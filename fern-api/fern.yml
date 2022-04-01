@@ -33,6 +33,7 @@ WithPackage:
 Type:
   union:
     object: ObjectTypeDefinition
+    union: UnionTypeDefinition
     alias: AliasTypeDefinition
     enum: EnumTypeDefinition
 
@@ -85,6 +86,16 @@ AllowedPrimitiveMapKeyType:
     - PrimitiveType.INTEGER
     - PrimitiveType.STRING
     - PrimitiveType.BOOLEAN
+
+UnionTypeDefinition:
+  fields:
+    types: list<SingleUnionType>
+
+SingleUnionType:
+  extends: WithDocs
+  fields:
+    discriminantValue: string
+    valueType: TypeReference
 
 AliasTypeDefinition:
   fields:
