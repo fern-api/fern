@@ -1,0 +1,2 @@
+# Run ./gradlew --write-locks to regenerate this file
+org.immutables:value:2.8.8 (1 constraints: 14051536)

@@ -1,0 +1,19 @@
+plugins {
+    id "com.palantir.consistent-versions" version "1.28.0"
+    id "com.palantir.git-version" version "0.14.0"
+    id "idea"
+}
+
+group ''
+version gitVersion()
+
+allprojects {
+
+    apply plugin: "idea"
+
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+        jcenter()
+    }
+}
