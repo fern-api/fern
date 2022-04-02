@@ -33,6 +33,7 @@ WithPackage:
 Type:
   union:
     object: ObjectTypeDefinition
+    union: UnionTypeDefinition
     alias: AliasTypeDefinition
     enum: EnumTypeDefinition
 
@@ -70,21 +71,18 @@ ContainerType:
 
 MapType:
   fields:
-    keyType: AllowedMapKeyType
+    keyType: TypeReference
     valueType: TypeReference
 
-AllowedMapKeyType: StringifiableType
+UnionTypeDefinition:
+  fields:
+    types: list<SingleUnionType>
 
-StringifiableType:
-  union:
-    primitive: AllowedPrimitiveMapKeyType
-    named: NamedTypeReference
-
-AllowedPrimitiveMapKeyType:
-  enum:
-    - INTEGER
-    - STRING
-    - BOOLEAN
+SingleUnionType:
+  extends: WithDocs
+  fields:
+    discriminantValue: string
+    valueType: TypeReference
 
 AliasTypeDefinition:
   fields:
@@ -130,7 +128,7 @@ HttpHeader:
   extends: WithDocs
   fields:
     header: string
-    valueType: StringifiableType
+    valueType: TypeReference
 
 HttpEndpoint:
   extends: WithDocs
@@ -166,13 +164,13 @@ HttpEndpointParameter:
   extends: WithDocs
   fields:
     key: string
-    valueType: StringifiableType
+    valueType: TypeReference
 
 HttpEndpointQueryParameter:
   extends: WithDocs
   fields:
     key: string
-    valueType: StringifiableType
+    valueType: TypeReference
 
 HttpError:
   extends: WithDocs
