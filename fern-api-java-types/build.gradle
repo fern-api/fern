@@ -1,0 +1,13 @@
+plugins {
+    id 'java-library'
+}
+
+dependencies {
+    implementation project(':fern-immutables-style')
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'com.google.code.findbugs:annotations'
+
+    annotationProcessor 'org.immutables:value'
+    compileOnly 'org.immutables:value::annotations'
+}
+

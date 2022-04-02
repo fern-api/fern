@@ -2,6 +2,7 @@ plugins {
     id "com.palantir.consistent-versions" version "1.28.0"
     id "com.palantir.git-version" version "0.14.0"
     id "idea"
+    id "org.inferred.processors" version "3.6.0"
 }
 
 group ''
@@ -10,6 +11,7 @@ version gitVersion()
 allprojects {
 
     apply plugin: "idea"
+    apply plugin: "org.inferred.processors"
 
     repositories {
         gradlePluginPortal()

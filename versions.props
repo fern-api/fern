@@ -1,2 +1,3 @@
-# immutables
 org.immutables:* = 2.8.8
+com.fasterxml.jackson.*:jackson-* = 2.12.3
+com.google.code.findbugs:annotations = 3.0.1
