@@ -33,6 +33,7 @@ WithPackage:
 Type:
   union:
     object: ObjectTypeDefinition
+    union: UnionTypeDefinition
     alias: AliasTypeDefinition
     enum: EnumTypeDefinition
 
@@ -74,6 +75,16 @@ MapType:
     valueType: TypeReference
 
 AllowedMapKeyType: StringifiableType
+
+UnionTypeDefinition:
+  fields:
+    types: list<SingleUnionType>
+
+SingleUnionType:
+  extends: WithDocs
+  fields:
+    discriminantValue: string
+    valueType: TypeReference
 
 AliasTypeDefinition:
   fields:
