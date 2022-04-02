@@ -75,17 +75,6 @@ MapType:
 
 AllowedMapKeyType: StringifiableType
 
-StringifiableType:
-  union:
-    primitive: AllowedPrimitiveMapKeyType
-    named: NamedTypeReference
-
-AllowedPrimitiveMapKeyType:
-  enum:
-    - PrimitiveType.INTEGER
-    - PrimitiveType.STRING
-    - PrimitiveType.BOOLEAN
-
 AliasTypeDefinition:
   fields:
     name: string
@@ -130,7 +119,7 @@ HttpHeader:
   extends: WithDocs
   fields:
     header: string
-    valueType: StringifiableType
+    valueType: TypeReference
 
 HttpEndpoint:
   extends: WithDocs
@@ -166,13 +155,13 @@ HttpEndpointParameter:
   extends: WithDocs
   fields:
     key: string
-    valueType: StringifiableType
+    valueType: TypeReference
 
 HttpEndpointQueryParameter:
   extends: WithDocs
   fields:
     key: string
-    valueType: StringifiableType
+    valueType: TypeReference
 
 HttpError:
   extends: WithDocs
