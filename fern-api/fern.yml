@@ -71,10 +71,8 @@ ContainerType:
 
 MapType:
   fields:
-    keyType: AllowedMapKeyType
+    keyType: TypeReference
     valueType: TypeReference
-
-AllowedMapKeyType: StringifiableType
 
 UnionTypeDefinition:
   fields:
