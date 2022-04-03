@@ -7,13 +7,13 @@ import org.immutables.value.Value;
 @Value.Immutable
 @StagedImmutablesStyle
 @JsonDeserialize(as = ImmutableObjectField.class)
-public interface ObjectField extends WithDocs {
+public interface SingleUnionType extends WithDocs {
 
-    String key();
+    String discriminantValue();
 
     TypeReference valueType();
 
-    static ImmutableObjectField.KeyBuildStage builder() {
-        return ImmutableObjectField.builder();
+    static ImmutableSingleUnionType.DiscriminantValueBuildStage builder() {
+        return ImmutableSingleUnionType.builder();
     }
 }
