@@ -95,9 +95,8 @@ EnumTypeDefinition:
 
 EnumValue:
   extends: WithDocs
-  union:
+  fields:
     value: string
-    reference: EnumValueReference
 
 EnumValueReference:
   extends: WithPackage
