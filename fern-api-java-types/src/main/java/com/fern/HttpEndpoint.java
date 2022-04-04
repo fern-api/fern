@@ -1,4 +1,36 @@
 package com.fern;
 
-public interface HttpEndpoint {
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fern.immutables.StagedImmutablesStyle;
+import org.immutables.value.Value;
+
+import java.util.List;
+import java.util.Optional;
+
+@Value.Immutable
+@StagedImmutablesStyle
+@JsonDeserialize(as = ImmutableHttpEndpoint.class)
+public interface HttpEndpoint extends WithDocs {
+
+    String endpointId();
+
+    HttpVerb verb();
+
+    String path();
+
+    List<HttpEndpointParameter> parameters();
+
+    List<HttpEndpointQueryParameter> queryParameters();
+
+    List<HttpHeader> header();
+
+    Optional<HttpRequest> request();
+
+    Optional<HttpResponse> response();
+
+    List<HttpError> errors();
+
+    static ImmutableHttpEndpoint.EndpointIdBuildStage builder() {
+        return ImmutableHttpEndpoint.builder();
+    }
 }

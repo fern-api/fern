@@ -13,7 +13,7 @@ public interface AliasTypeDefinition {
 
     TypeReference aliasType();
 
-    static ImmutableAliasTypeDefinition builder() {
-        ImmutableAliasTypeDefinition.builder();
+    static ImmutableAliasTypeDefinition.NameBuildStage builder() {
+        return ImmutableAliasTypeDefinition.builder();
     }
 }

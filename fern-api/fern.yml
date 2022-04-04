@@ -98,12 +98,6 @@ EnumValue:
   fields:
     value: string
 
-EnumValueReference:
-  extends: WithPackage
-  fields:
-    referencedEnum: NamedTypeReference
-    value: string
-
 Services:
   fields:
     http: list<HttpService>
@@ -175,7 +169,7 @@ HttpError:
   extends: WithDocs
   fields:
     name: string
-    statusCode: number
+    statusCode: integer
     bodyType: optional<TypeReference>
 
 WebSocketService:
