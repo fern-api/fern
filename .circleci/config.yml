@@ -25,7 +25,7 @@ jobs:
           root: /home/circleci
           paths: [ project, .gradle/init.gradle ]
 
-  publish:
+  publish-snapshot:
     docker: [{ image: 'cimg/openjdk:11.0.10-node' }]
     resource_class: small
     environment:
@@ -44,7 +44,7 @@ jobs:
             curl https://cdn.azul.com/zulu/bin/zulu11.41.23-ca-jdk11.0.8-linux_x64.tar.gz | tar -xzf - -C /opt/java
             sudo ln -s /opt/java/zulu*/ /opt/java11
       - run:
-          command: ./gradlew :publish
+          command: ./gradlew :fern-api-java-types:artifactoryPublish
           name: Publish conjure json file
 
 workflows:
@@ -54,6 +54,12 @@ workflows:
       - compile:
           filters: { tags: { only: /.*/ } }
 
-      - publish:
+      - publish-snapshot:
           requires: [ compile ]
-          filters: { tags: { only: /.*/ } }
+          filters:
+            branches:
+              only:
+                - main
+            tags:
+              ignore: /.*/
+          context: jfrog

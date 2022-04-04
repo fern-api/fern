@@ -13,9 +13,13 @@ dependencies {
 
 publishing {
     publications {
-        maven(MavenPublication) {
+        mavenJava(MavenPublication) {
             from components.java
         }
     }
+}
+
+artifactoryPublish {
+    publications('mavenJava')
 }
 
