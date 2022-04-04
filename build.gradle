@@ -3,15 +3,17 @@ plugins {
     id "com.palantir.git-version" version "0.14.0"
     id "idea"
     id "org.inferred.processors" version "3.6.0"
+    id 'maven-publish'
 }
 
-group ''
+group 'com.fern'
 version gitVersion()
 
 allprojects {
 
     apply plugin: "idea"
     apply plugin: "org.inferred.processors"
+    apply plugin: "maven-publish"
 
     repositories {
         gradlePluginPortal()

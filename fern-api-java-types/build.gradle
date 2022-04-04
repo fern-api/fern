@@ -11,3 +11,11 @@ dependencies {
     compileOnly 'org.immutables:value::annotations'
 }
 
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
