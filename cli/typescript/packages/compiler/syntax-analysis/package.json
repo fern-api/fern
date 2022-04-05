@@ -1,0 +1,36 @@
+{
+    "name": "@fern/syntax-analysis",
+    "version": "0.1.0",
+    "private": true,
+    "source": "src/index.ts",
+    "module": "src/index.ts",
+    "main": "lib/index.js",
+    "types": "lib/index.d.ts",
+    "scripts": {
+        "clean": "../../../node_modules/.bin/tsc --build --clean",
+        "compile": "../../../node_modules/.bin/tsc --build",
+        "test": "../../../node_modules/.bin/jest --passWithNoTests",
+        "lint:eslint": "../../../node_modules/.bin/eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
+        "lint:eslint:fix": "../../../node_modules/.bin/eslint --max-warnings 0 . --ignore-path=../../../.eslintignore --fix",
+        "lint:style": "../../../node_modules/.bin/stylelint '**/*.scss' --allow-empty-input --max-warnings 0",
+        "lint:style:fix": "../../../node_modules/.bin/stylelint '**/*.scss' --allow-empty-input --max-warnings 0 --fix",
+        "format": "../../../node_modules/.bin/prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+        "format:check": "../../../node_modules/.bin/prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+        "depcheck": "../../../node_modules/.bin/depcheck"
+    },
+    "dependencies": {
+        "@usebirch/compiler-commons": "workspace:^",
+        "js-yaml": "^4.1.0",
+        "zod": "^3.14.3"
+    },
+    "devDependencies": {
+        "@types/js-yaml": "^4.0.5"
+    },
+    "postcss": {
+        "postcss-modules": {
+            "globalModulePaths": [
+                "@blueprintjs.*"
+            ]
+        }
+    }
+}
