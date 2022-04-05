@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "module": "esnext",
+        "target": "es2017",
+        "lib": ["dom", "dom.iterable", "es2017"],
+        "jsx": "preserve",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "noImplicitAny": false,
+        "removeComments": true,
+        "noLib": false,
+        "skipLibCheck": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "sourceMap": true,
+        "noFallthroughCasesInSwitch": true,
+        "forceConsistentCasingInFileNames": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "isolatedModules": true,
+        "baseUrl": ".",
+        "noUncheckedIndexedAccess": true
+    }
+}
