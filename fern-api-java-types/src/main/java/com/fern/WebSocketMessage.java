@@ -1,16 +1,16 @@
 package com.fern;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fern.immutables.StagedImmutablesStyle;
+import com.fern.immutables.StagedBuilderStyle;
 import org.immutables.value.Value;
 
 import java.util.List;
 import java.util.Optional;
 
 @Value.Immutable
-@StagedImmutablesStyle
+@StagedBuilderStyle
 @JsonDeserialize(as = ImmutableWebSocketMessage.class)
-public interface WebSocketMessage extends WithDocs {
+public interface WebSocketMessage extends IWithDocs {
 
     WebSocketMessageOrigin origin();
 

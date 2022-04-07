@@ -1,16 +1,16 @@
 package com.fern;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fern.immutables.StagedImmutablesStyle;
+import com.fern.immutables.StagedBuilderStyle;
 import org.immutables.value.Value;
 
 import java.util.List;
 import java.util.Optional;
 
 @Value.Immutable
-@StagedImmutablesStyle
+@StagedBuilderStyle
 @JsonDeserialize(as = ImmutableHttpEndpoint.class)
-public interface HttpEndpoint extends WithDocs {
+public interface HttpEndpoint extends IWithDocs {
 
     String endpointId();
 

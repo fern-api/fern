@@ -1,7 +1,7 @@
 package com.fern;
 
 import com.fasterxml.jackson.annotation.*;
-import com.fern.immutables.StagedImmutablesStyle;
+import com.fern.immutables.StagedBuilderStyle;
 import org.immutables.value.Value;
 
 public final class ContainerType {
@@ -69,7 +69,7 @@ public final class ContainerType {
 
     @Value.Immutable
     @JsonTypeName("map")
-    @StagedImmutablesStyle
+    @StagedBuilderStyle
     interface Map extends Base {
 
         @JsonValue
@@ -87,7 +87,7 @@ public final class ContainerType {
 
     @Value.Immutable
     @JsonTypeName("list")
-    @StagedImmutablesStyle
+    @StagedBuilderStyle
     interface List extends Base {
 
         @JsonValue
@@ -105,7 +105,7 @@ public final class ContainerType {
 
     @Value.Immutable
     @JsonTypeName("set")
-    @StagedImmutablesStyle
+    @StagedBuilderStyle
     public interface Set extends Base {
 
         @JsonValue
@@ -123,7 +123,7 @@ public final class ContainerType {
 
     @Value.Immutable
     @JsonTypeName("optional")
-    @StagedImmutablesStyle
+    @StagedBuilderStyle
     public interface Optional extends Base {
 
         @JsonValue
@@ -140,7 +140,7 @@ public final class ContainerType {
     }
 
     @Value.Immutable
-    @StagedImmutablesStyle
+    @StagedBuilderStyle
     interface Unknown extends Base {
 
         @JsonValue
