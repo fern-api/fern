@@ -1,0 +1,4 @@
+org.immutables:* = 2.8.8
+com.fasterxml.jackson.*:jackson-* = 2.12.3
+com.google.code.findbugs:annotations = 3.0.1
+com.fern:fern-api-java-types = 0.0.0-3-g326f38f
