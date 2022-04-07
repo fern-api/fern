@@ -17,6 +17,9 @@ allprojects {
     apply plugin: "maven-publish"
     apply plugin: 'com.jfrog.artifactory'
 
+    version rootProject.version
+    group rootProject.group
+
     repositories {
         gradlePluginPortal()
         mavenCentral()
