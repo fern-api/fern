@@ -44,7 +44,7 @@ jobs:
             curl https://cdn.azul.com/zulu/bin/zulu11.41.23-ca-jdk11.0.8-linux_x64.tar.gz | tar -xzf - -C /opt/java
             sudo ln -s /opt/java/zulu*/ /opt/java11
       - run:
-          command: ./gradlew :fern-api-java-types:artifactoryPublish
+          command: ./gradlew artifactoryPublish
           name: Publish conjure json file
 
 workflows:
