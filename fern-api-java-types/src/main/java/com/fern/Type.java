@@ -37,10 +37,6 @@ public final class Type {
         return new Type(Enum.of(value));
     }
 
-    public <T> T accept(Visitor<T> visitor) {
-        return value.accept(visitor);
-    }
-
     public boolean isObject() {
         return value instanceof Object;
     }
@@ -55,6 +51,22 @@ public final class Type {
 
     public boolean isEnum() {
         return value instanceof Enum;
+    }
+
+    public <T> T accept(Visitor<T> visitor) {
+        return value.accept(visitor);
+    }
+
+    public interface Visitor<T> {
+        T visitObject(ObjectTypeDefinition value);
+
+        T visitUnion(UnionTypeDefinition value);
+
+        T visitAlias(AliasTypeDefinition value);
+
+        T visitEnum(EnumTypeDefinition value);
+
+        T visitUnknown(String unknownType);
     }
 
     @JsonTypeInfo(
@@ -159,17 +171,5 @@ public final class Type {
         default <T> T accept(Visitor<T> visitor) {
             return visitor.visitUnknown(type());
         }
-    }
-
-    interface Visitor<T> {
-        T visitObject(ObjectTypeDefinition value);
-
-        T visitUnion(UnionTypeDefinition value);
-
-        T visitAlias(AliasTypeDefinition value);
-
-        T visitEnum(EnumTypeDefinition value);
-
-        T visitUnknown(String unknownType);
     }
 }

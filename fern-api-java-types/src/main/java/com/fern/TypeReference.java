@@ -33,10 +33,6 @@ public final class TypeReference {
         return new TypeReference(Container.of(value));
     }
 
-    public <T> T accept(Visitor<T> visitor) {
-        return value.accept(visitor);
-    }
-
     public boolean isNamed() {
         return value instanceof Named;
     }
@@ -47,6 +43,20 @@ public final class TypeReference {
 
     public boolean isContainer() {
         return value instanceof Container;
+    }
+
+    public <T> T accept(Visitor<T> visitor) {
+        return value.accept(visitor);
+    }
+
+    public interface Visitor<T> {
+        T visitNamed(NamedTypeReference value);
+
+        T visitPrimitive(PrimitiveType value);
+
+        T visitContainer(ContainerType value);
+
+        T visitUnknown(String unknownType);
     }
 
     @JsonTypeInfo(
@@ -134,15 +144,5 @@ public final class TypeReference {
         default <T> T accept(Visitor<T> visitor) {
             return visitor.visitUnknown(type());
         }
-    }
-
-    public interface Visitor<T> {
-        T visitNamed(NamedTypeReference value);
-
-        T visitPrimitive(PrimitiveType value);
-
-        T visitContainer(ContainerType value);
-
-        T visitUnknown(String unknownType);
     }
 }
