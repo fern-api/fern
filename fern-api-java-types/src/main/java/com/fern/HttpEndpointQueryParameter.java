@@ -1,13 +1,13 @@
 package com.fern;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fern.immutables.StagedImmutablesStyle;
+import com.fern.immutables.StagedBuilderStyle;
 import org.immutables.value.Value;
 
 @Value.Immutable
-@StagedImmutablesStyle
+@StagedBuilderStyle
 @JsonDeserialize(as = ImmutableHttpEndpointQueryParameter.class)
-public interface HttpEndpointQueryParameter extends WithDocs {
+public interface HttpEndpointQueryParameter extends IWithDocs {
 
     String key();
 

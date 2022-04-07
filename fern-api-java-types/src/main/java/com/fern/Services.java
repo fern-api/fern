@@ -1,13 +1,13 @@
 package com.fern;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fern.immutables.StagedImmutablesStyle;
+import com.fern.immutables.StagedBuilderStyle;
 import org.immutables.value.Value;
 
 import java.util.List;
 
 @Value.Immutable
-@StagedImmutablesStyle
+@StagedBuilderStyle
 @JsonDeserialize(as = ImmutableServices.class)
 public interface Services {
 

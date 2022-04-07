@@ -1,13 +1,13 @@
 package com.fern;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fern.immutables.StagedImmutablesStyle;
+import com.fern.immutables.StagedBuilderStyle;
 import org.immutables.value.Value;
 
 @Value.Immutable
-@StagedImmutablesStyle
+@StagedBuilderStyle
 @JsonDeserialize(as = ImmutableHttpRequest.class)
-public interface HttpRequest extends WithDocs {
+public interface HttpRequest extends IWithDocs {
 
     TypeReference bodyType();
 

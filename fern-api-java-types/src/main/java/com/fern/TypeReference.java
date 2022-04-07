@@ -1,11 +1,12 @@
 package com.fern;
 
 import com.fasterxml.jackson.annotation.*;
-import com.fern.immutables.StagedImmutablesStyle;
+import com.fern.immutables.StagedBuilderStyle;
 import org.immutables.value.Value;
 
 import java.util.Map;
 
+@Value.Enclosing
 public final class TypeReference {
 
     private final Base value;
@@ -21,15 +22,15 @@ public final class TypeReference {
     }
 
     public static TypeReference named(NamedTypeReference value) {
-        return new TypeReference(Named.builder().named(value).build());
+        return new TypeReference(Named.of(value));
     }
 
     public static TypeReference primitive(PrimitiveType value) {
-        return new TypeReference(Primitive.builder().primitive(value).build());
+        return new TypeReference(Primitive.of(value));
     }
 
     public static TypeReference container(ContainerType value) {
-        return new TypeReference(Container.builder().container(value).build());
+        return new TypeReference(Container.of(value));
     }
 
     public boolean isNamed() {
@@ -60,9 +61,9 @@ public final class TypeReference {
         <T> T accept(Visitor<T> visitor);
     }
 
-    @Value.Immutable
+    @Value.Immutable()
     @JsonTypeName("named")
-    @StagedImmutablesStyle
+    @StagedBuilderStyle
     interface Named extends Base {
 
         @JsonValue
@@ -73,14 +74,14 @@ public final class TypeReference {
             return visitor.visitNamed(named());
         }
 
-        static ImmutableNamed.NamedBuildStage builder() {
-            return ImmutableNamed.builder();
+        static Named of(NamedTypeReference value) {
+            return ImmutableTypeReference.Named.builder().named(value).build();
         }
     }
 
     @Value.Immutable
     @JsonTypeName("primitive")
-    @StagedImmutablesStyle
+    @StagedBuilderStyle
     interface Primitive extends Base {
 
         @JsonValue
@@ -91,14 +92,14 @@ public final class TypeReference {
             return visitor.visitPrimitive(primitive());
         }
 
-        static ImmutablePrimitive.PrimitiveBuildStage builder() {
-            return ImmutablePrimitive.builder();
+        static Primitive of(PrimitiveType value) {
+            return ImmutableTypeReference.Primitive.builder().primitive(value).build();
         }
     }
 
     @Value.Immutable
     @JsonTypeName("container")
-    @StagedImmutablesStyle
+    @StagedBuilderStyle
     public interface Container extends Base {
 
         @JsonValue
@@ -109,13 +110,13 @@ public final class TypeReference {
             return visitor.visitContainer(container());
         }
 
-        static ImmutableContainer.ContainerBuildStage builder() {
-            return ImmutableContainer.builder();
+        static Container of(ContainerType value) {
+            return ImmutableTypeReference.Container.builder().container(value).build();
         }
     }
 
     @Value.Immutable
-    @StagedImmutablesStyle
+    @StagedBuilderStyle
     interface Unknown extends Base {
 
         @JsonValue
@@ -128,10 +129,6 @@ public final class TypeReference {
         @Override
         default <T> T accept(Visitor<T> visitor) {
             return visitor.visitUnknown(type());
-        }
-
-        static ImmutableUnknown.Builder builder() {
-            return ImmutableUnknown.builder();
         }
     }
 

@@ -1,11 +1,12 @@
 package com.fern;
 
 import com.fasterxml.jackson.annotation.*;
-import com.fern.immutables.StagedImmutablesStyle;
+import com.fern.immutables.StagedBuilderStyle;
 import org.immutables.value.Value;
 
 import java.util.Map;
 
+@Value.Enclosing
 public final class Type {
 
     private final Base value;
@@ -21,19 +22,19 @@ public final class Type {
     }
 
     public static Type object(ObjectTypeDefinition value) {
-        return new Type(Object.builder().object(value).build());
+        return new Type(_Object.of(value));
     }
 
     public static Type union(UnionTypeDefinition value) {
-        return new Type(Union.builder().union(value).build());
+        return new Type(Union.of(value));
     }
 
     public static Type alias(AliasTypeDefinition value) {
-        return new Type(Alias.builder().alias(value).build());
+        return new Type(Alias.of(value));
     }
 
     public static Type _enum(EnumTypeDefinition value) {
-        return new Type(Enum.builder()._enum(value).build());
+        return new Type(Enum.of(value));
     }
 
     public boolean isObject() {
@@ -70,9 +71,8 @@ public final class Type {
     }
 
     @Value.Immutable
-    @JsonTypeName("named")
-    @StagedImmutablesStyle
-    interface Object extends Base {
+    @JsonTypeName("object")
+    interface _Object extends Base {
 
         @JsonValue
         ObjectTypeDefinition object();
@@ -82,14 +82,13 @@ public final class Type {
             return visitor.visitObject(object());
         }
 
-        static ImmutableObject.ObjectBuildStage builder() {
-            return ImmutableObject.builder();
+        static _Object of(ObjectTypeDefinition value) {
+            return ImmutableType._Object.builder().object(value).build();
         }
     }
 
     @Value.Immutable
-    @JsonTypeName("primitive")
-    @StagedImmutablesStyle
+    @JsonTypeName("union")
     interface Union extends Base {
 
         @JsonValue
@@ -100,14 +99,14 @@ public final class Type {
             return visitor.visitUnion(union());
         }
 
-        static ImmutableUnion.UnionBuildStage builder() {
-            return ImmutableUnion.builder();
+        static Union of(UnionTypeDefinition value) {
+            return ImmutableType.Union.builder().union(value).build();
         }
     }
 
     @Value.Immutable
-    @JsonTypeName("container")
-    @StagedImmutablesStyle
+    @JsonTypeName("alias")
+    @StagedBuilderStyle
     interface Alias extends Base {
 
         @JsonValue
@@ -118,14 +117,14 @@ public final class Type {
             return visitor.visitAlias(alias());
         }
 
-        static ImmutableAlias.AliasBuildStage builder() {
-            return ImmutableAlias.builder();
+        static Alias of(AliasTypeDefinition value) {
+            return ImmutableType.Alias.builder().alias(value).build();
         }
     }
 
     @Value.Immutable
-    @JsonTypeName("container")
-    @StagedImmutablesStyle
+    @JsonTypeName("enum")
+    @StagedBuilderStyle
     interface Enum extends Base {
 
         @JsonValue
@@ -136,13 +135,13 @@ public final class Type {
             return visitor.visitEnum(_enum());
         }
 
-        static ImmutableEnum._enumBuildStage builder() {
-            return ImmutableEnum.builder();
+        static Enum of(EnumTypeDefinition value) {
+            return ImmutableType.Enum.builder()._enum(value).build();
         }
     }
 
     @Value.Immutable
-    @StagedImmutablesStyle
+    @StagedBuilderStyle
     interface Unknown extends Base {
 
         @JsonValue
@@ -155,10 +154,6 @@ public final class Type {
         @Override
         default <T> T accept(Visitor<T> visitor) {
             return visitor.visitUnknown(type());
-        }
-
-        static ImmutableUnknown.Builder builder() {
-            return ImmutableUnknown.builder();
         }
     }
 

@@ -1,17 +1,13 @@
 package com.fern;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fern.immutables.StagedImmutablesStyle;
+import com.fern.immutables.StagedBuilderStyle;
 import org.immutables.value.Value;
 
-import java.util.Optional;
-
 @Value.Immutable
-@StagedImmutablesStyle
+@StagedBuilderStyle
 @JsonDeserialize(as = ImmutableWithDocs.class)
-public interface WithDocs {
-
-    Optional<String> docs();
+public interface WithDocs extends IWithDocs {
 
     static ImmutableWithDocs.Builder builder() {
         return ImmutableWithDocs.builder();

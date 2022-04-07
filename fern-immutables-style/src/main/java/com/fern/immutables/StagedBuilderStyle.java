@@ -12,5 +12,7 @@ import java.lang.annotation.Target;
 @Value.Style(
         jdkOnly = true,
         get = {"get*", "is*"},
-        stagedBuilder = true)
-public @interface StagedImmutablesStyle {}
+        stagedBuilder = true,
+        visibility = Value.Style.ImplementationVisibility.PACKAGE,
+        overshadowImplementation = true)
+public @interface StagedBuilderStyle {}
