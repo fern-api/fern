@@ -21,7 +21,7 @@ public final class WebSocketMessageResponseBehavior {
         this.string = string;
     }
 
-    enum Value {
+    public enum Value {
         ONGOING,
         REQUEST_RESPONSE,
         UNKNOWN

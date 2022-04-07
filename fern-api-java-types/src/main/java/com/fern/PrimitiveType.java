@@ -26,7 +26,7 @@ public final class PrimitiveType {
         this.string = string;
     }
 
-    enum Value {
+    public enum Value {
         INTEGER,
         DOUBLE,
         LONG,

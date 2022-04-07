@@ -21,7 +21,7 @@ public final class WebSocketMessageOrigin {
         this.string = string;
     }
 
-    enum Value {
+    public enum Value {
         CLIENT,
         SERVER,
         UNKNOWN

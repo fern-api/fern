@@ -20,7 +20,7 @@ public final class HttpVerb {
         this.string = string;
     }
 
-    enum Value {
+    public enum Value {
         GET,
         PUT,
         POST,
