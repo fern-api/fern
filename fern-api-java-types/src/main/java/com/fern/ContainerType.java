@@ -50,6 +50,22 @@ public final class ContainerType {
         return value instanceof Optional;
     }
 
+    public <T> T accept(Visitor<T> visitor) {
+        return value.accept(visitor);
+    }
+
+    public interface Visitor<T> {
+        T visitMap(MapType value);
+
+        T visitList(TypeReference value);
+
+        T visitSet(TypeReference value);
+
+        T visitOptional(TypeReference value);
+
+        T visitUnknown(String unknownType);
+    }
+
     @JsonTypeInfo(
             use = JsonTypeInfo.Id.NAME,
             include = JsonTypeInfo.As.EXISTING_PROPERTY,
@@ -158,17 +174,5 @@ public final class ContainerType {
         static ImmutableUnknown.Builder builder() {
             return ImmutableUnknown.builder();
         }
-    }
-
-    public interface Visitor<T> {
-        T visitMap(MapType value);
-
-        T visitList(TypeReference value);
-
-        T visitSet(TypeReference value);
-
-        T visitOptional(TypeReference value);
-
-        T visitUnknown(String unknownType);
     }
 }
