@@ -37,6 +37,10 @@ public final class Type {
         return new Type(Enum.of(value));
     }
 
+    public <T> T accept(Visitor<T> visitor) {
+        return value.accept(visitor);
+    }
+
     public boolean isObject() {
         return value instanceof Object;
     }

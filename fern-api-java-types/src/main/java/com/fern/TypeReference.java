@@ -33,6 +33,10 @@ public final class TypeReference {
         return new TypeReference(Container.of(value));
     }
 
+    public <T> T accept(Visitor<T> visitor) {
+        return value.accept(visitor);
+    }
+
     public boolean isNamed() {
         return value instanceof Named;
     }
