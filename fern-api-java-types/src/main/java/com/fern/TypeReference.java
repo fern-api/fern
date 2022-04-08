@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.*;
 import com.fern.immutables.StagedBuilderStyle;
 import org.immutables.value.Value;
 
+import javax.naming.Name;
 import java.util.Map;
+import java.util.Optional;
 
 @Value.Enclosing
 public final class TypeReference {
@@ -43,6 +45,27 @@ public final class TypeReference {
 
     public boolean isContainer() {
         return value instanceof Container;
+    }
+
+    public Optional<NamedTypeReference> getNamed(){
+        if (isNamed()) {
+            return Optional.of(((Named) value).named());
+        }
+        return Optional.empty();
+    }
+
+    public Optional<PrimitiveType> getPrimitive() throws ClassCastException {
+        if (isPrimitive()) {
+            return Optional.of(((Primitive) value).primitive());
+        }
+        return Optional.empty();
+    }
+
+    public Optional<ContainerType> getContainer() throws ClassCastException {
+        if (isContainer()) {
+            return Optional.of(((Container) value).container());
+        }
+        return Optional.empty();
     }
 
     public <T> T accept(Visitor<T> visitor) {

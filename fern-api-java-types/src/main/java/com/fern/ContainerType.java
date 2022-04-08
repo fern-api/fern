@@ -50,6 +50,34 @@ public final class ContainerType {
         return value instanceof Optional;
     }
 
+    public java.util.Optional<MapType> getMap() throws ClassCastException {
+        if (isMap()) {
+            return java.util.Optional.of(((Map) value).map());
+        }
+        return java.util.Optional.empty();
+    }
+
+    public java.util.Optional<TypeReference> getList() throws ClassCastException {
+        if (isList()) {
+            return java.util.Optional.of(((List) value).list());
+        }
+        return java.util.Optional.empty();
+    }
+
+    public java.util.Optional<TypeReference> getSet() throws ClassCastException {
+        if (isSet()) {
+            return java.util.Optional.of(((Set) value).set());
+        }
+        return java.util.Optional.empty();
+    }
+
+    public java.util.Optional<TypeReference> getOptional() throws ClassCastException {
+        if (isOptional()) {
+            return java.util.Optional.of(((Optional) value).optional());
+        }
+        return java.util.Optional.empty();
+    }
+
     public <T> T accept(Visitor<T> visitor) {
         return value.accept(visitor);
     }
