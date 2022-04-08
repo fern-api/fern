@@ -5,6 +5,7 @@ import com.fern.immutables.StagedBuilderStyle;
 import org.immutables.value.Value;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Value.Enclosing
 public final class Type {
@@ -51,6 +52,34 @@ public final class Type {
 
     public boolean isEnum() {
         return value instanceof Enum;
+    }
+
+    public Optional<ObjectTypeDefinition> getObject() throws ClassCastException {
+        if (isObject()) {
+            return Optional.of(((_Object) value).object());
+        }
+        return Optional.empty();
+    }
+
+    public Optional<UnionTypeDefinition> getUnion() throws ClassCastException {
+        if (isUnion()) {
+            return Optional.of(((Union) value).union());
+        }
+        return Optional.empty();
+    }
+
+    public Optional<AliasTypeDefinition> getAlias() throws ClassCastException {
+        if (isAlias()) {
+            return Optional.of(((Alias) value).alias());
+        }
+        return Optional.empty();
+    }
+
+    public Optional<EnumTypeDefinition> getEnum() throws ClassCastException {
+        if (isEnum()) {
+            return Optional.of(((Enum) value)._enum());
+        }
+        return Optional.empty();
     }
 
     public <T> T accept(Visitor<T> visitor) {
