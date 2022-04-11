@@ -94,7 +94,7 @@ workflows:
             - lint:
                   filters: { tags: { only: /.*/ } }
 
-            - compile:
+            - compile-and-test:
                   filters: { tags: { only: /.*/ } }
                   requires: [lint]
 
