@@ -16,7 +16,7 @@ export async function lintMonorepo({ monorepo, rules, loggers, shouldFix }: lint
     const result = Result.success();
     const fileSystem = new LazyVirtualFileSystem(monorepo.root.fullPath);
 
-    const [monorepoRules, packageRules] = partition<Rule.MonorepoRule, Rule.PackageRule>(
+    const [, packageRules] = partition<Rule.MonorepoRule, Rule.PackageRule>(
         rules,
         (rule): rule is Rule.MonorepoRule => rule.type === RuleType.MONOREPO
     );
