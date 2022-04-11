@@ -22,13 +22,13 @@ WithDocs:
     docs: optional<string>
 
 NamedTypeReference:
-  extends: WithFilepath
+  extends: WithPackage
   fields:
     name: string
 
-WithFilepath:
+WithPackage:
   fields:
-    filepath: string
+    package: string
 
 Type:
   union:
@@ -105,7 +105,7 @@ Services:
 
 BaseService:
   extends:
-    - WithFilepath
+    - WithPackage
     - WithDocs
   fields:
     name: string

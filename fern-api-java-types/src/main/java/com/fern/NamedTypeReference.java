@@ -7,11 +7,11 @@ import org.immutables.value.Value;
 @Value.Immutable
 @StagedBuilderStyle
 @JsonDeserialize(as = ImmutableNamedTypeReference.class)
-public interface NamedTypeReference extends IWithFilepath {
+public interface NamedTypeReference extends IWithPackage {
 
     String name();
 
-    static ImmutableNamedTypeReference.FilepathBuildStage builder() {
+    static ImmutableNamedTypeReference.NameBuildStage builder() {
         return ImmutableNamedTypeReference.builder();
     }
 }
