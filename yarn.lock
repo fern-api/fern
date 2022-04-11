@@ -1162,28 +1162,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usebirch/cli@workspace:packages/compiler/cli":
-  version: 0.0.0-use.local
-  resolution: "@usebirch/cli@workspace:packages/compiler/cli"
-  dependencies:
-    "@fern/syntax-analysis": "workspace:^"
-    "@types/yargs": ^17.0.10
-    "@usebirch/compiler": "workspace:^"
-    "@usebirch/compiler-commons": "workspace:^"
-    chalk: ^4.1.2
-    depcheck: ^1.4.3
-    eslint: ^8.12.0
-    jest: ^27.5.1
-    prettier: ^2.6.1
-    stylelint: ^14.6.1
-    typescript: ^4.6.3
-    yargs: ^17.3.1
-    zod: ^3.14.3
-  bin:
-    cli: ./cli
-  languageName: unknown
-  linkType: soft
-
 "@usebirch/compiler-commons@workspace:^, @usebirch/compiler-commons@workspace:packages/compiler/compiler-commons":
   version: 0.0.0-use.local
   resolution: "@usebirch/compiler-commons@workspace:packages/compiler/compiler-commons"
@@ -2760,6 +2738,28 @@ __metadata:
   checksum: 8510230778ab3a51c27dffb1b76ef2c24fab672a42742d3c0a45c2e9d1e5f20210b1fbca33486088da4a9a3958bde96b5aec0a63aac9894b4e9df65c88b2cbd6
   languageName: node
   linkType: hard
+
+"fern@workspace:packages/compiler/cli":
+  version: 0.0.0-use.local
+  resolution: "fern@workspace:packages/compiler/cli"
+  dependencies:
+    "@fern/syntax-analysis": "workspace:^"
+    "@types/yargs": ^17.0.10
+    "@usebirch/compiler": "workspace:^"
+    "@usebirch/compiler-commons": "workspace:^"
+    chalk: ^4.1.2
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    jest: ^27.5.1
+    prettier: ^2.6.1
+    stylelint: ^14.6.1
+    typescript: ^4.6.3
+    yargs: ^17.3.1
+    zod: ^3.14.3
+  bin:
+    fern: ./cli
+  languageName: unknown
+  linkType: soft
 
 "file-entry-cache@npm:^6.0.1":
   version: 6.0.1
