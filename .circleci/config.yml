@@ -101,7 +101,7 @@ workflows:
             - compile-java:
                   filters: { tags: { only: /.*/ } }
 
-            - publish--java-snapshot:
+            - publish-java-snapshot:
                   requires: [compile-java]
                   filters:
                       branches:
