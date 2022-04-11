@@ -11,7 +11,7 @@ public interface NamedTypeReference extends IWithFilepath {
 
     String name();
 
-    static ImmutableNamedTypeReference.NameBuildStage builder() {
+    static ImmutableNamedTypeReference.FilepathBuildStage builder() {
         return ImmutableNamedTypeReference.builder();
     }
 }

@@ -9,7 +9,7 @@ import org.immutables.value.Value;
 @JsonDeserialize(as = ImmutableWithFilepath.class)
 public interface WithFilepath extends IWithFilepath {
 
-    static ImmutableWithFilepath.Builder builder() {
+    static ImmutableWithFilepath.FilepathBuildStage builder() {
         return ImmutableWithFilepath.builder();
     }
 }
