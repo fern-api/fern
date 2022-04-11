@@ -1,4 +1,26 @@
+# java poet
+com.squareup:javapoet = 1.13.0
+
+# immutables
 org.immutables:* = 2.8.8
+
+# apache commons
+org.apache.commons:commons-lang3 = 3.12.0
+
+# logging
+org.slf4j:slf4j-api = 1.7.36
+org.slf4j:slf4j-log4j12 = 1.7.36
+
+# fern
+com.fern:fern-api-java-types = 0.0.0-8-g51febd1
+
+# testing
+org.junit.jupiter:* = 5.5.0
+org.assertj:* = 3.19.0
+org.mockito:* = 3.11.2
+
+# jackson
 com.fasterxml.jackson.*:jackson-* = 2.12.3
+
+# misc
 com.google.code.findbugs:annotations = 3.0.1
-com.fern:fern-api-java-types = 0.0.0-3-g326f38f
