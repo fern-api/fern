@@ -416,9 +416,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern/syntax-analysis@workspace:packages/compiler/syntax-analysis":
+"@fern/syntax-analysis@workspace:^, @fern/syntax-analysis@workspace:packages/compiler/syntax-analysis":
   version: 0.0.0-use.local
   resolution: "@fern/syntax-analysis@workspace:packages/compiler/syntax-analysis"
+  dependencies:
+    "@types/js-yaml": ^4.0.5
+    "@usebirch/compiler-commons": "workspace:^"
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    jest: ^27.5.1
+    js-yaml: ^4.1.0
+    prettier: ^2.6.1
+    stylelint: ^14.6.1
+    typescript: ^4.6.3
+    zod: ^3.14.3
   languageName: unknown
   linkType: soft
 
@@ -692,33 +703,86 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mrlint/commons@workspace:packages/mrlint/commons":
+"@mrlint/commons@workspace:^, @mrlint/commons@workspace:packages/mrlint/commons":
   version: 0.0.0-use.local
   resolution: "@mrlint/commons@workspace:packages/mrlint/commons"
+  dependencies:
+    "@mrlint/virtual-file-system": "workspace:^"
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    jest: ^27.5.1
+    package-json-type: ^1.0.3
+    prettier: ^2.6.1
+    stylelint: ^14.6.1
+    typescript: ^4.6.3
   languageName: unknown
   linkType: soft
 
-"@mrlint/lint@workspace:packages/mrlint/lint":
+"@mrlint/lint@workspace:^, @mrlint/lint@workspace:packages/mrlint/lint":
   version: 0.0.0-use.local
   resolution: "@mrlint/lint@workspace:packages/mrlint/lint"
+  dependencies:
+    "@mrlint/commons": "workspace:^"
+    "@mrlint/virtual-file-system": "workspace:^"
+    "@types/diff": ^5.0.2
+    chalk: ^4.1.2
+    depcheck: ^1.4.3
+    diff: ^5.0.0
+    eslint: ^8.12.0
+    jest: ^27.5.1
+    prettier: ^2.6.1
+    stylelint: ^14.6.1
+    typescript: ^4.6.3
   languageName: unknown
   linkType: soft
 
-"@mrlint/parser@workspace:packages/mrlint/parser":
+"@mrlint/parser@workspace:^, @mrlint/parser@workspace:packages/mrlint/parser":
   version: 0.0.0-use.local
   resolution: "@mrlint/parser@workspace:packages/mrlint/parser"
+  dependencies:
+    "@mrlint/commons": "workspace:^"
+    "@types/glob": ^7.2.0
+    "@types/js-yaml": ^4.0.5
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    glob: ^7.2.0
+    jest: ^27.5.1
+    js-yaml: ^4.1.0
+    package-json-type: ^1.0.3
+    prettier: ^2.6.1
+    stylelint: ^14.6.1
+    typescript: ^4.6.3
+    zod: ^3.14.3
   languageName: unknown
   linkType: soft
 
-"@mrlint/rules@workspace:packages/mrlint/rules":
+"@mrlint/rules@workspace:^, @mrlint/rules@workspace:packages/mrlint/rules":
   version: 0.0.0-use.local
   resolution: "@mrlint/rules@workspace:packages/mrlint/rules"
+  dependencies:
+    "@mrlint/commons": "workspace:^"
+    "@mrlint/virtual-file-system": "workspace:^"
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    immer: ^9.0.12
+    jest: ^27.5.1
+    package-json-type: ^1.0.3
+    prettier: ^2.6.1
+    stylelint: ^14.6.1
+    typescript: ^4.6.3
   languageName: unknown
   linkType: soft
 
-"@mrlint/virtual-file-system@workspace:packages/mrlint/virtual-file-system":
+"@mrlint/virtual-file-system@workspace:^, @mrlint/virtual-file-system@workspace:packages/mrlint/virtual-file-system":
   version: 0.0.0-use.local
   resolution: "@mrlint/virtual-file-system@workspace:packages/mrlint/virtual-file-system"
+  dependencies:
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    jest: ^27.5.1
+    prettier: ^2.6.1
+    stylelint: ^14.6.1
+    typescript: ^4.6.3
   languageName: unknown
   linkType: soft
 
@@ -842,6 +906,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/diff@npm:^5.0.2":
+  version: 5.0.2
+  resolution: "@types/diff@npm:5.0.2"
+  checksum: 8fbc419b5aca33f494026bf5f70e026f76367689677ef114f9c078ac738d7dbe96e6dda3fd8290e4a7c35281e2b60b034e3d7e3c968b850cf06a21279e7ddcbe
+  languageName: node
+  linkType: hard
+
+"@types/glob@npm:^7.2.0":
+  version: 7.2.0
+  resolution: "@types/glob@npm:7.2.0"
+  dependencies:
+    "@types/minimatch": "*"
+    "@types/node": "*"
+  checksum: 6ae717fedfdfdad25f3d5a568323926c64f52ef35897bcac8aca8e19bc50c0bd84630bbd063e5d52078b2137d8e7d3c26eabebd1a2f03ff350fff8a91e79fc19
+  languageName: node
+  linkType: hard
+
 "@types/graceful-fs@npm:^4.1.2":
   version: 4.1.5
   resolution: "@types/graceful-fs@npm:4.1.5"
@@ -876,6 +957,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/js-yaml@npm:^4.0.5":
+  version: 4.0.5
+  resolution: "@types/js-yaml@npm:4.0.5"
+  checksum: 7dcac8c50fec31643cc9d6444b5503239a861414cdfaa7ae9a38bc22597c4d850c4b8cec3d82d73b3fbca408348ce223b0408d598b32e094470dfffc6d486b4d
+  languageName: node
+  linkType: hard
+
 "@types/json-schema@npm:^7.0.9":
   version: 7.0.11
   resolution: "@types/json-schema@npm:7.0.11"
@@ -883,7 +971,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/minimatch@npm:^3.0.3":
+"@types/minimatch@npm:*, @types/minimatch@npm:^3.0.3":
   version: 3.0.5
   resolution: "@types/minimatch@npm:3.0.5"
   checksum: c41d136f67231c3131cf1d4ca0b06687f4a322918a3a5adddc87ce90ed9dbd175a3610adee36b106ae68c0b92c637c35e02b58c8a56c424f71d30993ea220b92
@@ -945,6 +1033,15 @@ __metadata:
   dependencies:
     "@types/yargs-parser": "*"
   checksum: caa21d2c957592fe2184a8368c8cbe5a82a6c2e2f2893722e489f842dc5963293d2f3120bc06fe3933d60a3a0d1e2eb269649fd6b1947fe1820f8841ba611dd9
+  languageName: node
+  linkType: hard
+
+"@types/yargs@npm:^17.0.10":
+  version: 17.0.10
+  resolution: "@types/yargs@npm:17.0.10"
+  dependencies:
+    "@types/yargs-parser": "*"
+  checksum: f0673cbfc08e17239dc58952a88350d6c4db04a027a28a06fbad27d87b670e909f9cd9e66f9c64cebdd5071d1096261e33454a55868395f125297e5c50992ca8
   languageName: node
   linkType: hard
 
@@ -1068,26 +1165,66 @@ __metadata:
 "@usebirch/cli@workspace:packages/compiler/cli":
   version: 0.0.0-use.local
   resolution: "@usebirch/cli@workspace:packages/compiler/cli"
+  dependencies:
+    "@fern/syntax-analysis": "workspace:^"
+    "@types/yargs": ^17.0.10
+    "@usebirch/compiler": "workspace:^"
+    "@usebirch/compiler-commons": "workspace:^"
+    chalk: ^4.1.2
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    jest: ^27.5.1
+    prettier: ^2.6.1
+    stylelint: ^14.6.1
+    typescript: ^4.6.3
+    yargs: ^17.3.1
+    zod: ^3.14.3
   bin:
     cli: ./cli
   languageName: unknown
   linkType: soft
 
-"@usebirch/compiler-commons@workspace:packages/compiler/compiler-commons":
+"@usebirch/compiler-commons@workspace:^, @usebirch/compiler-commons@workspace:packages/compiler/compiler-commons":
   version: 0.0.0-use.local
   resolution: "@usebirch/compiler-commons@workspace:packages/compiler/compiler-commons"
+  dependencies:
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    jest: ^27.5.1
+    prettier: ^2.6.1
+    stylelint: ^14.6.1
+    typescript: ^4.6.3
   languageName: unknown
   linkType: soft
 
-"@usebirch/compiler@workspace:packages/compiler/compiler":
+"@usebirch/compiler@workspace:^, @usebirch/compiler@workspace:packages/compiler/compiler":
   version: 0.0.0-use.local
   resolution: "@usebirch/compiler@workspace:packages/compiler/compiler"
+  dependencies:
+    "@fern/syntax-analysis": "workspace:^"
+    "@usebirch/compiler-commons": "workspace:^"
+    "@usebirch/ir-generation": "workspace:^"
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    jest: ^27.5.1
+    prettier: ^2.6.1
+    stylelint: ^14.6.1
+    typescript: ^4.6.3
   languageName: unknown
   linkType: soft
 
-"@usebirch/ir-generation@workspace:packages/compiler/ir-generation":
+"@usebirch/ir-generation@workspace:^, @usebirch/ir-generation@workspace:packages/compiler/ir-generation":
   version: 0.0.0-use.local
   resolution: "@usebirch/ir-generation@workspace:packages/compiler/ir-generation"
+  dependencies:
+    "@fern/syntax-analysis": "workspace:^"
+    "@usebirch/compiler-commons": "workspace:^"
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    jest: ^27.5.1
+    prettier: ^2.6.1
+    stylelint: ^14.6.1
+    typescript: ^4.6.3
   languageName: unknown
   linkType: soft
 
@@ -1697,7 +1834,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:^4.0.0":
+"chalk@npm:^4.0.0, chalk@npm:^4.1.2":
   version: 4.1.2
   resolution: "chalk@npm:4.1.2"
   dependencies:
@@ -2130,6 +2267,13 @@ __metadata:
   version: 27.5.1
   resolution: "diff-sequences@npm:27.5.1"
   checksum: a00db5554c9da7da225db2d2638d85f8e41124eccbd56cbaefb3b276dcbb1c1c2ad851c32defe2055a54a4806f030656cbf6638105fd6ce97bb87b90b32a33ca
+  languageName: node
+  linkType: hard
+
+"diff@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "diff@npm:5.0.0"
+  checksum: f19fe29284b633afdb2725c2a8bb7d25761ea54d321d8e67987ac851c5294be4afeab532bd84531e02583a3fe7f4014aa314a3eda84f5590e7a9e6b371ef3b46
   languageName: node
   linkType: hard
 
@@ -3074,6 +3218,13 @@ __metadata:
   version: 5.2.0
   resolution: "ignore@npm:5.2.0"
   checksum: 6b1f926792d614f64c6c83da3a1f9c83f6196c2839aa41e1e32dd7b8d174cef2e329d75caabb62cb61ce9dc432f75e67d07d122a037312db7caa73166a1bdb77
+  languageName: node
+  linkType: hard
+
+"immer@npm:^9.0.12":
+  version: 9.0.12
+  resolution: "immer@npm:9.0.12"
+  checksum: bcbec6d76dac65e49068eb67ece4d407116e62b8cde3126aa89c801e408f5047763ba0aeb62f1938c1aa704bb6612f1d8302bb2a86fa1fc60fcc12d8b25dc895
   languageName: node
   linkType: hard
 
@@ -4498,6 +4649,20 @@ __metadata:
 "mrlint@workspace:^, mrlint@workspace:packages/mrlint/cli":
   version: 0.0.0-use.local
   resolution: "mrlint@workspace:packages/mrlint/cli"
+  dependencies:
+    "@mrlint/commons": "workspace:^"
+    "@mrlint/lint": "workspace:^"
+    "@mrlint/parser": "workspace:^"
+    "@mrlint/rules": "workspace:^"
+    "@types/yargs": ^17.0.10
+    chalk: ^4.1.2
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    jest: ^27.5.1
+    prettier: ^2.6.1
+    stylelint: ^14.6.1
+    typescript: ^4.6.3
+    yargs: ^17.3.1
   bin:
     mrlint: ./cli
   languageName: unknown
@@ -4817,6 +4982,13 @@ __metadata:
   version: 2.2.0
   resolution: "p-try@npm:2.2.0"
   checksum: f8a8e9a7693659383f06aec604ad5ead237c7a261c18048a6e1b5b85a5f8a067e469aa24f5bc009b991ea3b058a87f5065ef4176793a200d4917349881216cae
+  languageName: node
+  linkType: hard
+
+"package-json-type@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "package-json-type@npm:1.0.3"
+  checksum: ea93a2ee1cbc480feee94974158605463b8ce8f899e8a09dc008ac83c060fd10d8f38bfdd5f28222196dba1f57de4e65b46b057dc889a704967714da393c2ad9
   languageName: node
   linkType: hard
 
@@ -6116,6 +6288,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typescript@npm:^4.6.3":
+  version: 4.6.3
+  resolution: "typescript@npm:4.6.3"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 255bb26c8cb846ca689dd1c3a56587af4f69055907aa2c154796ea28ee0dea871535b1c78f85a6212c77f2657843a269c3a742d09d81495b97b914bf7920415b
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@^4.6.3#~builtin<compat/typescript>":
+  version: 4.6.3
+  resolution: "typescript@patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=bda367"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 6bf45caf847062420592e711bc9c28bf5f9a9a7fa8245343b81493e4ededae33f1774009d1234d911422d1646a2c839f44e1a23ecb111b40a60ac2ea4c1482a8
+  languageName: node
+  linkType: hard
+
 "unbox-primitive@npm:^1.0.1":
   version: 1.0.1
   resolution: "unbox-primitive@npm:1.0.1"
@@ -6424,6 +6616,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"yargs-parser@npm:^21.0.0":
+  version: 21.0.1
+  resolution: "yargs-parser@npm:21.0.1"
+  checksum: c3ea2ed12cad0377ce3096b3f138df8267edf7b1aa7d710cd502fe16af417bafe4443dd71b28158c22fcd1be5dfd0e86319597e47badf42ff83815485887323a
+  languageName: node
+  linkType: hard
+
 "yargs@npm:^16.1.0, yargs@npm:^16.2.0":
   version: 16.2.0
   resolution: "yargs@npm:16.2.0"
@@ -6436,5 +6635,27 @@ __metadata:
     y18n: ^5.0.5
     yargs-parser: ^20.2.2
   checksum: b14afbb51e3251a204d81937c86a7e9d4bdbf9a2bcee38226c900d00f522969ab675703bee2a6f99f8e20103f608382936034e64d921b74df82b63c07c5e8f59
+  languageName: node
+  linkType: hard
+
+"yargs@npm:^17.3.1":
+  version: 17.4.1
+  resolution: "yargs@npm:17.4.1"
+  dependencies:
+    cliui: ^7.0.2
+    escalade: ^3.1.1
+    get-caller-file: ^2.0.5
+    require-directory: ^2.1.1
+    string-width: ^4.2.3
+    y18n: ^5.0.5
+    yargs-parser: ^21.0.0
+  checksum: e9012322870d7e4e912a6ae1f63b203e365f911c0cf158be92c36edefddfb3bd38ce17eb9ef0d18858a4777f047c50589ea22dacb44bd949169ba37dc6d34bee
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.14.3":
+  version: 3.14.4
+  resolution: "zod@npm:3.14.4"
+  checksum: 30e75dc1e4e1d6ce5695750d1906b6b918779b8aa446f5db77eb2b8344d08f29344b5d0115034a9e695fd5a627d23c5c03d67efe58fe16fbb91dee9dc08761bc
   languageName: node
   linkType: hard
