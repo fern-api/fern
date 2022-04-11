@@ -6,6 +6,7 @@
     "module": "src/index.ts",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
+    "bin": "./cli",
     "scripts": {
         "clean": "tsc --build --clean",
         "compile": "tsc --build",
@@ -16,24 +17,6 @@
         "lint:style:fix": "stylelint '**/*.scss' --allow-empty-input --max-warnings 0 --fix",
         "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
         "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-        "depcheck": "depcheck",
-        "cli": "run compile && node lib/index.js"
-    },
-    "dependencies": {
-        "@mrlint/commons": "workspace:^",
-        "@mrlint/lint": "workspace:^",
-        "@mrlint/parser": "workspace:^",
-        "@mrlint/rules": "workspace:^",
-        "chalk": "^4.1.2",
-        "yargs": "^17.3.1"
-    },
-    "devDependencies": {
-        "@types/yargs": "^17.0.10",
-        "depcheck": "^1.4.3",
-        "eslint": "^8.12.0",
-        "jest": "^27.5.1",
-        "prettier": "^2.6.1",
-        "stylelint": "^14.6.1",
-        "typescript": "^4.6.3"
+        "depcheck": "depcheck"
     }
 }

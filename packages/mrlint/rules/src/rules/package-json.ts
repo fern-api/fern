@@ -2,7 +2,7 @@ import { Logger, Package, PackageType, Result, Rule, RuleType } from "@mrlint/co
 import produce from "immer";
 import { IPackageJson } from "package-json-type";
 import path from "path";
-import { Executable, EXECUTABLES, Executables, RequiredDependency } from "../utils/Executables";
+import { Executable, Executables } from "../utils/Executables";
 import { tryGetPackageJson } from "../utils/tryGetPackageJson";
 
 const PRODUCTION_ENVIRONMENT_ENV_VAR = "REACT_APP_PRODUCTION_ENVIRONMENT";
@@ -50,17 +50,6 @@ async function runRule({
     const fileSystemForPackage = fileSystems.getFileSystemForPackage(packageToLint);
     await fileSystemForPackage.writeFile("package.json", JSON.stringify(packageJson));
 
-    // warn about missing deps
-    for (const requiredDependency of executables.getRequiredDependencies()) {
-        result.accumulate(
-            checkDependencyForExecutable({
-                requiredDependency,
-                packageJson,
-                logger,
-            })
-        );
-    }
-
     return result;
 }
 
@@ -88,16 +77,20 @@ function generatePackageJson({
     const pathToEslintIgnore = path.join(relativePathToRoot, ".eslintignore");
     const pathToPrettierIgnore = path.join(relativePathToSharedConfigs, ".prettierignore");
 
-    // default package.json
-    let packageJson: IPackageJson = {
-        name: oldPackageJson.name,
-        version: oldPackageJson.version,
-        private: true,
-        source: "src/index.ts",
-        module: "src/index.ts",
-        main: "lib/index.js",
-        types: "lib/index.d.ts",
-        scripts: {
+    const packageJson = produce<IPackageJson>({}, (draft) => {
+        draft.name = oldPackageJson.name;
+        draft.version = oldPackageJson.version;
+        draft.private = true;
+        draft.source = "src/index.ts";
+        draft.module = "src/index.ts";
+        draft.main = "lib/index.js";
+        draft.types = "lib/index.d.ts";
+
+        if (packageToLint.config.type === PackageType.TYPESCRIPT_CLI) {
+            draft.bin = "./cli";
+        }
+
+        draft.scripts = {
             clean: `${executables.get(Executable.TSC)} --build --clean`,
             compile: `${executables.get(Executable.TSC)} --build`,
             test: `${executables.get(Executable.JEST)} --passWithNoTests`,
@@ -118,63 +111,52 @@ function generatePackageJson({
                 Executable.PRETTIER
             )} --check --ignore-unknown --ignore-path ${pathToPrettierIgnore} "**"`,
             depcheck: executables.get(Executable.DEPCHECK),
-        },
-    };
+        };
 
-    // sort dependencies
-    packageJson = produce(packageJson, (draft) => {
-        if (oldPackageJson.dependencies != null) {
-            draft.dependencies = sortDependencies(oldPackageJson.dependencies);
-        }
-        if (oldPackageJson.devDependencies != null) {
-            draft.devDependencies = sortDependencies(oldPackageJson.devDependencies);
-        }
-    });
-
-    // additional fields for certain package types
-    packageJson = produce(packageJson, (draft) => {
-        switch (packageToLint.config.type) {
-            case PackageType.REACT_APP:
-                draft.scripts = {
-                    ...draft.scripts,
-                    start: `${executables.get(Executable.ENV_CMD)} -e development ${executables.get(
-                        Executable.ENV_CMD
-                    )} -f .env.local --silent craco start`,
-                    "build:staging": `${PRODUCTION_ENVIRONMENT_ENV_VAR}=STAGING ${executables.get(
-                        Executable.ENV_CMD
-                    )} -e development craco --max_old_space_size=4096 build`,
-                    "build:production": `${PRODUCTION_ENVIRONMENT_ENV_VAR}=PRODUCTION ${executables.get(
-                        Executable.ENV_CMD
-                    )} -e production craco --max_old_space_size=4096 build`,
-                    "deploy:staging": `${PRODUCTION_ENVIRONMENT_ENV_VAR}=STAGING ${executables.get(
-                        Executable.AWS_CDK
-                    )} deploy --output deploy/cdk.out --require-approval never --progress events`,
-                    "deploy:production": `${PRODUCTION_ENVIRONMENT_ENV_VAR}=PRODUCTION ${executables.get(
-                        Executable.AWS_CDK
-                    )} deploy --output deploy/cdk.out --require-approval never --progress events`,
-                    eject: `${executables.get(Executable.REACT_SCRIPTS)} eject`,
-                };
-                draft.browserslist = {
-                    production: [">0.2%", "not dead", "not op_mini all"],
-                    development: ["last 1 chrome version", "last 1 firefox version", "last 1 safari version"],
-                };
-                break;
-        }
-    });
-
-    // postcss
-    if (
-        canPackageContainCss(packageToLint) &&
-        getDependencies(packageJson.dependencies).some((d) => d.startsWith("@blueprintjs/"))
-    ) {
-        packageJson = produce(packageJson, (draft) => {
-            draft.postcss = {
-                "postcss-modules": {
-                    globalModulePaths: ["@blueprintjs.*"],
-                },
+        if (packageToLint.config.type === PackageType.REACT_APP) {
+            draft.scripts = {
+                ...draft.scripts,
+                start: `${executables.get(Executable.ENV_CMD)} -e development ${executables.get(
+                    Executable.ENV_CMD
+                )} -f .env.local --silent craco start`,
+                "build:staging": `${PRODUCTION_ENVIRONMENT_ENV_VAR}=STAGING ${executables.get(
+                    Executable.ENV_CMD
+                )} -e development craco --max_old_space_size=4096 build`,
+                "build:production": `${PRODUCTION_ENVIRONMENT_ENV_VAR}=PRODUCTION ${executables.get(
+                    Executable.ENV_CMD
+                )} -e production craco --max_old_space_size=4096 build`,
+                "deploy:staging": `${PRODUCTION_ENVIRONMENT_ENV_VAR}=STAGING ${executables.get(
+                    Executable.AWS_CDK
+                )} deploy --output deploy/cdk.out --require-approval never --progress events`,
+                "deploy:production": `${PRODUCTION_ENVIRONMENT_ENV_VAR}=PRODUCTION ${executables.get(
+                    Executable.AWS_CDK
+                )} deploy --output deploy/cdk.out --require-approval never --progress events`,
+                eject: `${executables.get(Executable.REACT_SCRIPTS)} eject`,
             };
-        });
-    }
+            draft.browserslist = {
+                production: [">0.2%", "not dead", "not op_mini all"],
+                development: ["last 1 chrome version", "last 1 firefox version", "last 1 safari version"],
+            };
+
+            if (oldPackageJson.dependencies != null) {
+                draft.dependencies = sortDependencies(oldPackageJson.dependencies);
+            }
+            if (oldPackageJson.devDependencies != null) {
+                draft.devDependencies = sortDependencies(oldPackageJson.devDependencies);
+            }
+
+            if (
+                canPackageContainCss(packageToLint) &&
+                getDependencies(packageJson.dependencies).some((d) => d.startsWith("@blueprintjs/"))
+            ) {
+                draft.postcss = {
+                    "postcss-modules": {
+                        globalModulePaths: ["@blueprintjs.*"],
+                    },
+                };
+            }
+        }
+    });
 
     return packageJson;
 }
@@ -203,34 +185,6 @@ function canPackageContainCss(p: Package): boolean {
         case PackageType.TYPESCRIPT_LIBRARY:
             return false;
     }
-}
-
-function checkDependencyForExecutable({
-    requiredDependency,
-    packageJson,
-    logger,
-}: {
-    requiredDependency: RequiredDependency;
-    packageJson: IPackageJson;
-    logger: Logger;
-}): Result {
-    const allDependencies = new Set([
-        ...getDependencies(packageJson.dependencies),
-        ...getDependencies(packageJson.devDependencies),
-    ]);
-
-    if (!allDependencies.has(requiredDependency.dependency)) {
-        logger.error({
-            message: `${
-                requiredDependency.dependency
-            } is not listed as a dependency in package.json, but is required for ${
-                EXECUTABLES[requiredDependency.executable]
-            }`,
-        });
-        return Result.failure();
-    }
-
-    return Result.success();
 }
 
 function getDependencies(dependencies: Record<string, string> | undefined): string[] {

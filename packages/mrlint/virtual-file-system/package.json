@@ -17,13 +17,5 @@
         "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
         "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
         "depcheck": "depcheck"
-    },
-    "devDependencies": {
-        "depcheck": "^1.4.3",
-        "eslint": "^8.12.0",
-        "jest": "^27.5.1",
-        "prettier": "^2.6.1",
-        "stylelint": "^14.6.1",
-        "typescript": "^4.6.3"
     }
 }
