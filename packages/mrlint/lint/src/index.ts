@@ -1,0 +1,1 @@
+export { lintMonorepo } from "./lintMonorepo";
