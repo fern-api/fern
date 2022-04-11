@@ -13,9 +13,6 @@ jobs:
                   name: Compile mrlint
                   command: yarn workspace mrlint run compile
             - run:
-                  name: Re-run yarn install (to link mrlint)
-                  command: yarn install
-            - run:
                   name: Lint monorepo
                   command: yarn lint:monorepo
             - run:
