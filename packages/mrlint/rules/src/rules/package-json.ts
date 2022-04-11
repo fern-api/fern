@@ -148,24 +148,24 @@ function generatePackageJson({
                 production: [">0.2%", "not dead", "not op_mini all"],
                 development: ["last 1 chrome version", "last 1 firefox version", "last 1 safari version"],
             };
+        }
 
-            if (oldPackageJson.dependencies != null) {
-                draft.dependencies = sortDependencies(oldPackageJson.dependencies);
-            }
-            if (oldPackageJson.devDependencies != null) {
-                draft.devDependencies = sortDependencies(oldPackageJson.devDependencies);
-            }
+        if (oldPackageJson.dependencies != null) {
+            draft.dependencies = sortDependencies(oldPackageJson.dependencies);
+        }
+        if (oldPackageJson.devDependencies != null) {
+            draft.devDependencies = sortDependencies(oldPackageJson.devDependencies);
+        }
 
-            if (
-                canPackageContainCss(packageToLint) &&
-                getDependencies(packageJson.dependencies).some((d) => d.startsWith("@blueprintjs/"))
-            ) {
-                draft.postcss = {
-                    "postcss-modules": {
-                        globalModulePaths: ["@blueprintjs.*"],
-                    },
-                };
-            }
+        if (
+            canPackageContainCss(packageToLint) &&
+            getDependencies(packageJson.dependencies).some((d) => d.startsWith("@blueprintjs/"))
+        ) {
+            draft.postcss = {
+                "postcss-modules": {
+                    globalModulePaths: ["@blueprintjs.*"],
+                },
+            };
         }
     });
 

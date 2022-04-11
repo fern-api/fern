@@ -2,5 +2,5 @@
     "extends": "../../../shared/tsconfig.shared.json",
     "compilerOptions": { "composite": true, "outDir": "./lib", "rootDir": "src", "module": "CommonJS" },
     "include": ["./src"],
-    "references": []
+    "references": [{ "path": "../compiler-commons" }, { "path": "../syntax-analysis" }]
 }
