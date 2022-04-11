@@ -10,6 +10,12 @@ jobs:
             - node/install-packages:
                   pkg-manager: yarn-berry
             - run:
+                  name: Compile mrlint
+                  command: yarn workspace mrlint run compile
+            - run:
+                  name: Re-run yarn install (to link mrlint)
+                  command: yarn install
+            - run:
                   name: Lint monorepo
                   command: yarn lint:monorepo
             - run:
@@ -48,22 +54,26 @@ jobs:
             CIRCLE_ARTIFACTS: /home/circleci/artifacts
             GRADLE_OPTS: -Dorg.gradle.jvmargs='-XX:MaxMetaspaceSize=256m' -Dorg.gradle.workers.max=4
             _JAVA_OPTIONS: -XX:ActiveProcessorCount=4 -Xmx1177m -XX:MaxMetaspaceSize=512m -XX:ErrorFile=/home/circleci/artifacts/hs_err_pid%p.log -XX:HeapDumpPath=/home/circleci/artifacts
-        working_directory: ~/project/packages/java
         steps:
             - checkout
-            - restore_cache: { key: 'gradle-wrapper-v2-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}' }
             - restore_cache:
-                  { key: 'compile-gradle-cache-v2-{{ checksum "versions.props" }}-{{ checksum "build.gradle" }}' }
-            - run: ./gradlew --parallel --stacktrace classes testClasses
+                  {
+                      key: 'gradle-wrapper-v2-{{ checksum "packages/fern-java/gradle/wrapper/gradle-wrapper.properties" }}',
+                  }
+            - restore_cache:
+                  {
+                      key: 'compile-gradle-cache-v2-{{ checksum "packages/fern-java/versions.props" }}-{{ checksum "packages/fern-java/build.gradle" }}',
+                  }
+            - run: cd packages/fern-java && ./gradlew --parallel --stacktrace classes testClasses
             - save_cache:
-                  key: 'gradle-wrapper-v2-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}'
+                  key: 'gradle-wrapper-v2-{{ checksum "packages/fern-java/gradle/wrapper/gradle-wrapper.properties" }}'
                   paths: [~/.gradle/wrapper]
             - save_cache:
-                  key: 'compile-gradle-cache-v2-{{ checksum "versions.props" }}-{{ checksum "build.gradle" }}'
+                  key: 'compile-gradle-cache-v2-{{ checksum "packages/fern-java/versions.props" }}-{{ checksum "packages/fern-java/build.gradle" }}'
                   paths: [~/.gradle/caches]
             - persist_to_workspace:
                   root: /home/circleci
-                  paths: [project, .gradle/init.gradle]
+                  paths: [project, packages/fern-java/.gradle/init.gradle]
 
     publish-java-snapshot:
         docker: [{ image: "cimg/openjdk:11.0.10-node" }]
@@ -73,12 +83,16 @@ jobs:
             CIRCLE_ARTIFACTS: /home/circleci/artifacts
             _JAVA_OPTIONS: -Dorg.gradle.internal.launcher.welcomeMessageEnabled=false -Xmx8192m
             JAVA_HOME: /opt/java11
-        working_directory: ~/project/packages/java
         steps:
             - attach_workspace: { at: /home/circleci }
-            - restore_cache: { key: 'gradle-wrapper-v2-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}' }
             - restore_cache:
-                  { key: 'unit-test-gradle-cache-v2-{{ checksum "versions.props" }}-{{ checksum "build.gradle" }}' }
+                  {
+                      key: 'gradle-wrapper-v2-{{ checksum "packages/fern-java/gradle/wrapper/gradle-wrapper.properties" }}',
+                  }
+            - restore_cache:
+                  {
+                      key: 'unit-test-gradle-cache-v2-{{ checksum "packages/fern-java/versions.props" }}-{{ checksum "packages/fern-java/build.gradle" }}',
+                  }
             - run:
                   name: Install Java
                   command: |
@@ -86,7 +100,7 @@ jobs:
                       curl https://cdn.azul.com/zulu/bin/zulu11.41.23-ca-jdk11.0.8-linux_x64.tar.gz | tar -xzf - -C /opt/java
                       sudo ln -s /opt/java/zulu*/ /opt/java11
             - run:
-                  command: ./gradlew artifactoryPublish
+                  command: cd packages/fern-java && ./gradlew artifactoryPublish
                   name: Publish conjure json file
 
 workflows:
