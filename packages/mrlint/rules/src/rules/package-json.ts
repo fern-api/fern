@@ -2,7 +2,7 @@ import { Logger, Package, PackageType, Result, Rule, RuleType } from "@mrlint/co
 import produce from "immer";
 import { IPackageJson } from "package-json-type";
 import path from "path";
-import { Executable, Executables } from "../utils/Executables";
+import { Executable, EXECUTABLES, Executables, RequiredDependency } from "../utils/Executables";
 import { tryGetPackageJson } from "../utils/tryGetPackageJson";
 
 const PRODUCTION_ENVIRONMENT_ENV_VAR = "REACT_APP_PRODUCTION_ENVIRONMENT";
@@ -49,6 +49,17 @@ async function runRule({
 
     const fileSystemForPackage = fileSystems.getFileSystemForPackage(packageToLint);
     await fileSystemForPackage.writeFile("package.json", JSON.stringify(packageJson));
+
+    // warn about missing deps
+    for (const requiredDependency of executables.getRequiredDependencies()) {
+        result.accumulate(
+            checkDependencyForExecutable({
+                requiredDependency,
+                packageJson,
+                logger,
+            })
+        );
+    }
 
     return result;
 }
@@ -192,4 +203,32 @@ function getDependencies(dependencies: Record<string, string> | undefined): stri
         return [];
     }
     return Object.keys(dependencies);
+}
+
+function checkDependencyForExecutable({
+    requiredDependency,
+    packageJson,
+    logger,
+}: {
+    requiredDependency: RequiredDependency;
+    packageJson: IPackageJson;
+    logger: Logger;
+}): Result {
+    const allDependencies = new Set([
+        ...getDependencies(packageJson.dependencies),
+        ...getDependencies(packageJson.devDependencies),
+    ]);
+
+    if (!allDependencies.has(requiredDependency.dependency)) {
+        logger.error({
+            message: `${
+                requiredDependency.dependency
+            } is not listed as a dependency in package.json, but is required for ${
+                EXECUTABLES[requiredDependency.executable]
+            }`,
+        });
+        return Result.failure();
+    }
+
+    return Result.success();
 }
