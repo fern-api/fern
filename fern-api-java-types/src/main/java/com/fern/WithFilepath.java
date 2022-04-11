@@ -6,10 +6,10 @@ import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderStyle
-@JsonDeserialize(as = ImmutableWithPackage.class)
-public interface WithPackage extends IWithPackage {
+@JsonDeserialize(as = ImmutableWithFilepath.class)
+public interface WithFilepath extends IWithFilepath {
 
-    static ImmutableWithPackage.Builder builder() {
-        return ImmutableWithPackage.builder();
+    static ImmutableWithFilepath.Builder builder() {
+        return ImmutableWithFilepath.builder();
     }
 }
