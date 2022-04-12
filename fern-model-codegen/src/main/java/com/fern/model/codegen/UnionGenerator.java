@@ -6,6 +6,7 @@ import com.fern.SingleUnionType;
 import com.fern.TypeReference;
 import com.fern.UnionTypeDefinition;
 import com.fern.immutables.StagedBuilderStyle;
+import com.fern.model.codegen.utils.ClassNameUtils;
 import com.squareup.javapoet.*;
 import org.apache.commons.lang3.StringUtils;
 import org.immutables.value.Value;
@@ -31,7 +32,7 @@ public final class UnionGenerator {
     public static GeneratedUnion generate(
             NamedTypeReference name,
             UnionTypeDefinition unionTypeDefinition) {
-        ClassName generatedUnionClass = ClassName.get(name._package().orElse(""), name.name());
+        ClassName generatedUnionClass = ClassNameUtils.getClassName(name);
         TypeSpec.Builder unionBuilder = TypeSpec.classBuilder(name.name())
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addAnnotation(Value.Enclosing.class);
@@ -209,7 +210,7 @@ public final class UnionGenerator {
                 .build();
         unionBuilder.addType(unknownType);
 
-        JavaFile unionFile = JavaFile.builder(name._package().orElse(""), unionBuilder.build())
+        JavaFile unionFile = JavaFile.builder(generatedUnionClass.packageName(), unionBuilder.build())
                 .build();
         return GeneratedUnion.builder()
                 .file(unionFile)

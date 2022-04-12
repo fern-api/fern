@@ -10,8 +10,9 @@ public class InterfaceGeneratorTest {
     public void test_basic() {
         TypeDefinition withDocsTypeDefinition = TypeDefinition.builder()
                 .name(NamedTypeReference.builder()
+                        .filepath("com/fern")
                         .name("WithDocs")
-                        ._package("com.fern").build())
+                        .build())
                 .shape(Type.object(ObjectTypeDefinition.builder()
                         .addFields(ObjectField.builder()
                                 .key("docs")

@@ -14,8 +14,9 @@ public class EnumGeneratorTest {
                 .build();
         TypeDefinition migrationStatusTypeDef = TypeDefinition.builder()
                 .name(NamedTypeReference.builder()
+                        .filepath("com/trace/migration")
                         .name("MigrationStatus")
-                        ._package("com.trace.migration").build())
+                        .build())
                 .shape(Type._enum(migrationStatusEnumDef))
                 .build();
         GeneratedEnum generatedEnum =

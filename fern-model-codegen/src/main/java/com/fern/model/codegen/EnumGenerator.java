@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fern.EnumTypeDefinition;
 import com.fern.NamedTypeReference;
+import com.fern.model.codegen.utils.ClassNameUtils;
 import com.squareup.javapoet.*;
 import org.apache.commons.lang3.StringUtils;
 
@@ -34,7 +35,7 @@ public class EnumGenerator {
     public static GeneratedEnum generate(
             NamedTypeReference name,
             EnumTypeDefinition enumTypeDefinition) {
-        ClassName generatedEnumClassName = ClassName.get(name._package().orElse(""), name.name());
+        ClassName generatedEnumClassName = ClassNameUtils.getClassName(name);
         TypeSpec.Builder enumBuilder = TypeSpec.classBuilder(name.name())
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL);
 
@@ -184,7 +185,7 @@ public class EnumGenerator {
                 .returns(generatedEnumClassName);
         enumBuilder.addMethod(valueOfBuilder.build());
 
-        JavaFile enumFile = JavaFile.builder(name._package().orElse(""), enumBuilder.build())
+        JavaFile enumFile = JavaFile.builder(generatedEnumClassName.packageName(), enumBuilder.build())
                 .build();
         return GeneratedEnum.builder()
                 .file(enumFile)

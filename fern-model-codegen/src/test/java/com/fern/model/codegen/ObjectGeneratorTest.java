@@ -18,7 +18,7 @@ public class ObjectGeneratorTest {
                 .build();
         GeneratedObject generatedObject = ObjectGenerator.generate(
                 Collections.emptyList(),
-                NamedTypeReference.builder().name("WithDocs")._package("com.fern").build(),
+                NamedTypeReference.builder().filepath("com/fern").name("WithDocs").build(),
                 objectTypeDefinition,
                 false);
         System.out.println(generatedObject.file().toString());
@@ -35,8 +35,9 @@ public class ObjectGeneratorTest {
                 .build();
         TypeDefinition withDocsTypeDefinition = TypeDefinition.builder()
                 .name(NamedTypeReference.builder()
+                        .filepath("com/fern")
                         .name("WithDocs")
-                        ._package("com.fern").build())
+                        .build())
                 .shape(Type.object(withDocsObjectTypeDefinition))
                 .build();
         GeneratedInterface withDocsInterface = InterfaceGenerator.generate(withDocsTypeDefinition);

@@ -1,6 +1,7 @@
 package com.fern.model.codegen;
 
 import com.fern.*;
+import com.fern.model.codegen.utils.FilepathUtils;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
@@ -20,7 +21,9 @@ public class InterfaceGenerator {
         TypeSpec generatedInterface = TypeSpec.interfaceBuilder(INTERFACE_PREFIX + typeDefinition.name().name())
                 .addMethods(typeDefinition.shape().accept(new InterfaceMethodGenerator(typeDefinition.name().name())))
                 .build();
-        JavaFile interfaceFile = JavaFile.builder(typeDefinition.name()._package().orElse(""), generatedInterface)
+        JavaFile interfaceFile = JavaFile.builder(
+                    FilepathUtils.convertFilepathToPackage(typeDefinition.name().filepath()),
+                    generatedInterface)
                 .build();
         return GeneratedInterface.builder()
                 .file(interfaceFile)

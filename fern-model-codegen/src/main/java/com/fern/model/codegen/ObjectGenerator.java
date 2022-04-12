@@ -5,6 +5,7 @@ import com.fern.NamedTypeReference;
 import com.fern.ObjectField;
 import com.fern.ObjectTypeDefinition;
 import com.fern.immutables.StagedBuilderStyle;
+import com.fern.model.codegen.utils.ClassNameUtils;
 import com.squareup.javapoet.*;
 import org.immutables.value.Value;
 
@@ -24,6 +25,7 @@ public final class ObjectGenerator {
             NamedTypeReference name,
             ObjectTypeDefinition objectTypeDefinition,
             boolean ignoreOwnFields) {
+        ClassName generatedClassName = ClassNameUtils.getClassName(name);
         TypeSpec.Builder objectTypeBuilder = TypeSpec.interfaceBuilder(name.name());
         objectTypeBuilder
                 .addModifiers(Modifier.PUBLIC)
@@ -43,10 +45,10 @@ public final class ObjectGenerator {
                 .addAnnotation(AnnotationSpec
                         .builder(JsonDeserialize.class)
                         .addMember("as", "$T.class",
-                                ClassName.get(name._package().orElse(""), getImmutableClassName(name.name())))
+                                ClassNameUtils.getImmutablesClassName(name))
                         .build())
                 .build();
-        JavaFile objectFile = JavaFile.builder(name._package().orElse(""), objectType)
+        JavaFile objectFile = JavaFile.builder(generatedClassName.packageName(), objectType)
                 .build();
         return GeneratedObject.builder()
                 .file(objectFile)
@@ -54,16 +56,12 @@ public final class ObjectGenerator {
                 .build();
     }
 
-    private static String getImmutableClassName(String name) {
-        return IMMUTABLE_PREFIX + name;
-    }
-
     private static MethodSpec generateStaticBuilder(
             List<GeneratedInterface> superInterfaces,
             NamedTypeReference name,
             ObjectTypeDefinition objectTypeDefinition) {
         Optional<String> firstMandatoryFieldName = getFirstRequiredFieldName(superInterfaces, objectTypeDefinition.fields());
-        ClassName immutableClassName = ClassName.get(name._package().orElse(""), getImmutableClassName(name.name()));
+        ClassName immutableClassName = ClassNameUtils.getImmutablesClassName(name);
         ClassName builderClassName = firstMandatoryFieldName.isEmpty()
                 ? immutableClassName.nestedClass("Builder")
                 : immutableClassName.nestedClass(firstMandatoryFieldName.get() + BUILD_STAGE_SUFFIX);

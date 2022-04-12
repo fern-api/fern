@@ -1,6 +1,7 @@
 package com.fern.model.codegen;
 
 import com.fern.*;
+import com.fern.model.codegen.utils.ClassNameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
@@ -23,7 +24,7 @@ public final class TypeReferenceToTypeNameConverter implements TypeReference.Vis
 
     @Override
     public TypeName visitNamed(NamedTypeReference namedTypeReference) {
-        return ClassName.get(namedTypeReference._package().orElse(""), namedTypeReference.name());
+        return ClassNameUtils.getClassName(namedTypeReference);
     }
 
     @Override
