@@ -1,9 +1,11 @@
 package com.fern;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.immutables.StagedBuilderStyle;
 import org.immutables.value.Value;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -100,15 +102,15 @@ public final class Type {
 
     @JsonTypeInfo(
             use = JsonTypeInfo.Id.NAME,
-            include = JsonTypeInfo.As.EXISTING_PROPERTY,
+            include = JsonTypeInfo.As.PROPERTY,
             property = "type",
             visible = true,
             defaultImpl = Unknown.class)
     @JsonSubTypes({
-            @JsonSubTypes.Type(Object.class),
-            @JsonSubTypes.Type(Union.class),
-            @JsonSubTypes.Type(Alias.class),
-            @JsonSubTypes.Type(Enum.class)
+            @JsonSubTypes.Type(value = _Object.class, name = "object"),
+            @JsonSubTypes.Type(value = Union.class, name = "union"),
+            @JsonSubTypes.Type(value = Alias.class, name = "alias"),
+            @JsonSubTypes.Type(value = Enum.class, name = "enum")
     })
     @JsonIgnoreProperties(ignoreUnknown = true)
     private interface Base {
@@ -117,6 +119,7 @@ public final class Type {
 
     @Value.Immutable
     @JsonTypeName("object")
+    @JsonDeserialize(as = ImmutableType._Object.class)
     interface _Object extends Base {
 
         @JsonValue
@@ -134,6 +137,7 @@ public final class Type {
 
     @Value.Immutable
     @JsonTypeName("union")
+    @JsonDeserialize(as = ImmutableType.Union.class)
     interface Union extends Base {
 
         @JsonValue
@@ -151,7 +155,7 @@ public final class Type {
 
     @Value.Immutable
     @JsonTypeName("alias")
-    @StagedBuilderStyle
+    @JsonDeserialize(as = ImmutableType.Alias.class)
     interface Alias extends Base {
 
         @JsonValue
@@ -169,7 +173,7 @@ public final class Type {
 
     @Value.Immutable
     @JsonTypeName("enum")
-    @StagedBuilderStyle
+    @JsonDeserialize(as = ImmutableType.Enum.class)
     interface Enum extends Base {
 
         @JsonValue
@@ -186,7 +190,7 @@ public final class Type {
     }
 
     @Value.Immutable
-    @StagedBuilderStyle
+    @JsonDeserialize(as = ImmutableType.Unknown.class)
     interface Unknown extends Base {
 
         @JsonValue

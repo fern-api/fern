@@ -1,14 +1,17 @@
 # Run ./gradlew --write-locks to regenerate this file
-com.fasterxml.jackson:jackson-bom:2.12.3 (3 constraints: 7f37b4d3)
+com.fasterxml.jackson:jackson-bom:2.12.3 (5 constraints: 1c64e663)
 com.fasterxml.jackson.core:jackson-annotations:2.12.3 (2 constraints: 3f21e893)
-com.fasterxml.jackson.core:jackson-core:2.12.3 (2 constraints: 3f21e893)
-com.fasterxml.jackson.core:jackson-databind:2.12.3 (2 constraints: f1137d82)
+com.fasterxml.jackson.core:jackson-core:2.12.3 (4 constraints: dc4d3546)
+com.fasterxml.jackson.core:jackson-databind:2.12.3 (4 constraints: 8e404bb5)
 com.google.code.findbugs:annotations:3.0.1 (1 constraints: 0605fb35)
 com.google.code.findbugs:jsr305:3.0.1 (1 constraints: b70f3485)
 net.jcip:jcip-annotations:1.0 (1 constraints: 560ff165)
 org.immutables:value:2.8.8 (1 constraints: 14051536)
 
 [Test dependencies]
+com.fasterxml.jackson.datatype:jackson-datatype-guava:2.12.3 (2 constraints: f1137d82)
+com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.3 (2 constraints: f1137d82)
+com.google.guava:guava:21.0 (1 constraints: 3e1622de)
 net.bytebuddy:byte-buddy:1.11.3 (1 constraints: 400b38de)
 net.bytebuddy:byte-buddy-agent:1.11.3 (1 constraints: 400b38de)
 org.apiguardian:apiguardian-api:1.1.0 (5 constraints: 0654a8a8)
