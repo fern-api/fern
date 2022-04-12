@@ -1,3 +1,5 @@
+import { EnumValue } from "./EnumTypeDefinition copy";
+
 export interface EnumTypeDefinition {
-    values: string[];
+    values: EnumValue[];
 }

@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@usebirch/compiler-commons";
 import { FernSchema } from "./schemas/FernSchema";
-import { SyntaxAnalysis } from "./types";
+import { SyntaxAnalysis, SyntaxAnalysisFailureType } from "./types";
 
 export declare namespace Validator {
     export type Result = SuccessfulResult | FailedResult;
@@ -26,7 +26,7 @@ export function validate(files: Record<RelativeFilePath, unknown>): Validator.Re
             validatedFiles[relativeFilePath] = parsed.data;
         } else {
             failures[relativeFilePath] = {
-                type: SyntaxAnalysis.FailureType.STRUCTURE_VALIDATION,
+                type: SyntaxAnalysisFailureType.STRUCTURE_VALIDATION,
                 error: parsed.error,
             };
         }

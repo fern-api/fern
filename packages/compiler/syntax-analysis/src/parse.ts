@@ -1,6 +1,6 @@
 import { FernFile, RelativeFilePath } from "@usebirch/compiler-commons";
 import yaml from "js-yaml";
-import { SyntaxAnalysis } from "./types";
+import { SyntaxAnalysis, SyntaxAnalysisFailureType } from "./types";
 
 export type ParsedFileContents = unknown;
 
@@ -28,7 +28,7 @@ export async function parse(files: readonly FernFile[]): Promise<Parser.Result> 
             parsedFiles[file.package] = parsed;
         } catch (error) {
             failures[file.fileContents] = {
-                type: SyntaxAnalysis.FailureType.FILE_PARSE,
+                type: SyntaxAnalysisFailureType.FILE_PARSE,
                 error,
             };
         }

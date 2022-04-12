@@ -17,15 +17,15 @@ export declare namespace Compiler {
     export type Failure = SyntaxAnalysisFailure | IntermediateRepresentationFailure;
 
     export interface SyntaxAnalysisFailure extends SyntaxAnalysis.FailedResult {
-        type: FailureType.SYNTAX_ANALYSIS;
+        type: CompilerFailureType.SYNTAX_ANALYSIS;
     }
 
     export interface IntermediateRepresentationFailure {
-        type: FailureType.IR_GENERATION;
+        type: CompilerFailureType.IR_GENERATION;
     }
+}
 
-    export enum FailureType {
-        SYNTAX_ANALYSIS = "SYNTAX_ANALYSIS",
-        IR_GENERATION = "IR_GENERATION",
-    }
+export enum CompilerFailureType {
+    SYNTAX_ANALYSIS = "SYNTAX_ANALYSIS",
+    IR_GENERATION = "IR_GENERATION",
 }
