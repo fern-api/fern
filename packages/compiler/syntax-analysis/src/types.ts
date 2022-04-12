@@ -14,23 +14,23 @@ export declare namespace SyntaxAnalysis {
     export type Failure = FileReadFilure | FileParseFailure | StructureValidationFailure;
 
     export interface FileReadFilure {
-        type: FailureType.FILE_READ;
+        type: SyntaxAnalysisFailureType.FILE_READ;
         error: unknown;
     }
 
     export interface FileParseFailure {
-        type: FailureType.FILE_PARSE;
+        type: SyntaxAnalysisFailureType.FILE_PARSE;
         error: unknown;
     }
 
     export interface StructureValidationFailure {
-        type: FailureType.STRUCTURE_VALIDATION;
+        type: SyntaxAnalysisFailureType.STRUCTURE_VALIDATION;
         error: ZodError<FernSchema>;
     }
+}
 
-    export enum FailureType {
-        FILE_READ = "FILE_READ",
-        FILE_PARSE = "FILE_PARSE",
-        STRUCTURE_VALIDATION = "STRUCTURE_VALIDATION",
-    }
+export enum SyntaxAnalysisFailureType {
+    FILE_READ = "FILE_READ",
+    FILE_PARSE = "FILE_PARSE",
+    STRUCTURE_VALIDATION = "STRUCTURE_VALIDATION",
 }

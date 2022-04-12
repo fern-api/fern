@@ -1,215 +1,217 @@
-IntermediateRepresentation:
-  docs: Complete representation of the API schema
-  types:
-    docs: The types described by this API
-    type: list<TypeDefinition>
-  services:
-    docs: The services exposed by this API
-    type: Services
+types:
+    IntermediateRepresentation:
+        docs: Complete representation of the API schema
+        fields:
+            types:
+                docs: The types described by this API
+                type: list<TypeDefinition>
+            services:
+                docs: The services exposed by this API
+                type: Services
 
-TypeDefinition:
-  docs: A type, which is a name and a shape
-  extends: WithDocs
-  fields:
-    extends:
-      docs: A list of other types to inherit from
-      type: list<NamedTypeReference>
-    name: NamedTypeReference
-    shape: Type
+    TypeDefinition:
+        docs: A type, which is a name and a shape
+        extends: WithDocs
+        fields:
+            extends:
+                docs: A list of other types to inherit from
+                type: list<NamedTypeReference>
+            name: NamedTypeReference
+            shape: Type
 
-WithDocs:
-  fields:
-    docs: optional<string>
+    WithDocs:
+        fields:
+            docs: optional<string>
 
-NamedTypeReference:
-  extends: WithPackage
-  fields:
-    name: string
+    NamedTypeReference:
+        extends: WithPackage
+        fields:
+            name: string
 
-WithPackage:
-  fields:
-    package: string
+    WithPackage:
+        fields:
+            package: string
 
-Type:
-  union:
-    object: ObjectTypeDefinition
-    union: UnionTypeDefinition
-    alias: AliasTypeDefinition
-    enum: EnumTypeDefinition
+    Type:
+        union:
+            object: ObjectTypeDefinition
+            union: UnionTypeDefinition
+            alias: AliasTypeDefinition
+            enum: EnumTypeDefinition
 
-ObjectTypeDefinition:
-  fields:
-    fields: list<ObjectField>
+    ObjectTypeDefinition:
+        fields:
+            fields: list<ObjectField>
 
-ObjectField:
-  extends: WithDocs
-  fields:
-    key: string
-    valueType: TypeReference
+    ObjectField:
+        extends: WithDocs
+        fields:
+            key: string
+            valueType: TypeReference
 
-TypeReference:
-  union:
-    named: NamedTypeReference
-    primitive: PrimitiveType
-    container: ContainerType
+    TypeReference:
+        union:
+            named: NamedTypeReference
+            primitive: PrimitiveType
+            container: ContainerType
 
-PrimitiveType:
-  enum:
-    - INTEGER
-    - DOUBLE
-    - type: LONG
-      docs: Within the range -2^53 to 2^53
-    - STRING
-    - BOOLEAN
+    PrimitiveType:
+        enum:
+            - INTEGER
+            - DOUBLE
+            - value: LONG
+              docs: Within the range -2^53 to 2^53
+            - STRING
+            - BOOLEAN
 
-ContainerType:
-  union:
-    map: MapType
-    list: TypeReference
-    set: TypeReference
-    optional: TypeReference
+    ContainerType:
+        union:
+            map: MapType
+            list: TypeReference
+            set: TypeReference
+            optional: TypeReference
 
-MapType:
-  fields:
-    keyType: TypeReference
-    valueType: TypeReference
+    MapType:
+        fields:
+            keyType: TypeReference
+            valueType: TypeReference
 
-UnionTypeDefinition:
-  fields:
-    types: list<SingleUnionType>
+    UnionTypeDefinition:
+        fields:
+            types: list<SingleUnionType>
 
-SingleUnionType:
-  extends: WithDocs
-  fields:
-    discriminantValue: string
-    valueType: TypeReference
+    SingleUnionType:
+        extends: WithDocs
+        fields:
+            discriminantValue: string
+            valueType: TypeReference
 
-AliasTypeDefinition:
-  fields:
-    name: string
-    aliasType: TypeReference
+    AliasTypeDefinition:
+        fields:
+            name: string
+            aliasType: TypeReference
 
-EnumTypeDefinition:
-  fields:
-    values: list<EnumValue>
+    EnumTypeDefinition:
+        fields:
+            values: list<EnumValue>
 
-EnumValue:
-  extends: WithDocs
-  fields:
-    value: string
+    EnumValue:
+        extends: WithDocs
+        fields:
+            value: string
 
-Services:
-  fields:
-    http: list<HttpService>
-    webSocket: list<WebSocketService>
+    Services:
+        fields:
+            http: list<HttpService>
+            webSocket: list<WebSocketService>
 
-BaseService:
-  extends:
-    - WithPackage
-    - WithDocs
-  fields:
-    name: string
-    basePath: string
+    BaseService:
+        extends:
+            - WithPackage
+            - WithDocs
+        fields:
+            name: string
+            basePath: string
 
-HttpService:
-  extends: BaseService
-  fields:
-    headers: list<HttpHeader>
-    endpoints: list<HttpEndpoint>
+    HttpService:
+        extends: BaseService
+        fields:
+            headers: list<HttpHeader>
+            endpoints: list<HttpEndpoint>
 
-HttpHeader:
-  extends: WithDocs
-  fields:
-    header: string
-    valueType: TypeReference
+    HttpHeader:
+        extends: WithDocs
+        fields:
+            header: string
+            valueType: TypeReference
 
-HttpEndpoint:
-  extends: WithDocs
-  fields:
-    endpointId: string
-    verb: HttpVerb
-    path: string
-    parameters: list<HttpEndpointParameter>
-    queryParameters: list<HttpEndpointQueryParameter>
-    header: list<HttpHeader>
-    request: optional<HttpRequest>
-    response: optional<HttpResponse>
-    errors: list<HttpError>
+    HttpEndpoint:
+        extends: WithDocs
+        fields:
+            endpointId: string
+            verb: HttpVerb
+            path: string
+            parameters: list<HttpEndpointParameter>
+            queryParameters: list<HttpEndpointQueryParameter>
+            header: list<HttpHeader>
+            request: optional<HttpRequest>
+            response: optional<HttpResponse>
+            errors: list<HttpError>
 
-HttpRequest:
-  extends: WithDocs
-  fields:
-    bodyType: TypeReference
+    HttpRequest:
+        extends: WithDocs
+        fields:
+            bodyType: TypeReference
 
-HttpResponse:
-  extends: WithDocs
-  fields:
-    bodyType: TypeReference
+    HttpResponse:
+        extends: WithDocs
+        fields:
+            bodyType: TypeReference
 
-HttpVerb:
-  enum:
-    - GET
-    - POST
-    - PUT
-    - DELETE
+    HttpVerb:
+        enum:
+            - GET
+            - POST
+            - PUT
+            - DELETE
 
-HttpEndpointParameter:
-  extends: WithDocs
-  fields:
-    key: string
-    valueType: TypeReference
+    HttpEndpointParameter:
+        extends: WithDocs
+        fields:
+            key: string
+            valueType: TypeReference
 
-HttpEndpointQueryParameter:
-  extends: WithDocs
-  fields:
-    key: string
-    valueType: TypeReference
+    HttpEndpointQueryParameter:
+        extends: WithDocs
+        fields:
+            key: string
+            valueType: TypeReference
 
-HttpError:
-  extends: WithDocs
-  fields:
-    name: string
-    statusCode: integer
-    bodyType: optional<TypeReference>
+    HttpError:
+        extends: WithDocs
+        fields:
+            name: string
+            statusCode: integer
+            bodyType: optional<TypeReference>
 
-WebSocketService:
-  extends: BaseService
-  fields:
-    messages: list<WebSocketMessage>
+    WebSocketService:
+        extends: BaseService
+        fields:
+            messages: list<WebSocketMessage>
 
-WebSocketMessage:
-  extends: WithDocs
-  fields:
-    origin: WebSocketMessageOrigin
-    body: optional<WebSocketMessageBody>
-    response: optional<WebSocketMessageResponse>
-    errors: list<WebsocketError>
+    WebSocketMessage:
+        extends: WithDocs
+        fields:
+            origin: WebSocketMessageOrigin
+            body: optional<WebSocketMessageBody>
+            response: optional<WebSocketMessageResponse>
+            errors: list<WebsocketError>
 
-WebSocketMessageOrigin:
-  enum:
-    - CLIENT
-    - SERVER
+    WebSocketMessageOrigin:
+        enum:
+            - CLIENT
+            - SERVER
 
-WebSocketMessageBody:
-  extends: WithDocs
-  fields:
-    bodyType: TypeReference
+    WebSocketMessageBody:
+        extends: WithDocs
+        fields:
+            bodyType: TypeReference
 
-WebSocketMessageResponse:
-  extends: WithDocs
-  fields:
-    bodyType: TypeReference
-    behavior:
-      type: WebSocketMessageResponseBehavior
-      docs: Defaults to {WebSocketMessageResponseBehavior.ONGOING}
+    WebSocketMessageResponse:
+        extends: WithDocs
+        fields:
+            bodyType: TypeReference
+            behavior:
+                type: WebSocketMessageResponseBehavior
+                docs: Defaults to {WebSocketMessageResponseBehavior.ONGOING}
 
-WebSocketMessageResponseBehavior:
-  enum:
-    - ONGOING
-    - REQUEST_RESPONSE
+    WebSocketMessageResponseBehavior:
+        enum:
+            - ONGOING
+            - REQUEST_RESPONSE
 
-WebsocketError:
-  extends: WithDocs
-  fields:
-    name: string
-    bodyType: optional<TypeReference>
+    WebsocketError:
+        extends: WithDocs
+        fields:
+            name: string
+            bodyType: optional<TypeReference>

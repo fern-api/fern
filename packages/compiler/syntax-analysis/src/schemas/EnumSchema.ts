@@ -3,7 +3,16 @@ import { WithDocsSchema } from "./utils/WithDocsSchema";
 
 export const EnumSchema = z
     .strictObject({
-        enum: z.array(z.string()),
+        enum: z.array(
+            z.union([
+                z.string(),
+                z
+                    .strictObject({
+                        value: z.string(),
+                    })
+                    .merge(WithDocsSchema),
+            ])
+        ),
     })
     .merge(WithDocsSchema);
 

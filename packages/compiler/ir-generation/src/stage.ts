@@ -120,7 +120,11 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                     name: typeName,
                                 },
                                 shape: Type.enum({
-                                    values: typeDefinition.enum,
+                                    values: typeDefinition.enum.map((value) =>
+                                        typeof value === "string"
+                                            ? { value, docs: undefined }
+                                            : { value: value.value, docs: value.docs }
+                                    ),
                                 }),
                             });
                         } else {

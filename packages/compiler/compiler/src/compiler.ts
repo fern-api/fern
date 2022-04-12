@@ -1,7 +1,7 @@
 import { SyntaxAnalysisStage } from "@fern/syntax-analysis";
 import { FernFile } from "@usebirch/compiler-commons";
 import { IntermediateRepresentationGenerationStage } from "@usebirch/ir-generation";
-import { Compiler } from "./types";
+import { Compiler, CompilerFailureType } from "./types";
 
 export async function compile(files: readonly FernFile[]): Promise<Compiler.Result> {
     const syntaxAnalysisResult = await SyntaxAnalysisStage.run(files);
@@ -9,7 +9,7 @@ export async function compile(files: readonly FernFile[]): Promise<Compiler.Resu
         return {
             didSucceed: false,
             failure: {
-                type: Compiler.FailureType.SYNTAX_ANALYSIS,
+                type: CompilerFailureType.SYNTAX_ANALYSIS,
                 failures: syntaxAnalysisResult.failures,
             },
         };
@@ -22,7 +22,7 @@ export async function compile(files: readonly FernFile[]): Promise<Compiler.Resu
         return {
             didSucceed: false,
             failure: {
-                type: Compiler.FailureType.IR_GENERATION,
+                type: CompilerFailureType.IR_GENERATION,
             },
         };
     }
