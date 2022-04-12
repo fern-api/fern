@@ -21,4 +21,5 @@ public class ClassNameUtils {
                 FilepathUtils.convertFilepathToPackage(namedTypeReference.filepath()),
                 IMMUTABLE_PREFIX + namedTypeReference.name());
     }
+
 }

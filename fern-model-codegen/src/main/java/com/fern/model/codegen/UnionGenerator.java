@@ -1,12 +1,12 @@
 package com.fern.model.codegen;
 
 import com.fasterxml.jackson.annotation.*;
-import com.fern.NamedTypeReference;
-import com.fern.SingleUnionType;
-import com.fern.TypeReference;
-import com.fern.UnionTypeDefinition;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fern.*;
 import com.fern.immutables.StagedBuilderStyle;
 import com.fern.model.codegen.utils.ClassNameUtils;
+import com.fern.model.codegen.utils.KeyWordUtils;
+import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.*;
 import org.apache.commons.lang3.StringUtils;
 import org.immutables.value.Value;
@@ -31,7 +31,8 @@ public final class UnionGenerator {
 
     public static GeneratedUnion generate(
             NamedTypeReference name,
-            UnionTypeDefinition unionTypeDefinition) {
+            UnionTypeDefinition unionTypeDefinition,
+            Map<NamedTypeReference, TypeDefinition> typeDefinitionsByName) {
         ClassName generatedUnionClass = ClassNameUtils.getClassName(name);
         TypeSpec.Builder unionBuilder = TypeSpec.classBuilder(name.name())
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
@@ -82,9 +83,10 @@ public final class UnionGenerator {
                         .addMember("defaultImpl", "$T.class", unknownInterfaceClass)
                         .build());
         AnnotationSpec.Builder jsonSubTypeAnnotationBuilder = AnnotationSpec.builder(JsonSubTypes.class);
-        unionTypesToClassName.values().forEach(unionTypeClassName -> {
+        KeyedStream.stream(unionTypesToClassName).forEach((singleUnionType, unionTypeClassName) -> {
             AnnotationSpec subTypeAnnotation = AnnotationSpec.builder(JsonSubTypes.Type.class)
                     .addMember("value", "$T.class", unionTypeClassName)
+                    .addMember("name", "$S", singleUnionType.discriminantValue())
                     .build();
             jsonSubTypeAnnotationBuilder.addMember("value", "$L", subTypeAnnotation);
         });
@@ -116,7 +118,8 @@ public final class UnionGenerator {
                 .build());
 
         unionTypeDefinition.types().forEach(singleUnionType -> {
-            MethodSpec staticBuilder = MethodSpec.methodBuilder(singleUnionType.discriminantValue())
+            String keyWordCompatibleName = KeyWordUtils.getKeyWordCompatibleName(singleUnionType.discriminantValue());
+            MethodSpec staticBuilder = MethodSpec.methodBuilder(keyWordCompatibleName)
                     .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                     .addParameter(singleUnionType.valueType().accept(TypeReferenceToTypeNameConverter.INSTANCE), "value")
                     .returns(generatedUnionClass)
@@ -157,19 +160,25 @@ public final class UnionGenerator {
         unionBuilder.addMethod(acceptMethod);
 
         unionTypeDefinition.types().forEach(singleUnionType -> {
+            boolean unionIsObject = singleUnionType.valueType().isNamed()
+                    && typeDefinitionsByName.get(singleUnionType.valueType().getNamed().get()).shape().isObject();
+            MethodSpec.Builder discriminantMethod = MethodSpec.methodBuilder(singleUnionType.discriminantValue())
+                    .returns(singleUnionType.valueType().accept(TypeReferenceToTypeNameConverter.INSTANCE))
+                    .addModifiers(Modifier.ABSTRACT, Modifier.PUBLIC);
+            if (unionIsObject) {
+                discriminantMethod.addAnnotation(JsonValue.class);
+            }
             String capitalizedDiscriminantValue = StringUtils.capitalize(singleUnionType.discriminantValue());
             TypeSpec nestedUnion = TypeSpec.interfaceBuilder(capitalizedDiscriminantValue)
                     .addAnnotation(Value.Immutable.class)
                     .addAnnotation(AnnotationSpec.builder(JsonTypeName.class)
                             .addMember("value", "$S", singleUnionType.discriminantValue())
                             .build())
-                    .addAnnotation(StagedBuilderStyle.class)
-                    .addSuperinterface(baseInterface)
-                    .addMethod(MethodSpec.methodBuilder(singleUnionType.discriminantValue())
-                            .returns(singleUnionType.valueType().accept(TypeReferenceToTypeNameConverter.INSTANCE))
-                            .addAnnotation(JsonValue.class)
-                            .addModifiers(Modifier.ABSTRACT, Modifier.PUBLIC)
+                    .addAnnotation(AnnotationSpec.builder(JsonDeserialize.class)
+                            .addMember("as", "Immutable$L.$L.class", generatedUnionClass.simpleName(), unionTypesToClassName.get(singleUnionType).simpleName())
                             .build())
+                    .addSuperinterface(baseInterface)
+                    .addMethod(discriminantMethod.build())
                     .addMethod(MethodSpec.methodBuilder(ACCEPT_METHOD_NAME)
                             .returns(visitorReturnType)
                             .addParameter(ParameterizedTypeName.get(visitorInterface, visitorReturnType), "visitor")
@@ -189,7 +198,9 @@ public final class UnionGenerator {
 
         TypeSpec unknownType = TypeSpec.interfaceBuilder(UNKNOWN_CLASS_NAME)
                 .addAnnotation(Value.Immutable.class)
-                .addAnnotation(StagedBuilderStyle.class)
+                .addAnnotation(AnnotationSpec.builder(JsonDeserialize.class)
+                        .addMember("as", "Immutable$L.$L.class", generatedUnionClass.simpleName(), UNKNOWN_CLASS_NAME)
+                        .build())
                 .addMethod(MethodSpec.methodBuilder("value")
                         .returns(ParameterizedTypeName.get(ClassName.get(Map.class), ClassName.get(String.class), ClassName.get(Object.class)))
                         .addAnnotation(JsonValue.class)

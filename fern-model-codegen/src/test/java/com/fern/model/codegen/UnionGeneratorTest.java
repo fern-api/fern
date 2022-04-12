@@ -3,6 +3,8 @@ package com.fern.model.codegen;
 import com.fern.*;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
+
 public class UnionGeneratorTest {
 
     @Test
@@ -44,7 +46,9 @@ public class UnionGeneratorTest {
                 .shape(Type.union(unionTypeDefinition))
                 .build();
         GeneratedUnion generatedUnion = UnionGenerator.generate(
-                variableValueTypeDefinition.name(), unionTypeDefinition);
+                variableValueTypeDefinition.name(),
+                unionTypeDefinition,
+                Collections.singletonMap(variableValueTypeDefinition.name(), variableValueTypeDefinition));
         System.out.println(generatedUnion.file().toString());
     }
 }

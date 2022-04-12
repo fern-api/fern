@@ -22,7 +22,7 @@ public final class ModelGenerator {
                 .collect(Collectors.toMap(typeDefinition -> typeDefinition.name(), InterfaceGenerator::generate));
         List<GeneratedFile<?>> generatedFiles = typeDefinitions.stream()
                 .map(typeDefinition -> typeDefinition.shape()
-                        .accept(new TypeDefinitionGenerator(typeDefinition, generatedInterfaces)))
+                        .accept(new TypeDefinitionGenerator(typeDefinition, generatedInterfaces, typeDefinitionsByName)))
                 .collect(Collectors.toList());
         return generatedFiles.stream().map(GeneratedFile::file).collect(Collectors.toList());
     }
@@ -31,12 +31,15 @@ public final class ModelGenerator {
 
         private final TypeDefinition typeDefinition;
         private final Map<NamedTypeReference, GeneratedInterface> generatedInterfaces;
+        private final Map<NamedTypeReference, TypeDefinition> typeDefinitionsByName;
 
         public TypeDefinitionGenerator(
                 TypeDefinition typeDefinition,
-                Map<NamedTypeReference, GeneratedInterface> generatedInterfaces) {
+                Map<NamedTypeReference, GeneratedInterface> generatedInterfaces,
+                Map<NamedTypeReference, TypeDefinition> typeDefinitionsByName) {
             this.typeDefinition = typeDefinition;
             this.generatedInterfaces = generatedInterfaces;
+            this.typeDefinitionsByName = typeDefinitionsByName;
         }
 
         @Override
@@ -58,7 +61,7 @@ public final class ModelGenerator {
 
         @Override
         public GeneratedFile<?> visitUnion(UnionTypeDefinition unionTypeDefinition) {
-            return UnionGenerator.generate(typeDefinition.name(), unionTypeDefinition);
+            return UnionGenerator.generate(typeDefinition.name(), unionTypeDefinition, typeDefinitionsByName);
         }
 
         @Override

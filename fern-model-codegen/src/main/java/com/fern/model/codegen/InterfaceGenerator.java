@@ -2,8 +2,10 @@ package com.fern.model.codegen;
 
 import com.fern.*;
 import com.fern.model.codegen.utils.FilepathUtils;
+import com.fern.model.codegen.utils.KeyWordUtils;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,9 +44,10 @@ public class InterfaceGenerator {
         @Override
         public List<MethodSpec> visitObject(ObjectTypeDefinition objectTypeDefinition) {
             return objectTypeDefinition.fields().stream()
-                    .map(field -> MethodSpec.methodBuilder(field.key())
-                            .addModifiers(Modifier.ABSTRACT, Modifier.PUBLIC)
-                            .returns(field.valueType().accept(TypeReferenceToTypeNameConverter.INSTANCE)).build())
+                    .map(field -> {
+                        TypeName returnType = field.valueType().accept(TypeReferenceToTypeNameConverter.INSTANCE);
+                        return KeyWordUtils.getKeyWordCompatibleImmutablesPropertyName(field.key(), returnType);
+                    })
                     .collect(Collectors.toList());
         }
 
