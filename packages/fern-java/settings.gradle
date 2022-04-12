@@ -1,4 +1,4 @@
-rootProject.name = 'fern'
+rootProject.name = 'fern-java'
 
 include 'fern-api-java-types'
 include 'fern-immutables-style'

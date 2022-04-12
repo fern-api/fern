@@ -1,6 +1,7 @@
 package com.fern;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.immutables.StagedBuilderStyle;
 import org.immutables.value.Value;
 
@@ -84,14 +85,14 @@ public final class TypeReference {
 
     @JsonTypeInfo(
             use = JsonTypeInfo.Id.NAME,
-            include = JsonTypeInfo.As.EXISTING_PROPERTY,
+            include = JsonTypeInfo.As.PROPERTY,
             property = "type",
             visible = true,
             defaultImpl = Unknown.class)
     @JsonSubTypes({
-            @JsonSubTypes.Type(Named.class),
-            @JsonSubTypes.Type(Primitive.class),
-            @JsonSubTypes.Type(Container.class)
+            @JsonSubTypes.Type(value = Named.class, name = "named"),
+            @JsonSubTypes.Type(value = Primitive.class, name = "primitive"),
+            @JsonSubTypes.Type(value = Container.class, name = "container")
     })
     @JsonIgnoreProperties(ignoreUnknown = true)
     private interface Base {
@@ -100,7 +101,7 @@ public final class TypeReference {
 
     @Value.Immutable()
     @JsonTypeName("named")
-    @StagedBuilderStyle
+    @JsonDeserialize(as = ImmutableTypeReference.Named.class)
     interface Named extends Base {
 
         @JsonValue
@@ -118,10 +119,9 @@ public final class TypeReference {
 
     @Value.Immutable
     @JsonTypeName("primitive")
-    @StagedBuilderStyle
+    @JsonDeserialize(as = ImmutableTypeReference.Primitive.class)
     interface Primitive extends Base {
 
-        @JsonValue
         PrimitiveType primitive();
 
         @Override
@@ -136,7 +136,7 @@ public final class TypeReference {
 
     @Value.Immutable
     @JsonTypeName("container")
-    @StagedBuilderStyle
+    @JsonDeserialize(as = ImmutableTypeReference.Container.class)
     public interface Container extends Base {
 
         @JsonValue
@@ -153,7 +153,7 @@ public final class TypeReference {
     }
 
     @Value.Immutable
-    @StagedBuilderStyle
+    @JsonDeserialize(as = ImmutableTypeReference.Unknown.class)
     interface Unknown extends Base {
 
         @JsonValue

@@ -1,9 +1,11 @@
 package com.fern;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.immutables.StagedBuilderStyle;
 import org.immutables.value.Value;
 
+@Value.Enclosing
 public final class ContainerType {
 
     private final Base value;
@@ -96,15 +98,15 @@ public final class ContainerType {
 
     @JsonTypeInfo(
             use = JsonTypeInfo.Id.NAME,
-            include = JsonTypeInfo.As.EXISTING_PROPERTY,
+            include = JsonTypeInfo.As.PROPERTY,
             property = "type",
             visible = true,
             defaultImpl = Unknown.class)
     @JsonSubTypes({
-            @JsonSubTypes.Type(Map.class),
-            @JsonSubTypes.Type(List.class),
-            @JsonSubTypes.Type(Set.class),
-            @JsonSubTypes.Type(Optional.class)
+            @JsonSubTypes.Type(value = Map.class, name = "map"),
+            @JsonSubTypes.Type(value = List.class, name = "list"),
+            @JsonSubTypes.Type(value = Set.class, name = "set"),
+            @JsonSubTypes.Type(value = Optional.class, name = "optional")
     })
     @JsonIgnoreProperties(ignoreUnknown = true)
     private interface Base {
@@ -113,7 +115,7 @@ public final class ContainerType {
 
     @Value.Immutable
     @JsonTypeName("map")
-    @StagedBuilderStyle
+    @JsonDeserialize(as = ImmutableContainerType.Map.class)
     interface Map extends Base {
 
         @JsonValue
@@ -124,14 +126,14 @@ public final class ContainerType {
             return visitor.visitMap(map());
         }
 
-        static ImmutableMap.MapBuildStage builder() {
-            return ImmutableMap.builder();
+        static ImmutableContainerType.Map.Builder builder() {
+            return ImmutableContainerType.Map.builder();
         }
     }
 
     @Value.Immutable
     @JsonTypeName("list")
-    @StagedBuilderStyle
+    @JsonDeserialize(as = ImmutableContainerType.List.class)
     interface List extends Base {
 
         @JsonValue
@@ -142,14 +144,14 @@ public final class ContainerType {
             return visitor.visitList(list());
         }
 
-        static ImmutableList.ListBuildStage builder() {
-            return ImmutableList.builder();
+        static ImmutableContainerType.List.Builder builder() {
+            return ImmutableContainerType.List.builder();
         }
     }
 
     @Value.Immutable
     @JsonTypeName("set")
-    @StagedBuilderStyle
+    @JsonDeserialize(as = ImmutableContainerType.Set.class)
     public interface Set extends Base {
 
         @JsonValue
@@ -160,14 +162,14 @@ public final class ContainerType {
             return visitor.visitSet(set());
         }
 
-        static ImmutableSet.SetBuildStage builder() {
-            return ImmutableSet.builder();
+        static ImmutableContainerType.Set.Builder builder() {
+            return ImmutableContainerType.Set.builder();
         }
     }
 
     @Value.Immutable
     @JsonTypeName("optional")
-    @StagedBuilderStyle
+    @JsonDeserialize(as = ImmutableContainerType.Optional.class)
     public interface Optional extends Base {
 
         @JsonValue
@@ -178,13 +180,13 @@ public final class ContainerType {
             return visitor.visitOptional(optional());
         }
 
-        static ImmutableOptional.OptionalBuildStage builder() {
-            return ImmutableOptional.builder();
+        static ImmutableContainerType.Optional.Builder builder() {
+            return ImmutableContainerType.Optional.builder();
         }
     }
 
     @Value.Immutable
-    @StagedBuilderStyle
+    @JsonDeserialize(as = ImmutableContainerType.Unknown.class)
     interface Unknown extends Base {
 
         @JsonValue
@@ -199,8 +201,8 @@ public final class ContainerType {
             return visitor.visitUnknown(type());
         }
 
-        static ImmutableUnknown.Builder builder() {
-            return ImmutableUnknown.builder();
+        static ImmutableContainerType.Unknown.Builder builder() {
+            return ImmutableContainerType.Unknown.builder();
         }
     }
 }
