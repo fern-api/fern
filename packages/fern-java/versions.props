@@ -1,3 +1,8 @@
 org.immutables:* = 2.8.8
 com.fasterxml.jackson.*:jackson-* = 2.12.3
 com.google.code.findbugs:annotations = 3.0.1
+
+# testing
+org.junit.jupiter:* = 5.5.0
+org.assertj:* = 3.19.0
+org.mockito:* = 3.11.2
