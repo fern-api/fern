@@ -1,5 +1,6 @@
-import { SyntaxAnalysis } from "@fern/syntax-analysis";
-import { compile, Compiler } from "@usebirch/compiler";
+import { SyntaxAnalysisFailureType } from "@fern/syntax-analysis";
+import { CompilerFailureType } from "@usebirch/compiler";
+import { compile } from "@usebirch/compiler";
 import { FernFile, RelativeFilePath } from "@usebirch/compiler-commons";
 import chalk from "chalk";
 import { readdir, readFile, writeFile } from "fs/promises";
@@ -30,19 +31,19 @@ export async function compileCommand({
 
     if (compileResult.didSucceed) {
         console.log(chalk.green("Parsed successfully!"));
-        await writeFile(output, JSON.stringify(compileResult));
+        await writeFile(output, JSON.stringify(compileResult.intermediateRepresentation));
     } else {
         switch (compileResult.failure.type) {
-            case Compiler.FailureType.SYNTAX_ANALYSIS:
+            case CompilerFailureType.SYNTAX_ANALYSIS:
                 for (const [relativeFilePath, failure] of Object.entries(compileResult.failure.failures)) {
                     switch (failure.type) {
-                        case SyntaxAnalysis.FailureType.FILE_READ:
+                        case SyntaxAnalysisFailureType.FILE_READ:
                             console.error("Failed to open file", relativeFilePath);
                             break;
-                        case SyntaxAnalysis.FailureType.FILE_PARSE:
+                        case SyntaxAnalysisFailureType.FILE_PARSE:
                             console.error("Failed to parse file", relativeFilePath);
                             break;
-                        case SyntaxAnalysis.FailureType.STRUCTURE_VALIDATION:
+                        case SyntaxAnalysisFailureType.STRUCTURE_VALIDATION:
                             for (const issue of failure.error.issues) {
                                 for (const { title, subtitle } of parseIssue(issue)) {
                                     console.group(chalk.bold.red(`Validation error: ${title}`));
@@ -58,7 +59,7 @@ export async function compileCommand({
                     }
                 }
                 break;
-            case Compiler.FailureType.IR_GENERATION:
+            case CompilerFailureType.IR_GENERATION:
                 console.error("Failed to genrate intermediate representation.");
                 break;
         }
