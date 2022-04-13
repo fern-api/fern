@@ -5,12 +5,20 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.fern.EnumTypeDefinition;
 import com.fern.NamedTypeReference;
 import com.fern.model.codegen.utils.ClassNameUtils;
-import com.squareup.javapoet.*;
-import org.apache.commons.lang3.StringUtils;
-
+import com.squareup.javapoet.AnnotationSpec;
+import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.CodeBlock;
+import com.squareup.javapoet.FieldSpec;
+import com.squareup.javapoet.JavaFile;
+import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterSpec;
+import com.squareup.javapoet.ParameterizedTypeName;
+import com.squareup.javapoet.TypeSpec;
+import com.squareup.javapoet.TypeVariableName;
+import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.lang.model.element.Modifier;
-import java.util.stream.Collectors;
+import org.apache.commons.lang3.StringUtils;
 
 public class EnumGenerator {
 
@@ -32,34 +40,26 @@ public class EnumGenerator {
     private static final String ACCEPT_METHOD_NAME = "accept";
     private static final String VALUE_OF_METHOD_NAME = "valueOf";
 
-    public static GeneratedEnum generate(
-            NamedTypeReference name,
-            EnumTypeDefinition enumTypeDefinition) {
+    private EnumGenerator() {}
+
+    @SuppressWarnings("MethodLength")
+    public static GeneratedEnum generate(NamedTypeReference name, EnumTypeDefinition enumTypeDefinition) {
         ClassName generatedEnumClassName = ClassNameUtils.getClassName(name);
-        TypeSpec.Builder enumBuilder = TypeSpec.classBuilder(name.name())
-                .addModifiers(Modifier.PUBLIC, Modifier.FINAL);
+        TypeSpec.Builder enumBuilder = TypeSpec.classBuilder(name.name()).addModifiers(Modifier.PUBLIC, Modifier.FINAL);
 
         // Generate public static final constant for each enum value
         enumTypeDefinition.values().forEach(enumValue -> {
             enumBuilder.addField(FieldSpec.builder(
-                        generatedEnumClassName,
-                        enumValue.value(),
-                        Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
+                            generatedEnumClassName, enumValue.value(), Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
                     .build());
         });
 
         // Add private Value Field
         ClassName valueFieldClassName = generatedEnumClassName.nestedClass(VALUE_TYPE_NAME);
-        enumBuilder.addField(FieldSpec.builder(
-                valueFieldClassName,
-                VALUE_FIELD_NAME,
-                Modifier.PRIVATE, Modifier.FINAL)
+        enumBuilder.addField(FieldSpec.builder(valueFieldClassName, VALUE_FIELD_NAME, Modifier.PRIVATE, Modifier.FINAL)
                 .build());
         // Add private String Field
-        enumBuilder.addField(FieldSpec.builder(
-                STRING_TYPE_NAME,
-                STRING_FIELD_NAME,
-                Modifier.PRIVATE, Modifier.FINAL)
+        enumBuilder.addField(FieldSpec.builder(STRING_TYPE_NAME, STRING_FIELD_NAME, Modifier.PRIVATE, Modifier.FINAL)
                 .build());
         // Add constructor
         enumBuilder.addMethod(MethodSpec.constructorBuilder()
@@ -70,8 +70,8 @@ public class EnumGenerator {
                 .build());
 
         // Generate nested enum with UNKNOWN constant
-        TypeSpec.Builder nestedEnumBuilder = TypeSpec.enumBuilder(VALUE_TYPE_NAME)
-                .addModifiers(Modifier.PUBLIC);
+        TypeSpec.Builder nestedEnumBuilder =
+                TypeSpec.enumBuilder(VALUE_TYPE_NAME).addModifiers(Modifier.PUBLIC);
         enumTypeDefinition.values().forEach(enumValue -> {
             nestedEnumBuilder.addEnumConstant(enumValue.value());
         });
@@ -97,8 +97,11 @@ public class EnumGenerator {
                 .addAnnotation(Override.class)
                 .addParameter(ClassName.get(Object.class), "other")
                 .addCode(CodeBlock.builder()
-                        .add("return (this == other) || (other instanceof $T && this.string.equals((($T) other).string));",
-                                generatedEnumClassName, generatedEnumClassName)
+                        .add(
+                                "return (this == other) || (other instanceof $T && this.string.equals((($T)"
+                                        + " other).string));",
+                                generatedEnumClassName,
+                                generatedEnumClassName)
                         .build())
                 .returns(boolean.class)
                 .build();
@@ -116,12 +119,12 @@ public class EnumGenerator {
                 .addModifiers(Modifier.PUBLIC)
                 .addTypeVariable(visitorReturnType)
                 .addMethods(enumTypeDefinition.values().stream()
-                        .map(enumValue ->
-                                MethodSpec.methodBuilder("visit"
-                                        + StringUtils.capitalize(enumValue.value().toLowerCase()))
-                                        .addModifiers(Modifier.ABSTRACT, Modifier.PUBLIC)
-                                        .returns(visitorReturnType)
-                                        .build())
+                        .map(enumValue -> MethodSpec.methodBuilder("visit"
+                                        + StringUtils.capitalize(
+                                                enumValue.value().toLowerCase()))
+                                .addModifiers(Modifier.ABSTRACT, Modifier.PUBLIC)
+                                .returns(visitorReturnType)
+                                .build())
                         .collect(Collectors.toList()))
                 .addMethod(MethodSpec.methodBuilder(VISITOR_VISIT_UNKNOWN_METHOD_NAME)
                         .addModifiers(Modifier.ABSTRACT, Modifier.PUBLIC)
@@ -132,13 +135,14 @@ public class EnumGenerator {
         ClassName nestedVisitor = generatedEnumClassName.nestedClass(VISITOR_TYPE_NAME);
 
         TypeVariableName acceptReturnType = TypeVariableName.get("T");
-        CodeBlock.Builder acceptMethodImplementation = CodeBlock.builder()
-                .beginControlFlow("switch (value)");
+        CodeBlock.Builder acceptMethodImplementation = CodeBlock.builder().beginControlFlow("switch (value)");
         enumTypeDefinition.values().forEach(enumValue -> {
             acceptMethodImplementation
                     .add("case $L:\n", enumValue.value())
                     .indent()
-                    .addStatement("return visitor.$L", "visit" + StringUtils.capitalize(enumValue.value().toLowerCase()) + "()")
+                    .addStatement(
+                            "return visitor.$L",
+                            "visit" + StringUtils.capitalize(enumValue.value().toLowerCase()) + "()")
                     .unindent();
         });
         CodeBlock acceptCodeBlock = acceptMethodImplementation
@@ -176,7 +180,11 @@ public class EnumGenerator {
         MethodSpec.Builder valueOfBuilder = MethodSpec.methodBuilder(VALUE_OF_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .addAnnotation(AnnotationSpec.builder(JsonCreator.class)
-                        .addMember("mode", "$T.$L", ClassName.get(JsonCreator.Mode.class), JsonCreator.Mode.DELEGATING.name())
+                        .addMember(
+                                "mode",
+                                "$T.$L",
+                                ClassName.get(JsonCreator.Mode.class),
+                                JsonCreator.Mode.DELEGATING.name())
                         .build())
                 .addParameter(ParameterSpec.builder(ClassName.get(String.class), "value")
                         .addAnnotation(Nonnull.class)

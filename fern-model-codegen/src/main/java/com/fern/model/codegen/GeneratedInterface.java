@@ -1,6 +1,5 @@
 package com.fern.model.codegen;
 
-
 import com.fern.TypeDefinition;
 import com.fern.immutables.StagedBuilderStyle;
 import org.immutables.value.Value;

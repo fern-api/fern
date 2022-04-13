@@ -4,18 +4,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
-
-import javax.lang.model.element.Modifier;
 import java.util.Set;
+import javax.lang.model.element.Modifier;
 
 public final class KeyWordUtils {
 
-    private static final Set<String> RESERVED_WORDS = Set.of(
-            "enum",
-            "extends");
+    private static final Set<String> RESERVED_WORDS = Set.of("enum", "extends");
 
-    private KeyWordUtils() {
-    }
+    private KeyWordUtils() {}
 
     public static MethodSpec getKeyWordCompatibleImmutablesPropertyName(String methodName, TypeName returnType) {
         MethodSpec.Builder methodBuilder;

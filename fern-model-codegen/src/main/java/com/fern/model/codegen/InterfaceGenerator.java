@@ -1,31 +1,39 @@
 package com.fern.model.codegen;
 
-import com.fern.*;
+import com.fern.AliasTypeDefinition;
+import com.fern.EnumTypeDefinition;
+import com.fern.ObjectTypeDefinition;
+import com.fern.Type;
+import com.fern.TypeDefinition;
+import com.fern.UnionTypeDefinition;
 import com.fern.model.codegen.utils.FilepathUtils;
 import com.fern.model.codegen.utils.KeyWordUtils;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.lang.model.element.Modifier;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class InterfaceGenerator {
 
-    private static final Logger log = LoggerFactory.getLogger(InterfaceGenerator.class);
+    //    private static final Logger log = LoggerFactory.getLogger(InterfaceGenerator.class);
     private static final String INTERFACE_PREFIX = "I";
 
+    private InterfaceGenerator() {}
+
     public static GeneratedInterface generate(TypeDefinition typeDefinition) {
-        TypeSpec generatedInterface = TypeSpec.interfaceBuilder(INTERFACE_PREFIX + typeDefinition.name().name())
-                .addMethods(typeDefinition.shape().accept(new InterfaceMethodGenerator(typeDefinition.name().name())))
+        TypeSpec generatedInterface = TypeSpec.interfaceBuilder(
+                        INTERFACE_PREFIX + typeDefinition.name().name())
+                .addMethods(typeDefinition
+                        .shape()
+                        .accept(new InterfaceMethodGenerator(
+                                typeDefinition.name().name())))
                 .build();
         JavaFile interfaceFile = JavaFile.builder(
-                    FilepathUtils.convertFilepathToPackage(typeDefinition.name().filepath()),
-                    generatedInterface)
+                        FilepathUtils.convertFilepathToPackage(
+                                typeDefinition.name().filepath()),
+                        generatedInterface)
                 .build();
         return GeneratedInterface.builder()
                 .file(interfaceFile)
@@ -67,8 +75,8 @@ public class InterfaceGenerator {
         }
 
         @Override
-        public List<MethodSpec> visitUnknown(String s) {
-            throw new RuntimeException("Received unknown Type while building interface: " + s);
+        public List<MethodSpec> visitUnknown(String unknownType) {
+            throw new RuntimeException("Received unknown Type while building interface: " + unknownType);
         }
     }
 }

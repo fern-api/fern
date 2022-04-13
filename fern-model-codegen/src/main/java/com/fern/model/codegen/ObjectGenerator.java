@@ -8,18 +8,24 @@ import com.fern.ObjectTypeDefinition;
 import com.fern.immutables.StagedBuilderStyle;
 import com.fern.model.codegen.utils.ClassNameUtils;
 import com.fern.model.codegen.utils.KeyWordUtils;
-import com.squareup.javapoet.*;
-import org.immutables.value.Value;
-
-import javax.lang.model.element.Modifier;
+import com.squareup.javapoet.AnnotationSpec;
+import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.JavaFile;
+import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.TypeName;
+import com.squareup.javapoet.TypeSpec;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import javax.lang.model.element.Modifier;
+import org.immutables.value.Value;
 
 public final class ObjectGenerator {
 
     private static final String STATIC_BUILDER_METHOD_NAME = "builder";
     private static final String BUILD_STAGE_SUFFIX = "BuildStage";
+
+    private ObjectGenerator() {}
 
     public static GeneratedObject generate(
             List<GeneratedInterface> superInterfaces,
@@ -30,30 +36,30 @@ public final class ObjectGenerator {
         TypeSpec.Builder objectTypeBuilder = TypeSpec.interfaceBuilder(name.name());
         objectTypeBuilder
                 .addModifiers(Modifier.PUBLIC)
-                .addSuperinterfaces(superInterfaces.stream().map(
-                        superInterface -> ClassName.get(superInterface.packageName(), superInterface.className()))
+                .addSuperinterfaces(superInterfaces.stream()
+                        .map(superInterface -> ClassName.get(superInterface.packageName(), superInterface.className()))
                         .collect(Collectors.toList()));
         if (!ignoreOwnFields) {
-            objectTypeBuilder.addMethods(objectTypeDefinition.fields().stream().map(objectField -> {
-                TypeName returnType = objectField.valueType().accept(TypeReferenceToTypeNameConverter.INSTANCE);
-                return KeyWordUtils.getKeyWordCompatibleImmutablesPropertyName(objectField.key(), returnType);
-            }).collect(Collectors.toList()));
+            objectTypeBuilder.addMethods(objectTypeDefinition.fields().stream()
+                    .map(objectField -> {
+                        TypeName returnType = objectField.valueType().accept(TypeReferenceToTypeNameConverter.INSTANCE);
+                        return KeyWordUtils.getKeyWordCompatibleImmutablesPropertyName(objectField.key(), returnType);
+                    })
+                    .collect(Collectors.toList()));
         }
         TypeSpec objectType = objectTypeBuilder
                 .addMethod(generateStaticBuilder(superInterfaces, name, objectTypeDefinition))
                 .addAnnotation(Value.Immutable.class)
                 .addAnnotation(StagedBuilderStyle.class)
-                .addAnnotation(AnnotationSpec
-                        .builder(JsonDeserialize.class)
-                        .addMember("as", "$T.class",
-                                ClassNameUtils.getImmutablesClassName(name))
+                .addAnnotation(AnnotationSpec.builder(JsonDeserialize.class)
+                        .addMember("as", "$T.class", ClassNameUtils.getImmutablesClassName(name))
                         .build())
                 .addAnnotation(AnnotationSpec.builder(JsonIgnoreProperties.class)
                         .addMember("value", "{$S}", "type")
                         .build())
                 .build();
-        JavaFile objectFile = JavaFile.builder(generatedClassName.packageName(), objectType)
-                .build();
+        JavaFile objectFile =
+                JavaFile.builder(generatedClassName.packageName(), objectType).build();
         return GeneratedObject.builder()
                 .file(objectFile)
                 .definition(objectTypeDefinition)
@@ -64,7 +70,8 @@ public final class ObjectGenerator {
             List<GeneratedInterface> superInterfaces,
             NamedTypeReference name,
             ObjectTypeDefinition objectTypeDefinition) {
-        Optional<String> firstMandatoryFieldName = getFirstRequiredFieldName(superInterfaces, objectTypeDefinition.fields());
+        Optional<String> firstMandatoryFieldName =
+                getFirstRequiredFieldName(superInterfaces, objectTypeDefinition.fields());
         ClassName immutableClassName = ClassNameUtils.getImmutablesClassName(name);
         ClassName builderClassName = firstMandatoryFieldName.isEmpty()
                 ? immutableClassName.nestedClass("Builder")
@@ -80,7 +87,10 @@ public final class ObjectGenerator {
             List<GeneratedInterface> superInterfaces, List<ObjectField> fields) {
         // Required field from super interfaces take priority
         for (GeneratedInterface superInterface : superInterfaces) {
-            Optional<String> firstMandatoryFieldName = superInterface.definition().shape().getObject()
+            Optional<String> firstMandatoryFieldName = superInterface
+                    .definition()
+                    .shape()
+                    .getObject()
                     .flatMap(objectTypeDefinition -> getFirstRequiredFieldName(objectTypeDefinition.fields()));
             if (firstMandatoryFieldName.isPresent()) {
                 return firstMandatoryFieldName;

@@ -1,16 +1,22 @@
 package com.fern.model.codegen;
 
-import com.fern.*;
+import com.fern.AliasTypeDefinition;
+import com.fern.EnumTypeDefinition;
+import com.fern.NamedTypeReference;
+import com.fern.ObjectTypeDefinition;
+import com.fern.Type;
+import com.fern.TypeDefinition;
+import com.fern.UnionTypeDefinition;
 import com.squareup.javapoet.JavaFile;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public final class ModelGenerator {
+
+    private ModelGenerator() {}
 
     public static List<JavaFile> generate(List<TypeDefinition> typeDefinitions) {
         Map<NamedTypeReference, TypeDefinition> typeDefinitionsByName = typeDefinitions.stream()
@@ -21,19 +27,21 @@ public final class ModelGenerator {
                 .map(typeDefinitionsByName::get)
                 .collect(Collectors.toMap(typeDefinition -> typeDefinition.name(), InterfaceGenerator::generate));
         List<GeneratedFile<?>> generatedFiles = typeDefinitions.stream()
-                .map(typeDefinition -> typeDefinition.shape()
-                        .accept(new TypeDefinitionGenerator(typeDefinition, generatedInterfaces, typeDefinitionsByName)))
+                .map(typeDefinition -> typeDefinition
+                        .shape()
+                        .accept(new TypeDefinitionGenerator(
+                                typeDefinition, generatedInterfaces, typeDefinitionsByName)))
                 .collect(Collectors.toList());
         return generatedFiles.stream().map(GeneratedFile::file).collect(Collectors.toList());
     }
 
-    private final static class TypeDefinitionGenerator implements Type.Visitor<GeneratedFile<?>> {
+    private static final class TypeDefinitionGenerator implements Type.Visitor<GeneratedFile<?>> {
 
         private final TypeDefinition typeDefinition;
         private final Map<NamedTypeReference, GeneratedInterface> generatedInterfaces;
         private final Map<NamedTypeReference, TypeDefinition> typeDefinitionsByName;
 
-        public TypeDefinitionGenerator(
+        TypeDefinitionGenerator(
                 TypeDefinition typeDefinition,
                 Map<NamedTypeReference, GeneratedInterface> generatedInterfaces,
                 Map<NamedTypeReference, TypeDefinition> typeDefinitionsByName) {
@@ -54,8 +62,7 @@ public final class ModelGenerator {
                 return ObjectGenerator.generate(
                         superInterfacesWithOwnInterface, typeDefinition.name(), objectTypeDefinition, true);
             } else {
-                return ObjectGenerator.generate(
-                        superInterfaces, typeDefinition.name(), objectTypeDefinition, false);
+                return ObjectGenerator.generate(superInterfaces, typeDefinition.name(), objectTypeDefinition, false);
             }
         }
 
@@ -75,8 +82,8 @@ public final class ModelGenerator {
         }
 
         @Override
-        public GeneratedFile<?> visitUnknown(String s) {
-            throw new RuntimeException("Encountered unknown Type: " + s);
+        public GeneratedFile<?> visitUnknown(String unknownType) {
+            throw new RuntimeException("Encountered unknown Type: " + unknownType);
         }
     }
 }

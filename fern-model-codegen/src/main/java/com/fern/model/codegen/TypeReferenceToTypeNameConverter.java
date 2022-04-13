@@ -1,11 +1,14 @@
 package com.fern.model.codegen;
 
-import com.fern.*;
+import com.fern.ContainerType;
+import com.fern.MapType;
+import com.fern.NamedTypeReference;
+import com.fern.PrimitiveType;
+import com.fern.TypeReference;
 import com.fern.model.codegen.utils.ClassNameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -38,8 +41,8 @@ public final class TypeReferenceToTypeNameConverter implements TypeReference.Vis
     }
 
     @Override
-    public TypeName visitUnknown(String s) {
-        throw new RuntimeException("Encountered unknown type reference: " + s);
+    public TypeName visitUnknown(String unknownType) {
+        throw new RuntimeException("Encountered unknown type reference: " + unknownType);
     }
 
     private final class PrimitiveToTypeNameConverter implements PrimitiveType.Visitor<TypeName> {
@@ -82,8 +85,8 @@ public final class TypeReferenceToTypeNameConverter implements TypeReference.Vis
         }
 
         @Override
-        public TypeName visitUnknown(String s) {
-            throw new RuntimeException("Encountered unknown primitive type: " + s);
+        public TypeName visitUnknown(String unknownType) {
+            throw new RuntimeException("Encountered unknown primitive type: " + unknownType);
         }
     }
 
@@ -101,28 +104,22 @@ public final class TypeReferenceToTypeNameConverter implements TypeReference.Vis
 
         @Override
         public TypeName visitList(TypeReference typeReference) {
-            return ParameterizedTypeName.get(
-                    ClassName.get(List.class),
-                    typeReference.accept(NESTED_INSTANCE));
+            return ParameterizedTypeName.get(ClassName.get(List.class), typeReference.accept(NESTED_INSTANCE));
         }
 
         @Override
         public TypeName visitSet(TypeReference typeReference) {
-            return ParameterizedTypeName.get(
-                    ClassName.get(Set.class),
-                    typeReference.accept(NESTED_INSTANCE));
+            return ParameterizedTypeName.get(ClassName.get(Set.class), typeReference.accept(NESTED_INSTANCE));
         }
 
         @Override
         public TypeName visitOptional(TypeReference typeReference) {
-            return ParameterizedTypeName.get(
-                    ClassName.get(Optional.class),
-                    typeReference.accept(NESTED_INSTANCE));
+            return ParameterizedTypeName.get(ClassName.get(Optional.class), typeReference.accept(NESTED_INSTANCE));
         }
 
         @Override
-        public TypeName visitUnknown(String s) {
-            throw new RuntimeException("Encountered unknown container type: " + s);
+        public TypeName visitUnknown(String unknownType) {
+            throw new RuntimeException("Encountered unknown container type: " + unknownType);
         }
     }
 }

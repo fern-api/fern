@@ -22,6 +22,9 @@ org.mockito:* = 3.11.2
 # jackson
 com.fasterxml.jackson.*:jackson-* = 2.12.3
 
+# errorprone
+com.google.errorprone:error_prone_* = 2.12.1
+
 # misc
 com.google.code.findbugs:annotations = 3.0.1
 com.palantir.common:streams = 2.0.0
