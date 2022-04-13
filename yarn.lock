@@ -490,7 +490,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern/typescript-commons@workspace:^, @fern/typescript-commons@workspace:packages/fern-typescript/commons":
+"@fern/typescript-commons@workspace:packages/fern-typescript/commons":
   version: 0.0.0-use.local
   resolution: "@fern/typescript-commons@workspace:packages/fern-typescript/commons"
   dependencies:
@@ -499,7 +499,6 @@ __metadata:
     jest: ^27.5.1
     prettier: ^2.6.1
     stylelint: ^14.6.1
-    ts-morph: ^14.0.0
     typescript: ^4.6.3
   languageName: unknown
   linkType: soft
@@ -509,7 +508,6 @@ __metadata:
   resolution: "@fern/typescript-model@workspace:packages/fern-typescript/model"
   dependencies:
     "@fern/ir-generation": "workspace:^"
-    "@fern/typescript-commons": "workspace:^"
     depcheck: ^1.4.3
     eslint: ^8.12.0
     jest: ^27.5.1
@@ -524,11 +522,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern/typescript-server@workspace:packages/fern-typescript/server"
   dependencies:
+    "@fern/ir-generation": "workspace:^"
     depcheck: ^1.4.3
     eslint: ^8.12.0
     jest: ^27.5.1
     prettier: ^2.6.1
     stylelint: ^14.6.1
+    ts-morph: ^14.0.0
     typescript: ^4.6.3
   languageName: unknown
   linkType: soft
@@ -2830,7 +2830,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "fern-typescript@workspace:packages/fern-typescript/cli"
   dependencies:
-    "@fern/typescript-commons": "workspace:^"
+    "@fern/ir-generation": "workspace:^"
     "@fern/typescript-model": "workspace:^"
     "@fern/typescript-server": "workspace:^"
     "@types/yargs": ^17.0.10

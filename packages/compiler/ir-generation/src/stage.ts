@@ -1,11 +1,11 @@
 import { CompilerStage, RelativeFilePath } from "@fern/compiler-commons";
-import { TypeName } from "@fern/ir-generation/src/types/TypeName";
 import { RawSchemas, SimpleInlinableType } from "@fern/syntax-analysis";
 import { ContainerType } from "./types/ContainerType";
 import { HttpMethod } from "./types/HttpMethod";
 import { IntermediateRepresentation } from "./types/IntermediateRepresentation";
 import { PrimitiveType } from "./types/PrimitiveType";
 import { Type } from "./types/Type";
+import { TypeName } from "./types/TypeName";
 import { TypeReference } from "./types/TypeReference";
 import { WebSocketMessageOrigin } from "./types/WebSocketMessageOrigin";
 import { WebSocketMessageResponseBehavior } from "./types/WebSocketMessageResponseBehavior";

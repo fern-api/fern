@@ -18,6 +18,10 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck"
   },
+  "dependencies": {
+    "@fern/ir-generation": "workspace:^",
+    "ts-morph": "^14.0.0"
+  },
   "devDependencies": {
     "depcheck": "^1.4.3",
     "eslint": "^8.12.0",
