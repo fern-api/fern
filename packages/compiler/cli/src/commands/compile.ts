@@ -1,7 +1,6 @@
+import { compile, CompilerFailureType } from "@fern/compiler";
+import { FernFile, RelativeFilePath } from "@fern/compiler-commons";
 import { SyntaxAnalysisFailureType } from "@fern/syntax-analysis";
-import { CompilerFailureType } from "@usebirch/compiler";
-import { compile } from "@usebirch/compiler";
-import { FernFile, RelativeFilePath } from "@usebirch/compiler-commons";
 import chalk from "chalk";
 import { readdir, readFile, writeFile } from "fs/promises";
 import path from "path";
@@ -19,7 +18,7 @@ export async function compileCommand({
     for (const filepath of filepaths) {
         try {
             files.push({
-                package: filepath,
+                filepath,
                 fileContents: (await readFile(path.join(inputDirectory, filepath))).toString(),
             });
         } catch (e) {

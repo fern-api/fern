@@ -1,11 +1,11 @@
+import { CompilerStage, RelativeFilePath } from "@fern/compiler-commons";
 import { RawSchemas, SimpleInlinableType } from "@fern/syntax-analysis";
-import { CompilerStage, RelativeFilePath } from "@usebirch/compiler-commons";
 import { ContainerType } from "./types/ContainerType";
 import { HttpMethod } from "./types/HttpMethod";
 import { IntermediateRepresentation } from "./types/IntermediateRepresentation";
-import { TypeName } from "./types/NamedTypeReference";
 import { PrimitiveType } from "./types/PrimitiveType";
 import { Type } from "./types/Type";
+import { TypeName } from "./types/TypeName";
 import { TypeReference } from "./types/TypeReference";
 import { WebSocketMessageOrigin } from "./types/WebSocketMessageOrigin";
 import { WebSocketMessageResponseBehavior } from "./types/WebSocketMessageResponseBehavior";
@@ -25,6 +25,14 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
         };
 
         for (const [filepath, schema] of Object.entries(schemas)) {
+            const parseInlinableType = (type: SimpleInlinableType): TypeReference => {
+                const typeAsString = typeof type === "string" ? type : type.type;
+                if (typeAsString == null) {
+                    return TypeReference.void();
+                }
+                return parseInlineType({ type: typeAsString, filepath, imports });
+            };
+
             const { imports = {} } = schema;
 
             visit(schema, {
@@ -33,15 +41,20 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                     if (ids == null) {
                         return;
                     }
-                    for (const [id, idType] of Object.entries(ids)) {
+                    for (const id of ids) {
                         intermediateRepresentation.types.push({
-                            docs: typeof idType !== "string" ? idType.docs : undefined,
-                            extends: [],
+                            docs: typeof id !== "string" ? id.docs : undefined,
                             name: {
                                 filepath,
-                                name: id,
+                                name: typeof id === "string" ? id : id.name,
                             },
-                            shape: Type.alias(parseInlinableType({ type: idType, filepath, imports })),
+                            shape: Type.alias({
+                                aliasOf:
+                                    typeof id === "string" || id.type == null
+                                        ? TypeReference.primitive(PrimitiveType.String)
+                                        : parseInlinableType(id.type),
+                                isId: true,
+                            }),
                         });
                     }
                 },
@@ -53,40 +66,43 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                         if (isRawAliasDefinition(typeDefinition)) {
                             intermediateRepresentation.types.push({
                                 docs: typeof typeDefinition !== "string" ? typeDefinition.docs : undefined,
-                                extends: [],
                                 name: {
                                     filepath,
                                     name: typeName,
                                 },
-                                shape: Type.alias(
-                                    parseInlinableType({
-                                        type:
-                                            typeof typeDefinition === "string" ? typeDefinition : typeDefinition.alias,
-                                        filepath,
-                                        imports,
-                                    })
-                                ),
+                                shape: Type.alias({
+                                    aliasOf: parseInlinableType(
+                                        typeof typeDefinition === "string" ? typeDefinition : typeDefinition.alias
+                                    ),
+                                    isId: false,
+                                }),
                             });
                         } else if (isRawObjectDefinition(typeDefinition)) {
                             intermediateRepresentation.types.push({
                                 docs: typeDefinition.docs,
-                                extends:
-                                    typeDefinition.extends != null
-                                        ? typeof typeDefinition.extends === "string"
-                                            ? [parseTypeName({ typeName: typeDefinition.extends, filepath, imports })]
-                                            : typeDefinition.extends.map((extended) =>
-                                                  parseTypeName({ typeName: extended, filepath, imports })
-                                              )
-                                        : [],
                                 name: {
                                     filepath,
                                     name: typeName,
                                 },
                                 shape: Type.object({
+                                    extends:
+                                        typeDefinition.extends != null
+                                            ? typeof typeDefinition.extends === "string"
+                                                ? [
+                                                      parseTypeName({
+                                                          typeName: typeDefinition.extends,
+                                                          filepath,
+                                                          imports,
+                                                      }),
+                                                  ]
+                                                : typeDefinition.extends.map((extended) =>
+                                                      parseTypeName({ typeName: extended, filepath, imports })
+                                                  )
+                                            : [],
                                     fields: Object.entries(typeDefinition.fields).map(
                                         ([fieldName, fieldDefinition]) => ({
                                             key: fieldName,
-                                            valueType: parseInlinableType({ type: fieldDefinition, filepath, imports }),
+                                            valueType: parseInlinableType(fieldDefinition),
                                             docs:
                                                 typeof fieldDefinition !== "string" ? fieldDefinition.docs : undefined,
                                         })
@@ -96,7 +112,6 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                         } else if (isRawUnionDefinition(typeDefinition)) {
                             intermediateRepresentation.types.push({
                                 docs: typeDefinition.docs,
-                                extends: [],
                                 name: {
                                     filepath,
                                     name: typeName,
@@ -105,7 +120,7 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                     types: Object.entries(typeDefinition.union).map(
                                         ([discriminantValue, unionedType]) => ({
                                             discriminantValue,
-                                            valueType: parseInlinableType({ type: unionedType, filepath, imports }),
+                                            valueType: parseInlinableType(unionedType),
                                             docs: typeof unionedType !== "string" ? unionedType.docs : undefined,
                                         })
                                     ),
@@ -113,7 +128,6 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                             });
                         } else if (isRawEnumDefinition(typeDefinition)) {
                             intermediateRepresentation.types.push({
-                                extends: [],
                                 docs: typeDefinition.docs,
                                 name: {
                                     filepath,
@@ -150,7 +164,7 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                     serviceDefinition.headers != null
                                         ? Object.entries(serviceDefinition.headers).map(([header, headerType]) => ({
                                               header,
-                                              valueType: parseInlinableType({ type: headerType, filepath, imports }),
+                                              valueType: parseInlinableType(headerType),
                                               docs: typeof headerType !== "string" ? headerType.docs : undefined,
                                           }))
                                         : [],
@@ -169,11 +183,7 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                                                   ? parameterType.docs
                                                                   : undefined,
                                                           key: parameterName,
-                                                          valueType: parseInlinableType({
-                                                              type: parameterType,
-                                                              filepath,
-                                                              imports,
-                                                          }),
+                                                          valueType: parseInlinableType(parameterType),
                                                       })
                                                   )
                                                 : [],
@@ -186,11 +196,7 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                                                   ? parameterType.docs
                                                                   : undefined,
                                                           key: parameterName,
-                                                          valueType: parseInlinableType({
-                                                              type: parameterType,
-                                                              filepath,
-                                                              imports,
-                                                          }),
+                                                          valueType: parseInlinableType(parameterType),
                                                       })
                                                   )
                                                 : [],
@@ -198,11 +204,7 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                             endpoint.headers != null
                                                 ? Object.entries(endpoint.headers).map(([header, headerType]) => ({
                                                       header,
-                                                      valueType: parseInlinableType({
-                                                          type: headerType,
-                                                          filepath,
-                                                          imports,
-                                                      }),
+                                                      valueType: parseInlinableType(headerType),
                                                       docs:
                                                           typeof headerType !== "string" ? headerType.docs : undefined,
                                                   }))
@@ -214,11 +216,7 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                                           typeof endpoint.request !== "string"
                                                               ? endpoint.request.type
                                                               : undefined,
-                                                      bodyType: parseInlinableType({
-                                                          type: endpoint.request,
-                                                          filepath,
-                                                          imports,
-                                                      }),
+                                                      bodyType: parseInlinableType(endpoint.request),
                                                   }
                                                 : undefined,
                                         response:
@@ -228,11 +226,7 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                                           typeof endpoint.response !== "string"
                                                               ? endpoint.response.type
                                                               : undefined,
-                                                      bodyType: parseInlinableType({
-                                                          type: endpoint.response,
-                                                          filepath,
-                                                          imports,
-                                                      }),
+                                                      bodyType: parseInlinableType(endpoint.response),
                                                   }
                                                 : undefined,
                                         errors:
@@ -240,11 +234,7 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                                 ? Object.entries(endpoint.errors).map(([errorName, error]) => ({
                                                       name: errorName,
                                                       statusCode: error.statusCode,
-                                                      bodyType: parseInlinableType({
-                                                          type: error,
-                                                          filepath,
-                                                          imports,
-                                                      }),
+                                                      bodyType: parseInlinableType(error),
                                                       docs: error.docs,
                                                   }))
                                                 : [],
@@ -272,11 +262,7 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                             ? {
                                                   docs:
                                                       typeof message.body !== "string" ? message.body.docs : undefined,
-                                                  bodyType: parseInlinableType({
-                                                      type: message.body,
-                                                      filepath,
-                                                      imports,
-                                                  }),
+                                                  bodyType: parseInlinableType(message.body),
                                               }
                                             : undefined,
                                     response:
@@ -286,11 +272,7 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                                       typeof message.response !== "string"
                                                           ? message.response.docs
                                                           : undefined,
-                                                  bodyType: parseInlinableType({
-                                                      type: message.response,
-                                                      filepath,
-                                                      imports,
-                                                  }),
+                                                  bodyType: parseInlinableType(message.response),
                                                   behavior:
                                                       typeof message.response !== "string"
                                                           ? convertWebSocketMessageResponseBehavior(
@@ -304,10 +286,7 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                             ? Object.entries(message.errors).map(([errorName, error]) => ({
                                                   docs: typeof error !== "string" ? error.docs : undefined,
                                                   name: errorName,
-                                                  bodyType:
-                                                      error != null
-                                                          ? parseInlinableType({ type: error, filepath, imports })
-                                                          : undefined,
+                                                  bodyType: error != null ? parseInlinableType(error) : undefined,
                                               }))
                                             : [],
                                 })),
@@ -339,22 +318,6 @@ function noop() {
 
 function keys<T>(object: T): (keyof T)[] {
     return Object.keys(object) as (keyof T)[];
-}
-
-function parseInlinableType({
-    type,
-    filepath,
-    imports,
-}: {
-    type: SimpleInlinableType;
-    filepath: string;
-    imports: Record<string, string>;
-}): TypeReference {
-    const typeAsString = typeof type === "string" ? type : type.type;
-    if (typeAsString == null) {
-        return TypeReference.void();
-    }
-    return parseInlineType({ type: typeAsString, filepath, imports });
 }
 
 const MAP_REGEX = /map<\s*(.*)\s*,\s*(.*)\s*>/;
@@ -402,15 +365,15 @@ function parseInlineType({
 
     switch (type) {
         case "integer":
-            return TypeReference.primitive(PrimitiveType.INTEGER);
+            return TypeReference.primitive(PrimitiveType.Integer);
         case "double":
-            return TypeReference.primitive(PrimitiveType.DOUBLE);
+            return TypeReference.primitive(PrimitiveType.Double);
         case "long":
-            return TypeReference.primitive(PrimitiveType.LONG);
+            return TypeReference.primitive(PrimitiveType.Long);
         case "string":
-            return TypeReference.primitive(PrimitiveType.STRING);
+            return TypeReference.primitive(PrimitiveType.String);
         case "boolean":
-            return TypeReference.primitive(PrimitiveType.BOOLEAN);
+            return TypeReference.primitive(PrimitiveType.Boolean);
     }
 
     return TypeReference.named(

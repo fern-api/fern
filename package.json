@@ -1,43 +1,43 @@
 {
-    "name": "birch-api",
-    "version": "1.0.0",
-    "description": "Birch API",
-    "repository": "https://github.com/birch-solutions/birch-api",
-    "author": "Birch Solutions, Inc.",
-    "private": true,
-    "workspaces": [
-        "packages/**"
-    ],
-    "scripts": {
-        "clean": "yarn workspaces foreach --verbose --parallel run clean",
-        "compile": "yarn workspaces foreach --verbose --parallel --topological run compile",
-        "test": "yarn workspaces foreach --verbose --parallel --topological run test",
-        "lint:eslint": "eslint . --max-warnings 0",
-        "lint:eslint:fix": "eslint . --fix --max-warnings 0",
-        "lint:style": "yarn workspaces foreach --verbose --parallel run lint:style",
-        "lint:style:fix": "yarn workspaces foreach --verbose --parallel run lint:style:fix",
-        "lint:monorepo": "mrlint lint",
-        "lint:monorepo:fix": "mrlint lint --fix",
-        "format": "yarn workspaces foreach --verbose --parallel run format",
-        "format:check": "yarn workspaces foreach --verbose --parallel run format:check",
-        "depcheck": "yarn workspaces foreach --verbose --parallel run depcheck",
-        "prepare": "husky install"
-    },
-    "devDependencies": {
-        "@typescript-eslint/eslint-plugin": "^5.17.0",
-        "@typescript-eslint/parser": "^5.17.0",
-        "depcheck": "^1.4.3",
-        "eslint": "^8.12.0",
-        "eslint-plugin-react": "^7.29.4",
-        "eslint-plugin-react-hooks": "^4.4.0",
-        "fern": "workspace:^",
-        "husky": "^7.0.4",
-        "jest": "^27.5.1",
-        "lint-staged": "^12.3.7",
-        "mrlint": "workspace:^",
-        "prettier": "^2.6.1",
-        "react": "^18.0.0",
-        "stylelint": "^14.6.1"
-    },
-    "packageManager": "yarn@3.2.0"
+  "name": "birch-api",
+  "version": "1.0.0",
+  "description": "Birch API",
+  "repository": "https://github.com/birch-solutions/birch-api",
+  "author": "Birch Solutions, Inc.",
+  "private": true,
+  "workspaces": [
+    "packages/**"
+  ],
+  "scripts": {
+    "clean": "yarn workspaces foreach --verbose --parallel run clean",
+    "compile": "yarn workspaces foreach --verbose --parallel --topological run compile",
+    "test": "yarn workspaces foreach --verbose --parallel --topological run test",
+    "lint:eslint": "eslint . --max-warnings 0",
+    "lint:eslint:fix": "eslint . --fix --max-warnings 0",
+    "lint:style": "yarn workspaces foreach --verbose --parallel run lint:style",
+    "lint:style:fix": "yarn workspaces foreach --verbose --parallel run lint:style:fix",
+    "lint:monorepo": "mrlint lint",
+    "lint:monorepo:fix": "mrlint lint --fix",
+    "format": "prettier --write --ignore-unknown --ignore-path ./shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ./shared/.prettierignore \"**\"",
+    "depcheck": "yarn workspaces foreach --verbose --parallel run depcheck",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.17.0",
+    "@typescript-eslint/parser": "^5.17.0",
+    "depcheck": "^1.4.3",
+    "eslint": "^8.12.0",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.4.0",
+    "fern": "workspace:^",
+    "husky": "^7.0.4",
+    "jest": "^27.5.1",
+    "lint-staged": "^12.3.7",
+    "mrlint": "workspace:^",
+    "prettier": "^2.6.1",
+    "react": "^18.0.0",
+    "stylelint": "^14.6.1"
+  },
+  "packageManager": "yarn@3.2.0"
 }

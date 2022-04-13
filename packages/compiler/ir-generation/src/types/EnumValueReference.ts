@@ -1,4 +1,4 @@
-import { TypeName } from "./NamedTypeReference";
+import { TypeName } from "./TypeName";
 
 export interface EnumValueReference {
     referencedEnum: TypeName;

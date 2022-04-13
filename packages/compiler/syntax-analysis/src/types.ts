@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@usebirch/compiler-commons";
+import { RelativeFilePath } from "@fern/compiler-commons";
 import { ZodError } from "zod";
 import { FernSchema } from "./schemas/FernSchema";
 

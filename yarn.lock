@@ -416,12 +416,56 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fern/compiler-commons@workspace:^, @fern/compiler-commons@workspace:packages/compiler/compiler-commons":
+  version: 0.0.0-use.local
+  resolution: "@fern/compiler-commons@workspace:packages/compiler/compiler-commons"
+  dependencies:
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    jest: ^27.5.1
+    prettier: ^2.6.1
+    stylelint: ^14.6.1
+    typescript: ^4.6.3
+  languageName: unknown
+  linkType: soft
+
+"@fern/compiler@workspace:^, @fern/compiler@workspace:packages/compiler/compiler":
+  version: 0.0.0-use.local
+  resolution: "@fern/compiler@workspace:packages/compiler/compiler"
+  dependencies:
+    "@fern/compiler-commons": "workspace:^"
+    "@fern/ir-generation": "workspace:^"
+    "@fern/syntax-analysis": "workspace:^"
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    jest: ^27.5.1
+    prettier: ^2.6.1
+    stylelint: ^14.6.1
+    typescript: ^4.6.3
+  languageName: unknown
+  linkType: soft
+
+"@fern/ir-generation@workspace:^, @fern/ir-generation@workspace:packages/compiler/ir-generation":
+  version: 0.0.0-use.local
+  resolution: "@fern/ir-generation@workspace:packages/compiler/ir-generation"
+  dependencies:
+    "@fern/compiler-commons": "workspace:^"
+    "@fern/syntax-analysis": "workspace:^"
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    jest: ^27.5.1
+    prettier: ^2.6.1
+    stylelint: ^14.6.1
+    typescript: ^4.6.3
+  languageName: unknown
+  linkType: soft
+
 "@fern/syntax-analysis@workspace:^, @fern/syntax-analysis@workspace:packages/compiler/syntax-analysis":
   version: 0.0.0-use.local
   resolution: "@fern/syntax-analysis@workspace:packages/compiler/syntax-analysis"
   dependencies:
+    "@fern/compiler-commons": "workspace:^"
     "@types/js-yaml": ^4.0.5
-    "@usebirch/compiler-commons": "workspace:^"
     depcheck: ^1.4.3
     eslint: ^8.12.0
     jest: ^27.5.1
@@ -430,6 +474,62 @@ __metadata:
     stylelint: ^14.6.1
     typescript: ^4.6.3
     zod: ^3.14.3
+  languageName: unknown
+  linkType: soft
+
+"@fern/typescript-client@workspace:packages/fern-typescript/client":
+  version: 0.0.0-use.local
+  resolution: "@fern/typescript-client@workspace:packages/fern-typescript/client"
+  dependencies:
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    jest: ^27.5.1
+    prettier: ^2.6.1
+    stylelint: ^14.6.1
+    typescript: ^4.6.3
+  languageName: unknown
+  linkType: soft
+
+"@fern/typescript-commons@workspace:packages/fern-typescript/commons":
+  version: 0.0.0-use.local
+  resolution: "@fern/typescript-commons@workspace:packages/fern-typescript/commons"
+  dependencies:
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    jest: ^27.5.1
+    prettier: ^2.6.1
+    stylelint: ^14.6.1
+    typescript: ^4.6.3
+  languageName: unknown
+  linkType: soft
+
+"@fern/typescript-model@workspace:^, @fern/typescript-model@workspace:packages/fern-typescript/model":
+  version: 0.0.0-use.local
+  resolution: "@fern/typescript-model@workspace:packages/fern-typescript/model"
+  dependencies:
+    "@fern/ir-generation": "workspace:^"
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    jest: ^27.5.1
+    prettier: ^2.6.1
+    stylelint: ^14.6.1
+    ts-morph: ^14.0.0
+    typescript: ^4.6.3
+  languageName: unknown
+  linkType: soft
+
+"@fern/typescript-server@workspace:^, @fern/typescript-server@workspace:packages/fern-typescript/server":
+  version: 0.0.0-use.local
+  resolution: "@fern/typescript-server@workspace:packages/fern-typescript/server"
+  dependencies:
+    "@fern/ir-generation": "workspace:^"
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    jest: ^27.5.1
+    prettier: ^2.6.1
+    stylelint: ^14.6.1
+    ts-morph: ^14.0.0
+    typescript: ^4.6.3
   languageName: unknown
   linkType: soft
 
@@ -865,6 +965,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ts-morph/common@npm:~0.13.0":
+  version: 0.13.0
+  resolution: "@ts-morph/common@npm:0.13.0"
+  dependencies:
+    fast-glob: ^3.2.11
+    minimatch: ^5.0.1
+    mkdirp: ^1.0.4
+    path-browserify: ^1.0.1
+  checksum: 88b3d4b82dc6aca12741e55c6bf037f2243d14f4b9c42bbe28ed4a773ae9cd8d3ca6a6f9f827b5830c188037b0781d881a002ddb73e094fa5d5ff2a3352dc842
+  languageName: node
+  linkType: hard
+
 "@types/babel__core@npm:^7.0.0, @types/babel__core@npm:^7.1.14":
   version: 7.1.19
   resolution: "@types/babel__core@npm:7.1.19"
@@ -1161,50 +1273,6 @@ __metadata:
   checksum: ea878349c716980e8c83fde0b60399c5e59931f74eed14d3db0f630a3ed4d092a069a5cdd3bd652bde5e19d733babd18a70ddbb5e4f6ab5b2110ad5cce857bf7
   languageName: node
   linkType: hard
-
-"@usebirch/compiler-commons@workspace:^, @usebirch/compiler-commons@workspace:packages/compiler/compiler-commons":
-  version: 0.0.0-use.local
-  resolution: "@usebirch/compiler-commons@workspace:packages/compiler/compiler-commons"
-  dependencies:
-    depcheck: ^1.4.3
-    eslint: ^8.12.0
-    jest: ^27.5.1
-    prettier: ^2.6.1
-    stylelint: ^14.6.1
-    typescript: ^4.6.3
-  languageName: unknown
-  linkType: soft
-
-"@usebirch/compiler@workspace:^, @usebirch/compiler@workspace:packages/compiler/compiler":
-  version: 0.0.0-use.local
-  resolution: "@usebirch/compiler@workspace:packages/compiler/compiler"
-  dependencies:
-    "@fern/syntax-analysis": "workspace:^"
-    "@usebirch/compiler-commons": "workspace:^"
-    "@usebirch/ir-generation": "workspace:^"
-    depcheck: ^1.4.3
-    eslint: ^8.12.0
-    jest: ^27.5.1
-    prettier: ^2.6.1
-    stylelint: ^14.6.1
-    typescript: ^4.6.3
-  languageName: unknown
-  linkType: soft
-
-"@usebirch/ir-generation@workspace:^, @usebirch/ir-generation@workspace:packages/compiler/ir-generation":
-  version: 0.0.0-use.local
-  resolution: "@usebirch/ir-generation@workspace:packages/compiler/ir-generation"
-  dependencies:
-    "@fern/syntax-analysis": "workspace:^"
-    "@usebirch/compiler-commons": "workspace:^"
-    depcheck: ^1.4.3
-    eslint: ^8.12.0
-    jest: ^27.5.1
-    prettier: ^2.6.1
-    stylelint: ^14.6.1
-    typescript: ^4.6.3
-  languageName: unknown
-  linkType: soft
 
 "@vue/compiler-core@npm:3.2.31":
   version: 3.2.31
@@ -1681,6 +1749,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"brace-expansion@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "brace-expansion@npm:2.0.1"
+  dependencies:
+    balanced-match: ^1.0.0
+  checksum: a61e7cd2e8a8505e9f0036b3b6108ba5e926b4b55089eeb5550cd04a471fe216c96d4fe7e4c7f995c728c554ae20ddfc4244cad10aef255e72b62930afd233d1
+  languageName: node
+  linkType: hard
+
 "braces@npm:^3.0.2, braces@npm:~3.0.2":
   version: 3.0.2
   resolution: "braces@npm:3.0.2"
@@ -1931,6 +2008,15 @@ __metadata:
   version: 4.6.0
   resolution: "co@npm:4.6.0"
   checksum: 5210d9223010eb95b29df06a91116f2cf7c8e0748a9013ed853b53f362ea0e822f1e5bb054fb3cefc645239a4cf966af1f6133a3b43f40d591f3b68ed6cf0510
+  languageName: node
+  linkType: hard
+
+"code-block-writer@npm:^11.0.0":
+  version: 11.0.0
+  resolution: "code-block-writer@npm:11.0.0"
+  dependencies:
+    tslib: 2.3.1
+  checksum: d3d92a06f762d5926ecdb2033e4f30eb4c51aca365ea69ef424afbce7cc2b1518a50deff2645cc17b6fa53f234d664631f2268a4caf91af6a1fd696aa0b2fefb
   languageName: node
   linkType: hard
 
@@ -2740,14 +2826,35 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fern-typescript@workspace:packages/fern-typescript/cli":
+  version: 0.0.0-use.local
+  resolution: "fern-typescript@workspace:packages/fern-typescript/cli"
+  dependencies:
+    "@fern/ir-generation": "workspace:^"
+    "@fern/typescript-model": "workspace:^"
+    "@fern/typescript-server": "workspace:^"
+    "@types/yargs": ^17.0.10
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    jest: ^27.5.1
+    prettier: ^2.6.1
+    stylelint: ^14.6.1
+    ts-morph: ^14.0.0
+    typescript: ^4.6.3
+    yargs: ^17.4.1
+  bin:
+    fern-typescript: ./cli
+  languageName: unknown
+  linkType: soft
+
 "fern@workspace:^, fern@workspace:packages/compiler/cli":
   version: 0.0.0-use.local
   resolution: "fern@workspace:packages/compiler/cli"
   dependencies:
+    "@fern/compiler": "workspace:^"
+    "@fern/compiler-commons": "workspace:^"
     "@fern/syntax-analysis": "workspace:^"
     "@types/yargs": ^17.0.10
-    "@usebirch/compiler": "workspace:^"
-    "@usebirch/compiler-commons": "workspace:^"
     chalk: ^4.1.2
     depcheck: ^1.4.3
     eslint: ^8.12.0
@@ -4558,6 +4665,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"minimatch@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "minimatch@npm:5.0.1"
+  dependencies:
+    brace-expansion: ^2.0.1
+  checksum: b34b98463da4754bc526b244d680c69d4d6089451ebe512edaf6dd9eeed0279399cfa3edb19233513b8f830bf4bfcad911dddcdf125e75074100d52f724774f0
+  languageName: node
+  linkType: hard
+
 "minimist-options@npm:4.1.0":
   version: 4.1.0
   resolution: "minimist-options@npm:4.1.0"
@@ -5019,6 +5135,13 @@ __metadata:
   version: 6.0.1
   resolution: "parse5@npm:6.0.1"
   checksum: 7d569a176c5460897f7c8f3377eff640d54132b9be51ae8a8fa4979af940830b2b0c296ce75e5bd8f4041520aadde13170dbdec44889975f906098ea0002f4bd
+  languageName: node
+  linkType: hard
+
+"path-browserify@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "path-browserify@npm:1.0.1"
+  checksum: c6d7fa376423fe35b95b2d67990060c3ee304fc815ff0a2dc1c6c3cfaff2bd0d572ee67e18f19d0ea3bbe32e8add2a05021132ac40509416459fffee35200699
   languageName: node
   linkType: hard
 
@@ -6205,17 +6328,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ts-morph@npm:^14.0.0":
+  version: 14.0.0
+  resolution: "ts-morph@npm:14.0.0"
+  dependencies:
+    "@ts-morph/common": ~0.13.0
+    code-block-writer: ^11.0.0
+  checksum: e975fb245ae558c638e94014dcbbad828b904dee5a7309bfb4ef2b2922d0d7ad902ec00874a959be58991043ce655f78ae78df0d0e0d6fb3800b991b95be08ce
+  languageName: node
+  linkType: hard
+
+"tslib@npm:2.3.1, tslib@npm:^2.1.0":
+  version: 2.3.1
+  resolution: "tslib@npm:2.3.1"
+  checksum: de17a98d4614481f7fcb5cd53ffc1aaf8654313be0291e1bfaee4b4bb31a20494b7d218ff2e15017883e8ea9626599b3b0e0229c18383ba9dce89da2adf15cb9
+  languageName: node
+  linkType: hard
+
 "tslib@npm:^1.8.1":
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: dbe628ef87f66691d5d2959b3e41b9ca0045c3ee3c7c7b906cc1e328b39f199bb1ad9e671c39025bd56122ac57dfbf7385a94843b1cc07c60a4db74795829acd
-  languageName: node
-  linkType: hard
-
-"tslib@npm:^2.1.0":
-  version: 2.3.1
-  resolution: "tslib@npm:2.3.1"
-  checksum: de17a98d4614481f7fcb5cd53ffc1aaf8654313be0291e1bfaee4b4bb31a20494b7d218ff2e15017883e8ea9626599b3b0e0229c18383ba9dce89da2adf15cb9
   languageName: node
   linkType: hard
 
@@ -6649,7 +6782,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs@npm:^17.3.1":
+"yargs@npm:^17.3.1, yargs@npm:^17.4.1":
   version: 17.4.1
   resolution: "yargs@npm:17.4.1"
   dependencies:
