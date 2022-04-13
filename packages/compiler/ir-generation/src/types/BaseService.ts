@@ -1,4 +1,4 @@
-import { TypeName } from "./NamedTypeReference";
+import { TypeName } from "./TypeName";
 import { WithDocs } from "./WithDocs";
 
 export interface BaseService extends WithDocs {

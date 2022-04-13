@@ -24,7 +24,7 @@ export declare namespace ContainerType {
     }
 }
 
-export const ContainerType = Object.freeze({
+export const ContainerType = {
     map: (value: Omit<ContainerType.Map, "type">): ContainerType.Map => ({
         ...value,
         type: "map",
@@ -49,4 +49,27 @@ export const ContainerType = Object.freeze({
     }),
     isOptional: (containerType: ContainerType): containerType is ContainerType.Optional =>
         containerType.type === "optional",
-});
+
+    visit: <R>(value: ContainerType, visitor: ContainerTypeVisitor<R>): R => {
+        switch (value.type) {
+            case "map":
+                return visitor.map(value);
+            case "list":
+                return visitor.list(value.list);
+            case "set":
+                return visitor.set(value.set);
+            case "optional":
+                return visitor.optional(value.optional);
+            default:
+                return visitor.unknown(value);
+        }
+    },
+};
+
+export interface ContainerTypeVisitor<R> {
+    map: (map: MapType) => R;
+    list: (list: TypeReference) => R;
+    set: (set: TypeReference) => R;
+    optional: (optional: TypeReference) => R;
+    unknown: (object: { type: string }) => R;
+}

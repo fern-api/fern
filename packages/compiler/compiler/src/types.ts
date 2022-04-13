@@ -1,5 +1,5 @@
+import { IntermediateRepresentation } from "@fern/ir-generation";
 import { SyntaxAnalysis } from "@fern/syntax-analysis/src/types";
-import { IntermediateRepresentation } from "@usebirch/ir-generation";
 
 export declare namespace Compiler {
     export type Result = SuccessfulResult | FailedResult;

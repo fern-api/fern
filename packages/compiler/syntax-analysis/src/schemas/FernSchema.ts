@@ -5,7 +5,7 @@ import { TypeDefinitionSchema } from "./TypeDefinitionSchema";
 
 export const FernSchema = z.strictObject({
     imports: z.optional(z.record(z.string())),
-    ids: z.optional(z.record(IdSchema)),
+    ids: z.optional(z.array(IdSchema)),
     types: z.optional(z.record(TypeDefinitionSchema)),
     services: z.optional(ServicesSchema),
 });

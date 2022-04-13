@@ -1,4 +1,4 @@
 {
-    "npmClient": "yarn",
-    "useWorkspaces": true
+  "npmClient": "yarn",
+  "useWorkspaces": true
 }

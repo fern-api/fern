@@ -1,4 +1,11 @@
+ids:
+  - SubscriptionId
+  - name: MyId
+    type: integer
+  - PlaylistId
+
 types:
+  SomeAlias: map<string, list<IntermediateRepresentation>>
   IntermediateRepresentation:
     docs: Complete representation of the API schema
     fields:
@@ -13,17 +20,14 @@ types:
     docs: A type, which is a name and a shape
     extends: WithDocs
     fields:
-      extends:
-        docs: A list of other types to inherit from
-        type: list<NamedTypeReference>
-      name: NamedTypeReference
+      name: TypeName
       shape: Type
 
   WithDocs:
     fields:
       docs: optional<string>
 
-  NamedTypeReference:
+  TypeName:
     extends: WithFilepath
     fields:
       name: string
@@ -41,6 +45,9 @@ types:
 
   ObjectTypeDefinition:
     fields:
+      extends:
+        docs: A list of other types to inherit from
+        type: list<TypeName>
       fields: list<ObjectField>
 
   ObjectField:
@@ -51,18 +58,19 @@ types:
 
   TypeReference:
     union:
-      named: NamedTypeReference
+      named: TypeName
       primitive: PrimitiveType
       container: ContainerType
+      void: {}
 
   PrimitiveType:
     enum:
-      - INTEGER
-      - DOUBLE
-      - value: LONG
+      - integer
+      - double
+      - string
+      - boolean
+      - value: long
         docs: Within the range -2^53 to 2^53
-      - STRING
-      - BOOLEAN
 
   ContainerType:
     union:

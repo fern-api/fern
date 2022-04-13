@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@usebirch/compiler-commons";
+import { RelativeFilePath } from "@fern/compiler-commons";
 import { FernSchema } from "./schemas/FernSchema";
 import { SyntaxAnalysis, SyntaxAnalysisFailureType } from "./types";
 

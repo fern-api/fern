@@ -1,6 +1,6 @@
+import { AliasTypeDefinition } from "./AliasTypeDefinition";
 import { EnumTypeDefinition } from "./EnumTypeDefinition";
 import { ObjectTypeDefinition } from "./ObjectTypeDefinition";
-import { TypeReference } from "./TypeReference";
 import { UnionTypeDefinition } from "./UnionTypeDefinition";
 
 export type Type = Type.Object | Type.Union | Type.Alias | Type.Enum;
@@ -14,9 +14,8 @@ export declare namespace Type {
         type: "union";
     }
 
-    export interface Alias {
+    export interface Alias extends AliasTypeDefinition {
         type: "alias";
-        alias: TypeReference;
     }
 
     export interface Enum extends EnumTypeDefinition {
@@ -24,7 +23,7 @@ export declare namespace Type {
     }
 }
 
-export const Type = Object.freeze({
+export const Type = {
     object: (value: Omit<Type.Object, "type">): Type.Object => ({
         ...value,
         type: "object",
@@ -37,8 +36,8 @@ export const Type = Object.freeze({
     }),
     isUnion: (type: Type): type is Type.Union => type.type === "union",
 
-    alias: (value: TypeReference): Type.Alias => ({
-        alias: value,
+    alias: (value: Omit<Type.Alias, "type">): Type.Alias => ({
+        ...value,
         type: "alias",
     }),
     isAlias: (type: Type): type is Type.Alias => type.type === "alias",
@@ -48,4 +47,27 @@ export const Type = Object.freeze({
         type: "enum",
     }),
     isEnum: (type: Type): type is Type.Enum => type.type === "enum",
-});
+
+    visit: <R>(value: Type, visitor: TypeVisitor<R>): R => {
+        switch (value.type) {
+            case "object":
+                return visitor.object(value);
+            case "union":
+                return visitor.union(value);
+            case "alias":
+                return visitor.alias(value);
+            case "enum":
+                return visitor.enum(value);
+            default:
+                return visitor.unknown(value);
+        }
+    },
+};
+
+export interface TypeVisitor<R> {
+    object: (object: ObjectTypeDefinition) => R;
+    union: (union: UnionTypeDefinition) => R;
+    alias: (alias: AliasTypeDefinition) => R;
+    enum: (_enum: EnumTypeDefinition) => R;
+    unknown: (type: { type: string }) => R;
+}

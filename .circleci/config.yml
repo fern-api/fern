@@ -1,125 +1,121 @@
 version: 2.1
 orbs:
-    node: circleci/node@5.0.1
+  node: circleci/node@5.0.1
 jobs:
-    lint:
-        docker:
-            - image: cimg/node:17.3.1
-        steps:
-            - checkout
-            - node/install-packages:
-                  pkg-manager: yarn-berry
-            - run:
-                  name: Compile mrlint
-                  command: yarn workspace mrlint run compile
-            - run:
-                  name: Lint monorepo
-                  command: yarn lint:monorepo
-            - run:
-                  name: Lint
-                  command: yarn lint:eslint
-            - run:
-                  name: Lint style
-                  command: yarn lint:style
-            - run:
-                  name: Format
-                  command: yarn format:check
-            - run:
-                  name: Check dependencies
-                  command: yarn depcheck
-            - run:
-                  name: Ensure no changes to git-tracked files
-                  command: git --no-pager diff
-    compile-and-test:
-        docker:
-            - image: cimg/node:17.3.1
-        steps:
-            - checkout
-            - node/install-packages:
-                  pkg-manager: yarn-berry
-            - run:
-                  name: Compile
-                  command: yarn compile
-            - run:
-                  name: Run tests
-                  command: yarn test -- --ci
-    compile-java:
-        docker: [{ image: "cimg/openjdk:11.0.10-node" }]
-        resource_class: small
-        environment:
-            CIRCLE_TEST_REPORTS: /home/circleci/junit
-            CIRCLE_ARTIFACTS: /home/circleci/artifacts
-            GRADLE_OPTS: -Dorg.gradle.jvmargs='-XX:MaxMetaspaceSize=256m' -Dorg.gradle.workers.max=4
-            _JAVA_OPTIONS: -XX:ActiveProcessorCount=4 -Xmx1177m -XX:MaxMetaspaceSize=512m -XX:ErrorFile=/home/circleci/artifacts/hs_err_pid%p.log -XX:HeapDumpPath=/home/circleci/artifacts
-        steps:
-            - checkout
-            - restore_cache:
-                  {
-                      key: 'gradle-wrapper-v2-{{ checksum "packages/fern-java/gradle/wrapper/gradle-wrapper.properties" }}',
-                  }
-            - restore_cache:
-                  {
-                      key: 'compile-gradle-cache-v2-{{ checksum "packages/fern-java/versions.props" }}-{{ checksum "packages/fern-java/build.gradle" }}',
-                  }
-            - run: cd packages/fern-java && ./gradlew --parallel --stacktrace classes testClasses
-            - save_cache:
-                  key: 'gradle-wrapper-v2-{{ checksum "packages/fern-java/gradle/wrapper/gradle-wrapper.properties" }}'
-                  paths: [~/.gradle/wrapper]
-            - save_cache:
-                  key: 'compile-gradle-cache-v2-{{ checksum "packages/fern-java/versions.props" }}-{{ checksum "packages/fern-java/build.gradle" }}'
-                  paths: [~/.gradle/caches]
-            - persist_to_workspace:
-                  root: /home/circleci
-                  paths: [project, packages/fern-java/.gradle/init.gradle]
+  lint:
+    docker:
+      - image: cimg/node:17.3.1
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn-berry
+      - run:
+          name: Compile mrlint
+          command: yarn workspace mrlint run compile
+      - run:
+          name: Lint monorepo
+          command: yarn lint:monorepo
+      - run:
+          name: Lint
+          command: yarn lint:eslint
+      - run:
+          name: Lint style
+          command: yarn lint:style
+      - run:
+          name: Format
+          command: yarn format:check
+      - run:
+          name: Check dependencies
+          command: yarn depcheck
+      - run:
+          name: Ensure no changes to git-tracked files
+          command: git --no-pager diff
+  compile-and-test:
+    docker:
+      - image: cimg/node:17.3.1
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn-berry
+      - run:
+          name: Compile
+          command: yarn compile
+      - run:
+          name: Run tests
+          command: yarn test -- --ci
+  compile-java:
+    docker: [{ image: "cimg/openjdk:11.0.10-node" }]
+    resource_class: small
+    environment:
+      CIRCLE_TEST_REPORTS: /home/circleci/junit
+      CIRCLE_ARTIFACTS: /home/circleci/artifacts
+      GRADLE_OPTS: -Dorg.gradle.jvmargs='-XX:MaxMetaspaceSize=256m' -Dorg.gradle.workers.max=4
+      _JAVA_OPTIONS: -XX:ActiveProcessorCount=4 -Xmx1177m -XX:MaxMetaspaceSize=512m -XX:ErrorFile=/home/circleci/artifacts/hs_err_pid%p.log -XX:HeapDumpPath=/home/circleci/artifacts
+    steps:
+      - checkout
+      - restore_cache:
+          { key: 'gradle-wrapper-v2-{{ checksum "packages/fern-java/gradle/wrapper/gradle-wrapper.properties" }}' }
+      - restore_cache:
+          {
+            key: 'compile-gradle-cache-v2-{{ checksum "packages/fern-java/versions.props" }}-{{ checksum "packages/fern-java/build.gradle" }}',
+          }
+      - run: cd packages/fern-java && ./gradlew --parallel --stacktrace classes testClasses
+      - save_cache:
+          key: 'gradle-wrapper-v2-{{ checksum "packages/fern-java/gradle/wrapper/gradle-wrapper.properties" }}'
+          paths: [~/.gradle/wrapper]
+      - save_cache:
+          key: 'compile-gradle-cache-v2-{{ checksum "packages/fern-java/versions.props" }}-{{ checksum "packages/fern-java/build.gradle" }}'
+          paths: [~/.gradle/caches]
+      - persist_to_workspace:
+          root: /home/circleci
+          paths: [project, packages/fern-java/.gradle/init.gradle]
 
-    publish-java-snapshot:
-        docker: [{ image: "cimg/openjdk:11.0.10-node" }]
-        resource_class: small
-        environment:
-            CIRCLE_TEST_REPORTS: /home/circleci/junit
-            CIRCLE_ARTIFACTS: /home/circleci/artifacts
-            _JAVA_OPTIONS: -Dorg.gradle.internal.launcher.welcomeMessageEnabled=false -Xmx8192m
-            JAVA_HOME: /opt/java11
-        steps:
-            - attach_workspace: { at: /home/circleci }
-            - restore_cache:
-                  {
-                      key: 'gradle-wrapper-v2-{{ checksum "packages/fern-java/gradle/wrapper/gradle-wrapper.properties" }}',
-                  }
-            - restore_cache:
-                  {
-                      key: 'unit-test-gradle-cache-v2-{{ checksum "packages/fern-java/versions.props" }}-{{ checksum "packages/fern-java/build.gradle" }}',
-                  }
-            - run:
-                  name: Install Java
-                  command: |
-                      sudo mkdir -p /opt/java && cd /opt/java && sudo chown -R circleci:circleci .
-                      curl https://cdn.azul.com/zulu/bin/zulu11.41.23-ca-jdk11.0.8-linux_x64.tar.gz | tar -xzf - -C /opt/java
-                      sudo ln -s /opt/java/zulu*/ /opt/java11
-            - run:
-                  command: cd packages/fern-java && ./gradlew artifactoryPublish
-                  name: Publish conjure json file
+  publish-java-snapshot:
+    docker: [{ image: "cimg/openjdk:11.0.10-node" }]
+    resource_class: small
+    environment:
+      CIRCLE_TEST_REPORTS: /home/circleci/junit
+      CIRCLE_ARTIFACTS: /home/circleci/artifacts
+      _JAVA_OPTIONS: -Dorg.gradle.internal.launcher.welcomeMessageEnabled=false -Xmx8192m
+      JAVA_HOME: /opt/java11
+    steps:
+      - attach_workspace: { at: /home/circleci }
+      - restore_cache:
+          { key: 'gradle-wrapper-v2-{{ checksum "packages/fern-java/gradle/wrapper/gradle-wrapper.properties" }}' }
+      - restore_cache:
+          {
+            key: 'unit-test-gradle-cache-v2-{{ checksum "packages/fern-java/versions.props" }}-{{ checksum "packages/fern-java/build.gradle" }}',
+          }
+      - run:
+          name: Install Java
+          command: |
+            sudo mkdir -p /opt/java && cd /opt/java && sudo chown -R circleci:circleci .
+            curl https://cdn.azul.com/zulu/bin/zulu11.41.23-ca-jdk11.0.8-linux_x64.tar.gz | tar -xzf - -C /opt/java
+            sudo ln -s /opt/java/zulu*/ /opt/java11
+      - run:
+          command: cd packages/fern-java && ./gradlew artifactoryPublish
+          name: Publish conjure json file
 
 workflows:
-    version: 2
-    build:
-        jobs:
-            - lint:
-                  filters: { tags: { only: /.*/ } }
+  version: 2
+  build:
+    jobs:
+      - lint:
+          filters: { tags: { only: /.*/ } }
 
-            - compile-and-test:
-                  filters: { tags: { only: /.*/ } }
-                  requires: [lint]
+      - compile-and-test:
+          filters: { tags: { only: /.*/ } }
+          requires: [lint]
 
-            - compile-java:
-                  filters: { tags: { only: /.*/ } }
+      - compile-java:
+          filters: { tags: { only: /.*/ } }
 
-            - publish-java-snapshot:
-                  requires: [compile-java]
-                  filters:
-                      branches:
-                          only:
-                              - main
-                      tags:
-                          ignore: /.*/
-                  context: jfrog
+      - publish-java-snapshot:
+          requires: [compile-java]
+          filters:
+            branches:
+              only:
+                - main
+            tags:
+              ignore: /.*/
+          context: jfrog

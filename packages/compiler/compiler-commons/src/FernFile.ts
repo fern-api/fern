@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "./RelativeFilePath";
 
 export interface FernFile {
-    package: RelativeFilePath;
+    filepath: RelativeFilePath;
     fileContents: string;
 }
