@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "outDir": "./lib",
+    "rootDir": "src",
+    "composite": true
+  },
+  "include": ["./src"]
+}

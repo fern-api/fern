@@ -38,4 +38,4 @@ cdk.out/
 
 # fern api
 packages/api/ir.json
-/packages/**/src/generated
+/packages/**/generated

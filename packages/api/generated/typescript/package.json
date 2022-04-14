@@ -1,0 +1,16 @@
+{
+  "name": "@fernapi/api",
+  "version": "0.1.0",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "compile": "tsc --build",
+    "prepublish": "run compile"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.3"
+  }
+}

@@ -1,6 +1,6 @@
 {
   "name": "@fernapi/syntax-analysis",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -20,7 +20,7 @@
     "prepublish": "run clean && run compile && run test && run lint:eslint && run lint:style && run format:check && run depcheck"
   },
   "dependencies": {
-    "@fernapi/compiler-commons": "0.1.2",
+    "@fernapi/compiler-commons": "workspace:^",
     "js-yaml": "^4.1.0",
     "zod": "^3.14.3"
   },
