@@ -479,7 +479,7 @@ __metadata:
     "@fernapi/api": "workspace:*"
     "@fernapi/compiler-commons": "workspace:*"
     "@fernapi/ir-generation": "workspace:*"
-    "@fernapi/syntax-analysis": "workspace:^"
+    "@fernapi/syntax-analysis": "workspace:*"
     depcheck: ^1.4.3
     eslint: ^8.12.0
     jest: ^27.5.1
@@ -592,7 +592,7 @@ __metadata:
   dependencies:
     "@fernapi/api": "workspace:*"
     "@fernapi/compiler-commons": "workspace:*"
-    "@fernapi/syntax-analysis": "workspace:^"
+    "@fernapi/syntax-analysis": "workspace:*"
     depcheck: ^1.4.3
     eslint: ^8.12.0
     jest: ^27.5.1
@@ -670,7 +670,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fernapi/syntax-analysis@^0.1.0, @fernapi/syntax-analysis@workspace:*, @fernapi/syntax-analysis@workspace:^, @fernapi/syntax-analysis@workspace:packages/compiler/syntax-analysis":
+"@fernapi/syntax-analysis@^0.1.0, @fernapi/syntax-analysis@workspace:*, @fernapi/syntax-analysis@workspace:packages/compiler/syntax-analysis":
   version: 0.0.0-use.local
   resolution: "@fernapi/syntax-analysis@workspace:packages/compiler/syntax-analysis"
   dependencies:
