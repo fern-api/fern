@@ -1,1 +1,0 @@
-export { generateServerFiles } from "./generate";
