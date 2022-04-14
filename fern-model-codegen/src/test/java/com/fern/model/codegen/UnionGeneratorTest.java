@@ -1,9 +1,17 @@
 package com.fern.model.codegen;
 
-import com.fern.*;
-import org.junit.jupiter.api.Test;
-
+import com.fern.ContainerType;
+import com.fern.NamedTypeReference;
+import com.fern.PrimitiveType;
+import com.fern.SingleUnionType;
+import com.fern.Type;
+import com.fern.TypeDefinition;
+import com.fern.TypeReference;
+import com.fern.UnionTypeDefinition;
+import com.fern.model.codegen.union.GeneratedUnion;
+import com.fern.model.codegen.union.UnionGenerator;
 import java.util.Collections;
+import org.junit.jupiter.api.Test;
 
 public class UnionGeneratorTest {
 
@@ -32,10 +40,11 @@ public class UnionGeneratorTest {
                         .build())
                 .addTypes(SingleUnionType.builder()
                         .discriminantValue("mapValue")
-                        .valueType(TypeReference.container(ContainerType.list(TypeReference.named(NamedTypeReference.builder()
-                                .filepath("com/birch/trace/commons")
-                                .name("VariableValue")
-                                .build()))))
+                        .valueType(TypeReference.container(
+                                ContainerType.list(TypeReference.named(NamedTypeReference.builder()
+                                        .filepath("com/birch/trace/commons")
+                                        .name("VariableValue")
+                                        .build()))))
                         .build())
                 .build();
         TypeDefinition variableValueTypeDefinition = TypeDefinition.builder()
@@ -45,10 +54,11 @@ public class UnionGeneratorTest {
                         .build())
                 .shape(Type.union(unionTypeDefinition))
                 .build();
-        GeneratedUnion generatedUnion = UnionGenerator.generate(
+        UnionGenerator unionGenerator = new UnionGenerator(
                 variableValueTypeDefinition.name(),
                 unionTypeDefinition,
                 Collections.singletonMap(variableValueTypeDefinition.name(), variableValueTypeDefinition));
+        GeneratedUnion generatedUnion = unionGenerator.generate();
         System.out.println(generatedUnion.file().toString());
     }
 }

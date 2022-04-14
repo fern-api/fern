@@ -1,5 +1,6 @@
 package com.fern.model.codegen;
 
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 
 public interface GeneratedFile<D> {
@@ -8,9 +9,7 @@ public interface GeneratedFile<D> {
 
     D definition();
 
-    default String className() {
-        return file().typeSpec.name;
-    }
+    ClassName className();
 
     default String packageName() {
         return file().packageName;
