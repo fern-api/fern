@@ -139,7 +139,6 @@ public final class TypeReference {
     @JsonDeserialize(as = ImmutableTypeReference.Container.class)
     public interface Container extends Base {
 
-        @JsonValue
         ContainerType container();
 
         @Override
