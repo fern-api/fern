@@ -1,1 +1,0 @@
-{ "ignores": ["sass"], "ignore-patterns": ["lib", ".eslintrc.json"] }

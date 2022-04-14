@@ -1,16 +1,19 @@
+import {
+    ContainerType,
+    FernFilepath,
+    HttpEndpoint,
+    HttpVerb,
+    IntermediateRepresentation,
+    PrimitiveType,
+    Type,
+    TypeName,
+    TypeReference,
+    WebSocketMessageOrigin,
+    WebSocketMessageResponseBehavior,
+} from "@fernapi/api";
 import { CompilerStage, RelativeFilePath } from "@fernapi/compiler-commons";
 import { RawSchemas, SimpleInlinableType } from "@fernapi/syntax-analysis";
 import path from "path";
-import { ContainerType } from "./types/ContainerType";
-import { FernFilepath } from "./types/FernFilepath";
-import { HttpMethod } from "./types/HttpMethod";
-import { IntermediateRepresentation } from "./types/IntermediateRepresentation";
-import { PrimitiveType } from "./types/PrimitiveType";
-import { Type } from "./types/Type";
-import { TypeName } from "./types/TypeName";
-import { TypeReference } from "./types/TypeReference";
-import { WebSocketMessageOrigin } from "./types/WebSocketMessageOrigin";
-import { WebSocketMessageResponseBehavior } from "./types/WebSocketMessageResponseBehavior";
 
 export const IntermediateRepresentationGenerationStage: CompilerStage<
     Record<RelativeFilePath, RawSchemas.FernSchema>,
@@ -53,11 +56,11 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                 name: typeof id === "string" ? id : id.name,
                             },
                             shape: Type.alias({
-                                aliasOf:
+                                name: "TODO delete this and add isId",
+                                aliasType:
                                     typeof id === "string" || id.type == null
                                         ? TypeReference.primitive(PrimitiveType.String)
                                         : parseInlinableType(id.type),
-                                isId: true,
                             }),
                         });
                     }
@@ -75,10 +78,10 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                     name: typeName,
                                 },
                                 shape: Type.alias({
-                                    aliasOf: parseInlinableType(
+                                    name: "TODO delete this and add isId",
+                                    aliasType: parseInlinableType(
                                         typeof typeDefinition === "string" ? typeDefinition : typeDefinition.alias
                                     ),
-                                    isId: false,
                                 }),
                             });
                         } else if (isRawObjectDefinition(typeDefinition)) {
@@ -162,8 +165,9 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                     name: serviceName,
                                     fernFilepath,
                                 },
-                                displayName: serviceDefinition.name,
-                                basePath: serviceDefinition["base-path"],
+                                // TODO add display name
+                                // displayName: serviceDefinition.name,
+                                basePath: serviceDefinition["base-path"] ?? "/",
                                 headers:
                                     serviceDefinition.headers != null
                                         ? Object.entries(serviceDefinition.headers).map(([header, headerType]) => ({
@@ -173,10 +177,11 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                           }))
                                         : [],
                                 endpoints: Object.entries(serviceDefinition.endpoints).map(
-                                    ([endpointName, endpoint]) => ({
-                                        name: endpointName,
+                                    ([endpointId, endpoint]): HttpEndpoint => ({
+                                        endpointId,
                                         docs: endpoint.docs,
-                                        method: convertHttpMethod(endpoint.method),
+                                        // TODO change this to method
+                                        verb: convertHttpMethod(endpoint.method),
                                         path: endpoint.path,
                                         parameters:
                                             endpoint.parameters != null
@@ -204,7 +209,8 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                                       })
                                                   )
                                                 : [],
-                                        headers:
+                                        // TODO rename to headers
+                                        header:
                                             endpoint.headers != null
                                                 ? Object.entries(endpoint.headers).map(([header, headerType]) => ({
                                                       header,
@@ -255,8 +261,9 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                     fernFilepath,
                                     name: serviceName,
                                 },
-                                displayName: serviceDefinition.name,
-                                basePath: serviceDefinition["base-path"],
+                                // TODO add display name
+                                // displayName: serviceDefinition.name,
+                                basePath: serviceDefinition["base-path"] ?? "/",
                                 messages: Object.entries(serviceDefinition.messages).map(([messageName, message]) => ({
                                     name: messageName,
                                     docs: message.docs,
@@ -453,16 +460,16 @@ function assertNever(typeDefinition: never): never {
     throw new Error("Unexpected value: " + JSON.stringify(typeDefinition));
 }
 
-function convertHttpMethod(method: RawSchemas.HttpEndpointSchema["method"]): HttpMethod {
+function convertHttpMethod(method: RawSchemas.HttpEndpointSchema["method"]): HttpVerb {
     switch (method) {
         case "GET":
-            return HttpMethod.GET;
+            return HttpVerb.GET;
         case "POST":
-            return HttpMethod.POST;
+            return HttpVerb.POST;
         case "PUT":
-            return HttpMethod.PUT;
+            return HttpVerb.PUT;
         case "DELETE":
-            return HttpMethod.DELETE;
+            return HttpVerb.DELETE;
     }
 }
 

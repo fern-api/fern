@@ -35,3 +35,6 @@ cdk.context.json
 .cdk.staging/
 cdk.out/
 *.tabl.json
+
+# generated code
+src/generated

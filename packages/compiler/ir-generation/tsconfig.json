@@ -2,5 +2,5 @@
   "extends": "../../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "./lib", "rootDir": "src", "module": "CommonJS" },
   "include": ["./src"],
-  "references": [{ "path": "../compiler-commons" }, { "path": "../syntax-analysis" }]
+  "references": [{ "path": "../../fern-api" }, { "path": "../compiler-commons" }, { "path": "../syntax-analysis" }]
 }

@@ -1,4 +1,4 @@
-import { IntermediateRepresentation } from "@fernapi/ir-generation";
+import { IntermediateRepresentation } from "@fernapi/api";
 import { SyntaxAnalysis } from "@fernapi/syntax-analysis/src/types";
 
 export declare namespace Compiler {
