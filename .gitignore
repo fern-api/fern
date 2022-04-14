@@ -37,4 +37,4 @@ cdk.out/
 *.tabl.json
 
 # generated code
-src/generated
+/packages/**/src/generated
