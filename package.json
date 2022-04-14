@@ -1,8 +1,7 @@
 {
-  "name": "birch-api",
-  "version": "1.0.0",
-  "description": "Birch API",
-  "repository": "https://github.com/birch-solutions/birch-api",
+  "name": "fern",
+  "description": "Fern API",
+  "repository": "https://github.com/fern-api/fern",
   "author": "Birch Solutions, Inc.",
   "private": true,
   "workspaces": [

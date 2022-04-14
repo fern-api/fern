@@ -31,6 +31,9 @@ jobs:
           name: Check dependencies
           command: yarn depcheck
       - run:
+          name: Ensure changelong
+          command: yarn version check
+      - run:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff
   compile-and-test:

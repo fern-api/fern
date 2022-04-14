@@ -21,9 +21,9 @@
     "prepublish": "run clean && run compile && run test && run lint:eslint && run lint:style && run format:check && run depcheck"
   },
   "dependencies": {
-    "@fernapi/compiler": "workspace:^",
-    "@fernapi/compiler-commons": "workspace:^",
-    "@fernapi/syntax-analysis": "workspace:^",
+    "@fernapi/compiler": "workspace:*",
+    "@fernapi/compiler-commons": "workspace:*",
+    "@fernapi/syntax-analysis": "workspace:*",
     "chalk": "^4.1.2",
     "glob": "^7.2.0",
     "yargs": "^17.3.1",
