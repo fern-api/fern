@@ -1,6 +1,8 @@
 import { CompilerStage, RelativeFilePath } from "@fern/compiler-commons";
 import { RawSchemas, SimpleInlinableType } from "@fern/syntax-analysis";
+import path from "path";
 import { ContainerType } from "./types/ContainerType";
+import { FernFilepath } from "./types/FernFilepath";
 import { HttpMethod } from "./types/HttpMethod";
 import { IntermediateRepresentation } from "./types/IntermediateRepresentation";
 import { PrimitiveType } from "./types/PrimitiveType";
@@ -25,12 +27,14 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
         };
 
         for (const [filepath, schema] of Object.entries(schemas)) {
+            const fernFilepath = convertToFernFilepath(filepath);
+
             const parseInlinableType = (type: SimpleInlinableType): TypeReference => {
                 const typeAsString = typeof type === "string" ? type : type.type;
                 if (typeAsString == null) {
                     return TypeReference.void();
                 }
-                return parseInlineType({ type: typeAsString, filepath, imports });
+                return parseInlineType({ type: typeAsString, fernFilepath, imports });
             };
 
             const { imports = {} } = schema;
@@ -45,7 +49,7 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                         intermediateRepresentation.types.push({
                             docs: typeof id !== "string" ? id.docs : undefined,
                             name: {
-                                filepath,
+                                fernFilepath: convertToFernFilepath(filepath),
                                 name: typeof id === "string" ? id : id.name,
                             },
                             shape: Type.alias({
@@ -67,7 +71,7 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                             intermediateRepresentation.types.push({
                                 docs: typeof typeDefinition !== "string" ? typeDefinition.docs : undefined,
                                 name: {
-                                    filepath,
+                                    fernFilepath,
                                     name: typeName,
                                 },
                                 shape: Type.alias({
@@ -81,7 +85,7 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                             intermediateRepresentation.types.push({
                                 docs: typeDefinition.docs,
                                 name: {
-                                    filepath,
+                                    fernFilepath,
                                     name: typeName,
                                 },
                                 shape: Type.object({
@@ -91,12 +95,12 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                                 ? [
                                                       parseTypeName({
                                                           typeName: typeDefinition.extends,
-                                                          filepath,
+                                                          fernFilepath,
                                                           imports,
                                                       }),
                                                   ]
                                                 : typeDefinition.extends.map((extended) =>
-                                                      parseTypeName({ typeName: extended, filepath, imports })
+                                                      parseTypeName({ typeName: extended, fernFilepath, imports })
                                                   )
                                             : [],
                                     fields: Object.entries(typeDefinition.fields).map(
@@ -113,7 +117,7 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                             intermediateRepresentation.types.push({
                                 docs: typeDefinition.docs,
                                 name: {
-                                    filepath,
+                                    fernFilepath,
                                     name: typeName,
                                 },
                                 shape: Type.union({
@@ -130,7 +134,7 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                             intermediateRepresentation.types.push({
                                 docs: typeDefinition.docs,
                                 name: {
-                                    filepath,
+                                    fernFilepath,
                                     name: typeName,
                                 },
                                 shape: Type.enum({
@@ -156,7 +160,7 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                 docs: serviceDefinition.docs,
                                 name: {
                                     name: serviceName,
-                                    filepath,
+                                    fernFilepath,
                                 },
                                 displayName: serviceDefinition.name,
                                 basePath: serviceDefinition["base-path"],
@@ -248,7 +252,7 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                             intermediateRepresentation.services.webSocket.push({
                                 docs: serviceDefinition.docs,
                                 name: {
-                                    filepath,
+                                    fernFilepath,
                                     name: serviceName,
                                 },
                                 displayName: serviceDefinition.name,
@@ -327,15 +331,15 @@ const OPTIONAL_REGEX = /optional<\s*(.*)\s*>/;
 
 function parseInlineType({
     type,
-    filepath,
+    fernFilepath,
     imports,
 }: {
     type: string;
-    filepath: string;
+    fernFilepath: FernFilepath;
     imports: Record<string, string>;
 }): TypeReference {
     function parseInlineTypeRecursive(typeToRecurse: string) {
-        return parseInlineType({ type: typeToRecurse, filepath, imports });
+        return parseInlineType({ type: typeToRecurse, fernFilepath, imports });
     }
 
     const mapMatch = type.match(MAP_REGEX);
@@ -379,7 +383,7 @@ function parseInlineType({
     return TypeReference.named(
         parseTypeName({
             typeName: type,
-            filepath,
+            fernFilepath,
             imports,
         })
     );
@@ -387,38 +391,38 @@ function parseInlineType({
 
 function parseTypeName({
     typeName,
-    filepath,
+    fernFilepath,
     imports,
 }: {
     typeName: string;
-    filepath: string;
+    fernFilepath: FernFilepath;
     imports: Record<string, string>;
 }): TypeName {
     const splitByPackage = typeName.split(".");
 
     if (splitByPackage.length === 1) {
         return {
-            filepath,
+            fernFilepath,
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             name: splitByPackage[0]!,
         };
     }
 
     if (splitByPackage.length === 2) {
-        const importAlias = splitByPackage[0];
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const importPath = imports[importAlias!];
+        const importAlias = splitByPackage[0]!;
+        const importPath = imports[importAlias];
         if (importPath == null) {
             throw new Error(`Invalid type: ${typeName}. Package ${importAlias} not found.`);
         }
         return {
-            filepath: importPath,
+            fernFilepath: convertToFernFilepath(importPath),
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             name: splitByPackage[1]!,
         };
     }
 
-    throw new Error(`Invalid type: ${typeName}.`);
+    throw new Error(`Invalid type: ${typeName}`);
 }
 
 function isRawAliasDefinition(
@@ -483,4 +487,9 @@ function convertWebSocketMessageResponseBehavior(
         case "request-response":
             return WebSocketMessageResponseBehavior.REQUEST_RESPONSE;
     }
+}
+
+function convertToFernFilepath(relativeFilepath: RelativeFilePath): FernFilepath {
+    const parsed = path.parse(relativeFilepath);
+    return FernFilepath.of(path.join(parsed.dir, parsed.name));
 }

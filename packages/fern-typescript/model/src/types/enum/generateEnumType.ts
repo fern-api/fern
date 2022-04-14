@@ -1,6 +1,8 @@
-import { EnumTypeDefinition, TypeDefinition } from "@fern/ir-generation";
-import { EnumValue } from "@fern/ir-generation/src/types/EnumValue";
-import { SourceFile, ts, VariableDeclarationKind, WriterFunctionOrValue, Writers } from "ts-morph";
+import { EnumTypeDefinition, FernFilepath, TypeDefinition } from "@fern/ir-generation";
+import { FernWriters } from "@fern/typescript-commons";
+import path from "path";
+import { SourceFile, ts, VariableDeclarationKind, WriterFunction } from "ts-morph";
+import { addBrandedTypeAlias } from "../../utils/addBrandedTypeAlias";
 import { getTextOfTsNode } from "../../utils/getTextOfTsNode";
 import { getWriterForMultiLineUnionType } from "../../utils/getWriterForMultiLineUnionType";
 import { maybeAddDocs } from "../../utils/maybeAddDocs";
@@ -20,7 +22,12 @@ export function generateEnumType({
         name: typeDefinition.name.name,
         type: getWriterForMultiLineUnionType(
             shape.values.map((value) => ({
-                node: convertEnumValueToStringLiteral(value),
+                node: ts.factory.createTypeReferenceNode(
+                    ts.factory.createQualifiedName(
+                        ts.factory.createIdentifier(typeDefinition.name.name),
+                        ts.factory.createIdentifier(getKeyForEnum(value))
+                    )
+                ),
                 docs: value.docs,
             }))
         ),
@@ -33,7 +40,7 @@ export function generateEnumType({
         declarations: [
             {
                 name: typeDefinition.name.name,
-                initializer: Writers.object(createUtils(typeDefinition, shape)),
+                initializer: createUtils(typeDefinition, shape),
             },
         ],
         isExported: true,
@@ -44,26 +51,45 @@ export function generateEnumType({
         isExported: true,
         hasDeclareKeyword: true,
     });
+    for (const value of shape.values) {
+        addBrandedTypeAlias({
+            node: moduleDeclaration,
+            typeName: {
+                name: getKeyForEnum(value),
+                fernFilepath: FernFilepath.of(path.join(typeDefinition.name.fernFilepath, typeDefinition.name.name)),
+            },
+            docs: undefined,
+            baseType: ts.factory.createStringLiteral(value.value),
+        });
+    }
     addEnumVisitorToNamespace(moduleDeclaration, shape);
 }
 
-function convertEnumValueToStringLiteral(value: EnumValue): ts.StringLiteral {
-    return ts.factory.createStringLiteral(value.value);
-}
-
-function createUtils(typeDefinition: TypeDefinition, shape: EnumTypeDefinition): Record<string, WriterFunctionOrValue> {
-    const obj: Record<string, WriterFunctionOrValue> = {};
+function createUtils(typeDefinition: TypeDefinition, shape: EnumTypeDefinition): WriterFunction {
+    const writer = FernWriters.object.writer();
 
     for (const value of shape.values) {
-        obj[getKeyForEnum(value)] = getTextOfTsNode(
-            ts.factory.createAsExpression(
-                ts.factory.createStringLiteral(value.value),
-                ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("const"))
-            )
-        );
+        writer.addProperty({
+            key: getKeyForEnum(value),
+            value: getTextOfTsNode(
+                ts.factory.createAsExpression(
+                    ts.factory.createStringLiteral(value.value),
+                    ts.factory.createTypeReferenceNode(
+                        ts.factory.createQualifiedName(
+                            ts.factory.createIdentifier(typeDefinition.name.name),
+                            ts.factory.createIdentifier(getKeyForEnum(value))
+                        )
+                    )
+                )
+            ),
+        });
     }
 
-    obj.visit = getTextOfTsNode(generateEnumVisit(typeDefinition, shape));
+    writer.addNewLine();
+    writer.addProperty({
+        key: "visit",
+        value: getTextOfTsNode(generateEnumVisit(typeDefinition, shape)),
+    });
 
-    return obj;
+    return writer.toFunction();
 }

@@ -2,5 +2,10 @@
   "extends": "../../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "./lib", "rootDir": "src", "module": "CommonJS" },
   "include": ["./src"],
-  "references": [{ "path": "../../compiler/ir-generation" }, { "path": "../model" }, { "path": "../server" }]
+  "references": [
+    { "path": "../../compiler/ir-generation" },
+    { "path": "../client" },
+    { "path": "../model" },
+    { "path": "../server" }
+  ]
 }

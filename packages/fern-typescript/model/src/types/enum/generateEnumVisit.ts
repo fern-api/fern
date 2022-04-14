@@ -86,11 +86,13 @@ export function generateEnumVisit(typeDefinition: TypeDefinition, shape: EnumTyp
 }
 
 export function addEnumVisitorToNamespace(moduleDeclaration: ModuleDeclaration, shape: EnumTypeDefinition): void {
+    const VALUE_PARAMETER_NAME = "value";
     const RETURN_TYPE_PARAMETER = "R";
 
     moduleDeclaration.addInterface({
         name: VISITOR_NAME,
         typeParameters: [RETURN_TYPE_PARAMETER],
+        isExported: true,
         properties: [
             ...shape.values.map((value) => ({
                 name: value.value,
@@ -115,7 +117,7 @@ export function addEnumVisitorToNamespace(moduleDeclaration: ModuleDeclaration, 
                                 undefined,
                                 undefined,
                                 undefined,
-                                ts.factory.createIdentifier(RETURN_TYPE_PARAMETER),
+                                ts.factory.createIdentifier(VALUE_PARAMETER_NAME),
                                 undefined,
                                 ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
                                 undefined
