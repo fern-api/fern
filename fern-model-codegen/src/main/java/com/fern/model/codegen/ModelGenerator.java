@@ -19,7 +19,7 @@ import com.squareup.javapoet.JavaFile;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -101,12 +101,13 @@ public final class ModelGenerator {
         public GeneratedFile<?> visitObject(ObjectTypeDefinition objectTypeDefinition) {
             Optional<GeneratedInterface> selfInterface =
                     Optional.ofNullable(generatedInterfaces.get(typeDefinition.name()));
+            List<GeneratedInterface> extendedInterfaces = typeDefinition._extends().stream()
+                    .map(generatedInterfaces::get)
+                    .sorted(Comparator.comparing(
+                            generatedInterface -> generatedInterface.className().simpleName()))
+                    .collect(Collectors.toList());
             ObjectGenerator objectGenerator = new ObjectGenerator(
-                    typeDefinition.name(),
-                    objectTypeDefinition,
-                    new ArrayList<>(generatedInterfaces.values()),
-                    selfInterface,
-                    generatorContext);
+                    typeDefinition.name(), objectTypeDefinition, extendedInterfaces, selfInterface, generatorContext);
             return objectGenerator.generate();
         }
 
