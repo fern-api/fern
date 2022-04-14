@@ -22,7 +22,9 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ./shared/.prettierignore \"**\"",
     "depcheck": "yarn workspaces foreach --verbose --parallel run depcheck",
     "prepare": "husky install",
-    "generate-fern-api-ir": "fern generate packages/api/src packages/api/ir.json"
+    "generate-fern-api-ir": "fern generate packages/api/src packages/api/ir.json",
+    "prepublish": "run generate-fern-api-ir",
+    "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public"
   },
   "devDependencies": {
     "@fernapi/fern": "workspace:^",
