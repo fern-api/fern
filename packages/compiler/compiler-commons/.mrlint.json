@@ -1,3 +1,4 @@
 {
-  "type": "library"
+  "type": "library",
+  "private": false
 }

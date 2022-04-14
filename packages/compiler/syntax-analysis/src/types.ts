@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern/compiler-commons";
+import { RelativeFilePath } from "@fernapi/compiler-commons";
 import { ZodError } from "zod";
 import { FernSchema } from "./schemas/FernSchema";
 

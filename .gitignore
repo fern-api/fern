@@ -35,3 +35,7 @@ cdk.context.json
 .cdk.staging/
 cdk.out/
 *.tabl.json
+
+# fern api
+packages/api/ir.json
+/packages/**/generated

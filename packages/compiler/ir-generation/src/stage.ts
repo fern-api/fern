@@ -1,16 +1,19 @@
-import { CompilerStage, RelativeFilePath } from "@fern/compiler-commons";
-import { RawSchemas, SimpleInlinableType } from "@fern/syntax-analysis";
+import {
+    ContainerType,
+    FernFilepath,
+    HttpEndpoint,
+    HttpMethod,
+    IntermediateRepresentation,
+    PrimitiveType,
+    Type,
+    TypeName,
+    TypeReference,
+    WebSocketMessageOrigin,
+    WebSocketMessageResponseBehavior,
+} from "@fernapi/api";
+import { CompilerStage, RelativeFilePath } from "@fernapi/compiler-commons";
+import { RawSchemas, SimpleInlinableType } from "@fernapi/syntax-analysis";
 import path from "path";
-import { ContainerType } from "./types/ContainerType";
-import { FernFilepath } from "./types/FernFilepath";
-import { HttpMethod } from "./types/HttpMethod";
-import { IntermediateRepresentation } from "./types/IntermediateRepresentation";
-import { PrimitiveType } from "./types/PrimitiveType";
-import { Type } from "./types/Type";
-import { TypeName } from "./types/TypeName";
-import { TypeReference } from "./types/TypeReference";
-import { WebSocketMessageOrigin } from "./types/WebSocketMessageOrigin";
-import { WebSocketMessageResponseBehavior } from "./types/WebSocketMessageResponseBehavior";
 
 export const IntermediateRepresentationGenerationStage: CompilerStage<
     Record<RelativeFilePath, RawSchemas.FernSchema>,
@@ -155,15 +158,15 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                         return;
                     }
                     if (services.http != null) {
-                        for (const [serviceName, serviceDefinition] of Object.entries(services.http)) {
+                        for (const [serviceId, serviceDefinition] of Object.entries(services.http)) {
                             intermediateRepresentation.services.http.push({
                                 docs: serviceDefinition.docs,
                                 name: {
-                                    name: serviceName,
+                                    name: serviceId,
                                     fernFilepath,
                                 },
-                                displayName: serviceDefinition.name,
-                                basePath: serviceDefinition["base-path"],
+                                displayName: serviceDefinition.name ?? serviceId,
+                                basePath: serviceDefinition["base-path"] ?? "/",
                                 headers:
                                     serviceDefinition.headers != null
                                         ? Object.entries(serviceDefinition.headers).map(([header, headerType]) => ({
@@ -173,8 +176,8 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                           }))
                                         : [],
                                 endpoints: Object.entries(serviceDefinition.endpoints).map(
-                                    ([endpointName, endpoint]) => ({
-                                        name: endpointName,
+                                    ([endpointId, endpoint]): HttpEndpoint => ({
+                                        endpointId,
                                         docs: endpoint.docs,
                                         method: convertHttpMethod(endpoint.method),
                                         path: endpoint.path,
@@ -248,15 +251,15 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                         }
                     }
                     if (services.webSocket != null) {
-                        for (const [serviceName, serviceDefinition] of Object.entries(services.webSocket)) {
+                        for (const [serviceId, serviceDefinition] of Object.entries(services.webSocket)) {
                             intermediateRepresentation.services.webSocket.push({
                                 docs: serviceDefinition.docs,
                                 name: {
                                     fernFilepath,
-                                    name: serviceName,
+                                    name: serviceId,
                                 },
-                                displayName: serviceDefinition.name,
-                                basePath: serviceDefinition["base-path"],
+                                displayName: serviceDefinition.name ?? serviceId,
+                                basePath: serviceDefinition["base-path"] ?? "/",
                                 messages: Object.entries(serviceDefinition.messages).map(([messageName, message]) => ({
                                     name: messageName,
                                     docs: message.docs,

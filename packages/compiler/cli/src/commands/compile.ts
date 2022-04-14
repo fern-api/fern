@@ -1,8 +1,8 @@
-import { compile, CompilerFailureType } from "@fern/compiler";
-import { FernFile, RelativeFilePath } from "@fern/compiler-commons";
-import { SyntaxAnalysisFailureType } from "@fern/syntax-analysis";
+import { compile, CompilerFailureType } from "@fernapi/compiler";
+import { FernFile, RelativeFilePath } from "@fernapi/compiler-commons";
+import { SyntaxAnalysisFailureType } from "@fernapi/syntax-analysis";
 import chalk from "chalk";
-import { readFile, writeFile } from "fs/promises";
+import { mkdir, readFile, writeFile } from "fs/promises";
 import glob from "glob";
 import path from "path";
 import { promisify } from "util";
@@ -34,6 +34,7 @@ export async function compileCommand({
 
     if (compileResult.didSucceed) {
         console.log(chalk.green("Parsed successfully!"));
+        await mkdir(path.dirname(output), { recursive: true });
         await writeFile(output, JSON.stringify(compileResult.intermediateRepresentation));
     } else {
         switch (compileResult.failure.type) {

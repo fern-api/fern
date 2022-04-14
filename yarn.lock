@@ -416,9 +416,45 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern/compiler-commons@workspace:^, @fern/compiler-commons@workspace:packages/compiler/compiler-commons":
+"@fernapi/api-generation@workspace:packages/api":
   version: 0.0.0-use.local
-  resolution: "@fern/compiler-commons@workspace:packages/compiler/compiler-commons"
+  resolution: "@fernapi/api-generation@workspace:packages/api"
+  dependencies:
+    "@fernapi/fern": 0.1.3
+    "@fernapi/fern-typescript": ^0.1.9
+  languageName: unknown
+  linkType: soft
+
+"@fernapi/api@npm:0.1.2":
+  version: 0.1.2
+  resolution: "@fernapi/api@npm:0.1.2"
+  dependencies:
+    "@fernapi/fern": 0.1.0
+    "@fernapi/fern-typescript": ^0.1.2
+  bin:
+    api: ./cli
+  checksum: fe1c94744d27faf87591cf9c3df1e286705659c0026cc459e3387bf2a149664c02b69197ed8c6aefb38928de1b7ed8509a62410ff810d24c0ad35f3de1f63da5
+  languageName: node
+  linkType: hard
+
+"@fernapi/api@npm:0.1.3":
+  version: 0.1.3
+  resolution: "@fernapi/api@npm:0.1.3"
+  checksum: fada18ce45e46378307ce2d80ca7a2527056529d632967457e5707c42fd07596d5d43284bca037fdcb968d5131e0710e38852674a6835b0117212edc9d84c7f9
+  languageName: node
+  linkType: hard
+
+"@fernapi/api@workspace:^, @fernapi/api@workspace:packages/api/generated/typescript":
+  version: 0.0.0-use.local
+  resolution: "@fernapi/api@workspace:packages/api/generated/typescript"
+  dependencies:
+    typescript: ^4.6.3
+  languageName: unknown
+  linkType: soft
+
+"@fernapi/compiler-commons@^0.1.0, @fernapi/compiler-commons@workspace:^, @fernapi/compiler-commons@workspace:packages/compiler/compiler-commons":
+  version: 0.0.0-use.local
+  resolution: "@fernapi/compiler-commons@workspace:packages/compiler/compiler-commons"
   dependencies:
     depcheck: ^1.4.3
     eslint: ^8.12.0
@@ -429,13 +465,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern/compiler@workspace:^, @fern/compiler@workspace:packages/compiler/compiler":
+"@fernapi/compiler-commons@npm:0.1.3":
+  version: 0.1.3
+  resolution: "@fernapi/compiler-commons@npm:0.1.3"
+  checksum: a8a91c078b6559d87128fae65e8a655a274043e1f66724fc651ddffa3418734358aa1a1f9521792a23be820c3d529d6671854a89b2d3d983f941e3717adb5629
+  languageName: node
+  linkType: hard
+
+"@fernapi/compiler@^0.1.0, @fernapi/compiler@workspace:^, @fernapi/compiler@workspace:packages/compiler/compiler":
   version: 0.0.0-use.local
-  resolution: "@fern/compiler@workspace:packages/compiler/compiler"
+  resolution: "@fernapi/compiler@workspace:packages/compiler/compiler"
   dependencies:
-    "@fern/compiler-commons": "workspace:^"
-    "@fern/ir-generation": "workspace:^"
-    "@fern/syntax-analysis": "workspace:^"
+    "@fernapi/api": "workspace:^"
+    "@fernapi/compiler-commons": "workspace:^"
+    "@fernapi/ir-generation": "workspace:^"
+    "@fernapi/syntax-analysis": "workspace:^"
     depcheck: ^1.4.3
     eslint: ^8.12.0
     jest: ^27.5.1
@@ -445,12 +489,110 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern/ir-generation@workspace:^, @fern/ir-generation@workspace:packages/compiler/ir-generation":
-  version: 0.0.0-use.local
-  resolution: "@fern/ir-generation@workspace:packages/compiler/ir-generation"
+"@fernapi/compiler@npm:0.1.3":
+  version: 0.1.3
+  resolution: "@fernapi/compiler@npm:0.1.3"
   dependencies:
-    "@fern/compiler-commons": "workspace:^"
-    "@fern/syntax-analysis": "workspace:^"
+    "@fernapi/api": 0.1.2
+    "@fernapi/compiler-commons": 0.1.3
+    "@fernapi/ir-generation": 0.1.3
+    "@fernapi/syntax-analysis": 0.1.3
+  checksum: 94ebd333fa39e7faf427d92368063af1a11db24090c0ec9de63e1b191a9461fcafbc25be3a08ca4c165ac5441e09e58756f48eaddfd9b311f7759af90a4cabc6
+  languageName: node
+  linkType: hard
+
+"@fernapi/fern-typescript@npm:^0.1.2, @fernapi/fern-typescript@npm:^0.1.9":
+  version: 0.1.10
+  resolution: "@fernapi/fern-typescript@npm:0.1.10"
+  dependencies:
+    "@fernapi/api": 0.1.3
+    "@fernapi/typescript-client": ^0.1.10
+    "@fernapi/typescript-model": ^0.1.10
+    "@fernapi/typescript-server": ^0.1.10
+    ts-morph: ^14.0.0
+    yargs: ^17.4.1
+  bin:
+    fern-typescript: ./cli
+  checksum: bb4e404b95f38de756d1a7cacf59302be47a4d292faff3eb1e42738cf1913c5b6f13b1c1403515557bb0cb4a7fae5b81253512901ee956a1e54e4b821894039c
+  languageName: node
+  linkType: hard
+
+"@fernapi/fern@npm:0.1.0":
+  version: 0.1.0
+  resolution: "@fernapi/fern@npm:0.1.0"
+  dependencies:
+    "@fernapi/compiler": ^0.1.0
+    "@fernapi/compiler-commons": ^0.1.0
+    "@fernapi/syntax-analysis": ^0.1.0
+    chalk: ^4.1.2
+    glob: ^7.2.0
+    yargs: ^17.3.1
+    zod: ^3.14.3
+  bin:
+    fern: ./cli
+  checksum: f63d2d8bee15a944c8c2e97700e29076d0412e895dca3f5d65fd4d48feabd44497a31387ac43e52383d00787ae55266abe8cb76b8381ae2033cd914af19f3bed
+  languageName: node
+  linkType: hard
+
+"@fernapi/fern@npm:0.1.3":
+  version: 0.1.3
+  resolution: "@fernapi/fern@npm:0.1.3"
+  dependencies:
+    "@fernapi/compiler": 0.1.3
+    "@fernapi/compiler-commons": 0.1.3
+    "@fernapi/syntax-analysis": 0.1.3
+    chalk: ^4.1.2
+    glob: ^7.2.0
+    yargs: ^17.3.1
+    zod: ^3.14.3
+  bin:
+    fern: cli
+  checksum: c176239f257bf3afcc9d73c2f5c7d5037bf6986c7d15e9ccc9923ecc445aff47433ff9c386130563f847a39d93fe58533aba0f5513c052a0dfb3e7bd7d9ea502
+  languageName: node
+  linkType: hard
+
+"@fernapi/fern@workspace:packages/compiler/cli":
+  version: 0.0.0-use.local
+  resolution: "@fernapi/fern@workspace:packages/compiler/cli"
+  dependencies:
+    "@fernapi/compiler": "workspace:^"
+    "@fernapi/compiler-commons": "workspace:^"
+    "@fernapi/syntax-analysis": "workspace:^"
+    "@types/glob": ^7.2.0
+    "@types/yargs": ^17.0.10
+    chalk: ^4.1.2
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    glob: ^7.2.0
+    jest: ^27.5.1
+    prettier: ^2.6.1
+    stylelint: ^14.6.1
+    typescript: ^4.6.3
+    yargs: ^17.3.1
+    zod: ^3.14.3
+  bin:
+    fern: ./cli
+  languageName: unknown
+  linkType: soft
+
+"@fernapi/ir-generation@npm:0.1.3":
+  version: 0.1.3
+  resolution: "@fernapi/ir-generation@npm:0.1.3"
+  dependencies:
+    "@fernapi/api": 0.1.2
+    "@fernapi/compiler-commons": 0.1.3
+    "@fernapi/syntax-analysis": 0.1.3
+  checksum: eaabbb45df23bc99fec3cd7aba2162617671f530d86eb13888421f40bcd655387fc6d2b544213688c00d57687fa7bc816188ea7a7eb210d3a3c02128dab86df5
+  languageName: node
+  linkType: hard
+
+"@fernapi/ir-generation@workspace:^, @fernapi/ir-generation@workspace:packages/compiler/ir-generation":
+  version: 0.0.0-use.local
+  resolution: "@fernapi/ir-generation@workspace:packages/compiler/ir-generation"
+  dependencies:
+    "@fernapi/api": "workspace:^"
+    "@fernapi/compiler-commons": "workspace:^"
+    "@fernapi/syntax-analysis": "workspace:^"
     depcheck: ^1.4.3
     eslint: ^8.12.0
     jest: ^27.5.1
@@ -460,11 +602,79 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern/syntax-analysis@workspace:^, @fern/syntax-analysis@workspace:packages/compiler/syntax-analysis":
-  version: 0.0.0-use.local
-  resolution: "@fern/syntax-analysis@workspace:packages/compiler/syntax-analysis"
+"@fernapi/mrlint-commons@npm:^0.1.6":
+  version: 0.1.6
+  resolution: "@fernapi/mrlint-commons@npm:0.1.6"
   dependencies:
-    "@fern/compiler-commons": "workspace:^"
+    "@fernapi/mrlint-virtual-file-system": ^0.1.6
+  checksum: ac48b8d02fbccb621e4853cc4fc7478d8dbc3d47198e872df9d8f4cae91d76c41e1917e5923f29283204344b1fd0c6e053265e9ec138f5008d1db6608c5706b7
+  languageName: node
+  linkType: hard
+
+"@fernapi/mrlint-lint@npm:^0.1.6":
+  version: 0.1.6
+  resolution: "@fernapi/mrlint-lint@npm:0.1.6"
+  dependencies:
+    "@fernapi/mrlint-commons": ^0.1.6
+    "@fernapi/mrlint-virtual-file-system": ^0.1.6
+    chalk: ^4.1.2
+    diff: ^5.0.0
+    prettier: ^2.6.1
+  checksum: 1282e71250b13a8e12afd40989b45a5db118feadc3aef9a1f0dd29e32cfdc7263377e2525efce3118d5bde4fb4e4ea59a5fe3860f0442f3ba3b5acfa3bcb0c83
+  languageName: node
+  linkType: hard
+
+"@fernapi/mrlint-parser@npm:^0.1.6":
+  version: 0.1.6
+  resolution: "@fernapi/mrlint-parser@npm:0.1.6"
+  dependencies:
+    "@fernapi/mrlint-commons": ^0.1.6
+    glob: ^7.2.0
+    js-yaml: ^4.1.0
+    zod: ^3.14.3
+  checksum: f129de5afddda7700ff2a79c23db2f7723b859e762b368fdd6c8ec00f700e99573dbc91c7e882e9e2b540843b322f721341543b9678ba50dd658280d37f9f4b2
+  languageName: node
+  linkType: hard
+
+"@fernapi/mrlint-rules@npm:^0.1.6":
+  version: 0.1.6
+  resolution: "@fernapi/mrlint-rules@npm:0.1.6"
+  dependencies:
+    "@fernapi/mrlint-commons": ^0.1.6
+    "@fernapi/mrlint-virtual-file-system": ^0.1.6
+    immer: ^9.0.12
+  checksum: ee97c9f1bdbe2e936403259e0e174a2c4b3883250415440a900a50bcfdf4e9f17229e93f2167f62033cfa025fd155fd0660a819bd72dd5a540b9e6cec8cb1c36
+  languageName: node
+  linkType: hard
+
+"@fernapi/mrlint-virtual-file-system@npm:^0.1.6":
+  version: 0.1.6
+  resolution: "@fernapi/mrlint-virtual-file-system@npm:0.1.6"
+  checksum: 142e0246bf3fad9bcb101a4b5382f7e39f17a7e3ce6caf16dddb7083736255efc728cc16b072b1de39c6d8d95a38ca0ecee6b4396ab2e438411b14d1be76141c
+  languageName: node
+  linkType: hard
+
+"@fernapi/mrlint@npm:^0.1.6":
+  version: 0.1.6
+  resolution: "@fernapi/mrlint@npm:0.1.6"
+  dependencies:
+    "@fernapi/mrlint-commons": ^0.1.6
+    "@fernapi/mrlint-lint": ^0.1.6
+    "@fernapi/mrlint-parser": ^0.1.6
+    "@fernapi/mrlint-rules": ^0.1.6
+    chalk: ^4.1.2
+    yargs: ^17.3.1
+  bin:
+    mrlint: ./cli
+  checksum: 656dc8bdfe5905a32114ca9013a9097fada36fbdd08c53314ed8a6f736e1bbfc172afe8b178069df575349154dadee67ca8600bd14a1d1e2c6ed6d86f8f7cf5f
+  languageName: node
+  linkType: hard
+
+"@fernapi/syntax-analysis@^0.1.0, @fernapi/syntax-analysis@workspace:^, @fernapi/syntax-analysis@workspace:packages/compiler/syntax-analysis":
+  version: 0.0.0-use.local
+  resolution: "@fernapi/syntax-analysis@workspace:packages/compiler/syntax-analysis"
+  dependencies:
+    "@fernapi/compiler-commons": "workspace:^"
     "@types/js-yaml": ^4.0.5
     depcheck: ^1.4.3
     eslint: ^8.12.0
@@ -477,67 +687,57 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern/typescript-client@workspace:^, @fern/typescript-client@workspace:packages/fern-typescript/client":
-  version: 0.0.0-use.local
-  resolution: "@fern/typescript-client@workspace:packages/fern-typescript/client"
+"@fernapi/syntax-analysis@npm:0.1.3":
+  version: 0.1.3
+  resolution: "@fernapi/syntax-analysis@npm:0.1.3"
   dependencies:
-    "@fern/ir-generation": "workspace:^"
-    depcheck: ^1.4.3
-    eslint: ^8.12.0
-    jest: ^27.5.1
-    prettier: ^2.6.1
-    stylelint: ^14.6.1
-    ts-morph: ^14.0.0
-    typescript: ^4.6.3
-  languageName: unknown
-  linkType: soft
+    "@fernapi/compiler-commons": 0.1.3
+    js-yaml: ^4.1.0
+    zod: ^3.14.3
+  checksum: a01ab65f9337b7b60a4f2a8eca74b05150de93c395bfc4bf8fbd4f0df9140b2df7d2024b2f4ac3a8b3e5b631202c2319cadadbbb7c632275c2433cd6d46f3977
+  languageName: node
+  linkType: hard
 
-"@fern/typescript-commons@workspace:^, @fern/typescript-commons@workspace:packages/fern-typescript/commons":
-  version: 0.0.0-use.local
-  resolution: "@fern/typescript-commons@workspace:packages/fern-typescript/commons"
+"@fernapi/typescript-client@npm:^0.1.10":
+  version: 0.1.10
+  resolution: "@fernapi/typescript-client@npm:0.1.10"
   dependencies:
-    "@types/esutils": ^2.0.0
-    depcheck: ^1.4.3
-    eslint: ^8.12.0
+    "@fernapi/api": 0.1.3
+    ts-morph: ^14.0.0
+  checksum: 7f5d9b7d4a36cd01e5ca14a183edf5cf21b06c915a836809fda5ad87ce08ed58c6517be6ab7fa7c377912bda70f29f222122c337ed8c384d41c698a41b63fc50
+  languageName: node
+  linkType: hard
+
+"@fernapi/typescript-commons@npm:^0.1.10":
+  version: 0.1.10
+  resolution: "@fernapi/typescript-commons@npm:0.1.10"
+  dependencies:
     esutils: ^2.0.3
-    jest: ^27.5.1
-    prettier: ^2.6.1
-    stylelint: ^14.6.1
     ts-morph: ^14.0.0
-    typescript: ^4.6.3
-  languageName: unknown
-  linkType: soft
+  checksum: 77fca523dbba20bb1261d2a5b0b11870b9638687ddc9c2bbdb9f650b21e554b251043374f2780a96cf23e4a2f22d7d5c12b590606c9ebcb5a4983ad0ddc56ed0
+  languageName: node
+  linkType: hard
 
-"@fern/typescript-model@workspace:^, @fern/typescript-model@workspace:packages/fern-typescript/model":
-  version: 0.0.0-use.local
-  resolution: "@fern/typescript-model@workspace:packages/fern-typescript/model"
+"@fernapi/typescript-model@npm:^0.1.10":
+  version: 0.1.10
+  resolution: "@fernapi/typescript-model@npm:0.1.10"
   dependencies:
-    "@fern/ir-generation": "workspace:^"
-    "@fern/typescript-commons": "workspace:^"
-    depcheck: ^1.4.3
-    eslint: ^8.12.0
-    jest: ^27.5.1
-    prettier: ^2.6.1
-    stylelint: ^14.6.1
+    "@fernapi/api": 0.1.2
+    "@fernapi/typescript-commons": ^0.1.10
     ts-morph: ^14.0.0
-    typescript: ^4.6.3
-  languageName: unknown
-  linkType: soft
+  checksum: 13c7b83572d07dfee7c752ea50dc9af28089ec1598857da7a5363a00b631ea35c86f14fdd73058cfc26947681f15e59a8507d86ca26141acee0657395ec32b93
+  languageName: node
+  linkType: hard
 
-"@fern/typescript-server@workspace:^, @fern/typescript-server@workspace:packages/fern-typescript/server":
-  version: 0.0.0-use.local
-  resolution: "@fern/typescript-server@workspace:packages/fern-typescript/server"
+"@fernapi/typescript-server@npm:^0.1.10":
+  version: 0.1.10
+  resolution: "@fernapi/typescript-server@npm:0.1.10"
   dependencies:
-    "@fern/ir-generation": "workspace:^"
-    depcheck: ^1.4.3
-    eslint: ^8.12.0
-    jest: ^27.5.1
-    prettier: ^2.6.1
-    stylelint: ^14.6.1
+    "@fernapi/api": 0.1.2
     ts-morph: ^14.0.0
-    typescript: ^4.6.3
-  languageName: unknown
-  linkType: soft
+  checksum: ac5ec0d231b721c8d80475b0d9c235763a6f8535eae7a45d6e94e1c10eeb24c81a0b91a36258dee5989034dac79c5a69b51ea75ef0bf8b55e31b7f9546923d34
+  languageName: node
+  linkType: hard
 
 "@gar/promisify@npm:^1.1.3":
   version: 1.1.3
@@ -809,89 +1009,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mrlint/commons@workspace:^, @mrlint/commons@workspace:packages/mrlint/commons":
-  version: 0.0.0-use.local
-  resolution: "@mrlint/commons@workspace:packages/mrlint/commons"
-  dependencies:
-    "@mrlint/virtual-file-system": "workspace:^"
-    depcheck: ^1.4.3
-    eslint: ^8.12.0
-    jest: ^27.5.1
-    package-json-type: ^1.0.3
-    prettier: ^2.6.1
-    stylelint: ^14.6.1
-    typescript: ^4.6.3
-  languageName: unknown
-  linkType: soft
-
-"@mrlint/lint@workspace:^, @mrlint/lint@workspace:packages/mrlint/lint":
-  version: 0.0.0-use.local
-  resolution: "@mrlint/lint@workspace:packages/mrlint/lint"
-  dependencies:
-    "@mrlint/commons": "workspace:^"
-    "@mrlint/virtual-file-system": "workspace:^"
-    "@types/diff": ^5.0.2
-    chalk: ^4.1.2
-    depcheck: ^1.4.3
-    diff: ^5.0.0
-    eslint: ^8.12.0
-    jest: ^27.5.1
-    prettier: ^2.6.1
-    stylelint: ^14.6.1
-    typescript: ^4.6.3
-  languageName: unknown
-  linkType: soft
-
-"@mrlint/parser@workspace:^, @mrlint/parser@workspace:packages/mrlint/parser":
-  version: 0.0.0-use.local
-  resolution: "@mrlint/parser@workspace:packages/mrlint/parser"
-  dependencies:
-    "@mrlint/commons": "workspace:^"
-    "@types/glob": ^7.2.0
-    "@types/js-yaml": ^4.0.5
-    depcheck: ^1.4.3
-    eslint: ^8.12.0
-    glob: ^7.2.0
-    jest: ^27.5.1
-    js-yaml: ^4.1.0
-    package-json-type: ^1.0.3
-    prettier: ^2.6.1
-    stylelint: ^14.6.1
-    typescript: ^4.6.3
-    zod: ^3.14.3
-  languageName: unknown
-  linkType: soft
-
-"@mrlint/rules@workspace:^, @mrlint/rules@workspace:packages/mrlint/rules":
-  version: 0.0.0-use.local
-  resolution: "@mrlint/rules@workspace:packages/mrlint/rules"
-  dependencies:
-    "@mrlint/commons": "workspace:^"
-    "@mrlint/virtual-file-system": "workspace:^"
-    depcheck: ^1.4.3
-    eslint: ^8.12.0
-    immer: ^9.0.12
-    jest: ^27.5.1
-    package-json-type: ^1.0.3
-    prettier: ^2.6.1
-    stylelint: ^14.6.1
-    typescript: ^4.6.3
-  languageName: unknown
-  linkType: soft
-
-"@mrlint/virtual-file-system@workspace:^, @mrlint/virtual-file-system@workspace:packages/mrlint/virtual-file-system":
-  version: 0.0.0-use.local
-  resolution: "@mrlint/virtual-file-system@workspace:packages/mrlint/virtual-file-system"
-  dependencies:
-    depcheck: ^1.4.3
-    eslint: ^8.12.0
-    jest: ^27.5.1
-    prettier: ^2.6.1
-    stylelint: ^14.6.1
-    typescript: ^4.6.3
-  languageName: unknown
-  linkType: soft
-
 "@nodelib/fs.scandir@npm:2.1.5":
   version: 2.1.5
   resolution: "@nodelib/fs.scandir@npm:2.1.5"
@@ -1016,25 +1133,11 @@ __metadata:
   linkType: hard
 
 "@types/babel__traverse@npm:*, @types/babel__traverse@npm:^7.0.4, @types/babel__traverse@npm:^7.0.6":
-  version: 7.14.2
-  resolution: "@types/babel__traverse@npm:7.14.2"
+  version: 7.17.0
+  resolution: "@types/babel__traverse@npm:7.17.0"
   dependencies:
     "@babel/types": ^7.3.0
-  checksum: a797ea09c72307569e3ee08aa3900ca744ce3091114084f2dc59b67a45ee7d01df7865252790dbfa787a7915ce892cdc820c9b920f3683292765fc656b08dc63
-  languageName: node
-  linkType: hard
-
-"@types/diff@npm:^5.0.2":
-  version: 5.0.2
-  resolution: "@types/diff@npm:5.0.2"
-  checksum: 8fbc419b5aca33f494026bf5f70e026f76367689677ef114f9c078ac738d7dbe96e6dda3fd8290e4a7c35281e2b60b034e3d7e3c968b850cf06a21279e7ddcbe
-  languageName: node
-  linkType: hard
-
-"@types/esutils@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "@types/esutils@npm:2.0.0"
-  checksum: e765c7ef6ba7a3d3beaa503bc9823f98c063f37f46ddd50c9d9bddd98924785866423910bb9458ad9be5354a1b63ae06e509db70c1dcb8c9f0bec050c1fa61e5
+  checksum: b9a4acfc260179168d840c7f17e6b8b3ab4e7ebbce47b3308dd748683136518ab8636e2dcbf8d619fece0db7e561e08def9ede29269b7210a761763a26ece66a
   languageName: node
   linkType: hard
 
@@ -1111,9 +1214,9 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
-  version: 17.0.23
-  resolution: "@types/node@npm:17.0.23"
-  checksum: a3517554737cbb042e76c30d0e5482192ac4d9bea0eeb086e2622d9cabf460a0eb52a696b99fcd18e7fcc93c96db6cc7ae507f6608f256ef0b5c1d8c87a5a470
+  version: 17.0.24
+  resolution: "@types/node@npm:17.0.24"
+  checksum: 9e7c4f863601b2430b4c2429a89935f22eba692956f5013c90a4c7fb0e1401ed8add8c4307453c5d6b8b985384500f8c3f644427ab88632640cc396159af479a
   languageName: node
   linkType: hard
 
@@ -1287,73 +1390,73 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue/compiler-core@npm:3.2.31":
-  version: 3.2.31
-  resolution: "@vue/compiler-core@npm:3.2.31"
+"@vue/compiler-core@npm:3.2.33":
+  version: 3.2.33
+  resolution: "@vue/compiler-core@npm:3.2.33"
   dependencies:
     "@babel/parser": ^7.16.4
-    "@vue/shared": 3.2.31
+    "@vue/shared": 3.2.33
     estree-walker: ^2.0.2
     source-map: ^0.6.1
-  checksum: 61ae042cbf2708fbf7374c9b34d005063856224b888a2e8d8520da9cd449f6ccc7a36cfae8c2121f064a3f0ae01a4ab414c471388d27d5258d9d378e72aefb14
+  checksum: bae1a7db26ab208fe8f0b09f443387e0951a1d1b35f80d89cad2285a818dc9dece783b98ccee4dbece59fde57f20a2f17afb183f710fdbc852e568bdf871265e
   languageName: node
   linkType: hard
 
-"@vue/compiler-dom@npm:3.2.31":
-  version: 3.2.31
-  resolution: "@vue/compiler-dom@npm:3.2.31"
+"@vue/compiler-dom@npm:3.2.33":
+  version: 3.2.33
+  resolution: "@vue/compiler-dom@npm:3.2.33"
   dependencies:
-    "@vue/compiler-core": 3.2.31
-    "@vue/shared": 3.2.31
-  checksum: bf08990a67b6ee751fe149c4bbec9b8473b16100c1525c048587a4709c68d1ef787722e2966b14bc5297ba8032e6fad996c604e6074e74070cecad117709a5f6
+    "@vue/compiler-core": 3.2.33
+    "@vue/shared": 3.2.33
+  checksum: 498f313c81d287ab4ee5861508121ab130728f3b643544041acdadfce9840c2ea05b972169437ef1462443d4d0bc9674105db7b6cfa75f6e46ef470f2a098112
   languageName: node
   linkType: hard
 
 "@vue/compiler-sfc@npm:^3.0.5":
-  version: 3.2.31
-  resolution: "@vue/compiler-sfc@npm:3.2.31"
+  version: 3.2.33
+  resolution: "@vue/compiler-sfc@npm:3.2.33"
   dependencies:
     "@babel/parser": ^7.16.4
-    "@vue/compiler-core": 3.2.31
-    "@vue/compiler-dom": 3.2.31
-    "@vue/compiler-ssr": 3.2.31
-    "@vue/reactivity-transform": 3.2.31
-    "@vue/shared": 3.2.31
+    "@vue/compiler-core": 3.2.33
+    "@vue/compiler-dom": 3.2.33
+    "@vue/compiler-ssr": 3.2.33
+    "@vue/reactivity-transform": 3.2.33
+    "@vue/shared": 3.2.33
     estree-walker: ^2.0.2
     magic-string: ^0.25.7
     postcss: ^8.1.10
     source-map: ^0.6.1
-  checksum: a99ea2c17eb761926ee164fdbc1c30e959026b237d56faa3c1c2313f0b73efd0cd177c9fea37352d53aa0304af0ac58c35fe9e193f742804f87cd9af64610a39
+  checksum: f436c49bdce0d00d4b0c8dd9a9a8e76167898fc10e79578425391d0b0a712e8d8f3aad257066d6e0ecdde3c6c38e6280f93ea741865ea1cab823b71440578a24
   languageName: node
   linkType: hard
 
-"@vue/compiler-ssr@npm:3.2.31":
-  version: 3.2.31
-  resolution: "@vue/compiler-ssr@npm:3.2.31"
+"@vue/compiler-ssr@npm:3.2.33":
+  version: 3.2.33
+  resolution: "@vue/compiler-ssr@npm:3.2.33"
   dependencies:
-    "@vue/compiler-dom": 3.2.31
-    "@vue/shared": 3.2.31
-  checksum: 39d07986a269d639c7514a0dac8b750731da48381cdaa844cf12d20e53f8e2d47911bd5da4a5c561e134cd3582717ac497762f758b27977993eb83fbe9cceb1c
+    "@vue/compiler-dom": 3.2.33
+    "@vue/shared": 3.2.33
+  checksum: 4107f8e9e8f4553ba12cb915d0f51169b67176fbb50e05accf014ee6786e767ae9ec1218ffae266e807d00fbdeb881781a615d777531385581cce2ea5e1afd58
   languageName: node
   linkType: hard
 
-"@vue/reactivity-transform@npm:3.2.31":
-  version: 3.2.31
-  resolution: "@vue/reactivity-transform@npm:3.2.31"
+"@vue/reactivity-transform@npm:3.2.33":
+  version: 3.2.33
+  resolution: "@vue/reactivity-transform@npm:3.2.33"
   dependencies:
     "@babel/parser": ^7.16.4
-    "@vue/compiler-core": 3.2.31
-    "@vue/shared": 3.2.31
+    "@vue/compiler-core": 3.2.33
+    "@vue/shared": 3.2.33
     estree-walker: ^2.0.2
     magic-string: ^0.25.7
-  checksum: fc3c5390888c7b12622cf98c6873bbcb8a4d717fc1f5888c5e83bd911deb11402e9d5e59aae85edd756406ea9859dfe7c51c759284cd668e38e236b2a89ce997
+  checksum: 599a68f4bb1b36ac7015ddfc5cbcc97498e9caac5d1b96834185e2d248c22d1f1f4184e33788761112377ce22f9e2e3d79c50b551eec685395368a2480e6385c
   languageName: node
   linkType: hard
 
-"@vue/shared@npm:3.2.31":
-  version: 3.2.31
-  resolution: "@vue/shared@npm:3.2.31"
-  checksum: bf614d9d06f7c01fbe3f5f50d8f7621fffd83d2eebd6c2ccf540c59754283d3b659aa93f7d610ed4c16284a4d5208ef5aec12337f2d4d0ab05e9a271cd4a2051
+"@vue/shared@npm:3.2.33":
+  version: 3.2.33
+  resolution: "@vue/shared@npm:3.2.33"
+  checksum: 0083c9555b44f1c230079fac9270764e51af740f851101ae8972758fe6acf52184f76b4ab0c67a3840096d8f5a0988b99cae3046826b0f15af2431db6127ae48
   languageName: node
   linkType: hard
 
@@ -1595,13 +1698,14 @@ __metadata:
   linkType: hard
 
 "array.prototype.flatmap@npm:^1.2.5":
-  version: 1.2.5
-  resolution: "array.prototype.flatmap@npm:1.2.5"
+  version: 1.3.0
+  resolution: "array.prototype.flatmap@npm:1.3.0"
   dependencies:
-    call-bind: ^1.0.0
+    call-bind: ^1.0.2
     define-properties: ^1.1.3
-    es-abstract: ^1.19.0
-  checksum: a14119a28e5687a13cf3fd6756a8e7810563a9e81cd4227e27a25c31d362df47ac72553f06a271fd728741e199047933ad43d561d64a28da0b4e1a26f74e939e
+    es-abstract: ^1.19.2
+    es-shim-unscopables: ^1.0.0
+  checksum: 818538f39409c4045d874be85df0dbd195e1446b14d22f95bdcfefea44ae77db44e42dcd89a559254ec5a7c8b338cfc986cc6d641e3472f9a5326b21eb2976a2
   languageName: node
   linkType: hard
 
@@ -1735,17 +1839,16 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "birch-api@workspace:."
   dependencies:
+    "@fernapi/mrlint": ^0.1.6
     "@typescript-eslint/eslint-plugin": ^5.17.0
     "@typescript-eslint/parser": ^5.17.0
     depcheck: ^1.4.3
     eslint: ^8.12.0
     eslint-plugin-react: ^7.29.4
     eslint-plugin-react-hooks: ^4.4.0
-    fern: "workspace:^"
     husky: ^7.0.4
     jest: ^27.5.1
     lint-staged: ^12.3.7
-    mrlint: "workspace:^"
     prettier: ^2.6.1
     react: ^18.0.0
     stylelint: ^14.6.1
@@ -1887,9 +1990,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001317":
-  version: 1.0.30001327
-  resolution: "caniuse-lite@npm:1.0.30001327"
-  checksum: 789076fb889bd03515c4a3e2bfa09cd5b28439645173445147eb6ddfd8105c755e46dfda3de4b75edd2b71490864188bbfe8a2efe920c7998960b4e98916f518
+  version: 1.0.30001332
+  resolution: "caniuse-lite@npm:1.0.30001332"
+  checksum: e54182ea42ab3d2ff1440f9a6480292f7ab23c00c188df7ad65586312e4da567e8bedd5cb5fb8f0ff4193dc027a54e17e0b3c0b6db5d5a3fb61c7726ff9c45b3
   languageName: node
   linkType: hard
 
@@ -2400,9 +2503,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.84":
-  version: 1.4.106
-  resolution: "electron-to-chromium@npm:1.4.106"
-  checksum: 79eae050a775f6f674a24d4541d54cdb1c35e956d6e112ee9ec8d752fa9bcd94739e5f86c58d8e04f85199cf720146aee301b2e397932ad5c8d8e8cffe65a2ee
+  version: 1.4.107
+  resolution: "electron-to-chromium@npm:1.4.107"
+  checksum: c4538eb41df17330e9bc7aa030a5670788e1533f07280e2114c59ee89020162b50b2fff25675114c08826b29843c7271e76f6c9fbe313de0d307c90a5d097f78
   languageName: node
   linkType: hard
 
@@ -2459,9 +2562,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"es-abstract@npm:^1.19.0, es-abstract@npm:^1.19.1":
-  version: 1.19.2
-  resolution: "es-abstract@npm:1.19.2"
+"es-abstract@npm:^1.19.1, es-abstract@npm:^1.19.2":
+  version: 1.19.5
+  resolution: "es-abstract@npm:1.19.5"
   dependencies:
     call-bind: ^1.0.2
     es-to-primitive: ^1.2.1
@@ -2474,7 +2577,7 @@ __metadata:
     is-callable: ^1.2.4
     is-negative-zero: ^2.0.2
     is-regex: ^1.1.4
-    is-shared-array-buffer: ^1.0.1
+    is-shared-array-buffer: ^1.0.2
     is-string: ^1.0.7
     is-weakref: ^1.0.2
     object-inspect: ^1.12.0
@@ -2483,7 +2586,16 @@ __metadata:
     string.prototype.trimend: ^1.0.4
     string.prototype.trimstart: ^1.0.4
     unbox-primitive: ^1.0.1
-  checksum: 4724811fd54b2cea959a8b08e49cd41cc65c77363c37bf5b42dc64a7c730e16a0dca80edc73e46ebf90a8de311622009a5a8dbe47e9f4e129c35f52c5020fe4e
+  checksum: 55199b0f179a12b3b0ec9c9f2e3a27a7561686e4f88d46f9ef32c836448a336e367c14d8f792612fc83a64113896e478259e4dffbbcffb3efdd06650f6360324
+  languageName: node
+  linkType: hard
+
+"es-shim-unscopables@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "es-shim-unscopables@npm:1.0.0"
+  dependencies:
+    has: ^1.0.3
+  checksum: 83e95cadbb6ee44d3644dfad60dcad7929edbc42c85e66c3e99aefd68a3a5c5665f2686885cddb47dfeabfd77bd5ea5a7060f2092a955a729bbd8834f0d86fa1
   languageName: node
   linkType: hard
 
@@ -2838,52 +2950,6 @@ __metadata:
   checksum: 8510230778ab3a51c27dffb1b76ef2c24fab672a42742d3c0a45c2e9d1e5f20210b1fbca33486088da4a9a3958bde96b5aec0a63aac9894b4e9df65c88b2cbd6
   languageName: node
   linkType: hard
-
-"fern-typescript@workspace:packages/fern-typescript/cli":
-  version: 0.0.0-use.local
-  resolution: "fern-typescript@workspace:packages/fern-typescript/cli"
-  dependencies:
-    "@fern/ir-generation": "workspace:^"
-    "@fern/typescript-client": "workspace:^"
-    "@fern/typescript-model": "workspace:^"
-    "@fern/typescript-server": "workspace:^"
-    "@types/yargs": ^17.0.10
-    depcheck: ^1.4.3
-    eslint: ^8.12.0
-    jest: ^27.5.1
-    prettier: ^2.6.1
-    stylelint: ^14.6.1
-    ts-morph: ^14.0.0
-    typescript: ^4.6.3
-    yargs: ^17.4.1
-  bin:
-    fern-typescript: ./cli
-  languageName: unknown
-  linkType: soft
-
-"fern@workspace:^, fern@workspace:packages/compiler/cli":
-  version: 0.0.0-use.local
-  resolution: "fern@workspace:packages/compiler/cli"
-  dependencies:
-    "@fern/compiler": "workspace:^"
-    "@fern/compiler-commons": "workspace:^"
-    "@fern/syntax-analysis": "workspace:^"
-    "@types/glob": ^7.2.0
-    "@types/yargs": ^17.0.10
-    chalk: ^4.1.2
-    depcheck: ^1.4.3
-    eslint: ^8.12.0
-    glob: ^7.2.0
-    jest: ^27.5.1
-    prettier: ^2.6.1
-    stylelint: ^14.6.1
-    typescript: ^4.6.3
-    yargs: ^17.3.1
-    zod: ^3.14.3
-  bin:
-    fern: ./cli
-  languageName: unknown
-  linkType: soft
 
 "file-entry-cache@npm:^6.0.1":
   version: 6.0.1
@@ -3287,12 +3353,12 @@ __metadata:
   linkType: hard
 
 "https-proxy-agent@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "https-proxy-agent@npm:5.0.0"
+  version: 5.0.1
+  resolution: "https-proxy-agent@npm:5.0.1"
   dependencies:
     agent-base: 6
     debug: 4
-  checksum: 165bfb090bd26d47693597661298006841ab733d0c7383a8cb2f17373387a94c903a3ac687090aa739de05e379ab6f868bae84ab4eac288ad85c328cd1ec9e53
+  checksum: 571fccdf38184f05943e12d37d6ce38197becdd69e58d03f43637f7fa1269cf303a7d228aa27e5b27bbd3af8f09fd938e1c91dcfefff2df7ba77c20ed8dfc765
   languageName: node
   linkType: hard
 
@@ -3626,7 +3692,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-shared-array-buffer@npm:^1.0.1":
+"is-shared-array-buffer@npm:^1.0.2":
   version: 1.0.2
   resolution: "is-shared-array-buffer@npm:1.0.2"
   dependencies:
@@ -4519,7 +4585,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lru-cache@npm:^7.4.0, lru-cache@npm:^7.7.1":
+"lru-cache@npm:^7.7.1":
   version: 7.8.1
   resolution: "lru-cache@npm:7.8.1"
   checksum: 31ea67388c9774300331d70f4affd5a433869bcf0fae5405f967d19d7b447930b713b0566a2e95362c9082034a8b496f3671ccf8f0c061d8e8048412663f9432
@@ -4779,28 +4845,6 @@ __metadata:
   checksum: a96865108c6c3b1b8e1d5e9f11843de1e077e57737602de1b82030815f311be11f96f09cce59bd5b903d0b29834733e5313f9301e3ed6d6f6fba2eae0df4298f
   languageName: node
   linkType: hard
-
-"mrlint@workspace:^, mrlint@workspace:packages/mrlint/cli":
-  version: 0.0.0-use.local
-  resolution: "mrlint@workspace:packages/mrlint/cli"
-  dependencies:
-    "@mrlint/commons": "workspace:^"
-    "@mrlint/lint": "workspace:^"
-    "@mrlint/parser": "workspace:^"
-    "@mrlint/rules": "workspace:^"
-    "@types/yargs": ^17.0.10
-    chalk: ^4.1.2
-    depcheck: ^1.4.3
-    eslint: ^8.12.0
-    jest: ^27.5.1
-    prettier: ^2.6.1
-    stylelint: ^14.6.1
-    typescript: ^4.6.3
-    yargs: ^17.3.1
-  bin:
-    mrlint: ./cli
-  languageName: unknown
-  linkType: soft
 
 "ms@npm:2.1.2":
   version: 2.1.2
@@ -5116,13 +5160,6 @@ __metadata:
   version: 2.2.0
   resolution: "p-try@npm:2.2.0"
   checksum: f8a8e9a7693659383f06aec604ad5ead237c7a261c18048a6e1b5b85a5f8a067e469aa24f5bc009b991ea3b058a87f5065ef4176793a200d4917349881216cae
-  languageName: node
-  linkType: hard
-
-"package-json-type@npm:^1.0.3":
-  version: 1.0.3
-  resolution: "package-json-type@npm:1.0.3"
-  checksum: ea93a2ee1cbc480feee94974158605463b8ce8f899e8a09dc008ac83c060fd10d8f38bfdd5f28222196dba1f57de4e65b46b057dc889a704967714da393c2ad9
   languageName: node
   linkType: hard
 
@@ -5481,12 +5518,12 @@ __metadata:
   linkType: hard
 
 "regexp.prototype.flags@npm:^1.4.1":
-  version: 1.4.1
-  resolution: "regexp.prototype.flags@npm:1.4.1"
+  version: 1.4.2
+  resolution: "regexp.prototype.flags@npm:1.4.2"
   dependencies:
     call-bind: ^1.0.2
     define-properties: ^1.1.3
-  checksum: 77944a3ea5ae84f391fa80bff9babfedc47eadc9dc38e282b5fd746368fb787deec89c68ce3114195bf6b5782b160280a278b62d41ccc6e125afab1a7f816de8
+  checksum: a29ba403da16f9528f296611810d7629756a92601989dcab79a0ffe6d9ed3408a2a0e700dfd3f4d431123a1c16caa93a5b1f60b197bbcc084c3264d08f9f2fc2
   languageName: node
   linkType: hard
 
@@ -5732,13 +5769,13 @@ __metadata:
   linkType: hard
 
 "semver@npm:^7.3.2, semver@npm:^7.3.4, semver@npm:^7.3.5":
-  version: 7.3.6
-  resolution: "semver@npm:7.3.6"
+  version: 7.3.7
+  resolution: "semver@npm:7.3.7"
   dependencies:
-    lru-cache: ^7.4.0
+    lru-cache: ^6.0.0
   bin:
     semver: bin/semver.js
-  checksum: 9845f96b22268190b30025e02feca391451f2bd49b2c51920c27cc56744f64cbe397df089018fdb347d4b4fd800eabbd85661870eb63eb28055d2b72e457f759
+  checksum: 2fa3e877568cd6ce769c75c211beaed1f9fce80b28338cadd9d0b6c40f2e2862bafd62c19a6cff42f3d54292b7c623277bcab8816a2b5521cf15210d43e75232
   languageName: node
   linkType: hard
 
