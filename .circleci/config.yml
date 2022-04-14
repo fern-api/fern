@@ -57,21 +57,21 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          { key: 'gradle-wrapper-v2-{{ checksum "packages/java-api/gradle/wrapper/gradle-wrapper.properties" }}' }
+          { key: 'gradle-wrapper-v2-{{ checksum "packages/fern-java/gradle/wrapper/gradle-wrapper.properties" }}' }
       - restore_cache:
           {
-            key: 'compile-gradle-cache-v2-{{ checksum "packages/java-api/versions.props" }}-{{ checksum "packages/java-api/build.gradle" }}',
+            key: 'compile-gradle-cache-v2-{{ checksum "packages/fern-java/versions.props" }}-{{ checksum "packages/fern-java/build.gradle" }}',
           }
       - run: cd packages/java-api && ./gradlew --parallel --stacktrace classes testClasses
       - save_cache:
-          key: 'gradle-wrapper-v2-{{ checksum "packages/java-api/gradle/wrapper/gradle-wrapper.properties" }}'
+          key: 'gradle-wrapper-v2-{{ checksum "packages/fern-java/gradle/wrapper/gradle-wrapper.properties" }}'
           paths: [~/.gradle/wrapper]
       - save_cache:
-          key: 'compile-gradle-cache-v2-{{ checksum "packages/java-api/versions.props" }}-{{ checksum "packages/java-api/build.gradle" }}'
+          key: 'compile-gradle-cache-v2-{{ checksum "packages/fern-java/versions.props" }}-{{ checksum "packages/fern-java/build.gradle" }}'
           paths: [~/.gradle/caches]
       - persist_to_workspace:
           root: /home/circleci
-          paths: [project, packages/java-api/.gradle/init.gradle]
+          paths: [project, packages/fern-java/.gradle/init.gradle]
 
   publish-java-snapshot:
     docker: [{ image: "cimg/openjdk:11.0.10-node" }]
@@ -84,10 +84,10 @@ jobs:
     steps:
       - attach_workspace: { at: /home/circleci }
       - restore_cache:
-          { key: 'gradle-wrapper-v2-{{ checksum "packages/java-api/gradle/wrapper/gradle-wrapper.properties" }}' }
+          { key: 'gradle-wrapper-v2-{{ checksum "packages/fern-java/gradle/wrapper/gradle-wrapper.properties" }}' }
       - restore_cache:
           {
-            key: 'unit-test-gradle-cache-v2-{{ checksum "packages/java-api/versions.props" }}-{{ checksum "packages/java-api/build.gradle" }}',
+            key: 'unit-test-gradle-cache-v2-{{ checksum "packages/fern-java/versions.props" }}-{{ checksum "packages/fern-java/build.gradle" }}',
           }
       - run:
           name: Install Java
