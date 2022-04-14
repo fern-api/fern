@@ -20,8 +20,8 @@
     "prepublish": "run clean && run compile && run test && run lint:eslint && run lint:style && run format:check && run depcheck"
   },
   "dependencies": {
-    "@fernapi/api": "workspace:^",
-    "@fernapi/compiler-commons": "workspace:^",
+    "@fernapi/api": "workspace:*",
+    "@fernapi/compiler-commons": "workspace:*",
     "@fernapi/syntax-analysis": "workspace:^"
   },
   "devDependencies": {

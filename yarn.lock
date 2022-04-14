@@ -444,7 +444,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fernapi/api@workspace:^, @fernapi/api@workspace:packages/api/generated/typescript":
+"@fernapi/api@workspace:*, @fernapi/api@workspace:packages/api/generated/typescript":
   version: 0.0.0-use.local
   resolution: "@fernapi/api@workspace:packages/api/generated/typescript"
   dependencies:
@@ -452,7 +452,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fernapi/compiler-commons@^0.1.0, @fernapi/compiler-commons@workspace:^, @fernapi/compiler-commons@workspace:packages/compiler/compiler-commons":
+"@fernapi/compiler-commons@^0.1.0, @fernapi/compiler-commons@workspace:*, @fernapi/compiler-commons@workspace:packages/compiler/compiler-commons":
   version: 0.0.0-use.local
   resolution: "@fernapi/compiler-commons@workspace:packages/compiler/compiler-commons"
   dependencies:
@@ -472,13 +472,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fernapi/compiler@^0.1.0, @fernapi/compiler@workspace:^, @fernapi/compiler@workspace:packages/compiler/compiler":
+"@fernapi/compiler@^0.1.0, @fernapi/compiler@workspace:*, @fernapi/compiler@workspace:packages/compiler/compiler":
   version: 0.0.0-use.local
   resolution: "@fernapi/compiler@workspace:packages/compiler/compiler"
   dependencies:
-    "@fernapi/api": "workspace:^"
-    "@fernapi/compiler-commons": "workspace:^"
-    "@fernapi/ir-generation": "workspace:^"
+    "@fernapi/api": "workspace:*"
+    "@fernapi/compiler-commons": "workspace:*"
+    "@fernapi/ir-generation": "workspace:*"
     "@fernapi/syntax-analysis": "workspace:^"
     depcheck: ^1.4.3
     eslint: ^8.12.0
@@ -555,9 +555,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fernapi/fern@workspace:packages/compiler/cli"
   dependencies:
-    "@fernapi/compiler": "workspace:^"
-    "@fernapi/compiler-commons": "workspace:^"
-    "@fernapi/syntax-analysis": "workspace:^"
+    "@fernapi/compiler": "workspace:*"
+    "@fernapi/compiler-commons": "workspace:*"
+    "@fernapi/syntax-analysis": "workspace:*"
     "@types/glob": ^7.2.0
     "@types/yargs": ^17.0.10
     chalk: ^4.1.2
@@ -586,12 +586,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fernapi/ir-generation@workspace:^, @fernapi/ir-generation@workspace:packages/compiler/ir-generation":
+"@fernapi/ir-generation@workspace:*, @fernapi/ir-generation@workspace:packages/compiler/ir-generation":
   version: 0.0.0-use.local
   resolution: "@fernapi/ir-generation@workspace:packages/compiler/ir-generation"
   dependencies:
-    "@fernapi/api": "workspace:^"
-    "@fernapi/compiler-commons": "workspace:^"
+    "@fernapi/api": "workspace:*"
+    "@fernapi/compiler-commons": "workspace:*"
     "@fernapi/syntax-analysis": "workspace:^"
     depcheck: ^1.4.3
     eslint: ^8.12.0
@@ -670,11 +670,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fernapi/syntax-analysis@^0.1.0, @fernapi/syntax-analysis@workspace:^, @fernapi/syntax-analysis@workspace:packages/compiler/syntax-analysis":
+"@fernapi/syntax-analysis@^0.1.0, @fernapi/syntax-analysis@workspace:*, @fernapi/syntax-analysis@workspace:^, @fernapi/syntax-analysis@workspace:packages/compiler/syntax-analysis":
   version: 0.0.0-use.local
   resolution: "@fernapi/syntax-analysis@workspace:packages/compiler/syntax-analysis"
   dependencies:
-    "@fernapi/compiler-commons": "workspace:^"
+    "@fernapi/compiler-commons": "workspace:*"
     "@types/js-yaml": ^4.0.5
     depcheck: ^1.4.3
     eslint: ^8.12.0
@@ -1835,26 +1835,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"birch-api@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "birch-api@workspace:."
-  dependencies:
-    "@fernapi/mrlint": ^0.1.6
-    "@typescript-eslint/eslint-plugin": ^5.17.0
-    "@typescript-eslint/parser": ^5.17.0
-    depcheck: ^1.4.3
-    eslint: ^8.12.0
-    eslint-plugin-react: ^7.29.4
-    eslint-plugin-react-hooks: ^4.4.0
-    husky: ^7.0.4
-    jest: ^27.5.1
-    lint-staged: ^12.3.7
-    prettier: ^2.6.1
-    react: ^18.0.0
-    stylelint: ^14.6.1
-  languageName: unknown
-  linkType: soft
-
 "brace-expansion@npm:^1.1.7":
   version: 1.1.11
   resolution: "brace-expansion@npm:1.1.11"
@@ -2950,6 +2930,26 @@ __metadata:
   checksum: 8510230778ab3a51c27dffb1b76ef2c24fab672a42742d3c0a45c2e9d1e5f20210b1fbca33486088da4a9a3958bde96b5aec0a63aac9894b4e9df65c88b2cbd6
   languageName: node
   linkType: hard
+
+"fern@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "fern@workspace:."
+  dependencies:
+    "@fernapi/mrlint": ^0.1.6
+    "@typescript-eslint/eslint-plugin": ^5.17.0
+    "@typescript-eslint/parser": ^5.17.0
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    eslint-plugin-react: ^7.29.4
+    eslint-plugin-react-hooks: ^4.4.0
+    husky: ^7.0.4
+    jest: ^27.5.1
+    lint-staged: ^12.3.7
+    prettier: ^2.6.1
+    react: ^18.0.0
+    stylelint: ^14.6.1
+  languageName: unknown
+  linkType: soft
 
 "file-entry-cache@npm:^6.0.1":
   version: 6.0.1
