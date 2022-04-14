@@ -36,5 +36,6 @@ cdk.context.json
 cdk.out/
 *.tabl.json
 
-# generated code
+# fern api
+packages/api/ir.json
 /packages/**/src/generated

@@ -420,7 +420,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fernapi/api@workspace:packages/typescript-api"
   dependencies:
-    "@fernapi/fern": 0.1.0
     "@fernapi/fern-typescript": ^0.1.3
     depcheck: ^1.4.3
     eslint: ^8.12.0
@@ -431,7 +430,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fernapi/compiler-commons@^0.1.0, @fernapi/compiler-commons@workspace:^, @fernapi/compiler-commons@workspace:packages/compiler/compiler-commons":
+"@fernapi/compiler-commons@workspace:^, @fernapi/compiler-commons@workspace:packages/compiler/compiler-commons":
   version: 0.0.0-use.local
   resolution: "@fernapi/compiler-commons@workspace:packages/compiler/compiler-commons"
   dependencies:
@@ -444,7 +443,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fernapi/compiler@^0.1.0, @fernapi/compiler@workspace:^, @fernapi/compiler@workspace:packages/compiler/compiler":
+"@fernapi/compiler@workspace:^, @fernapi/compiler@workspace:packages/compiler/compiler":
   version: 0.0.0-use.local
   resolution: "@fernapi/compiler@workspace:packages/compiler/compiler"
   dependencies:
@@ -474,23 +473,6 @@ __metadata:
   bin:
     fern-typescript: ./cli
   checksum: 81b774be2f02a4b5ae93f046be6df61b914838e369ef6247adea0f7060abd2488097b5a0cf4ea3966c93bbf3482d1f70ea97b8de062f4fd5e1abcc8c70232381
-  languageName: node
-  linkType: hard
-
-"@fernapi/fern@npm:0.1.0":
-  version: 0.1.0
-  resolution: "@fernapi/fern@npm:0.1.0"
-  dependencies:
-    "@fernapi/compiler": ^0.1.0
-    "@fernapi/compiler-commons": ^0.1.0
-    "@fernapi/syntax-analysis": ^0.1.0
-    chalk: ^4.1.2
-    glob: ^7.2.0
-    yargs: ^17.3.1
-    zod: ^3.14.3
-  bin:
-    fern: ./cli
-  checksum: f63d2d8bee15a944c8c2e97700e29076d0412e895dca3f5d65fd4d48feabd44497a31387ac43e52383d00787ae55266abe8cb76b8381ae2033cd914af19f3bed
   languageName: node
   linkType: hard
 
@@ -602,7 +584,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fernapi/syntax-analysis@^0.1.0, @fernapi/syntax-analysis@workspace:^, @fernapi/syntax-analysis@workspace:packages/compiler/syntax-analysis":
+"@fernapi/syntax-analysis@workspace:^, @fernapi/syntax-analysis@workspace:packages/compiler/syntax-analysis":
   version: 0.0.0-use.local
   resolution: "@fernapi/syntax-analysis@workspace:packages/compiler/syntax-analysis"
   dependencies:

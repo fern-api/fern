@@ -22,7 +22,6 @@
     "codegen:clean": "/bin/rm -r src/generated"
   },
   "dependencies": {
-    "@fernapi/fern": "0.1.0",
     "@fernapi/fern-typescript": "^0.1.3"
   },
   "devDependencies": {
