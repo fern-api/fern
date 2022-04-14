@@ -452,7 +452,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fernapi/compiler-commons@0.1.4, @fernapi/compiler-commons@^0.1.0, @fernapi/compiler-commons@workspace:^, @fernapi/compiler-commons@workspace:packages/compiler/compiler-commons":
+"@fernapi/compiler-commons@^0.1.0, @fernapi/compiler-commons@workspace:^, @fernapi/compiler-commons@workspace:packages/compiler/compiler-commons":
   version: 0.0.0-use.local
   resolution: "@fernapi/compiler-commons@workspace:packages/compiler/compiler-commons"
   dependencies:
@@ -472,7 +472,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fernapi/compiler@^0.1.0, @fernapi/compiler@^0.1.2, @fernapi/compiler@workspace:packages/compiler/compiler":
+"@fernapi/compiler@^0.1.0, @fernapi/compiler@workspace:^, @fernapi/compiler@workspace:packages/compiler/compiler":
   version: 0.0.0-use.local
   resolution: "@fernapi/compiler@workspace:packages/compiler/compiler"
   dependencies:
@@ -555,9 +555,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fernapi/fern@workspace:packages/compiler/cli"
   dependencies:
-    "@fernapi/compiler": ^0.1.2
-    "@fernapi/compiler-commons": 0.1.4
-    "@fernapi/syntax-analysis": 0.1.4
+    "@fernapi/compiler": "workspace:^"
+    "@fernapi/compiler-commons": "workspace:^"
+    "@fernapi/syntax-analysis": "workspace:^"
     "@types/glob": ^7.2.0
     "@types/yargs": ^17.0.10
     chalk: ^4.1.2
@@ -670,7 +670,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fernapi/syntax-analysis@0.1.4, @fernapi/syntax-analysis@^0.1.0, @fernapi/syntax-analysis@workspace:^, @fernapi/syntax-analysis@workspace:packages/compiler/syntax-analysis":
+"@fernapi/syntax-analysis@^0.1.0, @fernapi/syntax-analysis@workspace:^, @fernapi/syntax-analysis@workspace:packages/compiler/syntax-analysis":
   version: 0.0.0-use.local
   resolution: "@fernapi/syntax-analysis@workspace:packages/compiler/syntax-analysis"
   dependencies:
