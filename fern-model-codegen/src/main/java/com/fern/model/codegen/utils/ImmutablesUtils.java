@@ -15,18 +15,24 @@ public final class ImmutablesUtils {
 
     private static final String IMMUTABLE_PREFIX = "Immutable";
 
-    private ImmutablesUtils() {}
+    private final FilepathUtils filepathUtils;
+    private final TypeReferenceUtils typeReferenceUtils;
 
-    public static List<MethodSpec> getImmutablesPropertyMethods(ObjectTypeDefinition objectTypeDefinition) {
+    public ImmutablesUtils(FilepathUtils filepathUtils, TypeReferenceUtils typeReferenceUtils) {
+        this.filepathUtils = filepathUtils;
+        this.typeReferenceUtils = typeReferenceUtils;
+    }
+
+    public List<MethodSpec> getImmutablesPropertyMethods(ObjectTypeDefinition objectTypeDefinition) {
         return objectTypeDefinition.fields().stream()
                 .map(objectField -> {
-                    TypeName returnType = TypeReferenceUtils.convertToTypeName(true, objectField.valueType());
-                    return ImmutablesUtils.getKeyWordCompatibleImmutablesPropertyMethod(objectField.key(), returnType);
+                    TypeName returnType = typeReferenceUtils.convertToTypeName(true, objectField.valueType());
+                    return getKeyWordCompatibleImmutablesPropertyMethod(objectField.key(), returnType);
                 })
                 .collect(Collectors.toList());
     }
 
-    public static MethodSpec getKeyWordCompatibleImmutablesPropertyMethod(String methodName, TypeName returnType) {
+    public MethodSpec getKeyWordCompatibleImmutablesPropertyMethod(String methodName, TypeName returnType) {
         MethodSpec.Builder methodBuilder;
         if (KeyWordUtils.isReserved(methodName)) {
             methodBuilder = MethodSpec.methodBuilder("_" + methodName)
@@ -43,9 +49,9 @@ public final class ImmutablesUtils {
                 .build();
     }
 
-    public static ClassName getImmutablesClassName(NamedTypeReference namedTypeReference) {
+    public ClassName getImmutablesClassName(NamedTypeReference namedTypeReference) {
         return ClassName.get(
-                FilepathUtils.convertFilepathToPackage(namedTypeReference.filepath()),
+                filepathUtils.convertFilepathToPackage(namedTypeReference.filepath()),
                 IMMUTABLE_PREFIX + namedTypeReference.name());
     }
 }

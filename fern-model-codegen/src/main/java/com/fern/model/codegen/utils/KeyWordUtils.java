@@ -4,11 +4,11 @@ import java.util.Set;
 
 public final class KeyWordUtils {
 
-    private static final Set<String> RESERVED_WORDS = Set.of("enum", "extends");
+    private static final Set<String> RESERVED_WORDS = Set.of("enum", "extends", "package");
 
-    private KeyWordUtils() {}
+    public KeyWordUtils() {}
 
-    public static String getKeyWordCompatibleName(String name) {
+    public String getKeyWordCompatibleName(String name) {
         if (isReserved(name)) {
             return "_" + name;
         }

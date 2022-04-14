@@ -1,0 +1,679 @@
+
+
+{
+  "types": [
+    {
+      "docs": "Complete representation of the API schema",
+      "extends": [],
+      "name": { "filepath": "fern.yml", "name": "IntermediateRepresentation" },
+      "shape": {
+        "fields": [
+          {
+            "key": "types",
+            "valueType": {
+              "container": {
+                "list": { "filepath": "fern.yml", "name": "TypeDefinition", "type": "named" },
+                "type": "list"
+              },
+              "type": "container"
+            },
+            "docs": "The types described by this API"
+          },
+          {
+            "key": "services",
+            "valueType": { "filepath": "fern.yml", "name": "Services", "type": "named" },
+            "docs": "The services exposed by this API"
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "docs": "A type, which is a name and a shape",
+      "extends": [{ "filepath": "fern.yml", "name": "WithDocs" }],
+      "name": { "filepath": "fern.yml", "name": "TypeDefinition" },
+      "shape": {
+        "fields": [
+          {
+            "key": "extends",
+            "valueType": {
+              "container": {
+                "list": { "filepath": "fern.yml", "name": "NamedTypeReference", "type": "named" },
+                "type": "list"
+              },
+              "type": "container"
+            },
+            "docs": "A list of other types to inherit from"
+          },
+          {
+            "key": "name",
+            "valueType": { "filepath": "fern.yml", "name": "NamedTypeReference", "type": "named" }
+          },
+          { "key": "shape", "valueType": { "filepath": "fern.yml", "name": "Type", "type": "named" } }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "extends": [],
+      "name": { "filepath": "fern.yml", "name": "WithDocs" },
+      "shape": {
+        "fields": [
+          {
+            "key": "docs",
+            "valueType": {
+              "container": {
+                "optional": { "primitive": "STRING", "type": "primitive" },
+                "type": "optional"
+              },
+              "type": "container"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "extends": [{ "filepath": "fern.yml", "name": "WithPackage" }],
+      "name": { "filepath": "fern.yml", "name": "NamedTypeReference" },
+      "shape": {
+        "fields": [{ "key": "name", "valueType": { "primitive": "STRING", "type": "primitive" } }],
+        "type": "object"
+      }
+    },
+    {
+      "extends": [],
+      "name": { "filepath": "fern.yml", "name": "WithPackage" },
+      "shape": {
+        "fields": [{ "key": "package", "valueType": { "primitive": "STRING", "type": "primitive" } }],
+        "type": "object"
+      }
+    },
+    {
+      "extends": [],
+      "name": { "filepath": "fern.yml", "name": "Type" },
+      "shape": {
+        "types": [
+          {
+            "discriminantValue": "object",
+            "valueType": { "filepath": "fern.yml", "name": "ObjectTypeDefinition", "type": "named" }
+          },
+          {
+            "discriminantValue": "union",
+            "valueType": { "filepath": "fern.yml", "name": "UnionTypeDefinition", "type": "named" }
+          },
+          {
+            "discriminantValue": "alias",
+            "valueType": { "filepath": "fern.yml", "name": "AliasTypeDefinition", "type": "named" }
+          },
+          {
+            "discriminantValue": "enum",
+            "valueType": { "filepath": "fern.yml", "name": "EnumTypeDefinition", "type": "named" }
+          }
+        ],
+        "type": "union"
+      }
+    },
+    {
+      "extends": [],
+      "name": { "filepath": "fern.yml", "name": "ObjectTypeDefinition" },
+      "shape": {
+        "fields": [
+          {
+            "key": "fields",
+            "valueType": {
+              "container": {
+                "list": { "filepath": "fern.yml", "name": "ObjectField", "type": "named" },
+                "type": "list"
+              },
+              "type": "container"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "extends": [{ "filepath": "fern.yml", "name": "WithDocs" }],
+      "name": { "filepath": "fern.yml", "name": "ObjectField" },
+      "shape": {
+        "fields": [
+          { "key": "key", "valueType": { "primitive": "STRING", "type": "primitive" } },
+          {
+            "key": "valueType",
+            "valueType": { "filepath": "fern.yml", "name": "TypeReference", "type": "named" }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "extends": [],
+      "name": { "filepath": "fern.yml", "name": "TypeReference" },
+      "shape": {
+        "types": [
+          {
+            "discriminantValue": "named",
+            "valueType": { "filepath": "fern.yml", "name": "NamedTypeReference", "type": "named" }
+          },
+          {
+            "discriminantValue": "primitive",
+            "valueType": { "filepath": "fern.yml", "name": "PrimitiveType", "type": "named" }
+          },
+          {
+            "discriminantValue": "container",
+            "valueType": { "filepath": "fern.yml", "name": "ContainerType", "type": "named" }
+          }
+        ],
+        "type": "union"
+      }
+    },
+    {
+      "extends": [],
+      "name": { "filepath": "fern.yml", "name": "PrimitiveType" },
+      "shape": {
+        "values": [
+          { "value": "INTEGER" },
+          { "value": "DOUBLE" },
+          { "value": "LONG", "docs": "Within the range -2^53 to 2^53" },
+          { "value": "STRING" },
+          { "value": "BOOLEAN" }
+        ],
+        "type": "enum"
+      }
+    },
+    {
+      "extends": [],
+      "name": { "filepath": "fern.yml", "name": "ContainerType" },
+      "shape": {
+        "types": [
+          {
+            "discriminantValue": "map",
+            "valueType": { "filepath": "fern.yml", "name": "MapType", "type": "named" }
+          },
+          {
+            "discriminantValue": "list",
+            "valueType": { "filepath": "fern.yml", "name": "TypeReference", "type": "named" }
+          },
+          {
+            "discriminantValue": "set",
+            "valueType": { "filepath": "fern.yml", "name": "TypeReference", "type": "named" }
+          },
+          {
+            "discriminantValue": "optional",
+            "valueType": { "filepath": "fern.yml", "name": "TypeReference", "type": "named" }
+          }
+        ],
+        "type": "union"
+      }
+    },
+    {
+      "extends": [],
+      "name": { "filepath": "fern.yml", "name": "MapType" },
+      "shape": {
+        "fields": [
+          {
+            "key": "keyType",
+            "valueType": { "filepath": "fern.yml", "name": "TypeReference", "type": "named" }
+          },
+          {
+            "key": "valueType",
+            "valueType": { "filepath": "fern.yml", "name": "TypeReference", "type": "named" }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "extends": [],
+      "name": { "filepath": "fern.yml", "name": "UnionTypeDefinition" },
+      "shape": {
+        "fields": [
+          {
+            "key": "types",
+            "valueType": {
+              "container": {
+                "list": { "filepath": "fern.yml", "name": "SingleUnionType", "type": "named" },
+                "type": "list"
+              },
+              "type": "container"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "extends": [{ "filepath": "fern.yml", "name": "WithDocs" }],
+      "name": { "filepath": "fern.yml", "name": "SingleUnionType" },
+      "shape": {
+        "fields": [
+          { "key": "discriminantValue", "valueType": { "primitive": "STRING", "type": "primitive" } },
+          {
+            "key": "valueType",
+            "valueType": { "filepath": "fern.yml", "name": "TypeReference", "type": "named" }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "extends": [],
+      "name": { "filepath": "fern.yml", "name": "AliasTypeDefinition" },
+      "shape": {
+        "fields": [
+          { "key": "name", "valueType": { "primitive": "STRING", "type": "primitive" } },
+          {
+            "key": "aliasType",
+            "valueType": { "filepath": "fern.yml", "name": "TypeReference", "type": "named" }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "extends": [],
+      "name": { "filepath": "fern.yml", "name": "EnumTypeDefinition" },
+      "shape": {
+        "fields": [
+          {
+            "key": "values",
+            "valueType": {
+              "container": {
+                "list": { "filepath": "fern.yml", "name": "EnumValue", "type": "named" },
+                "type": "list"
+              },
+              "type": "container"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "extends": [{ "filepath": "fern.yml", "name": "WithDocs" }],
+      "name": { "filepath": "fern.yml", "name": "EnumValue" },
+      "shape": {
+        "fields": [{ "key": "value", "valueType": { "primitive": "STRING", "type": "primitive" } }],
+        "type": "object"
+      }
+    },
+    {
+      "extends": [],
+      "name": { "filepath": "fern.yml", "name": "Services" },
+      "shape": {
+        "fields": [
+          {
+            "key": "http",
+            "valueType": {
+              "container": {
+                "list": { "filepath": "fern.yml", "name": "HttpService", "type": "named" },
+                "type": "list"
+              },
+              "type": "container"
+            }
+          },
+          {
+            "key": "webSocket",
+            "valueType": {
+              "container": {
+                "list": { "filepath": "fern.yml", "name": "WebSocketService", "type": "named" },
+                "type": "list"
+              },
+              "type": "container"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "extends": [
+        { "filepath": "fern.yml", "name": "WithPackage" },
+        { "filepath": "fern.yml", "name": "WithDocs" }
+      ],
+      "name": { "filepath": "fern.yml", "name": "BaseService" },
+      "shape": {
+        "fields": [
+          { "key": "name", "valueType": { "primitive": "STRING", "type": "primitive" } },
+          { "key": "basePath", "valueType": { "primitive": "STRING", "type": "primitive" } }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "extends": [{ "filepath": "fern.yml", "name": "BaseService" }],
+      "name": { "filepath": "fern.yml", "name": "HttpService" },
+      "shape": {
+        "fields": [
+          {
+            "key": "headers",
+            "valueType": {
+              "container": {
+                "list": { "filepath": "fern.yml", "name": "HttpHeader", "type": "named" },
+                "type": "list"
+              },
+              "type": "container"
+            }
+          },
+          {
+            "key": "endpoints",
+            "valueType": {
+              "container": {
+                "list": { "filepath": "fern.yml", "name": "HttpEndpoint", "type": "named" },
+                "type": "list"
+              },
+              "type": "container"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "extends": [{ "filepath": "fern.yml", "name": "WithDocs" }],
+      "name": { "filepath": "fern.yml", "name": "HttpHeader" },
+      "shape": {
+        "fields": [
+          { "key": "header", "valueType": { "primitive": "STRING", "type": "primitive" } },
+          {
+            "key": "valueType",
+            "valueType": { "filepath": "fern.yml", "name": "TypeReference", "type": "named" }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "extends": [{ "filepath": "fern.yml", "name": "WithDocs" }],
+      "name": { "filepath": "fern.yml", "name": "HttpEndpoint" },
+      "shape": {
+        "fields": [
+          { "key": "endpointId", "valueType": { "primitive": "STRING", "type": "primitive" } },
+          { "key": "verb", "valueType": { "filepath": "fern.yml", "name": "HttpVerb", "type": "named" } },
+          { "key": "path", "valueType": { "primitive": "STRING", "type": "primitive" } },
+          {
+            "key": "parameters",
+            "valueType": {
+              "container": {
+                "list": { "filepath": "fern.yml", "name": "HttpEndpointParameter", "type": "named" },
+                "type": "list"
+              },
+              "type": "container"
+            }
+          },
+          {
+            "key": "queryParameters",
+            "valueType": {
+              "container": {
+                "list": {
+                  "filepath": "fern.yml",
+                  "name": "HttpEndpointQueryParameter",
+                  "type": "named"
+                },
+                "type": "list"
+              },
+              "type": "container"
+            }
+          },
+          {
+            "key": "header",
+            "valueType": {
+              "container": {
+                "list": { "filepath": "fern.yml", "name": "HttpHeader", "type": "named" },
+                "type": "list"
+              },
+              "type": "container"
+            }
+          },
+          {
+            "key": "request",
+            "valueType": {
+              "container": {
+                "optional": { "filepath": "fern.yml", "name": "HttpRequest", "type": "named" },
+                "type": "optional"
+              },
+              "type": "container"
+            }
+          },
+          {
+            "key": "response",
+            "valueType": {
+              "container": {
+                "optional": { "filepath": "fern.yml", "name": "HttpResponse", "type": "named" },
+                "type": "optional"
+              },
+              "type": "container"
+            }
+          },
+          {
+            "key": "errors",
+            "valueType": {
+              "container": {
+                "list": { "filepath": "fern.yml", "name": "HttpError", "type": "named" },
+                "type": "list"
+              },
+              "type": "container"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "extends": [{ "filepath": "fern.yml", "name": "WithDocs" }],
+      "name": { "filepath": "fern.yml", "name": "HttpRequest" },
+      "shape": {
+        "fields": [
+          {
+            "key": "bodyType",
+            "valueType": { "filepath": "fern.yml", "name": "TypeReference", "type": "named" }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "extends": [{ "filepath": "fern.yml", "name": "WithDocs" }],
+      "name": { "filepath": "fern.yml", "name": "HttpResponse" },
+      "shape": {
+        "fields": [
+          {
+            "key": "bodyType",
+            "valueType": { "filepath": "fern.yml", "name": "TypeReference", "type": "named" }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "extends": [],
+      "name": { "filepath": "fern.yml", "name": "HttpVerb" },
+      "shape": {
+        "values": [{ "value": "GET" }, { "value": "POST" }, { "value": "PUT" }, { "value": "DELETE" }],
+        "type": "enum"
+      }
+    },
+    {
+      "extends": [{ "filepath": "fern.yml", "name": "WithDocs" }],
+      "name": { "filepath": "fern.yml", "name": "HttpEndpointParameter" },
+      "shape": {
+        "fields": [
+          { "key": "key", "valueType": { "primitive": "STRING", "type": "primitive" } },
+          {
+            "key": "valueType",
+            "valueType": { "filepath": "fern.yml", "name": "TypeReference", "type": "named" }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "extends": [{ "filepath": "fern.yml", "name": "WithDocs" }],
+      "name": { "filepath": "fern.yml", "name": "HttpEndpointQueryParameter" },
+      "shape": {
+        "fields": [
+          { "key": "key", "valueType": { "primitive": "STRING", "type": "primitive" } },
+          {
+            "key": "valueType",
+            "valueType": { "filepath": "fern.yml", "name": "TypeReference", "type": "named" }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "extends": [{ "filepath": "fern.yml", "name": "WithDocs" }],
+      "name": { "filepath": "fern.yml", "name": "HttpError" },
+      "shape": {
+        "fields": [
+          { "key": "name", "valueType": { "primitive": "STRING", "type": "primitive" } },
+          { "key": "statusCode", "valueType": { "primitive": "INTEGER", "type": "primitive" } },
+          {
+            "key": "bodyType",
+            "valueType": {
+              "container": {
+                "optional": { "filepath": "fern.yml", "name": "TypeReference", "type": "named" },
+                "type": "optional"
+              },
+              "type": "container"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "extends": [{ "filepath": "fern.yml", "name": "BaseService" }],
+      "name": { "filepath": "fern.yml", "name": "WebSocketService" },
+      "shape": {
+        "fields": [
+          {
+            "key": "messages",
+            "valueType": {
+              "container": {
+                "list": { "filepath": "fern.yml", "name": "WebSocketMessage", "type": "named" },
+                "type": "list"
+              },
+              "type": "container"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "extends": [{ "filepath": "fern.yml", "name": "WithDocs" }],
+      "name": { "filepath": "fern.yml", "name": "WebSocketMessage" },
+      "shape": {
+        "fields": [
+          {
+            "key": "origin",
+            "valueType": { "filepath": "fern.yml", "name": "WebSocketMessageOrigin", "type": "named" }
+          },
+          {
+            "key": "body",
+            "valueType": {
+              "container": {
+                "optional": { "filepath": "fern.yml", "name": "WebSocketMessageBody", "type": "named" },
+                "type": "optional"
+              },
+              "type": "container"
+            }
+          },
+          {
+            "key": "response",
+            "valueType": {
+              "container": {
+                "optional": {
+                  "filepath": "fern.yml",
+                  "name": "WebSocketMessageResponse",
+                  "type": "named"
+                },
+                "type": "optional"
+              },
+              "type": "container"
+            }
+          },
+          {
+            "key": "errors",
+            "valueType": {
+              "container": {
+                "list": { "filepath": "fern.yml", "name": "WebsocketError", "type": "named" },
+                "type": "list"
+              },
+              "type": "container"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "extends": [],
+      "name": { "filepath": "fern.yml", "name": "WebSocketMessageOrigin" },
+      "shape": { "values": [{ "value": "CLIENT" }, { "value": "SERVER" }], "type": "enum" }
+    },
+    {
+      "extends": [{ "filepath": "fern.yml", "name": "WithDocs" }],
+      "name": { "filepath": "fern.yml", "name": "WebSocketMessageBody" },
+      "shape": {
+        "fields": [
+          {
+            "key": "bodyType",
+            "valueType": { "filepath": "fern.yml", "name": "TypeReference", "type": "named" }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "extends": [{ "filepath": "fern.yml", "name": "WithDocs" }],
+      "name": { "filepath": "fern.yml", "name": "WebSocketMessageResponse" },
+      "shape": {
+        "fields": [
+          {
+            "key": "bodyType",
+            "valueType": { "filepath": "fern.yml", "name": "TypeReference", "type": "named" }
+          },
+          {
+            "key": "behavior",
+            "valueType": {
+              "filepath": "fern.yml",
+              "name": "WebSocketMessageResponseBehavior",
+              "type": "named"
+            },
+            "docs": "Defaults to {WebSocketMessageResponseBehavior.ONGOING}"
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "extends": [],
+      "name": { "filepath": "fern.yml", "name": "WebSocketMessageResponseBehavior" },
+      "shape": { "values": [{ "value": "ONGOING" }, { "value": "REQUEST_RESPONSE" }], "type": "enum" }
+    },
+    {
+      "extends": [{ "filepath": "fern.yml", "name": "WithDocs" }],
+      "name": { "filepath": "fern.yml", "name": "WebsocketError" },
+      "shape": {
+        "fields": [
+          { "key": "name", "valueType": { "primitive": "STRING", "type": "primitive" } },
+          {
+            "key": "bodyType",
+            "valueType": {
+              "container": {
+                "optional": { "filepath": "fern.yml", "name": "TypeReference", "type": "named" },
+                "type": "optional"
+              },
+              "type": "container"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    }
+  ],
+  "services": { "http": [], "webSocket": [] }
+}

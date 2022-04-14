@@ -1,5 +1,6 @@
 plugins {
     id 'java-library'
+    id 'java-library-distribution'
 }
 
 dependencies {
@@ -13,6 +14,9 @@ dependencies {
     implementation 'org.apache.commons:commons-lang3'
     implementation 'com.google.code.findbugs:annotations'
     implementation 'com.palantir.common:streams'
+    implementation 'net.sourceforge.argparse4j:argparse4j'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-guava'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
 
     annotationProcessor 'org.immutables:value'
     compileOnly 'org.immutables:value::annotations'
@@ -22,4 +26,26 @@ dependencies {
     testImplementation 'org.assertj:assertj-core'
     testImplementation 'org.mockito:mockito-core'
     testImplementation 'org.mockito:mockito-junit-jupiter'
+}
+
+distributions {
+    main {
+        distributionBaseName = project.name + "-" + rootProject.version
+    }
+}
+
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+        myDistribution(MavenPublication) {
+            artifact distZip
+        }
+    }
+}
+
+artifactoryPublish {
+    publications('mavenJava', 'myDistribution')
 }

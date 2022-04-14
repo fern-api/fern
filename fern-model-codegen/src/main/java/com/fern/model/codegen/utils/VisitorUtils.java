@@ -26,14 +26,14 @@ public final class VisitorUtils {
     private static final String VISITOR_UNKNOWN_TYPE_PARAMETER_NAME = "unknownType";
     private static final String VISITOR_TYPE_PARAMETER_NAME = "value";
 
-    private VisitorUtils() {}
+    public VisitorUtils() {}
 
-    public static TypeName getVisitorTypeName(ClassName enclosingClassName) {
+    public TypeName getVisitorTypeName(ClassName enclosingClassName) {
         ClassName visitorInterfaceClassName = enclosingClassName.nestedClass(VISITOR_INTERFACE_NAME);
         return ParameterizedTypeName.get(visitorInterfaceClassName, VISITOR_RETURN_TYPE);
     }
 
-    public static GeneratedVisitor buildVisitorInterface(List<VisitMethodArgs> visitMethodArgsList) {
+    public GeneratedVisitor buildVisitorInterface(List<VisitMethodArgs> visitMethodArgsList) {
         Map<String, MethodSpec> visitMethodsByKeyName = new HashMap<>();
         List<MethodSpec> visitMethods = visitMethodArgsList.stream()
                 .map(visitMethodArgs -> {

@@ -1,4 +1,4 @@
-package com.fern.model.codegen;
+package com.fern.model.codegen.alias;
 
 import com.fern.AliasTypeDefinition;
 import com.fern.NamedTypeReference;
@@ -6,8 +6,7 @@ import com.fern.PrimitiveType;
 import com.fern.Type;
 import com.fern.TypeDefinition;
 import com.fern.TypeReference;
-import com.fern.model.codegen.alias.AliasGenerator;
-import com.fern.model.codegen.alias.GeneratedAlias;
+import com.fern.model.codegen.TestConstants;
 import org.junit.jupiter.api.Test;
 
 public final class AliasGeneratorTest {
@@ -25,7 +24,8 @@ public final class AliasGeneratorTest {
                         .build())
                 .shape(Type.alias(aliasTypeDefinition))
                 .build();
-        AliasGenerator aliasGenerator = new AliasGenerator(aliasTypeDefinition, problemIdTypeDefinition.name());
+        AliasGenerator aliasGenerator = new AliasGenerator(
+                aliasTypeDefinition, problemIdTypeDefinition.name(), TestConstants.GENERATOR_CONTEXT);
         GeneratedAlias generatedAlias = aliasGenerator.generate();
         System.out.println(generatedAlias.file().toString());
     }

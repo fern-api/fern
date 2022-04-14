@@ -5,9 +5,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.AliasTypeDefinition;
 import com.fern.NamedTypeReference;
 import com.fern.immutables.StagedBuilderStyle;
-import com.fern.model.codegen.utils.ClassNameUtils;
-import com.fern.model.codegen.utils.ImmutablesUtils;
-import com.fern.model.codegen.utils.TypeReferenceUtils;
+import com.fern.model.codegen.Generator;
+import com.fern.model.codegen.GeneratorContext;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -18,7 +17,7 @@ import java.util.List;
 import javax.lang.model.element.Modifier;
 import org.immutables.value.Value;
 
-public final class AliasGenerator {
+public final class AliasGenerator extends Generator<AliasTypeDefinition> {
 
     private static final Modifier[] ALIAS_CLASS_MODIFIERS = new Modifier[] {Modifier.PUBLIC};
 
@@ -30,14 +29,19 @@ public final class AliasGenerator {
     private final NamedTypeReference namedTypeReference;
     private final ClassName generatedAliasClassName;
 
-    public AliasGenerator(AliasTypeDefinition aliasTypeDefinition, NamedTypeReference namedTypeReference) {
+    public AliasGenerator(
+            AliasTypeDefinition aliasTypeDefinition,
+            NamedTypeReference namedTypeReference,
+            GeneratorContext generatorContext) {
+        super(generatorContext);
         this.aliasTypeDefinition = aliasTypeDefinition;
         this.namedTypeReference = namedTypeReference;
-        this.generatedAliasClassName = ClassNameUtils.getClassName(namedTypeReference);
+        this.generatedAliasClassName = generatorContext.getClassNameUtils().getClassName(namedTypeReference);
     }
 
     public GeneratedAlias generate() {
-        TypeName aliasTypeName = TypeReferenceUtils.convertToTypeName(true, aliasTypeDefinition.aliasType());
+        TypeName aliasTypeName =
+                generatorContext.getTypeReferenceUtils().convertToTypeName(true, aliasTypeDefinition.aliasType());
         TypeSpec aliasTypeSpec = TypeSpec.interfaceBuilder(generatedAliasClassName)
                 .addModifiers(ALIAS_CLASS_MODIFIERS)
                 .addAnnotations(getAnnotationSpecs())
@@ -58,7 +62,10 @@ public final class AliasGenerator {
                 AnnotationSpec.builder(Value.Immutable.class).build(),
                 AnnotationSpec.builder(StagedBuilderStyle.class).build(),
                 AnnotationSpec.builder(JsonDeserialize.class)
-                        .addMember("as", "$T.class", ImmutablesUtils.getImmutablesClassName(namedTypeReference))
+                        .addMember(
+                                "as",
+                                "$T.class",
+                                generatorContext.getImmutablesUtils().getImmutablesClassName(namedTypeReference))
                         .build());
     }
 
@@ -76,7 +83,7 @@ public final class AliasGenerator {
                 .addParameter(aliasTypeName, "value")
                 .addStatement(
                         "return $T.builder().value($L).build()",
-                        ImmutablesUtils.getImmutablesClassName(namedTypeReference),
+                        generatorContext.getImmutablesUtils().getImmutablesClassName(namedTypeReference),
                         "value")
                 .build();
     }

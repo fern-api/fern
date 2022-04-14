@@ -7,10 +7,10 @@ import com.fern.ObjectField;
 import com.fern.ObjectTypeDefinition;
 import com.fern.immutables.StagedBuilderStyle;
 import com.fern.model.codegen.GeneratedFile;
+import com.fern.model.codegen.Generator;
+import com.fern.model.codegen.GeneratorContext;
 import com.fern.model.codegen.interfaces.GeneratedInterface;
 import com.fern.model.codegen.union.UnionGenerator;
-import com.fern.model.codegen.utils.ClassNameUtils;
-import com.fern.model.codegen.utils.ImmutablesUtils;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 import org.immutables.value.Value;
 
-public final class ObjectGenerator {
+public final class ObjectGenerator extends Generator<ObjectTypeDefinition> {
 
     private static final Modifier[] OBJECT_INTERFACE_MODIFIERS = new Modifier[] {Modifier.PUBLIC};
 
@@ -40,7 +40,9 @@ public final class ObjectGenerator {
             NamedTypeReference namedTypeReference,
             ObjectTypeDefinition objectTypeDefinition,
             List<GeneratedInterface> extendedInterfaces,
-            Optional<GeneratedInterface> selfInterface) {
+            Optional<GeneratedInterface> selfInterface,
+            GeneratorContext generatorContext) {
+        super(generatorContext);
         this.namedTypeReference = namedTypeReference;
         this.objectTypeDefinition = objectTypeDefinition;
         this.extendedInterfaces = extendedInterfaces;
@@ -48,7 +50,8 @@ public final class ObjectGenerator {
     }
 
     public GeneratedObject generate() {
-        ClassName generatedObjectClassName = ClassNameUtils.getClassName(namedTypeReference);
+        ClassName generatedObjectClassName =
+                generatorContext.getClassNameUtils().getClassName(namedTypeReference);
         TypeSpec objectTypeSpec = TypeSpec.interfaceBuilder(namedTypeReference.name())
                 .addModifiers(OBJECT_INTERFACE_MODIFIERS)
                 .addAnnotations(getAnnotations())
@@ -69,7 +72,10 @@ public final class ObjectGenerator {
         annotationSpecs.add(AnnotationSpec.builder(Value.Immutable.class).build());
         annotationSpecs.add(AnnotationSpec.builder(StagedBuilderStyle.class).build());
         annotationSpecs.add(AnnotationSpec.builder(JsonDeserialize.class)
-                .addMember("as", "$T.class", ImmutablesUtils.getImmutablesClassName(namedTypeReference))
+                .addMember(
+                        "as",
+                        "$T.class",
+                        generatorContext.getImmutablesUtils().getImmutablesClassName(namedTypeReference))
                 .build());
         annotationSpecs.add(AnnotationSpec.builder(JsonIgnoreProperties.class)
                 .addMember("value", "{$S}", UnionGenerator.UNION_DISCRIMINATOR_PROPERTY_NAME)
@@ -89,7 +95,7 @@ public final class ObjectGenerator {
         List<MethodSpec> methods = new ArrayList<>();
         // if no self interface, we want to add all fields as immutables attributes
         if (selfInterface.isEmpty()) {
-            methods.addAll(ImmutablesUtils.getImmutablesPropertyMethods(objectTypeDefinition));
+            methods.addAll(generatorContext.getImmutablesUtils().getImmutablesPropertyMethods(objectTypeDefinition));
         }
         methods.add(generateStaticBuilder());
         return methods;
@@ -98,7 +104,7 @@ public final class ObjectGenerator {
     private MethodSpec generateStaticBuilder() {
         Optional<String> firstMandatoryFieldName =
                 getFirstRequiredFieldName(extendedInterfaces, objectTypeDefinition.fields());
-        ClassName immutableClassName = ImmutablesUtils.getImmutablesClassName(namedTypeReference);
+        ClassName immutableClassName = generatorContext.getImmutablesUtils().getImmutablesClassName(namedTypeReference);
         ClassName builderClassName = firstMandatoryFieldName.isEmpty()
                 ? immutableClassName.nestedClass("Builder")
                 : immutableClassName.nestedClass(firstMandatoryFieldName.get() + BUILD_STAGE_SUFFIX);

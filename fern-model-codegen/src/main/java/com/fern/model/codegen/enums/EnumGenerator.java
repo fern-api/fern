@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.fern.EnumTypeDefinition;
 import com.fern.EnumValue;
 import com.fern.NamedTypeReference;
+import com.fern.model.codegen.Generator;
+import com.fern.model.codegen.GeneratorContext;
 import com.fern.model.codegen.utils.ClassNameUtils;
 import com.fern.model.codegen.utils.VisitorUtils;
 import com.fern.model.codegen.utils.VisitorUtils.GeneratedVisitor;
@@ -24,7 +26,7 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.lang.model.element.Modifier;
 
-public final class EnumGenerator {
+public final class EnumGenerator extends Generator<EnumTypeDefinition> {
 
     private static final Modifier[] ENUM_CLASS_MODIFIERS = new Modifier[] {Modifier.PUBLIC, Modifier.FINAL};
 
@@ -47,10 +49,14 @@ public final class EnumGenerator {
     private final ClassName generatedEnumClassName;
     private final ClassName valueFieldClassName;
 
-    public EnumGenerator(NamedTypeReference namedTypeReference, EnumTypeDefinition enumTypeDefinition) {
+    public EnumGenerator(
+            NamedTypeReference namedTypeReference,
+            EnumTypeDefinition enumTypeDefinition,
+            GeneratorContext generatorContext) {
+        super(generatorContext);
         this.namedTypeReference = namedTypeReference;
         this.enumTypeDefinition = enumTypeDefinition;
-        this.generatedEnumClassName = ClassNameUtils.getClassName(namedTypeReference);
+        this.generatedEnumClassName = generatorContext.getClassNameUtils().getClassName(namedTypeReference);
         this.valueFieldClassName = generatedEnumClassName.nestedClass(VALUE_TYPE_NAME);
     }
 
@@ -193,7 +199,7 @@ public final class EnumGenerator {
                 .endControlFlow()
                 .build();
         return MethodSpec.methodBuilder(ACCEPT_METHOD_NAME)
-                .addParameter(VisitorUtils.getVisitorTypeName(generatedEnumClassName), "visitor")
+                .addParameter(generatorContext.getVisitorUtils().getVisitorTypeName(generatedEnumClassName), "visitor")
                 .addCode(acceptCodeBlock)
                 .returns(VisitorUtils.VISITOR_RETURN_TYPE)
                 .build();
@@ -282,6 +288,6 @@ public final class EnumGenerator {
                         .keyName(enumValue.value())
                         .build())
                 .collect(Collectors.toList());
-        return VisitorUtils.buildVisitorInterface(visitMethodArgs);
+        return generatorContext.getVisitorUtils().buildVisitorInterface(visitMethodArgs);
     }
 }
