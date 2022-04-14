@@ -1,7 +1,11 @@
 import { IntermediateRepresentation } from "@fern/ir-generation";
-import { Project } from "ts-morph";
+import { Directory } from "ts-morph";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function generateServerFiles(_project: Project, _ir: IntermediateRepresentation): void {
+export function generateServerFiles(_args: {
+    directory: Directory;
+    modelDirectory: Directory;
+    intermediateRepresentation: IntermediateRepresentation;
+}): void {
     // TODO
 }

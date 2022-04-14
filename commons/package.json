@@ -18,7 +18,12 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck"
   },
+  "dependencies": {
+    "esutils": "^2.0.3",
+    "ts-morph": "^14.0.0"
+  },
   "devDependencies": {
+    "@types/esutils": "^2.0.0",
     "depcheck": "^1.4.3",
     "eslint": "^8.12.0",
     "jest": "^27.5.1",

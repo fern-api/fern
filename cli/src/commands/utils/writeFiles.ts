@@ -4,6 +4,7 @@ import { Project } from "ts-morph";
 
 export async function writeFiles(baseDir: string, project: Project): Promise<void> {
     try {
+        await rm(baseDir, { recursive: true, force: true });
         for (const file of project.getSourceFiles()) {
             file.formatText();
             file.organizeImports();
@@ -13,6 +14,6 @@ export async function writeFiles(baseDir: string, project: Project): Promise<voi
         }
     } catch (e) {
         console.error("Failed to generate files", e);
-        rm(baseDir, { recursive: true });
+        await rm(baseDir, { recursive: true, force: true });
     }
 }

@@ -1,12 +1,13 @@
 import { SingleUnionType, TypeDefinition, UnionTypeDefinition } from "@fern/ir-generation";
+import { FernWriters } from "@fern/typescript-commons";
 import {
+    Directory,
     InterfaceDeclaration,
     ModuleDeclaration,
     SourceFile,
     ts,
     VariableDeclarationKind,
-    WriterFunctionOrValue,
-    Writers,
+    WriterFunction,
 } from "ts-morph";
 import { generateTypeReference } from "../../utils/generateTypeReference";
 import { getTextOfTsNode } from "../../utils/getTextOfTsNode";
@@ -21,11 +22,13 @@ export function generateUnionType({
     typeDefinition,
     shape,
     typeResolver,
+    modelDirectory,
 }: {
     file: SourceFile;
     typeDefinition: TypeDefinition;
     shape: UnionTypeDefinition;
     typeResolver: TypeResolver;
+    modelDirectory: Directory;
 }): void {
     const typeAlias = file.addTypeAlias({
         name: typeDefinition.name.name,
@@ -56,6 +59,7 @@ export function generateUnionType({
             singleUnionType,
             typeResolver,
             file,
+            modelDirectory,
         });
         if (baseType != null) {
             visitTypeReference(singleUnionType.valueType, typeResolver, {
@@ -71,13 +75,25 @@ export function generateUnionType({
             });
         }
     }
-    addUnionVisitorToNamespace({ moduleDeclaration: module, shape, typeResolver, file });
+    addUnionVisitorToNamespace({
+        moduleDeclaration: module,
+        shape,
+        typeResolver,
+        file,
+        modelDirectory,
+    });
 
     file.addVariableStatement({
         declarations: [
             {
                 name: typeDefinition.name.name,
-                initializer: Writers.object(createUtils({ typeDefinition, shape, typeResolver, file })),
+                initializer: createUtils({
+                    typeDefinition,
+                    shape,
+                    typeResolver,
+                    file,
+                    modelDirectory,
+                }),
             },
         ],
         declarationKind: VariableDeclarationKind.Const,
@@ -97,6 +113,7 @@ function addDiscriminatedSingleUnionTypeInterface(
                 type: getTextOfTsNode(ts.factory.createStringLiteral(singleUnionType.discriminantValue)),
             },
         ],
+        isExported: true,
     });
 }
 
@@ -116,24 +133,34 @@ function createUtils({
     shape,
     typeResolver,
     file,
+    modelDirectory,
 }: {
     typeDefinition: TypeDefinition;
     shape: UnionTypeDefinition;
     typeResolver: TypeResolver;
     file: SourceFile;
-}): Record<string, WriterFunctionOrValue> {
-    const properties: Record<string, WriterFunctionOrValue> = {};
+    modelDirectory: Directory;
+}): WriterFunction {
+    const writer = FernWriters.object.writer();
 
     for (const type of shape.types) {
-        properties[type.discriminantValue] = getTextOfTsNode(
-            generateCreator({ typeDefinition, type, typeResolver, file })
-        );
-        properties[`is${getKeyForUnion(type)}`] = getTextOfTsNode(generatePredicate(typeDefinition, type));
+        writer.addProperty({
+            key: type.discriminantValue,
+            value: getTextOfTsNode(generateCreator({ typeDefinition, type, typeResolver, file, modelDirectory })),
+        });
+        writer.addProperty({
+            key: `is${getKeyForUnion(type)}`,
+            value: getTextOfTsNode(generatePredicate(typeDefinition, type)),
+        });
+        writer.addNewLine();
     }
 
-    properties.visit = getTextOfTsNode(generateUnionVisit({ typeDefinition, shape, typeResolver }));
+    writer.addProperty({
+        key: "visit",
+        value: getTextOfTsNode(generateUnionVisit({ typeDefinition, shape, typeResolver })),
+    });
 
-    return properties;
+    return writer.toFunction();
 }
 
 function generateCreator({
@@ -141,12 +168,16 @@ function generateCreator({
     type,
     typeResolver,
     file,
+    modelDirectory,
 }: {
     typeDefinition: TypeDefinition;
     type: SingleUnionType;
     typeResolver: TypeResolver;
     file: SourceFile;
+    modelDirectory: Directory;
 }): ts.ArrowFunction {
+    const VALUE_PARAMETER_NAME = "value";
+
     return visitTypeReference(type.valueType, typeResolver, {
         namedObject: () =>
             ts.factory.createArrowFunction(
@@ -157,7 +188,7 @@ function generateCreator({
                         undefined,
                         undefined,
                         undefined,
-                        ts.factory.createIdentifier(type.discriminantValue),
+                        VALUE_PARAMETER_NAME,
                         undefined,
                         ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Omit"), [
                             getQualifiedUnionTypeReference(typeDefinition, type),
@@ -171,7 +202,7 @@ function generateCreator({
                 ts.factory.createParenthesizedExpression(
                     ts.factory.createObjectLiteralExpression(
                         [
-                            ts.factory.createSpreadAssignment(ts.factory.createIdentifier(type.discriminantValue)),
+                            ts.factory.createSpreadAssignment(ts.factory.createIdentifier(VALUE_PARAMETER_NAME)),
                             ts.factory.createPropertyAssignment(
                                 ts.factory.createIdentifier(DISCRIMINANT),
                                 ts.factory.createStringLiteral(type.discriminantValue)
@@ -192,7 +223,7 @@ function generateCreator({
                         undefined,
                         ts.factory.createIdentifier(type.discriminantValue),
                         undefined,
-                        generateTypeReference(type.valueType, file),
+                        generateTypeReference({ reference: type.valueType, from: file, modelDirectory }),
                         undefined
                     ),
                 ],
