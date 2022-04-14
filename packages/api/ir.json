@@ -1,1 +1,603 @@
-{"types":[{"docs":"A filepath to a Fern spec file, excluding the file extension","name":{"fernFilepath":"fern","name":"FernFilepath"},"shape":{"aliasOf":{"primitive":"string","type":"primitive"},"isId":true,"type":"alias"}},{"docs":"Complete representation of the API schema","name":{"fernFilepath":"fern","name":"IntermediateRepresentation"},"shape":{"extends":[],"fields":[{"key":"types","valueType":{"container":{"list":{"fernFilepath":"fern","name":"TypeDefinition","type":"named"},"type":"list"},"type":"container"},"docs":"The types described by this API"},{"key":"services","valueType":{"fernFilepath":"fern","name":"Services","type":"named"},"docs":"The services exposed by this API"}],"type":"object"}},{"docs":"A type, which is a name and a shape","name":{"fernFilepath":"fern","name":"TypeDefinition"},"shape":{"extends":[{"fernFilepath":"fern","name":"WithDocs"}],"fields":[{"key":"name","valueType":{"fernFilepath":"fern","name":"TypeName","type":"named"}},{"key":"shape","valueType":{"fernFilepath":"fern","name":"Type","type":"named"}}],"type":"object"}},{"name":{"fernFilepath":"fern","name":"WithDocs"},"shape":{"extends":[],"fields":[{"key":"docs","valueType":{"container":{"optional":{"primitive":"string","type":"primitive"},"type":"optional"},"type":"container"}}],"type":"object"}},{"name":{"fernFilepath":"fern","name":"TypeName"},"shape":{"extends":[],"fields":[{"key":"name","valueType":{"primitive":"string","type":"primitive"}},{"key":"fernFilepath","valueType":{"fernFilepath":"fern","name":"FernFilepath","type":"named"}}],"type":"object"}},{"name":{"fernFilepath":"fern","name":"Type"},"shape":{"types":[{"discriminantValue":"object","valueType":{"fernFilepath":"fern","name":"ObjectTypeDefinition","type":"named"}},{"discriminantValue":"union","valueType":{"fernFilepath":"fern","name":"UnionTypeDefinition","type":"named"}},{"discriminantValue":"alias","valueType":{"fernFilepath":"fern","name":"AliasTypeDefinition","type":"named"}},{"discriminantValue":"enum","valueType":{"fernFilepath":"fern","name":"EnumTypeDefinition","type":"named"}}],"type":"union"}},{"name":{"fernFilepath":"fern","name":"ObjectTypeDefinition"},"shape":{"extends":[],"fields":[{"key":"extends","valueType":{"container":{"list":{"fernFilepath":"fern","name":"TypeName","type":"named"},"type":"list"},"type":"container"},"docs":"A list of other types to inherit from"},{"key":"fields","valueType":{"container":{"list":{"fernFilepath":"fern","name":"ObjectField","type":"named"},"type":"list"},"type":"container"}}],"type":"object"}},{"name":{"fernFilepath":"fern","name":"ObjectField"},"shape":{"extends":[{"fernFilepath":"fern","name":"WithDocs"}],"fields":[{"key":"key","valueType":{"primitive":"string","type":"primitive"}},{"key":"valueType","valueType":{"fernFilepath":"fern","name":"TypeReference","type":"named"}}],"type":"object"}},{"name":{"fernFilepath":"fern","name":"TypeReference"},"shape":{"types":[{"discriminantValue":"named","valueType":{"fernFilepath":"fern","name":"TypeName","type":"named"}},{"discriminantValue":"primitive","valueType":{"fernFilepath":"fern","name":"PrimitiveType","type":"named"}},{"discriminantValue":"container","valueType":{"fernFilepath":"fern","name":"ContainerType","type":"named"}},{"discriminantValue":"void","valueType":{"type":"void"}}],"type":"union"}},{"name":{"fernFilepath":"fern","name":"PrimitiveType"},"shape":{"values":[{"value":"integer"},{"value":"double"},{"value":"string"},{"value":"boolean"},{"value":"long","docs":"Within the range -2^53 to 2^53"}],"type":"enum"}},{"name":{"fernFilepath":"fern","name":"ContainerType"},"shape":{"types":[{"discriminantValue":"map","valueType":{"fernFilepath":"fern","name":"MapType","type":"named"}},{"discriminantValue":"list","valueType":{"fernFilepath":"fern","name":"TypeReference","type":"named"}},{"discriminantValue":"set","valueType":{"fernFilepath":"fern","name":"TypeReference","type":"named"}},{"discriminantValue":"optional","valueType":{"fernFilepath":"fern","name":"TypeReference","type":"named"}}],"type":"union"}},{"name":{"fernFilepath":"fern","name":"MapType"},"shape":{"extends":[],"fields":[{"key":"keyType","valueType":{"fernFilepath":"fern","name":"TypeReference","type":"named"}},{"key":"valueType","valueType":{"fernFilepath":"fern","name":"TypeReference","type":"named"}}],"type":"object"}},{"name":{"fernFilepath":"fern","name":"UnionTypeDefinition"},"shape":{"extends":[],"fields":[{"key":"types","valueType":{"container":{"list":{"fernFilepath":"fern","name":"SingleUnionType","type":"named"},"type":"list"},"type":"container"}}],"type":"object"}},{"name":{"fernFilepath":"fern","name":"SingleUnionType"},"shape":{"extends":[{"fernFilepath":"fern","name":"WithDocs"}],"fields":[{"key":"discriminantValue","valueType":{"primitive":"string","type":"primitive"}},{"key":"valueType","valueType":{"fernFilepath":"fern","name":"TypeReference","type":"named"}}],"type":"object"}},{"name":{"fernFilepath":"fern","name":"AliasTypeDefinition"},"shape":{"extends":[],"fields":[{"key":"name","valueType":{"primitive":"string","type":"primitive"}},{"key":"aliasOf","valueType":{"fernFilepath":"fern","name":"TypeReference","type":"named"}},{"key":"isId","valueType":{"primitive":"boolean","type":"primitive"}}],"type":"object"}},{"name":{"fernFilepath":"fern","name":"EnumTypeDefinition"},"shape":{"extends":[],"fields":[{"key":"values","valueType":{"container":{"list":{"fernFilepath":"fern","name":"EnumValue","type":"named"},"type":"list"},"type":"container"}}],"type":"object"}},{"name":{"fernFilepath":"fern","name":"EnumValue"},"shape":{"extends":[{"fernFilepath":"fern","name":"WithDocs"}],"fields":[{"key":"value","valueType":{"primitive":"string","type":"primitive"}}],"type":"object"}},{"name":{"fernFilepath":"fern","name":"Services"},"shape":{"extends":[],"fields":[{"key":"http","valueType":{"container":{"list":{"fernFilepath":"fern","name":"HttpService","type":"named"},"type":"list"},"type":"container"}},{"key":"webSocket","valueType":{"container":{"list":{"fernFilepath":"fern","name":"WebSocketService","type":"named"},"type":"list"},"type":"container"}}],"type":"object"}},{"name":{"fernFilepath":"fern","name":"BaseService"},"shape":{"extends":[{"fernFilepath":"fern","name":"WithDocs"}],"fields":[{"key":"name","valueType":{"fernFilepath":"fern","name":"TypeName","type":"named"}},{"key":"basePath","valueType":{"primitive":"string","type":"primitive"}}],"type":"object"}},{"name":{"fernFilepath":"fern","name":"HttpService"},"shape":{"extends":[{"fernFilepath":"fern","name":"BaseService"}],"fields":[{"key":"headers","valueType":{"container":{"list":{"fernFilepath":"fern","name":"HttpHeader","type":"named"},"type":"list"},"type":"container"}},{"key":"endpoints","valueType":{"container":{"list":{"fernFilepath":"fern","name":"HttpEndpoint","type":"named"},"type":"list"},"type":"container"}}],"type":"object"}},{"name":{"fernFilepath":"fern","name":"HttpHeader"},"shape":{"extends":[{"fernFilepath":"fern","name":"WithDocs"}],"fields":[{"key":"header","valueType":{"primitive":"string","type":"primitive"}},{"key":"valueType","valueType":{"fernFilepath":"fern","name":"TypeReference","type":"named"}}],"type":"object"}},{"name":{"fernFilepath":"fern","name":"HttpEndpoint"},"shape":{"extends":[{"fernFilepath":"fern","name":"WithDocs"}],"fields":[{"key":"endpointId","valueType":{"primitive":"string","type":"primitive"}},{"key":"verb","valueType":{"fernFilepath":"fern","name":"HttpVerb","type":"named"}},{"key":"path","valueType":{"primitive":"string","type":"primitive"}},{"key":"parameters","valueType":{"container":{"list":{"fernFilepath":"fern","name":"HttpEndpointParameter","type":"named"},"type":"list"},"type":"container"}},{"key":"queryParameters","valueType":{"container":{"list":{"fernFilepath":"fern","name":"HttpEndpointQueryParameter","type":"named"},"type":"list"},"type":"container"}},{"key":"header","valueType":{"container":{"list":{"fernFilepath":"fern","name":"HttpHeader","type":"named"},"type":"list"},"type":"container"}},{"key":"request","valueType":{"container":{"optional":{"fernFilepath":"fern","name":"HttpRequest","type":"named"},"type":"optional"},"type":"container"}},{"key":"response","valueType":{"container":{"optional":{"fernFilepath":"fern","name":"HttpResponse","type":"named"},"type":"optional"},"type":"container"}},{"key":"errors","valueType":{"container":{"list":{"fernFilepath":"fern","name":"HttpError","type":"named"},"type":"list"},"type":"container"}}],"type":"object"}},{"name":{"fernFilepath":"fern","name":"HttpRequest"},"shape":{"extends":[{"fernFilepath":"fern","name":"WithDocs"}],"fields":[{"key":"bodyType","valueType":{"fernFilepath":"fern","name":"TypeReference","type":"named"}}],"type":"object"}},{"name":{"fernFilepath":"fern","name":"HttpResponse"},"shape":{"extends":[{"fernFilepath":"fern","name":"WithDocs"}],"fields":[{"key":"bodyType","valueType":{"fernFilepath":"fern","name":"TypeReference","type":"named"}}],"type":"object"}},{"name":{"fernFilepath":"fern","name":"HttpVerb"},"shape":{"values":[{"value":"GET"},{"value":"POST"},{"value":"PUT"},{"value":"DELETE"}],"type":"enum"}},{"name":{"fernFilepath":"fern","name":"HttpEndpointParameter"},"shape":{"extends":[{"fernFilepath":"fern","name":"WithDocs"}],"fields":[{"key":"key","valueType":{"primitive":"string","type":"primitive"}},{"key":"valueType","valueType":{"fernFilepath":"fern","name":"TypeReference","type":"named"}}],"type":"object"}},{"name":{"fernFilepath":"fern","name":"HttpEndpointQueryParameter"},"shape":{"extends":[{"fernFilepath":"fern","name":"WithDocs"}],"fields":[{"key":"key","valueType":{"primitive":"string","type":"primitive"}},{"key":"valueType","valueType":{"fernFilepath":"fern","name":"TypeReference","type":"named"}}],"type":"object"}},{"name":{"fernFilepath":"fern","name":"HttpError"},"shape":{"extends":[{"fernFilepath":"fern","name":"WithDocs"}],"fields":[{"key":"name","valueType":{"primitive":"string","type":"primitive"}},{"key":"statusCode","valueType":{"primitive":"integer","type":"primitive"}},{"key":"bodyType","valueType":{"container":{"optional":{"fernFilepath":"fern","name":"TypeReference","type":"named"},"type":"optional"},"type":"container"}}],"type":"object"}},{"name":{"fernFilepath":"fern","name":"WebSocketService"},"shape":{"extends":[{"fernFilepath":"fern","name":"BaseService"}],"fields":[{"key":"messages","valueType":{"container":{"list":{"fernFilepath":"fern","name":"WebSocketMessage","type":"named"},"type":"list"},"type":"container"}}],"type":"object"}},{"name":{"fernFilepath":"fern","name":"WebSocketMessage"},"shape":{"extends":[{"fernFilepath":"fern","name":"WithDocs"}],"fields":[{"key":"origin","valueType":{"fernFilepath":"fern","name":"WebSocketMessageOrigin","type":"named"}},{"key":"body","valueType":{"container":{"optional":{"fernFilepath":"fern","name":"WebSocketMessageBody","type":"named"},"type":"optional"},"type":"container"}},{"key":"response","valueType":{"container":{"optional":{"fernFilepath":"fern","name":"WebSocketMessageResponse","type":"named"},"type":"optional"},"type":"container"}},{"key":"errors","valueType":{"container":{"list":{"fernFilepath":"fern","name":"WebsocketError","type":"named"},"type":"list"},"type":"container"}}],"type":"object"}},{"name":{"fernFilepath":"fern","name":"WebSocketMessageOrigin"},"shape":{"values":[{"value":"CLIENT"},{"value":"SERVER"}],"type":"enum"}},{"name":{"fernFilepath":"fern","name":"WebSocketMessageBody"},"shape":{"extends":[{"fernFilepath":"fern","name":"WithDocs"}],"fields":[{"key":"bodyType","valueType":{"fernFilepath":"fern","name":"TypeReference","type":"named"}}],"type":"object"}},{"name":{"fernFilepath":"fern","name":"WebSocketMessageResponse"},"shape":{"extends":[{"fernFilepath":"fern","name":"WithDocs"}],"fields":[{"key":"bodyType","valueType":{"fernFilepath":"fern","name":"TypeReference","type":"named"}},{"key":"behavior","valueType":{"fernFilepath":"fern","name":"WebSocketMessageResponseBehavior","type":"named"},"docs":"Defaults to {WebSocketMessageResponseBehavior.ONGOING}"}],"type":"object"}},{"name":{"fernFilepath":"fern","name":"WebSocketMessageResponseBehavior"},"shape":{"values":[{"value":"ONGOING"},{"value":"REQUEST_RESPONSE"}],"type":"enum"}},{"name":{"fernFilepath":"fern","name":"WebsocketError"},"shape":{"extends":[{"fernFilepath":"fern","name":"WithDocs"}],"fields":[{"key":"name","valueType":{"primitive":"string","type":"primitive"}},{"key":"bodyType","valueType":{"container":{"optional":{"fernFilepath":"fern","name":"TypeReference","type":"named"},"type":"optional"},"type":"container"}}],"type":"object"}}],"services":{"http":[],"webSocket":[]}}
+{
+  "types": [
+    {
+      "docs": "A filepath to a Fern spec file, excluding the file extension",
+      "name": { "fernFilepath": "fern", "name": "FernFilepath" },
+      "shape": { "aliasOf": { "primitive": "string", "type": "primitive" }, "isId": true, "type": "alias" }
+    },
+    {
+      "docs": "Complete representation of the API schema",
+      "name": { "fernFilepath": "fern", "name": "IntermediateRepresentation" },
+      "shape": {
+        "extends": [],
+        "fields": [
+          {
+            "key": "types",
+            "valueType": {
+              "container": {
+                "list": { "fernFilepath": "fern", "name": "TypeDefinition", "type": "named" },
+                "type": "list"
+              },
+              "type": "container"
+            },
+            "docs": "The types described by this API"
+          },
+          {
+            "key": "services",
+            "valueType": { "fernFilepath": "fern", "name": "Services", "type": "named" },
+            "docs": "The services exposed by this API"
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "docs": "A type, which is a name and a shape",
+      "name": { "fernFilepath": "fern", "name": "TypeDefinition" },
+      "shape": {
+        "extends": [{ "fernFilepath": "fern", "name": "WithDocs" }],
+        "fields": [
+          { "key": "name", "valueType": { "fernFilepath": "fern", "name": "TypeName", "type": "named" } },
+          { "key": "shape", "valueType": { "fernFilepath": "fern", "name": "Type", "type": "named" } }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "WithDocs" },
+      "shape": {
+        "extends": [],
+        "fields": [
+          {
+            "key": "docs",
+            "valueType": {
+              "container": { "optional": { "primitive": "string", "type": "primitive" }, "type": "optional" },
+              "type": "container"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "TypeName" },
+      "shape": {
+        "extends": [],
+        "fields": [
+          { "key": "name", "valueType": { "primitive": "string", "type": "primitive" } },
+          { "key": "fernFilepath", "valueType": { "fernFilepath": "fern", "name": "FernFilepath", "type": "named" } }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "Type" },
+      "shape": {
+        "types": [
+          {
+            "discriminantValue": "object",
+            "valueType": { "fernFilepath": "fern", "name": "ObjectTypeDefinition", "type": "named" }
+          },
+          {
+            "discriminantValue": "union",
+            "valueType": { "fernFilepath": "fern", "name": "UnionTypeDefinition", "type": "named" }
+          },
+          {
+            "discriminantValue": "alias",
+            "valueType": { "fernFilepath": "fern", "name": "AliasTypeDefinition", "type": "named" }
+          },
+          {
+            "discriminantValue": "enum",
+            "valueType": { "fernFilepath": "fern", "name": "EnumTypeDefinition", "type": "named" }
+          }
+        ],
+        "type": "union"
+      }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "ObjectTypeDefinition" },
+      "shape": {
+        "extends": [],
+        "fields": [
+          {
+            "key": "extends",
+            "valueType": {
+              "container": { "list": { "fernFilepath": "fern", "name": "TypeName", "type": "named" }, "type": "list" },
+              "type": "container"
+            },
+            "docs": "A list of other types to inherit from"
+          },
+          {
+            "key": "fields",
+            "valueType": {
+              "container": {
+                "list": { "fernFilepath": "fern", "name": "ObjectField", "type": "named" },
+                "type": "list"
+              },
+              "type": "container"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "ObjectField" },
+      "shape": {
+        "extends": [{ "fernFilepath": "fern", "name": "WithDocs" }],
+        "fields": [
+          { "key": "key", "valueType": { "primitive": "string", "type": "primitive" } },
+          { "key": "valueType", "valueType": { "fernFilepath": "fern", "name": "TypeReference", "type": "named" } }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "TypeReference" },
+      "shape": {
+        "types": [
+          {
+            "discriminantValue": "named",
+            "valueType": { "fernFilepath": "fern", "name": "TypeName", "type": "named" }
+          },
+          {
+            "discriminantValue": "primitive",
+            "valueType": { "fernFilepath": "fern", "name": "PrimitiveType", "type": "named" }
+          },
+          {
+            "discriminantValue": "container",
+            "valueType": { "fernFilepath": "fern", "name": "ContainerType", "type": "named" }
+          },
+          { "discriminantValue": "void", "valueType": { "type": "void" } }
+        ],
+        "type": "union"
+      }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "PrimitiveType" },
+      "shape": {
+        "values": [
+          { "value": "integer" },
+          { "value": "double" },
+          { "value": "string" },
+          { "value": "boolean" },
+          { "value": "long", "docs": "Within the range -2^53 to 2^53" }
+        ],
+        "type": "enum"
+      }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "ContainerType" },
+      "shape": {
+        "types": [
+          { "discriminantValue": "map", "valueType": { "fernFilepath": "fern", "name": "MapType", "type": "named" } },
+          {
+            "discriminantValue": "list",
+            "valueType": { "fernFilepath": "fern", "name": "TypeReference", "type": "named" }
+          },
+          {
+            "discriminantValue": "set",
+            "valueType": { "fernFilepath": "fern", "name": "TypeReference", "type": "named" }
+          },
+          {
+            "discriminantValue": "optional",
+            "valueType": { "fernFilepath": "fern", "name": "TypeReference", "type": "named" }
+          }
+        ],
+        "type": "union"
+      }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "MapType" },
+      "shape": {
+        "extends": [],
+        "fields": [
+          { "key": "keyType", "valueType": { "fernFilepath": "fern", "name": "TypeReference", "type": "named" } },
+          { "key": "valueType", "valueType": { "fernFilepath": "fern", "name": "TypeReference", "type": "named" } }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "UnionTypeDefinition" },
+      "shape": {
+        "extends": [],
+        "fields": [
+          {
+            "key": "types",
+            "valueType": {
+              "container": {
+                "list": { "fernFilepath": "fern", "name": "SingleUnionType", "type": "named" },
+                "type": "list"
+              },
+              "type": "container"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "SingleUnionType" },
+      "shape": {
+        "extends": [{ "fernFilepath": "fern", "name": "WithDocs" }],
+        "fields": [
+          { "key": "discriminantValue", "valueType": { "primitive": "string", "type": "primitive" } },
+          { "key": "valueType", "valueType": { "fernFilepath": "fern", "name": "TypeReference", "type": "named" } }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "AliasTypeDefinition" },
+      "shape": {
+        "extends": [],
+        "fields": [
+          { "key": "aliasOf", "valueType": { "fernFilepath": "fern", "name": "TypeReference", "type": "named" } },
+          { "key": "isId", "valueType": { "primitive": "boolean", "type": "primitive" } }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "EnumTypeDefinition" },
+      "shape": {
+        "extends": [],
+        "fields": [
+          {
+            "key": "values",
+            "valueType": {
+              "container": { "list": { "fernFilepath": "fern", "name": "EnumValue", "type": "named" }, "type": "list" },
+              "type": "container"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "EnumValue" },
+      "shape": {
+        "extends": [{ "fernFilepath": "fern", "name": "WithDocs" }],
+        "fields": [{ "key": "value", "valueType": { "primitive": "string", "type": "primitive" } }],
+        "type": "object"
+      }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "Services" },
+      "shape": {
+        "extends": [],
+        "fields": [
+          {
+            "key": "http",
+            "valueType": {
+              "container": {
+                "list": { "fernFilepath": "fern", "name": "HttpService", "type": "named" },
+                "type": "list"
+              },
+              "type": "container"
+            }
+          },
+          {
+            "key": "webSocket",
+            "valueType": {
+              "container": {
+                "list": { "fernFilepath": "fern", "name": "WebSocketService", "type": "named" },
+                "type": "list"
+              },
+              "type": "container"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "BaseService" },
+      "shape": {
+        "extends": [{ "fernFilepath": "fern", "name": "WithDocs" }],
+        "fields": [
+          { "key": "name", "valueType": { "fernFilepath": "fern", "name": "TypeName", "type": "named" } },
+          { "key": "displayName", "valueType": { "primitive": "string", "type": "primitive" } },
+          { "key": "basePath", "valueType": { "primitive": "string", "type": "primitive" } }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "HttpService" },
+      "shape": {
+        "extends": [{ "fernFilepath": "fern", "name": "BaseService" }],
+        "fields": [
+          {
+            "key": "headers",
+            "valueType": {
+              "container": {
+                "list": { "fernFilepath": "fern", "name": "HttpHeader", "type": "named" },
+                "type": "list"
+              },
+              "type": "container"
+            }
+          },
+          {
+            "key": "endpoints",
+            "valueType": {
+              "container": {
+                "list": { "fernFilepath": "fern", "name": "HttpEndpoint", "type": "named" },
+                "type": "list"
+              },
+              "type": "container"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "HttpHeader" },
+      "shape": {
+        "extends": [{ "fernFilepath": "fern", "name": "WithDocs" }],
+        "fields": [
+          { "key": "header", "valueType": { "primitive": "string", "type": "primitive" } },
+          { "key": "valueType", "valueType": { "fernFilepath": "fern", "name": "TypeReference", "type": "named" } }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "HttpEndpoint" },
+      "shape": {
+        "extends": [{ "fernFilepath": "fern", "name": "WithDocs" }],
+        "fields": [
+          { "key": "endpointId", "valueType": { "primitive": "string", "type": "primitive" } },
+          { "key": "method", "valueType": { "fernFilepath": "fern", "name": "HttpMethod", "type": "named" } },
+          { "key": "path", "valueType": { "primitive": "string", "type": "primitive" } },
+          {
+            "key": "parameters",
+            "valueType": {
+              "container": {
+                "list": { "fernFilepath": "fern", "name": "HttpEndpointParameter", "type": "named" },
+                "type": "list"
+              },
+              "type": "container"
+            }
+          },
+          {
+            "key": "queryParameters",
+            "valueType": {
+              "container": {
+                "list": { "fernFilepath": "fern", "name": "HttpEndpointQueryParameter", "type": "named" },
+                "type": "list"
+              },
+              "type": "container"
+            }
+          },
+          {
+            "key": "headers",
+            "valueType": {
+              "container": {
+                "list": { "fernFilepath": "fern", "name": "HttpHeader", "type": "named" },
+                "type": "list"
+              },
+              "type": "container"
+            }
+          },
+          {
+            "key": "request",
+            "valueType": {
+              "container": {
+                "optional": { "fernFilepath": "fern", "name": "HttpRequest", "type": "named" },
+                "type": "optional"
+              },
+              "type": "container"
+            }
+          },
+          {
+            "key": "response",
+            "valueType": {
+              "container": {
+                "optional": { "fernFilepath": "fern", "name": "HttpResponse", "type": "named" },
+                "type": "optional"
+              },
+              "type": "container"
+            }
+          },
+          {
+            "key": "errors",
+            "valueType": {
+              "container": { "list": { "fernFilepath": "fern", "name": "HttpError", "type": "named" }, "type": "list" },
+              "type": "container"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "HttpRequest" },
+      "shape": {
+        "extends": [{ "fernFilepath": "fern", "name": "WithDocs" }],
+        "fields": [
+          { "key": "bodyType", "valueType": { "fernFilepath": "fern", "name": "TypeReference", "type": "named" } }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "HttpResponse" },
+      "shape": {
+        "extends": [{ "fernFilepath": "fern", "name": "WithDocs" }],
+        "fields": [
+          { "key": "bodyType", "valueType": { "fernFilepath": "fern", "name": "TypeReference", "type": "named" } }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "HttpMethod" },
+      "shape": {
+        "values": [{ "value": "GET" }, { "value": "POST" }, { "value": "PUT" }, { "value": "DELETE" }],
+        "type": "enum"
+      }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "HttpEndpointParameter" },
+      "shape": {
+        "extends": [{ "fernFilepath": "fern", "name": "WithDocs" }],
+        "fields": [
+          { "key": "key", "valueType": { "primitive": "string", "type": "primitive" } },
+          { "key": "valueType", "valueType": { "fernFilepath": "fern", "name": "TypeReference", "type": "named" } }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "HttpEndpointQueryParameter" },
+      "shape": {
+        "extends": [{ "fernFilepath": "fern", "name": "WithDocs" }],
+        "fields": [
+          { "key": "key", "valueType": { "primitive": "string", "type": "primitive" } },
+          { "key": "valueType", "valueType": { "fernFilepath": "fern", "name": "TypeReference", "type": "named" } }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "HttpError" },
+      "shape": {
+        "extends": [{ "fernFilepath": "fern", "name": "WithDocs" }],
+        "fields": [
+          { "key": "name", "valueType": { "primitive": "string", "type": "primitive" } },
+          { "key": "statusCode", "valueType": { "primitive": "integer", "type": "primitive" } },
+          {
+            "key": "bodyType",
+            "valueType": {
+              "container": {
+                "optional": { "fernFilepath": "fern", "name": "TypeReference", "type": "named" },
+                "type": "optional"
+              },
+              "type": "container"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "WebSocketService" },
+      "shape": {
+        "extends": [{ "fernFilepath": "fern", "name": "BaseService" }],
+        "fields": [
+          {
+            "key": "messages",
+            "valueType": {
+              "container": {
+                "list": { "fernFilepath": "fern", "name": "WebSocketMessage", "type": "named" },
+                "type": "list"
+              },
+              "type": "container"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "WebSocketMessage" },
+      "shape": {
+        "extends": [{ "fernFilepath": "fern", "name": "WithDocs" }],
+        "fields": [
+          {
+            "key": "origin",
+            "valueType": { "fernFilepath": "fern", "name": "WebSocketMessageOrigin", "type": "named" }
+          },
+          {
+            "key": "body",
+            "valueType": {
+              "container": {
+                "optional": { "fernFilepath": "fern", "name": "WebSocketMessageBody", "type": "named" },
+                "type": "optional"
+              },
+              "type": "container"
+            }
+          },
+          {
+            "key": "response",
+            "valueType": {
+              "container": {
+                "optional": { "fernFilepath": "fern", "name": "WebSocketMessageResponse", "type": "named" },
+                "type": "optional"
+              },
+              "type": "container"
+            }
+          },
+          {
+            "key": "errors",
+            "valueType": {
+              "container": {
+                "list": { "fernFilepath": "fern", "name": "WebsocketError", "type": "named" },
+                "type": "list"
+              },
+              "type": "container"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "WebSocketMessageOrigin" },
+      "shape": { "values": [{ "value": "CLIENT" }, { "value": "SERVER" }], "type": "enum" }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "WebSocketMessageBody" },
+      "shape": {
+        "extends": [{ "fernFilepath": "fern", "name": "WithDocs" }],
+        "fields": [
+          { "key": "bodyType", "valueType": { "fernFilepath": "fern", "name": "TypeReference", "type": "named" } }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "WebSocketMessageResponse" },
+      "shape": {
+        "extends": [{ "fernFilepath": "fern", "name": "WithDocs" }],
+        "fields": [
+          { "key": "bodyType", "valueType": { "fernFilepath": "fern", "name": "TypeReference", "type": "named" } },
+          {
+            "key": "behavior",
+            "valueType": { "fernFilepath": "fern", "name": "WebSocketMessageResponseBehavior", "type": "named" },
+            "docs": "Defaults to {WebSocketMessageResponseBehavior.ONGOING}"
+          }
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "WebSocketMessageResponseBehavior" },
+      "shape": { "values": [{ "value": "ONGOING" }, { "value": "REQUEST_RESPONSE" }], "type": "enum" }
+    },
+    {
+      "name": { "fernFilepath": "fern", "name": "WebsocketError" },
+      "shape": {
+        "extends": [{ "fernFilepath": "fern", "name": "WithDocs" }],
+        "fields": [
+          { "key": "name", "valueType": { "primitive": "string", "type": "primitive" } },
+          {
+            "key": "bodyType",
+            "valueType": {
+              "container": {
+                "optional": { "fernFilepath": "fern", "name": "TypeReference", "type": "named" },
+                "type": "optional"
+              },
+              "type": "container"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    }
+  ],
+  "services": { "http": [], "webSocket": [] }
+}

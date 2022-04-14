@@ -416,12 +416,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fernapi/api@^0.1.0, @fernapi/api@workspace:^, @fernapi/api@workspace:packages/typescript-api":
+"@fernapi/api@0.1.2, @fernapi/api@workspace:^, @fernapi/api@workspace:packages/typescript-api":
   version: 0.0.0-use.local
   resolution: "@fernapi/api@workspace:packages/typescript-api"
   dependencies:
-    "@fernapi/fern": "workspace:^"
-    "@fernapi/fern-typescript": ^0.1.1
+    "@fernapi/fern": 0.1.0
+    "@fernapi/fern-typescript": ^0.1.3
     "@types/yargs": ^17.0.10
     depcheck: ^1.4.3
     eslint: ^8.12.0
@@ -434,7 +434,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fernapi/compiler-commons@workspace:^, @fernapi/compiler-commons@workspace:packages/compiler/compiler-commons":
+"@fernapi/compiler-commons@^0.1.0, @fernapi/compiler-commons@workspace:^, @fernapi/compiler-commons@workspace:packages/compiler/compiler-commons":
   version: 0.0.0-use.local
   resolution: "@fernapi/compiler-commons@workspace:packages/compiler/compiler-commons"
   dependencies:
@@ -447,7 +447,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fernapi/compiler@workspace:^, @fernapi/compiler@workspace:packages/compiler/compiler":
+"@fernapi/compiler@^0.1.0, @fernapi/compiler@workspace:^, @fernapi/compiler@workspace:packages/compiler/compiler":
   version: 0.0.0-use.local
   resolution: "@fernapi/compiler@workspace:packages/compiler/compiler"
   dependencies:
@@ -464,19 +464,36 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fernapi/fern-typescript@npm:^0.1.1":
-  version: 0.1.1
-  resolution: "@fernapi/fern-typescript@npm:0.1.1"
+"@fernapi/fern-typescript@npm:^0.1.3":
+  version: 0.1.3
+  resolution: "@fernapi/fern-typescript@npm:0.1.3"
   dependencies:
-    "@fernapi/api": ^0.1.0
-    "@fernapi/typescript-client": ^0.1.1
-    "@fernapi/typescript-model": ^0.1.1
-    "@fernapi/typescript-server": ^0.1.1
+    "@fernapi/api": 0.1.2
+    "@fernapi/typescript-client": ^0.1.3
+    "@fernapi/typescript-model": ^0.1.3
+    "@fernapi/typescript-server": ^0.1.3
     ts-morph: ^14.0.0
     yargs: ^17.4.1
   bin:
     fern-typescript: ./cli
-  checksum: 8b22832ed5023ad6e5c6afb1212dbb57fb880c26de23833516cf9dc594944637bc8185590246422c6b2b473d5034e5f5dd65f1be2cf930c3925bfb90d6075a47
+  checksum: 81b774be2f02a4b5ae93f046be6df61b914838e369ef6247adea0f7060abd2488097b5a0cf4ea3966c93bbf3482d1f70ea97b8de062f4fd5e1abcc8c70232381
+  languageName: node
+  linkType: hard
+
+"@fernapi/fern@npm:0.1.0":
+  version: 0.1.0
+  resolution: "@fernapi/fern@npm:0.1.0"
+  dependencies:
+    "@fernapi/compiler": ^0.1.0
+    "@fernapi/compiler-commons": ^0.1.0
+    "@fernapi/syntax-analysis": ^0.1.0
+    chalk: ^4.1.2
+    glob: ^7.2.0
+    yargs: ^17.3.1
+    zod: ^3.14.3
+  bin:
+    fern: ./cli
+  checksum: f63d2d8bee15a944c8c2e97700e29076d0412e895dca3f5d65fd4d48feabd44497a31387ac43e52383d00787ae55266abe8cb76b8381ae2033cd914af19f3bed
   languageName: node
   linkType: hard
 
@@ -588,7 +605,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fernapi/syntax-analysis@workspace:^, @fernapi/syntax-analysis@workspace:packages/compiler/syntax-analysis":
+"@fernapi/syntax-analysis@^0.1.0, @fernapi/syntax-analysis@workspace:^, @fernapi/syntax-analysis@workspace:packages/compiler/syntax-analysis":
   version: 0.0.0-use.local
   resolution: "@fernapi/syntax-analysis@workspace:packages/compiler/syntax-analysis"
   dependencies:
@@ -605,44 +622,44 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fernapi/typescript-client@npm:^0.1.1":
-  version: 0.1.1
-  resolution: "@fernapi/typescript-client@npm:0.1.1"
+"@fernapi/typescript-client@npm:^0.1.3":
+  version: 0.1.3
+  resolution: "@fernapi/typescript-client@npm:0.1.3"
   dependencies:
-    "@fernapi/api": ^0.1.0
+    "@fernapi/api": 0.1.2
     ts-morph: ^14.0.0
-  checksum: a5c7b4bf4705d486e12ecf3a773cfe1a9da834dfd7dc0e0a1993ef79ab29d03a5fdb69962e0cb11eae313a121d45e12bfb6cbfe1a9a4f61269d7548a5286820a
+  checksum: 8b19a37c50b7531c8fc87164f42c1b3d4bfe879e66078553247f4bce08fdb981f2ce993dec51fbc4d75f60e555d26f9c858c25cebecab8e5c1b29ecfcd90c6d8
   languageName: node
   linkType: hard
 
-"@fernapi/typescript-commons@npm:^0.1.1":
-  version: 0.1.1
-  resolution: "@fernapi/typescript-commons@npm:0.1.1"
+"@fernapi/typescript-commons@npm:^0.1.3":
+  version: 0.1.3
+  resolution: "@fernapi/typescript-commons@npm:0.1.3"
   dependencies:
     esutils: ^2.0.3
     ts-morph: ^14.0.0
-  checksum: 1d325f667a7249b80861eb4072d8c569e6b3df8e17264c9bae1f173674f81d8cb9c9c49a74e01ce8b44827fea4bcc8da30f8db5366d68fd8572755f874c9b741
+  checksum: 68503a640b214eaea1ccb42bb74740c46e85fa4733a188897d32d7c4ccd1615b08147bb5017363c414b27e0c98dfdc64d66ac0bc19f705ae1663cba2c0dda350
   languageName: node
   linkType: hard
 
-"@fernapi/typescript-model@npm:^0.1.1":
-  version: 0.1.1
-  resolution: "@fernapi/typescript-model@npm:0.1.1"
+"@fernapi/typescript-model@npm:^0.1.3":
+  version: 0.1.3
+  resolution: "@fernapi/typescript-model@npm:0.1.3"
   dependencies:
-    "@fernapi/api": ^0.1.0
-    "@fernapi/typescript-commons": ^0.1.1
+    "@fernapi/api": 0.1.2
+    "@fernapi/typescript-commons": ^0.1.3
     ts-morph: ^14.0.0
-  checksum: d92b2e6486a10bac1d648a0cd80f14b3990ee03df1b2c77b4214c535c65336027ecaa787813ffc7a71f5a77ef9344349669d49930ee060389fa42f161981ace5
+  checksum: c3ffc15044945826e9e0bbedb0715dbcafb5467b8aa1c1fee1f2bb62f25279438158a7702bbffa6fdc42e2b09ab27f5dd8264490035fdd0448075f9e4c955cfc
   languageName: node
   linkType: hard
 
-"@fernapi/typescript-server@npm:^0.1.1":
-  version: 0.1.1
-  resolution: "@fernapi/typescript-server@npm:0.1.1"
+"@fernapi/typescript-server@npm:^0.1.3":
+  version: 0.1.3
+  resolution: "@fernapi/typescript-server@npm:0.1.3"
   dependencies:
-    "@fernapi/api": ^0.1.0
+    "@fernapi/api": 0.1.2
     ts-morph: ^14.0.0
-  checksum: 77d494b1ad9d9b5233a454ca88a8b425b735d8471a038c289e725c1317ad9ba3b1b3380f099bd05c39d69b67fff040aa8e5332a83234b706b97e6ad9e6347581
+  checksum: 363c95b866d7d8b36cb7902c700674d59c909b504b4526b018dcf68644d4288498bb538e44e189124fefde81d92ac9eeeea83fb2839bb403368e6fadd598d10a
   languageName: node
   linkType: hard
 

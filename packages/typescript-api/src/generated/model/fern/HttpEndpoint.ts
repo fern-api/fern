@@ -2,18 +2,18 @@ import { HttpEndpointParameter } from "./HttpEndpointParameter";
 import { HttpEndpointQueryParameter } from "./HttpEndpointQueryParameter";
 import { HttpError } from "./HttpError";
 import { HttpHeader } from "./HttpHeader";
+import { HttpMethod } from "./HttpMethod";
 import { HttpRequest } from "./HttpRequest";
 import { HttpResponse } from "./HttpResponse";
-import { HttpVerb } from "./HttpVerb";
 import { WithDocs } from "./WithDocs";
 
 export interface HttpEndpoint extends WithDocs {
     endpointId: string;
-    verb: HttpVerb;
+    method: HttpMethod;
     path: string;
     parameters: HttpEndpointParameter[];
     queryParameters: HttpEndpointQueryParameter[];
-    header: HttpHeader[];
+    headers: HttpHeader[];
     request: HttpRequest | null | undefined;
     response: HttpResponse | null | undefined;
     errors: HttpError[];

@@ -88,7 +88,6 @@ types:
 
   AliasTypeDefinition:
     fields:
-      name: string
       aliasOf: TypeReference
       isId: boolean
 
@@ -110,6 +109,7 @@ types:
     extends: WithDocs
     fields:
       name: TypeName
+      displayName: string
       basePath: string
 
   HttpService:
@@ -128,11 +128,11 @@ types:
     extends: WithDocs
     fields:
       endpointId: string
-      verb: HttpVerb
+      method: HttpMethod
       path: string
       parameters: list<HttpEndpointParameter>
       queryParameters: list<HttpEndpointQueryParameter>
-      header: list<HttpHeader>
+      headers: list<HttpHeader>
       request: optional<HttpRequest>
       response: optional<HttpResponse>
       errors: list<HttpError>
@@ -147,7 +147,7 @@ types:
     fields:
       bodyType: TypeReference
 
-  HttpVerb:
+  HttpMethod:
     enum:
       - GET
       - POST

@@ -2,7 +2,7 @@ import {
     ContainerType,
     FernFilepath,
     HttpEndpoint,
-    HttpVerb,
+    HttpMethod,
     IntermediateRepresentation,
     PrimitiveType,
     Type,
@@ -56,11 +56,11 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                 name: typeof id === "string" ? id : id.name,
                             },
                             shape: Type.alias({
-                                name: "TODO delete this and add isId",
-                                aliasType:
+                                aliasOf:
                                     typeof id === "string" || id.type == null
                                         ? TypeReference.primitive(PrimitiveType.String)
                                         : parseInlinableType(id.type),
+                                isId: true,
                             }),
                         });
                     }
@@ -78,10 +78,10 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                     name: typeName,
                                 },
                                 shape: Type.alias({
-                                    name: "TODO delete this and add isId",
-                                    aliasType: parseInlinableType(
+                                    aliasOf: parseInlinableType(
                                         typeof typeDefinition === "string" ? typeDefinition : typeDefinition.alias
                                     ),
+                                    isId: false,
                                 }),
                             });
                         } else if (isRawObjectDefinition(typeDefinition)) {
@@ -158,15 +158,14 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                         return;
                     }
                     if (services.http != null) {
-                        for (const [serviceName, serviceDefinition] of Object.entries(services.http)) {
+                        for (const [serviceId, serviceDefinition] of Object.entries(services.http)) {
                             intermediateRepresentation.services.http.push({
                                 docs: serviceDefinition.docs,
                                 name: {
-                                    name: serviceName,
+                                    name: serviceId,
                                     fernFilepath,
                                 },
-                                // TODO add display name
-                                // displayName: serviceDefinition.name,
+                                displayName: serviceDefinition.name ?? serviceId,
                                 basePath: serviceDefinition["base-path"] ?? "/",
                                 headers:
                                     serviceDefinition.headers != null
@@ -180,8 +179,7 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                     ([endpointId, endpoint]): HttpEndpoint => ({
                                         endpointId,
                                         docs: endpoint.docs,
-                                        // TODO change this to method
-                                        verb: convertHttpMethod(endpoint.method),
+                                        method: convertHttpMethod(endpoint.method),
                                         path: endpoint.path,
                                         parameters:
                                             endpoint.parameters != null
@@ -209,8 +207,7 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                                       })
                                                   )
                                                 : [],
-                                        // TODO rename to headers
-                                        header:
+                                        headers:
                                             endpoint.headers != null
                                                 ? Object.entries(endpoint.headers).map(([header, headerType]) => ({
                                                       header,
@@ -254,15 +251,14 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                         }
                     }
                     if (services.webSocket != null) {
-                        for (const [serviceName, serviceDefinition] of Object.entries(services.webSocket)) {
+                        for (const [serviceId, serviceDefinition] of Object.entries(services.webSocket)) {
                             intermediateRepresentation.services.webSocket.push({
                                 docs: serviceDefinition.docs,
                                 name: {
                                     fernFilepath,
-                                    name: serviceName,
+                                    name: serviceId,
                                 },
-                                // TODO add display name
-                                // displayName: serviceDefinition.name,
+                                displayName: serviceDefinition.name ?? serviceId,
                                 basePath: serviceDefinition["base-path"] ?? "/",
                                 messages: Object.entries(serviceDefinition.messages).map(([messageName, message]) => ({
                                     name: messageName,
@@ -460,16 +456,16 @@ function assertNever(typeDefinition: never): never {
     throw new Error("Unexpected value: " + JSON.stringify(typeDefinition));
 }
 
-function convertHttpMethod(method: RawSchemas.HttpEndpointSchema["method"]): HttpVerb {
+function convertHttpMethod(method: RawSchemas.HttpEndpointSchema["method"]): HttpMethod {
     switch (method) {
         case "GET":
-            return HttpVerb.GET;
+            return HttpMethod.GET;
         case "POST":
-            return HttpVerb.POST;
+            return HttpMethod.POST;
         case "PUT":
-            return HttpVerb.PUT;
+            return HttpMethod.PUT;
         case "DELETE":
-            return HttpVerb.DELETE;
+            return HttpMethod.DELETE;
     }
 }
 
