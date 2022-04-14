@@ -10,9 +10,6 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
-          name: Compile mrlint
-          command: yarn workspace mrlint run compile
-      - run:
           name: Lint monorepo
           command: yarn lint:monorepo
       - run:
