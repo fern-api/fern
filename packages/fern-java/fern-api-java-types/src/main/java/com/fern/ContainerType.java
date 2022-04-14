@@ -136,7 +136,6 @@ public final class ContainerType {
     @JsonDeserialize(as = ImmutableContainerType.List.class)
     interface List extends Base {
 
-        @JsonValue
         TypeReference list();
 
         @Override
@@ -154,7 +153,6 @@ public final class ContainerType {
     @JsonDeserialize(as = ImmutableContainerType.Set.class)
     public interface Set extends Base {
 
-        @JsonValue
         TypeReference set();
 
         @Override
@@ -172,7 +170,6 @@ public final class ContainerType {
     @JsonDeserialize(as = ImmutableContainerType.Optional.class)
     public interface Optional extends Base {
 
-        @JsonValue
         TypeReference optional();
 
         @Override
