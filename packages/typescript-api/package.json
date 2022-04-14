@@ -1,14 +1,14 @@
 {
   "name": "@fernapi/api",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "lib"
   ],
   "scripts": {
-    "clean": "run codegen:clean && tsc --build --clean",
-    "compile": "run codegen && tsc --build",
+    "clean": "tsc --build --clean",
+    "compile": "tsc --build",
     "test": "jest --passWithNoTests",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
     "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore --fix",
@@ -17,12 +17,7 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck",
-    "prepublish": "run clean && run compile && run test && run lint:eslint && run lint:style && run format:check && run depcheck",
-    "codegen": "run fern-typescript model ../api/ir.json src/generated",
-    "codegen:clean": "/bin/rm -r src/generated"
-  },
-  "dependencies": {
-    "@fernapi/fern-typescript": "^0.1.3"
+    "prepublish": "run clean && run compile && run test && run lint:eslint && run lint:style && run format:check && run depcheck"
   },
   "devDependencies": {
     "depcheck": "^1.4.3",
