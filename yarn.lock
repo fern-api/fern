@@ -416,12 +416,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fernapi/api@workspace:^, @fernapi/api@workspace:packages/fern-api":
+"@fernapi/api@^0.1.0, @fernapi/api@workspace:^, @fernapi/api@workspace:packages/typescript-api":
   version: 0.0.0-use.local
-  resolution: "@fernapi/api@workspace:packages/fern-api"
+  resolution: "@fernapi/api@workspace:packages/typescript-api"
   dependencies:
-    "@fernapi/fern": ^0.1.0
-    "@fernapi/fern-typescript": ^0.1.0
+    "@fernapi/fern": "workspace:^"
+    "@fernapi/fern-typescript": ^0.1.1
     "@types/yargs": ^17.0.10
     depcheck: ^1.4.3
     eslint: ^8.12.0
@@ -451,6 +451,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fernapi/compiler@workspace:packages/compiler/compiler"
   dependencies:
+    "@fernapi/api": "workspace:^"
     "@fernapi/compiler-commons": "workspace:^"
     "@fernapi/ir-generation": "workspace:^"
     "@fernapi/syntax-analysis": "workspace:^"
@@ -463,23 +464,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fernapi/fern-typescript@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "@fernapi/fern-typescript@npm:0.1.0"
+"@fernapi/fern-typescript@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "@fernapi/fern-typescript@npm:0.1.1"
   dependencies:
-    "@fernapi/ir-generation": ^0.1.0
-    "@fernapi/typescript-client": ^0.1.0
-    "@fernapi/typescript-model": ^0.1.0
-    "@fernapi/typescript-server": ^0.1.0
+    "@fernapi/api": ^0.1.0
+    "@fernapi/typescript-client": ^0.1.1
+    "@fernapi/typescript-model": ^0.1.1
+    "@fernapi/typescript-server": ^0.1.1
     ts-morph: ^14.0.0
     yargs: ^17.4.1
   bin:
     fern-typescript: ./cli
-  checksum: eda8f344b7c66f002b43baf7a480f10a3a72b44bc85a9cbf1afc688b2d0b291cf6dbdb547e7fba42f72e48bcd46526e22e237caa486ecab27c4dd7791c38544d
+  checksum: 8b22832ed5023ad6e5c6afb1212dbb57fb880c26de23833516cf9dc594944637bc8185590246422c6b2b473d5034e5f5dd65f1be2cf930c3925bfb90d6075a47
   languageName: node
   linkType: hard
 
-"@fernapi/fern@^0.1.0, @fernapi/fern@workspace:^, @fernapi/fern@workspace:packages/compiler/cli":
+"@fernapi/fern@workspace:^, @fernapi/fern@workspace:packages/compiler/cli":
   version: 0.0.0-use.local
   resolution: "@fernapi/fern@workspace:packages/compiler/cli"
   dependencies:
@@ -503,7 +504,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fernapi/ir-generation@^0.1.0, @fernapi/ir-generation@workspace:^, @fernapi/ir-generation@workspace:packages/compiler/ir-generation":
+"@fernapi/ir-generation@workspace:^, @fernapi/ir-generation@workspace:packages/compiler/ir-generation":
   version: 0.0.0-use.local
   resolution: "@fernapi/ir-generation@workspace:packages/compiler/ir-generation"
   dependencies:
@@ -604,44 +605,44 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fernapi/typescript-client@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "@fernapi/typescript-client@npm:0.1.0"
+"@fernapi/typescript-client@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "@fernapi/typescript-client@npm:0.1.1"
   dependencies:
-    "@fernapi/ir-generation": ^0.1.0
+    "@fernapi/api": ^0.1.0
     ts-morph: ^14.0.0
-  checksum: 3c98f466dbd6aa7841a903f36ae2e070955432125ccde9a8619802e1ca8524dee91cdd453ff040974b6b9a08cee6db84f0e94a0ec25b87bfee8df169c81dbe86
+  checksum: a5c7b4bf4705d486e12ecf3a773cfe1a9da834dfd7dc0e0a1993ef79ab29d03a5fdb69962e0cb11eae313a121d45e12bfb6cbfe1a9a4f61269d7548a5286820a
   languageName: node
   linkType: hard
 
-"@fernapi/typescript-commons@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "@fernapi/typescript-commons@npm:0.1.0"
+"@fernapi/typescript-commons@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "@fernapi/typescript-commons@npm:0.1.1"
   dependencies:
     esutils: ^2.0.3
     ts-morph: ^14.0.0
-  checksum: c4e6598df9adf499440ae37795ba16b94e45ec9628a53a665c50c85e3ab6dabc6e0acf0f1afb1510f9a18523d704bda6f16520c1981416c35f67c882ab06dda8
+  checksum: 1d325f667a7249b80861eb4072d8c569e6b3df8e17264c9bae1f173674f81d8cb9c9c49a74e01ce8b44827fea4bcc8da30f8db5366d68fd8572755f874c9b741
   languageName: node
   linkType: hard
 
-"@fernapi/typescript-model@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "@fernapi/typescript-model@npm:0.1.0"
+"@fernapi/typescript-model@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "@fernapi/typescript-model@npm:0.1.1"
   dependencies:
-    "@fernapi/ir-generation": ^0.1.0
-    "@fernapi/typescript-commons": ^0.1.0
+    "@fernapi/api": ^0.1.0
+    "@fernapi/typescript-commons": ^0.1.1
     ts-morph: ^14.0.0
-  checksum: ee86543e3f54fdaf0307796c347c73fe754ccb4c84b9950ba7ce94fecb3e4ce5597f82379c390fc13e5b19a79aff369c0263eab06699a540b88f074478af7dc8
+  checksum: d92b2e6486a10bac1d648a0cd80f14b3990ee03df1b2c77b4214c535c65336027ecaa787813ffc7a71f5a77ef9344349669d49930ee060389fa42f161981ace5
   languageName: node
   linkType: hard
 
-"@fernapi/typescript-server@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "@fernapi/typescript-server@npm:0.1.0"
+"@fernapi/typescript-server@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "@fernapi/typescript-server@npm:0.1.1"
   dependencies:
-    "@fernapi/ir-generation": ^0.1.0
+    "@fernapi/api": ^0.1.0
     ts-morph: ^14.0.0
-  checksum: 15747c2d3872116d8395583626107ef46bb64f6a8e53c3735c66a2a8ee5e41a7ff5bb9f3cec0a6b89cefee675d5adfea9cf105f210e5e8462234ff06bc7a7f9b
+  checksum: 77d494b1ad9d9b5233a454ca88a8b425b735d8471a038c289e725c1317ad9ba3b1b3380f099bd05c39d69b67fff040aa8e5332a83234b706b97e6ad9e6347581
   languageName: node
   linkType: hard
 

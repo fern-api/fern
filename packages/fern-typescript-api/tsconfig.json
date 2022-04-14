@@ -1,0 +1,11 @@
+{
+  "extends": "../../shared/tsconfig.shared.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "../typescript-api/lib",
+    "rootDir": "../typescript-api/src",
+    "module": "CommonJS"
+  },
+  "include": ["../typescript-api/src"],
+  "references": []
+}
