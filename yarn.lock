@@ -501,23 +501,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fernapi/fern-typescript@npm:^0.1.2":
-  version: 0.1.3
-  resolution: "@fernapi/fern-typescript@npm:0.1.3"
-  dependencies:
-    "@fernapi/api": 0.1.2
-    "@fernapi/typescript-client": ^0.1.3
-    "@fernapi/typescript-model": ^0.1.3
-    "@fernapi/typescript-server": ^0.1.3
-    ts-morph: ^14.0.0
-    yargs: ^17.4.1
-  bin:
-    fern-typescript: ./cli
-  checksum: 81b774be2f02a4b5ae93f046be6df61b914838e369ef6247adea0f7060abd2488097b5a0cf4ea3966c93bbf3482d1f70ea97b8de062f4fd5e1abcc8c70232381
-  languageName: node
-  linkType: hard
-
-"@fernapi/fern-typescript@npm:^0.1.9":
+"@fernapi/fern-typescript@npm:^0.1.2, @fernapi/fern-typescript@npm:^0.1.9":
   version: 0.1.10
   resolution: "@fernapi/fern-typescript@npm:0.1.10"
   dependencies:
@@ -724,16 +708,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fernapi/typescript-client@npm:^0.1.3":
-  version: 0.1.3
-  resolution: "@fernapi/typescript-client@npm:0.1.3"
-  dependencies:
-    "@fernapi/api": 0.1.2
-    ts-morph: ^14.0.0
-  checksum: 8b19a37c50b7531c8fc87164f42c1b3d4bfe879e66078553247f4bce08fdb981f2ce993dec51fbc4d75f60e555d26f9c858c25cebecab8e5c1b29ecfcd90c6d8
-  languageName: node
-  linkType: hard
-
 "@fernapi/typescript-commons@npm:^0.1.10":
   version: 0.1.10
   resolution: "@fernapi/typescript-commons@npm:0.1.10"
@@ -741,16 +715,6 @@ __metadata:
     esutils: ^2.0.3
     ts-morph: ^14.0.0
   checksum: 77fca523dbba20bb1261d2a5b0b11870b9638687ddc9c2bbdb9f650b21e554b251043374f2780a96cf23e4a2f22d7d5c12b590606c9ebcb5a4983ad0ddc56ed0
-  languageName: node
-  linkType: hard
-
-"@fernapi/typescript-commons@npm:^0.1.3":
-  version: 0.1.3
-  resolution: "@fernapi/typescript-commons@npm:0.1.3"
-  dependencies:
-    esutils: ^2.0.3
-    ts-morph: ^14.0.0
-  checksum: 68503a640b214eaea1ccb42bb74740c46e85fa4733a188897d32d7c4ccd1615b08147bb5017363c414b27e0c98dfdc64d66ac0bc19f705ae1663cba2c0dda350
   languageName: node
   linkType: hard
 
@@ -765,17 +729,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fernapi/typescript-model@npm:^0.1.3":
-  version: 0.1.3
-  resolution: "@fernapi/typescript-model@npm:0.1.3"
-  dependencies:
-    "@fernapi/api": 0.1.2
-    "@fernapi/typescript-commons": ^0.1.3
-    ts-morph: ^14.0.0
-  checksum: c3ffc15044945826e9e0bbedb0715dbcafb5467b8aa1c1fee1f2bb62f25279438158a7702bbffa6fdc42e2b09ab27f5dd8264490035fdd0448075f9e4c955cfc
-  languageName: node
-  linkType: hard
-
 "@fernapi/typescript-server@npm:^0.1.10":
   version: 0.1.10
   resolution: "@fernapi/typescript-server@npm:0.1.10"
@@ -783,16 +736,6 @@ __metadata:
     "@fernapi/api": 0.1.2
     ts-morph: ^14.0.0
   checksum: ac5ec0d231b721c8d80475b0d9c235763a6f8535eae7a45d6e94e1c10eeb24c81a0b91a36258dee5989034dac79c5a69b51ea75ef0bf8b55e31b7f9546923d34
-  languageName: node
-  linkType: hard
-
-"@fernapi/typescript-server@npm:^0.1.3":
-  version: 0.1.3
-  resolution: "@fernapi/typescript-server@npm:0.1.3"
-  dependencies:
-    "@fernapi/api": 0.1.2
-    ts-morph: ^14.0.0
-  checksum: 363c95b866d7d8b36cb7902c700674d59c909b504b4526b018dcf68644d4288498bb538e44e189124fefde81d92ac9eeeea83fb2839bb403368e6fadd598d10a
   languageName: node
   linkType: hard
 
@@ -1190,11 +1133,11 @@ __metadata:
   linkType: hard
 
 "@types/babel__traverse@npm:*, @types/babel__traverse@npm:^7.0.4, @types/babel__traverse@npm:^7.0.6":
-  version: 7.14.2
-  resolution: "@types/babel__traverse@npm:7.14.2"
+  version: 7.17.0
+  resolution: "@types/babel__traverse@npm:7.17.0"
   dependencies:
     "@babel/types": ^7.3.0
-  checksum: a797ea09c72307569e3ee08aa3900ca744ce3091114084f2dc59b67a45ee7d01df7865252790dbfa787a7915ce892cdc820c9b920f3683292765fc656b08dc63
+  checksum: b9a4acfc260179168d840c7f17e6b8b3ab4e7ebbce47b3308dd748683136518ab8636e2dcbf8d619fece0db7e561e08def9ede29269b7210a761763a26ece66a
   languageName: node
   linkType: hard
 
@@ -1271,9 +1214,9 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
-  version: 17.0.23
-  resolution: "@types/node@npm:17.0.23"
-  checksum: a3517554737cbb042e76c30d0e5482192ac4d9bea0eeb086e2622d9cabf460a0eb52a696b99fcd18e7fcc93c96db6cc7ae507f6608f256ef0b5c1d8c87a5a470
+  version: 17.0.24
+  resolution: "@types/node@npm:17.0.24"
+  checksum: 9e7c4f863601b2430b4c2429a89935f22eba692956f5013c90a4c7fb0e1401ed8add8c4307453c5d6b8b985384500f8c3f644427ab88632640cc396159af479a
   languageName: node
   linkType: hard
 
@@ -1447,73 +1390,73 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue/compiler-core@npm:3.2.32":
-  version: 3.2.32
-  resolution: "@vue/compiler-core@npm:3.2.32"
+"@vue/compiler-core@npm:3.2.33":
+  version: 3.2.33
+  resolution: "@vue/compiler-core@npm:3.2.33"
   dependencies:
     "@babel/parser": ^7.16.4
-    "@vue/shared": 3.2.32
+    "@vue/shared": 3.2.33
     estree-walker: ^2.0.2
     source-map: ^0.6.1
-  checksum: 4db8180a9fd0cc6ccbabc6844c98885af6c254d553fc242a9c083c170e2ceeb5e4466c23b3fd221d9c79f895a8169b080a6f24569f3b3f727335a9d0b753c3b7
+  checksum: bae1a7db26ab208fe8f0b09f443387e0951a1d1b35f80d89cad2285a818dc9dece783b98ccee4dbece59fde57f20a2f17afb183f710fdbc852e568bdf871265e
   languageName: node
   linkType: hard
 
-"@vue/compiler-dom@npm:3.2.32":
-  version: 3.2.32
-  resolution: "@vue/compiler-dom@npm:3.2.32"
+"@vue/compiler-dom@npm:3.2.33":
+  version: 3.2.33
+  resolution: "@vue/compiler-dom@npm:3.2.33"
   dependencies:
-    "@vue/compiler-core": 3.2.32
-    "@vue/shared": 3.2.32
-  checksum: 02040e9202eb60cacc5dc3ab3d44ab265b09b20ce826d52adf7d239fc8d2ee52423d1a7c5b069e4c385c7a4d9f339112f35635223d85e5bbf3dcfac0c96a83d7
+    "@vue/compiler-core": 3.2.33
+    "@vue/shared": 3.2.33
+  checksum: 498f313c81d287ab4ee5861508121ab130728f3b643544041acdadfce9840c2ea05b972169437ef1462443d4d0bc9674105db7b6cfa75f6e46ef470f2a098112
   languageName: node
   linkType: hard
 
 "@vue/compiler-sfc@npm:^3.0.5":
-  version: 3.2.32
-  resolution: "@vue/compiler-sfc@npm:3.2.32"
+  version: 3.2.33
+  resolution: "@vue/compiler-sfc@npm:3.2.33"
   dependencies:
     "@babel/parser": ^7.16.4
-    "@vue/compiler-core": 3.2.32
-    "@vue/compiler-dom": 3.2.32
-    "@vue/compiler-ssr": 3.2.32
-    "@vue/reactivity-transform": 3.2.32
-    "@vue/shared": 3.2.32
+    "@vue/compiler-core": 3.2.33
+    "@vue/compiler-dom": 3.2.33
+    "@vue/compiler-ssr": 3.2.33
+    "@vue/reactivity-transform": 3.2.33
+    "@vue/shared": 3.2.33
     estree-walker: ^2.0.2
     magic-string: ^0.25.7
     postcss: ^8.1.10
     source-map: ^0.6.1
-  checksum: b133adf0cfd4126d7436cdc4b3d1da0a4785e86461344bee01430f4811a25d2d1cba9bc3a35cd3bbde53b5f5c5a8602d4eef9474e40ec818e0dc4b3994421f6f
+  checksum: f436c49bdce0d00d4b0c8dd9a9a8e76167898fc10e79578425391d0b0a712e8d8f3aad257066d6e0ecdde3c6c38e6280f93ea741865ea1cab823b71440578a24
   languageName: node
   linkType: hard
 
-"@vue/compiler-ssr@npm:3.2.32":
-  version: 3.2.32
-  resolution: "@vue/compiler-ssr@npm:3.2.32"
+"@vue/compiler-ssr@npm:3.2.33":
+  version: 3.2.33
+  resolution: "@vue/compiler-ssr@npm:3.2.33"
   dependencies:
-    "@vue/compiler-dom": 3.2.32
-    "@vue/shared": 3.2.32
-  checksum: 9363d2d0cd3590db73f0c63f71a8af09810e981683fd0d344da258f0d7dedad2a210a4ffc3fd7573409b9973428a3092d88c2952c1a34a6288e713924edc5276
+    "@vue/compiler-dom": 3.2.33
+    "@vue/shared": 3.2.33
+  checksum: 4107f8e9e8f4553ba12cb915d0f51169b67176fbb50e05accf014ee6786e767ae9ec1218ffae266e807d00fbdeb881781a615d777531385581cce2ea5e1afd58
   languageName: node
   linkType: hard
 
-"@vue/reactivity-transform@npm:3.2.32":
-  version: 3.2.32
-  resolution: "@vue/reactivity-transform@npm:3.2.32"
+"@vue/reactivity-transform@npm:3.2.33":
+  version: 3.2.33
+  resolution: "@vue/reactivity-transform@npm:3.2.33"
   dependencies:
     "@babel/parser": ^7.16.4
-    "@vue/compiler-core": 3.2.32
-    "@vue/shared": 3.2.32
+    "@vue/compiler-core": 3.2.33
+    "@vue/shared": 3.2.33
     estree-walker: ^2.0.2
     magic-string: ^0.25.7
-  checksum: 21469b446b4660d9f1763ca6f07b4d92521c3348d25a929066aa087623dff9f37ddc0df23c6da8f1a69c4f722b589028454a5b52a304afc6ed892fb04e3efb3a
+  checksum: 599a68f4bb1b36ac7015ddfc5cbcc97498e9caac5d1b96834185e2d248c22d1f1f4184e33788761112377ce22f9e2e3d79c50b551eec685395368a2480e6385c
   languageName: node
   linkType: hard
 
-"@vue/shared@npm:3.2.32":
-  version: 3.2.32
-  resolution: "@vue/shared@npm:3.2.32"
-  checksum: d268632cc4330ae352fce31504e7d506a08f76f88a74115d782e440e0d90f43f46abceebdd1b7b8971ffc0ea229a0b25eeeb51417481632d564031933e5c58e6
+"@vue/shared@npm:3.2.33":
+  version: 3.2.33
+  resolution: "@vue/shared@npm:3.2.33"
+  checksum: 0083c9555b44f1c230079fac9270764e51af740f851101ae8972758fe6acf52184f76b4ab0c67a3840096d8f5a0988b99cae3046826b0f15af2431db6127ae48
   languageName: node
   linkType: hard
 
@@ -2047,9 +1990,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001317":
-  version: 1.0.30001331
-  resolution: "caniuse-lite@npm:1.0.30001331"
-  checksum: b869b4222f08593ca6c3272e000dcf38c0db7fa100912f4dd5bb2992927721db0cfda0e6766099258187eb371270fe0f2d6f3cad6c4dfd12bd71e9f19dbce2c3
+  version: 1.0.30001332
+  resolution: "caniuse-lite@npm:1.0.30001332"
+  checksum: e54182ea42ab3d2ff1440f9a6480292f7ab23c00c188df7ad65586312e4da567e8bedd5cb5fb8f0ff4193dc027a54e17e0b3c0b6db5d5a3fb61c7726ff9c45b3
   languageName: node
   linkType: hard
 
@@ -2620,8 +2563,8 @@ __metadata:
   linkType: hard
 
 "es-abstract@npm:^1.19.1, es-abstract@npm:^1.19.2":
-  version: 1.19.4
-  resolution: "es-abstract@npm:1.19.4"
+  version: 1.19.5
+  resolution: "es-abstract@npm:1.19.5"
   dependencies:
     call-bind: ^1.0.2
     es-to-primitive: ^1.2.1
@@ -2643,7 +2586,7 @@ __metadata:
     string.prototype.trimend: ^1.0.4
     string.prototype.trimstart: ^1.0.4
     unbox-primitive: ^1.0.1
-  checksum: 73fabbe5a0645e196d5b48057c4e2249f69518c174b05bf93d407df861707224dc4adbd17a1260cbb7f0ab706531c033a22fd4a88121865262c6f5721a81556b
+  checksum: 55199b0f179a12b3b0ec9c9f2e3a27a7561686e4f88d46f9ef32c836448a336e367c14d8f792612fc83a64113896e478259e4dffbbcffb3efdd06650f6360324
   languageName: node
   linkType: hard
 
@@ -3410,12 +3353,12 @@ __metadata:
   linkType: hard
 
 "https-proxy-agent@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "https-proxy-agent@npm:5.0.0"
+  version: 5.0.1
+  resolution: "https-proxy-agent@npm:5.0.1"
   dependencies:
     agent-base: 6
     debug: 4
-  checksum: 165bfb090bd26d47693597661298006841ab733d0c7383a8cb2f17373387a94c903a3ac687090aa739de05e379ab6f868bae84ab4eac288ad85c328cd1ec9e53
+  checksum: 571fccdf38184f05943e12d37d6ce38197becdd69e58d03f43637f7fa1269cf303a7d228aa27e5b27bbd3af8f09fd938e1c91dcfefff2df7ba77c20ed8dfc765
   languageName: node
   linkType: hard
 
