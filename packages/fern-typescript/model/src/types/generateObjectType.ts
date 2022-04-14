@@ -1,4 +1,4 @@
-import { ObjectTypeDefinition, TypeDefinition } from "@fern/ir-generation";
+import { ObjectTypeDefinition, TypeDefinition } from "@fernapi/ir-generation";
 import { Directory, SourceFile } from "ts-morph";
 import { generateTypeNameReference, generateTypeReference } from "../utils/generateTypeReference";
 import { getTextOfTsNode } from "../utils/getTextOfTsNode";

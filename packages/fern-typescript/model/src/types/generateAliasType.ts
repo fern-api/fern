@@ -1,4 +1,4 @@
-import { AliasTypeDefinition, PrimitiveType, TypeDefinition, TypeReference } from "@fern/ir-generation";
+import { AliasTypeDefinition, PrimitiveType, TypeDefinition, TypeReference } from "@fernapi/ir-generation";
 import { Directory, SourceFile, ts, VariableDeclarationKind, Writers } from "ts-morph";
 import { addBrandedTypeAlias } from "../utils/addBrandedTypeAlias";
 import { generateTypeReference } from "../utils/generateTypeReference";

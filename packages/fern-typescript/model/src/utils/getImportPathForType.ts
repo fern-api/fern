@@ -1,4 +1,4 @@
-import { TypeName } from "@fern/ir-generation";
+import { TypeName } from "@fernapi/ir-generation";
 import path from "path";
 import { Directory, SourceFile } from "ts-morph";
 import { getFilePathForType } from "./getFilePathForType";

@@ -1,5 +1,5 @@
-import { TypeName } from "@fern/ir-generation";
-import { FernWriters } from "@fern/typescript-commons";
+import { TypeName } from "@fernapi/ir-generation";
+import { FernWriters } from "@fernapi/typescript-commons";
 import { StatementedNode, ts, Writers } from "ts-morph";
 import { getTextOfTsKeyword } from "./getTextOfTsKeyword";
 import { getTextOfTsNode } from "./getTextOfTsNode";

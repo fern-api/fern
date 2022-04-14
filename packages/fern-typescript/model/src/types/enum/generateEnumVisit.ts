@@ -1,4 +1,4 @@
-import { EnumTypeDefinition, TypeDefinition } from "@fern/ir-generation";
+import { EnumTypeDefinition, TypeDefinition } from "@fernapi/ir-generation";
 import { ModuleDeclaration, ts } from "ts-morph";
 import { getTextOfTsNode } from "../../utils/getTextOfTsNode";
 import { getKeyForEnum } from "./utils";

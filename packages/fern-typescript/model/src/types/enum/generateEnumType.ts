@@ -1,5 +1,5 @@
-import { EnumTypeDefinition, FernFilepath, TypeDefinition } from "@fern/ir-generation";
-import { FernWriters } from "@fern/typescript-commons";
+import { EnumTypeDefinition, FernFilepath, TypeDefinition } from "@fernapi/ir-generation";
+import { FernWriters } from "@fernapi/typescript-commons";
 import path from "path";
 import { SourceFile, ts, VariableDeclarationKind, WriterFunction } from "ts-morph";
 import { addBrandedTypeAlias } from "../../utils/addBrandedTypeAlias";

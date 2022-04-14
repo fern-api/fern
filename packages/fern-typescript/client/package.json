@@ -1,11 +1,12 @@
 {
-  "name": "@fern/typescript-client",
+  "name": "@fernapi/typescript-client",
   "version": "0.1.0",
   "private": true,
-  "source": "src/index.ts",
-  "module": "src/index.ts",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "tsc --build --clean",
     "compile": "tsc --build",
@@ -16,10 +17,11 @@
     "lint:style:fix": "stylelint '**/*.scss' --allow-empty-input --max-warnings 0 --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "depcheck": "depcheck"
+    "depcheck": "depcheck",
+    "prepublish": "run clean && run compile && run test && run lint:eslint && run lint:style && run format:check && run depcheck"
   },
   "dependencies": {
-    "@fern/ir-generation": "workspace:^",
+    "@fernapi/ir-generation": "workspace:^",
     "ts-morph": "^14.0.0"
   },
   "devDependencies": {

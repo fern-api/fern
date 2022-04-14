@@ -1,5 +1,5 @@
-import { generateClientFiles } from "@fern/typescript-client";
-import { generateModelFiles } from "@fern/typescript-model";
+import { generateClientFiles } from "@fernapi/typescript-client";
+import { generateModelFiles } from "@fernapi/typescript-model";
 import { Project } from "ts-morph";
 import { loadIntermediateRepresentation } from "./utils/loadIntermediateRepresentation";
 import { writeFiles } from "./utils/writeFiles";

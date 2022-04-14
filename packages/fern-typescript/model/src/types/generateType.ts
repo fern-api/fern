@@ -1,4 +1,4 @@
-import { Type, TypeDefinition } from "@fern/ir-generation";
+import { Type, TypeDefinition } from "@fernapi/ir-generation";
 import { Directory } from "ts-morph";
 import { getFilePathForType } from "../utils/getFilePathForType";
 import { TypeResolver } from "../utils/TypeResolver";

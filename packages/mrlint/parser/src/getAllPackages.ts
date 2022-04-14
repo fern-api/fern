@@ -11,6 +11,7 @@ const promisifiedGlob = promisify(glob);
 
 const PackageConfigSchema = z.strictObject({
     type: z.enum(["library", "cli", "react-library", "react-app"]),
+    private: z.optional(z.boolean()),
 });
 type RawPackageConfig = z.infer<typeof PackageConfigSchema>;
 
@@ -53,6 +54,7 @@ async function getPackageJson(packageDirectory: string): Promise<IPackageJson | 
 function convertConfig(rawConfig: RawPackageConfig): PackageConfig {
     return {
         type: getType(rawConfig.type),
+        private: rawConfig.private ?? true,
     };
 }
 

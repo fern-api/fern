@@ -91,14 +91,18 @@ function generatePackageJson({
     const packageJson = produce<IPackageJson>({}, (draft) => {
         draft.name = oldPackageJson.name;
         draft.version = oldPackageJson.version;
-        draft.private = true;
-        draft.source = "src/index.ts";
-        draft.module = "src/index.ts";
+        if (packageToLint.config.private) {
+            draft.private = true;
+        }
         draft.main = "lib/index.js";
         draft.types = "lib/index.d.ts";
+        draft.files = ["lib"];
 
         if (packageToLint.config.type === PackageType.TYPESCRIPT_CLI) {
-            draft.bin = "./cli";
+            const packageNameWithoutScope = oldPackageJson.name.slice(oldPackageJson.name.indexOf("/") + 1);
+            draft.bin = {
+                [packageNameWithoutScope]: "./cli",
+            };
         }
 
         draft.scripts = {
@@ -122,6 +126,8 @@ function generatePackageJson({
                 Executable.PRETTIER
             )} --check --ignore-unknown --ignore-path ${pathToPrettierIgnore} "**"`,
             depcheck: executables.get(Executable.DEPCHECK),
+            prepublish:
+                "run clean && run compile && run test && run lint:eslint && run lint:style && run format:check && run depcheck",
         };
 
         if (packageToLint.config.type === PackageType.REACT_APP) {

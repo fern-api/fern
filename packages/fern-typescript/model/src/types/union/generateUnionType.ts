@@ -1,5 +1,5 @@
-import { SingleUnionType, TypeDefinition, UnionTypeDefinition } from "@fern/ir-generation";
-import { FernWriters } from "@fern/typescript-commons";
+import { SingleUnionType, TypeDefinition, UnionTypeDefinition } from "@fernapi/ir-generation";
+import { FernWriters } from "@fernapi/typescript-commons";
 import {
     Directory,
     InterfaceDeclaration,

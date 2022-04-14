@@ -1,4 +1,4 @@
-import { FernFilepath, IntermediateRepresentation, Type, TypeName, TypeReference } from "@fern/ir-generation";
+import { FernFilepath, IntermediateRepresentation, Type, TypeName, TypeReference } from "@fernapi/ir-generation";
 
 type Filepath = string;
 type SimpleTypeName = string;

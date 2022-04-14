@@ -1,4 +1,4 @@
-import { SingleUnionType, TypeName, TypeReference } from "@fern/ir-generation";
+import { SingleUnionType, TypeName, TypeReference } from "@fernapi/ir-generation";
 import { Directory, SourceFile, ts } from "ts-morph";
 import { generateTypeNameReference, generateTypeReference } from "../../utils/generateTypeReference";
 import { TypeResolver } from "../../utils/TypeResolver";

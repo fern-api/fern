@@ -1,4 +1,4 @@
-import { CompilerStage, FernFile } from "@fern/compiler-commons";
+import { CompilerStage, FernFile } from "@fernapi/compiler-commons";
 import { parse } from "./parse";
 import { SyntaxAnalysis } from "./types";
 import { validate } from "./validate";

@@ -23,6 +23,7 @@ export interface Package {
 
 export interface PackageConfig {
     type: PackageType | undefined;
+    private: boolean;
 }
 
 export enum PackageType {

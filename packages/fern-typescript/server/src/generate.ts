@@ -1,4 +1,4 @@
-import { IntermediateRepresentation } from "@fern/ir-generation";
+import { IntermediateRepresentation } from "@fernapi/ir-generation";
 import { Directory } from "ts-morph";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

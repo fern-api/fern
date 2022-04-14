@@ -1,4 +1,4 @@
-import { ContainerType, PrimitiveType, TypeName, TypeReference } from "@fern/ir-generation";
+import { ContainerType, PrimitiveType, TypeName, TypeReference } from "@fernapi/ir-generation";
 import { Directory, SourceFile, ts } from "ts-morph";
 import { getImportPathForType } from "./getImportPathForType";
 

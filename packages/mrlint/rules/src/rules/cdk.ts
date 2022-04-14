@@ -112,7 +112,7 @@ async function writeDeployTs({
             "deploy.ts",
             `#!/usr/bin/env node
 
-import { createCdkStack } from "@fern/cdk-utils";
+import { createCdkStack } from "@fernapi/cdk-utils";
 import path from "path";
 	
 createCdkStack({
@@ -146,10 +146,10 @@ async function writeTsConfig({
     fileSystemForDeploy: FileSystem;
     logger: Logger;
 }): Promise<Result> {
-    const cdkUtils = allPackages.find((p) => p.packageJson?.name === "@fern/cdk-utils");
+    const cdkUtils = allPackages.find((p) => p.packageJson?.name === "@fernapi/cdk-utils");
     if (cdkUtils == null) {
         logger.error({
-            message: "Could not find @fern/cdk-utils",
+            message: "Could not find @fernapi/cdk-utils",
         });
         return Result.failure();
     }

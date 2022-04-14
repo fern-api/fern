@@ -416,9 +416,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern/compiler-commons@workspace:^, @fern/compiler-commons@workspace:packages/compiler/compiler-commons":
+"@fernapi/compiler-commons@workspace:^, @fernapi/compiler-commons@workspace:packages/compiler/compiler-commons":
   version: 0.0.0-use.local
-  resolution: "@fern/compiler-commons@workspace:packages/compiler/compiler-commons"
+  resolution: "@fernapi/compiler-commons@workspace:packages/compiler/compiler-commons"
   dependencies:
     depcheck: ^1.4.3
     eslint: ^8.12.0
@@ -429,13 +429,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern/compiler@workspace:^, @fern/compiler@workspace:packages/compiler/compiler":
+"@fernapi/compiler@workspace:^, @fernapi/compiler@workspace:packages/compiler/compiler":
   version: 0.0.0-use.local
-  resolution: "@fern/compiler@workspace:packages/compiler/compiler"
+  resolution: "@fernapi/compiler@workspace:packages/compiler/compiler"
   dependencies:
-    "@fern/compiler-commons": "workspace:^"
-    "@fern/ir-generation": "workspace:^"
-    "@fern/syntax-analysis": "workspace:^"
+    "@fernapi/compiler-commons": "workspace:^"
+    "@fernapi/ir-generation": "workspace:^"
+    "@fernapi/syntax-analysis": "workspace:^"
     depcheck: ^1.4.3
     eslint: ^8.12.0
     jest: ^27.5.1
@@ -445,12 +445,36 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern/ir-generation@workspace:^, @fern/ir-generation@workspace:packages/compiler/ir-generation":
+"@fernapi/fern@workspace:^, @fernapi/fern@workspace:packages/compiler/cli":
   version: 0.0.0-use.local
-  resolution: "@fern/ir-generation@workspace:packages/compiler/ir-generation"
+  resolution: "@fernapi/fern@workspace:packages/compiler/cli"
   dependencies:
-    "@fern/compiler-commons": "workspace:^"
-    "@fern/syntax-analysis": "workspace:^"
+    "@fernapi/compiler": "workspace:^"
+    "@fernapi/compiler-commons": "workspace:^"
+    "@fernapi/syntax-analysis": "workspace:^"
+    "@types/glob": ^7.2.0
+    "@types/yargs": ^17.0.10
+    chalk: ^4.1.2
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    glob: ^7.2.0
+    jest: ^27.5.1
+    prettier: ^2.6.1
+    stylelint: ^14.6.1
+    typescript: ^4.6.3
+    yargs: ^17.3.1
+    zod: ^3.14.3
+  bin:
+    fern: ./cli
+  languageName: unknown
+  linkType: soft
+
+"@fernapi/ir-generation@workspace:^, @fernapi/ir-generation@workspace:packages/compiler/ir-generation":
+  version: 0.0.0-use.local
+  resolution: "@fernapi/ir-generation@workspace:packages/compiler/ir-generation"
+  dependencies:
+    "@fernapi/compiler-commons": "workspace:^"
+    "@fernapi/syntax-analysis": "workspace:^"
     depcheck: ^1.4.3
     eslint: ^8.12.0
     jest: ^27.5.1
@@ -460,11 +484,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern/syntax-analysis@workspace:^, @fern/syntax-analysis@workspace:packages/compiler/syntax-analysis":
+"@fernapi/syntax-analysis@workspace:^, @fernapi/syntax-analysis@workspace:packages/compiler/syntax-analysis":
   version: 0.0.0-use.local
-  resolution: "@fern/syntax-analysis@workspace:packages/compiler/syntax-analysis"
+  resolution: "@fernapi/syntax-analysis@workspace:packages/compiler/syntax-analysis"
   dependencies:
-    "@fern/compiler-commons": "workspace:^"
+    "@fernapi/compiler-commons": "workspace:^"
     "@types/js-yaml": ^4.0.5
     depcheck: ^1.4.3
     eslint: ^8.12.0
@@ -477,11 +501,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern/typescript-client@workspace:^, @fern/typescript-client@workspace:packages/fern-typescript/client":
+"@fernapi/typescript-client@workspace:^, @fernapi/typescript-client@workspace:packages/fern-typescript/client":
   version: 0.0.0-use.local
-  resolution: "@fern/typescript-client@workspace:packages/fern-typescript/client"
+  resolution: "@fernapi/typescript-client@workspace:packages/fern-typescript/client"
   dependencies:
-    "@fern/ir-generation": "workspace:^"
+    "@fernapi/ir-generation": "workspace:^"
     depcheck: ^1.4.3
     eslint: ^8.12.0
     jest: ^27.5.1
@@ -492,9 +516,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern/typescript-commons@workspace:^, @fern/typescript-commons@workspace:packages/fern-typescript/commons":
+"@fernapi/typescript-commons@workspace:^, @fernapi/typescript-commons@workspace:packages/fern-typescript/commons":
   version: 0.0.0-use.local
-  resolution: "@fern/typescript-commons@workspace:packages/fern-typescript/commons"
+  resolution: "@fernapi/typescript-commons@workspace:packages/fern-typescript/commons"
   dependencies:
     "@types/esutils": ^2.0.0
     depcheck: ^1.4.3
@@ -508,12 +532,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern/typescript-model@workspace:^, @fern/typescript-model@workspace:packages/fern-typescript/model":
+"@fernapi/typescript-model@workspace:^, @fernapi/typescript-model@workspace:packages/fern-typescript/model":
   version: 0.0.0-use.local
-  resolution: "@fern/typescript-model@workspace:packages/fern-typescript/model"
+  resolution: "@fernapi/typescript-model@workspace:packages/fern-typescript/model"
   dependencies:
-    "@fern/ir-generation": "workspace:^"
-    "@fern/typescript-commons": "workspace:^"
+    "@fernapi/ir-generation": "workspace:^"
+    "@fernapi/typescript-commons": "workspace:^"
     depcheck: ^1.4.3
     eslint: ^8.12.0
     jest: ^27.5.1
@@ -524,11 +548,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern/typescript-server@workspace:^, @fern/typescript-server@workspace:packages/fern-typescript/server":
+"@fernapi/typescript-server@workspace:^, @fernapi/typescript-server@workspace:packages/fern-typescript/server":
   version: 0.0.0-use.local
-  resolution: "@fern/typescript-server@workspace:packages/fern-typescript/server"
+  resolution: "@fernapi/typescript-server@workspace:packages/fern-typescript/server"
   dependencies:
-    "@fern/ir-generation": "workspace:^"
+    "@fernapi/ir-generation": "workspace:^"
     depcheck: ^1.4.3
     eslint: ^8.12.0
     jest: ^27.5.1
@@ -839,6 +863,28 @@ __metadata:
     prettier: ^2.6.1
     stylelint: ^14.6.1
     typescript: ^4.6.3
+  languageName: unknown
+  linkType: soft
+
+"@mrlint/mrlint@workspace:^, @mrlint/mrlint@workspace:packages/mrlint/cli":
+  version: 0.0.0-use.local
+  resolution: "@mrlint/mrlint@workspace:packages/mrlint/cli"
+  dependencies:
+    "@mrlint/commons": "workspace:^"
+    "@mrlint/lint": "workspace:^"
+    "@mrlint/parser": "workspace:^"
+    "@mrlint/rules": "workspace:^"
+    "@types/yargs": ^17.0.10
+    chalk: ^4.1.2
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    jest: ^27.5.1
+    prettier: ^2.6.1
+    stylelint: ^14.6.1
+    typescript: ^4.6.3
+    yargs: ^17.3.1
+  bin:
+    mrlint: ./cli
   languageName: unknown
   linkType: soft
 
@@ -1735,17 +1781,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "birch-api@workspace:."
   dependencies:
+    "@fernapi/fern": "workspace:^"
+    "@mrlint/mrlint": "workspace:^"
     "@typescript-eslint/eslint-plugin": ^5.17.0
     "@typescript-eslint/parser": ^5.17.0
     depcheck: ^1.4.3
     eslint: ^8.12.0
     eslint-plugin-react: ^7.29.4
     eslint-plugin-react-hooks: ^4.4.0
-    fern: "workspace:^"
     husky: ^7.0.4
     jest: ^27.5.1
     lint-staged: ^12.3.7
-    mrlint: "workspace:^"
     prettier: ^2.6.1
     react: ^18.0.0
     stylelint: ^14.6.1
@@ -2843,10 +2889,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "fern-typescript@workspace:packages/fern-typescript/cli"
   dependencies:
-    "@fern/ir-generation": "workspace:^"
-    "@fern/typescript-client": "workspace:^"
-    "@fern/typescript-model": "workspace:^"
-    "@fern/typescript-server": "workspace:^"
+    "@fernapi/ir-generation": "workspace:^"
+    "@fernapi/typescript-client": "workspace:^"
+    "@fernapi/typescript-model": "workspace:^"
+    "@fernapi/typescript-server": "workspace:^"
     "@types/yargs": ^17.0.10
     depcheck: ^1.4.3
     eslint: ^8.12.0
@@ -2858,30 +2904,6 @@ __metadata:
     yargs: ^17.4.1
   bin:
     fern-typescript: ./cli
-  languageName: unknown
-  linkType: soft
-
-"fern@workspace:^, fern@workspace:packages/compiler/cli":
-  version: 0.0.0-use.local
-  resolution: "fern@workspace:packages/compiler/cli"
-  dependencies:
-    "@fern/compiler": "workspace:^"
-    "@fern/compiler-commons": "workspace:^"
-    "@fern/syntax-analysis": "workspace:^"
-    "@types/glob": ^7.2.0
-    "@types/yargs": ^17.0.10
-    chalk: ^4.1.2
-    depcheck: ^1.4.3
-    eslint: ^8.12.0
-    glob: ^7.2.0
-    jest: ^27.5.1
-    prettier: ^2.6.1
-    stylelint: ^14.6.1
-    typescript: ^4.6.3
-    yargs: ^17.3.1
-    zod: ^3.14.3
-  bin:
-    fern: ./cli
   languageName: unknown
   linkType: soft
 
@@ -4779,28 +4801,6 @@ __metadata:
   checksum: a96865108c6c3b1b8e1d5e9f11843de1e077e57737602de1b82030815f311be11f96f09cce59bd5b903d0b29834733e5313f9301e3ed6d6f6fba2eae0df4298f
   languageName: node
   linkType: hard
-
-"mrlint@workspace:^, mrlint@workspace:packages/mrlint/cli":
-  version: 0.0.0-use.local
-  resolution: "mrlint@workspace:packages/mrlint/cli"
-  dependencies:
-    "@mrlint/commons": "workspace:^"
-    "@mrlint/lint": "workspace:^"
-    "@mrlint/parser": "workspace:^"
-    "@mrlint/rules": "workspace:^"
-    "@types/yargs": ^17.0.10
-    chalk: ^4.1.2
-    depcheck: ^1.4.3
-    eslint: ^8.12.0
-    jest: ^27.5.1
-    prettier: ^2.6.1
-    stylelint: ^14.6.1
-    typescript: ^4.6.3
-    yargs: ^17.3.1
-  bin:
-    mrlint: ./cli
-  languageName: unknown
-  linkType: soft
 
 "ms@npm:2.1.2":
   version: 2.1.2

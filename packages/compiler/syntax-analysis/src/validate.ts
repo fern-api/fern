@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern/compiler-commons";
+import { RelativeFilePath } from "@fernapi/compiler-commons";
 import { FernSchema } from "./schemas/FernSchema";
 import { SyntaxAnalysis, SyntaxAnalysisFailureType } from "./types";
 

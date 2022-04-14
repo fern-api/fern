@@ -1,5 +1,5 @@
-import { CompilerStage, RelativeFilePath } from "@fern/compiler-commons";
-import { RawSchemas, SimpleInlinableType } from "@fern/syntax-analysis";
+import { CompilerStage, RelativeFilePath } from "@fernapi/compiler-commons";
+import { RawSchemas, SimpleInlinableType } from "@fernapi/syntax-analysis";
 import path from "path";
 import { ContainerType } from "./types/ContainerType";
 import { FernFilepath } from "./types/FernFilepath";

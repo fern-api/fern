@@ -1,4 +1,4 @@
-import { TypeDefinition, UnionTypeDefinition } from "@fern/ir-generation";
+import { TypeDefinition, UnionTypeDefinition } from "@fernapi/ir-generation";
 import { Directory, ModuleDeclaration, SourceFile, ts } from "ts-morph";
 import { getTextOfTsNode } from "../../utils/getTextOfTsNode";
 import { TypeResolver } from "../../utils/TypeResolver";
