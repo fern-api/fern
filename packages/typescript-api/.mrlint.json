@@ -1,4 +1,4 @@
 {
-  "type": "cli",
+  "type": "library",
   "private": false
 }
