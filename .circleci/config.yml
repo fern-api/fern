@@ -62,7 +62,7 @@ jobs:
           {
             key: 'compile-gradle-cache-v2-{{ checksum "packages/fern-java/versions.props" }}-{{ checksum "packages/fern-java/build.gradle" }}',
           }
-      - run: cd packages/java-api && ./gradlew --parallel --stacktrace classes testClasses
+      - run: cd packages/fern-java && ./gradlew --parallel --stacktrace classes testClasses
       - save_cache:
           key: 'gradle-wrapper-v2-{{ checksum "packages/fern-java/gradle/wrapper/gradle-wrapper.properties" }}'
           paths: [~/.gradle/wrapper]
@@ -96,7 +96,7 @@ jobs:
             curl https://cdn.azul.com/zulu/bin/zulu11.41.23-ca-jdk11.0.8-linux_x64.tar.gz | tar -xzf - -C /opt/java
             sudo ln -s /opt/java/zulu*/ /opt/java11
       - run:
-          command: cd packages/java-api && ./gradlew artifactoryPublish
+          command: cd packages/fern-java && ./gradlew artifactoryPublish
           name: Publish conjure json file
 
 workflows:
