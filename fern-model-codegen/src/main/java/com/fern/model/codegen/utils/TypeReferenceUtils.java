@@ -17,7 +17,7 @@ public final class TypeReferenceUtils {
 
     private TypeReferenceUtils() {}
 
-    public static final TypeName convertToTypeName(boolean primitiveAllowed, TypeReference typeReference) {
+    public static TypeName convertToTypeName(boolean primitiveAllowed, TypeReference typeReference) {
         if (primitiveAllowed) {
             return typeReference.accept(TypeReferenceToTypeNameConverter.PRIMITIVE_ALLOWED_CONVERTER);
         }

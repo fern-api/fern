@@ -7,7 +7,7 @@ import com.fern.ObjectField;
 import com.fern.ObjectTypeDefinition;
 import com.fern.immutables.StagedBuilderStyle;
 import com.fern.model.codegen.GeneratedFile;
-import com.fern.model.codegen._interface.GeneratedInterface;
+import com.fern.model.codegen.interfaces.GeneratedInterface;
 import com.fern.model.codegen.union.UnionGenerator;
 import com.fern.model.codegen.utils.ClassNameUtils;
 import com.fern.model.codegen.utils.ImmutablesUtils;
@@ -18,7 +18,6 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,6 +25,8 @@ import javax.lang.model.element.Modifier;
 import org.immutables.value.Value;
 
 public final class ObjectGenerator {
+
+    private static final Modifier[] OBJECT_INTERFACE_MODIFIERS = new Modifier[] {Modifier.PUBLIC};
 
     private static final String STATIC_BUILDER_METHOD_NAME = "builder";
     private static final String BUILD_STAGE_SUFFIX = "BuildStage";
@@ -49,7 +50,7 @@ public final class ObjectGenerator {
     public GeneratedObject generate() {
         ClassName generatedObjectClassName = ClassNameUtils.getClassName(namedTypeReference);
         TypeSpec objectTypeSpec = TypeSpec.interfaceBuilder(namedTypeReference.name())
-                .addModifiers(getClassModifiers())
+                .addModifiers(OBJECT_INTERFACE_MODIFIERS)
                 .addAnnotations(getAnnotations())
                 .addSuperinterfaces(getSuperInterfaces())
                 .addMethods(getMethods())
@@ -61,10 +62,6 @@ public final class ObjectGenerator {
                 .definition(objectTypeDefinition)
                 .className(generatedObjectClassName)
                 .build();
-    }
-
-    private Modifier[] getClassModifiers() {
-        return Collections.singletonList(Modifier.PUBLIC).toArray(new Modifier[0]);
     }
 
     private List<AnnotationSpec> getAnnotations() {

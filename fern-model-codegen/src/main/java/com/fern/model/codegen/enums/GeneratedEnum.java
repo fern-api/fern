@@ -1,4 +1,4 @@
-package com.fern.model.codegen._enum;
+package com.fern.model.codegen.enums;
 
 import com.fern.EnumTypeDefinition;
 import com.fern.immutables.StagedBuilderStyle;

@@ -1,4 +1,4 @@
-package com.fern.model.codegen._interface;
+package com.fern.model.codegen.interfaces;
 
 import com.fern.NamedTypeReference;
 import com.fern.ObjectTypeDefinition;
@@ -9,7 +9,7 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
 
-public class InterfaceGenerator {
+public final class InterfaceGenerator {
 
     private static final String INTERFACE_PREFIX = "I";
 

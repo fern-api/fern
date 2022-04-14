@@ -43,6 +43,8 @@ public final class UnionGenerator {
 
     public static final String UNION_DISCRIMINATOR_PROPERTY_NAME = "_type";
 
+    private static final Modifier[] UNION_CLASS_MODIFIERS = new Modifier[] {Modifier.PUBLIC, Modifier.FINAL};
+
     private static final String INTERNAL_VALUE_INTERFACE_NAME = "InternalValue";
     private static final String UNKNOWN_INTERNAL_VALUE_INTERFACE_NAME = "Unknown";
 
@@ -80,7 +82,7 @@ public final class UnionGenerator {
     public GeneratedUnion generate() {
         Map<SingleUnionType, MethodSpec> isTypeMethods = getIsTypeMethods();
         TypeSpec unionTypeSpec = TypeSpec.classBuilder(generatedUnionClassName)
-                .addModifiers(getClassModifiers())
+                .addModifiers(UNION_CLASS_MODIFIERS)
                 .addAnnotations(getAnnotations())
                 .addFields(getFields())
                 .addMethod(getConstructor())
@@ -101,10 +103,6 @@ public final class UnionGenerator {
                 .definition(unionTypeDefinition)
                 .className(generatedUnionClassName)
                 .build();
-    }
-
-    private Modifier[] getClassModifiers() {
-        return new Modifier[] {Modifier.PUBLIC, Modifier.FINAL};
     }
 
     private List<AnnotationSpec> getAnnotations() {
@@ -184,7 +182,8 @@ public final class UnionGenerator {
                                     "return $T.of((($T) value).$L())",
                                     ClassNameUtils.OPTIONAL_CLASS_NAME,
                                     internalValueClassNames.get(singleUnionType),
-                                    singleUnionType.discriminantValue()) // TODO: want to get direct methodspec and name
+                                    singleUnionType.discriminantValue())
+                            // TODO(dsinghvi): want to get direct methodspec and name
                             .endControlFlow()
                             .addStatement("return $T.empty()", ClassNameUtils.OPTIONAL_CLASS_NAME)
                             .build();
@@ -211,8 +210,8 @@ public final class UnionGenerator {
         return VisitorUtils.buildVisitorInterface(visitMethodArgs);
     }
 
-    /**
-     * Example of an InternalValue code generation:
+    /*
+     * Example of an InternalValue code generation below.
      * @JsonTypeInfo(
      *         use = JsonTypeInfo.Id.NAME,
      *         include = JsonTypeInfo.As.PROPERTY,

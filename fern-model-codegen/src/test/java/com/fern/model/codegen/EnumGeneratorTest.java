@@ -5,8 +5,8 @@ import com.fern.EnumValue;
 import com.fern.NamedTypeReference;
 import com.fern.Type;
 import com.fern.TypeDefinition;
-import com.fern.model.codegen._enum.EnumGenerator;
-import com.fern.model.codegen._enum.GeneratedEnum;
+import com.fern.model.codegen.enums.EnumGenerator;
+import com.fern.model.codegen.enums.GeneratedEnum;
 import org.junit.jupiter.api.Test;
 
 public class EnumGeneratorTest {

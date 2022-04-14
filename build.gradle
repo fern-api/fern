@@ -85,10 +85,10 @@ def addCodeStyle(provider) {
     provider.asNode().append(new XmlParser().parse(ideaStyleFile).component)
 
     // import into intellij
+    def ideaDirectory = new File(".idea");
+    ideaDirectory.mkdir()
     def codeStyleDirectory = new File(".idea/codeStyles");
-    if (!codeStyleDirectory.exists()){
-        codeStyleDirectory.mkdir();
-    }
+    codeStyleDirectory.mkdir()
 
     def codeStyleConfig = new File(".idea/codeStyles/codeStyleConfig.xml");
     codeStyleConfig.createNewFile();

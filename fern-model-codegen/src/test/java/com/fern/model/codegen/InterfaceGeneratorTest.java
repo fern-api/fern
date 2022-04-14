@@ -8,8 +8,8 @@ import com.fern.PrimitiveType;
 import com.fern.Type;
 import com.fern.TypeDefinition;
 import com.fern.TypeReference;
-import com.fern.model.codegen._interface.GeneratedInterface;
-import com.fern.model.codegen._interface.InterfaceGenerator;
+import com.fern.model.codegen.interfaces.GeneratedInterface;
+import com.fern.model.codegen.interfaces.InterfaceGenerator;
 import org.junit.jupiter.api.Test;
 
 public class InterfaceGeneratorTest {

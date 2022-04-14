@@ -1,4 +1,4 @@
-package com.fern.model.codegen._interface;
+package com.fern.model.codegen.interfaces;
 
 import com.fern.ObjectTypeDefinition;
 import com.fern.immutables.StagedBuilderStyle;
