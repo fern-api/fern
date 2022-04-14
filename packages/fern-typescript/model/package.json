@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@fern/ir-generation": "workspace:^",
+    "@fern/typescript-commons": "workspace:^",
     "ts-morph": "^14.0.0"
   },
   "devDependencies": {

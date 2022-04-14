@@ -1,5 +1,5 @@
 import { TypeDefinition, UnionTypeDefinition } from "@fern/ir-generation";
-import { ModuleDeclaration, SourceFile, ts } from "ts-morph";
+import { Directory, ModuleDeclaration, SourceFile, ts } from "ts-morph";
 import { getTextOfTsNode } from "../../utils/getTextOfTsNode";
 import { TypeResolver } from "../../utils/TypeResolver";
 import { DISCRIMINANT, getBaseTypeForSingleUnionType, visitTypeReference } from "./utils";
@@ -113,11 +113,13 @@ export function addUnionVisitorToNamespace({
     shape,
     typeResolver,
     file,
+    modelDirectory,
 }: {
     moduleDeclaration: ModuleDeclaration;
     shape: UnionTypeDefinition;
     typeResolver: TypeResolver;
     file: SourceFile;
+    modelDirectory: Directory;
 }): void {
     const VALUE_PARAMETER_NAME = "value";
     const RETURN_TYPE_PARAMETER = "R";
@@ -127,7 +129,12 @@ export function addUnionVisitorToNamespace({
         typeParameters: [RETURN_TYPE_PARAMETER],
         properties: [
             ...shape.types.map((type) => {
-                const parameterType = getBaseTypeForSingleUnionType({ singleUnionType: type, typeResolver, file });
+                const parameterType = getBaseTypeForSingleUnionType({
+                    singleUnionType: type,
+                    typeResolver,
+                    file,
+                    modelDirectory,
+                });
                 return {
                     name: type.discriminantValue,
                     type: getTextOfTsNode(

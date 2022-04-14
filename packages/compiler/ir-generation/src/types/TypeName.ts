@@ -1,4 +1,6 @@
+import { FernFilepath } from "./FernFilepath";
+
 export interface TypeName {
-    filepath: string;
     name: string;
+    fernFilepath: FernFilepath;
 }

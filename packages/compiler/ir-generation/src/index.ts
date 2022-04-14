@@ -3,6 +3,7 @@ export type { AliasTypeDefinition } from "./types/AliasTypeDefinition";
 export { ContainerType } from "./types/ContainerType";
 export type { EnumTypeDefinition } from "./types/EnumTypeDefinition";
 export type { EnumValue } from "./types/EnumValue";
+export { FernFilepath } from "./types/FernFilepath";
 export type { IntermediateRepresentation } from "./types/IntermediateRepresentation";
 export type { ObjectTypeDefinition } from "./types/ObjectTypeDefinition";
 export { PrimitiveType } from "./types/PrimitiveType";

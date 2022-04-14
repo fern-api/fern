@@ -1,6 +1,5 @@
 import { FernFile, RelativeFilePath } from "@fern/compiler-commons";
 import yaml from "js-yaml";
-import path from "path";
 import { SyntaxAnalysis, SyntaxAnalysisFailureType } from "./types";
 
 export type ParsedFileContents = unknown;
@@ -24,14 +23,11 @@ export async function parse(files: readonly FernFile[]): Promise<Parser.Result> 
     const failures: Record<RelativeFilePath, SyntaxAnalysis.FileParseFailure> = {};
 
     async function parseFilePath(file: FernFile) {
-        const parsed = path.parse(file.filepath);
-        const filepathWithoutExtension = path.join(parsed.dir, parsed.name);
-
         try {
             const parsed = yaml.load(file.fileContents);
-            parsedFiles[filepathWithoutExtension] = parsed;
+            parsedFiles[file.filepath] = parsed;
         } catch (error) {
-            failures[filepathWithoutExtension] = {
+            failures[file.filepath] = {
                 type: SyntaxAnalysisFailureType.FILE_PARSE,
                 error,
             };

@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@fern/ir-generation": "workspace:^",
+    "@fern/typescript-client": "workspace:^",
     "@fern/typescript-model": "workspace:^",
     "@fern/typescript-server": "workspace:^",
     "ts-morph": "^14.0.0",

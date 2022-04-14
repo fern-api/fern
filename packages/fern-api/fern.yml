@@ -1,11 +1,7 @@
 ids:
-  - SubscriptionId
-  - name: MyId
-    type: integer
-  - PlaylistId
-
+  - name: FernFilepath
+    docs: A filepath to a Fern spec file, excluding the file extension
 types:
-  SomeAlias: map<string, list<IntermediateRepresentation>>
   IntermediateRepresentation:
     docs: Complete representation of the API schema
     fields:
@@ -28,13 +24,9 @@ types:
       docs: optional<string>
 
   TypeName:
-    extends: WithFilepath
     fields:
       name: string
-
-  WithFilepath:
-    fields:
-      filepath: string
+      fernFilepath: FernFilepath
 
   Type:
     union:
@@ -114,11 +106,9 @@ types:
       webSocket: list<WebSocketService>
 
   BaseService:
-    extends:
-      - WithFilepath
-      - WithDocs
+    extends: WithDocs
     fields:
-      name: string
+      name: TypeName
       basePath: string
 
   HttpService:

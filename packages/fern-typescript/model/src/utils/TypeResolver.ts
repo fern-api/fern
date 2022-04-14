@@ -1,4 +1,4 @@
-import { IntermediateRepresentation, Type, TypeName, TypeReference } from "@fern/ir-generation";
+import { FernFilepath, IntermediateRepresentation, Type, TypeName, TypeReference } from "@fern/ir-generation";
 
 type Filepath = string;
 type SimpleTypeName = string;
@@ -8,15 +8,15 @@ export declare namespace TypeResolver {
 }
 
 export class TypeResolver {
-    private resolvedTypes: Record<Filepath, Record<SimpleTypeName, TypeResolver.ResolvedType>> = {};
+    private resolvedTypes: Record<FernFilepath, Record<SimpleTypeName, TypeResolver.ResolvedType>> = {};
 
     constructor(intermediateRepresentation: IntermediateRepresentation) {
         const allTypes: Record<Filepath, Record<SimpleTypeName, Type>> = {};
         for (const otherType of intermediateRepresentation.types) {
-            let typesAtFilepath = allTypes[otherType.name.filepath];
+            let typesAtFilepath = allTypes[otherType.name.fernFilepath];
             if (typesAtFilepath == null) {
                 typesAtFilepath = {};
-                allTypes[otherType.name.filepath] = typesAtFilepath;
+                allTypes[otherType.name.fernFilepath] = typesAtFilepath;
             }
 
             typesAtFilepath[otherType.name.name] = otherType.shape;
@@ -31,7 +31,7 @@ export class TypeResolver {
     }
 
     public resolveType(typeName: TypeName): TypeResolver.ResolvedType {
-        const resolvedType = this.resolvedTypes[typeName.filepath]?.[typeName.name];
+        const resolvedType = this.resolvedTypes[typeName.fernFilepath]?.[typeName.name];
         if (resolvedType == null) {
             throw new Error("Type not found: " + typeNameToString(typeName));
         }
@@ -47,16 +47,16 @@ export class TypeResolver {
         typeName: TypeName;
         seen?: Record<Filepath, Set<SimpleTypeName>>;
     }): TypeResolver.ResolvedType {
-        let seenAtFilepath = seen[typeName.filepath];
+        let seenAtFilepath = seen[typeName.fernFilepath];
         if (seenAtFilepath == null) {
             seenAtFilepath = new Set();
-            seen[typeName.filepath] = seenAtFilepath;
+            seen[typeName.fernFilepath] = seenAtFilepath;
         } else if (seenAtFilepath.has(typeName.name)) {
             throw new Error("Detected cycle when resolving type: " + typeNameToString(typeName));
         }
         seenAtFilepath.add(typeName.name);
 
-        const type = allTypes[typeName.filepath]?.[typeName.name];
+        const type = allTypes[typeName.fernFilepath]?.[typeName.name];
         if (type == null) {
             throw new Error("Type not found: " + typeNameToString(typeName));
         }
@@ -85,10 +85,10 @@ export class TypeResolver {
             },
         });
 
-        let resolvedTypesAtFilepath = this.resolvedTypes[typeName.filepath];
+        let resolvedTypesAtFilepath = this.resolvedTypes[typeName.fernFilepath];
         if (resolvedTypesAtFilepath == null) {
             resolvedTypesAtFilepath = {};
-            this.resolvedTypes[typeName.filepath] = resolvedTypesAtFilepath;
+            this.resolvedTypes[typeName.fernFilepath] = resolvedTypesAtFilepath;
         }
         resolvedTypesAtFilepath[typeName.name] = resolvedType;
 
@@ -97,5 +97,5 @@ export class TypeResolver {
 }
 
 function typeNameToString(typeName: TypeName) {
-    return `${typeName.filepath}.${typeName.name}`;
+    return `${typeName.fernFilepath}.${typeName.name}`;
 }

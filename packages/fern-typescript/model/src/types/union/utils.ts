@@ -1,5 +1,5 @@
 import { SingleUnionType, TypeName, TypeReference } from "@fern/ir-generation";
-import { SourceFile, ts } from "ts-morph";
+import { Directory, SourceFile, ts } from "ts-morph";
 import { generateTypeNameReference, generateTypeReference } from "../../utils/generateTypeReference";
 import { TypeResolver } from "../../utils/TypeResolver";
 import { uppercaseFirstLetter } from "../../utils/uppercaseFirstLetter";
@@ -14,17 +14,27 @@ export function getBaseTypeForSingleUnionType({
     singleUnionType,
     typeResolver,
     file,
+    modelDirectory,
 }: {
     singleUnionType: SingleUnionType;
     typeResolver: TypeResolver;
     file: SourceFile;
+    modelDirectory: Directory;
 }): ts.TypeNode | undefined {
     return visitTypeReference(singleUnionType.valueType, typeResolver, {
         namedObject: (named) => {
-            return generateTypeNameReference(named, file);
+            return generateTypeNameReference({
+                typeName: named,
+                from: file,
+                modelDirectory,
+            });
         },
         nonObject: () => {
-            return generateTypeReference(singleUnionType.valueType, file);
+            return generateTypeReference({
+                reference: singleUnionType.valueType,
+                from: file,
+                modelDirectory,
+            });
         },
         void: () => undefined,
     });

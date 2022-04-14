@@ -24,10 +24,12 @@
     "@fern/compiler-commons": "workspace:^",
     "@fern/syntax-analysis": "workspace:^",
     "chalk": "^4.1.2",
+    "glob": "^7.2.0",
     "yargs": "^17.3.1",
     "zod": "^3.14.3"
   },
   "devDependencies": {
+    "@types/glob": "^7.2.0",
     "@types/yargs": "^17.0.10",
     "depcheck": "^1.4.3",
     "eslint": "^8.12.0",
