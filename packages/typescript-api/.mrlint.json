@@ -1,4 +1,5 @@
 {
   "type": "library",
-  "private": false
+  "private": false,
+  "ignoreScripts": ["clean", "compile", "codegen", "codegen:clean"]
 }

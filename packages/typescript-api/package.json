@@ -7,8 +7,8 @@
     "lib"
   ],
   "scripts": {
-    "clean": "tsc --build --clean",
-    "compile": "tsc --build",
+    "clean": "run codegen:clean && tsc --build --clean",
+    "compile": "run codegen && tsc --build",
     "test": "jest --passWithNoTests",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
     "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore --fix",
@@ -17,14 +17,15 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck",
-    "prepublish": "run clean && run compile && run test && run lint:eslint && run lint:style && run format:check && run depcheck"
+    "prepublish": "run clean && run compile && run test && run lint:eslint && run lint:style && run format:check && run depcheck",
+    "codegen": "run fern-typescript model ../api/ir.json src/generated",
+    "codegen:clean": "/bin/rm -r src/generated"
   },
   "dependencies": {
     "@fernapi/fern": "0.1.0",
     "@fernapi/fern-typescript": "^0.1.3"
   },
   "devDependencies": {
-    "@types/yargs": "^17.0.10",
     "depcheck": "^1.4.3",
     "eslint": "^8.12.0",
     "jest": "^27.5.1",
