@@ -22,7 +22,7 @@
     "depcheck": "yarn workspaces foreach --verbose --parallel run depcheck",
     "prepare": "husky install",
     "codegen": "./fern.sh",
-    "publish": "workspaces foreach --no-private --parallel --verbose npm publish --access public"
+    "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public"
   },
   "devDependencies": {
     "@fernapi/fern": "0.1.6",
