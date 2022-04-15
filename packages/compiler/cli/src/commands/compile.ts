@@ -33,7 +33,6 @@ export async function compileCommand({
     const compileResult = await compile(files);
 
     if (compileResult.didSucceed) {
-        console.log(chalk.green("Parsed successfully!"));
         await mkdir(path.dirname(output), { recursive: true });
         await writeFile(output, JSON.stringify(compileResult.intermediateRepresentation));
     } else {

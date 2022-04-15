@@ -1,6 +1,5 @@
 {
   "name": "@fernapi/fern",
-  "version": "0.1.5",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -17,8 +16,7 @@
     "lint:style:fix": "stylelint '**/*.scss' --allow-empty-input --max-warnings 0 --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "depcheck": "depcheck",
-    "prepublish": "run clean && run compile && run test && run lint:eslint && run lint:style && run format:check && run depcheck"
+    "depcheck": "depcheck"
   },
   "dependencies": {
     "@fernapi/compiler": "workspace:*",
