@@ -96,7 +96,8 @@ public final class TypeReference {
     @JsonSubTypes({
             @JsonSubTypes.Type(value = Named.class, name = "named"),
             @JsonSubTypes.Type(value = Primitive.class, name = "primitive"),
-            @JsonSubTypes.Type(value = Container.class, name = "container")
+            @JsonSubTypes.Type(value = Container.class, name = "container"),
+            @JsonSubTypes.Type(value = Void.class, name = "void")
     })
     @JsonIgnoreProperties(ignoreUnknown = true)
     private interface Base {
