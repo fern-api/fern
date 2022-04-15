@@ -9,7 +9,7 @@ jobs:
       - checkout
       - run:
           name: Run code-generation
-          command: ./scripts/codegen.sh
+          command: ./packages/api/codegen.sh
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
@@ -41,7 +41,7 @@ jobs:
       - checkout
       - run:
           name: Run code-generation
-          command: ./scripts/codegen.sh
+          command: ./packages/api/codegen.sh
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
@@ -58,7 +58,7 @@ jobs:
       - checkout
       - run:
           name: Run code-generation
-          command: ./scripts/codegen.sh
+          command: ./packages/api/codegen.sh
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:

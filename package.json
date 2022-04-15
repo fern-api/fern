@@ -21,7 +21,7 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ./shared/.prettierignore \"**\"",
     "depcheck": "yarn workspaces foreach --verbose --parallel run depcheck",
     "prepare": "husky install",
-    "codegen": "./scripts/codegen.sh",
+    "codegen": "./packages/api/codegen.sh",
     "publish": "yarn workspaces foreach --no-private --parallel --verbose --topological npm publish --tolerate-republish --access public",
     "publish:dry-run": "yarn workspaces foreach --no-private --parallel --topological --verbose run prepublish"
   },
