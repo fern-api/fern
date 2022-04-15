@@ -2,10 +2,8 @@ package com.fern;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fern.immutables.StagedBuilderStyle;
 import org.immutables.value.Value;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -41,7 +39,7 @@ public final class Type {
     }
 
     public boolean isObject() {
-        return value instanceof Object;
+        return value instanceof _Object;
     }
 
     public boolean isUnion() {
