@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "clean": "tsc --build --clean && /bin/rm -r generated",
-    "codegen": "fern generate src generated/ir.json && run codegen:typescript",
+    "codegen": "mkdir -f generated && fern generate src generated/ir.json && run codegen:typescript",
     "codegen:typescript": "fern-typescript model generated/ir.json generated/typescript"
   },
   "devDependencies": {
