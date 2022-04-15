@@ -1,5 +1,5 @@
 # Generate fern ir
-cd ../../ && yarn workspace fern run fern generate ../../fern-api fern-api-ir.json
+cd ../../ && ./scripts/codegen.sh
 
 # Download java codegen plugin and invoke
 version=$1
