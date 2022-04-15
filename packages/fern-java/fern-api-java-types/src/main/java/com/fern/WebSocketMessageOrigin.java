@@ -48,7 +48,7 @@ public final class WebSocketMessageOrigin {
         return this.string.hashCode();
     }
 
-    public <T> T accept(HttpVerb.Visitor<T> visitor) {
+    public <T> T accept(HttpMethod.Visitor<T> visitor) {
         switch (value) {
             case CLIENT:
                 return visitor.visitGet();

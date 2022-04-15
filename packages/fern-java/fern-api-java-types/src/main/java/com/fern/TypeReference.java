@@ -2,10 +2,8 @@ package com.fern;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fern.immutables.StagedBuilderStyle;
 import org.immutables.value.Value;
 
-import javax.naming.Name;
 import java.util.Map;
 import java.util.Optional;
 
@@ -24,7 +22,7 @@ public final class TypeReference {
         return value;
     }
 
-    public static TypeReference named(NamedTypeReference value) {
+    public static TypeReference named(TypeName value) {
         return new TypeReference(Named.of(value));
     }
 
@@ -34,6 +32,10 @@ public final class TypeReference {
 
     public static TypeReference container(ContainerType value) {
         return new TypeReference(Container.of(value));
+    }
+
+    public static TypeReference _void() {
+        return new TypeReference(Void.of());
     }
 
     public boolean isNamed() {
@@ -48,7 +50,7 @@ public final class TypeReference {
         return value instanceof Container;
     }
 
-    public Optional<NamedTypeReference> getNamed(){
+    public Optional<TypeName> getNamed(){
         if (isNamed()) {
             return Optional.of(((Named) value).named());
         }
@@ -74,11 +76,13 @@ public final class TypeReference {
     }
 
     public interface Visitor<T> {
-        T visitNamed(NamedTypeReference value);
+        T visitNamed(TypeName value);
 
         T visitPrimitive(PrimitiveType value);
 
         T visitContainer(ContainerType value);
+
+        T visitVoid();
 
         T visitUnknown(String unknownType);
     }
@@ -105,14 +109,14 @@ public final class TypeReference {
     interface Named extends Base {
 
         @JsonValue
-        NamedTypeReference named();
+        TypeName named();
 
         @Override
         default <T> T accept(Visitor<T> visitor) {
             return visitor.visitNamed(named());
         }
 
-        static Named of(NamedTypeReference value) {
+        static Named of(TypeName value) {
             return ImmutableTypeReference.Named.builder().named(value).build();
         }
     }
@@ -148,6 +152,21 @@ public final class TypeReference {
 
         static Container of(ContainerType value) {
             return ImmutableTypeReference.Container.builder().container(value).build();
+        }
+    }
+
+    @Value.Immutable
+    @JsonTypeName("void")
+    @JsonDeserialize(as = ImmutableTypeReference.Container.class)
+    public interface Void extends Base {
+
+        @Override
+        default <T> T accept(Visitor<T> visitor) {
+            return visitor.visitVoid();
+        }
+
+        static Void of() {
+            return ImmutableTypeReference.Void.builder().build();
         }
     }
 

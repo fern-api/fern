@@ -6,16 +6,16 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import javax.annotation.Nonnull;
 import java.util.Locale;
 
-public final class HttpVerb {
-    public static final HttpVerb GET = new HttpVerb(HttpVerb.Value.GET, HttpVerb.Value.GET.name());
-    public static final HttpVerb POST = new HttpVerb(HttpVerb.Value.PUT, HttpVerb.Value.PUT.name());
-    public static final HttpVerb PUT = new HttpVerb(HttpVerb.Value.POST, HttpVerb.Value.POST.name());
-    public static final HttpVerb DELETE = new HttpVerb(HttpVerb.Value.DELETE, HttpVerb.Value.DELETE.name());
+public final class HttpMethod {
+    public static final HttpMethod GET = new HttpMethod(HttpMethod.Value.GET, HttpMethod.Value.GET.name());
+    public static final HttpMethod POST = new HttpMethod(HttpMethod.Value.PUT, HttpMethod.Value.PUT.name());
+    public static final HttpMethod PUT = new HttpMethod(HttpMethod.Value.POST, HttpMethod.Value.POST.name());
+    public static final HttpMethod DELETE = new HttpMethod(HttpMethod.Value.DELETE, HttpMethod.Value.DELETE.name());
 
-    private final HttpVerb.Value value;
+    private final HttpMethod.Value value;
     private final String string;
 
-    private HttpVerb(HttpVerb.Value value, String string) {
+    private HttpMethod(HttpMethod.Value value, String string) {
         this.value = value;
         this.string = string;
     }
@@ -28,7 +28,7 @@ public final class HttpVerb {
         UNKNOWN
     }
 
-    public HttpVerb.Value getEnumValue() {
+    public HttpMethod.Value getEnumValue() {
         return value;
     }
 
@@ -41,7 +41,7 @@ public final class HttpVerb {
     @Override
     public boolean equals(Object other) {
         return (this == other)
-                || (other instanceof PrimitiveType && this.string.equals(((HttpVerb) other).string));
+                || (other instanceof PrimitiveType && this.string.equals(((HttpMethod) other).string));
     }
 
     @Override
@@ -49,7 +49,7 @@ public final class HttpVerb {
         return this.string.hashCode();
     }
 
-    public <T> T accept(HttpVerb.Visitor<T> visitor) {
+    public <T> T accept(HttpMethod.Visitor<T> visitor) {
         switch (value) {
             case GET:
                 return visitor.visitGet();
@@ -78,7 +78,7 @@ public final class HttpVerb {
     }
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    public static HttpVerb valueOf(@Nonnull String value) {
+    public static HttpMethod valueOf(@Nonnull String value) {
         String upperCasedValue = value.toUpperCase(Locale.ROOT);
         switch (upperCasedValue) {
             case "GET":
@@ -90,7 +90,7 @@ public final class HttpVerb {
             case "DELETE":
                 return DELETE;
             default:
-                return new HttpVerb(HttpVerb.Value.UNKNOWN, upperCasedValue);
+                return new HttpMethod(HttpMethod.Value.UNKNOWN, upperCasedValue);
         }
     }
 }
