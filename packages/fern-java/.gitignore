@@ -32,3 +32,6 @@ build
 
 **/node_modules/**
 **/yarn.lock
+
+# Java model codegen plugin
+**/fern-model-codegen-**
