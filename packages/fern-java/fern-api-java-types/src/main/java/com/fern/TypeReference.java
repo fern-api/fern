@@ -158,7 +158,7 @@ public final class TypeReference {
 
     @Value.Immutable
     @JsonTypeName("void")
-    @JsonDeserialize(as = ImmutableTypeReference.Container.class)
+    @JsonDeserialize(as = ImmutableTypeReference.Void.class)
     public interface Void extends Base {
 
         @Override
