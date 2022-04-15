@@ -548,71 +548,71 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fernapi/mrlint-commons@npm:0.1.15":
-  version: 0.1.15
-  resolution: "@fernapi/mrlint-commons@npm:0.1.15"
+"@fernapi/mrlint-commons@npm:0.1.16":
+  version: 0.1.16
+  resolution: "@fernapi/mrlint-commons@npm:0.1.16"
   dependencies:
-    "@fernapi/mrlint-virtual-file-system": ^0.1.15
-  checksum: b9bb6c55a25cf1d183f7316fc1a2b1ce5a7675b55be3c98901b1f022d24cb02008e18e3183abcaa9867670a2a7dc987acec6446a9f2e5ca4f00942fd58517810
+    "@fernapi/mrlint-virtual-file-system": ^0.1.16
+  checksum: ebf2d19e5b3df2bca1b55ee3262b509eccacf1e94299b5efcf2fc24bafb49cd6f9e78d5ba16ce3805a748c976795168b5960550dc3c2e2bcc280a409ba7f1674
   languageName: node
   linkType: hard
 
-"@fernapi/mrlint-lint@npm:0.1.15":
-  version: 0.1.15
-  resolution: "@fernapi/mrlint-lint@npm:0.1.15"
+"@fernapi/mrlint-lint@npm:0.1.16":
+  version: 0.1.16
+  resolution: "@fernapi/mrlint-lint@npm:0.1.16"
   dependencies:
-    "@fernapi/mrlint-commons": 0.1.15
-    "@fernapi/mrlint-virtual-file-system": 0.1.15
+    "@fernapi/mrlint-commons": 0.1.16
+    "@fernapi/mrlint-virtual-file-system": 0.1.16
     chalk: ^4.1.2
     diff: ^5.0.0
     prettier: ^2.6.1
-  checksum: 5788afd21ce266f74222b994bd9381b6165e179b13d4f31c397e4021c03374d6d037f170e92da8de564f6bb0cff6a6fb0693df8ecc5648d0dc115020fed7d833
+  checksum: 11266a22580c106ce9c9eb3426695696894a7b5292779e88c8f991d6ef3c6af762811576d8d1e2b4b2b83b771d3de96c92dd0bb1cba39e6141bfe2f493c8ede5
   languageName: node
   linkType: hard
 
-"@fernapi/mrlint-parser@npm:0.1.15":
-  version: 0.1.15
-  resolution: "@fernapi/mrlint-parser@npm:0.1.15"
+"@fernapi/mrlint-parser@npm:0.1.16":
+  version: 0.1.16
+  resolution: "@fernapi/mrlint-parser@npm:0.1.16"
   dependencies:
-    "@fernapi/mrlint-commons": 0.1.15
+    "@fernapi/mrlint-commons": 0.1.16
     glob: ^7.2.0
     js-yaml: ^4.1.0
     zod: ^3.14.3
-  checksum: ec31c283e823e99ab9031485b3ba697ec85647cbceaefa9f57957136afb8e1c2d294c1beb1c2b2328b71edd43082806e7ef45eb6f317884ca5641426d301e88a
+  checksum: 34709bfbeaf0e8839957f08fa008594541bb94c1eb87cb72d8816f928e60b8eb1426b89bb058e5b1daf7aed94609bb09baed38596c9f151c10f996f5229372b5
   languageName: node
   linkType: hard
 
-"@fernapi/mrlint-rules@npm:0.1.15":
-  version: 0.1.15
-  resolution: "@fernapi/mrlint-rules@npm:0.1.15"
+"@fernapi/mrlint-rules@npm:0.1.16":
+  version: 0.1.16
+  resolution: "@fernapi/mrlint-rules@npm:0.1.16"
   dependencies:
-    "@fernapi/mrlint-commons": 0.1.15
-    "@fernapi/mrlint-virtual-file-system": 0.1.15
+    "@fernapi/mrlint-commons": 0.1.16
+    "@fernapi/mrlint-virtual-file-system": 0.1.16
     immer: ^9.0.12
-  checksum: 6d1c8d855d11d1815b0bc87f2aa12b36e1a1191b8cb578dab607a3c6860e36f82fcd7c428e1e638bb7d9c47125437e1181ad481df23920f247197b2b4dfce1e5
+  checksum: 3cd323853d0c298b53cd64b282c569c54f16c093b7109237880318ebaa649864111196e3361bc3ba98988f36fa544dd3b604836bd05b85226954c985c527e182
   languageName: node
   linkType: hard
 
-"@fernapi/mrlint-virtual-file-system@npm:0.1.15, @fernapi/mrlint-virtual-file-system@npm:^0.1.15":
-  version: 0.1.15
-  resolution: "@fernapi/mrlint-virtual-file-system@npm:0.1.15"
-  checksum: 0ab0c8940c442c869b88ee1d0f583775550056143699025c3cc2cde70b2ea0c6eede9b7deb4a16e28082230ea16cdde4de71f3387589ad43947c6966a7fa9997
+"@fernapi/mrlint-virtual-file-system@npm:0.1.16, @fernapi/mrlint-virtual-file-system@npm:^0.1.16":
+  version: 0.1.16
+  resolution: "@fernapi/mrlint-virtual-file-system@npm:0.1.16"
+  checksum: 43beb9a50f2881ca6d3c6ede4e09513b9dbd246f995f563d487b5a395226117be391acd23c7d588dade7aa30b3b5d277eae79530fff54ef8cb8fd1c173df0af5
   languageName: node
   linkType: hard
 
-"@fernapi/mrlint@npm:^0.1.15":
-  version: 0.1.15
-  resolution: "@fernapi/mrlint@npm:0.1.15"
+"@fernapi/mrlint@npm:^0.1.16":
+  version: 0.1.16
+  resolution: "@fernapi/mrlint@npm:0.1.16"
   dependencies:
-    "@fernapi/mrlint-commons": 0.1.15
-    "@fernapi/mrlint-lint": 0.1.15
-    "@fernapi/mrlint-parser": 0.1.15
-    "@fernapi/mrlint-rules": 0.1.15
+    "@fernapi/mrlint-commons": 0.1.16
+    "@fernapi/mrlint-lint": 0.1.16
+    "@fernapi/mrlint-parser": 0.1.16
+    "@fernapi/mrlint-rules": 0.1.16
     chalk: ^4.1.2
     yargs: ^17.3.1
   bin:
     mrlint: ./cli
-  checksum: e8d6b9c33452686315a630bdb7618655512cb7da2dd655240415326c845600d3afa5b7338d50b9ea9d853267b5cc83dfda50c404dd9f1bb66cde35b6e076b33b
+  checksum: dfb31144ae6ac04f30b200ee9040deae6e3d747748aa31f6d039ef3e1db0106c66503e73a1cca272feab147221e9e09411221ac1eafb663c48f32e505429aa0b
   languageName: node
   linkType: hard
 
@@ -2811,7 +2811,7 @@ __metadata:
   resolution: "fern@workspace:."
   dependencies:
     "@fernapi/fern": 0.1.6
-    "@fernapi/mrlint": ^0.1.15
+    "@fernapi/mrlint": ^0.1.16
     "@typescript-eslint/eslint-plugin": ^5.17.0
     "@typescript-eslint/parser": ^5.17.0
     depcheck: ^1.4.3

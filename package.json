@@ -26,7 +26,7 @@
   },
   "devDependencies": {
     "@fernapi/fern": "0.1.6",
-    "@fernapi/mrlint": "^0.1.15",
+    "@fernapi/mrlint": "^0.1.16",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
     "depcheck": "^1.4.3",

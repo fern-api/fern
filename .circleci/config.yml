@@ -49,7 +49,7 @@ jobs:
           pkg-manager: yarn-berry
       - run:
           name: Add version to package.json's
-          command: yarn lint:monorepo:fix --monorepo-version $(git tag --points-at HEAD)
+          command: yarn mrlint version $(git tag --points-at HEAD)
       - run:
           name: Compile
           command: yarn compile
