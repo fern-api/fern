@@ -11,7 +11,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.CLASS)
 @Value.Style(
         jdkOnly = true,
-        get = {"get*", "is*"},
         stagedBuilder = true,
         visibility = Value.Style.ImplementationVisibility.PACKAGE,
         overshadowImplementation = true)

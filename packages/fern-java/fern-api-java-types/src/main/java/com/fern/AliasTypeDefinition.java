@@ -11,11 +11,11 @@ import org.immutables.value.Value;
 @JsonIgnoreProperties({"type"})
 public interface AliasTypeDefinition {
 
-    String name();
+    TypeReference aliasOf();
 
-    TypeReference aliasType();
+    boolean isId();
 
-    static ImmutableAliasTypeDefinition.NameBuildStage builder() {
+    static ImmutableAliasTypeDefinition.AliasOfBuildStage builder() {
         return ImmutableAliasTypeDefinition.builder();
     }
 }

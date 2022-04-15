@@ -2,7 +2,9 @@ package com.fern;
 
 interface IBaseService {
 
-    String name();
+    TypeName name();
+
+    String displayName();
 
     String basePath();
 }

@@ -16,7 +16,7 @@ public interface HttpEndpoint extends IWithDocs {
 
     String endpointId();
 
-    HttpVerb verb();
+    HttpMethod method();
 
     String path();
 
@@ -24,7 +24,7 @@ public interface HttpEndpoint extends IWithDocs {
 
     List<HttpEndpointQueryParameter> queryParameters();
 
-    List<HttpHeader> header();
+    List<HttpHeader> headers();
 
     Optional<HttpRequest> request();
 
