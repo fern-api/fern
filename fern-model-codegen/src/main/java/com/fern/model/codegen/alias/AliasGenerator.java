@@ -37,6 +37,7 @@ public final class AliasGenerator extends Generator<AliasTypeDefinition> {
         this.generatedAliasClassName = generatorContext.getClassNameUtils().getClassName(namedType);
     }
 
+    @Override
     public GeneratedAlias generate() {
         TypeName aliasTypeName =
                 generatorContext.getTypeReferenceUtils().convertToTypeName(true, aliasTypeDefinition.aliasOf());

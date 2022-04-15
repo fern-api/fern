@@ -13,7 +13,6 @@ import java.util.Map;
 
 public final class GeneratorContext {
 
-    private final PluginConfig pluginConfig;
     private final ClassNameUtils classNameUtils;
     private final FilepathUtils filepathUtils;
     private final ImmutablesUtils immutablesUtils;
@@ -23,7 +22,6 @@ public final class GeneratorContext {
     private final Map<NamedType, TypeDefinition> typeDefinitionsByName;
 
     public GeneratorContext(PluginConfig pluginConfig, Map<NamedType, TypeDefinition> typeDefinitionsByName) {
-        this.pluginConfig = pluginConfig;
         this.filepathUtils = new FilepathUtils(pluginConfig);
         this.classNameUtils = new ClassNameUtils(filepathUtils);
         this.typeReferenceUtils = new TypeReferenceUtils(classNameUtils);
