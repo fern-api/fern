@@ -36,6 +36,8 @@ allprojects {
     apply plugin: "com.diffplug.spotless"
     apply plugin: 'com.palantir.java-format'
 
+    version rootProject.version
+
     repositories {
         gradlePluginPortal()
         mavenCentral()
@@ -43,8 +45,8 @@ allprojects {
             url "https://usebirch.jfrog.io/artifactory/default-maven-local"
             name "usebirch-jfrog"
             credentials {
-                username ="$System.env.JFROG_USERNAME"
-                password ="$System.env.JFROG_API_KEY"
+                username = "$System.env.JFROG_USERNAME"
+                password = "$System.env.JFROG_API_KEY"
             }
         }
     }
@@ -75,7 +77,7 @@ allprojects {
 idea {
     project {
         ipr {
-            withXml { provider -> addCodeStyle(provider) }
+            withXml {provider -> addCodeStyle(provider)}
         }
     }
 }
@@ -105,7 +107,7 @@ artifactory {
         contextUrl = 'https://usebirch.jfrog.io/artifactory'
         repository {
             repoKey = 'default-maven-local'
-            username ="$System.env.JFROG_USERNAME"
+            username = "$System.env.JFROG_USERNAME"
             password = "$System.env.JFROG_API_KEY"
         }
         defaults {
