@@ -36,6 +36,7 @@ jobs:
       - run:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff
+
   compile-and-test:
     docker:
       - image: cimg/node:17.3.1
@@ -55,6 +56,18 @@ jobs:
       - run:
           name: Run tests
           command: yarn test -- --ci
+
+  publish:
+    docker:
+      - image: cimg/node:17.3.1
+    steps:
+      - run:
+          name: Publish all packages [dry run]
+          command: yarn run publish:dry-run
+      - run:
+          name: Publish all packages
+          command: yarn run publish
+
   compile-java:
     docker: [{ image: "cimg/openjdk:11.0.10-node" }]
     resource_class: small
@@ -113,21 +126,38 @@ workflows:
   build:
     jobs:
       - lint:
-          filters: { tags: { only: /.*/ } }
+          filters:
+            tags:
+              only: /.*/
 
       - compile-and-test:
-          filters: { tags: { only: /.*/ } }
-          requires: [lint]
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - lint
 
-      - compile-java:
-          filters: { tags: { only: /.*/ } }
-
-      - publish-java-snapshot:
-          requires: [compile-java]
+      - publish:
           filters:
             branches:
-              only:
-                - main
+              only: main
+            tags:
+              only: /.*/
+          requires:
+            - compile-and-test
+          context: npm
+
+      - compile-java:
+          filters:
+            tags:
+              only: /.*/
+
+      - publish-java-snapshot:
+          filters:
+            branches:
+              only: main
             tags:
               ignore: /.*/
+          requires:
+            - compile-java
           context: jfrog
