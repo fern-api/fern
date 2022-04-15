@@ -22,7 +22,7 @@ plugins {
     id "com.diffplug.spotless" version "6.4.2"
 }
 
-group 'com.fern'
+group 'com.fern.java'
 version gitVersion()
 
 allprojects {
@@ -37,6 +37,7 @@ allprojects {
     apply plugin: 'com.palantir.java-format'
 
     version rootProject.version
+    group rootProject.group
 
     repositories {
         gradlePluginPortal()
