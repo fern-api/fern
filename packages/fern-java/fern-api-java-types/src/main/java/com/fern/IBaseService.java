@@ -2,7 +2,7 @@ package com.fern;
 
 interface IBaseService {
 
-    TypeName name();
+    NamedType name();
 
     String displayName();
 

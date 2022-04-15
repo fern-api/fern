@@ -22,7 +22,7 @@ public final class TypeReference {
         return value;
     }
 
-    public static TypeReference named(TypeName value) {
+    public static TypeReference named(NamedType value) {
         return new TypeReference(Named.of(value));
     }
 
@@ -50,7 +50,7 @@ public final class TypeReference {
         return value instanceof Container;
     }
 
-    public Optional<TypeName> getNamed(){
+    public Optional<NamedType> getNamed(){
         if (isNamed()) {
             return Optional.of(((Named) value).named());
         }
@@ -76,7 +76,7 @@ public final class TypeReference {
     }
 
     public interface Visitor<T> {
-        T visitNamed(TypeName value);
+        T visitNamed(NamedType value);
 
         T visitPrimitive(PrimitiveType value);
 
@@ -109,14 +109,14 @@ public final class TypeReference {
     interface Named extends Base {
 
         @JsonValue
-        TypeName named();
+        NamedType named();
 
         @Override
         default <T> T accept(Visitor<T> visitor) {
             return visitor.visitNamed(named());
         }
 
-        static Named of(TypeName value) {
+        static Named of(NamedType value) {
             return ImmutableTypeReference.Named.builder().named(value).build();
         }
     }

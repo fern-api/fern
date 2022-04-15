@@ -6,7 +6,7 @@ import {
     IntermediateRepresentation,
     PrimitiveType,
     Type,
-    TypeName,
+    NamedType,
     TypeReference,
     WebSocketMessageOrigin,
     WebSocketMessageResponseBehavior,
@@ -400,7 +400,7 @@ function parseTypeName({
     typeName: string;
     fernFilepath: FernFilepath;
     imports: Record<string, string>;
-}): TypeName {
+}): NamedType {
     const splitByPackage = typeName.split(".");
 
     if (splitByPackage.length === 1) {
