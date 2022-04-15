@@ -1,6 +1,6 @@
 {
   "name": "@fernapi/compiler",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -20,10 +20,10 @@
     "prepublish": "run clean && run compile && run test && run lint:eslint && run lint:style && run format:check && run depcheck"
   },
   "dependencies": {
-    "@fernapi/api": "workspace:^",
-    "@fernapi/compiler-commons": "workspace:^",
-    "@fernapi/ir-generation": "workspace:^",
-    "@fernapi/syntax-analysis": "workspace:^"
+    "@fernapi/api": "workspace:*",
+    "@fernapi/compiler-commons": "workspace:*",
+    "@fernapi/ir-generation": "workspace:*",
+    "@fernapi/syntax-analysis": "workspace:*"
   },
   "devDependencies": {
     "depcheck": "^1.4.3",

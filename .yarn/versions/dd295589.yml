@@ -1,0 +1,5 @@
+releases:
+  "@fernapi/compiler": patch
+  "@fernapi/fern": patch
+  "@fernapi/ir-generation": patch
+  "@fernapi/syntax-analysis": patch
