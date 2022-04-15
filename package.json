@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "clean": "yarn workspaces foreach --verbose --parallel run clean",
-    "compile": "yarn workspaces foreach --verbose --parallel --topological run compile",
+    "compile": "run codegen && yarn workspaces foreach --verbose --parallel --topological run compile",
     "test": "yarn workspaces foreach --verbose --parallel --topological run test",
     "lint:eslint": "eslint . --max-warnings 0",
     "lint:eslint:fix": "eslint . --fix --max-warnings 0",
@@ -21,9 +21,9 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ./shared/.prettierignore \"**\"",
     "depcheck": "yarn workspaces foreach --verbose --parallel run depcheck",
     "prepare": "husky install",
-    "codegen": "yarn workspaces foreach --parallel --verbose run codegen",
-    "publish": "run codegen && yarn workspaces foreach --no-private --parallel --verbose --topological npm publish --tolerate-republish --access public",
-    "publish:dry-run": "run codegen && yarn workspaces foreach --no-private --parallel --topological --verbose run prepublish"
+    "codegen": "./scripts/codegen.sh",
+    "publish": "yarn workspaces foreach --no-private --parallel --verbose --topological npm publish --tolerate-republish --access public",
+    "publish:dry-run": "yarn workspaces foreach --no-private --parallel --topological --verbose run prepublish"
   },
   "devDependencies": {
     "@fernapi/mrlint": "^0.1.6",

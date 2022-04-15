@@ -9,10 +9,7 @@ jobs:
       - checkout
       - run:
           name: Run code-generation
-          command: |
-            set -e
-            yarn workspaces focus @fernapi/api-generation
-            yarn workspace @fernapi/api-generation run codegen
+          command: ./scripts/codegen.sh
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
@@ -44,10 +41,7 @@ jobs:
       - checkout
       - run:
           name: Run code-generation
-          command: |
-            set -e
-            yarn workspaces focus @fernapi/api-generation
-            yarn workspace @fernapi/api-generation run codegen
+          command: ./scripts/codegen.sh
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
@@ -61,6 +55,15 @@ jobs:
     docker:
       - image: cimg/node:17.3.1
     steps:
+      - checkout
+      - run:
+          name: Run code-generation
+          command: ./scripts/codegen.sh
+      - node/install-packages:
+          pkg-manager: yarn-berry
+      - run:
+          name: Compile
+          command: yarn compile
       - run:
           name: Publish all packages [dry run]
           command: yarn run publish:dry-run
@@ -140,7 +143,7 @@ workflows:
       - publish:
           filters:
             branches:
-              only: main
+              ignore: /.*/
             tags:
               only: /.*/
           requires:
