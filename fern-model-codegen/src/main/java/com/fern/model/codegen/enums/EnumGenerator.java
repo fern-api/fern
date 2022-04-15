@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fern.EnumTypeDefinition;
 import com.fern.EnumValue;
-import com.fern.NamedTypeReference;
+import com.fern.NamedType;
 import com.fern.model.codegen.Generator;
 import com.fern.model.codegen.GeneratorContext;
 import com.fern.model.codegen.utils.ClassNameUtils;
@@ -44,26 +44,24 @@ public final class EnumGenerator extends Generator<EnumTypeDefinition> {
     private static final String ACCEPT_METHOD_NAME = "accept";
     private static final String VALUE_OF_METHOD_NAME = "valueOf";
 
-    private final NamedTypeReference namedTypeReference;
+    private final NamedType namedType;
     private final EnumTypeDefinition enumTypeDefinition;
     private final ClassName generatedEnumClassName;
     private final ClassName valueFieldClassName;
 
     public EnumGenerator(
-            NamedTypeReference namedTypeReference,
-            EnumTypeDefinition enumTypeDefinition,
-            GeneratorContext generatorContext) {
+            NamedType namedType, EnumTypeDefinition enumTypeDefinition, GeneratorContext generatorContext) {
         super(generatorContext);
-        this.namedTypeReference = namedTypeReference;
+        this.namedType = namedType;
         this.enumTypeDefinition = enumTypeDefinition;
-        this.generatedEnumClassName = generatorContext.getClassNameUtils().getClassName(namedTypeReference);
+        this.generatedEnumClassName = generatorContext.getClassNameUtils().getClassName(namedType);
         this.valueFieldClassName = generatedEnumClassName.nestedClass(VALUE_TYPE_NAME);
     }
 
     public GeneratedEnum generate() {
         Map<EnumValue, FieldSpec> enumConstants = getConstants();
         VisitorUtils.GeneratedVisitor generatedVisitor = getVisitor();
-        TypeSpec enumTypeSpec = TypeSpec.classBuilder(namedTypeReference.name())
+        TypeSpec enumTypeSpec = TypeSpec.classBuilder(namedType.name())
                 .addModifiers(ENUM_CLASS_MODIFIERS)
                 .addFields(enumConstants.values())
                 .addFields(getPrivateMembers())

@@ -1,7 +1,7 @@
 package com.fern.model.codegen.utils;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fern.NamedTypeReference;
+import com.fern.NamedType;
 import com.fern.ObjectTypeDefinition;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
@@ -49,9 +49,8 @@ public final class ImmutablesUtils {
                 .build();
     }
 
-    public ClassName getImmutablesClassName(NamedTypeReference namedTypeReference) {
+    public ClassName getImmutablesClassName(NamedType namedType) {
         return ClassName.get(
-                filepathUtils.convertFilepathToPackage(namedTypeReference.filepath()),
-                IMMUTABLE_PREFIX + namedTypeReference.name());
+                filepathUtils.convertFilepathToPackage(namedType.fernFilepath()), IMMUTABLE_PREFIX + namedType.name());
     }
 }

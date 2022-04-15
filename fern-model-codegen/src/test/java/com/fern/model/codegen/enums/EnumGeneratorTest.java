@@ -2,7 +2,8 @@ package com.fern.model.codegen.enums;
 
 import com.fern.EnumTypeDefinition;
 import com.fern.EnumValue;
-import com.fern.NamedTypeReference;
+import com.fern.FernFilepath;
+import com.fern.NamedType;
 import com.fern.Type;
 import com.fern.TypeDefinition;
 import com.fern.model.codegen.TestConstants;
@@ -18,9 +19,9 @@ public class EnumGeneratorTest {
                 .addValues(EnumValue.builder().value("FINISHED").build())
                 .build();
         TypeDefinition migrationStatusTypeDef = TypeDefinition.builder()
-                .name(NamedTypeReference.builder()
-                        .filepath("com/trace/migration")
+                .name(NamedType.builder()
                         .name("MigrationStatus")
+                        .fernFilepath(FernFilepath.valueOf("com/trace/migration"))
                         .build())
                 .shape(Type._enum(migrationStatusEnumDef))
                 .build();

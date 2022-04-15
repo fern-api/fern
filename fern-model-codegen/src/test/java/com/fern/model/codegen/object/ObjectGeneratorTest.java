@@ -1,7 +1,8 @@
 package com.fern.model.codegen.object;
 
 import com.fern.ContainerType;
-import com.fern.NamedTypeReference;
+import com.fern.FernFilepath;
+import com.fern.NamedType;
 import com.fern.ObjectField;
 import com.fern.ObjectTypeDefinition;
 import com.fern.PrimitiveType;
@@ -27,9 +28,9 @@ public class ObjectGeneratorTest {
                         .build())
                 .build();
         ObjectGenerator objectGenerator = new ObjectGenerator(
-                NamedTypeReference.builder()
-                        .filepath("com/fern")
+                NamedType.builder()
                         .name("WithDocs")
+                        .fernFilepath(FernFilepath.valueOf("com/fern"))
                         .build(),
                 objectTypeDefinition,
                 Collections.emptyList(),
@@ -49,9 +50,9 @@ public class ObjectGeneratorTest {
                         .build())
                 .build();
         TypeDefinition withDocsTypeDefinition = TypeDefinition.builder()
-                .name(NamedTypeReference.builder()
-                        .filepath("com/fern")
+                .name(NamedType.builder()
                         .name("WithDocs")
+                        .fernFilepath(FernFilepath.valueOf("com/fern"))
                         .build())
                 .shape(Type.object(withDocsObjectTypeDefinition))
                 .build();

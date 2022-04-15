@@ -2,7 +2,7 @@ package com.fern.model.codegen.utils;
 
 import com.fern.ContainerType;
 import com.fern.MapType;
-import com.fern.NamedTypeReference;
+import com.fern.NamedType;
 import com.fern.PrimitiveType;
 import com.fern.TypeReference;
 import com.squareup.javapoet.ClassName;
@@ -37,8 +37,8 @@ public final class TypeReferenceUtils {
         }
 
         @Override
-        public TypeName visitNamed(NamedTypeReference namedTypeReference) {
-            return classNameUtils.getClassName(namedTypeReference);
+        public TypeName visitNamed(NamedType namedType) {
+            return classNameUtils.getClassName(namedType);
         }
 
         @Override
@@ -52,6 +52,11 @@ public final class TypeReferenceUtils {
         @Override
         public TypeName visitContainer(ContainerType containerType) {
             return containerType.accept(containerToTypeNameConverter);
+        }
+
+        @Override
+        public TypeName visitVoid() {
+            throw new RuntimeException("Void types are unsupported!");
         }
 
         @Override

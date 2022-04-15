@@ -1,6 +1,6 @@
 package com.fern.model.codegen.interfaces;
 
-import com.fern.NamedTypeReference;
+import com.fern.NamedType;
 import com.fern.ObjectTypeDefinition;
 import com.fern.model.codegen.Generator;
 import com.fern.model.codegen.GeneratorContext;
@@ -14,20 +14,18 @@ public final class InterfaceGenerator extends Generator<ObjectTypeDefinition> {
     private static final String INTERFACES_PACKAGE_NAME = "interfaces";
 
     private final ObjectTypeDefinition objectTypeDefinition;
-    private final NamedTypeReference namedTypeReference;
+    private final NamedType namedType;
 
     public InterfaceGenerator(
-            ObjectTypeDefinition objectTypeDefinition,
-            NamedTypeReference namedTypeReference,
-            GeneratorContext generatorContext) {
+            ObjectTypeDefinition objectTypeDefinition, NamedType namedType, GeneratorContext generatorContext) {
         super(generatorContext);
         this.objectTypeDefinition = objectTypeDefinition;
-        this.namedTypeReference = namedTypeReference;
+        this.namedType = namedType;
     }
 
     public GeneratedInterface generate() {
         ClassName generatedInterfaceClassName = getInterfaceClassName();
-        TypeSpec interfaceTypeSpec = TypeSpec.interfaceBuilder(INTERFACE_PREFIX + namedTypeReference.name())
+        TypeSpec interfaceTypeSpec = TypeSpec.interfaceBuilder(INTERFACE_PREFIX + namedType.name())
                 .addMethods(generatorContext.getImmutablesUtils().getImmutablesPropertyMethods(objectTypeDefinition))
                 .build();
         JavaFile interfaceFile = JavaFile.builder(generatedInterfaceClassName.packageName(), interfaceTypeSpec)
@@ -40,12 +38,8 @@ public final class InterfaceGenerator extends Generator<ObjectTypeDefinition> {
     }
 
     private ClassName getInterfaceClassName() {
-        NamedTypeReference interfaceNamedTypeReference = NamedTypeReference.builder()
-                .filepath(namedTypeReference.filepath())
-                .name(INTERFACE_PREFIX + namedTypeReference.name())
-                .build();
         String nonInterfacePackageName =
-                generatorContext.getFilepathUtils().convertFilepathToPackage(interfaceNamedTypeReference.filepath());
-        return ClassName.get(nonInterfacePackageName + "." + INTERFACES_PACKAGE_NAME, namedTypeReference.name());
+                generatorContext.getFilepathUtils().convertFilepathToPackage(namedType.fernFilepath());
+        return ClassName.get(nonInterfacePackageName + "." + INTERFACES_PACKAGE_NAME, namedType.name());
     }
 }

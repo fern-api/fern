@@ -1,7 +1,8 @@
 package com.fern.model.codegen.alias;
 
 import com.fern.AliasTypeDefinition;
-import com.fern.NamedTypeReference;
+import com.fern.FernFilepath;
+import com.fern.NamedType;
 import com.fern.PrimitiveType;
 import com.fern.Type;
 import com.fern.TypeDefinition;
@@ -14,13 +15,13 @@ public final class AliasGeneratorTest {
     @Test
     public void test_basic() {
         AliasTypeDefinition aliasTypeDefinition = AliasTypeDefinition.builder()
-                .name("")
-                .aliasType(TypeReference.primitive(PrimitiveType.STRING))
+                .aliasOf(TypeReference.primitive(PrimitiveType.STRING))
+                .isId(true)
                 .build();
         TypeDefinition problemIdTypeDefinition = TypeDefinition.builder()
-                .name(NamedTypeReference.builder()
-                        .filepath("com/trace/problem")
+                .name(NamedType.builder()
                         .name("ProblemId")
+                        .fernFilepath(FernFilepath.valueOf("com/trace/problem"))
                         .build())
                 .shape(Type.alias(aliasTypeDefinition))
                 .build();

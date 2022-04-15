@@ -3,7 +3,7 @@ package com.fern.model.codegen.alias;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.AliasTypeDefinition;
-import com.fern.NamedTypeReference;
+import com.fern.NamedType;
 import com.fern.immutables.StagedBuilderStyle;
 import com.fern.model.codegen.Generator;
 import com.fern.model.codegen.GeneratorContext;
@@ -26,22 +26,20 @@ public final class AliasGenerator extends Generator<AliasTypeDefinition> {
     private static final String VALUE_OF_METHOD_NAME = "valueOf";
 
     private final AliasTypeDefinition aliasTypeDefinition;
-    private final NamedTypeReference namedTypeReference;
+    private final NamedType namedType;
     private final ClassName generatedAliasClassName;
 
     public AliasGenerator(
-            AliasTypeDefinition aliasTypeDefinition,
-            NamedTypeReference namedTypeReference,
-            GeneratorContext generatorContext) {
+            AliasTypeDefinition aliasTypeDefinition, NamedType namedType, GeneratorContext generatorContext) {
         super(generatorContext);
         this.aliasTypeDefinition = aliasTypeDefinition;
-        this.namedTypeReference = namedTypeReference;
-        this.generatedAliasClassName = generatorContext.getClassNameUtils().getClassName(namedTypeReference);
+        this.namedType = namedType;
+        this.generatedAliasClassName = generatorContext.getClassNameUtils().getClassName(namedType);
     }
 
     public GeneratedAlias generate() {
         TypeName aliasTypeName =
-                generatorContext.getTypeReferenceUtils().convertToTypeName(true, aliasTypeDefinition.aliasType());
+                generatorContext.getTypeReferenceUtils().convertToTypeName(true, aliasTypeDefinition.aliasOf());
         TypeSpec aliasTypeSpec = TypeSpec.interfaceBuilder(generatedAliasClassName)
                 .addModifiers(ALIAS_CLASS_MODIFIERS)
                 .addAnnotations(getAnnotationSpecs())
@@ -65,7 +63,7 @@ public final class AliasGenerator extends Generator<AliasTypeDefinition> {
                         .addMember(
                                 "as",
                                 "$T.class",
-                                generatorContext.getImmutablesUtils().getImmutablesClassName(namedTypeReference))
+                                generatorContext.getImmutablesUtils().getImmutablesClassName(namedType))
                         .build());
     }
 
@@ -83,7 +81,7 @@ public final class AliasGenerator extends Generator<AliasTypeDefinition> {
                 .addParameter(aliasTypeName, "value")
                 .addStatement(
                         "return $T.builder().value($L).build()",
-                        generatorContext.getImmutablesUtils().getImmutablesClassName(namedTypeReference),
+                        generatorContext.getImmutablesUtils().getImmutablesClassName(namedType),
                         "value")
                 .build();
     }

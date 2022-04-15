@@ -2,7 +2,7 @@ package com.fern.model.codegen;
 
 import com.fern.AliasTypeDefinition;
 import com.fern.EnumTypeDefinition;
-import com.fern.NamedTypeReference;
+import com.fern.NamedType;
 import com.fern.ObjectTypeDefinition;
 import com.fern.Type;
 import com.fern.TypeDefinition;
@@ -32,7 +32,7 @@ public final class ModelGenerator {
     private static final String SRC_MAIN_JAVA = "src/main/java";
 
     private final List<TypeDefinition> typeDefinitions;
-    private final Map<NamedTypeReference, TypeDefinition> typeDefinitionsByName;
+    private final Map<NamedType, TypeDefinition> typeDefinitionsByName;
     private final PluginConfig pluginConfig;
     private final GeneratorContext generatorContext;
 
@@ -57,7 +57,7 @@ public final class ModelGenerator {
     }
 
     private List<JavaFile> generateJavaFiles() {
-        Map<NamedTypeReference, GeneratedInterface> generatedInterfaces = getGeneratedInterfaces();
+        Map<NamedType, GeneratedInterface> generatedInterfaces = getGeneratedInterfaces();
         List<GeneratedFile<?>> generatedFiles = typeDefinitions.stream()
                 .map(typeDefinition ->
                         typeDefinition.shape().accept(new TypeDefinitionGenerator(typeDefinition, generatedInterfaces)))
@@ -67,21 +67,24 @@ public final class ModelGenerator {
                 .collect(Collectors.toList());
     }
 
-    private Map<NamedTypeReference, GeneratedInterface> getGeneratedInterfaces() {
-        Set<NamedTypeReference> interfaceCandidates = typeDefinitions.stream()
-                .map(TypeDefinition::_extends)
+    private Map<NamedType, GeneratedInterface> getGeneratedInterfaces() {
+        Set<NamedType> interfaceCandidates = typeDefinitions.stream()
+                .map(TypeDefinition::shape)
+                .map(Type::getObject)
+                .flatMap(Optional::stream)
+                .map(ObjectTypeDefinition::_extends)
                 .flatMap(List::stream)
                 .collect(Collectors.toSet());
-        return interfaceCandidates.stream().collect(Collectors.toMap(Function.identity(), namedTypeReference -> {
-            TypeDefinition typeDefinition = typeDefinitionsByName.get(namedTypeReference);
+        return interfaceCandidates.stream().collect(Collectors.toMap(Function.identity(), namedType -> {
+            TypeDefinition typeDefinition = typeDefinitionsByName.get(namedType);
             ObjectTypeDefinition objectTypeDefinition = typeDefinition
                     .shape()
                     .getObject()
                     .orElseThrow(() -> new IllegalStateException("Non-objects cannot be extended. Fix type "
                             + typeDefinition.name().name() + " located in file"
-                            + typeDefinition.name().filepath()));
+                            + typeDefinition.name().fernFilepath()));
             InterfaceGenerator interfaceGenerator =
-                    new InterfaceGenerator(objectTypeDefinition, namedTypeReference, generatorContext);
+                    new InterfaceGenerator(objectTypeDefinition, namedType, generatorContext);
             return interfaceGenerator.generate();
         }));
     }
@@ -89,10 +92,9 @@ public final class ModelGenerator {
     private final class TypeDefinitionGenerator implements Type.Visitor<GeneratedFile<?>> {
 
         private final TypeDefinition typeDefinition;
-        private final Map<NamedTypeReference, GeneratedInterface> generatedInterfaces;
+        private final Map<NamedType, GeneratedInterface> generatedInterfaces;
 
-        TypeDefinitionGenerator(
-                TypeDefinition typeDefinition, Map<NamedTypeReference, GeneratedInterface> generatedInterfaces) {
+        TypeDefinitionGenerator(TypeDefinition typeDefinition, Map<NamedType, GeneratedInterface> generatedInterfaces) {
             this.typeDefinition = typeDefinition;
             this.generatedInterfaces = generatedInterfaces;
         }
@@ -101,7 +103,7 @@ public final class ModelGenerator {
         public GeneratedFile<?> visitObject(ObjectTypeDefinition objectTypeDefinition) {
             Optional<GeneratedInterface> selfInterface =
                     Optional.ofNullable(generatedInterfaces.get(typeDefinition.name()));
-            List<GeneratedInterface> extendedInterfaces = typeDefinition._extends().stream()
+            List<GeneratedInterface> extendedInterfaces = objectTypeDefinition._extends().stream()
                     .map(generatedInterfaces::get)
                     .sorted(Comparator.comparing(
                             generatedInterface -> generatedInterface.className().simpleName()))

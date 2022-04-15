@@ -1,7 +1,8 @@
 package com.fern.model.codegen.interfaces;
 
 import com.fern.ContainerType;
-import com.fern.NamedTypeReference;
+import com.fern.FernFilepath;
+import com.fern.NamedType;
 import com.fern.ObjectField;
 import com.fern.ObjectTypeDefinition;
 import com.fern.PrimitiveType;
@@ -23,9 +24,9 @@ public class InterfaceGeneratorTest {
                         .build())
                 .build();
         TypeDefinition withDocsTypeDefinition = TypeDefinition.builder()
-                .name(NamedTypeReference.builder()
-                        .filepath("com/fern")
+                .name(NamedType.builder()
                         .name("WithDocs")
+                        .fernFilepath(FernFilepath.valueOf("com/fern"))
                         .build())
                 .shape(Type.object(objectTypeDefinition))
                 .build();

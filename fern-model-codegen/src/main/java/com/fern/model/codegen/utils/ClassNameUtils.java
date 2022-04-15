@@ -1,6 +1,6 @@
 package com.fern.model.codegen.utils;
 
-import com.fern.NamedTypeReference;
+import com.fern.NamedType;
 import com.squareup.javapoet.ClassName;
 import java.util.Optional;
 
@@ -15,8 +15,7 @@ public final class ClassNameUtils {
         this.filepathUtils = filepathUtils;
     }
 
-    public ClassName getClassName(NamedTypeReference namedTypeReference) {
-        return ClassName.get(
-                filepathUtils.convertFilepathToPackage(namedTypeReference.filepath()), namedTypeReference.name());
+    public ClassName getClassName(NamedType namedType) {
+        return ClassName.get(filepathUtils.convertFilepathToPackage(namedType.fernFilepath()), namedType.name());
     }
 }

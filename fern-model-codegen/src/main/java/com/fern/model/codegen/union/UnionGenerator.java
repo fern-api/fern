@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fern.NamedTypeReference;
+import com.fern.NamedType;
 import com.fern.SingleUnionType;
 import com.fern.TypeDefinition;
 import com.fern.TypeReference;
@@ -53,23 +53,21 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
     private static final String GET_INTERNAL_VALUE_METHOD_NAME = "getInternalValue";
     private static final String ACCEPT_METHOD_NAME = "accept";
 
-    private final NamedTypeReference namedTypeReference;
+    private final NamedType namedType;
     private final UnionTypeDefinition unionTypeDefinition;
-    private final Map<NamedTypeReference, TypeDefinition> typeDefinitionsByName;
+    private final Map<NamedType, TypeDefinition> typeDefinitionsByName;
     private final ClassName generatedUnionClassName;
     private final Map<SingleUnionType, ClassName> internalValueClassNames;
     private final ClassName unknownInternalValueClassName;
     private final ClassName internalValueInterfaceClassName;
 
     public UnionGenerator(
-            NamedTypeReference namedTypeReference,
-            UnionTypeDefinition unionTypeDefinition,
-            GeneratorContext generatorContext) {
+            NamedType namedType, UnionTypeDefinition unionTypeDefinition, GeneratorContext generatorContext) {
         super(generatorContext);
-        this.namedTypeReference = namedTypeReference;
+        this.namedType = namedType;
         this.unionTypeDefinition = unionTypeDefinition;
         this.typeDefinitionsByName = generatorContext.getTypeDefinitionsByName();
-        this.generatedUnionClassName = generatorContext.getClassNameUtils().getClassName(namedTypeReference);
+        this.generatedUnionClassName = generatorContext.getClassNameUtils().getClassName(namedType);
         this.internalValueClassNames = unionTypeDefinition.types().stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
@@ -289,7 +287,7 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
                                             "$T.$L.class",
                                             generatorContext
                                                     .getImmutablesUtils()
-                                                    .getImmutablesClassName(namedTypeReference),
+                                                    .getImmutablesClassName(namedType),
                                             internalValueClassName.simpleName())
                                     .build())
                             .addSuperinterface(internalValueInterfaceClassName)
@@ -334,7 +332,7 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
                         .addMember(
                                 "as",
                                 "$T.$L.class",
-                                generatorContext.getImmutablesUtils().getImmutablesClassName(namedTypeReference),
+                                generatorContext.getImmutablesUtils().getImmutablesClassName(namedType),
                                 UNKNOWN_INTERNAL_VALUE_INTERFACE_NAME)
                         .build())
                 .addMethod(MethodSpec.methodBuilder("value")
@@ -379,14 +377,14 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
     }
 
     private boolean isTypeReferenceAnObject(TypeReference typeReference) {
-        Optional<NamedTypeReference> maybeNamedTypeReference = typeReference.getNamed();
-        if (maybeNamedTypeReference.isPresent()) {
-            TypeDefinition typeDefinition = typeDefinitionsByName.get(maybeNamedTypeReference.get());
+        Optional<NamedType> maybeNamedType = typeReference.getNamed();
+        if (maybeNamedType.isPresent()) {
+            TypeDefinition typeDefinition = typeDefinitionsByName.get(maybeNamedType.get());
             if (typeDefinition.shape().isObject()) {
                 return true;
             } else if (typeDefinition.shape().isAlias()) {
                 return isTypeReferenceAnObject(
-                        typeDefinition.shape().getAlias().get().aliasType());
+                        typeDefinition.shape().getAlias().get().aliasOf());
             }
         }
         return false;

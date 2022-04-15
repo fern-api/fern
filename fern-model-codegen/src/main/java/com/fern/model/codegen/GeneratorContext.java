@@ -1,6 +1,6 @@
 package com.fern.model.codegen;
 
-import com.fern.NamedTypeReference;
+import com.fern.NamedType;
 import com.fern.TypeDefinition;
 import com.fern.model.codegen.config.PluginConfig;
 import com.fern.model.codegen.utils.ClassNameUtils;
@@ -20,9 +20,9 @@ public final class GeneratorContext {
     private final KeyWordUtils keyWordUtils;
     private final TypeReferenceUtils typeReferenceUtils;
     private final VisitorUtils visitorUtils;
-    private final Map<NamedTypeReference, TypeDefinition> typeDefinitionsByName;
+    private final Map<NamedType, TypeDefinition> typeDefinitionsByName;
 
-    public GeneratorContext(PluginConfig pluginConfig, Map<NamedTypeReference, TypeDefinition> typeDefinitionsByName) {
+    public GeneratorContext(PluginConfig pluginConfig, Map<NamedType, TypeDefinition> typeDefinitionsByName) {
         this.pluginConfig = pluginConfig;
         this.filepathUtils = new FilepathUtils(pluginConfig);
         this.classNameUtils = new ClassNameUtils(filepathUtils);
@@ -49,7 +49,7 @@ public final class GeneratorContext {
         return keyWordUtils;
     }
 
-    public Map<NamedTypeReference, TypeDefinition> getTypeDefinitionsByName() {
+    public Map<NamedType, TypeDefinition> getTypeDefinitionsByName() {
         return typeDefinitionsByName;
     }
 

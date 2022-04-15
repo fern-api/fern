@@ -1,7 +1,8 @@
 package com.fern.model.codegen.union;
 
 import com.fern.ContainerType;
-import com.fern.NamedTypeReference;
+import com.fern.FernFilepath;
+import com.fern.NamedType;
 import com.fern.PrimitiveType;
 import com.fern.SingleUnionType;
 import com.fern.Type;
@@ -41,16 +42,16 @@ public class UnionGeneratorTest {
                 .addTypes(SingleUnionType.builder()
                         .discriminantValue("mapValue")
                         .valueType(TypeReference.container(
-                                ContainerType.list(TypeReference.named(NamedTypeReference.builder()
-                                        .filepath("com/birch/trace/commons")
+                                ContainerType.list(TypeReference.named(NamedType.builder()
                                         .name("VariableValue")
+                                        .fernFilepath(FernFilepath.valueOf("com/birch/trace/commons"))
                                         .build()))))
                         .build())
                 .build();
         TypeDefinition variableValueTypeDefinition = TypeDefinition.builder()
-                .name(NamedTypeReference.builder()
-                        .filepath("com/birch/trace/commons")
+                .name(NamedType.builder()
                         .name("VariableValue")
+                        .fernFilepath(FernFilepath.valueOf("com/birch/trace/commons"))
                         .build())
                 .shape(Type.union(unionTypeDefinition))
                 .build();

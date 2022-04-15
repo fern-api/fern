@@ -2,7 +2,7 @@ package com.fern.model.codegen.object;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fern.NamedTypeReference;
+import com.fern.NamedType;
 import com.fern.ObjectField;
 import com.fern.ObjectTypeDefinition;
 import com.fern.immutables.StagedBuilderStyle;
@@ -31,19 +31,19 @@ public final class ObjectGenerator extends Generator<ObjectTypeDefinition> {
     private static final String STATIC_BUILDER_METHOD_NAME = "builder";
     private static final String BUILD_STAGE_SUFFIX = "BuildStage";
 
-    private final NamedTypeReference namedTypeReference;
+    private final NamedType namedType;
     private final ObjectTypeDefinition objectTypeDefinition;
     private final List<GeneratedInterface> extendedInterfaces;
     private final Optional<GeneratedInterface> selfInterface;
 
     public ObjectGenerator(
-            NamedTypeReference namedTypeReference,
+            NamedType namedType,
             ObjectTypeDefinition objectTypeDefinition,
             List<GeneratedInterface> extendedInterfaces,
             Optional<GeneratedInterface> selfInterface,
             GeneratorContext generatorContext) {
         super(generatorContext);
-        this.namedTypeReference = namedTypeReference;
+        this.namedType = namedType;
         this.objectTypeDefinition = objectTypeDefinition;
         this.extendedInterfaces = extendedInterfaces;
         this.selfInterface = selfInterface;
@@ -51,8 +51,8 @@ public final class ObjectGenerator extends Generator<ObjectTypeDefinition> {
 
     public GeneratedObject generate() {
         ClassName generatedObjectClassName =
-                generatorContext.getClassNameUtils().getClassName(namedTypeReference);
-        TypeSpec objectTypeSpec = TypeSpec.interfaceBuilder(namedTypeReference.name())
+                generatorContext.getClassNameUtils().getClassName(namedType);
+        TypeSpec objectTypeSpec = TypeSpec.interfaceBuilder(namedType.name())
                 .addModifiers(OBJECT_INTERFACE_MODIFIERS)
                 .addAnnotations(getAnnotations())
                 .addSuperinterfaces(getSuperInterfaces())
@@ -73,9 +73,7 @@ public final class ObjectGenerator extends Generator<ObjectTypeDefinition> {
         annotationSpecs.add(AnnotationSpec.builder(StagedBuilderStyle.class).build());
         annotationSpecs.add(AnnotationSpec.builder(JsonDeserialize.class)
                 .addMember(
-                        "as",
-                        "$T.class",
-                        generatorContext.getImmutablesUtils().getImmutablesClassName(namedTypeReference))
+                        "as", "$T.class", generatorContext.getImmutablesUtils().getImmutablesClassName(namedType))
                 .build());
         annotationSpecs.add(AnnotationSpec.builder(JsonIgnoreProperties.class)
                 .addMember("value", "{$S}", UnionGenerator.UNION_DISCRIMINATOR_PROPERTY_NAME)
@@ -104,7 +102,7 @@ public final class ObjectGenerator extends Generator<ObjectTypeDefinition> {
     private MethodSpec generateStaticBuilder() {
         Optional<String> firstMandatoryFieldName =
                 getFirstRequiredFieldName(extendedInterfaces, objectTypeDefinition.fields());
-        ClassName immutableClassName = generatorContext.getImmutablesUtils().getImmutablesClassName(namedTypeReference);
+        ClassName immutableClassName = generatorContext.getImmutablesUtils().getImmutablesClassName(namedType);
         ClassName builderClassName = firstMandatoryFieldName.isEmpty()
                 ? immutableClassName.nestedClass("Builder")
                 : immutableClassName.nestedClass(firstMandatoryFieldName.get() + BUILD_STAGE_SUFFIX);
