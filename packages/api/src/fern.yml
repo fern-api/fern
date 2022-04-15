@@ -16,14 +16,14 @@ types:
     docs: A type, which is a name and a shape
     extends: WithDocs
     fields:
-      name: TypeName
+      name: NamedType
       shape: Type
 
   WithDocs:
     fields:
       docs: optional<string>
 
-  TypeName:
+  NamedType:
     fields:
       name: string
       fernFilepath: FernFilepath
@@ -39,7 +39,7 @@ types:
     fields:
       extends:
         docs: A list of other types to inherit from
-        type: list<TypeName>
+        type: list<NamedType>
       fields: list<ObjectField>
 
   ObjectField:
@@ -50,7 +50,7 @@ types:
 
   TypeReference:
     union:
-      named: TypeName
+      named: NamedType
       primitive: PrimitiveType
       container: ContainerType
       void: {}
@@ -108,7 +108,7 @@ types:
   BaseService:
     extends: WithDocs
     fields:
-      name: TypeName
+      name: NamedType
       displayName: string
       basePath: string
 
