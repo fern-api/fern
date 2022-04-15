@@ -26,7 +26,7 @@
     "publish:dry-run": "run codegen && yarn workspaces foreach --no-private --parallel --topological --verbose run prepublish"
   },
   "devDependencies": {
-    "@fernapi/mrlint": "^0.1.6",
+    "@fernapi/mrlint": "^0.1.8",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
     "depcheck": "^1.4.3",
