@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "clean": "yarn workspaces foreach --verbose --parallel run clean && /bin/rm -rf ./packages/api/generated",
-    "compile": "run codegen && yarn workspaces foreach --verbose --parallel --topological run compile",
+    "compile": "yarn workspaces foreach --verbose --parallel --topological run compile",
     "test": "yarn workspaces foreach --verbose --parallel --topological run test",
     "lint:eslint": "eslint . --max-warnings 0",
     "lint:eslint:fix": "eslint . --fix --max-warnings 0",
