@@ -149,22 +149,29 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
                             .getKeyWordUtils()
                             .getKeyWordCompatibleName(singleUnionType.discriminantValue());
                     MethodSpec.Builder staticBuilder = MethodSpec.methodBuilder(keyWordCompatibleName)
-                            .addModifiers(Modifier.PUBLIC, Modifier.STATIC);
+                            .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                            .returns(generatedUnionClassName);
                     // static builders for void types should have no parameters
                     if (!singleUnionType.valueType().isVoid()) {
-                        staticBuilder.addParameter(
-                                generatorContext
-                                        .getTypeReferenceUtils()
-                                        .convertToTypeName(true, singleUnionType.valueType()),
-                                "value");
+                        return staticBuilder
+                                .addParameter(
+                                        generatorContext
+                                                .getTypeReferenceUtils()
+                                                .convertToTypeName(true, singleUnionType.valueType()),
+                                        "value")
+                                .addStatement(
+                                        "return new $T($T.of(value))",
+                                        generatedUnionClassName,
+                                        internalValueClassNames.get(singleUnionType))
+                                .build();
+                    } else {
+                        return staticBuilder
+                                .addStatement(
+                                        "return new $T($T.of())",
+                                        generatedUnionClassName,
+                                        internalValueClassNames.get(singleUnionType))
+                                .build();
                     }
-                    return staticBuilder
-                            .returns(generatedUnionClassName)
-                            .addStatement(
-                                    "return new $T($T.of())",
-                                    generatedUnionClassName,
-                                    internalValueClassNames.get(singleUnionType))
-                            .build();
                 })
                 .collect(Collectors.toList());
     }
