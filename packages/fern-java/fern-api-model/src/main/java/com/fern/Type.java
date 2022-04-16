@@ -51,16 +51,16 @@ public final class Type {
     return value instanceof _Enum;
   }
 
+  public boolean isAlias() {
+    return value instanceof Alias;
+  }
+
   public boolean isUnion() {
     return value instanceof Union;
   }
 
   public boolean isObject() {
     return value instanceof _Object;
-  }
-
-  public boolean isAlias() {
-    return value instanceof Alias;
   }
 
   public Optional<ObjectTypeDefinition> getObject() {
@@ -116,9 +116,9 @@ public final class Type {
   )
   @JsonSubTypes({
       @JsonSubTypes.Type(value = _Enum.class, name = "enum"),
+      @JsonSubTypes.Type(value = Alias.class, name = "alias"),
       @JsonSubTypes.Type(value = Union.class, name = "union"),
-      @JsonSubTypes.Type(value = _Object.class, name = "object"),
-      @JsonSubTypes.Type(value = Alias.class, name = "alias")
+      @JsonSubTypes.Type(value = _Object.class, name = "object")
   })
   @JsonIgnoreProperties(
       ignoreUnknown = true
@@ -144,6 +144,25 @@ public final class Type {
 
     static _Enum of(EnumTypeDefinition value) {
       return ImmutableType._Enum.builder()._enum(value).build();
+    }
+  }
+
+  @Value.Immutable
+  @JsonTypeName("alias")
+  @JsonDeserialize(
+      as = ImmutableType.Alias.class
+  )
+  interface Alias extends InternalValue {
+    @JsonValue
+    AliasTypeDefinition alias();
+
+    @Override
+    default <T> T accept(Visitor<T> visitor) {
+      return visitor.visitAlias(alias());
+    }
+
+    static Alias of(AliasTypeDefinition value) {
+      return ImmutableType.Alias.builder().alias(value).build();
     }
   }
 
@@ -183,25 +202,6 @@ public final class Type {
 
     static _Object of(ObjectTypeDefinition value) {
       return ImmutableType._Object.builder()._object(value).build();
-    }
-  }
-
-  @Value.Immutable
-  @JsonTypeName("alias")
-  @JsonDeserialize(
-      as = ImmutableType.Alias.class
-  )
-  interface Alias extends InternalValue {
-    @JsonValue
-    AliasTypeDefinition alias();
-
-    @Override
-    default <T> T accept(Visitor<T> visitor) {
-      return visitor.visitAlias(alias());
-    }
-
-    static Alias of(AliasTypeDefinition value) {
-      return ImmutableType.Alias.builder().alias(value).build();
     }
   }
 
