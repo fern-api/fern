@@ -9,15 +9,15 @@ import org.immutables.value.Value;
 @Value.Immutable
 @StagedBuilderStyle
 @JsonDeserialize(
-    as = ImmutableTypeName.class
+    as = ImmutableNamedType.class
 )
 @JsonIgnoreProperties({"_type"})
-public interface TypeName {
+public interface NamedType {
   String name();
 
   FernFilepath fernFilepath();
 
-  static ImmutableTypeName.NameBuildStage builder() {
-    return ImmutableTypeName.builder();
+  static ImmutableNamedType.NameBuildStage builder() {
+    return ImmutableNamedType.builder();
   }
 }

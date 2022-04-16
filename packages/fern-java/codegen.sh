@@ -1,6 +1,3 @@
-# Generate fern ir
-sh ../../scripts/codegen.sh
-
 # Download java codegen plugin and invoke
 version=$1
 rm -rf fern-model-codegen-"$version"-"$version"

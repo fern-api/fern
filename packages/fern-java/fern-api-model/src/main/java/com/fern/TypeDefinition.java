@@ -13,7 +13,7 @@ import org.immutables.value.Value;
 )
 @JsonIgnoreProperties({"_type"})
 public interface TypeDefinition extends IWithDocs {
-  TypeName name();
+  NamedType name();
 
   Type shape();
 
