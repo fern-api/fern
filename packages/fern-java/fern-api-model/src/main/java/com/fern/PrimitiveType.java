@@ -49,7 +49,7 @@ public final class PrimitiveType {
     return this.string.hashCode();
   }
 
-  <T> T accept(Visitor<T> visitor) {
+  public <T> T accept(Visitor<T> visitor) {
     switch (value) {
       case STRING:
         return visitor.visitString();
