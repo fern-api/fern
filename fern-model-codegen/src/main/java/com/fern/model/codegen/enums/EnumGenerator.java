@@ -25,6 +25,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.lang.model.element.Modifier;
+import org.apache.commons.lang3.StringUtils;
 
 public final class EnumGenerator extends Generator<EnumTypeDefinition> {
 
@@ -53,11 +54,19 @@ public final class EnumGenerator extends Generator<EnumTypeDefinition> {
             NamedType namedType, EnumTypeDefinition enumTypeDefinition, GeneratorContext generatorContext) {
         super(generatorContext);
         this.namedType = namedType;
-        this.enumTypeDefinition = enumTypeDefinition;
+        this.enumTypeDefinition = EnumTypeDefinition.builder()
+                .addAllValues(enumTypeDefinition.values().stream()
+                        .map(EnumValue::value)
+                        .map(StringUtils::upperCase)
+                        .map(upperCasedEnum ->
+                                EnumValue.builder().value(upperCasedEnum).build())
+                        .collect(Collectors.toList()))
+                .build();
         this.generatedEnumClassName = generatorContext.getClassNameUtils().getClassName(namedType);
         this.valueFieldClassName = generatedEnumClassName.nestedClass(VALUE_TYPE_NAME);
     }
 
+    @Override
     public GeneratedEnum generate() {
         Map<EnumValue, FieldSpec> enumConstants = getConstants();
         VisitorUtils.GeneratedVisitor generatedVisitor = getVisitor();

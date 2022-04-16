@@ -23,6 +23,7 @@ public final class InterfaceGenerator extends Generator<ObjectTypeDefinition> {
         this.namedType = namedType;
     }
 
+    @Override
     public GeneratedInterface generate() {
         ClassName generatedInterfaceClassName = getInterfaceClassName();
         TypeSpec interfaceTypeSpec = TypeSpec.interfaceBuilder(INTERFACE_PREFIX + namedType.name())

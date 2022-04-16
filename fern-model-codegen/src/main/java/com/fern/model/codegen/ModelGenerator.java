@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 
 public final class ModelGenerator {
 
-    private static final String SRC_MAIN_JAVA = "src/main/java";
+    private static final String SRC_GENERATED_JAVA = "src/generated/java";
 
     private final List<TypeDefinition> typeDefinitions;
     private final Map<NamedType, TypeDefinition> typeDefinitionsByName;
@@ -48,7 +48,7 @@ public final class ModelGenerator {
         List<JavaFile> javaFiles = generateJavaFiles();
         javaFiles.forEach(javaFile -> {
             try {
-                Path javaFilePath = Paths.get(pluginConfig.modelSubprojectDirectoryName(), SRC_MAIN_JAVA);
+                Path javaFilePath = Paths.get(pluginConfig.modelSubprojectDirectoryName(), SRC_GENERATED_JAVA);
                 javaFile.writeToFile(javaFilePath.toFile());
             } catch (IOException e) {
                 throw new RuntimeException("Failed to write generated java file: " + javaFile.typeSpec.name, e);

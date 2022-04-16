@@ -49,6 +49,7 @@ public final class ObjectGenerator extends Generator<ObjectTypeDefinition> {
         this.selfInterface = selfInterface;
     }
 
+    @Override
     public GeneratedObject generate() {
         ClassName generatedObjectClassName =
                 generatorContext.getClassNameUtils().getClassName(namedType);

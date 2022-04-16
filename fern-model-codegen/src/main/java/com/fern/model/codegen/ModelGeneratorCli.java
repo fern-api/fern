@@ -18,15 +18,11 @@ public final class ModelGeneratorCli {
 
     private static final String PROGRAM_NAME = "Fern Java Model Generator Plugin";
     private static final String IR_ARG_NAME = "ir";
+    private static final String OUTPUT_ARG_NAME = "output";
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper()
             .registerModule(new GuavaModule())
             .registerModule(new Jdk8Module().configureAbsentsAsNulls(true));
-
-    private static final PluginConfig HARDCODED_PLUGIN_CONFIG = PluginConfig.builder()
-            .modelSubprojectDirectoryName("build/fern/model")
-            .packagePrefix("com")
-            .build();
 
     private ModelGeneratorCli() {}
 
@@ -35,15 +31,20 @@ public final class ModelGeneratorCli {
                 .build()
                 .defaultHelp(true)
                 .description("Generates Java objects based on types in your Fern API spec.");
-        parser.addArgument(IR_ARG_NAME).nargs(1).help("Filepath to Fern IR JSON (intermediate json).");
+        parser.addArgument(IR_ARG_NAME).nargs(1).help("Filepath to Fern IR JSON (intermediate representation).");
+        parser.addArgument(OUTPUT_ARG_NAME).nargs(1).help("Filepath for generated code");
         try {
             Namespace namespace = parser.parseArgs(args);
             String irLocation = ((List<String>) namespace.get(IR_ARG_NAME)).get(0);
+            String outputDirectory = ((List<String>) namespace.get(OUTPUT_ARG_NAME)).get(0);
+            PluginConfig pluginConfig = PluginConfig.builder()
+                    .modelSubprojectDirectoryName(outputDirectory)
+                    .packagePrefix("com")
+                    .build();
             String irJson = Files.readString(new File(irLocation).toPath());
             IntermediateRepresentation intermediateRepresentation =
                     OBJECT_MAPPER.readValue(irJson, IntermediateRepresentation.class);
-            ModelGenerator modelGenerator =
-                    new ModelGenerator(intermediateRepresentation.types(), HARDCODED_PLUGIN_CONFIG);
+            ModelGenerator modelGenerator = new ModelGenerator(intermediateRepresentation.types(), pluginConfig);
             modelGenerator.buildModelSubproject();
         } catch (ArgumentParserException e) {
             parser.handleError(e);

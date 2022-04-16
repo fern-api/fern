@@ -7,7 +7,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fern.ContainerType;
 import com.fern.NamedType;
+import com.fern.PrimitiveType;
 import com.fern.SingleUnionType;
 import com.fern.TypeDefinition;
 import com.fern.TypeReference;
@@ -65,7 +67,12 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
             NamedType namedType, UnionTypeDefinition unionTypeDefinition, GeneratorContext generatorContext) {
         super(generatorContext);
         this.namedType = namedType;
-        this.unionTypeDefinition = unionTypeDefinition;
+        // TODO(dsinghvi): Handle void types within unions
+        this.unionTypeDefinition = UnionTypeDefinition.builder()
+                .addAllTypes(unionTypeDefinition.types().stream()
+                        .filter(singleUnionType -> !singleUnionType.valueType().accept(IsVoidTypeReference.INSTANCE))
+                        .collect(Collectors.toList()))
+                .build();
         this.typeDefinitionsByName = generatorContext.getTypeDefinitionsByName();
         this.generatedUnionClassName = generatorContext.getClassNameUtils().getClassName(namedType);
         this.internalValueClassNames = unionTypeDefinition.types().stream()
@@ -77,6 +84,7 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
         this.internalValueInterfaceClassName = generatedUnionClassName.nestedClass(INTERNAL_VALUE_INTERFACE_NAME);
     }
 
+    @Override
     public GeneratedUnion generate() {
         Map<SingleUnionType, MethodSpec> isTypeMethods = getIsTypeMethods();
         TypeSpec unionTypeSpec = TypeSpec.classBuilder(generatedUnionClassName)
@@ -388,5 +396,35 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
             }
         }
         return false;
+    }
+
+    private static final class IsVoidTypeReference implements TypeReference.Visitor<Boolean> {
+
+        private static final IsVoidTypeReference INSTANCE = new IsVoidTypeReference();
+
+        @Override
+        public Boolean visitNamed(NamedType namedType) {
+            return false;
+        }
+
+        @Override
+        public Boolean visitPrimitive(PrimitiveType primitiveType) {
+            return false;
+        }
+
+        @Override
+        public Boolean visitContainer(ContainerType containerType) {
+            return false;
+        }
+
+        @Override
+        public Boolean visitVoid() {
+            return true;
+        }
+
+        @Override
+        public Boolean visitUnknown(String unknownTyp) {
+            throw new RuntimeException("Encountered unknown type reference: " + unknownTyp);
+        }
     }
 }
