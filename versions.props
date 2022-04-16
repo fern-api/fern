@@ -12,7 +12,7 @@ org.slf4j:slf4j-api = 1.7.36
 org.slf4j:slf4j-log4j12 = 1.7.36
 
 # fern
-com.fern:fern-api-java-types = 1.1.12-3-g6282704
+com.fern:fern-api-* = 1.1.12-5-gc665ee6
 
 # testing
 org.junit.jupiter:* = 5.5.0

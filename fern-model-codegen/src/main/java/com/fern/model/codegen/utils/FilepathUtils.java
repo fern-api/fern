@@ -19,7 +19,7 @@ public final class FilepathUtils {
     }
 
     public String convertFilepathToPackage(FernFilepath filepath) {
-        List<String> splitFilepath = Arrays.asList(filepath.get().split("/"));
+        List<String> splitFilepath = Arrays.asList(filepath.value().split("/"));
         List<String> packagePath = new ArrayList<>(packagePrefixes);
         packagePath.addAll(splitFilepath);
         return String.join(".", packagePath);

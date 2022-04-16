@@ -28,7 +28,7 @@ public class InterfaceGeneratorTest {
                         .name("WithDocs")
                         .fernFilepath(FernFilepath.valueOf("com/fern"))
                         .build())
-                .shape(Type.object(objectTypeDefinition))
+                .shape(Type._object(objectTypeDefinition))
                 .build();
         InterfaceGenerator interfaceGenerator = new InterfaceGenerator(
                 objectTypeDefinition, withDocsTypeDefinition.name(), TestConstants.GENERATOR_CONTEXT);
