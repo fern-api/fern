@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
+import org.apache.commons.lang3.StringUtils;
 import org.immutables.value.Value;
 
 public final class ObjectGenerator extends Generator<ObjectTypeDefinition> {
@@ -106,7 +107,8 @@ public final class ObjectGenerator extends Generator<ObjectTypeDefinition> {
         ClassName immutableClassName = generatorContext.getImmutablesUtils().getImmutablesClassName(namedType);
         ClassName builderClassName = firstMandatoryFieldName.isEmpty()
                 ? immutableClassName.nestedClass("Builder")
-                : immutableClassName.nestedClass(firstMandatoryFieldName.get() + BUILD_STAGE_SUFFIX);
+                : immutableClassName.nestedClass(
+                        StringUtils.capitalize(firstMandatoryFieldName.get()) + BUILD_STAGE_SUFFIX);
         return MethodSpec.methodBuilder(STATIC_BUILDER_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(builderClassName)

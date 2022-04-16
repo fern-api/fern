@@ -37,7 +37,7 @@ public final class ImmutablesUtils {
         if (KeyWordUtils.isReserved(methodName)) {
             methodBuilder = MethodSpec.methodBuilder("_" + methodName)
                     .addAnnotation(AnnotationSpec.builder(JsonProperty.class)
-                            .addMember("value", methodName)
+                            .addMember("value", "$S", methodName)
                             .build());
 
         } else {

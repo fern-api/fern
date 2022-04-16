@@ -23,10 +23,10 @@ public final class GeneratorContext {
 
     public GeneratorContext(PluginConfig pluginConfig, Map<NamedType, TypeDefinition> typeDefinitionsByName) {
         this.filepathUtils = new FilepathUtils(pluginConfig);
-        this.classNameUtils = new ClassNameUtils(filepathUtils);
+        this.keyWordUtils = new KeyWordUtils();
+        this.classNameUtils = new ClassNameUtils(filepathUtils, keyWordUtils);
         this.typeReferenceUtils = new TypeReferenceUtils(classNameUtils);
         this.immutablesUtils = new ImmutablesUtils(filepathUtils, typeReferenceUtils);
-        this.keyWordUtils = new KeyWordUtils();
         this.visitorUtils = new VisitorUtils();
         this.typeDefinitionsByName = typeDefinitionsByName;
     }

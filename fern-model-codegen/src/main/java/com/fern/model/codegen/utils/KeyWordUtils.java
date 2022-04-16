@@ -4,12 +4,12 @@ import java.util.Set;
 
 public final class KeyWordUtils {
 
-    private static final Set<String> RESERVED_WORDS = Set.of("enum", "extends", "package", "void");
+    private static final Set<String> RESERVED_WORDS = Set.of("enum", "extends", "package", "void", "object");
 
     public KeyWordUtils() {}
 
     public String getKeyWordCompatibleName(String name) {
-        if (isReserved(name)) {
+        if (isReserved(name.toLowerCase())) {
             return "_" + name;
         }
         return name;

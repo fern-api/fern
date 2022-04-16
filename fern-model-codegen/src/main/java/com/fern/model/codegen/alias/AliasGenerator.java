@@ -84,6 +84,7 @@ public final class AliasGenerator extends Generator<AliasTypeDefinition> {
                         "return $T.builder().value($L).build()",
                         generatorContext.getImmutablesUtils().getImmutablesClassName(namedType),
                         "value")
+                .returns(generatedAliasClassName)
                 .build();
     }
 }

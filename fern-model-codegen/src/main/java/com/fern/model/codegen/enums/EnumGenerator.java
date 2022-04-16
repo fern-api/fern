@@ -20,6 +20,7 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -146,6 +147,7 @@ public final class EnumGenerator extends Generator<EnumTypeDefinition> {
         return MethodSpec.methodBuilder(TO_STRING_METHOD_NAME)
                 .addAnnotation(Override.class)
                 .addAnnotation(JsonValue.class)
+                .addModifiers(Modifier.PUBLIC)
                 .addCode("return this.string;")
                 .returns(ClassName.get(String.class))
                 .build();
@@ -154,6 +156,7 @@ public final class EnumGenerator extends Generator<EnumTypeDefinition> {
     private MethodSpec getEqualsMethod() {
         return MethodSpec.methodBuilder(EQUALS_METHOD_NAME)
                 .addAnnotation(Override.class)
+                .addModifiers(Modifier.PUBLIC)
                 .addParameter(ClassName.get(Object.class), "other")
                 .addCode(CodeBlock.builder()
                         .add(
@@ -169,6 +172,7 @@ public final class EnumGenerator extends Generator<EnumTypeDefinition> {
     private MethodSpec getHashCodeMethod() {
         return MethodSpec.methodBuilder(HASHCODE_METHOD_NAME)
                 .addAnnotation(Override.class)
+                .addModifiers(Modifier.PUBLIC)
                 .addCode("return this.string.hashCode();")
                 .returns(int.class)
                 .build();
@@ -206,6 +210,7 @@ public final class EnumGenerator extends Generator<EnumTypeDefinition> {
                 .endControlFlow()
                 .build();
         return MethodSpec.methodBuilder(ACCEPT_METHOD_NAME)
+                .addTypeVariable(VisitorUtils.VISITOR_RETURN_TYPE)
                 .addParameter(generatorContext.getVisitorUtils().getVisitorTypeName(generatedEnumClassName), "visitor")
                 .addCode(acceptCodeBlock)
                 .returns(VisitorUtils.VISITOR_RETURN_TYPE)
@@ -229,7 +234,7 @@ public final class EnumGenerator extends Generator<EnumTypeDefinition> {
      */
     private MethodSpec getValueOfMethod(Map<EnumValue, FieldSpec> constants) {
         CodeBlock.Builder valueOfCodeBlockBuilder = CodeBlock.builder()
-                .addStatement("String upperCasedValue = value.toUpperCase(Locale.ROOT)")
+                .addStatement("String upperCasedValue = value.toUpperCase($T.ROOT)", Locale.class)
                 .beginControlFlow("switch (upperCasedValue)");
         constants.forEach((enumValue, constantField) -> {
             valueOfCodeBlockBuilder

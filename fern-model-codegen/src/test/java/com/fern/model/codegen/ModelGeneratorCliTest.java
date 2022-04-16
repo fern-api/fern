@@ -8,6 +8,6 @@ public class ModelGeneratorCliTest {
     public void test_basic() {
         ModelGeneratorCli.main(
                 "fern-model-codegen/src/test/resources/fern-ir.json",
-                "fern-model-codegen/build/fern-java-model");
+                "fern-model-test");
     }
 }
