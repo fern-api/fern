@@ -210,6 +210,7 @@ public final class EnumGenerator extends Generator<EnumTypeDefinition> {
                 .endControlFlow()
                 .build();
         return MethodSpec.methodBuilder(ACCEPT_METHOD_NAME)
+                .addModifiers(Modifier.PUBLIC)
                 .addTypeVariable(VisitorUtils.VISITOR_RETURN_TYPE)
                 .addParameter(generatorContext.getVisitorUtils().getVisitorTypeName(generatedEnumClassName), "visitor")
                 .addCode(acceptCodeBlock)

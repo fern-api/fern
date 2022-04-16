@@ -7,9 +7,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fern.ContainerType;
 import com.fern.NamedType;
-import com.fern.PrimitiveType;
 import com.fern.SingleUnionType;
 import com.fern.TypeDefinition;
 import com.fern.TypeReference;
@@ -67,15 +65,10 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
             NamedType namedType, UnionTypeDefinition unionTypeDefinition, GeneratorContext generatorContext) {
         super(generatorContext);
         this.namedType = namedType;
-        // TODO(dsinghvi): Handle void types within unions
-        this.unionTypeDefinition = UnionTypeDefinition.builder()
-                .addAllTypes(unionTypeDefinition.types().stream()
-                        .filter(singleUnionType -> !singleUnionType.valueType().accept(IsVoidTypeReference.INSTANCE))
-                        .collect(Collectors.toList()))
-                .build();
+        this.unionTypeDefinition = unionTypeDefinition;
         this.typeDefinitionsByName = generatorContext.getTypeDefinitionsByName();
         this.generatedUnionClassName = generatorContext.getClassNameUtils().getClassName(namedType);
-        this.internalValueClassNames = this.unionTypeDefinition.types().stream()
+        this.internalValueClassNames = unionTypeDefinition.types().stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
                         singleUnionType -> generatedUnionClassName.nestedClass(generatorContext
@@ -155,16 +148,20 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
                     String keyWordCompatibleName = generatorContext
                             .getKeyWordUtils()
                             .getKeyWordCompatibleName(singleUnionType.discriminantValue());
-                    return MethodSpec.methodBuilder(keyWordCompatibleName)
-                            .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                            .addParameter(
-                                    generatorContext
-                                            .getTypeReferenceUtils()
-                                            .convertToTypeName(true, singleUnionType.valueType()),
-                                    "value")
+                    MethodSpec.Builder staticBuilder = MethodSpec.methodBuilder(keyWordCompatibleName)
+                            .addModifiers(Modifier.PUBLIC, Modifier.STATIC);
+                    // static builders for void types should have no parameters
+                    if (!singleUnionType.valueType().isVoid()) {
+                        staticBuilder.addParameter(
+                                generatorContext
+                                        .getTypeReferenceUtils()
+                                        .convertToTypeName(true, singleUnionType.valueType()),
+                                "value");
+                    }
+                    return staticBuilder
                             .returns(generatedUnionClassName)
                             .addStatement(
-                                    "return new $T($T.of(value))",
+                                    "return new $T($T.of())",
                                     generatedUnionClassName,
                                     internalValueClassNames.get(singleUnionType))
                             .build();
@@ -186,6 +183,11 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
             Map<SingleUnionType, MethodSpec> isTypeMethods,
             Map<SingleUnionType, GeneratedInternalValueTypeSpec> internalValueTypeSpecs) {
         return unionTypeDefinition.types().stream()
+                // Only non void single union types have getter methods
+                .filter(singleUnionType -> internalValueTypeSpecs
+                        .get(singleUnionType)
+                        .internalValueImmutablesProperty()
+                        .isPresent())
                 .map(singleUnionType -> {
                     TypeName singleUnionTypeName = generatorContext
                             .getTypeReferenceUtils()
@@ -199,7 +201,11 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
                                     "return $T.of((($T) value).$L())",
                                     ClassNameUtils.OPTIONAL_CLASS_NAME,
                                     internalValueClassNames.get(singleUnionType),
-                                    internalValueTypeSpecs.get(singleUnionType).internalValueImmutablesProperty().name)
+                                    internalValueTypeSpecs
+                                            .get(singleUnionType)
+                                            .internalValueImmutablesProperty()
+                                            .get()
+                                            .name)
                             .endControlFlow()
                             .addStatement("return $T.empty()", ClassNameUtils.OPTIONAL_CLASS_NAME)
                             .build();
@@ -218,15 +224,23 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
     }
 
     private GeneratedVisitor getVisitor() {
-        List<VisitorUtils.VisitMethodArgs> visitMethodArgs = unionTypeDefinition.types().stream()
-                .map(singleUnionType -> VisitorUtils.VisitMethodArgs.builder()
-                        .keyName(singleUnionType.discriminantValue())
-                        .visitorType(generatorContext
-                                .getTypeReferenceUtils()
-                                .convertToTypeName(true, singleUnionType.valueType()))
-                        .build())
+        List<VisitorUtils.VisitMethodArgs> visitMethodArgsList = unionTypeDefinition.types().stream()
+                .map(singleUnionType -> {
+                    if (singleUnionType.valueType().isVoid()) {
+                        return VisitorUtils.VisitMethodArgs.builder()
+                                .keyName(singleUnionType.discriminantValue())
+                                .build();
+                    } else {
+                        return VisitorUtils.VisitMethodArgs.builder()
+                                .keyName(singleUnionType.discriminantValue())
+                                .visitorType(generatorContext
+                                        .getTypeReferenceUtils()
+                                        .convertToTypeName(true, singleUnionType.valueType()))
+                                .build();
+                    }
+                })
                 .collect(Collectors.toList());
-        return generatorContext.getVisitorUtils().buildVisitorInterface(visitMethodArgs);
+        return generatorContext.getVisitorUtils().buildVisitorInterface(visitMethodArgsList);
     }
 
     /*
@@ -289,8 +303,8 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
         return unionTypeDefinition.types().stream().collect(Collectors.toMap(Function.identity(), singleUnionType -> {
             String capitalizedDiscriminantValue = StringUtils.capitalize(singleUnionType.discriminantValue());
             ClassName internalValueClassName = internalValueClassNames.get(singleUnionType);
-            MethodSpec internalValueImmutablesProperty = getInternalValueImmutablesProperty(singleUnionType);
-            TypeSpec typeSpec = TypeSpec.interfaceBuilder(internalValueClassName)
+
+            TypeSpec.Builder typeSpecBuilder = TypeSpec.interfaceBuilder(internalValueClassName)
                     .addAnnotation(Value.Immutable.class)
                     .addAnnotation(AnnotationSpec.builder(JsonTypeName.class)
                             .addMember("value", "$S", singleUnionType.discriminantValue())
@@ -302,40 +316,70 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
                                     generatorContext.getImmutablesUtils().getImmutablesClassName(namedType),
                                     internalValueClassName.simpleName())
                             .build())
-                    .addSuperinterface(internalValueInterfaceClassName)
-                    .addMethod(internalValueImmutablesProperty)
-                    .addMethod(MethodSpec.methodBuilder(ACCEPT_METHOD_NAME)
-                            .addTypeVariable(VisitorUtils.VISITOR_RETURN_TYPE)
-                            .returns(VisitorUtils.VISITOR_RETURN_TYPE)
-                            .addParameter(
-                                    generatorContext.getVisitorUtils().getVisitorTypeName(generatedUnionClassName),
-                                    "visitor")
-                            .addAnnotation(Override.class)
-                            .addStatement(
-                                    "return visitor.visit$L($L())",
-                                    capitalizedDiscriminantValue,
-                                    internalValueImmutablesProperty.name)
-                            .addModifiers(Modifier.DEFAULT, Modifier.PUBLIC)
-                            .build())
-                    .addMethod(MethodSpec.methodBuilder("of")
-                            .addModifiers(Modifier.STATIC, Modifier.PUBLIC)
-                            .returns(internalValueClassName)
-                            .addParameter(
-                                    generatorContext
-                                            .getTypeReferenceUtils()
-                                            .convertToTypeName(true, singleUnionType.valueType()),
-                                    "value")
-                            .addStatement(
-                                    "return Immutable$L.$L.builder().$L(value).build()",
-                                    generatedUnionClassName.simpleName(),
-                                    internalValueClassName.simpleName(),
-                                    internalValueImmutablesProperty.name)
-                            .build())
-                    .build();
-            return GeneratedInternalValueTypeSpec.builder()
-                    .typeSpec(typeSpec)
-                    .internalValueImmutablesProperty(internalValueImmutablesProperty)
-                    .build();
+                    .addSuperinterface(internalValueInterfaceClassName);
+
+            // No immutables properties for nested void types
+            if (!singleUnionType.valueType().isVoid()) {
+                MethodSpec internalValueImmutablesProperty = getInternalValueImmutablesProperty(singleUnionType);
+                TypeSpec typeSpec = typeSpecBuilder
+                        .addMethod(internalValueImmutablesProperty)
+                        .addMethod(MethodSpec.methodBuilder(ACCEPT_METHOD_NAME)
+                                .addTypeVariable(VisitorUtils.VISITOR_RETURN_TYPE)
+                                .returns(VisitorUtils.VISITOR_RETURN_TYPE)
+                                .addParameter(
+                                        generatorContext.getVisitorUtils().getVisitorTypeName(generatedUnionClassName),
+                                        "visitor")
+                                .addAnnotation(Override.class)
+                                .addStatement(
+                                        "return visitor.visit$L($L())",
+                                        capitalizedDiscriminantValue,
+                                        internalValueImmutablesProperty.name)
+                                .addModifiers(Modifier.DEFAULT, Modifier.PUBLIC)
+                                .build())
+                        .addMethod(MethodSpec.methodBuilder("of")
+                                .addModifiers(Modifier.STATIC, Modifier.PUBLIC)
+                                .returns(internalValueClassName)
+                                .addParameter(
+                                        generatorContext
+                                                .getTypeReferenceUtils()
+                                                .convertToTypeName(true, singleUnionType.valueType()),
+                                        "value")
+                                .addStatement(
+                                        "return Immutable$L.$L.builder().$L(value).build()",
+                                        generatedUnionClassName.simpleName(),
+                                        internalValueClassName.simpleName(),
+                                        internalValueImmutablesProperty.name)
+                                .build())
+                        .build();
+                return GeneratedInternalValueTypeSpec.builder()
+                        .typeSpec(typeSpec)
+                        .internalValueImmutablesProperty(internalValueImmutablesProperty)
+                        .build();
+            } else {
+                TypeSpec typeSpec = typeSpecBuilder
+                        .addMethod(MethodSpec.methodBuilder(ACCEPT_METHOD_NAME)
+                                .addTypeVariable(VisitorUtils.VISITOR_RETURN_TYPE)
+                                .returns(VisitorUtils.VISITOR_RETURN_TYPE)
+                                .addParameter(
+                                        generatorContext.getVisitorUtils().getVisitorTypeName(generatedUnionClassName),
+                                        "visitor")
+                                .addAnnotation(Override.class)
+                                .addStatement("return visitor.visit$L()", capitalizedDiscriminantValue)
+                                .addModifiers(Modifier.DEFAULT, Modifier.PUBLIC)
+                                .build())
+                        .addMethod(MethodSpec.methodBuilder("of")
+                                .addModifiers(Modifier.STATIC, Modifier.PUBLIC)
+                                .returns(internalValueClassName)
+                                .addStatement(
+                                        "return Immutable$L.$L.builder().build()",
+                                        generatedUnionClassName.simpleName(),
+                                        internalValueClassName.simpleName())
+                                .build())
+                        .build();
+                return GeneratedInternalValueTypeSpec.builder()
+                        .typeSpec(typeSpec)
+                        .build();
+            }
         }));
     }
 
@@ -412,40 +456,10 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
 
         TypeSpec typeSpec();
 
-        MethodSpec internalValueImmutablesProperty();
+        Optional<MethodSpec> internalValueImmutablesProperty();
 
         static ImmutableGeneratedInternalValueTypeSpec.TypeSpecBuildStage builder() {
             return ImmutableGeneratedInternalValueTypeSpec.builder();
-        }
-    }
-
-    private static final class IsVoidTypeReference implements TypeReference.Visitor<Boolean> {
-
-        private static final IsVoidTypeReference INSTANCE = new IsVoidTypeReference();
-
-        @Override
-        public Boolean visitNamed(NamedType namedType) {
-            return false;
-        }
-
-        @Override
-        public Boolean visitPrimitive(PrimitiveType primitiveType) {
-            return false;
-        }
-
-        @Override
-        public Boolean visitContainer(ContainerType containerType) {
-            return false;
-        }
-
-        @Override
-        public Boolean visitVoid() {
-            return true;
-        }
-
-        @Override
-        public Boolean visitUnknown(String unknownTyp) {
-            throw new RuntimeException("Encountered unknown type reference: " + unknownTyp);
         }
     }
 }

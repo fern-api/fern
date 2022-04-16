@@ -39,14 +39,20 @@ public final class AliasGenerator extends Generator<AliasTypeDefinition> {
 
     @Override
     public GeneratedAlias generate() {
-        TypeName aliasTypeName =
-                generatorContext.getTypeReferenceUtils().convertToTypeName(true, aliasTypeDefinition.aliasOf());
-        TypeSpec aliasTypeSpec = TypeSpec.interfaceBuilder(generatedAliasClassName)
+        TypeSpec.Builder aliasTypeSpecBuilder = TypeSpec.interfaceBuilder(generatedAliasClassName)
                 .addModifiers(ALIAS_CLASS_MODIFIERS)
-                .addAnnotations(getAnnotationSpecs())
-                .addMethod(getImmutablesValueProperty(aliasTypeName))
-                .addMethod(getValueOfMethod(aliasTypeName))
-                .build();
+                .addAnnotations(getAnnotationSpecs());
+        TypeSpec aliasTypeSpec;
+        if (aliasTypeDefinition.aliasOf().isVoid()) {
+            aliasTypeSpec = aliasTypeSpecBuilder.addMethod(getValueOfMethod()).build();
+        } else {
+            TypeName aliasTypeName =
+                    generatorContext.getTypeReferenceUtils().convertToTypeName(true, aliasTypeDefinition.aliasOf());
+            aliasTypeSpec = aliasTypeSpecBuilder
+                    .addMethod(getImmutablesValueProperty(aliasTypeName))
+                    .addMethod(getValueOfMethod(aliasTypeName))
+                    .build();
+        }
         JavaFile aliasFile = JavaFile.builder(generatedAliasClassName.packageName(), aliasTypeSpec)
                 .build();
         return GeneratedAlias.builder()
@@ -82,6 +88,17 @@ public final class AliasGenerator extends Generator<AliasTypeDefinition> {
                 .addParameter(aliasTypeName, "value")
                 .addStatement(
                         "return $T.builder().value($L).build()",
+                        generatorContext.getImmutablesUtils().getImmutablesClassName(namedType),
+                        "value")
+                .returns(generatedAliasClassName)
+                .build();
+    }
+
+    private MethodSpec getValueOfMethod() {
+        return MethodSpec.methodBuilder(VALUE_OF_METHOD_NAME)
+                .addModifiers(Modifier.PUBLIC, Modifier.DEFAULT)
+                .addStatement(
+                        "return $T.builder().build()",
                         generatorContext.getImmutablesUtils().getImmutablesClassName(namedType),
                         "value")
                 .returns(generatedAliasClassName)
