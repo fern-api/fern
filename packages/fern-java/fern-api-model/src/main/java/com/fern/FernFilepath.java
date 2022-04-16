@@ -15,7 +15,7 @@ public interface FernFilepath {
   @JsonValue
   String value();
 
-  default FernFilepath valueOf(String value) {
+  static FernFilepath valueOf(String value) {
     return ImmutableFernFilepath.builder().value(value).build();
   }
 }
