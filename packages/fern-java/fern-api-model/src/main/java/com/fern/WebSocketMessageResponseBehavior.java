@@ -43,7 +43,7 @@ public final class WebSocketMessageResponseBehavior {
     return this.string.hashCode();
   }
 
-  <T> T accept(Visitor<T> visitor) {
+  public <T> T accept(Visitor<T> visitor) {
     switch (value) {
       case ONGOING:
         return visitor.visitOngoing();

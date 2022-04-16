@@ -43,7 +43,7 @@ public final class WebSocketMessageOrigin {
     return this.string.hashCode();
   }
 
-  <T> T accept(Visitor<T> visitor) {
+  public <T> T accept(Visitor<T> visitor) {
     switch (value) {
       case SERVER:
         return visitor.visitServer();

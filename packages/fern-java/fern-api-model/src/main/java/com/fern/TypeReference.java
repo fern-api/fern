@@ -42,16 +42,24 @@ public final class TypeReference {
     return new TypeReference(Container.of(value));
   }
 
-  public boolean isContainer() {
-    return value instanceof Container;
+  public static TypeReference _void() {
+    return new TypeReference(_Void.of());
   }
 
   public boolean isPrimitive() {
     return value instanceof Primitive;
   }
 
+  public boolean isContainer() {
+    return value instanceof Container;
+  }
+
   public boolean isNamed() {
     return value instanceof Named;
+  }
+
+  public boolean isVoid() {
+    return value instanceof _Void;
   }
 
   public Optional<NamedType> getNamed() {
@@ -86,6 +94,8 @@ public final class TypeReference {
 
     T visitContainer(ContainerType value);
 
+    T visitVoid();
+
     T visitUnknown(String unknownType);
   }
 
@@ -97,33 +107,16 @@ public final class TypeReference {
       defaultImpl = Unknown.class
   )
   @JsonSubTypes({
-      @JsonSubTypes.Type(value = Container.class, name = "container"),
       @JsonSubTypes.Type(value = Primitive.class, name = "primitive"),
-      @JsonSubTypes.Type(value = Named.class, name = "named")
+      @JsonSubTypes.Type(value = Container.class, name = "container"),
+      @JsonSubTypes.Type(value = Named.class, name = "named"),
+      @JsonSubTypes.Type(value = _Void.class, name = "void")
   })
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
   private interface InternalValue {
     <T> T accept(Visitor<T> visitor);
-  }
-
-  @Value.Immutable
-  @JsonTypeName("container")
-  @JsonDeserialize(
-      as = ImmutableTypeReference.Container.class
-  )
-  interface Container extends InternalValue {
-    ContainerType container();
-
-    @Override
-    default <T> T accept(Visitor<T> visitor) {
-      return visitor.visitContainer(container());
-    }
-
-    static Container of(ContainerType value) {
-      return ImmutableTypeReference.Container.builder().container(value).build();
-    }
   }
 
   @Value.Immutable
@@ -145,6 +138,24 @@ public final class TypeReference {
   }
 
   @Value.Immutable
+  @JsonTypeName("container")
+  @JsonDeserialize(
+      as = ImmutableTypeReference.Container.class
+  )
+  interface Container extends InternalValue {
+    ContainerType container();
+
+    @Override
+    default <T> T accept(Visitor<T> visitor) {
+      return visitor.visitContainer(container());
+    }
+
+    static Container of(ContainerType value) {
+      return ImmutableTypeReference.Container.builder().container(value).build();
+    }
+  }
+
+  @Value.Immutable
   @JsonTypeName("named")
   @JsonDeserialize(
       as = ImmutableTypeReference.Named.class
@@ -160,6 +171,22 @@ public final class TypeReference {
 
     static Named of(NamedType value) {
       return ImmutableTypeReference.Named.builder().named(value).build();
+    }
+  }
+
+  @Value.Immutable
+  @JsonTypeName("void")
+  @JsonDeserialize(
+      as = ImmutableTypeReference._Void.class
+  )
+  interface _Void extends InternalValue {
+    @Override
+    default <T> T accept(Visitor<T> visitor) {
+      return visitor.visitVoid();
+    }
+
+    static _Void of() {
+      return ImmutableTypeReference._Void.builder().build();
     }
   }
 
