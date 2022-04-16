@@ -50,6 +50,10 @@ public final class TypeReference {
         return value instanceof Container;
     }
 
+    public boolean isVoid() {
+        return value instanceof Void;
+    }
+
     public Optional<NamedType> getNamed(){
         if (isNamed()) {
             return Optional.of(((Named) value).named());
