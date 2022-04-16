@@ -29,7 +29,6 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
-import com.squareup.javapoet.TypeVariableName;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -125,7 +124,7 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
     private MethodSpec getConstructor() {
         return MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PRIVATE)
-                .addParameter(generatedUnionClassName, VALUE_FIELD_NAME)
+                .addParameter(internalValueInterfaceClassName, VALUE_FIELD_NAME)
                 .addStatement("this.$L = $L", VALUE_FIELD_NAME, VALUE_FIELD_NAME)
                 .addAnnotation(AnnotationSpec.builder(JsonCreator.class)
                         .addMember(
@@ -205,6 +204,7 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
     private MethodSpec getAcceptMethod() {
         return MethodSpec.methodBuilder(ACCEPT_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC)
+                .addTypeVariable(VisitorUtils.VISITOR_RETURN_TYPE)
                 .addParameter(generatorContext.getVisitorUtils().getVisitorTypeName(generatedUnionClassName), "visitor")
                 .returns(VisitorUtils.VISITOR_RETURN_TYPE)
                 .addStatement("return value.accept(visitor)")
@@ -241,7 +241,6 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
      * }
      */
     private TypeSpec getInternalValueInterface() {
-        TypeVariableName acceptReturnType = TypeVariableName.get("T");
         TypeSpec.Builder baseInterfaceTypeSpecBuilder = TypeSpec.interfaceBuilder(internalValueInterfaceClassName)
                 .addModifiers(Modifier.PRIVATE)
                 .addMethod(MethodSpec.methodBuilder(ACCEPT_METHOD_NAME)
@@ -249,7 +248,8 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
                                         generatorContext.getVisitorUtils().getVisitorTypeName(generatedUnionClassName),
                                         "visitor")
                                 .build())
-                        .returns(acceptReturnType)
+                        .addTypeVariable(VisitorUtils.VISITOR_RETURN_TYPE)
+                        .returns(VisitorUtils.VISITOR_RETURN_TYPE)
                         .addModifiers(Modifier.ABSTRACT, Modifier.PRIVATE)
                         .build())
                 .addAnnotation(AnnotationSpec.builder(JsonTypeInfo.class)
@@ -301,6 +301,7 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
                             .addSuperinterface(internalValueInterfaceClassName)
                             .addMethod(getInternalValueImmutablesProperty(singleUnionType))
                             .addMethod(MethodSpec.methodBuilder(ACCEPT_METHOD_NAME)
+                                    .addTypeVariable(VisitorUtils.VISITOR_RETURN_TYPE)
                                     .returns(VisitorUtils.VISITOR_RETURN_TYPE)
                                     .addParameter(
                                             generatorContext
@@ -355,6 +356,7 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
                         .addModifiers(Modifier.DEFAULT, Modifier.PUBLIC)
                         .build())
                 .addMethod(MethodSpec.methodBuilder(ACCEPT_METHOD_NAME)
+                        .addTypeVariable(VisitorUtils.VISITOR_RETURN_TYPE)
                         .returns(VisitorUtils.VISITOR_RETURN_TYPE)
                         .addParameter(
                                 generatorContext.getVisitorUtils().getVisitorTypeName(generatedUnionClassName),
