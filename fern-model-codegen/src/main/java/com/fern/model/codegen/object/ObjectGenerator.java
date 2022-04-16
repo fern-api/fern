@@ -110,7 +110,7 @@ public final class ObjectGenerator extends Generator<ObjectTypeDefinition> {
         return MethodSpec.methodBuilder(STATIC_BUILDER_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(builderClassName)
-                .addCode("returns $T.builder();", immutableClassName)
+                .addCode("return $T.builder();", immutableClassName)
                 .build();
     }
 
