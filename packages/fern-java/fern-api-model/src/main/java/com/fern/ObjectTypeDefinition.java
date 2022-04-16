@@ -15,7 +15,7 @@ import org.immutables.value.Value;
 @JsonIgnoreProperties({"_type"})
 public interface ObjectTypeDefinition {
   @JsonProperty("extends")
-  List<TypeName> _extends();
+  List<NamedType> _extends();
 
   List<ObjectField> fields();
 

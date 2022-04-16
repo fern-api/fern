@@ -1,10 +1,10 @@
 package com.fern.interfaces;
 
-import com.fern.TypeName;
+import com.fern.NamedType;
 import java.lang.String;
 
 public interface IBaseService {
-  TypeName name();
+  NamedType name();
 
   String displayName();
 
