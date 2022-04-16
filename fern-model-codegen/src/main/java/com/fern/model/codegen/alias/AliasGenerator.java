@@ -84,7 +84,7 @@ public final class AliasGenerator extends Generator<AliasTypeDefinition> {
 
     private MethodSpec getValueOfMethod(TypeName aliasTypeName) {
         return MethodSpec.methodBuilder(VALUE_OF_METHOD_NAME)
-                .addModifiers(Modifier.PUBLIC, Modifier.DEFAULT)
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .addParameter(aliasTypeName, "value")
                 .addStatement(
                         "return $T.builder().value($L).build()",
