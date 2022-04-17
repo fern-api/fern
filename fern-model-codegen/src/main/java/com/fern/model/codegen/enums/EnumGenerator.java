@@ -138,6 +138,7 @@ public final class EnumGenerator extends Generator<EnumTypeDefinition> {
 
     private MethodSpec getEnumValueMethod() {
         return MethodSpec.methodBuilder(GET_ENUM_VALUE_METHOD_NAME)
+                .addModifiers(Modifier.PUBLIC)
                 .addCode("return value;")
                 .returns(valueFieldClassName)
                 .build();
