@@ -5,9 +5,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.fern.EnumTypeDefinition;
 import com.fern.EnumValue;
 import com.fern.NamedType;
+import com.fern.codegen.utils.ClassNameUtils;
 import com.fern.model.codegen.Generator;
 import com.fern.model.codegen.GeneratorContext;
-import com.fern.model.codegen.utils.ClassNameUtils;
 import com.fern.model.codegen.utils.VisitorUtils;
 import com.fern.model.codegen.utils.VisitorUtils.GeneratedVisitor;
 import com.squareup.javapoet.AnnotationSpec;
@@ -63,7 +63,7 @@ public final class EnumGenerator extends Generator<EnumTypeDefinition> {
                                 EnumValue.builder().value(upperCasedEnum).build())
                         .collect(Collectors.toList()))
                 .build();
-        this.generatedEnumClassName = generatorContext.getClassNameUtils().getClassName(namedType);
+        this.generatedEnumClassName = generatorContext.getClassNameUtils().getClassNameForNamedType(namedType);
         this.valueFieldClassName = generatedEnumClassName.nestedClass(VALUE_TYPE_NAME);
     }
 

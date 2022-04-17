@@ -1,5 +1,7 @@
 package com.fern.model.codegen;
 
+import com.fern.codegen.GeneratedFile;
+
 public abstract class Generator<D> {
 
     @SuppressWarnings("VisibilityModifier")

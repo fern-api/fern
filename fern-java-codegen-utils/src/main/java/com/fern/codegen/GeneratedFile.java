@@ -1,4 +1,4 @@
-package com.fern.model.codegen;
+package com.fern.codegen;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;

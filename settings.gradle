@@ -1,3 +1,5 @@
 rootProject.name = 'fern-java-plugins'
 
+include 'fern-java-codegen-utils'
 include 'fern-model-codegen'
+include 'fern-jersey-codegen'

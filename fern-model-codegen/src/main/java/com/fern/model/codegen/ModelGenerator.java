@@ -7,6 +7,7 @@ import com.fern.ObjectTypeDefinition;
 import com.fern.Type;
 import com.fern.TypeDefinition;
 import com.fern.UnionTypeDefinition;
+import com.fern.codegen.GeneratedFile;
 import com.fern.model.codegen.alias.AliasGenerator;
 import com.fern.model.codegen.config.PluginConfig;
 import com.fern.model.codegen.enums.EnumGenerator;

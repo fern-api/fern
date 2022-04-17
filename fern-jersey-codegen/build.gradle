@@ -1,9 +1,9 @@
 plugins {
     id 'java-library'
-    id 'java-library-distribution'
 }
 
 dependencies {
+    implementation project(':fern-model-codegen')
     implementation project(':fern-java-codegen-utils')
     implementation 'com.fern:fern-api-model'
     implementation 'com.fern:fern-immutables-style'
@@ -19,6 +19,7 @@ dependencies {
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-guava'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
     implementation 'org.immutables:value::annotations'
+    implementation 'jakarta.ws.rs:jakarta.ws.rs-api'
 
     annotationProcessor 'org.immutables:value'
 
@@ -28,25 +29,22 @@ dependencies {
     testImplementation 'org.mockito:mockito-core'
     testImplementation 'org.mockito:mockito-junit-jupiter'
 }
+//
+//distributions {
+//    main {
+//        distributionBaseName = project.name + "-" + rootProject.version
+//    }
+//}
 
-distributions {
-    main {
-        distributionBaseName = project.name + "-" + rootProject.version
-    }
-}
 
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-        }
-        myDistribution(MavenPublication) {
-            artifact distZip
-        }
-    }
-}
-
-artifactoryPublish {
-    publications('mavenJava', 'myDistribution')
-}
+//publishing {
+//    publications {
+//        mavenJava(MavenPublication) {
+//            from components.java
+//        }
+//    }
+//}
+//
+//artifactoryPublish {
+//    publications('mavenJava', 'myDistribution')
+//}

@@ -1,5 +1,6 @@
 package com.fern.model.codegen.utils;
 
+import com.fern.codegen.utils.ClassNameUtils;
 import com.fern.immutables.StagedBuilderStyle;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;

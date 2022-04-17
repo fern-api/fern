@@ -1,4 +1,4 @@
-package com.fern.model.codegen.utils;
+package com.fern.codegen.utils;
 
 import com.fern.ContainerType;
 import com.fern.MapType;
@@ -13,24 +13,24 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-public final class TypeReferenceUtils {
+class TypeReferenceUtils {
 
     private final ClassNameUtils classNameUtils;
     private final TypeReferenceToTypeNameConverter primitiveAllowedTypeReferenceConverter =
             new TypeReferenceToTypeNameConverter(true);
+    private final ContainerToTypeNameConverter containerToTypeNameConverter = new ContainerToTypeNameConverter();
 
-    public TypeReferenceUtils(ClassNameUtils classNameUtils) {
+    TypeReferenceUtils(ClassNameUtils classNameUtils) {
         this.classNameUtils = classNameUtils;
     }
 
-    public TypeName convertToTypeName(boolean primitiveAllowed, TypeReference typeReference) {
+    TypeName convertToTypeName(boolean primitiveAllowed, TypeReference typeReference) {
         return typeReference.accept(new TypeReferenceToTypeNameConverter(primitiveAllowed));
     }
 
     private final class TypeReferenceToTypeNameConverter implements TypeReference.Visitor<TypeName> {
 
         private final boolean primitiveAllowed;
-        private final ContainerToTypeNameConverter containerToTypeNameConverter = new ContainerToTypeNameConverter();
 
         private TypeReferenceToTypeNameConverter(boolean primitiveAllowed) {
             this.primitiveAllowed = primitiveAllowed;
@@ -38,7 +38,7 @@ public final class TypeReferenceUtils {
 
         @Override
         public TypeName visitNamed(NamedType namedType) {
-            return classNameUtils.getClassName(namedType);
+            return classNameUtils.getClassNameForNamedType(namedType);
         }
 
         @Override

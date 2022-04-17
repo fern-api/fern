@@ -3,6 +3,8 @@ package com.fern.model.codegen.utils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fern.NamedType;
 import com.fern.ObjectTypeDefinition;
+import com.fern.codegen.utils.ClassNameUtils;
+import com.fern.codegen.utils.KeyWordUtils;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
@@ -15,18 +17,16 @@ public final class ImmutablesUtils {
 
     private static final String IMMUTABLE_PREFIX = "Immutable";
 
-    private final FilepathUtils filepathUtils;
-    private final TypeReferenceUtils typeReferenceUtils;
+    private final ClassNameUtils classNameUtils;
 
-    public ImmutablesUtils(FilepathUtils filepathUtils, TypeReferenceUtils typeReferenceUtils) {
-        this.filepathUtils = filepathUtils;
-        this.typeReferenceUtils = typeReferenceUtils;
+    public ImmutablesUtils(ClassNameUtils classNameUtils) {
+        this.classNameUtils = classNameUtils;
     }
 
     public List<MethodSpec> getImmutablesPropertyMethods(ObjectTypeDefinition objectTypeDefinition) {
         return objectTypeDefinition.fields().stream()
                 .map(objectField -> {
-                    TypeName returnType = typeReferenceUtils.convertToTypeName(true, objectField.valueType());
+                    TypeName returnType = classNameUtils.getTypeNameFromTypeReference(true, objectField.valueType());
                     return getKeyWordCompatibleImmutablesPropertyMethod(objectField.key(), returnType);
                 })
                 .collect(Collectors.toList());
@@ -51,6 +51,6 @@ public final class ImmutablesUtils {
 
     public ClassName getImmutablesClassName(NamedType namedType) {
         return ClassName.get(
-                filepathUtils.convertFilepathToPackage(namedType.fernFilepath()), IMMUTABLE_PREFIX + namedType.name());
+                classNameUtils.getPackageFromFilepath(namedType.fernFilepath()), IMMUTABLE_PREFIX + namedType.name());
     }
 }

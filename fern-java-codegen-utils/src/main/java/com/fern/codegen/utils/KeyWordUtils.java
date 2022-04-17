@@ -1,4 +1,4 @@
-package com.fern.model.codegen.utils;
+package com.fern.codegen.utils;
 
 import java.util.Set;
 
@@ -6,16 +6,16 @@ public final class KeyWordUtils {
 
     private static final Set<String> RESERVED_WORDS = Set.of("enum", "extends", "package", "void", "object");
 
-    public KeyWordUtils() {}
+    private KeyWordUtils() {}
 
-    public String getKeyWordCompatibleName(String name) {
+    public static String getKeyWordCompatibleName(String name) {
         if (isReserved(name.toLowerCase())) {
             return "_" + name;
         }
         return name;
     }
 
-    static boolean isReserved(String value) {
+    public static boolean isReserved(String value) {
         return RESERVED_WORDS.contains(value.toLowerCase());
     }
 }

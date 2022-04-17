@@ -12,10 +12,11 @@ import com.fern.SingleUnionType;
 import com.fern.TypeDefinition;
 import com.fern.TypeReference;
 import com.fern.UnionTypeDefinition;
+import com.fern.codegen.utils.ClassNameUtils;
+import com.fern.codegen.utils.KeyWordUtils;
 import com.fern.immutables.StagedBuilderStyle;
 import com.fern.model.codegen.Generator;
 import com.fern.model.codegen.GeneratorContext;
-import com.fern.model.codegen.utils.ClassNameUtils;
 import com.fern.model.codegen.utils.VisitorUtils;
 import com.fern.model.codegen.utils.VisitorUtils.GeneratedVisitor;
 import com.palantir.common.streams.KeyedStream;
@@ -67,7 +68,7 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
         this.namedType = namedType;
         this.unionTypeDefinition = unionTypeDefinition;
         this.typeDefinitionsByName = generatorContext.getTypeDefinitionsByName();
-        this.generatedUnionClassName = generatorContext.getClassNameUtils().getClassName(namedType);
+        this.generatedUnionClassName = generatorContext.getClassNameUtils().getClassNameForNamedType(namedType);
         this.internalValueClassNames = unionTypeDefinition.types().stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
@@ -145,9 +146,8 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
     private List<MethodSpec> getStaticBuilderMethods() {
         return unionTypeDefinition.types().stream()
                 .map(singleUnionType -> {
-                    String keyWordCompatibleName = generatorContext
-                            .getKeyWordUtils()
-                            .getKeyWordCompatibleName(singleUnionType.discriminantValue());
+                    String keyWordCompatibleName =
+                            KeyWordUtils.getKeyWordCompatibleName(singleUnionType.discriminantValue());
                     MethodSpec.Builder staticBuilder = MethodSpec.methodBuilder(keyWordCompatibleName)
                             .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                             .returns(generatedUnionClassName);
@@ -156,8 +156,8 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
                         return staticBuilder
                                 .addParameter(
                                         generatorContext
-                                                .getTypeReferenceUtils()
-                                                .convertToTypeName(true, singleUnionType.valueType()),
+                                                .getClassNameUtils()
+                                                .getTypeNameFromTypeReference(true, singleUnionType.valueType()),
                                         "value")
                                 .addStatement(
                                         "return new $T($T.of(value))",
@@ -197,8 +197,8 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
                         .isPresent())
                 .map(singleUnionType -> {
                     TypeName singleUnionTypeName = generatorContext
-                            .getTypeReferenceUtils()
-                            .convertToTypeName(false, singleUnionType.valueType());
+                            .getClassNameUtils()
+                            .getTypeNameFromTypeReference(false, singleUnionType.valueType());
                     String capitalizedDiscriminantValue = StringUtils.capitalize(singleUnionType.discriminantValue());
                     return MethodSpec.methodBuilder("get" + capitalizedDiscriminantValue)
                             .addModifiers(Modifier.PUBLIC)
@@ -241,8 +241,8 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
                         return VisitorUtils.VisitMethodArgs.builder()
                                 .keyName(singleUnionType.discriminantValue())
                                 .visitorType(generatorContext
-                                        .getTypeReferenceUtils()
-                                        .convertToTypeName(true, singleUnionType.valueType()))
+                                        .getClassNameUtils()
+                                        .getTypeNameFromTypeReference(true, singleUnionType.valueType()))
                                 .build();
                     }
                 })
@@ -348,8 +348,8 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
                                 .returns(internalValueClassName)
                                 .addParameter(
                                         generatorContext
-                                                .getTypeReferenceUtils()
-                                                .convertToTypeName(true, singleUnionType.valueType()),
+                                                .getClassNameUtils()
+                                                .getTypeNameFromTypeReference(true, singleUnionType.valueType()),
                                         "value")
                                 .addStatement(
                                         "return Immutable$L.$L.builder().$L(value).build()",
@@ -427,7 +427,7 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
 
     private MethodSpec getInternalValueImmutablesProperty(SingleUnionType singleUnionType) {
         TypeName returnTypeName =
-                generatorContext.getTypeReferenceUtils().convertToTypeName(true, singleUnionType.valueType());
+                generatorContext.getClassNameUtils().getTypeNameFromTypeReference(true, singleUnionType.valueType());
         MethodSpec internalValueImmutablesProperty = generatorContext
                 .getImmutablesUtils()
                 .getKeyWordCompatibleImmutablesPropertyMethod(singleUnionType.discriminantValue(), returnTypeName);

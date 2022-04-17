@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.NamedType;
 import com.fern.ObjectField;
 import com.fern.ObjectTypeDefinition;
+import com.fern.codegen.GeneratedFile;
 import com.fern.immutables.StagedBuilderStyle;
-import com.fern.model.codegen.GeneratedFile;
 import com.fern.model.codegen.Generator;
 import com.fern.model.codegen.GeneratorContext;
 import com.fern.model.codegen.interfaces.GeneratedInterface;
@@ -53,7 +53,7 @@ public final class ObjectGenerator extends Generator<ObjectTypeDefinition> {
     @Override
     public GeneratedObject generate() {
         ClassName generatedObjectClassName =
-                generatorContext.getClassNameUtils().getClassName(namedType);
+                generatorContext.getClassNameUtils().getClassNameForNamedType(namedType);
         TypeSpec objectTypeSpec = TypeSpec.interfaceBuilder(namedType.name())
                 .addModifiers(OBJECT_INTERFACE_MODIFIERS)
                 .addAnnotations(getAnnotations())
