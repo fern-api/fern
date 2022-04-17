@@ -1,4 +1,4 @@
-import { FernFile, RelativeFilePath } from "@fernapi/compiler-commons";
+import { FernFile, RelativeFilePath } from "@fern-api/compiler-commons";
 import yaml from "js-yaml";
 import { SyntaxAnalysis, SyntaxAnalysisFailureType } from "./types";
 

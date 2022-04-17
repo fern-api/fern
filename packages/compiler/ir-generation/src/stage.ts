@@ -4,15 +4,15 @@ import {
     HttpEndpoint,
     HttpMethod,
     IntermediateRepresentation,
+    NamedType,
     PrimitiveType,
     Type,
-    NamedType,
     TypeReference,
     WebSocketMessageOrigin,
     WebSocketMessageResponseBehavior,
-} from "@fernapi/api";
-import { CompilerStage, RelativeFilePath } from "@fernapi/compiler-commons";
-import { RawSchemas, SimpleInlinableType } from "@fernapi/syntax-analysis";
+} from "@fern-api/api";
+import { CompilerStage, RelativeFilePath } from "@fern-api/compiler-commons";
+import { RawSchemas, SimpleInlinableType } from "@fern-api/syntax-analysis";
 import path from "path";
 
 export const IntermediateRepresentationGenerationStage: CompilerStage<

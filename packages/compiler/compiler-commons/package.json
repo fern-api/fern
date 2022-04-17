@@ -1,5 +1,5 @@
 {
-  "name": "@fernapi/compiler-commons",
+  "name": "@fern-api/compiler-commons",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [

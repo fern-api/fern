@@ -1,6 +1,6 @@
-import { compile, CompilerFailureType } from "@fernapi/compiler";
-import { FernFile, RelativeFilePath } from "@fernapi/compiler-commons";
-import { SyntaxAnalysisFailureType } from "@fernapi/syntax-analysis";
+import { compile, CompilerFailureType } from "@fern-api/compiler";
+import { FernFile, RelativeFilePath } from "@fern-api/compiler-commons";
+import { SyntaxAnalysisFailureType } from "@fern-api/syntax-analysis";
 import chalk from "chalk";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import glob from "glob";
