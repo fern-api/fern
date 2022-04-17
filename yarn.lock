@@ -416,13 +416,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/api@workspace:*, @fern-api/api@workspace:packages/api/generated/typescript":
+"@fern-api/api@0.0.1, @fern-api/api@workspace:*, @fern-api/api@workspace:packages/api/generated/typescript":
   version: 0.0.0-use.local
   resolution: "@fern-api/api@workspace:packages/api/generated/typescript"
   dependencies:
     typescript: ^4.6.3
   languageName: unknown
   linkType: soft
+
+"@fern-api/compiler-commons@npm:0.0.1":
+  version: 0.0.1
+  resolution: "@fern-api/compiler-commons@npm:0.0.1"
+  checksum: cf7c66c9a69dcf2630fa9f27f45101d98bdd8358bc1e2ce42c1c0389a4628252e384862ba44149a190066ac589dcc867946084f3e4c96234ec1cadee61c21017
+  languageName: node
+  linkType: hard
 
 "@fern-api/compiler-commons@workspace:*, @fern-api/compiler-commons@workspace:packages/compiler/compiler-commons":
   version: 0.0.0-use.local
@@ -436,6 +443,18 @@ __metadata:
     typescript: ^4.6.3
   languageName: unknown
   linkType: soft
+
+"@fern-api/compiler@npm:0.0.1":
+  version: 0.0.1
+  resolution: "@fern-api/compiler@npm:0.0.1"
+  dependencies:
+    "@fern-api/api": 0.0.1
+    "@fern-api/compiler-commons": 0.0.1
+    "@fern-api/ir-generation": 0.0.1
+    "@fern-api/syntax-analysis": 0.0.1
+  checksum: 0602e4b7f719a383040234b84f1c8a16d3a1e132a7e304def3494f4c3237f7319cac29ac2506fcd372796b0334c3daeda085186e1be40549dc96136088cfb589
+  languageName: node
+  linkType: hard
 
 "@fern-api/compiler@workspace:*, @fern-api/compiler@workspace:packages/compiler/compiler":
   version: 0.0.0-use.local
@@ -453,6 +472,17 @@ __metadata:
     typescript: ^4.6.3
   languageName: unknown
   linkType: soft
+
+"@fern-api/ir-generation@npm:0.0.1":
+  version: 0.0.1
+  resolution: "@fern-api/ir-generation@npm:0.0.1"
+  dependencies:
+    "@fern-api/api": 0.0.1
+    "@fern-api/compiler-commons": 0.0.1
+    "@fern-api/syntax-analysis": 0.0.1
+  checksum: 27e22b3175957efb3723c2d3bdc10243f3f6964754a21b129e2f4f352713c7f6cf0fe707dd85eea8af560103d3be775c6f8bd64e15d7f52331017ee7dd5a5890
+  languageName: node
+  linkType: hard
 
 "@fern-api/ir-generation@workspace:*, @fern-api/ir-generation@workspace:packages/compiler/ir-generation":
   version: 0.0.0-use.local
@@ -519,6 +549,17 @@ __metadata:
   version: 0.0.1
   resolution: "@fern-api/mrlint-virtual-file-system@npm:0.0.1"
   checksum: 1bccf5e6f51e9c2ce065ed2002309ad879962a6e0708fb2923ed16e364c088fe49911072d790800912e78aa42bf0773b284f8a963eb4789149a70de80036dedb
+  languageName: node
+  linkType: hard
+
+"@fern-api/syntax-analysis@npm:0.0.1":
+  version: 0.0.1
+  resolution: "@fern-api/syntax-analysis@npm:0.0.1"
+  dependencies:
+    "@fern-api/compiler-commons": 0.0.1
+    js-yaml: ^4.1.0
+    zod: ^3.14.3
+  checksum: a5beecbcdb19d3faf84c77c38285d2afda4b4c4bf5ec93d2f99246d6cc24e5205176960ef5a8f3435917042a0c0ab31564576e6c6f95cdcfbcd8f6aa612dbf70
   languageName: node
   linkType: hard
 
@@ -2701,6 +2742,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fern-api@npm:0.0.1":
+  version: 0.0.1
+  resolution: "fern-api@npm:0.0.1"
+  dependencies:
+    "@fern-api/compiler": 0.0.1
+    "@fern-api/compiler-commons": 0.0.1
+    "@fern-api/syntax-analysis": 0.0.1
+    chalk: ^4.1.2
+    glob: ^7.2.0
+    yargs: ^17.3.1
+    zod: ^3.14.3
+  bin:
+    fern-api: ./cli
+  checksum: 221a6c860371526f13eaa90684c85dc497d1bfaa7df61b625e2616fbc73d9c7614ea337165cc66a86df2fe142cca709cce24e03d03fda2885eea309388104a07
+  languageName: node
+  linkType: hard
+
 "fern-api@workspace:packages/compiler/cli":
   version: 0.0.0-use.local
   resolution: "fern-api@workspace:packages/compiler/cli"
@@ -2725,13 +2783,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"fern@npm:0.0.1":
-  version: 0.0.1
-  resolution: "fern@npm:0.0.1"
-  checksum: bbe1a745d657c36ef86ae13931284e68f2c769a30c66720db021b34cf9e90e1485ffd6c88f4afa275404e629fb85c98370ef7c7cd551d18d3325931b9eb48dc0
-  languageName: node
-  linkType: hard
-
 "fern@workspace:.":
   version: 0.0.0-use.local
   resolution: "fern@workspace:."
@@ -2742,7 +2793,7 @@ __metadata:
     eslint: ^8.12.0
     eslint-plugin-react: ^7.29.4
     eslint-plugin-react-hooks: ^4.4.0
-    fern: 0.0.1
+    fern-api: 0.0.1
     husky: ^7.0.4
     jest: ^27.5.1
     lint-staged: ^12.3.7
