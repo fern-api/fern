@@ -1,5 +1,5 @@
-import { IntermediateRepresentation } from "@fernapi/api";
-import { SyntaxAnalysis } from "@fernapi/syntax-analysis/src/types";
+import { IntermediateRepresentation } from "@fern-api/api";
+import { SyntaxAnalysis } from "@fern-api/syntax-analysis/src/types";
 
 export declare namespace Compiler {
     export type Result = SuccessfulResult | FailedResult;

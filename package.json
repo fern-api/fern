@@ -25,17 +25,17 @@
     "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public"
   },
   "devDependencies": {
-    "@fernapi/fern": "0.1.6",
-    "@fernapi/mrlint": "^0.1.16",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
     "depcheck": "^1.4.3",
     "eslint": "^8.12.0",
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.4.0",
+    "fern": "0.0.1",
     "husky": "^7.0.4",
     "jest": "^27.5.1",
     "lint-staged": "^12.3.7",
+    "mrlint": "^0.0.1",
     "prettier": "^2.6.1",
     "react": "^18.0.0",
     "stylelint": "^14.6.1"

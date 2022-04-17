@@ -1,5 +1,5 @@
 {
-  "name": "@fernapi/compiler",
+  "name": "@fern-api/compiler",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -18,10 +18,10 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fernapi/api": "workspace:*",
-    "@fernapi/compiler-commons": "workspace:*",
-    "@fernapi/ir-generation": "workspace:*",
-    "@fernapi/syntax-analysis": "workspace:*"
+    "@fern-api/api": "workspace:*",
+    "@fern-api/compiler-commons": "workspace:*",
+    "@fern-api/ir-generation": "workspace:*",
+    "@fern-api/syntax-analysis": "workspace:*"
   },
   "devDependencies": {
     "depcheck": "^1.4.3",
