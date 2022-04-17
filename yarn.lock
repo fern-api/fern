@@ -416,7 +416,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/api@0.0.1, @fern-api/api@workspace:*, @fern-api/api@workspace:packages/api/generated/typescript":
+"@fern-api/api@npm:0.0.1":
+  version: 0.0.1
+  resolution: "@fern-api/api@npm:0.0.1"
+  checksum: 0b461b052b51d1193e9ec9d0bc3cddbcc121f5d0b9ddf4329ecdf9b0710b7ee8f3ebea36d0532431ffb186eccdf535fe65ef87b5b3e5e7238204a38f8f8d7d93
+  languageName: node
+  linkType: hard
+
+"@fern-api/api@workspace:*, @fern-api/api@workspace:packages/api/generated/typescript":
   version: 0.0.0-use.local
   resolution: "@fern-api/api@workspace:packages/api/generated/typescript"
   dependencies:
