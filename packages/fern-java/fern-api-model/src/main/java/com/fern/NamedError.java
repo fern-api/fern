@@ -3,21 +3,21 @@ package com.fern;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.immutables.StagedBuilderStyle;
-import java.util.List;
+import java.lang.String;
 import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderStyle
 @JsonDeserialize(
-    as = ImmutableServices.class
+    as = ImmutableNamedError.class
 )
 @JsonIgnoreProperties({"_type"})
-public interface Services {
-  List<HttpService> http();
+public interface NamedError {
+  String name();
 
-  List<WebSocketService> websocket();
+  FernFilepath fernFilepath();
 
-  static ImmutableServices.Builder builder() {
-    return ImmutableServices.builder();
+  static ImmutableNamedError.NameBuildStage builder() {
+    return ImmutableNamedError.builder();
   }
 }

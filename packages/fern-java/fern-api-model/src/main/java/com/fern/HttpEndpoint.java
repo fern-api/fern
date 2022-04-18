@@ -32,7 +32,7 @@ public interface HttpEndpoint extends IWithDocs {
 
   Optional<HttpResponse> response();
 
-  List<HttpError> errors();
+  List<ErrorReference> errors();
 
   static ImmutableHttpEndpoint.EndpointIdBuildStage builder() {
     return ImmutableHttpEndpoint.builder();
