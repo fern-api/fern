@@ -8,6 +8,7 @@ types:
       types:
         docs: The types described by this API
         type: list<TypeDefinition>
+      errors: list<Error>
       services:
         docs: The services exposed by this API
         type: Services
@@ -100,10 +101,27 @@ types:
     fields:
       value: string
 
+  Error:
+    extends: WithDocs
+    fields:
+      name: NamedError
+      httpStatusCode: optional<integer>
+      bodyType: optional<TypeReference>
+
+  NamedError:
+    fields:
+      name: string
+      fernFilepath: FernFilepath
+
+  ErrorReference:
+    extends: WithDocs
+    fields:
+      error: NamedError
+
   Services:
     fields:
       http: list<HttpService>
-      webSocket: list<WebSocketService>
+      websocket: list<WebSocketService>
 
   BaseService:
     extends: WithDocs
@@ -135,7 +153,7 @@ types:
       headers: list<HttpHeader>
       request: optional<HttpRequest>
       response: optional<HttpResponse>
-      errors: list<HttpError>
+      errors: list<ErrorReference>
 
   HttpRequest:
     extends: WithDocs
@@ -166,13 +184,6 @@ types:
       key: string
       valueType: TypeReference
 
-  HttpError:
-    extends: WithDocs
-    fields:
-      name: string
-      statusCode: integer
-      bodyType: optional<TypeReference>
-
   WebSocketService:
     extends: BaseService
     fields:
@@ -184,7 +195,7 @@ types:
       origin: WebSocketMessageOrigin
       body: optional<WebSocketMessageBody>
       response: optional<WebSocketMessageResponse>
-      errors: list<WebsocketError>
+      errors: list<ErrorReference>
 
   WebSocketMessageOrigin:
     enum:
@@ -208,9 +219,3 @@ types:
     enum:
       - ONGOING
       - REQUEST_RESPONSE
-
-  WebsocketError:
-    extends: WithDocs
-    fields:
-      name: string
-      bodyType: optional<TypeReference>

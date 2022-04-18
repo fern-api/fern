@@ -2,6 +2,7 @@ import yargs from "yargs";
 import { compileCommand } from "./commands/compile";
 
 yargs
+    .scriptName("fern-api")
     .strict()
     .command(
         "generate <input> <output>",

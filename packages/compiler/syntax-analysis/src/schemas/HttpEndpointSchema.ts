@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { AuthSchema } from "./AuthSchema";
-import { HttpErrorSchema } from "./HttpErrorSchema";
+import { ErrorReferenceSchema } from "./ErrorReferenceSchema";
 import { HttpHeaderSchema } from "./HttpHeaderSchema";
 import { HttpParameterSchema } from "./HttpParameterSchema";
 import { HttpQueryParameterSchema } from "./HttpQueryParameterSchema";
@@ -18,7 +18,7 @@ export const HttpEndpointSchema = z
         auth: z.optional(AuthSchema),
         request: z.optional(HttpRequestSchema),
         response: z.optional(HttpResponseSchema),
-        errors: z.optional(z.record(HttpErrorSchema)),
+        errors: z.array(ErrorReferenceSchema),
     })
     .merge(WithDocsSchema);
 
