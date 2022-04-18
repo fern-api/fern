@@ -44,20 +44,20 @@ public final class ContainerType {
     return new ContainerType(Optional.of(value));
   }
 
-  public boolean isSet() {
-    return value instanceof Set;
-  }
-
-  public boolean isList() {
-    return value instanceof List;
-  }
-
   public boolean isMap() {
     return value instanceof Map;
   }
 
   public boolean isOptional() {
     return value instanceof Optional;
+  }
+
+  public boolean isSet() {
+    return value instanceof Set;
+  }
+
+  public boolean isList() {
+    return value instanceof List;
   }
 
   public java.util.Optional<MapType> getMap() {
@@ -112,52 +112,16 @@ public final class ContainerType {
       defaultImpl = Unknown.class
   )
   @JsonSubTypes({
-      @JsonSubTypes.Type(value = Set.class, name = "set"),
-      @JsonSubTypes.Type(value = List.class, name = "list"),
       @JsonSubTypes.Type(value = Map.class, name = "map"),
-      @JsonSubTypes.Type(value = Optional.class, name = "optional")
+      @JsonSubTypes.Type(value = Optional.class, name = "optional"),
+      @JsonSubTypes.Type(value = Set.class, name = "set"),
+      @JsonSubTypes.Type(value = List.class, name = "list")
   })
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
   private interface InternalValue {
     <T> T accept(Visitor<T> visitor);
-  }
-
-  @Value.Immutable
-  @JsonTypeName("set")
-  @JsonDeserialize(
-      as = ImmutableContainerType.Set.class
-  )
-  interface Set extends InternalValue {
-    TypeReference set();
-
-    @Override
-    default <T> T accept(Visitor<T> visitor) {
-      return visitor.visitSet(set());
-    }
-
-    static Set of(TypeReference value) {
-      return ImmutableContainerType.Set.builder().set(value).build();
-    }
-  }
-
-  @Value.Immutable
-  @JsonTypeName("list")
-  @JsonDeserialize(
-      as = ImmutableContainerType.List.class
-  )
-  interface List extends InternalValue {
-    TypeReference list();
-
-    @Override
-    default <T> T accept(Visitor<T> visitor) {
-      return visitor.visitList(list());
-    }
-
-    static List of(TypeReference value) {
-      return ImmutableContainerType.List.builder().list(value).build();
-    }
   }
 
   @Value.Immutable
@@ -194,6 +158,42 @@ public final class ContainerType {
 
     static Optional of(TypeReference value) {
       return ImmutableContainerType.Optional.builder().optional(value).build();
+    }
+  }
+
+  @Value.Immutable
+  @JsonTypeName("set")
+  @JsonDeserialize(
+      as = ImmutableContainerType.Set.class
+  )
+  interface Set extends InternalValue {
+    TypeReference set();
+
+    @Override
+    default <T> T accept(Visitor<T> visitor) {
+      return visitor.visitSet(set());
+    }
+
+    static Set of(TypeReference value) {
+      return ImmutableContainerType.Set.builder().set(value).build();
+    }
+  }
+
+  @Value.Immutable
+  @JsonTypeName("list")
+  @JsonDeserialize(
+      as = ImmutableContainerType.List.class
+  )
+  interface List extends InternalValue {
+    TypeReference list();
+
+    @Override
+    default <T> T accept(Visitor<T> visitor) {
+      return visitor.visitList(list());
+    }
+
+    static List of(TypeReference value) {
+      return ImmutableContainerType.List.builder().list(value).build();
     }
   }
 

@@ -4,26 +4,24 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.immutables.StagedBuilderStyle;
 import com.fern.interfaces.IWithDocs;
-import java.util.List;
+import java.lang.Integer;
 import java.util.Optional;
 import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderStyle
 @JsonDeserialize(
-    as = ImmutableWebSocketMessage.class
+    as = ImmutableError.class
 )
 @JsonIgnoreProperties({"_type"})
-public interface WebSocketMessage extends IWithDocs {
-  WebSocketMessageOrigin origin();
+public interface Error extends IWithDocs {
+  NamedError name();
 
-  Optional<WebSocketMessageBody> body();
+  Optional<Integer> httpStatusCode();
 
-  Optional<WebSocketMessageResponse> response();
+  Optional<TypeReference> bodyType();
 
-  List<ErrorReference> errors();
-
-  static ImmutableWebSocketMessage.OriginBuildStage builder() {
-    return ImmutableWebSocketMessage.builder();
+  static ImmutableError.NameBuildStage builder() {
+    return ImmutableError.builder();
   }
 }

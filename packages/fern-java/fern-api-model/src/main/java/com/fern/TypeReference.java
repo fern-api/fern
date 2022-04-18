@@ -46,20 +46,20 @@ public final class TypeReference {
     return new TypeReference(_Void.of());
   }
 
-  public boolean isPrimitive() {
-    return value instanceof Primitive;
+  public boolean isVoid() {
+    return value instanceof _Void;
   }
 
   public boolean isContainer() {
     return value instanceof Container;
   }
 
-  public boolean isNamed() {
-    return value instanceof Named;
+  public boolean isPrimitive() {
+    return value instanceof Primitive;
   }
 
-  public boolean isVoid() {
-    return value instanceof _Void;
+  public boolean isNamed() {
+    return value instanceof Named;
   }
 
   public Optional<NamedType> getNamed() {
@@ -107,10 +107,10 @@ public final class TypeReference {
       defaultImpl = Unknown.class
   )
   @JsonSubTypes({
-      @JsonSubTypes.Type(value = Primitive.class, name = "primitive"),
+      @JsonSubTypes.Type(value = _Void.class, name = "void"),
       @JsonSubTypes.Type(value = Container.class, name = "container"),
-      @JsonSubTypes.Type(value = Named.class, name = "named"),
-      @JsonSubTypes.Type(value = _Void.class, name = "void")
+      @JsonSubTypes.Type(value = Primitive.class, name = "primitive"),
+      @JsonSubTypes.Type(value = Named.class, name = "named")
   })
   @JsonIgnoreProperties(
       ignoreUnknown = true
@@ -120,20 +120,18 @@ public final class TypeReference {
   }
 
   @Value.Immutable
-  @JsonTypeName("primitive")
+  @JsonTypeName("void")
   @JsonDeserialize(
-      as = ImmutableTypeReference.Primitive.class
+      as = ImmutableTypeReference._Void.class
   )
-  interface Primitive extends InternalValue {
-    PrimitiveType primitive();
-
+  interface _Void extends InternalValue {
     @Override
     default <T> T accept(Visitor<T> visitor) {
-      return visitor.visitPrimitive(primitive());
+      return visitor.visitVoid();
     }
 
-    static Primitive of(PrimitiveType value) {
-      return ImmutableTypeReference.Primitive.builder().primitive(value).build();
+    static _Void of() {
+      return ImmutableTypeReference._Void.builder().build();
     }
   }
 
@@ -156,6 +154,24 @@ public final class TypeReference {
   }
 
   @Value.Immutable
+  @JsonTypeName("primitive")
+  @JsonDeserialize(
+      as = ImmutableTypeReference.Primitive.class
+  )
+  interface Primitive extends InternalValue {
+    PrimitiveType primitive();
+
+    @Override
+    default <T> T accept(Visitor<T> visitor) {
+      return visitor.visitPrimitive(primitive());
+    }
+
+    static Primitive of(PrimitiveType value) {
+      return ImmutableTypeReference.Primitive.builder().primitive(value).build();
+    }
+  }
+
+  @Value.Immutable
   @JsonTypeName("named")
   @JsonDeserialize(
       as = ImmutableTypeReference.Named.class
@@ -171,22 +187,6 @@ public final class TypeReference {
 
     static Named of(NamedType value) {
       return ImmutableTypeReference.Named.builder().named(value).build();
-    }
-  }
-
-  @Value.Immutable
-  @JsonTypeName("void")
-  @JsonDeserialize(
-      as = ImmutableTypeReference._Void.class
-  )
-  interface _Void extends InternalValue {
-    @Override
-    default <T> T accept(Visitor<T> visitor) {
-      return visitor.visitVoid();
-    }
-
-    static _Void of() {
-      return ImmutableTypeReference._Void.builder().build();
     }
   }
 
