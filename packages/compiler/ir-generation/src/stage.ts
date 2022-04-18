@@ -1,9 +1,11 @@
 import {
     ContainerType,
+    ErrorReference,
     FernFilepath,
     HttpEndpoint,
     HttpMethod,
     IntermediateRepresentation,
+    NamedError,
     NamedType,
     PrimitiveType,
     Type,
@@ -13,6 +15,7 @@ import {
 } from "@fern-api/api";
 import { CompilerStage, RelativeFilePath } from "@fern-api/compiler-commons";
 import { RawSchemas, SimpleInlinableType } from "@fern-api/syntax-analysis";
+import { ErrorReferenceSchema } from "@fern-api/syntax-analysis/src/schemas";
 import path from "path";
 
 export const IntermediateRepresentationGenerationStage: CompilerStage<
@@ -23,9 +26,10 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
     run: (schemas) => {
         const intermediateRepresentation: IntermediateRepresentation = {
             types: [],
+            errors: [],
             services: {
                 http: [],
-                webSocket: [],
+                websocket: [],
             },
         };
 
@@ -153,10 +157,47 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                         }
                     }
                 },
+                errors: (errors) => {
+                    if (errors == null) {
+                        return;
+                    }
+                    for (const [errorName, error] of Object.entries(errors)) {
+                        intermediateRepresentation.errors.push({
+                            name: {
+                                name: errorName,
+                                fernFilepath,
+                            },
+                            docs: error.docs,
+                            httpStatusCode: error.httpStatusCode,
+                            bodyType: error.bodyType != null ? parseInlinableType(error.bodyType) : undefined,
+                        });
+                    }
+                },
                 services: (services) => {
                     if (services == null) {
                         return;
                     }
+
+                    const parseErrorReferences = (
+                        errors: readonly ErrorReferenceSchema[] | undefined
+                    ): ErrorReference[] => {
+                        if (errors == null) {
+                            return [];
+                        }
+
+                        return errors.map((error) => {
+                            const docs = typeof error !== "string" ? error.docs : undefined;
+                            return {
+                                docs,
+                                error: parseError({
+                                    errorName: typeof error === "string" ? error : error.error,
+                                    fernFilepath,
+                                    imports,
+                                }),
+                            };
+                        });
+                    };
+
                     if (services.http != null) {
                         for (const [serviceId, serviceDefinition] of Object.entries(services.http)) {
                             intermediateRepresentation.services.http.push({
@@ -236,15 +277,7 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                                       bodyType: parseInlinableType(endpoint.response),
                                                   }
                                                 : undefined,
-                                        errors:
-                                            endpoint.errors != null
-                                                ? Object.entries(endpoint.errors).map(([errorName, error]) => ({
-                                                      name: errorName,
-                                                      statusCode: error.statusCode,
-                                                      bodyType: parseInlinableType(error),
-                                                      docs: error.docs,
-                                                  }))
-                                                : [],
+                                        errors: parseErrorReferences(endpoint.errors),
                                     })
                                 ),
                             });
@@ -252,7 +285,7 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                     }
                     if (services.webSocket != null) {
                         for (const [serviceId, serviceDefinition] of Object.entries(services.webSocket)) {
-                            intermediateRepresentation.services.webSocket.push({
+                            intermediateRepresentation.services.websocket.push({
                                 docs: serviceDefinition.docs,
                                 name: {
                                     fernFilepath,
@@ -288,14 +321,7 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                                           : WebSocketMessageResponseBehavior.ONGOING,
                                               }
                                             : undefined,
-                                    errors:
-                                        message.errors != null
-                                            ? Object.entries(message.errors).map(([errorName, error]) => ({
-                                                  docs: typeof error !== "string" ? error.docs : undefined,
-                                                  name: errorName,
-                                                  bodyType: error != null ? parseInlinableType(error) : undefined,
-                                              }))
-                                            : [],
+                                    errors: parseErrorReferences(message.errors),
                                 })),
                             });
                         }
@@ -401,31 +427,70 @@ function parseTypeName({
     fernFilepath: FernFilepath;
     imports: Record<string, string>;
 }): NamedType {
-    const splitByPackage = typeName.split(".");
+    const reference = parseReference({
+        reference: typeName,
+        fernFilepath,
+        imports,
+    });
+    return {
+        name: reference.referenceName,
+        fernFilepath,
+    };
+}
 
-    if (splitByPackage.length === 1) {
-        return {
-            fernFilepath,
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            name: splitByPackage[0]!,
-        };
-    }
+function parseError({
+    errorName,
+    fernFilepath,
+    imports,
+}: {
+    errorName: string;
+    fernFilepath: FernFilepath;
+    imports: Record<string, string>;
+}): NamedError {
+    const reference = parseReference({
+        reference: errorName,
+        fernFilepath,
+        imports,
+    });
+    return {
+        name: reference.referenceName,
+        fernFilepath,
+    };
+}
 
-    if (splitByPackage.length === 2) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const importAlias = splitByPackage[0]!;
-        const importPath = imports[importAlias];
-        if (importPath == null) {
-            throw new Error(`Invalid type: ${typeName}. Package ${importAlias} not found.`);
+function parseReference({
+    reference,
+    fernFilepath,
+    imports,
+}: {
+    reference: string;
+    fernFilepath: FernFilepath;
+    imports: Record<string, string>;
+}): { fernFilepath: FernFilepath; referenceName: string } {
+    const [firstPart, secondPart, ...rest] = reference.split(".");
+
+    if (firstPart != null) {
+        if (secondPart == null) {
+            return {
+                fernFilepath,
+                referenceName: firstPart,
+            };
         }
-        return {
-            fernFilepath: convertToFernFilepath(importPath),
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            name: splitByPackage[1]!,
-        };
+
+        if (rest.length === 0) {
+            const importAlias = firstPart;
+            const importPath = imports[importAlias];
+            if (importPath == null) {
+                throw new Error(`Invalid reference: ${reference}. Package ${importAlias} not found.`);
+            }
+            return {
+                fernFilepath: convertToFernFilepath(importPath),
+                referenceName: secondPart,
+            };
+        }
     }
 
-    throw new Error(`Invalid type: ${typeName}`);
+    throw new Error(`Invalid reference: ${reference}`);
 }
 
 function isRawAliasDefinition(
