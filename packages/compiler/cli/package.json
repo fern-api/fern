@@ -5,7 +5,9 @@
   "files": [
     "lib"
   ],
-  "bin": "./cli",
+  "bin": {
+    "fern": "./lib/cli.js"
+  },
   "scripts": {
     "clean": "tsc --build --clean",
     "compile": "tsc --build",
