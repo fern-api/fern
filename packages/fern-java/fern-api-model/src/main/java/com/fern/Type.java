@@ -47,20 +47,20 @@ public final class Type {
     return new Type(_Enum.of(value));
   }
 
-  public boolean isEnum() {
-    return value instanceof _Enum;
-  }
-
   public boolean isAlias() {
     return value instanceof Alias;
   }
 
-  public boolean isUnion() {
-    return value instanceof Union;
+  public boolean isEnum() {
+    return value instanceof _Enum;
   }
 
   public boolean isObject() {
     return value instanceof _Object;
+  }
+
+  public boolean isUnion() {
+    return value instanceof Union;
   }
 
   public Optional<ObjectTypeDefinition> getObject() {
@@ -115,16 +115,35 @@ public final class Type {
       defaultImpl = Unknown.class
   )
   @JsonSubTypes({
-      @JsonSubTypes.Type(value = _Enum.class, name = "enum"),
       @JsonSubTypes.Type(value = Alias.class, name = "alias"),
-      @JsonSubTypes.Type(value = Union.class, name = "union"),
-      @JsonSubTypes.Type(value = _Object.class, name = "object")
+      @JsonSubTypes.Type(value = _Enum.class, name = "enum"),
+      @JsonSubTypes.Type(value = _Object.class, name = "object"),
+      @JsonSubTypes.Type(value = Union.class, name = "union")
   })
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
   private interface InternalValue {
     <T> T accept(Visitor<T> visitor);
+  }
+
+  @Value.Immutable
+  @JsonTypeName("alias")
+  @JsonDeserialize(
+      as = ImmutableType.Alias.class
+  )
+  interface Alias extends InternalValue {
+    @JsonValue
+    AliasTypeDefinition alias();
+
+    @Override
+    default <T> T accept(Visitor<T> visitor) {
+      return visitor.visitAlias(alias());
+    }
+
+    static Alias of(AliasTypeDefinition value) {
+      return ImmutableType.Alias.builder().alias(value).build();
+    }
   }
 
   @Value.Immutable
@@ -148,21 +167,22 @@ public final class Type {
   }
 
   @Value.Immutable
-  @JsonTypeName("alias")
+  @JsonTypeName("object")
   @JsonDeserialize(
-      as = ImmutableType.Alias.class
+      as = ImmutableType._Object.class
   )
-  interface Alias extends InternalValue {
+  interface _Object extends InternalValue {
+    @JsonProperty("object")
     @JsonValue
-    AliasTypeDefinition alias();
+    ObjectTypeDefinition _object();
 
     @Override
     default <T> T accept(Visitor<T> visitor) {
-      return visitor.visitAlias(alias());
+      return visitor.visitObject(_object());
     }
 
-    static Alias of(AliasTypeDefinition value) {
-      return ImmutableType.Alias.builder().alias(value).build();
+    static _Object of(ObjectTypeDefinition value) {
+      return ImmutableType._Object.builder()._object(value).build();
     }
   }
 
@@ -182,26 +202,6 @@ public final class Type {
 
     static Union of(UnionTypeDefinition value) {
       return ImmutableType.Union.builder().union(value).build();
-    }
-  }
-
-  @Value.Immutable
-  @JsonTypeName("object")
-  @JsonDeserialize(
-      as = ImmutableType._Object.class
-  )
-  interface _Object extends InternalValue {
-    @JsonProperty("object")
-    @JsonValue
-    ObjectTypeDefinition _object();
-
-    @Override
-    default <T> T accept(Visitor<T> visitor) {
-      return visitor.visitObject(_object());
-    }
-
-    static _Object of(ObjectTypeDefinition value) {
-      return ImmutableType._Object.builder()._object(value).build();
     }
   }
 
