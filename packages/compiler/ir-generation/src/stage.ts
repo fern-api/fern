@@ -168,7 +168,12 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                 fernFilepath,
                             },
                             docs: error.docs,
-                            httpStatusCode: error.httpStatusCode,
+                            http:
+                                error.http != null
+                                    ? {
+                                          statusCode: error.http.statusCode,
+                                      }
+                                    : undefined,
                             bodyType: error.bodyType != null ? parseInlinableType(error.bodyType) : undefined,
                         });
                     }
@@ -318,7 +323,7 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                                           ? convertWebSocketMessageResponseBehavior(
                                                                 message.response.behavior
                                                             )
-                                                          : WebSocketMessageResponseBehavior.ONGOING,
+                                                          : WebSocketMessageResponseBehavior.Ongoing,
                                               }
                                             : undefined,
                                     errors: parseErrorReferences(message.errors),
@@ -524,22 +529,22 @@ function assertNever(typeDefinition: never): never {
 function convertHttpMethod(method: RawSchemas.HttpEndpointSchema["method"]): HttpMethod {
     switch (method) {
         case "GET":
-            return HttpMethod.GET;
+            return HttpMethod.Get;
         case "POST":
-            return HttpMethod.POST;
+            return HttpMethod.Post;
         case "PUT":
-            return HttpMethod.PUT;
+            return HttpMethod.Put;
         case "DELETE":
-            return HttpMethod.DELETE;
+            return HttpMethod.Delete;
     }
 }
 
 function convertWebSocketMessageOrigin(origin: RawSchemas.WebSocketMessageSchema["origin"]): WebSocketMessageOrigin {
     switch (origin) {
         case "client":
-            return WebSocketMessageOrigin.CLIENT;
+            return WebSocketMessageOrigin.Client;
         case "server":
-            return WebSocketMessageOrigin.SERVER;
+            return WebSocketMessageOrigin.Server;
     }
 }
 
@@ -547,13 +552,13 @@ function convertWebSocketMessageResponseBehavior(
     behavior: RawSchemas.WebSocketMessageResponseBehaviorSchema | undefined
 ): WebSocketMessageResponseBehavior {
     if (behavior == null) {
-        return WebSocketMessageResponseBehavior.ONGOING;
+        return WebSocketMessageResponseBehavior.Ongoing;
     }
     switch (behavior) {
         case "ongoing":
-            return WebSocketMessageResponseBehavior.ONGOING;
+            return WebSocketMessageResponseBehavior.Ongoing;
         case "request-response":
-            return WebSocketMessageResponseBehavior.REQUEST_RESPONSE;
+            return WebSocketMessageResponseBehavior.RequestResponse;
     }
 }
 
