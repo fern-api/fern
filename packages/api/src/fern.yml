@@ -1,6 +1,7 @@
 ids:
   - name: FernFilepath
     docs: A filepath to a Fern spec file, excluding the file extension
+
 types:
   IntermediateRepresentation:
     docs: Complete representation of the API schema
@@ -58,11 +59,11 @@ types:
 
   PrimitiveType:
     enum:
-      - integer
-      - double
-      - string
-      - boolean
-      - value: long
+      - INTEGER
+      - DOUBLE
+      - STRING
+      - BOOLEAN
+      - value: LONG
         docs: Within the range -2^53 to 2^53
 
   ContainerType:
@@ -105,8 +106,12 @@ types:
     extends: WithDocs
     fields:
       name: NamedError
-      httpStatusCode: optional<integer>
+      http: optional<HttpErrorConfiguration>
       bodyType: optional<TypeReference>
+
+  HttpErrorConfiguration:
+    fields:
+      statusCode: integer
 
   NamedError:
     fields:
@@ -122,13 +127,6 @@ types:
     fields:
       http: list<HttpService>
       websocket: list<WebSocketService>
-
-  BaseService:
-    extends: WithDocs
-    fields:
-      name: NamedType
-      displayName: string
-      basePath: string
 
   HttpService:
     extends: BaseService
@@ -148,8 +146,8 @@ types:
       endpointId: string
       method: HttpMethod
       path: string
-      parameters: list<HttpEndpointParameter>
-      queryParameters: list<HttpEndpointQueryParameter>
+      parameters: list<PathParameter>
+      queryParameters: list<QueryParameter>
       headers: list<HttpHeader>
       request: optional<HttpRequest>
       response: optional<HttpResponse>
@@ -171,18 +169,6 @@ types:
       - POST
       - PUT
       - DELETE
-
-  HttpEndpointParameter:
-    extends: WithDocs
-    fields:
-      key: string
-      valueType: TypeReference
-
-  HttpEndpointQueryParameter:
-    extends: WithDocs
-    fields:
-      key: string
-      valueType: TypeReference
 
   WebSocketService:
     extends: BaseService
@@ -219,3 +205,22 @@ types:
     enum:
       - ONGOING
       - REQUEST_RESPONSE
+
+  BaseService:
+    extends: WithDocs
+    fields:
+      name: NamedType
+      displayName: string
+      basePath: string
+
+  PathParameter:
+    extends: WithDocs
+    fields:
+      key: string
+      valueType: TypeReference
+
+  QueryParameter:
+    extends: WithDocs
+    fields:
+      key: string
+      valueType: TypeReference

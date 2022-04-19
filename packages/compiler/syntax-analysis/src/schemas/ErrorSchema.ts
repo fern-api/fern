@@ -1,8 +1,9 @@
 import { z } from "zod";
+import { HttpErrorConfigurationSchema } from "./HttpErrorConfigurationSchema";
 import { WithDocsSchema } from "./utils/WithDocsSchema";
 
 export const ErrorSchema = WithDocsSchema.extend({
-    httpStatusCode: z.optional(z.number()),
+    http: z.optional(HttpErrorConfigurationSchema),
     bodyType: z.optional(z.string()),
 });
 
