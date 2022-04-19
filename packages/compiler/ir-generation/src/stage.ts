@@ -558,7 +558,7 @@ function convertWebSocketMessageResponseBehavior(
         case "ongoing":
             return WebSocketMessageResponseBehavior.Ongoing;
         case "request-response":
-            return WebSocketMessageResponseBehavior.Requestresponse;
+            return WebSocketMessageResponseBehavior.RequestResponse;
     }
 }
 
