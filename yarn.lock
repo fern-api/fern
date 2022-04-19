@@ -1322,10 +1322,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/api@npm:0.0.2":
-  version: 0.0.2
-  resolution: "@fern-api/api@npm:0.0.2"
-  checksum: ff3ddd6f03de61af59471b99af2ec917a19c946bc5f4e9c20d76444aac3df96a36d47384645b7bf6e2bfcbd9ff2faa9c352246e165117f88deee832721b0d4e2
+"@fern-api/api@npm:0.0.3":
+  version: 0.0.3
+  resolution: "@fern-api/api@npm:0.0.3"
+  checksum: 0ff171ef12692351f60ce50a156c341330180168453bbfc8a90e8cbe1cbc4987bd7b2170febd556dc7a475b425cda5a16ef75378da8c43b8b845dfcf723f1fda
   languageName: node
   linkType: hard
 
@@ -1337,10 +1337,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/compiler-commons@npm:0.0.2":
-  version: 0.0.2
-  resolution: "@fern-api/compiler-commons@npm:0.0.2"
-  checksum: bf9a6abd9d71fa3bc7c37efa3c3f97b52d6d29ac711fab4dc383396b57ce5a76cc21d9bafdc9d37be10fe3f618dfbff1c33d3c5714bedfcf8ab0d0a5a5b29fba
+"@fern-api/compiler-commons@npm:0.0.3":
+  version: 0.0.3
+  resolution: "@fern-api/compiler-commons@npm:0.0.3"
+  checksum: 773ee337bb1f3aa6ab80339e4103fb93414b75a3cc1585c9d8c97a557ebb4c3e077005168be6e517cb14a0a299e1bdf59b7bd62f35f356a0701c2824b104509f
   languageName: node
   linkType: hard
 
@@ -1362,15 +1362,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/compiler@npm:0.0.2":
-  version: 0.0.2
-  resolution: "@fern-api/compiler@npm:0.0.2"
+"@fern-api/compiler@npm:0.0.3":
+  version: 0.0.3
+  resolution: "@fern-api/compiler@npm:0.0.3"
   dependencies:
-    "@fern-api/api": 0.0.2
-    "@fern-api/compiler-commons": 0.0.2
-    "@fern-api/ir-generation": 0.0.2
-    "@fern-api/syntax-analysis": 0.0.2
-  checksum: be2e9401bb7ca6ee57cb0f2f0d3c115e886afba7006ff34fd658f463c5741d52efca4e4b675a7854bdf8d40d89690ce00951cdb00d202dc603f1a574b664ea90
+    "@fern-api/api": 0.0.3
+    "@fern-api/compiler-commons": 0.0.3
+    "@fern-api/ir-generation": 0.0.3
+    "@fern-api/syntax-analysis": 0.0.3
+  checksum: aafd372fbcd2f3874fb652368c3e4dec350528e99d6a19aa25f6a1f62b4917226d439900bbe7ecd1e2dfc73fc93cc7c4f710f7284c2bd162eb1a6b869e4c29c1
   languageName: node
   linkType: hard
 
@@ -1396,14 +1396,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/ir-generation@npm:0.0.2":
-  version: 0.0.2
-  resolution: "@fern-api/ir-generation@npm:0.0.2"
+"@fern-api/ir-generation@npm:0.0.3":
+  version: 0.0.3
+  resolution: "@fern-api/ir-generation@npm:0.0.3"
   dependencies:
-    "@fern-api/api": 0.0.2
-    "@fern-api/compiler-commons": 0.0.2
-    "@fern-api/syntax-analysis": 0.0.2
-  checksum: aead48d9aeeed6fec4174e7fade18d2d62bdf7ad05e47a1e5d0b11ca961091249d736283ddeb265e6d1489c771d75bcf0f1d2546607cbf6c57c63b862c555358
+    "@fern-api/api": 0.0.3
+    "@fern-api/compiler-commons": 0.0.3
+    "@fern-api/syntax-analysis": 0.0.3
+  checksum: dbb05a9ccd5d7a76e0c4b1f5390d6e6ef42897b552c4147fc652ff442c26bee7a84509159d5f718e87a7a230827745c38e6d4c49db96d2f45cd9d4ee06649dba
   languageName: node
   linkType: hard
 
@@ -1480,14 +1480,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/syntax-analysis@npm:0.0.2":
-  version: 0.0.2
-  resolution: "@fern-api/syntax-analysis@npm:0.0.2"
+"@fern-api/syntax-analysis@npm:0.0.3":
+  version: 0.0.3
+  resolution: "@fern-api/syntax-analysis@npm:0.0.3"
   dependencies:
-    "@fern-api/compiler-commons": 0.0.2
+    "@fern-api/compiler-commons": 0.0.3
     js-yaml: ^4.1.0
     zod: ^3.14.3
-  checksum: 5d7c9d7dca39a53de24cb72b1dfb0311fbcfd8d65a6a6ba8f109590996f9d4aca5f145fb905ea45d124698fff9f7209c36eb8e77b776be2f24aa8245a2da98c0
+  checksum: 3fc91a8edb1009b5477a2394f63f24fa4c4551ec9a85dc02cc25648c6047e7082672183a2c82b213a907e4a8e1e5333e5aa8ca5de5128baab3aab4bc200fbd37
   languageName: node
   linkType: hard
 
@@ -3747,20 +3747,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fern-api@npm:0.0.2":
-  version: 0.0.2
-  resolution: "fern-api@npm:0.0.2"
+"fern-api@npm:0.0.3":
+  version: 0.0.3
+  resolution: "fern-api@npm:0.0.3"
   dependencies:
-    "@fern-api/compiler": 0.0.2
-    "@fern-api/compiler-commons": 0.0.2
-    "@fern-api/syntax-analysis": 0.0.2
+    "@fern-api/compiler": 0.0.3
+    "@fern-api/compiler-commons": 0.0.3
+    "@fern-api/syntax-analysis": 0.0.3
     chalk: ^4.1.2
     glob: ^7.2.0
     yargs: ^17.3.1
     zod: ^3.14.3
   bin:
     fern-api: ./cli
-  checksum: 4d9d786c1ac16d3e20c665ce59b4bb5ff7f44b635c79fa39d8438b35e2e87916cbbf61072e046a46e681d36f16b86b8fcf7123718b01dc705c638b48c40fd72a
+  checksum: bae65982aae4f15cc2d641329d44b42f8387838f5691fa682d0f4bb6b36ee35fd097e15819741df7939a36cd947808d64af5d52b1ebc212b65515c2090c1b312
   languageName: node
   linkType: hard
 
@@ -3803,7 +3803,7 @@ __metadata:
     eslint: ^8.12.0
     eslint-plugin-react: ^7.29.4
     eslint-plugin-react-hooks: ^4.4.0
-    fern-api: 0.0.2
+    fern-api: 0.0.3
     husky: ^7.0.4
     jest: ^27.5.1
     lint-staged: ^12.3.7
