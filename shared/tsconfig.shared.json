@@ -20,6 +20,8 @@
     "strict": true,
     "isolatedModules": true,
     "baseUrl": ".",
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
   }
 }
