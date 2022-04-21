@@ -9,7 +9,7 @@ types:
       types:
         docs: The types described by this API
         type: list<TypeDefinition>
-      errors: list<Error>
+      errors: list<ErrorDefinition>
       services:
         docs: The services exposed by this API
         type: Services
@@ -103,12 +103,19 @@ types:
     fields:
       value: string
 
-  Error:
+  ErrorDefinition:
     extends: WithDocs
     fields:
       name: NamedError
       http: optional<HttpErrorConfiguration>
       bodyType: optional<TypeReference>
+      args: list<ErrorArgument>
+
+  ErrorArgument:
+    extends: WithDocs
+    fields:
+      name: string
+      type: TypeReference
 
   HttpErrorConfiguration:
     fields:
