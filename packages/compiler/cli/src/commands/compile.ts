@@ -1,14 +1,10 @@
 import { compile, CompilerFailureType } from "@fern-api/compiler";
-import { FernFile, RelativeFilePath } from "@fern-api/compiler-commons";
 import { SyntaxAnalysisFailureType } from "@fern-api/syntax-analysis";
 import chalk from "chalk";
-import { mkdir, readFile, writeFile } from "fs/promises";
-import glob from "glob";
+import { mkdir, writeFile } from "fs/promises";
 import path from "path";
-import { promisify } from "util";
 import { ZodIssue, ZodIssueCode } from "zod";
-
-const promisifiedGlob = promisify(glob);
+import { parseFernDirectory } from "../parseFernDirectory";
 
 export async function compileCommand({
     inputDirectory,
@@ -17,19 +13,7 @@ export async function compileCommand({
     inputDirectory: string;
     output: string;
 }): Promise<void> {
-    const filepaths = await getAllYamlFiles(inputDirectory);
-    const files: FernFile[] = [];
-    for (const filepath of filepaths) {
-        try {
-            files.push({
-                filepath,
-                fileContents: (await readFile(path.join(inputDirectory, filepath))).toString(),
-            });
-        } catch (e) {
-            console.error(`Failed to read file: ${filepath}`, e);
-        }
-    }
-
+    const files = await parseFernDirectory(inputDirectory);
     const compileResult = await compile(files);
 
     if (compileResult.didSucceed) {
@@ -110,11 +94,4 @@ function parseIssue(issue: ZodIssue): ParsedIssue[] {
         default:
             return [{ title: issue.message }];
     }
-}
-
-async function getAllYamlFiles(fullDirectoryPath: string): Promise<RelativeFilePath[]> {
-    const x = await promisifiedGlob("**/*.yml", {
-        cwd: fullDirectoryPath,
-    });
-    return x;
 }

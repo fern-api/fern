@@ -17,6 +17,7 @@ import { CompilerStage, RelativeFilePath } from "@fern-api/compiler-commons";
 import { RawSchemas, SimpleInlinableType } from "@fern-api/syntax-analysis";
 import { ErrorReferenceSchema } from "@fern-api/syntax-analysis/src/schemas";
 import path from "path";
+import { DEFAULT_UNION_TYPE_DISCRIMINANT } from "./constants";
 
 export const IntermediateRepresentationGenerationStage: CompilerStage<
     Record<RelativeFilePath, RawSchemas.FernSchema>,
@@ -128,6 +129,7 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                     name: typeName,
                                 },
                                 shape: Type.union({
+                                    discriminant: typeDefinition.discriminant ?? DEFAULT_UNION_TYPE_DISCRIMINANT,
                                     types: Object.entries(typeDefinition.union).map(
                                         ([discriminantValue, unionedType]) => ({
                                             discriminantValue,

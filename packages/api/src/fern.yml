@@ -80,6 +80,7 @@ types:
 
   UnionTypeDefinition:
     fields:
+      discriminant: string
       types: list<SingleUnionType>
 
   SingleUnionType:
