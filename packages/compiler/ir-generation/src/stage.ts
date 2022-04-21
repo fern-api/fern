@@ -186,16 +186,17 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                     }
 
                     const parseErrorReferences = (
-                        errors: readonly ErrorReferenceSchema[] | undefined
+                        errors: Record<string, ErrorReferenceSchema> | undefined
                     ): ErrorReference[] => {
                         if (errors == null) {
                             return [];
                         }
 
-                        return errors.map((error) => {
+                        return Object.entries(errors).map(([discriminantValue, error]) => {
                             const docs = typeof error !== "string" ? error.docs : undefined;
                             return {
                                 docs,
+                                discriminantValue,
                                 error: parseError({
                                     errorName: typeof error === "string" ? error : error.error,
                                     fernFilepath,
