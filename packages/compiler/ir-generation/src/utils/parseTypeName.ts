@@ -17,6 +17,6 @@ export function parseTypeName({
     });
     return {
         name: reference.referenceName,
-        fernFilepath,
+        fernFilepath: reference.fernFilepath,
     };
 }
