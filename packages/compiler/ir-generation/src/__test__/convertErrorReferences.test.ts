@@ -3,12 +3,11 @@ import { convertErrorReferences } from "../converters/services/convertErrorRefer
 
 describe("convertErrorReferences", () => {
     it("reference to an error in another file", () => {
-        const fernFilepath = FernFilepath.of("path/to/service");
         const references = convertErrorReferences({
             errors: {
                 unauthorized: "commons.UnauthorizedError",
             },
-            fernFilepath,
+            fernFilepath: FernFilepath.of("path/to/service"),
             imports: {
                 commons: "./commons",
             },
