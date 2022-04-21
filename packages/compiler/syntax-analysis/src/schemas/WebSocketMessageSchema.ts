@@ -9,7 +9,7 @@ export const WebSocketMessageSchema = z
         origin: z.enum(["client", "server"]),
         body: z.optional(WebSocketMessageBodySchema),
         response: z.optional(WebSocketMessageResponseSchema),
-        errors: z.array(ErrorReferenceSchema),
+        errors: z.optional(z.record(ErrorReferenceSchema)),
     })
     .merge(WithDocsSchema);
 

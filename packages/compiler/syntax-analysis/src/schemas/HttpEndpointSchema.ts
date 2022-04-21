@@ -18,7 +18,7 @@ export const HttpEndpointSchema = z
         auth: z.optional(AuthSchema),
         request: z.optional(HttpRequestSchema),
         response: z.optional(HttpResponseSchema),
-        errors: z.array(ErrorReferenceSchema),
+        errors: z.optional(z.record(ErrorReferenceSchema)),
     })
     .merge(WithDocsSchema);
 
