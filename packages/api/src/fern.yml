@@ -42,9 +42,9 @@ types:
       extends:
         docs: A list of other types to inherit from
         type: list<NamedType>
-      fields: list<ObjectField>
+      properties: list<ObjectProperty>
 
-  ObjectField:
+  ObjectProperty:
     extends: WithDocs
     fields:
       key: string
@@ -108,10 +108,9 @@ types:
     fields:
       name: NamedError
       http: optional<HttpErrorConfiguration>
-      bodyType: optional<TypeReference>
-      args: list<ErrorArgument>
+      properties: list<ErrorProperty>
 
-  ErrorArgument:
+  ErrorProperty:
     extends: WithDocs
     fields:
       name: string
