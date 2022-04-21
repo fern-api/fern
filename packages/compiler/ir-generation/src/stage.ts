@@ -20,7 +20,7 @@ import path from "path";
 import { DEFAULT_UNION_TYPE_DISCRIMINANT } from "./constants";
 
 export const IntermediateRepresentationGenerationStage: CompilerStage<
-    Record<RelativeFilePath, RawSchemas.FernSchema>,
+    Record<RelativeFilePath, RawSchemas.RawFernConfigurationSchema>,
     IntermediateRepresentation,
     void
 > = {
@@ -163,20 +163,31 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                     if (errors == null) {
                         return;
                     }
-                    for (const [errorName, error] of Object.entries(errors)) {
+                    for (const [errorName, errorDefinition] of Object.entries(errors)) {
                         intermediateRepresentation.errors.push({
                             name: {
                                 name: errorName,
                                 fernFilepath,
                             },
-                            docs: error.docs,
+                            docs: errorDefinition.docs,
                             http:
-                                error.http != null
+                                errorDefinition.http != null
                                     ? {
-                                          statusCode: error.http.statusCode,
+                                          statusCode: errorDefinition.http.statusCode,
                                       }
                                     : undefined,
-                            bodyType: error.bodyType != null ? parseInlinableType(error.bodyType) : undefined,
+                            bodyType:
+                                errorDefinition.bodyType != null
+                                    ? parseInlinableType(errorDefinition.bodyType)
+                                    : undefined,
+                            args:
+                                errorDefinition.args != null
+                                    ? Object.entries(errorDefinition.args).map(([argName, arg]) => ({
+                                          name: argName,
+                                          docs: typeof arg !== "string" ? arg.docs : undefined,
+                                          type: parseInlinableType(arg),
+                                      }))
+                                    : [],
                         });
                     }
                 },
