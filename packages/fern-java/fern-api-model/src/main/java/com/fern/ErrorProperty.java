@@ -10,15 +10,15 @@ import org.immutables.value.Value;
 @Value.Immutable
 @StagedBuilderStyle
 @JsonDeserialize(
-    as = ImmutableErrorReference.class
+    as = ImmutableErrorProperty.class
 )
 @JsonIgnoreProperties({"_type"})
-public interface ErrorReference extends IWithDocs {
-  String discriminantValue();
+public interface ErrorProperty extends IWithDocs {
+  String name();
 
-  NamedError error();
+  TypeReference type();
 
-  static ImmutableErrorReference.DiscriminantValueBuildStage builder() {
-    return ImmutableErrorReference.builder();
+  static ImmutableErrorProperty.NameBuildStage builder() {
+    return ImmutableErrorProperty.builder();
   }
 }

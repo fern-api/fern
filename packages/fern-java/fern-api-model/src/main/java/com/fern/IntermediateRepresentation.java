@@ -15,7 +15,7 @@ import org.immutables.value.Value;
 public interface IntermediateRepresentation {
   List<TypeDefinition> types();
 
-  List<Error> errors();
+  List<ErrorDefinition> errors();
 
   Services services();
 

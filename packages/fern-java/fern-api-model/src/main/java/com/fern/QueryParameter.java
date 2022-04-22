@@ -10,15 +10,15 @@ import org.immutables.value.Value;
 @Value.Immutable
 @StagedBuilderStyle
 @JsonDeserialize(
-    as = ImmutableErrorReference.class
+    as = ImmutableQueryParameter.class
 )
 @JsonIgnoreProperties({"_type"})
-public interface ErrorReference extends IWithDocs {
-  String discriminantValue();
+public interface QueryParameter extends IWithDocs {
+  String key();
 
-  NamedError error();
+  TypeReference valueType();
 
-  static ImmutableErrorReference.DiscriminantValueBuildStage builder() {
-    return ImmutableErrorReference.builder();
+  static ImmutableQueryParameter.KeyBuildStage builder() {
+    return ImmutableQueryParameter.builder();
   }
 }

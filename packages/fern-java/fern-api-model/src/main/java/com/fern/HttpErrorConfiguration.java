@@ -3,22 +3,19 @@ package com.fern;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.immutables.StagedBuilderStyle;
-import com.fern.interfaces.IWithDocs;
-import java.lang.String;
+import java.lang.Integer;
 import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderStyle
 @JsonDeserialize(
-    as = ImmutableErrorReference.class
+    as = ImmutableHttpErrorConfiguration.class
 )
 @JsonIgnoreProperties({"_type"})
-public interface ErrorReference extends IWithDocs {
-  String discriminantValue();
+public interface HttpErrorConfiguration {
+  Integer statusCode();
 
-  NamedError error();
-
-  static ImmutableErrorReference.DiscriminantValueBuildStage builder() {
-    return ImmutableErrorReference.builder();
+  static ImmutableHttpErrorConfiguration.StatusCodeBuildStage builder() {
+    return ImmutableHttpErrorConfiguration.builder();
   }
 }
