@@ -22,9 +22,9 @@ public interface HttpEndpoint extends IWithDocs {
 
   String path();
 
-  List<HttpEndpointParameter> parameters();
+  List<PathParameter> parameters();
 
-  List<HttpEndpointQueryParameter> queryParameters();
+  List<QueryParameter> queryParameters();
 
   List<HttpHeader> headers();
 

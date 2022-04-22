@@ -17,7 +17,7 @@ public interface ObjectTypeDefinition {
   @JsonProperty("extends")
   List<NamedType> _extends();
 
-  List<ObjectField> fields();
+  List<ObjectProperty> properties();
 
   static ImmutableObjectTypeDefinition.Builder builder() {
     return ImmutableObjectTypeDefinition.builder();
