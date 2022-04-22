@@ -24,7 +24,7 @@ public final class ImmutablesUtils {
     }
 
     public List<MethodSpec> getImmutablesPropertyMethods(ObjectTypeDefinition objectTypeDefinition) {
-        return objectTypeDefinition.fields().stream()
+        return objectTypeDefinition.properties().stream()
                 .map(objectField -> {
                     TypeName returnType = classNameUtils.getTypeNameFromTypeReference(true, objectField.valueType());
                     return getKeyWordCompatibleImmutablesPropertyMethod(objectField.key(), returnType);

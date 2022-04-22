@@ -2,12 +2,12 @@ package com.fern.services.jersey.codegen;
 
 import com.fern.FernFilepath;
 import com.fern.HttpEndpoint;
-import com.fern.HttpEndpointParameter;
 import com.fern.HttpMethod;
 import com.fern.HttpRequest;
 import com.fern.HttpResponse;
 import com.fern.HttpService;
 import com.fern.NamedType;
+import com.fern.PathParameter;
 import com.fern.PrimitiveType;
 import com.fern.TypeReference;
 import java.util.Collections;
@@ -28,7 +28,7 @@ public class ServiceGeneratorTest {
                         .endpointId("getPerson")
                         .method(HttpMethod.GET)
                         .path("/{personId}")
-                        .addParameters(HttpEndpointParameter.builder()
+                        .addParameters(PathParameter.builder()
                                 .key("personId")
                                 .valueType(TypeReference.primitive(PrimitiveType.STRING))
                                 .build())

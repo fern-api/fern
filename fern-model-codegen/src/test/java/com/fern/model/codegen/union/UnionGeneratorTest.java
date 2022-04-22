@@ -19,6 +19,7 @@ public class UnionGeneratorTest {
     @Test
     public void test_basic() {
         UnionTypeDefinition unionTypeDefinition = UnionTypeDefinition.builder()
+                .discriminant("_type")
                 .addTypes(SingleUnionType.builder()
                         .discriminantValue("integerValue")
                         .valueType(TypeReference.primitive(PrimitiveType.INTEGER))

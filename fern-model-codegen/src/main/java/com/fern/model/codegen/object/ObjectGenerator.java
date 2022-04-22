@@ -3,14 +3,13 @@ package com.fern.model.codegen.object;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.NamedType;
-import com.fern.ObjectField;
+import com.fern.ObjectProperty;
 import com.fern.ObjectTypeDefinition;
 import com.fern.codegen.GeneratedFile;
 import com.fern.immutables.StagedBuilderStyle;
 import com.fern.model.codegen.Generator;
 import com.fern.model.codegen.GeneratorContext;
 import com.fern.model.codegen.interfaces.GeneratedInterface;
-import com.fern.model.codegen.union.UnionGenerator;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -78,7 +77,7 @@ public final class ObjectGenerator extends Generator<ObjectTypeDefinition> {
                         "as", "$T.class", generatorContext.getImmutablesUtils().getImmutablesClassName(namedType))
                 .build());
         annotationSpecs.add(AnnotationSpec.builder(JsonIgnoreProperties.class)
-                .addMember("value", "{$S}", UnionGenerator.UNION_DISCRIMINATOR_PROPERTY_NAME)
+                .addMember("ignoreUnknown", "{$L}", Boolean.TRUE.toString())
                 .build());
         return annotationSpecs;
     }
@@ -103,7 +102,7 @@ public final class ObjectGenerator extends Generator<ObjectTypeDefinition> {
 
     private MethodSpec generateStaticBuilder() {
         Optional<String> firstMandatoryFieldName =
-                getFirstRequiredFieldName(extendedInterfaces, objectTypeDefinition.fields());
+                getFirstRequiredFieldName(extendedInterfaces, objectTypeDefinition.properties());
         ClassName immutableClassName = generatorContext.getImmutablesUtils().getImmutablesClassName(namedType);
         ClassName builderClassName = firstMandatoryFieldName.isEmpty()
                 ? immutableClassName.nestedClass("Builder")
@@ -117,22 +116,22 @@ public final class ObjectGenerator extends Generator<ObjectTypeDefinition> {
     }
 
     private static Optional<String> getFirstRequiredFieldName(
-            List<GeneratedInterface> superInterfaces, List<ObjectField> fields) {
+            List<GeneratedInterface> superInterfaces, List<ObjectProperty> properties) {
         // Required field from super interfaces take priority
         for (GeneratedInterface superInterface : superInterfaces) {
             Optional<String> firstMandatoryFieldName =
-                    getFirstRequiredFieldName(superInterface.definition().fields());
+                    getFirstRequiredFieldName(superInterface.definition().properties());
             if (firstMandatoryFieldName.isPresent()) {
                 return firstMandatoryFieldName;
             }
         }
-        return getFirstRequiredFieldName(fields);
+        return getFirstRequiredFieldName(properties);
     }
 
-    private static Optional<String> getFirstRequiredFieldName(List<ObjectField> fields) {
-        for (ObjectField field : fields) {
-            if (field.valueType().isPrimitive() || field.valueType().isNamed()) {
-                return Optional.of(field.key());
+    private static Optional<String> getFirstRequiredFieldName(List<ObjectProperty> properties) {
+        for (ObjectProperty property : properties) {
+            if (property.valueType().isPrimitive() || property.valueType().isNamed()) {
+                return Optional.of(property.key());
             }
         }
         return Optional.empty();

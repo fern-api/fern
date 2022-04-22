@@ -1,13 +1,13 @@
 package com.fern.services.jersey.codegen;
 
 import com.fern.HttpEndpoint;
-import com.fern.HttpEndpointParameter;
-import com.fern.HttpEndpointQueryParameter;
 import com.fern.HttpHeader;
 import com.fern.HttpMethod;
 import com.fern.HttpRequest;
 import com.fern.HttpResponse;
 import com.fern.HttpService;
+import com.fern.PathParameter;
+import com.fern.QueryParameter;
 import com.fern.TypeReference;
 import com.fern.codegen.utils.ClassNameUtils;
 import com.squareup.javapoet.AnnotationSpec;
@@ -25,6 +25,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
+import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -106,11 +107,11 @@ public final class ServiceGenerator {
         return getParameterSpec(HeaderParam.class, header.header(), header.valueType());
     }
 
-    private ParameterSpec getPathParameterSpec(HttpEndpointParameter pathParameter) {
+    private ParameterSpec getPathParameterSpec(PathParameter pathParameter) {
         return getParameterSpec(PathParam.class, pathParameter.key(), pathParameter.valueType());
     }
 
-    private ParameterSpec getQueryParameterSpec(HttpEndpointQueryParameter queryParameter) {
+    private ParameterSpec getQueryParameterSpec(QueryParameter queryParameter) {
         return getParameterSpec(QueryParam.class, queryParameter.key(), queryParameter.valueType());
     }
 
@@ -154,6 +155,11 @@ public final class ServiceGenerator {
         @Override
         public AnnotationSpec visitDelete() {
             return AnnotationSpec.builder(DELETE.class).build();
+        }
+
+        @Override
+        public AnnotationSpec visitPatch() {
+            return AnnotationSpec.builder(PATCH.class).build();
         }
 
         @Override

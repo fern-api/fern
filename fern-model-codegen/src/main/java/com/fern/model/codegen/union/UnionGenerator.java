@@ -41,8 +41,6 @@ import org.immutables.value.Value;
 
 public final class UnionGenerator extends Generator<UnionTypeDefinition> {
 
-    public static final String UNION_DISCRIMINATOR_PROPERTY_NAME = "_type";
-
     private static final Modifier[] UNION_CLASS_MODIFIERS = new Modifier[] {Modifier.PUBLIC, Modifier.FINAL};
 
     private static final String INTERNAL_VALUE_INTERFACE_NAME = "InternalValue";
@@ -286,7 +284,7 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
                                 "$T.$L",
                                 ClassName.get(JsonTypeInfo.As.class),
                                 JsonTypeInfo.As.EXISTING_PROPERTY.name())
-                        .addMember("property", "$S", UNION_DISCRIMINATOR_PROPERTY_NAME)
+                        .addMember("property", "$S", unionTypeDefinition.discriminant())
                         .addMember("visible", "true")
                         .addMember("defaultImpl", "$T.class", unknownInternalValueClassName)
                         .build());
