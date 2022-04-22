@@ -93,5 +93,7 @@ function convertHttpMethod(method: RawSchemas.HttpEndpointSchema["method"]): Htt
             return HttpMethod.Put;
         case "DELETE":
             return HttpMethod.Delete;
+        case "PATCH":
+            return HttpMethod.Patch;
     }
 }

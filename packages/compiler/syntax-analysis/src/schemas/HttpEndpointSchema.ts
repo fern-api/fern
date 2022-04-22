@@ -10,7 +10,7 @@ import { WithDocsSchema } from "./utils/WithDocsSchema";
 
 export const HttpEndpointSchema = z
     .strictObject({
-        method: z.enum(["GET", "POST", "PUT", "DELETE"]),
+        method: z.enum(["GET", "POST", "PUT", "DELETE", "PATCH"]),
         path: z.string(),
         parameters: z.optional(z.record(HttpParameterSchema)),
         queryParameters: z.optional(z.record(HttpQueryParameterSchema)),
