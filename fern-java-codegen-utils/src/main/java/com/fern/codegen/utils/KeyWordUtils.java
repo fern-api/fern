@@ -4,8 +4,7 @@ import java.util.Set;
 
 public final class KeyWordUtils {
 
-    private static final Set<String> RESERVED_WORDS = Set.of(
-            "enum", "extends", "package", "void", "object", "short");
+    private static final Set<String> RESERVED_WORDS = Set.of("enum", "extends", "package", "void", "object", "short");
 
     private KeyWordUtils() {}
 
