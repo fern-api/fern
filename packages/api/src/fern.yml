@@ -101,6 +101,7 @@ types:
   EnumValue:
     extends: WithDocs
     fields:
+      name: string
       value: string
 
   ErrorDefinition:
