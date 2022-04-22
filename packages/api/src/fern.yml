@@ -101,7 +101,9 @@ types:
   EnumValue:
     extends: WithDocs
     fields:
-      name: string
+      name:
+        type: string
+        docs: Name is an alphanumeric way to reference this enum. Useful for code generation.
       value: string
 
   ErrorDefinition:
