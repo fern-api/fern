@@ -177,6 +177,7 @@ types:
       - POST
       - PUT
       - DELETE
+      - PATCH
 
   WebSocketService:
     extends: BaseService
