@@ -16,8 +16,8 @@ import java.util.Set;
 class TypeReferenceUtils {
 
     private final ClassNameUtils classNameUtils;
-    private final TypeReferenceToTypeNameConverter primitiveAllowedTypeReferenceConverter =
-            new TypeReferenceToTypeNameConverter(true);
+    private final TypeReferenceToTypeNameConverter primitiveDisAllowedTypeReferenceConverter =
+            new TypeReferenceToTypeNameConverter(false);
     private final ContainerToTypeNameConverter containerToTypeNameConverter = new ContainerToTypeNameConverter();
 
     TypeReferenceUtils(ClassNameUtils classNameUtils) {
@@ -127,26 +127,26 @@ class TypeReferenceUtils {
         public TypeName visitMap(MapType mapType) {
             return ParameterizedTypeName.get(
                     ClassName.get(Map.class),
-                    mapType.keyType().accept(primitiveAllowedTypeReferenceConverter),
-                    mapType.valueType().accept(primitiveAllowedTypeReferenceConverter));
+                    mapType.keyType().accept(primitiveDisAllowedTypeReferenceConverter),
+                    mapType.valueType().accept(primitiveDisAllowedTypeReferenceConverter));
         }
 
         @Override
         public TypeName visitList(TypeReference typeReference) {
             return ParameterizedTypeName.get(
-                    ClassName.get(List.class), typeReference.accept(primitiveAllowedTypeReferenceConverter));
+                    ClassName.get(List.class), typeReference.accept(primitiveDisAllowedTypeReferenceConverter));
         }
 
         @Override
         public TypeName visitSet(TypeReference typeReference) {
             return ParameterizedTypeName.get(
-                    ClassName.get(Set.class), typeReference.accept(primitiveAllowedTypeReferenceConverter));
+                    ClassName.get(Set.class), typeReference.accept(primitiveDisAllowedTypeReferenceConverter));
         }
 
         @Override
         public TypeName visitOptional(TypeReference typeReference) {
             return ParameterizedTypeName.get(
-                    ClassName.get(Optional.class), typeReference.accept(primitiveAllowedTypeReferenceConverter));
+                    ClassName.get(Optional.class), typeReference.accept(primitiveDisAllowedTypeReferenceConverter));
         }
 
         @Override
