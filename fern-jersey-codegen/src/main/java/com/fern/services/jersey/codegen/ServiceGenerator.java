@@ -47,11 +47,11 @@ public final class ServiceGenerator {
         this.classNameUtils = new ClassNameUtils(Optional.empty());
     }
 
-    public List<GeneratedService> generate() {
+    public List<GeneratedServiceWithDefinition> generate() {
         return httpServices.stream().map(this::getGeneratedService).collect(Collectors.toList());
     }
 
-    private GeneratedService getGeneratedService(HttpService httpService) {
+    private GeneratedServiceWithDefinition getGeneratedService(HttpService httpService) {
         ClassName generatedServiceClassName = classNameUtils.getClassNameForNamedType(httpService.name());
         TypeSpec.Builder jerseyServiceBuilder = TypeSpec.interfaceBuilder(
                         StringUtils.capitalize(httpService.name().name()))
@@ -73,10 +73,10 @@ public final class ServiceGenerator {
         JavaFile jerseyServiceJavaFile = JavaFile.builder(
                         generatedServiceClassName.packageName(), jerseyServiceTypeSpec)
                 .build();
-        return GeneratedService.builder()
+        return GeneratedServiceWithDefinition.builder()
                 .file(jerseyServiceJavaFile)
-                .definition(httpService)
                 .className(generatedServiceClassName)
+                .definition(httpService)
                 .build();
     }
 

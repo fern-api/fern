@@ -89,8 +89,8 @@ public final class EnumGenerator extends Generator<EnumTypeDefinition> {
                 .build();
         return GeneratedEnum.builder()
                 .file(enumFile)
-                .definition(enumTypeDefinition)
                 .className(generatedEnumClassName)
+                .definition(enumTypeDefinition)
                 .build();
     }
 

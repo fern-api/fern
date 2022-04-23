@@ -49,7 +49,7 @@ public class ServiceGeneratorTest {
                         .build())
                 .build();
         ServiceGenerator serviceGenerator = new ServiceGenerator(Collections.singletonList(testHttpService));
-        GeneratedService generatedService = serviceGenerator.generate().get(0);
+        GeneratedServiceWithDefinition generatedService = serviceGenerator.generate().get(0);
         System.out.println(generatedService.file().toString());
     }
 }

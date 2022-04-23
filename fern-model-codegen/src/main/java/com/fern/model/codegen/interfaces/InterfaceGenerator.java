@@ -35,8 +35,8 @@ public final class InterfaceGenerator extends Generator<ObjectTypeDefinition> {
                 .build();
         return GeneratedInterface.builder()
                 .file(interfaceFile)
-                .definition(objectTypeDefinition)
                 .className(generatedInterfaceClassName)
+                .definition(objectTypeDefinition)
                 .build();
     }
 

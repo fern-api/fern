@@ -102,8 +102,8 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
                 .build();
         return GeneratedUnion.builder()
                 .file(unionFile)
-                .definition(unionTypeDefinition)
                 .className(generatedUnionClassName)
+                .definition(unionTypeDefinition)
                 .build();
     }
 

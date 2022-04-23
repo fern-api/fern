@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.AliasTypeDefinition;
 import com.fern.NamedType;
-import com.fern.immutables.StagedBuilderStyle;
 import com.fern.model.codegen.Generator;
 import com.fern.model.codegen.GeneratorContext;
 import com.squareup.javapoet.AnnotationSpec;
@@ -58,15 +57,16 @@ public final class AliasGenerator extends Generator<AliasTypeDefinition> {
                 .build();
         return GeneratedAlias.builder()
                 .file(aliasFile)
-                .definition(aliasTypeDefinition)
                 .className(generatedAliasClassName)
+                .definition(aliasTypeDefinition)
                 .build();
     }
 
     private List<AnnotationSpec> getAnnotationSpecs() {
         return List.of(
                 AnnotationSpec.builder(Value.Immutable.class).build(),
-                AnnotationSpec.builder(StagedBuilderStyle.class).build(),
+                AnnotationSpec.builder(generatorContext.getStagedImmutablesBuilderClassname())
+                        .build(),
                 AnnotationSpec.builder(JsonDeserialize.class)
                         .addMember(
                                 "as",

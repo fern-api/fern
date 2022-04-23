@@ -18,10 +18,12 @@ public final class ClassNameUtils {
     public static final ClassName OPTIONAL_CLASS_NAME = ClassName.get(Optional.class);
     public static final ClassName SET_CLASS_NAME = ClassName.get(Set.class);
 
+    private final Optional<String> maybePackagePrefix;
     private final List<String> packagePrefixes;
     private final TypeReferenceUtils typeReferenceUtils;
 
     public ClassNameUtils(Optional<String> maybePackagePrefix) {
+        this.maybePackagePrefix = maybePackagePrefix;
         String[] splitPackagePrefix = maybePackagePrefix
                 .map(packagePrefix -> packagePrefix.split("/"))
                 .orElseGet(() -> new String[0]);
@@ -31,6 +33,13 @@ public final class ClassNameUtils {
 
     public ClassName getClassNameForNamedType(NamedType namedType) {
         return ClassName.get(getPackageFromFilepath(namedType.fernFilepath()), namedType.name());
+    }
+
+    public ClassName getClassName(String className) {
+        if (maybePackagePrefix.isPresent()) {
+            return ClassName.get(maybePackagePrefix.get(), className);
+        }
+        return ClassName.get("", className);
     }
 
     public TypeName getTypeNameFromTypeReference(boolean primitiveAllowed, TypeReference typeReference) {

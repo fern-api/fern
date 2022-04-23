@@ -7,7 +7,8 @@ import com.fern.ObjectTypeDefinition;
 import com.fern.Type;
 import com.fern.TypeDefinition;
 import com.fern.UnionTypeDefinition;
-import com.fern.codegen.GeneratedFile;
+import com.fern.codegen.GeneratedFileWithDefinition;
+import com.fern.codegen.IGeneratedFile;
 import com.fern.model.codegen.alias.AliasGenerator;
 import com.fern.model.codegen.config.PluginConfig;
 import com.fern.model.codegen.enums.EnumGenerator;
@@ -27,6 +28,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public final class ModelGenerator {
 
@@ -59,12 +61,15 @@ public final class ModelGenerator {
 
     private List<JavaFile> generateJavaFiles() {
         Map<NamedType, GeneratedInterface> generatedInterfaces = getGeneratedInterfaces();
-        List<GeneratedFile<?>> generatedFiles = typeDefinitions.stream()
+        List<GeneratedFileWithDefinition<?>> generatedFiles = typeDefinitions.stream()
                 .map(typeDefinition ->
                         typeDefinition.shape().accept(new TypeDefinitionGenerator(typeDefinition, generatedInterfaces)))
                 .collect(Collectors.toList());
-        return Streams.concat(generatedInterfaces.values().stream(), generatedFiles.stream())
-                .map(GeneratedFile::file)
+        return Streams.concat(
+                        generatedInterfaces.values().stream(),
+                        generatedFiles.stream(),
+                        Stream.of(generatorContext.getStagedImmutablesFile()))
+                .map(IGeneratedFile::file)
                 .collect(Collectors.toList());
     }
 
@@ -90,7 +95,7 @@ public final class ModelGenerator {
         }));
     }
 
-    private final class TypeDefinitionGenerator implements Type.Visitor<GeneratedFile<?>> {
+    private final class TypeDefinitionGenerator implements Type.Visitor<GeneratedFileWithDefinition<?>> {
 
         private final TypeDefinition typeDefinition;
         private final Map<NamedType, GeneratedInterface> generatedInterfaces;
@@ -101,7 +106,7 @@ public final class ModelGenerator {
         }
 
         @Override
-        public GeneratedFile<?> visitObject(ObjectTypeDefinition objectTypeDefinition) {
+        public GeneratedFileWithDefinition<?> visitObject(ObjectTypeDefinition objectTypeDefinition) {
             Optional<GeneratedInterface> selfInterface =
                     Optional.ofNullable(generatedInterfaces.get(typeDefinition.name()));
             List<GeneratedInterface> extendedInterfaces = objectTypeDefinition._extends().stream()
@@ -115,28 +120,28 @@ public final class ModelGenerator {
         }
 
         @Override
-        public GeneratedFile<?> visitUnion(UnionTypeDefinition unionTypeDefinition) {
+        public GeneratedFileWithDefinition<?> visitUnion(UnionTypeDefinition unionTypeDefinition) {
             UnionGenerator unionGenerator =
                     new UnionGenerator(typeDefinition.name(), unionTypeDefinition, generatorContext);
             return unionGenerator.generate();
         }
 
         @Override
-        public GeneratedFile<?> visitAlias(AliasTypeDefinition aliasTypeDefinition) {
+        public GeneratedFileWithDefinition<?> visitAlias(AliasTypeDefinition aliasTypeDefinition) {
             AliasGenerator aliasGenerator =
                     new AliasGenerator(aliasTypeDefinition, typeDefinition.name(), generatorContext);
             return aliasGenerator.generate();
         }
 
         @Override
-        public GeneratedFile<?> visitEnum(EnumTypeDefinition enumTypeDefinition) {
+        public GeneratedFileWithDefinition<?> visitEnum(EnumTypeDefinition enumTypeDefinition) {
             EnumGenerator enumGenerator =
                     new EnumGenerator(typeDefinition.name(), enumTypeDefinition, generatorContext);
             return enumGenerator.generate();
         }
 
         @Override
-        public GeneratedFile<?> visitUnknown(String unknownType) {
+        public GeneratedFileWithDefinition<?> visitUnknown(String unknownType) {
             throw new RuntimeException("Encountered unknown Type: " + unknownType);
         }
     }

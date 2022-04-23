@@ -5,8 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.NamedType;
 import com.fern.ObjectProperty;
 import com.fern.ObjectTypeDefinition;
-import com.fern.codegen.GeneratedFile;
-import com.fern.immutables.StagedBuilderStyle;
+import com.fern.codegen.GeneratedFileWithDefinition;
 import com.fern.model.codegen.Generator;
 import com.fern.model.codegen.GeneratorContext;
 import com.fern.model.codegen.interfaces.GeneratedInterface;
@@ -63,15 +62,16 @@ public final class ObjectGenerator extends Generator<ObjectTypeDefinition> {
                 .build();
         return GeneratedObject.builder()
                 .file(objectFile)
-                .definition(objectTypeDefinition)
                 .className(generatedObjectClassName)
+                .definition(objectTypeDefinition)
                 .build();
     }
 
     private List<AnnotationSpec> getAnnotations() {
         List<AnnotationSpec> annotationSpecs = new ArrayList<>();
         annotationSpecs.add(AnnotationSpec.builder(Value.Immutable.class).build());
-        annotationSpecs.add(AnnotationSpec.builder(StagedBuilderStyle.class).build());
+        annotationSpecs.add(AnnotationSpec.builder(generatorContext.getStagedImmutablesBuilderClassname())
+                .build());
         annotationSpecs.add(AnnotationSpec.builder(JsonDeserialize.class)
                 .addMember(
                         "as", "$T.class", generatorContext.getImmutablesUtils().getImmutablesClassName(namedType))
@@ -84,8 +84,9 @@ public final class ObjectGenerator extends Generator<ObjectTypeDefinition> {
 
     private List<TypeName> getSuperInterfaces() {
         List<TypeName> superInterfaces = new ArrayList<>();
-        superInterfaces.addAll(
-                extendedInterfaces.stream().map(GeneratedFile::className).collect(Collectors.toList()));
+        superInterfaces.addAll(extendedInterfaces.stream()
+                .map(GeneratedFileWithDefinition::className)
+                .collect(Collectors.toList()));
         selfInterface.ifPresent(generatedInterface -> superInterfaces.add(generatedInterface.className()));
         return superInterfaces;
     }

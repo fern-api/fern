@@ -1,17 +1,13 @@
 package com.fern.codegen;
 
-import com.squareup.javapoet.ClassName;
-import com.squareup.javapoet.JavaFile;
+import com.fern.immutables.StagedBuilderStyle;
+import org.immutables.value.Value;
 
-public interface GeneratedFile<D> {
+@Value.Immutable
+@StagedBuilderStyle
+public interface GeneratedFile extends IGeneratedFile {
 
-    JavaFile file();
-
-    D definition();
-
-    ClassName className();
-
-    default String packageName() {
-        return file().packageName;
+    static ImmutableGeneratedFile.FileBuildStage builder() {
+        return ImmutableGeneratedFile.builder();
     }
 }

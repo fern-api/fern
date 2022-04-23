@@ -1,6 +1,6 @@
 package com.fern.model.codegen;
 
-import com.fern.codegen.GeneratedFile;
+import com.fern.codegen.GeneratedFileWithDefinition;
 
 public abstract class Generator<D> {
 
@@ -11,5 +11,5 @@ public abstract class Generator<D> {
         this.generatorContext = generatorContext;
     }
 
-    public abstract GeneratedFile<D> generate();
+    public abstract GeneratedFileWithDefinition<D> generate();
 }
