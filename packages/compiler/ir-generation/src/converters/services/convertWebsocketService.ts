@@ -5,9 +5,8 @@ import {
     WebSocketService,
 } from "@fern-api/api";
 import { RawSchemas } from "@fern-api/syntax-analysis";
-import { getDocs } from "../../utils/getDocs";
-import { createInlinableTypeParser } from "../../utils/parseInlineType";
-import { convertErrorReferences } from "./convertErrorReferences";
+import { convertResponseErrors } from "./convertResponseErrors";
+import { convertWireMessage } from "./convertWireMessage";
 
 export function convertWebsocketService({
     serviceDefinition,
@@ -20,15 +19,12 @@ export function convertWebsocketService({
     fernFilepath: FernFilepath;
     imports: Record<string, string>;
 }): WebSocketService {
-    const parseInlinableType = createInlinableTypeParser({ fernFilepath, imports });
-
     return {
         docs: serviceDefinition.docs,
         name: {
             fernFilepath,
             name: serviceId,
         },
-        displayName: serviceDefinition.name ?? serviceId,
         basePath: serviceDefinition["base-path"] ?? "/",
         messages: Object.entries(serviceDefinition.messages).map(([messageName, message]) => ({
             name: messageName,
@@ -36,23 +32,19 @@ export function convertWebsocketService({
             origin: convertWebSocketMessageOrigin(message.origin),
             body:
                 message.body != null
-                    ? {
-                          docs: getDocs(message.body),
-                          bodyType: parseInlinableType(message.body),
-                      }
+                    ? convertWireMessage({ wireMessage: message.body, fernFilepath, imports })
                     : undefined,
             response:
                 message.response != null
                     ? {
-                          docs: typeof message.response !== "string" ? message.response.docs : undefined,
-                          bodyType: parseInlinableType(message.response),
+                          ...convertWireMessage({ wireMessage: message.response, fernFilepath, imports }),
                           behavior:
                               typeof message.response !== "string"
                                   ? convertWebSocketMessageResponseBehavior(message.response.behavior)
                                   : WebSocketMessageResponseBehavior.Ongoing,
                       }
                     : undefined,
-            errors: convertErrorReferences({ errors: message.errors, fernFilepath, imports }),
+            errors: convertResponseErrors({ rawResponseErrors: message.errors, fernFilepath, imports }),
         })),
     };
 }

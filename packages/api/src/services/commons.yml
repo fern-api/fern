@@ -1,0 +1,23 @@
+imports:
+  commons: ../commons.yml
+  types: ../types.yml
+types:
+  BaseService:
+    extends: commons.WithDocs
+    fields:
+      basePath: string
+      name: types.NamedType
+  WireMessage:
+    extends: commons.WithDocs
+    fields:
+      type: types.Type
+  ResponseErrors:
+    extends: commons.WithDocs
+    fields:
+      discriminant: string
+      possibleErrors: list<ResponseError>
+  ResponseError:
+    extends: commons.WithDocs
+    fields:
+      discriminantValue: string
+      error: types.NamedType

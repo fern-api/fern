@@ -1,7 +1,6 @@
 import { z } from "zod";
-import { inlinableType } from "./utils/inlinableType";
-import { WithDocsSchema } from "./utils/WithDocsSchema";
+import { WireMessageSchema } from "./WireMessageSchema";
 
-export const WebSocketMessageBodySchema = inlinableType(WithDocsSchema.shape);
+export const WebSocketMessageBodySchema = WireMessageSchema;
 
 export type WebSocketMessageBodySchema = z.infer<typeof WebSocketMessageBodySchema>;

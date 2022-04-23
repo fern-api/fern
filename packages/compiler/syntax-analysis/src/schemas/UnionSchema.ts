@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { SingleUnionTypeSchema } from "./SingleUnionTypeSchema";
-import { WithDocsSchema } from "./utils/WithDocsSchema";
+import { WithDocsSchema } from "./WithDocsSchema";
 
 export const UnionSchema = z
     .strictObject({

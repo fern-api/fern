@@ -1,7 +1,6 @@
 import { z } from "zod";
-import { inlinableType } from "./utils/inlinableType";
-import { WithDocsSchema } from "./utils/WithDocsSchema";
+import { TypeReferenceWithDocsSchema } from "./TypeReferenceSchema";
 
-export const WebSocketMessageErrorSchema = inlinableType(WithDocsSchema.shape);
+export const WebSocketMessageErrorSchema = TypeReferenceWithDocsSchema;
 
 export type WebSocketMessageErrorSchema = z.infer<typeof WebSocketMessageErrorSchema>;

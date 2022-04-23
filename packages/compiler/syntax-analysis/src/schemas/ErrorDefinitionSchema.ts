@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { ErrorPropertySchema } from "./ErrorPropertySchema";
 import { HttpErrorConfigurationSchema } from "./HttpErrorConfigurationSchema";
-import { WithDocsSchema } from "./utils/WithDocsSchema";
+import { WithDocsSchema } from "./WithDocsSchema";
 
 export const ErrorDefinitionSchema = WithDocsSchema.extend({
     http: z.optional(HttpErrorConfigurationSchema),

@@ -1329,9 +1329,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/api@workspace:*, @fern-api/api@workspace:packages/api/generated/typescript":
+"@fern-api/api@workspace:*, @fern-api/api@workspace:packages/api/generated":
   version: 0.0.0-use.local
-  resolution: "@fern-api/api@workspace:packages/api/generated/typescript"
+  resolution: "@fern-api/api@workspace:packages/api/generated"
   dependencies:
     typescript: ^4.6.3
   languageName: unknown

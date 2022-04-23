@@ -1,7 +1,6 @@
 import { z } from "zod";
-import { inlinableType } from "./utils/inlinableType";
-import { WithDocsSchema } from "./utils/WithDocsSchema";
+import { TypeReferenceWithDocsSchema } from "./TypeReferenceSchema";
 
-export const ErrorPropertySchema = inlinableType(WithDocsSchema.shape);
+export const ErrorPropertySchema = TypeReferenceWithDocsSchema;
 
 export type ErrorPropertySchema = z.infer<typeof ErrorPropertySchema>;
