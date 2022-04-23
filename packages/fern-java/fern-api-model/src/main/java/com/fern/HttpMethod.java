@@ -13,6 +13,8 @@ public final class HttpMethod {
 
   public static final HttpMethod DELETE = new HttpMethod(Value.DELETE, "DELETE");
 
+  public static final HttpMethod PATCH = new HttpMethod(Value.PATCH, "PATCH");
+
   public static final HttpMethod POST = new HttpMethod(Value.POST, "POST");
 
   public static final HttpMethod PUT = new HttpMethod(Value.PUT, "PUT");
@@ -57,6 +59,8 @@ public final class HttpMethod {
         return visitor.visitGet();
       case PUT:
         return visitor.visitPut();
+      case PATCH:
+        return visitor.visitPatch();
       case UNKNOWN:
       default:
         return visitor.visitUnknown(string);
@@ -73,6 +77,8 @@ public final class HttpMethod {
         return GET;
       case "DELETE":
         return DELETE;
+      case "PATCH":
+        return PATCH;
       case "POST":
         return POST;
       case "PUT":
@@ -91,6 +97,8 @@ public final class HttpMethod {
 
     DELETE,
 
+    PATCH,
+
     UNKNOWN
   }
 
@@ -102,6 +110,8 @@ public final class HttpMethod {
     T visitPut();
 
     T visitDelete();
+
+    T visitPatch();
 
     T visitUnknown(String unknownType);
   }

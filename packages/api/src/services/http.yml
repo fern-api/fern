@@ -25,6 +25,7 @@ types:
       - GET
       - POST
       - PUT
+      - PATCH
       - DELETE
   HttpHeader:
     extends: commons.WithDocs
