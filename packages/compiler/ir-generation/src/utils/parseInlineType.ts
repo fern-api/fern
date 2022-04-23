@@ -2,10 +2,10 @@ import { ContainerType, FernFilepath, PrimitiveType, TypeReference } from "@fern
 import { RawSchemas } from "@fern-api/syntax-analysis";
 import { parseTypeName } from "./parseTypeName";
 
-const MAP_REGEX = /map<\s*(.*)\s*,\s*(.*)\s*>/;
-const LIST_REGEX = /list<\s*(.*)\s*>/;
-const SET_REGEX = /set<\s*(.*)\s*>/;
-const OPTIONAL_REGEX = /optional<\s*(.*)\s*>/;
+const MAP_REGEX = /^map<\s*(.*)\s*,\s*(.*)\s*>$/;
+const LIST_REGEX = /^list<\s*(.*)\s*>$/;
+const SET_REGEX = /^set<\s*(.*)\s*>$/;
+const OPTIONAL_REGEX = /^optional<\s*(.*)\s*>$/;
 
 export declare namespace parseInlineType {
     export interface Args {
