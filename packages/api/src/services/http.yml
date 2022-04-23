@@ -1,0 +1,44 @@
+imports:
+  serviceCommons: ./commons.yml
+  commons: ../commons.yml
+  types: ../types.yml
+types:
+  HttpService:
+    extends: serviceCommons.BaseService
+    fields:
+      endpoints: list<HttpEndpoint>
+      headers: list<HttpHeader>
+  HttpEndpoint:
+    extends: commons.WithDocs
+    fields:
+      endpointId: string
+      path: string
+      method: HttpMethod
+      headers: list<HttpHeader>
+      parameters: list<PathParameter>
+      queryParameters: list<QueryParameter>
+      request: optional<serviceCommons.WireMessage>
+      response: optional<serviceCommons.WireMessage>
+      errors: serviceCommons.ResponseErrors
+  HttpMethod:
+    enum:
+      - GET
+      - POST
+      - PUT
+      - PATCH
+      - DELETE
+  HttpHeader:
+    extends: commons.WithDocs
+    fields:
+      header: string
+      valueType: types.TypeReference
+  PathParameter:
+    extends: commons.WithDocs
+    fields:
+      key: string
+      valueType: types.TypeReference
+  QueryParameter:
+    extends: commons.WithDocs
+    fields:
+      key: string
+      valueType: types.TypeReference

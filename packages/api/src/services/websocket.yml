@@ -1,0 +1,31 @@
+imports:
+  serviceCommons: ./commons.yml
+  commons: ../commons.yml
+  types: ../types.yml
+types:
+  WebSocketService:
+    extends: serviceCommons.BaseService
+    fields:
+      messages: list<WebSocketMessage>
+  WebSocketMessage:
+    extends: commons.WithDocs
+    fields:
+      origin: WebSocketMessageOrigin
+      body: optional<serviceCommons.WireMessage>
+      response: optional<WebSocketMessageResponse>
+      errors: serviceCommons.ResponseErrors
+  WebSocketMessageOrigin:
+    enum:
+      - CLIENT
+      - SERVER
+  WebSocketMessageResponse:
+    extends: serviceCommons.WireMessage
+    fields:
+      behavior:
+        docs: Defaults to WebSocketMessageResponseBehavior.ONGOING
+        type: WebSocketMessageResponseBehavior
+      type: types.Type
+  WebSocketMessageResponseBehavior:
+    enum:
+      - ONGOING
+      - REQUEST_RESPONSE

@@ -1,0 +1,18 @@
+imports:
+  commons: commons.yml
+  types: types.yml
+types:
+  ErrorDefinition:
+    extends: commons.WithDocs
+    fields:
+      name: types.NamedType
+      properties: list<ErrorProperty>
+      http: optional<HttpErrorConfiguration>
+  ErrorProperty:
+    extends: commons.WithDocs
+    fields:
+      name: string
+      type: types.TypeReference
+  HttpErrorConfiguration:
+    fields:
+      statusCode: integer

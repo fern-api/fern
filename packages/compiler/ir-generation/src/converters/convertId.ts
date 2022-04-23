@@ -1,7 +1,7 @@
 import { FernFilepath, PrimitiveType, Type, TypeDefinition, TypeReference } from "@fern-api/api";
 import { RawSchemas } from "@fern-api/syntax-analysis";
 import { getDocs } from "../utils/getDocs";
-import { createInlinableTypeParser } from "../utils/parseInlineType";
+import { createTypeReferenceParser } from "../utils/parseInlineType";
 
 export function convertId({
     id,
@@ -12,7 +12,7 @@ export function convertId({
     fernFilepath: FernFilepath;
     imports: Record<string, string>;
 }): TypeDefinition {
-    const parseInlinableType = createInlinableTypeParser({ fernFilepath, imports });
+    const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
 
     return {
         docs: getDocs(id),
@@ -24,8 +24,7 @@ export function convertId({
             aliasOf:
                 typeof id === "string" || id.type == null
                     ? TypeReference.primitive(PrimitiveType.String)
-                    : parseInlinableType(id.type),
-            isId: true,
+                    : parseTypeReference(id.type),
         }),
     };
 }

@@ -1,7 +1,6 @@
 import { z } from "zod";
-import { inlinableType } from "./utils/inlinableType";
-import { WithDocsSchema } from "./utils/WithDocsSchema";
+import { WireMessageSchema } from "./WireMessageSchema";
 
-export const HttpResponseSchema = inlinableType(WithDocsSchema.shape);
+export const HttpResponseSchema = WireMessageSchema;
 
 export type HttpResponseSchema = z.infer<typeof HttpResponseSchema>;

@@ -1,7 +1,6 @@
 import { z } from "zod";
-import { inlinableType } from "./utils/inlinableType";
-import { WithDocsSchema } from "./utils/WithDocsSchema";
+import { TypeReferenceWithDocsSchema } from "./TypeReferenceSchema";
 
-export const HttpQueryParameterSchema = inlinableType(WithDocsSchema.shape);
+export const HttpQueryParameterSchema = TypeReferenceWithDocsSchema;
 
 export type HttpQueryParameterSchema = z.infer<typeof HttpQueryParameterSchema>;

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { WithDocsSchema } from "./utils/WithDocsSchema";
+import { WithDocsSchema } from "./WithDocsSchema";
 
 export const EnumSchema = z
     .strictObject({

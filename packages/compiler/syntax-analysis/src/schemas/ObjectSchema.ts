@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { ObjectFieldSchema } from "./ObjectFieldSchema";
-import { WithDocsSchema } from "./utils/WithDocsSchema";
+import { WithDocsSchema } from "./WithDocsSchema";
 
 export const ObjectSchema = z
     .strictObject({

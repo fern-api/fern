@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { WithDocsSchema } from "./utils/WithDocsSchema";
+import { WithDocsSchema } from "./WithDocsSchema";
 
 export const BaseServiceSchema = WithDocsSchema.extend({
     name: z.optional(z.string()),

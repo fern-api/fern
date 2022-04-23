@@ -1,7 +1,6 @@
 import { z } from "zod";
-import { inlinableType } from "./utils/inlinableType";
-import { WithDocsSchema } from "./utils/WithDocsSchema";
+import { TypeReferenceWithDocsSchema } from "./TypeReferenceSchema";
 
-export const HttpHeaderSchema = inlinableType(WithDocsSchema.shape);
+export const HttpHeaderSchema = TypeReferenceWithDocsSchema;
 
 export type HttpHeaderSchema = z.infer<typeof HttpHeaderSchema>;
