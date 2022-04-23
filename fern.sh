@@ -3,10 +3,10 @@
 set -e
 
 npx --yes fern-api@0.0.10 generate packages/api/src packages/api/generated/ir.json
-npx --yes fern-typescript@0.0.6 model packages/api/generated/ir.json packages/api/generated
-mv packages/api/generated/model packages/api/generated/src
+npx --yes fern-typescript@0.0.6 model packages/api/generated/ir.json packages/api/generated/model
+mv packages/api/generated/model/model packages/api/generated/model/src
 
-cat > packages/api/generated/package.json <<EOL
+cat > packages/api/generated/model/package.json <<EOL
 {
   "name": "@fern-api/api",
   "main": "lib/index.js",
@@ -24,9 +24,9 @@ cat > packages/api/generated/package.json <<EOL
 }
 EOL
 
-cat > packages/api/generated/tsconfig.json <<EOL
+cat > packages/api/generated/model/tsconfig.json <<EOL
 {
-	"extends": "../../../shared/tsconfig.shared.json",
+	"extends": "../../../../shared/tsconfig.shared.json",
 	"compilerOptions": {
 		"composite": true,
 		"outDir": "./lib",

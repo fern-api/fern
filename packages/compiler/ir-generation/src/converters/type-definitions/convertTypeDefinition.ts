@@ -64,7 +64,7 @@ export function convertType({
             properties: Object.entries(typeDefinition.fields).map(([fieldName, fieldDefinition]) => ({
                 key: fieldName,
                 valueType: parseTypeReference(fieldDefinition),
-                docs: typeof getDocs(fieldDefinition),
+                docs: getDocs(fieldDefinition),
             })),
         });
     }
