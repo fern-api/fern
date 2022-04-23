@@ -68,9 +68,9 @@ class TypeReferenceUtils {
     private static final class PrimitiveToTypeNameConverter implements PrimitiveType.Visitor<TypeName> {
 
         private static final PrimitiveToTypeNameConverter PRIMITIVE_ALLOWED_CONVERTER =
-                new PrimitiveToTypeNameConverter(false);
-        private static final PrimitiveToTypeNameConverter PRIMITIVE_DISALLOWED_CONVERTER =
                 new PrimitiveToTypeNameConverter(true);
+        private static final PrimitiveToTypeNameConverter PRIMITIVE_DISALLOWED_CONVERTER =
+                new PrimitiveToTypeNameConverter(false);
 
         private final boolean primitiveAllowed;
 
