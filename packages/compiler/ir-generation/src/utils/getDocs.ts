@@ -4,5 +4,6 @@ export function getDocs(field: RawSchemas.WithDocsSchema | string): string | und
     if (typeof field === "string") {
         return undefined;
     }
+    console.log("Field.docs is a ", typeof field.docs, { docs: field.docs });
     return field.docs;
 }
