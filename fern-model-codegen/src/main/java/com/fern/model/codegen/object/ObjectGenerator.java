@@ -77,7 +77,7 @@ public final class ObjectGenerator extends Generator<ObjectTypeDefinition> {
                         "as", "$T.class", generatorContext.getImmutablesUtils().getImmutablesClassName(namedType))
                 .build());
         annotationSpecs.add(AnnotationSpec.builder(JsonIgnoreProperties.class)
-                .addMember("ignoreUnknown", "{$L}", Boolean.TRUE.toString())
+                .addMember("ignoreUnknown", "$L", Boolean.TRUE.toString())
                 .build());
         return annotationSpecs;
     }
