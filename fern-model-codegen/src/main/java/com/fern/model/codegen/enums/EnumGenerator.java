@@ -193,7 +193,7 @@ public final class EnumGenerator extends Generator {
      *     }
      * }
      */
-    private MethodSpec getAcceptMethod(GeneratedVisitor generatedVisitor) {
+    private MethodSpec getAcceptMethod(GeneratedVisitor<EnumValue> generatedVisitor) {
         CodeBlock.Builder acceptMethodImplementation = CodeBlock.builder().beginControlFlow("switch (value)");
         generatedVisitor.visitMethodsByKeyName().forEach((keyName, visitMethod) -> {
             acceptMethodImplementation
@@ -295,10 +295,10 @@ public final class EnumGenerator extends Generator {
      *     T visitUnknownType(String unknownType);
      * }
      */
-    private GeneratedVisitor getVisitor() {
-        List<VisitorUtils.VisitMethodArgs> visitMethodArgs = enumTypeDefinition.values().stream()
-                .map(enumValue -> VisitorUtils.VisitMethodArgs.builder()
-                        // TODO(dsinghvi): Should we handle underscores in enum values by removing them and camelCasing?
+    private GeneratedVisitor<EnumValue> getVisitor() {
+        List<VisitorUtils.VisitMethodArgs<EnumValue>> visitMethodArgs = enumTypeDefinition.values().stream()
+                .map(enumValue -> VisitorUtils.VisitMethodArgs.<EnumValue>builder()
+                        .key(enumValue)
                         .keyName(enumValue.value())
                         .build())
                 .collect(Collectors.toList());

@@ -87,7 +87,9 @@ public final class UnionGenerator extends Generator {
     @Override
     public GeneratedUnion generate() {
         Map<SingleUnionType, MethodSpec> isTypeMethods = getIsTypeMethods();
-        Map<SingleUnionType, GeneratedInternalValueTypeSpec> internalValueTypeSpecs = getInternalValueTypeSpecs();
+        GeneratedVisitor<SingleUnionType> visitor = getVisitor();
+        Map<SingleUnionType, GeneratedInternalValueTypeSpec> internalValueTypeSpecs =
+                getInternalValueTypeSpecs(visitor);
         TypeSpec unionTypeSpec = TypeSpec.classBuilder(generatedUnionClassName)
                 .addModifiers(UNION_CLASS_MODIFIERS)
                 .addAnnotations(getAnnotations())
@@ -98,7 +100,7 @@ public final class UnionGenerator extends Generator {
                 .addMethods(isTypeMethods.values())
                 .addMethods(getSingleUnionTypeGetterMethods(isTypeMethods, internalValueTypeSpecs))
                 .addMethod(getAcceptMethod())
-                .addType(getVisitor().typeSpec())
+                .addType(visitor.typeSpec())
                 .addType(getInternalValueInterface())
                 .addTypes(internalValueTypeSpecs.values().stream()
                         .map(GeneratedInternalValueTypeSpec::typeSpec)
@@ -235,24 +237,28 @@ public final class UnionGenerator extends Generator {
                 .build();
     }
 
-    private GeneratedVisitor getVisitor() {
-        List<VisitorUtils.VisitMethodArgs> visitMethodArgsList = unionTypeDefinition.types().stream()
-                .map(singleUnionType -> {
-                    if (singleUnionType.valueType().isVoid()) {
-                        return VisitorUtils.VisitMethodArgs.builder()
-                                .keyName(singleUnionType.discriminantValue())
-                                .build();
-                    } else {
-                        return VisitorUtils.VisitMethodArgs.builder()
-                                .keyName(singleUnionType.discriminantValue())
-                                .visitorType(generatorContext
-                                        .getClassNameUtils()
-                                        .getTypeNameFromTypeReference(true, singleUnionType.valueType()))
-                                .build();
-                    }
-                })
+    private GeneratedVisitor<SingleUnionType> getVisitor() {
+        List<VisitorUtils.VisitMethodArgs<SingleUnionType>> visitMethodArgsList = unionTypeDefinition.types().stream()
+                .map(this::getVisitMethodArgs)
                 .collect(Collectors.toList());
         return generatorContext.getVisitorUtils().buildVisitorInterface(visitMethodArgsList);
+    }
+
+    private VisitorUtils.VisitMethodArgs<SingleUnionType> getVisitMethodArgs(SingleUnionType singleUnionType) {
+        if (singleUnionType.valueType().isVoid()) {
+            return VisitorUtils.VisitMethodArgs.<SingleUnionType>builder()
+                    .key(singleUnionType)
+                    .keyName(singleUnionType.discriminantValue())
+                    .build();
+        } else {
+            return VisitorUtils.VisitMethodArgs.<SingleUnionType>builder()
+                    .key(singleUnionType)
+                    .keyName(singleUnionType.discriminantValue())
+                    .visitorType(generatorContext
+                            .getClassNameUtils()
+                            .getTypeNameFromTypeReference(true, singleUnionType.valueType()))
+                    .build();
+        }
     }
 
     /*
@@ -311,10 +317,13 @@ public final class UnionGenerator extends Generator {
         return baseInterfaceTypeSpecBuilder.build();
     }
 
-    private Map<SingleUnionType, GeneratedInternalValueTypeSpec> getInternalValueTypeSpecs() {
+    private Map<SingleUnionType, GeneratedInternalValueTypeSpec> getInternalValueTypeSpecs(
+            GeneratedVisitor<SingleUnionType> generatedVisitor) {
         return unionTypeDefinition.types().stream().collect(Collectors.toMap(Function.identity(), singleUnionType -> {
             String capitalizedDiscriminantValue = StringUtils.capitalize(singleUnionType.discriminantValue());
             ClassName internalValueClassName = internalValueClassNames.get(singleUnionType);
+            MethodSpec visitorMethodName =
+                    generatedVisitor.visitMethodsByKeyName().get(singleUnionType);
 
             TypeSpec.Builder typeSpecBuilder = TypeSpec.interfaceBuilder(internalValueClassName)
                     .addAnnotation(Value.Immutable.class)
@@ -343,8 +352,8 @@ public final class UnionGenerator extends Generator {
                                         "visitor")
                                 .addAnnotation(Override.class)
                                 .addStatement(
-                                        "return visitor.visit$L($L())",
-                                        capitalizedDiscriminantValue,
+                                        "return visitor.$L($L())",
+                                        visitorMethodName.name,
                                         internalValueImmutablesProperty.name)
                                 .addModifiers(Modifier.DEFAULT, Modifier.PUBLIC)
                                 .build())

@@ -64,4 +64,38 @@ public class UnionGeneratorTest {
         GeneratedUnion generatedUnion = unionGenerator.generate();
         System.out.println(generatedUnion.file().toString());
     }
+
+    @Test
+    public void test_nonCamelCaseDiscriminants() {
+        UnionTypeDefinition unionTypeDefinition = UnionTypeDefinition.builder()
+                .discriminant("_type")
+                .addTypes(SingleUnionType.builder()
+                        .discriminantValue("integervalue")
+                        .valueType(TypeReference.primitive(PrimitiveType.INTEGER))
+                        .build())
+                .addTypes(SingleUnionType.builder()
+                        .discriminantValue("booleanvalue")
+                        .valueType(TypeReference.primitive(PrimitiveType.BOOLEAN))
+                        .build())
+                .addTypes(SingleUnionType.builder()
+                        .discriminantValue("doublevalue")
+                        .valueType(TypeReference.primitive(PrimitiveType.DOUBLE))
+                        .build())
+                .build();
+        TypeDefinition variableValueTypeDefinition = TypeDefinition.builder()
+                .name(NamedType.builder()
+                        .fernFilepath(FernFilepath.valueOf("com/birch/trace/commons"))
+                        .name("VariableValue")
+                        .build())
+                .shape(Type.union(unionTypeDefinition))
+                .build();
+        GeneratorContext generatorContext = new GeneratorContext(TestConstants.PLUGIN_CONFIG,
+                Collections.singletonMap(variableValueTypeDefinition.name(), variableValueTypeDefinition));
+        UnionGenerator unionGenerator = new UnionGenerator(
+                variableValueTypeDefinition.name(),
+                unionTypeDefinition,
+                generatorContext);
+        GeneratedUnion generatedUnion = unionGenerator.generate();
+        System.out.println(generatedUnion.file().toString());
+    }
 }
