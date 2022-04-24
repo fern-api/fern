@@ -6,7 +6,7 @@ imports:
 types:
   IntermediateRepresentation:
     docs: "Complete representation of the API schema"
-    fields:
+    properties:
       types:
         docs: "The types described by this API"
         type: list<types.TypeDefinition>
@@ -15,6 +15,6 @@ types:
         type: Services
       errors: list<errors.ErrorDefinition>
   Services:
-    fields:
+    properties:
       http: list<http.HttpService>
       websocket: list<websocket.WebSocketService>

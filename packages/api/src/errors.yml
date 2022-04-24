@@ -4,15 +4,15 @@ imports:
 types:
   ErrorDefinition:
     extends: commons.WithDocs
-    fields:
+    properties:
       name: types.NamedType
       properties: list<ErrorProperty>
       http: optional<HttpErrorConfiguration>
   ErrorProperty:
     extends: commons.WithDocs
-    fields:
+    properties:
       name: string
       type: types.TypeReference
   HttpErrorConfiguration:
-    fields:
+    properties:
       statusCode: integer
