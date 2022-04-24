@@ -32,7 +32,7 @@ jobs:
           command: yarn compile
       - run:
           name: Run tests
-          command: yarn test -- --ci
+          command: yarn test --ci
       - run:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff
