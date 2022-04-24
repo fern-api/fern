@@ -1322,6 +1322,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fern-api/api@npm:0.0.13":
+  version: 0.0.13
+  resolution: "@fern-api/api@npm:0.0.13"
+  checksum: 37e2e0476ae7d5a5f429c05fcd8c23e10cd84c16de2d717b7f23e6fe099e9ae8c9a98f42dd2d6c4931cd3edb0ae5fd6d29851a81f2be510f469f8a62102f09ee
+  languageName: node
+  linkType: hard
+
 "@fern-api/api@npm:0.0.15":
   version: 0.0.15
   resolution: "@fern-api/api@npm:0.0.15"
@@ -1336,6 +1343,13 @@ __metadata:
     typescript: ^4.6.3
   languageName: unknown
   linkType: soft
+
+"@fern-api/compiler-commons@npm:0.0.13":
+  version: 0.0.13
+  resolution: "@fern-api/compiler-commons@npm:0.0.13"
+  checksum: ea76c3a3ade4b1ba8b4cc7d908e1a7e0c7c7ebfcc4444b6089799b63cf7fedbdc8910d4361aa332ed6b76fca1ace8662aa9de3a4494edabffbc430e1323d5ac7
+  languageName: node
+  linkType: hard
 
 "@fern-api/compiler-commons@npm:0.0.15":
   version: 0.0.15
@@ -1361,6 +1375,18 @@ __metadata:
     typescript: ^4.6.3
   languageName: unknown
   linkType: soft
+
+"@fern-api/compiler@npm:0.0.13":
+  version: 0.0.13
+  resolution: "@fern-api/compiler@npm:0.0.13"
+  dependencies:
+    "@fern-api/api": 0.0.13
+    "@fern-api/compiler-commons": 0.0.13
+    "@fern-api/ir-generation": 0.0.13
+    "@fern-api/syntax-analysis": 0.0.13
+  checksum: 7bc050d9022dbd187eaf4da9019c5761f145263d73a4d7762d91a4ac652897b5e73d59b2b3ff798d345f0d1d6679cf176b5c0d9c1b30c51b8bef6a7169b865af
+  languageName: node
+  linkType: hard
 
 "@fern-api/compiler@npm:0.0.15":
   version: 0.0.15
@@ -1396,6 +1422,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-api/ir-generation@npm:0.0.13":
+  version: 0.0.13
+  resolution: "@fern-api/ir-generation@npm:0.0.13"
+  dependencies:
+    "@fern-api/api": 0.0.13
+    "@fern-api/compiler-commons": 0.0.13
+    "@fern-api/syntax-analysis": 0.0.13
+  checksum: 05f3bca91e86290edf2f34b8486840de5bfd3d58103d6044ee53b981e818503fd7c6ee72904a8a698b3cac92742749840f4551b47c46fecb36de80a73e1b5c82
+  languageName: node
+  linkType: hard
+
 "@fern-api/ir-generation@npm:0.0.15":
   version: 0.0.15
   resolution: "@fern-api/ir-generation@npm:0.0.15"
@@ -1428,55 +1465,66 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/mrlint-commons@npm:0.0.10":
-  version: 0.0.10
-  resolution: "@fern-api/mrlint-commons@npm:0.0.10"
+"@fern-api/mrlint-commons@npm:0.0.11":
+  version: 0.0.11
+  resolution: "@fern-api/mrlint-commons@npm:0.0.11"
   dependencies:
-    "@fern-api/mrlint-virtual-file-system": 0.0.10
-  checksum: 854c1d03d872f499c75edcbe1b4aaa86365bf9b67c22f0ffeba7828c6f9f90a75b70d4a3f212ed1f5a4843fc1b079574c2653f202d1660cff87cbe902278e398
+    "@fern-api/mrlint-virtual-file-system": 0.0.11
+  checksum: 1c68f0e082a69e1484ef9344a0ec08e66f7103c92fd6f679fa2bffab60f1fa230d68b3e60b80a084326742f93f6ce24752ceeb8174b37690e515b459ed12e711
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-lint@npm:0.0.10":
-  version: 0.0.10
-  resolution: "@fern-api/mrlint-lint@npm:0.0.10"
+"@fern-api/mrlint-lint@npm:0.0.11":
+  version: 0.0.11
+  resolution: "@fern-api/mrlint-lint@npm:0.0.11"
   dependencies:
-    "@fern-api/mrlint-commons": 0.0.10
-    "@fern-api/mrlint-virtual-file-system": 0.0.10
+    "@fern-api/mrlint-commons": 0.0.11
+    "@fern-api/mrlint-virtual-file-system": 0.0.11
     chalk: ^4.1.2
     diff: ^5.0.0
     prettier: ^2.6.2
-  checksum: c76f5b6c05a0137422ce7e1d0de93b13af399ce13292fabbdf2fcc7c22b8fd3d8d68343e872d11dfced750fe71fd6b135a7a4d71a9c1b8c24a2f1d4b0b43d5d5
+  checksum: 51125d5ed54cf7286d5b8251452739844a1331f933fd664ff928514720ccc74f995560aca13f0787529761bf9622bb0f40296d6ae2efd8eb6f3d021776555f85
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-parser@npm:0.0.10":
-  version: 0.0.10
-  resolution: "@fern-api/mrlint-parser@npm:0.0.10"
+"@fern-api/mrlint-parser@npm:0.0.11":
+  version: 0.0.11
+  resolution: "@fern-api/mrlint-parser@npm:0.0.11"
   dependencies:
-    "@fern-api/mrlint-commons": 0.0.10
+    "@fern-api/mrlint-commons": 0.0.11
     glob: ^7.2.0
     js-yaml: ^4.1.0
     zod: ^3.14.3
-  checksum: 907338a8a679cc1911bf591bf40663b1e9509085802e99fe193ca2761a797d794dbacea838527f1f8c8d524075bdda06bf2576aef1342e444ed2cc6827a812a8
+  checksum: 9b7c5c8e2c905f2eb791d6139dca4514497ae5a195f886d826b7909e593c6721fc2776f252ae0a13a5085bbe34c6b8524f188a669190eae8929c4d782520a993
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-rules@npm:0.0.10":
-  version: 0.0.10
-  resolution: "@fern-api/mrlint-rules@npm:0.0.10"
+"@fern-api/mrlint-rules@npm:0.0.11":
+  version: 0.0.11
+  resolution: "@fern-api/mrlint-rules@npm:0.0.11"
   dependencies:
-    "@fern-api/mrlint-commons": 0.0.10
-    "@fern-api/mrlint-virtual-file-system": 0.0.10
+    "@fern-api/mrlint-commons": 0.0.11
+    "@fern-api/mrlint-virtual-file-system": 0.0.11
     immer: ^9.0.12
-  checksum: c679682a06ad7410a933b88c42bc0a581828461c65811c0e7e069ff66d6dfea76a5f6c3ec2c8ff25429c14d0cc6fd2fb5572cdfb157a3a167b7b5d02ced9e712
+  checksum: 4eaa3604d108af8ea6dde7c7f1883a6cd848e5d20c6ff4608b4e9bec94d51cd2618c8889d792c004ef6e9623fdb085ddf1d2a3db67afb3be70f48c136ce10472
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-virtual-file-system@npm:0.0.10":
-  version: 0.0.10
-  resolution: "@fern-api/mrlint-virtual-file-system@npm:0.0.10"
-  checksum: a6348e048082ca7755d73e2c9009a9a23a54464d5b7e0139dfbb5f0661dd86a64145acbf4c13cb40f43d1d4767edd95b7febe3b98a6830fd7c0e7fb979de28a5
+"@fern-api/mrlint-virtual-file-system@npm:0.0.11":
+  version: 0.0.11
+  resolution: "@fern-api/mrlint-virtual-file-system@npm:0.0.11"
+  checksum: bbbc3053bfef3ad864d46d02a7eae8746172cec78a01bd000420f81c1d758c33a0e2b81d70a208e8f2e0e5640b8c706b1ee046b26147ca289c3580a38ca13f57
+  languageName: node
+  linkType: hard
+
+"@fern-api/syntax-analysis@npm:0.0.13":
+  version: 0.0.13
+  resolution: "@fern-api/syntax-analysis@npm:0.0.13"
+  dependencies:
+    "@fern-api/compiler-commons": 0.0.13
+    js-yaml: ^4.1.0
+    zod: ^3.14.3
+  checksum: d1854dfa36c9de668c6628e8079e78f86811f0067f23d428bccc4b94a11811fdb0b1c6d49b65856a2429e7d3e003fde0d858032a5e2f97b790af6d57dff3f0eb
   languageName: node
   linkType: hard
 
@@ -1510,6 +1558,96 @@ __metadata:
     stylelint: ^14.6.1
     typescript: ^4.6.3
     zod: ^3.14.3
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/typescript-client@workspace:*, @fern-api/typescript-client@workspace:packages/fern-typescript/client":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/typescript-client@workspace:packages/fern-typescript/client"
+  dependencies:
+    "@babel/core": ^7.17.9
+    "@babel/preset-env": ^7.16.11
+    "@babel/preset-typescript": ^7.16.7
+    "@fern-api/api": "workspace:*"
+    "@fern-api/typescript-commons": "workspace:*"
+    "@types/jest": ^27.4.1
+    "@types/node": ^17.0.25
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    jest: ^27.5.1
+    prettier: ^2.6.1
+    stylelint: ^14.6.1
+    ts-morph: ^14.0.0
+    typescript: ^4.6.3
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/typescript-commons@workspace:*, @fern-api/typescript-commons@workspace:packages/fern-typescript/commons":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/typescript-commons@workspace:packages/fern-typescript/commons"
+  dependencies:
+    "@babel/core": ^7.17.9
+    "@babel/preset-env": ^7.16.11
+    "@babel/preset-typescript": ^7.16.7
+    "@fern-api/api": "workspace:*"
+    "@types/esutils": ^2.0.0
+    "@types/jest": ^27.4.1
+    "@types/node": ^17.0.25
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    esutils: ^2.0.3
+    jest: ^27.5.1
+    memfs: ^3.4.1
+    prettier: ^2.6.1
+    stylelint: ^14.6.1
+    ts-morph: ^14.0.0
+    typescript: ^4.6.3
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/typescript-model@workspace:*, @fern-api/typescript-model@workspace:packages/fern-typescript/model":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/typescript-model@workspace:packages/fern-typescript/model"
+  dependencies:
+    "@babel/core": ^7.17.9
+    "@babel/preset-env": ^7.16.11
+    "@babel/preset-typescript": ^7.16.7
+    "@fern-api/api": "workspace:*"
+    "@fern-api/compiler": "workspace:*"
+    "@fern-api/typescript-commons": "workspace:*"
+    "@types/jest": ^27.4.1
+    "@types/lodash": ^4.14.182
+    "@types/node": ^17.0.25
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    fern-api: ^0.0.13
+    jest: ^27.5.1
+    lodash: ^4.17.21
+    memfs: ^3.4.1
+    prettier: ^2.6.1
+    stylelint: ^14.6.1
+    ts-morph: ^14.0.0
+    typescript: ^4.6.3
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/typescript-server@workspace:*, @fern-api/typescript-server@workspace:packages/fern-typescript/server":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/typescript-server@workspace:packages/fern-typescript/server"
+  dependencies:
+    "@babel/core": ^7.17.9
+    "@babel/preset-env": ^7.16.11
+    "@babel/preset-typescript": ^7.16.7
+    "@fern-api/api": "workspace:*"
+    "@types/jest": ^27.4.1
+    "@types/node": ^17.0.25
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    jest: ^27.5.1
+    prettier: ^2.6.1
+    stylelint: ^14.6.1
+    ts-morph: ^14.0.0
+    typescript: ^4.6.3
   languageName: unknown
   linkType: soft
 
@@ -1862,6 +2000,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ts-morph/common@npm:~0.13.0":
+  version: 0.13.0
+  resolution: "@ts-morph/common@npm:0.13.0"
+  dependencies:
+    fast-glob: ^3.2.11
+    minimatch: ^5.0.1
+    mkdirp: ^1.0.4
+    path-browserify: ^1.0.1
+  checksum: 88b3d4b82dc6aca12741e55c6bf037f2243d14f4b9c42bbe28ed4a773ae9cd8d3ca6a6f9f827b5830c188037b0781d881a002ddb73e094fa5d5ff2a3352dc842
+  languageName: node
+  linkType: hard
+
 "@types/babel__core@npm:^7.0.0, @types/babel__core@npm:^7.1.14":
   version: 7.1.19
   resolution: "@types/babel__core@npm:7.1.19"
@@ -1900,6 +2050,13 @@ __metadata:
   dependencies:
     "@babel/types": ^7.3.0
   checksum: b9a4acfc260179168d840c7f17e6b8b3ab4e7ebbce47b3308dd748683136518ab8636e2dcbf8d619fece0db7e561e08def9ede29269b7210a761763a26ece66a
+  languageName: node
+  linkType: hard
+
+"@types/esutils@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@types/esutils@npm:2.0.0"
+  checksum: e765c7ef6ba7a3d3beaa503bc9823f98c063f37f46ddd50c9d9bddd98924785866423910bb9458ad9be5354a1b63ae06e509db70c1dcb8c9f0bec050c1fa61e5
   languageName: node
   linkType: hard
 
@@ -1968,6 +2125,13 @@ __metadata:
   version: 7.0.11
   resolution: "@types/json-schema@npm:7.0.11"
   checksum: 527bddfe62db9012fccd7627794bd4c71beb77601861055d87e3ee464f2217c85fca7a4b56ae677478367bbd248dbde13553312b7d4dbc702a2f2bbf60c4018d
+  languageName: node
+  linkType: hard
+
+"@types/lodash@npm:^4.14.182":
+  version: 4.14.182
+  resolution: "@types/lodash@npm:4.14.182"
+  checksum: 7dd137aa9dbabd632408bd37009d984655164fa1ecc3f2b6eb94afe35bf0a5852cbab6183148d883e9c73a958b7fec9a9bcf7c8e45d41195add6a18c34958209
   languageName: node
   linkType: hard
 
@@ -2669,6 +2833,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"brace-expansion@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "brace-expansion@npm:2.0.1"
+  dependencies:
+    balanced-match: ^1.0.0
+  checksum: a61e7cd2e8a8505e9f0036b3b6108ba5e926b4b55089eeb5550cd04a471fe216c96d4fe7e4c7f995c728c554ae20ddfc4244cad10aef255e72b62930afd233d1
+  languageName: node
+  linkType: hard
+
 "braces@npm:^3.0.2, braces@npm:~3.0.2":
   version: 3.0.2
   resolution: "braces@npm:3.0.2"
@@ -2919,6 +3092,15 @@ __metadata:
   version: 4.6.0
   resolution: "co@npm:4.6.0"
   checksum: 5210d9223010eb95b29df06a91116f2cf7c8e0748a9013ed853b53f362ea0e822f1e5bb054fb3cefc645239a4cf966af1f6133a3b43f40d591f3b68ed6cf0510
+  languageName: node
+  linkType: hard
+
+"code-block-writer@npm:^11.0.0":
+  version: 11.0.0
+  resolution: "code-block-writer@npm:11.0.0"
+  dependencies:
+    tslib: 2.3.1
+  checksum: d3d92a06f762d5926ecdb2033e4f30eb4c51aca365ea69ef424afbce7cc2b1518a50deff2645cc17b6fa53f234d664631f2268a4caf91af6a1fd696aa0b2fefb
   languageName: node
   linkType: hard
 
@@ -3636,7 +3818,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esutils@npm:^2.0.2":
+"esutils@npm:^2.0.2, esutils@npm:^2.0.3":
   version: 2.0.3
   resolution: "esutils@npm:2.0.3"
   checksum: 22b5b08f74737379a840b8ed2036a5fb35826c709ab000683b092d9054e5c2a82c27818f12604bfc2a9a76b90b6834ef081edbc1c7ae30d1627012e067c6ec87
@@ -3764,6 +3946,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fern-api@npm:^0.0.13":
+  version: 0.0.13
+  resolution: "fern-api@npm:0.0.13"
+  dependencies:
+    "@fern-api/compiler": 0.0.13
+    "@fern-api/compiler-commons": 0.0.13
+    "@fern-api/syntax-analysis": 0.0.13
+    chalk: ^4.1.2
+    glob: ^7.2.0
+    yargs: ^17.3.1
+    zod: ^3.14.3
+  bin:
+    fern: ./cli
+  checksum: c5520dbbcdfe92406fc61275e4855a9fdc5e5fff6a3598fecdc0fd03ce6b107bef5c6cb2e06fee7af18452ca329f52874fe5219e193c6ed55c9da0473cd19df9
+  languageName: node
+  linkType: hard
+
 "fern-api@workspace:packages/compiler/cli":
   version: 0.0.0-use.local
   resolution: "fern-api@workspace:packages/compiler/cli"
@@ -3786,10 +3985,38 @@ __metadata:
     prettier: ^2.6.1
     stylelint: ^14.6.1
     typescript: ^4.6.3
-    yargs: ^17.3.1
+    yargs: ^17.4.1
     zod: ^3.14.3
   bin:
     fern: ./cli
+  languageName: unknown
+  linkType: soft
+
+"fern-typescript@workspace:packages/fern-typescript/cli":
+  version: 0.0.0-use.local
+  resolution: "fern-typescript@workspace:packages/fern-typescript/cli"
+  dependencies:
+    "@babel/core": ^7.17.9
+    "@babel/preset-env": ^7.16.11
+    "@babel/preset-typescript": ^7.16.7
+    "@fern-api/api": "workspace:*"
+    "@fern-api/typescript-client": "workspace:*"
+    "@fern-api/typescript-commons": "workspace:*"
+    "@fern-api/typescript-model": "workspace:*"
+    "@fern-api/typescript-server": "workspace:*"
+    "@types/jest": ^27.4.1
+    "@types/node": ^17.0.25
+    "@types/yargs": ^17.0.10
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    jest: ^27.5.1
+    prettier: ^2.6.1
+    stylelint: ^14.6.1
+    ts-morph: ^14.0.0
+    typescript: ^4.6.3
+    yargs: ^17.4.1
+  bin:
+    fern-typescript: ./cli
   languageName: unknown
   linkType: soft
 
@@ -3807,7 +4034,7 @@ __metadata:
     husky: ^7.0.4
     jest: ^27.5.1
     lint-staged: ^12.3.7
-    mrlint: ^0.0.10
+    mrlint: ^0.0.11
     prettier: ^2.6.1
     react: ^18.0.0
     stylelint: ^14.6.1
@@ -3876,6 +4103,13 @@ __metadata:
   dependencies:
     minipass: ^3.0.0
   checksum: 1b8d128dae2ac6cc94230cc5ead341ba3e0efaef82dab46a33d171c044caaa6ca001364178d42069b2809c35a1c3c35079a32107c770e9ffab3901b59af8c8b1
+  languageName: node
+  linkType: hard
+
+"fs-monkey@npm:1.0.3":
+  version: 1.0.3
+  resolution: "fs-monkey@npm:1.0.3"
+  checksum: cf50804833f9b88a476911ae911fe50f61a98d986df52f890bd97e7262796d023698cb2309fa9b74fdd8974f04315b648748a0a8ee059e7d5257b293bfc409c0
   languageName: node
   linkType: hard
 
@@ -5543,6 +5777,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"memfs@npm:^3.4.1":
+  version: 3.4.1
+  resolution: "memfs@npm:3.4.1"
+  dependencies:
+    fs-monkey: 1.0.3
+  checksum: 6d2f49d447d1be24ff9c747618933784eeb059189bc6a0d77b7a51c7daf06e2d3a74674a2e2ff1520e2c312bf91e719ed37144cf05087379b3ba0aef0b6aa062
+  languageName: node
+  linkType: hard
+
 "meow@npm:^9.0.0":
   version: 9.0.0
   resolution: "meow@npm:9.0.0"
@@ -5623,6 +5866,15 @@ __metadata:
   dependencies:
     brace-expansion: ^1.1.7
   checksum: c154e566406683e7bcb746e000b84d74465b3a832c45d59912b9b55cd50dee66e5c4b1e5566dba26154040e51672f9aa450a9aef0c97cfc7336b78b7afb9540a
+  languageName: node
+  linkType: hard
+
+"minimatch@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "minimatch@npm:5.0.1"
+  dependencies:
+    brace-expansion: ^2.0.1
+  checksum: b34b98463da4754bc526b244d680c69d4d6089451ebe512edaf6dd9eeed0279399cfa3edb19233513b8f830bf4bfcad911dddcdf125e75074100d52f724774f0
   languageName: node
   linkType: hard
 
@@ -5716,19 +5968,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mrlint@npm:^0.0.10":
-  version: 0.0.10
-  resolution: "mrlint@npm:0.0.10"
+"mrlint@npm:^0.0.11":
+  version: 0.0.11
+  resolution: "mrlint@npm:0.0.11"
   dependencies:
-    "@fern-api/mrlint-commons": 0.0.10
-    "@fern-api/mrlint-lint": 0.0.10
-    "@fern-api/mrlint-parser": 0.0.10
-    "@fern-api/mrlint-rules": 0.0.10
+    "@fern-api/mrlint-commons": 0.0.11
+    "@fern-api/mrlint-lint": 0.0.11
+    "@fern-api/mrlint-parser": 0.0.11
+    "@fern-api/mrlint-rules": 0.0.11
     chalk: ^4.1.2
     yargs: ^17.3.1
   bin:
     mrlint: ./cli
-  checksum: 9aa6a993306ba90354fb3727b74b96ea0c3d60e50c65b73561caece9409da5e7d170782c83365c40146bbe0aa4d87dffe2a18ddeb6e455dd7134ffc9cce23277
+  checksum: 3505aef7f04ae11fe079ac9293725d07ca2cda3c440d573fb7c9fda13502378f7d8bf640f5d1bc6d2b99049a04e1785432f79e86905d8bf984d52bd2699d81fe
   languageName: node
   linkType: hard
 
@@ -6074,6 +6326,13 @@ __metadata:
   version: 6.0.1
   resolution: "parse5@npm:6.0.1"
   checksum: 7d569a176c5460897f7c8f3377eff640d54132b9be51ae8a8fa4979af940830b2b0c296ce75e5bd8f4041520aadde13170dbdec44889975f906098ea0002f4bd
+  languageName: node
+  linkType: hard
+
+"path-browserify@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "path-browserify@npm:1.0.1"
+  checksum: c6d7fa376423fe35b95b2d67990060c3ee304fc815ff0a2dc1c6c3cfaff2bd0d572ee67e18f19d0ea3bbe32e8add2a05021132ac40509416459fffee35200699
   languageName: node
   linkType: hard
 
@@ -7333,17 +7592,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ts-morph@npm:^14.0.0":
+  version: 14.0.0
+  resolution: "ts-morph@npm:14.0.0"
+  dependencies:
+    "@ts-morph/common": ~0.13.0
+    code-block-writer: ^11.0.0
+  checksum: e975fb245ae558c638e94014dcbbad828b904dee5a7309bfb4ef2b2922d0d7ad902ec00874a959be58991043ce655f78ae78df0d0e0d6fb3800b991b95be08ce
+  languageName: node
+  linkType: hard
+
+"tslib@npm:2.3.1, tslib@npm:^2.1.0":
+  version: 2.3.1
+  resolution: "tslib@npm:2.3.1"
+  checksum: de17a98d4614481f7fcb5cd53ffc1aaf8654313be0291e1bfaee4b4bb31a20494b7d218ff2e15017883e8ea9626599b3b0e0229c18383ba9dce89da2adf15cb9
+  languageName: node
+  linkType: hard
+
 "tslib@npm:^1.8.1":
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: dbe628ef87f66691d5d2959b3e41b9ca0045c3ee3c7c7b906cc1e328b39f199bb1ad9e671c39025bd56122ac57dfbf7385a94843b1cc07c60a4db74795829acd
-  languageName: node
-  linkType: hard
-
-"tslib@npm:^2.1.0":
-  version: 2.3.1
-  resolution: "tslib@npm:2.3.1"
-  checksum: de17a98d4614481f7fcb5cd53ffc1aaf8654313be0291e1bfaee4b4bb31a20494b7d218ff2e15017883e8ea9626599b3b0e0229c18383ba9dce89da2adf15cb9
   languageName: node
   linkType: hard
 
@@ -7808,7 +8077,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs@npm:^17.3.1":
+"yargs@npm:^17.3.1, yargs@npm:^17.4.1":
   version: 17.4.1
   resolution: "yargs@npm:17.4.1"
   dependencies:
