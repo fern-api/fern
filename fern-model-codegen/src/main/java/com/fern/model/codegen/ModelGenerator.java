@@ -1,12 +1,5 @@
 package com.fern.model.codegen;
 
-import com.fern.AliasTypeDefinition;
-import com.fern.EnumTypeDefinition;
-import com.fern.NamedType;
-import com.fern.ObjectTypeDefinition;
-import com.fern.Type;
-import com.fern.TypeDefinition;
-import com.fern.UnionTypeDefinition;
 import com.fern.codegen.GeneratedFileWithDefinition;
 import com.fern.codegen.IGeneratedFile;
 import com.fern.model.codegen.alias.AliasGenerator;
@@ -18,6 +11,13 @@ import com.fern.model.codegen.object.ObjectGenerator;
 import com.fern.model.codegen.union.UnionGenerator;
 import com.google.common.collect.Streams;
 import com.squareup.javapoet.JavaFile;
+import com.types.AliasTypeDefinition;
+import com.types.EnumTypeDefinition;
+import com.types.NamedType;
+import com.types.ObjectTypeDefinition;
+import com.types.Type;
+import com.types.TypeDefinition;
+import com.types.UnionTypeDefinition;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;

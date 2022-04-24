@@ -1,15 +1,15 @@
 package com.fern.model.codegen.interfaces;
 
-import com.fern.ContainerType;
-import com.fern.FernFilepath;
-import com.fern.NamedType;
-import com.fern.ObjectProperty;
-import com.fern.ObjectTypeDefinition;
-import com.fern.PrimitiveType;
-import com.fern.Type;
-import com.fern.TypeDefinition;
-import com.fern.TypeReference;
 import com.fern.model.codegen.TestConstants;
+import com.types.ContainerType;
+import com.types.FernFilepath;
+import com.types.NamedType;
+import com.types.ObjectProperty;
+import com.types.ObjectTypeDefinition;
+import com.types.PrimitiveType;
+import com.types.Type;
+import com.types.TypeDefinition;
+import com.types.TypeReference;
 import org.junit.jupiter.api.Test;
 
 public class InterfaceGeneratorTest {
@@ -25,8 +25,8 @@ public class InterfaceGeneratorTest {
                 .build();
         TypeDefinition withDocsTypeDefinition = TypeDefinition.builder()
                 .name(NamedType.builder()
-                        .name("WithDocs")
                         .fernFilepath(FernFilepath.valueOf("com/fern"))
+                        .name("WithDocs")
                         .build())
                 .shape(Type._object(objectTypeDefinition))
                 .build();

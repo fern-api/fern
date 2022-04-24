@@ -1,8 +1,8 @@
 package com.fern.model.codegen.object;
 
-import com.fern.ObjectTypeDefinition;
 import com.fern.codegen.GeneratedFileWithDefinition;
 import com.fern.immutables.StagedBuilderStyle;
+import com.types.ObjectTypeDefinition;
 import org.immutables.value.Value;
 
 @Value.Immutable

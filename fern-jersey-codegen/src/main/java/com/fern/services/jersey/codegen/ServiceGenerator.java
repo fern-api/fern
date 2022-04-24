@@ -1,15 +1,13 @@
 package com.fern.services.jersey.codegen;
 
-import com.fern.HttpEndpoint;
-import com.fern.HttpHeader;
-import com.fern.HttpMethod;
-import com.fern.HttpRequest;
-import com.fern.HttpResponse;
-import com.fern.HttpService;
-import com.fern.PathParameter;
-import com.fern.QueryParameter;
-import com.fern.TypeReference;
 import com.fern.codegen.utils.ClassNameUtils;
+import com.services.commons.WireMessage;
+import com.services.http.HttpEndpoint;
+import com.services.http.HttpHeader;
+import com.services.http.HttpMethod;
+import com.services.http.HttpService;
+import com.services.http.PathParameter;
+import com.services.http.QueryParameter;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -17,6 +15,7 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+import com.types.TypeReference;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -93,7 +92,7 @@ public final class ServiceGenerator {
                 .map(this::getQueryParameterSpec)
                 .forEach(endpointMethodBuilder::addParameter);
         httpEndpoint.request().ifPresent(httpRequest -> {
-            ParameterSpec requestParameterSpec = getRequestParameterSpec(httpRequest);
+            ParameterSpec requestParameterSpec = getRequestTypeName(httpRequest);
             endpointMethodBuilder.addParameter(requestParameterSpec);
         });
         httpEndpoint.response().ifPresent(httpResponse -> {
@@ -124,13 +123,12 @@ public final class ServiceGenerator {
                 .build();
     }
 
-    private ParameterSpec getRequestParameterSpec(HttpRequest httpRequest) {
-        TypeName requestTypeName = classNameUtils.getTypeNameFromTypeReference(true, httpRequest.bodyType());
-        return ParameterSpec.builder(requestTypeName, REQUEST_PARAMETER_NAME).build();
+    private ParameterSpec getRequestTypeName(WireMessage httpRequest) {
+        throw new RuntimeException("Unsupported");
     }
 
-    private TypeName getResponseTypeName(HttpResponse httpResponse) {
-        return classNameUtils.getTypeNameFromTypeReference(true, httpResponse.bodyType());
+    private TypeName getResponseTypeName(WireMessage httpResponse) {
+        throw new RuntimeException("Unsupported");
     }
 
     private static final class HttpMethodAnnotationVisitor implements HttpMethod.Visitor<AnnotationSpec> {

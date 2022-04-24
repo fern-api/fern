@@ -1,10 +1,10 @@
 package com.fern.codegen.utils;
 
-import com.fern.FernFilepath;
-import com.fern.NamedType;
-import com.fern.TypeReference;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeName;
+import com.types.FernFilepath;
+import com.types.NamedType;
+import com.types.TypeReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

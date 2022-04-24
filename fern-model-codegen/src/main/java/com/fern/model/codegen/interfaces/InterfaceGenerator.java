@@ -1,12 +1,12 @@
 package com.fern.model.codegen.interfaces;
 
-import com.fern.NamedType;
-import com.fern.ObjectTypeDefinition;
 import com.fern.model.codegen.Generator;
 import com.fern.model.codegen.GeneratorContext;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
+import com.types.NamedType;
+import com.types.ObjectTypeDefinition;
 import javax.lang.model.element.Modifier;
 
 public final class InterfaceGenerator extends Generator<ObjectTypeDefinition> {

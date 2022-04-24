@@ -1,33 +1,34 @@
 package com.fern.services.jersey.codegen;
 
-import com.fern.FernFilepath;
-import com.fern.HttpEndpoint;
-import com.fern.HttpMethod;
-import com.fern.HttpRequest;
-import com.fern.HttpResponse;
-import com.fern.HttpService;
-import com.fern.NamedType;
-import com.fern.PathParameter;
-import com.fern.PrimitiveType;
-import com.fern.TypeReference;
+import com.services.commons.ResponseErrors;
+import com.services.commons.WireMessage;
+import com.services.http.HttpEndpoint;
+import com.services.http.HttpMethod;
+import com.services.http.HttpService;
+import com.services.http.PathParameter;
+import com.types.AliasTypeDefinition;
+import com.types.FernFilepath;
+import com.types.NamedType;
+import com.types.PrimitiveType;
+import com.types.Type;
+import com.types.TypeReference;
 import java.util.Collections;
-import org.junit.jupiter.api.Test;
 
-public class ServiceGeneratorTest {
+public final class ServiceGeneratorTest {
 
-    @Test
+    // @Test
     public void test_basic() {
         HttpService testHttpService = HttpService.builder()
-                .name(NamedType.builder()
-                        .name("PersonCrudService")
-                        .fernFilepath(FernFilepath.valueOf("fern"))
-                        .build())
-                .displayName("Person Crud Service")
                 .basePath("/person")
+                .name(NamedType.builder()
+                        .fernFilepath(FernFilepath.valueOf("fern"))
+                        .name("PersonCrudService")
+                        .build())
                 .addEndpoints(HttpEndpoint.builder()
                         .endpointId("getPerson")
-                        .method(HttpMethod.GET)
                         .path("/{personId}")
+                        .method(HttpMethod.GET)
+                        .errors(ResponseErrors.builder().discriminant("").build())
                         .addParameters(PathParameter.builder()
                                 .key("personId")
                                 .valueType(TypeReference.primitive(PrimitiveType.STRING))
@@ -35,16 +36,21 @@ public class ServiceGeneratorTest {
                         .build())
                 .addEndpoints(HttpEndpoint.builder()
                         .endpointId("createPerson")
-                        .method(HttpMethod.POST)
                         .path("/create")
-                        .request(HttpRequest.builder()
-                                .bodyType(TypeReference.named(NamedType.builder()
-                                        .name("CreatePersonRequest")
-                                        .fernFilepath(FernFilepath.valueOf("fern"))
+                        .method(HttpMethod.POST)
+                        .errors(ResponseErrors.builder().discriminant("").build())
+                        .request(WireMessage.builder()
+                                .type(Type.alias(AliasTypeDefinition.builder()
+                                        .aliasOf(TypeReference.named(NamedType.builder()
+                                                .fernFilepath(FernFilepath.valueOf("fern"))
+                                                .name("CreatePersonRequest")
+                                                .build()))
                                         .build()))
                                 .build())
-                        .response(HttpResponse.builder()
-                                .bodyType(TypeReference.primitive(PrimitiveType.STRING))
+                        .response(WireMessage.builder()
+                                .type(Type.alias(AliasTypeDefinition.builder()
+                                        .aliasOf(TypeReference.primitive(PrimitiveType.STRING))
+                                        .build()))
                                 .build())
                         .build())
                 .build();

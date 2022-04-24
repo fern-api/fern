@@ -1,12 +1,12 @@
 package com.fern.model.codegen.enums;
 
-import com.fern.EnumTypeDefinition;
-import com.fern.EnumValue;
-import com.fern.FernFilepath;
-import com.fern.NamedType;
-import com.fern.Type;
-import com.fern.TypeDefinition;
 import com.fern.model.codegen.TestConstants;
+import com.types.EnumTypeDefinition;
+import com.types.EnumValue;
+import com.types.FernFilepath;
+import com.types.NamedType;
+import com.types.Type;
+import com.types.TypeDefinition;
 import org.junit.jupiter.api.Test;
 
 public class EnumGeneratorTest {
@@ -20,8 +20,8 @@ public class EnumGeneratorTest {
                 .build();
         TypeDefinition migrationStatusTypeDef = TypeDefinition.builder()
                 .name(NamedType.builder()
-                        .name("MigrationStatus")
                         .fernFilepath(FernFilepath.valueOf("com/trace/migration"))
+                        .name("MigrationStatus")
                         .build())
                 .shape(Type._enum(migrationStatusEnumDef))
                 .build();

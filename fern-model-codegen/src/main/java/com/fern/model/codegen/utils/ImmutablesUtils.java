@@ -1,14 +1,14 @@
 package com.fern.model.codegen.utils;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fern.NamedType;
-import com.fern.ObjectTypeDefinition;
 import com.fern.codegen.utils.ClassNameUtils;
 import com.fern.codegen.utils.KeyWordUtils;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
+import com.types.NamedType;
+import com.types.ObjectTypeDefinition;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;

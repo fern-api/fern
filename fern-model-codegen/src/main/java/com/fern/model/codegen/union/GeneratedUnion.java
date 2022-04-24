@@ -1,8 +1,8 @@
 package com.fern.model.codegen.union;
 
-import com.fern.UnionTypeDefinition;
 import com.fern.codegen.GeneratedFileWithDefinition;
 import com.fern.immutables.StagedBuilderStyle;
+import com.types.UnionTypeDefinition;
 import org.immutables.value.Value;
 
 @Value.Immutable

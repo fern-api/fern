@@ -1,13 +1,13 @@
 package com.fern.model.codegen;
 
-import com.fern.NamedType;
-import com.fern.TypeDefinition;
 import com.fern.codegen.GeneratedFile;
 import com.fern.codegen.utils.ClassNameUtils;
 import com.fern.model.codegen.config.PluginConfig;
 import com.fern.model.codegen.utils.ImmutablesUtils;
 import com.fern.model.codegen.utils.VisitorUtils;
 import com.squareup.javapoet.ClassName;
+import com.types.NamedType;
+import com.types.TypeDefinition;
 import java.util.Map;
 
 public final class GeneratorContext {

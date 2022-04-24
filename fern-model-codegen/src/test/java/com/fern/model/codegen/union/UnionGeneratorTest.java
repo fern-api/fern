@@ -1,16 +1,16 @@
 package com.fern.model.codegen.union;
 
-import com.fern.ContainerType;
-import com.fern.FernFilepath;
-import com.fern.NamedType;
-import com.fern.PrimitiveType;
-import com.fern.SingleUnionType;
-import com.fern.Type;
-import com.fern.TypeDefinition;
-import com.fern.TypeReference;
-import com.fern.UnionTypeDefinition;
 import com.fern.model.codegen.GeneratorContext;
 import com.fern.model.codegen.TestConstants;
+import com.types.ContainerType;
+import com.types.FernFilepath;
+import com.types.NamedType;
+import com.types.PrimitiveType;
+import com.types.SingleUnionType;
+import com.types.Type;
+import com.types.TypeDefinition;
+import com.types.TypeReference;
+import com.types.UnionTypeDefinition;
 import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
@@ -42,17 +42,16 @@ public class UnionGeneratorTest {
                         .build())
                 .addTypes(SingleUnionType.builder()
                         .discriminantValue("mapValue")
-                        .valueType(TypeReference.container(
-                                ContainerType.list(TypeReference.named(NamedType.builder()
-                                        .name("VariableValue")
-                                        .fernFilepath(FernFilepath.valueOf("com/birch/trace/commons"))
-                                        .build()))))
+                        .valueType(TypeReference.container(ContainerType.list(TypeReference.named(NamedType.builder()
+                                .fernFilepath(FernFilepath.valueOf("com/birch/trace/commons"))
+                                .name("VariableValue")
+                                .build()))))
                         .build())
                 .build();
         TypeDefinition variableValueTypeDefinition = TypeDefinition.builder()
                 .name(NamedType.builder()
-                        .name("VariableValue")
                         .fernFilepath(FernFilepath.valueOf("com/birch/trace/commons"))
+                        .name("VariableValue")
                         .build())
                 .shape(Type.union(unionTypeDefinition))
                 .build();

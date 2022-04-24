@@ -1,8 +1,8 @@
 package com.fern.services.jersey.codegen;
 
-import com.fern.HttpService;
 import com.fern.codegen.GeneratedFileWithDefinition;
 import com.fern.immutables.StagedBuilderStyle;
+import com.services.http.HttpService;
 import org.immutables.value.Value;
 
 @Value.Immutable

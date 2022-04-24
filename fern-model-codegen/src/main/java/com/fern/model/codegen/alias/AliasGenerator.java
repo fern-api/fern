@@ -2,8 +2,6 @@ package com.fern.model.codegen.alias;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fern.AliasTypeDefinition;
-import com.fern.NamedType;
 import com.fern.model.codegen.Generator;
 import com.fern.model.codegen.GeneratorContext;
 import com.squareup.javapoet.AnnotationSpec;
@@ -12,6 +10,8 @@ import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+import com.types.AliasTypeDefinition;
+import com.types.NamedType;
 import java.util.List;
 import javax.lang.model.element.Modifier;
 import org.immutables.value.Value;
