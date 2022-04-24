@@ -40,7 +40,7 @@ describe("model", () => {
             intermediateRepresentation: compilerResult.intermediateRepresentation,
         });
 
-        await writeFiles(generatedDir, project, vol.promises);
+        await writeFiles("/", project, vol.promises);
         expect(vol.toJSON()).toMatchSnapshot();
 
         await writeFiles(generatedDir, project);
@@ -65,7 +65,7 @@ describe("model", () => {
             intermediateRepresentation: compilerResult.intermediateRepresentation,
         });
 
-        await writeFiles(generatedDir, project, vol.promises);
+        await writeFiles("/", project, vol.promises);
         expect(vol.toJSON()).toMatchSnapshot();
 
         await writeFiles(generatedDir, project);

@@ -2,13 +2,35 @@
 
 exports[`model fern IR 1`] = `
 Object {
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/commons/WithDocs.ts": "export interface WithDocs {
+  "/src/errors/index.ts": "export * from \\"./posts\\";
+",
+  "/src/errors/posts/PostNotFoundError.ts": "import * as model from \\"../../model\\";
+
+export interface PostNotFoundError {
+    _type: \\"PostNotFoundError\\";
+    id: model.PostId;
+}
+",
+  "/src/errors/posts/index.ts": "export * from \\"./PostNotFoundError\\";
+",
+  "/src/model/commons/PostId.ts": "/**
+ * An ID of a blog post
+ */
+export type PostId = string & {
+    __commons: void,
+};
+
+export const PostId = {
+    of: (value: string): PostId => value as PostId
+};
+",
+  "/src/model/commons/WithDocs.ts": "export interface WithDocs {
     docs: string | null | undefined;
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/commons/index.ts": "export * from \\"./WithDocs\\";
+  "/src/model/commons/index.ts": "export * from \\"./WithDocs\\";
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/errors/ErrorDefinition.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
+  "/src/model/errors/ErrorDefinition.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
 import { NamedType } from \\"../types/NamedType\\";
 import { ErrorProperty } from \\"./ErrorProperty\\";
 import { HttpErrorConfiguration } from \\"./HttpErrorConfiguration\\";
@@ -19,7 +41,7 @@ export interface ErrorDefinition extends WithDocs {
     http: HttpErrorConfiguration | null | undefined;
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/errors/ErrorProperty.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
+  "/src/model/errors/ErrorProperty.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
 import { TypeReference } from \\"../types/TypeReference\\";
 
 export interface ErrorProperty extends WithDocs {
@@ -27,15 +49,15 @@ export interface ErrorProperty extends WithDocs {
     type: TypeReference;
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/errors/HttpErrorConfiguration.ts": "export interface HttpErrorConfiguration {
+  "/src/model/errors/HttpErrorConfiguration.ts": "export interface HttpErrorConfiguration {
     statusCode: number;
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/errors/index.ts": "export * from \\"./ErrorDefinition\\";
+  "/src/model/errors/index.ts": "export * from \\"./ErrorDefinition\\";
 export * from \\"./ErrorProperty\\";
 export * from \\"./HttpErrorConfiguration\\";
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/fern/IntermediateRepresentation.ts": "import { ErrorDefinition } from \\"../errors/ErrorDefinition\\";
+  "/src/model/fern/IntermediateRepresentation.ts": "import { ErrorDefinition } from \\"../errors/ErrorDefinition\\";
 import { TypeDefinition } from \\"../types/TypeDefinition\\";
 import { Services } from \\"./Services\\";
 
@@ -50,7 +72,7 @@ export interface IntermediateRepresentation {
     errors: ErrorDefinition[];
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/fern/Services.ts": "import { HttpService } from \\"../services/http/HttpService\\";
+  "/src/model/fern/Services.ts": "import { HttpService } from \\"../services/http/HttpService\\";
 import { WebSocketService } from \\"../services/websocket/WebSocketService\\";
 
 export interface Services {
@@ -58,16 +80,118 @@ export interface Services {
     websocket: WebSocketService[];
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/fern/index.ts": "export * from \\"./IntermediateRepresentation\\";
+  "/src/model/fern/index.ts": "export * from \\"./IntermediateRepresentation\\";
 export * from \\"./Services\\";
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/index.ts": "export * from \\"./commons\\";
+  "/src/model/index.ts": "export * from \\"./commons\\";
 export * from \\"./errors\\";
 export * from \\"./fern\\";
 export * from \\"./services\\";
 export * from \\"./types\\";
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/services/commons/BaseService.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
+  "/src/model/posts/Author.ts": "export type Author =
+    | Author.Anonymous
+    | Author.Named;
+
+export declare namespace Author {
+    interface Anonymous {
+        _type: \\"anonymous\\";
+    }
+
+    interface Named {
+        _type: \\"named\\";
+        named: string;
+    }
+
+    export interface _Visitor<R> {
+        anonymous: () => R;
+        named: (value: string) => R;
+        unknown: (value: {
+            _type: string;
+        }) => R;
+    }
+}
+
+export const Author = {
+    anonymous: (): Author.Anonymous => ({
+        _type: \\"anonymous\\"
+    }),
+
+    named: (value: string): Author.Named => ({
+        _type: \\"named\\",
+        named: value
+    }),
+
+    _visit: <Result>(value: Author, visitor: Author._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"anonymous\\": return visitor.anonymous();
+            case \\"named\\": return visitor.named(value.named);
+            default: return visitor.unknown(value);
+        }
+    },
+};
+",
+  "/src/model/posts/CreatePostRequest.ts": "import { Author } from \\"./Author\\";
+
+export interface CreatePostRequest {
+    title: string;
+    author: Author;
+    content: string;
+}
+",
+  "/src/model/posts/Post.ts": "import { PostId } from \\"../commons/PostId\\";
+import { Author } from \\"./Author\\";
+import { PostType } from \\"./PostType\\";
+
+/**
+ * A blog post
+ */
+export interface Post {
+    id: PostId;
+    type: PostType;
+    title: string;
+    author: Author;
+    content: string;
+}
+",
+  "/src/model/posts/PostType.ts": "export type PostType =
+    | PostType.Long
+    | PostType.Short;
+
+export const PostType = {
+    Long: \\"LONG\\" as PostType.Long,
+    Short: \\"SHORT\\" as PostType.Short,
+
+    visit: <Result>(value: PostType, visitor: PostType._Visitor<Result>): Result => {
+        switch (value) {
+            case PostType.Long: return visitor.Long();
+            case PostType.Short: return visitor.Short();
+            default: return visitor.unknown(value);
+        }
+    },
+};
+
+export declare namespace PostType {
+    export type Long = \\"LONG\\" & {
+        \\"__posts.PostType\\": void,
+    };
+    export type Short = \\"SHORT\\" & {
+        \\"__posts.PostType\\": void,
+    };
+
+    export interface _Visitor<R> {
+        Long: () => R;
+        Short: () => R;
+        unknown: (value: string) => R;
+    }
+}
+",
+  "/src/model/posts/index.ts": "export * from \\"./Author\\";
+export * from \\"./CreatePostRequest\\";
+export * from \\"./Post\\";
+export * from \\"./PostType\\";
+",
+  "/src/model/services/commons/BaseService.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
 import { NamedType } from \\"../../types/NamedType\\";
 
 export interface BaseService extends WithDocs {
@@ -75,7 +199,7 @@ export interface BaseService extends WithDocs {
     name: NamedType;
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/services/commons/ResponseError.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
+  "/src/model/services/commons/ResponseError.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
 import { NamedType } from \\"../../types/NamedType\\";
 
 export interface ResponseError extends WithDocs {
@@ -83,7 +207,7 @@ export interface ResponseError extends WithDocs {
     error: NamedType;
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/services/commons/ResponseErrors.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
+  "/src/model/services/commons/ResponseErrors.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
 import { ResponseError } from \\"./ResponseError\\";
 
 export interface ResponseErrors extends WithDocs {
@@ -91,19 +215,19 @@ export interface ResponseErrors extends WithDocs {
     possibleErrors: ResponseError[];
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/services/commons/WireMessage.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
+  "/src/model/services/commons/WireMessage.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
 import { Type } from \\"../../types/Type\\";
 
 export interface WireMessage extends WithDocs {
     type: Type;
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/services/commons/index.ts": "export * from \\"./BaseService\\";
+  "/src/model/services/commons/index.ts": "export * from \\"./BaseService\\";
 export * from \\"./ResponseError\\";
 export * from \\"./ResponseErrors\\";
 export * from \\"./WireMessage\\";
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/services/http/HttpEndpoint.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
+  "/src/model/services/http/HttpEndpoint.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
 import { ResponseErrors } from \\"../commons/ResponseErrors\\";
 import { WireMessage } from \\"../commons/WireMessage\\";
 import { HttpHeader } from \\"./HttpHeader\\";
@@ -123,7 +247,7 @@ export interface HttpEndpoint extends WithDocs {
     errors: ResponseErrors;
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/services/http/HttpHeader.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
+  "/src/model/services/http/HttpHeader.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
 import { TypeReference } from \\"../../types/TypeReference\\";
 
 export interface HttpHeader extends WithDocs {
@@ -131,7 +255,7 @@ export interface HttpHeader extends WithDocs {
     valueType: TypeReference;
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/services/http/HttpMethod.ts": "export type HttpMethod =
+  "/src/model/services/http/HttpMethod.ts": "export type HttpMethod =
     | HttpMethod.Get
     | HttpMethod.Post
     | HttpMethod.Put
@@ -184,7 +308,7 @@ export declare namespace HttpMethod {
     }
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/services/http/HttpService.ts": "import { BaseService } from \\"../commons/BaseService\\";
+  "/src/model/services/http/HttpService.ts": "import { BaseService } from \\"../commons/BaseService\\";
 import { HttpEndpoint } from \\"./HttpEndpoint\\";
 import { HttpHeader } from \\"./HttpHeader\\";
 
@@ -193,7 +317,7 @@ export interface HttpService extends BaseService {
     headers: HttpHeader[];
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/services/http/PathParameter.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
+  "/src/model/services/http/PathParameter.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
 import { TypeReference } from \\"../../types/TypeReference\\";
 
 export interface PathParameter extends WithDocs {
@@ -201,7 +325,7 @@ export interface PathParameter extends WithDocs {
     valueType: TypeReference;
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/services/http/QueryParameter.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
+  "/src/model/services/http/QueryParameter.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
 import { TypeReference } from \\"../../types/TypeReference\\";
 
 export interface QueryParameter extends WithDocs {
@@ -209,18 +333,18 @@ export interface QueryParameter extends WithDocs {
     valueType: TypeReference;
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/services/http/index.ts": "export * from \\"./HttpEndpoint\\";
+  "/src/model/services/http/index.ts": "export * from \\"./HttpEndpoint\\";
 export * from \\"./HttpHeader\\";
 export * from \\"./HttpMethod\\";
 export * from \\"./HttpService\\";
 export * from \\"./PathParameter\\";
 export * from \\"./QueryParameter\\";
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/services/index.ts": "export * from \\"./commons\\";
+  "/src/model/services/index.ts": "export * from \\"./commons\\";
 export * from \\"./http\\";
 export * from \\"./websocket\\";
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/services/websocket/WebSocketMessage.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
+  "/src/model/services/websocket/WebSocketMessage.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
 import { ResponseErrors } from \\"../commons/ResponseErrors\\";
 import { WireMessage } from \\"../commons/WireMessage\\";
 import { WebSocketMessageOrigin } from \\"./WebSocketMessageOrigin\\";
@@ -233,7 +357,7 @@ export interface WebSocketMessage extends WithDocs {
     errors: ResponseErrors;
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/services/websocket/WebSocketMessageOrigin.ts": "export type WebSocketMessageOrigin =
+  "/src/model/services/websocket/WebSocketMessageOrigin.ts": "export type WebSocketMessageOrigin =
     | WebSocketMessageOrigin.Client
     | WebSocketMessageOrigin.Server;
 
@@ -265,7 +389,7 @@ export declare namespace WebSocketMessageOrigin {
     }
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/services/websocket/WebSocketMessageResponse.ts": "import { Type } from \\"../../types/Type\\";
+  "/src/model/services/websocket/WebSocketMessageResponse.ts": "import { Type } from \\"../../types/Type\\";
 import { WireMessage } from \\"../commons/WireMessage\\";
 import { WebSocketMessageResponseBehavior } from \\"./WebSocketMessageResponseBehavior\\";
 
@@ -275,7 +399,7 @@ export interface WebSocketMessageResponse extends WireMessage {
     type: Type;
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/services/websocket/WebSocketMessageResponseBehavior.ts": "export type WebSocketMessageResponseBehavior =
+  "/src/model/services/websocket/WebSocketMessageResponseBehavior.ts": "export type WebSocketMessageResponseBehavior =
     | WebSocketMessageResponseBehavior.Ongoing
     | WebSocketMessageResponseBehavior.RequestResponse;
 
@@ -307,26 +431,26 @@ export declare namespace WebSocketMessageResponseBehavior {
     }
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/services/websocket/WebSocketService.ts": "import { BaseService } from \\"../commons/BaseService\\";
+  "/src/model/services/websocket/WebSocketService.ts": "import { BaseService } from \\"../commons/BaseService\\";
 import { WebSocketMessage } from \\"./WebSocketMessage\\";
 
 export interface WebSocketService extends BaseService {
     messages: WebSocketMessage[];
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/services/websocket/index.ts": "export * from \\"./WebSocketMessage\\";
+  "/src/model/services/websocket/index.ts": "export * from \\"./WebSocketMessage\\";
 export * from \\"./WebSocketMessageOrigin\\";
 export * from \\"./WebSocketMessageResponse\\";
 export * from \\"./WebSocketMessageResponseBehavior\\";
 export * from \\"./WebSocketService\\";
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/types/AliasTypeDefinition.ts": "import { TypeReference } from \\"./TypeReference\\";
+  "/src/model/types/AliasTypeDefinition.ts": "import { TypeReference } from \\"./TypeReference\\";
 
 export interface AliasTypeDefinition {
     aliasOf: TypeReference;
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/types/ContainerType.ts": "import { MapType } from \\"./MapType\\";
+  "/src/model/types/ContainerType.ts": "import { MapType } from \\"./MapType\\";
 import { TypeReference } from \\"./TypeReference\\";
 
 export type ContainerType =
@@ -398,19 +522,19 @@ export const ContainerType = {
     },
 };
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/types/EnumTypeDefinition.ts": "import { EnumValue } from \\"./EnumValue\\";
+  "/src/model/types/EnumTypeDefinition.ts": "import { EnumValue } from \\"./EnumValue\\";
 
 export interface EnumTypeDefinition {
     values: EnumValue[];
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/types/EnumValue.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
+  "/src/model/types/EnumValue.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
 
 export interface EnumValue extends WithDocs {
     value: string;
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/types/FernFilepath.ts": "/**
+  "/src/model/types/FernFilepath.ts": "/**
  * A filepath to a Fern spec file, excluding the file extension
  */
 export type FernFilepath = string & {
@@ -421,21 +545,21 @@ export const FernFilepath = {
     of: (value: string): FernFilepath => value as FernFilepath
 };
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/types/MapType.ts": "import { TypeReference } from \\"./TypeReference\\";
+  "/src/model/types/MapType.ts": "import { TypeReference } from \\"./TypeReference\\";
 
 export interface MapType {
     keyType: TypeReference;
     valueType: TypeReference;
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/types/NamedType.ts": "import { FernFilepath } from \\"./FernFilepath\\";
+  "/src/model/types/NamedType.ts": "import { FernFilepath } from \\"./FernFilepath\\";
 
 export interface NamedType {
     fernFilepath: FernFilepath;
     name: string;
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/types/ObjectProperty.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
+  "/src/model/types/ObjectProperty.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
 import { TypeReference } from \\"./TypeReference\\";
 
 export interface ObjectProperty extends WithDocs {
@@ -443,7 +567,7 @@ export interface ObjectProperty extends WithDocs {
     valueType: TypeReference;
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/types/ObjectTypeDefinition.ts": "import { NamedType } from \\"./NamedType\\";
+  "/src/model/types/ObjectTypeDefinition.ts": "import { NamedType } from \\"./NamedType\\";
 import { ObjectProperty } from \\"./ObjectProperty\\";
 
 export interface ObjectTypeDefinition {
@@ -452,7 +576,7 @@ export interface ObjectTypeDefinition {
     properties: ObjectProperty[];
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/types/PrimitiveType.ts": "export type PrimitiveType =
+  "/src/model/types/PrimitiveType.ts": "export type PrimitiveType =
     | PrimitiveType.Integer
     | PrimitiveType.Double
     | PrimitiveType.String
@@ -507,7 +631,7 @@ export declare namespace PrimitiveType {
     }
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/types/SingleUnionType.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
+  "/src/model/types/SingleUnionType.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
 import { TypeReference } from \\"./TypeReference\\";
 
 export interface SingleUnionType extends WithDocs {
@@ -515,7 +639,7 @@ export interface SingleUnionType extends WithDocs {
     valueType: TypeReference;
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/types/Type.ts": "import { AliasTypeDefinition } from \\"./AliasTypeDefinition\\";
+  "/src/model/types/Type.ts": "import { AliasTypeDefinition } from \\"./AliasTypeDefinition\\";
 import { EnumTypeDefinition } from \\"./EnumTypeDefinition\\";
 import { ObjectTypeDefinition } from \\"./ObjectTypeDefinition\\";
 import { UnionTypeDefinition } from \\"./UnionTypeDefinition\\";
@@ -586,7 +710,7 @@ export const Type = {
     },
 };
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/types/TypeDefinition.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
+  "/src/model/types/TypeDefinition.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
 import { NamedType } from \\"./NamedType\\";
 import { Type } from \\"./Type\\";
 
@@ -598,7 +722,7 @@ export interface TypeDefinition extends WithDocs {
     shape: Type;
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/types/TypeReference.ts": "import { ContainerType } from \\"./ContainerType\\";
+  "/src/model/types/TypeReference.ts": "import { ContainerType } from \\"./ContainerType\\";
 import { NamedType } from \\"./NamedType\\";
 import { PrimitiveType } from \\"./PrimitiveType\\";
 
@@ -669,14 +793,14 @@ export const TypeReference = {
     },
 };
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/types/UnionTypeDefinition.ts": "import { SingleUnionType } from \\"./SingleUnionType\\";
+  "/src/model/types/UnionTypeDefinition.ts": "import { SingleUnionType } from \\"./SingleUnionType\\";
 
 export interface UnionTypeDefinition {
     discriminant: string;
     types: SingleUnionType[];
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/fern-ir/generated/src/model/types/index.ts": "export * from \\"./AliasTypeDefinition\\";
+  "/src/model/types/index.ts": "export * from \\"./AliasTypeDefinition\\";
 export * from \\"./ContainerType\\";
 export * from \\"./EnumTypeDefinition\\";
 export * from \\"./EnumValue\\";
@@ -692,152 +816,23 @@ export * from \\"./TypeDefinition\\";
 export * from \\"./TypeReference\\";
 export * from \\"./UnionTypeDefinition\\";
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/posts/generated/src/errors/index.ts": "export * from \\"./posts\\";
-",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/posts/generated/src/errors/posts/PostNotFoundError.ts": "import * as model from \\"../../model\\";
-
-export interface PostNotFoundError {
-    _type: \\"PostNotFoundError\\";
-    id: model.PostId;
-}
-",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/posts/generated/src/errors/posts/index.ts": "export * from \\"./PostNotFoundError\\";
-",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/posts/generated/src/model/commons/PostId.ts": "/**
- * An ID of a blog post
- */
-export type PostId = string & {
-    __commons: void,
-};
-
-export const PostId = {
-    of: (value: string): PostId => value as PostId
-};
-",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/posts/generated/src/model/commons/index.ts": "export * from \\"./PostId\\";
-",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/posts/generated/src/model/index.ts": "export * from \\"./commons\\";
-export * from \\"./posts\\";
-",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/posts/generated/src/model/posts/Author.ts": "export type Author =
-    | Author.Anonymous
-    | Author.Named;
-
-export declare namespace Author {
-    interface Anonymous {
-        _type: \\"anonymous\\";
-    }
-
-    interface Named {
-        _type: \\"named\\";
-        named: string;
-    }
-
-    export interface _Visitor<R> {
-        anonymous: () => R;
-        named: (value: string) => R;
-        unknown: (value: {
-            _type: string;
-        }) => R;
-    }
-}
-
-export const Author = {
-    anonymous: (): Author.Anonymous => ({
-        _type: \\"anonymous\\"
-    }),
-
-    named: (value: string): Author.Named => ({
-        _type: \\"named\\",
-        named: value
-    }),
-
-    _visit: <Result>(value: Author, visitor: Author._Visitor<Result>): Result => {
-        switch (value._type) {
-            case \\"anonymous\\": return visitor.anonymous();
-            case \\"named\\": return visitor.named(value.named);
-            default: return visitor.unknown(value);
-        }
-    },
-};
-",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/posts/generated/src/model/posts/CreatePostRequest.ts": "import { Author } from \\"./Author\\";
-
-export interface CreatePostRequest {
-    title: string;
-    author: Author;
-    content: string;
-}
-",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/posts/generated/src/model/posts/Post.ts": "import { PostId } from \\"../commons/PostId\\";
-import { Author } from \\"./Author\\";
-import { PostType } from \\"./PostType\\";
-
-/**
- * A blog post
- */
-export interface Post {
-    id: PostId;
-    type: PostType;
-    title: string;
-    author: Author;
-    content: string;
-}
-",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/posts/generated/src/model/posts/PostType.ts": "export type PostType =
-    | PostType.Long
-    | PostType.Short;
-
-export const PostType = {
-    Long: \\"LONG\\" as PostType.Long,
-    Short: \\"SHORT\\" as PostType.Short,
-
-    visit: <Result>(value: PostType, visitor: PostType._Visitor<Result>): Result => {
-        switch (value) {
-            case PostType.Long: return visitor.Long();
-            case PostType.Short: return visitor.Short();
-            default: return visitor.unknown(value);
-        }
-    },
-};
-
-export declare namespace PostType {
-    export type Long = \\"LONG\\" & {
-        \\"__posts.PostType\\": void,
-    };
-    export type Short = \\"SHORT\\" & {
-        \\"__posts.PostType\\": void,
-    };
-
-    export interface _Visitor<R> {
-        Long: () => R;
-        Short: () => R;
-        unknown: (value: string) => R;
-    }
-}
-",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/posts/generated/src/model/posts/index.ts": "export * from \\"./Author\\";
-export * from \\"./CreatePostRequest\\";
-export * from \\"./Post\\";
-export * from \\"./PostType\\";
-",
 }
 `;
 
 exports[`model posts 1`] = `
 Object {
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/posts/generated/src/errors/index.ts": "export * from \\"./posts\\";
+  "/src/errors/index.ts": "export * from \\"./posts\\";
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/posts/generated/src/errors/posts/PostNotFoundError.ts": "import * as model from \\"../../model\\";
+  "/src/errors/posts/PostNotFoundError.ts": "import * as model from \\"../../model\\";
 
 export interface PostNotFoundError {
     _type: \\"PostNotFoundError\\";
     id: model.PostId;
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/posts/generated/src/errors/posts/index.ts": "export * from \\"./PostNotFoundError\\";
+  "/src/errors/posts/index.ts": "export * from \\"./PostNotFoundError\\";
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/posts/generated/src/model/commons/PostId.ts": "/**
+  "/src/model/commons/PostId.ts": "/**
  * An ID of a blog post
  */
 export type PostId = string & {
@@ -848,12 +843,12 @@ export const PostId = {
     of: (value: string): PostId => value as PostId
 };
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/posts/generated/src/model/commons/index.ts": "export * from \\"./PostId\\";
+  "/src/model/commons/index.ts": "export * from \\"./PostId\\";
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/posts/generated/src/model/index.ts": "export * from \\"./commons\\";
+  "/src/model/index.ts": "export * from \\"./commons\\";
 export * from \\"./posts\\";
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/posts/generated/src/model/posts/Author.ts": "export type Author =
+  "/src/model/posts/Author.ts": "export type Author =
     | Author.Anonymous
     | Author.Named;
 
@@ -895,7 +890,7 @@ export const Author = {
     },
 };
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/posts/generated/src/model/posts/CreatePostRequest.ts": "import { Author } from \\"./Author\\";
+  "/src/model/posts/CreatePostRequest.ts": "import { Author } from \\"./Author\\";
 
 export interface CreatePostRequest {
     title: string;
@@ -903,7 +898,7 @@ export interface CreatePostRequest {
     content: string;
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/posts/generated/src/model/posts/Post.ts": "import { PostId } from \\"../commons/PostId\\";
+  "/src/model/posts/Post.ts": "import { PostId } from \\"../commons/PostId\\";
 import { Author } from \\"./Author\\";
 import { PostType } from \\"./PostType\\";
 
@@ -918,7 +913,7 @@ export interface Post {
     content: string;
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/posts/generated/src/model/posts/PostType.ts": "export type PostType =
+  "/src/model/posts/PostType.ts": "export type PostType =
     | PostType.Long
     | PostType.Short;
 
@@ -950,7 +945,7 @@ export declare namespace PostType {
     }
 }
 ",
-  "/Users/zachkirsch/Dropbox/Mac/Documents/fern-typescript-plugins/packages/fern-typescript/model/src/__test__/mocks/posts/generated/src/model/posts/index.ts": "export * from \\"./Author\\";
+  "/src/model/posts/index.ts": "export * from \\"./Author\\";
 export * from \\"./CreatePostRequest\\";
 export * from \\"./Post\\";
 export * from \\"./PostType\\";
