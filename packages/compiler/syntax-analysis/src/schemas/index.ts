@@ -13,7 +13,7 @@ export { HttpRequestSchema } from "./HttpRequestSchema";
 export { HttpResponseSchema } from "./HttpResponseSchema";
 export { HttpServiceSchema } from "./HttpServiceSchema";
 export { IdSchema } from "./IdSchema";
-export { ObjectFieldSchema } from "./ObjectFieldSchema";
+export { ObjectPropertySchema } from "./ObjectPropertySchema";
 export { ObjectSchema } from "./ObjectSchema";
 export { RawFernConfigurationSchema } from "./RawFernConfigurationSchema";
 export { ResponseErrorsSchema } from "./ResponseErrorsSchema";
