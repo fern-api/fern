@@ -1,9 +1,9 @@
-import { FernFilepath, ResponseError } from "@fern-api/api";
+import { FernFilepath, ResponseErrors } from "@fern-api/api";
 import { convertResponseErrors } from "../converters/services/convertResponseErrors";
 
 describe("convertResponseErrors", () => {
     it("reference to an error in another file", () => {
-        const references = convertResponseErrors({
+        const actualResponseErrors = convertResponseErrors({
             rawResponseErrors: {
                 union: {
                     unauthorized: "commons.UnauthorizedError",
@@ -15,15 +15,21 @@ describe("convertResponseErrors", () => {
             },
         });
 
-        const expectedReference: ResponseError = {
+        const expectedResponseErrors: ResponseErrors = {
             docs: undefined,
-            discriminantValue: "unauthorized",
-            error: {
-                name: "UnauthorizedError",
-                fernFilepath: FernFilepath.of("path/to/commons"),
-            },
+            discriminant: "_type",
+            possibleErrors: [
+                {
+                    discriminantValue: "unauthorized",
+                    docs: undefined,
+                    error: {
+                        fernFilepath: FernFilepath.of("path/to/commons"),
+                        name: "UnauthorizedError",
+                    },
+                },
+            ],
         };
 
-        expect(references).toEqual([expectedReference]);
+        expect(actualResponseErrors).toEqual(expectedResponseErrors);
     });
 });
