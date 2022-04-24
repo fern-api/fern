@@ -1,0 +1,51 @@
+imports:
+  commons: commons.yml
+
+types:
+  Post:
+    docs: A blog post
+    properties:
+      id: commons.PostId
+      type: PostType
+      title: string
+      author: Author
+      content: string
+
+  PostType:
+    enum:
+      - LONG
+      - SHORT
+
+  Author:
+    union:
+      anonymous: {}
+      named: string
+
+  CreatePostRequest:
+    properties:
+      title: string
+      author: Author
+      content: string
+
+errors:
+  PostNotFoundError:
+    http:
+      statusCode: 404
+    properties:
+      id: commons.PostId
+
+services:
+  http:
+    PostsService:
+      base-path: /posts
+      endpoints:
+        getPost:
+          method: GET
+          path: /{postId}
+          parameters:
+            postId: string
+          request: CreatePostRequest
+          response: commons.PostId
+          errors:
+            union:
+              notFound: PostNotFoundError
