@@ -11,7 +11,7 @@ import org.immutables.value.Value;
     as = ImmutableHttpErrorConfiguration.class
 )
 @JsonIgnoreProperties(
-    ignoreUnknown = {true}
+    ignoreUnknown = true
 )
 public interface HttpErrorConfiguration {
   int statusCode();

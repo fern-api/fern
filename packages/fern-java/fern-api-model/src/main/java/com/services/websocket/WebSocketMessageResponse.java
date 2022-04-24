@@ -13,14 +13,14 @@ import org.immutables.value.Value;
     as = ImmutableWebSocketMessageResponse.class
 )
 @JsonIgnoreProperties(
-    ignoreUnknown = {true}
+    ignoreUnknown = true
 )
 public interface WebSocketMessageResponse extends IWireMessage {
   WebSocketMessageResponseBehavior behavior();
 
   Type type();
 
-  static ImmutableWebSocketMessageResponse.TypeBuildStage builder() {
+  static ImmutableWebSocketMessageResponse.BehaviorBuildStage builder() {
     return ImmutableWebSocketMessageResponse.builder();
   }
 }

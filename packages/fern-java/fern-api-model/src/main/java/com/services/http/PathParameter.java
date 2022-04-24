@@ -14,7 +14,7 @@ import org.immutables.value.Value;
     as = ImmutablePathParameter.class
 )
 @JsonIgnoreProperties(
-    ignoreUnknown = {true}
+    ignoreUnknown = true
 )
 public interface PathParameter extends IWithDocs {
   String key();

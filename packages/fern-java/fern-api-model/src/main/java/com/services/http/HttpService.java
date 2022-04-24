@@ -13,7 +13,7 @@ import org.immutables.value.Value;
     as = ImmutableHttpService.class
 )
 @JsonIgnoreProperties(
-    ignoreUnknown = {true}
+    ignoreUnknown = true
 )
 public interface HttpService extends IBaseService {
   List<HttpEndpoint> endpoints();

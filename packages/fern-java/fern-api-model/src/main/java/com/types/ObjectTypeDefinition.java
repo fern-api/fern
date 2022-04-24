@@ -13,7 +13,7 @@ import org.immutables.value.Value;
     as = ImmutableObjectTypeDefinition.class
 )
 @JsonIgnoreProperties(
-    ignoreUnknown = {true}
+    ignoreUnknown = true
 )
 public interface ObjectTypeDefinition {
   @JsonProperty("extends")

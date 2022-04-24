@@ -12,7 +12,7 @@ import org.immutables.value.Value;
     as = ImmutableEnumTypeDefinition.class
 )
 @JsonIgnoreProperties(
-    ignoreUnknown = {true}
+    ignoreUnknown = true
 )
 public interface EnumTypeDefinition {
   List<EnumValue> values();

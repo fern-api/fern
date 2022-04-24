@@ -13,7 +13,7 @@ import org.immutables.value.Value;
     as = ImmutableUnionTypeDefinition.class
 )
 @JsonIgnoreProperties(
-    ignoreUnknown = {true}
+    ignoreUnknown = true
 )
 public interface UnionTypeDefinition {
   String discriminant();

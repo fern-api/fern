@@ -14,7 +14,7 @@ import org.immutables.value.Value;
     as = ImmutableResponseError.class
 )
 @JsonIgnoreProperties(
-    ignoreUnknown = {true}
+    ignoreUnknown = true
 )
 public interface ResponseError extends IWithDocs {
   String discriminantValue();

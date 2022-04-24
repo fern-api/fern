@@ -15,7 +15,7 @@ import org.immutables.value.Value;
     as = ImmutableWebSocketMessage.class
 )
 @JsonIgnoreProperties(
-    ignoreUnknown = {true}
+    ignoreUnknown = true
 )
 public interface WebSocketMessage extends IWithDocs {
   WebSocketMessageOrigin origin();

@@ -11,7 +11,7 @@ import org.immutables.value.Value;
     as = ImmutableMapType.class
 )
 @JsonIgnoreProperties(
-    ignoreUnknown = {true}
+    ignoreUnknown = true
 )
 public interface MapType {
   TypeReference keyType();

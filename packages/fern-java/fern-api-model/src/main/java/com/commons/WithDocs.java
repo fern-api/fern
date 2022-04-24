@@ -12,7 +12,7 @@ import org.immutables.value.Value;
     as = ImmutableWithDocs.class
 )
 @JsonIgnoreProperties(
-    ignoreUnknown = {true}
+    ignoreUnknown = true
 )
 public interface WithDocs extends IWithDocs {
   static ImmutableWithDocs.Builder builder() {

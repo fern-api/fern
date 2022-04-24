@@ -13,7 +13,7 @@ import org.immutables.value.Value;
     as = ImmutableWireMessage.class
 )
 @JsonIgnoreProperties(
-    ignoreUnknown = {true}
+    ignoreUnknown = true
 )
 public interface WireMessage extends IWithDocs, IWireMessage {
   static ImmutableWireMessage.TypeBuildStage builder() {
