@@ -13,7 +13,7 @@ import org.immutables.value.Value;
     as = ImmutableEnumValue.class
 )
 @JsonIgnoreProperties(
-    ignoreUnknown = {true}
+    ignoreUnknown = true
 )
 public interface EnumValue extends IWithDocs {
   String value();

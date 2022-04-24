@@ -17,7 +17,7 @@ import org.immutables.value.Value;
     as = ImmutableHttpEndpoint.class
 )
 @JsonIgnoreProperties(
-    ignoreUnknown = {true}
+    ignoreUnknown = true
 )
 public interface HttpEndpoint extends IWithDocs {
   String endpointId();

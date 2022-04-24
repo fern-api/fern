@@ -13,7 +13,7 @@ import org.immutables.value.Value;
     as = ImmutableWebSocketService.class
 )
 @JsonIgnoreProperties(
-    ignoreUnknown = {true}
+    ignoreUnknown = true
 )
 public interface WebSocketService extends IBaseService {
   List<WebSocketMessage> messages();

@@ -14,7 +14,7 @@ import org.immutables.value.Value;
     as = ImmutableErrorProperty.class
 )
 @JsonIgnoreProperties(
-    ignoreUnknown = {true}
+    ignoreUnknown = true
 )
 public interface ErrorProperty extends IWithDocs {
   String name();

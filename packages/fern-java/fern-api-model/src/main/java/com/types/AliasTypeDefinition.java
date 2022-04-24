@@ -11,7 +11,7 @@ import org.immutables.value.Value;
     as = ImmutableAliasTypeDefinition.class
 )
 @JsonIgnoreProperties(
-    ignoreUnknown = {true}
+    ignoreUnknown = true
 )
 public interface AliasTypeDefinition {
   TypeReference aliasOf();

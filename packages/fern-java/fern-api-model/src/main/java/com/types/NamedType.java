@@ -12,7 +12,7 @@ import org.immutables.value.Value;
     as = ImmutableNamedType.class
 )
 @JsonIgnoreProperties(
-    ignoreUnknown = {true}
+    ignoreUnknown = true
 )
 public interface NamedType {
   FernFilepath fernFilepath();

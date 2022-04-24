@@ -1,5 +1,5 @@
 # Download java codegen plugin and invoke
-version="37d6f3c"
+version="2d00ce7"
 rm -rf fern-model-codegen-"$version"-"$version"
 wget --user "$JFROG_USERNAME" --password "$JFROG_API_KEY" \
   https://usebirch.jfrog.io/artifactory/default-maven-local/com/fern/java/fern-model-codegen/"$version"/fern-model-codegen-"$version".zip

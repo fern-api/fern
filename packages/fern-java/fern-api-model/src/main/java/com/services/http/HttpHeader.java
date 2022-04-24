@@ -14,7 +14,7 @@ import org.immutables.value.Value;
     as = ImmutableHttpHeader.class
 )
 @JsonIgnoreProperties(
-    ignoreUnknown = {true}
+    ignoreUnknown = true
 )
 public interface HttpHeader extends IWithDocs {
   String header();

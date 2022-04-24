@@ -14,7 +14,7 @@ import org.immutables.value.Value;
     as = ImmutableIntermediateRepresentation.class
 )
 @JsonIgnoreProperties(
-    ignoreUnknown = {true}
+    ignoreUnknown = true
 )
 public interface IntermediateRepresentation {
   List<TypeDefinition> types();

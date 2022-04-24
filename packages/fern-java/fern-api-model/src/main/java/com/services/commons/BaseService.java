@@ -13,7 +13,7 @@ import org.immutables.value.Value;
     as = ImmutableBaseService.class
 )
 @JsonIgnoreProperties(
-    ignoreUnknown = {true}
+    ignoreUnknown = true
 )
 public interface BaseService extends IWithDocs, IBaseService {
   static ImmutableBaseService.BasePathBuildStage builder() {

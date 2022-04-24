@@ -14,7 +14,7 @@ import org.immutables.value.Value;
     as = ImmutableQueryParameter.class
 )
 @JsonIgnoreProperties(
-    ignoreUnknown = {true}
+    ignoreUnknown = true
 )
 public interface QueryParameter extends IWithDocs {
   String key();

@@ -14,7 +14,7 @@ import org.immutables.value.Value;
     as = ImmutableServices.class
 )
 @JsonIgnoreProperties(
-    ignoreUnknown = {true}
+    ignoreUnknown = true
 )
 public interface Services {
   List<HttpService> http();

@@ -13,7 +13,7 @@ import org.immutables.value.Value;
     as = ImmutableObjectProperty.class
 )
 @JsonIgnoreProperties(
-    ignoreUnknown = {true}
+    ignoreUnknown = true
 )
 public interface ObjectProperty extends IWithDocs {
   String key();

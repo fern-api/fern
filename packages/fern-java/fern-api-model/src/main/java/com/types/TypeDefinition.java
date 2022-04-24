@@ -12,7 +12,7 @@ import org.immutables.value.Value;
     as = ImmutableTypeDefinition.class
 )
 @JsonIgnoreProperties(
-    ignoreUnknown = {true}
+    ignoreUnknown = true
 )
 public interface TypeDefinition extends IWithDocs {
   NamedType name();
