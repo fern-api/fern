@@ -5,11 +5,11 @@ imports:
 types:
   WebSocketService:
     extends: serviceCommons.BaseService
-    fields:
+    properties:
       messages: list<WebSocketMessage>
   WebSocketMessage:
     extends: commons.WithDocs
-    fields:
+    properties:
       origin: WebSocketMessageOrigin
       body: optional<serviceCommons.WireMessage>
       response: optional<WebSocketMessageResponse>
@@ -20,7 +20,7 @@ types:
       - SERVER
   WebSocketMessageResponse:
     extends: serviceCommons.WireMessage
-    fields:
+    properties:
       behavior:
         docs: Defaults to WebSocketMessageResponseBehavior.ONGOING
         type: WebSocketMessageResponseBehavior

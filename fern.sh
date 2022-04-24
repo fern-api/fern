@@ -2,7 +2,7 @@
 
 set -e
 
-npx --yes fern-api@0.0.13 generate packages/api/src packages/api/generated/ir.json
+npx --yes fern-api@0.0.15 generate packages/api/src packages/api/generated/ir.json
 npx --yes fern-typescript@0.0.9 model packages/api/generated/ir.json packages/api/generated/ir
 
 cat > packages/api/generated/ir/package.json <<EOL

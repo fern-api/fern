@@ -4,20 +4,20 @@ imports:
 types:
   BaseService:
     extends: commons.WithDocs
-    fields:
+    properties:
       basePath: string
       name: types.NamedType
   WireMessage:
     extends: commons.WithDocs
-    fields:
+    properties:
       type: types.Type
   ResponseErrors:
     extends: commons.WithDocs
-    fields:
+    properties:
       discriminant: string
       possibleErrors: list<ResponseError>
   ResponseError:
     extends: commons.WithDocs
-    fields:
+    properties:
       discriminantValue: string
       error: types.NamedType

@@ -5,12 +5,12 @@ imports:
 types:
   HttpService:
     extends: serviceCommons.BaseService
-    fields:
+    properties:
       endpoints: list<HttpEndpoint>
       headers: list<HttpHeader>
   HttpEndpoint:
     extends: commons.WithDocs
-    fields:
+    properties:
       endpointId: string
       path: string
       method: HttpMethod
@@ -29,16 +29,16 @@ types:
       - DELETE
   HttpHeader:
     extends: commons.WithDocs
-    fields:
+    properties:
       header: string
       valueType: types.TypeReference
   PathParameter:
     extends: commons.WithDocs
-    fields:
+    properties:
       key: string
       valueType: types.TypeReference
   QueryParameter:
     extends: commons.WithDocs
-    fields:
+    properties:
       key: string
       valueType: types.TypeReference
