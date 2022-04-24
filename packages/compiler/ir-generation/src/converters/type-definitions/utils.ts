@@ -19,7 +19,7 @@ export function isRawAliasDefinition(
 export function isRawObjectDefinition(
     rawTypeDefinition: RawSchemas.TypeDefinitionSchema
 ): rawTypeDefinition is RawSchemas.ObjectSchema {
-    return (rawTypeDefinition as RawSchemas.ObjectSchema)?.fields != null;
+    return (rawTypeDefinition as RawSchemas.ObjectSchema)?.properties != null;
 }
 
 export function isRawUnionDefinition(

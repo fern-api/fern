@@ -2,7 +2,7 @@ import { FernFilepath, Type, WireMessage } from "@fern-api/api";
 import { WireMessageSchema } from "@fern-api/syntax-analysis/src/schemas/WireMessageSchema";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { convertType } from "../type-definitions/convertTypeDefinition";
-import { isRawTypeDefinition } from "../type-definitions/util";
+import { isRawTypeDefinition } from "../type-definitions/utils";
 
 export function convertWireMessage({
     wireMessage,

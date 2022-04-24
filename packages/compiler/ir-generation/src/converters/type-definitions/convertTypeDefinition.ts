@@ -5,7 +5,7 @@ import { assertNever } from "../../utils/assertNever";
 import { getDocs } from "../../utils/getDocs";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { parseTypeName } from "../../utils/parseTypeName";
-import { isRawAliasDefinition, isRawEnumDefinition, isRawObjectDefinition, isRawUnionDefinition } from "./util";
+import { isRawAliasDefinition, isRawEnumDefinition, isRawObjectDefinition, isRawUnionDefinition } from "./utils";
 
 export function convertTypeDefinition({
     typeName,
@@ -61,11 +61,13 @@ export function convertType({
                               parseTypeName({ typeName: extended, fernFilepath, imports })
                           )
                     : [],
-            properties: Object.entries(typeDefinition.fields).map(([fieldName, fieldDefinition]) => ({
-                key: fieldName,
-                valueType: parseTypeReference(fieldDefinition),
-                docs: getDocs(fieldDefinition),
-            })),
+            properties: [
+                ...Object.entries(typeDefinition.properties).map(([propertyName, propertyDefinition]) => ({
+                    key: propertyName,
+                    valueType: parseTypeReference(propertyDefinition),
+                    docs: getDocs(propertyDefinition),
+                })),
+            ],
         });
     }
 
