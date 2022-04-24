@@ -7,11 +7,13 @@ import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
-import com.types.NamedType;
+import com.types.ObjectProperty;
 import com.types.ObjectTypeDefinition;
-import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
+import org.apache.commons.lang3.StringUtils;
 
 public final class ImmutablesUtils {
 
@@ -23,13 +25,11 @@ public final class ImmutablesUtils {
         this.classNameUtils = classNameUtils;
     }
 
-    public List<MethodSpec> getImmutablesPropertyMethods(ObjectTypeDefinition objectTypeDefinition) {
-        return objectTypeDefinition.properties().stream()
-                .map(objectField -> {
-                    TypeName returnType = classNameUtils.getTypeNameFromTypeReference(true, objectField.valueType());
-                    return getKeyWordCompatibleImmutablesPropertyMethod(objectField.key(), returnType);
-                })
-                .collect(Collectors.toList());
+    public Map<ObjectProperty, MethodSpec> getImmutablesPropertyMethods(ObjectTypeDefinition objectTypeDefinition) {
+        return objectTypeDefinition.properties().stream().collect(Collectors.toMap(Function.identity(), objectField -> {
+            TypeName returnType = classNameUtils.getTypeNameFromTypeReference(true, objectField.valueType());
+            return getKeyWordCompatibleImmutablesPropertyMethod(objectField.key(), returnType);
+        }));
     }
 
     public MethodSpec getKeyWordCompatibleImmutablesPropertyMethod(String methodName, TypeName returnType) {
@@ -49,8 +49,9 @@ public final class ImmutablesUtils {
                 .build();
     }
 
-    public ClassName getImmutablesClassName(NamedType namedType) {
+    public ClassName getImmutablesClassName(ClassName interfaceClassName) {
         return ClassName.get(
-                classNameUtils.getPackageFromFilepath(namedType.fernFilepath()), IMMUTABLE_PREFIX + namedType.name());
+                interfaceClassName.packageName(),
+                IMMUTABLE_PREFIX + StringUtils.capitalize(interfaceClassName.simpleName()));
     }
 }

@@ -16,7 +16,9 @@ import com.types.NamedType;
 import com.types.ObjectProperty;
 import com.types.ObjectTypeDefinition;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
@@ -34,6 +36,8 @@ public final class ObjectGenerator extends Generator<ObjectTypeDefinition> {
     private final ObjectTypeDefinition objectTypeDefinition;
     private final List<GeneratedInterface> extendedInterfaces;
     private final Optional<GeneratedInterface> selfInterface;
+    private final ClassName generatedObjectClassName;
+    private final ClassName generatedObjectImmutablesClassName;
 
     public ObjectGenerator(
             NamedType namedType,
@@ -46,18 +50,24 @@ public final class ObjectGenerator extends Generator<ObjectTypeDefinition> {
         this.objectTypeDefinition = objectTypeDefinition;
         this.extendedInterfaces = extendedInterfaces;
         this.selfInterface = selfInterface;
+        this.generatedObjectClassName = generatorContext.getClassNameUtils().getClassNameForNamedType(namedType);
+        this.generatedObjectImmutablesClassName =
+                generatorContext.getImmutablesUtils().getImmutablesClassName(generatedObjectClassName);
     }
 
     @Override
     public GeneratedObject generate() {
-        ClassName generatedObjectClassName =
-                generatorContext.getClassNameUtils().getClassNameForNamedType(namedType);
-        TypeSpec objectTypeSpec = TypeSpec.interfaceBuilder(namedType.name())
+        TypeSpec.Builder objectTypeSpecBuilder = TypeSpec.interfaceBuilder(namedType.name())
                 .addModifiers(OBJECT_INTERFACE_MODIFIERS)
                 .addAnnotations(getAnnotations())
-                .addSuperinterfaces(getSuperInterfaces())
-                .addMethods(getMethods())
-                .build();
+                .addSuperinterfaces(getSuperInterfaces());
+        Map<ObjectProperty, MethodSpec> methodSpecsByProperty = new HashMap<>();
+        if (selfInterface.isEmpty()) {
+            methodSpecsByProperty.putAll(
+                    generatorContext.getImmutablesUtils().getImmutablesPropertyMethods(objectTypeDefinition));
+        }
+        objectTypeSpecBuilder.addMethods(methodSpecsByProperty.values()).addMethod(generateStaticBuilder());
+        TypeSpec objectTypeSpec = objectTypeSpecBuilder.build();
         JavaFile objectFile = JavaFile.builder(generatedObjectClassName.packageName(), objectTypeSpec)
                 .build();
         return GeneratedObject.builder()
@@ -73,8 +83,7 @@ public final class ObjectGenerator extends Generator<ObjectTypeDefinition> {
         annotationSpecs.add(AnnotationSpec.builder(generatorContext.getStagedImmutablesBuilderClassname())
                 .build());
         annotationSpecs.add(AnnotationSpec.builder(JsonDeserialize.class)
-                .addMember(
-                        "as", "$T.class", generatorContext.getImmutablesUtils().getImmutablesClassName(namedType))
+                .addMember("as", "$T.class", generatedObjectImmutablesClassName)
                 .build());
         annotationSpecs.add(AnnotationSpec.builder(JsonIgnoreProperties.class)
                 .addMember("ignoreUnknown", "$L", Boolean.TRUE.toString())
@@ -91,28 +100,17 @@ public final class ObjectGenerator extends Generator<ObjectTypeDefinition> {
         return superInterfaces;
     }
 
-    private List<MethodSpec> getMethods() {
-        List<MethodSpec> methods = new ArrayList<>();
-        // if no self interface, we want to add all fields as immutables attributes
-        if (selfInterface.isEmpty()) {
-            methods.addAll(generatorContext.getImmutablesUtils().getImmutablesPropertyMethods(objectTypeDefinition));
-        }
-        methods.add(generateStaticBuilder());
-        return methods;
-    }
-
     private MethodSpec generateStaticBuilder() {
         Optional<String> firstMandatoryFieldName =
                 getFirstRequiredFieldName(extendedInterfaces, objectTypeDefinition.properties());
-        ClassName immutableClassName = generatorContext.getImmutablesUtils().getImmutablesClassName(namedType);
         ClassName builderClassName = firstMandatoryFieldName.isEmpty()
-                ? immutableClassName.nestedClass("Builder")
-                : immutableClassName.nestedClass(
+                ? generatedObjectImmutablesClassName.nestedClass("Builder")
+                : generatedObjectImmutablesClassName.nestedClass(
                         StringUtils.capitalize(firstMandatoryFieldName.get()) + BUILD_STAGE_SUFFIX);
         return MethodSpec.methodBuilder(STATIC_BUILDER_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(builderClassName)
-                .addCode("return $T.builder();", immutableClassName)
+                .addCode("return $T.builder();", generatedObjectImmutablesClassName)
                 .build();
     }
 

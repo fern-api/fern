@@ -29,7 +29,10 @@ public final class InterfaceGenerator extends Generator<ObjectTypeDefinition> {
         ClassName generatedInterfaceClassName = getInterfaceClassName();
         TypeSpec interfaceTypeSpec = TypeSpec.interfaceBuilder(generatedInterfaceClassName.simpleName())
                 .addModifiers(Modifier.PUBLIC)
-                .addMethods(generatorContext.getImmutablesUtils().getImmutablesPropertyMethods(objectTypeDefinition))
+                .addMethods(generatorContext
+                        .getImmutablesUtils()
+                        .getImmutablesPropertyMethods(objectTypeDefinition)
+                        .values())
                 .build();
         JavaFile interfaceFile = JavaFile.builder(generatedInterfaceClassName.packageName(), interfaceTypeSpec)
                 .build();

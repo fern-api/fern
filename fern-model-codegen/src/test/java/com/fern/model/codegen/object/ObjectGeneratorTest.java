@@ -68,4 +68,30 @@ public class ObjectGeneratorTest {
         GeneratedObject withDocsObject = objectGenerator.generate();
         System.out.println(withDocsObject.file().toString());
     }
+
+    @Test
+    public void test_lowerCasedClassName() {
+        ObjectTypeDefinition objectTypeDefinition = ObjectTypeDefinition.builder()
+                .addProperties(ObjectProperty.builder()
+                        .key("prop")
+                        .valueType(TypeReference.container(
+                                ContainerType.optional(TypeReference.primitive(PrimitiveType.STRING))))
+                        .build())
+                .build();
+        TypeDefinition typeDefinition = TypeDefinition.builder()
+                .name(NamedType.builder()
+                        .fernFilepath(FernFilepath.valueOf("com/fern"))
+                        .name("lowercase")
+                        .build())
+                .shape(Type._object(objectTypeDefinition))
+                .build();
+        ObjectGenerator objectGenerator = new ObjectGenerator(
+                typeDefinition.name(),
+                objectTypeDefinition,
+                Collections.emptyList(),
+                Optional.empty(),
+                TestConstants.GENERATOR_CONTEXT);
+        GeneratedObject object = objectGenerator.generate();
+        System.out.println(object.file().toString());
+    }
 }

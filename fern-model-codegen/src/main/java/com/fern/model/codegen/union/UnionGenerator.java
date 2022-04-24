@@ -56,6 +56,7 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
     private final UnionTypeDefinition unionTypeDefinition;
     private final Map<NamedType, TypeDefinition> typeDefinitionsByName;
     private final ClassName generatedUnionClassName;
+    private final ClassName generatedUnionImmutablesClassName;
     private final Map<SingleUnionType, ClassName> internalValueClassNames;
     private final ClassName unknownInternalValueClassName;
     private final ClassName internalValueInterfaceClassName;
@@ -67,6 +68,8 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
         this.unionTypeDefinition = unionTypeDefinition;
         this.typeDefinitionsByName = generatorContext.getTypeDefinitionsByName();
         this.generatedUnionClassName = generatorContext.getClassNameUtils().getClassNameForNamedType(namedType);
+        this.generatedUnionImmutablesClassName =
+                generatorContext.getImmutablesUtils().getImmutablesClassName(generatedUnionClassName);
         this.internalValueClassNames = unionTypeDefinition.types().stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
@@ -318,7 +321,7 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
                             .addMember(
                                     "as",
                                     "$T.$L.class",
-                                    generatorContext.getImmutablesUtils().getImmutablesClassName(namedType),
+                                    generatedUnionImmutablesClassName,
                                     internalValueClassName.simpleName())
                             .build())
                     .addSuperinterface(internalValueInterfaceClassName);
@@ -395,7 +398,7 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
                         .addMember(
                                 "as",
                                 "$T.$L.class",
-                                generatorContext.getImmutablesUtils().getImmutablesClassName(namedType),
+                                generatedUnionImmutablesClassName,
                                 UNKNOWN_INTERNAL_VALUE_INTERFACE_NAME)
                         .build())
                 .addSuperinterface(internalValueInterfaceClassName)
