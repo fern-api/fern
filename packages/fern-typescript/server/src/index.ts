@@ -1,0 +1,1 @@
+export { generateServerFiles } from "./generate";
