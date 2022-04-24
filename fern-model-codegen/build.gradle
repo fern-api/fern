@@ -19,6 +19,7 @@ dependencies {
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-guava'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
     implementation 'org.immutables:value::annotations'
+    implementation 'org.immutables:value-processor'
 
     annotationProcessor 'org.immutables:value'
 

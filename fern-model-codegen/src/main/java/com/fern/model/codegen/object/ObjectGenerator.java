@@ -102,7 +102,8 @@ public final class ObjectGenerator extends Generator {
     }
 
     private MethodSpec generateStaticBuilder(Map<ObjectProperty, MethodSpec> methodSpecsByProperty) {
-        Optional<String> firstMandatoryFieldName = getFirstRequiredFieldName(extendedInterfaces, methodSpecsByProperty);
+        Optional<String> firstMandatoryFieldName =
+                getFirstRequiredFieldName(extendedInterfaces, selfInterface, methodSpecsByProperty);
         ClassName builderClassName = firstMandatoryFieldName.isEmpty()
                 ? generatedObjectImmutablesClassName.nestedClass("Builder")
                 : generatedObjectImmutablesClassName.nestedClass(
@@ -115,7 +116,9 @@ public final class ObjectGenerator extends Generator {
     }
 
     private static Optional<String> getFirstRequiredFieldName(
-            List<GeneratedInterface> superInterfaces, Map<ObjectProperty, MethodSpec> methodSpecsByProperty) {
+            List<GeneratedInterface> superInterfaces,
+            Optional<GeneratedInterface> selfInterface,
+            Map<ObjectProperty, MethodSpec> methodSpecsByProperty) {
         // Required field from super interfaces take priority
         for (GeneratedInterface superInterface : superInterfaces) {
             Optional<String> firstMandatoryFieldName =
@@ -123,6 +126,9 @@ public final class ObjectGenerator extends Generator {
             if (firstMandatoryFieldName.isPresent()) {
                 return firstMandatoryFieldName;
             }
+        }
+        if (selfInterface.isPresent()) {
+            return getFirstRequiredFieldName(selfInterface.get().methodSpecsByProperties());
         }
         return getFirstRequiredFieldName(methodSpecsByProperty);
     }
