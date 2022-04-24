@@ -20,7 +20,7 @@ public interface WebSocketMessageResponse extends IWireMessage {
 
   Type type();
 
-  static ImmutableWebSocketMessageResponse.TypeBuildStage builder() {
+  static ImmutableWebSocketMessageResponse.BehaviorBuildStage builder() {
     return ImmutableWebSocketMessageResponse.builder();
   }
 }
