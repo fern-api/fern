@@ -23,7 +23,7 @@
     "prepare": "husky install",
     "codegen": "run codegen:ts && run codegen:java",
     "codegen:ts": "./fern.sh",
-    "codegen:java": "cd packages/fern-java && ./codegen.sh",
+    "codegen:java": "cd packages/api/java-api && ./codegen.sh",
     "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public"
   },
   "devDependencies": {
@@ -34,6 +34,7 @@
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.4.0",
     "fern-api": "0.0.15",
+    "fern-typescript": "0.0.9",
     "husky": "^7.0.4",
     "jest": "^27.5.1",
     "lint-staged": "^12.3.7",

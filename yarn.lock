@@ -1322,7 +1322,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/api@npm:0.0.13":
+"@fern-api/api@npm:0.0.13, @fern-api/api@npm:^0.0.13":
   version: 0.0.13
   resolution: "@fern-api/api@npm:0.0.13"
   checksum: 37e2e0476ae7d5a5f429c05fcd8c23e10cd84c16de2d717b7f23e6fe099e9ae8c9a98f42dd2d6c4931cd3edb0ae5fd6d29851a81f2be510f469f8a62102f09ee
@@ -1561,6 +1561,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-api/typescript-client@npm:0.0.9":
+  version: 0.0.9
+  resolution: "@fern-api/typescript-client@npm:0.0.9"
+  dependencies:
+    "@fern-api/typescript-commons": 0.0.9
+    ts-morph: ^14.0.0
+  checksum: 49c4263633577e75504702a2ceebd363d0f6d5bc17fb33e8fd029615ed95fbaa33a63d9aa9d577b44bbd9e46e34f9270383dc15dd2e3e2fe9cb6bd378e1d6993
+  languageName: node
+  linkType: hard
+
 "@fern-api/typescript-client@workspace:*, @fern-api/typescript-client@workspace:packages/fern-typescript/client":
   version: 0.0.0-use.local
   resolution: "@fern-api/typescript-client@workspace:packages/fern-typescript/client"
@@ -1581,6 +1591,16 @@ __metadata:
     typescript: ^4.6.3
   languageName: unknown
   linkType: soft
+
+"@fern-api/typescript-commons@npm:0.0.9":
+  version: 0.0.9
+  resolution: "@fern-api/typescript-commons@npm:0.0.9"
+  dependencies:
+    esutils: ^2.0.3
+    ts-morph: ^14.0.0
+  checksum: 8bd5f2b5d0ea1dc42a65e6779f3c4fe3826e1df27d2e43af228ad6a90be38ba5a7f2d067f6c585ad687e6de63a579fcef0d435793fa12ae2a6080d72e1dbd6a1
+  languageName: node
+  linkType: hard
 
 "@fern-api/typescript-commons@workspace:*, @fern-api/typescript-commons@workspace:packages/fern-typescript/commons":
   version: 0.0.0-use.local
@@ -1605,6 +1625,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-api/typescript-model@npm:0.0.9":
+  version: 0.0.9
+  resolution: "@fern-api/typescript-model@npm:0.0.9"
+  dependencies:
+    "@fern-api/typescript-commons": 0.0.9
+    fern-api: ^0.0.13
+    lodash: ^4.17.21
+    ts-morph: ^14.0.0
+  checksum: f5ebab58eef3bf9ffe354214bc5117e22fe557dea877ce2a6e82054feee25acb13e9ed93db724cc0e0e1cc55a39531711e830af1e3630c2fda9adeaa176645ab
+  languageName: node
+  linkType: hard
+
 "@fern-api/typescript-model@workspace:*, @fern-api/typescript-model@workspace:packages/fern-typescript/model":
   version: 0.0.0-use.local
   resolution: "@fern-api/typescript-model@workspace:packages/fern-typescript/model"
@@ -1620,7 +1652,7 @@ __metadata:
     "@types/node": ^17.0.25
     depcheck: ^1.4.3
     eslint: ^8.12.0
-    fern-api: ^0.0.13
+    fern-api: "workspace:*"
     jest: ^27.5.1
     lodash: ^4.17.21
     memfs: ^3.4.1
@@ -1630,6 +1662,16 @@ __metadata:
     typescript: ^4.6.3
   languageName: unknown
   linkType: soft
+
+"@fern-api/typescript-server@npm:0.0.9":
+  version: 0.0.9
+  resolution: "@fern-api/typescript-server@npm:0.0.9"
+  dependencies:
+    "@fern-api/api": ^0.0.13
+    ts-morph: ^14.0.0
+  checksum: 645a7fde8ae628e9c916b371821e3308a388668fd4573e13ef67f122f85b69d4c45f0149617cc41f3c6e5c2663b59be85316f42c4f41526cef1642a96a91a454
+  languageName: node
+  linkType: hard
 
 "@fern-api/typescript-server@workspace:*, @fern-api/typescript-server@workspace:packages/fern-typescript/server":
   version: 0.0.0-use.local
@@ -3963,7 +4005,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fern-api@workspace:packages/compiler/cli":
+"fern-api@workspace:*, fern-api@workspace:packages/compiler/cli":
   version: 0.0.0-use.local
   resolution: "fern-api@workspace:packages/compiler/cli"
   dependencies:
@@ -3991,6 +4033,22 @@ __metadata:
     fern: ./cli
   languageName: unknown
   linkType: soft
+
+"fern-typescript@npm:0.0.9":
+  version: 0.0.9
+  resolution: "fern-typescript@npm:0.0.9"
+  dependencies:
+    "@fern-api/typescript-client": 0.0.9
+    "@fern-api/typescript-commons": 0.0.9
+    "@fern-api/typescript-model": 0.0.9
+    "@fern-api/typescript-server": 0.0.9
+    ts-morph: ^14.0.0
+    yargs: ^17.4.1
+  bin:
+    fern-typescript: ./cli
+  checksum: 08df79eeed17892522653f43b00d777d99ec2c6e362ec84ca51b2ee393d1674e6347ab1708fc50d32598eedb23feeada70d2a566d67b12052d61f16776483ea9
+  languageName: node
+  linkType: hard
 
 "fern-typescript@workspace:packages/fern-typescript/cli":
   version: 0.0.0-use.local
@@ -4031,6 +4089,7 @@ __metadata:
     eslint-plugin-react: ^7.29.4
     eslint-plugin-react-hooks: ^4.4.0
     fern-api: 0.0.15
+    fern-typescript: 0.0.9
     husky: ^7.0.4
     jest: ^27.5.1
     lint-staged: ^12.3.7
