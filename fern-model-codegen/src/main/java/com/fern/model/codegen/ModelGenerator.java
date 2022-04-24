@@ -1,6 +1,6 @@
 package com.fern.model.codegen;
 
-import com.fern.codegen.GeneratedFileWithDefinition;
+import com.fern.codegen.GeneratedFile;
 import com.fern.codegen.IGeneratedFile;
 import com.fern.model.codegen.alias.AliasGenerator;
 import com.fern.model.codegen.config.PluginConfig;
@@ -61,7 +61,7 @@ public final class ModelGenerator {
 
     private List<JavaFile> generateJavaFiles() {
         Map<NamedType, GeneratedInterface> generatedInterfaces = getGeneratedInterfaces();
-        List<GeneratedFileWithDefinition<?>> generatedFiles = typeDefinitions.stream()
+        List<GeneratedFile> generatedFiles = typeDefinitions.stream()
                 .map(typeDefinition ->
                         typeDefinition.shape().accept(new TypeDefinitionGenerator(typeDefinition, generatedInterfaces)))
                 .collect(Collectors.toList());
@@ -95,7 +95,7 @@ public final class ModelGenerator {
         }));
     }
 
-    private final class TypeDefinitionGenerator implements Type.Visitor<GeneratedFileWithDefinition<?>> {
+    private final class TypeDefinitionGenerator implements Type.Visitor<GeneratedFile> {
 
         private final TypeDefinition typeDefinition;
         private final Map<NamedType, GeneratedInterface> generatedInterfaces;
@@ -106,7 +106,7 @@ public final class ModelGenerator {
         }
 
         @Override
-        public GeneratedFileWithDefinition<?> visitObject(ObjectTypeDefinition objectTypeDefinition) {
+        public GeneratedFile visitObject(ObjectTypeDefinition objectTypeDefinition) {
             Optional<GeneratedInterface> selfInterface =
                     Optional.ofNullable(generatedInterfaces.get(typeDefinition.name()));
             List<GeneratedInterface> extendedInterfaces = objectTypeDefinition._extends().stream()
@@ -120,28 +120,28 @@ public final class ModelGenerator {
         }
 
         @Override
-        public GeneratedFileWithDefinition<?> visitUnion(UnionTypeDefinition unionTypeDefinition) {
+        public GeneratedFile visitUnion(UnionTypeDefinition unionTypeDefinition) {
             UnionGenerator unionGenerator =
                     new UnionGenerator(typeDefinition.name(), unionTypeDefinition, generatorContext);
             return unionGenerator.generate();
         }
 
         @Override
-        public GeneratedFileWithDefinition<?> visitAlias(AliasTypeDefinition aliasTypeDefinition) {
+        public GeneratedFile visitAlias(AliasTypeDefinition aliasTypeDefinition) {
             AliasGenerator aliasGenerator =
                     new AliasGenerator(aliasTypeDefinition, typeDefinition.name(), generatorContext);
             return aliasGenerator.generate();
         }
 
         @Override
-        public GeneratedFileWithDefinition<?> visitEnum(EnumTypeDefinition enumTypeDefinition) {
+        public GeneratedFile visitEnum(EnumTypeDefinition enumTypeDefinition) {
             EnumGenerator enumGenerator =
                     new EnumGenerator(typeDefinition.name(), enumTypeDefinition, generatorContext);
             return enumGenerator.generate();
         }
 
         @Override
-        public GeneratedFileWithDefinition<?> visitUnknown(String unknownType) {
+        public GeneratedFile visitUnknown(String unknownType) {
             throw new RuntimeException("Encountered unknown Type: " + unknownType);
         }
     }

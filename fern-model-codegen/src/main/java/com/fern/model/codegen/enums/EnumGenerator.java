@@ -28,7 +28,7 @@ import javax.annotation.Nonnull;
 import javax.lang.model.element.Modifier;
 import org.apache.commons.lang3.StringUtils;
 
-public final class EnumGenerator extends Generator<EnumTypeDefinition> {
+public final class EnumGenerator extends Generator {
 
     private static final Modifier[] ENUM_CLASS_MODIFIERS = new Modifier[] {Modifier.PUBLIC, Modifier.FINAL};
 
@@ -90,7 +90,7 @@ public final class EnumGenerator extends Generator<EnumTypeDefinition> {
         return GeneratedEnum.builder()
                 .file(enumFile)
                 .className(generatedEnumClassName)
-                .definition(enumTypeDefinition)
+                .enumTypeDefinition(enumTypeDefinition)
                 .build();
     }
 

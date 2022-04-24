@@ -94,4 +94,34 @@ public class ObjectGeneratorTest {
         GeneratedObject object = objectGenerator.generate();
         System.out.println(object.file().toString());
     }
+
+    @Test
+    public void test_underscoredProperty() {
+        ObjectTypeDefinition objectTypeDefinition = ObjectTypeDefinition.builder()
+                .addProperties(ObjectProperty.builder()
+                        .key("_class")
+                        .valueType(TypeReference.container(
+                                ContainerType.optional(TypeReference.primitive(PrimitiveType.STRING))))
+                        .build())
+                .addProperties(ObjectProperty.builder()
+                        .key("_returns")
+                        .valueType(TypeReference.primitive(PrimitiveType.STRING))
+                        .build())
+                .build();
+        TypeDefinition typeDefinition = TypeDefinition.builder()
+                .name(NamedType.builder()
+                        .fernFilepath(FernFilepath.valueOf("com/fern"))
+                        .name("Test")
+                        .build())
+                .shape(Type._object(objectTypeDefinition))
+                .build();
+        ObjectGenerator objectGenerator = new ObjectGenerator(
+                typeDefinition.name(),
+                objectTypeDefinition,
+                Collections.emptyList(),
+                Optional.empty(),
+                TestConstants.GENERATOR_CONTEXT);
+        GeneratedObject object = objectGenerator.generate();
+        System.out.println(object.file().toString());
+    }
 }

@@ -16,7 +16,7 @@ import java.util.List;
 import javax.lang.model.element.Modifier;
 import org.immutables.value.Value;
 
-public final class AliasGenerator extends Generator<AliasTypeDefinition> {
+public final class AliasGenerator extends Generator {
 
     private static final Modifier[] ALIAS_CLASS_MODIFIERS = new Modifier[] {Modifier.PUBLIC};
 
@@ -61,7 +61,7 @@ public final class AliasGenerator extends Generator<AliasTypeDefinition> {
         return GeneratedAlias.builder()
                 .file(aliasFile)
                 .className(generatedAliasClassName)
-                .definition(aliasTypeDefinition)
+                .aliasTypeDefinition(aliasTypeDefinition)
                 .build();
     }
 

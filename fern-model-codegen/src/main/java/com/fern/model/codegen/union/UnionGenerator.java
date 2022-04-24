@@ -39,7 +39,7 @@ import javax.lang.model.element.Modifier;
 import org.apache.commons.lang3.StringUtils;
 import org.immutables.value.Value;
 
-public final class UnionGenerator extends Generator<UnionTypeDefinition> {
+public final class UnionGenerator extends Generator {
 
     private static final Modifier[] UNION_CLASS_MODIFIERS = new Modifier[] {Modifier.PUBLIC, Modifier.FINAL};
 
@@ -106,7 +106,7 @@ public final class UnionGenerator extends Generator<UnionTypeDefinition> {
         return GeneratedUnion.builder()
                 .file(unionFile)
                 .className(generatedUnionClassName)
-                .definition(unionTypeDefinition)
+                .unionTypeDefinition(unionTypeDefinition)
                 .build();
     }
 

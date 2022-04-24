@@ -75,7 +75,7 @@ public final class ServiceGenerator {
         return GeneratedServiceWithDefinition.builder()
                 .file(jerseyServiceJavaFile)
                 .className(generatedServiceClassName)
-                .definition(httpService)
+                .httpService(httpService)
                 .build();
     }
 

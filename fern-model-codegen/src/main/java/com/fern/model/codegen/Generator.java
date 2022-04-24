@@ -1,8 +1,8 @@
 package com.fern.model.codegen;
 
-import com.fern.codegen.GeneratedFileWithDefinition;
+import com.fern.codegen.GeneratedFile;
 
-public abstract class Generator<D> {
+public abstract class Generator {
 
     @SuppressWarnings("VisibilityModifier")
     protected final GeneratorContext generatorContext;
@@ -11,5 +11,5 @@ public abstract class Generator<D> {
         this.generatorContext = generatorContext;
     }
 
-    public abstract GeneratedFileWithDefinition<D> generate();
+    public abstract GeneratedFile generate();
 }
