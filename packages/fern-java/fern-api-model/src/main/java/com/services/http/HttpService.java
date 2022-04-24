@@ -1,27 +1,26 @@
-package com.fern;
+package com.services.http;
 
 import com.StagedBuilderStyle;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.services.http.HttpService;
-import com.services.websocket.WebSocketService;
+import com.services.commons.interfaces.IBaseService;
 import java.util.List;
 import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderStyle
 @JsonDeserialize(
-    as = ImmutableServices.class
+    as = ImmutableHttpService.class
 )
 @JsonIgnoreProperties(
     ignoreUnknown = {true}
 )
-public interface Services {
-  List<HttpService> http();
+public interface HttpService extends IBaseService {
+  List<HttpEndpoint> endpoints();
 
-  List<WebSocketService> websocket();
+  List<HttpHeader> headers();
 
-  static ImmutableServices.Builder builder() {
-    return ImmutableServices.builder();
+  static ImmutableHttpService.BasePathBuildStage builder() {
+    return ImmutableHttpService.builder();
   }
 }

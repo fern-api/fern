@@ -1,27 +1,26 @@
-package com.fern;
+package com.types;
 
 import com.StagedBuilderStyle;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.services.http.HttpService;
-import com.services.websocket.WebSocketService;
+import java.lang.String;
 import java.util.List;
 import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderStyle
 @JsonDeserialize(
-    as = ImmutableServices.class
+    as = ImmutableUnionTypeDefinition.class
 )
 @JsonIgnoreProperties(
     ignoreUnknown = {true}
 )
-public interface Services {
-  List<HttpService> http();
+public interface UnionTypeDefinition {
+  String discriminant();
 
-  List<WebSocketService> websocket();
+  List<SingleUnionType> types();
 
-  static ImmutableServices.Builder builder() {
-    return ImmutableServices.builder();
+  static ImmutableUnionTypeDefinition.DiscriminantBuildStage builder() {
+    return ImmutableUnionTypeDefinition.builder();
   }
 }
