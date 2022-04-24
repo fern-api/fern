@@ -4,8 +4,8 @@
   "include": ["./src"],
   "references": [
     { "path": "../../api/generated/ir" },
-    { "path": "../commons" },
-    { "path": "../errors" },
-    { "path": "../model" }
+    { "path": "../../compiler/cli" },
+    { "path": "../../compiler/compiler" },
+    { "path": "../commons" }
   ]
 }

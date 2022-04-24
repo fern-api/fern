@@ -22,7 +22,6 @@
     "@fern-api/typescript-client": "workspace:*",
     "@fern-api/typescript-commons": "workspace:*",
     "@fern-api/typescript-model": "workspace:*",
-    "@fern-api/typescript-server": "workspace:*",
     "ts-morph": "^14.0.0",
     "yargs": "^17.4.1"
   },

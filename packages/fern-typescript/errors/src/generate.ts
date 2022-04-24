@@ -1,7 +1,7 @@
 import { IntermediateRepresentation } from "@fern-api/api";
 import { withDirectory } from "@fern-api/typescript-commons";
 import { Directory } from "ts-morph";
-import { generateError } from "./errors/generateError";
+import { generateError } from "./generateError";
 
 export function generateErrorFiles({
     directory,

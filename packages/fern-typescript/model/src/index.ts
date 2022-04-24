@@ -1,2 +1,1 @@
-export { generateErrorFiles } from "./generateErrors";
-export { generateModelFiles } from "./generateModel";
+export { generateModelFiles } from "./generate";

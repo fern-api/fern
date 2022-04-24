@@ -5,8 +5,7 @@ import { rm } from "fs/promises";
 import { vol } from "memfs";
 import path from "path";
 import { Project } from "ts-morph";
-import { generateErrorFiles } from "../generateErrors";
-import { generateModelFiles } from "../generateModel";
+import { generateModelFiles } from "../generate";
 
 const MOCK_APIS_DIR = path.join(__dirname, "mocks");
 const GENERATED_DIR = path.join(__dirname, "generated");
@@ -30,13 +29,8 @@ describe("model", () => {
             useInMemoryFileSystem: true,
         });
 
-        const modelDirectory = generateModelFiles({
+        generateModelFiles({
             directory: project.createDirectory("src"),
-            intermediateRepresentation: compilerResult.intermediateRepresentation,
-        });
-        generateErrorFiles({
-            directory: project.createDirectory("src"),
-            modelDirectory,
             intermediateRepresentation: compilerResult.intermediateRepresentation,
         });
 
