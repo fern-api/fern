@@ -70,7 +70,7 @@ public final class EnumGenerator extends Generator {
     @Override
     public GeneratedEnum generate() {
         Map<EnumValue, FieldSpec> enumConstants = getConstants();
-        VisitorUtils.GeneratedVisitor generatedVisitor = getVisitor();
+        VisitorUtils.GeneratedVisitor<EnumValue> generatedVisitor = getVisitor();
         TypeSpec enumTypeSpec = TypeSpec.classBuilder(namedType.name())
                 .addModifiers(ENUM_CLASS_MODIFIERS)
                 .addFields(enumConstants.values())
@@ -195,9 +195,9 @@ public final class EnumGenerator extends Generator {
      */
     private MethodSpec getAcceptMethod(GeneratedVisitor<EnumValue> generatedVisitor) {
         CodeBlock.Builder acceptMethodImplementation = CodeBlock.builder().beginControlFlow("switch (value)");
-        generatedVisitor.visitMethodsByKeyName().forEach((keyName, visitMethod) -> {
+        generatedVisitor.visitMethodsByKeyName().forEach((enumValue, visitMethod) -> {
             acceptMethodImplementation
-                    .add("case $L:\n", keyName)
+                    .add("case $L:\n", enumValue.value())
                     .indent()
                     .addStatement("return visitor.$L()", visitMethod.name)
                     .unindent();
