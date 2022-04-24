@@ -44,10 +44,12 @@ public final class UnionGenerator extends Generator {
     private static final Modifier[] UNION_CLASS_MODIFIERS = new Modifier[] {Modifier.PUBLIC, Modifier.FINAL};
 
     private static final String INTERNAL_VALUE_INTERFACE_NAME = "InternalValue";
+    private static final String INTERNAL_CLASS_NAME_PREFIX = "Internal";
+    private static final String INTERNAL_CLASS_NAME_SUFFIX = "Value";
+
     private static final String UNKNOWN_INTERNAL_VALUE_INTERFACE_NAME = "Unknown";
 
     private static final String VALUE_FIELD_NAME = "value";
-
     private static final String IS_METHOD_NAME_PREFIX = "is";
     private static final String GET_INTERNAL_VALUE_METHOD_NAME = "getInternalValue";
     private static final String ACCEPT_METHOD_NAME = "accept";
@@ -75,7 +77,9 @@ public final class UnionGenerator extends Generator {
                         Function.identity(),
                         singleUnionType -> generatedUnionClassName.nestedClass(generatorContext
                                 .getClassNameUtils()
-                                .getKeywordCompatibleClassName(singleUnionType.discriminantValue()))));
+                                .getKeywordCompatibleClassName(INTERNAL_CLASS_NAME_PREFIX
+                                        + StringUtils.capitalize(singleUnionType.discriminantValue())
+                                        + INTERNAL_CLASS_NAME_SUFFIX))));
         this.unknownInternalValueClassName = generatedUnionClassName.nestedClass(UNKNOWN_INTERNAL_VALUE_INTERFACE_NAME);
         this.internalValueInterfaceClassName = generatedUnionClassName.nestedClass(INTERNAL_VALUE_INTERFACE_NAME);
     }
