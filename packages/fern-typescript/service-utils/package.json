@@ -17,10 +17,6 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck"
   },
-  "dependencies": {
-    "@fern-api/api": "workspace:*",
-    "ts-morph": "^14.0.0"
-  },
   "devDependencies": {
     "@babel/core": "^7.17.9",
     "@babel/preset-env": "^7.16.11",
