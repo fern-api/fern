@@ -58,8 +58,8 @@ export function generateType({
                 shape: _enum,
             });
         },
-        unknown: (type) => {
-            throw new Error("Unexpected type: " + type);
+        unknown: () => {
+            throw new Error("Unexpected type: " + type._type);
         },
     });
 }

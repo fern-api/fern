@@ -13,13 +13,13 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
-          name: Lint monorepo
+          name: lint:monorepo
           command: yarn lint:monorepo
       - run:
-          name: Lint
+          name: lint:eslint
           command: yarn lint:eslint
       - run:
-          name: Lint style
+          name: lint:style
           command: yarn lint:style
       - run:
           name: Format
