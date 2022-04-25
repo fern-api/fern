@@ -8,6 +8,7 @@
     { "path": "../../compiler/compiler" },
     { "path": "../commons" },
     { "path": "../errors" },
-    { "path": "../model" }
+    { "path": "../model" },
+    { "path": "../testing-utils" }
   ]
 }

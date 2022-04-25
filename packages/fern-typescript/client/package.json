@@ -29,6 +29,7 @@
     "@babel/preset-typescript": "^7.16.7",
     "@fern-api/api": "workspace:*",
     "@fern-api/compiler": "workspace:*",
+    "@fern-typescript/testing-utils": "workspace:*",
     "@types/jest": "^27.4.1",
     "@types/node": "^17.0.25",
     "depcheck": "^1.4.3",
