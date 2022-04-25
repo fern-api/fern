@@ -1,4 +1,3 @@
-import { NamedType } from "@fern-api/api";
 import { StatementedNode, ts, Writers } from "ts-morph";
 import { FernWriters } from "../writers";
 import { getTextOfTsKeyword } from "./getTextOfTsKeyword";
@@ -12,19 +11,19 @@ export function addBrandedTypeAlias({
     baseType = ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
 }: {
     node: StatementedNode;
-    typeName: NamedType;
+    typeName: string;
     docs: string | null | undefined;
     baseType?: ts.Node;
 }): void {
     const typeAlias = node.addTypeAlias({
-        name: typeName.name,
+        name: typeName,
         isExported: true,
         type: Writers.intersectionType(
             getTextOfTsNode(baseType),
             FernWriters.object
                 .writer()
                 .addProperty({
-                    key: `__${typeName.fernFilepath.replace(/\//g, ".")}`,
+                    key: `__${typeName}`,
                     value: getTextOfTsKeyword(ts.SyntaxKind.VoidKeyword),
                 })
                 .toFunction()

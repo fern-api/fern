@@ -1,6 +1,5 @@
-import { Type, TypeDefinition } from "@fern-api/api";
-import { getFilePathForType, withSourceFile } from "@fern-api/typescript-commons";
-import { Directory } from "ts-morph";
+import { Type } from "@fern-api/api";
+import { Directory, SourceFile } from "ts-morph";
 import { TypeResolver } from "../utils/TypeResolver";
 import { generateEnumType } from "./enum/generateEnumType";
 import { generateAliasType } from "./generateAliasType";
@@ -9,55 +8,58 @@ import { generateUnionType } from "./union/generateUnionType";
 
 export function generateType({
     type,
+    typeName,
+    docs,
     typeResolver,
     modelDirectory,
+    file,
 }: {
-    type: TypeDefinition;
+    type: Type;
+    typeName: string;
+    docs: string | null | undefined;
     typeResolver: TypeResolver;
     modelDirectory: Directory;
+    file: SourceFile;
 }): void {
-    const filepath = getFilePathForType({
-        modelDirectory,
-        typeName: type.name,
-    });
-
-    withSourceFile({ directory: modelDirectory, filepath }, (file) => {
-        Type._visit(type.shape, {
-            object: (object) => {
-                generateObjectType({
-                    file,
-                    typeDefinition: type,
-                    shape: object,
-                    modelDirectory,
-                });
-            },
-            union: (union) => {
-                generateUnionType({
-                    file,
-                    typeDefinition: type,
-                    shape: union,
-                    typeResolver,
-                    modelDirectory,
-                });
-            },
-            alias: (alias) => {
-                generateAliasType({
-                    file,
-                    typeDefinition: type,
-                    shape: alias,
-                    modelDirectory,
-                });
-            },
-            enum: (_enum) => {
-                generateEnumType({
-                    file,
-                    typeDefinition: type,
-                    shape: _enum,
-                });
-            },
-            unknown: (type) => {
-                throw new Error("Unexpected type: " + type);
-            },
-        });
+    Type._visit(type, {
+        object: (object) => {
+            generateObjectType({
+                file,
+                typeName,
+                docs,
+                shape: object,
+                modelDirectory,
+            });
+        },
+        union: (unionTypeDefinition) => {
+            generateUnionType({
+                file,
+                typeName,
+                docs,
+                unionTypeDefinition,
+                typeResolver,
+                modelDirectory,
+            });
+        },
+        alias: (alias) => {
+            generateAliasType({
+                file,
+                typeName,
+                docs,
+                shape: alias,
+                modelDirectory,
+            });
+        },
+        enum: (_enum) => {
+            generateEnumType({
+                file,
+                typeName,
+                docs,
+                shape: _enum,
+            });
+        },
+        unknown: (type) => {
+            throw new Error("Unexpected type: " + type);
+        },
     });
 }

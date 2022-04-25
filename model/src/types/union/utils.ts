@@ -1,5 +1,5 @@
 import { NamedType, SingleUnionType, TypeReference } from "@fern-api/api";
-import { capitalizeFirstLetter, generateTypeNameReference, generateTypeReference } from "@fern-api/typescript-commons";
+import { capitalizeFirstLetter, generateTypeNameReference, generateTypeReference } from "@fern-typescript/commons";
 import { Directory, SourceFile, ts } from "ts-morph";
 import { TypeResolver } from "../../utils/TypeResolver";
 
