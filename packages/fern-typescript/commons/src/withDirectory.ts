@@ -2,25 +2,38 @@ import { Directory } from "ts-morph";
 import { exportFromModule } from "./exportFromModule";
 
 export function withDirectory(
-    containingModule: Directory,
-    name: string,
+    {
+        containingModule,
+        name,
+        namespaceExport,
+    }: {
+        containingModule: Directory;
+        name: string;
+        namespaceExport?: string;
+    },
     addDirectoryContents: (directory: Directory) => void
 ): Directory {
     const directory = containingModule.createDirectory(name);
     addDirectoryContents(directory);
+
     addExports(directory);
+    exportFromModule({
+        module: containingModule,
+        pathToExport: directory.getPath(),
+        namespaceExport,
+    });
+
     return directory;
 }
 
-// TODO maybe we should instead specify shouldExport=true in withFile
-// because maybe we'll make edits to files in this directory after
-// withDirectory is complete
 function addExports(directory: Directory): void {
     for (const sourceFile of directory.getSourceFiles()) {
-        exportFromModule({
-            module: directory,
-            pathToExport: sourceFile.getFilePath(),
-        });
+        if (sourceFile.getBaseName() !== "index.ts") {
+            exportFromModule({
+                module: directory,
+                pathToExport: sourceFile.getFilePath(),
+            });
+        }
     }
 
     for (const subdirectory of directory.getDirectories()) {

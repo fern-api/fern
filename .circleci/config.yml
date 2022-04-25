@@ -103,6 +103,6 @@ workflows:
             #   only: main
             tags:
               only: /.*/
-          requires:
-            - compile-java
+          # requires:
+          #   - compile-java
           context: jfrog
