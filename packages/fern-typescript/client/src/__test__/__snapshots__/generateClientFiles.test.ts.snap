@@ -56,12 +56,10 @@ export declare namespace Author {
 
 export const Author = {
     anonymous: (): Author.Anonymous => ({
-        _type: \\"anonymous\\",
         _type: \\"anonymous\\"
     }),
 
     named: (value: string): Author.Named => ({
-        _type: \\"named\\",
         named: value,
         _type: \\"named\\"
     }),
