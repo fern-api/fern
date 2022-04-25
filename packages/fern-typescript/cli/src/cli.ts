@@ -1,8 +1,8 @@
 import yargs from "yargs";
 import { clientCommand } from "./commands/clientCommand";
 import { modelCommand } from "./commands/modelCommand";
-import { runCommand } from "./commands/runCommand";
 import { serverCommand } from "./commands/serverCommand";
+import { runCommand } from "./runCommand";
 
 yargs
     .strict()

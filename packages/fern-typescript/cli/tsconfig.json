@@ -6,7 +6,6 @@
     { "path": "../../api/generated/ir" },
     { "path": "../client" },
     { "path": "../commons" },
-    { "path": "../model" },
-    { "path": "../server" }
+    { "path": "../model" }
   ]
 }

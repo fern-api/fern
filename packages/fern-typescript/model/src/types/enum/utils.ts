@@ -1,5 +1,5 @@
 import { EnumValue } from "@fern-api/api";
-import { capitalizeFirstLetter } from "@fern-api/typescript-commons";
+import { capitalizeFirstLetter } from "@fern-typescript/commons";
 import { snakeCase } from "lodash";
 
 export function getKeyForEnum({ value }: EnumValue): string {

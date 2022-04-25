@@ -19,10 +19,9 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/typescript-client": "workspace:*",
-    "@fern-api/typescript-commons": "workspace:*",
-    "@fern-api/typescript-model": "workspace:*",
-    "@fern-api/typescript-server": "workspace:*",
+    "@fern-typescript/client": "workspace:*",
+    "@fern-typescript/commons": "workspace:*",
+    "@fern-typescript/model": "workspace:*",
     "ts-morph": "^14.0.0",
     "yargs": "^17.4.1"
   },

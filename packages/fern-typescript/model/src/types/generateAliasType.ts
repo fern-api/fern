@@ -1,28 +1,25 @@
-import { AliasTypeDefinition, PrimitiveType, TypeDefinition } from "@fern-api/api";
-import {
-    addBrandedTypeAlias,
-    generateTypeReference,
-    getTextOfTsNode,
-    maybeAddDocs,
-} from "@fern-api/typescript-commons";
+import { AliasTypeDefinition, PrimitiveType } from "@fern-api/api";
+import { addBrandedTypeAlias, generateTypeReference, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { Directory, SourceFile, ts, VariableDeclarationKind, Writers } from "ts-morph";
 
 export function generateAliasType({
     file,
-    typeDefinition,
+    typeName,
+    docs,
     shape,
     modelDirectory,
 }: {
     file: SourceFile;
-    typeDefinition: TypeDefinition;
+    typeName: string;
+    docs: string | null | undefined;
     shape: AliasTypeDefinition;
     modelDirectory: Directory;
 }): void {
     if (shape.aliasOf._type === "primitive" && shape.aliasOf.primitive === PrimitiveType.String) {
-        generateStringAlias(file, typeDefinition);
+        generateStringAlias({ file, typeName, docs });
     } else {
         const typeAlias = file.addTypeAlias({
-            name: typeDefinition.name.name,
+            name: typeName,
             type: getTextOfTsNode(
                 generateTypeReference({
                     reference: shape.aliasOf,
@@ -32,20 +29,28 @@ export function generateAliasType({
             ),
             isExported: true,
         });
-        maybeAddDocs(typeAlias, typeDefinition.docs);
+        maybeAddDocs(typeAlias, docs);
     }
 }
 
-function generateStringAlias(file: SourceFile, typeDefinition: TypeDefinition) {
-    addBrandedTypeAlias({ node: file, typeName: typeDefinition.name, docs: typeDefinition.docs });
+function generateStringAlias({
+    file,
+    typeName,
+    docs,
+}: {
+    file: SourceFile;
+    typeName: string;
+    docs: string | null | undefined;
+}) {
+    addBrandedTypeAlias({ node: file, typeName, docs });
 
     file.addVariableStatement({
         declarationKind: VariableDeclarationKind.Const,
         declarations: [
             {
-                name: typeDefinition.name.name,
+                name: typeName,
                 initializer: Writers.object({
-                    of: getTextOfTsNode(getOf(typeDefinition.name.name)),
+                    of: getTextOfTsNode(getOf(typeName)),
                 }),
             },
         ],
@@ -53,7 +58,7 @@ function generateStringAlias(file: SourceFile, typeDefinition: TypeDefinition) {
     });
 }
 
-function getOf(idTypeName: string): ts.ArrowFunction {
+function getOf(typeName: string): ts.ArrowFunction {
     const VALUE_PARAMETER_NAME = "value";
 
     return ts.factory.createArrowFunction(
@@ -69,11 +74,11 @@ function getOf(idTypeName: string): ts.ArrowFunction {
                 ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
             ),
         ],
-        ts.factory.createTypeReferenceNode(idTypeName),
+        ts.factory.createTypeReferenceNode(typeName),
         undefined,
         ts.factory.createAsExpression(
             ts.factory.createIdentifier(VALUE_PARAMETER_NAME),
-            ts.factory.createTypeReferenceNode(idTypeName)
+            ts.factory.createTypeReferenceNode(typeName)
         )
     );
 }

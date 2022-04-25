@@ -1,5 +1,5 @@
 {
-  "name": "@fern-api/typescript-server",
+  "name": "@fern-typescript/server",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [

@@ -1,12 +1,11 @@
 import { compile } from "@fern-api/compiler";
-import { writeFiles } from "@fern-api/typescript-commons";
+import { writeFiles } from "@fern-typescript/commons";
 import { parseFernDirectory } from "fern-api";
 import { rm } from "fs/promises";
 import { vol } from "memfs";
 import path from "path";
 import { Project } from "ts-morph";
-import { generateErrorFiles } from "../generateErrors";
-import { generateModelFiles } from "../generateModel";
+import { generateModelFiles } from "../generateModelFiles";
 
 const MOCK_APIS_DIR = path.join(__dirname, "mocks");
 const GENERATED_DIR = path.join(__dirname, "generated");
@@ -15,7 +14,7 @@ beforeAll(async () => {
     await rm(GENERATED_DIR, { recursive: true, force: true });
 });
 
-describe("model", () => {
+describe("generateModelFiles", () => {
     it("posts", async () => {
         const directory = path.join(MOCK_APIS_DIR, "posts");
         const generatedDir = path.join(directory, "generated");
@@ -30,13 +29,8 @@ describe("model", () => {
             useInMemoryFileSystem: true,
         });
 
-        const modelDirectory = generateModelFiles({
+        generateModelFiles({
             directory: project.createDirectory("src"),
-            intermediateRepresentation: compilerResult.intermediateRepresentation,
-        });
-        generateErrorFiles({
-            directory: project.createDirectory("src"),
-            modelDirectory,
             intermediateRepresentation: compilerResult.intermediateRepresentation,
         });
 
