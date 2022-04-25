@@ -105,10 +105,8 @@ workflows:
 
       - publish-java-snapshot:
           filters:
-            # branches:
-            #   only: main
+            branches:
+              only: main
             tags:
-              only: /.*/
-          # requires:
-          #   - compile-java
+              ignore: /.*/
           context: jfrog
