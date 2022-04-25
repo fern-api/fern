@@ -24,7 +24,6 @@ types:
       behavior:
         docs: Defaults to WebSocketMessageResponseBehavior.ONGOING
         type: WebSocketMessageResponseBehavior
-      type: types.Type
   WebSocketMessageResponseBehavior:
     enum:
       - ONGOING
