@@ -2,11 +2,13 @@
 
 exports[`generateModelFiles fern IR 1`] = `
 Object {
+  "/src/index.ts": "export * from \\"./model\\";
+",
   "/src/model/commons/PostId.ts": "/**
  * An ID of a blog post
  */
 export type PostId = string & {
-    __commons: void,
+    __PostId: void,
 };
 
 export const PostId = {
@@ -92,30 +94,30 @@ export declare namespace Author {
         named: string;
     }
 
-    export interface _Visitor<R> {
-        anonymous: () => R;
-        named: (value: string) => R;
-        unknown: (value: {
-            _type: string;
-        }) => R;
+    export interface _Visitor<Result> {
+        anonymous: () => Result;
+        named: (value: string) => Result;
+        unknown: () => Result;
     }
 }
 
 export const Author = {
     anonymous: (): Author.Anonymous => ({
+        _type: \\"anonymous\\",
         _type: \\"anonymous\\"
     }),
 
     named: (value: string): Author.Named => ({
         _type: \\"named\\",
-        named: value
+        named: value,
+        _type: \\"named\\"
     }),
 
     _visit: <Result>(value: Author, visitor: Author._Visitor<Result>): Result => {
         switch (value._type) {
             case \\"anonymous\\": return visitor.anonymous();
             case \\"named\\": return visitor.named(value.named);
-            default: return visitor.unknown(value);
+            default: return visitor.unknown();
         }
     },
 };
@@ -162,10 +164,10 @@ export const PostType = {
 
 export declare namespace PostType {
     export type Long = \\"LONG\\" & {
-        \\"__posts.PostType\\": void,
+        __Long: void,
     };
     export type Short = \\"SHORT\\" & {
-        \\"__posts.PostType\\": void,
+        __Short: void,
     };
 
     export interface _Visitor<R> {
@@ -272,19 +274,19 @@ export const HttpMethod = {
 
 export declare namespace HttpMethod {
     export type Get = \\"GET\\" & {
-        \\"__services.http.HttpMethod\\": void,
+        __Get: void,
     };
     export type Post = \\"POST\\" & {
-        \\"__services.http.HttpMethod\\": void,
+        __Post: void,
     };
     export type Put = \\"PUT\\" & {
-        \\"__services.http.HttpMethod\\": void,
+        __Put: void,
     };
     export type Patch = \\"PATCH\\" & {
-        \\"__services.http.HttpMethod\\": void,
+        __Patch: void,
     };
     export type Delete = \\"DELETE\\" & {
-        \\"__services.http.HttpMethod\\": void,
+        __Delete: void,
     };
 
     export interface _Visitor<R> {
@@ -365,10 +367,10 @@ export const WebSocketMessageOrigin = {
 
 export declare namespace WebSocketMessageOrigin {
     export type Client = \\"CLIENT\\" & {
-        \\"__services.websocket.WebSocketMessageOrigin\\": void,
+        __Client: void,
     };
     export type Server = \\"SERVER\\" & {
-        \\"__services.websocket.WebSocketMessageOrigin\\": void,
+        __Server: void,
     };
 
     export interface _Visitor<R> {
@@ -407,10 +409,10 @@ export const WebSocketMessageResponseBehavior = {
 
 export declare namespace WebSocketMessageResponseBehavior {
     export type Ongoing = \\"ONGOING\\" & {
-        \\"__services.websocket.WebSocketMessageResponseBehavior\\": void,
+        __Ongoing: void,
     };
     export type RequestResponse = \\"REQUEST_RESPONSE\\" & {
-        \\"__services.websocket.WebSocketMessageResponseBehavior\\": void,
+        __RequestResponse: void,
     };
 
     export interface _Visitor<R> {
@@ -468,21 +470,20 @@ export declare namespace ContainerType {
         set: TypeReference;
     }
 
-    export interface _Visitor<R> {
-        list: (value: TypeReference) => R;
-        map: (value: MapType) => R;
-        optional: (value: TypeReference) => R;
-        set: (value: TypeReference) => R;
-        unknown: (value: {
-            _type: string;
-        }) => R;
+    export interface _Visitor<Result> {
+        list: (value: TypeReference) => Result;
+        map: (value: MapType) => Result;
+        optional: (value: TypeReference) => Result;
+        set: (value: TypeReference) => Result;
+        unknown: () => Result;
     }
 }
 
 export const ContainerType = {
     list: (value: TypeReference): ContainerType.List => ({
         _type: \\"list\\",
-        list: value
+        list: value,
+        _type: \\"list\\"
     }),
 
     map: (value: MapType): ContainerType.Map => ({
@@ -492,12 +493,14 @@ export const ContainerType = {
 
     optional: (value: TypeReference): ContainerType.Optional => ({
         _type: \\"optional\\",
-        optional: value
+        optional: value,
+        _type: \\"optional\\"
     }),
 
     set: (value: TypeReference): ContainerType.Set => ({
         _type: \\"set\\",
-        set: value
+        set: value,
+        _type: \\"set\\"
     }),
 
     _visit: <Result>(value: ContainerType, visitor: ContainerType._Visitor<Result>): Result => {
@@ -506,7 +509,7 @@ export const ContainerType = {
             case \\"map\\": return visitor.map(value);
             case \\"optional\\": return visitor.optional(value.optional);
             case \\"set\\": return visitor.set(value.set);
-            default: return visitor.unknown(value);
+            default: return visitor.unknown();
         }
     },
 };
@@ -527,7 +530,7 @@ export interface EnumValue extends WithDocs {
  * A filepath to a Fern spec file, excluding the file extension
  */
 export type FernFilepath = string & {
-    __types: void,
+    __FernFilepath: void,
 };
 
 export const FernFilepath = {
@@ -595,19 +598,19 @@ export const PrimitiveType = {
 
 export declare namespace PrimitiveType {
     export type Integer = \\"INTEGER\\" & {
-        \\"__types.PrimitiveType\\": void,
+        __Integer: void,
     };
     export type Double = \\"DOUBLE\\" & {
-        \\"__types.PrimitiveType\\": void,
+        __Double: void,
     };
     export type String = \\"STRING\\" & {
-        \\"__types.PrimitiveType\\": void,
+        __String: void,
     };
     export type Boolean = \\"BOOLEAN\\" & {
-        \\"__types.PrimitiveType\\": void,
+        __Boolean: void,
     };
     export type Long = \\"LONG\\" & {
-        \\"__types.PrimitiveType\\": void,
+        __Long: void,
     };
 
     export interface _Visitor<R> {
@@ -656,14 +659,12 @@ export declare namespace Type {
         _type: \\"union\\";
     }
 
-    export interface _Visitor<R> {
-        alias: (value: AliasTypeDefinition) => R;
-        enum: (value: EnumTypeDefinition) => R;
-        object: (value: ObjectTypeDefinition) => R;
-        union: (value: UnionTypeDefinition) => R;
-        unknown: (value: {
-            _type: string;
-        }) => R;
+    export interface _Visitor<Result> {
+        alias: (value: AliasTypeDefinition) => Result;
+        enum: (value: EnumTypeDefinition) => Result;
+        object: (value: ObjectTypeDefinition) => Result;
+        union: (value: UnionTypeDefinition) => Result;
+        unknown: () => Result;
     }
 }
 
@@ -694,7 +695,7 @@ export const Type = {
             case \\"enum\\": return visitor.enum(value);
             case \\"object\\": return visitor.object(value);
             case \\"union\\": return visitor.union(value);
-            default: return visitor.unknown(value);
+            default: return visitor.unknown();
         }
     },
 };
@@ -740,21 +741,20 @@ export declare namespace TypeReference {
         _type: \\"void\\";
     }
 
-    export interface _Visitor<R> {
-        container: (value: ContainerType) => R;
-        named: (value: NamedType) => R;
-        primitive: (value: PrimitiveType) => R;
-        void: () => R;
-        unknown: (value: {
-            _type: string;
-        }) => R;
+    export interface _Visitor<Result> {
+        container: (value: ContainerType) => Result;
+        named: (value: NamedType) => Result;
+        primitive: (value: PrimitiveType) => Result;
+        void: () => Result;
+        unknown: () => Result;
     }
 }
 
 export const TypeReference = {
     container: (value: ContainerType): TypeReference.Container => ({
         _type: \\"container\\",
-        container: value
+        container: value,
+        _type: \\"container\\"
     }),
 
     named: (value: NamedType): TypeReference.Named => ({
@@ -764,10 +764,12 @@ export const TypeReference = {
 
     primitive: (value: PrimitiveType): TypeReference.Primitive => ({
         _type: \\"primitive\\",
-        primitive: value
+        primitive: value,
+        _type: \\"primitive\\"
     }),
 
     void: (): TypeReference.Void => ({
+        _type: \\"void\\",
         _type: \\"void\\"
     }),
 
@@ -777,7 +779,7 @@ export const TypeReference = {
             case \\"named\\": return visitor.named(value);
             case \\"primitive\\": return visitor.primitive(value.primitive);
             case \\"void\\": return visitor.void();
-            default: return visitor.unknown(value);
+            default: return visitor.unknown();
         }
     },
 };
@@ -810,11 +812,13 @@ export * from \\"./UnionTypeDefinition\\";
 
 exports[`generateModelFiles posts 1`] = `
 Object {
+  "/src/index.ts": "export * from \\"./model\\";
+",
   "/src/model/commons/PostId.ts": "/**
  * An ID of a blog post
  */
 export type PostId = string & {
-    __commons: void,
+    __PostId: void,
 };
 
 export const PostId = {
@@ -840,30 +844,30 @@ export declare namespace Author {
         named: string;
     }
 
-    export interface _Visitor<R> {
-        anonymous: () => R;
-        named: (value: string) => R;
-        unknown: (value: {
-            _type: string;
-        }) => R;
+    export interface _Visitor<Result> {
+        anonymous: () => Result;
+        named: (value: string) => Result;
+        unknown: () => Result;
     }
 }
 
 export const Author = {
     anonymous: (): Author.Anonymous => ({
+        _type: \\"anonymous\\",
         _type: \\"anonymous\\"
     }),
 
     named: (value: string): Author.Named => ({
         _type: \\"named\\",
-        named: value
+        named: value,
+        _type: \\"named\\"
     }),
 
     _visit: <Result>(value: Author, visitor: Author._Visitor<Result>): Result => {
         switch (value._type) {
             case \\"anonymous\\": return visitor.anonymous();
             case \\"named\\": return visitor.named(value.named);
-            default: return visitor.unknown(value);
+            default: return visitor.unknown();
         }
     },
 };
@@ -910,10 +914,10 @@ export const PostType = {
 
 export declare namespace PostType {
     export type Long = \\"LONG\\" & {
-        \\"__posts.PostType\\": void,
+        __Long: void,
     };
     export type Short = \\"SHORT\\" & {
-        \\"__posts.PostType\\": void,
+        __Short: void,
     };
 
     export interface _Visitor<R> {
