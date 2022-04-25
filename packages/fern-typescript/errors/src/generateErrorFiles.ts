@@ -12,7 +12,7 @@ export function generateErrorFiles({
     modelDirectory: Directory;
     intermediateRepresentation: IntermediateRepresentation;
 }): Directory {
-    return withDirectory(directory, "errors", (errorsDirectory) => {
+    return withDirectory({ containingModule: directory, name: "errors" }, (errorsDirectory) => {
         for (const error of intermediateRepresentation.errors) {
             generateError({
                 error,

@@ -2,7 +2,7 @@ import { writeFiles } from "@fern-api/typescript-commons";
 import { mkdir, rm } from "fs/promises";
 import { Project } from "ts-morph";
 import { Command } from "./Command";
-import { loadIntermediateRepresentation } from "./utils/loadIntermediateRepresentation";
+import { loadIntermediateRepresentation } from "./commands/utils/loadIntermediateRepresentation";
 
 export async function runCommand({
     command,

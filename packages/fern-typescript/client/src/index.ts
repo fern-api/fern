@@ -1,1 +1,1 @@
-export { generateClientFiles } from "./generate";
+export { generateClientFiles } from "./generateClientFiles";

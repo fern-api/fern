@@ -1,32 +1,33 @@
-import { EnumTypeDefinition, FernFilepath, TypeDefinition } from "@fern-api/api";
+import { EnumTypeDefinition } from "@fern-api/api";
 import {
+    addBrandedTypeAlias,
     FernWriters,
     getTextOfTsNode,
     getWriterForMultiLineUnionType,
     maybeAddDocs,
 } from "@fern-api/typescript-commons";
-import path from "path";
 import { SourceFile, ts, VariableDeclarationKind, WriterFunction } from "ts-morph";
-import { addBrandedTypeAlias } from "../../utils/addBrandedTypeAlias";
 import { getKeyForEnum } from "./utils";
 import { generateVisitMethod, generateVisitorInterface } from "./visitorUtils";
 
 export function generateEnumType({
     file,
-    typeDefinition,
+    typeName,
+    docs,
     shape,
 }: {
     file: SourceFile;
-    typeDefinition: TypeDefinition;
+    typeName: string;
+    docs: string | null | undefined;
     shape: EnumTypeDefinition;
 }): void {
     const typeAlias = file.addTypeAlias({
-        name: typeDefinition.name.name,
+        name: typeName,
         type: getWriterForMultiLineUnionType(
             shape.values.map((value) => ({
                 node: ts.factory.createTypeReferenceNode(
                     ts.factory.createQualifiedName(
-                        ts.factory.createIdentifier(typeDefinition.name.name),
+                        ts.factory.createIdentifier(typeName),
                         ts.factory.createIdentifier(getKeyForEnum(value))
                     )
                 ),
@@ -35,31 +36,28 @@ export function generateEnumType({
         ),
         isExported: true,
     });
-    maybeAddDocs(typeAlias, typeDefinition.docs);
+    maybeAddDocs(typeAlias, docs);
 
     file.addVariableStatement({
         declarationKind: VariableDeclarationKind.Const,
         declarations: [
             {
-                name: typeDefinition.name.name,
-                initializer: createUtils(typeDefinition, shape),
+                name: typeName,
+                initializer: createUtils({ shape, typeName }),
             },
         ],
         isExported: true,
     });
 
     const moduleDeclaration = file.addModule({
-        name: typeDefinition.name.name,
+        name: typeName,
         isExported: true,
         hasDeclareKeyword: true,
     });
     for (const value of shape.values) {
         addBrandedTypeAlias({
             node: moduleDeclaration,
-            typeName: {
-                name: getKeyForEnum(value),
-                fernFilepath: FernFilepath.of(path.join(typeDefinition.name.fernFilepath, typeDefinition.name.name)),
-            },
+            typeName: getKeyForEnum(value),
             docs: undefined,
             baseType: ts.factory.createStringLiteral(value.value),
         });
@@ -67,7 +65,7 @@ export function generateEnumType({
     moduleDeclaration.addInterface(generateVisitorInterface({ shape }));
 }
 
-function createUtils(typeDefinition: TypeDefinition, shape: EnumTypeDefinition): WriterFunction {
+function createUtils({ shape, typeName }: { shape: EnumTypeDefinition; typeName: string }): WriterFunction {
     const writer = FernWriters.object.writer();
 
     for (const value of shape.values) {
@@ -78,7 +76,7 @@ function createUtils(typeDefinition: TypeDefinition, shape: EnumTypeDefinition):
                     ts.factory.createStringLiteral(value.value),
                     ts.factory.createTypeReferenceNode(
                         ts.factory.createQualifiedName(
-                            ts.factory.createIdentifier(typeDefinition.name.name),
+                            ts.factory.createIdentifier(typeName),
                             ts.factory.createIdentifier(getKeyForEnum(value))
                         )
                     )
@@ -90,7 +88,7 @@ function createUtils(typeDefinition: TypeDefinition, shape: EnumTypeDefinition):
     writer.addNewLine();
     writer.addProperty({
         key: "visit",
-        value: getTextOfTsNode(generateVisitMethod({ typeDefinition, shape })),
+        value: getTextOfTsNode(generateVisitMethod({ typeName, shape })),
     });
 
     return writer.toFunction();

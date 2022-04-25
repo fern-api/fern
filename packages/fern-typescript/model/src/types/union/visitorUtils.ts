@@ -1,4 +1,4 @@
-import { TypeDefinition, UnionTypeDefinition } from "@fern-api/api";
+import { UnionTypeDefinition } from "@fern-api/api";
 import { getTextOfTsNode } from "@fern-api/typescript-commons";
 import { Directory, InterfaceDeclarationStructure, OptionalKind, SourceFile, ts } from "ts-morph";
 import { TypeResolver } from "../../utils/TypeResolver";
@@ -11,12 +11,12 @@ import {
 import { getBaseTypeForSingleUnionType, visitResolvedTypeReference } from "./utils";
 
 export function generateVisitMethod({
-    typeDefinition,
-    shape,
+    typeName,
+    unionTypeDefinition,
     typeResolver,
 }: {
-    typeDefinition: TypeDefinition;
-    shape: UnionTypeDefinition;
+    typeName: string;
+    unionTypeDefinition: UnionTypeDefinition;
     typeResolver: TypeResolver;
 }): ts.ArrowFunction {
     const VALUE_PARAMETER_NAME = "value";
@@ -37,7 +37,7 @@ export function generateVisitMethod({
                 undefined,
                 ts.factory.createIdentifier(VALUE_PARAMETER_NAME),
                 undefined,
-                ts.factory.createTypeReferenceNode(ts.factory.createIdentifier(typeDefinition.name.name), undefined),
+                ts.factory.createTypeReferenceNode(ts.factory.createIdentifier(typeName), undefined),
                 undefined
             ),
             ts.factory.createParameterDeclaration(
@@ -48,7 +48,7 @@ export function generateVisitMethod({
                 undefined,
                 ts.factory.createTypeReferenceNode(
                     ts.factory.createQualifiedName(
-                        ts.factory.createIdentifier(typeDefinition.name.name),
+                        ts.factory.createIdentifier(typeName),
                         ts.factory.createIdentifier(VISITOR_INTERFACE_NAME)
                     ),
                     [
@@ -68,10 +68,10 @@ export function generateVisitMethod({
                 ts.factory.createSwitchStatement(
                     ts.factory.createPropertyAccessExpression(
                         ts.factory.createIdentifier(VALUE_PARAMETER_NAME),
-                        ts.factory.createIdentifier(shape.discriminant)
+                        ts.factory.createIdentifier(unionTypeDefinition.discriminant)
                     ),
                     ts.factory.createCaseBlock([
-                        ...shape.types.map((type) =>
+                        ...unionTypeDefinition.types.map((type) =>
                             ts.factory.createCaseClause(ts.factory.createStringLiteral(type.discriminantValue), [
                                 ts.factory.createReturnStatement(
                                     ts.factory.createCallExpression(
@@ -102,7 +102,7 @@ export function generateVisitMethod({
                                         ts.factory.createIdentifier(UNKNOWN_PROPERY_NAME)
                                     ),
                                     undefined,
-                                    [ts.factory.createIdentifier(VALUE_PARAMETER_NAME)]
+                                    undefined
                                 )
                             ),
                         ]),
@@ -115,25 +115,24 @@ export function generateVisitMethod({
 }
 
 export function generateVisitorInterface({
-    shape,
+    unionTypeDefinition,
     typeResolver,
     file,
     modelDirectory,
 }: {
-    shape: UnionTypeDefinition;
+    unionTypeDefinition: UnionTypeDefinition;
     typeResolver: TypeResolver;
     file: SourceFile;
     modelDirectory: Directory;
 }): OptionalKind<InterfaceDeclarationStructure> {
     const VALUE_PARAMETER_NAME = "value";
-    const RETURN_TYPE_PARAMETER = "R";
 
     return {
         name: VISITOR_INTERFACE_NAME,
         isExported: true,
-        typeParameters: [RETURN_TYPE_PARAMETER],
+        typeParameters: [VISITOR_RESULT_TYPE_PARAMETER],
         properties: [
-            ...shape.types.map((type) => {
+            ...unionTypeDefinition.types.map((type) => {
                 const parameterType = getBaseTypeForSingleUnionType({
                     singleUnionType: type,
                     typeResolver,
@@ -159,7 +158,7 @@ export function generateVisitorInterface({
                                   ]
                                 : [],
                             ts.factory.createTypeReferenceNode(
-                                ts.factory.createIdentifier(RETURN_TYPE_PARAMETER),
+                                ts.factory.createIdentifier(VISITOR_RESULT_TYPE_PARAMETER),
                                 undefined
                             )
                         )
@@ -171,26 +170,9 @@ export function generateVisitorInterface({
                 type: getTextOfTsNode(
                     ts.factory.createFunctionTypeNode(
                         undefined,
-                        [
-                            ts.factory.createParameterDeclaration(
-                                undefined,
-                                undefined,
-                                undefined,
-                                ts.factory.createIdentifier(VALUE_PARAMETER_NAME),
-                                undefined,
-                                ts.factory.createTypeLiteralNode([
-                                    ts.factory.createPropertySignature(
-                                        undefined,
-                                        ts.factory.createIdentifier(shape.discriminant),
-                                        undefined,
-                                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-                                    ),
-                                ]),
-                                undefined
-                            ),
-                        ],
+                        [],
                         ts.factory.createTypeReferenceNode(
-                            ts.factory.createIdentifier(RETURN_TYPE_PARAMETER),
+                            ts.factory.createIdentifier(VISITOR_RESULT_TYPE_PARAMETER),
                             undefined
                         )
                     )

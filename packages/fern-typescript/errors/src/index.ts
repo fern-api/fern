@@ -1,1 +1,1 @@
-export { generateErrorFiles } from "./generate";
+export { generateErrorFiles } from "./generateErrorFiles";

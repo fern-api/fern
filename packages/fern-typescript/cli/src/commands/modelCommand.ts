@@ -1,5 +1,5 @@
 import { generateModelFiles } from "@fern-api/typescript-model";
-import { Command } from "./Command";
+import { Command } from "../Command";
 
 export const modelCommand: Command = {
     run: ({ project, intermediateRepresentation }) => {

@@ -1,18 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`model fern IR 1`] = `
+exports[`generateModelFiles fern IR 1`] = `
 Object {
-  "/src/errors/index.ts": "export * from \\"./posts\\";
-",
-  "/src/errors/posts/PostNotFoundError.ts": "import * as model from \\"../../model\\";
-
-export interface PostNotFoundError {
-    _type: \\"PostNotFoundError\\";
-    id: model.PostId;
-}
-",
-  "/src/errors/posts/index.ts": "export * from \\"./PostNotFoundError\\";
-",
   "/src/model/commons/PostId.ts": "/**
  * An ID of a blog post
  */
@@ -819,19 +808,8 @@ export * from \\"./UnionTypeDefinition\\";
 }
 `;
 
-exports[`model posts 1`] = `
+exports[`generateModelFiles posts 1`] = `
 Object {
-  "/src/errors/index.ts": "export * from \\"./posts\\";
-",
-  "/src/errors/posts/PostNotFoundError.ts": "import * as model from \\"../../model\\";
-
-export interface PostNotFoundError {
-    _type: \\"PostNotFoundError\\";
-    id: model.PostId;
-}
-",
-  "/src/errors/posts/index.ts": "export * from \\"./PostNotFoundError\\";
-",
   "/src/model/commons/PostId.ts": "/**
  * An ID of a blog post
  */

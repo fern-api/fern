@@ -1,4 +1,4 @@
-import { ObjectTypeDefinition, TypeDefinition } from "@fern-api/api";
+import { ObjectTypeDefinition } from "@fern-api/api";
 import {
     generateTypeNameReference,
     generateTypeReference,
@@ -8,18 +8,20 @@ import {
 import { Directory, SourceFile } from "ts-morph";
 
 export function generateObjectType({
+    typeName,
+    docs,
     file,
-    typeDefinition,
     shape,
     modelDirectory,
 }: {
     file: SourceFile;
-    typeDefinition: TypeDefinition;
+    docs: string | null | undefined;
+    typeName: string;
     shape: ObjectTypeDefinition;
     modelDirectory: Directory;
 }): void {
     const node = file.addInterface({
-        name: typeDefinition.name.name,
+        name: typeName,
         extends: shape.extends
             .map((typeName) => generateTypeNameReference({ typeName, referencedIn: file, modelDirectory }))
             .map(getTextOfTsNode),
@@ -32,5 +34,5 @@ export function generateObjectType({
         })),
         isExported: true,
     });
-    maybeAddDocs(node, typeDefinition.docs);
+    maybeAddDocs(node, docs);
 }

@@ -1,4 +1,4 @@
-import { EnumTypeDefinition, TypeDefinition } from "@fern-api/api";
+import { EnumTypeDefinition } from "@fern-api/api";
 import { getTextOfTsNode } from "@fern-api/typescript-commons";
 import { InterfaceDeclarationStructure, OptionalKind, ts } from "ts-morph";
 import {
@@ -10,10 +10,10 @@ import {
 import { getKeyForEnum } from "./utils";
 
 export function generateVisitMethod({
-    typeDefinition,
+    typeName,
     shape,
 }: {
-    typeDefinition: TypeDefinition;
+    typeName: string;
     shape: EnumTypeDefinition;
 }): ts.ArrowFunction {
     const VALUE_PARAMETER_NAME = "value";
@@ -28,7 +28,7 @@ export function generateVisitMethod({
                 undefined,
                 VALUE_PARAMETER_NAME,
                 undefined,
-                ts.factory.createTypeReferenceNode(ts.factory.createIdentifier(typeDefinition.name.name), undefined)
+                ts.factory.createTypeReferenceNode(ts.factory.createIdentifier(typeName), undefined)
             ),
             ts.factory.createParameterDeclaration(
                 undefined,
@@ -38,7 +38,7 @@ export function generateVisitMethod({
                 undefined,
                 ts.factory.createTypeReferenceNode(
                     ts.factory.createQualifiedName(
-                        ts.factory.createIdentifier(typeDefinition.name.name),
+                        ts.factory.createIdentifier(typeName),
                         ts.factory.createIdentifier(VISITOR_INTERFACE_NAME)
                     ),
                     [
@@ -60,7 +60,7 @@ export function generateVisitMethod({
                         ...shape.values.map((value) =>
                             ts.factory.createCaseClause(
                                 ts.factory.createPropertyAccessExpression(
-                                    ts.factory.createIdentifier(typeDefinition.name.name),
+                                    ts.factory.createIdentifier(typeName),
                                     ts.factory.createIdentifier(getKeyForEnum(value))
                                 ),
                                 [
