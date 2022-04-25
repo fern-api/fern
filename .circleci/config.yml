@@ -76,7 +76,11 @@ jobs:
       - run:
           name: Run code-generation
           command: ./fern.sh
-      - run: cd packages/api/java-api && bash codegen.sh
+      - run:
+          command: |
+            export PATH="$PATH:$JAVA_HOME/bin"
+            cd packages/api/java-api
+            ./codegen.sh
       - run:
           command: ./gradlew artifactoryPublish
           name: Publish conjure json file
