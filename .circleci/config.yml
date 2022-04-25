@@ -69,7 +69,7 @@ jobs:
       - checkout
       - run:
           name: Run code-generation
-          command: ./fern.sh
+          command: yarn install && ./fern.sh
       - run: cd packages/api/java-api && ./codegen.sh
       - run:
           name: Install Java
