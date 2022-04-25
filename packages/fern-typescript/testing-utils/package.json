@@ -20,7 +20,10 @@
   "dependencies": {
     "@fern-api/api": "workspace:*",
     "@fern-api/compiler": "workspace:*",
-    "@fern-typescript/commons": "workspace:*"
+    "@fern-typescript/commons": "workspace:*",
+    "fern-api": "workspace:*",
+    "memfs": "^3.4.1",
+    "ts-morph": "^14.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",
