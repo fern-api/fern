@@ -77,13 +77,12 @@ jobs:
           name: Run code-generation
           command: ./fern.sh
       - run:
+          name: Publish
           command: |
             export PATH="$PATH:$JAVA_HOME/bin"
             cd packages/api/java-api
             ./codegen.sh
-      - run:
-          command: ./gradlew artifactoryPublish
-          name: Publish conjure json file
+            ./gradlew artifactoryPublish
 
 workflows:
   version: 2
