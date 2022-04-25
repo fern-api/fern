@@ -1,2 +1,1 @@
-export { DefaultFetcher } from "./DefaultFetcher";
-export type { Fetcher } from "./Fetcher";
+export type { runEteTest } from "./runEteTest";
