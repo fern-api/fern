@@ -204,20 +204,11 @@ function generateCreator({
         namedObject: () => [ts.factory.createSpreadAssignment(ts.factory.createIdentifier(VALUE_PARAMETER_NAME))],
         nonObject: () => [
             ts.factory.createPropertyAssignment(
-                ts.factory.createIdentifier(unionTypeDefinition.discriminant),
-                ts.factory.createStringLiteral(singleUnionType.discriminantValue)
-            ),
-            ts.factory.createPropertyAssignment(
                 ts.factory.createIdentifier(singleUnionType.discriminantValue),
                 ts.factory.createIdentifier(VALUE_PARAMETER_NAME)
             ),
         ],
-        void: () => [
-            ts.factory.createPropertyAssignment(
-                ts.factory.createIdentifier(unionTypeDefinition.discriminant),
-                ts.factory.createStringLiteral(singleUnionType.discriminantValue)
-            ),
-        ],
+        void: () => [],
     });
 
     return ts.factory.createArrowFunction(
