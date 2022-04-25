@@ -18,14 +18,10 @@ import com.types.ObjectTypeDefinition;
 import com.types.Type;
 import com.types.TypeDefinition;
 import com.types.UnionTypeDefinition;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -42,7 +38,7 @@ public final class ModelGenerator {
 
     private static final Logger log = LoggerFactory.getLogger(ModelGenerator.class);
 
-    private static final String SRC_MAIN_JAVA = "src/main/java";
+    private static final String SRC_GENERATED_JAVA = "src/generated/java";
 
     private final List<TypeDefinition> typeDefinitions;
     private final Map<NamedType, TypeDefinition> typeDefinitionsByName;
@@ -60,7 +56,7 @@ public final class ModelGenerator {
     public synchronized void buildModelSubproject() {
         Set<String> javaFilePaths = new HashSet<>();
         List<JavaFile> javaFiles = generateJavaFiles();
-        Path srcPath = Paths.get(pluginConfig.modelSubprojectDirectoryName(), SRC_MAIN_JAVA);
+        Path srcPath = Paths.get(pluginConfig.modelSubprojectDirectoryName(), SRC_GENERATED_JAVA);
         javaFiles.forEach(javaFile -> {
             try {
                 File writtenFile = javaFile.writeToFile(srcPath.toFile());
@@ -69,51 +65,6 @@ public final class ModelGenerator {
                 throw new RuntimeException("Failed to write generated java file: " + javaFile.typeSpec.name, e);
             }
         });
-        try {
-            List<String> command = new ArrayList<>();
-            command.addAll(List.of(
-                    "javac",
-                    "-cp",
-                    System.getProperty("java.class.path"),
-                    "-processor",
-                    "org.immutables.value.processor.Processor",
-                    "-s",
-                    pluginConfig.modelSubprojectDirectoryName() + "/generatedSrc",
-                    "-d",
-                    pluginConfig.modelSubprojectDirectoryName() + "/build/classes"));
-            command.addAll(javaFilePaths);
-            log.debug("Running annotation processor {}", command);
-            Process proc = Runtime.getRuntime().exec(command.toArray(new String[0]));
-            StreamGobbler errorGobbler = new StreamGobbler(proc.getErrorStream());
-            StreamGobbler outputGobbler = new StreamGobbler(proc.getInputStream());
-            errorGobbler.start();
-            outputGobbler.start();
-            proc.waitFor();
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException("Failed to generate cli");
-        }
-    }
-
-    private static class StreamGobbler extends Thread {
-        private final InputStream is;
-
-        // reads everything from is until empty.
-        StreamGobbler(InputStream is) {
-            this.is = is;
-        }
-
-        public void run() {
-            try {
-                InputStreamReader isr = new InputStreamReader(is);
-                BufferedReader br = new BufferedReader(isr);
-                String line = null;
-                while ((line = br.readLine()) != null) {
-                    log.info(line);
-                }
-            } catch (IOException ioe) {
-                log.error("Encountered exception while running annotation procesor", ioe);
-            }
-        }
     }
 
     private List<JavaFile> generateJavaFiles() {

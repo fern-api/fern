@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    implementation project(':fern-java-codegen-utils')
+    implementation project(':fern-codegen-utils')
     implementation 'com.fern:fern-api-model'
     implementation 'com.fern:fern-immutables-style'
     implementation 'com.squareup:javapoet'
