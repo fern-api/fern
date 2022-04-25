@@ -18,6 +18,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
+    "@fern-api/api": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "fern-api": "workspace:*",
     "lodash": "^4.17.21",
@@ -27,7 +28,6 @@
     "@babel/core": "^7.17.9",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-typescript": "^7.16.7",
-    "@fern-api/api": "workspace:*",
     "@fern-api/compiler": "workspace:*",
     "@types/jest": "^27.4.1",
     "@types/lodash": "^4.14.182",
