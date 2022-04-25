@@ -1,10 +1,5 @@
 import { SingleUnionType, UnionTypeDefinition } from "@fern-api/api";
-import {
-    FernWriters,
-    getTextOfTsNode,
-    getWriterForMultiLineUnionType,
-    maybeAddDocs,
-} from "@fern-api/typescript-commons";
+import { FernWriters, getTextOfTsNode, getWriterForMultiLineUnionType, maybeAddDocs } from "@fern-typescript/commons";
 import {
     Directory,
     InterfaceDeclaration,

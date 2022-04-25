@@ -1,5 +1,5 @@
 import { UnionTypeDefinition } from "@fern-api/api";
-import { getTextOfTsNode } from "@fern-api/typescript-commons";
+import { getTextOfTsNode } from "@fern-typescript/commons";
 import { Directory, InterfaceDeclarationStructure, OptionalKind, SourceFile, ts } from "ts-morph";
 import { TypeResolver } from "../../utils/TypeResolver";
 import {

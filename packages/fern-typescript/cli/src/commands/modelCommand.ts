@@ -1,4 +1,4 @@
-import { generateModelFiles } from "@fern-api/typescript-model";
+import { generateModelFiles } from "@fern-typescript/model";
 import { Command } from "../Command";
 
 export const modelCommand: Command = {

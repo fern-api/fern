@@ -1,4 +1,4 @@
-import { writeFiles } from "@fern-api/typescript-commons";
+import { writeFiles } from "@fern-typescript/commons";
 import { mkdir, rm } from "fs/promises";
 import { Project } from "ts-morph";
 import { Command } from "./Command";

@@ -1,6 +1,6 @@
 import { HttpService } from "@fern-api/api";
-import { withDirectory, withSourceFile } from "@fern-api/typescript-commons";
-import { TypeResolver } from "@fern-api/typescript-model";
+import { withDirectory, withSourceFile } from "@fern-typescript/commons";
+import { TypeResolver } from "@fern-typescript/model";
 import { Directory } from "ts-morph";
 import { addEndpointToService } from "./addEndpointToService";
 

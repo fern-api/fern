@@ -1,5 +1,5 @@
 import { compile } from "@fern-api/compiler";
-import { writeFiles } from "@fern-api/typescript-commons";
+import { writeFiles } from "@fern-typescript/commons";
 import { parseFernDirectory } from "fern-api";
 import { rm } from "fs/promises";
 import { vol } from "memfs";

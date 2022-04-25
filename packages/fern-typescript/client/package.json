@@ -1,5 +1,5 @@
 {
-  "name": "@fern-api/typescript-client",
+  "name": "@fern-typescript/client",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -18,9 +18,9 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/typescript-commons": "workspace:*",
-    "@fern-api/typescript-errors": "workspace:*",
-    "@fern-api/typescript-model": "workspace:*",
+    "@fern-typescript/commons": "workspace:*",
+    "@fern-typescript/errors": "workspace:*",
+    "@fern-typescript/model": "workspace:*",
     "ts-morph": "^14.0.0"
   },
   "devDependencies": {

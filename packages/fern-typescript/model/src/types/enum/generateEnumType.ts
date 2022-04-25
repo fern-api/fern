@@ -5,7 +5,7 @@ import {
     getTextOfTsNode,
     getWriterForMultiLineUnionType,
     maybeAddDocs,
-} from "@fern-api/typescript-commons";
+} from "@fern-typescript/commons";
 import { SourceFile, ts, VariableDeclarationKind, WriterFunction } from "ts-morph";
 import { getKeyForEnum } from "./utils";
 import { generateVisitMethod, generateVisitorInterface } from "./visitorUtils";

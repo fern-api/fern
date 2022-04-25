@@ -1,5 +1,5 @@
 {
-  "name": "@fern-typescript/errors",
+  "name": "@fern-typescript/service-utils",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -18,14 +18,13 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-typescript/commons": "workspace:*",
+    "@fern-api/api": "workspace:*",
     "ts-morph": "^14.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-typescript": "^7.16.7",
-    "@fern-api/api": "workspace:*",
     "@types/jest": "^27.4.1",
     "@types/node": "^17.0.25",
     "depcheck": "^1.4.3",

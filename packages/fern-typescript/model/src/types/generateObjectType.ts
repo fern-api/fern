@@ -4,7 +4,7 @@ import {
     generateTypeReference,
     getTextOfTsNode,
     maybeAddDocs,
-} from "@fern-api/typescript-commons";
+} from "@fern-typescript/commons";
 import { Directory, SourceFile } from "ts-morph";
 
 export function generateObjectType({

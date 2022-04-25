@@ -1571,18 +1571,50 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/typescript-client@workspace:*, @fern-api/typescript-client@workspace:packages/fern-typescript/client":
+"@fern-api/typescript-commons@npm:0.0.9":
+  version: 0.0.9
+  resolution: "@fern-api/typescript-commons@npm:0.0.9"
+  dependencies:
+    esutils: ^2.0.3
+    ts-morph: ^14.0.0
+  checksum: 8bd5f2b5d0ea1dc42a65e6779f3c4fe3826e1df27d2e43af228ad6a90be38ba5a7f2d067f6c585ad687e6de63a579fcef0d435793fa12ae2a6080d72e1dbd6a1
+  languageName: node
+  linkType: hard
+
+"@fern-api/typescript-model@npm:0.0.9":
+  version: 0.0.9
+  resolution: "@fern-api/typescript-model@npm:0.0.9"
+  dependencies:
+    "@fern-api/typescript-commons": 0.0.9
+    fern-api: ^0.0.13
+    lodash: ^4.17.21
+    ts-morph: ^14.0.0
+  checksum: f5ebab58eef3bf9ffe354214bc5117e22fe557dea877ce2a6e82054feee25acb13e9ed93db724cc0e0e1cc55a39531711e830af1e3630c2fda9adeaa176645ab
+  languageName: node
+  linkType: hard
+
+"@fern-api/typescript-server@npm:0.0.9":
+  version: 0.0.9
+  resolution: "@fern-api/typescript-server@npm:0.0.9"
+  dependencies:
+    "@fern-api/api": ^0.0.13
+    ts-morph: ^14.0.0
+  checksum: 645a7fde8ae628e9c916b371821e3308a388668fd4573e13ef67f122f85b69d4c45f0149617cc41f3c6e5c2663b59be85316f42c4f41526cef1642a96a91a454
+  languageName: node
+  linkType: hard
+
+"@fern-typescript/client@workspace:*, @fern-typescript/client@workspace:packages/fern-typescript/client":
   version: 0.0.0-use.local
-  resolution: "@fern-api/typescript-client@workspace:packages/fern-typescript/client"
+  resolution: "@fern-typescript/client@workspace:packages/fern-typescript/client"
   dependencies:
     "@babel/core": ^7.17.9
     "@babel/preset-env": ^7.16.11
     "@babel/preset-typescript": ^7.16.7
     "@fern-api/api": "workspace:*"
     "@fern-api/compiler": "workspace:*"
-    "@fern-api/typescript-commons": "workspace:*"
-    "@fern-api/typescript-errors": "workspace:*"
-    "@fern-api/typescript-model": "workspace:*"
+    "@fern-typescript/commons": "workspace:*"
+    "@fern-typescript/errors": "workspace:*"
+    "@fern-typescript/model": "workspace:*"
     "@types/jest": ^27.4.1
     "@types/node": ^17.0.25
     depcheck: ^1.4.3
@@ -1597,19 +1629,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/typescript-commons@npm:0.0.9":
-  version: 0.0.9
-  resolution: "@fern-api/typescript-commons@npm:0.0.9"
-  dependencies:
-    esutils: ^2.0.3
-    ts-morph: ^14.0.0
-  checksum: 8bd5f2b5d0ea1dc42a65e6779f3c4fe3826e1df27d2e43af228ad6a90be38ba5a7f2d067f6c585ad687e6de63a579fcef0d435793fa12ae2a6080d72e1dbd6a1
-  languageName: node
-  linkType: hard
-
-"@fern-api/typescript-commons@workspace:*, @fern-api/typescript-commons@workspace:packages/fern-typescript/commons":
+"@fern-typescript/commons@workspace:*, @fern-typescript/commons@workspace:packages/fern-typescript/commons":
   version: 0.0.0-use.local
-  resolution: "@fern-api/typescript-commons@workspace:packages/fern-typescript/commons"
+  resolution: "@fern-typescript/commons@workspace:packages/fern-typescript/commons"
   dependencies:
     "@babel/core": ^7.17.9
     "@babel/preset-env": ^7.16.11
@@ -1630,15 +1652,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/typescript-errors@workspace:*, @fern-api/typescript-errors@workspace:packages/fern-typescript/errors":
+"@fern-typescript/errors@workspace:*, @fern-typescript/errors@workspace:packages/fern-typescript/errors":
   version: 0.0.0-use.local
-  resolution: "@fern-api/typescript-errors@workspace:packages/fern-typescript/errors"
+  resolution: "@fern-typescript/errors@workspace:packages/fern-typescript/errors"
   dependencies:
     "@babel/core": ^7.17.9
     "@babel/preset-env": ^7.16.11
     "@babel/preset-typescript": ^7.16.7
     "@fern-api/api": "workspace:*"
-    "@fern-api/typescript-commons": "workspace:*"
+    "@fern-typescript/commons": "workspace:*"
     "@types/jest": ^27.4.1
     "@types/node": ^17.0.25
     depcheck: ^1.4.3
@@ -1651,28 +1673,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/typescript-model@npm:0.0.9":
-  version: 0.0.9
-  resolution: "@fern-api/typescript-model@npm:0.0.9"
-  dependencies:
-    "@fern-api/typescript-commons": 0.0.9
-    fern-api: ^0.0.13
-    lodash: ^4.17.21
-    ts-morph: ^14.0.0
-  checksum: f5ebab58eef3bf9ffe354214bc5117e22fe557dea877ce2a6e82054feee25acb13e9ed93db724cc0e0e1cc55a39531711e830af1e3630c2fda9adeaa176645ab
-  languageName: node
-  linkType: hard
-
-"@fern-api/typescript-model@workspace:*, @fern-api/typescript-model@workspace:packages/fern-typescript/model":
+"@fern-typescript/model@workspace:*, @fern-typescript/model@workspace:packages/fern-typescript/model":
   version: 0.0.0-use.local
-  resolution: "@fern-api/typescript-model@workspace:packages/fern-typescript/model"
+  resolution: "@fern-typescript/model@workspace:packages/fern-typescript/model"
   dependencies:
     "@babel/core": ^7.17.9
     "@babel/preset-env": ^7.16.11
     "@babel/preset-typescript": ^7.16.7
     "@fern-api/api": "workspace:*"
     "@fern-api/compiler": "workspace:*"
-    "@fern-api/typescript-commons": "workspace:*"
+    "@fern-typescript/commons": "workspace:*"
     "@types/jest": ^27.4.1
     "@types/lodash": ^4.14.182
     "@types/node": ^17.0.25
@@ -1689,19 +1699,29 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/typescript-server@npm:0.0.9":
-  version: 0.0.9
-  resolution: "@fern-api/typescript-server@npm:0.0.9"
-  dependencies:
-    "@fern-api/api": ^0.0.13
-    ts-morph: ^14.0.0
-  checksum: 645a7fde8ae628e9c916b371821e3308a388668fd4573e13ef67f122f85b69d4c45f0149617cc41f3c6e5c2663b59be85316f42c4f41526cef1642a96a91a454
-  languageName: node
-  linkType: hard
-
-"@fern-api/typescript-server@workspace:packages/fern-typescript/server":
+"@fern-typescript/server@workspace:packages/fern-typescript/server":
   version: 0.0.0-use.local
-  resolution: "@fern-api/typescript-server@workspace:packages/fern-typescript/server"
+  resolution: "@fern-typescript/server@workspace:packages/fern-typescript/server"
+  dependencies:
+    "@babel/core": ^7.17.9
+    "@babel/preset-env": ^7.16.11
+    "@babel/preset-typescript": ^7.16.7
+    "@fern-api/api": "workspace:*"
+    "@types/jest": ^27.4.1
+    "@types/node": ^17.0.25
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    jest: ^27.5.1
+    prettier: ^2.6.1
+    stylelint: ^14.6.1
+    ts-morph: ^14.0.0
+    typescript: ^4.6.3
+  languageName: unknown
+  linkType: soft
+
+"@fern-typescript/service-utils@workspace:packages/fern-typescript/service-utils":
+  version: 0.0.0-use.local
+  resolution: "@fern-typescript/service-utils@workspace:packages/fern-typescript/service-utils"
   dependencies:
     "@babel/core": ^7.17.9
     "@babel/preset-env": ^7.16.11
@@ -4084,9 +4104,9 @@ __metadata:
     "@babel/preset-env": ^7.16.11
     "@babel/preset-typescript": ^7.16.7
     "@fern-api/api": "workspace:*"
-    "@fern-api/typescript-client": "workspace:*"
-    "@fern-api/typescript-commons": "workspace:*"
-    "@fern-api/typescript-model": "workspace:*"
+    "@fern-typescript/client": "workspace:*"
+    "@fern-typescript/commons": "workspace:*"
+    "@fern-typescript/model": "workspace:*"
     "@types/jest": ^27.4.1
     "@types/node": ^17.0.25
     "@types/yargs": ^17.0.10

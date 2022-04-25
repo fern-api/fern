@@ -5,8 +5,8 @@ import {
     getTextOfTsNode,
     withDirectory,
     withSourceFile,
-} from "@fern-api/typescript-commons";
-import { generateType, TypeResolver } from "@fern-api/typescript-model";
+} from "@fern-typescript/commons";
+import { generateType, TypeResolver } from "@fern-typescript/model";
 import { ClassDeclaration, Directory, InterfaceDeclaration, Scope, SourceFile, ts } from "ts-morph";
 
 export function addEndpointToService({

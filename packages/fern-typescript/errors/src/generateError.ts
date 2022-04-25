@@ -1,10 +1,5 @@
 import { ErrorDefinition } from "@fern-api/api";
-import {
-    generateTypeReference,
-    getFilePathForError,
-    getTextOfTsNode,
-    withSourceFile,
-} from "@fern-api/typescript-commons";
+import { generateTypeReference, getFilePathForError, getTextOfTsNode, withSourceFile } from "@fern-typescript/commons";
 import { Directory, ts } from "ts-morph";
 
 // TODO this should live in IR

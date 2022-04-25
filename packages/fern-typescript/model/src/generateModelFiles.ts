@@ -1,5 +1,5 @@
 import { IntermediateRepresentation } from "@fern-api/api";
-import { getFilePathForType, withDirectory, withSourceFile } from "@fern-api/typescript-commons";
+import { getFilePathForType, withDirectory, withSourceFile } from "@fern-typescript/commons";
 import { Directory } from "ts-morph";
 import { generateType } from "./types/generateType";
 import { TypeResolver } from "./utils/TypeResolver";

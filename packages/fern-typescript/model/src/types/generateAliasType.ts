@@ -1,10 +1,5 @@
 import { AliasTypeDefinition, PrimitiveType } from "@fern-api/api";
-import {
-    addBrandedTypeAlias,
-    generateTypeReference,
-    getTextOfTsNode,
-    maybeAddDocs,
-} from "@fern-api/typescript-commons";
+import { addBrandedTypeAlias, generateTypeReference, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { Directory, SourceFile, ts, VariableDeclarationKind, Writers } from "ts-morph";
 
 export function generateAliasType({

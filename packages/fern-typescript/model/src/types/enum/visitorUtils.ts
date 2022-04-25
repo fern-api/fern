@@ -1,5 +1,5 @@
 import { EnumTypeDefinition } from "@fern-api/api";
-import { getTextOfTsNode } from "@fern-api/typescript-commons";
+import { getTextOfTsNode } from "@fern-typescript/commons";
 import { InterfaceDeclarationStructure, OptionalKind, ts } from "ts-morph";
 import {
     UNKNOWN_PROPERY_NAME,
