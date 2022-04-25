@@ -103,12 +103,10 @@ export declare namespace Author {
 
 export const Author = {
     anonymous: (): Author.Anonymous => ({
-        _type: \\"anonymous\\",
         _type: \\"anonymous\\"
     }),
 
     named: (value: string): Author.Named => ({
-        _type: \\"named\\",
         named: value,
         _type: \\"named\\"
     }),
@@ -481,7 +479,6 @@ export declare namespace ContainerType {
 
 export const ContainerType = {
     list: (value: TypeReference): ContainerType.List => ({
-        _type: \\"list\\",
         list: value,
         _type: \\"list\\"
     }),
@@ -492,13 +489,11 @@ export const ContainerType = {
     }),
 
     optional: (value: TypeReference): ContainerType.Optional => ({
-        _type: \\"optional\\",
         optional: value,
         _type: \\"optional\\"
     }),
 
     set: (value: TypeReference): ContainerType.Set => ({
-        _type: \\"set\\",
         set: value,
         _type: \\"set\\"
     }),
@@ -752,7 +747,6 @@ export declare namespace TypeReference {
 
 export const TypeReference = {
     container: (value: ContainerType): TypeReference.Container => ({
-        _type: \\"container\\",
         container: value,
         _type: \\"container\\"
     }),
@@ -763,13 +757,11 @@ export const TypeReference = {
     }),
 
     primitive: (value: PrimitiveType): TypeReference.Primitive => ({
-        _type: \\"primitive\\",
         primitive: value,
         _type: \\"primitive\\"
     }),
 
     void: (): TypeReference.Void => ({
-        _type: \\"void\\",
         _type: \\"void\\"
     }),
 
@@ -853,12 +845,10 @@ export declare namespace Author {
 
 export const Author = {
     anonymous: (): Author.Anonymous => ({
-        _type: \\"anonymous\\",
         _type: \\"anonymous\\"
     }),
 
     named: (value: string): Author.Named => ({
-        _type: \\"named\\",
         named: value,
         _type: \\"named\\"
     }),
