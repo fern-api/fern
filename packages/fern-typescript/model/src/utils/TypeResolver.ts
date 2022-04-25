@@ -61,11 +61,11 @@ export class TypeResolver {
             throw new Error("Type not found: " + typeNameToString(typeName));
         }
 
-        const resolvedType: TypeResolver.ResolvedType = Type._visit(type, {
+        const resolvedType = Type._visit<TypeResolver.ResolvedType>(type, {
             object: () => "object",
             union: () => "union",
             alias: (alias) =>
-                TypeReference._visit(alias.aliasOf, {
+                TypeReference._visit<TypeResolver.ResolvedType>(alias.aliasOf, {
                     named: (named) =>
                         this.resolveTypeRecursive({
                             allTypes,
@@ -75,13 +75,13 @@ export class TypeResolver {
                     primitive: () => "primitive",
                     container: () => "container",
                     void: () => "void",
-                    unknown: ({ _type }) => {
-                        throw new Error("Unkonwn Alias type reference: " + _type);
+                    unknown: () => {
+                        throw new Error("Unkonwn Alias type reference: " + alias.aliasOf._type);
                     },
                 }),
             enum: () => "enum",
-            unknown: ({ _type }) => {
-                throw new Error("Unkonwn Type: " + _type);
+            unknown: () => {
+                throw new Error("Unkonwn Type: " + type._type);
             },
         });
 

@@ -50,8 +50,8 @@ export function generateTypeReference({
                         ts.factory.createLiteralTypeNode(ts.factory.createNull()),
                         ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
                     ]),
-                unknown: ({ _type }) => {
-                    throw new Error("Unexpected container type: " + _type);
+                unknown: () => {
+                    throw new Error("Unexpected container type: " + container._type);
                 },
             });
         },
@@ -61,8 +61,8 @@ export function generateTypeReference({
                 ts.factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword),
             ]);
         },
-        unknown: ({ _type }) => {
-            throw new Error("Unexpected type reference: " + _type);
+        unknown: () => {
+            throw new Error("Unexpected type reference: " + reference._type);
         },
     });
 }
