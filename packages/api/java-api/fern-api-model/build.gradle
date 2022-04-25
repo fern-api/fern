@@ -3,12 +3,24 @@ plugins {
 }
 
 dependencies {
-    implementation project(':fern-immutables-style')
     implementation 'com.fasterxml.jackson.core:jackson-databind'
     implementation 'com.google.code.findbugs:annotations'
-
     annotationProcessor 'org.immutables:value'
     compileOnly 'org.immutables:value::annotations'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/generated/java']
+        }
+    }
+}
+
+idea {
+    module {
+        sourceDirs += file('src/generated/java')
+    }
 }
 
 publishing {

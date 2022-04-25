@@ -57,33 +57,6 @@ jobs:
           name: Publish all packages
           command: yarn run publish
 
-  compile-java:
-    docker: [{ image: "cimg/openjdk:11.0.10-node" }]
-    resource_class: small
-    environment:
-      CIRCLE_TEST_REPORTS: /home/circleci/junit
-      CIRCLE_ARTIFACTS: /home/circleci/artifacts
-      GRADLE_OPTS: -Dorg.gradle.jvmargs='-XX:MaxMetaspaceSize=256m' -Dorg.gradle.workers.max=4
-      _JAVA_OPTIONS: -XX:ActiveProcessorCount=4 -Xmx1177m -XX:MaxMetaspaceSize=512m -XX:ErrorFile=/home/circleci/artifacts/hs_err_pid%p.log -XX:HeapDumpPath=/home/circleci/artifacts
-    steps:
-      - checkout
-      - restore_cache:
-          { key: 'gradle-wrapper-v2-{{ checksum "packages/api/java-api/gradle/wrapper/gradle-wrapper.properties" }}' }
-      - restore_cache:
-          {
-            key: 'compile-gradle-cache-v2-{{ checksum "packages/api/java-api/versions.props" }}-{{ checksum "packages/api/java-api/build.gradle" }}',
-          }
-      - run: cd packages/api/java-api && ./gradlew --parallel --stacktrace classes testClasses
-      - save_cache:
-          key: 'gradle-wrapper-v2-{{ checksum "packages/api/java-api/gradle/wrapper/gradle-wrapper.properties" }}'
-          paths: [~/.gradle/wrapper]
-      - save_cache:
-          key: 'compile-gradle-cache-v2-{{ checksum "packages/api/java-api/versions.props" }}-{{ checksum "packages/api/java-api/build.gradle" }}'
-          paths: [~/.gradle/caches]
-      - persist_to_workspace:
-          root: /home/circleci
-          paths: [project, packages/api/java-api/.gradle/init.gradle]
-
   publish-java-snapshot:
     docker: [{ image: "cimg/openjdk:11.0.10-node" }]
     resource_class: small
@@ -93,13 +66,8 @@ jobs:
       _JAVA_OPTIONS: -Dorg.gradle.internal.launcher.welcomeMessageEnabled=false -Xmx8192m
       JAVA_HOME: /opt/java11
     steps:
-      - attach_workspace: { at: /home/circleci }
-      - restore_cache:
-          { key: 'gradle-wrapper-v2-{{ checksum "packages/api/java-api/gradle/wrapper/gradle-wrapper.properties" }}' }
-      - restore_cache:
-          {
-            key: 'unit-test-gradle-cache-v2-{{ checksum "packages/api/java-api/versions.props" }}-{{ checksum "packages/api/java-api/build.gradle" }}',
-          }
+      - checkout
+      - run: cd packages/api/java-api && ./codegen.sh
       - run:
           name: Install Java
           command: |
@@ -129,17 +97,12 @@ workflows:
             - check
           context: npm
 
-      - compile-java:
-          filters:
-            tags:
-              only: /.*/
-
       - publish-java-snapshot:
           filters:
-            branches:
-              only: main
+            # branches:
+            #   only: main
             tags:
-              ignore: /.*/
+              only: /.*/
           requires:
             - compile-java
           context: jfrog
