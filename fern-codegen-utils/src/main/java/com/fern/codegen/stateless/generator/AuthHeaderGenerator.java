@@ -1,5 +1,6 @@
 package com.fern.codegen.stateless.generator;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.fern.codegen.GeneratedFile;
 import com.fern.codegen.utils.ClassNameUtils;
 import com.fern.codegen.utils.ImmutablesUtils;
@@ -22,7 +23,7 @@ public final class AuthHeaderGenerator {
             ClassNameUtils classNameUtils, ImmutablesUtils immutablesUtils, ClassName packagePrivateImmutablesStyle) {
         ClassName authHeaderClassName =
                 classNameUtils.getClassName(AUTH_HEADER_CLASS_NAME, Optional.empty(), Optional.empty());
-        TypeSpec authHeaderTypeSpec = TypeSpec.interfaceBuilder(authHeaderClassName)
+        TypeSpec authHeaderTypeSpec = TypeSpec.classBuilder(authHeaderClassName)
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                 .addAnnotation(AnnotationSpec.builder(Value.Immutable.class).build())
                 .addAnnotation(
@@ -31,6 +32,7 @@ public final class AuthHeaderGenerator {
                         .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                         .returns(ClassNameUtils.STRING_CLASS_NAME)
                         .addAnnotation(Value.Parameter.class)
+                        .addAnnotation(JsonValue.class)
                         .build())
                 .addMethod(MethodSpec.methodBuilder("valueOf")
                         .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
@@ -43,6 +45,12 @@ public final class AuthHeaderGenerator {
                         .addStatement(
                                 "return $T.of(\"Bearer \" + authHeader)",
                                 immutablesUtils.getImmutablesClassName(authHeaderClassName))
+                        .build())
+                .addMethod(MethodSpec.methodBuilder("toString")
+                        .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+                        .returns(ClassNameUtils.STRING_CLASS_NAME)
+                        .addStatement("return authHeader()")
+                        .addAnnotation(Override.class)
                         .build())
                 .build();
         JavaFile authHeaderFile = JavaFile.builder(authHeaderClassName.packageName(), authHeaderTypeSpec)
