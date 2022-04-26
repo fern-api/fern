@@ -1,5 +1,6 @@
 package com.fern.codegen.utils;
 
+import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
@@ -38,7 +39,7 @@ class TypeReferenceUtils {
 
         @Override
         public TypeName visitNamed(NamedType namedType) {
-            return classNameUtils.getClassNameForNamedType(namedType);
+            return classNameUtils.getClassNameForNamedType(namedType, PackageType.TYPES);
         }
 
         @Override

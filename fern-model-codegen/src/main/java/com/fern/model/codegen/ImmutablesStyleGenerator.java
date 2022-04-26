@@ -10,6 +10,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.Optional;
 import javax.lang.model.element.Modifier;
 import org.immutables.value.Value;
 
@@ -20,7 +21,8 @@ public final class ImmutablesStyleGenerator {
     private ImmutablesStyleGenerator() {}
 
     public static GeneratedFile generateStagedBuilderImmutablesStyle(ClassNameUtils classNameUtils) {
-        ClassName stagedBuilderClassName = classNameUtils.getClassName(STAGED_BUILDER_ANNOTATION_CLASS_NAME);
+        ClassName stagedBuilderClassName =
+                classNameUtils.getClassName(STAGED_BUILDER_ANNOTATION_CLASS_NAME, Optional.empty(), Optional.empty());
         TypeSpec stagedBuilderTypeSpec = TypeSpec.annotationBuilder(stagedBuilderClassName)
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(AnnotationSpec.builder(Target.class)

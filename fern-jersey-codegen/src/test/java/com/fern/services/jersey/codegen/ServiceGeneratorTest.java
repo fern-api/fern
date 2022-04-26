@@ -1,5 +1,9 @@
 package com.fern.services.jersey.codegen;
 
+import com.fern.codegen.GeneratedFile;
+import com.fern.codegen.GeneratedHttpService;
+import com.fern.codegen.GeneratorContext;
+import com.fern.codegen.utils.ClassNameUtils;
 import com.services.commons.ResponseErrors;
 import com.services.commons.WireMessage;
 import com.services.http.HttpEndpoint;
@@ -13,10 +17,16 @@ import com.types.PrimitiveType;
 import com.types.Type;
 import com.types.TypeReference;
 import java.util.Collections;
+import java.util.Optional;
+import org.junit.jupiter.api.Test;
 
 public final class ServiceGeneratorTest {
 
-    // @Test
+    private static final String PACKAGE_PREFIX = "com";
+    private static final GeneratorContext GENERATOR_CONTEXT =
+            new GeneratorContext(Optional.of(PACKAGE_PREFIX), Collections.emptyMap());
+
+    @Test
     public void test_basic() {
         HttpService testHttpService = HttpService.builder()
                 .basePath("/person")
@@ -54,8 +64,11 @@ public final class ServiceGeneratorTest {
                                 .build())
                         .build())
                 .build();
-        ServiceGenerator serviceGenerator = new ServiceGenerator(Collections.singletonList(testHttpService));
-        GeneratedServiceWithDefinition generatedService = serviceGenerator.generate().get(0);
-        System.out.println(generatedService.file().toString());
+        ClassNameUtils classNameUtils = new ClassNameUtils(Optional.of(PACKAGE_PREFIX));
+        GeneratedFile generatedObjectMapperClass = ObjectMapperGenerator.generateObjectMappersClass(classNameUtils);
+        HttpServiceGenerator httpServiceGenerator = new HttpServiceGenerator(GENERATOR_CONTEXT,
+                Collections.emptyMap(), testHttpService, generatedObjectMapperClass);
+        GeneratedHttpService generatedHttpService = httpServiceGenerator.generate();
+        System.out.println(generatedHttpService.file().toString());
     }
 }

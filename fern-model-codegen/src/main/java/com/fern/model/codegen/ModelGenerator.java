@@ -1,16 +1,12 @@
 package com.fern.model.codegen;
 
-import com.fern.codegen.GeneratedFile;
-import com.fern.codegen.IGeneratedFile;
-import com.fern.model.codegen.alias.AliasGenerator;
-import com.fern.model.codegen.config.PluginConfig;
-import com.fern.model.codegen.enums.EnumGenerator;
-import com.fern.model.codegen.interfaces.GeneratedInterface;
-import com.fern.model.codegen.interfaces.InterfaceGenerator;
-import com.fern.model.codegen.object.ObjectGenerator;
-import com.fern.model.codegen.union.UnionGenerator;
-import com.google.common.collect.Streams;
-import com.squareup.javapoet.JavaFile;
+import com.fern.codegen.GeneratedAlias;
+import com.fern.codegen.GeneratedEnum;
+import com.fern.codegen.GeneratedInterface;
+import com.fern.codegen.GeneratedObject;
+import com.fern.codegen.GeneratedUnion;
+import com.fern.codegen.GeneratorContext;
+import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.types.AliasTypeDefinition;
 import com.types.EnumTypeDefinition;
 import com.types.NamedType;
@@ -18,19 +14,13 @@ import com.types.ObjectTypeDefinition;
 import com.types.Type;
 import com.types.TypeDefinition;
 import com.types.UnionTypeDefinition;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,47 +28,24 @@ public final class ModelGenerator {
 
     private static final Logger log = LoggerFactory.getLogger(ModelGenerator.class);
 
-    private static final String SRC_GENERATED_JAVA = "src/generated/java";
-
     private final List<TypeDefinition> typeDefinitions;
     private final Map<NamedType, TypeDefinition> typeDefinitionsByName;
-    private final PluginConfig pluginConfig;
     private final GeneratorContext generatorContext;
 
-    public ModelGenerator(List<TypeDefinition> typeDefinitions, PluginConfig pluginConfig) {
+    public ModelGenerator(List<TypeDefinition> typeDefinitions, GeneratorContext generatorContext) {
         this.typeDefinitions = typeDefinitions;
-        this.typeDefinitionsByName = typeDefinitions.stream()
-                .collect(Collectors.toUnmodifiableMap(TypeDefinition::name, Function.identity()));
-        this.pluginConfig = pluginConfig;
-        this.generatorContext = new GeneratorContext(pluginConfig, typeDefinitionsByName);
+        this.typeDefinitionsByName = generatorContext.getTypeDefinitionsByName();
+        this.generatorContext = generatorContext;
     }
 
-    public synchronized void buildModelSubproject() {
-        Set<String> javaFilePaths = new HashSet<>();
-        List<JavaFile> javaFiles = generateJavaFiles();
-        Path srcPath = Paths.get(pluginConfig.modelSubprojectDirectoryName(), SRC_GENERATED_JAVA);
-        javaFiles.forEach(javaFile -> {
-            try {
-                File writtenFile = javaFile.writeToFile(srcPath.toFile());
-                javaFilePaths.add(writtenFile.toPath().toString());
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to write generated java file: " + javaFile.typeSpec.name, e);
-            }
-        });
-    }
-
-    private List<JavaFile> generateJavaFiles() {
+    public ModelGeneratorResult generate() {
+        ModelGeneratorResult.Builder modelGeneratorResultBuilder = ModelGeneratorResult.builder();
         Map<NamedType, GeneratedInterface> generatedInterfaces = getGeneratedInterfaces();
-        List<GeneratedFile> generatedFiles = typeDefinitions.stream()
-                .map(typeDefinition ->
-                        typeDefinition.shape().accept(new TypeDefinitionGenerator(typeDefinition, generatedInterfaces)))
-                .collect(Collectors.toList());
-        return Streams.concat(
-                        generatedInterfaces.values().stream(),
-                        generatedFiles.stream(),
-                        Stream.of(generatorContext.getStagedImmutablesFile()))
-                .map(IGeneratedFile::file)
-                .collect(Collectors.toList());
+        modelGeneratorResultBuilder.putAllInterfaces(generatedInterfaces);
+        typeDefinitions.forEach(typeDefinition -> typeDefinition
+                .shape()
+                .accept(new TypeDefinitionGenerator(typeDefinition, generatedInterfaces, modelGeneratorResultBuilder)));
+        return modelGeneratorResultBuilder.build();
     }
 
     private Map<NamedType, GeneratedInterface> getGeneratedInterfaces() {
@@ -103,18 +70,23 @@ public final class ModelGenerator {
         }));
     }
 
-    private final class TypeDefinitionGenerator implements Type.Visitor<GeneratedFile> {
+    private final class TypeDefinitionGenerator implements Type.Visitor<Void> {
 
         private final TypeDefinition typeDefinition;
         private final Map<NamedType, GeneratedInterface> generatedInterfaces;
+        private final ModelGeneratorResult.Builder modelGeneratorResultBuilder;
 
-        TypeDefinitionGenerator(TypeDefinition typeDefinition, Map<NamedType, GeneratedInterface> generatedInterfaces) {
+        TypeDefinitionGenerator(
+                TypeDefinition typeDefinition,
+                Map<NamedType, GeneratedInterface> generatedInterfaces,
+                ModelGeneratorResult.Builder modelGeneratorResultBuilder) {
             this.typeDefinition = typeDefinition;
             this.generatedInterfaces = generatedInterfaces;
+            this.modelGeneratorResultBuilder = modelGeneratorResultBuilder;
         }
 
         @Override
-        public GeneratedFile visitObject(ObjectTypeDefinition objectTypeDefinition) {
+        public Void visitObject(ObjectTypeDefinition objectTypeDefinition) {
             Optional<GeneratedInterface> selfInterface =
                     Optional.ofNullable(generatedInterfaces.get(typeDefinition.name()));
             List<GeneratedInterface> extendedInterfaces = objectTypeDefinition._extends().stream()
@@ -123,33 +95,46 @@ public final class ModelGenerator {
                             generatedInterface -> generatedInterface.className().simpleName()))
                     .collect(Collectors.toList());
             ObjectGenerator objectGenerator = new ObjectGenerator(
-                    typeDefinition.name(), objectTypeDefinition, extendedInterfaces, selfInterface, generatorContext);
-            return objectGenerator.generate();
+                    typeDefinition.name(),
+                    PackageType.TYPES,
+                    objectTypeDefinition,
+                    extendedInterfaces,
+                    selfInterface,
+                    generatorContext);
+            GeneratedObject generatedObject = objectGenerator.generate();
+            modelGeneratorResultBuilder.addObjects(generatedObject);
+            return null;
         }
 
         @Override
-        public GeneratedFile visitUnion(UnionTypeDefinition unionTypeDefinition) {
+        public Void visitUnion(UnionTypeDefinition unionTypeDefinition) {
             UnionGenerator unionGenerator =
-                    new UnionGenerator(typeDefinition.name(), unionTypeDefinition, generatorContext);
-            return unionGenerator.generate();
+                    new UnionGenerator(typeDefinition.name(), PackageType.TYPES, unionTypeDefinition, generatorContext);
+            GeneratedUnion generatedUnion = unionGenerator.generate();
+            modelGeneratorResultBuilder.addUnions(generatedUnion);
+            return null;
         }
 
         @Override
-        public GeneratedFile visitAlias(AliasTypeDefinition aliasTypeDefinition) {
+        public Void visitAlias(AliasTypeDefinition aliasTypeDefinition) {
             AliasGenerator aliasGenerator =
-                    new AliasGenerator(aliasTypeDefinition, typeDefinition.name(), generatorContext);
-            return aliasGenerator.generate();
+                    new AliasGenerator(aliasTypeDefinition, PackageType.TYPES, typeDefinition.name(), generatorContext);
+            GeneratedAlias generatedAlias = aliasGenerator.generate();
+            modelGeneratorResultBuilder.addAliases(generatedAlias);
+            return null;
         }
 
         @Override
-        public GeneratedFile visitEnum(EnumTypeDefinition enumTypeDefinition) {
+        public Void visitEnum(EnumTypeDefinition enumTypeDefinition) {
             EnumGenerator enumGenerator =
-                    new EnumGenerator(typeDefinition.name(), enumTypeDefinition, generatorContext);
-            return enumGenerator.generate();
+                    new EnumGenerator(typeDefinition.name(), PackageType.TYPES, enumTypeDefinition, generatorContext);
+            GeneratedEnum generatedEnum = enumGenerator.generate();
+            modelGeneratorResultBuilder.addEnums(generatedEnum);
+            return null;
         }
 
         @Override
-        public GeneratedFile visitUnknown(String unknownType) {
+        public Void visitUnknown(String unknownType) {
             throw new RuntimeException("Encountered unknown Type: " + unknownType);
         }
     }

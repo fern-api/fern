@@ -1,14 +1,18 @@
+plugins {
+    id 'java-library-distribution'
+}
+
 dependencies {
     implementation project(':fern-codegen-utils')
+    implementation project(':fern-model-codegen')
+    implementation project(':fern-jersey-codegen')
+    implementation 'net.sourceforge.argparse4j:argparse4j'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
     implementation 'com.fern:fern-api-model'
+    implementation 'org.immutables:value::annotations'
     implementation 'com.fern:fern-immutables-style'
     implementation 'com.squareup:javapoet'
-    implementation 'org.slf4j:slf4j-api'
-    implementation 'org.apache.commons:commons-lang3'
-    implementation 'com.google.code.findbugs:annotations'
-    implementation 'com.palantir.common:streams'
-    implementation 'org.immutables:value::annotations'
-    implementation 'com.fasterxml.jackson.core:jackson-databind'
 
     annotationProcessor 'org.immutables:value'
 
@@ -19,11 +23,11 @@ dependencies {
     testImplementation 'org.mockito:mockito-junit-jupiter'
 }
 
-//distributions {
-//    main {
-//        distributionBaseName = project.name + "-" + rootProject.version
-//    }
-//}
+distributions {
+    main {
+        distributionBaseName = project.name + "-" + rootProject.version
+    }
+}
 
 
 publishing {
@@ -31,9 +35,6 @@ publishing {
         mavenJava(MavenPublication) {
             from components.java
         }
-//        myDistribution(MavenPublication) {
-//            artifact distZip
-//        }
     }
 }
 

@@ -1,17 +1,15 @@
 package com.fern.model.codegen;
 
-import com.fern.model.codegen.config.PluginConfig;
+import com.fern.codegen.GeneratorContext;
 import java.util.Collections;
+import java.util.Optional;
 
 public final class TestConstants {
 
-    public static final PluginConfig PLUGIN_CONFIG = PluginConfig.builder()
-            .modelSubprojectDirectoryName("build/fern/model")
-            .packagePrefix("com")
-            .build();
+    public static final String PACKAGE_PREFIX = "com";
 
     public static final GeneratorContext GENERATOR_CONTEXT =
-            new GeneratorContext(PLUGIN_CONFIG, Collections.emptyMap());
+            new GeneratorContext(Optional.of(PACKAGE_PREFIX), Collections.emptyMap());
 
     private TestConstants() {
     }
