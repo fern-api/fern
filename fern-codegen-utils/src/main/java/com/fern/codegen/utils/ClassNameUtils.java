@@ -55,6 +55,7 @@ public final class ClassNameUtils {
                 } else {
                     camelCaseNameBuilder.append(name.charAt(i));
                 }
+                shouldCapitalize = false;
             }
         }
         String camelCasedClassName = camelCaseNameBuilder.toString();
