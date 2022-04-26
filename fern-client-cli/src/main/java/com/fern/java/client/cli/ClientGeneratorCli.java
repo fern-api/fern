@@ -6,6 +6,7 @@ import com.fern.IntermediateRepresentation;
 import com.fern.codegen.GeneratedFile;
 import com.fern.codegen.GeneratedHttpService;
 import com.fern.codegen.GeneratorContext;
+import com.fern.codegen.utils.ClassNameUtils;
 import com.fern.model.codegen.ImmutablesStyleGenerator;
 import com.fern.model.codegen.ModelGenerator;
 import com.fern.model.codegen.ModelGeneratorResult;
@@ -34,7 +35,7 @@ public final class ClientGeneratorCli {
     private static final String PROGRAM_NAME = "Fern Java Model Generator Plugin";
     private static final String IR_ARG_NAME = "ir";
     private static final String OUTPUT_DIRECTORY_ARG_NAME = "output";
-    private static final String PACKAGE_PREFIX_ARG_NAME = "package-prefix";
+    private static final String PACKAGE_PREFIX_ARG_NAME = "package_prefix";
 
     private static final String SRC_GENERATED_JAVA = "src/generated/java";
 
@@ -74,7 +75,10 @@ public final class ClientGeneratorCli {
     private static void generate(IntermediateRepresentation ir, PluginConfig pluginConfig) {
         Map<NamedType, TypeDefinition> typeDefinitionsByName =
                 ir.types().stream().collect(Collectors.toUnmodifiableMap(TypeDefinition::name, Function.identity()));
-        GeneratorContext generatorContext = new GeneratorContext(pluginConfig.packagePrefix(), typeDefinitionsByName);
+        GeneratedFile generatedStagedBuilder = ImmutablesStyleGenerator.generateStagedBuilderImmutablesStyle(
+                new ClassNameUtils(pluginConfig.packagePrefix()));
+        GeneratorContext generatorContext =
+                new GeneratorContext(pluginConfig.packagePrefix(), typeDefinitionsByName, generatedStagedBuilder);
         ModelGenerator modelGenerator = new ModelGenerator(ir.types(), generatorContext);
         ModelGeneratorResult modelGeneratorResult = modelGenerator.generate();
         GeneratedFile generatedObjectMapper =
@@ -92,8 +96,7 @@ public final class ClientGeneratorCli {
         generatedFiles.addAll(modelGeneratorResult.interfaces().values());
         generatedFiles.addAll(modelGeneratorResult.objects());
         generatedFiles.addAll(modelGeneratorResult.unions());
-        generatedFiles.add(
-                ImmutablesStyleGenerator.generateStagedBuilderImmutablesStyle(generatorContext.getClassNameUtils()));
+        generatedFiles.add(generatedStagedBuilder);
         generatedHttpServices.forEach(generatedHttpService -> {
             generatedFiles.add(generatedHttpService);
             generatedFiles.addAll(generatedHttpService.generatedWireMessages());

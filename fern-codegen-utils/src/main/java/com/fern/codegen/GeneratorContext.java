@@ -17,13 +17,15 @@ public final class GeneratorContext {
     private final Map<NamedType, TypeDefinition> typeDefinitionsByName;
     private final GeneratedFile stagedImmutablesFile;
 
-    public GeneratorContext(Optional<String> packagePrefix, Map<NamedType, TypeDefinition> typeDefinitionsByName) {
+    public GeneratorContext(
+            Optional<String> packagePrefix,
+            Map<NamedType, TypeDefinition> typeDefinitionsByName,
+            GeneratedFile stagedImmutablesFile) {
         this.classNameUtils = new ClassNameUtils(packagePrefix);
         this.immutablesUtils = new ImmutablesUtils(classNameUtils);
         this.visitorUtils = new VisitorUtils();
         this.typeDefinitionsByName = typeDefinitionsByName;
-        this.stagedImmutablesFile = null;
-        // this.stagedImmutablesFile = ImmutablesStyleGenerator.generateStagedBuilderImmutablesStyle(classNameUtils);
+        this.stagedImmutablesFile = stagedImmutablesFile;
     }
 
     public ClassNameUtils getClassNameUtils() {

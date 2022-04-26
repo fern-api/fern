@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import org.apache.commons.text.CaseUtils;
 
 public final class ClassNameUtils {
 
@@ -43,7 +42,22 @@ public final class ClassNameUtils {
     }
 
     private static String getCompatibleClassName(String name) {
-        String camelCasedClassName = CaseUtils.toCamelCase(name, true, ' ', '_');
+        StringBuilder camelCaseNameBuilder = new StringBuilder();
+        boolean shouldCapitalize = false;
+        for (int i = 0; i < name.length(); ++i) {
+            if (i == 0) {
+                camelCaseNameBuilder.append(Character.toUpperCase(name.charAt(i)));
+            } else if (name.charAt(i) == '_') {
+                shouldCapitalize = true;
+            } else {
+                if (shouldCapitalize) {
+                    camelCaseNameBuilder.append(Character.toUpperCase(name.charAt(i)));
+                } else {
+                    camelCaseNameBuilder.append(name.charAt(i));
+                }
+            }
+        }
+        String camelCasedClassName = camelCaseNameBuilder.toString();
         return KeyWordUtils.getKeyWordCompatibleName(camelCasedClassName);
     }
 
