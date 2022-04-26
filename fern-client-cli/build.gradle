@@ -29,11 +29,13 @@ distributions {
     }
 }
 
-
 publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
+        }
+        myDistribution(MavenPublication) {
+            artifact distZip
         }
     }
 }

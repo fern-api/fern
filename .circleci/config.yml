@@ -89,7 +89,7 @@ jobs:
             sudo ln -s /opt/java/zulu*/ /opt/java11
       - run:
           command: ./gradlew artifactoryPublish
-          name: Publish conjure json file
+          name: Publish
 
 workflows:
   version: 2

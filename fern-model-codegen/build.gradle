@@ -18,25 +18,3 @@ dependencies {
     testImplementation 'org.mockito:mockito-core'
     testImplementation 'org.mockito:mockito-junit-jupiter'
 }
-
-//distributions {
-//    main {
-//        distributionBaseName = project.name + "-" + rootProject.version
-//    }
-//}
-
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-        }
-//        myDistribution(MavenPublication) {
-//            artifact distZip
-//        }
-    }
-}
-
-artifactoryPublish {
-    publications('mavenJava', 'myDistribution')
-}
