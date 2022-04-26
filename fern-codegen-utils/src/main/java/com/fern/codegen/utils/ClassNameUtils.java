@@ -48,6 +48,7 @@ public final class ClassNameUtils {
             if (i == 0) {
                 camelCaseNameBuilder.append(Character.toUpperCase(name.charAt(i)));
             } else if (name.charAt(i) == '_') {
+                camelCaseNameBuilder.append(Character.toUpperCase(name.charAt(i)));
                 shouldCapitalize = true;
             } else {
                 if (shouldCapitalize) {
