@@ -152,7 +152,7 @@ public final class HttpServiceGenerator extends Generator {
                                 JacksonEncoder.class,
                                 generatedObjectMapper.className(),
                                 ObjectMapperGenerator.JSON_MAPPER_FIELD_NAME)
-                        .add(".target($T, $L);", generatedServiceClassName, "url")
+                        .add(".target($T.class, $L);", generatedServiceClassName, "url")
                         .unindent()
                         .unindent()
                         .build())

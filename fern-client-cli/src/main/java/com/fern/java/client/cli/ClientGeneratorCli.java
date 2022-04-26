@@ -96,6 +96,7 @@ public final class ClientGeneratorCli {
         generatedFiles.addAll(modelGeneratorResult.interfaces().values());
         generatedFiles.addAll(modelGeneratorResult.objects());
         generatedFiles.addAll(modelGeneratorResult.unions());
+        generatedFiles.add(generatedObjectMapper);
         generatedFiles.add(generatedStagedBuilder);
         generatedHttpServices.forEach(generatedHttpService -> {
             generatedFiles.add(generatedHttpService);

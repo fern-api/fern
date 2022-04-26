@@ -16,7 +16,7 @@ import javax.lang.model.element.Modifier;
 
 public final class ObjectMapperGenerator {
 
-    public static final String OBJECT_MAPPERS_CLASS_NAME = "OBJECT_MAPPERS";
+    public static final String OBJECT_MAPPERS_CLASS_NAME = "ObjectMappers";
     public static final String JSON_MAPPER_FIELD_NAME = "JSON_MAPPER";
 
     private ObjectMapperGenerator() {}
