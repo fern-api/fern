@@ -33,11 +33,11 @@ public final class ObjectMapperGenerator {
                                 Modifier.STATIC,
                                 Modifier.FINAL)
                         .initializer(CodeBlock.builder()
-                                .add("return $T.builder()\n", JsonMapper.class)
+                                .add("$T.builder()\n", JsonMapper.class)
                                 .indent()
                                 .indent()
                                 .add(".addModule(new $T())\n", Jdk8Module.class)
-                                .add(".build();")
+                                .add(".build()")
                                 .unindent()
                                 .unindent()
                                 .build())
