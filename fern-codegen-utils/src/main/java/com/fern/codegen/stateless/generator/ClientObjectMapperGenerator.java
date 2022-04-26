@@ -1,8 +1,9 @@
-package com.fern.codegen;
+package com.fern.codegen.stateless.generator;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fern.codegen.GeneratedFile;
 import com.fern.codegen.utils.ClassNameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
@@ -21,9 +22,9 @@ public final class ClientObjectMapperGenerator {
     private ClientObjectMapperGenerator() {}
 
     public static GeneratedFile generateObjectMappersClass(ClassNameUtils classNameUtils) {
-        ClassName stagedBuilderClassName =
+        ClassName objectMappersClassName =
                 classNameUtils.getClassName(OBJECT_MAPPERS_CLASS_NAME, Optional.empty(), Optional.empty());
-        TypeSpec stagedBuilderTypeSpec = TypeSpec.classBuilder(stagedBuilderClassName)
+        TypeSpec objectMappersTypeSpec = TypeSpec.classBuilder(objectMappersClassName)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addField(FieldSpec.builder(
                                 ObjectMapper.class,
@@ -45,11 +46,11 @@ public final class ClientObjectMapperGenerator {
                         .addModifiers(Modifier.PRIVATE)
                         .build())
                 .build();
-        JavaFile stagedBuilderFile = JavaFile.builder(stagedBuilderClassName.packageName(), stagedBuilderTypeSpec)
+        JavaFile objectMappersFile = JavaFile.builder(objectMappersClassName.packageName(), objectMappersTypeSpec)
                 .build();
         return GeneratedFile.builder()
-                .file(stagedBuilderFile)
-                .className(stagedBuilderClassName)
+                .file(objectMappersFile)
+                .className(objectMappersClassName)
                 .build();
     }
 }

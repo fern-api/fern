@@ -90,6 +90,8 @@ public final class ClientGeneratorCli {
         generatedFiles.addAll(modelGeneratorResult.unions());
         generatedFiles.add(generatorContext.getClientObjectMappersFile());
         generatedFiles.add(generatorContext.getStagedImmutablesFile());
+        generatedFiles.add(generatorContext.getPackagePrivateImmutablesFile());
+        generatedFiles.add(generatorContext.getAuthHeaderFile());
         generatedHttpServices.forEach(generatedHttpService -> {
             generatedFiles.add(generatedHttpService);
             generatedFiles.addAll(generatedHttpService.generatedWireMessages());

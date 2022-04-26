@@ -1,10 +1,10 @@
 package com.fern.services.jersey.codegen;
 
-import com.fern.codegen.ClientObjectMapperGenerator;
 import com.fern.codegen.GeneratedHttpService;
 import com.fern.codegen.GeneratedInterface;
 import com.fern.codegen.GeneratedWireMessage;
 import com.fern.codegen.GeneratorContext;
+import com.fern.codegen.stateless.generator.ClientObjectMapperGenerator;
 import com.fern.codegen.utils.ClassNameUtils;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.model.codegen.Generator;
@@ -50,6 +50,7 @@ import org.apache.commons.lang3.StringUtils;
 public final class HttpServiceGenerator extends Generator {
 
     private static final String GET_CLIENT_METHOD_NAME = "getClient";
+    private static final String AUTHORIZATION_HEADER_NAME = "Authorization";
 
     private final HttpService httpService;
     private final Map<NamedType, GeneratedInterface> generatedInterfaces;
@@ -106,6 +107,12 @@ public final class HttpServiceGenerator extends Generator {
                         .addMember("value", "$S", httpEndpoint.path())
                         .build())
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT);
+        endpointMethodBuilder.addParameter(
+                ParameterSpec.builder(generatorContext.getAuthHeaderFile().className(), "authHeader")
+                        .addAnnotation(AnnotationSpec.builder(HeaderParam.class)
+                                .addMember("value", "$S", AUTHORIZATION_HEADER_NAME)
+                                .build())
+                        .build());
         httpEndpoint.headers().stream().map(this::getHeaderParameterSpec).forEach(endpointMethodBuilder::addParameter);
         httpEndpoint.parameters().stream().map(this::getPathParameterSpec).forEach(endpointMethodBuilder::addParameter);
         httpEndpoint.queryParameters().stream()

@@ -1,5 +1,8 @@
 package com.fern.codegen;
 
+import com.fern.codegen.stateless.generator.AuthHeaderGenerator;
+import com.fern.codegen.stateless.generator.ClientObjectMapperGenerator;
+import com.fern.codegen.stateless.generator.ImmutablesStyleGenerator;
 import com.fern.codegen.utils.ClassNameUtils;
 import com.fern.codegen.utils.ImmutablesUtils;
 import com.fern.codegen.utils.VisitorUtils;
@@ -16,6 +19,8 @@ public final class GeneratorContext {
     private final Map<NamedType, TypeDefinition> typeDefinitionsByName;
     private final GeneratedFile stagedImmutablesFile;
     private final GeneratedFile clientObjectMappersFile;
+    private final GeneratedFile packagePrivateImmutablesFile;
+    private final GeneratedFile authHeaderFile;
 
     public GeneratorContext(Optional<String> packagePrefix, Map<NamedType, TypeDefinition> typeDefinitionsByName) {
         this.classNameUtils = new ClassNameUtils(packagePrefix);
@@ -23,7 +28,11 @@ public final class GeneratorContext {
         this.visitorUtils = new VisitorUtils();
         this.typeDefinitionsByName = typeDefinitionsByName;
         this.stagedImmutablesFile = ImmutablesStyleGenerator.generateStagedBuilderImmutablesStyle(classNameUtils);
+        this.packagePrivateImmutablesFile =
+                ImmutablesStyleGenerator.generatePackagePrivateImmutablesStyle(classNameUtils);
         this.clientObjectMappersFile = ClientObjectMapperGenerator.generateObjectMappersClass(classNameUtils);
+        this.authHeaderFile = AuthHeaderGenerator.generateAuthHeaderClass(
+                classNameUtils, immutablesUtils, packagePrivateImmutablesFile.className());
     }
 
     public ClassNameUtils getClassNameUtils() {
@@ -48,5 +57,13 @@ public final class GeneratorContext {
 
     public GeneratedFile getClientObjectMappersFile() {
         return clientObjectMappersFile;
+    }
+
+    public GeneratedFile getPackagePrivateImmutablesFile() {
+        return packagePrivateImmutablesFile;
+    }
+
+    public GeneratedFile getAuthHeaderFile() {
+        return authHeaderFile;
     }
 }
