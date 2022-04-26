@@ -1,6 +1,7 @@
 package com.fern.model.codegen;
 
 import com.fern.codegen.GeneratedFile;
+import com.fern.codegen.ImmutablesStyleGenerator;
 import com.fern.codegen.utils.ClassNameUtils;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;

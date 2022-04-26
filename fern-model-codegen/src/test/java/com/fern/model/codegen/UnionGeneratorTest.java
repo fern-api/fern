@@ -2,7 +2,6 @@ package com.fern.model.codegen;
 
 import com.fern.codegen.GeneratedUnion;
 import com.fern.codegen.GeneratorContext;
-import com.fern.codegen.utils.ClassNameUtils;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.types.ContainerType;
 import com.types.FernFilepath;
@@ -60,9 +59,7 @@ public class UnionGeneratorTest {
                 .build();
         GeneratorContext generatorContext = new GeneratorContext(
                 Optional.of(TestConstants.PACKAGE_PREFIX),
-                Collections.singletonMap(variableValueTypeDefinition.name(), variableValueTypeDefinition),
-                ImmutablesStyleGenerator.generateStagedBuilderImmutablesStyle(
-                        new ClassNameUtils(Optional.of(TestConstants.PACKAGE_PREFIX))));
+                Collections.singletonMap(variableValueTypeDefinition.name(), variableValueTypeDefinition));
         UnionGenerator unionGenerator = new UnionGenerator(
                 variableValueTypeDefinition.name(),
                 PackageType.TYPES,
@@ -97,9 +94,7 @@ public class UnionGeneratorTest {
                 .shape(Type.union(unionTypeDefinition))
                 .build();
         GeneratorContext generatorContext = new GeneratorContext(Optional.of(TestConstants.PACKAGE_PREFIX),
-                Collections.singletonMap(variableValueTypeDefinition.name(), variableValueTypeDefinition),
-                ImmutablesStyleGenerator.generateStagedBuilderImmutablesStyle(
-                        new ClassNameUtils(Optional.of(TestConstants.PACKAGE_PREFIX))));
+                Collections.singletonMap(variableValueTypeDefinition.name(), variableValueTypeDefinition));
         UnionGenerator unionGenerator = new UnionGenerator(
                 variableValueTypeDefinition.name(),
                 PackageType.TYPES,

@@ -1,6 +1,5 @@
-package com.fern.model.codegen;
+package com.fern.codegen;
 
-import com.fern.codegen.GeneratedFile;
 import com.fern.codegen.utils.ClassNameUtils;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;

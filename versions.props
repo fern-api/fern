@@ -28,8 +28,10 @@ com.google.errorprone:error_prone_* = 2.12.1
 # guava
 com.google.guava:guava = 31.1-jre
 
+# feign
+io.github.openfeign:* = 11.8
+
 # misc
-org.apache.commons:commons-text = 1.9
 com.google.code.findbugs:annotations = 3.0.1
 com.palantir.common:streams = 2.0.0
 net.sourceforge.argparse4j:argparse4j = 0.9.0

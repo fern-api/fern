@@ -5,8 +5,7 @@ dependencies {
     implementation 'org.apache.commons:commons-lang3'
     implementation 'com.google.code.findbugs:annotations'
     implementation 'com.fern:fern-immutables-style'
-    implementation 'com.google.guava:guava'
-    implementation 'org.apache.commons:commons-text:1.9'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
 
     compileOnly 'org.immutables:value::annotations'
     annotationProcessor 'org.immutables:value'

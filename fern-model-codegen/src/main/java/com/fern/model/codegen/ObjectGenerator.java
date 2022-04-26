@@ -85,7 +85,8 @@ public final class ObjectGenerator extends Generator {
     private List<AnnotationSpec> getAnnotations() {
         List<AnnotationSpec> annotationSpecs = new ArrayList<>();
         annotationSpecs.add(AnnotationSpec.builder(Value.Immutable.class).build());
-        annotationSpecs.add(AnnotationSpec.builder(generatorContext.getStagedImmutablesBuilderClassname())
+        annotationSpecs.add(AnnotationSpec.builder(
+                        generatorContext.getStagedImmutablesFile().className())
                 .build());
         annotationSpecs.add(AnnotationSpec.builder(JsonDeserialize.class)
                 .addMember("as", "$T.class", generatedObjectImmutablesClassName)

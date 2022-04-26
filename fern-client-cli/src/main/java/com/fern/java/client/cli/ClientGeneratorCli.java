@@ -6,12 +6,9 @@ import com.fern.IntermediateRepresentation;
 import com.fern.codegen.GeneratedFile;
 import com.fern.codegen.GeneratedHttpService;
 import com.fern.codegen.GeneratorContext;
-import com.fern.codegen.utils.ClassNameUtils;
-import com.fern.model.codegen.ImmutablesStyleGenerator;
 import com.fern.model.codegen.ModelGenerator;
 import com.fern.model.codegen.ModelGeneratorResult;
 import com.fern.services.jersey.codegen.HttpServiceGenerator;
-import com.fern.services.jersey.codegen.ObjectMapperGenerator;
 import com.squareup.javapoet.JavaFile;
 import com.types.NamedType;
 import com.types.TypeDefinition;
@@ -75,18 +72,13 @@ public final class ClientGeneratorCli {
     private static void generate(IntermediateRepresentation ir, PluginConfig pluginConfig) {
         Map<NamedType, TypeDefinition> typeDefinitionsByName =
                 ir.types().stream().collect(Collectors.toUnmodifiableMap(TypeDefinition::name, Function.identity()));
-        GeneratedFile generatedStagedBuilder = ImmutablesStyleGenerator.generateStagedBuilderImmutablesStyle(
-                new ClassNameUtils(pluginConfig.packagePrefix()));
-        GeneratorContext generatorContext =
-                new GeneratorContext(pluginConfig.packagePrefix(), typeDefinitionsByName, generatedStagedBuilder);
+        GeneratorContext generatorContext = new GeneratorContext(pluginConfig.packagePrefix(), typeDefinitionsByName);
         ModelGenerator modelGenerator = new ModelGenerator(ir.types(), generatorContext);
         ModelGeneratorResult modelGeneratorResult = modelGenerator.generate();
-        GeneratedFile generatedObjectMapper =
-                ObjectMapperGenerator.generateObjectMappersClass(generatorContext.getClassNameUtils());
         List<GeneratedHttpService> generatedHttpServices = ir.services().http().stream()
                 .map(httpService -> {
-                    HttpServiceGenerator httpServiceGenerator = new HttpServiceGenerator(
-                            generatorContext, modelGeneratorResult.interfaces(), httpService, generatedObjectMapper);
+                    HttpServiceGenerator httpServiceGenerator =
+                            new HttpServiceGenerator(generatorContext, modelGeneratorResult.interfaces(), httpService);
                     return httpServiceGenerator.generate();
                 })
                 .collect(Collectors.toList());
@@ -96,8 +88,8 @@ public final class ClientGeneratorCli {
         generatedFiles.addAll(modelGeneratorResult.interfaces().values());
         generatedFiles.addAll(modelGeneratorResult.objects());
         generatedFiles.addAll(modelGeneratorResult.unions());
-        generatedFiles.add(generatedObjectMapper);
-        generatedFiles.add(generatedStagedBuilder);
+        generatedFiles.add(generatorContext.getClientObjectMappersFile());
+        generatedFiles.add(generatorContext.getStagedImmutablesFile());
         generatedHttpServices.forEach(generatedHttpService -> {
             generatedFiles.add(generatedHttpService);
             generatedFiles.addAll(generatedHttpService.generatedWireMessages());

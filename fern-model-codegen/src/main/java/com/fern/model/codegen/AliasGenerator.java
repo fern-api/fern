@@ -73,7 +73,8 @@ public final class AliasGenerator extends Generator {
     private List<AnnotationSpec> getAnnotationSpecs() {
         return List.of(
                 AnnotationSpec.builder(Value.Immutable.class).build(),
-                AnnotationSpec.builder(generatorContext.getStagedImmutablesBuilderClassname())
+                AnnotationSpec.builder(
+                                generatorContext.getStagedImmutablesFile().className())
                         .build(),
                 AnnotationSpec.builder(JsonDeserialize.class)
                         .addMember("as", "$T.class", generatedAliasImmutablesClassName)

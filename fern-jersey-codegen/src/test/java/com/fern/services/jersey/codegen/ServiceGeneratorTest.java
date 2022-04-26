@@ -1,10 +1,7 @@
 package com.fern.services.jersey.codegen;
 
-import com.fern.codegen.GeneratedFile;
 import com.fern.codegen.GeneratedHttpService;
 import com.fern.codegen.GeneratorContext;
-import com.fern.codegen.utils.ClassNameUtils;
-import com.fern.model.codegen.ImmutablesStyleGenerator;
 import com.services.commons.ResponseErrors;
 import com.services.commons.WireMessage;
 import com.services.http.HttpEndpoint;
@@ -26,9 +23,7 @@ public final class ServiceGeneratorTest {
     private static final String PACKAGE_PREFIX = "com";
     private static final GeneratorContext GENERATOR_CONTEXT = new GeneratorContext(
             Optional.of(PACKAGE_PREFIX),
-            Collections.emptyMap(),
-            ImmutablesStyleGenerator.generateStagedBuilderImmutablesStyle(
-                    new ClassNameUtils(Optional.of(PACKAGE_PREFIX))));
+            Collections.emptyMap());
 
     @Test
     public void test_basic() {
@@ -68,10 +63,8 @@ public final class ServiceGeneratorTest {
                                 .build())
                         .build())
                 .build();
-        ClassNameUtils classNameUtils = new ClassNameUtils(Optional.of(PACKAGE_PREFIX));
-        GeneratedFile generatedObjectMapperClass = ObjectMapperGenerator.generateObjectMappersClass(classNameUtils);
-        HttpServiceGenerator httpServiceGenerator = new HttpServiceGenerator(GENERATOR_CONTEXT,
-                Collections.emptyMap(), testHttpService, generatedObjectMapperClass);
+        HttpServiceGenerator httpServiceGenerator = new HttpServiceGenerator(
+                GENERATOR_CONTEXT, Collections.emptyMap(), testHttpService);
         GeneratedHttpService generatedHttpService = httpServiceGenerator.generate();
         System.out.println(generatedHttpService.file().toString());
     }
