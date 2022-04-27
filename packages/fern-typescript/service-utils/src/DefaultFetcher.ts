@@ -1,15 +1,20 @@
 import { Fetcher } from "./Fetcher";
 
-export class DefaultFetcher implements Fetcher {
-    public fetch = async (args: Fetcher.Args): Promise<Fetcher.Response> => {
-        const fetchResponse = await fetch(args.url, {
-            method: args.method,
-            headers: args.headers,
-        });
+export const defaultFetcher: Fetcher = async (args) => {
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    if (args.token != null) {
+        headers.append("Authorization", `Bearer ${args.token}`);
+    }
 
-        return {
-            text: await fetchResponse.text(),
-            statusCode: fetchResponse.status,
-        };
+    const fetchResponse = await fetch(args.url, {
+        method: args.method,
+        headers: args.headers,
+        body: args.request != null ? JSON.stringify(args.request) : undefined,
+    });
+
+    return {
+        statusCode: fetchResponse.status,
+        body: await fetchResponse.json(),
     };
-}
+};

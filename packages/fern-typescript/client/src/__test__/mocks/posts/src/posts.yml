@@ -49,10 +49,7 @@ services:
           parameters:
             postId: commons.PostId
           response:
-            union:
-              a: Post
-              b: Post
-              c: Post
+            alias: string
           errors:
             union:
               notFound: PostNotFoundError

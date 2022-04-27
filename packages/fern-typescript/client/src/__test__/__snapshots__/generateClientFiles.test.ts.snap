@@ -13,8 +13,8 @@ export interface PostNotFoundError {
 ",
   "/src/errors/posts/index.ts": "export * from \\"./PostNotFoundError\\";
 ",
-  "/src/index.ts": "export * from \\"./model\\";
-export * from \\"./errors\\";
+  "/src/index.ts": "export * from \\"./errors\\";
+export * from \\"./model\\";
 export * from \\"./services\\";
 ",
   "/src/model/commons/PostId.ts": "/**
@@ -50,7 +50,7 @@ export declare namespace Author {
     export interface _Visitor<Result> {
         anonymous: () => Result;
         named: (value: string) => Result;
-        unknown: () => Result;
+        _unknown: () => Result;
     }
 }
 
@@ -68,7 +68,7 @@ export const Author = {
         switch (value._type) {
             case \\"anonymous\\": return visitor.anonymous();
             case \\"named\\": return visitor.named(value.named);
-            default: return visitor.unknown();
+            default: return visitor._unknown();
         }
     },
 };
@@ -96,11 +96,11 @@ export const PostType = {
     Long: \\"LONG\\" as PostType.Long,
     Short: \\"SHORT\\" as PostType.Short,
 
-    visit: <Result>(value: PostType, visitor: PostType._Visitor<Result>): Result => {
+    _visit: <Result>(value: PostType, visitor: PostType._Visitor<Result>): Result => {
         switch (value) {
             case PostType.Long: return visitor.Long();
             case PostType.Short: return visitor.Short();
-            default: return visitor.unknown(value);
+            default: return visitor._unknown();
         }
     },
 };
@@ -113,10 +113,10 @@ export declare namespace PostType {
         __Short: void,
     };
 
-    export interface _Visitor<R> {
-        Long: () => R;
-        Short: () => R;
-        unknown: (value: string) => R;
+    export interface _Visitor<Result> {
+        Long: () => Result;
+        Short: () => Result;
+        _unknown: () => Result;
     }
 }
 ",
@@ -124,89 +124,139 @@ export declare namespace PostType {
 export * from \\"./Post\\";
 export * from \\"./PostType\\";
 ",
-  "/src/services/PostsService/PostsService.ts": "import * as model from \\"../../model\\";
+  "/src/services/PostsService/PostsService.ts": "import { defaultFetcher, Fetcher, joinPaths, Service } from \\"@fern-typescript/service-utils\\";
 import * as endpoints from \\"./endpoints\\";
+import { Request } from \\"./endpoints/getPost/Request\\";
 
 export interface Client {
-    createPost: (request: endpoints.createPost.Request) => Promise<model.PostId>;
-    getPost: (postId: model.PostId) => Promise<endpoints.getPost.Response>;
+    createPost: (request: endpoints.createPost.RequestBody) => Promise<endpoints.createPost.Response>;
+    getPost: (request: Request) => Promise<endpoints.getPost.Response>;
 }
 
 export class Client implements Client {
-    public createPost = (request: endpoints.createPost.Request): Promise<model.PostId> => {
-        return Promise.reject();
+    private baseUrl: string;
+    private fetcher: Fetcher;
+
+    constructor(args: Service.Init) {
+        this.fetcher = args.fetcher ?? defaultFetcher;
+        this.baseUrl = joinPaths(args.serverUrl, args.serviceBaseUrl);
+    }
+
+    public createPost = async (request: endpoints.createPost.RequestBody): Promise<endpoints.createPost.Response> => {
+        const response = await this.fetcher({
+            url: joinPaths(this.baseUrl, \\"/\\"),
+            method: \\"POST\\",
+            headers: {},
+            request
+        });
+        if (response.statusCode >= 200 && response.statusCode < 300) {
+            return {
+                _ok: true,
+                statusCode: response.statusCode,
+                body: response.body
+            };
+        }
+        else {
+            return {
+                _ok: false,
+                statusCode: response.statusCode
+            };
+        }
     };
-    public getPost = (postId: model.PostId): Promise<endpoints.getPost.Response> => {
-        return Promise.reject();
+    public getPost = async (request: Request): Promise<endpoints.getPost.Response> => {
+        const response = await this.fetcher({
+            url: joinPaths(this.baseUrl, \\"/{postId}\\"),
+            method: \\"GET\\",
+            headers: {}
+        });
+        if (response.statusCode >= 200 && response.statusCode < 300) {
+            return {
+                _ok: true,
+                statusCode: response.statusCode,
+                body: response.body
+            };
+        }
+        else {
+            return {
+                _ok: false,
+                statusCode: response.statusCode,
+                error: response.body
+            };
+        }
     };
 }
 ",
-  "/src/services/PostsService/endpoints/createPost/Request.ts": "import * as model from \\"../../../../model\\";
+  "/src/services/PostsService/endpoints/createPost/RequestBody.ts": "import * as model from \\"../../../../model\\";
 
-export interface Request {
+export interface RequestBody {
     type: model.PostType;
     title: string;
     author: model.Author;
     content: string;
 }
 ",
-  "/src/services/PostsService/endpoints/createPost/index.ts": "export * from \\"./Request\\";
-",
-  "/src/services/PostsService/endpoints/getPost/Response.ts": "import * as model from \\"../../../../model\\";
+  "/src/services/PostsService/endpoints/createPost/Response.ts": "import * as model from \\"../../../../model\\";
 
-export type Response =
-    | Response.A
-    | Response.B
-    | Response.C;
+export type Response = SuccessResponse | ErrorResponse;
 
-export declare namespace Response {
-    interface A extends model.Post {
-        _type: \\"a\\";
-    }
-
-    interface B extends model.Post {
-        _type: \\"b\\";
-    }
-
-    interface C extends model.Post {
-        _type: \\"c\\";
-    }
-
-    export interface _Visitor<Result> {
-        a: (value: model.Post) => Result;
-        b: (value: model.Post) => Result;
-        c: (value: model.Post) => Result;
-        unknown: () => Result;
-    }
+export interface SuccessResponse {
+    _ok: true;
+    statusCode: number;
+    body: model.PostId;
 }
 
-export const Response = {
-    a: (value: model.Post): Response.A => ({
-        ...value,
-        _type: \\"a\\"
-    }),
-
-    b: (value: model.Post): Response.B => ({
-        ...value,
-        _type: \\"b\\"
-    }),
-
-    c: (value: model.Post): Response.C => ({
-        ...value,
-        _type: \\"c\\"
-    }),
-
-    _visit: <Result>(value: Response, visitor: Response._Visitor<Result>): Result => {
-        switch (value._type) {
-            case \\"a\\": return visitor.a(value);
-            case \\"b\\": return visitor.b(value);
-            case \\"c\\": return visitor.c(value);
-            default: return visitor.unknown();
-        }
-    },
-};
+export interface ErrorResponse {
+    _ok: false;
+    statusCode: number;
+}
 ",
-  "/src/services/PostsService/endpoints/getPost/index.ts": "export * from \\"./Response\\";
+  "/src/services/PostsService/endpoints/createPost/index.ts": "export * from \\"./RequestBody\\";
+export * from \\"./Response\\";
+",
+  "/src/services/PostsService/endpoints/getPost/ErrorBody.ts": "import * as model from \\"../../../../errors\\";
+
+export type ErrorBody =
+    | model.PostNotFoundError;
+
+export const _visit = <Result>(value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+    switch (value._type) {
+        case \\"PostNotFoundError\\": return visitor.notFound(value);
+        default: return visitor._unknown();
+    }
+};
+
+export declare namespace ErrorBody {
+    export interface _Visitor<Result> {
+        notFound: (value: model.PostNotFoundError) => Result;
+        _unknown: () => Result;
+    }
+}
+",
+  "/src/services/PostsService/endpoints/getPost/Request.ts": "import * as model from \\"../../../../model\\";
+
+export interface Request {
+    postId: model.PostId;
+}
+",
+  "/src/services/PostsService/endpoints/getPost/Response.ts": "import { ErrorBody } from \\"./ErrorBody\\";
+
+export type Response = SuccessResponse | ErrorResponse;
+
+export interface SuccessResponse {
+    _ok: true;
+    statusCode: number;
+    body: string;
+}
+
+export interface ErrorResponse {
+    _ok: false;
+    statusCode: number;
+    error: ErrorBody;
+}
+",
+  "/src/services/PostsService/endpoints/getPost/index.ts": "export * from \\"./ErrorBody\\";
+export * from \\"./Request\\";
+export * from \\"./Response\\";
 ",
   "/src/services/PostsService/endpoints/index.ts": "export * as createPost from \\"./createPost\\";
 export * as getPost from \\"./getPost\\";

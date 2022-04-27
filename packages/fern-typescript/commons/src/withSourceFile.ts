@@ -11,7 +11,7 @@ export function withSourceFile(
     { directory, filepath }: withSourceFile.Args,
     addFileContents: (file: SourceFile) => void
 ): void {
-    const file = directory.createSourceFile(filepath);
+    const file = directory.getSourceFile(filepath) ?? directory.createSourceFile(filepath);
     addFileContents(file);
     file.formatText();
     file.organizeImports();

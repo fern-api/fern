@@ -1,17 +1,20 @@
 import { HttpService } from "@fern-api/api";
-import { withDirectory, withSourceFile } from "@fern-typescript/commons";
+import { getTextOfTsKeyword, getTextOfTsNode, withDirectory, withSourceFile } from "@fern-typescript/commons";
 import { TypeResolver } from "@fern-typescript/model";
-import { Directory } from "ts-morph";
-import { addEndpointToService } from "./addEndpointToService";
+import { ClassDeclaration, Directory, Scope, ts } from "ts-morph";
+import { addEndpointToService } from "./endpoints/addEndpointToService";
+import { generateJoinPathsCall } from "./utils/generateJoinPathsCall";
 
 export function generateHttpService({
     servicesDirectory,
     modelDirectory,
+    errorsDirectory,
     service,
     typeResolver,
 }: {
     servicesDirectory: Directory;
     modelDirectory: Directory;
+    errorsDirectory: Directory;
     service: HttpService;
     typeResolver: TypeResolver;
 }): void {
@@ -22,30 +25,28 @@ export function generateHttpService({
             namespaceExport: service.name.name,
         },
         (serviceDirectory) => {
-            withDirectory(
-                {
-                    containingModule: serviceDirectory,
-                    name: "endpoints",
-                    namespaceExport: "Endpoints",
-                },
-                (endpointsDirectory) => {
-                    generateService({ service, serviceDirectory, modelDirectory, endpointsDirectory, typeResolver });
-                }
-            );
+            generateService({
+                service,
+                serviceDirectory,
+                modelDirectory,
+                errorsDirectory,
+                typeResolver,
+            });
         }
     );
 }
+
 function generateService({
     service,
     serviceDirectory,
     modelDirectory,
-    endpointsDirectory,
+    errorsDirectory,
     typeResolver,
 }: {
     service: HttpService;
     serviceDirectory: Directory;
     modelDirectory: Directory;
-    endpointsDirectory: Directory;
+    errorsDirectory: Directory;
     typeResolver: TypeResolver;
 }) {
     withSourceFile(
@@ -65,17 +66,101 @@ function generateService({
                 isExported: true,
             });
 
+            serviceClass.addProperty({
+                name: "baseUrl",
+                scope: Scope.Private,
+                type: getTextOfTsKeyword(ts.SyntaxKind.StringKeyword),
+            });
+
+            serviceClass.addProperty({
+                name: "fetcher",
+                scope: Scope.Private,
+                type: getTextOfTsNode(ts.factory.createIdentifier("Fetcher")),
+            });
+
+            addConstructor(serviceClass);
+
             for (const endpoint of service.endpoints) {
                 addEndpointToService({
                     endpoint,
-                    serviceFile,
                     serviceInterface,
                     serviceClass,
                     modelDirectory,
-                    endpointsDirectory,
+                    errorsDirectory,
                     typeResolver,
                 });
             }
         }
+    );
+}
+function addConstructor(serviceClass: ClassDeclaration) {
+    serviceClass.getSourceFile().addImportDeclaration({
+        namedImports: ["Fetcher", "defaultFetcher", "Service"],
+        moduleSpecifier: "@fern-typescript/service-utils",
+    });
+
+    serviceClass.addConstructor({
+        parameters: [
+            {
+                name: "args",
+                type: getTextOfTsNode(
+                    ts.factory.createTypeReferenceNode(
+                        ts.factory.createQualifiedName(
+                            ts.factory.createIdentifier("Service"),
+                            ts.factory.createIdentifier("Init")
+                        )
+                    )
+                ),
+            },
+        ],
+        statements: [
+            getTextOfTsNode(
+                createClassMemberAssignment({
+                    member: "fetcher",
+                    initialValue: ts.factory.createBinaryExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier("args"),
+                            ts.factory.createIdentifier("fetcher")
+                        ),
+                        ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                        ts.factory.createIdentifier("defaultFetcher")
+                    ),
+                })
+            ),
+            getTextOfTsNode(
+                createClassMemberAssignment({
+                    member: "baseUrl",
+                    initialValue: generateJoinPathsCall({
+                        file: serviceClass.getSourceFile(),
+                        paths: [
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createIdentifier("args"),
+                                ts.factory.createIdentifier("serverUrl")
+                            ),
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createIdentifier("args"),
+                                ts.factory.createIdentifier("serviceBaseUrl")
+                            ),
+                        ],
+                    }),
+                })
+            ),
+        ],
+    });
+}
+
+function createClassMemberAssignment({
+    member,
+    initialValue,
+}: {
+    member: string;
+    initialValue: ts.Expression;
+}): ts.ExpressionStatement {
+    return ts.factory.createExpressionStatement(
+        ts.factory.createBinaryExpression(
+            ts.factory.createPropertyAccessExpression(ts.factory.createThis(), ts.factory.createIdentifier(member)),
+            ts.factory.createToken(ts.SyntaxKind.EqualsToken),
+            initialValue
+        )
     );
 }

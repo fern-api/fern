@@ -1,5 +1,5 @@
 import { IntermediateRepresentation } from "@fern-api/api";
-import { getFilePathForType, withDirectory, withSourceFile } from "@fern-typescript/commons";
+import { getFilePathForNamedType, withDirectory, withSourceFile } from "@fern-typescript/commons";
 import { Directory } from "ts-morph";
 import { generateType } from "./types/generateType";
 import { TypeResolver } from "./utils/TypeResolver";
@@ -15,8 +15,8 @@ export function generateModelFiles({
 }): Directory {
     return withDirectory({ containingModule: directory, name: "model" }, (modelDirectory) => {
         for (const typeDefinition of intermediateRepresentation.types) {
-            const filepath = getFilePathForType({
-                modelDirectory,
+            const filepath = getFilePathForNamedType({
+                baseDirectory: modelDirectory,
                 typeName: typeDefinition.name,
             });
             withSourceFile({ directory: modelDirectory, filepath }, (file) => {

@@ -17,7 +17,6 @@ describe("convertResponseErrors", () => {
 
         const expectedResponseErrors: ResponseErrors = {
             docs: undefined,
-            discriminant: "_type",
             possibleErrors: [
                 {
                     discriminantValue: "unauthorized",

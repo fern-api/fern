@@ -1,5 +1,5 @@
 import { NamedType, SingleUnionType, TypeReference } from "@fern-api/api";
-import { capitalizeFirstLetter, generateTypeNameReference, generateTypeReference } from "@fern-typescript/commons";
+import { capitalizeFirstLetter, generateNamedTypeReference, generateTypeReference } from "@fern-typescript/commons";
 import { Directory, SourceFile, ts } from "ts-morph";
 import { TypeResolver } from "../../utils/TypeResolver";
 
@@ -20,10 +20,10 @@ export function getBaseTypeForSingleUnionType({
 }): ts.TypeNode | undefined {
     return visitResolvedTypeReference(singleUnionType.valueType, typeResolver, {
         namedObject: (named) => {
-            return generateTypeNameReference({
+            return generateNamedTypeReference({
                 typeName: named,
                 referencedIn: file,
-                modelDirectory,
+                baseDirectory: modelDirectory,
             });
         },
         nonObject: () => {

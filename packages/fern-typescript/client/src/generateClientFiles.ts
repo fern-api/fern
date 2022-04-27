@@ -20,7 +20,7 @@ export function generateClientFiles({
         typeResolver,
     });
 
-    generateErrorFiles({
+    const errorsDirectory = generateErrorFiles({
         directory,
         intermediateRepresentation,
         modelDirectory,
@@ -32,6 +32,7 @@ export function generateClientFiles({
                 service,
                 servicesDirectory,
                 modelDirectory,
+                errorsDirectory,
                 typeResolver,
             });
         }

@@ -1,5 +1,11 @@
 import { SingleUnionType, UnionTypeDefinition } from "@fern-api/api";
-import { FernWriters, getTextOfTsNode, getWriterForMultiLineUnionType, maybeAddDocs } from "@fern-typescript/commons";
+import {
+    FernWriters,
+    getTextOfTsNode,
+    getWriterForMultiLineUnionType,
+    maybeAddDocs,
+    visitorUtils,
+} from "@fern-typescript/commons";
 import {
     Directory,
     InterfaceDeclaration,
@@ -11,9 +17,7 @@ import {
     WriterFunction,
 } from "ts-morph";
 import { TypeResolver } from "../../utils/TypeResolver";
-import { VISIT_PROPERTY_NAME } from "../constants";
 import { getBaseTypeForSingleUnionType, getKeyForUnion, visitResolvedTypeReference } from "./utils";
-import { generateVisitMethod, generateVisitorInterface } from "./visitorUtils";
 
 export function generateUnionType({
     file,
@@ -80,9 +84,45 @@ export function generateUnionType({
         }
     }
 
-    module.addInterface(generateVisitorInterface({ unionTypeDefinition, typeResolver, file, modelDirectory }));
+    const visitorItems: visitorUtils.VisitableItem[] = unionTypeDefinition.types.map((type) => {
+        const baseType = getBaseTypeForSingleUnionType({
+            singleUnionType: type,
+            typeResolver,
+            file,
+            modelDirectory,
+        });
+
+        return {
+            caseInSwitchStatement: ts.factory.createStringLiteral(type.discriminantValue),
+            keyInVisitor: type.discriminantValue,
+            visitorArgument:
+                baseType != null
+                    ? visitResolvedTypeReference<visitorUtils.VisitorArgument | undefined>(
+                          type.valueType,
+                          typeResolver,
+                          {
+                              namedObject: () => ({
+                                  type: baseType,
+                                  argument: ts.factory.createIdentifier(visitorUtils.VALUE_PARAMETER_NAME),
+                              }),
+                              nonObject: () => ({
+                                  type: baseType,
+                                  argument: ts.factory.createPropertyAccessExpression(
+                                      ts.factory.createIdentifier(visitorUtils.VALUE_PARAMETER_NAME),
+                                      ts.factory.createIdentifier(type.discriminantValue)
+                                  ),
+                              }),
+                              void: () => undefined,
+                          }
+                      )
+                    : undefined,
+        };
+    });
+
+    module.addInterface(visitorUtils.generateVisitorInterface(visitorItems));
 
     file.addVariableStatement({
+        declarationKind: VariableDeclarationKind.Const,
         declarations: [
             {
                 name: typeName,
@@ -92,10 +132,10 @@ export function generateUnionType({
                     typeResolver,
                     file,
                     modelDirectory,
+                    visitorItems,
                 }),
             },
         ],
-        declarationKind: VariableDeclarationKind.Const,
         isExported: true,
     });
 }
@@ -135,12 +175,14 @@ function createUtils({
     typeResolver,
     file,
     modelDirectory,
+    visitorItems,
 }: {
     typeName: string;
     unionTypeDefinition: UnionTypeDefinition;
     typeResolver: TypeResolver;
     file: SourceFile;
     modelDirectory: Directory;
+    visitorItems: readonly visitorUtils.VisitableItem[];
 }): WriterFunction {
     const writer = FernWriters.object.writer();
 
@@ -155,8 +197,17 @@ function createUtils({
     }
 
     writer.addProperty({
-        key: VISIT_PROPERTY_NAME,
-        value: getTextOfTsNode(generateVisitMethod({ typeName, unionTypeDefinition, typeResolver })),
+        key: visitorUtils.VISIT_PROPERTY_NAME,
+        value: getTextOfTsNode(
+            visitorUtils.generateVisitMethod({
+                typeName,
+                switchOn: ts.factory.createPropertyAccessExpression(
+                    ts.factory.createIdentifier(visitorUtils.VALUE_PARAMETER_NAME),
+                    ts.factory.createIdentifier(unionTypeDefinition.discriminant)
+                ),
+                items: visitorItems,
+            })
+        ),
     });
 
     return writer.toFunction();
