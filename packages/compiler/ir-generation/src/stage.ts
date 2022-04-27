@@ -83,8 +83,8 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                         }
                     }
 
-                    if (services.webSocket != null) {
-                        for (const [serviceId, serviceDefinition] of Object.entries(services.webSocket)) {
+                    if (services.websocket != null) {
+                        for (const [serviceId, serviceDefinition] of Object.entries(services.websocket)) {
                             intermediateRepresentation.services.websocket.push(
                                 convertWebsocketService({
                                     serviceId,
