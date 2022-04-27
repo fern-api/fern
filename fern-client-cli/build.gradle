@@ -31,16 +31,13 @@ distributions {
 
 publishing {
     publications {
-        mavenJava(MavenPublication) {
-            from components.java
-        }
         myDistribution(MavenPublication) {
             artifact distZip
         }
     }
     repositories {
         maven {
-            url "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            url "https://s01.oss.sonatype.org/content/repositories/releases/"
             credentials {
                 username "$System.env.FERN_MAVEN_PUBLISH_USERNAME"
                 password "$System.env.FERN_MAVEN_PUBLISH_PASSWORD"
@@ -50,5 +47,5 @@ publishing {
 }
 
 artifactoryPublish {
-    publications('mavenJava', 'myDistribution')
+    publications('myDistribution')
 }
