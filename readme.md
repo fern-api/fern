@@ -41,9 +41,9 @@ The following YAML file defines a simple Food Delivery API. (See [concepts](/doc
 
 ```yaml
 id:
-    menuId: string
-    orderId: string
-    driverId: string
+    MenuId: string
+    OrderId: string
+    DriverId: string
     
 
 objects:
