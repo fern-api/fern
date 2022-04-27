@@ -22,7 +22,7 @@ plugins {
     id "com.diffplug.spotless" version "6.4.2"
 }
 
-group 'com.fern.java'
+group 'io.github.fern-api'
 version gitVersion()
 
 allprojects {

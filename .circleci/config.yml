@@ -91,6 +91,28 @@ jobs:
           command: ./gradlew artifactoryPublish
           name: Publish
 
+  publish-release:
+    docker: [ { image: 'cimg/openjdk:11.0.10-node' } ]
+    resource_class: small
+    environment:
+      CIRCLE_TEST_REPORTS: /home/circleci/junit
+      CIRCLE_ARTIFACTS: /home/circleci/artifacts
+      _JAVA_OPTIONS: -Dorg.gradle.internal.launcher.welcomeMessageEnabled=false -Xmx8192m
+      JAVA_HOME: /opt/java11
+    steps:
+      - attach_workspace: { at: /home/circleci }
+      - restore_cache: { key: 'gradle-wrapper-v2-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}' }
+      - restore_cache: { key: 'unit-test-gradle-cache-v2-{{ checksum "versions.props" }}-{{ checksum "build.gradle" }}' }
+      - run:
+          name: Install Java
+          command: |
+            sudo mkdir -p /opt/java && cd /opt/java && sudo chown -R circleci:circleci .
+            curl https://cdn.azul.com/zulu/bin/zulu11.41.23-ca-jdk11.0.8-linux_x64.tar.gz | tar -xzf - -C /opt/java
+            sudo ln -s /opt/java/zulu*/ /opt/java11
+      - run:
+          command: ./gradlew publishMyDistributionPublicationToMavenRepository
+          name: Publish
+
 workflows:
   version: 2
   build:
@@ -118,3 +140,13 @@ workflows:
             tags:
               ignore: /.*/
           context: jfrog
+
+      - publish-release:
+          requires: [ compile, check, unit-test ]
+          filters:
+            branches:
+              only:
+                - main
+            tags:
+              only:
+                - /.*/

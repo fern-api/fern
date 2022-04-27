@@ -38,6 +38,15 @@ publishing {
             artifact distZip
         }
     }
+    repositories {
+        maven {
+            url "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            credentials {
+                username "$System.env.FERN_MAVEN_PUBLISH_USERNAME"
+                password "$System.env.FERN_MAVEN_PUBLISH_PASSWORD"
+            }
+        }
+    }
 }
 
 artifactoryPublish {
