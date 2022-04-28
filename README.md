@@ -13,6 +13,8 @@ Fern is interoperable with Open API so you are never locked in.
 
 ## Example Spec
 
+Below we have written out a sample spec for a Food Delivery App.
+
 ```
 ids:
   - MenuItemId
@@ -87,3 +89,7 @@ errors:
     http:
       statusCode: 400
 ```
+
+The app has REST endpoints so that clients can add items to their cart and place order. It also has a websocket channel where a client can subscribe to updates about an order's ETA.
+
+This spec can be used to generate clients and servers.
