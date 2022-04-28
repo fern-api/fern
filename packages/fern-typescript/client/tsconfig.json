@@ -7,7 +7,6 @@
     { "path": "../commons" },
     { "path": "../errors" },
     { "path": "../model" },
-    { "path": "../service-utils" },
     { "path": "../testing-utils" }
   ]
 }
