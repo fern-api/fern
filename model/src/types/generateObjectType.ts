@@ -1,6 +1,6 @@
 import { ObjectTypeDefinition } from "@fern-api/api";
 import {
-    generateTypeNameReference,
+    generateNamedTypeReference,
     generateTypeReference,
     getTextOfTsNode,
     maybeAddDocs,
@@ -23,7 +23,9 @@ export function generateObjectType({
     const node = file.addInterface({
         name: typeName,
         extends: shape.extends
-            .map((typeName) => generateTypeNameReference({ typeName, referencedIn: file, modelDirectory }))
+            .map((typeName) =>
+                generateNamedTypeReference({ typeName, referencedIn: file, baseDirectory: modelDirectory })
+            )
             .map(getTextOfTsNode),
         properties: shape.properties.map((field) => ({
             name: field.key,

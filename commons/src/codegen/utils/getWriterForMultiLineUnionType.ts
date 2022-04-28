@@ -1,4 +1,5 @@
 import { ts, WriterFunction } from "ts-morph";
+import { getTextOfTsKeyword } from "./getTextOfTsKeyword";
 import { getTextOfTsNode } from "./getTextOfTsNode";
 
 export interface TsNodeMaybeWithDocs {
@@ -8,13 +9,17 @@ export interface TsNodeMaybeWithDocs {
 
 export function getWriterForMultiLineUnionType(nodes: readonly TsNodeMaybeWithDocs[]): WriterFunction {
     return (writer) => {
-        for (const { node, docs } of nodes) {
-            writer.newLine();
-            if (docs != null) {
-                writer.write(getTextOfTsNode(ts.factory.createJSDocComment(docs)));
-                writer.newLineIfLastNot();
+        if (nodes.length === 0) {
+            writer.write(getTextOfTsKeyword(ts.SyntaxKind.NeverKeyword));
+        } else {
+            for (const { node, docs } of nodes) {
+                writer.newLine();
+                if (docs != null) {
+                    writer.write(getTextOfTsNode(ts.factory.createJSDocComment(docs)));
+                    writer.newLineIfLastNot();
+                }
+                writer.write(`| ${getTextOfTsNode(node)}`);
             }
-            writer.write(`| ${getTextOfTsNode(node)}`);
         }
     };
 }

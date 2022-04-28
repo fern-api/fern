@@ -1,1 +1,1 @@
-export type { runEteTest } from "./runEteTest";
+export { itFernETE } from "./itFernETE";

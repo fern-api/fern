@@ -13,7 +13,7 @@ export function withDirectory(
     },
     addDirectoryContents: (directory: Directory) => void
 ): Directory {
-    const directory = containingModule.createDirectory(name);
+    const directory = containingModule.getDirectory(name) ?? containingModule.createDirectory(name);
     addDirectoryContents(directory);
 
     addExports(directory);

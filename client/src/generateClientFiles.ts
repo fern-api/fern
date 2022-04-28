@@ -1,7 +1,7 @@
 import { IntermediateRepresentation } from "@fern-api/api";
-import { withDirectory } from "@fern-typescript/commons";
+import { TypeResolver, withDirectory } from "@fern-typescript/commons";
 import { generateErrorFiles } from "@fern-typescript/errors";
-import { generateModelFiles, TypeResolver } from "@fern-typescript/model";
+import { generateModelFiles } from "@fern-typescript/model";
 import { Directory } from "ts-morph";
 import { generateHttpService } from "./generateHttpService";
 
@@ -20,7 +20,7 @@ export function generateClientFiles({
         typeResolver,
     });
 
-    generateErrorFiles({
+    const errorsDirectory = generateErrorFiles({
         directory,
         intermediateRepresentation,
         modelDirectory,
@@ -32,6 +32,7 @@ export function generateClientFiles({
                 service,
                 servicesDirectory,
                 modelDirectory,
+                errorsDirectory,
                 typeResolver,
             });
         }

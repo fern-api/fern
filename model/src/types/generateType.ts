@@ -1,10 +1,11 @@
 import { Type } from "@fern-api/api";
+import { TypeResolver } from "@fern-typescript/commons";
 import { Directory, SourceFile } from "ts-morph";
-import { TypeResolver } from "../utils/TypeResolver";
 import { generateEnumType } from "./enum/generateEnumType";
 import { generateAliasType } from "./generateAliasType";
 import { generateObjectType } from "./generateObjectType";
 import { generateUnionType } from "./union/generateUnionType";
+import { getResolvedTypeForSingleUnionType } from "./union/utils";
 
 export function generateType({
     type,
@@ -36,9 +37,18 @@ export function generateType({
                 file,
                 typeName,
                 docs,
-                unionTypeDefinition,
-                typeResolver,
-                modelDirectory,
+                discriminant: unionTypeDefinition.discriminant,
+                types: unionTypeDefinition.types.map((singleUnionType) => {
+                    return {
+                        ...singleUnionType,
+                        resolvedValueType: getResolvedTypeForSingleUnionType({
+                            singleUnionType,
+                            typeResolver,
+                            modelDirectory,
+                            file,
+                        }),
+                    };
+                }),
             });
         },
         alias: (alias) => {
