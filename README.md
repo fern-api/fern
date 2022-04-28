@@ -18,8 +18,7 @@ Below we have written out a sample spec for a Food Delivery App.
 ```yaml
 ids:
   - MenuItemId
-  - name: OrderId
-    type: long
+  - OrderId: long
 
 types:
   DeliveryMethod:
