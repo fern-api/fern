@@ -1536,7 +1536,6 @@ __metadata:
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/errors": "workspace:*"
     "@fern-typescript/model": "workspace:*"
-    "@fern-typescript/service-utils": "workspace:*"
     "@fern-typescript/testing-utils": "workspace:*"
     "@types/jest": ^27.4.1
     "@types/node": ^17.0.25
@@ -1672,7 +1671,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/service-utils@workspace:*, @fern-typescript/service-utils@workspace:packages/fern-typescript/service-utils":
+"@fern-typescript/service-utils@workspace:packages/fern-typescript/service-utils":
   version: 0.0.0-use.local
   resolution: "@fern-typescript/service-utils@workspace:packages/fern-typescript/service-utils"
   dependencies:

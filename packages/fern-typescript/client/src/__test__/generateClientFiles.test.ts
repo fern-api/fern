@@ -13,6 +13,5 @@ describe("generateClientFiles", () => {
                 intermediateRepresentation,
             });
         },
-        outputToDisk: true,
     });
 });
