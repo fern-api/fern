@@ -1,8 +1,6 @@
-import { ContainerType, NamedType, PrimitiveType, TypeReference } from "@fern-api/api";
+import { ContainerType, PrimitiveType, TypeReference } from "@fern-api/api";
 import { Directory, SourceFile, ts } from "ts-morph";
-import { getImportPathForType } from "./getImportPathForType";
-
-const MODEL_NAMESPACE_IMPORT = "model";
+import { generateNamedTypeReference } from "./generateNamedTypeReference";
 
 export function generateTypeReference({
     reference,
@@ -14,7 +12,7 @@ export function generateTypeReference({
     modelDirectory: Directory;
 }): ts.TypeNode {
     return TypeReference._visit(reference, {
-        named: (named) => generateTypeNameReference({ typeName: named, referencedIn, modelDirectory }),
+        named: (named) => generateNamedTypeReference({ typeName: named, referencedIn, baseDirectory: modelDirectory }),
         primitive: (primitive) => {
             return PrimitiveType.visit<ts.TypeNode>(primitive, {
                 Boolean: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword),
@@ -65,38 +63,4 @@ export function generateTypeReference({
             throw new Error("Unexpected type reference: " + reference._type);
         },
     });
-}
-
-export function generateTypeNameReference({
-    typeName,
-    referencedIn,
-    modelDirectory,
-}: {
-    typeName: NamedType;
-    referencedIn: SourceFile;
-    modelDirectory: Directory;
-}): ts.TypeNode {
-    // if we're importing from within the model directory, then import from the
-    // actual filepath of the type
-    if (modelDirectory.isAncestorOf(referencedIn)) {
-        referencedIn.addImportDeclaration({
-            moduleSpecifier: getImportPathForType({ from: referencedIn, typeName, modelDirectory }),
-            namedImports: [{ name: typeName.name }],
-        });
-        return ts.factory.createTypeReferenceNode(typeName.name);
-    }
-
-    // otherwise, just use `import * as model`
-    referencedIn.addImportDeclaration({
-        moduleSpecifier: referencedIn.getRelativePathAsModuleSpecifierTo(modelDirectory),
-        namespaceImport: MODEL_NAMESPACE_IMPORT,
-    });
-
-    return ts.factory.createTypeReferenceNode(
-        ts.factory.createQualifiedName(
-            ts.factory.createIdentifier(MODEL_NAMESPACE_IMPORT),
-            ts.factory.createIdentifier(typeName.name)
-        ),
-        undefined
-    );
 }

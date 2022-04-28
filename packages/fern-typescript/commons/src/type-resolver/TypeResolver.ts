@@ -1,14 +1,15 @@
 import { FernFilepath, IntermediateRepresentation, NamedType, Type, TypeReference } from "@fern-api/api";
+import { ResolvedType } from "./types";
 
 type Filepath = string;
 type SimpleTypeName = string;
 
-export declare namespace TypeResolver {
-    export type ResolvedType = "object" | "union" | "primitive" | "container" | "enum" | "void";
-}
-
+/**
+ * TypeResolver converts a NamedType to a "resolved" value by following all
+ * aliases and unwrapping all containers.
+ */
 export class TypeResolver {
-    private resolvedTypes: Record<FernFilepath, Record<SimpleTypeName, TypeResolver.ResolvedType>> = {};
+    private resolvedTypes: Record<FernFilepath, Record<SimpleTypeName, ResolvedType>> = {};
 
     constructor(intermediateRepresentation: IntermediateRepresentation) {
         const allTypes: Record<Filepath, Record<SimpleTypeName, Type>> = {};
@@ -30,7 +31,7 @@ export class TypeResolver {
         }
     }
 
-    public resolveType(typeName: NamedType): TypeResolver.ResolvedType {
+    public resolveNamedType(typeName: NamedType): ResolvedType {
         const resolvedType = this.resolvedTypes[typeName.fernFilepath]?.[typeName.name];
         if (resolvedType == null) {
             throw new Error("Type not found: " + typeNameToString(typeName));
@@ -46,7 +47,7 @@ export class TypeResolver {
         allTypes: Record<Filepath, Record<SimpleTypeName, Type>>;
         typeName: NamedType;
         seen?: Record<Filepath, Set<SimpleTypeName>>;
-    }): TypeResolver.ResolvedType {
+    }): ResolvedType {
         let seenAtFilepath = seen[typeName.fernFilepath];
         if (seenAtFilepath == null) {
             seenAtFilepath = new Set();
@@ -61,29 +62,7 @@ export class TypeResolver {
             throw new Error("Type not found: " + typeNameToString(typeName));
         }
 
-        const resolvedType = Type._visit<TypeResolver.ResolvedType>(type, {
-            object: () => "object",
-            union: () => "union",
-            alias: (alias) =>
-                TypeReference._visit<TypeResolver.ResolvedType>(alias.aliasOf, {
-                    named: (named) =>
-                        this.resolveTypeRecursive({
-                            allTypes,
-                            typeName: named,
-                            seen,
-                        }),
-                    primitive: () => "primitive",
-                    container: () => "container",
-                    void: () => "void",
-                    unknown: () => {
-                        throw new Error("Unkonwn Alias type reference: " + alias.aliasOf._type);
-                    },
-                }),
-            enum: () => "enum",
-            unknown: () => {
-                throw new Error("Unkonwn Type: " + type._type);
-            },
-        });
+        const resolvedType = this.resolveType(type, allTypes, seen);
 
         let resolvedTypesAtFilepath = this.resolvedTypes[typeName.fernFilepath];
         if (resolvedTypesAtFilepath == null) {
@@ -93,6 +72,36 @@ export class TypeResolver {
         resolvedTypesAtFilepath[typeName.name] = resolvedType;
 
         return resolvedType;
+    }
+
+    private resolveType(
+        type: Type,
+        allTypes: Record<Filepath, Record<SimpleTypeName, Type>>,
+        seen: Record<Filepath, Set<SimpleTypeName>>
+    ): ResolvedType {
+        return Type._visit<ResolvedType>(type, {
+            object: ResolvedType.object,
+            union: ResolvedType.union,
+            alias: (alias) =>
+                TypeReference._visit<ResolvedType>(alias.aliasOf, {
+                    named: (named) =>
+                        this.resolveTypeRecursive({
+                            allTypes,
+                            typeName: named,
+                            seen,
+                        }),
+                    primitive: ResolvedType.primitive,
+                    container: ResolvedType.container,
+                    void: ResolvedType.void,
+                    unknown: () => {
+                        throw new Error("Unkonwn Alias type reference: " + alias.aliasOf._type);
+                    },
+                }),
+            enum: ResolvedType.enum,
+            unknown: () => {
+                throw new Error("Unkonwn Type: " + type._type);
+            },
+        });
     }
 }
 

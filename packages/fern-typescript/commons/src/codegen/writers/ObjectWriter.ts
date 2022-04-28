@@ -29,7 +29,7 @@ export class ObjectWriter {
         /* private */
     }
 
-    public addProperty(property: Omit<ObjectWriter.Property, "type">): ObjectWriter {
+    public addProperty(property: Omit<ObjectWriter.Property, "type">): this {
         this.blocks.push({
             ...property,
             type: "property",
@@ -37,7 +37,7 @@ export class ObjectWriter {
         return this;
     }
 
-    public addNewLine(): ObjectWriter {
+    public addNewLine(): this {
         this.blocks.push({
             type: "custom",
             writer: (writer) => {

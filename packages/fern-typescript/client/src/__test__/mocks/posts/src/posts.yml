@@ -48,11 +48,11 @@ services:
           path: /{postId}
           parameters:
             postId: commons.PostId
+          queryParameters:
+            page: optional<integer>
+            otherParam: integer
           response:
-            union:
-              a: Post
-              b: Post
-              c: Post
+            alias: string
           errors:
             union:
               notFound: PostNotFoundError
