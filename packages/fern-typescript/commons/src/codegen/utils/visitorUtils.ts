@@ -28,6 +28,17 @@ export function generateVisitMethod({
     switchOn: ts.Expression;
     items: readonly VisitableItem[];
 }): ts.ArrowFunction {
+    const returnUnknown = ts.factory.createReturnStatement(
+        ts.factory.createCallExpression(
+            ts.factory.createPropertyAccessExpression(
+                ts.factory.createIdentifier(VISITOR_PARAMETER_NAME),
+                ts.factory.createIdentifier(UNKNOWN_PROPERY_NAME)
+            ),
+            undefined,
+            undefined
+        )
+    );
+
     return ts.factory.createArrowFunction(
         undefined,
         [
@@ -42,7 +53,7 @@ export function generateVisitMethod({
                 undefined,
                 undefined,
                 undefined,
-                ts.factory.createIdentifier(VALUE_PARAMETER_NAME),
+                ts.factory.createIdentifier(items.length > 0 ? VALUE_PARAMETER_NAME : `_${VALUE_PARAMETER_NAME}`),
                 undefined,
                 ts.factory.createTypeReferenceNode(ts.factory.createIdentifier(typeName), undefined),
                 undefined
@@ -72,37 +83,28 @@ export function generateVisitMethod({
         undefined,
         ts.factory.createBlock(
             [
-                ts.factory.createSwitchStatement(
-                    switchOn,
-                    ts.factory.createCaseBlock([
-                        ...items.map((item) =>
-                            ts.factory.createCaseClause(item.caseInSwitchStatement, [
-                                ts.factory.createReturnStatement(
-                                    ts.factory.createCallExpression(
-                                        ts.factory.createPropertyAccessExpression(
-                                            ts.factory.createIdentifier(VISITOR_PARAMETER_NAME),
-                                            ts.factory.createIdentifier(item.keyInVisitor)
-                                        ),
-                                        undefined,
-                                        item.visitorArgument != null ? [item.visitorArgument.argument] : []
-                                    )
-                                ),
-                            ])
-                        ),
-                        ts.factory.createDefaultClause([
-                            ts.factory.createReturnStatement(
-                                ts.factory.createCallExpression(
-                                    ts.factory.createPropertyAccessExpression(
-                                        ts.factory.createIdentifier(VISITOR_PARAMETER_NAME),
-                                        ts.factory.createIdentifier(UNKNOWN_PROPERY_NAME)
-                                    ),
-                                    undefined,
-                                    undefined
-                                )
-                            ),
-                        ]),
-                    ])
-                ),
+                items.length > 0
+                    ? ts.factory.createSwitchStatement(
+                          switchOn,
+                          ts.factory.createCaseBlock([
+                              ...items.map((item) =>
+                                  ts.factory.createCaseClause(item.caseInSwitchStatement, [
+                                      ts.factory.createReturnStatement(
+                                          ts.factory.createCallExpression(
+                                              ts.factory.createPropertyAccessExpression(
+                                                  ts.factory.createIdentifier(VISITOR_PARAMETER_NAME),
+                                                  ts.factory.createIdentifier(item.keyInVisitor)
+                                              ),
+                                              undefined,
+                                              item.visitorArgument != null ? [item.visitorArgument.argument] : []
+                                          )
+                                      ),
+                                  ])
+                              ),
+                              ts.factory.createDefaultClause([returnUnknown]),
+                          ])
+                      )
+                    : returnUnknown,
             ],
             true
         )

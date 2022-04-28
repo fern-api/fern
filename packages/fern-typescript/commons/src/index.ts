@@ -4,13 +4,14 @@ export { generateTypeReference } from "./codegen/references/generateTypeReferenc
 export { getFilePathForError } from "./codegen/references/getFilePathForError";
 export { getFilePathForNamedType } from "./codegen/references/getFilePathForNamedType";
 export { addBrandedTypeAlias } from "./codegen/utils/addBrandedTypeAlias";
-export { capitalizeFirstLetter } from "./codegen/utils/capitalizeFirstLetter";
 export { getTextOfTsKeyword } from "./codegen/utils/getTextOfTsKeyword";
 export { getTextOfTsNode } from "./codegen/utils/getTextOfTsNode";
 export { getWriterForMultiLineUnionType } from "./codegen/utils/getWriterForMultiLineUnionType";
 export { maybeAddDocs } from "./codegen/utils/maybeAddDocs";
 export * as visitorUtils from "./codegen/utils/visitorUtils";
 export { FernWriters } from "./codegen/writers";
+export { TypeResolver } from "./type-resolver/TypeResolver";
+export { ResolvedType } from "./type-resolver/types";
 export { withDirectory } from "./withDirectory";
 export { withSourceFile } from "./withSourceFile";
 export { writeFiles } from "./writeFiles";

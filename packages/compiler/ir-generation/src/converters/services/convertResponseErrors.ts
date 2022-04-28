@@ -1,5 +1,6 @@
 import { FernFilepath, ResponseErrors } from "@fern-api/api";
 import { RawSchemas } from "@fern-api/syntax-analysis";
+import { DEFAULT_UNION_TYPE_DISCRIMINANT } from "../../constants";
 import { parseTypeName } from "../../utils/parseTypeName";
 
 export function convertResponseErrors({
@@ -13,6 +14,7 @@ export function convertResponseErrors({
 }): ResponseErrors {
     return {
         docs: rawResponseErrors?.docs,
+        discriminant: rawResponseErrors?.discriminant ?? DEFAULT_UNION_TYPE_DISCRIMINANT,
         possibleErrors:
             rawResponseErrors?.union == null
                 ? []

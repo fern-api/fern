@@ -5,6 +5,7 @@ describe("convertResponseErrors", () => {
     it("reference to an error in another file", () => {
         const actualResponseErrors = convertResponseErrors({
             rawResponseErrors: {
+                discriminant: "_some_other_discriminant",
                 union: {
                     unauthorized: "commons.UnauthorizedError",
                 },
@@ -17,6 +18,7 @@ describe("convertResponseErrors", () => {
 
         const expectedResponseErrors: ResponseErrors = {
             docs: undefined,
+            discriminant: "_some_other_discriminant",
             possibleErrors: [
                 {
                     discriminantValue: "unauthorized",

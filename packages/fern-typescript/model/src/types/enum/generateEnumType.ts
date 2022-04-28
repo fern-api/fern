@@ -7,6 +7,7 @@ import {
     maybeAddDocs,
     visitorUtils,
 } from "@fern-typescript/commons";
+import { lowerFirst } from "lodash";
 import { SourceFile, ts, VariableDeclarationKind, WriterFunction } from "ts-morph";
 import { getKeyForEnum } from "./utils";
 
@@ -43,7 +44,7 @@ export function generateEnumType({
             ts.factory.createIdentifier(typeName),
             ts.factory.createIdentifier(getKeyForEnum(value))
         ),
-        keyInVisitor: getKeyForEnum(value),
+        keyInVisitor: lowerFirst(getKeyForEnum(value)),
         visitorArgument: undefined,
     }));
 

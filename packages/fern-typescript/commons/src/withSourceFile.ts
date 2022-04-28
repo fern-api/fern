@@ -10,9 +10,11 @@ export declare namespace withSourceFile {
 export function withSourceFile(
     { directory, filepath }: withSourceFile.Args,
     addFileContents: (file: SourceFile) => void
-): void {
+): SourceFile {
     const file = directory.getSourceFile(filepath) ?? directory.createSourceFile(filepath);
     addFileContents(file);
+    // TODO do this in a finalize method, since we might add stuff after this method returns
     file.formatText();
     file.organizeImports();
+    return file;
 }

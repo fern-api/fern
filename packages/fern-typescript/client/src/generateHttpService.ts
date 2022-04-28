@@ -1,7 +1,21 @@
 import { HttpService } from "@fern-api/api";
-import { getTextOfTsKeyword, getTextOfTsNode, withDirectory, withSourceFile } from "@fern-typescript/commons";
-import { TypeResolver } from "@fern-typescript/model";
+import {
+    getTextOfTsKeyword,
+    getTextOfTsNode,
+    TypeResolver,
+    withDirectory,
+    withSourceFile,
+} from "@fern-typescript/commons";
 import { ClassDeclaration, Directory, Scope, ts } from "ts-morph";
+import {
+    BASE_URL_SERVICE_MEMBER,
+    ENDPOINTS_DIRECTORY_NAME,
+    ENDPOINTS_NAMESPACE_IMPORT,
+    FETCHER_SERVICE_MEMBER,
+    SERVICE_INIT_FETCHER_PROPERTY_NAME,
+    SERVICE_INIT_SERVER_URL_PROPERTY_NAME,
+    SERVICE_INIT_SERVICE_BASE_URL_PROPERTY_NAME,
+} from "./constants";
 import { addEndpointToService } from "./endpoints/addEndpointToService";
 import { generateJoinPathsCall } from "./utils/generateJoinPathsCall";
 
@@ -55,6 +69,11 @@ function generateService({
             filepath: `${service.name.name}.ts`,
         },
         (serviceFile) => {
+            serviceFile.addImportDeclaration({
+                namedImports: ["Fetcher", "defaultFetcher", "Service"],
+                moduleSpecifier: "@fern-typescript/service-utils",
+            });
+
             const serviceInterface = serviceFile.addInterface({
                 name: "Client",
                 isExported: true,
@@ -67,42 +86,49 @@ function generateService({
             });
 
             serviceClass.addProperty({
-                name: "baseUrl",
+                name: BASE_URL_SERVICE_MEMBER,
                 scope: Scope.Private,
                 type: getTextOfTsKeyword(ts.SyntaxKind.StringKeyword),
             });
 
             serviceClass.addProperty({
-                name: "fetcher",
+                name: FETCHER_SERVICE_MEMBER,
                 scope: Scope.Private,
                 type: getTextOfTsNode(ts.factory.createIdentifier("Fetcher")),
             });
 
             addConstructor(serviceClass);
 
-            for (const endpoint of service.endpoints) {
-                addEndpointToService({
-                    endpoint,
-                    serviceInterface,
-                    serviceClass,
-                    modelDirectory,
-                    errorsDirectory,
-                    typeResolver,
-                });
-            }
+            withDirectory(
+                { containingModule: serviceDirectory, name: ENDPOINTS_DIRECTORY_NAME, namespaceExport: "Endpoints" },
+                (endpointsDirectory) => {
+                    serviceFile.addImportDeclaration({
+                        namespaceImport: ENDPOINTS_NAMESPACE_IMPORT,
+                        moduleSpecifier: serviceFile.getRelativePathAsModuleSpecifierTo(endpointsDirectory),
+                    });
+
+                    for (const endpoint of service.endpoints) {
+                        addEndpointToService({
+                            endpoint,
+                            serviceInterface,
+                            serviceClass,
+                            modelDirectory,
+                            errorsDirectory,
+                            endpointsDirectory,
+                            typeResolver,
+                        });
+                    }
+                }
+            );
         }
     );
 }
 function addConstructor(serviceClass: ClassDeclaration) {
-    serviceClass.getSourceFile().addImportDeclaration({
-        namedImports: ["Fetcher", "defaultFetcher", "Service"],
-        moduleSpecifier: "@fern-typescript/service-utils",
-    });
-
+    const SERVICE_INIT_PARAMETER_NAME = "args";
     serviceClass.addConstructor({
         parameters: [
             {
-                name: "args",
+                name: SERVICE_INIT_PARAMETER_NAME,
                 type: getTextOfTsNode(
                     ts.factory.createTypeReferenceNode(
                         ts.factory.createQualifiedName(
@@ -116,11 +142,11 @@ function addConstructor(serviceClass: ClassDeclaration) {
         statements: [
             getTextOfTsNode(
                 createClassMemberAssignment({
-                    member: "fetcher",
+                    member: FETCHER_SERVICE_MEMBER,
                     initialValue: ts.factory.createBinaryExpression(
                         ts.factory.createPropertyAccessExpression(
-                            ts.factory.createIdentifier("args"),
-                            ts.factory.createIdentifier("fetcher")
+                            ts.factory.createIdentifier(SERVICE_INIT_PARAMETER_NAME),
+                            ts.factory.createIdentifier(SERVICE_INIT_FETCHER_PROPERTY_NAME)
                         ),
                         ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
                         ts.factory.createIdentifier("defaultFetcher")
@@ -134,12 +160,12 @@ function addConstructor(serviceClass: ClassDeclaration) {
                         file: serviceClass.getSourceFile(),
                         paths: [
                             ts.factory.createPropertyAccessExpression(
-                                ts.factory.createIdentifier("args"),
-                                ts.factory.createIdentifier("serverUrl")
+                                ts.factory.createIdentifier(SERVICE_INIT_PARAMETER_NAME),
+                                ts.factory.createIdentifier(SERVICE_INIT_SERVER_URL_PROPERTY_NAME)
                             ),
                             ts.factory.createPropertyAccessExpression(
-                                ts.factory.createIdentifier("args"),
-                                ts.factory.createIdentifier("serviceBaseUrl")
+                                ts.factory.createIdentifier(SERVICE_INIT_PARAMETER_NAME),
+                                ts.factory.createIdentifier(SERVICE_INIT_SERVICE_BASE_URL_PROPERTY_NAME)
                             ),
                         ],
                     }),

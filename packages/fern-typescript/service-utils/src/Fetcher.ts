@@ -6,13 +6,12 @@ export declare namespace Fetcher {
         method: string;
         headers?: Record<string, string>;
         token?: string;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        request?: any;
+        queryParameters?: URLSearchParams;
+        body?: unknown;
     }
 
     export interface Response {
         statusCode: number;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        body: any;
+        body: unknown;
     }
 }

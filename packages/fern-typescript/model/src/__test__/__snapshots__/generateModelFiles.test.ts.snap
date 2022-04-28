@@ -153,8 +153,8 @@ export const PostType = {
 
     _visit: <Result>(value: PostType, visitor: PostType._Visitor<Result>): Result => {
         switch (value) {
-            case PostType.Long: return visitor.Long();
-            case PostType.Short: return visitor.Short();
+            case PostType.Long: return visitor.long();
+            case PostType.Short: return visitor.short();
             default: return visitor._unknown();
         }
     },
@@ -169,8 +169,8 @@ export declare namespace PostType {
     };
 
     export interface _Visitor<Result> {
-        Long: () => Result;
-        Short: () => Result;
+        long: () => Result;
+        short: () => Result;
         _unknown: () => Result;
     }
 }
@@ -260,11 +260,11 @@ export const HttpMethod = {
 
     _visit: <Result>(value: HttpMethod, visitor: HttpMethod._Visitor<Result>): Result => {
         switch (value) {
-            case HttpMethod.Get: return visitor.Get();
-            case HttpMethod.Post: return visitor.Post();
-            case HttpMethod.Put: return visitor.Put();
-            case HttpMethod.Patch: return visitor.Patch();
-            case HttpMethod.Delete: return visitor.Delete();
+            case HttpMethod.Get: return visitor.get();
+            case HttpMethod.Post: return visitor.post();
+            case HttpMethod.Put: return visitor.put();
+            case HttpMethod.Patch: return visitor.patch();
+            case HttpMethod.Delete: return visitor.delete();
             default: return visitor._unknown();
         }
     },
@@ -288,11 +288,11 @@ export declare namespace HttpMethod {
     };
 
     export interface _Visitor<Result> {
-        Get: () => Result;
-        Post: () => Result;
-        Put: () => Result;
-        Patch: () => Result;
-        Delete: () => Result;
+        get: () => Result;
+        post: () => Result;
+        put: () => Result;
+        patch: () => Result;
+        delete: () => Result;
         _unknown: () => Result;
     }
 }
@@ -356,8 +356,8 @@ export const WebSocketMessageOrigin = {
 
     _visit: <Result>(value: WebSocketMessageOrigin, visitor: WebSocketMessageOrigin._Visitor<Result>): Result => {
         switch (value) {
-            case WebSocketMessageOrigin.Client: return visitor.Client();
-            case WebSocketMessageOrigin.Server: return visitor.Server();
+            case WebSocketMessageOrigin.Client: return visitor.client();
+            case WebSocketMessageOrigin.Server: return visitor.server();
             default: return visitor._unknown();
         }
     },
@@ -372,8 +372,8 @@ export declare namespace WebSocketMessageOrigin {
     };
 
     export interface _Visitor<Result> {
-        Client: () => Result;
-        Server: () => Result;
+        client: () => Result;
+        server: () => Result;
         _unknown: () => Result;
     }
 }
@@ -398,8 +398,8 @@ export const WebSocketMessageResponseBehavior = {
 
     _visit: <Result>(value: WebSocketMessageResponseBehavior, visitor: WebSocketMessageResponseBehavior._Visitor<Result>): Result => {
         switch (value) {
-            case WebSocketMessageResponseBehavior.Ongoing: return visitor.Ongoing();
-            case WebSocketMessageResponseBehavior.RequestResponse: return visitor.RequestResponse();
+            case WebSocketMessageResponseBehavior.Ongoing: return visitor.ongoing();
+            case WebSocketMessageResponseBehavior.RequestResponse: return visitor.requestResponse();
             default: return visitor._unknown();
         }
     },
@@ -414,8 +414,8 @@ export declare namespace WebSocketMessageResponseBehavior {
     };
 
     export interface _Visitor<Result> {
-        Ongoing: () => Result;
-        RequestResponse: () => Result;
+        ongoing: () => Result;
+        requestResponse: () => Result;
         _unknown: () => Result;
     }
 }
@@ -581,11 +581,11 @@ export const PrimitiveType = {
 
     _visit: <Result>(value: PrimitiveType, visitor: PrimitiveType._Visitor<Result>): Result => {
         switch (value) {
-            case PrimitiveType.Integer: return visitor.Integer();
-            case PrimitiveType.Double: return visitor.Double();
-            case PrimitiveType.String: return visitor.String();
-            case PrimitiveType.Boolean: return visitor.Boolean();
-            case PrimitiveType.Long: return visitor.Long();
+            case PrimitiveType.Integer: return visitor.integer();
+            case PrimitiveType.Double: return visitor.double();
+            case PrimitiveType.String: return visitor.string();
+            case PrimitiveType.Boolean: return visitor.boolean();
+            case PrimitiveType.Long: return visitor.long();
             default: return visitor._unknown();
         }
     },
@@ -609,11 +609,11 @@ export declare namespace PrimitiveType {
     };
 
     export interface _Visitor<Result> {
-        Integer: () => Result;
-        Double: () => Result;
-        String: () => Result;
-        Boolean: () => Result;
-        Long: () => Result;
+        integer: () => Result;
+        double: () => Result;
+        string: () => Result;
+        boolean: () => Result;
+        long: () => Result;
         _unknown: () => Result;
     }
 }
@@ -895,8 +895,8 @@ export const PostType = {
 
     _visit: <Result>(value: PostType, visitor: PostType._Visitor<Result>): Result => {
         switch (value) {
-            case PostType.Long: return visitor.Long();
-            case PostType.Short: return visitor.Short();
+            case PostType.Long: return visitor.long();
+            case PostType.Short: return visitor.short();
             default: return visitor._unknown();
         }
     },
@@ -911,8 +911,8 @@ export declare namespace PostType {
     };
 
     export interface _Visitor<Result> {
-        Long: () => Result;
-        Short: () => Result;
+        long: () => Result;
+        short: () => Result;
         _unknown: () => Result;
     }
 }

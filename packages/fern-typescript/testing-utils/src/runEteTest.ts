@@ -24,9 +24,8 @@ export declare namespace runEteTest {
 
         /**
          * If true, generated files are outputed to a generated/ directory.
-         * This is typed as `false` to prevent accidentally merging it in as `true`
          */
-        outputToDisk?: false;
+        outputToDisk?: boolean;
     }
 }
 

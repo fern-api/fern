@@ -1,13 +1,19 @@
 import { NamedType, SingleUnionType, TypeReference } from "@fern-api/api";
-import { capitalizeFirstLetter, generateNamedTypeReference, generateTypeReference } from "@fern-typescript/commons";
-import { Directory, SourceFile, ts } from "ts-morph";
-import { TypeResolver } from "../../utils/TypeResolver";
+import {
+    generateNamedTypeReference,
+    generateTypeReference,
+    ResolvedType,
+    TypeResolver,
+} from "@fern-typescript/commons";
+import { upperFirst } from "lodash";
+import { Directory, SourceFile } from "ts-morph";
+import { SingleUnionTypeWithResolvedValueType } from "./generateUnionType";
 
 export function getKeyForUnion({ discriminantValue }: SingleUnionType): string {
-    return capitalizeFirstLetter(discriminantValue);
+    return upperFirst(discriminantValue);
 }
 
-export function getBaseTypeForSingleUnionType({
+export function getResolvedTypeForSingleUnionType({
     singleUnionType,
     typeResolver,
     file,
@@ -17,24 +23,34 @@ export function getBaseTypeForSingleUnionType({
     typeResolver: TypeResolver;
     file: SourceFile;
     modelDirectory: Directory;
-}): ts.TypeNode | undefined {
-    return visitResolvedTypeReference(singleUnionType.valueType, typeResolver, {
-        namedObject: (named) => {
-            return generateNamedTypeReference({
-                typeName: named,
-                referencedIn: file,
-                baseDirectory: modelDirectory,
-            });
-        },
-        nonObject: () => {
-            return generateTypeReference({
-                reference: singleUnionType.valueType,
-                referencedIn: file,
-                modelDirectory,
-            });
-        },
-        void: () => undefined,
-    });
+}): SingleUnionTypeWithResolvedValueType["resolvedValueType"] | undefined {
+    return visitResolvedTypeReference<SingleUnionTypeWithResolvedValueType["resolvedValueType"]>(
+        singleUnionType.valueType,
+        typeResolver,
+        {
+            namedObject: (named) => {
+                return {
+                    type: generateNamedTypeReference({
+                        typeName: named,
+                        referencedIn: file,
+                        baseDirectory: modelDirectory,
+                    }),
+                    isExtendable: true,
+                };
+            },
+            nonObject: () => {
+                return {
+                    type: generateTypeReference({
+                        reference: singleUnionType.valueType,
+                        referencedIn: file,
+                        modelDirectory,
+                    }),
+                    isExtendable: false,
+                };
+            },
+            void: () => undefined,
+        }
+    );
 }
 
 export function visitResolvedTypeReference<R>(
@@ -44,19 +60,18 @@ export function visitResolvedTypeReference<R>(
 ): R {
     return TypeReference._visit(typeReference, {
         named: (named) => {
-            const resolved = typeResolver.resolveType(named);
-            switch (resolved) {
-                case "object": {
-                    return visitor.namedObject(named);
-                }
-                case "container":
-                case "primitive":
-                case "enum":
-                case "union":
-                    return visitor.nonObject();
-                case "void":
-                    return visitor.void();
-            }
+            const resolved = typeResolver.resolveNamedType(named);
+            return ResolvedType._visit(resolved, {
+                object: () => visitor.namedObject(named),
+                union: visitor.nonObject,
+                enum: visitor.nonObject,
+                container: visitor.nonObject,
+                primitive: visitor.nonObject,
+                void: visitor.void,
+                unknown: () => {
+                    throw new Error("Unexpected resolved type: " + resolved._type);
+                },
+            });
         },
         primitive: () => visitor.nonObject(),
         container: () => visitor.nonObject(),

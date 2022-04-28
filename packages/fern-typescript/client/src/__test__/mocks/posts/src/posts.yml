@@ -48,6 +48,9 @@ services:
           path: /{postId}
           parameters:
             postId: commons.PostId
+          queryParameters:
+            page: optional<integer>
+            otherParam: integer
           response:
             alias: string
           errors:
