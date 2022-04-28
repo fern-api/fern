@@ -90,6 +90,6 @@ errors:
       statusCode: 400
 ```
 
-The app has REST endpoints so that clients can add items to their cart an place order. It also has a websocket channel where a client can subscribe to updates about an order's ETA.
+The app has REST endpoints so that clients can add items to their cart and place orders. It also has a websocket channel where a client can subscribe to updates about an order's ETA.
 
 This spec can be used to generate clients and servers.
