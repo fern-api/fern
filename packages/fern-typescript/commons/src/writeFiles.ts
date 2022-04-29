@@ -16,7 +16,9 @@ export async function writeFiles(
         const formatted = format(file.getFullText(), {
             parser: "typescript",
             plugins: ["prettier-plugin-organize-imports"],
+            tabWidth: 4,
         });
+
         await fileSystem.writeFile(filepath, formatted);
     }
 }
