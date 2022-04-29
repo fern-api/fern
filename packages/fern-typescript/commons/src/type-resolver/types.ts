@@ -48,7 +48,7 @@ export declare namespace ResolvedType {
         container: (value: ContainerType) => Result;
         primitive: (value: PrimitiveType) => Result;
         void: () => Result;
-        unknown: () => Result;
+        _unknown: () => Result;
     }
 }
 
@@ -97,7 +97,7 @@ export const ResolvedType = {
             case "void":
                 return visitor.void();
             default:
-                return visitor.unknown();
+                return visitor._unknown();
         }
     },
 };

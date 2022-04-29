@@ -68,7 +68,7 @@ export function visitResolvedTypeReference<R>(
                 container: visitor.nonObject,
                 primitive: visitor.nonObject,
                 void: visitor.void,
-                unknown: () => {
+                _unknown: () => {
                     throw new Error("Unexpected resolved type: " + resolved._type);
                 },
             });
@@ -76,7 +76,7 @@ export function visitResolvedTypeReference<R>(
         primitive: () => visitor.nonObject(),
         container: () => visitor.nonObject(),
         void: () => visitor.void(),
-        unknown: () => {
+        _unknown: () => {
             throw new Error("Unexpected type reference: " + typeReference._type);
         },
     });

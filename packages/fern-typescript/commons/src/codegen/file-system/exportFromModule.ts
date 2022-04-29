@@ -1,4 +1,5 @@
 import { Directory } from "ts-morph";
+import { getRelativePathAsModuleSpecifierTo } from "../utils/getRelativePathAsModuleSpecifierTo";
 import { getOrCreateSourceFile } from "./getOrCreateSourceFile";
 
 export declare namespace exportFromModule {
@@ -23,7 +24,7 @@ export declare namespace exportFromModule {
 
 export function exportFromModule({ module, pathToExport, options }: exportFromModule.Args): void {
     const indexTs = getOrCreateSourceFile(module, "index.ts");
-    const moduleSpecifier = module.getRelativePathAsModuleSpecifierTo(pathToExport);
+    const moduleSpecifier = getRelativePathAsModuleSpecifierTo(module, pathToExport);
     if (indexTs.getExportDeclaration(moduleSpecifier) == null) {
         indexTs.addExportDeclaration({
             moduleSpecifier,

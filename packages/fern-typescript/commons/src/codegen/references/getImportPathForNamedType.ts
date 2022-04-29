@@ -1,5 +1,6 @@
 import { NamedType } from "@fern-api/api";
 import { Directory, SourceFile } from "ts-morph";
+import { getRelativePathAsModuleSpecifierTo } from "../utils/getRelativePathAsModuleSpecifierTo";
 import { getFilePathForNamedType } from "./getFilePathForNamedType";
 
 export function getImportPathForNamedType({
@@ -20,5 +21,5 @@ export function getImportPathForNamedType({
         baseDirectory,
         typeName,
     });
-    return from.getRelativePathAsModuleSpecifierTo(filepathForType);
+    return getRelativePathAsModuleSpecifierTo(from, filepathForType);
 }

@@ -14,16 +14,16 @@ export function generateTypeReference({
     return TypeReference._visit(reference, {
         named: (named) => generateNamedTypeReference({ typeName: named, referencedIn, baseDirectory: modelDirectory }),
         primitive: (primitive) => {
-            return PrimitiveType.visit<ts.TypeNode>(primitive, {
-                Boolean: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword),
+            return PrimitiveType._visit<ts.TypeNode>(primitive, {
+                boolean: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword),
                 // TODO add datetime
                 // datetime: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                Double: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
-                Integer: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
-                Long: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
-                String: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                unknown: (value) => {
-                    throw new Error("Unexpected primitive type: " + value);
+                double: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
+                integer: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
+                long: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
+                string: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                _unknown: () => {
+                    throw new Error("Unexpected primitive type: " + primitive);
                 },
             });
         },
@@ -48,7 +48,7 @@ export function generateTypeReference({
                         ts.factory.createLiteralTypeNode(ts.factory.createNull()),
                         ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
                     ]),
-                unknown: () => {
+                _unknown: () => {
                     throw new Error("Unexpected container type: " + container._type);
                 },
             });
@@ -59,7 +59,7 @@ export function generateTypeReference({
                 ts.factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword),
             ]);
         },
-        unknown: () => {
+        _unknown: () => {
             throw new Error("Unexpected type reference: " + reference._type);
         },
     });

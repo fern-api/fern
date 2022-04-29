@@ -2,6 +2,7 @@ import { HttpService } from "@fern-api/api";
 import {
     getOrCreateDirectory,
     getOrCreateSourceFile,
+    getRelativePathAsModuleSpecifierTo,
     getTextOfTsKeyword,
     getTextOfTsNode,
     TypeResolver,
@@ -100,7 +101,7 @@ function generateService({
 
     serviceFile.addImportDeclaration({
         namespaceImport: ENDPOINTS_NAMESPACE_IMPORT,
-        moduleSpecifier: serviceFile.getRelativePathAsModuleSpecifierTo(endpointsDirectory),
+        moduleSpecifier: getRelativePathAsModuleSpecifierTo(serviceFile, endpointsDirectory),
     });
 
     for (const endpoint of service.endpoints) {

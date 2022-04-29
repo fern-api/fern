@@ -5,8 +5,11 @@ export function withProject(create: (project: Project) => void): Project {
     const project = new Project({
         useInMemoryFileSystem: true,
     });
+
     create(project);
+
     finalizeProject(project);
+
     return project;
 }
 

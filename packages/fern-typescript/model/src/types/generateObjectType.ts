@@ -23,17 +23,27 @@ export function generateObjectType({
     const node = file.addInterface({
         name: typeName,
         extends: shape.extends
-            .map((typeName) =>
-                generateNamedTypeReference({ typeName, referencedIn: file, baseDirectory: modelDirectory })
-            )
+            .map((typeName) => {
+                const reference = generateNamedTypeReference({
+                    typeName,
+                    referencedIn: file,
+                    baseDirectory: modelDirectory,
+                });
+
+                return reference;
+            })
             .map(getTextOfTsNode),
-        properties: shape.properties.map((field) => ({
-            name: field.key,
-            type: getTextOfTsNode(
-                generateTypeReference({ reference: field.valueType, referencedIn: file, modelDirectory })
-            ),
-            docs: field.docs != null ? [{ description: field.docs }] : undefined,
-        })),
+        properties: shape.properties.map((field) => {
+            const property = {
+                name: field.key,
+                type: getTextOfTsNode(
+                    generateTypeReference({ reference: field.valueType, referencedIn: file, modelDirectory })
+                ),
+                docs: field.docs != null ? [{ description: field.docs }] : undefined,
+            };
+
+            return property;
+        }),
         isExported: true,
     });
     maybeAddDocs(node, docs);
