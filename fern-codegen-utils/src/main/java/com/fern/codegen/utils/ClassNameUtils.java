@@ -14,6 +14,7 @@ public final class ClassNameUtils {
 
     public static final ClassName STRING_CLASS_NAME = ClassName.get(String.class);
     public static final ClassName OPTIONAL_CLASS_NAME = ClassName.get(Optional.class);
+    public static final ClassName EXCEPTION_CLASS_NAME = ClassName.get(Exception.class);
 
     private final List<String> packagePrefixes;
     private final TypeReferenceUtils typeReferenceUtils;
@@ -90,5 +91,6 @@ public final class ClassNameUtils {
         INTERFACES,
         TYPES,
         SERVICES,
+        ERRORS,
     }
 }

@@ -1,5 +1,6 @@
 package com.fern.codegen;
 
+import com.fern.codegen.stateless.generator.ApiExceptionGenerator;
 import com.fern.codegen.stateless.generator.AuthHeaderGenerator;
 import com.fern.codegen.stateless.generator.ClientObjectMapperGenerator;
 import com.fern.codegen.stateless.generator.ImmutablesStyleGenerator;
@@ -21,6 +22,8 @@ public final class GeneratorContext {
     private final GeneratedFile clientObjectMappersFile;
     private final GeneratedFile packagePrivateImmutablesFile;
     private final GeneratedFile authHeaderFile;
+    private final GeneratedFile apiExceptionFile;
+    private final GeneratedFile httpApiExceptionFile;
 
     public GeneratorContext(Optional<String> packagePrefix, Map<NamedType, TypeDefinition> typeDefinitionsByName) {
         this.classNameUtils = new ClassNameUtils(packagePrefix);
@@ -33,6 +36,8 @@ public final class GeneratorContext {
         this.clientObjectMappersFile = ClientObjectMapperGenerator.generateObjectMappersClass(classNameUtils);
         this.authHeaderFile = AuthHeaderGenerator.generateAuthHeaderClass(
                 classNameUtils, immutablesUtils, packagePrivateImmutablesFile.className());
+        this.apiExceptionFile = ApiExceptionGenerator.generateApiExceptionInterface(classNameUtils);
+        this.httpApiExceptionFile = ApiExceptionGenerator.generateHttpApiExceptionInterface(classNameUtils);
     }
 
     public ClassNameUtils getClassNameUtils() {
@@ -65,5 +70,13 @@ public final class GeneratorContext {
 
     public GeneratedFile getAuthHeaderFile() {
         return authHeaderFile;
+    }
+
+    public GeneratedFile getApiExceptionFile() {
+        return apiExceptionFile;
+    }
+
+    public GeneratedFile getHttpApiExceptionFile() {
+        return httpApiExceptionFile;
     }
 }

@@ -73,7 +73,7 @@ public final class ClientGeneratorCli {
         Map<NamedType, TypeDefinition> typeDefinitionsByName =
                 ir.types().stream().collect(Collectors.toUnmodifiableMap(TypeDefinition::name, Function.identity()));
         GeneratorContext generatorContext = new GeneratorContext(pluginConfig.packagePrefix(), typeDefinitionsByName);
-        ModelGenerator modelGenerator = new ModelGenerator(ir.types(), generatorContext);
+        ModelGenerator modelGenerator = new ModelGenerator(ir.types(), ir.errors(), generatorContext);
         ModelGeneratorResult modelGeneratorResult = modelGenerator.generate();
         List<GeneratedHttpService> generatedHttpServices = ir.services().http().stream()
                 .map(httpService -> {
@@ -88,10 +88,13 @@ public final class ClientGeneratorCli {
         generatedFiles.addAll(modelGeneratorResult.interfaces().values());
         generatedFiles.addAll(modelGeneratorResult.objects());
         generatedFiles.addAll(modelGeneratorResult.unions());
+        generatedFiles.addAll(modelGeneratorResult.exceptions());
         generatedFiles.add(generatorContext.getClientObjectMappersFile());
         generatedFiles.add(generatorContext.getStagedImmutablesFile());
         generatedFiles.add(generatorContext.getPackagePrivateImmutablesFile());
         generatedFiles.add(generatorContext.getAuthHeaderFile());
+        generatedFiles.add(generatorContext.getApiExceptionFile());
+        generatedFiles.add(generatorContext.getHttpApiExceptionFile());
         generatedHttpServices.forEach(generatedHttpService -> {
             generatedFiles.add(generatedHttpService);
             generatedFiles.addAll(generatedHttpService.generatedWireMessages());

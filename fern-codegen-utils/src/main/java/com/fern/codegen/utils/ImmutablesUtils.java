@@ -1,5 +1,7 @@
 package com.fern.codegen.utils;
 
+import com.errors.ErrorDefinition;
+import com.errors.ErrorProperty;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
@@ -27,6 +29,13 @@ public final class ImmutablesUtils {
         return objectTypeDefinition.properties().stream().collect(Collectors.toMap(Function.identity(), objectField -> {
             TypeName returnType = classNameUtils.getTypeNameFromTypeReference(true, objectField.valueType());
             return getKeyWordCompatibleImmutablesPropertyMethod(objectField.key(), returnType);
+        }));
+    }
+
+    public Map<ErrorProperty, MethodSpec> getImmutablesPropertyMethods(ErrorDefinition errorDefinition) {
+        return errorDefinition.properties().stream().collect(Collectors.toMap(Function.identity(), errorField -> {
+            TypeName returnType = classNameUtils.getTypeNameFromTypeReference(true, errorField.type());
+            return getKeyWordCompatibleImmutablesPropertyMethod(errorField.name(), returnType);
         }));
     }
 

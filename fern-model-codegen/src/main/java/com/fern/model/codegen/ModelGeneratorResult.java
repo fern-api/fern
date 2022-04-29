@@ -2,6 +2,7 @@ package com.fern.model.codegen;
 
 import com.fern.codegen.GeneratedAlias;
 import com.fern.codegen.GeneratedEnum;
+import com.fern.codegen.GeneratedException;
 import com.fern.codegen.GeneratedInterface;
 import com.fern.codegen.GeneratedObject;
 import com.fern.codegen.GeneratedUnion;
@@ -22,6 +23,8 @@ public interface ModelGeneratorResult {
     List<GeneratedObject> objects();
 
     List<GeneratedUnion> unions();
+
+    List<GeneratedException> exceptions();
 
     class Builder extends ImmutableModelGeneratorResult.Builder {}
 
