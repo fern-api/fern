@@ -1,5 +1,5 @@
 import { HttpEndpoint } from "@fern-api/api";
-import { getTextOfTsKeyword, getTextOfTsNode, TypeResolver, withSourceFile } from "@fern-typescript/commons";
+import { getOrCreateSourceFile, getTextOfTsKeyword, getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
 import { Directory, OptionalKind, PropertySignatureStructure, ts, Writers } from "ts-morph";
 import { generateWireMessageBodyReference } from "../generateWireMessageBodyReference";
 import { GeneratedEndpointTypes } from "../types";
@@ -46,49 +46,47 @@ export function generateResponseTypes({
               })
             : undefined;
 
-    withSourceFile({ directory: endpointDirectory, filepath: `${RESPONSE_TYPE_NAME}.ts` }, (responseFile) => {
-        responseFile.addTypeAlias({
-            name: RESPONSE_TYPE_NAME,
-            type: Writers.unionType(SUCCESS_RESPONSE_TYPE_NAME, ERROR_RESPONSE_TYPE_NAME),
-            isExported: true,
-        });
+    const responseFile = getOrCreateSourceFile(endpointDirectory, `${RESPONSE_TYPE_NAME}.ts`);
 
-        responseFile.addInterface({
-            name: SUCCESS_RESPONSE_TYPE_NAME,
-            isExported: true,
-            properties: generateSuccessResponse({
-                responseBodyReference:
-                    responseBody != null ? responseBody.generateTypeReference(responseFile) : undefined,
-            }),
-        });
+    responseFile.addTypeAlias({
+        name: RESPONSE_TYPE_NAME,
+        type: Writers.unionType(SUCCESS_RESPONSE_TYPE_NAME, ERROR_RESPONSE_TYPE_NAME),
+        isExported: true,
+    });
 
-        withSourceFile({ directory: endpointDirectory, filepath: `${ERROR_BODY_TYPE_NAME}.ts` }, (errorBodyFile) => {
-            responseFile.addInterface({
-                name: ERROR_RESPONSE_TYPE_NAME,
-                isExported: true,
-                properties: [
-                    {
-                        name: RESPONSE_OK_PROPERTY_NAME,
-                        type: getTextOfTsNode(ts.factory.createLiteralTypeNode(ts.factory.createFalse())),
-                    },
-                    {
-                        name: RESPONSE_STATUS_CODE_PROPERTY_NAME,
-                        type: getTextOfTsKeyword(ts.SyntaxKind.NumberKeyword),
-                    },
-                    {
-                        name: ERROR_BODY_PROPERTY_NAME,
-                        type: getTextOfTsNode(
-                            generateErrorBodyReference({
-                                endpoint,
-                                errorBodyFile,
-                                referencedIn: responseFile,
-                                errorsDirectory,
-                            })
-                        ),
-                    },
-                ],
-            });
-        });
+    responseFile.addInterface({
+        name: SUCCESS_RESPONSE_TYPE_NAME,
+        isExported: true,
+        properties: generateSuccessResponse({
+            responseBodyReference: responseBody != null ? responseBody.generateTypeReference(responseFile) : undefined,
+        }),
+    });
+
+    const errorBodyFile = getOrCreateSourceFile(endpointDirectory, `${ERROR_BODY_TYPE_NAME}.ts`);
+    responseFile.addInterface({
+        name: ERROR_RESPONSE_TYPE_NAME,
+        isExported: true,
+        properties: [
+            {
+                name: RESPONSE_OK_PROPERTY_NAME,
+                type: getTextOfTsNode(ts.factory.createLiteralTypeNode(ts.factory.createFalse())),
+            },
+            {
+                name: RESPONSE_STATUS_CODE_PROPERTY_NAME,
+                type: getTextOfTsKeyword(ts.SyntaxKind.NumberKeyword),
+            },
+            {
+                name: ERROR_BODY_PROPERTY_NAME,
+                type: getTextOfTsNode(
+                    generateErrorBodyReference({
+                        endpoint,
+                        errorBodyFile,
+                        referencedIn: responseFile,
+                        errorsDirectory,
+                    })
+                ),
+            },
+        ],
     });
 
     return {

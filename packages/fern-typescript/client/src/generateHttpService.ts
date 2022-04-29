@@ -1,10 +1,10 @@
 import { HttpService } from "@fern-api/api";
 import {
+    getOrCreateDirectory,
+    getOrCreateSourceFile,
     getTextOfTsKeyword,
     getTextOfTsNode,
     TypeResolver,
-    withDirectory,
-    withSourceFile,
 } from "@fern-typescript/commons";
 import { ClassDeclaration, Directory, Scope, ts } from "ts-morph";
 import {
@@ -32,22 +32,19 @@ export function generateHttpService({
     service: HttpService;
     typeResolver: TypeResolver;
 }): void {
-    withDirectory(
-        {
-            containingModule: servicesDirectory,
-            name: service.name.name,
-            namespaceExport: service.name.name,
+    const serviceDirectory = getOrCreateDirectory(servicesDirectory, service.name.name, {
+        exportOptions: {
+            type: "namespace",
+            namespace: service.name.name,
         },
-        (serviceDirectory) => {
-            generateService({
-                service,
-                serviceDirectory,
-                modelDirectory,
-                errorsDirectory,
-                typeResolver,
-            });
-        }
-    );
+    });
+    generateService({
+        service,
+        serviceDirectory,
+        modelDirectory,
+        errorsDirectory,
+        typeResolver,
+    });
 }
 
 function generateService({
@@ -63,65 +60,60 @@ function generateService({
     errorsDirectory: Directory;
     typeResolver: TypeResolver;
 }) {
-    withSourceFile(
-        {
-            directory: serviceDirectory,
-            filepath: `${service.name.name}.ts`,
+    const serviceFile = getOrCreateSourceFile(serviceDirectory, `${service.name.name}.ts`);
+    serviceFile.addImportDeclaration({
+        namedImports: ["Fetcher", "defaultFetcher", "Service"],
+        moduleSpecifier: "@fern-typescript/service-utils",
+    });
+
+    const serviceInterface = serviceFile.addInterface({
+        name: "Client",
+        isExported: true,
+    });
+
+    const serviceClass = serviceFile.addClass({
+        name: serviceInterface.getName(),
+        implements: [serviceInterface.getName()],
+        isExported: true,
+    });
+
+    serviceClass.addProperty({
+        name: BASE_URL_SERVICE_MEMBER,
+        scope: Scope.Private,
+        type: getTextOfTsKeyword(ts.SyntaxKind.StringKeyword),
+    });
+
+    serviceClass.addProperty({
+        name: FETCHER_SERVICE_MEMBER,
+        scope: Scope.Private,
+        type: getTextOfTsNode(ts.factory.createIdentifier("Fetcher")),
+    });
+
+    addConstructor(serviceClass);
+
+    const endpointsDirectory = getOrCreateDirectory(serviceDirectory, ENDPOINTS_DIRECTORY_NAME, {
+        exportOptions: {
+            type: "namespace",
+            namespace: "EndpointTypes",
         },
-        (serviceFile) => {
-            serviceFile.addImportDeclaration({
-                namedImports: ["Fetcher", "defaultFetcher", "Service"],
-                moduleSpecifier: "@fern-typescript/service-utils",
-            });
+    });
 
-            const serviceInterface = serviceFile.addInterface({
-                name: "Client",
-                isExported: true,
-            });
+    serviceFile.addImportDeclaration({
+        namespaceImport: ENDPOINTS_NAMESPACE_IMPORT,
+        moduleSpecifier: serviceFile.getRelativePathAsModuleSpecifierTo(endpointsDirectory),
+    });
 
-            const serviceClass = serviceFile.addClass({
-                name: serviceInterface.getName(),
-                implements: [serviceInterface.getName()],
-                isExported: true,
-            });
-
-            serviceClass.addProperty({
-                name: BASE_URL_SERVICE_MEMBER,
-                scope: Scope.Private,
-                type: getTextOfTsKeyword(ts.SyntaxKind.StringKeyword),
-            });
-
-            serviceClass.addProperty({
-                name: FETCHER_SERVICE_MEMBER,
-                scope: Scope.Private,
-                type: getTextOfTsNode(ts.factory.createIdentifier("Fetcher")),
-            });
-
-            addConstructor(serviceClass);
-
-            withDirectory(
-                { containingModule: serviceDirectory, name: ENDPOINTS_DIRECTORY_NAME, namespaceExport: "Endpoints" },
-                (endpointsDirectory) => {
-                    serviceFile.addImportDeclaration({
-                        namespaceImport: ENDPOINTS_NAMESPACE_IMPORT,
-                        moduleSpecifier: serviceFile.getRelativePathAsModuleSpecifierTo(endpointsDirectory),
-                    });
-
-                    for (const endpoint of service.endpoints) {
-                        addEndpointToService({
-                            endpoint,
-                            serviceInterface,
-                            serviceClass,
-                            modelDirectory,
-                            errorsDirectory,
-                            endpointsDirectory,
-                            typeResolver,
-                        });
-                    }
-                }
-            );
-        }
-    );
+    for (const endpoint of service.endpoints) {
+        addEndpointToService({
+            endpoint,
+            serviceInterface,
+            serviceClass,
+            modelDirectory,
+            errorsDirectory,
+            endpointsDirectory,
+            typeResolver,
+        });
+    }
 }
 function addConstructor(serviceClass: ClassDeclaration) {
     const SERVICE_INIT_PARAMETER_NAME = "args";

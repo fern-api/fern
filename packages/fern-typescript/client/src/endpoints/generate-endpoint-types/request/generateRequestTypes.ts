@@ -1,5 +1,5 @@
 import { HttpEndpoint, PathParameter, QueryParameter } from "@fern-api/api";
-import { TypeResolver, withSourceFile } from "@fern-typescript/commons";
+import { getOrCreateSourceFile, TypeResolver } from "@fern-typescript/commons";
 import { Directory, ts } from "ts-morph";
 import { generateWireMessageBodyReference } from "../generateWireMessageBodyReference";
 import { GeneratedEndpointTypes } from "../types";
@@ -64,13 +64,12 @@ export function generateRequestTypes({
 
     // Otherwise, we generate a Request type that contains all parameters and
     // the RequestBody (if it exists)
-    withSourceFile({ directory: endpointDirectory, filepath: `${REQUEST_TYPE_NAME}.ts` }, (requestFile) => {
-        generateRequest({
-            requestFile,
-            endpoint,
-            modelDirectory,
-            requestBodyReference: requestBody != null ? requestBody.generateTypeReference(requestFile) : undefined,
-        });
+    const requestFile = getOrCreateSourceFile(endpointDirectory, `${REQUEST_TYPE_NAME}.ts`);
+    generateRequest({
+        requestFile,
+        endpoint,
+        modelDirectory,
+        requestBodyReference: requestBody != null ? requestBody.generateTypeReference(requestFile) : undefined,
     });
 
     return {

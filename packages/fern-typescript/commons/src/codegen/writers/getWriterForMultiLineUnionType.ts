@@ -1,6 +1,6 @@
 import { ts, WriterFunction } from "ts-morph";
-import { getTextOfTsKeyword } from "./getTextOfTsKeyword";
-import { getTextOfTsNode } from "./getTextOfTsNode";
+import { getTextOfTsKeyword } from "../utils/getTextOfTsKeyword";
+import { getTextOfTsNode } from "../utils/getTextOfTsNode";
 
 export interface TsNodeMaybeWithDocs {
     node: ts.Node;
