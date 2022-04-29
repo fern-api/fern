@@ -1,14 +1,10 @@
 import { HttpEndpoint } from "@fern-api/api";
-import { TypeResolver, withDirectory } from "@fern-typescript/commons";
+import { getOrCreateDirectory, TypeResolver } from "@fern-typescript/commons";
 import { Directory } from "ts-morph";
 import { ENDPOINTS_DIRECTORY_NAME } from "../../constants";
 import { generateRequestTypes } from "./request/generateRequestTypes";
 import { generateResponseTypes } from "./response/generateResponseTypes";
 import { GeneratedEndpointTypes } from "./types";
-
-const noop = () => {
-    /* no-op */
-};
 
 export function generateEndpointTypes({
     endpoint,
@@ -25,14 +21,12 @@ export function generateEndpointTypes({
     errorsDirectory: Directory;
     typeResolver: TypeResolver;
 }): GeneratedEndpointTypes {
-    withDirectory(
-        {
-            containingModule: endpointsDirectory,
-            name: endpoint.endpointId,
-            namespaceExport: endpoint.endpointId,
+    getOrCreateDirectory(endpointsDirectory, endpoint.endpointId, {
+        exportOptions: {
+            type: "namespace",
+            namespace: endpoint.endpointId,
         },
-        noop
-    );
+    });
 
     const endpointDirectory = serviceDirectory
         .getDirectoryOrThrow(ENDPOINTS_DIRECTORY_NAME)

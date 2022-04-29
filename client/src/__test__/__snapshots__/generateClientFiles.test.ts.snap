@@ -20,11 +20,11 @@ export * from \\"./services\\";
  * An ID of a blog post
  */
 export type PostId = string & {
-    __PostId: void,
+    __PostId: void;
 };
 
 export const PostId = {
-    of: (value: string): PostId => value as PostId
+    of: (value: string): PostId => value as PostId,
 };
 ",
   "/src/model/commons/index.ts": "export * from \\"./PostId\\";
@@ -32,9 +32,7 @@ export const PostId = {
   "/src/model/index.ts": "export * from \\"./commons\\";
 export * from \\"./posts\\";
 ",
-  "/src/model/posts/Author.ts": "export type Author =
-    | Author.Anonymous
-    | Author.Named;
+  "/src/model/posts/Author.ts": "export type Author = Author.Anonymous | Author.Named;
 
 export declare namespace Author {
     interface Anonymous {
@@ -55,19 +53,25 @@ export declare namespace Author {
 
 export const Author = {
     anonymous: (): Author.Anonymous => ({
-        _type: \\"anonymous\\"
+        _type: \\"anonymous\\",
     }),
 
     named: (value: string): Author.Named => ({
         named: value,
-        _type: \\"named\\"
+        _type: \\"named\\",
     }),
 
-    _visit: <Result>(value: Author, visitor: Author._Visitor<Result>): Result => {
+    _visit: <Result>(
+        value: Author,
+        visitor: Author._Visitor<Result>
+    ): Result => {
         switch (value._type) {
-            case \\"anonymous\\": return visitor.anonymous();
-            case \\"named\\": return visitor.named(value.named);
-            default: return visitor._unknown();
+            case \\"anonymous\\":
+                return visitor.anonymous();
+            case \\"named\\":
+                return visitor.named(value.named);
+            default:
+                return visitor._unknown();
         }
     },
 };
@@ -87,29 +91,33 @@ export interface Post {
     content: string;
 }
 ",
-  "/src/model/posts/PostType.ts": "export type PostType =
-    | PostType.Long
-    | PostType.Short;
+  "/src/model/posts/PostType.ts": "export type PostType = PostType.Long | PostType.Short;
 
 export const PostType = {
     Long: \\"LONG\\" as PostType.Long,
     Short: \\"SHORT\\" as PostType.Short,
 
-    _visit: <Result>(value: PostType, visitor: PostType._Visitor<Result>): Result => {
+    _visit: <Result>(
+        value: PostType,
+        visitor: PostType._Visitor<Result>
+    ): Result => {
         switch (value) {
-            case PostType.Long: return visitor.long();
-            case PostType.Short: return visitor.short();
-            default: return visitor._unknown();
+            case PostType.Long:
+                return visitor.long();
+            case PostType.Short:
+                return visitor.short();
+            default:
+                return visitor._unknown();
         }
     },
 };
 
 export declare namespace PostType {
     export type Long = \\"LONG\\" & {
-        __Long: void,
+        __Long: void;
     };
     export type Short = \\"SHORT\\" & {
-        __Short: void,
+        __Short: void;
     };
 
     export interface _Visitor<Result> {
@@ -123,12 +131,21 @@ export declare namespace PostType {
 export * from \\"./Post\\";
 export * from \\"./PostType\\";
 ",
-  "/src/services/PostsService/PostsService.ts": "import { defaultFetcher, Fetcher, joinPaths, Service } from \\"@fern-typescript/service-utils\\";
+  "/src/services/PostsService/PostsService.ts": "import {
+    defaultFetcher,
+    Fetcher,
+    joinPaths,
+    Service,
+} from \\"@fern-typescript/service-utils\\";
 import * as endpoints from \\"./endpoints\\";
 
 export interface Client {
-    createPost(request: endpoints.createPost.RequestBody): Promise<endpoints.createPost.Response>;
-    getPost(request: endpoints.getPost.Request): Promise<endpoints.getPost.Response>;
+    createPost(
+        request: endpoints.createPost.RequestBody
+    ): Promise<endpoints.createPost.Response>;
+    getPost(
+        request: endpoints.getPost.Request
+    ): Promise<endpoints.getPost.Response>;
 }
 
 export class Client implements Client {
@@ -140,31 +157,34 @@ export class Client implements Client {
         this.baseUrl = joinPaths(args.serverUrl, args.serviceBaseUrl);
     }
 
-    public async createPost(request: endpoints.createPost.RequestBody): Promise<endpoints.createPost.Response> {
+    public async createPost(
+        request: endpoints.createPost.RequestBody
+    ): Promise<endpoints.createPost.Response> {
         const response = await this.fetcher({
             url: joinPaths(this.baseUrl, \\"/\\"),
             method: \\"POST\\",
             headers: {},
-            body: request
+            body: request,
         });
 
         if (response.statusCode >= 200 && response.statusCode < 300) {
             return {
                 ok: true,
                 statusCode: response.statusCode,
-                body: response.body as endpoints.createPost.ResponseBody
+                body: response.body as endpoints.createPost.ResponseBody,
             };
-        }
-        else {
+        } else {
             return {
                 ok: false,
                 statusCode: response.statusCode,
-                error: response.body as endpoints.createPost.ErrorBody
+                error: response.body as endpoints.createPost.ErrorBody,
             };
         }
     }
 
-    public async getPost(request: endpoints.getPost.Request): Promise<endpoints.getPost.Response> {
+    public async getPost(
+        request: endpoints.getPost.Request
+    ): Promise<endpoints.getPost.Response> {
         const queryParameters = new URLSearchParams();
         if (request.page != null) {
             queryParameters.append(\\"page\\", request.page.toString());
@@ -175,20 +195,19 @@ export class Client implements Client {
             url: joinPaths(this.baseUrl, \`/\${request.postId}\`),
             method: \\"GET\\",
             headers: {},
-            queryParameters
+            queryParameters,
         });
 
         if (response.statusCode >= 200 && response.statusCode < 300) {
             return {
                 ok: true,
-                statusCode: response.statusCode
+                statusCode: response.statusCode,
             };
-        }
-        else {
+        } else {
             return {
                 ok: false,
                 statusCode: response.statusCode,
-                error: response.body as endpoints.getPost.ErrorBody
+                error: response.body as endpoints.getPost.ErrorBody,
             };
         }
     }
@@ -203,7 +222,10 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+    _visit: <Result>(
+        _value: ErrorBody,
+        visitor: ErrorBody._Visitor<Result>
+    ): Result => {
         return visitor._unknown();
     },
 };
@@ -250,8 +272,7 @@ export * from \\"./ResponseBody\\";
 ",
   "/src/services/PostsService/endpoints/getPost/ErrorBody.ts": "import * as model from \\"../../../../errors\\";
 
-export type ErrorBody =
-    | ErrorBody.NotFound;
+export type ErrorBody = ErrorBody.NotFound;
 
 export declare namespace ErrorBody {
     interface NotFound extends model.PostNotFoundError {
@@ -267,13 +288,18 @@ export declare namespace ErrorBody {
 export const ErrorBody = {
     notFound: (value: model.PostNotFoundError): ErrorBody.NotFound => ({
         ...value,
-        _type: \\"notFound\\"
+        _type: \\"notFound\\",
     }),
 
-    _visit: <Result>(value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+    _visit: <Result>(
+        value: ErrorBody,
+        visitor: ErrorBody._Visitor<Result>
+    ): Result => {
         switch (value._type) {
-            case \\"notFound\\": return visitor.notFound(value);
-            default: return visitor._unknown();
+            case \\"notFound\\":
+                return visitor.notFound(value);
+            default:
+                return visitor._unknown();
         }
     },
 };
@@ -308,7 +334,7 @@ export * from \\"./Response\\";
   "/src/services/PostsService/endpoints/index.ts": "export * as createPost from \\"./createPost\\";
 export * as getPost from \\"./getPost\\";
 ",
-  "/src/services/PostsService/index.ts": "export * as Endpoints from \\"./endpoints\\";
+  "/src/services/PostsService/index.ts": "export * as EndpointTypes from \\"./endpoints\\";
 export * from \\"./PostsService\\";
 ",
   "/src/services/index.ts": "export * as PostsService from \\"./PostsService\\";

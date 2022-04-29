@@ -1,5 +1,5 @@
 import { WireMessage } from "@fern-api/api";
-import { assertNever, generateTypeReference, TypeResolver, withSourceFile } from "@fern-typescript/commons";
+import { assertNever, generateTypeReference, getOrCreateSourceFile, TypeResolver } from "@fern-typescript/commons";
 import { generateType } from "@fern-typescript/model";
 import { Directory, SourceFile, ts } from "ts-morph";
 
@@ -41,19 +41,15 @@ export function generateWireMessageBodyReference({
         case "object":
         case "union":
         case "enum": {
-            const wireMessageFile = withSourceFile(
-                { directory: endpointDirectory, filepath: `${typeName}.ts` },
-                (wireMessageFile) => {
-                    generateType({
-                        type: wireMessage.type,
-                        docs: wireMessage.docs,
-                        typeName,
-                        typeResolver,
-                        modelDirectory,
-                        file: wireMessageFile,
-                    });
-                }
-            );
+            const wireMessageFile = getOrCreateSourceFile(endpointDirectory, `${typeName}.ts`);
+            generateType({
+                type: wireMessage.type,
+                docs: wireMessage.docs,
+                typeName,
+                typeResolver,
+                modelDirectory,
+                file: wireMessageFile,
+            });
 
             return {
                 file: wireMessageFile,
