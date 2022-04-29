@@ -1,5 +1,10 @@
 import { ErrorDefinition } from "@fern-api/api";
-import { generateTypeReference, getFilePathForError, getTextOfTsNode, withSourceFile } from "@fern-typescript/commons";
+import {
+    generateTypeReference,
+    getFilePathForError,
+    getOrCreateSourceFile,
+    getTextOfTsNode,
+} from "@fern-typescript/commons";
 import { Directory } from "ts-morph";
 
 export function generateError({
@@ -16,17 +21,17 @@ export function generateError({
         error: error.name,
     });
 
-    withSourceFile({ directory: errorsDirectory, filepath }, (file) => {
-        file.addInterface({
-            name: error.name.name,
-            isExported: true,
-            properties: error.properties.map((property) => ({
-                name: property.name,
-                docs: property.docs != null ? [property.docs] : undefined,
-                type: getTextOfTsNode(
-                    generateTypeReference({ reference: property.type, referencedIn: file, modelDirectory })
-                ),
-            })),
-        });
+    const file = getOrCreateSourceFile(errorsDirectory, filepath);
+
+    file.addInterface({
+        name: error.name.name,
+        isExported: true,
+        properties: error.properties.map((property) => ({
+            name: property.name,
+            docs: property.docs != null ? [property.docs] : undefined,
+            type: getTextOfTsNode(
+                generateTypeReference({ reference: property.type, referencedIn: file, modelDirectory })
+            ),
+        })),
     });
 }

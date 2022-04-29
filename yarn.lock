@@ -1577,6 +1577,7 @@ __metadata:
     jest: ^27.5.1
     memfs: ^3.4.1
     prettier: ^2.6.1
+    prettier-plugin-organize-imports: ^2.3.4
     stylelint: ^14.6.1
     ts-morph: ^14.0.0
     typescript: ^4.6.3
@@ -6543,6 +6544,16 @@ __metadata:
   version: 1.1.2
   resolution: "prelude-ls@npm:1.1.2"
   checksum: c4867c87488e4a0c233e158e4d0d5565b609b105d75e4c05dc760840475f06b731332eb93cc8c9cecb840aa8ec323ca3c9a56ad7820ad2e63f0261dadcb154e4
+  languageName: node
+  linkType: hard
+
+"prettier-plugin-organize-imports@npm:^2.3.4":
+  version: 2.3.4
+  resolution: "prettier-plugin-organize-imports@npm:2.3.4"
+  peerDependencies:
+    prettier: ">=2.0"
+    typescript: ">=2.9"
+  checksum: 2298fcae0f16fd1a095cc3a33ba5d51b679b291518d404ad5eaca56fdcfbd55d35e26c5adffcb8664bfb45c2339b551b385cf03f48888c46d0348843d96024e1
   languageName: node
   linkType: hard
 

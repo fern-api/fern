@@ -1,12 +1,12 @@
 import { IntermediateRepresentation } from "@fern-api/api";
 import { compile } from "@fern-api/compiler";
-import { writeFiles } from "@fern-typescript/commons";
+import { withProject, writeFiles } from "@fern-typescript/commons";
 import { parseFernDirectory } from "fern-api";
 import { rm } from "fs/promises";
 import glob from "glob";
 import { vol } from "memfs";
 import path from "path";
-import { Directory, Project } from "ts-morph";
+import { Directory } from "ts-morph";
 import ts from "typescript";
 import { promisify } from "util";
 
@@ -38,13 +38,11 @@ export async function runEteTest({ directory, generateFiles, outputToDisk = fals
         throw new Error(JSON.stringify(compilerResult.failure));
     }
 
-    const project = new Project({
-        useInMemoryFileSystem: true,
-    });
-
-    generateFiles({
-        directory: project.createDirectory("src"),
-        intermediateRepresentation: compilerResult.intermediateRepresentation,
+    const project = withProject((p) => {
+        generateFiles({
+            directory: p.createDirectory("src"),
+            intermediateRepresentation: compilerResult.intermediateRepresentation,
+        });
     });
 
     // write to disk to check compilation
@@ -75,9 +73,8 @@ async function compileTypescript(directory: string) {
             noImplicitAny: false,
             strict: true,
             noUncheckedIndexedAccess: true,
-            // TODO uncomment these!
-            // noUnusedLocals: true,
-            // noUnusedParameters: true,
+            noUnusedLocals: true,
+            noUnusedParameters: true,
         },
     });
     const emitResult = program.emit();

@@ -1,5 +1,5 @@
 import { IntermediateRepresentation } from "@fern-api/api";
-import { TypeResolver, withDirectory } from "@fern-typescript/commons";
+import { getOrCreateDirectory, TypeResolver } from "@fern-typescript/commons";
 import { generateErrorFiles } from "@fern-typescript/errors";
 import { generateModelFiles } from "@fern-typescript/model";
 import { Directory } from "ts-morph";
@@ -26,15 +26,15 @@ export function generateClientFiles({
         modelDirectory,
     });
 
-    withDirectory({ containingModule: directory, name: "services" }, (servicesDirectory) => {
-        for (const service of intermediateRepresentation.services.http) {
-            generateHttpService({
-                service,
-                servicesDirectory,
-                modelDirectory,
-                errorsDirectory,
-                typeResolver,
-            });
-        }
-    });
+    const servicesDirectory = getOrCreateDirectory(directory, "services");
+
+    for (const service of intermediateRepresentation.services.http) {
+        generateHttpService({
+            service,
+            servicesDirectory,
+            modelDirectory,
+            errorsDirectory,
+            typeResolver,
+        });
+    }
 }
