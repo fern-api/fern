@@ -24,6 +24,7 @@ public final class GeneratorContext {
     private final GeneratedFile authHeaderFile;
     private final GeneratedFile apiExceptionFile;
     private final GeneratedFile httpApiExceptionFile;
+    private final GeneratedFile unknownRemoteExceptionFile;
 
     public GeneratorContext(Optional<String> packagePrefix, Map<NamedType, TypeDefinition> typeDefinitionsByName) {
         this.classNameUtils = new ClassNameUtils(packagePrefix);
@@ -38,6 +39,7 @@ public final class GeneratorContext {
                 classNameUtils, immutablesUtils, packagePrivateImmutablesFile.className());
         this.apiExceptionFile = ApiExceptionGenerator.generateApiExceptionInterface(classNameUtils);
         this.httpApiExceptionFile = ApiExceptionGenerator.generateHttpApiExceptionInterface(classNameUtils);
+        this.unknownRemoteExceptionFile = ApiExceptionGenerator.generateUnknownRemoteException(classNameUtils);
     }
 
     public ClassNameUtils getClassNameUtils() {
@@ -78,5 +80,9 @@ public final class GeneratorContext {
 
     public GeneratedFile getHttpApiExceptionFile() {
         return httpApiExceptionFile;
+    }
+
+    public GeneratedFile getUnknownRemoteExceptionFile() {
+        return unknownRemoteExceptionFile;
     }
 }

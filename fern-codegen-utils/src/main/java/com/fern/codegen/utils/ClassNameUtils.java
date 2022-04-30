@@ -31,6 +31,11 @@ public final class ClassNameUtils {
         return getClassName(namedType.name(), Optional.of(packageType), Optional.of(namedType.fernFilepath()));
     }
 
+    public ClassName getNestedClassName(ClassName outerClassName, String nestedClassName) {
+        String compatibleNestedClassName = getCompatibleClassName(nestedClassName);
+        return outerClassName.nestedClass(compatibleNestedClassName);
+    }
+
     public ClassName getClassName(
             String className, Optional<PackageType> generatedClassType, Optional<FernFilepath> fernFilepath) {
         String compatibleClassname = getCompatibleClassName(className);
@@ -83,6 +88,8 @@ public final class ClassNameUtils {
                 return "interfaces";
             case SERVICES:
                 return "services";
+            case ERRORS:
+                return "errors";
         }
         throw new IllegalStateException("Encountered unknown PackageType: " + packageType);
     }
