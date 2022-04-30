@@ -1,4 +1,4 @@
-import fs, { lstat } from "fs/promises";
+import fs from "fs/promises";
 import { IPromisesAPI } from "memfs/lib/promises";
 import path from "path";
 import { format } from "prettier";
@@ -16,7 +16,7 @@ export async function writeFiles(
         const formatted = format(file.getFullText(), {
             parser: "typescript",
             plugins: ["prettier-plugin-organize-imports"],
-            pluginSearchDirs: await getPluginSearchDirs(),
+            pluginSearchDirs: getPluginSearchDirs(),
             tabWidth: 4,
         });
 
@@ -25,32 +25,20 @@ export async function writeFiles(
 }
 
 // since this plugin might be run via npx, prettier might not be able to find
-// the node_modules/ folder that exists in npx's cache. Per
-// https://docs.npmjs.com/cli/v7/commands/npx, the node_modules is added to the
-// PATH, so we can find it from that environment variable.
-async function getPluginSearchDirs(): Promise<string[]> {
+// the node_modules/ folder that exists in npx's cache. npx adds
+// node_modules/.bin to the PATH, so we can find it from that environment
+// variable.
+const NPX_NPM_MODULES_REGEX = /(.*\/.npm\/_npx\/.*\/node_modules).*/;
+function getPluginSearchDirs(): string[] {
     if (process.env.PATH == null) {
         return [];
     }
 
-    const dirs: string[] = [];
-
-    await Promise.all(
-        process.env.PATH.split(":").map(async (pathItem) => {
-            if (await doesDirectoryExist(pathItem)) {
-                dirs.push(pathItem);
-            }
-        })
-    );
-
-    return dirs;
-}
-
-async function doesDirectoryExist(pathToDir: string): Promise<boolean> {
-    try {
-        const stats = await lstat(pathToDir);
-        return stats.isDirectory();
-    } catch (e) {
-        return false;
-    }
+    return process.env.PATH.split(":").reduce<string[]>((pluginDirs, pathItem) => {
+        const match = pathItem.match(NPX_NPM_MODULES_REGEX);
+        if (match?.[1] != null) {
+            pluginDirs.push(match[1]);
+        }
+        return pluginDirs;
+    }, []);
 }
