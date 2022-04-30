@@ -30,12 +30,14 @@ export async function writeFiles(
 // variable.
 const NPX_NPM_MODULES_REGEX = /(.*\/.npm\/_npx\/.*\/node_modules).*/;
 function getPluginSearchDirs(): string[] {
+    console.log("PATH is", process.env.PATH);
     if (process.env.PATH == null) {
         return [];
     }
 
     return process.env.PATH.split(":").reduce<string[]>((pluginDirs, pathItem) => {
         const match = pathItem.match(NPX_NPM_MODULES_REGEX);
+        console.log("Evaluating: pathItem", match);
         if (match?.[1] != null) {
             pluginDirs.push(match[1]);
         }
