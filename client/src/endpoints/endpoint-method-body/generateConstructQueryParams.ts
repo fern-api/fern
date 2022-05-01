@@ -102,7 +102,7 @@ function isTypeReferenceStringLike({
         container: () => false,
         primitive: isPrimitiveStringLike,
         void: () => false,
-        unknown: () => false,
+        _unknown: () => false,
     });
 }
 
@@ -120,17 +120,17 @@ function isNamedTypeStringLike({
         container: () => false,
         primitive: isPrimitiveStringLike,
         void: () => false,
-        unknown: () => false,
+        _unknown: () => false,
     });
 }
 
 function isPrimitiveStringLike(primitive: PrimitiveType): boolean {
-    return PrimitiveType.visit(primitive, {
-        String: () => true,
-        Integer: () => false,
-        Long: () => false,
-        Double: () => false,
-        Boolean: () => false,
-        unknown: () => false,
+    return PrimitiveType._visit(primitive, {
+        string: () => true,
+        integer: () => false,
+        long: () => false,
+        double: () => false,
+        boolean: () => false,
+        _unknown: () => false,
     });
 }

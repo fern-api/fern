@@ -1,5 +1,6 @@
 import { NamedType } from "@fern-api/api";
 import { Directory, SourceFile, ts } from "ts-morph";
+import { getRelativePathAsModuleSpecifierTo } from "../utils/getRelativePathAsModuleSpecifierTo";
 import { getImportPathForNamedType } from "./getImportPathForNamedType";
 
 const MODEL_NAMESPACE_IMPORT = "model";
@@ -20,17 +21,21 @@ export function generateNamedTypeReference({
 }): ts.TypeNode {
     // if we're importing from within the model directory, then import from the
     // actual filepath of the type
-    if (baseDirectory.isAncestorOf(referencedIn)) {
+
+    const isBaseDirectoryAncestorOfReferencedIn = baseDirectory.isAncestorOf(referencedIn);
+
+    if (isBaseDirectoryAncestorOfReferencedIn) {
         referencedIn.addImportDeclaration({
             moduleSpecifier: getImportPathForNamedType({ from: referencedIn, typeName, baseDirectory }),
             namedImports: [{ name: typeName.name }],
         });
+
         return ts.factory.createTypeReferenceNode(typeName.name);
     }
 
     // otherwise, just use `import * as model`
     referencedIn.addImportDeclaration({
-        moduleSpecifier: referencedIn.getRelativePathAsModuleSpecifierTo(baseDirectory),
+        moduleSpecifier: getRelativePathAsModuleSpecifierTo(referencedIn, baseDirectory),
         namespaceImport: MODEL_NAMESPACE_IMPORT,
     });
 
