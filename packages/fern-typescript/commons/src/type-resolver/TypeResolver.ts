@@ -93,12 +93,12 @@ export class TypeResolver {
                     primitive: ResolvedType.primitive,
                     container: ResolvedType.container,
                     void: ResolvedType.void,
-                    unknown: () => {
+                    _unknown: () => {
                         throw new Error("Unkonwn Alias type reference: " + alias.aliasOf._type);
                     },
                 }),
             enum: ResolvedType.enum,
-            unknown: () => {
+            _unknown: () => {
                 throw new Error("Unkonwn Type: " + type._type);
             },
         });

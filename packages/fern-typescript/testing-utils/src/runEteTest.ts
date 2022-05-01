@@ -66,6 +66,7 @@ async function compileTypescript(directory: string) {
         cwd: directory,
         absolute: true,
     });
+
     const program = ts.createProgram({
         rootNames: typescriptFileNames,
         options: {

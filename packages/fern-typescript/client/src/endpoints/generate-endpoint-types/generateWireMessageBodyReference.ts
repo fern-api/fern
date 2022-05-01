@@ -1,5 +1,11 @@
 import { WireMessage } from "@fern-api/api";
-import { assertNever, generateTypeReference, getOrCreateSourceFile, TypeResolver } from "@fern-typescript/commons";
+import {
+    assertNever,
+    generateTypeReference,
+    getOrCreateSourceFile,
+    getRelativePathAsModuleSpecifierTo,
+    TypeResolver,
+} from "@fern-typescript/commons";
 import { generateType } from "@fern-typescript/model";
 import { Directory, SourceFile, ts } from "ts-morph";
 
@@ -56,7 +62,7 @@ export function generateWireMessageBodyReference({
                 generateTypeReference: (referencedIn) => {
                     referencedIn.addImportDeclaration({
                         namedImports: [typeName],
-                        moduleSpecifier: referencedIn.getRelativePathAsModuleSpecifierTo(wireMessageFile),
+                        moduleSpecifier: getRelativePathAsModuleSpecifierTo(referencedIn, wireMessageFile),
                     });
 
                     return ts.factory.createTypeReferenceNode(typeName);

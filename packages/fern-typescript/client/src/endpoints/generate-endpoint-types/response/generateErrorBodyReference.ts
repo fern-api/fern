@@ -1,5 +1,5 @@
 import { HttpEndpoint, TypeReference } from "@fern-api/api";
-import { generateNamedTypeReference } from "@fern-typescript/commons";
+import { generateNamedTypeReference, getRelativePathAsModuleSpecifierTo } from "@fern-typescript/commons";
 import { generateUnionType } from "@fern-typescript/model";
 import { Directory, SourceFile, ts } from "ts-morph";
 import { ERROR_BODY_TYPE_NAME } from "./constants";
@@ -37,7 +37,7 @@ export function generateErrorBodyReference({
 
     referencedIn.addImportDeclaration({
         namedImports: [ERROR_BODY_TYPE_NAME],
-        moduleSpecifier: referencedIn.getRelativePathAsModuleSpecifierTo(errorBodyFile),
+        moduleSpecifier: getRelativePathAsModuleSpecifierTo(referencedIn, errorBodyFile),
     });
 
     return ts.factory.createTypeReferenceNode(ERROR_BODY_TYPE_NAME);
