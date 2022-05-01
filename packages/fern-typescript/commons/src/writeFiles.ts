@@ -15,30 +15,9 @@ export async function writeFiles(
 
         const formatted = format(file.getFullText(), {
             parser: "typescript",
-            plugins: ["prettier-plugin-organize-imports"],
-            pluginSearchDirs: getPluginSearchDirs(),
             tabWidth: 4,
         });
 
         await fileSystem.writeFile(filepath, formatted);
     }
-}
-
-// since this plugin might be run via npx, prettier might not be able to find
-// the node_modules/ folder that exists in npx's cache. npx adds
-// node_modules/.bin to the PATH, so we can find it from that environment
-// variable.
-const NPX_NPM_MODULES_REGEX = /(.*\/.npm\/_npx\/.*\/node_modules).*/;
-function getPluginSearchDirs(): string[] {
-    if (process.env.PATH == null) {
-        return [];
-    }
-
-    return process.env.PATH.split(":").reduce<string[]>((pluginDirs, pathItem) => {
-        const match = pathItem.match(NPX_NPM_MODULES_REGEX);
-        if (match?.[1] != null) {
-            pluginDirs.push(match[1]);
-        }
-        return pluginDirs;
-    }, []);
 }
