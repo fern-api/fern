@@ -1,4 +1,4 @@
-import { Directory, Project } from "ts-morph";
+import { Directory, Project, SourceFile } from "ts-morph";
 import { exportFromModule } from "./exportFromModule";
 
 export function withProject(create: (project: Project) => void): Project {
@@ -32,5 +32,11 @@ function finalizeDirectory(directory: Directory): void {
                 pathToExport: sourceFile.getFilePath(),
             });
         }
+        finalizeSourceFile(sourceFile);
     }
+}
+
+function finalizeSourceFile(sourceFile: SourceFile): void {
+    sourceFile.formatText();
+    sourceFile.organizeImports();
 }
