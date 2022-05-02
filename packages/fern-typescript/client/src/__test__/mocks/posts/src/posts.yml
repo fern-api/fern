@@ -51,8 +51,7 @@ services:
           queryParameters:
             page: optional<integer>
             otherParam: integer
-          response:
-            alias: string
+          response: commons.PostId
           errors:
             union:
               notFound: PostNotFoundError

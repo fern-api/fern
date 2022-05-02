@@ -1,7 +1,7 @@
 import { HttpEndpoint, NamedType, PrimitiveType, QueryParameter, TypeReference } from "@fern-api/api";
 import { ResolvedType, TypeResolver } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
-import { getQueryParameterReference } from "../generate-endpoint-types/request/generateRequestTypes";
+import { ENDPOINT_PARAMETER_NAME } from "../../constants";
 import { QUERY_PARAMETERS_VARIABLE_NAME } from "./constants";
 
 export function generateConstructQueryParams({
@@ -133,4 +133,11 @@ function isPrimitiveStringLike(primitive: PrimitiveType): boolean {
         boolean: () => false,
         _unknown: () => false,
     });
+}
+
+function getQueryParameterReference(queryParameter: QueryParameter): ts.PropertyAccessExpression {
+    return ts.factory.createPropertyAccessExpression(
+        ts.factory.createIdentifier(ENDPOINT_PARAMETER_NAME),
+        ts.factory.createIdentifier(queryParameter.key)
+    );
 }

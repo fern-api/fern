@@ -36,10 +36,10 @@ export function generateResponseTypes({
     typeResolver,
 }: generateResponseTypes.Args): generateResponseTypes.Return {
     const responseBody =
-        endpoint.request != null
+        endpoint.response != null
             ? generateWireMessageBodyReference({
                   typeName: RESPONSE_BODY_TYPE_NAME,
-                  wireMessage: endpoint.request,
+                  wireMessage: endpoint.response,
                   endpointDirectory,
                   modelDirectory,
                   typeResolver,
@@ -92,10 +92,15 @@ export function generateResponseTypes({
     return {
         responseBody:
             responseBody != null
-                ? {
-                      propertyName: RESPONSE_BODY_PROPERTY_NAME,
-                      identifier: ts.factory.createIdentifier(RESPONSE_BODY_TYPE_NAME),
-                  }
+                ? responseBody.file != null
+                    ? {
+                          isLocal: true,
+                          typeName: ts.factory.createIdentifier(RESPONSE_BODY_TYPE_NAME),
+                      }
+                    : {
+                          isLocal: false,
+                          generateTypeReference: responseBody.generateTypeReference,
+                      }
                 : undefined,
     };
 }
