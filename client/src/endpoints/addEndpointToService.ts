@@ -1,7 +1,7 @@
 import { HttpEndpoint } from "@fern-api/api";
 import { getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
 import { ClassDeclaration, Directory, InterfaceDeclaration, Scope, ts } from "ts-morph";
-import { ENDPOINTS_NAMESPACE_IMPORT } from "../constants";
+import { ENDPOINTS_NAMESPACE_IMPORT, ENDPOINT_PARAMETER_NAME } from "../constants";
 import { generateEndpointMethodBody } from "./endpoint-method-body/generateEndpointMethodBody";
 import { generateEndpointTypes } from "./generate-endpoint-types/generateEndpointTypes";
 import { RESPONSE_TYPE_NAME } from "./generate-endpoint-types/response/constants";
@@ -52,9 +52,9 @@ export function addEndpointToService({
         generatedEndpointTypes.endpointParameter != null
             ? [
                   {
-                      name: generatedEndpointTypes.endpointParameter.name,
+                      name: ENDPOINT_PARAMETER_NAME,
                       type: getTextOfTsNode(
-                          getReferenceToEndpointType(generatedEndpointTypes.endpointParameter.identifier)
+                          getReferenceToEndpointType(generatedEndpointTypes.endpointParameter.typeName)
                       ),
                   },
               ]

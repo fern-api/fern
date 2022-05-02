@@ -1,4 +1,4 @@
-import { ts } from "ts-morph";
+import { SourceFile, ts } from "ts-morph";
 import {
     ERROR_BODY_PROPERTY_NAME,
     ERROR_BODY_TYPE_NAME,
@@ -14,15 +14,19 @@ import {
 } from "./constants";
 
 export function generateReturnResponse({
+    serviceFile,
     endpointTypes,
     getReferenceToEndpointType,
 }: {
+    serviceFile: SourceFile;
     endpointTypes: GeneratedEndpointTypes;
     getReferenceToEndpointType: (identifier: ts.Identifier) => ts.TypeReferenceNode;
 }): ts.Statement {
     return ts.factory.createIfStatement(
         isStatusCodeOk(),
-        ts.factory.createBlock([generateReturnSuccessResponse({ endpointTypes, getReferenceToEndpointType })]),
+        ts.factory.createBlock([
+            generateReturnSuccessResponse({ endpointTypes, getReferenceToEndpointType, serviceFile }),
+        ]),
         ts.factory.createBlock([generateReturnErrorResponse({ getReferenceToEndpointType })])
     );
 }
@@ -50,9 +54,11 @@ function isStatusCodeOk() {
 }
 
 function generateReturnSuccessResponse({
+    serviceFile,
     endpointTypes,
     getReferenceToEndpointType,
 }: {
+    serviceFile: SourceFile;
     endpointTypes: GeneratedEndpointTypes;
     getReferenceToEndpointType: (identifier: ts.Identifier) => ts.TypeReferenceNode;
 }) {
@@ -79,7 +85,9 @@ function generateReturnSuccessResponse({
                         ts.factory.createIdentifier(RESPONSE_VARIABLE_NAME),
                         ts.factory.createIdentifier(FETCHER_RESPONSE_BODY_PROPERTY_NAME)
                     ),
-                    getReferenceToEndpointType(endpointTypes.responseBody.identifier)
+                    endpointTypes.responseBody.isLocal
+                        ? getReferenceToEndpointType(endpointTypes.responseBody.typeName)
+                        : endpointTypes.responseBody.generateTypeReference(serviceFile)
                 )
             )
         );

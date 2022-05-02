@@ -39,6 +39,6 @@ export function generateEndpointMethodBody({
         (writer) => {
             writer.newLine();
         },
-        getTextOfTsNode(generateReturnResponse({ endpointTypes, getReferenceToEndpointType })),
+        getTextOfTsNode(generateReturnResponse({ endpointTypes, getReferenceToEndpointType, serviceFile })),
     ];
 }

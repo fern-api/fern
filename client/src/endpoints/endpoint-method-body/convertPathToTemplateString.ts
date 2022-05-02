@@ -1,5 +1,5 @@
 import { ts } from "ts-morph";
-import { REQUEST_PARAMETER_NAME } from "../generate-endpoint-types/request/constants";
+import { ENDPOINT_PARAMETER_NAME } from "../../constants";
 
 const TEMPLATE_SPAN_REGEX = /\{(.*?)\}([^{]*)/g;
 
@@ -19,7 +19,7 @@ export function convertPathToTemplateString(path: string): ts.Expression {
             }
             return ts.factory.createTemplateSpan(
                 ts.factory.createPropertyAccessExpression(
-                    ts.factory.createIdentifier(REQUEST_PARAMETER_NAME),
+                    ts.factory.createIdentifier(ENDPOINT_PARAMETER_NAME),
                     ts.factory.createIdentifier(expression)
                 ),
                 index === matches.length - 1
