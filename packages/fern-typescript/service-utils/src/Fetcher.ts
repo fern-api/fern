@@ -1,3 +1,5 @@
+import { URLSearchParams } from "url";
+
 export type Fetcher = (args: Fetcher.Args) => Promise<Fetcher.Response>;
 
 export declare namespace Fetcher {

@@ -1,3 +1,5 @@
+import fetch, { Headers } from "node-fetch";
+import { URL } from "url";
 import { Fetcher } from "./Fetcher";
 
 export const defaultFetcher: Fetcher = async (args) => {

@@ -13,11 +13,12 @@ export function getOrCreateDirectory(
     { exportOptions }: getOrCreateDirectory.Options = {}
 ): Directory {
     const directory = containingModule.getDirectory(name) ?? containingModule.createDirectory(name);
-    exportFromModule({
-        module: containingModule,
-        pathToExport: directory.getPath(),
-        options: exportOptions,
-    });
-
+    if (exportOptions != null) {
+        exportFromModule({
+            module: containingModule,
+            pathToExport: directory.getPath(),
+            options: exportOptions,
+        });
+    }
     return directory;
 }
