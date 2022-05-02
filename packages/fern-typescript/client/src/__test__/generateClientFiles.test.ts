@@ -13,6 +13,7 @@ describe("generateClientFiles", () => {
                 intermediateRepresentation,
             });
         },
+        outputToDisk: true,
     });
 
     itFernETE("no errors", {

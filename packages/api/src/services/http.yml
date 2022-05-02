@@ -12,7 +12,6 @@ types:
   HttpAuth:
     enum:
       - BEARER
-      - BASIC
   HttpEndpoint:
     extends: commons.WithDocs
     properties:
