@@ -2,9 +2,9 @@
 
 exports[`generateModelFiles fern IR 1`] = `
 Object {
-  "/src/index.ts": "export * from \\"./model\\";
+  "/index.ts": "export * from \\"./model\\";
 ",
-  "/src/model/commons/PostId.ts": "/**
+  "/model/commons/PostId.ts": "/**
  * An ID of a blog post
  */
 export type PostId = string & {
@@ -15,13 +15,13 @@ export const PostId = {
     of: (value: string): PostId => value as PostId,
 };
 ",
-  "/src/model/commons/WithDocs.ts": "export interface WithDocs {
+  "/model/commons/WithDocs.ts": "export interface WithDocs {
     docs: string | null | undefined;
 }
 ",
-  "/src/model/commons/index.ts": "export * from \\"./WithDocs\\";
+  "/model/commons/index.ts": "export * from \\"./WithDocs\\";
 ",
-  "/src/model/errors/ErrorDefinition.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
+  "/model/errors/ErrorDefinition.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
 import { NamedType } from \\"../types/NamedType\\";
 import { ErrorProperty } from \\"./ErrorProperty\\";
 import { HttpErrorConfiguration } from \\"./HttpErrorConfiguration\\";
@@ -32,7 +32,7 @@ export interface ErrorDefinition extends WithDocs {
     http: HttpErrorConfiguration | null | undefined;
 }
 ",
-  "/src/model/errors/ErrorProperty.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
+  "/model/errors/ErrorProperty.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
 import { TypeReference } from \\"../types/TypeReference\\";
 
 export interface ErrorProperty extends WithDocs {
@@ -40,15 +40,15 @@ export interface ErrorProperty extends WithDocs {
     type: TypeReference;
 }
 ",
-  "/src/model/errors/HttpErrorConfiguration.ts": "export interface HttpErrorConfiguration {
+  "/model/errors/HttpErrorConfiguration.ts": "export interface HttpErrorConfiguration {
     statusCode: number;
 }
 ",
-  "/src/model/errors/index.ts": "export * from \\"./ErrorDefinition\\";
+  "/model/errors/index.ts": "export * from \\"./ErrorDefinition\\";
 export * from \\"./ErrorProperty\\";
 export * from \\"./HttpErrorConfiguration\\";
 ",
-  "/src/model/fern/IntermediateRepresentation.ts": "import { ErrorDefinition } from \\"../errors/ErrorDefinition\\";
+  "/model/fern/IntermediateRepresentation.ts": "import { ErrorDefinition } from \\"../errors/ErrorDefinition\\";
 import { TypeDefinition } from \\"../types/TypeDefinition\\";
 import { Services } from \\"./Services\\";
 
@@ -63,7 +63,7 @@ export interface IntermediateRepresentation {
     errors: ErrorDefinition[];
 }
 ",
-  "/src/model/fern/Services.ts": "import { HttpService } from \\"../services/http/HttpService\\";
+  "/model/fern/Services.ts": "import { HttpService } from \\"../services/http/HttpService\\";
 import { WebSocketService } from \\"../services/websocket/WebSocketService\\";
 
 export interface Services {
@@ -71,16 +71,16 @@ export interface Services {
     websocket: WebSocketService[];
 }
 ",
-  "/src/model/fern/index.ts": "export * from \\"./IntermediateRepresentation\\";
+  "/model/fern/index.ts": "export * from \\"./IntermediateRepresentation\\";
 export * from \\"./Services\\";
 ",
-  "/src/model/index.ts": "export * from \\"./commons\\";
+  "/model/index.ts": "export * from \\"./commons\\";
 export * from \\"./errors\\";
 export * from \\"./fern\\";
 export * from \\"./services\\";
 export * from \\"./types\\";
 ",
-  "/src/model/posts/Author.ts": "export type Author = Author.Anonymous | Author.Named;
+  "/model/posts/Author.ts": "export type Author = Author.Anonymous | Author.Named;
 
 export declare namespace Author {
     interface Anonymous {
@@ -124,7 +124,7 @@ export const Author = {
     },
 };
 ",
-  "/src/model/posts/CreatePostRequest.ts": "import { Author } from \\"./Author\\";
+  "/model/posts/CreatePostRequest.ts": "import { Author } from \\"./Author\\";
 
 export interface CreatePostRequest {
     title: string;
@@ -132,7 +132,7 @@ export interface CreatePostRequest {
     content: string;
 }
 ",
-  "/src/model/posts/Post.ts": "import { PostId } from \\"../commons/PostId\\";
+  "/model/posts/Post.ts": "import { PostId } from \\"../commons/PostId\\";
 import { Author } from \\"./Author\\";
 import { PostType } from \\"./PostType\\";
 
@@ -147,7 +147,7 @@ export interface Post {
     content: string;
 }
 ",
-  "/src/model/posts/PostType.ts": "export type PostType = PostType.Long | PostType.Short;
+  "/model/posts/PostType.ts": "export type PostType = PostType.Long | PostType.Short;
 
 export const PostType = {
     Long: \\"LONG\\" as PostType.Long,
@@ -183,12 +183,12 @@ export declare namespace PostType {
     }
 }
 ",
-  "/src/model/posts/index.ts": "export * from \\"./Author\\";
+  "/model/posts/index.ts": "export * from \\"./Author\\";
 export * from \\"./CreatePostRequest\\";
 export * from \\"./Post\\";
 export * from \\"./PostType\\";
 ",
-  "/src/model/services/commons/BaseService.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
+  "/model/services/commons/BaseService.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
 import { NamedType } from \\"../../types/NamedType\\";
 
 export interface BaseService extends WithDocs {
@@ -196,7 +196,7 @@ export interface BaseService extends WithDocs {
     name: NamedType;
 }
 ",
-  "/src/model/services/commons/ResponseError.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
+  "/model/services/commons/ResponseError.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
 import { NamedType } from \\"../../types/NamedType\\";
 
 export interface ResponseError extends WithDocs {
@@ -204,7 +204,7 @@ export interface ResponseError extends WithDocs {
     error: NamedType;
 }
 ",
-  "/src/model/services/commons/ResponseErrors.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
+  "/model/services/commons/ResponseErrors.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
 import { ResponseError } from \\"./ResponseError\\";
 
 export interface ResponseErrors extends WithDocs {
@@ -212,19 +212,19 @@ export interface ResponseErrors extends WithDocs {
     possibleErrors: ResponseError[];
 }
 ",
-  "/src/model/services/commons/WireMessage.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
+  "/model/services/commons/WireMessage.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
 import { Type } from \\"../../types/Type\\";
 
 export interface WireMessage extends WithDocs {
     type: Type;
 }
 ",
-  "/src/model/services/commons/index.ts": "export * from \\"./BaseService\\";
+  "/model/services/commons/index.ts": "export * from \\"./BaseService\\";
 export * from \\"./ResponseError\\";
 export * from \\"./ResponseErrors\\";
 export * from \\"./WireMessage\\";
 ",
-  "/src/model/services/http/HttpEndpoint.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
+  "/model/services/http/HttpEndpoint.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
 import { ResponseErrors } from \\"../commons/ResponseErrors\\";
 import { WireMessage } from \\"../commons/WireMessage\\";
 import { HttpHeader } from \\"./HttpHeader\\";
@@ -244,7 +244,7 @@ export interface HttpEndpoint extends WithDocs {
     errors: ResponseErrors;
 }
 ",
-  "/src/model/services/http/HttpHeader.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
+  "/model/services/http/HttpHeader.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
 import { TypeReference } from \\"../../types/TypeReference\\";
 
 export interface HttpHeader extends WithDocs {
@@ -252,7 +252,7 @@ export interface HttpHeader extends WithDocs {
     valueType: TypeReference;
 }
 ",
-  "/src/model/services/http/HttpMethod.ts": "export type HttpMethod =
+  "/model/services/http/HttpMethod.ts": "export type HttpMethod =
     | HttpMethod.Get
     | HttpMethod.Post
     | HttpMethod.Put
@@ -314,7 +314,7 @@ export declare namespace HttpMethod {
     }
 }
 ",
-  "/src/model/services/http/HttpService.ts": "import { BaseService } from \\"../commons/BaseService\\";
+  "/model/services/http/HttpService.ts": "import { BaseService } from \\"../commons/BaseService\\";
 import { HttpEndpoint } from \\"./HttpEndpoint\\";
 import { HttpHeader } from \\"./HttpHeader\\";
 
@@ -323,7 +323,7 @@ export interface HttpService extends BaseService {
     headers: HttpHeader[];
 }
 ",
-  "/src/model/services/http/PathParameter.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
+  "/model/services/http/PathParameter.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
 import { TypeReference } from \\"../../types/TypeReference\\";
 
 export interface PathParameter extends WithDocs {
@@ -331,7 +331,7 @@ export interface PathParameter extends WithDocs {
     valueType: TypeReference;
 }
 ",
-  "/src/model/services/http/QueryParameter.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
+  "/model/services/http/QueryParameter.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
 import { TypeReference } from \\"../../types/TypeReference\\";
 
 export interface QueryParameter extends WithDocs {
@@ -339,18 +339,18 @@ export interface QueryParameter extends WithDocs {
     valueType: TypeReference;
 }
 ",
-  "/src/model/services/http/index.ts": "export * from \\"./HttpEndpoint\\";
+  "/model/services/http/index.ts": "export * from \\"./HttpEndpoint\\";
 export * from \\"./HttpHeader\\";
 export * from \\"./HttpMethod\\";
 export * from \\"./HttpService\\";
 export * from \\"./PathParameter\\";
 export * from \\"./QueryParameter\\";
 ",
-  "/src/model/services/index.ts": "export * from \\"./commons\\";
+  "/model/services/index.ts": "export * from \\"./commons\\";
 export * from \\"./http\\";
 export * from \\"./websocket\\";
 ",
-  "/src/model/services/websocket/WebSocketMessage.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
+  "/model/services/websocket/WebSocketMessage.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
 import { ResponseErrors } from \\"../commons/ResponseErrors\\";
 import { WireMessage } from \\"../commons/WireMessage\\";
 import { WebSocketMessageOrigin } from \\"./WebSocketMessageOrigin\\";
@@ -363,7 +363,7 @@ export interface WebSocketMessage extends WithDocs {
     errors: ResponseErrors;
 }
 ",
-  "/src/model/services/websocket/WebSocketMessageOrigin.ts": "export type WebSocketMessageOrigin =
+  "/model/services/websocket/WebSocketMessageOrigin.ts": "export type WebSocketMessageOrigin =
     | WebSocketMessageOrigin.Client
     | WebSocketMessageOrigin.Server;
 
@@ -401,7 +401,7 @@ export declare namespace WebSocketMessageOrigin {
     }
 }
 ",
-  "/src/model/services/websocket/WebSocketMessageResponse.ts": "import { Type } from \\"../../types/Type\\";
+  "/model/services/websocket/WebSocketMessageResponse.ts": "import { Type } from \\"../../types/Type\\";
 import { WireMessage } from \\"../commons/WireMessage\\";
 import { WebSocketMessageResponseBehavior } from \\"./WebSocketMessageResponseBehavior\\";
 
@@ -411,7 +411,7 @@ export interface WebSocketMessageResponse extends WireMessage {
     type: Type;
 }
 ",
-  "/src/model/services/websocket/WebSocketMessageResponseBehavior.ts": "export type WebSocketMessageResponseBehavior =
+  "/model/services/websocket/WebSocketMessageResponseBehavior.ts": "export type WebSocketMessageResponseBehavior =
     | WebSocketMessageResponseBehavior.Ongoing
     | WebSocketMessageResponseBehavior.RequestResponse;
 
@@ -450,26 +450,26 @@ export declare namespace WebSocketMessageResponseBehavior {
     }
 }
 ",
-  "/src/model/services/websocket/WebSocketService.ts": "import { BaseService } from \\"../commons/BaseService\\";
+  "/model/services/websocket/WebSocketService.ts": "import { BaseService } from \\"../commons/BaseService\\";
 import { WebSocketMessage } from \\"./WebSocketMessage\\";
 
 export interface WebSocketService extends BaseService {
     messages: WebSocketMessage[];
 }
 ",
-  "/src/model/services/websocket/index.ts": "export * from \\"./WebSocketMessage\\";
+  "/model/services/websocket/index.ts": "export * from \\"./WebSocketMessage\\";
 export * from \\"./WebSocketMessageOrigin\\";
 export * from \\"./WebSocketMessageResponse\\";
 export * from \\"./WebSocketMessageResponseBehavior\\";
 export * from \\"./WebSocketService\\";
 ",
-  "/src/model/types/AliasTypeDefinition.ts": "import { TypeReference } from \\"./TypeReference\\";
+  "/model/types/AliasTypeDefinition.ts": "import { TypeReference } from \\"./TypeReference\\";
 
 export interface AliasTypeDefinition {
     aliasOf: TypeReference;
 }
 ",
-  "/src/model/types/ContainerType.ts": "import { MapType } from \\"./MapType\\";
+  "/model/types/ContainerType.ts": "import { MapType } from \\"./MapType\\";
 import { TypeReference } from \\"./TypeReference\\";
 
 export type ContainerType =
@@ -547,19 +547,19 @@ export const ContainerType = {
     },
 };
 ",
-  "/src/model/types/EnumTypeDefinition.ts": "import { EnumValue } from \\"./EnumValue\\";
+  "/model/types/EnumTypeDefinition.ts": "import { EnumValue } from \\"./EnumValue\\";
 
 export interface EnumTypeDefinition {
     values: EnumValue[];
 }
 ",
-  "/src/model/types/EnumValue.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
+  "/model/types/EnumValue.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
 
 export interface EnumValue extends WithDocs {
     value: string;
 }
 ",
-  "/src/model/types/FernFilepath.ts": "/**
+  "/model/types/FernFilepath.ts": "/**
  * A filepath to a Fern spec file, excluding the file extension
  */
 export type FernFilepath = string & {
@@ -570,21 +570,21 @@ export const FernFilepath = {
     of: (value: string): FernFilepath => value as FernFilepath,
 };
 ",
-  "/src/model/types/MapType.ts": "import { TypeReference } from \\"./TypeReference\\";
+  "/model/types/MapType.ts": "import { TypeReference } from \\"./TypeReference\\";
 
 export interface MapType {
     keyType: TypeReference;
     valueType: TypeReference;
 }
 ",
-  "/src/model/types/NamedType.ts": "import { FernFilepath } from \\"./FernFilepath\\";
+  "/model/types/NamedType.ts": "import { FernFilepath } from \\"./FernFilepath\\";
 
 export interface NamedType {
     fernFilepath: FernFilepath;
     name: string;
 }
 ",
-  "/src/model/types/ObjectProperty.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
+  "/model/types/ObjectProperty.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
 import { TypeReference } from \\"./TypeReference\\";
 
 export interface ObjectProperty extends WithDocs {
@@ -592,7 +592,7 @@ export interface ObjectProperty extends WithDocs {
     valueType: TypeReference;
 }
 ",
-  "/src/model/types/ObjectTypeDefinition.ts": "import { NamedType } from \\"./NamedType\\";
+  "/model/types/ObjectTypeDefinition.ts": "import { NamedType } from \\"./NamedType\\";
 import { ObjectProperty } from \\"./ObjectProperty\\";
 
 export interface ObjectTypeDefinition {
@@ -601,7 +601,7 @@ export interface ObjectTypeDefinition {
     properties: ObjectProperty[];
 }
 ",
-  "/src/model/types/PrimitiveType.ts": "export type PrimitiveType =
+  "/model/types/PrimitiveType.ts": "export type PrimitiveType =
     | PrimitiveType.Integer
     | PrimitiveType.Double
     | PrimitiveType.String
@@ -665,7 +665,7 @@ export declare namespace PrimitiveType {
     }
 }
 ",
-  "/src/model/types/SingleUnionType.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
+  "/model/types/SingleUnionType.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
 import { TypeReference } from \\"./TypeReference\\";
 
 export interface SingleUnionType extends WithDocs {
@@ -673,7 +673,7 @@ export interface SingleUnionType extends WithDocs {
     valueType: TypeReference;
 }
 ",
-  "/src/model/types/Type.ts": "import { AliasTypeDefinition } from \\"./AliasTypeDefinition\\";
+  "/model/types/Type.ts": "import { AliasTypeDefinition } from \\"./AliasTypeDefinition\\";
 import { EnumTypeDefinition } from \\"./EnumTypeDefinition\\";
 import { ObjectTypeDefinition } from \\"./ObjectTypeDefinition\\";
 import { UnionTypeDefinition } from \\"./UnionTypeDefinition\\";
@@ -743,7 +743,7 @@ export const Type = {
     },
 };
 ",
-  "/src/model/types/TypeDefinition.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
+  "/model/types/TypeDefinition.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
 import { NamedType } from \\"./NamedType\\";
 import { Type } from \\"./Type\\";
 
@@ -755,7 +755,7 @@ export interface TypeDefinition extends WithDocs {
     shape: Type;
 }
 ",
-  "/src/model/types/TypeReference.ts": "import { ContainerType } from \\"./ContainerType\\";
+  "/model/types/TypeReference.ts": "import { ContainerType } from \\"./ContainerType\\";
 import { NamedType } from \\"./NamedType\\";
 import { PrimitiveType } from \\"./PrimitiveType\\";
 
@@ -832,14 +832,14 @@ export const TypeReference = {
     },
 };
 ",
-  "/src/model/types/UnionTypeDefinition.ts": "import { SingleUnionType } from \\"./SingleUnionType\\";
+  "/model/types/UnionTypeDefinition.ts": "import { SingleUnionType } from \\"./SingleUnionType\\";
 
 export interface UnionTypeDefinition {
     discriminant: string;
     types: SingleUnionType[];
 }
 ",
-  "/src/model/types/index.ts": "export * from \\"./AliasTypeDefinition\\";
+  "/model/types/index.ts": "export * from \\"./AliasTypeDefinition\\";
 export * from \\"./ContainerType\\";
 export * from \\"./EnumTypeDefinition\\";
 export * from \\"./EnumValue\\";
@@ -860,9 +860,9 @@ export * from \\"./UnionTypeDefinition\\";
 
 exports[`generateModelFiles posts 1`] = `
 Object {
-  "/src/index.ts": "export * from \\"./model\\";
+  "/index.ts": "export * from \\"./model\\";
 ",
-  "/src/model/commons/PostId.ts": "/**
+  "/model/commons/PostId.ts": "/**
  * An ID of a blog post
  */
 export type PostId = string & {
@@ -873,12 +873,12 @@ export const PostId = {
     of: (value: string): PostId => value as PostId,
 };
 ",
-  "/src/model/commons/index.ts": "export * from \\"./PostId\\";
+  "/model/commons/index.ts": "export * from \\"./PostId\\";
 ",
-  "/src/model/index.ts": "export * from \\"./commons\\";
+  "/model/index.ts": "export * from \\"./commons\\";
 export * from \\"./posts\\";
 ",
-  "/src/model/posts/Author.ts": "export type Author = Author.Anonymous | Author.Named;
+  "/model/posts/Author.ts": "export type Author = Author.Anonymous | Author.Named;
 
 export declare namespace Author {
     interface Anonymous {
@@ -922,7 +922,7 @@ export const Author = {
     },
 };
 ",
-  "/src/model/posts/CreatePostRequest.ts": "import { Author } from \\"./Author\\";
+  "/model/posts/CreatePostRequest.ts": "import { Author } from \\"./Author\\";
 
 export interface CreatePostRequest {
     title: string;
@@ -930,7 +930,7 @@ export interface CreatePostRequest {
     content: string;
 }
 ",
-  "/src/model/posts/Post.ts": "import { PostId } from \\"../commons/PostId\\";
+  "/model/posts/Post.ts": "import { PostId } from \\"../commons/PostId\\";
 import { Author } from \\"./Author\\";
 import { PostType } from \\"./PostType\\";
 
@@ -945,7 +945,7 @@ export interface Post {
     content: string;
 }
 ",
-  "/src/model/posts/PostType.ts": "export type PostType = PostType.Long | PostType.Short;
+  "/model/posts/PostType.ts": "export type PostType = PostType.Long | PostType.Short;
 
 export const PostType = {
     Long: \\"LONG\\" as PostType.Long,
@@ -981,7 +981,7 @@ export declare namespace PostType {
     }
 }
 ",
-  "/src/model/posts/index.ts": "export * from \\"./Author\\";
+  "/model/posts/index.ts": "export * from \\"./Author\\";
 export * from \\"./CreatePostRequest\\";
 export * from \\"./Post\\";
 export * from \\"./PostType\\";
