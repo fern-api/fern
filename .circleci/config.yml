@@ -104,7 +104,7 @@ jobs:
           command: |
             projectVersion=$(./gradlew printVersion --quiet)
             ./gradlew :fern-client-cli:dockerTag"$projectVersion"
-            docker tag fern-java-client:"$version" fernapi/fern-java-client:"$projectVersion"
+            docker tag fern-java-client:"projectVersion" fernapi/fern-java-client:"$projectVersion"
             docker push fernapi/fern-java-client:"$projectVersion"
           name: Publish
 
