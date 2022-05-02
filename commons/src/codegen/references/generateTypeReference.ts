@@ -6,13 +6,22 @@ export function generateTypeReference({
     reference,
     referencedIn,
     modelDirectory,
+    forceUseNamespaceImport,
 }: {
     reference: TypeReference;
     referencedIn: SourceFile;
     modelDirectory: Directory;
+    forceUseNamespaceImport?: generateNamedTypeReference.Args["forceUseNamespaceImport"];
 }): ts.TypeNode {
     return TypeReference._visit(reference, {
-        named: (named) => generateNamedTypeReference({ typeName: named, referencedIn, baseDirectory: modelDirectory }),
+        named: (named) =>
+            generateNamedTypeReference({
+                typeName: named,
+                referencedIn,
+                baseDirectory: modelDirectory,
+                baseDirectoryType: "model",
+                forceUseNamespaceImport,
+            }),
         primitive: (primitive) => {
             return PrimitiveType._visit<ts.TypeNode>(primitive, {
                 boolean: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword),

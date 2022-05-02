@@ -10,6 +10,7 @@ types:
       title: string
       author: Author
       content: string
+      relatedPosts: list<Post>
 
   PostType:
     enum:
