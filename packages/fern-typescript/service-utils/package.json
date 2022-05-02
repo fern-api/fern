@@ -18,8 +18,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "node-fetch": "^3.2.4",
-    "url": "^0.11.0"
+    "node-fetch": "^3.2.4"
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",
