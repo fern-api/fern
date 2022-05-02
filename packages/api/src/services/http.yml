@@ -6,8 +6,13 @@ types:
   HttpService:
     extends: serviceCommons.BaseService
     properties:
+      auth: optional<HttpAuth>
       endpoints: list<HttpEndpoint>
       headers: list<HttpHeader>
+  HttpAuth:
+    enum:
+      - BEARER
+      - BASIC
   HttpEndpoint:
     extends: commons.WithDocs
     properties:
