@@ -1,14 +1,9 @@
-import { HttpEndpoint, PathParameter, QueryParameter } from "@fern-api/api";
+import { HttpEndpoint } from "@fern-api/api";
 import { getOrCreateSourceFile, TypeResolver } from "@fern-typescript/commons";
 import { Directory, ts } from "ts-morph";
 import { generateWireMessageBodyReference } from "../generateWireMessageBodyReference";
 import { GeneratedEndpointTypes } from "../types";
-import {
-    REQUEST_BODY_PROPERTY_NAME,
-    REQUEST_BODY_TYPE_NAME,
-    REQUEST_PARAMETER_NAME,
-    REQUEST_TYPE_NAME,
-} from "./constants";
+import { REQUEST_BODY_PROPERTY_NAME, REQUEST_BODY_TYPE_NAME, REQUEST_TYPE_NAME } from "./constants";
 import { generateRequest } from "./generateRequest";
 
 export declare namespace generateRequestTypes {
@@ -52,12 +47,11 @@ export function generateRequestTypes({
     if (requestBody?.file != null && numParameters === 0) {
         return {
             endpointParameter: {
-                name: REQUEST_PARAMETER_NAME,
-                type: ts.factory.createTypeReferenceNode(REQUEST_BODY_TYPE_NAME),
-                identifier: ts.factory.createIdentifier(REQUEST_BODY_TYPE_NAME),
+                typeName: ts.factory.createIdentifier(REQUEST_BODY_TYPE_NAME),
             },
             requestBody: {
-                reference: ts.factory.createIdentifier(REQUEST_PARAMETER_NAME),
+                isLocal: true,
+                typeName: ts.factory.createIdentifier(REQUEST_BODY_TYPE_NAME),
             },
         };
     }
@@ -74,32 +68,21 @@ export function generateRequestTypes({
 
     return {
         endpointParameter: {
-            name: REQUEST_PARAMETER_NAME,
-            type: ts.factory.createTypeReferenceNode(REQUEST_TYPE_NAME),
-            identifier: ts.factory.createIdentifier(REQUEST_TYPE_NAME),
+            typeName: ts.factory.createIdentifier(REQUEST_TYPE_NAME),
         },
         requestBody:
             requestBody != null
-                ? {
-                      reference: ts.factory.createPropertyAccessExpression(
-                          ts.factory.createIdentifier(REQUEST_PARAMETER_NAME),
-                          ts.factory.createIdentifier(REQUEST_BODY_PROPERTY_NAME)
-                      ),
-                  }
+                ? requestBody.file != null
+                    ? {
+                          isLocal: true,
+                          typeName: ts.factory.createIdentifier(REQUEST_BODY_TYPE_NAME),
+                          propertyName: REQUEST_BODY_PROPERTY_NAME,
+                      }
+                    : {
+                          isLocal: false,
+                          generateTypeReference: requestBody.generateTypeReference,
+                          propertyName: REQUEST_BODY_PROPERTY_NAME,
+                      }
                 : undefined,
     };
-}
-
-export function getQueryParameterReference(queryParameter: QueryParameter): ts.PropertyAccessExpression {
-    return ts.factory.createPropertyAccessExpression(
-        ts.factory.createIdentifier(REQUEST_PARAMETER_NAME),
-        ts.factory.createIdentifier(queryParameter.key)
-    );
-}
-
-export function getPathParameterReference(pathParameter: PathParameter): ts.PropertyAccessExpression {
-    return ts.factory.createPropertyAccessExpression(
-        ts.factory.createIdentifier(REQUEST_PARAMETER_NAME),
-        ts.factory.createIdentifier(pathParameter.key)
-    );
 }

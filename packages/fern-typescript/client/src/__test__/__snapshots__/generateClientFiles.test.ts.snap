@@ -137,6 +137,7 @@ export * from \\"./PostType\\";
     joinPaths,
     Service,
 } from \\"@fern-typescript/service-utils\\";
+import * as model from \\"../../model\\";
 import * as endpoints from \\"./endpoints\\";
 
 export interface Client {
@@ -171,7 +172,7 @@ export class Client implements Client {
             return {
                 ok: true,
                 statusCode: response.statusCode,
-                body: response.body as endpoints.createPost.ResponseBody,
+                body: response.body as model.PostId,
             };
         } else {
             return {
@@ -202,6 +203,7 @@ export class Client implements Client {
             return {
                 ok: true,
                 statusCode: response.statusCode,
+                body: response.body as model.PostId,
             };
         } else {
             return {
@@ -239,15 +241,15 @@ export interface RequestBody {
     content: string;
 }
 ",
-  "/src/services/PostsService/endpoints/createPost/Response.ts": "import { ErrorBody } from \\"./ErrorBody\\";
-import { ResponseBody } from \\"./ResponseBody\\";
+  "/src/services/PostsService/endpoints/createPost/Response.ts": "import * as model from \\"../../../../model\\";
+import { ErrorBody } from \\"./ErrorBody\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
 export interface SuccessResponse {
     ok: true;
     statusCode: number;
-    body: ResponseBody;
+    body: model.PostId;
 }
 
 export interface ErrorResponse {
@@ -256,19 +258,9 @@ export interface ErrorResponse {
     error: ErrorBody;
 }
 ",
-  "/src/services/PostsService/endpoints/createPost/ResponseBody.ts": "import * as model from \\"../../../../model\\";
-
-export interface ResponseBody {
-    type: model.PostType;
-    title: string;
-    author: model.Author;
-    content: string;
-}
-",
   "/src/services/PostsService/endpoints/createPost/index.ts": "export * from \\"./ErrorBody\\";
 export * from \\"./RequestBody\\";
 export * from \\"./Response\\";
-export * from \\"./ResponseBody\\";
 ",
   "/src/services/PostsService/endpoints/getPost/ErrorBody.ts": "import * as model from \\"../../../../errors\\";
 
@@ -312,13 +304,15 @@ export interface Request {
     otherParam: number;
 }
 ",
-  "/src/services/PostsService/endpoints/getPost/Response.ts": "import { ErrorBody } from \\"./ErrorBody\\";
+  "/src/services/PostsService/endpoints/getPost/Response.ts": "import * as model from \\"../../../../model\\";
+import { ErrorBody } from \\"./ErrorBody\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
 export interface SuccessResponse {
     ok: true;
     statusCode: number;
+    body: model.PostId;
 }
 
 export interface ErrorResponse {

@@ -1,7 +1,7 @@
 import { HttpEndpoint } from "@fern-api/api";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { SourceFile, StatementStructures, StructureKind, ts, VariableDeclarationKind } from "ts-morph";
-import { BASE_URL_SERVICE_MEMBER, FETCHER_SERVICE_MEMBER } from "../../constants";
+import { BASE_URL_SERVICE_MEMBER, ENDPOINT_PARAMETER_NAME, FETCHER_SERVICE_MEMBER } from "../../constants";
 import { generateJoinPathsCall } from "../../utils/generateJoinPathsCall";
 import { GeneratedEndpointTypes } from "../generate-endpoint-types/types";
 import {
@@ -67,7 +67,12 @@ export function generateFetcherCall({
         fetcherArgs.push(
             ts.factory.createPropertyAssignment(
                 ts.factory.createIdentifier(FETCHER_REQUEST_BODY_PROPERTY_NAME),
-                endpointTypes.requestBody.reference
+                endpointTypes.requestBody.propertyName != null
+                    ? ts.factory.createPropertyAccessExpression(
+                          ts.factory.createIdentifier(ENDPOINT_PARAMETER_NAME),
+                          endpointTypes.requestBody.propertyName
+                      )
+                    : ts.factory.createIdentifier(ENDPOINT_PARAMETER_NAME)
             )
         );
     }
