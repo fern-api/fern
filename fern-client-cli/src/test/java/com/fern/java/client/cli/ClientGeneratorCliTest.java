@@ -7,6 +7,6 @@ public class ClientGeneratorCliTest {
     @Test
     public void test_basic() {
         ClientGeneratorCli.main(
-                "fern-client-cli/src/test/resources/fern-ir.json", "fern-ir-test", "com.fern");
+                "fern-client-cli/src/test/resources/ir.json", "fern-ir-test", "com.fern");
     }
 }
