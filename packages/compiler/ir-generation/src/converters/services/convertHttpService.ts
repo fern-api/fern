@@ -1,4 +1,4 @@
-import { FernFilepath, HttpEndpoint, HttpMethod, HttpService } from "@fern-api/api";
+import { FernFilepath, HttpAuth, HttpEndpoint, HttpMethod, HttpService } from "@fern-api/api";
 import { RawSchemas } from "@fern-api/syntax-analysis";
 import { getDocs } from "../../utils/getDocs";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
@@ -20,6 +20,7 @@ export function convertHttpService({
 
     return {
         docs: serviceDefinition.docs,
+        auth: serviceDefinition.auth !== undefined ? convertHttpAuth(serviceDefinition.auth) : null,
         name: {
             name: serviceId,
             fernFilepath,
@@ -89,5 +90,14 @@ function convertHttpMethod(method: RawSchemas.HttpEndpointSchema["method"]): Htt
             return HttpMethod.Patch;
         case "DELETE":
             return HttpMethod.Delete;
+    }
+}
+
+function convertHttpAuth(auth: "bearer" | "basic"): HttpAuth {
+    switch (auth) {
+        case "basic":
+            return HttpAuth.Basic;
+        case "bearer":
+            return HttpAuth.Bearer;
     }
 }
