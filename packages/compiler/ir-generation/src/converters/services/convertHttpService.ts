@@ -21,7 +21,7 @@ export function convertHttpService({
 
     return {
         docs: serviceDefinition.docs,
-        auth: serviceDefinition.auth !== undefined ? convertHttpAuth(serviceDefinition.auth) : null,
+        auth: serviceDefinition.auth != null ? convertHttpAuth(serviceDefinition.auth) : null,
         name: {
             name: serviceId,
             fernFilepath,
