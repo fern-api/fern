@@ -54,7 +54,9 @@ export function addEndpointToService({
                   {
                       name: ENDPOINT_PARAMETER_NAME,
                       type: getTextOfTsNode(
-                          getReferenceToEndpointType(generatedEndpointTypes.endpointParameter.typeName)
+                          generatedEndpointTypes.endpointParameter.isLocal
+                              ? getReferenceToEndpointType(generatedEndpointTypes.endpointParameter.typeName)
+                              : generatedEndpointTypes.endpointParameter.generateTypeReference(serviceFile)
                       ),
                   },
               ]
