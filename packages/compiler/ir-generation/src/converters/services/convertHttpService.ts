@@ -1,5 +1,6 @@
 import { FernFilepath, HttpAuth, HttpEndpoint, HttpMethod, HttpService } from "@fern-api/api";
 import { RawSchemas } from "@fern-api/syntax-analysis";
+import { assertNever } from "../../utils/assertNever";
 import { getDocs } from "../../utils/getDocs";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { convertResponseErrors } from "./convertResponseErrors";
@@ -90,14 +91,16 @@ function convertHttpMethod(method: RawSchemas.HttpEndpointSchema["method"]): Htt
             return HttpMethod.Patch;
         case "DELETE":
             return HttpMethod.Delete;
+        default:
+            assertNever(method);
     }
 }
 
-function convertHttpAuth(auth: "bearer" | "basic"): HttpAuth {
+function convertHttpAuth(auth: RawSchemas.AuthSchema): HttpAuth {
     switch (auth) {
-        case "basic":
-            return HttpAuth.Basic;
         case "bearer":
             return HttpAuth.Bearer;
+        default:
+            assertNever(auth);
     }
 }

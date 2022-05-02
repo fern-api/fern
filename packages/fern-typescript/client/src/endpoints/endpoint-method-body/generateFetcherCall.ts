@@ -1,7 +1,12 @@
 import { HttpEndpoint } from "@fern-api/api";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { SourceFile, StatementStructures, StructureKind, ts, VariableDeclarationKind } from "ts-morph";
-import { BASE_URL_SERVICE_MEMBER, ENDPOINT_PARAMETER_NAME, FETCHER_SERVICE_MEMBER } from "../../constants";
+import {
+    BASE_URL_SERVICE_MEMBER,
+    ENDPOINT_PARAMETER_NAME,
+    FETCHER_SERVICE_MEMBER,
+    TOKEN_SERVICE_MEMBER,
+} from "../../constants";
 import { generateJoinPathsCall } from "../../utils/generateJoinPathsCall";
 import { GeneratedEndpointTypes } from "../generate-endpoint-types/types";
 import {
@@ -9,6 +14,7 @@ import {
     FETCHER_REQUEST_HEADER_PARAMETER_NAME,
     FETCHER_REQUEST_METHOD_PARAMETER_NAME,
     FETCHER_REQUEST_QUERY_PARAMS_PARAMETER_NAME,
+    FETCHER_REQUEST_TOKEN_PROPERTY_NAME,
     FETCHER_REQUEST_URL_PARAMETER_NAME,
     QUERY_PARAMETERS_VARIABLE_NAME,
     RESPONSE_VARIABLE_NAME,
@@ -47,6 +53,13 @@ export function generateFetcherCall({
         ts.factory.createPropertyAssignment(
             ts.factory.createIdentifier(FETCHER_REQUEST_HEADER_PARAMETER_NAME),
             ts.factory.createObjectLiteralExpression([])
+        ),
+        ts.factory.createPropertyAssignment(
+            ts.factory.createIdentifier(FETCHER_REQUEST_TOKEN_PROPERTY_NAME),
+            ts.factory.createPropertyAccessExpression(
+                ts.factory.createThis(),
+                ts.factory.createIdentifier(TOKEN_SERVICE_MEMBER)
+            )
         ),
     ];
 

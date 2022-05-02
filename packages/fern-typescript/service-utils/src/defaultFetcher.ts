@@ -6,7 +6,8 @@ export const defaultFetcher: Fetcher = async (args) => {
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
     if (args.token != null) {
-        headers.append("Authorization", `Bearer ${args.token}`);
+        const token = typeof args.token === "string" ? args.token : args.token();
+        headers.append("Authorization", `Bearer ${token}`);
     }
 
     const url = new URL(args.url);

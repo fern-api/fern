@@ -5,7 +5,7 @@ export declare namespace Fetcher {
         url: string;
         method: string;
         headers?: Record<string, string>;
-        token?: string;
+        token?: string | (() => string);
         queryParameters?: URLSearchParams;
         body?: unknown;
     }

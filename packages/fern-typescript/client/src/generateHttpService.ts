@@ -16,9 +16,15 @@ import {
     SERVICE_INIT_FETCHER_PROPERTY_NAME,
     SERVICE_INIT_SERVER_URL_PROPERTY_NAME,
     SERVICE_INIT_SERVICE_BASE_URL_PROPERTY_NAME,
+    SERVICE_INIT_TOKEN_PROPERTY_NAME,
+    TOKEN_SERVICE_MEMBER,
 } from "./constants";
 import { addEndpointToService } from "./endpoints/addEndpointToService";
 import { generateJoinPathsCall } from "./utils/generateJoinPathsCall";
+
+const SERVICE_INIT_TYPE = ts.factory.createTypeReferenceNode(
+    ts.factory.createQualifiedName(ts.factory.createIdentifier("Service"), ts.factory.createIdentifier("Init"))
+);
 
 export function generateHttpService({
     servicesDirectory,
@@ -90,6 +96,17 @@ function generateService({
         type: getTextOfTsNode(ts.factory.createIdentifier("Fetcher")),
     });
 
+    serviceClass.addProperty({
+        name: TOKEN_SERVICE_MEMBER,
+        scope: Scope.Private,
+        type: getTextOfTsNode(
+            ts.factory.createIndexedAccessTypeNode(
+                SERVICE_INIT_TYPE,
+                ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral("token"))
+            )
+        ),
+    });
+
     addConstructor(serviceClass);
 
     const endpointsDirectory = getOrCreateDirectory(serviceDirectory, ENDPOINTS_DIRECTORY_NAME, {
@@ -122,14 +139,7 @@ function addConstructor(serviceClass: ClassDeclaration) {
         parameters: [
             {
                 name: SERVICE_INIT_PARAMETER_NAME,
-                type: getTextOfTsNode(
-                    ts.factory.createTypeReferenceNode(
-                        ts.factory.createQualifiedName(
-                            ts.factory.createIdentifier("Service"),
-                            ts.factory.createIdentifier("Init")
-                        )
-                    )
-                ),
+                type: getTextOfTsNode(SERVICE_INIT_TYPE),
             },
         ],
         statements: [
@@ -148,7 +158,7 @@ function addConstructor(serviceClass: ClassDeclaration) {
             ),
             getTextOfTsNode(
                 createClassMemberAssignment({
-                    member: "baseUrl",
+                    member: BASE_URL_SERVICE_MEMBER,
                     initialValue: generateJoinPathsCall({
                         file: serviceClass.getSourceFile(),
                         paths: [
@@ -162,6 +172,15 @@ function addConstructor(serviceClass: ClassDeclaration) {
                             ),
                         ],
                     }),
+                })
+            ),
+            getTextOfTsNode(
+                createClassMemberAssignment({
+                    member: TOKEN_SERVICE_MEMBER,
+                    initialValue: ts.factory.createPropertyAccessExpression(
+                        ts.factory.createIdentifier(SERVICE_INIT_PARAMETER_NAME),
+                        ts.factory.createIdentifier(SERVICE_INIT_TOKEN_PROPERTY_NAME)
+                    ),
                 })
             ),
         ],
