@@ -2,21 +2,21 @@
 
 exports[`generateClientFiles posts 1`] = `
 Object {
-  "/src/errors/index.ts": "export * from \\"./posts\\";
+  "/errors/index.ts": "export * from \\"./posts\\";
 ",
-  "/src/errors/posts/PostNotFoundError.ts": "import * as model from \\"../../model\\";
+  "/errors/posts/PostNotFoundError.ts": "import * as model from \\"../../model\\";
 
 export interface PostNotFoundError {
     id: model.PostId;
 }
 ",
-  "/src/errors/posts/index.ts": "export * from \\"./PostNotFoundError\\";
+  "/errors/posts/index.ts": "export * from \\"./PostNotFoundError\\";
 ",
-  "/src/index.ts": "export * from \\"./errors\\";
+  "/index.ts": "export * from \\"./errors\\";
 export * from \\"./model\\";
 export * from \\"./services\\";
 ",
-  "/src/model/commons/PostId.ts": "/**
+  "/model/commons/PostId.ts": "/**
  * An ID of a blog post
  */
 export type PostId = string & {
@@ -27,12 +27,12 @@ export const PostId = {
     of: (value: string): PostId => value as PostId,
 };
 ",
-  "/src/model/commons/index.ts": "export * from \\"./PostId\\";
+  "/model/commons/index.ts": "export * from \\"./PostId\\";
 ",
-  "/src/model/index.ts": "export * from \\"./commons\\";
+  "/model/index.ts": "export * from \\"./commons\\";
 export * from \\"./posts\\";
 ",
-  "/src/model/posts/Author.ts": "export type Author = Author.Anonymous | Author.Named;
+  "/model/posts/Author.ts": "export type Author = Author.Anonymous | Author.Named;
 
 export declare namespace Author {
     interface Anonymous {
@@ -76,7 +76,7 @@ export const Author = {
     },
 };
 ",
-  "/src/model/posts/Post.ts": "import { PostId } from \\"../commons/PostId\\";
+  "/model/posts/Post.ts": "import { PostId } from \\"../commons/PostId\\";
 import { Author } from \\"./Author\\";
 import { PostType } from \\"./PostType\\";
 
@@ -91,7 +91,7 @@ export interface Post {
     content: string;
 }
 ",
-  "/src/model/posts/PostType.ts": "export type PostType = PostType.Long | PostType.Short;
+  "/model/posts/PostType.ts": "export type PostType = PostType.Long | PostType.Short;
 
 export const PostType = {
     Long: \\"LONG\\" as PostType.Long,
@@ -127,11 +127,11 @@ export declare namespace PostType {
     }
 }
 ",
-  "/src/model/posts/index.ts": "export * from \\"./Author\\";
+  "/model/posts/index.ts": "export * from \\"./Author\\";
 export * from \\"./Post\\";
 export * from \\"./PostType\\";
 ",
-  "/src/services/PostsService/PostsService.ts": "import {
+  "/services/PostsService/PostsService.ts": "import {
     defaultFetcher,
     Fetcher,
     joinPaths,
@@ -241,7 +241,7 @@ export class Client implements Client {
     }
 }
 ",
-  "/src/services/PostsService/endpoints/createPost/ErrorBody.ts": "export type ErrorBody = never;
+  "/services/PostsService/endpoints/createPost/ErrorBody.ts": "export type ErrorBody = never;
 
 export declare namespace ErrorBody {
     export interface _Visitor<Result> {
@@ -258,7 +258,7 @@ export const ErrorBody = {
     },
 };
 ",
-  "/src/services/PostsService/endpoints/createPost/RequestBody.ts": "import * as model from \\"../../../../model\\";
+  "/services/PostsService/endpoints/createPost/RequestBody.ts": "import * as model from \\"../../../../model\\";
 
 export interface RequestBody {
     type: model.PostType;
@@ -267,7 +267,7 @@ export interface RequestBody {
     content: string;
 }
 ",
-  "/src/services/PostsService/endpoints/createPost/Response.ts": "import * as model from \\"../../../../model\\";
+  "/services/PostsService/endpoints/createPost/Response.ts": "import * as model from \\"../../../../model\\";
 import { ErrorBody } from \\"./ErrorBody\\";
 
 export type Response = SuccessResponse | ErrorResponse;
@@ -284,11 +284,11 @@ export interface ErrorResponse {
     error: ErrorBody;
 }
 ",
-  "/src/services/PostsService/endpoints/createPost/index.ts": "export * from \\"./ErrorBody\\";
+  "/services/PostsService/endpoints/createPost/index.ts": "export * from \\"./ErrorBody\\";
 export * from \\"./RequestBody\\";
 export * from \\"./Response\\";
 ",
-  "/src/services/PostsService/endpoints/getPost/ErrorBody.ts": "import * as model from \\"../../../../errors\\";
+  "/services/PostsService/endpoints/getPost/ErrorBody.ts": "import * as model from \\"../../../../errors\\";
 
 export type ErrorBody = ErrorBody.NotFound;
 
@@ -322,7 +322,7 @@ export const ErrorBody = {
     },
 };
 ",
-  "/src/services/PostsService/endpoints/getPost/Request.ts": "import * as model from \\"../../../../model\\";
+  "/services/PostsService/endpoints/getPost/Request.ts": "import * as model from \\"../../../../model\\";
 
 export interface Request {
     postId: model.PostId;
@@ -330,7 +330,7 @@ export interface Request {
     otherParam: number;
 }
 ",
-  "/src/services/PostsService/endpoints/getPost/Response.ts": "import * as model from \\"../../../../model\\";
+  "/services/PostsService/endpoints/getPost/Response.ts": "import * as model from \\"../../../../model\\";
 import { ErrorBody } from \\"./ErrorBody\\";
 
 export type Response = SuccessResponse | ErrorResponse;
@@ -347,11 +347,11 @@ export interface ErrorResponse {
     error: ErrorBody;
 }
 ",
-  "/src/services/PostsService/endpoints/getPost/index.ts": "export * from \\"./ErrorBody\\";
+  "/services/PostsService/endpoints/getPost/index.ts": "export * from \\"./ErrorBody\\";
 export * from \\"./Request\\";
 export * from \\"./Response\\";
 ",
-  "/src/services/PostsService/endpoints/getPostV2/ErrorBody.ts": "import * as model from \\"../../../../errors\\";
+  "/services/PostsService/endpoints/getPostV2/ErrorBody.ts": "import * as model from \\"../../../../errors\\";
 
 export type ErrorBody = ErrorBody.NotFound;
 
@@ -385,7 +385,7 @@ export const ErrorBody = {
     },
 };
 ",
-  "/src/services/PostsService/endpoints/getPostV2/Response.ts": "import * as model from \\"../../../../model\\";
+  "/services/PostsService/endpoints/getPostV2/Response.ts": "import * as model from \\"../../../../model\\";
 import { ErrorBody } from \\"./ErrorBody\\";
 
 export type Response = SuccessResponse | ErrorResponse;
@@ -402,17 +402,17 @@ export interface ErrorResponse {
     error: ErrorBody;
 }
 ",
-  "/src/services/PostsService/endpoints/getPostV2/index.ts": "export * from \\"./ErrorBody\\";
+  "/services/PostsService/endpoints/getPostV2/index.ts": "export * from \\"./ErrorBody\\";
 export * from \\"./Response\\";
 ",
-  "/src/services/PostsService/endpoints/index.ts": "export * as createPost from \\"./createPost\\";
+  "/services/PostsService/endpoints/index.ts": "export * as createPost from \\"./createPost\\";
 export * as getPost from \\"./getPost\\";
 export * as getPostV2 from \\"./getPostV2\\";
 ",
-  "/src/services/PostsService/index.ts": "export * as EndpointTypes from \\"./endpoints\\";
+  "/services/PostsService/index.ts": "export * as EndpointTypes from \\"./endpoints\\";
 export * from \\"./PostsService\\";
 ",
-  "/src/services/index.ts": "export * as PostsService from \\"./PostsService\\";
+  "/services/index.ts": "export * as PostsService from \\"./PostsService\\";
 ",
 }
 `;
