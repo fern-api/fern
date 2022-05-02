@@ -40,7 +40,7 @@ export async function runEteTest({ directory, generateFiles, outputToDisk = fals
 
     const project = withProject((p) => {
         generateFiles({
-            directory: p.createDirectory("src"),
+            directory: p.createDirectory("/"),
             intermediateRepresentation: compilerResult.intermediateRepresentation,
         });
     });

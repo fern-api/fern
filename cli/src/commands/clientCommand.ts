@@ -4,7 +4,7 @@ import { Command } from "../Command";
 export const clientCommand: Command = {
     run: ({ project, intermediateRepresentation }) => {
         generateClientFiles({
-            directory: project.createDirectory("src"),
+            directory: project.createDirectory("."),
             intermediateRepresentation,
         });
     },
