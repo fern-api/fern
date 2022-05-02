@@ -9,6 +9,8 @@ import { upperFirst } from "lodash";
 import { Directory, SourceFile } from "ts-morph";
 import { SingleUnionTypeWithResolvedValueType } from "./generateUnionType";
 
+export const FORCE_USE_MODEL_NAMESPACE_IMPORT = true;
+
 export function getKeyForUnion({ discriminantValue }: SingleUnionType): string {
     return upperFirst(discriminantValue);
 }
@@ -34,6 +36,8 @@ export function getResolvedTypeForSingleUnionType({
                         typeName: named,
                         referencedIn: file,
                         baseDirectory: modelDirectory,
+                        baseDirectoryType: "model",
+                        forceUseNamespaceImport: FORCE_USE_MODEL_NAMESPACE_IMPORT,
                     }),
                     isExtendable: true,
                 };
@@ -44,6 +48,7 @@ export function getResolvedTypeForSingleUnionType({
                         reference: singleUnionType.valueType,
                         referencedIn: file,
                         modelDirectory,
+                        forceUseNamespaceImport: FORCE_USE_MODEL_NAMESPACE_IMPORT,
                     }),
                     isExtendable: false,
                 };
