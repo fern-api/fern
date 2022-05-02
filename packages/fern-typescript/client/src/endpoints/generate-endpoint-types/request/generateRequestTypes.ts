@@ -42,13 +42,20 @@ export function generateRequestTypes({
               })
             : undefined;
 
-    // if there's no parameters and RequestBody is in its own file, then we just
-    // reference RequestBody directly in the endpoint.
-    if (requestBody?.file != null && numParameters === 0) {
+    // if there's a request body and no parameters, then we just reference
+    // RequestBody directly in the endpoint.
+    if (requestBody != null && numParameters === 0) {
         return {
-            endpointParameter: {
-                typeName: ts.factory.createIdentifier(REQUEST_BODY_TYPE_NAME),
-            },
+            endpointParameter:
+                requestBody.file != null
+                    ? {
+                          isLocal: true,
+                          typeName: ts.factory.createIdentifier(REQUEST_BODY_TYPE_NAME),
+                      }
+                    : {
+                          isLocal: false,
+                          generateTypeReference: requestBody.generateTypeReference,
+                      },
             requestBody: {
                 isLocal: true,
                 typeName: ts.factory.createIdentifier(REQUEST_BODY_TYPE_NAME),
@@ -68,6 +75,7 @@ export function generateRequestTypes({
 
     return {
         endpointParameter: {
+            isLocal: true,
             typeName: ts.factory.createIdentifier(REQUEST_TYPE_NAME),
         },
         requestBody:
