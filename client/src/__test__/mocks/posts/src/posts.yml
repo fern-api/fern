@@ -33,6 +33,7 @@ services:
   http:
     PostsService:
       base-path: /posts
+      auth: bearer
       endpoints:
         createPost:
           method: POST
