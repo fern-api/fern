@@ -53,7 +53,7 @@ public final class UnionGenerator extends Generator {
     private static final String VALUE_FIELD_NAME = "value";
     private static final String IS_METHOD_NAME_PREFIX = "is";
     private static final String GET_INTERNAL_VALUE_METHOD_NAME = "getInternalValue";
-    private static final String ACCEPT_METHOD_NAME = "accept";
+    private static final String VISIT_METHOD_NAME = "visit";
 
     private final NamedType namedType;
     private final UnionTypeDefinition unionTypeDefinition;
@@ -102,7 +102,7 @@ public final class UnionGenerator extends Generator {
                 .addMethods(getStaticBuilderMethods())
                 .addMethods(isTypeMethods.values())
                 .addMethods(getSingleUnionTypeGetterMethods(isTypeMethods, internalValueTypeSpecs))
-                .addMethod(getAcceptMethod())
+                .addMethod(getVisitMethod())
                 .addType(visitor.typeSpec())
                 .addType(getInternalValueInterface())
                 .addTypes(internalValueTypeSpecs.values().stream()
@@ -230,8 +230,8 @@ public final class UnionGenerator extends Generator {
                 .collect(Collectors.toList());
     }
 
-    private MethodSpec getAcceptMethod() {
-        return MethodSpec.methodBuilder(ACCEPT_METHOD_NAME)
+    private MethodSpec getVisitMethod() {
+        return MethodSpec.methodBuilder(VISIT_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC)
                 .addTypeVariable(VisitorUtils.VISITOR_RETURN_TYPE)
                 .addParameter(generatorContext.getVisitorUtils().getVisitorTypeName(generatedUnionClassName), "visitor")
@@ -284,7 +284,7 @@ public final class UnionGenerator extends Generator {
     private TypeSpec getInternalValueInterface() {
         TypeSpec.Builder baseInterfaceTypeSpecBuilder = TypeSpec.interfaceBuilder(internalValueInterfaceClassName)
                 .addModifiers(Modifier.PRIVATE)
-                .addMethod(MethodSpec.methodBuilder(ACCEPT_METHOD_NAME)
+                .addMethod(MethodSpec.methodBuilder(VISIT_METHOD_NAME)
                         .addParameter(ParameterSpec.builder(
                                         generatorContext.getVisitorUtils().getVisitorTypeName(generatedUnionClassName),
                                         "visitor")
@@ -347,7 +347,7 @@ public final class UnionGenerator extends Generator {
                 MethodSpec internalValueImmutablesProperty = getInternalValueImmutablesProperty(singleUnionType);
                 TypeSpec typeSpec = typeSpecBuilder
                         .addMethod(internalValueImmutablesProperty)
-                        .addMethod(MethodSpec.methodBuilder(ACCEPT_METHOD_NAME)
+                        .addMethod(MethodSpec.methodBuilder(VISIT_METHOD_NAME)
                                 .addTypeVariable(VisitorUtils.VISITOR_RETURN_TYPE)
                                 .returns(VisitorUtils.VISITOR_RETURN_TYPE)
                                 .addParameter(
@@ -381,7 +381,7 @@ public final class UnionGenerator extends Generator {
                         .build();
             } else {
                 TypeSpec typeSpec = typeSpecBuilder
-                        .addMethod(MethodSpec.methodBuilder(ACCEPT_METHOD_NAME)
+                        .addMethod(MethodSpec.methodBuilder(VISIT_METHOD_NAME)
                                 .addTypeVariable(VisitorUtils.VISITOR_RETURN_TYPE)
                                 .returns(VisitorUtils.VISITOR_RETURN_TYPE)
                                 .addParameter(
@@ -429,7 +429,7 @@ public final class UnionGenerator extends Generator {
                         .addStatement("return value().get(\"type\").toString()")
                         .addModifiers(Modifier.DEFAULT, Modifier.PUBLIC)
                         .build())
-                .addMethod(MethodSpec.methodBuilder(ACCEPT_METHOD_NAME)
+                .addMethod(MethodSpec.methodBuilder(VISIT_METHOD_NAME)
                         .addTypeVariable(VisitorUtils.VISITOR_RETURN_TYPE)
                         .returns(VisitorUtils.VISITOR_RETURN_TYPE)
                         .addParameter(

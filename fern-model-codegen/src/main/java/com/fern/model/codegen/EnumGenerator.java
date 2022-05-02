@@ -44,7 +44,7 @@ public final class EnumGenerator extends Generator {
     private static final String TO_STRING_METHOD_NAME = "toString";
     private static final String EQUALS_METHOD_NAME = "equals";
     private static final String HASHCODE_METHOD_NAME = "hashCode";
-    private static final String ACCEPT_METHOD_NAME = "accept";
+    private static final String VISIT_METHOD_NAME = "visit";
     private static final String VALUE_OF_METHOD_NAME = "valueOf";
 
     private final NamedType namedType;
@@ -215,7 +215,7 @@ public final class EnumGenerator extends Generator {
                 .unindent()
                 .endControlFlow()
                 .build();
-        return MethodSpec.methodBuilder(ACCEPT_METHOD_NAME)
+        return MethodSpec.methodBuilder(VISIT_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC)
                 .addTypeVariable(VisitorUtils.VISITOR_RETURN_TYPE)
                 .addParameter(generatorContext.getVisitorUtils().getVisitorTypeName(generatedEnumClassName), "visitor")
