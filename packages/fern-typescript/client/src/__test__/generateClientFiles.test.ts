@@ -14,4 +14,14 @@ describe("generateClientFiles", () => {
             });
         },
     });
+
+    itFernETE("no errors", {
+        directory: path.join(MOCK_APIS_DIR, "no-errors"),
+        generateFiles: ({ directory, intermediateRepresentation }) => {
+            generateClientFiles({
+                directory,
+                intermediateRepresentation,
+            });
+        },
+    });
 });
