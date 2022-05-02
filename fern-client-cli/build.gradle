@@ -57,3 +57,7 @@ publishing {
 artifactoryPublish {
     publications('myDistribution')
 }
+
+task dockerTagVersion {
+    dependsOn ":fern-client-cli:dockerTag${project.version}"
+}
