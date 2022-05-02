@@ -18,11 +18,13 @@ function finalizeProject(project: Project): void {
 
 function finalizeDirectory(directory: Directory): void {
     for (const subdirectory of directory.getDirectories()) {
-        exportFromModule({
-            module: directory,
-            pathToExport: subdirectory.getPath(),
-        });
         finalizeDirectory(subdirectory);
+        if (subdirectory.getSourceFile("index.ts") != null) {
+            exportFromModule({
+                module: directory,
+                pathToExport: subdirectory.getPath(),
+            });
+        }
     }
 
     for (const sourceFile of directory.getSourceFiles()) {
