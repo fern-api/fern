@@ -29,6 +29,7 @@ export function generateErrorBodyReference({
                     typeName: error.error,
                     referencedIn: errorBodyFile,
                     baseDirectory: errorsDirectory,
+                    baseDirectoryType: "errors",
                 }),
                 isExtendable: true,
             },

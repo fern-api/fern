@@ -28,6 +28,7 @@ export function generateObjectType({
                     typeName,
                     referencedIn: file,
                     baseDirectory: modelDirectory,
+                    baseDirectoryType: "model",
                 });
 
                 return reference;

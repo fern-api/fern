@@ -124,6 +124,40 @@ export const Author = {
     },
 };
 ",
+  "/model/posts/BlogPostReference.ts": "import * as model from \\"..\\";
+
+export type BlogPostReference = BlogPostReference.Post;
+
+export declare namespace BlogPostReference {
+    interface Post extends model.Post {
+        _type: \\"post\\";
+    }
+
+    export interface _Visitor<Result> {
+        post: (value: model.Post) => Result;
+        _unknown: () => Result;
+    }
+}
+
+export const BlogPostReference = {
+    post: (value: model.Post): BlogPostReference.Post => ({
+        ...value,
+        _type: \\"post\\",
+    }),
+
+    _visit: <Result>(
+        value: BlogPostReference,
+        visitor: BlogPostReference._Visitor<Result>
+    ): Result => {
+        switch (value._type) {
+            case \\"post\\":
+                return visitor.post(value);
+            default:
+                return visitor._unknown();
+        }
+    },
+};
+",
   "/model/posts/CreatePostRequest.ts": "import { Author } from \\"./Author\\";
 
 export interface CreatePostRequest {
@@ -184,6 +218,7 @@ export declare namespace PostType {
 }
 ",
   "/model/posts/index.ts": "export * from \\"./Author\\";
+export * from \\"./BlogPostReference\\";
 export * from \\"./CreatePostRequest\\";
 export * from \\"./Post\\";
 export * from \\"./PostType\\";
@@ -469,8 +504,7 @@ export interface AliasTypeDefinition {
     aliasOf: TypeReference;
 }
 ",
-  "/model/types/ContainerType.ts": "import { MapType } from \\"./MapType\\";
-import { TypeReference } from \\"./TypeReference\\";
+  "/model/types/ContainerType.ts": "import * as model from \\"..\\";
 
 export type ContainerType =
     | ContainerType.List
@@ -481,49 +515,49 @@ export type ContainerType =
 export declare namespace ContainerType {
     interface List {
         _type: \\"list\\";
-        list: TypeReference;
+        list: model.TypeReference;
     }
 
-    interface Map extends MapType {
+    interface Map extends model.MapType {
         _type: \\"map\\";
     }
 
     interface Optional {
         _type: \\"optional\\";
-        optional: TypeReference;
+        optional: model.TypeReference;
     }
 
     interface Set {
         _type: \\"set\\";
-        set: TypeReference;
+        set: model.TypeReference;
     }
 
     export interface _Visitor<Result> {
-        list: (value: TypeReference) => Result;
-        map: (value: MapType) => Result;
-        optional: (value: TypeReference) => Result;
-        set: (value: TypeReference) => Result;
+        list: (value: model.TypeReference) => Result;
+        map: (value: model.MapType) => Result;
+        optional: (value: model.TypeReference) => Result;
+        set: (value: model.TypeReference) => Result;
         _unknown: () => Result;
     }
 }
 
 export const ContainerType = {
-    list: (value: TypeReference): ContainerType.List => ({
+    list: (value: model.TypeReference): ContainerType.List => ({
         list: value,
         _type: \\"list\\",
     }),
 
-    map: (value: MapType): ContainerType.Map => ({
+    map: (value: model.MapType): ContainerType.Map => ({
         ...value,
         _type: \\"map\\",
     }),
 
-    optional: (value: TypeReference): ContainerType.Optional => ({
+    optional: (value: model.TypeReference): ContainerType.Optional => ({
         optional: value,
         _type: \\"optional\\",
     }),
 
-    set: (value: TypeReference): ContainerType.Set => ({
+    set: (value: model.TypeReference): ContainerType.Set => ({
         set: value,
         _type: \\"set\\",
     }),
@@ -673,56 +707,53 @@ export interface SingleUnionType extends WithDocs {
     valueType: TypeReference;
 }
 ",
-  "/model/types/Type.ts": "import { AliasTypeDefinition } from \\"./AliasTypeDefinition\\";
-import { EnumTypeDefinition } from \\"./EnumTypeDefinition\\";
-import { ObjectTypeDefinition } from \\"./ObjectTypeDefinition\\";
-import { UnionTypeDefinition } from \\"./UnionTypeDefinition\\";
+  "/model/types/Type.ts": "import * as model from \\"..\\";
 
 export type Type = Type.Alias | Type.Enum | Type.Object | Type.Union;
 
 export declare namespace Type {
-    interface Alias extends AliasTypeDefinition {
+    interface Alias extends model.AliasTypeDefinition {
         _type: \\"alias\\";
     }
 
-    interface Enum extends EnumTypeDefinition {
+    interface Enum extends model.EnumTypeDefinition {
         _type: \\"enum\\";
     }
 
-    interface Object extends ObjectTypeDefinition {
+    interface Object extends model.ObjectTypeDefinition {
         _type: \\"object\\";
     }
 
-    interface Union extends UnionTypeDefinition {
+    interface Union extends model.UnionTypeDefinition {
         _type: \\"union\\";
     }
 
     export interface _Visitor<Result> {
-        alias: (value: AliasTypeDefinition) => Result;
-        enum: (value: EnumTypeDefinition) => Result;
-        object: (value: ObjectTypeDefinition) => Result;
-        union: (value: UnionTypeDefinition) => Result;
+        alias: (value: model.AliasTypeDefinition) => Result;
+        enum: (value: model.EnumTypeDefinition) => Result;
+        object: (value: model.ObjectTypeDefinition) => Result;
+        union: (value: model.UnionTypeDefinition) => Result;
         _unknown: () => Result;
     }
 }
 
 export const Type = {
-    alias: (value: AliasTypeDefinition): Type.Alias => ({
+    alias: (value: model.AliasTypeDefinition): Type.Alias => ({
         ...value,
         _type: \\"alias\\",
     }),
 
-    enum: (value: EnumTypeDefinition): Type.Enum => ({
+    enum: (value: model.EnumTypeDefinition): Type.Enum => ({
         ...value,
         _type: \\"enum\\",
     }),
 
-    object: (value: ObjectTypeDefinition): Type.Object => ({
+    object: (value: model.ObjectTypeDefinition): Type.Object => ({
         ...value,
         _type: \\"object\\",
     }),
 
-    union: (value: UnionTypeDefinition): Type.Union => ({
+    union: (value: model.UnionTypeDefinition): Type.Union => ({
         ...value,
         _type: \\"union\\",
     }),
@@ -755,9 +786,7 @@ export interface TypeDefinition extends WithDocs {
     shape: Type;
 }
 ",
-  "/model/types/TypeReference.ts": "import { ContainerType } from \\"./ContainerType\\";
-import { NamedType } from \\"./NamedType\\";
-import { PrimitiveType } from \\"./PrimitiveType\\";
+  "/model/types/TypeReference.ts": "import * as model from \\"..\\";
 
 export type TypeReference =
     | TypeReference.Container
@@ -768,16 +797,16 @@ export type TypeReference =
 export declare namespace TypeReference {
     interface Container {
         _type: \\"container\\";
-        container: ContainerType;
+        container: model.ContainerType;
     }
 
-    interface Named extends NamedType {
+    interface Named extends model.NamedType {
         _type: \\"named\\";
     }
 
     interface Primitive {
         _type: \\"primitive\\";
-        primitive: PrimitiveType;
+        primitive: model.PrimitiveType;
     }
 
     interface Void {
@@ -785,26 +814,26 @@ export declare namespace TypeReference {
     }
 
     export interface _Visitor<Result> {
-        container: (value: ContainerType) => Result;
-        named: (value: NamedType) => Result;
-        primitive: (value: PrimitiveType) => Result;
+        container: (value: model.ContainerType) => Result;
+        named: (value: model.NamedType) => Result;
+        primitive: (value: model.PrimitiveType) => Result;
         void: () => Result;
         _unknown: () => Result;
     }
 }
 
 export const TypeReference = {
-    container: (value: ContainerType): TypeReference.Container => ({
+    container: (value: model.ContainerType): TypeReference.Container => ({
         container: value,
         _type: \\"container\\",
     }),
 
-    named: (value: NamedType): TypeReference.Named => ({
+    named: (value: model.NamedType): TypeReference.Named => ({
         ...value,
         _type: \\"named\\",
     }),
 
-    primitive: (value: PrimitiveType): TypeReference.Primitive => ({
+    primitive: (value: model.PrimitiveType): TypeReference.Primitive => ({
         primitive: value,
         _type: \\"primitive\\",
     }),
@@ -922,6 +951,40 @@ export const Author = {
     },
 };
 ",
+  "/model/posts/BlogPostReference.ts": "import * as model from \\"..\\";
+
+export type BlogPostReference = BlogPostReference.Post;
+
+export declare namespace BlogPostReference {
+    interface Post extends model.Post {
+        _type: \\"post\\";
+    }
+
+    export interface _Visitor<Result> {
+        post: (value: model.Post) => Result;
+        _unknown: () => Result;
+    }
+}
+
+export const BlogPostReference = {
+    post: (value: model.Post): BlogPostReference.Post => ({
+        ...value,
+        _type: \\"post\\",
+    }),
+
+    _visit: <Result>(
+        value: BlogPostReference,
+        visitor: BlogPostReference._Visitor<Result>
+    ): Result => {
+        switch (value._type) {
+            case \\"post\\":
+                return visitor.post(value);
+            default:
+                return visitor._unknown();
+        }
+    },
+};
+",
   "/model/posts/CreatePostRequest.ts": "import { Author } from \\"./Author\\";
 
 export interface CreatePostRequest {
@@ -982,6 +1045,7 @@ export declare namespace PostType {
 }
 ",
   "/model/posts/index.ts": "export * from \\"./Author\\";
+export * from \\"./BlogPostReference\\";
 export * from \\"./CreatePostRequest\\";
 export * from \\"./Post\\";
 export * from \\"./PostType\\";

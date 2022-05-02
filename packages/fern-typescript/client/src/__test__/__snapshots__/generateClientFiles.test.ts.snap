@@ -89,6 +89,7 @@ export interface Post {
     title: string;
     author: Author;
     content: string;
+    relatedPosts: Post[];
 }
 ",
   "/model/posts/PostType.ts": "export type PostType = PostType.Long | PostType.Short;
@@ -288,23 +289,23 @@ export interface ErrorResponse {
 export * from \\"./RequestBody\\";
 export * from \\"./Response\\";
 ",
-  "/services/PostsService/endpoints/getPost/ErrorBody.ts": "import * as model from \\"../../../../errors\\";
+  "/services/PostsService/endpoints/getPost/ErrorBody.ts": "import * as errors from \\"../../../../errors\\";
 
 export type ErrorBody = ErrorBody.NotFound;
 
 export declare namespace ErrorBody {
-    interface NotFound extends model.PostNotFoundError {
+    interface NotFound extends errors.PostNotFoundError {
         _type: \\"notFound\\";
     }
 
     export interface _Visitor<Result> {
-        notFound: (value: model.PostNotFoundError) => Result;
+        notFound: (value: errors.PostNotFoundError) => Result;
         _unknown: () => Result;
     }
 }
 
 export const ErrorBody = {
-    notFound: (value: model.PostNotFoundError): ErrorBody.NotFound => ({
+    notFound: (value: errors.PostNotFoundError): ErrorBody.NotFound => ({
         ...value,
         _type: \\"notFound\\",
     }),
@@ -351,23 +352,23 @@ export interface ErrorResponse {
 export * from \\"./Request\\";
 export * from \\"./Response\\";
 ",
-  "/services/PostsService/endpoints/getPostV2/ErrorBody.ts": "import * as model from \\"../../../../errors\\";
+  "/services/PostsService/endpoints/getPostV2/ErrorBody.ts": "import * as errors from \\"../../../../errors\\";
 
 export type ErrorBody = ErrorBody.NotFound;
 
 export declare namespace ErrorBody {
-    interface NotFound extends model.PostNotFoundError {
+    interface NotFound extends errors.PostNotFoundError {
         _type: \\"notFound\\";
     }
 
     export interface _Visitor<Result> {
-        notFound: (value: model.PostNotFoundError) => Result;
+        notFound: (value: errors.PostNotFoundError) => Result;
         _unknown: () => Result;
     }
 }
 
 export const ErrorBody = {
-    notFound: (value: model.PostNotFoundError): ErrorBody.NotFound => ({
+    notFound: (value: errors.PostNotFoundError): ErrorBody.NotFound => ({
         ...value,
         _type: \\"notFound\\",
     }),
