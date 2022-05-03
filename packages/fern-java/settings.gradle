@@ -1,4 +1,0 @@
-rootProject.name = 'fern-java'
-
-include 'fern-immutables-style'
-include 'fern-api-model'

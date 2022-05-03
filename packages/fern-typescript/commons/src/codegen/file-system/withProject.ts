@@ -1,0 +1,38 @@
+import { Directory, Project } from "ts-morph";
+import { exportFromModule } from "./exportFromModule";
+
+export function withProject(create: (project: Project) => void): Project {
+    const project = new Project({
+        useInMemoryFileSystem: true,
+    });
+    create(project);
+    finalizeProject(project);
+    return project;
+}
+
+function finalizeProject(project: Project): void {
+    for (const directory of project.getDirectories()) {
+        finalizeDirectory(directory);
+    }
+}
+
+function finalizeDirectory(directory: Directory): void {
+    for (const subdirectory of directory.getDirectories()) {
+        finalizeDirectory(subdirectory);
+        if (subdirectory.getSourceFile("index.ts") != null) {
+            exportFromModule({
+                module: directory,
+                pathToExport: subdirectory.getPath(),
+            });
+        }
+    }
+
+    for (const sourceFile of directory.getSourceFiles()) {
+        if (sourceFile.getBaseName() !== "index.ts") {
+            exportFromModule({
+                module: directory,
+                pathToExport: sourceFile.getFilePath(),
+            });
+        }
+    }
+}

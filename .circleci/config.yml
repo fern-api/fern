@@ -13,13 +13,13 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
-          name: Lint monorepo
+          name: lint:monorepo
           command: yarn lint:monorepo
       - run:
-          name: Lint
+          name: lint:eslint
           command: yarn lint:eslint
       - run:
-          name: Lint style
+          name: lint:style
           command: yarn lint:style
       - run:
           name: Format
@@ -32,7 +32,7 @@ jobs:
           command: yarn compile
       - run:
           name: Run tests
-          command: yarn test -- --ci
+          command: yarn test --ci
       - run:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff
@@ -57,35 +57,8 @@ jobs:
           name: Publish all packages
           command: yarn run publish
 
-  compile-java:
-    docker: [{ image: "cimg/openjdk:11.0.10-node" }]
-    resource_class: small
-    environment:
-      CIRCLE_TEST_REPORTS: /home/circleci/junit
-      CIRCLE_ARTIFACTS: /home/circleci/artifacts
-      GRADLE_OPTS: -Dorg.gradle.jvmargs='-XX:MaxMetaspaceSize=256m' -Dorg.gradle.workers.max=4
-      _JAVA_OPTIONS: -XX:ActiveProcessorCount=4 -Xmx1177m -XX:MaxMetaspaceSize=512m -XX:ErrorFile=/home/circleci/artifacts/hs_err_pid%p.log -XX:HeapDumpPath=/home/circleci/artifacts
-    steps:
-      - checkout
-      - restore_cache:
-          { key: 'gradle-wrapper-v2-{{ checksum "packages/fern-java/gradle/wrapper/gradle-wrapper.properties" }}' }
-      - restore_cache:
-          {
-            key: 'compile-gradle-cache-v2-{{ checksum "packages/fern-java/versions.props" }}-{{ checksum "packages/fern-java/build.gradle" }}',
-          }
-      - run: cd packages/fern-java && ./gradlew --parallel --stacktrace classes testClasses
-      - save_cache:
-          key: 'gradle-wrapper-v2-{{ checksum "packages/fern-java/gradle/wrapper/gradle-wrapper.properties" }}'
-          paths: [~/.gradle/wrapper]
-      - save_cache:
-          key: 'compile-gradle-cache-v2-{{ checksum "packages/fern-java/versions.props" }}-{{ checksum "packages/fern-java/build.gradle" }}'
-          paths: [~/.gradle/caches]
-      - persist_to_workspace:
-          root: /home/circleci
-          paths: [project, packages/fern-java/.gradle/init.gradle]
-
   publish-java-snapshot:
-    docker: [{ image: "cimg/openjdk:11.0.10-node" }]
+    docker: [{ image: "cimg/node:17.3.1" }]
     resource_class: small
     environment:
       CIRCLE_TEST_REPORTS: /home/circleci/junit
@@ -93,13 +66,7 @@ jobs:
       _JAVA_OPTIONS: -Dorg.gradle.internal.launcher.welcomeMessageEnabled=false -Xmx8192m
       JAVA_HOME: /opt/java11
     steps:
-      - attach_workspace: { at: /home/circleci }
-      - restore_cache:
-          { key: 'gradle-wrapper-v2-{{ checksum "packages/fern-java/gradle/wrapper/gradle-wrapper.properties" }}' }
-      - restore_cache:
-          {
-            key: 'unit-test-gradle-cache-v2-{{ checksum "packages/fern-java/versions.props" }}-{{ checksum "packages/fern-java/build.gradle" }}',
-          }
+      - checkout
       - run:
           name: Install Java
           command: |
@@ -107,8 +74,15 @@ jobs:
             curl https://cdn.azul.com/zulu/bin/zulu11.41.23-ca-jdk11.0.8-linux_x64.tar.gz | tar -xzf - -C /opt/java
             sudo ln -s /opt/java/zulu*/ /opt/java11
       - run:
-          command: cd packages/fern-java && ./gradlew artifactoryPublish
-          name: Publish conjure json file
+          name: Run code-generation
+          command: ./fern.sh
+      - run:
+          name: Publish
+          command: |
+            export PATH="$PATH:$JAVA_HOME/bin"
+            cd packages/api/java-api
+            ./codegen.sh
+            ./gradlew artifactoryPublish
 
 workflows:
   version: 2
@@ -129,17 +103,10 @@ workflows:
             - check
           context: npm
 
-      - compile-java:
-          filters:
-            tags:
-              only: /.*/
-
       - publish-java-snapshot:
           filters:
             branches:
               only: main
             tags:
               ignore: /.*/
-          requires:
-            - compile-java
           context: jfrog

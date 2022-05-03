@@ -10,7 +10,7 @@
   "scripts": {
     "clean": "yarn workspaces foreach --verbose --parallel run clean && /bin/rm -rf ./packages/api/generated",
     "compile": "yarn workspaces foreach --verbose --parallel --topological run compile",
-    "test": "yarn workspaces foreach --verbose --parallel --topological run test",
+    "test": "yarn workspaces foreach --verbose --parallel run test",
     "lint:eslint": "eslint . --max-warnings 0",
     "lint:eslint:fix": "eslint . --fix --max-warnings 0",
     "lint:style": "yarn workspaces foreach --verbose --parallel run lint:style",
@@ -21,7 +21,9 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ./shared/.prettierignore \"**\"",
     "depcheck": "yarn workspaces foreach --verbose --parallel run depcheck",
     "prepare": "husky install",
-    "codegen": "./fern.sh && cd packages/fern-java && ./codegen.sh",
+    "codegen": "run codegen:ts && run codegen:java",
+    "codegen:ts": "./fern.sh",
+    "codegen:java": "cd packages/api/java-api && ./codegen.sh",
     "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public"
   },
   "devDependencies": {
@@ -31,11 +33,12 @@
     "eslint": "^8.12.0",
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.4.0",
-    "fern-api": "0.0.3",
+    "fern-api": "0.0.26",
+    "fern-typescript": "0.0.26",
     "husky": "^7.0.4",
     "jest": "^27.5.1",
     "lint-staged": "^12.3.7",
-    "mrlint": "^0.0.8",
+    "mrlint": "^0.0.14",
     "prettier": "^2.6.1",
     "react": "^18.0.0",
     "stylelint": "^14.6.1"

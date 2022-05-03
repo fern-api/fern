@@ -1,0 +1,84 @@
+imports:
+  commons: commons.yml
+ids:
+  - name: FernFilepath
+    docs: "A filepath to a Fern spec file, excluding the file extension"
+types:
+  TypeDefinition:
+    docs: "A type, which is a name and a shape"
+    extends: commons.WithDocs
+    properties:
+      name: NamedType
+      shape: Type
+  NamedType:
+    properties:
+      fernFilepath: FernFilepath
+      name: string
+  Type:
+    union:
+      alias: AliasTypeDefinition
+      enum: EnumTypeDefinition
+      object: ObjectTypeDefinition
+      union: UnionTypeDefinition
+
+  AliasTypeDefinition:
+    properties:
+      aliasOf: TypeReference
+
+  EnumTypeDefinition:
+    properties:
+      values: list<EnumValue>
+  EnumValue:
+    extends: commons.WithDocs
+    properties:
+      name:
+        type: string
+        docs: Name must start with an alphabet. Allowed regex is /[a-z][a-z0-9]*/i.
+      value: string
+
+  ObjectTypeDefinition:
+    properties:
+      extends:
+        docs: "A list of other types to inherit from"
+        type: list<NamedType>
+      properties: list<ObjectProperty>
+  ObjectProperty:
+    extends: commons.WithDocs
+    properties:
+      key: string
+      valueType: TypeReference
+
+  UnionTypeDefinition:
+    properties:
+      discriminant: string
+      types: list<SingleUnionType>
+  SingleUnionType:
+    extends: commons.WithDocs
+    properties:
+      discriminantValue: string
+      valueType: TypeReference
+
+  TypeReference:
+    union:
+      container: ContainerType
+      named: NamedType
+      primitive: PrimitiveType
+      void: {}
+  ContainerType:
+    union:
+      list: TypeReference
+      map: MapType
+      optional: TypeReference
+      set: TypeReference
+  MapType:
+    properties:
+      keyType: TypeReference
+      valueType: TypeReference
+  PrimitiveType:
+    enum:
+      - INTEGER
+      - DOUBLE
+      - STRING
+      - BOOLEAN
+      - docs: "Within the range -2^53 to 2^53"
+        value: LONG

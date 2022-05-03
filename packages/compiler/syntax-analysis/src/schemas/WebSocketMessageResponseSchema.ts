@@ -1,12 +1,9 @@
 import { z } from "zod";
-import { inlinableType } from "./utils/inlinableType";
-import { WithDocsSchema } from "./utils/WithDocsSchema";
 import { WebSocketMessageResponseBehaviorSchema } from "./WebSocketMessageResponseBehaviorSchema";
+import { extendWireMessageSchema } from "./WireMessageSchema";
 
-export const WebSocketMessageResponseSchema = inlinableType(
-    WithDocsSchema.extend({
-        behavior: z.optional(WebSocketMessageResponseBehaviorSchema),
-    }).shape
-);
+export const WebSocketMessageResponseSchema = extendWireMessageSchema({
+    behavior: z.optional(WebSocketMessageResponseBehaviorSchema),
+});
 
 export type WebSocketMessageResponseSchema = z.infer<typeof WebSocketMessageResponseSchema>;

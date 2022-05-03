@@ -6,7 +6,7 @@
     "lib"
   ],
   "bin": {
-    "fern": "./lib/cli.js"
+    "fern": "./cli"
   },
   "scripts": {
     "clean": "tsc --build --clean",
@@ -26,7 +26,7 @@
     "@fern-api/syntax-analysis": "workspace:*",
     "chalk": "^4.1.2",
     "glob": "^7.2.0",
-    "yargs": "^17.3.1",
+    "yargs": "^17.4.1",
     "zod": "^3.14.3"
   },
   "devDependencies": {

@@ -1,0 +1,3 @@
+rootProject.name = 'fern-java'
+
+include 'fern-api-model'

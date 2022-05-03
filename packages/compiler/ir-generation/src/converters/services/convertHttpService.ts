@@ -1,8 +1,10 @@
-import { FernFilepath, HttpEndpoint, HttpMethod, HttpService } from "@fern-api/api";
+import { FernFilepath, HttpAuth, HttpEndpoint, HttpMethod, HttpService } from "@fern-api/api";
 import { RawSchemas } from "@fern-api/syntax-analysis";
+import { assertNever } from "../../utils/assertNever";
 import { getDocs } from "../../utils/getDocs";
-import { createInlinableTypeParser } from "../../utils/parseInlineType";
-import { convertErrorReferences } from "./convertErrorReferences";
+import { createTypeReferenceParser } from "../../utils/parseInlineType";
+import { convertResponseErrors } from "./convertResponseErrors";
+import { convertWireMessage } from "./convertWireMessage";
 
 export function convertHttpService({
     serviceDefinition,
@@ -15,21 +17,21 @@ export function convertHttpService({
     fernFilepath: FernFilepath;
     imports: Record<string, string>;
 }): HttpService {
-    const parseInlinableType = createInlinableTypeParser({ fernFilepath, imports });
+    const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
 
     return {
         docs: serviceDefinition.docs,
+        auth: serviceDefinition.auth != null ? convertHttpAuth(serviceDefinition.auth) : null,
         name: {
             name: serviceId,
             fernFilepath,
         },
-        displayName: serviceDefinition.name ?? serviceId,
         basePath: serviceDefinition["base-path"] ?? "/",
         headers:
             serviceDefinition.headers != null
                 ? Object.entries(serviceDefinition.headers).map(([header, headerType]) => ({
                       header,
-                      valueType: parseInlinableType(headerType),
+                      valueType: parseTypeReference(headerType),
                       docs: getDocs(headerType),
                   }))
                 : [],
@@ -44,7 +46,7 @@ export function convertHttpService({
                         ? Object.entries(endpoint.parameters).map(([parameterName, parameterType]) => ({
                               docs: typeof parameterType !== "string" ? parameterType.docs : undefined,
                               key: parameterName,
-                              valueType: parseInlinableType(parameterType),
+                              valueType: parseTypeReference(parameterType),
                           }))
                         : [],
                 queryParameters:
@@ -52,32 +54,26 @@ export function convertHttpService({
                         ? Object.entries(endpoint.queryParameters).map(([parameterName, parameterType]) => ({
                               docs: typeof parameterType !== "string" ? parameterType.docs : undefined,
                               key: parameterName,
-                              valueType: parseInlinableType(parameterType),
+                              valueType: parseTypeReference(parameterType),
                           }))
                         : [],
                 headers:
                     endpoint.headers != null
                         ? Object.entries(endpoint.headers).map(([header, headerType]) => ({
                               header,
-                              valueType: parseInlinableType(headerType),
+                              valueType: parseTypeReference(headerType),
                               docs: getDocs(headerType),
                           }))
                         : [],
                 request:
                     endpoint.request != null
-                        ? {
-                              docs: typeof endpoint.request !== "string" ? endpoint.request.type : undefined,
-                              bodyType: parseInlinableType(endpoint.request),
-                          }
+                        ? convertWireMessage({ wireMessage: endpoint.request, fernFilepath, imports })
                         : undefined,
                 response:
                     endpoint.response != null
-                        ? {
-                              docs: typeof endpoint.response !== "string" ? endpoint.response.type : undefined,
-                              bodyType: parseInlinableType(endpoint.response),
-                          }
+                        ? convertWireMessage({ wireMessage: endpoint.response, fernFilepath, imports })
                         : undefined,
-                errors: convertErrorReferences({ errors: endpoint.errors, fernFilepath, imports }),
+                errors: convertResponseErrors({ rawResponseErrors: endpoint.errors, fernFilepath, imports }),
             })
         ),
     };
@@ -91,7 +87,20 @@ function convertHttpMethod(method: RawSchemas.HttpEndpointSchema["method"]): Htt
             return HttpMethod.Post;
         case "PUT":
             return HttpMethod.Put;
+        case "PATCH":
+            return HttpMethod.Patch;
         case "DELETE":
             return HttpMethod.Delete;
+        default:
+            assertNever(method);
+    }
+}
+
+function convertHttpAuth(auth: RawSchemas.AuthSchema): HttpAuth {
+    switch (auth) {
+        case "bearer":
+            return HttpAuth.Bearer;
+        default:
+            assertNever(auth);
     }
 }

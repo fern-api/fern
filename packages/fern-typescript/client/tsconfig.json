@@ -1,0 +1,12 @@
+{
+  "extends": "../../../shared/tsconfig.shared.json",
+  "compilerOptions": { "composite": true, "outDir": "./lib", "rootDir": "src", "module": "CommonJS" },
+  "include": ["./src"],
+  "references": [
+    { "path": "../../api/generated/ir" },
+    { "path": "../commons" },
+    { "path": "../errors" },
+    { "path": "../model" },
+    { "path": "../testing-utils" }
+  ]
+}

@@ -2,10 +2,10 @@ import { ContainerType, FernFilepath, PrimitiveType, TypeReference } from "@fern
 import { RawSchemas } from "@fern-api/syntax-analysis";
 import { parseTypeName } from "./parseTypeName";
 
-const MAP_REGEX = /map<\s*(.*)\s*,\s*(.*)\s*>/;
-const LIST_REGEX = /list<\s*(.*)\s*>/;
-const SET_REGEX = /set<\s*(.*)\s*>/;
-const OPTIONAL_REGEX = /optional<\s*(.*)\s*>/;
+const MAP_REGEX = /^map<\s*(.*)\s*,\s*(.*)\s*>$/;
+const LIST_REGEX = /^list<\s*(.*)\s*>$/;
+const SET_REGEX = /^set<\s*(.*)\s*>$/;
+const OPTIONAL_REGEX = /^optional<\s*(.*)\s*>$/;
 
 export declare namespace parseInlineType {
     export interface Args {
@@ -67,9 +67,9 @@ export function parseInlineType({ type, fernFilepath, imports }: parseInlineType
     );
 }
 
-export function createInlinableTypeParser(
+export function createTypeReferenceParser(
     args: Omit<parseInlineType.Args, "type">
-): (type: RawSchemas.SimpleInlinableType) => TypeReference {
+): (type: RawSchemas.TypeReferenceSchema) => TypeReference {
     return (type) => {
         const typeAsString = typeof type === "string" ? type : type.type;
         if (typeAsString == null) {

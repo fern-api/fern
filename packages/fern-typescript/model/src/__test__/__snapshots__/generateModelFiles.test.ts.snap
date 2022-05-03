@@ -1,0 +1,1054 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generateModelFiles fern IR 1`] = `
+Object {
+  "/index.ts": "export * from \\"./model\\";
+",
+  "/model/commons/PostId.ts": "/**
+ * An ID of a blog post
+ */
+export type PostId = string & {
+    __PostId: void;
+};
+
+export const PostId = {
+    of: (value: string): PostId => value as PostId,
+};
+",
+  "/model/commons/WithDocs.ts": "export interface WithDocs {
+    docs: string | null | undefined;
+}
+",
+  "/model/commons/index.ts": "export * from \\"./WithDocs\\";
+",
+  "/model/errors/ErrorDefinition.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
+import { NamedType } from \\"../types/NamedType\\";
+import { ErrorProperty } from \\"./ErrorProperty\\";
+import { HttpErrorConfiguration } from \\"./HttpErrorConfiguration\\";
+
+export interface ErrorDefinition extends WithDocs {
+    name: NamedType;
+    properties: ErrorProperty[];
+    http: HttpErrorConfiguration | null | undefined;
+}
+",
+  "/model/errors/ErrorProperty.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
+import { TypeReference } from \\"../types/TypeReference\\";
+
+export interface ErrorProperty extends WithDocs {
+    name: string;
+    type: TypeReference;
+}
+",
+  "/model/errors/HttpErrorConfiguration.ts": "export interface HttpErrorConfiguration {
+    statusCode: number;
+}
+",
+  "/model/errors/index.ts": "export * from \\"./ErrorDefinition\\";
+export * from \\"./ErrorProperty\\";
+export * from \\"./HttpErrorConfiguration\\";
+",
+  "/model/fern/IntermediateRepresentation.ts": "import { ErrorDefinition } from \\"../errors/ErrorDefinition\\";
+import { TypeDefinition } from \\"../types/TypeDefinition\\";
+import { Services } from \\"./Services\\";
+
+/**
+ * Complete representation of the API schema
+ */
+export interface IntermediateRepresentation {
+    /** The types described by this API */
+    types: TypeDefinition[];
+    /** The services exposed by this API */
+    services: Services;
+    errors: ErrorDefinition[];
+}
+",
+  "/model/fern/Services.ts": "import { HttpService } from \\"../services/http/HttpService\\";
+import { WebSocketService } from \\"../services/websocket/WebSocketService\\";
+
+export interface Services {
+    http: HttpService[];
+    websocket: WebSocketService[];
+}
+",
+  "/model/fern/index.ts": "export * from \\"./IntermediateRepresentation\\";
+export * from \\"./Services\\";
+",
+  "/model/index.ts": "export * from \\"./commons\\";
+export * from \\"./errors\\";
+export * from \\"./fern\\";
+export * from \\"./services\\";
+export * from \\"./types\\";
+",
+  "/model/posts/Author.ts": "export type Author = Author.Anonymous | Author.Named;
+
+export declare namespace Author {
+    interface Anonymous {
+        _type: \\"anonymous\\";
+    }
+
+    interface Named {
+        _type: \\"named\\";
+        named: string;
+    }
+
+    export interface _Visitor<Result> {
+        anonymous: () => Result;
+        named: (value: string) => Result;
+        _unknown: () => Result;
+    }
+}
+
+export const Author = {
+    anonymous: (): Author.Anonymous => ({
+        _type: \\"anonymous\\",
+    }),
+
+    named: (value: string): Author.Named => ({
+        named: value,
+        _type: \\"named\\",
+    }),
+
+    _visit: <Result>(
+        value: Author,
+        visitor: Author._Visitor<Result>
+    ): Result => {
+        switch (value._type) {
+            case \\"anonymous\\":
+                return visitor.anonymous();
+            case \\"named\\":
+                return visitor.named(value.named);
+            default:
+                return visitor._unknown();
+        }
+    },
+};
+",
+  "/model/posts/BlogPostReference.ts": "import * as model from \\"..\\";
+
+export type BlogPostReference = BlogPostReference.Post;
+
+export declare namespace BlogPostReference {
+    interface Post extends model.Post {
+        _type: \\"post\\";
+    }
+
+    export interface _Visitor<Result> {
+        post: (value: model.Post) => Result;
+        _unknown: () => Result;
+    }
+}
+
+export const BlogPostReference = {
+    post: (value: model.Post): BlogPostReference.Post => ({
+        ...value,
+        _type: \\"post\\",
+    }),
+
+    _visit: <Result>(
+        value: BlogPostReference,
+        visitor: BlogPostReference._Visitor<Result>
+    ): Result => {
+        switch (value._type) {
+            case \\"post\\":
+                return visitor.post(value);
+            default:
+                return visitor._unknown();
+        }
+    },
+};
+",
+  "/model/posts/CreatePostRequest.ts": "import { Author } from \\"./Author\\";
+
+export interface CreatePostRequest {
+    title: string;
+    author: Author;
+    content: string;
+}
+",
+  "/model/posts/Post.ts": "import { PostId } from \\"../commons/PostId\\";
+import { Author } from \\"./Author\\";
+import { PostType } from \\"./PostType\\";
+
+/**
+ * A blog post
+ */
+export interface Post {
+    id: PostId;
+    type: PostType;
+    title: string;
+    author: Author;
+    content: string;
+}
+",
+  "/model/posts/PostType.ts": "export type PostType = PostType.Long | PostType.Short;
+
+export const PostType = {
+    Long: \\"LONG\\" as PostType.Long,
+    Short: \\"SHORT\\" as PostType.Short,
+
+    _visit: <Result>(
+        value: PostType,
+        visitor: PostType._Visitor<Result>
+    ): Result => {
+        switch (value) {
+            case PostType.Long:
+                return visitor.long();
+            case PostType.Short:
+                return visitor.short();
+            default:
+                return visitor._unknown();
+        }
+    },
+};
+
+export declare namespace PostType {
+    export type Long = \\"LONG\\" & {
+        __Long: void;
+    };
+    export type Short = \\"SHORT\\" & {
+        __Short: void;
+    };
+
+    export interface _Visitor<Result> {
+        long: () => Result;
+        short: () => Result;
+        _unknown: () => Result;
+    }
+}
+",
+  "/model/posts/index.ts": "export * from \\"./Author\\";
+export * from \\"./BlogPostReference\\";
+export * from \\"./CreatePostRequest\\";
+export * from \\"./Post\\";
+export * from \\"./PostType\\";
+",
+  "/model/services/commons/BaseService.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
+import { NamedType } from \\"../../types/NamedType\\";
+
+export interface BaseService extends WithDocs {
+    basePath: string;
+    name: NamedType;
+}
+",
+  "/model/services/commons/ResponseError.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
+import { NamedType } from \\"../../types/NamedType\\";
+
+export interface ResponseError extends WithDocs {
+    discriminantValue: string;
+    error: NamedType;
+}
+",
+  "/model/services/commons/ResponseErrors.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
+import { ResponseError } from \\"./ResponseError\\";
+
+export interface ResponseErrors extends WithDocs {
+    discriminant: string;
+    possibleErrors: ResponseError[];
+}
+",
+  "/model/services/commons/WireMessage.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
+import { Type } from \\"../../types/Type\\";
+
+export interface WireMessage extends WithDocs {
+    type: Type;
+}
+",
+  "/model/services/commons/index.ts": "export * from \\"./BaseService\\";
+export * from \\"./ResponseError\\";
+export * from \\"./ResponseErrors\\";
+export * from \\"./WireMessage\\";
+",
+  "/model/services/http/HttpEndpoint.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
+import { ResponseErrors } from \\"../commons/ResponseErrors\\";
+import { WireMessage } from \\"../commons/WireMessage\\";
+import { HttpHeader } from \\"./HttpHeader\\";
+import { HttpMethod } from \\"./HttpMethod\\";
+import { PathParameter } from \\"./PathParameter\\";
+import { QueryParameter } from \\"./QueryParameter\\";
+
+export interface HttpEndpoint extends WithDocs {
+    endpointId: string;
+    path: string;
+    method: HttpMethod;
+    headers: HttpHeader[];
+    parameters: PathParameter[];
+    queryParameters: QueryParameter[];
+    request: WireMessage | null | undefined;
+    response: WireMessage | null | undefined;
+    errors: ResponseErrors;
+}
+",
+  "/model/services/http/HttpHeader.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
+import { TypeReference } from \\"../../types/TypeReference\\";
+
+export interface HttpHeader extends WithDocs {
+    header: string;
+    valueType: TypeReference;
+}
+",
+  "/model/services/http/HttpMethod.ts": "export type HttpMethod =
+    | HttpMethod.Get
+    | HttpMethod.Post
+    | HttpMethod.Put
+    | HttpMethod.Patch
+    | HttpMethod.Delete;
+
+export const HttpMethod = {
+    Get: \\"GET\\" as HttpMethod.Get,
+    Post: \\"POST\\" as HttpMethod.Post,
+    Put: \\"PUT\\" as HttpMethod.Put,
+    Patch: \\"PATCH\\" as HttpMethod.Patch,
+    Delete: \\"DELETE\\" as HttpMethod.Delete,
+
+    _visit: <Result>(
+        value: HttpMethod,
+        visitor: HttpMethod._Visitor<Result>
+    ): Result => {
+        switch (value) {
+            case HttpMethod.Get:
+                return visitor.get();
+            case HttpMethod.Post:
+                return visitor.post();
+            case HttpMethod.Put:
+                return visitor.put();
+            case HttpMethod.Patch:
+                return visitor.patch();
+            case HttpMethod.Delete:
+                return visitor.delete();
+            default:
+                return visitor._unknown();
+        }
+    },
+};
+
+export declare namespace HttpMethod {
+    export type Get = \\"GET\\" & {
+        __Get: void;
+    };
+    export type Post = \\"POST\\" & {
+        __Post: void;
+    };
+    export type Put = \\"PUT\\" & {
+        __Put: void;
+    };
+    export type Patch = \\"PATCH\\" & {
+        __Patch: void;
+    };
+    export type Delete = \\"DELETE\\" & {
+        __Delete: void;
+    };
+
+    export interface _Visitor<Result> {
+        get: () => Result;
+        post: () => Result;
+        put: () => Result;
+        patch: () => Result;
+        delete: () => Result;
+        _unknown: () => Result;
+    }
+}
+",
+  "/model/services/http/HttpService.ts": "import { BaseService } from \\"../commons/BaseService\\";
+import { HttpEndpoint } from \\"./HttpEndpoint\\";
+import { HttpHeader } from \\"./HttpHeader\\";
+
+export interface HttpService extends BaseService {
+    endpoints: HttpEndpoint[];
+    headers: HttpHeader[];
+}
+",
+  "/model/services/http/PathParameter.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
+import { TypeReference } from \\"../../types/TypeReference\\";
+
+export interface PathParameter extends WithDocs {
+    key: string;
+    valueType: TypeReference;
+}
+",
+  "/model/services/http/QueryParameter.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
+import { TypeReference } from \\"../../types/TypeReference\\";
+
+export interface QueryParameter extends WithDocs {
+    key: string;
+    valueType: TypeReference;
+}
+",
+  "/model/services/http/index.ts": "export * from \\"./HttpEndpoint\\";
+export * from \\"./HttpHeader\\";
+export * from \\"./HttpMethod\\";
+export * from \\"./HttpService\\";
+export * from \\"./PathParameter\\";
+export * from \\"./QueryParameter\\";
+",
+  "/model/services/index.ts": "export * from \\"./commons\\";
+export * from \\"./http\\";
+export * from \\"./websocket\\";
+",
+  "/model/services/websocket/WebSocketMessage.ts": "import { WithDocs } from \\"../../commons/WithDocs\\";
+import { ResponseErrors } from \\"../commons/ResponseErrors\\";
+import { WireMessage } from \\"../commons/WireMessage\\";
+import { WebSocketMessageOrigin } from \\"./WebSocketMessageOrigin\\";
+import { WebSocketMessageResponse } from \\"./WebSocketMessageResponse\\";
+
+export interface WebSocketMessage extends WithDocs {
+    origin: WebSocketMessageOrigin;
+    body: WireMessage | null | undefined;
+    response: WebSocketMessageResponse | null | undefined;
+    errors: ResponseErrors;
+}
+",
+  "/model/services/websocket/WebSocketMessageOrigin.ts": "export type WebSocketMessageOrigin =
+    | WebSocketMessageOrigin.Client
+    | WebSocketMessageOrigin.Server;
+
+export const WebSocketMessageOrigin = {
+    Client: \\"CLIENT\\" as WebSocketMessageOrigin.Client,
+    Server: \\"SERVER\\" as WebSocketMessageOrigin.Server,
+
+    _visit: <Result>(
+        value: WebSocketMessageOrigin,
+        visitor: WebSocketMessageOrigin._Visitor<Result>
+    ): Result => {
+        switch (value) {
+            case WebSocketMessageOrigin.Client:
+                return visitor.client();
+            case WebSocketMessageOrigin.Server:
+                return visitor.server();
+            default:
+                return visitor._unknown();
+        }
+    },
+};
+
+export declare namespace WebSocketMessageOrigin {
+    export type Client = \\"CLIENT\\" & {
+        __Client: void;
+    };
+    export type Server = \\"SERVER\\" & {
+        __Server: void;
+    };
+
+    export interface _Visitor<Result> {
+        client: () => Result;
+        server: () => Result;
+        _unknown: () => Result;
+    }
+}
+",
+  "/model/services/websocket/WebSocketMessageResponse.ts": "import { Type } from \\"../../types/Type\\";
+import { WireMessage } from \\"../commons/WireMessage\\";
+import { WebSocketMessageResponseBehavior } from \\"./WebSocketMessageResponseBehavior\\";
+
+export interface WebSocketMessageResponse extends WireMessage {
+    /** Defaults to WebSocketMessageResponseBehavior.ONGOING */
+    behavior: WebSocketMessageResponseBehavior;
+    type: Type;
+}
+",
+  "/model/services/websocket/WebSocketMessageResponseBehavior.ts": "export type WebSocketMessageResponseBehavior =
+    | WebSocketMessageResponseBehavior.Ongoing
+    | WebSocketMessageResponseBehavior.RequestResponse;
+
+export const WebSocketMessageResponseBehavior = {
+    Ongoing: \\"ONGOING\\" as WebSocketMessageResponseBehavior.Ongoing,
+    RequestResponse:
+        \\"REQUEST_RESPONSE\\" as WebSocketMessageResponseBehavior.RequestResponse,
+
+    _visit: <Result>(
+        value: WebSocketMessageResponseBehavior,
+        visitor: WebSocketMessageResponseBehavior._Visitor<Result>
+    ): Result => {
+        switch (value) {
+            case WebSocketMessageResponseBehavior.Ongoing:
+                return visitor.ongoing();
+            case WebSocketMessageResponseBehavior.RequestResponse:
+                return visitor.requestResponse();
+            default:
+                return visitor._unknown();
+        }
+    },
+};
+
+export declare namespace WebSocketMessageResponseBehavior {
+    export type Ongoing = \\"ONGOING\\" & {
+        __Ongoing: void;
+    };
+    export type RequestResponse = \\"REQUEST_RESPONSE\\" & {
+        __RequestResponse: void;
+    };
+
+    export interface _Visitor<Result> {
+        ongoing: () => Result;
+        requestResponse: () => Result;
+        _unknown: () => Result;
+    }
+}
+",
+  "/model/services/websocket/WebSocketService.ts": "import { BaseService } from \\"../commons/BaseService\\";
+import { WebSocketMessage } from \\"./WebSocketMessage\\";
+
+export interface WebSocketService extends BaseService {
+    messages: WebSocketMessage[];
+}
+",
+  "/model/services/websocket/index.ts": "export * from \\"./WebSocketMessage\\";
+export * from \\"./WebSocketMessageOrigin\\";
+export * from \\"./WebSocketMessageResponse\\";
+export * from \\"./WebSocketMessageResponseBehavior\\";
+export * from \\"./WebSocketService\\";
+",
+  "/model/types/AliasTypeDefinition.ts": "import { TypeReference } from \\"./TypeReference\\";
+
+export interface AliasTypeDefinition {
+    aliasOf: TypeReference;
+}
+",
+  "/model/types/ContainerType.ts": "import * as model from \\"..\\";
+
+export type ContainerType =
+    | ContainerType.List
+    | ContainerType.Map
+    | ContainerType.Optional
+    | ContainerType.Set;
+
+export declare namespace ContainerType {
+    interface List {
+        _type: \\"list\\";
+        list: model.TypeReference;
+    }
+
+    interface Map extends model.MapType {
+        _type: \\"map\\";
+    }
+
+    interface Optional {
+        _type: \\"optional\\";
+        optional: model.TypeReference;
+    }
+
+    interface Set {
+        _type: \\"set\\";
+        set: model.TypeReference;
+    }
+
+    export interface _Visitor<Result> {
+        list: (value: model.TypeReference) => Result;
+        map: (value: model.MapType) => Result;
+        optional: (value: model.TypeReference) => Result;
+        set: (value: model.TypeReference) => Result;
+        _unknown: () => Result;
+    }
+}
+
+export const ContainerType = {
+    list: (value: model.TypeReference): ContainerType.List => ({
+        list: value,
+        _type: \\"list\\",
+    }),
+
+    map: (value: model.MapType): ContainerType.Map => ({
+        ...value,
+        _type: \\"map\\",
+    }),
+
+    optional: (value: model.TypeReference): ContainerType.Optional => ({
+        optional: value,
+        _type: \\"optional\\",
+    }),
+
+    set: (value: model.TypeReference): ContainerType.Set => ({
+        set: value,
+        _type: \\"set\\",
+    }),
+
+    _visit: <Result>(
+        value: ContainerType,
+        visitor: ContainerType._Visitor<Result>
+    ): Result => {
+        switch (value._type) {
+            case \\"list\\":
+                return visitor.list(value.list);
+            case \\"map\\":
+                return visitor.map(value);
+            case \\"optional\\":
+                return visitor.optional(value.optional);
+            case \\"set\\":
+                return visitor.set(value.set);
+            default:
+                return visitor._unknown();
+        }
+    },
+};
+",
+  "/model/types/EnumTypeDefinition.ts": "import { EnumValue } from \\"./EnumValue\\";
+
+export interface EnumTypeDefinition {
+    values: EnumValue[];
+}
+",
+  "/model/types/EnumValue.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
+
+export interface EnumValue extends WithDocs {
+    value: string;
+}
+",
+  "/model/types/FernFilepath.ts": "/**
+ * A filepath to a Fern spec file, excluding the file extension
+ */
+export type FernFilepath = string & {
+    __FernFilepath: void;
+};
+
+export const FernFilepath = {
+    of: (value: string): FernFilepath => value as FernFilepath,
+};
+",
+  "/model/types/MapType.ts": "import { TypeReference } from \\"./TypeReference\\";
+
+export interface MapType {
+    keyType: TypeReference;
+    valueType: TypeReference;
+}
+",
+  "/model/types/NamedType.ts": "import { FernFilepath } from \\"./FernFilepath\\";
+
+export interface NamedType {
+    fernFilepath: FernFilepath;
+    name: string;
+}
+",
+  "/model/types/ObjectProperty.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
+import { TypeReference } from \\"./TypeReference\\";
+
+export interface ObjectProperty extends WithDocs {
+    key: string;
+    valueType: TypeReference;
+}
+",
+  "/model/types/ObjectTypeDefinition.ts": "import { NamedType } from \\"./NamedType\\";
+import { ObjectProperty } from \\"./ObjectProperty\\";
+
+export interface ObjectTypeDefinition {
+    /** A list of other types to inherit from */
+    extends: NamedType[];
+    properties: ObjectProperty[];
+}
+",
+  "/model/types/PrimitiveType.ts": "export type PrimitiveType =
+    | PrimitiveType.Integer
+    | PrimitiveType.Double
+    | PrimitiveType.String
+    | PrimitiveType.Boolean
+    /**
+     * Within the range -2^53 to 2^53 */
+    | PrimitiveType.Long;
+
+export const PrimitiveType = {
+    Integer: \\"INTEGER\\" as PrimitiveType.Integer,
+    Double: \\"DOUBLE\\" as PrimitiveType.Double,
+    String: \\"STRING\\" as PrimitiveType.String,
+    Boolean: \\"BOOLEAN\\" as PrimitiveType.Boolean,
+    Long: \\"LONG\\" as PrimitiveType.Long,
+
+    _visit: <Result>(
+        value: PrimitiveType,
+        visitor: PrimitiveType._Visitor<Result>
+    ): Result => {
+        switch (value) {
+            case PrimitiveType.Integer:
+                return visitor.integer();
+            case PrimitiveType.Double:
+                return visitor.double();
+            case PrimitiveType.String:
+                return visitor.string();
+            case PrimitiveType.Boolean:
+                return visitor.boolean();
+            case PrimitiveType.Long:
+                return visitor.long();
+            default:
+                return visitor._unknown();
+        }
+    },
+};
+
+export declare namespace PrimitiveType {
+    export type Integer = \\"INTEGER\\" & {
+        __Integer: void;
+    };
+    export type Double = \\"DOUBLE\\" & {
+        __Double: void;
+    };
+    export type String = \\"STRING\\" & {
+        __String: void;
+    };
+    export type Boolean = \\"BOOLEAN\\" & {
+        __Boolean: void;
+    };
+    export type Long = \\"LONG\\" & {
+        __Long: void;
+    };
+
+    export interface _Visitor<Result> {
+        integer: () => Result;
+        double: () => Result;
+        string: () => Result;
+        boolean: () => Result;
+        long: () => Result;
+        _unknown: () => Result;
+    }
+}
+",
+  "/model/types/SingleUnionType.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
+import { TypeReference } from \\"./TypeReference\\";
+
+export interface SingleUnionType extends WithDocs {
+    discriminantValue: string;
+    valueType: TypeReference;
+}
+",
+  "/model/types/Type.ts": "import * as model from \\"..\\";
+
+export type Type = Type.Alias | Type.Enum | Type.Object | Type.Union;
+
+export declare namespace Type {
+    interface Alias extends model.AliasTypeDefinition {
+        _type: \\"alias\\";
+    }
+
+    interface Enum extends model.EnumTypeDefinition {
+        _type: \\"enum\\";
+    }
+
+    interface Object extends model.ObjectTypeDefinition {
+        _type: \\"object\\";
+    }
+
+    interface Union extends model.UnionTypeDefinition {
+        _type: \\"union\\";
+    }
+
+    export interface _Visitor<Result> {
+        alias: (value: model.AliasTypeDefinition) => Result;
+        enum: (value: model.EnumTypeDefinition) => Result;
+        object: (value: model.ObjectTypeDefinition) => Result;
+        union: (value: model.UnionTypeDefinition) => Result;
+        _unknown: () => Result;
+    }
+}
+
+export const Type = {
+    alias: (value: model.AliasTypeDefinition): Type.Alias => ({
+        ...value,
+        _type: \\"alias\\",
+    }),
+
+    enum: (value: model.EnumTypeDefinition): Type.Enum => ({
+        ...value,
+        _type: \\"enum\\",
+    }),
+
+    object: (value: model.ObjectTypeDefinition): Type.Object => ({
+        ...value,
+        _type: \\"object\\",
+    }),
+
+    union: (value: model.UnionTypeDefinition): Type.Union => ({
+        ...value,
+        _type: \\"union\\",
+    }),
+
+    _visit: <Result>(value: Type, visitor: Type._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"alias\\":
+                return visitor.alias(value);
+            case \\"enum\\":
+                return visitor.enum(value);
+            case \\"object\\":
+                return visitor.object(value);
+            case \\"union\\":
+                return visitor.union(value);
+            default:
+                return visitor._unknown();
+        }
+    },
+};
+",
+  "/model/types/TypeDefinition.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
+import { NamedType } from \\"./NamedType\\";
+import { Type } from \\"./Type\\";
+
+/**
+ * A type, which is a name and a shape
+ */
+export interface TypeDefinition extends WithDocs {
+    name: NamedType;
+    shape: Type;
+}
+",
+  "/model/types/TypeReference.ts": "import * as model from \\"..\\";
+
+export type TypeReference =
+    | TypeReference.Container
+    | TypeReference.Named
+    | TypeReference.Primitive
+    | TypeReference.Void;
+
+export declare namespace TypeReference {
+    interface Container {
+        _type: \\"container\\";
+        container: model.ContainerType;
+    }
+
+    interface Named extends model.NamedType {
+        _type: \\"named\\";
+    }
+
+    interface Primitive {
+        _type: \\"primitive\\";
+        primitive: model.PrimitiveType;
+    }
+
+    interface Void {
+        _type: \\"void\\";
+    }
+
+    export interface _Visitor<Result> {
+        container: (value: model.ContainerType) => Result;
+        named: (value: model.NamedType) => Result;
+        primitive: (value: model.PrimitiveType) => Result;
+        void: () => Result;
+        _unknown: () => Result;
+    }
+}
+
+export const TypeReference = {
+    container: (value: model.ContainerType): TypeReference.Container => ({
+        container: value,
+        _type: \\"container\\",
+    }),
+
+    named: (value: model.NamedType): TypeReference.Named => ({
+        ...value,
+        _type: \\"named\\",
+    }),
+
+    primitive: (value: model.PrimitiveType): TypeReference.Primitive => ({
+        primitive: value,
+        _type: \\"primitive\\",
+    }),
+
+    void: (): TypeReference.Void => ({
+        _type: \\"void\\",
+    }),
+
+    _visit: <Result>(
+        value: TypeReference,
+        visitor: TypeReference._Visitor<Result>
+    ): Result => {
+        switch (value._type) {
+            case \\"container\\":
+                return visitor.container(value.container);
+            case \\"named\\":
+                return visitor.named(value);
+            case \\"primitive\\":
+                return visitor.primitive(value.primitive);
+            case \\"void\\":
+                return visitor.void();
+            default:
+                return visitor._unknown();
+        }
+    },
+};
+",
+  "/model/types/UnionTypeDefinition.ts": "import { SingleUnionType } from \\"./SingleUnionType\\";
+
+export interface UnionTypeDefinition {
+    discriminant: string;
+    types: SingleUnionType[];
+}
+",
+  "/model/types/index.ts": "export * from \\"./AliasTypeDefinition\\";
+export * from \\"./ContainerType\\";
+export * from \\"./EnumTypeDefinition\\";
+export * from \\"./EnumValue\\";
+export * from \\"./FernFilepath\\";
+export * from \\"./MapType\\";
+export * from \\"./NamedType\\";
+export * from \\"./ObjectProperty\\";
+export * from \\"./ObjectTypeDefinition\\";
+export * from \\"./PrimitiveType\\";
+export * from \\"./SingleUnionType\\";
+export * from \\"./Type\\";
+export * from \\"./TypeDefinition\\";
+export * from \\"./TypeReference\\";
+export * from \\"./UnionTypeDefinition\\";
+",
+}
+`;
+
+exports[`generateModelFiles posts 1`] = `
+Object {
+  "/index.ts": "export * from \\"./model\\";
+",
+  "/model/commons/PostId.ts": "/**
+ * An ID of a blog post
+ */
+export type PostId = string & {
+    __PostId: void;
+};
+
+export const PostId = {
+    of: (value: string): PostId => value as PostId,
+};
+",
+  "/model/commons/index.ts": "export * from \\"./PostId\\";
+",
+  "/model/index.ts": "export * from \\"./commons\\";
+export * from \\"./posts\\";
+",
+  "/model/posts/Author.ts": "export type Author = Author.Anonymous | Author.Named;
+
+export declare namespace Author {
+    interface Anonymous {
+        _type: \\"anonymous\\";
+    }
+
+    interface Named {
+        _type: \\"named\\";
+        named: string;
+    }
+
+    export interface _Visitor<Result> {
+        anonymous: () => Result;
+        named: (value: string) => Result;
+        _unknown: () => Result;
+    }
+}
+
+export const Author = {
+    anonymous: (): Author.Anonymous => ({
+        _type: \\"anonymous\\",
+    }),
+
+    named: (value: string): Author.Named => ({
+        named: value,
+        _type: \\"named\\",
+    }),
+
+    _visit: <Result>(
+        value: Author,
+        visitor: Author._Visitor<Result>
+    ): Result => {
+        switch (value._type) {
+            case \\"anonymous\\":
+                return visitor.anonymous();
+            case \\"named\\":
+                return visitor.named(value.named);
+            default:
+                return visitor._unknown();
+        }
+    },
+};
+",
+  "/model/posts/BlogPostReference.ts": "import * as model from \\"..\\";
+
+export type BlogPostReference = BlogPostReference.Post;
+
+export declare namespace BlogPostReference {
+    interface Post extends model.Post {
+        _type: \\"post\\";
+    }
+
+    export interface _Visitor<Result> {
+        post: (value: model.Post) => Result;
+        _unknown: () => Result;
+    }
+}
+
+export const BlogPostReference = {
+    post: (value: model.Post): BlogPostReference.Post => ({
+        ...value,
+        _type: \\"post\\",
+    }),
+
+    _visit: <Result>(
+        value: BlogPostReference,
+        visitor: BlogPostReference._Visitor<Result>
+    ): Result => {
+        switch (value._type) {
+            case \\"post\\":
+                return visitor.post(value);
+            default:
+                return visitor._unknown();
+        }
+    },
+};
+",
+  "/model/posts/CreatePostRequest.ts": "import { Author } from \\"./Author\\";
+
+export interface CreatePostRequest {
+    title: string;
+    author: Author;
+    content: string;
+}
+",
+  "/model/posts/Post.ts": "import { PostId } from \\"../commons/PostId\\";
+import { Author } from \\"./Author\\";
+import { PostType } from \\"./PostType\\";
+
+/**
+ * A blog post
+ */
+export interface Post {
+    id: PostId;
+    type: PostType;
+    title: string;
+    author: Author;
+    content: string;
+}
+",
+  "/model/posts/PostType.ts": "export type PostType = PostType.Long | PostType.Short;
+
+export const PostType = {
+    Long: \\"LONG\\" as PostType.Long,
+    Short: \\"SHORT\\" as PostType.Short,
+
+    _visit: <Result>(
+        value: PostType,
+        visitor: PostType._Visitor<Result>
+    ): Result => {
+        switch (value) {
+            case PostType.Long:
+                return visitor.long();
+            case PostType.Short:
+                return visitor.short();
+            default:
+                return visitor._unknown();
+        }
+    },
+};
+
+export declare namespace PostType {
+    export type Long = \\"LONG\\" & {
+        __Long: void;
+    };
+    export type Short = \\"SHORT\\" & {
+        __Short: void;
+    };
+
+    export interface _Visitor<Result> {
+        long: () => Result;
+        short: () => Result;
+        _unknown: () => Result;
+    }
+}
+",
+  "/model/posts/index.ts": "export * from \\"./Author\\";
+export * from \\"./BlogPostReference\\";
+export * from \\"./CreatePostRequest\\";
+export * from \\"./Post\\";
+export * from \\"./PostType\\";
+",
+}
+`;

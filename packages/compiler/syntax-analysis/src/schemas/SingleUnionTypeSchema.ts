@@ -1,7 +1,6 @@
 import { z } from "zod";
-import { inlinableType } from "./utils/inlinableType";
-import { WithDocsSchema } from "./utils/WithDocsSchema";
+import { TypeReferenceWithDocsSchema } from "./TypeReferenceSchema";
 
-export const SingleUnionTypeSchema = inlinableType(WithDocsSchema.shape);
+export const SingleUnionTypeSchema = TypeReferenceWithDocsSchema;
 
 export type SingleUnionTypeSchema = z.infer<typeof SingleUnionTypeSchema>;
