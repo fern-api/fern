@@ -8,6 +8,7 @@ export const EnumSchema = z
                 z.string(),
                 z
                     .strictObject({
+                        name: z.optional(z.string()),
                         value: z.string(),
                     })
                     .merge(WithDocsSchema),

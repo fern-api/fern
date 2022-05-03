@@ -85,7 +85,9 @@ export function convertType({
     if (isRawEnumDefinition(typeDefinition)) {
         return Type.enum({
             values: typeDefinition.enum.map((value) =>
-                typeof value === "string" ? { value, docs: undefined } : { value: value.value, docs: value.docs }
+                typeof value === "string"
+                    ? { value, name: value, docs: undefined }
+                    : { value: value.value, name: value.name != null ? value.name : value.value, docs: value.docs }
             ),
         });
     }

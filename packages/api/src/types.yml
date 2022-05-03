@@ -33,7 +33,7 @@ types:
     properties:
       name:
         type: string
-        docs: Name must start with an alphabet. Allowed regex is /[a-z][a-z0-9]*/i.
+        docs: Name must start with an alphabet.
       value: string
 
   ObjectTypeDefinition:
