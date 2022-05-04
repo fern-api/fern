@@ -7,7 +7,6 @@ dependencies {
     implementation project(':fern-codegen-utils')
     implementation project(':fern-model-codegen')
     implementation project(':fern-jersey-codegen')
-    implementation 'net.sourceforge.argparse4j:argparse4j'
     implementation 'com.fasterxml.jackson.core:jackson-databind'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
     implementation 'com.fern:fern-api-model'

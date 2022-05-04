@@ -1,0 +1,1325 @@
+{
+  "types": [
+    {
+      "name": {
+        "fernFilepath": "commons",
+        "name": "WithDocs"
+      },
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "docs",
+            "valueType": {
+              "container": {
+                "optional": {
+                  "primitive": "STRING",
+                  "_type": "primitive"
+                },
+                "_type": "optional"
+              },
+              "_type": "container"
+            },
+            "docs": "undefined"
+          }
+        ],
+        "_type": "object"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "errors",
+        "name": "ErrorDefinition"
+      },
+      "shape": {
+        "extends": [
+          {
+            "name": "WithDocs",
+            "fernFilepath": "commons"
+          }
+        ],
+        "properties": [
+          {
+            "key": "name",
+            "valueType": {
+              "name": "NamedType",
+              "fernFilepath": "types",
+              "_type": "named"
+            },
+            "docs": "undefined"
+          },
+          {
+            "key": "properties",
+            "valueType": {
+              "container": {
+                "list": {
+                  "name": "ErrorProperty",
+                  "fernFilepath": "errors",
+                  "_type": "named"
+                },
+                "_type": "list"
+              },
+              "_type": "container"
+            },
+            "docs": "undefined"
+          },
+          {
+            "key": "http",
+            "valueType": {
+              "container": {
+                "optional": {
+                  "name": "HttpErrorConfiguration",
+                  "fernFilepath": "errors",
+                  "_type": "named"
+                },
+                "_type": "optional"
+              },
+              "_type": "container"
+            },
+            "docs": "undefined"
+          }
+        ],
+        "_type": "object"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "errors",
+        "name": "ErrorProperty"
+      },
+      "shape": {
+        "extends": [
+          {
+            "name": "WithDocs",
+            "fernFilepath": "commons"
+          }
+        ],
+        "properties": [
+          {
+            "key": "name",
+            "valueType": {
+              "primitive": "STRING",
+              "_type": "primitive"
+            },
+            "docs": "undefined"
+          },
+          {
+            "key": "type",
+            "valueType": {
+              "name": "TypeReference",
+              "fernFilepath": "types",
+              "_type": "named"
+            },
+            "docs": "undefined"
+          }
+        ],
+        "_type": "object"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "errors",
+        "name": "HttpErrorConfiguration"
+      },
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "statusCode",
+            "valueType": {
+              "primitive": "INTEGER",
+              "_type": "primitive"
+            },
+            "docs": "undefined"
+          }
+        ],
+        "_type": "object"
+      }
+    },
+    {
+      "docs": "Complete representation of the API schema",
+      "name": {
+        "fernFilepath": "fern",
+        "name": "IntermediateRepresentation"
+      },
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "types",
+            "valueType": {
+              "container": {
+                "list": {
+                  "name": "TypeDefinition",
+                  "fernFilepath": "types",
+                  "_type": "named"
+                },
+                "_type": "list"
+              },
+              "_type": "container"
+            },
+            "docs": "string"
+          },
+          {
+            "key": "services",
+            "valueType": {
+              "name": "Services",
+              "fernFilepath": "fern",
+              "_type": "named"
+            },
+            "docs": "string"
+          },
+          {
+            "key": "errors",
+            "valueType": {
+              "container": {
+                "list": {
+                  "name": "ErrorDefinition",
+                  "fernFilepath": "errors",
+                  "_type": "named"
+                },
+                "_type": "list"
+              },
+              "_type": "container"
+            },
+            "docs": "undefined"
+          }
+        ],
+        "_type": "object"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "fern",
+        "name": "Services"
+      },
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "http",
+            "valueType": {
+              "container": {
+                "list": {
+                  "name": "HttpService",
+                  "fernFilepath": "services/http",
+                  "_type": "named"
+                },
+                "_type": "list"
+              },
+              "_type": "container"
+            },
+            "docs": "undefined"
+          },
+          {
+            "key": "websocket",
+            "valueType": {
+              "container": {
+                "list": {
+                  "name": "WebSocketService",
+                  "fernFilepath": "services/websocket",
+                  "_type": "named"
+                },
+                "_type": "list"
+              },
+              "_type": "container"
+            },
+            "docs": "undefined"
+          }
+        ],
+        "_type": "object"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "services/commons",
+        "name": "BaseService"
+      },
+      "shape": {
+        "extends": [
+          {
+            "name": "WithDocs",
+            "fernFilepath": "commons"
+          }
+        ],
+        "properties": [
+          {
+            "key": "basePath",
+            "valueType": {
+              "primitive": "STRING",
+              "_type": "primitive"
+            },
+            "docs": "undefined"
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "name": "NamedType",
+              "fernFilepath": "types",
+              "_type": "named"
+            },
+            "docs": "undefined"
+          }
+        ],
+        "_type": "object"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "services/commons",
+        "name": "WireMessage"
+      },
+      "shape": {
+        "extends": [
+          {
+            "name": "WithDocs",
+            "fernFilepath": "commons"
+          }
+        ],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "name": "Type",
+              "fernFilepath": "types",
+              "_type": "named"
+            },
+            "docs": "undefined"
+          }
+        ],
+        "_type": "object"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "services/commons",
+        "name": "ResponseErrors"
+      },
+      "shape": {
+        "extends": [
+          {
+            "name": "WithDocs",
+            "fernFilepath": "commons"
+          }
+        ],
+        "properties": [
+          {
+            "key": "discriminant",
+            "valueType": {
+              "primitive": "STRING",
+              "_type": "primitive"
+            },
+            "docs": "undefined"
+          },
+          {
+            "key": "possibleErrors",
+            "valueType": {
+              "container": {
+                "list": {
+                  "name": "ResponseError",
+                  "fernFilepath": "services/commons",
+                  "_type": "named"
+                },
+                "_type": "list"
+              },
+              "_type": "container"
+            },
+            "docs": "undefined"
+          }
+        ],
+        "_type": "object"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "services/commons",
+        "name": "ResponseError"
+      },
+      "shape": {
+        "extends": [
+          {
+            "name": "WithDocs",
+            "fernFilepath": "commons"
+          }
+        ],
+        "properties": [
+          {
+            "key": "discriminantValue",
+            "valueType": {
+              "primitive": "STRING",
+              "_type": "primitive"
+            },
+            "docs": "undefined"
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "name": "NamedType",
+              "fernFilepath": "types",
+              "_type": "named"
+            },
+            "docs": "undefined"
+          }
+        ],
+        "_type": "object"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "services/http",
+        "name": "HttpService"
+      },
+      "shape": {
+        "extends": [
+          {
+            "name": "BaseService",
+            "fernFilepath": "services/commons"
+          }
+        ],
+        "properties": [
+          {
+            "key": "endpoints",
+            "valueType": {
+              "container": {
+                "list": {
+                  "name": "HttpEndpoint",
+                  "fernFilepath": "services/http",
+                  "_type": "named"
+                },
+                "_type": "list"
+              },
+              "_type": "container"
+            },
+            "docs": "undefined"
+          },
+          {
+            "key": "headers",
+            "valueType": {
+              "container": {
+                "list": {
+                  "name": "HttpHeader",
+                  "fernFilepath": "services/http",
+                  "_type": "named"
+                },
+                "_type": "list"
+              },
+              "_type": "container"
+            },
+            "docs": "undefined"
+          }
+        ],
+        "_type": "object"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "services/http",
+        "name": "HttpEndpoint"
+      },
+      "shape": {
+        "extends": [
+          {
+            "name": "WithDocs",
+            "fernFilepath": "commons"
+          }
+        ],
+        "properties": [
+          {
+            "key": "endpointId",
+            "valueType": {
+              "primitive": "STRING",
+              "_type": "primitive"
+            },
+            "docs": "undefined"
+          },
+          {
+            "key": "path",
+            "valueType": {
+              "primitive": "STRING",
+              "_type": "primitive"
+            },
+            "docs": "undefined"
+          },
+          {
+            "key": "method",
+            "valueType": {
+              "name": "HttpMethod",
+              "fernFilepath": "services/http",
+              "_type": "named"
+            },
+            "docs": "undefined"
+          },
+          {
+            "key": "headers",
+            "valueType": {
+              "container": {
+                "list": {
+                  "name": "HttpHeader",
+                  "fernFilepath": "services/http",
+                  "_type": "named"
+                },
+                "_type": "list"
+              },
+              "_type": "container"
+            },
+            "docs": "undefined"
+          },
+          {
+            "key": "parameters",
+            "valueType": {
+              "container": {
+                "list": {
+                  "name": "PathParameter",
+                  "fernFilepath": "services/http",
+                  "_type": "named"
+                },
+                "_type": "list"
+              },
+              "_type": "container"
+            },
+            "docs": "undefined"
+          },
+          {
+            "key": "queryParameters",
+            "valueType": {
+              "container": {
+                "list": {
+                  "name": "QueryParameter",
+                  "fernFilepath": "services/http",
+                  "_type": "named"
+                },
+                "_type": "list"
+              },
+              "_type": "container"
+            },
+            "docs": "undefined"
+          },
+          {
+            "key": "request",
+            "valueType": {
+              "container": {
+                "optional": {
+                  "name": "WireMessage",
+                  "fernFilepath": "services/commons",
+                  "_type": "named"
+                },
+                "_type": "optional"
+              },
+              "_type": "container"
+            },
+            "docs": "undefined"
+          },
+          {
+            "key": "response",
+            "valueType": {
+              "container": {
+                "optional": {
+                  "name": "WireMessage",
+                  "fernFilepath": "services/commons",
+                  "_type": "named"
+                },
+                "_type": "optional"
+              },
+              "_type": "container"
+            },
+            "docs": "undefined"
+          },
+          {
+            "key": "errors",
+            "valueType": {
+              "name": "ResponseErrors",
+              "fernFilepath": "services/commons",
+              "_type": "named"
+            },
+            "docs": "undefined"
+          }
+        ],
+        "_type": "object"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "services/http",
+        "name": "HttpMethod"
+      },
+      "shape": {
+        "values": [
+          {
+            "value": "GET"
+          },
+          {
+            "value": "POST"
+          },
+          {
+            "value": "PUT"
+          },
+          {
+            "value": "PATCH"
+          },
+          {
+            "value": "DELETE"
+          }
+        ],
+        "_type": "enum"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "services/http",
+        "name": "HttpHeader"
+      },
+      "shape": {
+        "extends": [
+          {
+            "name": "WithDocs",
+            "fernFilepath": "commons"
+          }
+        ],
+        "properties": [
+          {
+            "key": "header",
+            "valueType": {
+              "primitive": "STRING",
+              "_type": "primitive"
+            },
+            "docs": "undefined"
+          },
+          {
+            "key": "valueType",
+            "valueType": {
+              "name": "TypeReference",
+              "fernFilepath": "types",
+              "_type": "named"
+            },
+            "docs": "undefined"
+          }
+        ],
+        "_type": "object"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "services/http",
+        "name": "PathParameter"
+      },
+      "shape": {
+        "extends": [
+          {
+            "name": "WithDocs",
+            "fernFilepath": "commons"
+          }
+        ],
+        "properties": [
+          {
+            "key": "key",
+            "valueType": {
+              "primitive": "STRING",
+              "_type": "primitive"
+            },
+            "docs": "undefined"
+          },
+          {
+            "key": "valueType",
+            "valueType": {
+              "name": "TypeReference",
+              "fernFilepath": "types",
+              "_type": "named"
+            },
+            "docs": "undefined"
+          }
+        ],
+        "_type": "object"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "services/http",
+        "name": "QueryParameter"
+      },
+      "shape": {
+        "extends": [
+          {
+            "name": "WithDocs",
+            "fernFilepath": "commons"
+          }
+        ],
+        "properties": [
+          {
+            "key": "key",
+            "valueType": {
+              "primitive": "STRING",
+              "_type": "primitive"
+            },
+            "docs": "undefined"
+          },
+          {
+            "key": "valueType",
+            "valueType": {
+              "name": "TypeReference",
+              "fernFilepath": "types",
+              "_type": "named"
+            },
+            "docs": "undefined"
+          }
+        ],
+        "_type": "object"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "services/websocket",
+        "name": "WebSocketService"
+      },
+      "shape": {
+        "extends": [
+          {
+            "name": "BaseService",
+            "fernFilepath": "services/commons"
+          }
+        ],
+        "properties": [
+          {
+            "key": "messages",
+            "valueType": {
+              "container": {
+                "list": {
+                  "name": "WebSocketMessage",
+                  "fernFilepath": "services/websocket",
+                  "_type": "named"
+                },
+                "_type": "list"
+              },
+              "_type": "container"
+            },
+            "docs": "undefined"
+          }
+        ],
+        "_type": "object"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "services/websocket",
+        "name": "WebSocketMessage"
+      },
+      "shape": {
+        "extends": [
+          {
+            "name": "WithDocs",
+            "fernFilepath": "commons"
+          }
+        ],
+        "properties": [
+          {
+            "key": "origin",
+            "valueType": {
+              "name": "WebSocketMessageOrigin",
+              "fernFilepath": "services/websocket",
+              "_type": "named"
+            },
+            "docs": "undefined"
+          },
+          {
+            "key": "body",
+            "valueType": {
+              "container": {
+                "optional": {
+                  "name": "WireMessage",
+                  "fernFilepath": "services/commons",
+                  "_type": "named"
+                },
+                "_type": "optional"
+              },
+              "_type": "container"
+            },
+            "docs": "undefined"
+          },
+          {
+            "key": "response",
+            "valueType": {
+              "container": {
+                "optional": {
+                  "name": "WebSocketMessageResponse",
+                  "fernFilepath": "services/websocket",
+                  "_type": "named"
+                },
+                "_type": "optional"
+              },
+              "_type": "container"
+            },
+            "docs": "undefined"
+          },
+          {
+            "key": "errors",
+            "valueType": {
+              "name": "ResponseErrors",
+              "fernFilepath": "services/commons",
+              "_type": "named"
+            },
+            "docs": "undefined"
+          }
+        ],
+        "_type": "object"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "services/websocket",
+        "name": "WebSocketMessageOrigin"
+      },
+      "shape": {
+        "values": [
+          {
+            "value": "CLIENT"
+          },
+          {
+            "value": "SERVER"
+          }
+        ],
+        "_type": "enum"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "services/websocket",
+        "name": "WebSocketMessageResponse"
+      },
+      "shape": {
+        "extends": [
+          {
+            "name": "WireMessage",
+            "fernFilepath": "services/commons"
+          }
+        ],
+        "properties": [
+          {
+            "key": "behavior",
+            "valueType": {
+              "name": "WebSocketMessageResponseBehavior",
+              "fernFilepath": "services/websocket",
+              "_type": "named"
+            },
+            "docs": "string"
+          },
+          {
+            "key": "type",
+            "valueType": {
+              "name": "Type",
+              "fernFilepath": "types",
+              "_type": "named"
+            },
+            "docs": "undefined"
+          }
+        ],
+        "_type": "object"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "services/websocket",
+        "name": "WebSocketMessageResponseBehavior"
+      },
+      "shape": {
+        "values": [
+          {
+            "value": "ONGOING"
+          },
+          {
+            "value": "REQUEST_RESPONSE"
+          }
+        ],
+        "_type": "enum"
+      }
+    },
+    {
+      "docs": "A filepath to a Fern spec file, excluding the file extension",
+      "name": {
+        "fernFilepath": "types",
+        "name": "FernFilepath"
+      },
+      "shape": {
+        "aliasOf": {
+          "primitive": "STRING",
+          "_type": "primitive"
+        },
+        "isId": true,
+        "_type": "alias"
+      }
+    },
+    {
+      "docs": "A type, which is a name and a shape",
+      "name": {
+        "fernFilepath": "types",
+        "name": "TypeDefinition"
+      },
+      "shape": {
+        "extends": [
+          {
+            "name": "WithDocs",
+            "fernFilepath": "commons"
+          }
+        ],
+        "properties": [
+          {
+            "key": "name",
+            "valueType": {
+              "name": "NamedType",
+              "fernFilepath": "types",
+              "_type": "named"
+            },
+            "docs": "undefined"
+          },
+          {
+            "key": "shape",
+            "valueType": {
+              "name": "Type",
+              "fernFilepath": "types",
+              "_type": "named"
+            },
+            "docs": "undefined"
+          }
+        ],
+        "_type": "object"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "types",
+        "name": "NamedType"
+      },
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "fernFilepath",
+            "valueType": {
+              "name": "FernFilepath",
+              "fernFilepath": "types",
+              "_type": "named"
+            },
+            "docs": "undefined"
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "primitive": "STRING",
+              "_type": "primitive"
+            },
+            "docs": "undefined"
+          }
+        ],
+        "_type": "object"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "types",
+        "name": "Type"
+      },
+      "shape": {
+        "discriminant": "_type",
+        "types": [
+          {
+            "discriminantValue": "alias",
+            "valueType": {
+              "name": "AliasTypeDefinition",
+              "fernFilepath": "types",
+              "_type": "named"
+            }
+          },
+          {
+            "discriminantValue": "enum",
+            "valueType": {
+              "name": "EnumTypeDefinition",
+              "fernFilepath": "types",
+              "_type": "named"
+            }
+          },
+          {
+            "discriminantValue": "object",
+            "valueType": {
+              "name": "ObjectTypeDefinition",
+              "fernFilepath": "types",
+              "_type": "named"
+            }
+          },
+          {
+            "discriminantValue": "union",
+            "valueType": {
+              "name": "UnionTypeDefinition",
+              "fernFilepath": "types",
+              "_type": "named"
+            }
+          }
+        ],
+        "_type": "union"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "types",
+        "name": "AliasTypeDefinition"
+      },
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "aliasOf",
+            "valueType": {
+              "name": "TypeReference",
+              "fernFilepath": "types",
+              "_type": "named"
+            },
+            "docs": "undefined"
+          }
+        ],
+        "_type": "object"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "types",
+        "name": "EnumTypeDefinition"
+      },
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "values",
+            "valueType": {
+              "container": {
+                "list": {
+                  "name": "EnumValue",
+                  "fernFilepath": "types",
+                  "_type": "named"
+                },
+                "_type": "list"
+              },
+              "_type": "container"
+            },
+            "docs": "undefined"
+          }
+        ],
+        "_type": "object"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "types",
+        "name": "EnumValue"
+      },
+      "shape": {
+        "extends": [
+          {
+            "name": "WithDocs",
+            "fernFilepath": "commons"
+          }
+        ],
+        "properties": [
+          {
+            "key": "value",
+            "valueType": {
+              "primitive": "STRING",
+              "_type": "primitive"
+            },
+            "docs": "undefined"
+          }
+        ],
+        "_type": "object"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "types",
+        "name": "ObjectTypeDefinition"
+      },
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "extends",
+            "valueType": {
+              "container": {
+                "list": {
+                  "name": "NamedType",
+                  "fernFilepath": "types",
+                  "_type": "named"
+                },
+                "_type": "list"
+              },
+              "_type": "container"
+            },
+            "docs": "string"
+          },
+          {
+            "key": "properties",
+            "valueType": {
+              "container": {
+                "list": {
+                  "name": "ObjectProperty",
+                  "fernFilepath": "types",
+                  "_type": "named"
+                },
+                "_type": "list"
+              },
+              "_type": "container"
+            },
+            "docs": "undefined"
+          }
+        ],
+        "_type": "object"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "types",
+        "name": "ObjectProperty"
+      },
+      "shape": {
+        "extends": [
+          {
+            "name": "WithDocs",
+            "fernFilepath": "commons"
+          }
+        ],
+        "properties": [
+          {
+            "key": "key",
+            "valueType": {
+              "primitive": "STRING",
+              "_type": "primitive"
+            },
+            "docs": "undefined"
+          },
+          {
+            "key": "valueType",
+            "valueType": {
+              "name": "TypeReference",
+              "fernFilepath": "types",
+              "_type": "named"
+            },
+            "docs": "undefined"
+          }
+        ],
+        "_type": "object"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "types",
+        "name": "UnionTypeDefinition"
+      },
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "discriminant",
+            "valueType": {
+              "primitive": "STRING",
+              "_type": "primitive"
+            },
+            "docs": "undefined"
+          },
+          {
+            "key": "types",
+            "valueType": {
+              "container": {
+                "list": {
+                  "name": "SingleUnionType",
+                  "fernFilepath": "types",
+                  "_type": "named"
+                },
+                "_type": "list"
+              },
+              "_type": "container"
+            },
+            "docs": "undefined"
+          }
+        ],
+        "_type": "object"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "types",
+        "name": "SingleUnionType"
+      },
+      "shape": {
+        "extends": [
+          {
+            "name": "WithDocs",
+            "fernFilepath": "commons"
+          }
+        ],
+        "properties": [
+          {
+            "key": "discriminantValue",
+            "valueType": {
+              "primitive": "STRING",
+              "_type": "primitive"
+            },
+            "docs": "undefined"
+          },
+          {
+            "key": "valueType",
+            "valueType": {
+              "name": "TypeReference",
+              "fernFilepath": "types",
+              "_type": "named"
+            },
+            "docs": "undefined"
+          }
+        ],
+        "_type": "object"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "types",
+        "name": "TypeReference"
+      },
+      "shape": {
+        "discriminant": "_type",
+        "types": [
+          {
+            "discriminantValue": "container",
+            "valueType": {
+              "name": "ContainerType",
+              "fernFilepath": "types",
+              "_type": "named"
+            }
+          },
+          {
+            "discriminantValue": "named",
+            "valueType": {
+              "name": "NamedType",
+              "fernFilepath": "types",
+              "_type": "named"
+            }
+          },
+          {
+            "discriminantValue": "primitive",
+            "valueType": {
+              "name": "PrimitiveType",
+              "fernFilepath": "types",
+              "_type": "named"
+            }
+          },
+          {
+            "discriminantValue": "void",
+            "valueType": {
+              "_type": "void"
+            }
+          }
+        ],
+        "_type": "union"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "types",
+        "name": "ContainerType"
+      },
+      "shape": {
+        "discriminant": "_type",
+        "types": [
+          {
+            "discriminantValue": "list",
+            "valueType": {
+              "name": "TypeReference",
+              "fernFilepath": "types",
+              "_type": "named"
+            }
+          },
+          {
+            "discriminantValue": "map",
+            "valueType": {
+              "name": "MapType",
+              "fernFilepath": "types",
+              "_type": "named"
+            }
+          },
+          {
+            "discriminantValue": "optional",
+            "valueType": {
+              "name": "TypeReference",
+              "fernFilepath": "types",
+              "_type": "named"
+            }
+          },
+          {
+            "discriminantValue": "set",
+            "valueType": {
+              "name": "TypeReference",
+              "fernFilepath": "types",
+              "_type": "named"
+            }
+          }
+        ],
+        "_type": "union"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "types",
+        "name": "MapType"
+      },
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "keyType",
+            "valueType": {
+              "name": "TypeReference",
+              "fernFilepath": "types",
+              "_type": "named"
+            },
+            "docs": "undefined"
+          },
+          {
+            "key": "valueType",
+            "valueType": {
+              "name": "TypeReference",
+              "fernFilepath": "types",
+              "_type": "named"
+            },
+            "docs": "undefined"
+          }
+        ],
+        "_type": "object"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": "types",
+        "name": "PrimitiveType"
+      },
+      "shape": {
+        "values": [
+          {
+            "value": "INTEGER"
+          },
+          {
+            "value": "DOUBLE"
+          },
+          {
+            "value": "STRING"
+          },
+          {
+            "value": "BOOLEAN"
+          },
+          {
+            "value": "LONG",
+            "docs": "Within the range -2^53 to 2^53"
+          }
+        ],
+        "_type": "enum"
+      }
+    }
+  ],
+  "errors": [],
+  "services": {
+    "http": [],
+    "websocket": []
+  }
+}
