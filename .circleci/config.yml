@@ -109,7 +109,9 @@ workflows:
               only: /.*/
           requires:
             - check
-          context: npm
+          context:
+            - npm
+            - docker-hub
 
       - publish-java-snapshot:
           filters:
