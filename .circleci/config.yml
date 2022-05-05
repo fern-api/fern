@@ -10,9 +10,8 @@ jobs:
       - run:
           name: Install Node
           command: |
-            sudo apt install nodejs
-            sudo apt install npm
-            sudo apt install yarn
+            sudo apt update
+            sudo apt install nodejs npm yarn
       - run:
           name: Run code-generation
           command: ./fern.sh
