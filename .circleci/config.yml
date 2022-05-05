@@ -4,14 +4,14 @@ orbs:
 jobs:
   check:
     machine:
-      image: ubuntu-2004:202010-01
+      image: ubuntu-2004:202104-01
     steps:
       - checkout
-      - run:
-          name: Install Node
-          command: |
-            sudo apt update
-            sudo apt install nodejs npm yarn
+      # - run:
+      #     name: Install Node
+      #     command: |
+      #       sudo apt update
+      #       sudo apt install nodejs npm yarn
       - run:
           name: Run code-generation
           command: ./fern.sh
