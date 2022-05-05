@@ -1,6 +1,8 @@
-import yargs from "yargs";
+import yargs from "yargs/yargs";
+import { clientCommand } from "./commands/clientCommand";
+import { runCommand } from "./runCommand";
 
-yargs
+yargs()
     .strict()
     .command(
         "$0 <path-to-config>",
@@ -11,8 +13,12 @@ yargs
                 demandOption: true,
                 describe: "path to the JSON file containing the Fern plugin config",
             }),
-        (argv) => {
-            console.log(argv.pathToConfig);
+        () => {
+            runCommand({
+                command: clientCommand,
+                pathToIr: "/Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/api/generated/ir.json",
+                outputDir: "/Users/zachkirsch/Downloads",
+            });
         }
     )
     .showHelpOnFail(true)
