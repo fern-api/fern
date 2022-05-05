@@ -4,7 +4,7 @@ orbs:
 jobs:
   check:
     machine:
-      image: ubuntu-2004:202104-01
+      image: ubuntu-2004:current
     steps:
       - checkout
       # - run:
