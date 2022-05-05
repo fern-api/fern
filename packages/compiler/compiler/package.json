@@ -1,5 +1,6 @@
 {
   "name": "@fern-api/compiler",
+  "version": "0.0.0",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [

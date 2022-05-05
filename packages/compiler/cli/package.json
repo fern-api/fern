@@ -1,5 +1,6 @@
 {
   "name": "fern-api",
+  "version": "0.0.0",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -25,7 +26,11 @@
     "@fern-api/compiler-commons": "workspace:*",
     "@fern-api/syntax-analysis": "workspace:*",
     "chalk": "^4.1.2",
+    "find-up": "^5.0.0",
     "glob": "^7.2.0",
+    "glob-promise": "^4.2.2",
+    "listr": "^0.14.3",
+    "tmp-promise": "^3.0.3",
     "yargs": "^17.4.1",
     "zod": "^3.14.3"
   },
@@ -35,6 +40,7 @@
     "@babel/preset-typescript": "^7.16.7",
     "@types/glob": "^7.2.0",
     "@types/jest": "^27.4.1",
+    "@types/listr": "^0.14.4",
     "@types/node": "^17.0.25",
     "@types/yargs": "^17.0.10",
     "depcheck": "^1.4.3",

@@ -1,0 +1,11 @@
+name: My Name!
+input: ./some/path/to/api
+plugins:
+  - name: typescript
+    config:
+      mode: client
+      output: ./some/path/to/ts/output
+  - name: java
+    config:
+      mode: server
+      output: ./some/path/to/java/output

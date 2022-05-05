@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "module": "esnext",
-    "target": "es2017",
-    "lib": ["dom", "dom.iterable", "es2017"],
+    "target": "esnext",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "jsx": "preserve",
     "moduleResolution": "node",
     "resolveJsonModule": true,

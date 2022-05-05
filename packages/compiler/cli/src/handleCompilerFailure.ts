@@ -1,0 +1,80 @@
+import { Compiler, CompilerFailureType } from "@fern-api/compiler";
+import { SyntaxAnalysisFailureType } from "@fern-api/syntax-analysis";
+import chalk from "chalk";
+import { ZodIssue, ZodIssueCode } from "zod";
+
+export function handleCompilerFailure(failure: Compiler.Failure): void {
+    switch (failure.type) {
+        case CompilerFailureType.SYNTAX_ANALYSIS:
+            for (const [relativeFilePath, syntaxAnalysisFailure] of Object.entries(failure.failures)) {
+                switch (syntaxAnalysisFailure.type) {
+                    case SyntaxAnalysisFailureType.FILE_READ:
+                        console.error("Failed to open file", relativeFilePath);
+                        break;
+                    case SyntaxAnalysisFailureType.FILE_PARSE:
+                        console.error("Failed to parse file", relativeFilePath);
+                        break;
+                    case SyntaxAnalysisFailureType.STRUCTURE_VALIDATION:
+                        for (const issue of syntaxAnalysisFailure.error.issues) {
+                            for (const { title, subtitle } of parseIssue(issue)) {
+                                console.group(chalk.bold.red(`Validation error: ${title}`));
+                                if (subtitle != null) {
+                                    console.log(subtitle);
+                                }
+                                console.log(chalk.blue([relativeFilePath, ...issue.path].join(" -> ")));
+                                console.log();
+                                console.groupEnd();
+                            }
+                        }
+                        break;
+                }
+            }
+            break;
+        case CompilerFailureType.IR_GENERATION:
+            console.error("Failed to generate intermediate representation.");
+            break;
+    }
+}
+
+interface ParsedIssue {
+    title: string;
+    subtitle?: string;
+}
+
+function parseIssue(issue: ZodIssue): ParsedIssue[] {
+    switch (issue.code) {
+        case ZodIssueCode.invalid_type:
+            return [
+                {
+                    title: "Incorrect type",
+                    subtitle: `Expected ${chalk.underline(issue.expected)} but received ${chalk.underline(
+                        issue.received
+                    )}`,
+                },
+            ];
+        case ZodIssueCode.unrecognized_keys:
+            return issue.keys.map((key) => ({
+                title: "Unexpected key",
+                subtitle: `Encountered unexpected key ${chalk.underline(key)}`,
+            }));
+        case ZodIssueCode.invalid_enum_value:
+            return [
+                {
+                    title: "Unrecognized value",
+                    subtitle: `Allowed values: ${issue.options.map((option) => chalk.underline(option)).join(", ")}`,
+                },
+            ];
+        case ZodIssueCode.invalid_union:
+        case ZodIssueCode.invalid_arguments:
+        case ZodIssueCode.invalid_return_type:
+        case ZodIssueCode.invalid_date:
+        case ZodIssueCode.invalid_string:
+        case ZodIssueCode.too_small:
+        case ZodIssueCode.too_big:
+        case ZodIssueCode.invalid_intersection_types:
+        case ZodIssueCode.not_multiple_of:
+        case ZodIssueCode.custom:
+        default:
+            return [{ title: issue.message }];
+    }
+}

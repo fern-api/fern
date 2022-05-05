@@ -1,29 +1,22 @@
 import yargs from "yargs";
-import { compileCommand } from "./commands/compile";
+import { compileWorkspaces } from "./compileWorkspaces";
 
 yargs
     .scriptName("fern-api")
     .strict()
     .command(
-        "generate <input> <output>",
-        "read birch API spec from provided directory and generate an intermediate representation",
+        "$0 [--workspace]",
+        "Generate typesafe servers and clients",
         (yargs) =>
-            yargs
-                .positional("input", {
-                    type: "string",
-                    demandOption: true,
-                    describe: "the directory containing Fern yaml files",
-                })
-                .positional("output", {
-                    type: "string",
-                    demandOption: true,
-                    describe: "a file to dump the intermediate representation",
-                }),
+            yargs.option("--workspace", {
+                array: true,
+                type: "string",
+                describe: "process this workspace",
+                description:
+                    "If omitted, every workspace specified in the project-level configuration (fern.config.json) will be processed.",
+            }),
         (argv) => {
-            compileCommand({
-                inputDirectory: argv["input"],
-                output: argv["output"],
-            });
+            compileWorkspaces(argv.Workspace ?? []);
         }
     )
     .demandCommand()

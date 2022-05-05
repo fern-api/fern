@@ -1,4 +1,11 @@
 {
   "type": "cli",
-  "private": false
+  "private": false,
+  "rules": {
+    "package-json": {
+      "scripts": {
+        "dockerTagLatest": "./docker/create_docker.sh"
+      }
+    }
+  }
 }
