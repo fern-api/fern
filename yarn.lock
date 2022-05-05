@@ -1338,26 +1338,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/code-generation@workspace:packages/compiler/code-generation":
-  version: 0.0.0-use.local
-  resolution: "@fern-api/code-generation@workspace:packages/compiler/code-generation"
-  dependencies:
-    "@babel/core": ^7.17.9
-    "@babel/preset-env": ^7.16.11
-    "@babel/preset-typescript": ^7.16.7
-    "@types/dockerode": ^3.3.8
-    "@types/jest": ^27.4.1
-    "@types/node": ^17.0.25
-    depcheck: ^1.4.3
-    dockerode: ^3.3.1
-    eslint: ^8.12.0
-    jest: ^27.5.1
-    prettier: ^2.6.1
-    stylelint: ^14.6.1
-    typescript: ^4.6.3
-  languageName: unknown
-  linkType: soft
-
 "@fern-api/compiler-commons@npm:0.0.26":
   version: 0.0.26
   resolution: "@fern-api/compiler-commons@npm:0.0.26"
@@ -1409,6 +1389,26 @@ __metadata:
     "@types/jest": ^27.4.1
     "@types/node": ^17.0.25
     depcheck: ^1.4.3
+    eslint: ^8.12.0
+    jest: ^27.5.1
+    prettier: ^2.6.1
+    stylelint: ^14.6.1
+    typescript: ^4.6.3
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/docker-utils@workspace:packages/compiler/plugins/docker-utils":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/docker-utils@workspace:packages/compiler/plugins/docker-utils"
+  dependencies:
+    "@babel/core": ^7.17.9
+    "@babel/preset-env": ^7.16.11
+    "@babel/preset-typescript": ^7.16.7
+    "@types/dockerode": ^3.3.8
+    "@types/jest": ^27.4.1
+    "@types/node": ^17.0.25
+    depcheck: ^1.4.3
+    dockerode: ^3.3.1
     eslint: ^8.12.0
     jest: ^27.5.1
     prettier: ^2.6.1
@@ -4285,7 +4285,6 @@ __metadata:
     jest: ^27.5.1
     lint-staged: ^12.3.7
     mrlint: ^0.0.14
-    noop-stream: ^1.0.0
     prettier: ^2.6.1
     react: ^18.0.0
     stylelint: ^14.6.1
@@ -6390,13 +6389,6 @@ __metadata:
   version: 2.0.4
   resolution: "node-releases@npm:2.0.4"
   checksum: b32d6c2032c7b169ae3938b416fc50f123f5bd577d54a79b2ae201febf27b22846b01c803dd35ac8689afe840f8ba4e5f7154723db629b80f359836b6707b92f
-  languageName: node
-  linkType: hard
-
-"noop-stream@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "noop-stream@npm:1.0.0"
-  checksum: 006035be240e67b17bf4b7482ac0d436c7535a861972e696b98a803624c465ffdd8d42262b0c4153301c4538b70ebb2f41cd17e98232d00049ca8ed9be0a1534
   languageName: node
   linkType: hard
 
