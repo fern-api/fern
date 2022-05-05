@@ -7,6 +7,9 @@
         "dockerTagLatest": "./docker/create_docker.sh latest",
         "dockerTagVersion": "./docker/create_docker.sh"
       }
+    },
+    "depcheck": {
+      "ignores": ["webpack-cli", "@ts-morph/common"]
     }
   }
 }
