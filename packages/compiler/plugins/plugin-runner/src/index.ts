@@ -1,0 +1,1 @@
+export { runPlugin } from "./runPlugin";
