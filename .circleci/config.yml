@@ -3,8 +3,9 @@ orbs:
   node: circleci/node@5.0.1
 jobs:
   check:
-    docker:
-      - image: cimg/node:17.3.1
+    machine:
+      image: cimg/node:17.3.1
+      docker_layer_caching: true
     steps:
       - checkout
       - run:
