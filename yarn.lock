@@ -1347,7 +1347,6 @@ __metadata:
     "@babel/preset-typescript": ^7.16.7
     "@types/dockerode": ^3.3.8
     "@types/jest": ^27.4.1
-    "@types/js-yaml": ^4.0.5
     "@types/node": ^17.0.25
     depcheck: ^1.4.3
     dockerode: ^3.3.1
