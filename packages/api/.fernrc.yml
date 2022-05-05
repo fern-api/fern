@@ -1,0 +1,6 @@
+name: Fern Intermediate Representation
+input: ./src
+plugins:
+  - name: fernapi/fern-java-client
+    version: 0.0.7
+    output: ./java-api-2

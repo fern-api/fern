@@ -1,15 +1,21 @@
 import { FernFile } from "@fern-api/compiler-commons";
-import { readFile } from "fs/promises";
-import glob from "glob";
+import { lstat, readFile } from "fs/promises";
+import glob from "glob-promise";
 import path from "path";
-import { promisify } from "util";
-
-const promisifiedGlob = promisify(glob);
 
 export async function parseFernDirectory(fullDirectoryPath: string): Promise<FernFile[]> {
+    try {
+        const stats = await lstat(fullDirectoryPath);
+        if (!stats.isDirectory()) {
+            throw new Error(`${fullDirectoryPath} is not a directory`);
+        }
+    } catch (e) {
+        throw new Error(`${fullDirectoryPath} does not exist`);
+    }
+
     const files: FernFile[] = [];
 
-    const filepaths = await promisifiedGlob("**/*.yml", {
+    const filepaths = await glob("**/*.yml", {
         cwd: fullDirectoryPath,
     });
 

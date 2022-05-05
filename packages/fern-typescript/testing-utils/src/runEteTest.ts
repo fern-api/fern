@@ -3,14 +3,11 @@ import { compile } from "@fern-api/compiler";
 import { withProject, writeFiles } from "@fern-typescript/commons";
 import { parseFernDirectory } from "fern-api";
 import { rm } from "fs/promises";
-import glob from "glob";
+import glob from "glob-promise";
 import { vol } from "memfs";
 import path from "path";
 import { Directory } from "ts-morph";
 import ts from "typescript";
-import { promisify } from "util";
-
-const promisifiedGlob = promisify(glob);
 
 export declare namespace runEteTest {
     export interface Args {
@@ -62,7 +59,7 @@ function deleteDirectory(directory: string): Promise<void> {
 }
 
 async function compileTypescript(directory: string) {
-    const typescriptFileNames = await promisifiedGlob("**/*.ts", {
+    const typescriptFileNames = await glob("**/*.ts", {
         cwd: directory,
         absolute: true,
     });
