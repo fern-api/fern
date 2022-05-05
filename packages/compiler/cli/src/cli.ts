@@ -1,7 +1,7 @@
-import yargs from "yargs";
+import yargs from "yargs/yargs";
 import { compileWorkspaces } from "./compileWorkspaces";
 
-yargs
+yargs()
     .scriptName("fern-api")
     .strict()
     .command(
