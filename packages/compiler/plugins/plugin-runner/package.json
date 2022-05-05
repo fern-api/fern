@@ -19,8 +19,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/docker-utils": "workspace:*",
-    "tmp-promise": "^3.0.3"
+    "@fern-api/docker-utils": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",
