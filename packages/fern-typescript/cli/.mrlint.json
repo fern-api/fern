@@ -4,7 +4,8 @@
   "rules": {
     "package-json": {
       "scripts": {
-        "dockerTagLatest": "./docker/create_docker.sh"
+        "dockerTagLatest": "./docker/create_docker.sh latest",
+        "dockerTagVersion": "./docker/create_docker.sh"
       }
     }
   }
