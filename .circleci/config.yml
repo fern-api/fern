@@ -4,9 +4,15 @@ orbs:
 jobs:
   check:
     machine:
-      image: cimg/node:17.3.1s
+      image: ubuntu-2004:202010-01
     steps:
       - checkout
+      - run:
+          name: Install Node
+          command: |
+            sudo apt install nodejs
+            sudo apt install 
+            sudo apt install yarn
       - run:
           name: Run code-generation
           command: ./fern.sh
