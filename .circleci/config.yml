@@ -11,7 +11,7 @@ jobs:
           name: Install Node
           command: |
             sudo apt install nodejs
-            sudo apt install 
+            sudo apt install npm
             sudo apt install yarn
       - run:
           name: Run code-generation
