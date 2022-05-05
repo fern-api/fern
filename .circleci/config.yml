@@ -3,8 +3,8 @@ orbs:
   node: circleci/node@5.0.1
 jobs:
   check:
-    docker:
-      - image: cimg/node:17.3.1
+    machine:
+      image: ubuntu-2004:current
     steps:
       - checkout
       - run:
