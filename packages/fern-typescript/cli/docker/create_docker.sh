@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
-tag=$1
+
 set -e
 
-DOCKER_NAME=fern-typescript:"$tag"
+TAG="$1"
+DOCKER_NAME=fern-typescript:"$TAG"
 
 PACKAGE_DIR="$(pwd)"
 DOCKER_DIR="$PACKAGE_DIR/docker"
