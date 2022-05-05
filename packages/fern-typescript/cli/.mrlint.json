@@ -5,7 +5,7 @@
     "package-json": {
       "scripts": {
         "dockerTagLatest": "./docker/create_docker.sh latest",
-        "dockerTagVersion": "./docker/create_docker.sh"
+        "dockerTagVersion": "./docker/create_docker.sh $(yarn info fern-typescript --all --json | jq -r .children.Version)"
       }
     },
     "depcheck": {

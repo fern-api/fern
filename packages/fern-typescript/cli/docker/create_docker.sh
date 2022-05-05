@@ -12,7 +12,7 @@ WEBPACK_CONFIG="$DOCKER_DIR/webpack.config.js"
 yarn
 yarn workspaces foreach --all --verbose --parallel --topological run compile
 yarn webpack --config "$WEBPACK_CONFIG"
-docker build -f Dockerfile -t "$DOCKER_NAME" "$DOCKER_DIR"
+docker build -f "$DOCKER_DIR/Dockerfile" -t "$DOCKER_NAME" "$DOCKER_DIR"
 
 echo
 echo "Built docker: $DOCKER_NAME"
