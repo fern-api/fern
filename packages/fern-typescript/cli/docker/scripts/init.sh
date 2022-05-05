@@ -10,4 +10,4 @@ node --experimental-modules /scripts/unzipPackages.mjs
 node --experimental-modules /scripts/writePackageJson.mjs
 cd /fern
 rm -r artifacts
-yarn
+yarn workspaces focus --production fern-typescript

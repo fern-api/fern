@@ -1464,7 +1464,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/plugin-runner@workspace:packages/compiler/plugins/plugin-runner":
+"@fern-api/plugin-runner@workspace:*, @fern-api/plugin-runner@workspace:packages/compiler/plugins/plugin-runner":
   version: 0.0.0-use.local
   resolution: "@fern-api/plugin-runner@workspace:packages/compiler/plugins/plugin-runner"
   dependencies:
@@ -1474,11 +1474,13 @@ __metadata:
     "@fern-api/docker-utils": "workspace:*"
     "@types/jest": ^27.4.1
     "@types/node": ^17.0.25
+    "@types/tmp": ^0.2.3
     depcheck: ^1.4.3
     eslint: ^8.12.0
     jest: ^27.5.1
     prettier: ^2.6.1
     stylelint: ^14.6.1
+    tmp-promise: ^3.0.3
     typescript: ^4.6.3
   languageName: unknown
   linkType: soft
@@ -2285,6 +2287,13 @@ __metadata:
   version: 2.0.1
   resolution: "@types/stack-utils@npm:2.0.1"
   checksum: 205fdbe3326b7046d7eaf5e494d8084f2659086a266f3f9cf00bccc549c8e36e407f88168ad4383c8b07099957ad669f75f2532ed4bc70be2b037330f7bae019
+  languageName: node
+  linkType: hard
+
+"@types/tmp@npm:^0.2.3":
+  version: 0.2.3
+  resolution: "@types/tmp@npm:0.2.3"
+  checksum: 0ca45e99b3b3c6959d5c4f4555f73c8007db540cfb0fbbb9373217f9ab85e67eef75193f51a1d6564b0ee6c6f5ffa259d1034d7f7530a5b7ce80acb94cfc4daa
   languageName: node
   linkType: hard
 
@@ -4226,6 +4235,7 @@ __metadata:
     "@babel/preset-typescript": ^7.16.7
     "@fern-api/compiler": "workspace:*"
     "@fern-api/compiler-commons": "workspace:*"
+    "@fern-api/plugin-runner": "workspace:*"
     "@fern-api/syntax-analysis": "workspace:*"
     "@types/glob": ^7.2.0
     "@types/jest": ^27.4.1

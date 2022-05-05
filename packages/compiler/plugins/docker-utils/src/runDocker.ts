@@ -19,6 +19,8 @@ export async function runDocker({ imageName, args, binds }: runDocker.Args): Pro
         if ((e as any)?.statusCode === 404) {
             await pullImage(docker, imageName);
             await tryRun();
+        } else {
+            throw e;
         }
     }
 }
@@ -35,7 +37,7 @@ async function tryRunDocker({
     args?: string[];
     binds?: string[];
 }): Promise<void> {
-    const runResponse = await docker.run(
+    await docker.run(
         imageName,
         args != null ? args : [],
         new Writable({
@@ -47,8 +49,8 @@ async function tryRunDocker({
             Binds: binds,
         }
     );
-    const container = runResponse[1];
-    return container.remove();
+    // const container = runResponse[1];
+    // return container.remove();
 }
 
 async function pullImage(docker: Docker, imageName: string): Promise<void> {
