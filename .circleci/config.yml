@@ -51,19 +51,22 @@ jobs:
           name: Add version to package.json's
           command: yarn mrlint version $(git tag --points-at HEAD)
       - run:
+          name: Update yarn.lock with new versions
+          command: yarn
+      - run:
           name: Compile
           command: yarn compile
       - run:
           name: Publish all packages
           command: yarn run publish
       - run:
+          name: Publish fern-typescript docker
           command: |
-            projectVersion=$(yarn info fern-typescript --all --json | jq -r .children.Version)
-            yarn workspace fern-typescript dockerTagVersion "$projectVersion"
+            projectVersion=$(git tag --points-at HEAD)
+            yarn workspace fern-typescript dockerTagVersion
             echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
             docker tag fern-typescript:"$projectVersion" fernapi/fern-typescript:"$projectVersion"
             docker push fernapi/fern-typescript:"$projectVersion"
-          name: Publish fern-typescript docker
 
   publish-java-snapshot:
     docker: [{ image: "cimg/node:17.3.1" }]
