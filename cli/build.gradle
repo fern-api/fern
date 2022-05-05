@@ -4,9 +4,9 @@ plugins {
 }
 
 dependencies {
-    implementation project(':fern-codegen-utils')
-    implementation project(':fern-model-codegen')
-    implementation project(':fern-jersey-codegen')
+    implementation project(':utils')
+    implementation project(':model-codegen')
+    implementation project(':jersey-codegen')
     implementation 'com.fasterxml.jackson.core:jackson-databind'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
     implementation 'com.fern:fern-api-model'
@@ -30,7 +30,7 @@ distributions {
 }
 
 docker {
-    name "fern-java-client:${project.version}"
+    name "fern-java:${project.version}"
     tags 'latest', "${project.version}"
     files tasks.distTar.outputs, './init.sh'
     buildArgs([BUILD_VERSION: "${project.version}"])
@@ -58,5 +58,5 @@ artifactoryPublish {
 }
 
 task dockerTagVersion {
-    dependsOn ":fern-client-cli:dockerTag${project.version}"
+    dependsOn ":cli:dockerTag${project.version}"
 }
