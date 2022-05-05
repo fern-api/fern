@@ -37,7 +37,7 @@ async function tryRunDocker({
     args?: string[];
     binds?: string[];
 }): Promise<void> {
-    await docker.run(
+    const runResponse = await docker.run(
         imageName,
         args != null ? args : [],
         new Writable({
@@ -49,8 +49,8 @@ async function tryRunDocker({
             Binds: binds,
         }
     );
-    // const container = runResponse[1];
-    // return container.remove();
+    const container = runResponse[1];
+    await container.remove();
 }
 
 async function pullImage(docker: Docker, imageName: string): Promise<void> {
