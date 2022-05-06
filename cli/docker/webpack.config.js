@@ -1,5 +1,6 @@
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
+const SimpleProgressWebpackPlugin = require("simple-progress-webpack-plugin");
 
 module.exports = {
     mode: "production",
@@ -18,18 +19,15 @@ module.exports = {
             },
         ],
         noParse: [require.resolve("@ts-morph/common/dist/typescript.js")],
+        // this allows prettier's dynamic loading of the organize-imports plugin
+        parser: {
+            javascript: {
+                commonjsMagicComments: true,
+            },
+        },
     },
     optimization: {
-        minimize: true,
-        minimizer: [
-            new TerserPlugin({
-                extractComments: false,
-                terserOptions: {
-                    format: {
-                        comments: false,
-                    },
-                },
-            }),
-        ],
+        minimize: false,
     },
+    plugins: [new SimpleProgressWebpackPlugin()],
 };
