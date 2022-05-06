@@ -4,7 +4,7 @@
   "rules": {
     "package-json": {
       "scripts": {
-        "dockerTagLatest": "./docker/create_docker.sh latest",
+        "dockerTagLocal": "./docker/create_docker.sh local",
         "dockerTagVersion": "./docker/create_docker.sh $(yarn info fern-typescript --all --json | jq -r .children.Version)"
       }
     },
