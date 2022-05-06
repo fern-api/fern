@@ -1553,6 +1553,7 @@ __metadata:
     esutils: ^2.0.3
     jest: ^27.5.1
     memfs: ^3.4.1
+    prettier: ^2.6.2
     prettier-plugin-organize-imports: ^2.3.4
     stylelint: ^14.6.1
     ts-morph: ^14.0.0
