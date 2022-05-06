@@ -5,7 +5,7 @@ import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderStyle
-public interface GeneratedErrorDecoder extends GeneratedFile {
+public interface GeneratedErrorDecoder extends IGeneratedFile {
 
     static ImmutableGeneratedErrorDecoder.FileBuildStage builder() {
         return ImmutableGeneratedErrorDecoder.builder();

@@ -6,7 +6,7 @@ import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderStyle
-public interface GeneratedObject extends GeneratedFile {
+public interface GeneratedObject extends IGeneratedFile {
 
     ObjectTypeDefinition objectTypeDefinition();
 

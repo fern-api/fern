@@ -1,12 +1,12 @@
-package com.fern.services.jersey.codegen;
+package com.fern.jersey;
 
 import com.fern.codegen.GeneratedEnum;
-import com.fern.codegen.GeneratedFile;
 import com.fern.codegen.GeneratedInterface;
 import com.fern.codegen.GeneratedObject;
 import com.fern.codegen.GeneratedUnion;
 import com.fern.codegen.GeneratedWireMessage;
 import com.fern.codegen.GeneratorContext;
+import com.fern.codegen.IGeneratedFile;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.model.codegen.EnumGenerator;
 import com.fern.model.codegen.ObjectGenerator;
@@ -121,7 +121,7 @@ public final class ServiceWireMessageGenerator {
             throw new RuntimeException("Encountered unknown Type in Wire Reference: " + unknownType);
         }
 
-        private GeneratedWireMessage getGeneratedWireMessage(GeneratedFile generatedFile) {
+        private GeneratedWireMessage getGeneratedWireMessage(IGeneratedFile generatedFile) {
             return GeneratedWireMessage.builder()
                     .file(generatedFile.file())
                     .className(generatedFile.className())

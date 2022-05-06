@@ -1,4 +1,4 @@
-package com.fern.services.jersey.codegen;
+package com.fern.jersey.client;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -94,6 +94,7 @@ public final class ServiceErrorDecoderGenerator extends Generator {
         });
     }
 
+    @Override
     public GeneratedErrorDecoder generate() {
         Map<HttpEndpoint, ClassName> endpointToBaseException = httpService.endpoints().stream()
                 .filter(httpEndpoint -> !httpEndpoint.errors().possibleErrors().isEmpty())

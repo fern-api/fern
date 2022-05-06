@@ -2,10 +2,10 @@ package com.fern.model.codegen;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fern.codegen.GeneratedFile;
 import com.fern.codegen.GeneratedInterface;
 import com.fern.codegen.GeneratedObject;
 import com.fern.codegen.GeneratorContext;
+import com.fern.codegen.IGeneratedFile;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
@@ -100,7 +100,7 @@ public final class ObjectGenerator extends Generator {
     private List<TypeName> getSuperInterfaces() {
         List<TypeName> superInterfaces = new ArrayList<>();
         superInterfaces.addAll(
-                extendedInterfaces.stream().map(GeneratedFile::className).collect(Collectors.toList()));
+                extendedInterfaces.stream().map(IGeneratedFile::className).collect(Collectors.toList()));
         selfInterface.ifPresent(generatedInterface -> superInterfaces.add(generatedInterface.className()));
         return superInterfaces;
     }

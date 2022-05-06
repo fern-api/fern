@@ -9,7 +9,7 @@ import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderStyle
-public interface GeneratedInterface extends GeneratedFile {
+public interface GeneratedInterface extends IGeneratedFile {
 
     ObjectTypeDefinition objectTypeDefinition();
 

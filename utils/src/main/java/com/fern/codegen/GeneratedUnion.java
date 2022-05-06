@@ -6,7 +6,7 @@ import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderStyle
-public interface GeneratedUnion extends GeneratedFile {
+public interface GeneratedUnion extends IGeneratedFile {
 
     UnionTypeDefinition unionTypeDefinition();
 

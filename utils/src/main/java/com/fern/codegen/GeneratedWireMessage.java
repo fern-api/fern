@@ -6,7 +6,7 @@ import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderStyle
-public interface GeneratedWireMessage extends GeneratedFile {
+public interface GeneratedWireMessage extends IGeneratedFile {
 
     WireMessage wireMessage();
 

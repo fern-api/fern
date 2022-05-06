@@ -1,9 +1,7 @@
 package com.fern.model.codegen;
 
-import com.errors.ErrorDefinition;
 import com.fern.codegen.GeneratedAlias;
 import com.fern.codegen.GeneratedEnum;
-import com.fern.codegen.GeneratedException;
 import com.fern.codegen.GeneratedInterface;
 import com.fern.codegen.GeneratedObject;
 import com.fern.codegen.GeneratedUnion;
@@ -31,18 +29,13 @@ public final class ModelGenerator {
     private static final Logger log = LoggerFactory.getLogger(ModelGenerator.class);
 
     private final List<TypeDefinition> typeDefinitions;
-    private final List<ErrorDefinition> errorDefinitions;
     private final Map<NamedType, TypeDefinition> typeDefinitionsByName;
     private final GeneratorContext generatorContext;
 
-    public ModelGenerator(
-            List<TypeDefinition> typeDefinitions,
-            List<ErrorDefinition> errorDefinitions,
-            GeneratorContext generatorContext) {
+    public ModelGenerator(List<TypeDefinition> typeDefinitions, GeneratorContext generatorContext) {
         this.typeDefinitions = typeDefinitions;
         this.typeDefinitionsByName = generatorContext.getTypeDefinitionsByName();
         this.generatorContext = generatorContext;
-        this.errorDefinitions = errorDefinitions;
     }
 
     public ModelGeneratorResult generate() {
@@ -52,13 +45,6 @@ public final class ModelGenerator {
         typeDefinitions.forEach(typeDefinition -> typeDefinition
                 .shape()
                 .accept(new TypeDefinitionGenerator(typeDefinition, generatedInterfaces, modelGeneratorResultBuilder)));
-        List<GeneratedException> generatedExceptions = errorDefinitions.stream()
-                .map(errorDefinition -> {
-                    ExceptionGenerator exceptionGenerator = new ExceptionGenerator(generatorContext, errorDefinition);
-                    return exceptionGenerator.generate();
-                })
-                .collect(Collectors.toList());
-        modelGeneratorResultBuilder.addAllExceptions(generatedExceptions);
         return modelGeneratorResultBuilder.build();
     }
 

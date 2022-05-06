@@ -6,7 +6,7 @@ import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderStyle
-public interface GeneratedAlias extends GeneratedFile {
+public interface GeneratedAlias extends IGeneratedFile {
 
     AliasTypeDefinition aliasTypeDefinition();
 

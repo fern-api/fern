@@ -2,6 +2,7 @@ package com.fern.model.codegen;
 
 import com.fern.codegen.GeneratedAlias;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
+import com.fern.java.test.TestConstants;
 import com.types.AliasTypeDefinition;
 import com.types.FernFilepath;
 import com.types.NamedType;

@@ -1,0 +1,4 @@
+dependencies {
+    implementation project(":utils")
+    implementation 'com.fern:fern-api-model'
+}

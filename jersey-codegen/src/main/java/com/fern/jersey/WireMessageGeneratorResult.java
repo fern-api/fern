@@ -1,4 +1,4 @@
-package com.fern.services.jersey.codegen;
+package com.fern.jersey;
 
 import com.fern.codegen.GeneratedWireMessage;
 import com.fern.immutables.StagedBuilderStyle;

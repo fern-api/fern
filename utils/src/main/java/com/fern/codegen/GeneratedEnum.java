@@ -6,7 +6,7 @@ import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderStyle
-public interface GeneratedEnum extends GeneratedFile {
+public interface GeneratedEnum extends IGeneratedFile {
 
     EnumTypeDefinition enumTypeDefinition();
 

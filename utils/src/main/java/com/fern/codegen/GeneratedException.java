@@ -6,7 +6,7 @@ import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderStyle
-public interface GeneratedException extends GeneratedFile {
+public interface GeneratedException extends IGeneratedFile {
 
     ErrorDefinition errorDefinition();
 

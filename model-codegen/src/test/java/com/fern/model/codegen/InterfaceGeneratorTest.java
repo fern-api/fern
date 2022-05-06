@@ -1,6 +1,7 @@
 package com.fern.model.codegen;
 
 import com.fern.codegen.GeneratedInterface;
+import com.fern.java.test.TestConstants;
 import com.types.ContainerType;
 import com.types.FernFilepath;
 import com.types.NamedType;
