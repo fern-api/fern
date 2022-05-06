@@ -16,7 +16,13 @@ export async function writeFiles(
 
         const formatted = format(file.getFullText(), {
             parser: "typescript",
-            plugins: ["/prettier-plugin-organize-imports/package"],
+            plugins: [
+                // when in production, access the plugin via the special place
+                // we put it when constructing the plugin docker
+                process.env.NODE_ENV === "production"
+                    ? "/prettier-plugin-organize-imports/package"
+                    : "prettier-plugin-organize-imports",
+            ],
             tabWidth: 4,
         });
 
