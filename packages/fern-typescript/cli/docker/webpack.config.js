@@ -20,4 +20,7 @@ module.exports = {
         noParse: [require.resolve("@ts-morph/common/dist/typescript.js")],
     },
     plugins: [new SimpleProgressWebpackPlugin()],
+    optimization: {
+        minimize: false,
+    },
 };
