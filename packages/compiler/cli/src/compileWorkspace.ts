@@ -11,7 +11,7 @@ import { parseFernDirectory } from "./parseFernDirectory";
 interface WorkspaceConfig {
     name?: string;
     input: string;
-    plugins: { name: string; version: string; output: string }[];
+    plugins: { name: string; output: string; config: unknown }[];
 }
 
 export async function createCompileWorkspaceTask(pathToWorkspaceDefinition: string): Promise<Listr.ListrTask> {
@@ -60,14 +60,14 @@ async function createCompileWorkspaceSubtasks({
             task: async () => {
                 await Promise.all(
                     workspaceConfig.plugins.map(async (plugin) => {
+                        const configJson = await tmp.file({
+                            tmpdir: workspaceTempDir.path,
+                        });
                         await runPlugin({
-                            plugin: { name: plugin.name, version: plugin.version },
+                            imageName: plugin.name,
                             pathToIr,
-                            pluginTempDir: (
-                                await tmp.dir({
-                                    tmpdir: workspaceTempDir.path,
-                                })
-                            ).path,
+                            pathToWriteConfigJson: configJson.path,
+                            pluginConfig: plugin.config,
                             pluginOutputDirectory: path.join(path.dirname(pathToWorkspaceDefinition), plugin.output),
                         });
                     })

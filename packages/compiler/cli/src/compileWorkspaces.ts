@@ -1,13 +1,16 @@
-import findUp from "find-up";
-import { readFile } from "fs/promises";
+import { lstat } from "fs/promises";
 import glob from "glob-promise";
 import Listr from "listr";
 import { createCompileWorkspaceTask } from "./compileWorkspace";
+import { WorkspaceCliOption } from "./constants";
+import { loadProjectConfig, ProjectConfig } from "./project-config/loadProjectConfig";
 
-const PROJECT_CONFIG_FILENAME = "fern.config.json";
-
-export async function compileWorkspaces(workspaces: readonly string[]): Promise<void> {
-    const workspaceDefinitionPaths = await collectWorkspaceDefinitions(workspaces);
+export async function compileWorkspaces(commandLineWorkspaces: readonly string[]): Promise<void> {
+    const projectConfig = await loadProjectConfig();
+    const workspaceDefinitionPaths = await collectWorkspaceDefinitions({
+        commandLineWorkspaces,
+        projectConfig,
+    });
     const uniqueWorkspaceDefinitionPaths = uniq(workspaceDefinitionPaths);
     const tasks = new Listr(await Promise.all(uniqueWorkspaceDefinitionPaths.map(createCompileWorkspaceTask)), {
         concurrent: true,
@@ -15,21 +18,25 @@ export async function compileWorkspaces(workspaces: readonly string[]): Promise<
     await tasks.run();
 }
 
-async function collectWorkspaceDefinitions(workspaces: readonly string[]): Promise<readonly string[]> {
-    if (workspaces.length > 0) {
-        return workspaces;
+async function collectWorkspaceDefinitions({
+    commandLineWorkspaces,
+    projectConfig,
+}: {
+    commandLineWorkspaces: readonly string[];
+    projectConfig: ProjectConfig | undefined;
+}): Promise<string[]> {
+    if (commandLineWorkspaces.length > 0) {
+        return getWorkspaceDefinitionsFromCommandLineArgs(commandLineWorkspaces);
     }
 
-    const pathToProjectConfig = await findUp(PROJECT_CONFIG_FILENAME);
-    if (pathToProjectConfig == null) {
+    if (projectConfig == null) {
         throw new Error(
-            `No project configuration found (${PROJECT_CONFIG_FILENAME}).` +
-                " If you're running fern-api from outside a project, you must manually specify the workspace(s) with --workspace."
+            "No project configuration found." +
+                ` If you're running from outside a project, you must manually specify the workspace(s) with --${WorkspaceCliOption.KEY}`
         );
     }
 
-    const projectConfig = await readFile(pathToProjectConfig);
-    const workspacesGlobs = JSON.parse(projectConfig.toString()).workspaces;
+    const workspacesGlobs = projectConfig.workspaces;
     const allWorkspaces: string[] = [];
     for (const workspacesGlob of workspacesGlobs) {
         const workspacesInGlob = await findWorkspaceDefinitionsFromGlob(workspacesGlob);
@@ -38,8 +45,23 @@ async function collectWorkspaceDefinitions(workspaces: readonly string[]): Promi
     return allWorkspaces;
 }
 
-async function findWorkspaceDefinitionsFromGlob(findWorkspaceDefinitionsFromGlob: string): Promise<string[]> {
-    return glob(`${findWorkspaceDefinitionsFromGlob}/.fernrc.yml`, {
+async function getWorkspaceDefinitionsFromCommandLineArgs(commandLineWorkspaces: readonly string[]) {
+    const promises = commandLineWorkspaces.flatMap(async (commandLineWorkspace) => {
+        const stats = await lstat(commandLineWorkspace);
+        if (stats.isFile()) {
+            return [commandLineWorkspace];
+        } else if (stats.isDirectory()) {
+            return findWorkspaceDefinitionsFromGlob(`${commandLineWorkspace}/**`);
+        } else {
+            throw new Error("Filepath is not a file or a directory " + commandLineWorkspace);
+        }
+    });
+
+    return (await Promise.all(promises)).flat();
+}
+
+async function findWorkspaceDefinitionsFromGlob(workspaceDefinitionsGlob: string): Promise<string[]> {
+    return glob(`${workspaceDefinitionsGlob}/.fernrc.yml`, {
         absolute: true,
     });
 }
