@@ -2,10 +2,5 @@
   "extends": "../../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "./lib", "rootDir": "src", "module": "CommonJS" },
   "include": ["./src"],
-  "references": [
-    { "path": "../../api/fern-ir-typescript" },
-    { "path": "../compiler-commons" },
-    { "path": "../ir-generation" },
-    { "path": "../syntax-analysis" }
-  ]
+  "references": []
 }

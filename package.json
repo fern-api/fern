@@ -21,9 +21,7 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ./shared/.prettierignore \"**\"",
     "depcheck": "yarn workspaces foreach --verbose --parallel run depcheck",
     "prepare": "husky install",
-    "codegen": "run codegen:ts && run codegen:java",
-    "codegen:ts": "./fern.sh",
-    "codegen:java": "cd packages/api/java-api && ./codegen.sh",
+    "codegen": "fern-api generate",
     "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public"
   },
   "devDependencies": {
@@ -33,6 +31,7 @@
     "eslint": "^8.12.0",
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.4.0",
+    "fern-api": "0.0.45",
     "husky": "^7.0.4",
     "jest": "^27.5.1",
     "lint-staged": "^12.3.7",
