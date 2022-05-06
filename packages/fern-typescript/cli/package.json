@@ -41,7 +41,6 @@
     "prettier": "^2.6.2",
     "simple-progress-webpack-plugin": "^2.0.0",
     "stylelint": "^14.6.1",
-    "terser-webpack-plugin": "^5.3.1",
     "typescript": "^4.6.3",
     "umd-compat-loader": "^2.1.2",
     "webpack": "^5.72.0",

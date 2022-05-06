@@ -49,8 +49,9 @@ async function tryRunDocker({
             Binds: binds,
         }
     );
-    const container = runResponse[1];
-    if (Math.random() > 1) {
+
+    if (process.env.NODE_ENV !== "development") {
+        const container = runResponse[1];
         await container.remove();
     }
 }
