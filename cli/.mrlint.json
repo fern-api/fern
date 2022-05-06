@@ -9,7 +9,7 @@
       }
     },
     "depcheck": {
-      "ignores": ["webpack-cli", "@ts-morph/common"]
+      "ignores": ["webpack", "webpack-cli", "@ts-morph/common"]
     }
   }
 }
