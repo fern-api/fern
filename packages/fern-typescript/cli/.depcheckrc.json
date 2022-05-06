@@ -1,1 +1,11 @@
-{ "ignores": ["@types/jest", "@types/node", "webpack", "webpack-cli", "@ts-morph/common"], "ignore-patterns": ["lib"] }
+{
+  "ignores": [
+    "@types/jest",
+    "@types/node",
+    "webpack",
+    "webpack-cli",
+    "umd-compat-loader",
+    "simple-progress-webpack-plugin"
+  ],
+  "ignore-patterns": ["lib", "docker"]
+}
