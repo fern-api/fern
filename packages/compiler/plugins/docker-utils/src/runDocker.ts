@@ -50,7 +50,9 @@ async function tryRunDocker({
         }
     );
     const container = runResponse[1];
-    await container.remove();
+    if (Math.random() > 1) {
+        await container.remove();
+    }
 }
 
 async function pullImage(docker: Docker, imageName: string): Promise<void> {

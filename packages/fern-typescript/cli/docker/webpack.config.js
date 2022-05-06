@@ -1,5 +1,6 @@
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
+const SimpleProgressWebpackPlugin = require("simple-progress-webpack-plugin");
 
 module.exports = {
     mode: "production",
@@ -32,4 +33,5 @@ module.exports = {
             }),
         ],
     },
+    plugins: [new SimpleProgressWebpackPlugin()],
 };
