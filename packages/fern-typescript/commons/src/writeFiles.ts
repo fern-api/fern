@@ -2,7 +2,6 @@ import fs from "fs/promises";
 import { IPromisesAPI } from "memfs/lib/promises";
 import path from "path";
 import { format } from "prettier";
-import "prettier-plugin-organize-imports";
 import { Project } from "ts-morph";
 
 export async function writeFiles(

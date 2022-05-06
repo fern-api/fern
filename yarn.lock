@@ -1547,12 +1547,12 @@ __metadata:
     "@types/esutils": ^2.0.0
     "@types/jest": ^27.4.1
     "@types/node": ^17.0.25
+    "@zachkirsch/prettier": 2.6.2
     depcheck: ^1.4.3
     eslint: ^8.12.0
     esutils: ^2.0.3
     jest: ^27.5.1
     memfs: ^3.4.1
-    prettier: ^2.6.1
     prettier-plugin-organize-imports: ^2.3.4
     stylelint: ^14.6.1
     ts-morph: ^14.0.0
@@ -2728,6 +2728,15 @@ __metadata:
   version: 4.2.2
   resolution: "@xtuc/long@npm:4.2.2"
   checksum: 8ed0d477ce3bc9c6fe2bf6a6a2cc316bb9c4127c5a7827bae947fa8ec34c7092395c5a283cc300c05b5fa01cbbfa1f938f410a7bf75db7c7846fea41949989ec
+  languageName: node
+  linkType: hard
+
+"@zachkirsch/prettier@npm:2.6.2":
+  version: 2.6.2
+  resolution: "@zachkirsch/prettier@npm:2.6.2"
+  bin:
+    prettier: bin-prettier.js
+  checksum: c314343349f4d8b1bbe3239bb11cdac5a943f129d2a65a745910811ed094bca4053796b123d515dcdc045f7343c5c714fd232b0141b854b2476e8d87c12b3cfc
   languageName: node
   linkType: hard
 

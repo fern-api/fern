@@ -19,19 +19,15 @@ module.exports = {
             },
         ],
         noParse: [require.resolve("@ts-morph/common/dist/typescript.js")],
+        // this allows prettier's dynamic loading of the organize-imports plugin
+        parser: {
+            javascript: {
+                commonjsMagicComments: true,
+            },
+        },
     },
     optimization: {
-        minimize: true,
-        minimizer: [
-            new TerserPlugin({
-                extractComments: false,
-                terserOptions: {
-                    format: {
-                        comments: false,
-                    },
-                },
-            }),
-        ],
+        minimize: false,
     },
     plugins: [new SimpleProgressWebpackPlugin()],
 };
