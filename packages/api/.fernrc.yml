@@ -5,7 +5,7 @@ plugins:
     output: ./java-api-2
     config:
       packagePrefix: com
-  - name: fern-typescript:latest
+  - name: fern-typescript:local
     output: ./ts-api-2
     config:
       mode: model

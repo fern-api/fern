@@ -3,6 +3,7 @@ import { runPlugin } from "@fern-api/plugin-runner";
 import { readFile, rm, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import Listr from "listr";
+import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
 import { handleCompilerFailure } from "./handleCompilerFailure";
@@ -34,8 +35,10 @@ async function createCompileWorkspaceSubtasks({
     workspaceConfig: WorkspaceConfig;
 }): Promise<() => Listr> {
     const workspaceTempDir = await tmp.dir({
-        tmpdir: path.dirname(pathToWorkspaceDefinition),
-        prefix: ".fern",
+        // use the /private prefix on osx so that docker can access the tmpdir
+        // see https://stackoverflow.com/a/45123074
+        tmpdir: os.platform() === "darwin" ? path.join("/private", os.tmpdir()) : undefined,
+        prefix: "fern",
     });
 
     const pathToIr = path.join(workspaceTempDir.path, "ir.json");
