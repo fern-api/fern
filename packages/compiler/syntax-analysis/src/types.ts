@@ -1,5 +1,5 @@
-import { RelativeFilePath } from "@fern-api/compiler-commons";
 import { ZodError } from "zod";
+import { RelativeFilePath } from "../packages/compiler/commons/src";
 import { RawFernConfigurationSchema } from "./schemas/RawFernConfigurationSchema";
 
 export declare namespace SyntaxAnalysis {

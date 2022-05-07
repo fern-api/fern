@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/compiler-commons";
+import { RelativeFilePath } from "../packages/compiler/commons/src";
 import { RawFernConfigurationSchema } from "./schemas/RawFernConfigurationSchema";
 import { SyntaxAnalysis, SyntaxAnalysisFailureType } from "./types";
 

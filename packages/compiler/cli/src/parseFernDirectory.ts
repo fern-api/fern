@@ -1,7 +1,7 @@
-import { FernFile } from "@fern-api/compiler-commons";
 import { lstat, readFile } from "fs/promises";
 import glob from "glob-promise";
 import path from "path";
+import { FernFile } from "../packages/compiler/commons/src";
 
 export async function parseFernDirectory(fullDirectoryPath: string): Promise<FernFile[]> {
     try {

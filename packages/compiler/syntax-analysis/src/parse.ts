@@ -1,5 +1,5 @@
-import { FernFile, RelativeFilePath } from "@fern-api/compiler-commons";
 import yaml from "js-yaml";
+import { FernFile, RelativeFilePath } from "../packages/compiler/commons/src";
 import { SyntaxAnalysis, SyntaxAnalysisFailureType } from "./types";
 
 export type ParsedFileContents = unknown;

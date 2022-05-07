@@ -1,6 +1,6 @@
-import { FernFile } from "@fern-api/compiler-commons";
 import { IntermediateRepresentationGenerationStage } from "@fern-api/ir-generation";
 import { SyntaxAnalysisStage } from "@fern-api/syntax-analysis";
+import { FernFile } from "../packages/compiler/commons/src";
 import { Compiler, CompilerFailureType } from "./types";
 
 export async function compile(files: readonly FernFile[]): Promise<Compiler.Result> {

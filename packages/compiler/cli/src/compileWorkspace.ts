@@ -1,7 +1,7 @@
 import { compile } from "@fern-api/compiler";
+import { loadWorkspaceDefinition, WorkspaceDefinition } from "@fern-api/compiler-commons";
 import { runPlugin } from "@fern-api/plugin-runner";
-import { readFile, rm, writeFile } from "fs/promises";
-import yaml from "js-yaml";
+import { rm, writeFile } from "fs/promises";
 import Listr from "listr";
 import os from "os";
 import path from "path";
@@ -9,30 +9,20 @@ import tmp from "tmp-promise";
 import { handleCompilerFailure } from "./handleCompilerFailure";
 import { parseFernDirectory } from "./parseFernDirectory";
 
-interface WorkspaceConfig {
-    name?: string;
-    input: string;
-    plugins: { name: string; output: string; config: unknown }[];
-}
-
 export async function createCompileWorkspaceTask(pathToWorkspaceDefinition: string): Promise<Listr.ListrTask> {
-    const fileContents = await readFile(pathToWorkspaceDefinition);
-    const workspaceConfig = yaml.load(fileContents.toString()) as WorkspaceConfig;
+    const workspaceDefinition = await loadWorkspaceDefinition(pathToWorkspaceDefinition);
     return {
-        title: workspaceConfig.name ?? pathToWorkspaceDefinition,
+        title: workspaceDefinition.name ?? pathToWorkspaceDefinition,
         task: await createCompileWorkspaceSubtasks({
-            pathToWorkspaceDefinition,
-            workspaceConfig,
+            workspaceDefinition,
         }),
     };
 }
 
 async function createCompileWorkspaceSubtasks({
-    pathToWorkspaceDefinition,
-    workspaceConfig,
+    workspaceDefinition: workspaceConfig,
 }: {
-    pathToWorkspaceDefinition: string;
-    workspaceConfig: WorkspaceConfig;
+    workspaceDefinition: WorkspaceDefinition;
 }): Promise<() => Listr> {
     const workspaceTempDir = await tmp.dir({
         // use the /private prefix on osx so that docker can access the tmpdir
@@ -47,9 +37,7 @@ async function createCompileWorkspaceSubtasks({
         {
             title: "Parse API definition",
             task: async () => {
-                const files = await parseFernDirectory(
-                    path.join(path.dirname(pathToWorkspaceDefinition), workspaceConfig.input)
-                );
+                const files = await parseFernDirectory(workspaceConfig.absolutePathToInput);
                 const compileResult = await compile(files);
                 if (compileResult.didSucceed) {
                     await writeFile(pathToIr, JSON.stringify(compileResult.intermediateRepresentation));
@@ -70,8 +58,8 @@ async function createCompileWorkspaceSubtasks({
                             imageName: plugin.name,
                             pathToIr,
                             pathToWriteConfigJson: configJson.path,
-                            pluginConfig: plugin.config,
-                            pluginOutputDirectory: path.join(path.dirname(pathToWorkspaceDefinition), plugin.output),
+                            customPluginConfig: plugin.config,
+                            pluginOutputDirectory: plugin.absolutePathToOutput,
                         });
                     })
                 );

@@ -1,9 +1,9 @@
+import { loadProjectConfig, ProjectConfig } from "@fern-api/compiler-commons";
 import { lstat } from "fs/promises";
 import glob from "glob-promise";
 import Listr from "listr";
 import { createCompileWorkspaceTask } from "./compileWorkspace";
 import { WorkspaceCliOption } from "./constants";
-import { loadProjectConfig, ProjectConfig } from "./project-config/loadProjectConfig";
 
 export async function compileWorkspaces(commandLineWorkspaces: readonly string[]): Promise<void> {
     const projectConfig = await loadProjectConfig();
