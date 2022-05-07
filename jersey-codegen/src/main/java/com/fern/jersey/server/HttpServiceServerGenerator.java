@@ -46,7 +46,7 @@ public final class HttpServiceServerGenerator extends Generator {
     @Override
     public GeneratedHttpServiceServer generate() {
         TypeSpec.Builder jerseyServiceBuilder = TypeSpec.interfaceBuilder(
-                        StringUtils.capitalize(httpService.name().name()))
+                        generatedServiceClassName)
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(AnnotationSpec.builder(Consumes.class)
                         .addMember("value", "$T.APPLICATION_JSON", MediaType.class)
