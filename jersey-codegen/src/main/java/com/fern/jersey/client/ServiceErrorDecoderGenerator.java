@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.codegen.GeneratedErrorDecoder;
 import com.fern.codegen.GeneratorContext;
-import com.fern.codegen.stateless.generator.ClientObjectMapperGenerator;
+import com.fern.codegen.stateless.generator.ObjectMapperGenerator;
 import com.fern.codegen.utils.ClassNameUtils;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.model.codegen.Generator;
@@ -178,7 +178,7 @@ public final class ServiceErrorDecoderGenerator extends Generator {
                 .addStatement(
                         "return $T.$L.readValue($L.body().asInputStream(), $L)",
                         generatorContext.getClientObjectMappersFile().className(),
-                        ClientObjectMapperGenerator.JSON_MAPPER_FIELD_NAME,
+                        ObjectMapperGenerator.JSON_MAPPER_FIELD_NAME,
                         DECODE_EXCEPTION_RESPONSE_PARAMETER_NAME,
                         DECODE_EXCEPTION_CLAZZ_PARAMETER_NAME)
                 .endControlFlow()

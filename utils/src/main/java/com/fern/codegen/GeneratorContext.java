@@ -2,8 +2,8 @@ package com.fern.codegen;
 
 import com.fern.codegen.stateless.generator.ApiExceptionGenerator;
 import com.fern.codegen.stateless.generator.AuthHeaderGenerator;
-import com.fern.codegen.stateless.generator.ClientObjectMapperGenerator;
 import com.fern.codegen.stateless.generator.ImmutablesStyleGenerator;
+import com.fern.codegen.stateless.generator.ObjectMapperGenerator;
 import com.fern.codegen.utils.ClassNameUtils;
 import com.fern.codegen.utils.ImmutablesUtils;
 import com.fern.codegen.utils.VisitorUtils;
@@ -20,6 +20,7 @@ public final class GeneratorContext {
     private final Map<NamedType, TypeDefinition> typeDefinitionsByName;
     private final GeneratedFile stagedImmutablesFile;
     private final GeneratedFile clientObjectMappersFile;
+    private final GeneratedFile serverObjectMappersFile;
     private final GeneratedFile packagePrivateImmutablesFile;
     private final GeneratedFile authHeaderFile;
     private final GeneratedFile apiExceptionFile;
@@ -34,7 +35,8 @@ public final class GeneratorContext {
         this.stagedImmutablesFile = ImmutablesStyleGenerator.generateStagedBuilderImmutablesStyle(classNameUtils);
         this.packagePrivateImmutablesFile =
                 ImmutablesStyleGenerator.generatePackagePrivateImmutablesStyle(classNameUtils);
-        this.clientObjectMappersFile = ClientObjectMapperGenerator.generateObjectMappersClass(classNameUtils);
+        this.clientObjectMappersFile = ObjectMapperGenerator.generateClientObjectMappersClass(classNameUtils);
+        this.serverObjectMappersFile = ObjectMapperGenerator.generateServerObjectMappersClass(classNameUtils);
         this.authHeaderFile = AuthHeaderGenerator.generateAuthHeaderClass(
                 classNameUtils, immutablesUtils, packagePrivateImmutablesFile.className());
         this.apiExceptionFile = ApiExceptionGenerator.generateApiExceptionInterface(classNameUtils);
@@ -64,6 +66,10 @@ public final class GeneratorContext {
 
     public GeneratedFile getClientObjectMappersFile() {
         return clientObjectMappersFile;
+    }
+
+    public GeneratedFile getServerObjectMappersFile() {
+        return serverObjectMappersFile;
     }
 
     public GeneratedFile getPackagePrivateImmutablesFile() {

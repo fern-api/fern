@@ -1,13 +1,12 @@
 package com.fern.java.client.cli;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import static com.fern.codegen.utils.ObjectMappers.CLIENT_OBJECT_MAPPER;
+
 import com.fern.IntermediateRepresentation;
 import com.fern.codegen.GeneratedException;
 import com.fern.codegen.GeneratedHttpServiceClient;
 import com.fern.codegen.GeneratedHttpServiceServer;
 import com.fern.codegen.GeneratorContext;
-import com.fern.codegen.IGeneratedFile;
 import com.fern.jersey.ExceptionGenerator;
 import com.fern.jersey.client.HttpServiceClientGenerator;
 import com.fern.jersey.server.HttpServiceServerGenerator;
@@ -18,20 +17,18 @@ import com.types.NamedType;
 import com.types.TypeDefinition;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import org.immutables.value.Value;
 
 public final class ClientGeneratorCli {
 
-    private static final String SRC_GENERATED_JAVA = "src/generated/java";
-
-    private static final ObjectMapper OBJECT_MAPPER =
-            new ObjectMapper().registerModule(new Jdk8Module().configureAbsentsAsNulls(true));
+    private static final String SRC_MAIN_JAVA = "src/main/java";
+    private static final String BUILD_GRADLE = "build.gradle";
 
     private ClientGeneratorCli() {}
 
@@ -44,7 +41,7 @@ public final class ClientGeneratorCli {
 
     private static FernPluginConfig getPluginConfig(String pluginPath) {
         try {
-            return OBJECT_MAPPER.readValue(new File(pluginPath), FernPluginConfig.class);
+            return CLIENT_OBJECT_MAPPER.readValue(new File(pluginPath), FernPluginConfig.class);
         } catch (IOException e) {
             throw new RuntimeException("Failed to read plugin configuration", e);
         }
@@ -52,14 +49,15 @@ public final class ClientGeneratorCli {
 
     private static IntermediateRepresentation getIr(FernPluginConfig fernPluginConfig) {
         try {
-            return OBJECT_MAPPER.readValue(new File(fernPluginConfig.irFilepath()), IntermediateRepresentation.class);
+            return CLIENT_OBJECT_MAPPER.readValue(
+                    new File(fernPluginConfig.irFilepath()), IntermediateRepresentation.class);
         } catch (IOException e) {
             throw new RuntimeException("Failed to read ir", e);
         }
     }
 
     private static void generate(IntermediateRepresentation ir, FernPluginConfig fernPluginConfig) {
-        CodeGenerationResult.Builder resultBuilder = CodeGenerationResult.builder();
+        ImmutableCodeGenerationResult.Builder resultBuilder = CodeGenerationResult.builder();
         Map<NamedType, TypeDefinition> typeDefinitionsByName =
                 ir.types().stream().collect(Collectors.toUnmodifiableMap(TypeDefinition::name, Function.identity()));
         GeneratorContext generatorContext =
@@ -85,7 +83,7 @@ public final class ClientGeneratorCli {
     private static ModelGeneratorResult addModelFiles(
             IntermediateRepresentation ir,
             GeneratorContext generatorContext,
-            CodeGenerationResult.Builder resultBuilder) {
+            ImmutableCodeGenerationResult.Builder resultBuilder) {
         ModelGenerator modelGenerator = new ModelGenerator(ir.types(), generatorContext);
         ModelGeneratorResult modelGeneratorResult = modelGenerator.generate();
         resultBuilder.addAllModelFiles(modelGeneratorResult.aliases());
@@ -105,7 +103,7 @@ public final class ClientGeneratorCli {
             IntermediateRepresentation ir,
             GeneratorContext generatorContext,
             ModelGeneratorResult modelGeneratorResult,
-            CodeGenerationResult.Builder resultBuilder) {
+            ImmutableCodeGenerationResult.Builder resultBuilder) {
         List<GeneratedException> generatedExceptions = ir.errors().stream()
                 .map(errorDefinition -> {
                     ExceptionGenerator exceptionGenerator =
@@ -137,7 +135,7 @@ public final class ClientGeneratorCli {
             IntermediateRepresentation ir,
             GeneratorContext generatorContext,
             ModelGeneratorResult modelGeneratorResult,
-            CodeGenerationResult.Builder resultBuilder) {
+            ImmutableCodeGenerationResult.Builder resultBuilder) {
         List<GeneratedException> generatedExceptions = ir.errors().stream()
                 .map(errorDefinition -> {
                     ExceptionGenerator exceptionGenerator =
@@ -152,34 +150,59 @@ public final class ClientGeneratorCli {
                     return httpServiceServerGenerator.generate();
                 })
                 .collect(Collectors.toList());
-        boolean serviceClientPresent = false;
+        boolean serviceServerPresent = false;
         for (GeneratedHttpServiceServer generatedHttpServiceServer : generatedHttpServiceServers) {
             resultBuilder.addServerFiles(generatedHttpServiceServer);
             resultBuilder.addAllServerFiles(generatedHttpServiceServer.generatedWireMessages());
-            serviceClientPresent = true;
+            serviceServerPresent = true;
         }
-        if (serviceClientPresent) {
-            resultBuilder.addClientFiles(generatorContext.getClientObjectMappersFile());
-            resultBuilder.addClientFiles(generatorContext.getUnknownRemoteExceptionFile());
+        if (serviceServerPresent) {
+            resultBuilder.addClientFiles(generatorContext.getServerObjectMappersFile());
         }
     }
 
     private static synchronized void writeToFiles(
             CodeGenerationResult codeGenerationResult, FernPluginConfig fernPluginConfig) {
-        codeGenerationResult
-                .modelFiles()
-                .forEach(clientFile -> writeFile(
-                        Paths.get(fernPluginConfig.outputDirectory(), "model", SRC_GENERATED_JAVA), clientFile.file()));
-        codeGenerationResult
-                .clientFiles()
-                .forEach(clientFile -> writeFile(
-                        Paths.get(fernPluginConfig.outputDirectory(), "client", SRC_GENERATED_JAVA),
-                        clientFile.file()));
-        codeGenerationResult
-                .clientFiles()
-                .forEach(clientFile -> writeFile(
-                        Paths.get(fernPluginConfig.outputDirectory(), "server", SRC_GENERATED_JAVA),
-                        clientFile.file()));
+        writeFileContents(Paths.get(fernPluginConfig.outputDirectory(), ".gitignore"), "*/\n");
+
+        if (!codeGenerationResult.modelFiles().isEmpty()) {
+            codeGenerationResult
+                    .modelFiles()
+                    .forEach(modelFile -> writeFile(
+                            Paths.get(fernPluginConfig.outputDirectory(), "model", SRC_MAIN_JAVA), modelFile.file()));
+            writeFileContents(
+                    Paths.get(fernPluginConfig.outputDirectory(), "model", BUILD_GRADLE),
+                    CodeGenerationResult.getModelBuildGradle(fernPluginConfig));
+        }
+
+        if (!codeGenerationResult.clientFiles().isEmpty()) {
+            codeGenerationResult
+                    .clientFiles()
+                    .forEach(clientFile -> writeFile(
+                            Paths.get(fernPluginConfig.outputDirectory(), "client", SRC_MAIN_JAVA), clientFile.file()));
+            writeFileContents(
+                    Paths.get(fernPluginConfig.outputDirectory(), "client", BUILD_GRADLE),
+                    CodeGenerationResult.getClientBuildGradle(fernPluginConfig));
+        }
+
+        if (!codeGenerationResult.serverFiles().isEmpty()) {
+            codeGenerationResult
+                    .serverFiles()
+                    .forEach(serverFiles -> writeFile(
+                            Paths.get(fernPluginConfig.outputDirectory(), "server", SRC_MAIN_JAVA),
+                            serverFiles.file()));
+            writeFileContents(
+                    Paths.get(fernPluginConfig.outputDirectory(), "server", BUILD_GRADLE),
+                    CodeGenerationResult.getServerBuildGradle(fernPluginConfig));
+        }
+    }
+
+    private static void writeFileContents(Path path, String contents) {
+        try {
+            Files.writeString(path, contents);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to write .gitignore ", e);
+        }
     }
 
     private static void writeFile(Path path, JavaFile javaFile) {
@@ -187,22 +210,6 @@ public final class ClientGeneratorCli {
             javaFile.writeToFile(path.toFile());
         } catch (IOException e) {
             throw new RuntimeException("Failed to write generated java file: " + javaFile.typeSpec.name, e);
-        }
-    }
-
-    @Value.Immutable
-    interface CodeGenerationResult {
-
-        List<IGeneratedFile> modelFiles();
-
-        List<IGeneratedFile> clientFiles();
-
-        List<IGeneratedFile> serverFiles();
-
-        class Builder extends ImmutableCodeGenerationResult.Builder {}
-
-        static Builder builder() {
-            return new Builder();
         }
     }
 }

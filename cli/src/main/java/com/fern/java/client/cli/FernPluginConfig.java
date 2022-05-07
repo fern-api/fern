@@ -10,6 +10,8 @@ import org.immutables.value.Value;
 @JsonDeserialize(as = ImmutableFernPluginConfig.class)
 public interface FernPluginConfig {
 
+    String relativeWorkspacePathOnHost();
+
     String irFilepath();
 
     String outputDirectory();
@@ -17,7 +19,7 @@ public interface FernPluginConfig {
     @JsonProperty("config")
     CustomPluginConfig customPluginConfig();
 
-    static ImmutableFernPluginConfig.IrFilepathBuildStage builder() {
+    static ImmutableFernPluginConfig.RelativeWorkspacePathOnHostBuildStage builder() {
         return ImmutableFernPluginConfig.builder();
     }
 }

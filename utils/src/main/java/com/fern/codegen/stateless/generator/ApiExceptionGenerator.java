@@ -62,7 +62,7 @@ public final class ApiExceptionGenerator {
     public static GeneratedFile generateUnknownRemoteException(ClassNameUtils classNameUtils) {
         ClassName unknownRemoteExceptionClassName = classNameUtils.getClassName(
                 UNKNOWN_REMOTE_EXCEPTION_INTERFACE_CLASS_NAME, Optional.empty(), Optional.empty());
-        TypeSpec unknownRemoteExceptionTypeSpec = TypeSpec.classBuilder(HTTP_API_EXCEPTION_CLASS_NAME)
+        TypeSpec unknownRemoteExceptionTypeSpec = TypeSpec.classBuilder(UNKNOWN_REMOTE_EXCEPTION_INTERFACE_CLASS_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addSuperinterface(ClassName.get(RemoteException.class))
                 .build();

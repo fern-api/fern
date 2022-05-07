@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import org.apache.commons.lang3.StringUtils;
 
 public final class ClassNameUtils {
 
@@ -29,6 +30,14 @@ public final class ClassNameUtils {
 
     public ClassName getClassNameForNamedType(NamedType namedType, PackageType packageType) {
         return getClassName(namedType.name(), Optional.of(packageType), Optional.of(namedType.fernFilepath()));
+    }
+
+    public ClassName getClassNameForNamedType(
+            NamedType namedType, PackageType packageType, Optional<String> maybeSuffix) {
+        String fullName = maybeSuffix
+                .map(suffix -> namedType.name() + StringUtils.capitalize(suffix))
+                .orElse(namedType.name());
+        return getClassName(fullName, Optional.of(packageType), Optional.of(namedType.fernFilepath()));
     }
 
     public ClassName getNestedClassName(ClassName outerClassName, String nestedClassName) {

@@ -5,7 +5,7 @@ import com.fern.codegen.GeneratedException;
 import com.fern.codegen.GeneratedHttpServiceClient;
 import com.fern.codegen.GeneratedInterface;
 import com.fern.codegen.GeneratorContext;
-import com.fern.codegen.stateless.generator.ClientObjectMapperGenerator;
+import com.fern.codegen.stateless.generator.ObjectMapperGenerator;
 import com.fern.codegen.utils.ClassNameUtils;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.jersey.JerseyServiceGeneratorUtils;
@@ -36,6 +36,8 @@ import org.apache.commons.lang3.StringUtils;
 
 public final class HttpServiceClientGenerator extends Generator {
 
+    private static final String CLIENT_CLASS_NAME_SUFFIX = "client";
+
     private static final String GET_CLIENT_METHOD_NAME = "getClient";
 
     private final HttpService httpService;
@@ -49,8 +51,9 @@ public final class HttpServiceClientGenerator extends Generator {
             HttpService httpService) {
         super(generatorContext, PackageType.SERVICES);
         this.httpService = httpService;
-        this.generatedServiceClassName =
-                generatorContext.getClassNameUtils().getClassNameForNamedType(httpService.name(), packageType);
+        this.generatedServiceClassName = generatorContext
+                .getClassNameUtils()
+                .getClassNameForNamedType(httpService.name(), packageType, Optional.of(CLIENT_CLASS_NAME_SUFFIX));
         this.jerseyServiceGeneratorUtils = new JerseyServiceGeneratorUtils(
                 generatorContext, generatedInterfaces, generatedExceptions, httpService);
     }
@@ -116,12 +119,12 @@ public final class HttpServiceClientGenerator extends Generator {
                         ".decoder(new $T($T.$L))\n",
                         JacksonDecoder.class,
                         objectMapperClassName,
-                        ClientObjectMapperGenerator.JSON_MAPPER_FIELD_NAME)
+                        ObjectMapperGenerator.JSON_MAPPER_FIELD_NAME)
                 .add(
                         ".encoder(new $T($T.$L))\n",
                         JacksonEncoder.class,
                         objectMapperClassName,
-                        ClientObjectMapperGenerator.JSON_MAPPER_FIELD_NAME)
+                        ObjectMapperGenerator.JSON_MAPPER_FIELD_NAME)
                 .add(".target($T.class, $L);", generatedServiceClassName, "url");
         if (generatedErrorDecoder.isPresent()) {
             codeBlockBuilder.add(
