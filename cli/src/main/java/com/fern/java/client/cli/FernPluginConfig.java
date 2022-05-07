@@ -1,6 +1,5 @@
 package com.fern.java.client.cli;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.immutables.StagedBuilderStyle;
@@ -11,8 +10,7 @@ import org.immutables.value.Value;
 @JsonDeserialize(as = ImmutableFernPluginConfig.class)
 public interface FernPluginConfig {
 
-    @JsonAlias("workspacePath")
-    String relativeWorkspacePathOnHost();
+    String outputPathRelativeToRootOnHost();
 
     String irFilepath();
 
@@ -21,7 +19,7 @@ public interface FernPluginConfig {
     @JsonProperty("config")
     CustomPluginConfig customPluginConfig();
 
-    static ImmutableFernPluginConfig.RelativeWorkspacePathOnHostBuildStage builder() {
+    static ImmutableFernPluginConfig.OutputPathRelativeToRootOnHostBuildStage builder() {
         return ImmutableFernPluginConfig.builder();
     }
 }

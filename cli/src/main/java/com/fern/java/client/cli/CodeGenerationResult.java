@@ -85,7 +85,7 @@ public abstract class CodeGenerationResult {
 
     static String getModelSubprojectDependency(FernPluginConfig fernPluginConfig) {
         String gradleDependency = Arrays.asList(
-                        fernPluginConfig.relativeWorkspacePathOnHost().split("/"))
+                        fernPluginConfig.outputPathRelativeToRootOnHost().split("/"))
                 .stream()
                 .collect(Collectors.joining(":"));
         return ":" + gradleDependency + ":model";
