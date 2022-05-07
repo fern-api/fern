@@ -85,7 +85,10 @@ async function createCompileWorkspaceSubtasks({
                             pathToWriteConfigJson: configJson.path,
                             pluginConfig: plugin.config,
                             pluginOutputDirectory: path.join(path.dirname(pathToWorkspaceDefinition), plugin.output),
-                            workspacePathRelativeToRoot: workspacePathRelativeToRoot,
+                            outputPathRelativeToRootOnHost:
+                                workspacePathRelativeToRoot != null
+                                    ? path.resolve(workspacePathRelativeToRoot, plugin.output)
+                                    : undefined,
                         });
                     })
                 );
