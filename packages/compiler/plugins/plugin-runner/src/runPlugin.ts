@@ -18,6 +18,7 @@ export declare namespace runPlugin {
          * the plugin will be instructed to write any files to this directory.
          */
         pluginOutputDirectory: string;
+        workspacePathRelativeToRoot: string | undefined;
     }
 }
 
@@ -27,8 +28,10 @@ export async function runPlugin({
     pluginConfig,
     pathToWriteConfigJson,
     pluginOutputDirectory,
+    workspacePathRelativeToRoot: workspacePath,
 }: runPlugin.Args): Promise<void> {
     const configJson = {
+        workspacePath,
         irFilepath: DOCKER_PATH_TO_IR,
         outputDirectory: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
         config: pluginConfig,

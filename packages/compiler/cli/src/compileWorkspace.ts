@@ -15,14 +15,25 @@ interface WorkspaceConfig {
     plugins: { name: string; output: string; config: unknown }[];
 }
 
-export async function createCompileWorkspaceTask(pathToWorkspaceDefinition: string): Promise<Listr.ListrTask> {
+export async function createCompileWorkspaceTask({
+    pathToWorkspaceDefinition,
+    absolutePathToProjectConfig,
+}: {
+    pathToWorkspaceDefinition: string;
+    absolutePathToProjectConfig: string | undefined;
+}): Promise<Listr.ListrTask> {
     const fileContents = await readFile(pathToWorkspaceDefinition);
     const workspaceConfig = yaml.load(fileContents.toString()) as WorkspaceConfig;
+    const workspacePathRelativeToRoot = getWorkspacePathRelativeToRoot(
+        absolutePathToProjectConfig,
+        pathToWorkspaceDefinition
+    );
     return {
         title: workspaceConfig.name ?? pathToWorkspaceDefinition,
         task: await createCompileWorkspaceSubtasks({
             pathToWorkspaceDefinition,
             workspaceConfig,
+            workspacePathRelativeToRoot,
         }),
     };
 }
@@ -30,9 +41,11 @@ export async function createCompileWorkspaceTask(pathToWorkspaceDefinition: stri
 async function createCompileWorkspaceSubtasks({
     pathToWorkspaceDefinition,
     workspaceConfig,
+    workspacePathRelativeToRoot,
 }: {
     pathToWorkspaceDefinition: string;
     workspaceConfig: WorkspaceConfig;
+    workspacePathRelativeToRoot: string | undefined;
 }): Promise<() => Listr> {
     const workspaceTempDir = await tmp.dir({
         // use the /private prefix on osx so that docker can access the tmpdir
@@ -72,6 +85,7 @@ async function createCompileWorkspaceSubtasks({
                             pathToWriteConfigJson: configJson.path,
                             pluginConfig: plugin.config,
                             pluginOutputDirectory: path.join(path.dirname(pathToWorkspaceDefinition), plugin.output),
+                            workspacePathRelativeToRoot: workspacePathRelativeToRoot,
                         });
                     })
                 );
@@ -82,8 +96,19 @@ async function createCompileWorkspaceSubtasks({
             task: async () => {
                 await rm(workspaceTempDir.path, { recursive: true });
             },
+            skip: () => process.env.NODE_ENV === "development",
         },
     ]);
 
     return () => listr;
+}
+
+function getWorkspacePathRelativeToRoot(
+    absolutePathToProjectConfig: string | undefined,
+    pathToWorkspaceDefinition: string
+): string | undefined {
+    if (absolutePathToProjectConfig != null) {
+        return path.relative(path.dirname(absolutePathToProjectConfig), path.dirname(pathToWorkspaceDefinition));
+    }
+    return undefined;
 }
