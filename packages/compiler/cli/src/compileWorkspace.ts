@@ -24,16 +24,12 @@ export async function createCompileWorkspaceTask({
 }): Promise<Listr.ListrTask> {
     const fileContents = await readFile(pathToWorkspaceDefinition);
     const workspaceConfig = yaml.load(fileContents.toString()) as WorkspaceConfig;
-    const workspacePathRelativeToRoot = getWorkspacePathRelativeToRoot(
-        absolutePathToProjectConfig,
-        pathToWorkspaceDefinition
-    );
     return {
         title: workspaceConfig.name ?? pathToWorkspaceDefinition,
         task: await createCompileWorkspaceSubtasks({
             pathToWorkspaceDefinition,
             workspaceConfig,
-            workspacePathRelativeToRoot,
+            absolutePathToProjectConfig,
         }),
     };
 }
@@ -41,11 +37,11 @@ export async function createCompileWorkspaceTask({
 async function createCompileWorkspaceSubtasks({
     pathToWorkspaceDefinition,
     workspaceConfig,
-    workspacePathRelativeToRoot,
+    absolutePathToProjectConfig,
 }: {
     pathToWorkspaceDefinition: string;
     workspaceConfig: WorkspaceConfig;
-    workspacePathRelativeToRoot: string | undefined;
+    absolutePathToProjectConfig: string | undefined;
 }): Promise<() => Listr> {
     const workspaceTempDir = await tmp.dir({
         // use the /private prefix on osx so that docker can access the tmpdir
@@ -85,10 +81,11 @@ async function createCompileWorkspaceSubtasks({
                             pathToWriteConfigJson: configJson.path,
                             pluginConfig: plugin.config,
                             pluginOutputDirectory: path.join(path.dirname(pathToWorkspaceDefinition), plugin.output),
-                            outputPathRelativeToRootOnHost:
-                                workspacePathRelativeToRoot != null
-                                    ? path.resolve(workspacePathRelativeToRoot, plugin.output)
-                                    : undefined,
+                            outputPathRelativeToRootOnHost: getOutputPathRelativeToRootOnHost(
+                                absolutePathToProjectConfig,
+                                pathToWorkspaceDefinition,
+                                plugin.output
+                            ),
                         });
                     })
                 );
@@ -106,12 +103,16 @@ async function createCompileWorkspaceSubtasks({
     return () => listr;
 }
 
-function getWorkspacePathRelativeToRoot(
+function getOutputPathRelativeToRootOnHost(
     absolutePathToProjectConfig: string | undefined,
-    pathToWorkspaceDefinition: string
+    pathToWorkspaceDefinition: string,
+    outputDirectory: string
 ): string | undefined {
     if (absolutePathToProjectConfig != null) {
-        return path.relative(path.dirname(absolutePathToProjectConfig), path.dirname(pathToWorkspaceDefinition));
+        return path.relative(
+            path.dirname(absolutePathToProjectConfig),
+            path.join(path.dirname(pathToWorkspaceDefinition), outputDirectory)
+        );
     }
     return undefined;
 }
