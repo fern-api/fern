@@ -62,16 +62,14 @@ async function createCompileWorkspaceSubtasks({
             title: "Run plugins",
             task: async () => {
                 await Promise.all(
-                    workspaceDefinition.plugins.map(async (plugin) => {
+                    workspaceDefinition.plugins.map(async (pluginInvocation) => {
                         const configJson = await tmp.file({
                             tmpdir: workspaceTempDir.path,
                         });
                         await runPlugin({
-                            imageName: plugin.name,
+                            pluginInvocation,
                             pathToIr,
                             pathToWriteConfigJson: configJson.path,
-                            customPluginConfig: plugin.config,
-                            pluginOutputDirectory: plugin.absolutePathToOutput,
                             workspacePathRelativeToRoot,
                         });
                     })
