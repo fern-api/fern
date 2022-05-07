@@ -5,7 +5,7 @@
     "package-json": {
       "scripts": {
         "dockerTagLocal": "./docker/create_docker.sh local",
-        "dockerTagVersion": "./docker/create_docker.sh $(yarn info fern-typescript --all --json | jq -r .children.Version)"
+        "dockerTagVersion": "./docker/create_docker.sh $(git tag --points-at HEAD)"
       }
     },
     "depcheck": {

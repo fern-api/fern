@@ -9,7 +9,7 @@ jobs:
       - checkout
       - run:
           name: Run code-generation
-          command: npx fern-api@0.0.45 generate
+          command: npx fern-api generate
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
@@ -44,7 +44,7 @@ jobs:
       - checkout
       - run:
           name: Run code-generation
-          command: npx fern-api@0.0.45 generate
+          command: npx fern-api generate
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
@@ -86,7 +86,7 @@ jobs:
             sudo ln -s /opt/java/zulu*/ /opt/java11
       - run:
           name: Run code-generation
-          command: npx fern-api@0.0.45 generate
+          command: npx fern-api generate
       - run:
           name: Publish
           command: |
