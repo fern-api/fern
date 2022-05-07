@@ -1,6 +1,6 @@
 import { IntermediateRepresentation } from "@fern-api/api";
+import { CompilerStage, RelativeFilePath } from "@fern-api/compiler-commons";
 import { RawSchemas } from "@fern-api/syntax-analysis";
-import { CompilerStage, RelativeFilePath } from "../packages/compiler/commons/src";
 import { convertErrorDefinition } from "./converters/convertErrorDefinition";
 import { convertId } from "./converters/convertId";
 import { convertHttpService } from "./converters/services/convertHttpService";
