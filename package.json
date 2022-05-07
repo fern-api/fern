@@ -37,7 +37,7 @@
     "husky": "^7.0.4",
     "jest": "^27.5.1",
     "lint-staged": "^12.3.7",
-    "mrlint": "^0.0.16",
+    "mrlint": "^0.0.18",
     "prettier": "^2.6.2",
     "react": "^18.0.0",
     "stylelint": "^14.6.1"
