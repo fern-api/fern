@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 public class CodeGenerationResultTest {
 
-    private static FernPluginConfig PLUGIN_CONFIG = FernPluginConfig.builder()
+    private static final FernPluginConfig PLUGIN_CONFIG = FernPluginConfig.builder()
             .relativeWorkspacePathOnHost("memory-api/memory-java-api")
             .irFilepath("ir.json")
             .outputDirectory("output")

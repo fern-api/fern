@@ -1,12 +1,11 @@
 package com.fern.java.client.cli;
 
-import static com.fern.codegen.utils.ObjectMappers.CLIENT_OBJECT_MAPPER;
-
 import com.fern.IntermediateRepresentation;
 import com.fern.codegen.GeneratedException;
 import com.fern.codegen.GeneratedHttpServiceClient;
 import com.fern.codegen.GeneratedHttpServiceServer;
 import com.fern.codegen.GeneratorContext;
+import com.fern.codegen.utils.ObjectMappers;
 import com.fern.jersey.ExceptionGenerator;
 import com.fern.jersey.client.HttpServiceClientGenerator;
 import com.fern.jersey.server.HttpServiceServerGenerator;
@@ -41,7 +40,7 @@ public final class ClientGeneratorCli {
 
     private static FernPluginConfig getPluginConfig(String pluginPath) {
         try {
-            return CLIENT_OBJECT_MAPPER.readValue(new File(pluginPath), FernPluginConfig.class);
+            return ObjectMappers.CLIENT_OBJECT_MAPPER.readValue(new File(pluginPath), FernPluginConfig.class);
         } catch (IOException e) {
             throw new RuntimeException("Failed to read plugin configuration", e);
         }
@@ -49,7 +48,7 @@ public final class ClientGeneratorCli {
 
     private static IntermediateRepresentation getIr(FernPluginConfig fernPluginConfig) {
         try {
-            return CLIENT_OBJECT_MAPPER.readValue(
+            return ObjectMappers.CLIENT_OBJECT_MAPPER.readValue(
                     new File(fernPluginConfig.irFilepath()), IntermediateRepresentation.class);
         } catch (IOException e) {
             throw new RuntimeException("Failed to read ir", e);
