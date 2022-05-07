@@ -1,5 +1,5 @@
 export interface PluginConfig {
-    relativeWorkspacePathOnHost: string | undefined;
+    outputPathRelativeToRootOnHost: string | undefined;
     irFilepath: string;
     outputDirectory: string;
     helpers: PluginHelpers;

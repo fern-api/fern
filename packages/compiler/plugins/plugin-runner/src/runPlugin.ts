@@ -25,7 +25,7 @@ export async function runPlugin({
     relativeWorkspacePath,
 }: runPlugin.Args): Promise<void> {
     const config: PluginConfig = {
-        relativeWorkspacePathOnHost: relativeWorkspacePath,
+        outputPathRelativeToRootOnHost: relativeWorkspacePath,
         irFilepath: DOCKER_PATH_TO_IR,
         outputDirectory: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
         helpers: {
