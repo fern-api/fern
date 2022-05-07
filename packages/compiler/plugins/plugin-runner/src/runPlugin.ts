@@ -1,6 +1,8 @@
+import { PluginInvocation } from "@fern-api/compiler-commons";
 import { runDocker } from "@fern-api/docker-utils";
 import { rm, writeFile } from "fs/promises";
 import path from "path";
+import { PluginConfig } from "./PluginConfig";
 
 const DOCKER_FERN_DIRECTORY = "/fern";
 const DOCKER_CODEGEN_OUTPUT_DIRECTORY = path.join(DOCKER_FERN_DIRECTORY, "output");
@@ -9,44 +11,39 @@ const DOCKER_PATH_TO_IR = path.join(DOCKER_FERN_DIRECTORY, "ir.json");
 
 export declare namespace runPlugin {
     export interface Args {
-        imageName: string;
+        pluginInvocation: PluginInvocation;
         pathToIr: string;
-        pluginConfig: unknown;
         pathToWriteConfigJson: string;
-        /**
-         * this directory will be mapped to DOCKER_CODEGEN_OUTPUT_DIRECTORY.
-         * the plugin will be instructed to write any files to this directory.
-         */
-        pluginOutputDirectory: string;
-        outputPathRelativeToRootOnHost: string | undefined;
+        relativeWorkspacePath: string | undefined;
     }
 }
 
 export async function runPlugin({
-    imageName,
+    pluginInvocation,
     pathToIr,
-    pluginConfig,
     pathToWriteConfigJson,
-    pluginOutputDirectory,
-    outputPathRelativeToRootOnHost,
+    relativeWorkspacePath,
 }: runPlugin.Args): Promise<void> {
-    const configJson = {
-        outputPathRelativeToRootOnHost,
+    const config: PluginConfig = {
+        relativeWorkspacePathOnHost: relativeWorkspacePath,
         irFilepath: DOCKER_PATH_TO_IR,
         outputDirectory: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
-        config: pluginConfig,
+        helpers: {
+            encodings: {},
+        },
+        customConfig: pluginInvocation.config,
     };
-    await writeFile(pathToWriteConfigJson, JSON.stringify(configJson, undefined, 4));
+    await writeFile(pathToWriteConfigJson, JSON.stringify(config, undefined, 4));
 
-    await rm(pluginOutputDirectory, { force: true, recursive: true });
+    const binds = [`${pathToWriteConfigJson}:${DOCKER_PLUGIN_CONFIG_PATH}:ro`, `${pathToIr}:${DOCKER_PATH_TO_IR}:ro`];
+    if (pluginInvocation.absolutePathToOutput != null) {
+        await rm(pluginInvocation.absolutePathToOutput, { force: true, recursive: true });
+        binds.push(`${pluginInvocation.absolutePathToOutput}:${DOCKER_CODEGEN_OUTPUT_DIRECTORY}`);
+    }
 
     await runDocker({
-        imageName,
+        imageName: `${pluginInvocation.name}:${pluginInvocation.version}`,
         args: [DOCKER_PLUGIN_CONFIG_PATH],
-        binds: [
-            `${pathToWriteConfigJson}:${DOCKER_PLUGIN_CONFIG_PATH}:ro`,
-            `${pathToIr}:${DOCKER_PATH_TO_IR}:ro`,
-            `${pluginOutputDirectory}:${DOCKER_CODEGEN_OUTPUT_DIRECTORY}`,
-        ],
+        binds,
     });
 }

@@ -3,8 +3,8 @@
   "compilerOptions": { "composite": true, "outDir": "./lib", "rootDir": "src", "module": "CommonJS" },
   "include": ["./src"],
   "references": [
-    { "path": "../../api/generated/ir" },
-    { "path": "../compiler-commons" },
+    { "path": "../../api/fern-ir-typescript" },
+    { "path": "../commons" },
     { "path": "../ir-generation" },
     { "path": "../syntax-analysis" }
   ]
