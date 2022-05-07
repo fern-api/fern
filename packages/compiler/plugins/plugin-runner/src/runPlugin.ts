@@ -26,28 +26,28 @@ export async function runPlugin({
 }: runPlugin.Args): Promise<void> {
     const config: PluginConfig = {
         irFilepath: DOCKER_PATH_TO_IR,
-        output:
-            pluginInvocation.absolutePathToOutput != null
-                ? {
-                      path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
-                      pathRelativeToRootOnHost:
-                          absolutePathToProjectConfig != null
-                              ? path.relative(absolutePathToProjectConfig, pluginInvocation.absolutePathToOutput)
-                              : undefined,
-                  }
-                : undefined,
+        output: undefined,
         helpers: {
             encodings: {},
         },
         customConfig: pluginInvocation.config,
     };
-    await writeFile(pathToWriteConfigJson, JSON.stringify(config, undefined, 4));
 
     const binds = [`${pathToWriteConfigJson}:${DOCKER_PLUGIN_CONFIG_PATH}:ro`, `${pathToIr}:${DOCKER_PATH_TO_IR}:ro`];
+
     if (pluginInvocation.absolutePathToOutput != null) {
         await rm(pluginInvocation.absolutePathToOutput, { force: true, recursive: true });
         binds.push(`${pluginInvocation.absolutePathToOutput}:${DOCKER_CODEGEN_OUTPUT_DIRECTORY}`);
+        config.output = {
+            path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
+            pathRelativeToRootOnHost:
+                absolutePathToProjectConfig != null
+                    ? path.relative(absolutePathToProjectConfig, pluginInvocation.absolutePathToOutput)
+                    : undefined,
+        };
     }
+
+    await writeFile(pathToWriteConfigJson, JSON.stringify(config, undefined, 4));
 
     await runDocker({
         imageName: `${pluginInvocation.name}:${pluginInvocation.version}`,
