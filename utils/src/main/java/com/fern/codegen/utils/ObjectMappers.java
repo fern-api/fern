@@ -9,4 +9,6 @@ public final class ObjectMappers {
     public static final ObjectMapper CLIENT_OBJECT_MAPPER = new ObjectMapper()
             .registerModule(new Jdk8Module())
             .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+
+    private ObjectMappers() {}
 }
