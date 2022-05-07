@@ -1,6 +1,7 @@
 {
-  "name": "@fern-api/plugin-runner",
+  "name": "@fern-api/api",
   "version": "0.0.0",
+  "private": true,
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -10,17 +11,13 @@
     "clean": "tsc --build --clean",
     "compile": "tsc --build",
     "test": "jest --passWithNoTests",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../../.eslintignore",
-    "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../../../.eslintignore --fix",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
+    "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore --fix",
     "lint:style": "stylelint '**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "stylelint '**/*.scss' --allow-empty-input --max-warnings 0 --fix",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck"
-  },
-  "dependencies": {
-    "@fern-api/compiler-commons": "workspace:*",
-    "@fern-api/docker-utils": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",

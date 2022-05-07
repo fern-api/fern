@@ -11,6 +11,7 @@ types:
     extends: commons.WithDocs
     properties:
       type: types.Type
+      encoding: optional<string>
   ResponseErrors:
     extends: commons.WithDocs
     properties:
