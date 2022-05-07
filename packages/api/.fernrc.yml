@@ -1,7 +1,11 @@
 name: Fern Intermediate Representation
 input: ./src
 plugins:
-  - name: fernapi/fern-typescript:0.0.45
-    output: ./fern-ir-typescript/src/generated
+  - name: fernapi/fern-java-client:0.0.7
+    output: ./java-api-2
+    config:
+      packagePrefix: com
+  - name: fern-typescript:local
+    output: ./ts-api-2
     config:
       mode: model

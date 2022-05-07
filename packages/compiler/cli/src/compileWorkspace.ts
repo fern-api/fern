@@ -1,13 +1,19 @@
 import { compile } from "@fern-api/compiler";
-import { loadWorkspaceDefinition, WorkspaceDefinition } from "@fern-api/compiler-commons";
 import { runPlugin } from "@fern-api/plugin-runner";
-import { rm, writeFile } from "fs/promises";
+import { readFile, rm, writeFile } from "fs/promises";
+import yaml from "js-yaml";
 import Listr from "listr";
 import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
 import { handleCompilerFailure } from "./handleCompilerFailure";
 import { parseFernDirectory } from "./parseFernDirectory";
+
+interface WorkspaceConfig {
+    name?: string;
+    input: string;
+    plugins: { name: string; output: string; config: unknown }[];
+}
 
 export async function createCompileWorkspaceTask({
     pathToWorkspaceDefinition,
@@ -16,25 +22,30 @@ export async function createCompileWorkspaceTask({
     pathToWorkspaceDefinition: string;
     absolutePathToProjectConfig: string | undefined;
 }): Promise<Listr.ListrTask> {
-    const workspaceDefinition = await loadWorkspaceDefinition(pathToWorkspaceDefinition);
+    const fileContents = await readFile(pathToWorkspaceDefinition);
+    const workspaceConfig = yaml.load(fileContents.toString()) as WorkspaceConfig;
+    const workspacePathRelativeToRoot = getWorkspacePathRelativeToRoot(
+        absolutePathToProjectConfig,
+        pathToWorkspaceDefinition
+    );
     return {
-        title: workspaceDefinition.name ?? pathToWorkspaceDefinition,
+        title: workspaceConfig.name ?? pathToWorkspaceDefinition,
         task: await createCompileWorkspaceSubtasks({
-            workspaceDefinition,
-            relativeWorkspacePath:
-                absolutePathToProjectConfig != null
-                    ? path.relative(path.dirname(absolutePathToProjectConfig), workspaceDefinition._absolutePath)
-                    : undefined,
+            pathToWorkspaceDefinition,
+            workspaceConfig,
+            workspacePathRelativeToRoot,
         }),
     };
 }
 
 async function createCompileWorkspaceSubtasks({
-    workspaceDefinition,
-    relativeWorkspacePath,
+    pathToWorkspaceDefinition,
+    workspaceConfig,
+    workspacePathRelativeToRoot,
 }: {
-    workspaceDefinition: WorkspaceDefinition;
-    relativeWorkspacePath: string | undefined;
+    pathToWorkspaceDefinition: string;
+    workspaceConfig: WorkspaceConfig;
+    workspacePathRelativeToRoot: string | undefined;
 }): Promise<() => Listr> {
     const workspaceTempDir = await tmp.dir({
         // use the /private prefix on osx so that docker can access the tmpdir
@@ -49,7 +60,9 @@ async function createCompileWorkspaceSubtasks({
         {
             title: "Parse API definition",
             task: async () => {
-                const files = await parseFernDirectory(workspaceDefinition.absolutePathToInput);
+                const files = await parseFernDirectory(
+                    path.join(path.dirname(pathToWorkspaceDefinition), workspaceConfig.input)
+                );
                 const compileResult = await compile(files);
                 if (compileResult.didSucceed) {
                     await writeFile(pathToIr, JSON.stringify(compileResult.intermediateRepresentation));
@@ -62,15 +75,17 @@ async function createCompileWorkspaceSubtasks({
             title: "Run plugins",
             task: async () => {
                 await Promise.all(
-                    workspaceDefinition.plugins.map(async (pluginInvocation) => {
+                    workspaceConfig.plugins.map(async (plugin) => {
                         const configJson = await tmp.file({
                             tmpdir: workspaceTempDir.path,
                         });
                         await runPlugin({
-                            pluginInvocation,
+                            imageName: plugin.name,
                             pathToIr,
                             pathToWriteConfigJson: configJson.path,
-                            relativeWorkspacePath,
+                            pluginConfig: plugin.config,
+                            pluginOutputDirectory: path.join(path.dirname(pathToWorkspaceDefinition), plugin.output),
+                            workspacePathRelativeToRoot: workspacePathRelativeToRoot,
                         });
                     })
                 );
@@ -86,4 +101,14 @@ async function createCompileWorkspaceSubtasks({
     ]);
 
     return () => listr;
+}
+
+function getWorkspacePathRelativeToRoot(
+    absolutePathToProjectConfig: string | undefined,
+    pathToWorkspaceDefinition: string
+): string | undefined {
+    if (absolutePathToProjectConfig != null) {
+        return path.relative(path.dirname(absolutePathToProjectConfig), path.dirname(pathToWorkspaceDefinition));
+    }
+    return undefined;
 }

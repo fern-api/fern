@@ -4,9 +4,8 @@ import path from "path";
 import { ProjectConfigSchema } from "./schemas/ProjectConfigSchema";
 
 export interface ProjectConfig {
-    _absolutePath: string;
-
     workspaces: string[];
+    absolutePath: string;
 }
 
 const PROJECT_CONFIG_FILENAME = "fern.config.json";
@@ -21,6 +20,6 @@ export async function loadProjectConfig(): Promise<ProjectConfig | undefined> {
     const projectConfig = await ProjectConfigSchema.parseAsync(projectConfigParsed);
     return {
         workspaces: projectConfig.workspaces ?? [],
-        _absolutePath: path.resolve(pathToProjectConfig),
+        absolutePath: path.resolve(pathToProjectConfig),
     };
 }
