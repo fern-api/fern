@@ -4,11 +4,12 @@ import path from "path";
 import { WorkspaceDefinitionSchema } from "./schemas/WorkspaceDefinitionSchema";
 import { WorkspaceDefinition } from "./WorkspaceDefinition";
 
-export async function loadWorkspaceDefinition(filepath: string): Promise<WorkspaceDefinition> {
-    const contentsStr = await readFile(filepath);
+export async function loadWorkspaceDefinition(absolutePath: string): Promise<WorkspaceDefinition> {
+    const contentsStr = await readFile(absolutePath);
     const contentsParsed = yaml.load(contentsStr.toString());
     const validated = await WorkspaceDefinitionSchema.parseAsync(contentsParsed);
     return {
+        _absolutePath: absolutePath,
         name: validated.name,
         absolutePathToInput: path.resolve(validated.input),
         plugins: validated.plugins.map((plugin) => ({

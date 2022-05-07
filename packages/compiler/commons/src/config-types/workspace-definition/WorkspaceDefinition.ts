@@ -1,4 +1,6 @@
 export interface WorkspaceDefinition {
+    _absolutePath: string;
+
     name: string | undefined;
     absolutePathToInput: string;
     plugins: PluginInvocation[];

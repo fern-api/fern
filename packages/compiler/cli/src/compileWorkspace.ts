@@ -9,20 +9,32 @@ import tmp from "tmp-promise";
 import { handleCompilerFailure } from "./handleCompilerFailure";
 import { parseFernDirectory } from "./parseFernDirectory";
 
-export async function createCompileWorkspaceTask(pathToWorkspaceDefinition: string): Promise<Listr.ListrTask> {
+export async function createCompileWorkspaceTask({
+    pathToWorkspaceDefinition,
+    absolutePathToProjectConfig,
+}: {
+    pathToWorkspaceDefinition: string;
+    absolutePathToProjectConfig: string | undefined;
+}): Promise<Listr.ListrTask> {
     const workspaceDefinition = await loadWorkspaceDefinition(pathToWorkspaceDefinition);
     return {
         title: workspaceDefinition.name ?? pathToWorkspaceDefinition,
         task: await createCompileWorkspaceSubtasks({
             workspaceDefinition,
+            workspacePathRelativeToRoot:
+                absolutePathToProjectConfig != null
+                    ? path.relative(path.dirname(absolutePathToProjectConfig), path.dirname(pathToWorkspaceDefinition))
+                    : undefined,
         }),
     };
 }
 
 async function createCompileWorkspaceSubtasks({
-    workspaceDefinition: workspaceConfig,
+    workspaceDefinition,
+    workspacePathRelativeToRoot,
 }: {
     workspaceDefinition: WorkspaceDefinition;
+    workspacePathRelativeToRoot: string | undefined;
 }): Promise<() => Listr> {
     const workspaceTempDir = await tmp.dir({
         // use the /private prefix on osx so that docker can access the tmpdir
@@ -37,7 +49,7 @@ async function createCompileWorkspaceSubtasks({
         {
             title: "Parse API definition",
             task: async () => {
-                const files = await parseFernDirectory(workspaceConfig.absolutePathToInput);
+                const files = await parseFernDirectory(workspaceDefinition.absolutePathToInput);
                 const compileResult = await compile(files);
                 if (compileResult.didSucceed) {
                     await writeFile(pathToIr, JSON.stringify(compileResult.intermediateRepresentation));
@@ -50,7 +62,7 @@ async function createCompileWorkspaceSubtasks({
             title: "Run plugins",
             task: async () => {
                 await Promise.all(
-                    workspaceConfig.plugins.map(async (plugin) => {
+                    workspaceDefinition.plugins.map(async (plugin) => {
                         const configJson = await tmp.file({
                             tmpdir: workspaceTempDir.path,
                         });
@@ -60,6 +72,7 @@ async function createCompileWorkspaceSubtasks({
                             pathToWriteConfigJson: configJson.path,
                             customPluginConfig: plugin.config,
                             pluginOutputDirectory: plugin.absolutePathToOutput,
+                            workspacePathRelativeToRoot,
                         });
                     })
                 );
@@ -70,6 +83,7 @@ async function createCompileWorkspaceSubtasks({
             task: async () => {
                 await rm(workspaceTempDir.path, { recursive: true });
             },
+            skip: () => process.env.NODE_ENV === "development",
         },
     ]);
 

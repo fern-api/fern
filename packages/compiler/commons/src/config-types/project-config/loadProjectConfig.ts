@@ -1,8 +1,11 @@
 import findUp from "find-up";
 import { readFile } from "fs/promises";
+import path from "path";
 import { ProjectConfigSchema } from "./schemas/ProjectConfigSchema";
 
 export interface ProjectConfig {
+    _absolutePath: string;
+
     workspaces: string[];
 }
 
@@ -18,5 +21,6 @@ export async function loadProjectConfig(): Promise<ProjectConfig | undefined> {
     const projectConfig = await ProjectConfigSchema.parseAsync(projectConfigParsed);
     return {
         workspaces: projectConfig.workspaces ?? [],
+        _absolutePath: path.resolve(pathToProjectConfig),
     };
 }

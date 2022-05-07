@@ -12,9 +12,19 @@ export async function compileWorkspaces(commandLineWorkspaces: readonly string[]
         projectConfig,
     });
     const uniqueWorkspaceDefinitionPaths = uniq(workspaceDefinitionPaths);
-    const tasks = new Listr(await Promise.all(uniqueWorkspaceDefinitionPaths.map(createCompileWorkspaceTask)), {
-        concurrent: true,
-    });
+    const tasks = new Listr(
+        await Promise.all(
+            uniqueWorkspaceDefinitionPaths.map((uniqueWorkspaceDefinitionPath) =>
+                createCompileWorkspaceTask({
+                    pathToWorkspaceDefinition: uniqueWorkspaceDefinitionPath,
+                    absolutePathToProjectConfig: projectConfig?.absolutePath,
+                })
+            )
+        ),
+        {
+            concurrent: true,
+        }
+    );
     await tasks.run();
 }
 
