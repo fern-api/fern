@@ -1,9 +1,13 @@
 export interface PluginConfig {
-    outputPathRelativeToRootOnHost: string | undefined;
     irFilepath: string;
-    outputDirectory: string;
+    output: PluginOutputConfig | undefined;
     helpers: PluginHelpers;
     customConfig: unknown;
+}
+
+export interface PluginOutputConfig {
+    path: string;
+    pathRelativeToRootOnHost: string | undefined;
 }
 
 export interface PluginHelpers {

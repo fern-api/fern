@@ -21,20 +21,17 @@ export async function createCompileWorkspaceTask({
         title: workspaceDefinition.name ?? pathToWorkspaceDefinition,
         task: await createCompileWorkspaceSubtasks({
             workspaceDefinition,
-            relativeWorkspacePath:
-                absolutePathToProjectConfig != null
-                    ? path.relative(path.dirname(absolutePathToProjectConfig), workspaceDefinition._absolutePath)
-                    : undefined,
+            absolutePathToProjectConfig,
         }),
     };
 }
 
 async function createCompileWorkspaceSubtasks({
     workspaceDefinition,
-    relativeWorkspacePath,
+    absolutePathToProjectConfig,
 }: {
     workspaceDefinition: WorkspaceDefinition;
-    relativeWorkspacePath: string | undefined;
+    absolutePathToProjectConfig: string | undefined;
 }): Promise<() => Listr> {
     const workspaceTempDir = await tmp.dir({
         // use the /private prefix on osx so that docker can access the tmpdir
@@ -70,7 +67,7 @@ async function createCompileWorkspaceSubtasks({
                             pluginInvocation,
                             pathToIr,
                             pathToWriteConfigJson: configJson.path,
-                            relativeWorkspacePath,
+                            absolutePathToProjectConfig,
                         });
                     })
                 );
