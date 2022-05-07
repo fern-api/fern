@@ -1,19 +1,13 @@
 import { compile } from "@fern-api/compiler";
+import { loadWorkspaceDefinition, WorkspaceDefinition } from "@fern-api/compiler-commons";
 import { runPlugin } from "@fern-api/plugin-runner";
-import { readFile, rm, writeFile } from "fs/promises";
-import yaml from "js-yaml";
+import { rm, writeFile } from "fs/promises";
 import Listr from "listr";
 import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
 import { handleCompilerFailure } from "./handleCompilerFailure";
 import { parseFernDirectory } from "./parseFernDirectory";
-
-interface WorkspaceConfig {
-    name?: string;
-    input: string;
-    plugins: { name: string; output: string; config: unknown }[];
-}
 
 export async function createCompileWorkspaceTask({
     pathToWorkspaceDefinition,
@@ -22,25 +16,21 @@ export async function createCompileWorkspaceTask({
     pathToWorkspaceDefinition: string;
     absolutePathToProjectConfig: string | undefined;
 }): Promise<Listr.ListrTask> {
-    const fileContents = await readFile(pathToWorkspaceDefinition);
-    const workspaceConfig = yaml.load(fileContents.toString()) as WorkspaceConfig;
+    const workspaceDefinition = await loadWorkspaceDefinition(pathToWorkspaceDefinition);
     return {
-        title: workspaceConfig.name ?? pathToWorkspaceDefinition,
+        title: workspaceDefinition.name ?? pathToWorkspaceDefinition,
         task: await createCompileWorkspaceSubtasks({
-            pathToWorkspaceDefinition,
-            workspaceConfig,
+            workspaceDefinition,
             absolutePathToProjectConfig,
         }),
     };
 }
 
 async function createCompileWorkspaceSubtasks({
-    pathToWorkspaceDefinition,
-    workspaceConfig,
+    workspaceDefinition,
     absolutePathToProjectConfig,
 }: {
-    pathToWorkspaceDefinition: string;
-    workspaceConfig: WorkspaceConfig;
+    workspaceDefinition: WorkspaceDefinition;
     absolutePathToProjectConfig: string | undefined;
 }): Promise<() => Listr> {
     const workspaceTempDir = await tmp.dir({
@@ -56,9 +46,7 @@ async function createCompileWorkspaceSubtasks({
         {
             title: "Parse API definition",
             task: async () => {
-                const files = await parseFernDirectory(
-                    path.join(path.dirname(pathToWorkspaceDefinition), workspaceConfig.input)
-                );
+                const files = await parseFernDirectory(workspaceDefinition.absolutePathToInput);
                 const compileResult = await compile(files);
                 if (compileResult.didSucceed) {
                     await writeFile(pathToIr, JSON.stringify(compileResult.intermediateRepresentation));
@@ -71,21 +59,15 @@ async function createCompileWorkspaceSubtasks({
             title: "Run plugins",
             task: async () => {
                 await Promise.all(
-                    workspaceConfig.plugins.map(async (plugin) => {
+                    workspaceDefinition.plugins.map(async (pluginInvocation) => {
                         const configJson = await tmp.file({
                             tmpdir: workspaceTempDir.path,
                         });
                         await runPlugin({
-                            imageName: plugin.name,
+                            pluginInvocation,
                             pathToIr,
                             pathToWriteConfigJson: configJson.path,
-                            pluginConfig: plugin.config,
-                            pluginOutputDirectory: path.join(path.dirname(pathToWorkspaceDefinition), plugin.output),
-                            outputPathRelativeToRootOnHost: getOutputPathRelativeToRootOnHost(
-                                absolutePathToProjectConfig,
-                                pathToWorkspaceDefinition,
-                                plugin.output
-                            ),
+                            absolutePathToProjectConfig,
                         });
                     })
                 );
@@ -101,18 +83,4 @@ async function createCompileWorkspaceSubtasks({
     ]);
 
     return () => listr;
-}
-
-function getOutputPathRelativeToRootOnHost(
-    absolutePathToProjectConfig: string | undefined,
-    pathToWorkspaceDefinition: string,
-    outputDirectory: string
-): string | undefined {
-    if (absolutePathToProjectConfig != null) {
-        return path.relative(
-            path.dirname(absolutePathToProjectConfig),
-            path.join(path.dirname(pathToWorkspaceDefinition), outputDirectory)
-        );
-    }
-    return undefined;
 }

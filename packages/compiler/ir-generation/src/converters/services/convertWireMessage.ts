@@ -16,6 +16,7 @@ export function convertWireMessage({
 
     return {
         docs: typeof wireMessage !== "string" ? wireMessage.docs : undefined,
+        encoding: typeof wireMessage !== "string" ? wireMessage.encoding : undefined,
         type:
             typeof wireMessage === "string"
                 ? Type.alias({ aliasOf: parseTypeReference(wireMessage) })
