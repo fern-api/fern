@@ -22,7 +22,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import org.apache.commons.lang3.StringUtils;
 
 public final class HttpServiceServerGenerator extends Generator {
 
@@ -45,8 +44,7 @@ public final class HttpServiceServerGenerator extends Generator {
 
     @Override
     public GeneratedHttpServiceServer generate() {
-        TypeSpec.Builder jerseyServiceBuilder = TypeSpec.interfaceBuilder(
-                        generatedServiceClassName)
+        TypeSpec.Builder jerseyServiceBuilder = TypeSpec.interfaceBuilder(generatedServiceClassName)
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(AnnotationSpec.builder(Consumes.class)
                         .addMember("value", "$T.APPLICATION_JSON", MediaType.class)
