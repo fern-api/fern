@@ -9,7 +9,7 @@ export async function loadWorkspaceDefinition(absolutePath: string): Promise<Wor
     const contentsParsed = yaml.load(contentsStr.toString());
     const validated = await WorkspaceDefinitionSchema.parseAsync(contentsParsed);
     return {
-        _absolutePath: absolutePath,
+        _absolutePath: path.dirname(absolutePath),
         name: validated.name,
         absolutePathToInput: path.resolve(validated.input),
         plugins: validated.plugins.map((plugin) => ({

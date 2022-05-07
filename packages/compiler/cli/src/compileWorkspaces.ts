@@ -17,7 +17,7 @@ export async function compileWorkspaces(commandLineWorkspaces: readonly string[]
             uniqueWorkspaceDefinitionPaths.map((uniqueWorkspaceDefinitionPath) =>
                 createCompileWorkspaceTask({
                     pathToWorkspaceDefinition: uniqueWorkspaceDefinitionPath,
-                    absolutePathToProjectConfig: projectConfig?.absolutePath,
+                    absolutePathToProjectConfig: projectConfig?._absolutePath,
                 })
             )
         ),

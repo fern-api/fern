@@ -14,7 +14,7 @@ export declare namespace runPlugin {
         pluginInvocation: PluginInvocation;
         pathToIr: string;
         pathToWriteConfigJson: string;
-        workspacePathRelativeToRoot: string | undefined;
+        relativeWorkspacePath: string | undefined;
     }
 }
 
@@ -22,10 +22,10 @@ export async function runPlugin({
     pluginInvocation,
     pathToIr,
     pathToWriteConfigJson,
-    workspacePathRelativeToRoot,
+    relativeWorkspacePath,
 }: runPlugin.Args): Promise<void> {
     const config: PluginConfig = {
-        relativeWorkspacePathOnHost: workspacePathRelativeToRoot,
+        relativeWorkspacePathOnHost: relativeWorkspacePath,
         irFilepath: DOCKER_PATH_TO_IR,
         outputDirectory: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
         helpers: {

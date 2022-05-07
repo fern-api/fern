@@ -1,4 +1,5 @@
 export interface WorkspaceDefinition {
+    // path to the workspace directory
     _absolutePath: string;
 
     name: string | undefined;
