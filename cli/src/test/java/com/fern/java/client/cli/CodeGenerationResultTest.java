@@ -1,14 +1,17 @@
 package com.fern.java.client.cli;
 
 import com.fern.java.client.cli.CustomPluginConfig.Mode;
+import com.fern.java.client.cli.FernPluginConfig.OutputConfig;
 import org.junit.jupiter.api.Test;
 
 public class CodeGenerationResultTest {
 
     private static final FernPluginConfig PLUGIN_CONFIG = FernPluginConfig.builder()
-            .outputPathRelativeToRootOnHost("memory-api/memory-java-api")
             .irFilepath("ir.json")
-            .outputDirectory("output")
+            .output(OutputConfig.builder()
+                    .path("output")
+                    .pathRelativeToRootOnHost("memory-api/memory-java-api")
+                    .build())
             .customPluginConfig(CustomPluginConfig.builder()
                     .mode(Mode.CLIENT_AND_SERVER)
                     .build())

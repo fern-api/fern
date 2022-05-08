@@ -10,16 +10,27 @@ import org.immutables.value.Value;
 @JsonDeserialize(as = ImmutableFernPluginConfig.class)
 public interface FernPluginConfig {
 
-    String outputPathRelativeToRootOnHost();
-
     String irFilepath();
 
-    String outputDirectory();
+    OutputConfig output();
 
     @JsonProperty("config")
     CustomPluginConfig customPluginConfig();
 
-    static ImmutableFernPluginConfig.OutputPathRelativeToRootOnHostBuildStage builder() {
+    @Value.Immutable
+    @StagedBuilderStyle
+    @JsonDeserialize(as = ImmutableFernPluginConfig.class)
+    interface OutputConfig {
+        String path();
+
+        String pathRelativeToRootOnHost();
+
+        static ImmutableOutputConfig.PathBuildStage builder() {
+            return ImmutableOutputConfig.builder();
+        }
+    }
+
+    static ImmutableFernPluginConfig.IrFilepathBuildStage builder() {
         return ImmutableFernPluginConfig.builder();
     }
 }

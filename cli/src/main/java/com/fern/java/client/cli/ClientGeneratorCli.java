@@ -162,36 +162,37 @@ public final class ClientGeneratorCli {
 
     private static synchronized void writeToFiles(
             CodeGenerationResult codeGenerationResult, FernPluginConfig fernPluginConfig) {
-        writeFileContents(Paths.get(fernPluginConfig.outputDirectory(), ".gitignore"), "*/\n");
+        String outputDirectory = fernPluginConfig.output().path();
+
+        writeFileContents(Paths.get(outputDirectory, ".gitignore"), "*/\n");
 
         if (!codeGenerationResult.modelFiles().isEmpty()) {
             codeGenerationResult
                     .modelFiles()
-                    .forEach(modelFile -> writeFile(
-                            Paths.get(fernPluginConfig.outputDirectory(), "model", SRC_MAIN_JAVA), modelFile.file()));
+                    .forEach(modelFile ->
+                            writeFile(Paths.get(outputDirectory, "model", SRC_MAIN_JAVA), modelFile.file()));
             writeFileContents(
-                    Paths.get(fernPluginConfig.outputDirectory(), "model", BUILD_GRADLE),
+                    Paths.get(outputDirectory, "model", BUILD_GRADLE),
                     CodeGenerationResult.getModelBuildGradle(fernPluginConfig));
         }
 
         if (!codeGenerationResult.clientFiles().isEmpty()) {
             codeGenerationResult
                     .clientFiles()
-                    .forEach(clientFile -> writeFile(
-                            Paths.get(fernPluginConfig.outputDirectory(), "client", SRC_MAIN_JAVA), clientFile.file()));
+                    .forEach(clientFile ->
+                            writeFile(Paths.get(outputDirectory, "client", SRC_MAIN_JAVA), clientFile.file()));
             writeFileContents(
-                    Paths.get(fernPluginConfig.outputDirectory(), "client", BUILD_GRADLE),
+                    Paths.get(outputDirectory, "client", BUILD_GRADLE),
                     CodeGenerationResult.getClientBuildGradle(fernPluginConfig));
         }
 
         if (!codeGenerationResult.serverFiles().isEmpty()) {
             codeGenerationResult
                     .serverFiles()
-                    .forEach(serverFiles -> writeFile(
-                            Paths.get(fernPluginConfig.outputDirectory(), "server", SRC_MAIN_JAVA),
-                            serverFiles.file()));
+                    .forEach(serverFiles ->
+                            writeFile(Paths.get(outputDirectory, "server", SRC_MAIN_JAVA), serverFiles.file()));
             writeFileContents(
-                    Paths.get(fernPluginConfig.outputDirectory(), "server", BUILD_GRADLE),
+                    Paths.get(outputDirectory, "server", BUILD_GRADLE),
                     CodeGenerationResult.getServerBuildGradle(fernPluginConfig));
         }
     }
