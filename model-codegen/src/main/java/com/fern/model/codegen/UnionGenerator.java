@@ -236,7 +236,7 @@ public final class UnionGenerator extends Generator {
                 .addTypeVariable(VisitorUtils.VISITOR_RETURN_TYPE)
                 .addParameter(generatorContext.getVisitorUtils().getVisitorTypeName(generatedUnionClassName), "visitor")
                 .returns(VisitorUtils.VISITOR_RETURN_TYPE)
-                .addStatement("return value.accept(visitor)")
+                .addStatement("return value.visit(visitor)")
                 .build();
     }
 
