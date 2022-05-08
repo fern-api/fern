@@ -22,6 +22,7 @@
     "dockerTagVersion": "./docker/create_docker.sh $(yarn info fern-typescript --all --json | jq -r .children.Version)"
   },
   "dependencies": {
+    "@fern-api/plugin-runner": "workspace:*",
     "@fern-typescript/client": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/model": "workspace:*",
