@@ -72,8 +72,8 @@ jobs:
             docker push fernapi/fern-typescript:"$projectVersion"
 
   publish-java-snapshot:
-    docker: [{ image: "cimg/node:17.3.1" }]
-    resource_class: small
+    machine:
+      image: ubuntu-2004:current
     environment:
       CIRCLE_TEST_REPORTS: /home/circleci/junit
       CIRCLE_ARTIFACTS: /home/circleci/artifacts
