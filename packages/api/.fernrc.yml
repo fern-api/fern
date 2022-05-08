@@ -1,8 +1,7 @@
 name: Fern Intermediate Representation
 input: ./src
 plugins:
-  - name: fernapi/fern-typescript
-    version: 0.0.53
+  - name: fernapi/fern-typescript:0.0.53
     output: ./fern-ir-typescript/src/generated
     config:
       mode: model
