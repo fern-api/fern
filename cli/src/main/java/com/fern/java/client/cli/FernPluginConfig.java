@@ -19,7 +19,7 @@ public interface FernPluginConfig {
 
     @Value.Immutable
     @StagedBuilderStyle
-    @JsonDeserialize(as = ImmutableFernPluginConfig.class)
+    @JsonDeserialize(as = ImmutableOutputConfig.class)
     interface OutputConfig {
         String path();
 
