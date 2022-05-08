@@ -26,7 +26,7 @@ export async function runPlugin({
 }: runPlugin.Args): Promise<void> {
     const config: PluginConfig = {
         irFilepath: DOCKER_PATH_TO_IR,
-        output: undefined,
+        output: null,
         helpers: {
             encodings: {},
         },
@@ -43,7 +43,7 @@ export async function runPlugin({
             pathRelativeToRootOnHost:
                 absolutePathToProjectConfig != null
                     ? path.relative(absolutePathToProjectConfig, pluginInvocation.absolutePathToOutput)
-                    : undefined,
+                    : null,
         };
     }
 

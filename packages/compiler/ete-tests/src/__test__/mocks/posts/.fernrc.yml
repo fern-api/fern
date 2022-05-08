@@ -1,0 +1,8 @@
+name: Posts
+input: ./api
+plugins:
+  - name: fern-typescript
+    version: local
+    output: ./generated
+    config:
+      mode: model

@@ -1451,6 +1451,24 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-api/ete-tests@workspace:packages/compiler/ete-tests":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/ete-tests@workspace:packages/compiler/ete-tests"
+  dependencies:
+    "@babel/core": "npm:^7.17.9"
+    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/preset-typescript": "npm:^7.16.7"
+    "@types/jest": "npm:^27.4.1"
+    "@types/node": "npm:^17.0.25"
+    depcheck: "npm:^1.4.3"
+    eslint: "npm:^8.12.0"
+    jest: "npm:^27.5.1"
+    prettier: "npm:^2.6.2"
+    stylelint: "npm:^14.6.1"
+    typescript: "npm:^4.6.3"
+  languageName: unknown
+  linkType: soft
+
 "@fern-api/ir-generation@npm:0.0.54":
   version: 0.0.54
   resolution: "@fern-api/ir-generation@npm:0.0.54"
@@ -4718,6 +4736,7 @@ __metadata:
     "@babel/preset-env": "npm:^7.16.11"
     "@babel/preset-typescript": "npm:^7.16.7"
     "@fern-api/api": "workspace:*"
+    "@fern-api/plugin-runner": "workspace:*"
     "@fern-typescript/client": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/model": "workspace:*"
