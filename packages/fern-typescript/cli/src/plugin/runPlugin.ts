@@ -11,12 +11,16 @@ export async function runPlugin(pathToConfig: string): Promise<void> {
     const configParsed = JSON.parse(configStr.toString()) as unknown;
     const config = await FernPluginConfigSchema.parseAsync(configParsed);
 
+    if (config.output == null) {
+        throw new Error("Output directory is not specified.");
+    }
+
     const command = getCommand(config);
-    await runCommand({ command, pathToIr: config.irFilepath, outputDir: config.outputDirectory });
+    await runCommand({ command, pathToIr: config.irFilepath, outputDir: config.output.path });
 }
 
 function getCommand(config: FernPluginConfigSchema): Command {
-    switch (config.config.mode) {
+    switch (config.customConfig.mode) {
         case "client":
             return clientCommand;
         case "server":
