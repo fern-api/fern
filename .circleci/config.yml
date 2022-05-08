@@ -95,7 +95,6 @@ jobs:
           command: |
             export PATH="$PATH:$JAVA_HOME/bin"
             cd packages/api/fern-ir-java
-            ./codegen.sh
             ./gradlew artifactoryPublish
 
 workflows:

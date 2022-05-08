@@ -6,3 +6,9 @@ plugins:
     output: ./fern-ir-typescript/src/generated
     config:
       mode: model
+  - name: fernapi/fern-java
+    version: 0.0.23
+    output: ./fern-ir-java/ir-api
+    config:
+      packagePrefix: "com.fern"
+      mode: MODEL

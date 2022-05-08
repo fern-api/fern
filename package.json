@@ -21,9 +21,7 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ./shared/.prettierignore \"**\"",
     "depcheck": "yarn workspaces foreach --verbose --parallel run depcheck",
     "prepare": "husky install",
-    "codegen": "run codegen:ts && run codegen:java",
-    "codegen:ts": "fern generate",
-    "codegen:java": "cd packages/api/fern-ir-java && ./codegen.sh",
+    "codegen": "fern generate",
     "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public"
   },
   "devDependencies": {
