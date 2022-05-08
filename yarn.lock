@@ -2426,6 +2426,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/tmp@npm:^0.2.3":
+  version: 0.2.3
+  resolution: "@types/tmp@npm:0.2.3"
+  checksum: ec94f7a39f6accaeb88b27390b7b43bbc39b4cdbf77e15b73184fcfa0605f415eb0f81d1a9d68138ad08355562301c878e00ce6ee800d3c20529ea19d6ad1759
+  languageName: node
+  linkType: hard
+
 "@types/yargs-parser@npm:*":
   version: 21.0.0
   resolution: "@types/yargs-parser@npm:21.0.0"
@@ -4709,6 +4716,7 @@ __metadata:
     "@types/jest": "npm:^27.4.1"
     "@types/listr": "npm:^0.14.4"
     "@types/node": "npm:^17.0.25"
+    "@types/tmp": "npm:^0.2.3"
     "@types/yargs": "npm:^17.0.10"
     chalk: "npm:^4.1.2"
     depcheck: "npm:^1.4.3"

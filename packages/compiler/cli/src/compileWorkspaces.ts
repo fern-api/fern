@@ -3,7 +3,6 @@ import { lstat } from "fs/promises";
 import glob from "glob-promise";
 import Listr from "listr";
 import { createCompileWorkspaceTask } from "./compileWorkspace";
-import { WorkspaceCliOption } from "./constants";
 
 export async function compileWorkspaces(commandLineWorkspaces: readonly string[]): Promise<void> {
     const projectConfig = await loadProjectConfig();
@@ -41,8 +40,7 @@ async function collectWorkspaceDefinitions({
 
     if (projectConfig == null) {
         throw new Error(
-            "No project configuration found." +
-                ` If you're running from outside a project, you must manually specify the workspace(s) with --${WorkspaceCliOption.KEY}`
+            "No project configuration found. If you're intentionally running from outside a project, you must manually specify the workspace(s)."
         );
     }
 

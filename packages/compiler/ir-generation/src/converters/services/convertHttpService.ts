@@ -11,11 +11,13 @@ export function convertHttpService({
     serviceId,
     fernFilepath,
     imports,
+    nonStandardEncodings,
 }: {
     serviceDefinition: RawSchemas.HttpServiceSchema;
     serviceId: string;
     fernFilepath: FernFilepath;
     imports: Record<string, string>;
+    nonStandardEncodings: Set<string>;
 }): HttpService {
     const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
 
@@ -67,11 +69,21 @@ export function convertHttpService({
                         : [],
                 request:
                     endpoint.request != null
-                        ? convertWireMessage({ wireMessage: endpoint.request, fernFilepath, imports })
+                        ? convertWireMessage({
+                              wireMessage: endpoint.request,
+                              fernFilepath,
+                              imports,
+                              nonStandardEncodings,
+                          })
                         : undefined,
                 response:
                     endpoint.response != null
-                        ? convertWireMessage({ wireMessage: endpoint.response, fernFilepath, imports })
+                        ? convertWireMessage({
+                              wireMessage: endpoint.response,
+                              fernFilepath,
+                              imports,
+                              nonStandardEncodings,
+                          })
                         : undefined,
                 errors: convertResponseErrors({ rawResponseErrors: endpoint.errors, fernFilepath, imports }),
             })

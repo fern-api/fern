@@ -12,7 +12,7 @@ const DOCKER_PATH_TO_IR = path.join(DOCKER_FERN_DIRECTORY, "ir.json");
 export declare namespace runPlugin {
     export interface Args {
         pluginInvocation: PluginInvocation;
-        pathToIr: string;
+        absolutePathToIr: string;
         pathToWriteConfigJson: string;
         absolutePathToProjectConfig: string | undefined;
     }
@@ -20,7 +20,7 @@ export declare namespace runPlugin {
 
 export async function runPlugin({
     pluginInvocation,
-    pathToIr,
+    absolutePathToIr,
     pathToWriteConfigJson,
     absolutePathToProjectConfig,
 }: runPlugin.Args): Promise<void> {
@@ -33,7 +33,10 @@ export async function runPlugin({
         customConfig: pluginInvocation.config,
     };
 
-    const binds = [`${pathToWriteConfigJson}:${DOCKER_PLUGIN_CONFIG_PATH}:ro`, `${pathToIr}:${DOCKER_PATH_TO_IR}:ro`];
+    const binds = [
+        `${pathToWriteConfigJson}:${DOCKER_PLUGIN_CONFIG_PATH}:ro`,
+        `${absolutePathToIr}:${DOCKER_PATH_TO_IR}:ro`,
+    ];
 
     if (pluginInvocation.absolutePathToOutput != null) {
         await rm(pluginInvocation.absolutePathToOutput, { force: true, recursive: true });

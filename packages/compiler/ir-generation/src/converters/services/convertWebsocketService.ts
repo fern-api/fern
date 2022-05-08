@@ -13,11 +13,13 @@ export function convertWebsocketService({
     fernFilepath,
     serviceId,
     imports,
+    nonStandardEncodings,
 }: {
     serviceId: string;
     serviceDefinition: RawSchemas.WebSocketServiceSchema;
     fernFilepath: FernFilepath;
     imports: Record<string, string>;
+    nonStandardEncodings: Set<string>;
 }): WebSocketService {
     return {
         docs: serviceDefinition.docs,
@@ -32,12 +34,17 @@ export function convertWebsocketService({
             origin: convertWebSocketMessageOrigin(message.origin),
             body:
                 message.body != null
-                    ? convertWireMessage({ wireMessage: message.body, fernFilepath, imports })
+                    ? convertWireMessage({ wireMessage: message.body, fernFilepath, imports, nonStandardEncodings })
                     : undefined,
             response:
                 message.response != null
                     ? {
-                          ...convertWireMessage({ wireMessage: message.response, fernFilepath, imports }),
+                          ...convertWireMessage({
+                              wireMessage: message.response,
+                              fernFilepath,
+                              imports,
+                              nonStandardEncodings,
+                          }),
                           behavior:
                               typeof message.response !== "string"
                                   ? convertWebSocketMessageResponseBehavior(message.response.behavior)

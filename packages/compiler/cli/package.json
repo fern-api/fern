@@ -41,6 +41,7 @@
     "@types/jest": "^27.4.1",
     "@types/listr": "^0.14.4",
     "@types/node": "^17.0.25",
+    "@types/tmp": "^0.2.3",
     "@types/yargs": "^17.0.10",
     "depcheck": "^1.4.3",
     "eslint": "^8.12.0",

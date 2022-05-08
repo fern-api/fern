@@ -10,9 +10,16 @@ import { convertToFernFilepath } from "./utils/convertToFernFilepath";
 import { noop } from "./utils/noop";
 import { visit } from "./utils/visit";
 
+export declare namespace IntermediateRepresentationGenerationStage {
+    export interface Success {
+        intermediateRepresentation: IntermediateRepresentation;
+        nonStandardEncodings: Set<string>;
+    }
+}
+
 export const IntermediateRepresentationGenerationStage: CompilerStage<
     Record<RelativeFilePath, RawSchemas.RawFernConfigurationSchema>,
-    IntermediateRepresentation,
+    IntermediateRepresentationGenerationStage.Success,
     void
 > = {
     run: (schemas) => {
@@ -24,6 +31,8 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                 websocket: [],
             },
         };
+
+        const nonStandardEncodings = new Set<string>();
 
         for (const [filepath, schema] of Object.entries(schemas)) {
             const fernFilepath = convertToFernFilepath(filepath);
@@ -78,7 +87,13 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                     if (services.http != null) {
                         for (const [serviceId, serviceDefinition] of Object.entries(services.http)) {
                             intermediateRepresentation.services.http.push(
-                                convertHttpService({ serviceDefinition, serviceId, fernFilepath, imports })
+                                convertHttpService({
+                                    serviceDefinition,
+                                    serviceId,
+                                    fernFilepath,
+                                    imports,
+                                    nonStandardEncodings,
+                                })
                             );
                         }
                     }
@@ -91,6 +106,7 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                     serviceDefinition,
                                     fernFilepath,
                                     imports,
+                                    nonStandardEncodings,
                                 })
                             );
                         }
@@ -101,7 +117,10 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
 
         return {
             didSucceed: true,
-            result: intermediateRepresentation,
+            result: {
+                intermediateRepresentation,
+                nonStandardEncodings,
+            },
         };
     },
 };
