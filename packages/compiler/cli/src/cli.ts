@@ -6,17 +6,17 @@ yargs(hideBin(process.argv))
     .scriptName("fern")
     .strict()
     .command(
-        ["generate", "gen"],
+        ["$0 [workspaces...]", "generate", "gen"],
         "Generate typesafe servers and clients",
         (yargs) =>
-            yargs.positional("workspace", {
+            yargs.positional("workspaces", {
                 array: true,
                 type: "string",
                 description:
                     "If omitted, every workspace specified in the project-level configuration (fern.config.json) will be processed.",
             }),
         (argv) => {
-            compileWorkspaces(argv.workspace ?? []);
+            compileWorkspaces(argv.workspaces ?? []);
         }
     )
     .demandCommand()

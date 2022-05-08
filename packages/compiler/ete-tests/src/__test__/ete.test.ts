@@ -12,7 +12,7 @@ describe("ETE tests", () => {
         const outputPath = path.join(MOCKS_DIR, "posts", "generated");
         await rm(outputPath, { force: true, recursive: true });
 
-        const processPromise = promisifiedExec(`NODE_ENV=development node ../cli/cli generate -W ${MOCKS_DIR}`);
+        const processPromise = promisifiedExec(`NODE_ENV=development node ../cli/cli ${MOCKS_DIR}`);
 
         const process = processPromise.child;
         await processPromise;
