@@ -7,6 +7,7 @@ export declare namespace Compiler {
     export interface SuccessfulResult {
         didSucceed: true;
         intermediateRepresentation: IntermediateRepresentation;
+        nonStandardEncodings: Set<string>;
     }
 
     export interface FailedResult {

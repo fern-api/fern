@@ -1,17 +1,15 @@
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 import { compileWorkspaces } from "./compileWorkspaces";
-import { WorkspaceCliOption } from "./constants";
 
 yargs(hideBin(process.argv))
-    .scriptName("fern-api")
+    .scriptName("fern")
     .strict()
     .command(
         ["generate", "gen"],
         "Generate typesafe servers and clients",
         (yargs) =>
-            yargs.option(WorkspaceCliOption.KEY, {
-                alias: WorkspaceCliOption.ALIASES,
+            yargs.positional("workspace", {
                 array: true,
                 type: "string",
                 description:

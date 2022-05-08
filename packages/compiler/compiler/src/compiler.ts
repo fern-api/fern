@@ -29,6 +29,7 @@ export async function compile(files: readonly FernFile[]): Promise<Compiler.Resu
 
     return {
         didSucceed: true,
-        intermediateRepresentation: intermediateRepresentationResult.result,
+        intermediateRepresentation: intermediateRepresentationResult.result.intermediateRepresentation,
+        nonStandardEncodings: intermediateRepresentationResult.result.nonStandardEncodings,
     };
 }
