@@ -14,7 +14,7 @@ public interface FernPluginConfig {
 
     OutputConfig output();
 
-    @JsonProperty("config")
+    @JsonProperty("customConfig")
     CustomPluginConfig customPluginConfig();
 
     @Value.Immutable
