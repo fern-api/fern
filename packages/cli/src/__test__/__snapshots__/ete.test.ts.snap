@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ETE tests hathora-plugin 1`] = `
+"import {
+    defaultFetcher,
+    Fetcher,
+    joinPaths,
+    Service,
+} from \\"@fern-typescript/service-utils\\";
+import * as model from \\"../../model\\";
+import * as endpoints from \\"./endpoints\\";
+
+export interface Client {
+    deletePost(request: model.PostId): Promise<endpoints.deletePost.Response>;
+}
+
+export class Client implements Client {
+    private baseUrl: string;
+    private fetcher: Fetcher;
+    private token: Service.Init[\\"token\\"];
+
+    constructor(args: Service.Init) {
+        this.fetcher = args.fetcher ?? defaultFetcher;
+        this.baseUrl = joinPaths(args.serverUrl, args.serviceBaseUrl);
+        this.token = args.token;
+    }
+
+    public async deletePost(
+        request: model.PostId
+    ): Promise<endpoints.deletePost.Response> {
+        const response = await this.fetcher({
+            url: joinPaths(this.baseUrl, \\"/delete\\"),
+            method: \\"DELETE\\",
+            headers: {},
+            token: this.token,
+            body: request,
+        });
+
+        if (response.statusCode >= 200 && response.statusCode < 300) {
+            return {
+                ok: true,
+                statusCode: response.statusCode,
+            };
+        } else {
+            return {
+                ok: false,
+                statusCode: response.statusCode,
+                error: response.body as endpoints.deletePost.ErrorBody,
+            };
+        }
+    }
+}
+"
+`;
+
+exports[`ETE tests simple-model 1`] = `
+"/**
+ * A blog post
+ */
+export interface Post {
+    id: string;
+    title: string;
+    content: string;
+}
+"
+`;

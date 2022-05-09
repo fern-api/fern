@@ -1,8 +1,7 @@
 import { loadProjectConfig, ProjectConfig } from "@fern-api/compiler-commons";
 import { lstat } from "fs/promises";
 import glob from "glob-promise";
-import Listr from "listr";
-import { createCompileWorkspaceTask } from "./compileWorkspace";
+import { compileWorkspace } from "./compileWorkspace";
 
 export async function compileWorkspaces(commandLineWorkspaces: readonly string[]): Promise<void> {
     const projectConfig = await loadProjectConfig();
@@ -11,20 +10,15 @@ export async function compileWorkspaces(commandLineWorkspaces: readonly string[]
         projectConfig,
     });
     const uniqueWorkspaceDefinitionPaths = uniq(workspaceDefinitionPaths);
-    const tasks = new Listr(
-        await Promise.all(
-            uniqueWorkspaceDefinitionPaths.map((uniqueWorkspaceDefinitionPath) =>
-                createCompileWorkspaceTask({
-                    pathToWorkspaceDefinition: uniqueWorkspaceDefinitionPath,
-                    absolutePathToProjectConfig: projectConfig?._absolutePath,
-                })
-            )
-        ),
-        {
-            concurrent: true,
-        }
+
+    await Promise.all(
+        uniqueWorkspaceDefinitionPaths.map((uniqueWorkspaceDefinitionPath) =>
+            compileWorkspace({
+                absolutePathToWorkspaceDefinition: uniqueWorkspaceDefinitionPath,
+                absolutePathToProjectConfig: projectConfig?._absolutePath,
+            })
+        )
     );
-    await tasks.run();
 }
 
 async function collectWorkspaceDefinitions({

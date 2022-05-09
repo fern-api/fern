@@ -1,7 +1,7 @@
 import { IntermediateRepresentation } from "@fern-api/api";
 import { compile } from "@fern-api/compiler";
 import { withProject, writeFiles } from "@fern-typescript/commons";
-import { parseFernDirectory } from "fern-api";
+import { parseFernInput } from "fern-api";
 import { rm } from "fs/promises";
 import glob from "glob-promise";
 import { vol } from "memfs";
@@ -29,7 +29,7 @@ export declare namespace runEteTest {
 export async function runEteTest({ directory, generateFiles, outputToDisk = false }: runEteTest.Args): Promise<void> {
     const generatedDir = path.join(directory, "generated");
 
-    const files = await parseFernDirectory(path.join(directory, "src"));
+    const files = await parseFernInput(path.join(directory, "src"));
     const compilerResult = await compile(files);
     if (!compilerResult.didSucceed) {
         throw new Error(JSON.stringify(compilerResult.failure));

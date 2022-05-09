@@ -1451,24 +1451,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/ete-tests@workspace:packages/compiler/ete-tests":
-  version: 0.0.0-use.local
-  resolution: "@fern-api/ete-tests@workspace:packages/compiler/ete-tests"
-  dependencies:
-    "@babel/core": "npm:^7.17.9"
-    "@babel/preset-env": "npm:^7.16.11"
-    "@babel/preset-typescript": "npm:^7.16.7"
-    "@types/jest": "npm:^27.4.1"
-    "@types/node": "npm:^17.0.25"
-    depcheck: "npm:^1.4.3"
-    eslint: "npm:^8.12.0"
-    jest: "npm:^27.5.1"
-    prettier: "npm:^2.6.2"
-    stylelint: "npm:^14.6.1"
-    typescript: "npm:^4.6.3"
-  languageName: unknown
-  linkType: soft
-
 "@fern-api/ir-generation@npm:0.0.54":
   version: 0.0.54
   resolution: "@fern-api/ir-generation@npm:0.0.54"
@@ -2328,16 +2310,6 @@ __metadata:
   version: 7.0.11
   resolution: "@types/json-schema@npm:7.0.11"
   checksum: 8e5c6dd393411418e3d803ab0a09862b4ed47f73e7ed990f3b907dd41cc4d2f2b4f7aed9a39c7fd2acaa80314ac1397a5e2e5e6c25a338f01bbfba708cc70d8e
-  languageName: node
-  linkType: hard
-
-"@types/listr@npm:^0.14.4":
-  version: 0.14.4
-  resolution: "@types/listr@npm:0.14.4"
-  dependencies:
-    "@types/node": "npm:*"
-    rxjs: "npm:^6.5.1"
-  checksum: 6d92b1587395c33dcdc1f086207d2850dedd5c621ae07127270705c798b6a35250bc4d7869e92765f4129ef2da913b123547f62018df6dc4163661832572a355
   languageName: node
   linkType: hard
 
@@ -4702,9 +4674,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fern-api@workspace:*, fern-api@workspace:packages/compiler/cli":
+"fern-api@workspace:*, fern-api@workspace:packages/cli":
   version: 0.0.0-use.local
-  resolution: "fern-api@workspace:packages/compiler/cli"
+  resolution: "fern-api@workspace:packages/cli"
   dependencies:
     "@babel/core": "npm:^7.17.9"
     "@babel/preset-env": "npm:^7.16.11"
@@ -4714,17 +4686,16 @@ __metadata:
     "@fern-api/plugin-runner": "workspace:*"
     "@fern-api/syntax-analysis": "workspace:*"
     "@types/jest": "npm:^27.4.1"
-    "@types/listr": "npm:^0.14.4"
     "@types/node": "npm:^17.0.25"
     "@types/tmp": "npm:^0.2.3"
     "@types/yargs": "npm:^17.0.10"
     chalk: "npm:^4.1.2"
     depcheck: "npm:^1.4.3"
     eslint: "npm:^8.12.0"
+    execa: "npm:^5.1.1"
     glob: "npm:^7.2.0"
     glob-promise: "npm:^4.2.2"
     jest: "npm:^27.5.1"
-    listr: "npm:^0.14.3"
     prettier: "npm:^2.6.2"
     stylelint: "npm:^14.6.1"
     tmp-promise: "npm:^3.0.3"
@@ -8095,7 +8066,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:^6.3.3, rxjs@npm:^6.5.1":
+"rxjs@npm:^6.3.3":
   version: 6.6.7
   resolution: "rxjs@npm:6.6.7"
   dependencies:

@@ -16,3 +16,9 @@ types:
   HttpErrorConfiguration:
     properties:
       statusCode: integer
+
+  endpoints:
+    myEndpoint:
+      request:
+        type: string
+        encoding: hathora
