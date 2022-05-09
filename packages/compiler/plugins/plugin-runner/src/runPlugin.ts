@@ -2,7 +2,7 @@ import { PluginInvocation } from "@fern-api/compiler-commons";
 import { runDocker } from "@fern-api/docker-utils";
 import { rm, writeFile } from "fs/promises";
 import path from "path";
-import { PluginConfig } from "./PluginConfig";
+import { PluginConfig, PluginOutputConfig } from "./PluginConfig";
 
 const DOCKER_FERN_DIRECTORY = "/fern";
 const DOCKER_CODEGEN_OUTPUT_DIRECTORY = path.join(DOCKER_FERN_DIRECTORY, "output");
@@ -41,13 +41,7 @@ export async function runPlugin({
     if (pluginInvocation.absolutePathToOutput != null) {
         await rm(pluginInvocation.absolutePathToOutput, { force: true, recursive: true });
         binds.push(`${pluginInvocation.absolutePathToOutput}:${DOCKER_CODEGEN_OUTPUT_DIRECTORY}`);
-        config.output = {
-            path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
-            pathRelativeToRootOnHost:
-                absolutePathToProjectConfig != null
-                    ? path.relative(absolutePathToProjectConfig, pluginInvocation.absolutePathToOutput)
-                    : null,
-        };
+        config.output = getPluginOutputConfig(absolutePathToProjectConfig, pluginInvocation.absolutePathToOutput);
     }
 
     await writeFile(pathToWriteConfigJson, JSON.stringify(config, undefined, 4));
@@ -57,4 +51,17 @@ export async function runPlugin({
         args: [DOCKER_PLUGIN_CONFIG_PATH],
         binds,
     });
+}
+
+export function getPluginOutputConfig(
+    absolutePathToProjectConfig: string | undefined,
+    absolutePathToOutput: string
+): PluginOutputConfig {
+    return {
+        path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
+        pathRelativeToRootOnHost:
+            absolutePathToProjectConfig != null
+                ? path.relative(path.dirname(absolutePathToProjectConfig), absolutePathToOutput)
+                : null,
+    };
 }
