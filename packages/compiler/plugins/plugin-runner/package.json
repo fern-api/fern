@@ -19,7 +19,6 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/compiler-commons": "workspace:*",
     "@fern-api/docker-utils": "workspace:*"
   },
   "devDependencies": {
