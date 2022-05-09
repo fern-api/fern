@@ -17,14 +17,11 @@ describe("ETE tests", () => {
                 const outputPath = path.join(fixturePath, "generated");
                 await rm(outputPath, { force: true, recursive: true });
 
-                const cliProcess = execa("node", ["./cli", fixturePath], {
+                await execa("node", ["./cli", fixturePath], {
                     env: {
                         NODE_ENV: "development",
                     },
                 });
-                cliProcess.stdout?.pipe(process.stdout);
-                cliProcess.stderr?.pipe(process.stderr);
-                await cliProcess;
 
                 const expectedFilesBuffer = await readFile(path.join(fixturePath, EXPECTED_FILES_TXT));
                 const expectedFiles = expectedFilesBuffer
