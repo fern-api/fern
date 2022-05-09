@@ -4,7 +4,7 @@ import { HelpersSchema } from "./HelpersSchema";
 import { PluginOutputConfigSchema } from "./PluginOutputConfigSchema";
 import { TypescriptPluginConfigSchema } from "./TypescriptPluginConfigSchema";
 
-// IMPORTANT: don't use strictObject so we're forward compat if new keys are added
+// IMPORTANT: don't use strictObject so we're forward-compat if new keys are added
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const validatePluginSchema = <S extends z.ZodType<PluginConfig, any, unknown>>(arg: S): S => {

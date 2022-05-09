@@ -19,9 +19,6 @@ jobs:
           name: lint:eslint
           command: yarn lint:eslint
       - run:
-          name: lint:style
-          command: yarn lint:style
-      - run:
           name: Format
           command: yarn format:check
       - run:
