@@ -1,7 +1,7 @@
 import { runDocker } from "@fern-api/docker-utils";
 import { rm, writeFile } from "fs/promises";
 import path from "path";
-import { PluginConfig, PluginHelpers } from "./PluginConfig";
+import { PluginConfig, PluginHelpers, PluginOutputConfig } from "./PluginConfig";
 
 const DOCKER_FERN_DIRECTORY = "/fern";
 const DOCKER_CODEGEN_OUTPUT_DIRECTORY = path.join(DOCKER_FERN_DIRECTORY, "output");
@@ -45,13 +45,7 @@ export async function runPlugin({
     if (absolutePathToOutput != null) {
         await rm(absolutePathToOutput, { force: true, recursive: true });
         binds.push(`${absolutePathToOutput}:${DOCKER_CODEGEN_OUTPUT_DIRECTORY}`);
-        config.output = {
-            path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
-            pathRelativeToRootOnHost:
-                absolutePathToProjectConfig != null
-                    ? path.relative(absolutePathToProjectConfig, absolutePathToOutput)
-                    : null,
-        };
+        config.output = getPluginOutputConfig(absolutePathToProjectConfig, absolutePathToOutput);
     }
 
     await writeFile(pathToWriteConfigJson, JSON.stringify(config, undefined, 4));
@@ -61,4 +55,17 @@ export async function runPlugin({
         args: [DOCKER_PLUGIN_CONFIG_PATH],
         binds,
     });
+}
+
+export function getPluginOutputConfig(
+    absolutePathToProjectConfig: string | undefined,
+    absolutePathToOutput: string
+): PluginOutputConfig {
+    return {
+        path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
+        pathRelativeToRootOnHost:
+            absolutePathToProjectConfig != null
+                ? path.relative(path.dirname(absolutePathToProjectConfig), absolutePathToOutput)
+                : null,
+    };
 }
