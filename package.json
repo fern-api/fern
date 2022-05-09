@@ -19,7 +19,7 @@
     "lint:monorepo:fix": "mrlint lint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ./shared/.prettierignore ",
     "format:all": "yarn format \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ./shared/.prettierignore \"**\"",
+    "format:check": "yarn format --check",
     "depcheck": "yarn workspaces foreach --verbose --parallel run depcheck",
     "prepare": "husky install",
     "codegen": "fern generate",
