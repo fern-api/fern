@@ -91,7 +91,8 @@ async function loadHelpersAndRunPlugin({
         absolutePathToIr,
         pathToWriteConfigJson: configJson.path,
         pluginHelpers: buildPluginHelpers({ pluginInvocation, nonStandardEncodings }),
-        absolutePathToProjectConfig,
+        absolutePathToProject:
+            absolutePathToProjectConfig != null ? path.dirname(absolutePathToProjectConfig) : undefined,
         customConfig: pluginInvocation.config,
     });
 }

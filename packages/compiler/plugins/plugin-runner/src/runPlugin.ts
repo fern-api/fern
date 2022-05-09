@@ -16,7 +16,7 @@ export declare namespace runPlugin {
 
         absolutePathToIr: string;
         absolutePathToOutput: string | undefined;
-        absolutePathToProjectConfig: string | undefined;
+        absolutePathToProject: string | undefined;
         pathToWriteConfigJson: string;
     }
 }
@@ -26,7 +26,7 @@ export async function runPlugin({
     absolutePathToOutput,
     absolutePathToIr,
     pathToWriteConfigJson,
-    absolutePathToProjectConfig,
+    absolutePathToProject,
     pluginHelpers,
     customConfig,
 }: runPlugin.Args): Promise<void> {
@@ -45,7 +45,7 @@ export async function runPlugin({
     if (absolutePathToOutput != null) {
         await rm(absolutePathToOutput, { force: true, recursive: true });
         binds.push(`${absolutePathToOutput}:${DOCKER_CODEGEN_OUTPUT_DIRECTORY}`);
-        config.output = getPluginOutputConfig(absolutePathToProjectConfig, absolutePathToOutput);
+        config.output = getPluginOutputConfig({ absolutePathToProject, absolutePathToOutput });
     }
 
     await writeFile(pathToWriteConfigJson, JSON.stringify(config, undefined, 4));
@@ -57,15 +57,16 @@ export async function runPlugin({
     });
 }
 
-export function getPluginOutputConfig(
-    absolutePathToProjectConfig: string | undefined,
-    absolutePathToOutput: string
-): PluginOutputConfig {
+export function getPluginOutputConfig({
+    absolutePathToProject,
+    absolutePathToOutput,
+}: {
+    absolutePathToProject: string | undefined;
+    absolutePathToOutput: string;
+}): PluginOutputConfig {
     return {
         path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
         pathRelativeToRootOnHost:
-            absolutePathToProjectConfig != null
-                ? path.relative(path.dirname(absolutePathToProjectConfig), absolutePathToOutput)
-                : null,
+            absolutePathToProject != null ? path.relative(absolutePathToProject, absolutePathToOutput) : null,
     };
 }
