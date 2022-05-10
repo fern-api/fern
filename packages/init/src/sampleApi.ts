@@ -2,9 +2,9 @@ import { RawSchemas } from "@fern-api/syntax-analysis";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
 
-export async function writeSampleApiToDirectory(directory: string): void {
-    await writeFile(`${directory}/${ORDER_API_FILENAME}`, yaml.dump(ORDER_API));
-    await writeFile(`${directory}/${MENU_API_FILENAME}`, yaml.dump(MENU_API));
+export async function writeSampleApiToDirectory(dir: string): void {
+    await writeFile(`${dir}/${ORDER_API_FILENAME}`, yaml.dump(ORDER_API));
+    await writeFile(`${dir}/${MENU_API_FILENAME}`, yaml.dump(MENU_API));
 }
 
 const ORDER_API_FILENAME = "orders.yml";

@@ -1366,7 +1366,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/compiler-commons@workspace:*, @fern-api/compiler-commons@workspace:^, @fern-api/compiler-commons@workspace:packages/compiler/commons":
+"@fern-api/compiler-commons@workspace:*, @fern-api/compiler-commons@workspace:packages/compiler/commons":
   version: 0.0.0-use.local
   resolution: "@fern-api/compiler-commons@workspace:packages/compiler/commons"
   dependencies:
@@ -1458,8 +1458,8 @@ __metadata:
     "@babel/core": "npm:^7.17.9"
     "@babel/preset-env": "npm:^7.16.11"
     "@babel/preset-typescript": "npm:^7.16.7"
-    "@fern-api/compiler-commons": "workspace:^"
-    "@fern-api/syntax-analysis": "workspace:^"
+    "@fern-api/compiler-commons": "workspace:*"
+    "@fern-api/syntax-analysis": "workspace:*"
     "@types/jest": "npm:^27.4.1"
     "@types/js-yaml": "npm:^4.0.5"
     "@types/node": "npm:^17.0.25"
@@ -1598,7 +1598,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/syntax-analysis@workspace:*, @fern-api/syntax-analysis@workspace:^, @fern-api/syntax-analysis@workspace:packages/compiler/syntax-analysis":
+"@fern-api/syntax-analysis@workspace:*, @fern-api/syntax-analysis@workspace:packages/compiler/syntax-analysis":
   version: 0.0.0-use.local
   resolution: "@fern-api/syntax-analysis@workspace:packages/compiler/syntax-analysis"
   dependencies:

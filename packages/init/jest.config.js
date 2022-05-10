@@ -1,3 +1,3 @@
 module.exports = {
-    ...require("../../../shared/jest.config.shared.json"),
+    ...require("../../shared/jest.config.shared.json"),
 };
