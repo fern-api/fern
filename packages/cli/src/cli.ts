@@ -1,3 +1,4 @@
+import { initialize } from "@fern-api/init";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 import { compileWorkspaces } from "./compileWorkspaces";
@@ -19,6 +20,9 @@ yargs(hideBin(process.argv))
             compileWorkspaces(argv.workspaces ?? []);
         }
     )
+    .command(["$0 init"], "Initializes an example Fern API", undefined, () => {
+        initialize();
+    })
     .demandCommand()
     .showHelpOnFail(true)
     .parse();
