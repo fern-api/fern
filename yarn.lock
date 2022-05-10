@@ -1366,7 +1366,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/compiler-commons@workspace:*, @fern-api/compiler-commons@workspace:packages/compiler/commons":
+"@fern-api/compiler-commons@workspace:*, @fern-api/compiler-commons@workspace:^, @fern-api/compiler-commons@workspace:packages/compiler/commons":
   version: 0.0.0-use.local
   resolution: "@fern-api/compiler-commons@workspace:packages/compiler/commons"
   dependencies:
@@ -1445,6 +1445,28 @@ __metadata:
     dockerode: "npm:^3.3.1"
     eslint: "npm:^8.12.0"
     jest: "npm:^27.5.1"
+    prettier: "npm:^2.6.2"
+    stylelint: "npm:^14.6.1"
+    typescript: "npm:^4.6.3"
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/init@workspace:packages/init":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/init@workspace:packages/init"
+  dependencies:
+    "@babel/core": "npm:^7.17.9"
+    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/preset-typescript": "npm:^7.16.7"
+    "@fern-api/compiler-commons": "workspace:^"
+    "@fern-api/syntax-analysis": "workspace:^"
+    "@types/jest": "npm:^27.4.1"
+    "@types/js-yaml": "npm:^4.0.5"
+    "@types/node": "npm:^17.0.25"
+    depcheck: "npm:^1.4.3"
+    eslint: "npm:^8.12.0"
+    jest: "npm:^27.5.1"
+    js-yaml: "npm:^4.1.0"
     prettier: "npm:^2.6.2"
     stylelint: "npm:^14.6.1"
     typescript: "npm:^4.6.3"
@@ -1576,7 +1598,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/syntax-analysis@workspace:*, @fern-api/syntax-analysis@workspace:packages/compiler/syntax-analysis":
+"@fern-api/syntax-analysis@workspace:*, @fern-api/syntax-analysis@workspace:^, @fern-api/syntax-analysis@workspace:packages/compiler/syntax-analysis":
   version: 0.0.0-use.local
   resolution: "@fern-api/syntax-analysis@workspace:packages/compiler/syntax-analysis"
   dependencies:

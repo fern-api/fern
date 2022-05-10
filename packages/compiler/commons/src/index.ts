@@ -1,5 +1,6 @@
-export { loadProjectConfig } from "./config-types/project-config/loadProjectConfig";
+export { loadProjectConfig, PROJECT_CONFIG_FILENAME } from "./config-types/project-config/loadProjectConfig";
 export type { ProjectConfig } from "./config-types/project-config/loadProjectConfig";
+export { ProjectConfigSchema } from "./config-types/project-config/schemas/ProjectConfigSchema";
 export { loadWorkspaceDefinition } from "./config-types/workspace-definition/loadWorkspaceDefinition";
 export type {
     PluginHelper,
