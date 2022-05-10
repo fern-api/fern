@@ -20,11 +20,11 @@ public final class AliasGeneratorTest {
                 .aliasOf(TypeReference.primitive(PrimitiveType.STRING))
                 .build();
         TypeDefinition problemIdTypeDefinition = TypeDefinition.builder()
+                .shape(Type.alias(aliasTypeDefinition))
                 .name(NamedType.builder()
                         .fernFilepath(FernFilepath.valueOf("com/trace/problem"))
                         .name("ProblemId")
                         .build())
-                .shape(Type.alias(aliasTypeDefinition))
                 .build();
         AliasGenerator aliasGenerator = new AliasGenerator(
                 aliasTypeDefinition, PackageType.TYPES, problemIdTypeDefinition.name(),

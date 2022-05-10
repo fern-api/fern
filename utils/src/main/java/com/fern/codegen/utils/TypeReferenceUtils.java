@@ -80,7 +80,7 @@ class TypeReferenceUtils {
         }
 
         @Override
-        public TypeName visitInteger() {
+        public TypeName visitINTEGER() {
             if (primitiveAllowed) {
                 return TypeName.INT;
             }
@@ -88,7 +88,7 @@ class TypeReferenceUtils {
         }
 
         @Override
-        public TypeName visitDouble() {
+        public TypeName visitDOUBLE() {
             if (primitiveAllowed) {
                 return TypeName.DOUBLE;
             }
@@ -96,7 +96,7 @@ class TypeReferenceUtils {
         }
 
         @Override
-        public TypeName visitLong() {
+        public TypeName visitLONG() {
             if (primitiveAllowed) {
                 return TypeName.LONG;
             }
@@ -104,12 +104,12 @@ class TypeReferenceUtils {
         }
 
         @Override
-        public TypeName visitString() {
+        public TypeName visitSTRING() {
             return ClassName.get(String.class);
         }
 
         @Override
-        public TypeName visitBoolean() {
+        public TypeName visitBOOLEAN() {
             if (primitiveAllowed) {
                 return TypeName.BOOLEAN;
             }

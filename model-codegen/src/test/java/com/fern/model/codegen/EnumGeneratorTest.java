@@ -21,11 +21,11 @@ public class EnumGeneratorTest {
                 .addValues(EnumValue.builder().value("FINISHED").build())
                 .build();
         TypeDefinition migrationStatusTypeDef = TypeDefinition.builder()
+                .shape(Type._enum(migrationStatusEnumDef))
                 .name(NamedType.builder()
                         .fernFilepath(FernFilepath.valueOf("com/trace/migration"))
                         .name("MigrationStatus")
                         .build())
-                .shape(Type._enum(migrationStatusEnumDef))
                 .build();
         EnumGenerator enumGenerator = new EnumGenerator(
                 migrationStatusTypeDef.name(), PackageType.TYPES, migrationStatusEnumDef,

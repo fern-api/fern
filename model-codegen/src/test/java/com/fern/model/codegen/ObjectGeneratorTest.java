@@ -23,9 +23,9 @@ public class ObjectGeneratorTest {
     public void test_basic() {
         ObjectTypeDefinition objectTypeDefinition = ObjectTypeDefinition.builder()
                 .addProperties(ObjectProperty.builder()
-                        .key("docs")
                         .valueType(TypeReference.container(
                                 ContainerType.optional(TypeReference.primitive(PrimitiveType.STRING))))
+                        .key("docs")
                         .build())
                 .build();
         ObjectGenerator objectGenerator = new ObjectGenerator(
@@ -46,17 +46,17 @@ public class ObjectGeneratorTest {
     public void test_skipOwnFields() {
         ObjectTypeDefinition withDocsObjectTypeDefinition = ObjectTypeDefinition.builder()
                 .addProperties(ObjectProperty.builder()
-                        .key("docs")
                         .valueType(TypeReference.container(
                                 ContainerType.optional(TypeReference.primitive(PrimitiveType.STRING))))
+                        .key("docs")
                         .build())
                 .build();
         TypeDefinition withDocsTypeDefinition = TypeDefinition.builder()
+                .shape(Type._object(withDocsObjectTypeDefinition))
                 .name(NamedType.builder()
                         .fernFilepath(FernFilepath.valueOf("com/fern"))
                         .name("WithDocs")
                         .build())
-                .shape(Type._object(withDocsObjectTypeDefinition))
                 .build();
         InterfaceGenerator interfaceGenerator = new InterfaceGenerator(
                 withDocsObjectTypeDefinition, withDocsTypeDefinition.name(), TestConstants.GENERATOR_CONTEXT);
@@ -76,17 +76,17 @@ public class ObjectGeneratorTest {
     public void test_lowerCasedClassName() {
         ObjectTypeDefinition objectTypeDefinition = ObjectTypeDefinition.builder()
                 .addProperties(ObjectProperty.builder()
-                        .key("prop")
                         .valueType(TypeReference.container(
                                 ContainerType.optional(TypeReference.primitive(PrimitiveType.STRING))))
+                        .key("prop")
                         .build())
                 .build();
         TypeDefinition typeDefinition = TypeDefinition.builder()
+                .shape(Type._object(objectTypeDefinition))
                 .name(NamedType.builder()
                         .fernFilepath(FernFilepath.valueOf("com/fern"))
                         .name("lowercase")
                         .build())
-                .shape(Type._object(objectTypeDefinition))
                 .build();
         ObjectGenerator objectGenerator = new ObjectGenerator(
                 typeDefinition.name(),
@@ -103,21 +103,21 @@ public class ObjectGeneratorTest {
     public void test_underscoredProperty() {
         ObjectTypeDefinition objectTypeDefinition = ObjectTypeDefinition.builder()
                 .addProperties(ObjectProperty.builder()
-                        .key("_class")
                         .valueType(TypeReference.container(
                                 ContainerType.optional(TypeReference.primitive(PrimitiveType.STRING))))
+                        .key("_class")
                         .build())
                 .addProperties(ObjectProperty.builder()
-                        .key("_returns")
                         .valueType(TypeReference.primitive(PrimitiveType.STRING))
+                        .key("_returns")
                         .build())
                 .build();
         TypeDefinition typeDefinition = TypeDefinition.builder()
+                .shape(Type._object(objectTypeDefinition))
                 .name(NamedType.builder()
                         .fernFilepath(FernFilepath.valueOf("com/fern"))
                         .name("Test")
                         .build())
-                .shape(Type._object(objectTypeDefinition))
                 .build();
         ObjectGenerator objectGenerator = new ObjectGenerator(
                 typeDefinition.name(),

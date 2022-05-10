@@ -19,17 +19,17 @@ public class InterfaceGeneratorTest {
     public void test_basic() {
         ObjectTypeDefinition objectTypeDefinition = ObjectTypeDefinition.builder()
                 .addProperties(ObjectProperty.builder()
-                        .key("docs")
                         .valueType(TypeReference.container(
                                 ContainerType.optional(TypeReference.primitive(PrimitiveType.STRING))))
+                        .key("docs")
                         .build())
                 .build();
         TypeDefinition withDocsTypeDefinition = TypeDefinition.builder()
+                .shape(Type._object(objectTypeDefinition))
                 .name(NamedType.builder()
                         .fernFilepath(FernFilepath.valueOf("com/fern"))
                         .name("WithDocs")
                         .build())
-                .shape(Type._object(objectTypeDefinition))
                 .build();
         InterfaceGenerator interfaceGenerator = new InterfaceGenerator(
                 objectTypeDefinition, withDocsTypeDefinition.name(), TestConstants.GENERATOR_CONTEXT);

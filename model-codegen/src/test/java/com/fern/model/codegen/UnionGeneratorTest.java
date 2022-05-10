@@ -52,11 +52,11 @@ public class UnionGeneratorTest {
                         .build())
                 .build();
         TypeDefinition variableValueTypeDefinition = TypeDefinition.builder()
+                .shape(Type.union(unionTypeDefinition))
                 .name(NamedType.builder()
                         .fernFilepath(FernFilepath.valueOf("com/birch/trace/commons"))
                         .name("VariableValue")
                         .build())
-                .shape(Type.union(unionTypeDefinition))
                 .build();
         GeneratorContext generatorContext = new GeneratorContext(
                 Optional.of(TestConstants.PACKAGE_PREFIX),
@@ -88,11 +88,11 @@ public class UnionGeneratorTest {
                         .build())
                 .build();
         TypeDefinition variableValueTypeDefinition = TypeDefinition.builder()
+                .shape(Type.union(unionTypeDefinition))
                 .name(NamedType.builder()
                         .fernFilepath(FernFilepath.valueOf("com/birch/trace/commons"))
                         .name("VariableValue")
                         .build())
-                .shape(Type.union(unionTypeDefinition))
                 .build();
         GeneratorContext generatorContext = new GeneratorContext(Optional.of(TestConstants.PACKAGE_PREFIX),
                 Collections.singletonMap(variableValueTypeDefinition.name(), variableValueTypeDefinition));

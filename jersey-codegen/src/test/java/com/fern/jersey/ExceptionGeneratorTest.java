@@ -23,8 +23,8 @@ public class ExceptionGeneratorTest {
                                 .name("NotFoundError")
                                 .build())
                         .addProperties(ErrorProperty.builder()
-                                .name("a")
                                 .type(TypeReference.primitive(PrimitiveType.STRING))
+                                .name("a")
                                 .build())
                         .build(),
                 false);
@@ -42,8 +42,8 @@ public class ExceptionGeneratorTest {
                                 .name("NotFoundError")
                                 .build())
                         .addProperties(ErrorProperty.builder()
-                                .name("a")
                                 .type(TypeReference.primitive(PrimitiveType.STRING))
+                                .name("a")
                                 .build())
                         .http(HttpErrorConfiguration.builder().statusCode(500).build())
                         .build(),
