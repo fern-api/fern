@@ -110,6 +110,7 @@ public final class ClientGeneratorCli {
                     return exceptionGenerator.generate();
                 })
                 .collect(Collectors.toList());
+        resultBuilder.addAllClientFiles(generatedExceptions);
         List<GeneratedHttpServiceClient> generatedHttpServiceClients = ir.services().http().stream()
                 .map(httpService -> {
                     HttpServiceClientGenerator httpServiceClientGenerator = new HttpServiceClientGenerator(
@@ -142,6 +143,7 @@ public final class ClientGeneratorCli {
                     return exceptionGenerator.generate();
                 })
                 .collect(Collectors.toList());
+        resultBuilder.addAllClientFiles(generatedExceptions);
         List<GeneratedHttpServiceServer> generatedHttpServiceServers = ir.services().http().stream()
                 .map(httpService -> {
                     HttpServiceServerGenerator httpServiceServerGenerator = new HttpServiceServerGenerator(
