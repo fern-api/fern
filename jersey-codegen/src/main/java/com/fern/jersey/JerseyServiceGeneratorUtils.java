@@ -69,12 +69,14 @@ public final class JerseyServiceGeneratorUtils {
                         .addMember("value", "$S", httpEndpoint.path())
                         .build())
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT);
-        endpointMethodBuilder.addParameter(
-                ParameterSpec.builder(generatorContext.getAuthHeaderFile().className(), "authHeader")
-                        .addAnnotation(AnnotationSpec.builder(HeaderParam.class)
-                                .addMember("value", "$S", AUTHORIZATION_HEADER_NAME)
-                                .build())
-                        .build());
+        if (httpService.auth().isPresent()) {
+            endpointMethodBuilder.addParameter(
+                    ParameterSpec.builder(generatorContext.getAuthHeaderFile().className(), "authHeader")
+                            .addAnnotation(AnnotationSpec.builder(HeaderParam.class)
+                                    .addMember("value", "$S", AUTHORIZATION_HEADER_NAME)
+                                    .build())
+                            .build());
+        }
         httpEndpoint.headers().stream().map(this::getHeaderParameterSpec).forEach(endpointMethodBuilder::addParameter);
         httpEndpoint.parameters().stream().map(this::getPathParameterSpec).forEach(endpointMethodBuilder::addParameter);
         httpEndpoint.queryParameters().stream()
@@ -134,27 +136,27 @@ public final class JerseyServiceGeneratorUtils {
         private static final HttpMethodAnnotationVisitor INSTANCE = new HttpMethodAnnotationVisitor();
 
         @Override
-        public AnnotationSpec visitGet() {
+        public AnnotationSpec visitGET() {
             return AnnotationSpec.builder(GET.class).build();
         }
 
         @Override
-        public AnnotationSpec visitPost() {
+        public AnnotationSpec visitPOST() {
             return AnnotationSpec.builder(POST.class).build();
         }
 
         @Override
-        public AnnotationSpec visitPut() {
+        public AnnotationSpec visitPUT() {
             return AnnotationSpec.builder(PUT.class).build();
         }
 
         @Override
-        public AnnotationSpec visitDelete() {
+        public AnnotationSpec visitDELETE() {
             return AnnotationSpec.builder(DELETE.class).build();
         }
 
         @Override
-        public AnnotationSpec visitPatch() {
+        public AnnotationSpec visitPATCH() {
             return AnnotationSpec.builder(PATCH.class).build();
         }
 
