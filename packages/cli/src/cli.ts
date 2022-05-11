@@ -20,8 +20,12 @@ yargs(hideBin(process.argv))
             compileWorkspaces(argv.workspaces ?? []);
         }
     )
-    .command(["$0 init"], "Initializes an example Fern API", undefined, () => {
-        initialize();
+    .command({
+        command: ["$0 init"],
+        describe: "Initializes an example Fern API",
+        handler: (): void => {
+            initialize();
+        },
     })
     .demandCommand()
     .showHelpOnFail(true)

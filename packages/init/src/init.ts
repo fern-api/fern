@@ -14,17 +14,17 @@ export async function initialize(): Promise<void> {
     await writeApiSubDirectoryIfNotExists();
 }
 
-const API_DIRECTORY = "fern-api";
+const API_DIRECTORY = "api";
 const SRC_DIRECTORY = "src";
 const API_SRC_DIRECTORY = path.join(API_DIRECTORY, SRC_DIRECTORY);
-const API_WORKSPACE_DEFINITION_FILE = path.join(API_SRC_DIRECTORY, WORKSPACE_DEFINITION_FILENAME);
 
 async function writeApiSubDirectoryIfNotExists(): Promise<void> {
-    if (!doesPathExist(API_DIRECTORY)) {
+    const apiSubDirectoryExists = await doesPathExist(API_DIRECTORY);
+    if (!apiSubDirectoryExists) {
         await mkdir(API_DIRECTORY);
         await mkdir(API_SRC_DIRECTORY);
         await writeWorkspaceDefinitionFile(API_DIRECTORY);
-        await writeSampleApiToDirectory(API_WORKSPACE_DEFINITION_FILE);
+        await writeSampleApiToDirectory(API_SRC_DIRECTORY);
     }
 }
 
@@ -35,7 +35,7 @@ const BLOG_POST_API_WORKSPACE_DEFINITION: WorkspaceDefinitionSchema = {
 };
 
 async function writeWorkspaceDefinitionFile(dir: string): Promise<void> {
-    await writeFile(dir, yaml.dump(BLOG_POST_API_WORKSPACE_DEFINITION));
+    await writeFile(path.join(dir, WORKSPACE_DEFINITION_FILENAME), yaml.dump(BLOG_POST_API_WORKSPACE_DEFINITION));
 }
 
 const DEFAULT_PROJECT_CONFIG: ProjectConfigSchema = {
