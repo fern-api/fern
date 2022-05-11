@@ -15,15 +15,21 @@ export declare namespace IntermediateRepresentationGenerationStage {
         intermediateRepresentation: IntermediateRepresentation;
         nonStandardEncodings: CustomWireMessageEncoding[];
     }
+
+    export interface Args {
+        rawFernConfigurationSchemas: Record<RelativeFilePath, RawSchemas.RawFernConfigurationSchema>;
+        workspaceName: string | undefined;
+    }
 }
 
 export const IntermediateRepresentationGenerationStage: CompilerStage<
-    Record<RelativeFilePath, RawSchemas.RawFernConfigurationSchema>,
+    IntermediateRepresentationGenerationStage.Args,
     IntermediateRepresentationGenerationStage.Success,
     void
 > = {
-    run: (schemas) => {
+    run: (args) => {
         const intermediateRepresentation: IntermediateRepresentation = {
+            workspaceName: args.workspaceName,
             types: [],
             errors: [],
             services: {
@@ -34,7 +40,7 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
 
         const nonStandardEncodings: CustomWireMessageEncoding[] = [];
 
-        for (const [filepath, schema] of Object.entries(schemas)) {
+        for (const [filepath, schema] of Object.entries(args.rawFernConfigurationSchemas)) {
             const fernFilepath = convertToFernFilepath(filepath);
 
             const { imports = {} } = schema;
