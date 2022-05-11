@@ -1339,7 +1339,6 @@ __metadata:
     "@babel/preset-typescript": "npm:^7.16.7"
     "@fern-api/compiler-commons": "workspace:*"
     "@types/jest": "npm:^27.4.1"
-    "@types/js-yaml": "npm:^4.0.5"
     "@types/node": "npm:^17.0.25"
     depcheck: "npm:^1.4.3"
     eslint: "npm:^8.12.0"
