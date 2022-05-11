@@ -16,4 +16,5 @@ export { FernWriters } from "./codegen/writers";
 export { getWriterForMultiLineUnionType } from "./codegen/writers/getWriterForMultiLineUnionType";
 export { TypeResolver } from "./type-resolver/TypeResolver";
 export { ResolvedType } from "./type-resolver/types";
+export { validateSchema } from "./validateSchema";
 export { writeFiles } from "./writeFiles";

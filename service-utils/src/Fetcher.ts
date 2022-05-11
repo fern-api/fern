@@ -7,11 +7,14 @@ export declare namespace Fetcher {
         headers?: Record<string, string>;
         token?: string | (() => string);
         queryParameters?: URLSearchParams;
-        body?: unknown;
+        body?: {
+            content: string | Buffer | ArrayBuffer;
+            contentType: string;
+        };
     }
 
     export interface Response {
         statusCode: number;
-        body: unknown;
+        body: Buffer;
     }
 }

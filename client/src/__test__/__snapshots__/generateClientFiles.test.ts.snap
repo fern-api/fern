@@ -154,12 +154,13 @@ export class Client implements Client {
     }
 
     public async get(): Promise<endpoints.get.Response> {
-        const response = await this.fetcher({
+        const encodedResponse = await this.fetcher({
             url: joinPaths(this.baseUrl, \\"/\\"),
             method: \\"GET\\",
             headers: {},
             token: this.token,
         });
+        const response = JSON.parse(encodedResponse.toString());
 
         if (response.statusCode >= 200 && response.statusCode < 300) {
             return {
@@ -249,13 +250,17 @@ export class Client implements Client {
     public async createPost(
         request: endpoints.createPost.RequestBody
     ): Promise<endpoints.createPost.Response> {
-        const response = await this.fetcher({
+        const encodedResponse = await this.fetcher({
             url: joinPaths(this.baseUrl, \\"/\\"),
             method: \\"POST\\",
             headers: {},
             token: this.token,
-            body: request,
+            body: {
+                content: JSON.stringify(request),
+                contentType: \\"application/json\\",
+            },
         });
+        const response = JSON.parse(encodedResponse.toString());
 
         if (response.statusCode >= 200 && response.statusCode < 300) {
             return {
@@ -281,13 +286,14 @@ export class Client implements Client {
         }
         queryParameters.append(\\"otherParam\\", request.otherParam.toString());
 
-        const response = await this.fetcher({
+        const encodedResponse = await this.fetcher({
             url: joinPaths(this.baseUrl, \`/\${request.postId}\`),
             method: \\"GET\\",
             headers: {},
             token: this.token,
             queryParameters,
         });
+        const response = JSON.parse(encodedResponse.toString());
 
         if (response.statusCode >= 200 && response.statusCode < 300) {
             return {
@@ -307,13 +313,17 @@ export class Client implements Client {
     public async getPostV2(
         request: model.PostId
     ): Promise<endpoints.getPostV2.Response> {
-        const response = await this.fetcher({
+        const encodedResponse = await this.fetcher({
             url: joinPaths(this.baseUrl, \\"/get\\"),
             method: \\"GET\\",
             headers: {},
             token: this.token,
-            body: request,
+            body: {
+                content: JSON.stringify(request),
+                contentType: \\"application/json\\",
+            },
         });
+        const response = JSON.parse(encodedResponse.toString());
 
         if (response.statusCode >= 200 && response.statusCode < 300) {
             return {
@@ -672,13 +682,17 @@ export class Client implements Client {
     public async createPost(
         request: endpoints.createPost.RequestBody
     ): Promise<endpoints.createPost.Response> {
-        const response = await this.fetcher({
+        const encodedResponse = await this.fetcher({
             url: joinPaths(this.baseUrl, \\"/\\"),
             method: \\"POST\\",
             headers: {},
             token: this.token,
-            body: request,
+            body: {
+                content: JSON.stringify(request),
+                contentType: \\"application/json\\",
+            },
         });
+        const response = JSON.parse(encodedResponse.toString());
 
         if (response.statusCode >= 200 && response.statusCode < 300) {
             return {
@@ -704,13 +718,14 @@ export class Client implements Client {
         }
         queryParameters.append(\\"otherParam\\", request.otherParam.toString());
 
-        const response = await this.fetcher({
+        const encodedResponse = await this.fetcher({
             url: joinPaths(this.baseUrl, \`/\${request.postId}\`),
             method: \\"GET\\",
             headers: {},
             token: this.token,
             queryParameters,
         });
+        const response = JSON.parse(encodedResponse.toString());
 
         if (response.statusCode >= 200 && response.statusCode < 300) {
             return {
@@ -730,13 +745,17 @@ export class Client implements Client {
     public async getPostV2(
         request: model.PostId
     ): Promise<endpoints.getPostV2.Response> {
-        const response = await this.fetcher({
+        const encodedResponse = await this.fetcher({
             url: joinPaths(this.baseUrl, \\"/get\\"),
             method: \\"GET\\",
             headers: {},
             token: this.token,
-            body: request,
+            body: {
+                content: JSON.stringify(request),
+                contentType: \\"application/json\\",
+            },
         });
+        const response = JSON.parse(encodedResponse.toString());
 
         if (response.statusCode >= 200 && response.statusCode < 300) {
             return {
