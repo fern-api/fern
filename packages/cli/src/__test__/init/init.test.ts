@@ -5,8 +5,8 @@ import path from "path";
 const GENERATED_DIR = path.join(__dirname, "generated");
 const GENERATED_API_DIR = path.join(GENERATED_DIR, "api");
 
-describe("fern generate tests", () => {
-    it("fern inits", async () => {
+describe("fern init tests", () => {
+    it("fern init", async () => {
         await rm(GENERATED_DIR, { force: true, recursive: true });
         await mkdir(GENERATED_DIR);
         const cmd = execa("node", ["../../../../cli", "init"], {

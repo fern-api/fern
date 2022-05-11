@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`fern generate tests fern inits 1`] = `
+exports[`fern init tests fern init 1`] = `
 "name: Blog Post API
 input: src
 plugins: []
 "
 `;
 
-exports[`fern generate tests fern inits 2`] = `
+exports[`fern init tests fern init 2`] = `
 "imports:
   menu: blog.yml
 ids:

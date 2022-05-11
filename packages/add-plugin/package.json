@@ -1,14 +1,11 @@
 {
-  "name": "fern-api",
+  "name": "@fern-api/add-plugin",
   "version": "0.0.0",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "lib"
   ],
-  "bin": {
-    "fern": "./cli"
-  },
   "scripts": {
     "clean": "tsc --build --clean",
     "compile": "tsc --build",
@@ -22,19 +19,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/add-plugin": "workspace:*",
-    "@fern-api/compiler": "workspace:*",
-    "@fern-api/compiler-commons": "workspace:*",
-    "@fern-api/init": "workspace:*",
-    "@fern-api/plugin-runner": "workspace:*",
-    "@fern-api/syntax-analysis": "workspace:*",
-    "chalk": "^4.1.2",
-    "glob": "^7.2.0",
-    "glob-promise": "^4.2.2",
-    "js-yaml": "^4.1.0",
-    "tmp-promise": "^3.0.3",
-    "yargs": "^17.4.1",
-    "zod": "^3.14.3"
+    "@fern-api/compiler-commons": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",
@@ -42,11 +27,8 @@
     "@babel/preset-typescript": "^7.16.7",
     "@types/jest": "^27.4.1",
     "@types/node": "^17.0.25",
-    "@types/tmp": "^0.2.3",
-    "@types/yargs": "^17.0.10",
     "depcheck": "^1.4.3",
     "eslint": "^8.12.0",
-    "execa": "^5.1.1",
     "jest": "^27.5.1",
     "prettier": "^2.6.2",
     "stylelint": "^14.6.1",
