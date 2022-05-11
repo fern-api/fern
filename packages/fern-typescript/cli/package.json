@@ -25,6 +25,7 @@
     "@fern-api/plugin-runner": "workspace:*",
     "@fern-typescript/client": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
+    "@fern-typescript/helper-manager": "workspace:*",
     "@fern-typescript/model": "workspace:*",
     "ts-morph": "^14.0.0",
     "zod": "^3.14.3"

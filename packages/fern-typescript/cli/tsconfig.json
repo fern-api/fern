@@ -7,6 +7,7 @@
     { "path": "../../compiler/plugins/plugin-runner" },
     { "path": "../client" },
     { "path": "../commons" },
+    { "path": "../helpers/helper-manager" },
     { "path": "../model" }
   ]
 }

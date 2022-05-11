@@ -4710,6 +4710,7 @@ __metadata:
     "@fern-api/plugin-runner": "workspace:*"
     "@fern-typescript/client": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
+    "@fern-typescript/helper-manager": "workspace:*"
     "@fern-typescript/model": "workspace:*"
     "@types/jest": "npm:^27.4.1"
     "@types/node": "npm:^17.0.25"
