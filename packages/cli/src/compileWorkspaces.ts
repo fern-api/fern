@@ -1,4 +1,4 @@
-import { loadProjectConfig, ProjectConfig } from "@fern-api/compiler-commons";
+import { loadProjectConfig, ProjectConfig, WORKSPACE_DEFINITION_FILENAME } from "@fern-api/compiler-commons";
 import { lstat } from "fs/promises";
 import glob from "glob-promise";
 import { compileWorkspace } from "./compileWorkspace";
@@ -63,7 +63,7 @@ async function getWorkspaceDefinitionsFromCommandLineArgs(commandLineWorkspaces:
 }
 
 async function findWorkspaceDefinitionsFromGlob(workspaceDefinitionsGlob: string): Promise<string[]> {
-    return glob(`${workspaceDefinitionsGlob}/.fernrc.yml`, {
+    return glob(`${workspaceDefinitionsGlob}/${WORKSPACE_DEFINITION_FILENAME}`, {
         absolute: true,
     });
 }

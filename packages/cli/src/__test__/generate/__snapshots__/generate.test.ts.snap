@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ETE tests hathora-plugin 1`] = `
+exports[`fern generate tests hathora-plugin 1`] = `
 "import {
     defaultFetcher,
     Fetcher,
@@ -53,7 +53,7 @@ export class Client implements Client {
 "
 `;
 
-exports[`ETE tests simple-model 1`] = `
+exports[`fern generate tests simple-model 1`] = `
 "/**
  * A blog post
  */

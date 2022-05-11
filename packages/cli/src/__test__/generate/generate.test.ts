@@ -6,7 +6,7 @@ import path from "path";
 const FIXTURES_DIR = path.join(__dirname, "fixtures");
 const EXPECTED_FILES_TXT = "expectedFiles.txt";
 
-describe("ETE tests", () => {
+describe("fern generate tests", () => {
     const fixtures = readdirSync(FIXTURES_DIR);
 
     for (const fixture of fixtures) {
@@ -16,12 +16,14 @@ describe("ETE tests", () => {
                 const fixturePath = path.join(FIXTURES_DIR, fixture);
                 const outputPath = path.join(fixturePath, "generated");
                 await rm(outputPath, { force: true, recursive: true });
-
-                await execa("node", ["./cli", fixturePath], {
+                const cmd = execa("node", ["./cli", "generate", fixturePath], {
                     env: {
                         NODE_ENV: "development",
                     },
                 });
+                cmd.stdout?.pipe(process.stdout);
+                cmd.stderr?.pipe(process.stderr);
+                await cmd;
 
                 const expectedFilesBuffer = await readFile(path.join(fixturePath, EXPECTED_FILES_TXT));
                 const expectedFiles = expectedFilesBuffer

@@ -9,7 +9,7 @@ export interface ProjectConfig {
     workspaces: string[];
 }
 
-const PROJECT_CONFIG_FILENAME = "fern.config.json";
+export const PROJECT_CONFIG_FILENAME = "fern.config.json";
 
 export async function loadProjectConfig(): Promise<ProjectConfig | undefined> {
     const pathToProjectConfig = await findUp(PROJECT_CONFIG_FILENAME);

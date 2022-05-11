@@ -6,6 +6,7 @@
     { "path": "../compiler/commons" },
     { "path": "../compiler/compiler" },
     { "path": "../compiler/plugins/plugin-runner" },
-    { "path": "../compiler/syntax-analysis" }
+    { "path": "../compiler/syntax-analysis" },
+    { "path": "../init" }
   ]
 }
