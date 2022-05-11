@@ -43,7 +43,8 @@ const DEFAULT_PROJECT_CONFIG: ProjectConfigSchema = {
 };
 
 async function writeProjectConfigIfNotExists(): Promise<void> {
-    if (!doesPathExist(PROJECT_CONFIG_FILENAME)) {
+    const projectConfigExists = await doesPathExist(PROJECT_CONFIG_FILENAME);
+    if (!projectConfigExists) {
         await writeFile(PROJECT_CONFIG_FILENAME, JSON.stringify(DEFAULT_PROJECT_CONFIG, undefined, 4));
     }
 }
