@@ -1667,6 +1667,26 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-typescript/json-encoding-plugin@workspace:packages/fern-typescript/plugins/json-encoding-plugin":
+  version: 0.0.0-use.local
+  resolution: "@fern-typescript/json-encoding-plugin@workspace:packages/fern-typescript/plugins/json-encoding-plugin"
+  dependencies:
+    "@babel/core": "npm:^7.17.9"
+    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/preset-typescript": "npm:^7.16.7"
+    "@types/jest": "npm:^27.4.1"
+    "@types/node": "npm:^17.0.25"
+    "@types/node-fetch": "npm:^2.6.1"
+    depcheck: "npm:^1.4.3"
+    eslint: "npm:^8.12.0"
+    jest: "npm:^27.5.1"
+    node-fetch: "npm:^2.6.7"
+    prettier: "npm:^2.6.2"
+    stylelint: "npm:^14.6.1"
+    typescript: "npm:^4.6.3"
+  languageName: unknown
+  linkType: soft
+
 "@fern-typescript/model@workspace:*, @fern-typescript/model@workspace:packages/fern-typescript/model":
   version: 0.0.0-use.local
   resolution: "@fern-typescript/model@workspace:packages/fern-typescript/model"
@@ -1687,6 +1707,25 @@ __metadata:
     prettier: "npm:^2.6.2"
     stylelint: "npm:^14.6.1"
     ts-morph: "npm:^14.0.0"
+    typescript: "npm:^4.6.3"
+  languageName: unknown
+  linkType: soft
+
+"@fern-typescript/plugin-loader@workspace:packages/fern-typescript/plugin-loader":
+  version: 0.0.0-use.local
+  resolution: "@fern-typescript/plugin-loader@workspace:packages/fern-typescript/plugin-loader"
+  dependencies:
+    "@babel/core": "npm:^7.17.9"
+    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/preset-typescript": "npm:^7.16.7"
+    "@fern-typescript/commons": "workspace:*"
+    "@types/jest": "npm:^27.4.1"
+    "@types/node": "npm:^17.0.25"
+    depcheck: "npm:^1.4.3"
+    eslint: "npm:^8.12.0"
+    jest: "npm:^27.5.1"
+    prettier: "npm:^2.6.2"
+    stylelint: "npm:^14.6.1"
     typescript: "npm:^4.6.3"
   languageName: unknown
   linkType: soft

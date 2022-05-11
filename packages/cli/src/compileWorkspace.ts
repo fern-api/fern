@@ -1,3 +1,4 @@
+import { CustomWireMessageEncoding } from "@fern-api/api";
 import { compile, Compiler } from "@fern-api/compiler";
 import { loadWorkspaceDefinition, PluginInvocation, WorkspaceDefinition } from "@fern-api/compiler-commons";
 import { runPlugin } from "@fern-api/plugin-runner";
@@ -79,7 +80,7 @@ async function loadHelpersAndRunPlugin({
     workspaceTempDir: DirectoryResult;
     absolutePathToIr: string;
     absolutePathToProjectConfig: string | undefined;
-    nonStandardEncodings: Set<string>;
+    nonStandardEncodings: CustomWireMessageEncoding[];
 }): Promise<void> {
     const configJson = await tmp.file({
         tmpdir: workspaceTempDir.path,

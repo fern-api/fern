@@ -4,7 +4,9 @@ import { Fetcher } from "./Fetcher";
 
 export const defaultFetcher: Fetcher = async (args) => {
     const headers = new Headers(args.headers);
-    headers.append("Content-Type", "application/json");
+    if (args.body != null) {
+        headers.append("Content-Type", args.body.contentType);
+    }
     if (args.token != null) {
         const token = typeof args.token === "string" ? args.token : args.token();
         headers.append("Authorization", `Bearer ${token}`);
@@ -18,11 +20,13 @@ export const defaultFetcher: Fetcher = async (args) => {
     const fetchResponse = await fetch(url.toString(), {
         method: args.method,
         headers,
-        body: args.body != null ? JSON.stringify(args.body) : undefined,
+        body: args.body?.content,
     });
+
+    const body = await fetchResponse.buffer();
 
     return {
         statusCode: fetchResponse.status,
-        body: await fetchResponse.json(),
+        body,
     };
 };

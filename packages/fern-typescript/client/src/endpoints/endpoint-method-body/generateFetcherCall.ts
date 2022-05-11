@@ -10,6 +10,8 @@ import {
 import { generateJoinPathsCall } from "../../utils/generateJoinPathsCall";
 import { GeneratedEndpointTypes } from "../generate-endpoint-types/types";
 import {
+    FETCHER_REQUEST_BODY_CONTENT_PROPERTY_NAME,
+    FETCHER_REQUEST_BODY_CONTENT_TYPE_PROPERTY_NAME,
     FETCHER_REQUEST_BODY_PROPERTY_NAME,
     FETCHER_REQUEST_HEADER_PARAMETER_NAME,
     FETCHER_REQUEST_METHOD_PARAMETER_NAME,
@@ -21,6 +23,8 @@ import {
 } from "./constants";
 import { convertPathToTemplateString } from "./convertPathToTemplateString";
 
+const ENCODED_RESPONSE_VARIABLE_NAME = "encodedResponse";
+
 export function generateFetcherCall({
     serviceFile,
     endpoint,
@@ -31,7 +35,7 @@ export function generateFetcherCall({
     endpoint: HttpEndpoint;
     endpointTypes: GeneratedEndpointTypes;
     includeQueryParams: boolean;
-}): StatementStructures {
+}): StatementStructures[] {
     const fetcherArgs: ts.ObjectLiteralElementLike[] = [
         ts.factory.createPropertyAssignment(
             ts.factory.createIdentifier(FETCHER_REQUEST_URL_PARAMETER_NAME),
@@ -77,25 +81,49 @@ export function generateFetcherCall({
     }
 
     if (endpointTypes.requestBody != null) {
+        const requestBodyReference =
+            endpointTypes.requestBody.propertyName != null
+                ? ts.factory.createPropertyAccessExpression(
+                      ts.factory.createIdentifier(ENDPOINT_PARAMETER_NAME),
+                      endpointTypes.requestBody.propertyName
+                  )
+                : ts.factory.createIdentifier(ENDPOINT_PARAMETER_NAME);
+
+        const encodedRequestBody = ts.factory.createCallExpression(
+            ts.factory.createPropertyAccessExpression(
+                ts.factory.createIdentifier("JSON"),
+                ts.factory.createIdentifier("stringify")
+            ),
+            undefined,
+            [requestBodyReference]
+        );
+
         fetcherArgs.push(
             ts.factory.createPropertyAssignment(
                 ts.factory.createIdentifier(FETCHER_REQUEST_BODY_PROPERTY_NAME),
-                endpointTypes.requestBody.propertyName != null
-                    ? ts.factory.createPropertyAccessExpression(
-                          ts.factory.createIdentifier(ENDPOINT_PARAMETER_NAME),
-                          endpointTypes.requestBody.propertyName
-                      )
-                    : ts.factory.createIdentifier(ENDPOINT_PARAMETER_NAME)
+                ts.factory.createObjectLiteralExpression(
+                    [
+                        ts.factory.createPropertyAssignment(
+                            ts.factory.createIdentifier(FETCHER_REQUEST_BODY_CONTENT_PROPERTY_NAME),
+                            encodedRequestBody
+                        ),
+                        ts.factory.createPropertyAssignment(
+                            ts.factory.createIdentifier(FETCHER_REQUEST_BODY_CONTENT_TYPE_PROPERTY_NAME),
+                            ts.factory.createStringLiteral("application/json")
+                        ),
+                    ],
+                    true
+                )
             )
         );
     }
 
-    return {
+    const fetcherCall: StatementStructures = {
         kind: StructureKind.VariableStatement,
         declarationKind: VariableDeclarationKind.Const,
         declarations: [
             {
-                name: RESPONSE_VARIABLE_NAME,
+                name: ENCODED_RESPONSE_VARIABLE_NAME,
                 initializer: getTextOfTsNode(
                     ts.factory.createAwaitExpression(
                         ts.factory.createCallExpression(
@@ -111,4 +139,35 @@ export function generateFetcherCall({
             },
         ],
     };
+
+    const decoderCall: StatementStructures = {
+        kind: StructureKind.VariableStatement,
+        declarationKind: VariableDeclarationKind.Const,
+        declarations: [
+            {
+                name: RESPONSE_VARIABLE_NAME,
+                initializer: getTextOfTsNode(
+                    ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier("JSON"),
+                            ts.factory.createIdentifier("parse")
+                        ),
+                        undefined,
+                        [
+                            ts.factory.createCallExpression(
+                                ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createIdentifier(ENCODED_RESPONSE_VARIABLE_NAME),
+                                    ts.factory.createIdentifier("toString")
+                                ),
+                                undefined,
+                                []
+                            ),
+                        ]
+                    )
+                ),
+            },
+        ],
+    };
+
+    return [fetcherCall, decoderCall];
 }

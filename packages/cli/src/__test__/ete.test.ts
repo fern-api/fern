@@ -4,11 +4,9 @@ import { readFile, rm } from "fs/promises";
 import path from "path";
 
 const FIXTURES_DIR = path.join(__dirname, "fixtures");
-const EXPECTED_FILES_TXT = "expectedFiles.txt";
 
 describe("ETE tests", () => {
     const fixtures = readdirSync(FIXTURES_DIR);
-
     for (const fixture of fixtures) {
         it(
             fixture,
@@ -23,7 +21,7 @@ describe("ETE tests", () => {
                     },
                 });
 
-                const expectedFilesBuffer = await readFile(path.join(fixturePath, EXPECTED_FILES_TXT));
+                const expectedFilesBuffer = await readFile(path.join(fixturePath, "expectedFiles.txt"));
                 const expectedFiles = expectedFilesBuffer
                     .toString()
                     .split("\n")
