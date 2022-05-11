@@ -107,8 +107,6 @@ types:
             f: string
 ```
 
-<br>
-
 ### Objects
 
 _A collection of named properties, each of which has their own Fern type. Below is an example of a `Post` object._
