@@ -59,6 +59,7 @@ const BLOG_POST_API: RawSchemas.RawFernConfigurationSchema = {
                                 title: "string",
                                 author: "Author",
                                 content: "string",
+                                postType: "PostType",
                             },
                         },
                     },
