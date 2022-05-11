@@ -3,6 +3,7 @@
   "compilerOptions": { "composite": true, "outDir": "./lib", "rootDir": "src", "module": "CommonJS" },
   "include": ["./src"],
   "references": [
+    { "path": "../../../api/fern-ir-typescript" },
     { "path": "../../../compiler/plugins/plugin-runner" },
     { "path": "../../commons" },
     { "path": "../built-in/json-encoding-helper" },
