@@ -8,81 +8,60 @@ Define your API in YAML and Fern will generate type-safe clients for Java and Ty
 
 ## Example
 
-The following YAML file defines a Food Delivery API.
+The YAML defines a simple Blog Post API.
 
 ```yaml
 ids:
-    - MenuItemId
-    - name: OrderId
-      type: long
+    - PostId
 
 types:
-    DeliveryMethod:
+    Post:
+        docs: A blog post
+        properties:
+            id: PostId
+            type: PostType
+            title: string
+            author: Author
+            content: string
+
+    PostType:
         enum:
-            - PICKUP
-            - DELIVERY
-    OrderStatus:
+            - LONG
+            - SHORT
+
+    Author:
         union:
-            pickup: PickupOrderStatus
-            delivery: DeliveryOrderStatus
-    PickupOrderStatus:
-        enum:
-            - PREPARING
-            - READY_FOR_PICKUP
-            - PICKED_UP
-    DeliveryOrderStatus:
-        enum:
-            - PREPARING
-            - ON_THE_WAY
-            - DELIVERED
+            anonymous: {}
+            name: string
+
+    CreatePostRequest:
+        properties:
+            title: string
+            author: Author
+            content: string
+
+errors:
+    PostNotFoundError:
+        http:
+            statusCode: 404
+        properties:
+            id: PostId
 
 services:
     http:
-        OrderService:
-            base-path: /order
+        PostsService:
+            base-path: /posts
             endpoints:
-                addItemToCart:
-                    method: POST
-                    path: /add
-                    request:
-                        properties:
-                            menuItemId: MenuItemId
-                            quantity: integer
-                placeOrder:
-                    method: POST
-                    path: /order/new
-                    request:
-                        properties:
-                            deliveryMethod: DeliveryMethod
-                            tip: optional<double>
-                    response: OrderId
+                getPost:
+                    method: GET
+                    path: /{postId}
+                    parameters:
+                        postId: string
+                    request: CreatePostRequest
+                    response: PostId
                     errors:
                         union:
-                            emptyCart: EmptyCartError
-
-    websocket:
-        OrderStatusChannel:
-            messages:
-                getOrderStatus:
-                    origin: client
-                    body: OrderId
-                    response:
-                        properties:
-                            orderStatus: OrderStatus
-                            etaInMinutes: integer
-                        # we're expecting multiple updates over time, not just a single response
-                        behavior: ongoing
-                    errors:
-                        union:
-                            notFound: OrderNotFoundError
-
-errors:
-    OrderNotFoundError:
-        http:
-            statusCode: 404
-    EmptyCartError:
-        http:
-            statusCode: 400
+                            notFound: PostNotFoundError
 ```
 
 ## Contributing
@@ -95,4 +74,4 @@ The team welcomes contributions! To make code changes to one of the Fern repos:
 
 ## License
 
-This tooling is made available under the [Apache 2.0 License] (<https://www.apache.org/licenses/LICENSE-2.0>).
+This tooling is made available under the [MIT License](LICENSE).
