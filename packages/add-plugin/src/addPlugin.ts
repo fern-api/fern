@@ -16,7 +16,7 @@ function addPluginIfNotPresent(
     pluginName: string,
     getDefaultPluginInvocationSchema: () => PluginInvocationSchema
 ): WorkspaceDefinitionSchema {
-    const pluginInstalled = workspaceDefinition.plugins.every((plugin) => plugin.name === pluginName);
+    const pluginInstalled = workspaceDefinition.plugins.some((plugin) => plugin.name === pluginName);
     if (!pluginInstalled) {
         return {
             ...workspaceDefinition,
