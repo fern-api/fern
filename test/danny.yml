@@ -29,7 +29,6 @@ services:
       base-path: /order
       endpoints:
         addItemToCart:
-          docs: Adds a menu item to a cart.
           method: POST
           path: /add
           request:
