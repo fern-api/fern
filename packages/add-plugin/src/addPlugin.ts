@@ -29,7 +29,7 @@ function addPluginIfNotPresent(
 function getJavaPluginConfigSchema(): PluginInvocationSchema {
     return {
         name: JAVA_PLUGIN_NAME,
-        version: "0.0.24",
+        version: "0.0.26",
         output: "generated-java",
         config: {
             packagePrefix: "com",

@@ -57,6 +57,7 @@ services:
               title: string
               author: Author
               content: string
+              postType: PostType
         getPost:
           method: GET
           path: /{postId}
