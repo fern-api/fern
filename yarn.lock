@@ -4624,6 +4624,7 @@ __metadata:
     glob: "npm:^7.2.0"
     glob-promise: "npm:^4.2.2"
     jest: "npm:^27.5.1"
+    js-yaml: "npm:^4.1.0"
     prettier: "npm:^2.6.2"
     stylelint: "npm:^14.6.1"
     tmp-promise: "npm:^3.0.3"
