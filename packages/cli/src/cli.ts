@@ -22,7 +22,7 @@ yargs(hideBin(process.argv))
         }
     )
     .command(
-        ["$0 add [workspaces...] <plugin>"],
+        ["$0 add <plugin> [workspaces...]"],
         "Add a plugin to .fernrc.yml",
         (yargs) =>
             yargs
