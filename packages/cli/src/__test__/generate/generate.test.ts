@@ -6,7 +6,7 @@ import path from "path";
 const FIXTURES_DIR = path.join(__dirname, "fixtures");
 
 describe("fern generate tests", () => {
-    const fixtures = readdirSync(FIXTURES_DIR);
+    const fixtures = readdirSync(FIXTURES_DIR).sort();
     for (const fixture of fixtures) {
         it(
             fixture,
