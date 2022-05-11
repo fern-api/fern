@@ -2,7 +2,7 @@
   "compilerOptions": {
     "module": "CommonJS",
     "composite": true,
-    "outDir": "./lib", 
+    "outDir": "./lib",
     "rootDir": "src",
     "target": "esnext",
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -25,6 +25,6 @@
     "baseUrl": ".",
     "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedParameters": true
   }
 }
