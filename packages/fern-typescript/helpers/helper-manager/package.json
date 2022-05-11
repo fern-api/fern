@@ -19,11 +19,11 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
+    "@fern-api/api": "workspace:*",
     "@fern-api/plugin-runner": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/helper-commons": "workspace:*",
-    "@fern-typescript/json-encoding-helper": "workspace:*",
-    "zod": "^3.14.3"
+    "@fern-typescript/json-encoding-helper": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",

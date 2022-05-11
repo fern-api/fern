@@ -19,7 +19,6 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-typescript/commons": "workspace:*",
     "zod": "^3.14.3"
   },
   "devDependencies": {

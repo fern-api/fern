@@ -1717,7 +1717,6 @@ __metadata:
     "@babel/core": "npm:^7.17.9"
     "@babel/preset-env": "npm:^7.16.11"
     "@babel/preset-typescript": "npm:^7.16.7"
-    "@fern-typescript/commons": "workspace:*"
     "@types/jest": "npm:^27.4.1"
     "@types/node": "npm:^17.0.25"
     depcheck: "npm:^1.4.3"
@@ -1737,6 +1736,7 @@ __metadata:
     "@babel/core": "npm:^7.17.9"
     "@babel/preset-env": "npm:^7.16.11"
     "@babel/preset-typescript": "npm:^7.16.7"
+    "@fern-api/api": "workspace:*"
     "@fern-api/plugin-runner": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/helper-commons": "workspace:*"
@@ -1749,7 +1749,6 @@ __metadata:
     prettier: "npm:^2.6.2"
     stylelint: "npm:^14.6.1"
     typescript: "npm:^4.6.3"
-    zod: "npm:^3.14.3"
   languageName: unknown
   linkType: soft
 
