@@ -69,10 +69,12 @@ const BLOG_POST_API: RawSchemas.RawFernConfigurationSchema = {
                         parameters: {
                             postId: "PostId",
                         },
-                        response: "BlogPost",
-                        errors: {
-                            union: {
-                                notFound: "PostNotFoundError",
+                        response: {
+                            ok: "BlogPost",
+                            errors: {
+                                union: {
+                                    notFound: "PostNotFoundError",
+                                },
                             },
                         },
                     },

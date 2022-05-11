@@ -1,6 +1,11 @@
 import { z } from "zod";
-import { WireMessageSchema } from "./WireMessageSchema";
+import { extendTypeDefinitionSchema } from "./TypeDefinitionSchema";
 
-export const HttpRequestSchema = WireMessageSchema;
+export const HttpRequestSchema = z.union([
+    z.string(),
+    extendTypeDefinitionSchema({
+        encoding: z.optional(z.string()),
+    }),
+]);
 
 export type HttpRequestSchema = z.infer<typeof HttpRequestSchema>;

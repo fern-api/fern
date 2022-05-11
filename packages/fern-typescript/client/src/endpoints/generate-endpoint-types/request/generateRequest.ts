@@ -7,12 +7,12 @@ export function generateRequest({
     requestFile,
     endpoint,
     modelDirectory,
-    requestBodyReference,
+    generateRequestBodyReference,
 }: {
     requestFile: SourceFile;
     endpoint: HttpEndpoint;
     modelDirectory: Directory;
-    requestBodyReference: ts.TypeNode | undefined;
+    generateRequestBodyReference: ((referencedIn: SourceFile) => ts.TypeNode) | undefined;
 }): void {
     const properties: OptionalKind<PropertySignatureStructure>[] = [
         ...endpoint.parameters.map((parameter) => ({
@@ -39,10 +39,10 @@ export function generateRequest({
         })),
     ];
 
-    if (requestBodyReference != null) {
+    if (generateRequestBodyReference != null) {
         properties.push({
             name: REQUEST_BODY_PROPERTY_NAME,
-            type: getTextOfTsNode(requestBodyReference),
+            type: getTextOfTsNode(generateRequestBodyReference(requestFile)),
         });
     }
 

@@ -1,7 +1,8 @@
 import { runDocker } from "@fern-api/docker-utils";
-import { rm, writeFile } from "fs/promises";
+import { writeFile } from "fs/promises";
 import path from "path";
-import { PluginConfig, PluginHelpers, PluginOutputConfig } from "./PluginConfig";
+import { getPluginConfig } from "./getPluginConfig";
+import { PluginHelpers } from "./PluginConfig";
 
 const DOCKER_FERN_DIRECTORY = "/fern";
 const DOCKER_CODEGEN_OUTPUT_DIRECTORY = path.join(DOCKER_FERN_DIRECTORY, "output");
@@ -30,23 +31,22 @@ export async function runPlugin({
     pluginHelpers,
     customConfig,
 }: runPlugin.Args): Promise<void> {
-    const config: PluginConfig = {
-        irFilepath: DOCKER_PATH_TO_IR,
-        output: null,
-        helpers: pluginHelpers,
-        customConfig,
-    };
-
     const binds = [
         `${pathToWriteConfigJson}:${DOCKER_PLUGIN_CONFIG_PATH}:ro`,
         `${absolutePathToIr}:${DOCKER_PATH_TO_IR}:ro`,
     ];
 
     if (absolutePathToOutput != null) {
-        await rm(absolutePathToOutput, { force: true, recursive: true });
         binds.push(`${absolutePathToOutput}:${DOCKER_CODEGEN_OUTPUT_DIRECTORY}`);
-        config.output = getPluginOutputConfig({ absolutePathToProject, absolutePathToOutput });
     }
+
+    const { config, binds: bindsForPlugins } = getPluginConfig({
+        pluginHelpers,
+        absolutePathToOutput,
+        absolutePathToProject,
+        customConfig,
+    });
+    binds.push(...bindsForPlugins);
 
     await writeFile(pathToWriteConfigJson, JSON.stringify(config, undefined, 4));
 
@@ -55,18 +55,4 @@ export async function runPlugin({
         args: [DOCKER_PLUGIN_CONFIG_PATH],
         binds,
     });
-}
-
-export function getPluginOutputConfig({
-    absolutePathToProject,
-    absolutePathToOutput,
-}: {
-    absolutePathToProject: string | undefined;
-    absolutePathToOutput: string;
-}): PluginOutputConfig {
-    return {
-        path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
-        pathRelativeToRootOnHost:
-            absolutePathToProject != null ? path.relative(absolutePathToProject, absolutePathToOutput) : null,
-    };
 }

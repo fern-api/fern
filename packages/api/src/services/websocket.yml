@@ -11,19 +11,24 @@ types:
     extends: commons.WithDocs
     properties:
       origin: WebSocketMessageOrigin
-      body: optional<serviceCommons.WireMessage>
-      response: optional<WebSocketMessageResponse>
-      errors: serviceCommons.ResponseErrors
+      body: optional<WebSocketMessageBody>
+      response: WebSocketMessageResponse
   WebSocketMessageOrigin:
     enum:
       - CLIENT
       - SERVER
-  WebSocketMessageResponse:
-    extends: serviceCommons.WireMessage
+  WebSocketMessageBody:
+    extends: commons.WithDocs
     properties:
-      behavior:
-        docs: Defaults to WebSocketMessageResponseBehavior.ONGOING
-        type: WebSocketMessageResponseBehavior
+      type: types.Type
+      encoding: serviceCommons.Encoding
+  WebSocketMessageResponse:
+    extends: commons.WithDocs
+    properties:
+      behavior: WebSocketMessageResponseBehavior
+      encoding: serviceCommons.Encoding
+      ok: optional<types.Type>
+      errors: serviceCommons.ResponseErrors
   WebSocketMessageResponseBehavior:
     enum:
       - ONGOING

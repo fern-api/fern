@@ -1,16 +1,16 @@
-import { HttpEndpoint, TypeReference } from "@fern-api/api";
+import { ResponseErrors, TypeReference } from "@fern-api/api";
 import { generateNamedTypeReference, getRelativePathAsModuleSpecifierTo } from "@fern-typescript/commons";
 import { generateUnionType } from "@fern-typescript/model";
 import { Directory, SourceFile, ts } from "ts-morph";
 import { ERROR_BODY_TYPE_NAME } from "./constants";
 
 export function generateErrorBodyReference({
-    endpoint,
+    errors,
     errorBodyFile,
     referencedIn,
     errorsDirectory,
 }: {
-    endpoint: HttpEndpoint;
+    errors: ResponseErrors;
     errorBodyFile: SourceFile;
     referencedIn: SourceFile;
     errorsDirectory: Directory;
@@ -18,9 +18,9 @@ export function generateErrorBodyReference({
     generateUnionType({
         file: errorBodyFile,
         typeName: ERROR_BODY_TYPE_NAME,
-        docs: endpoint.errors.docs,
-        discriminant: endpoint.errors.discriminant,
-        types: endpoint.errors.possibleErrors.map((error) => ({
+        docs: errors.docs,
+        discriminant: errors.discriminant,
+        types: errors.possibleErrors.map((error) => ({
             docs: error.docs,
             discriminantValue: error.discriminantValue,
             valueType: TypeReference.named(error.error),

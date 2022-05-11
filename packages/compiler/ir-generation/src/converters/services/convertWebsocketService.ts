@@ -6,8 +6,8 @@ import {
     WebSocketService,
 } from "@fern-api/api";
 import { RawSchemas } from "@fern-api/syntax-analysis";
+import { convertEncoding } from "./convertEncoding";
 import { convertResponseErrors } from "./convertResponseErrors";
-import { convertWireMessage } from "./convertWireMessage";
 
 export function convertWebsocketService({
     serviceDefinition,
@@ -33,26 +33,25 @@ export function convertWebsocketService({
             name: messageName,
             docs: message.docs,
             origin: convertWebSocketMessageOrigin(message.origin),
-            body:
-                message.body != null
-                    ? convertWireMessage({ wireMessage: message.body, fernFilepath, imports, nonStandardEncodings })
-                    : undefined,
-            response:
-                message.response != null
-                    ? {
-                          ...convertWireMessage({
-                              wireMessage: message.response,
-                              fernFilepath,
-                              imports,
-                              nonStandardEncodings,
-                          }),
-                          behavior:
-                              typeof message.response !== "string"
-                                  ? convertWebSocketMessageResponseBehavior(message.response.behavior)
-                                  : WebSocketMessageResponseBehavior.Ongoing,
-                      }
-                    : undefined,
-            errors: convertResponseErrors({ rawResponseErrors: message.errors, fernFilepath, imports }),
+            // TODO write converter
+            body: undefined,
+            response: {
+                docs: typeof message.response !== "string" ? message.response?.docs : undefined,
+                behavior: convertWebSocketMessageResponseBehavior(
+                    typeof message.response !== "string" ? message.response?.behavior : undefined
+                ),
+                encoding: convertEncoding({
+                    rawEncoding: typeof message.response !== "string" ? message.response?.encoding : undefined,
+                    nonStandardEncodings,
+                }),
+                // TODO write converter
+                ok: undefined,
+                errors: convertResponseErrors({
+                    rawResponseErrors: typeof message.response !== "string" ? message.response?.errors : undefined,
+                    fernFilepath,
+                    imports,
+                }),
+            },
         })),
     };
 }

@@ -63,9 +63,10 @@ services:
           path: /{postId}
           parameters:
             postId: PostId
-          response: BlogPost
-          errors:
-            union:
-              notFound: PostNotFoundError
+          response:
+            ok: BlogPost
+            errors:
+              union:
+                notFound: PostNotFoundError
 "
 `;

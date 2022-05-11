@@ -1,5 +1,5 @@
 {
-  "name": "@fern-typescript/json-encoding-plugin",
+  "name": "@fern-typescript/json-encoding-helper",
   "version": "0.0.0",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -10,13 +10,17 @@
     "clean": "tsc --build --clean",
     "compile": "tsc --build",
     "test": "jest --passWithNoTests",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../../.eslintignore",
-    "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../../../.eslintignore --fix",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../../../.eslintignore",
+    "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../../../../.eslintignore --fix",
     "lint:style": "stylelint '**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "stylelint '**/*.scss' --allow-empty-input --max-warnings 0 --fix",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../../../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck"
+  },
+  "dependencies": {
+    "@fern-typescript/helper-commons": "workspace:*",
+    "typescript": "^4.6.3"
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",
@@ -28,7 +32,6 @@
     "eslint": "^8.12.0",
     "jest": "^27.5.1",
     "prettier": "^2.6.2",
-    "stylelint": "^14.6.1",
-    "typescript": "^4.6.3"
+    "stylelint": "^14.6.1"
   }
 }

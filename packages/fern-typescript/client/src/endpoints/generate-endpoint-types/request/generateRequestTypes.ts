@@ -1,8 +1,8 @@
-import { HttpEndpoint } from "@fern-api/api";
+import { HttpEndpoint, HttpRequest } from "@fern-api/api";
 import { getOrCreateSourceFile, TypeResolver } from "@fern-typescript/commons";
 import { Directory, ts } from "ts-morph";
 import { generateWireMessageBodyReference } from "../generateWireMessageBodyReference";
-import { GeneratedEndpointTypes } from "../types";
+import { GeneratedEndpointTypes, LocalEndpointParameterReference } from "../types";
 import { REQUEST_BODY_PROPERTY_NAME, REQUEST_BODY_TYPE_NAME, REQUEST_TYPE_NAME } from "./constants";
 import { generateRequest } from "./generateRequest";
 
@@ -24,6 +24,9 @@ export function generateRequestTypes({
     typeResolver,
 }: generateRequestTypes.Args): generateRequestTypes.Return {
     const numParameters = endpoint.parameters.length + endpoint.queryParameters.length;
+
+    // if there's no request or parameters, then there's no endpoint parameter
+    // and no request body
     if (endpoint.request == null && numParameters === 0) {
         return {
             endpointParameter: undefined,
@@ -31,20 +34,16 @@ export function generateRequestTypes({
         };
     }
 
-    const requestBody =
-        endpoint.request != null
-            ? generateWireMessageBodyReference({
-                  typeName: REQUEST_BODY_TYPE_NAME,
-                  wireMessage: endpoint.request,
-                  endpointDirectory,
-                  modelDirectory,
-                  typeResolver,
-              })
-            : undefined;
-
     // if there's a request body and no parameters, then we just reference
     // RequestBody directly in the endpoint.
-    if (requestBody != null && numParameters === 0) {
+    if (endpoint.request != null && numParameters === 0) {
+        const requestBody = getRequestBody({
+            request: endpoint.request,
+            endpointDirectory,
+            modelDirectory,
+            typeResolver,
+        });
+
         return {
             endpointParameter:
                 requestBody.file != null
@@ -57,30 +56,52 @@ export function generateRequestTypes({
                           generateTypeReference: requestBody.generateTypeReference,
                       },
             requestBody: {
-                isLocal: true,
-                typeName: ts.factory.createIdentifier(REQUEST_BODY_TYPE_NAME),
+                encoding: endpoint.request.encoding,
+                reference: {
+                    isLocal: true,
+                    typeName: ts.factory.createIdentifier(REQUEST_BODY_TYPE_NAME),
+                },
             },
         };
     }
 
-    // Otherwise, we generate a Request type that contains all parameters and
-    // the RequestBody (if it exists)
+    // since there are some parameters, then we need a Request type that includes those parameters
     const requestFile = getOrCreateSourceFile(endpointDirectory, `${REQUEST_TYPE_NAME}.ts`);
+    const endpointParameter: LocalEndpointParameterReference = {
+        isLocal: true,
+        typeName: ts.factory.createIdentifier(REQUEST_TYPE_NAME),
+    };
+
+    // if theres's no request body, then we generate a Request object with all the parameters
+    if (endpoint.request == null) {
+        generateRequest({
+            requestFile,
+            endpoint,
+            modelDirectory,
+            generateRequestBodyReference: undefined,
+        });
+        return { endpointParameter, requestBody: undefined };
+    }
+
+    const requestBody = getRequestBody({
+        request: endpoint.request,
+        endpointDirectory,
+        modelDirectory,
+        typeResolver,
+    });
     generateRequest({
         requestFile,
         endpoint,
         modelDirectory,
-        requestBodyReference: requestBody != null ? requestBody.generateTypeReference(requestFile) : undefined,
+        generateRequestBodyReference: requestBody.generateTypeReference,
     });
 
     return {
-        endpointParameter: {
-            isLocal: true,
-            typeName: ts.factory.createIdentifier(REQUEST_TYPE_NAME),
-        },
-        requestBody:
-            requestBody != null
-                ? requestBody.file != null
+        endpointParameter,
+        requestBody: {
+            encoding: endpoint.request.encoding,
+            reference:
+                requestBody.file != null
                     ? {
                           isLocal: true,
                           typeName: ts.factory.createIdentifier(REQUEST_BODY_TYPE_NAME),
@@ -90,7 +111,28 @@ export function generateRequestTypes({
                           isLocal: false,
                           generateTypeReference: requestBody.generateTypeReference,
                           propertyName: REQUEST_BODY_PROPERTY_NAME,
-                      }
-                : undefined,
+                      },
+        },
     };
+}
+
+function getRequestBody({
+    request,
+    endpointDirectory,
+    modelDirectory,
+    typeResolver,
+}: {
+    request: HttpRequest;
+    endpointDirectory: Directory;
+    modelDirectory: Directory;
+    typeResolver: TypeResolver;
+}) {
+    return generateWireMessageBodyReference({
+        typeName: REQUEST_BODY_TYPE_NAME,
+        type: request.type,
+        docs: request.docs,
+        endpointDirectory,
+        modelDirectory,
+        typeResolver,
+    });
 }

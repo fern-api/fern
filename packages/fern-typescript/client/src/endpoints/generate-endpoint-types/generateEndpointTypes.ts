@@ -35,6 +35,6 @@ export function generateEndpointTypes({
     return {
         methodName: endpoint.endpointId,
         ...generateRequestTypes({ endpoint, endpointDirectory, modelDirectory, typeResolver }),
-        ...generateResponseTypes({ endpoint, endpointDirectory, modelDirectory, errorsDirectory, typeResolver }),
+        response: generateResponseTypes({ endpoint, endpointDirectory, modelDirectory, errorsDirectory, typeResolver }),
     };
 }

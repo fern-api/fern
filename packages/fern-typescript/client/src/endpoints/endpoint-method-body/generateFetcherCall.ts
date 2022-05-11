@@ -1,5 +1,6 @@
 import { HttpEndpoint } from "@fern-api/api";
 import { getTextOfTsNode } from "@fern-typescript/commons";
+import { HelperManager } from "@fern-typescript/helper-manager";
 import { SourceFile, StatementStructures, StructureKind, ts, VariableDeclarationKind } from "ts-morph";
 import {
     BASE_URL_SERVICE_MEMBER,
@@ -25,17 +26,19 @@ import { convertPathToTemplateString } from "./convertPathToTemplateString";
 
 const ENCODED_RESPONSE_VARIABLE_NAME = "encodedResponse";
 
-export function generateFetcherCall({
+export async function generateFetcherCall({
     serviceFile,
     endpoint,
     endpointTypes,
     includeQueryParams,
+    helperManager,
 }: {
     serviceFile: SourceFile;
     endpoint: HttpEndpoint;
     endpointTypes: GeneratedEndpointTypes;
     includeQueryParams: boolean;
-}): StatementStructures[] {
+    helperManager: HelperManager;
+}): Promise<StatementStructures[]> {
     const fetcherArgs: ts.ObjectLiteralElementLike[] = [
         ts.factory.createPropertyAssignment(
             ts.factory.createIdentifier(FETCHER_REQUEST_URL_PARAMETER_NAME),
@@ -82,21 +85,17 @@ export function generateFetcherCall({
 
     if (endpointTypes.requestBody != null) {
         const requestBodyReference =
-            endpointTypes.requestBody.propertyName != null
+            endpointTypes.requestBody.reference.propertyName != null
                 ? ts.factory.createPropertyAccessExpression(
                       ts.factory.createIdentifier(ENDPOINT_PARAMETER_NAME),
-                      endpointTypes.requestBody.propertyName
+                      endpointTypes.requestBody.reference.propertyName
                   )
                 : ts.factory.createIdentifier(ENDPOINT_PARAMETER_NAME);
 
-        const encodedRequestBody = ts.factory.createCallExpression(
-            ts.factory.createPropertyAccessExpression(
-                ts.factory.createIdentifier("JSON"),
-                ts.factory.createIdentifier("stringify")
-            ),
-            undefined,
-            [requestBodyReference]
-        );
+        const encodingHelper = await helperManager.getHandlersForEncoding(endpointTypes.requestBody.encoding);
+        const encodedRequestBody = encodingHelper.generateEncode({
+            referenceToDecoded: requestBodyReference,
+        });
 
         fetcherArgs.push(
             ts.factory.createPropertyAssignment(
@@ -109,7 +108,7 @@ export function generateFetcherCall({
                         ),
                         ts.factory.createPropertyAssignment(
                             ts.factory.createIdentifier(FETCHER_REQUEST_BODY_CONTENT_TYPE_PROPERTY_NAME),
-                            ts.factory.createStringLiteral("application/json")
+                            ts.factory.createStringLiteral(encodingHelper.contentType)
                         ),
                     ],
                     true
@@ -140,31 +139,17 @@ export function generateFetcherCall({
         ],
     };
 
+    const decodingHelper = await helperManager.getHandlersForEncoding(endpointTypes.response.encoding);
+    const decodedResponse = decodingHelper.generateDecode({
+        referenceToEncodedBuffer: ts.factory.createIdentifier(ENCODED_RESPONSE_VARIABLE_NAME),
+    });
     const decoderCall: StatementStructures = {
         kind: StructureKind.VariableStatement,
         declarationKind: VariableDeclarationKind.Const,
         declarations: [
             {
                 name: RESPONSE_VARIABLE_NAME,
-                initializer: getTextOfTsNode(
-                    ts.factory.createCallExpression(
-                        ts.factory.createPropertyAccessExpression(
-                            ts.factory.createIdentifier("JSON"),
-                            ts.factory.createIdentifier("parse")
-                        ),
-                        undefined,
-                        [
-                            ts.factory.createCallExpression(
-                                ts.factory.createPropertyAccessExpression(
-                                    ts.factory.createIdentifier(ENCODED_RESPONSE_VARIABLE_NAME),
-                                    ts.factory.createIdentifier("toString")
-                                ),
-                                undefined,
-                                []
-                            ),
-                        ]
-                    )
-                ),
+                initializer: getTextOfTsNode(decodedResponse),
             },
         ],
     };
