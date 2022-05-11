@@ -1,0 +1,38 @@
+version: 2.1
+orbs:
+  node: circleci/node@5.0.1
+jobs:
+  check:
+    machine:
+      image: ubuntu-2004:current
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn-berry
+      - run:
+          name: lint:eslint
+          command: yarn lint:eslint
+      - run:
+          name: Format
+          command: yarn format:check
+      - run:
+          name: Check dependencies
+          command: yarn depcheck
+      - run:
+          name: Compile
+          command: yarn compile
+      - run:
+          name: Run tests
+          command: yarn test --ci
+      - run:
+          name: Ensure no changes to git-tracked files
+          command: git --no-pager diff
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - check:
+          filters:
+            tags:
+              only: /.*/
