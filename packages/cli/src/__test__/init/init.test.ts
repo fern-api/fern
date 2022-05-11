@@ -1,3 +1,4 @@
+import { PROJECT_CONFIG_FILENAME, WORKSPACE_DEFINITION_FILENAME } from "@fern-api/compiler-commons";
 import execa from "execa";
 import { mkdir, readFile, rm } from "fs/promises";
 import path from "path";
@@ -18,7 +19,8 @@ describe("fern init tests", () => {
         cmd.stdout?.pipe(process.stdout);
         cmd.stderr?.pipe(process.stderr);
         await cmd;
-        await matchAgainstSnapshot(path.join(GENERATED_API_DIR, ".fernrc.yml"));
+        await matchAgainstSnapshot(path.join(GENERATED_DIR, PROJECT_CONFIG_FILENAME));
+        await matchAgainstSnapshot(path.join(GENERATED_API_DIR, WORKSPACE_DEFINITION_FILENAME));
         await matchAgainstSnapshot(path.join(GENERATED_API_DIR, "src", "blog.yml"));
     }, 10_000);
 });

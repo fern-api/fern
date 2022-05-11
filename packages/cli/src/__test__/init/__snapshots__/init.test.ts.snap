@@ -1,13 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`fern init tests fern init 1`] = `
+"{
+    \\"workspaces\\": [
+        \\"**\\"
+    ]
+}"
+`;
+
+exports[`fern init tests fern init 2`] = `
 "name: Blog Post API
 input: src
 plugins: []
 "
 `;
 
-exports[`fern init tests fern init 2`] = `
+exports[`fern init tests fern init 3`] = `
 "imports:
   menu: blog.yml
 ids:
