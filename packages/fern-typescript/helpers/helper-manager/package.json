@@ -1,5 +1,5 @@
 {
-  "name": "@fern-typescript/plugin-loader",
+  "name": "@fern-typescript/helper-manager",
   "version": "0.0.0",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -10,16 +10,19 @@
     "clean": "tsc --build --clean",
     "compile": "tsc --build",
     "test": "jest --passWithNoTests",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
-    "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore --fix",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../../.eslintignore",
+    "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../../../.eslintignore --fix",
     "lint:style": "stylelint '**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "stylelint '**/*.scss' --allow-empty-input --max-warnings 0 --fix",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck"
   },
   "dependencies": {
+    "@fern-api/plugin-runner": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
+    "@fern-typescript/helper-commons": "workspace:*",
+    "@fern-typescript/json-encoding-helper": "workspace:*",
     "zod": "^3.14.3"
   },
   "devDependencies": {

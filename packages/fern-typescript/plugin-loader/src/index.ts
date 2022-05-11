@@ -1,1 +1,0 @@
-export { loadPluginFromDisk } from "./loadPluginFromDisk";

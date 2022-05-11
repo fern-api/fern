@@ -1,9 +1,2 @@
-export type {
-    NpmPluginHelperLocation,
-    PluginConfig,
-    PluginHelper,
-    PluginHelperLocation,
-    PluginHelpers,
-    PluginOutputConfig,
-} from "./PluginConfig";
+export type { PluginConfig, PluginHelper, PluginHelpers, PluginOutputConfig } from "./PluginConfig";
 export { runPlugin } from "./runPlugin";

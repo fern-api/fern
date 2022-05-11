@@ -76,7 +76,7 @@ function generateReturnSuccessResponse({
         ),
     ];
 
-    if (endpointTypes.responseBody != null) {
+    if (endpointTypes.response.successBodyReference != null) {
         properties.push(
             ts.factory.createPropertyAssignment(
                 ts.factory.createIdentifier(RESPONSE_BODY_PROPERTY_NAME),
@@ -85,9 +85,9 @@ function generateReturnSuccessResponse({
                         ts.factory.createIdentifier(RESPONSE_VARIABLE_NAME),
                         ts.factory.createIdentifier(FETCHER_RESPONSE_BODY_PROPERTY_NAME)
                     ),
-                    endpointTypes.responseBody.isLocal
-                        ? getReferenceToEndpointType(endpointTypes.responseBody.typeName)
-                        : endpointTypes.responseBody.generateTypeReference(serviceFile)
+                    endpointTypes.response.successBodyReference.isLocal
+                        ? getReferenceToEndpointType(endpointTypes.response.successBodyReference.typeName)
+                        : endpointTypes.response.successBodyReference.generateTypeReference(serviceFile)
                 )
             )
         );

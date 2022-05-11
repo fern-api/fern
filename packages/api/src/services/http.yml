@@ -21,9 +21,8 @@ types:
       headers: list<HttpHeader>
       parameters: list<PathParameter>
       queryParameters: list<QueryParameter>
-      request: optional<serviceCommons.WireMessage>
-      response: optional<serviceCommons.WireMessage>
-      errors: serviceCommons.ResponseErrors
+      request: optional<HttpRequest>
+      response: HttpResponse
   HttpMethod:
     enum:
       - GET
@@ -46,3 +45,14 @@ types:
     properties:
       key: string
       valueType: types.TypeReference
+  HttpRequest:
+    extends: commons.WithDocs
+    properties:
+      type: types.Type
+      encoding: serviceCommons.Encoding
+  HttpResponse:
+    extends: commons.WithDocs
+    properties:
+      ok: optional<types.Type>
+      encoding: serviceCommons.Encoding
+      errors: serviceCommons.ResponseErrors

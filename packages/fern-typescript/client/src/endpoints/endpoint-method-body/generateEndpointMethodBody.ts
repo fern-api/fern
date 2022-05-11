@@ -1,24 +1,27 @@
 import { HttpEndpoint } from "@fern-api/api";
 import { getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
+import { HelperManager } from "@fern-typescript/helper-manager";
 import { SourceFile, StatementStructures, ts, WriterFunction } from "ts-morph";
 import { GeneratedEndpointTypes } from "../generate-endpoint-types/types";
 import { generateConstructQueryParams } from "./generateConstructQueryParams";
 import { generateFetcherCall } from "./generateFetcherCall";
 import { generateReturnResponse } from "./generateReturnResponse";
 
-export function generateEndpointMethodBody({
+export async function generateEndpointMethodBody({
     endpoint,
     endpointTypes,
     serviceFile,
     getReferenceToEndpointType,
     typeResolver,
+    helperManager,
 }: {
     endpoint: HttpEndpoint;
     endpointTypes: GeneratedEndpointTypes;
     serviceFile: SourceFile;
     getReferenceToEndpointType: (identifier: ts.Identifier) => ts.TypeReferenceNode;
     typeResolver: TypeResolver;
-}): (StatementStructures | WriterFunction | string)[] {
+    helperManager: HelperManager;
+}): Promise<(StatementStructures | WriterFunction | string)[]> {
     const queryParameterStatements = generateConstructQueryParams({ endpoint, typeResolver });
 
     return [
@@ -30,12 +33,13 @@ export function generateEndpointMethodBody({
                 writer.newLine();
             }
         },
-        ...generateFetcherCall({
+        ...(await generateFetcherCall({
             endpoint,
             endpointTypes,
             serviceFile,
             includeQueryParams: queryParameterStatements.length > 0,
-        }),
+            helperManager,
+        })),
         (writer) => {
             writer.newLine();
         },

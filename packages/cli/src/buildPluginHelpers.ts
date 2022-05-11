@@ -23,11 +23,7 @@ export function buildPluginHelpers({ pluginInvocation, nonStandardEncodings }: b
             helpers.encodings[encoding] = {
                 name: helperForEncoding.name,
                 version: helperForEncoding.version,
-                location: {
-                    type: "npm",
-                    packageName: helperForEncoding.name,
-                    version: helperForEncoding.version,
-                },
+                absolutePath: "/TODO",
             };
         });
     }

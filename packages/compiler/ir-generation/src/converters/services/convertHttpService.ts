@@ -10,8 +10,8 @@ import { RawSchemas } from "@fern-api/syntax-analysis";
 import { assertNever } from "../../utils/assertNever";
 import { getDocs } from "../../utils/getDocs";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
-import { convertResponseErrors } from "./convertResponseErrors";
-import { convertWireMessage } from "./convertWireMessage";
+import { convertHttpRequest } from "./convertHttpRequest";
+import { convertHttpResponse } from "./convertHttpResponse";
 
 export function convertHttpService({
     serviceDefinition,
@@ -76,23 +76,19 @@ export function convertHttpService({
                         : [],
                 request:
                     endpoint.request != null
-                        ? convertWireMessage({
-                              wireMessage: endpoint.request,
+                        ? convertHttpRequest({
+                              request: endpoint.request,
                               fernFilepath,
                               imports,
                               nonStandardEncodings,
                           })
                         : undefined,
-                response:
-                    endpoint.response != null
-                        ? convertWireMessage({
-                              wireMessage: endpoint.response,
-                              fernFilepath,
-                              imports,
-                              nonStandardEncodings,
-                          })
-                        : undefined,
-                errors: convertResponseErrors({ rawResponseErrors: endpoint.errors, fernFilepath, imports }),
+                response: convertHttpResponse({
+                    response: endpoint.response,
+                    fernFilepath,
+                    imports,
+                    nonStandardEncodings,
+                }),
             })
         ),
     };

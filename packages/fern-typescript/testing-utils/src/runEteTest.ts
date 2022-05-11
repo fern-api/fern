@@ -35,7 +35,7 @@ export async function runEteTest({ directory, generateFiles, outputToDisk = fals
         throw new Error(JSON.stringify(compilerResult.failure));
     }
 
-    const project = withProject((p) => {
+    const project = await withProject((p) => {
         generateFiles({
             directory: p.createDirectory("/"),
             intermediateRepresentation: compilerResult.intermediateRepresentation,

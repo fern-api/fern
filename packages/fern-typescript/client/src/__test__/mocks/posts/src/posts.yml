@@ -53,15 +53,17 @@ services:
           queryParameters:
             page: optional<integer>
             otherParam: integer
-          response: Post
-          errors:
-            union:
-              notFound: PostNotFoundError
+          response:
+            ok: Post
+            errors:
+              union:
+                notFound: PostNotFoundError
         getPostV2:
           method: GET
           path: /get
           request: commons.PostId
-          response: Post
-          errors:
-            union:
-              notFound: PostNotFoundError
+          response:
+            ok: Post
+            errors:
+              union:
+                notFound: PostNotFoundError

@@ -6,6 +6,7 @@
     { "path": "../../api/fern-ir-typescript" },
     { "path": "../commons" },
     { "path": "../errors" },
+    { "path": "../helpers/helper-manager" },
     { "path": "../model" },
     { "path": "../testing-utils" }
   ]

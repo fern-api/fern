@@ -1,5 +1,5 @@
 {
-  "name": "@fern-typescript/json-encoding-plugin",
+  "name": "@fern-typescript/helper-commons",
   "version": "0.0.0",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -17,6 +17,10 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck"
+  },
+  "dependencies": {
+    "@fern-typescript/commons": "workspace:*",
+    "zod": "^3.14.3"
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",

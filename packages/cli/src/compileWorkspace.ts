@@ -2,7 +2,7 @@ import { CustomWireMessageEncoding } from "@fern-api/api";
 import { compile, Compiler } from "@fern-api/compiler";
 import { loadWorkspaceDefinition, PluginInvocation, WorkspaceDefinition } from "@fern-api/compiler-commons";
 import { runPlugin } from "@fern-api/plugin-runner";
-import { writeFile } from "fs/promises";
+import { rm, writeFile } from "fs/promises";
 import os from "os";
 import path from "path";
 import tmp, { DirectoryResult } from "tmp-promise";
@@ -85,6 +85,10 @@ async function loadHelpersAndRunPlugin({
     const configJson = await tmp.file({
         tmpdir: workspaceTempDir.path,
     });
+
+    if (pluginInvocation.absolutePathToOutput != null) {
+        await rm(pluginInvocation.absolutePathToOutput, { force: true, recursive: true });
+    }
 
     await runPlugin({
         imageName: `${pluginInvocation.name}:${pluginInvocation.version}`,

@@ -1,12 +1,13 @@
 import { HttpEndpoint } from "@fern-api/api";
 import { getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
+import { HelperManager } from "@fern-typescript/helper-manager";
 import { ClassDeclaration, Directory, InterfaceDeclaration, Scope, ts } from "ts-morph";
 import { ENDPOINTS_NAMESPACE_IMPORT, ENDPOINT_PARAMETER_NAME } from "../constants";
 import { generateEndpointMethodBody } from "./endpoint-method-body/generateEndpointMethodBody";
 import { generateEndpointTypes } from "./generate-endpoint-types/generateEndpointTypes";
 import { RESPONSE_TYPE_NAME } from "./generate-endpoint-types/response/constants";
 
-export function addEndpointToService({
+export async function addEndpointToService({
     endpoint,
     serviceInterface,
     serviceClass,
@@ -14,6 +15,7 @@ export function addEndpointToService({
     errorsDirectory,
     endpointsDirectory,
     typeResolver,
+    helperManager,
 }: {
     endpoint: HttpEndpoint;
     serviceInterface: InterfaceDeclaration;
@@ -22,7 +24,8 @@ export function addEndpointToService({
     modelDirectory: Directory;
     errorsDirectory: Directory;
     typeResolver: TypeResolver;
-}): void {
+    helperManager: HelperManager;
+}): Promise<void> {
     const serviceFile = serviceInterface.getSourceFile();
     const serviceDirectory = serviceFile.getDirectory();
 
@@ -79,12 +82,13 @@ export function addEndpointToService({
         isAsync: true,
         parameters,
         returnType,
-        statements: generateEndpointMethodBody({
+        statements: await generateEndpointMethodBody({
             endpoint,
             endpointTypes: generatedEndpointTypes,
             serviceFile,
             getReferenceToEndpointType,
             typeResolver,
+            helperManager,
         }),
     });
 }
