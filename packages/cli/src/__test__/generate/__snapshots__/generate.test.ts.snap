@@ -33,7 +33,10 @@ export class Client implements Client {
             method: \\"DELETE\\",
             headers: {},
             token: this.token,
-            body: JSON.stringify(request),
+            body: {
+                content: JSON.stringify(request),
+                contentType: \\"application/json\\",
+            },
         });
         const response = JSON.parse(encodedResponse.toString());
 
