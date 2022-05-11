@@ -1,14 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`fern init tests fern init 1`] = `
-"name: Blog Post API
-input: src
-plugins: []
-"
-`;
-
-exports[`fern init tests fern init 2`] = `
-"imports:
+imports:
   menu: blog.yml
 ids:
   - PostId
@@ -58,5 +48,3 @@ services:
           errors:
             union:
               notFound: PostNotFoundError
-"
-`;
