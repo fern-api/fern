@@ -34,7 +34,7 @@ public final class HttpServiceServerGenerator extends Generator {
             Map<NamedType, GeneratedInterface> generatedInterfaces,
             List<GeneratedException> generatedExceptions,
             HttpService httpService) {
-        super(generatorContext, PackageType.SERVICES);
+        super(generatorContext, PackageType.SERVER);
         this.httpService = httpService;
         this.generatedServiceClassName =
                 generatorContext.getClassNameUtils().getClassNameForNamedType(httpService.name(), packageType);

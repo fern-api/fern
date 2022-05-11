@@ -53,14 +53,14 @@ public final class ObjectGenerator extends Generator {
         this.extendedInterfaces = extendedInterfaces;
         this.selfInterface = selfInterface;
         this.generatedObjectClassName =
-                generatorContext.getClassNameUtils().getClassNameForNamedType(namedType, PackageType.TYPES);
+                generatorContext.getClassNameUtils().getClassNameForNamedType(namedType, packageType);
         this.generatedObjectImmutablesClassName =
                 generatorContext.getImmutablesUtils().getImmutablesClassName(generatedObjectClassName);
     }
 
     @Override
     public GeneratedObject generate() {
-        TypeSpec.Builder objectTypeSpecBuilder = TypeSpec.interfaceBuilder(namedType.name())
+        TypeSpec.Builder objectTypeSpecBuilder = TypeSpec.interfaceBuilder(generatedObjectClassName)
                 .addModifiers(OBJECT_INTERFACE_MODIFIERS)
                 .addAnnotations(getAnnotations())
                 .addSuperinterfaces(getSuperInterfaces());

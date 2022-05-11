@@ -74,7 +74,7 @@ public final class UnionGenerator extends Generator {
         this.unionTypeDefinition = unionTypeDefinition;
         this.typeDefinitionsByName = generatorContext.getTypeDefinitionsByName();
         this.generatedUnionClassName =
-                generatorContext.getClassNameUtils().getClassNameForNamedType(namedType, PackageType.TYPES);
+                generatorContext.getClassNameUtils().getClassNameForNamedType(namedType, packageType);
         this.generatedUnionImmutablesClassName =
                 generatorContext.getImmutablesUtils().getImmutablesClassName(generatedUnionClassName);
         this.internalValueClassNames = unionTypeDefinition.types().stream()

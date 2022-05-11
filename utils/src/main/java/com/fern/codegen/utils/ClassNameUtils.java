@@ -95,7 +95,11 @@ public final class ClassNameUtils {
                 return "types";
             case INTERFACES:
                 return "interfaces";
-            case SERVICES:
+            case SERVER:
+                return "server";
+            case CLIENT:
+                return "client";
+            case REQUEST_RESPONSES:
                 return "services";
             case ERRORS:
                 return "errors";
@@ -106,7 +110,9 @@ public final class ClassNameUtils {
     public enum PackageType {
         INTERFACES,
         TYPES,
-        SERVICES,
+        SERVER,
+        CLIENT,
+        REQUEST_RESPONSES,
         ERRORS,
     }
 }

@@ -75,8 +75,8 @@ public final class ServiceWireMessageGenerator {
 
         @Override
         public WireMessageGeneratorResult visitEnum(EnumTypeDefinition enumTypeDefinition) {
-            EnumGenerator enumGenerator =
-                    new EnumGenerator(getNamedType(), PackageType.SERVICES, enumTypeDefinition, generatorContext);
+            EnumGenerator enumGenerator = new EnumGenerator(
+                    getNamedType(), PackageType.REQUEST_RESPONSES, enumTypeDefinition, generatorContext);
             GeneratedEnum generatedEnum = enumGenerator.generate();
             return WireMessageGeneratorResult.builder()
                     .typeName(generatedEnum.className())
@@ -93,7 +93,7 @@ public final class ServiceWireMessageGenerator {
                     .collect(Collectors.toList());
             ObjectGenerator objectGenerator = new ObjectGenerator(
                     getNamedType(),
-                    PackageType.SERVICES,
+                    PackageType.REQUEST_RESPONSES,
                     objectTypeDefinition,
                     extendedInterfaces,
                     Optional.empty(),
@@ -107,8 +107,8 @@ public final class ServiceWireMessageGenerator {
 
         @Override
         public WireMessageGeneratorResult visitUnion(UnionTypeDefinition unionTypeDefinition) {
-            UnionGenerator unionGenerator =
-                    new UnionGenerator(getNamedType(), PackageType.SERVICES, unionTypeDefinition, generatorContext);
+            UnionGenerator unionGenerator = new UnionGenerator(
+                    getNamedType(), PackageType.REQUEST_RESPONSES, unionTypeDefinition, generatorContext);
             GeneratedUnion generatedUnion = unionGenerator.generate();
             return WireMessageGeneratorResult.builder()
                     .typeName(generatedUnion.className())

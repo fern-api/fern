@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.codegen.GeneratedErrorDecoder;
+import com.fern.codegen.GeneratedException;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.stateless.generator.ObjectMapperGenerator;
 import com.fern.codegen.utils.ClassNameUtils;
@@ -57,23 +58,32 @@ public final class ServiceErrorDecoderGenerator extends Generator {
 
     private static final String IMMUTABLES_ERROR_ATTRIBUTE_NAME = "error";
 
+    private static final String NESTED_ERROR_CLASSNAME_SUFFIX = "Value";
+
     private final HttpService httpService;
     private final ClassName errorDecoderClassName;
     private final ClassName exceptionRetrieverClassName;
     private final Map<NamedType, ClassName> errorClassNames = new HashMap<>();
     private final Map<HttpEndpoint, ClassName> baseExceptionClassNames = new HashMap<>();
     private final Multimap<NamedType, HttpEndpoint> errorToEndpoints = ArrayListMultimap.create();
+    private final Map<NamedType, GeneratedException> generatedExceptions;
 
-    public ServiceErrorDecoderGenerator(GeneratorContext generatorContext, HttpService httpService) {
-        super(generatorContext, PackageType.SERVICES);
+    public ServiceErrorDecoderGenerator(
+            GeneratorContext generatorContext, HttpService httpService, List<GeneratedException> generatedExceptions) {
+        super(generatorContext, PackageType.CLIENT);
         this.httpService = httpService;
         this.errorDecoderClassName = generatorContext
                 .getClassNameUtils()
                 .getClassName(
                         httpService.name().name() + ERROR_DECODER_CLASSNAME_SUFFIX,
-                        Optional.of(PackageType.SERVICES),
+                        Optional.of(PackageType.CLIENT),
                         Optional.of(httpService.name().fernFilepath()));
         this.exceptionRetrieverClassName = errorDecoderClassName.nestedClass(EXCEPTION_RETRIEVER_CLASSNAME);
+        this.generatedExceptions = generatedExceptions.stream()
+                .collect(Collectors.toMap(
+                        generatedException ->
+                                generatedException.errorDefinition().name(),
+                        Function.identity()));
         httpService.endpoints().forEach(httpEndpoint -> {
             httpEndpoint.errors().possibleErrors().forEach(responseError -> {
                 errorToEndpoints.put(responseError.error(), httpEndpoint);
@@ -89,7 +99,9 @@ public final class ServiceErrorDecoderGenerator extends Generator {
             }
         });
         errorToEndpoints.keys().forEach(namedType -> {
-            ClassName nestedResponseError = errorDecoderClassName.nestedClass(namedType.name());
+            GeneratedException generatedException = this.generatedExceptions.get(namedType);
+            ClassName nestedResponseError = errorDecoderClassName.nestedClass(
+                    generatedException.className().simpleName() + NESTED_ERROR_CLASSNAME_SUFFIX);
             errorClassNames.put(namedType, nestedResponseError);
         });
     }
@@ -165,9 +177,8 @@ public final class ServiceErrorDecoderGenerator extends Generator {
 
     private MethodSpec getDecodeExceptionMethodSpec() {
         TypeVariableName decodeMethodGeneric = TypeVariableName.get("T").withBounds(exceptionRetrieverClassName);
-        return MethodSpec.methodBuilder(DECODE_METHOD_NAME)
+        return MethodSpec.methodBuilder(DECODE_EXCEPTION_METHOD_NAME)
                 .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
-                .addAnnotation(Override.class)
                 .addTypeVariable(decodeMethodGeneric)
                 .returns(exceptionRetrieverClassName)
                 .addParameter(FEIGN_RESPONSE_PARAMETER_TYPE, DECODE_EXCEPTION_RESPONSE_PARAMETER_NAME)
@@ -232,6 +243,8 @@ public final class ServiceErrorDecoderGenerator extends Generator {
 
     private TypeSpec getNestedErrorTypeSpec(NamedType errorNamedType, List<ClassName> endpointBaseExceptions) {
         ClassName nestedErrorClassName = errorClassNames.get(errorNamedType);
+        ClassName errorAttributeClassName =
+                generatedExceptions.get(errorNamedType).className();
         ClassName immutablesClassName =
                 generatorContext.getImmutablesUtils().getImmutablesClassName(nestedErrorClassName);
         return TypeSpec.interfaceBuilder(nestedErrorClassName)
@@ -243,7 +256,7 @@ public final class ServiceErrorDecoderGenerator extends Generator {
                 .addMethod(MethodSpec.methodBuilder(IMMUTABLES_ERROR_ATTRIBUTE_NAME)
                         .addModifiers(Modifier.ABSTRACT, Modifier.PUBLIC)
                         .addAnnotation(JsonValue.class)
-                        .returns(errorClassNames.get(errorNamedType))
+                        .returns(errorAttributeClassName)
                         .build())
                 .addMethod(MethodSpec.methodBuilder(GET_EXCEPTION_METHOD_NAME)
                         .addModifiers(Modifier.DEFAULT, Modifier.PUBLIC)

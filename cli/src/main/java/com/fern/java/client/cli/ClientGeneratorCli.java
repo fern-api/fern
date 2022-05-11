@@ -122,7 +122,7 @@ public final class ClientGeneratorCli {
         for (GeneratedHttpServiceClient generatedHttpServiceClient : generatedHttpServiceClients) {
             resultBuilder.addClientFiles(generatedHttpServiceClient);
             generatedHttpServiceClient.generatedErrorDecoder().ifPresent(resultBuilder::addClientFiles);
-            resultBuilder.addAllClientFiles(generatedHttpServiceClient.generatedWireMessages());
+            resultBuilder.addAllModelFiles(generatedHttpServiceClient.generatedWireMessages());
             serviceClientPresent = true;
         }
         if (serviceClientPresent) {
@@ -143,7 +143,7 @@ public final class ClientGeneratorCli {
                     return exceptionGenerator.generate();
                 })
                 .collect(Collectors.toList());
-        resultBuilder.addAllClientFiles(generatedExceptions);
+        resultBuilder.addAllServerFiles(generatedExceptions);
         List<GeneratedHttpServiceServer> generatedHttpServiceServers = ir.services().http().stream()
                 .map(httpService -> {
                     HttpServiceServerGenerator httpServiceServerGenerator = new HttpServiceServerGenerator(
@@ -154,11 +154,10 @@ public final class ClientGeneratorCli {
         boolean serviceServerPresent = false;
         for (GeneratedHttpServiceServer generatedHttpServiceServer : generatedHttpServiceServers) {
             resultBuilder.addServerFiles(generatedHttpServiceServer);
-            resultBuilder.addAllServerFiles(generatedHttpServiceServer.generatedWireMessages());
             serviceServerPresent = true;
         }
         if (serviceServerPresent) {
-            resultBuilder.addClientFiles(generatorContext.getServerObjectMappersFile());
+            resultBuilder.addServerFiles(generatorContext.getServerObjectMappersFile());
         }
     }
 

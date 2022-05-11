@@ -68,7 +68,7 @@ public final class EnumGenerator extends Generator {
                         .collect(Collectors.toList()))
                 .build();
         this.generatedEnumClassName =
-                generatorContext.getClassNameUtils().getClassNameForNamedType(namedType, PackageType.TYPES);
+                generatorContext.getClassNameUtils().getClassNameForNamedType(namedType, packageType);
         this.valueFieldClassName = generatedEnumClassName.nestedClass(VALUE_TYPE_NAME);
     }
 
