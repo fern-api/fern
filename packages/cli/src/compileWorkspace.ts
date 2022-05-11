@@ -20,7 +20,7 @@ export async function compileWorkspace({
     const workspaceDefinition = await loadWorkspaceDefinition(absolutePathToWorkspaceDefinition);
 
     const files = await parseFernInput(workspaceDefinition.absolutePathToInput);
-    const compileResult = await compile(files);
+    const compileResult = await compile(files, workspaceDefinition.name);
     if (!compileResult.didSucceed) {
         handleCompilerFailure(compileResult.failure);
         return;

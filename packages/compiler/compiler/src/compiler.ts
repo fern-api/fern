@@ -3,7 +3,7 @@ import { IntermediateRepresentationGenerationStage } from "@fern-api/ir-generati
 import { SyntaxAnalysisStage } from "@fern-api/syntax-analysis";
 import { Compiler, CompilerFailureType } from "./types";
 
-export async function compile(files: readonly FernFile[]): Promise<Compiler.Result> {
+export async function compile(files: readonly FernFile[], workspaceName: string | undefined): Promise<Compiler.Result> {
     const syntaxAnalysisResult = await SyntaxAnalysisStage.run(files);
     if (!syntaxAnalysisResult.didSucceed) {
         return {
@@ -15,9 +15,10 @@ export async function compile(files: readonly FernFile[]): Promise<Compiler.Resu
         };
     }
 
-    const intermediateRepresentationResult = await IntermediateRepresentationGenerationStage.run(
-        syntaxAnalysisResult.result.validatedFiles
-    );
+    const intermediateRepresentationResult = await IntermediateRepresentationGenerationStage.run({
+        workspaceName,
+        rawFernConfigurationSchemas: syntaxAnalysisResult.result.validatedFiles,
+    });
     if (!intermediateRepresentationResult.didSucceed) {
         return {
             didSucceed: false,

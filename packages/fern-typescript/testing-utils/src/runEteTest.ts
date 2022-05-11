@@ -30,7 +30,7 @@ export async function runEteTest({ directory, generateFiles, outputToDisk = fals
     const generatedDir = path.join(directory, "generated");
 
     const files = await parseFernInput(path.join(directory, "src"));
-    const compilerResult = await compile(files);
+    const compilerResult = await compile(files, undefined);
     if (!compilerResult.didSucceed) {
         throw new Error(JSON.stringify(compilerResult.failure));
     }
