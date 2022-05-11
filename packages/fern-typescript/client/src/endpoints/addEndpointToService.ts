@@ -43,8 +43,7 @@ export function addEndpointToService({
                     ts.factory.createIdentifier(endpoint.endpointId)
                 ),
                 reference
-            ),
-            undefined
+            )
         );
     };
 

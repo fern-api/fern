@@ -1,4 +1,4 @@
-import { IntermediateRepresentation } from "@fern-api/api";
+import { CustomWireMessageEncoding, IntermediateRepresentation } from "@fern-api/api";
 import { CompilerStage, RelativeFilePath } from "@fern-api/compiler-commons";
 import { RawSchemas } from "@fern-api/syntax-analysis";
 import { convertErrorDefinition } from "./converters/convertErrorDefinition";
@@ -13,7 +13,7 @@ import { visit } from "./utils/visit";
 export declare namespace IntermediateRepresentationGenerationStage {
     export interface Success {
         intermediateRepresentation: IntermediateRepresentation;
-        nonStandardEncodings: Set<string>;
+        nonStandardEncodings: CustomWireMessageEncoding[];
     }
 }
 
@@ -32,7 +32,7 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
             },
         };
 
-        const nonStandardEncodings = new Set<string>();
+        const nonStandardEncodings: CustomWireMessageEncoding[] = [];
 
         for (const [filepath, schema] of Object.entries(schemas)) {
             const fernFilepath = convertToFernFilepath(filepath);

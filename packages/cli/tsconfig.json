@@ -4,6 +4,7 @@
   "include": ["./src"],
   "references": [
     { "path": "../add-plugin" },
+    { "path": "../api/fern-ir-typescript" },
     { "path": "../compiler/commons" },
     { "path": "../compiler/compiler" },
     { "path": "../compiler/plugins/plugin-runner" },

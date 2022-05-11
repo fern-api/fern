@@ -1,4 +1,5 @@
 import {
+    CustomWireMessageEncoding,
     FernFilepath,
     WebSocketMessageOrigin,
     WebSocketMessageResponseBehavior,
@@ -19,7 +20,7 @@ export function convertWebsocketService({
     serviceDefinition: RawSchemas.WebSocketServiceSchema;
     fernFilepath: FernFilepath;
     imports: Record<string, string>;
-    nonStandardEncodings: Set<string>;
+    nonStandardEncodings: CustomWireMessageEncoding[];
 }): WebSocketService {
     return {
         docs: serviceDefinition.docs,

@@ -1,4 +1,11 @@
-import { FernFilepath, HttpAuth, HttpEndpoint, HttpMethod, HttpService } from "@fern-api/api";
+import {
+    CustomWireMessageEncoding,
+    FernFilepath,
+    HttpAuth,
+    HttpEndpoint,
+    HttpMethod,
+    HttpService,
+} from "@fern-api/api";
 import { RawSchemas } from "@fern-api/syntax-analysis";
 import { assertNever } from "../../utils/assertNever";
 import { getDocs } from "../../utils/getDocs";
@@ -17,7 +24,7 @@ export function convertHttpService({
     serviceId: string;
     fernFilepath: FernFilepath;
     imports: Record<string, string>;
-    nonStandardEncodings: Set<string>;
+    nonStandardEncodings: CustomWireMessageEncoding[];
 }): HttpService {
     const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
 

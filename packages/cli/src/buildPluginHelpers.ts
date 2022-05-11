@@ -1,18 +1,24 @@
+import { CustomWireMessageEncoding } from "@fern-api/api";
 import { PluginHelper, PluginInvocation } from "@fern-api/compiler-commons";
 import { PluginHelpers } from "@fern-api/plugin-runner";
 
 export declare namespace buildPluginHelpers {
     export interface Args {
         pluginInvocation: PluginInvocation;
-        nonStandardEncodings: Set<string>;
+        nonStandardEncodings: CustomWireMessageEncoding[];
     }
 }
 
 export function buildPluginHelpers({ pluginInvocation, nonStandardEncodings }: buildPluginHelpers.Args): PluginHelpers {
     const helpers: PluginHelpers = { encodings: {} };
 
-    if (nonStandardEncodings.size > 0) {
-        nonStandardEncodings.forEach((encoding) => {
+    if (nonStandardEncodings.length > 0) {
+        const uniqueNonStandardEncodings = nonStandardEncodings.reduce((unique, { encoding }) => {
+            unique.add(encoding);
+            return unique;
+        }, new Set<string>());
+
+        uniqueNonStandardEncodings.forEach((encoding) => {
             const helperForEncoding = getHelperForEncoding({ encoding, pluginInvocation });
             helpers.encodings[encoding] = {
                 name: helperForEncoding.name,

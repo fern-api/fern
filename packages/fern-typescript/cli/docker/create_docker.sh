@@ -15,7 +15,7 @@ if [[ "$TAG" == "local" ]]; then
 fi
 
 yarn
-yarn workspace fern compile
+yarn compile
 yarn webpack --config "$WEBPACK_CONFIG" --mode "$webpack_mode"
 docker build -f "$DOCKER_DIR/Dockerfile" -t "$DOCKER_NAME" "$DOCKER_DIR"
 

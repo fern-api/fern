@@ -4,11 +4,9 @@ import { readFile, rm } from "fs/promises";
 import path from "path";
 
 const FIXTURES_DIR = path.join(__dirname, "fixtures");
-const EXPECTED_FILES_TXT = "expectedFiles.txt";
 
 describe("fern generate tests", () => {
-    const fixtures = readdirSync(FIXTURES_DIR);
-
+    const fixtures = readdirSync(FIXTURES_DIR).sort();
     for (const fixture of fixtures) {
         it(
             fixture,
@@ -25,7 +23,7 @@ describe("fern generate tests", () => {
                 cmd.stderr?.pipe(process.stderr);
                 await cmd;
 
-                const expectedFilesBuffer = await readFile(path.join(fixturePath, EXPECTED_FILES_TXT));
+                const expectedFilesBuffer = await readFile(path.join(fixturePath, "expectedFiles.txt"));
                 const expectedFiles = expectedFilesBuffer
                     .toString()
                     .split("\n")

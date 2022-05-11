@@ -11,7 +11,14 @@ types:
     extends: commons.WithDocs
     properties:
       type: types.Type
-      encoding: optional<string>
+      encoding: WireMessageEncoding
+  WireMessageEncoding:
+    union:
+      json: {}
+      custom: CustomWireMessageEncoding
+  CustomWireMessageEncoding:
+    properties:
+      encoding: string
   ResponseErrors:
     extends: commons.WithDocs
     properties:

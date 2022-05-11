@@ -30,7 +30,7 @@ export function generateEndpointMethodBody({
                 writer.newLine();
             }
         },
-        generateFetcherCall({
+        ...generateFetcherCall({
             endpoint,
             endpointTypes,
             serviceFile,

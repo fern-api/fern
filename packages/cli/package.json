@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@fern-api/add-plugin": "workspace:*",
+    "@fern-api/api": "workspace:*",
     "@fern-api/compiler": "workspace:*",
     "@fern-api/compiler-commons": "workspace:*",
     "@fern-api/init": "workspace:*",
