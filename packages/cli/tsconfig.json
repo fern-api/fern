@@ -3,9 +3,11 @@
   "compilerOptions": { "composite": true, "outDir": "./lib", "rootDir": "src", "module": "CommonJS" },
   "include": ["./src"],
   "references": [
+    { "path": "../add-plugin" },
     { "path": "../compiler/commons" },
     { "path": "../compiler/compiler" },
     { "path": "../compiler/plugins/plugin-runner" },
-    { "path": "../compiler/syntax-analysis" }
+    { "path": "../compiler/syntax-analysis" },
+    { "path": "../init" }
   ]
 }
