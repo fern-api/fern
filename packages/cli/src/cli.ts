@@ -37,7 +37,6 @@ yargs(hideBin(process.argv))
                     demandOption: true,
                 }),
         (argv) => {
-            console.log(argv);
             addPluginToWorkspaces(argv.workspaces ?? [], argv.plugin);
         }
     )
