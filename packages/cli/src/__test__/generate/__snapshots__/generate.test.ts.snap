@@ -28,13 +28,17 @@ export class Client implements Client {
     public async deletePost(
         request: model.PostId
     ): Promise<endpoints.deletePost.Response> {
-        const response = await this.fetcher({
+        const encodedResponse = await this.fetcher({
             url: joinPaths(this.baseUrl, \\"/delete\\"),
             method: \\"DELETE\\",
             headers: {},
             token: this.token,
-            body: request,
+            body: {
+                content: JSON.stringify(request),
+                contentType: \\"application/json\\",
+            },
         });
+        const response = JSON.parse(encodedResponse.toString());
 
         if (response.statusCode >= 200 && response.statusCode < 300) {
             return {
