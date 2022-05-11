@@ -1,6 +1,5 @@
 import { EnumTypeDefinition } from "@fern-api/api";
 import {
-    addBrandedTypeAlias,
     FernWriters,
     getTextOfTsNode,
     getWriterForMultiLineUnionType,
@@ -26,12 +25,7 @@ export function generateEnumType({
         name: typeName,
         type: getWriterForMultiLineUnionType(
             shape.values.map((value) => ({
-                node: ts.factory.createTypeReferenceNode(
-                    ts.factory.createQualifiedName(
-                        ts.factory.createIdentifier(typeName),
-                        ts.factory.createIdentifier(getKeyForEnum(value))
-                    )
-                ),
+                node: ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(value.value)),
                 docs: value.docs,
             }))
         ),
@@ -64,14 +58,6 @@ export function generateEnumType({
         isExported: true,
         hasDeclareKeyword: true,
     });
-    for (const value of shape.values) {
-        addBrandedTypeAlias({
-            node: moduleDeclaration,
-            typeName: getKeyForEnum(value),
-            docs: undefined,
-            baseType: ts.factory.createStringLiteral(value.value),
-        });
-    }
     moduleDeclaration.addInterface(visitorUtils.generateVisitorInterface(visitorItems));
 }
 
@@ -89,17 +75,7 @@ function createUtils({
     for (const value of shape.values) {
         writer.addProperty({
             key: getKeyForEnum(value),
-            value: getTextOfTsNode(
-                ts.factory.createAsExpression(
-                    ts.factory.createStringLiteral(value.value),
-                    ts.factory.createTypeReferenceNode(
-                        ts.factory.createQualifiedName(
-                            ts.factory.createIdentifier(typeName),
-                            ts.factory.createIdentifier(getKeyForEnum(value))
-                        )
-                    )
-                )
-            ),
+            value: getTextOfTsNode(ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(value.value))),
         });
     }
 

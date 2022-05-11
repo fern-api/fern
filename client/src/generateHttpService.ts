@@ -7,6 +7,7 @@ import {
     getTextOfTsNode,
     TypeResolver,
 } from "@fern-typescript/commons";
+import { HelperManager } from "@fern-typescript/helper-manager";
 import { ClassDeclaration, Directory, Scope, ts } from "ts-morph";
 import {
     BASE_URL_SERVICE_MEMBER,
@@ -26,47 +27,52 @@ const SERVICE_INIT_TYPE = ts.factory.createTypeReferenceNode(
     ts.factory.createQualifiedName(ts.factory.createIdentifier("Service"), ts.factory.createIdentifier("Init"))
 );
 
-export function generateHttpService({
+export async function generateHttpService({
     servicesDirectory,
     modelDirectory,
     errorsDirectory,
     service,
     typeResolver,
+    helperManager,
 }: {
     servicesDirectory: Directory;
     modelDirectory: Directory;
     errorsDirectory: Directory;
     service: HttpService;
     typeResolver: TypeResolver;
-}): void {
+    helperManager: HelperManager;
+}): Promise<void> {
     const serviceDirectory = getOrCreateDirectory(servicesDirectory, service.name.name, {
         exportOptions: {
             type: "namespace",
             namespace: service.name.name,
         },
     });
-    generateService({
+    await generateService({
         service,
         serviceDirectory,
         modelDirectory,
         errorsDirectory,
         typeResolver,
+        helperManager,
     });
 }
 
-function generateService({
+async function generateService({
     service,
     serviceDirectory,
     modelDirectory,
     errorsDirectory,
     typeResolver,
+    helperManager,
 }: {
     service: HttpService;
     serviceDirectory: Directory;
     modelDirectory: Directory;
     errorsDirectory: Directory;
     typeResolver: TypeResolver;
-}) {
+    helperManager: HelperManager;
+}): Promise<void> {
     const serviceFile = getOrCreateSourceFile(serviceDirectory, `${service.name.name}.ts`);
     serviceFile.addImportDeclaration({
         namedImports: ["Fetcher", "defaultFetcher", "Service"],
@@ -122,7 +128,7 @@ function generateService({
     });
 
     for (const endpoint of service.endpoints) {
-        addEndpointToService({
+        await addEndpointToService({
             endpoint,
             serviceInterface,
             serviceClass,
@@ -130,6 +136,7 @@ function generateService({
             errorsDirectory,
             endpointsDirectory,
             typeResolver,
+            helperManager,
         });
     }
 }

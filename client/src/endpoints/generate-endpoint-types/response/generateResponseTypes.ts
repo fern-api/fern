@@ -25,7 +25,7 @@ export declare namespace generateResponseTypes {
         typeResolver: TypeResolver;
     }
 
-    export type Return = Pick<GeneratedEndpointTypes, "responseBody">;
+    export type Return = GeneratedEndpointTypes["response"];
 }
 
 export function generateResponseTypes({
@@ -35,11 +35,12 @@ export function generateResponseTypes({
     errorsDirectory,
     typeResolver,
 }: generateResponseTypes.Args): generateResponseTypes.Return {
-    const responseBody =
-        endpoint.response != null
+    const successResponseBody =
+        endpoint.response.ok != null
             ? generateWireMessageBodyReference({
                   typeName: RESPONSE_BODY_TYPE_NAME,
-                  wireMessage: endpoint.response,
+                  type: endpoint.response.ok,
+                  docs: endpoint.response.docs,
                   endpointDirectory,
                   modelDirectory,
                   typeResolver,
@@ -58,7 +59,8 @@ export function generateResponseTypes({
         name: SUCCESS_RESPONSE_TYPE_NAME,
         isExported: true,
         properties: generateSuccessResponse({
-            responseBodyReference: responseBody != null ? responseBody.generateTypeReference(responseFile) : undefined,
+            successResponseBodyReference:
+                successResponseBody != null ? successResponseBody.generateTypeReference(responseFile) : undefined,
         }),
     });
 
@@ -79,7 +81,7 @@ export function generateResponseTypes({
                 name: ERROR_BODY_PROPERTY_NAME,
                 type: getTextOfTsNode(
                     generateErrorBodyReference({
-                        endpoint,
+                        errors: endpoint.response.errors,
                         errorBodyFile,
                         referencedIn: responseFile,
                         errorsDirectory,
@@ -90,25 +92,26 @@ export function generateResponseTypes({
     });
 
     return {
-        responseBody:
-            responseBody != null
-                ? responseBody.file != null
+        successBodyReference:
+            successResponseBody != null
+                ? successResponseBody.file != null
                     ? {
                           isLocal: true,
                           typeName: ts.factory.createIdentifier(RESPONSE_BODY_TYPE_NAME),
                       }
                     : {
                           isLocal: false,
-                          generateTypeReference: responseBody.generateTypeReference,
+                          generateTypeReference: successResponseBody.generateTypeReference,
                       }
                 : undefined,
+        encoding: endpoint.response.encoding,
     };
 }
 
 function generateSuccessResponse({
-    responseBodyReference,
+    successResponseBodyReference,
 }: {
-    responseBodyReference: ts.TypeNode | undefined;
+    successResponseBodyReference: ts.TypeNode | undefined;
 }): OptionalKind<PropertySignatureStructure>[] {
     const properties: OptionalKind<PropertySignatureStructure>[] = [
         {
@@ -121,10 +124,10 @@ function generateSuccessResponse({
         },
     ];
 
-    if (responseBodyReference) {
+    if (successResponseBodyReference != null) {
         properties.push({
             name: RESPONSE_BODY_PROPERTY_NAME,
-            type: getTextOfTsNode(responseBodyReference),
+            type: getTextOfTsNode(successResponseBodyReference),
         });
     }
 

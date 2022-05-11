@@ -1,8 +1,11 @@
+import { HelperManager } from "@fern-typescript/helper-manager";
 import { itFernETE } from "@fern-typescript/testing-utils";
 import path from "path";
 import { generateClientFiles } from "../generateClientFiles";
 
 const MOCK_APIS_DIR = path.join(__dirname, "mocks");
+
+const MOCK_HELPERS_MANAGERS = new HelperManager({ encodings: {} });
 
 describe("generateClientFiles", () => {
     itFernETE("posts", {
@@ -11,6 +14,7 @@ describe("generateClientFiles", () => {
             generateClientFiles({
                 directory,
                 intermediateRepresentation,
+                helperManager: MOCK_HELPERS_MANAGERS,
             });
         },
     });
@@ -21,6 +25,7 @@ describe("generateClientFiles", () => {
             generateClientFiles({
                 directory,
                 intermediateRepresentation,
+                helperManager: MOCK_HELPERS_MANAGERS,
             });
         },
     });

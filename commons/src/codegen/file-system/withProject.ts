@@ -1,16 +1,17 @@
 import { Directory, Project } from "ts-morph";
 import { exportFromModule } from "./exportFromModule";
 
-export function withProject(create: (project: Project) => void): Project {
+export async function withProject(create: (project: Project) => void | Promise<void>): Promise<Project> {
     const project = new Project({
         useInMemoryFileSystem: true,
     });
-    create(project);
-    finalizeProject(project);
+    await create(project);
+    await finalizeProject(project);
     return project;
 }
 
-function finalizeProject(project: Project): void {
+async function finalizeProject(project: Project): Promise<void> {
+    await project.save();
     for (const directory of project.getDirectories()) {
         finalizeDirectory(directory);
     }

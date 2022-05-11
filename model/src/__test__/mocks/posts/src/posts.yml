@@ -48,7 +48,8 @@ services:
           parameters:
             postId: string
           request: CreatePostRequest
-          response: commons.PostId
-          errors:
-            union:
-              notFound: PostNotFoundError
+          response:
+            ok: commons.PostId
+            errors:
+              union:
+                notFound: PostNotFoundError

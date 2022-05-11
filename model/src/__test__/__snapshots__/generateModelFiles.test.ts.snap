@@ -181,11 +181,11 @@ export interface Post {
     content: string;
 }
 ",
-  "/model/posts/PostType.ts": "export type PostType = PostType.Long | PostType.Short;
+  "/model/posts/PostType.ts": "export type PostType = \\"LONG\\" | \\"SHORT\\";
 
 export const PostType = {
-    Long: \\"LONG\\" as PostType.Long,
-    Short: \\"SHORT\\" as PostType.Short,
+    Long: \\"LONG\\",
+    Short: \\"SHORT\\",
 
     _visit: <Result>(
         value: PostType,
@@ -203,13 +203,6 @@ export const PostType = {
 };
 
 export declare namespace PostType {
-    export type Long = \\"LONG\\" & {
-        __Long: void;
-    };
-    export type Short = \\"SHORT\\" & {
-        __Short: void;
-    };
-
     export interface _Visitor<Result> {
         long: () => Result;
         short: () => Result;
@@ -287,19 +280,14 @@ export interface HttpHeader extends WithDocs {
     valueType: TypeReference;
 }
 ",
-  "/model/services/http/HttpMethod.ts": "export type HttpMethod =
-    | HttpMethod.Get
-    | HttpMethod.Post
-    | HttpMethod.Put
-    | HttpMethod.Patch
-    | HttpMethod.Delete;
+  "/model/services/http/HttpMethod.ts": "export type HttpMethod = \\"GET\\" | \\"POST\\" | \\"PUT\\" | \\"PATCH\\" | \\"DELETE\\";
 
 export const HttpMethod = {
-    Get: \\"GET\\" as HttpMethod.Get,
-    Post: \\"POST\\" as HttpMethod.Post,
-    Put: \\"PUT\\" as HttpMethod.Put,
-    Patch: \\"PATCH\\" as HttpMethod.Patch,
-    Delete: \\"DELETE\\" as HttpMethod.Delete,
+    Get: \\"GET\\",
+    Post: \\"POST\\",
+    Put: \\"PUT\\",
+    Patch: \\"PATCH\\",
+    Delete: \\"DELETE\\",
 
     _visit: <Result>(
         value: HttpMethod,
@@ -323,22 +311,6 @@ export const HttpMethod = {
 };
 
 export declare namespace HttpMethod {
-    export type Get = \\"GET\\" & {
-        __Get: void;
-    };
-    export type Post = \\"POST\\" & {
-        __Post: void;
-    };
-    export type Put = \\"PUT\\" & {
-        __Put: void;
-    };
-    export type Patch = \\"PATCH\\" & {
-        __Patch: void;
-    };
-    export type Delete = \\"DELETE\\" & {
-        __Delete: void;
-    };
-
     export interface _Visitor<Result> {
         get: () => Result;
         post: () => Result;
@@ -398,13 +370,11 @@ export interface WebSocketMessage extends WithDocs {
     errors: ResponseErrors;
 }
 ",
-  "/model/services/websocket/WebSocketMessageOrigin.ts": "export type WebSocketMessageOrigin =
-    | WebSocketMessageOrigin.Client
-    | WebSocketMessageOrigin.Server;
+  "/model/services/websocket/WebSocketMessageOrigin.ts": "export type WebSocketMessageOrigin = \\"CLIENT\\" | \\"SERVER\\";
 
 export const WebSocketMessageOrigin = {
-    Client: \\"CLIENT\\" as WebSocketMessageOrigin.Client,
-    Server: \\"SERVER\\" as WebSocketMessageOrigin.Server,
+    Client: \\"CLIENT\\",
+    Server: \\"SERVER\\",
 
     _visit: <Result>(
         value: WebSocketMessageOrigin,
@@ -422,13 +392,6 @@ export const WebSocketMessageOrigin = {
 };
 
 export declare namespace WebSocketMessageOrigin {
-    export type Client = \\"CLIENT\\" & {
-        __Client: void;
-    };
-    export type Server = \\"SERVER\\" & {
-        __Server: void;
-    };
-
     export interface _Visitor<Result> {
         client: () => Result;
         server: () => Result;
@@ -446,14 +409,11 @@ export interface WebSocketMessageResponse extends WireMessage {
     type: Type;
 }
 ",
-  "/model/services/websocket/WebSocketMessageResponseBehavior.ts": "export type WebSocketMessageResponseBehavior =
-    | WebSocketMessageResponseBehavior.Ongoing
-    | WebSocketMessageResponseBehavior.RequestResponse;
+  "/model/services/websocket/WebSocketMessageResponseBehavior.ts": "export type WebSocketMessageResponseBehavior = \\"ONGOING\\" | \\"REQUEST_RESPONSE\\";
 
 export const WebSocketMessageResponseBehavior = {
-    Ongoing: \\"ONGOING\\" as WebSocketMessageResponseBehavior.Ongoing,
-    RequestResponse:
-        \\"REQUEST_RESPONSE\\" as WebSocketMessageResponseBehavior.RequestResponse,
+    Ongoing: \\"ONGOING\\",
+    RequestResponse: \\"REQUEST_RESPONSE\\",
 
     _visit: <Result>(
         value: WebSocketMessageResponseBehavior,
@@ -471,13 +431,6 @@ export const WebSocketMessageResponseBehavior = {
 };
 
 export declare namespace WebSocketMessageResponseBehavior {
-    export type Ongoing = \\"ONGOING\\" & {
-        __Ongoing: void;
-    };
-    export type RequestResponse = \\"REQUEST_RESPONSE\\" & {
-        __RequestResponse: void;
-    };
-
     export interface _Visitor<Result> {
         ongoing: () => Result;
         requestResponse: () => Result;
@@ -636,20 +589,20 @@ export interface ObjectTypeDefinition {
 }
 ",
   "/model/types/PrimitiveType.ts": "export type PrimitiveType =
-    | PrimitiveType.Integer
-    | PrimitiveType.Double
-    | PrimitiveType.String
-    | PrimitiveType.Boolean
+    | \\"INTEGER\\"
+    | \\"DOUBLE\\"
+    | \\"STRING\\"
+    | \\"BOOLEAN\\"
     /**
      * Within the range -2^53 to 2^53 */
-    | PrimitiveType.Long;
+    | \\"LONG\\";
 
 export const PrimitiveType = {
-    Integer: \\"INTEGER\\" as PrimitiveType.Integer,
-    Double: \\"DOUBLE\\" as PrimitiveType.Double,
-    String: \\"STRING\\" as PrimitiveType.String,
-    Boolean: \\"BOOLEAN\\" as PrimitiveType.Boolean,
-    Long: \\"LONG\\" as PrimitiveType.Long,
+    Integer: \\"INTEGER\\",
+    Double: \\"DOUBLE\\",
+    String: \\"STRING\\",
+    Boolean: \\"BOOLEAN\\",
+    Long: \\"LONG\\",
 
     _visit: <Result>(
         value: PrimitiveType,
@@ -673,22 +626,6 @@ export const PrimitiveType = {
 };
 
 export declare namespace PrimitiveType {
-    export type Integer = \\"INTEGER\\" & {
-        __Integer: void;
-    };
-    export type Double = \\"DOUBLE\\" & {
-        __Double: void;
-    };
-    export type String = \\"STRING\\" & {
-        __String: void;
-    };
-    export type Boolean = \\"BOOLEAN\\" & {
-        __Boolean: void;
-    };
-    export type Long = \\"LONG\\" & {
-        __Long: void;
-    };
-
     export interface _Visitor<Result> {
         integer: () => Result;
         double: () => Result;
@@ -1008,11 +945,11 @@ export interface Post {
     content: string;
 }
 ",
-  "/model/posts/PostType.ts": "export type PostType = PostType.Long | PostType.Short;
+  "/model/posts/PostType.ts": "export type PostType = \\"LONG\\" | \\"SHORT\\";
 
 export const PostType = {
-    Long: \\"LONG\\" as PostType.Long,
-    Short: \\"SHORT\\" as PostType.Short,
+    Long: \\"LONG\\",
+    Short: \\"SHORT\\",
 
     _visit: <Result>(
         value: PostType,
@@ -1030,13 +967,6 @@ export const PostType = {
 };
 
 export declare namespace PostType {
-    export type Long = \\"LONG\\" & {
-        __Long: void;
-    };
-    export type Short = \\"SHORT\\" & {
-        __Short: void;
-    };
-
     export interface _Visitor<Result> {
         long: () => Result;
         short: () => Result;

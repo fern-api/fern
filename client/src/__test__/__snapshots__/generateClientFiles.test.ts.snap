@@ -90,11 +90,11 @@ export interface Post {
     relatedPosts: Post[];
 }
 ",
-  "/model/posts/PostType.ts": "export type PostType = PostType.Long | PostType.Short;
+  "/model/posts/PostType.ts": "export type PostType = \\"LONG\\" | \\"SHORT\\";
 
 export const PostType = {
-    Long: \\"LONG\\" as PostType.Long,
-    Short: \\"SHORT\\" as PostType.Short,
+    Long: \\"LONG\\",
+    Short: \\"SHORT\\",
 
     _visit: <Result>(
         value: PostType,
@@ -112,13 +112,6 @@ export const PostType = {
 };
 
 export declare namespace PostType {
-    export type Long = \\"LONG\\" & {
-        __Long: void;
-    };
-    export type Short = \\"SHORT\\" & {
-        __Short: void;
-    };
-
     export interface _Visitor<Result> {
         long: () => Result;
         short: () => Result;
@@ -609,11 +602,11 @@ export interface Post {
     relatedPosts: Post[];
 }
 ",
-  "/model/posts/PostType.ts": "export type PostType = PostType.Long | PostType.Short;
+  "/model/posts/PostType.ts": "export type PostType = \\"LONG\\" | \\"SHORT\\";
 
 export const PostType = {
-    Long: \\"LONG\\" as PostType.Long,
-    Short: \\"SHORT\\" as PostType.Short,
+    Long: \\"LONG\\",
+    Short: \\"SHORT\\",
 
     _visit: <Result>(
         value: PostType,
@@ -631,13 +624,6 @@ export const PostType = {
 };
 
 export declare namespace PostType {
-    export type Long = \\"LONG\\" & {
-        __Long: void;
-    };
-    export type Short = \\"SHORT\\" & {
-        __Short: void;
-    };
-
     export interface _Visitor<Result> {
         long: () => Result;
         short: () => Result;

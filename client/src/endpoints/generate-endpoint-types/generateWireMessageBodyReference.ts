@@ -1,4 +1,4 @@
-import { WireMessage } from "@fern-api/api";
+import { Type } from "@fern-api/api";
 import {
     assertNever,
     generateTypeReference,
@@ -12,7 +12,8 @@ import { Directory, SourceFile, ts } from "ts-morph";
 export declare namespace generateWireMessageBodyReference {
     export interface Args {
         typeName: string;
-        wireMessage: WireMessage;
+        type: Type;
+        docs: string | null | undefined;
         endpointDirectory: Directory;
         modelDirectory: Directory;
         typeResolver: TypeResolver;
@@ -26,14 +27,15 @@ export declare namespace generateWireMessageBodyReference {
 
 export function generateWireMessageBodyReference({
     typeName,
-    wireMessage,
+    type,
+    docs,
     endpointDirectory,
     modelDirectory,
     typeResolver,
 }: generateWireMessageBodyReference.Args): generateWireMessageBodyReference.Return {
-    switch (wireMessage.type._type) {
+    switch (type._type) {
         case "alias": {
-            const { aliasOf } = wireMessage.type;
+            const { aliasOf } = type;
             return {
                 file: undefined,
                 generateTypeReference: (referencedIn) =>
@@ -49,8 +51,8 @@ export function generateWireMessageBodyReference({
         case "enum": {
             const wireMessageFile = getOrCreateSourceFile(endpointDirectory, `${typeName}.ts`);
             generateType({
-                type: wireMessage.type,
-                docs: wireMessage.docs,
+                type,
+                docs,
                 typeName,
                 typeResolver,
                 modelDirectory,
@@ -70,6 +72,6 @@ export function generateWireMessageBodyReference({
             };
         }
         default:
-            assertNever(wireMessage.type);
+            assertNever(type);
     }
 }
