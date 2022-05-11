@@ -1330,6 +1330,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fern-api/add-plugin@workspace:*, @fern-api/add-plugin@workspace:packages/add-plugin":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/add-plugin@workspace:packages/add-plugin"
+  dependencies:
+    "@babel/core": "npm:^7.17.9"
+    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/preset-typescript": "npm:^7.16.7"
+    "@fern-api/compiler-commons": "workspace:*"
+    "@types/jest": "npm:^27.4.1"
+    "@types/js-yaml": "npm:^4.0.5"
+    "@types/node": "npm:^17.0.25"
+    depcheck: "npm:^1.4.3"
+    eslint: "npm:^8.12.0"
+    jest: "npm:^27.5.1"
+    prettier: "npm:^2.6.2"
+    stylelint: "npm:^14.6.1"
+    typescript: "npm:^4.6.3"
+  languageName: unknown
+  linkType: soft
+
 "@fern-api/api@npm:0.0.54":
   version: 0.0.54
   resolution: "@fern-api/api@npm:0.0.54"
@@ -4587,6 +4607,7 @@ __metadata:
     "@babel/core": "npm:^7.17.9"
     "@babel/preset-env": "npm:^7.16.11"
     "@babel/preset-typescript": "npm:^7.16.7"
+    "@fern-api/add-plugin": "workspace:*"
     "@fern-api/compiler": "workspace:*"
     "@fern-api/compiler-commons": "workspace:*"
     "@fern-api/init": "workspace:*"

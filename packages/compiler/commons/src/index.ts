@@ -3,8 +3,10 @@ export type { ProjectConfig } from "./config-types/project-config/loadProjectCon
 export { ProjectConfigSchema } from "./config-types/project-config/schemas/ProjectConfigSchema";
 export {
     loadWorkspaceDefinition,
+    loadWorkspaceDefinitionSchema,
     WORKSPACE_DEFINITION_FILENAME,
 } from "./config-types/workspace-definition/loadWorkspaceDefinition";
+export type { PluginInvocationSchema } from "./config-types/workspace-definition/schemas/PluginInvocationSchema";
 export type { WorkspaceDefinitionSchema } from "./config-types/workspace-definition/schemas/WorkspaceDefinitionSchema";
 export type {
     PluginHelper,
