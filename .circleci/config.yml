@@ -10,8 +10,8 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
-          name: lint:eslint
-          command: yarn lint:eslint
+          name: lint
+          command: yarn lint
       - run:
           name: Format
           command: yarn format:check

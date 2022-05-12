@@ -1,1 +1,4 @@
-{ "ignores": ["@types/jest", "@types/node", "@fern-typescript/testing-utils"], "ignore-patterns": ["lib"] }
+{
+  "ignores": ["@types/jest", "@types/node", "@fern-typescript/testing-utils", "lint-staged"],
+  "ignore-patterns": ["lib"]
+}
