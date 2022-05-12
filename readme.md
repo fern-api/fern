@@ -2,66 +2,81 @@
 
 </p>
 
-Fern was developed as an open-source alternative to OpenAPI and is currently in beta.
+TODO Fern makes it easy to define APIs.
 
-Define your API in YAML and Fern will generate type-safe clients for Java and TypeScript.
+### Single source of truth
 
-## Example
+Define your data model and your APIs in **one place** in your repo.
 
-The YAML defines a simple Blog Post API.
+### Type-safe servers and clients
+
+Run `fern generate` to automatically generate **server stubs** and **type-safe clients**.
+
+> "Wow, this codegen is so idiomatic!" - Chuck Norris
+
+## What languages are supported?
+
+| **Language** | **Server Stub**  | **Client** |
+| ------------ | ---------------- | ---------- |
+| Java         | ✅               | ✅         |
+| TypeScript   | 🚧 _in progress_ | ✅         |
+| Python       | 🚧               | 🚧         |
+
+_Interested in another language? [Get in touch](hey@buildwithfern.com)_
+
+## Let's do an example
+
+Here's a simple API to get the current weather report:
 
 ```yaml
-ids:
-    - PostId
+# api.yml
 
 types:
-    Post:
-        docs: A blog post
+    WeatherReport:
         properties:
-            id: PostId
-            type: PostType
-            title: string
-            author: Author
-            content: string
-
-    PostType:
+            tempInFahrenheit: double
+            humidity:
+                type: integer
+                docs: a number between 0 and 100
+            conditions: WeatherConditions
+    WeatherConditions:
         enum:
-            - LONG
-            - SHORT
-
-    Author:
-        union:
-            anonymous: {}
-            name: string
-
-    CreatePostRequest:
-        properties:
-            title: string
-            author: Author
-            content: string
-
-errors:
-    PostNotFoundError:
-        http:
-            statusCode: 404
-        properties:
-            id: PostId
+            - SUNNY
+            - CLOUDY
+            - RAINY
 
 services:
     http:
-        PostsService:
-            base-path: /posts
+        WeatherService:
+            base-path: /weather
             endpoints:
-                getPost:
+                getWeather:
                     method: GET
-                    path: /{postId}
+                    path: /{zipCode}
                     parameters:
-                        postId: string
-                    request: CreatePostRequest
-                    response: PostId
-                    errors:
-                        union:
-                            notFound: PostNotFoundError
+                        zipCode: string
+                    response: WeatherReport
+```
+
+### The server
+
+Here's the Typescript/express server stubs that Fern generates:
+
+TODO
+
+### The client
+
+Let's say we published the client to npm... TODO make this better. Here's an example of someone consuming it:
+
+```ts
+import { WeatherService } from "weather-api";
+
+const weatherService = WeatherService.create({
+  baseUrl:
+})
+
+const weatherReport = await Weather
+
 ```
 
 ## Contributing
@@ -71,6 +86,16 @@ The team welcomes contributions! To make code changes to one of the Fern repos:
 -   Fork the repo and make a branch
 -   Write your code
 -   Open a PR (optionally linking to a Github issue)
+
+## Getting started
+
+TODO
+
+`fern init`
+
+`fern generate`
+
+`fern add`
 
 ## License
 

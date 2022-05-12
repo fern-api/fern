@@ -37,11 +37,11 @@ ids:
 
 _Users may define the following kinds of types. These can be referenced by their name elsewhere in a Fern data model._
 
--   [Primitives](#Primitives)
--   [Objects](#Objects)
--   [Aliases](#Aliases)
--   [Enums](#Enums)
--   [Containers](#Containers)
+-   [Primitives](#primitives)
+-   [Objects](#objects)
+-   [Aliases](#aliases)
+-   [Enums](#enums)
+-   [Containers](#containers)
 
 ### Errors
 
