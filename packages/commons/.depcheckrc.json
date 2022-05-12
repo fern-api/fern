@@ -1,0 +1,1 @@
+{ "ignores": ["@types/jest", "@types/node", "prettier-plugin-organize-imports"], "ignore-patterns": ["lib"] }

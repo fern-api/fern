@@ -1,6 +1,6 @@
 import { PluginHelper } from "@fern-api/compiler-commons";
 import execa from "execa";
-import { lstat, mkdir, rm } from "fs/promises";
+import { mkdir, rm } from "fs/promises";
 import path from "path";
 import tar from "tar";
 import tmp from "tmp-promise";
@@ -13,10 +13,6 @@ export async function downloadHelper({
     absolutePathToWorkspaceTempDir: string;
 }): Promise<void> {
     const absolutePathToHelper = getDownloadPathForHelper({ helper, absolutePathToWorkspaceTempDir });
-    if (await doesDirectoryExist(absolutePathToHelper)) {
-        return;
-    }
-
     await rm(absolutePathToHelper, { force: true, recursive: true });
     const absolutePathToTgz = await downloadHelperTgz(helper);
     await mkdir(absolutePathToHelper, { recursive: true });
@@ -34,6 +30,7 @@ async function downloadHelperTgz(helper: PluginHelper) {
     }
 
     const dirToUnpackIn = await tmp.dir();
+
     const { stdout } = await execa("npm", [
         "pack",
         `${helper.name}@${helper.version}`,
@@ -48,7 +45,11 @@ async function downloadHelperTgz(helper: PluginHelper) {
         throw new Error("Failed to parse filename of downloaded helper " + `${helper.name}@${helper.version}`);
     }
 
-    return path.join(dirToUnpackIn.path, filename);
+    // same logic as npm
+    // https://github.com/npm/cli/blob/8a49e3ab6499c6196c5d7a0f6dad3b345944b992/lib/commands/pack.js#L59
+    const sanitizedFilename = filename.replace(/^@/, "").replace(/\//, "-");
+
+    return path.join(dirToUnpackIn.path, sanitizedFilename);
 }
 
 export function getDownloadPathForHelper({
@@ -59,13 +60,4 @@ export function getDownloadPathForHelper({
     absolutePathToWorkspaceTempDir: string;
 }): string {
     return path.join(absolutePathToWorkspaceTempDir, helper.name, helper.version);
-}
-
-async function doesDirectoryExist(filepath: string): Promise<boolean> {
-    try {
-        const stats = await lstat(filepath);
-        return stats.isDirectory();
-    } catch {
-        return false;
-    }
 }

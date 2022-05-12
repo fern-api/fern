@@ -6,8 +6,8 @@ import {
     HttpMethod,
     HttpService,
 } from "@fern-api/api";
+import { assertNever } from "@fern-api/commons";
 import { RawSchemas } from "@fern-api/syntax-analysis";
-import { assertNever } from "../../utils/assertNever";
 import { getDocs } from "../../utils/getDocs";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { convertHttpRequest } from "./convertHttpRequest";

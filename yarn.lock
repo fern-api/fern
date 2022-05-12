@@ -1374,6 +1374,26 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-api/commons@workspace:*, @fern-api/commons@workspace:packages/commons":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/commons@workspace:packages/commons"
+  dependencies:
+    "@babel/core": "npm:^7.17.9"
+    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/preset-typescript": "npm:^7.16.7"
+    "@types/jest": "npm:^27.4.1"
+    "@types/node": "npm:^17.0.25"
+    depcheck: "npm:^1.4.3"
+    eslint: "npm:^8.12.0"
+    glob: "npm:^7.2.0"
+    glob-promise: "npm:^4.2.2"
+    jest: "npm:^27.5.1"
+    prettier: "npm:^2.6.2"
+    stylelint: "npm:^14.6.1"
+    typescript: "npm:^4.6.3"
+  languageName: unknown
+  linkType: soft
+
 "@fern-api/compiler-commons@npm:0.0.54":
   version: 0.0.54
   resolution: "@fern-api/compiler-commons@npm:0.0.54"
@@ -1470,6 +1490,29 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-api/ete-tests@workspace:packages/ete-tests":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/ete-tests@workspace:packages/ete-tests"
+  dependencies:
+    "@babel/core": "npm:^7.17.9"
+    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/preset-typescript": "npm:^7.16.7"
+    "@fern-api/commons": "workspace:*"
+    "@fern-api/compiler-commons": "workspace:*"
+    "@types/jest": "npm:^27.4.1"
+    "@types/node": "npm:^17.0.25"
+    depcheck: "npm:^1.4.3"
+    eslint: "npm:^8.12.0"
+    execa: "npm:^5.1.1"
+    jest: "npm:^27.5.1"
+    prettier: "npm:^2.6.2"
+    stylelint: "npm:^14.6.1"
+    typescript: "npm:^4.6.3"
+  bin:
+    fern: ./cli
+  languageName: unknown
+  linkType: soft
+
 "@fern-api/init@workspace:*, @fern-api/init@workspace:packages/init":
   version: 0.0.0-use.local
   resolution: "@fern-api/init@workspace:packages/init"
@@ -1511,6 +1554,7 @@ __metadata:
     "@babel/preset-env": "npm:^7.16.11"
     "@babel/preset-typescript": "npm:^7.16.7"
     "@fern-api/api": "workspace:*"
+    "@fern-api/commons": "workspace:*"
     "@fern-api/compiler-commons": "workspace:*"
     "@fern-api/syntax-analysis": "workspace:*"
     "@types/jest": "npm:^27.4.1"
@@ -1647,6 +1691,7 @@ __metadata:
     "@babel/preset-env": "npm:^7.16.11"
     "@babel/preset-typescript": "npm:^7.16.7"
     "@fern-api/api": "workspace:*"
+    "@fern-api/commons": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/errors": "workspace:*"
     "@fern-typescript/helper-manager": "workspace:*"
@@ -1672,6 +1717,7 @@ __metadata:
     "@babel/preset-env": "npm:^7.16.11"
     "@babel/preset-typescript": "npm:^7.16.7"
     "@fern-api/api": "workspace:*"
+    "@fern-api/commons": "workspace:*"
     "@types/esutils": "npm:^2.0.0"
     "@types/jest": "npm:^27.4.1"
     "@types/node": "npm:^17.0.25"
@@ -1863,6 +1909,7 @@ __metadata:
     "@babel/preset-env": "npm:^7.16.11"
     "@babel/preset-typescript": "npm:^7.16.7"
     "@fern-api/api": "workspace:*"
+    "@fern-api/commons": "workspace:*"
     "@fern-api/compiler": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@types/jest": "npm:^27.4.1"
@@ -1870,8 +1917,6 @@ __metadata:
     depcheck: "npm:^1.4.3"
     eslint: "npm:^8.12.0"
     fern-api: "workspace:*"
-    glob: "npm:^7.2.0"
-    glob-promise: "npm:^4.2.2"
     jest: "npm:^27.5.1"
     memfs: "npm:^3.4.1"
     prettier: "npm:^2.6.2"

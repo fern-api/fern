@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@fern-api/api": "workspace:*",
+    "@fern-api/commons": "workspace:*",
     "@fern-api/compiler-commons": "workspace:*",
     "@fern-api/syntax-analysis": "workspace:*"
   },
