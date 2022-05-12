@@ -1,4 +1,4 @@
-import ts from "typescript";
+import ts, { NodeFactory } from "typescript";
 
 export interface FernTypescriptHelper {
     encodings?: Record<FernTypescriptHelper.Encodings.Encoding, FernTypescriptHelper.Encodings.EncodingHandlers>;
@@ -18,12 +18,14 @@ export declare namespace FernTypescriptHelper {
             namespace generateEncode {
                 interface Args {
                     referenceToDecoded: ts.Expression;
+                    factory: NodeFactory;
                 }
             }
 
             namespace generateDecode {
                 interface Args {
                     referenceToEncodedBuffer: ts.Expression;
+                    factory: NodeFactory;
                 }
             }
         }

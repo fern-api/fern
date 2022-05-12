@@ -18,5 +18,5 @@ export interface PluginInvocation {
 export interface PluginHelper {
     name: string;
     version: string;
-    locationOnDisk: string | undefined;
+    absoluteLocationOnDisk: string | undefined;
 }

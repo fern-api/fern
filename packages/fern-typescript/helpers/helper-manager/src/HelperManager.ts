@@ -1,7 +1,7 @@
 import { Encoding } from "@fern-api/api";
 import { PluginHelper, PluginHelpers } from "@fern-api/plugin-runner";
 import { FernTypescriptHelper } from "@fern-typescript/helper-commons";
-import JsonEncodingHelper from "@fern-typescript/json-encoding-helper";
+import { helper as JsonEncodingHelper } from "@fern-typescript/json-encoding-helper";
 import { loadHelperFromDisk } from "./loadHelperFromDisk";
 
 type HelperName = string;

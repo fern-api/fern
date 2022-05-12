@@ -95,6 +95,7 @@ export async function generateFetcherCall({
         const encodingHelper = await helperManager.getHandlersForEncoding(endpointTypes.requestBody.encoding);
         const encodedRequestBody = encodingHelper.generateEncode({
             referenceToDecoded: requestBodyReference,
+            factory: ts.factory,
         });
 
         fetcherArgs.push(
@@ -142,6 +143,7 @@ export async function generateFetcherCall({
     const decodingHelper = await helperManager.getHandlersForEncoding(endpointTypes.response.encoding);
     const decodedResponse = decodingHelper.generateDecode({
         referenceToEncodedBuffer: ts.factory.createIdentifier(ENCODED_RESPONSE_VARIABLE_NAME),
+        factory: ts.factory,
     });
     const decoderCall: StatementStructures = {
         kind: StructureKind.VariableStatement,

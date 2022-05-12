@@ -19,8 +19,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-typescript/helper-commons": "workspace:*",
-    "typescript": "^4.6.3"
+    "@fern-typescript/helper-commons": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",
@@ -32,6 +31,7 @@
     "eslint": "^8.12.0",
     "jest": "^27.5.1",
     "prettier": "^2.6.2",
-    "stylelint": "^14.6.1"
+    "stylelint": "^14.6.1",
+    "typescript": "^4.6.3"
   }
 }

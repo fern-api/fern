@@ -1,6 +1,6 @@
 import { PluginHelper } from "@fern-api/compiler-commons";
 import execa from "execa";
-import { mkdir, rm } from "fs/promises";
+import { cp, mkdir, rm } from "fs/promises";
 import path from "path";
 import tar from "tar";
 import tmp from "tmp-promise";
@@ -14,21 +14,22 @@ export async function downloadHelper({
 }): Promise<void> {
     const absolutePathToHelper = getDownloadPathForHelper({ helper, absolutePathToWorkspaceTempDir });
     await rm(absolutePathToHelper, { force: true, recursive: true });
-    const absolutePathToTgz = await downloadHelperTgz(helper);
     await mkdir(absolutePathToHelper, { recursive: true });
-    await tar.extract({
-        cwd: absolutePathToHelper,
-        file: absolutePathToTgz,
-        strip: 1, // strip "package" directory from the npm pack
-    });
+
+    if (helper.absoluteLocationOnDisk != null) {
+        await cp(helper.absoluteLocationOnDisk, absolutePathToHelper, { recursive: true });
+    } else {
+        const absolutePathToTgz = await downloadHelperTgz(helper);
+        await tar.extract({
+            cwd: absolutePathToHelper,
+            file: absolutePathToTgz,
+            strip: 1, // strip "package" directory from the npm pack
+        });
+    }
 }
 
 // returns absolute path to tgz
 async function downloadHelperTgz(helper: PluginHelper) {
-    if (helper.locationOnDisk != null) {
-        return helper.locationOnDisk;
-    }
-
     const dirToUnpackIn = await tmp.dir();
 
     const { stdout } = await execa("npm", [

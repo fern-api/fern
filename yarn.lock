@@ -1770,8 +1770,10 @@ __metadata:
     eslint: "npm:^8.12.0"
     jest: "npm:^27.5.1"
     prettier: "npm:^2.6.2"
-    stylelint: "npm:^14.6.1"
+    simple-progress-webpack-plugin: "npm:^2.0.0"
+    ts-loader: "npm:^9.3.0"
     typescript: "npm:^4.6.3"
+    webpack: "npm:^5.72.1"
   languageName: unknown
   linkType: soft
 
@@ -1810,7 +1812,6 @@ __metadata:
     "@types/node": "npm:^17.0.25"
     depcheck: "npm:^1.4.3"
     eslint: "npm:^8.12.0"
-    execa: "npm:^5.1.1"
     jest: "npm:^27.5.1"
     prettier: "npm:^2.6.2"
     stylelint: "npm:^14.6.1"
@@ -3665,7 +3666,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:4.1.x, chalk@npm:^4.0.0, chalk@npm:^4.1.2":
+"chalk@npm:4.1.x, chalk@npm:^4.0.0, chalk@npm:^4.1.0, chalk@npm:^4.1.2":
   version: 4.1.2
   resolution: "chalk@npm:4.1.2"
   dependencies:
@@ -4351,7 +4352,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"enhanced-resolve@npm:^5.9.2":
+"enhanced-resolve@npm:^5.0.0, enhanced-resolve@npm:^5.9.3":
   version: 5.9.3
   resolution: "enhanced-resolve@npm:5.9.3"
   dependencies:
@@ -4809,7 +4810,7 @@ __metadata:
     ts-morph: "npm:^14.0.0"
     typescript: "npm:^4.6.3"
     umd-compat-loader: "npm:^2.1.2"
-    webpack: "npm:^5.72.0"
+    webpack: "npm:^5.72.1"
     webpack-cli: "npm:^4.9.2"
     zod: "npm:^3.14.3"
   bin:
@@ -6305,14 +6306,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"json-parse-better-errors@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "json-parse-better-errors@npm:1.0.2"
-  checksum: b5aa5ddfd40eca6bf2d224d9daa7b92849fb9e5c8c91eaeb427ee03cdd3fa25847d19187580971208ec20bc9fdc6b35770c8b1786a8b83ef22710f03e717d45a
-  languageName: node
-  linkType: hard
-
-"json-parse-even-better-errors@npm:^2.3.0":
+"json-parse-even-better-errors@npm:^2.3.0, json-parse-even-better-errors@npm:^2.3.1":
   version: 2.3.1
   resolution: "json-parse-even-better-errors@npm:2.3.1"
   checksum: ba9ec77806c99530719c8c2a26aa426f421dccd6faafb4ee32f2d71dff25aefe4d150fba814eb58be8b82e765af5e7dc8e88d1c38c7227a1304f4d20a405a67a
@@ -6766,7 +6760,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"micromatch@npm:^4.0.4, micromatch@npm:^4.0.5":
+"micromatch@npm:^4.0.0, micromatch@npm:^4.0.4, micromatch@npm:^4.0.5":
   version: 4.0.5
   resolution: "micromatch@npm:4.0.5"
   dependencies:
@@ -8796,6 +8790,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ts-loader@npm:^9.3.0":
+  version: 9.3.0
+  resolution: "ts-loader@npm:9.3.0"
+  dependencies:
+    chalk: "npm:^4.1.0"
+    enhanced-resolve: "npm:^5.0.0"
+    micromatch: "npm:^4.0.0"
+    semver: "npm:^7.3.4"
+  peerDependencies:
+    typescript: "*"
+    webpack: ^5.0.0
+  checksum: b6bfbc0f4fde399db7e9761de0953e9ed067edbe6a36fa742236d6d8359e3958eb7e0f8d67f34cc98f0d45e15ca9d0ab4af1a141fe8d08d6c629ac01ab0d234e
+  languageName: node
+  linkType: hard
+
 "ts-morph@npm:^14.0.0":
   version: 14.0.0
   resolution: "ts-morph@npm:14.0.0"
@@ -9160,9 +9169,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5.72.0":
-  version: 5.72.0
-  resolution: "webpack@npm:5.72.0"
+"webpack@npm:^5.72.1":
+  version: 5.72.1
+  resolution: "webpack@npm:5.72.1"
   dependencies:
     "@types/eslint-scope": "npm:^3.7.3"
     "@types/estree": "npm:^0.0.51"
@@ -9173,13 +9182,13 @@ __metadata:
     acorn-import-assertions: "npm:^1.7.6"
     browserslist: "npm:^4.14.5"
     chrome-trace-event: "npm:^1.0.2"
-    enhanced-resolve: "npm:^5.9.2"
+    enhanced-resolve: "npm:^5.9.3"
     es-module-lexer: "npm:^0.9.0"
     eslint-scope: "npm:5.1.1"
     events: "npm:^3.2.0"
     glob-to-regexp: "npm:^0.4.1"
     graceful-fs: "npm:^4.2.9"
-    json-parse-better-errors: "npm:^1.0.2"
+    json-parse-even-better-errors: "npm:^2.3.1"
     loader-runner: "npm:^4.2.0"
     mime-types: "npm:^2.1.27"
     neo-async: "npm:^2.6.2"
@@ -9193,7 +9202,7 @@ __metadata:
       optional: true
   bin:
     webpack: bin/webpack.js
-  checksum: 221635816a6b3d9e868d725dcbbb572a2b3ccc0ace5bacdd2fc042c4ec4f780c53f9b0cde56b12fe98026635aa20fd909b779700447cc31f65c5832c4badd3d0
+  checksum: 82ea1fdc8ec9cf8c5576ea2e9589aa46fa7e0e15e24bceb934cd5da137af6304639b240c4772fc2e75952a392fc80ac2bf7fbc87537420da0985696ab71d1935
   languageName: node
   linkType: hard
 
