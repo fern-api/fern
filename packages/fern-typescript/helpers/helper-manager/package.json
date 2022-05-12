@@ -23,8 +23,7 @@
     "@fern-api/plugin-runner": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/helper-commons": "workspace:*",
-    "@fern-typescript/json-encoding-helper": "workspace:*",
-    "execa": "^5.1.1"
+    "@fern-typescript/json-encoding-helper": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",
