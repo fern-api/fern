@@ -10,9 +10,11 @@ import {
 import urlJoin from "url-join";
 
 export function convertToPostmanCollection(ir: IntermediateRepresentation): CollectionDefinition {
+    const id = ir.workspaceName ?? "Untitled API";
     return {
         info: {
-            id: ir.workspaceName ?? "Untitled API",
+            id,
+            name: id,
         },
         item: getCollectionItems(ir),
     };

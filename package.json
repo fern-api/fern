@@ -15,10 +15,13 @@
     "format": "prettier --write --ignore-unknown",
     "format:all": "yarn format \"**\"",
     "format:check": "yarn format:all --check",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "dockerTagLocal": "./docker/create_docker.sh local",
+    "dockerTagVersion": "./docker/create_docker.sh"
   },
   "devDependencies": {
     "@babel/core": "^7.17.10",
+    "@babel/eslint-parser": "^7.17.0",
     "@babel/preset-env": "^7.17.10",
     "@babel/preset-typescript": "^7.16.7",
     "@types/jest": "^27.5.0",
@@ -31,13 +34,17 @@
     "jest": "^28.1.0",
     "lint-staged": "^12.4.1",
     "prettier": "^2.6.2",
-    "typescript": "^4.6.4"
+    "simple-progress-webpack-plugin": "^2.0.0",
+    "typescript": "^4.6.4",
+    "webpack": "^5.72.1",
+    "webpack-cli": "^4.9.2"
   },
   "dependencies": {
     "@fern-api/api": "^0.0.59",
     "@fern-api/compiler": "^0.0.59",
     "postman-collection": "^4.1.2",
-    "url-join": "^5.0.0"
+    "url-join": "^5.0.0",
+    "zod": "^3.16.0"
   },
   "packageManager": "yarn@3.2.0"
 }

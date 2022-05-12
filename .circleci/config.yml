@@ -27,6 +27,22 @@ jobs:
       - run:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff
+  publish:
+    machine:
+      image: ubuntu-2004:current
+    steps:
+      - checkout
+      - run:
+          name: Compile
+          command: yarn compile
+      - run:
+          name: Publish fern-postman docker
+          command: |
+            projectVersion=$(git tag --points-at HEAD)
+            yarn dockerTagVersion "$projectVersion"
+            echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
+            docker tag fern-postman:"$projectVersion" fernapi/fern-postman:"$projectVersion"
+            docker push fernapi/fern-postman:"$projectVersion"
 
 workflows:
   version: 2
@@ -36,3 +52,13 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - publish:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
+          requires:
+            - check
+          context:
+            - docker-hub
