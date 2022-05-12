@@ -1,102 +1,94 @@
 # Fern
 
-</p>
+Fern is an open source framework that makes it easier to build APIs.
 
-TODO Fern makes it easy to define APIs.
+Fern allows you to
 
-### Single source of truth
+1. Define a source-of-truth for your API
+2. Autogenerate idiomatic & typesafe clients and servers
+3. Supports WebSocket and REST APIs
+4. Easily manage backwards compatiblity
 
-Define your data model and your APIs in **one place** in your repo.
+Fern is interoperable with Open API so you are never locked in.
 
-### Type-safe servers and clients
+## Example Spec
 
-Run `fern generate` to automatically generate **server stubs** and **type-safe clients**.
-
-> "Wow, this codegen is so idiomatic!" - Chuck Norris
-
-## What languages are supported?
-
-| **Language** | **Server Stub**  | **Client** |
-| ------------ | ---------------- | ---------- |
-| Java         | ✅               | ✅         |
-| TypeScript   | 🚧 _in progress_ | ✅         |
-| Python       | 🚧               | 🚧         |
-
-_Interested in another language? [Get in touch](hey@buildwithfern.com)_
-
-## Let's do an example
-
-Here's a simple API to get the current weather report:
+Below we have written out a sample spec for a Food Delivery App.
 
 ```yaml
-# api.yml
+ids:
+  - MenuItemId
+  - OrderId: long
 
 types:
-    WeatherReport:
-        properties:
-            tempInFahrenheit: double
-            humidity:
-                type: integer
-                docs: a number between 0 and 100
-            conditions: WeatherConditions
-    WeatherConditions:
-        enum:
-            - SUNNY
-            - CLOUDY
-            - RAINY
+  DeliveryMethod:
+    enum:
+      - PICKUP
+      - DELIVERY
+  OrderStatus:
+    union:
+      pickup: PickupOrderStatus
+      delivery: DeliveryOrderStatus
+  PickupOrderStatus:
+    enum:
+      - PREPARING
+      - READY_FOR_PICKUP
+      - PICKED_UP
+  DeliveryOrderStatus:
+    enum:
+      - PREPARING
+      - ON_THE_WAY
+      - DELIVERED
 
 services:
+  http:
+    OrderService:
+      base-path: /order
+      endpoints:
+        addItemToCart:
+          docs: Adds a menu item to a cart.
+          method: POST
+          path: /add
+          request:
+            properties:
+              menuItemId: MenuItemId
+              quantity: integer
+        placeOrder:
+          method: POST
+          path: /order/new
+          request:
+            properties:
+              deliveryMethod: DeliveryMethod
+              tip: optional<double>
+          response: OrderId
+          errors:
+            union:
+              emptyCart: EmptyCartError
+
+  websocket:
+    OrderStatusChannel:
+      messages:
+        subscribeToOrderStatus:
+          origin: client
+          body: OrderId
+          response:
+            properties:
+              orderStatus: OrderStatus
+              etaInMinutes: integer
+            behavior: ongoing
+          errors:
+            union:
+              notFound: OrderNotFoundError
+
+errors:
+  OrderNotFoundError:
     http:
-        WeatherService:
-            base-path: /weather
-            endpoints:
-                getWeather:
-                    method: GET
-                    path: /{zipCode}
-                    parameters:
-                        zipCode: string
-                    response: WeatherReport
+      statusCode: 404
+  EmptyCartError:
+    http:
+      statusCode: 400
 ```
 
-### The server
+The app has REST endpoints so that clients can add items to their cart and place orders. It also has a websocket channel where a client can subscribe to updates about an order's ETA.
 
-Here's the Typescript/express server stubs that Fern generates:
-
-TODO
-
-### The client
-
-Let's say we published the client to npm... TODO make this better. Here's an example of someone consuming it:
-
-```ts
-import { WeatherService } from "weather-api";
-
-const weatherService = WeatherService.create({
-  baseUrl:
-})
-
-const weatherReport = await Weather
-
-```
-
-## Contributing
-
-The team welcomes contributions! To make code changes to one of the Fern repos:
-
--   Fork the repo and make a branch
--   Write your code
--   Open a PR (optionally linking to a Github issue)
-
-## Getting started
-
-TODO
-
-`fern init`
-
-`fern generate`
-
-`fern add`
-
-## License
-
-This tooling is made available under the [MIT License](LICENSE).
+This spec can be used to generate clients and servers.
