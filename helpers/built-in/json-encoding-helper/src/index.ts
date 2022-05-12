@@ -1,1 +1,1 @@
-export { helper as default } from "./helper";
+export { helper } from "./helper";
