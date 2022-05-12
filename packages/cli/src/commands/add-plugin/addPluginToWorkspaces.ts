@@ -2,7 +2,7 @@ import { addJavaPlugin, addTypescriptPlugin } from "@fern-api/add-plugin";
 import { loadWorkspaceDefinitionSchema, WorkspaceDefinitionSchema } from "@fern-api/compiler-commons";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
-import { getWorkspaces } from "./getWorkspaces";
+import { getWorkspaces } from "../utils/getWorkspaces";
 
 export async function addPluginToWorkspaces(
     commandLineWorkspaces: readonly string[],

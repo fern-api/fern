@@ -1710,6 +1710,25 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-typescript/hathora-encoding-helper@workspace:packages/fern-typescript/helpers/built-in/hathora-encoding-helper":
+  version: 0.0.0-use.local
+  resolution: "@fern-typescript/hathora-encoding-helper@workspace:packages/fern-typescript/helpers/built-in/hathora-encoding-helper"
+  dependencies:
+    "@babel/core": "npm:^7.17.9"
+    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/preset-typescript": "npm:^7.16.7"
+    "@fern-typescript/helper-commons": "workspace:*"
+    "@types/jest": "npm:^27.4.1"
+    "@types/node": "npm:^17.0.25"
+    depcheck: "npm:^1.4.3"
+    eslint: "npm:^8.12.0"
+    jest: "npm:^27.5.1"
+    prettier: "npm:^2.6.2"
+    stylelint: "npm:^14.6.1"
+    typescript: "npm:^4.6.3"
+  languageName: unknown
+  linkType: soft
+
 "@fern-typescript/helper-commons@workspace:*, @fern-typescript/helper-commons@workspace:packages/fern-typescript/helpers/commons":
   version: 0.0.0-use.local
   resolution: "@fern-typescript/helper-commons@workspace:packages/fern-typescript/helpers/commons"
@@ -1745,6 +1764,7 @@ __metadata:
     "@types/node": "npm:^17.0.25"
     depcheck: "npm:^1.4.3"
     eslint: "npm:^8.12.0"
+    execa: "npm:^5.1.1"
     jest: "npm:^27.5.1"
     prettier: "npm:^2.6.2"
     stylelint: "npm:^14.6.1"
@@ -2437,6 +2457,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/minipass@npm:*":
+  version: 3.1.2
+  resolution: "@types/minipass@npm:3.1.2"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: ba4cea3c8cedce479bc79d1782374a40bdd5e6e08f8a694888b25edb442fce16c10458dde3e394d1e8ef6dd63cd0bd1d18f6eb3c9c021765430cb8e7a58c29a0
+  languageName: node
+  linkType: hard
+
 "@types/node-fetch@npm:^2.6.1":
   version: 2.6.1
   resolution: "@types/node-fetch@npm:2.6.1"
@@ -2498,6 +2527,16 @@ __metadata:
   version: 2.0.1
   resolution: "@types/stack-utils@npm:2.0.1"
   checksum: a961a1d043517a2b6f7fc326fbce12cd3ba4a8dfc87b63ef2aa7cd991f6a8c7bc87942a51a792c3f922e34e3898d9de3139f2f6636a326a7ec4635389b822bd9
+  languageName: node
+  linkType: hard
+
+"@types/tar@npm:^6.1.1":
+  version: 6.1.1
+  resolution: "@types/tar@npm:6.1.1"
+  dependencies:
+    "@types/minipass": "npm:*"
+    "@types/node": "npm:*"
+  checksum: 048f6b5af621abfd83787354fec45af621a25fad68675344e76051c9e88f45485ddfd9b2b1d6bf3598521f667362a400a305cc0bb98e59a28c35c9e1d02005be
   languageName: node
   linkType: hard
 
@@ -4678,6 +4717,7 @@ __metadata:
     "@fern-api/syntax-analysis": "workspace:*"
     "@types/jest": "npm:^27.4.1"
     "@types/node": "npm:^17.0.25"
+    "@types/tar": "npm:^6.1.1"
     "@types/tmp": "npm:^0.2.3"
     "@types/yargs": "npm:^17.0.10"
     chalk: "npm:^4.1.2"
@@ -4690,6 +4730,7 @@ __metadata:
     js-yaml: "npm:^4.1.0"
     prettier: "npm:^2.6.2"
     stylelint: "npm:^14.6.1"
+    tar: "npm:^6.1.11"
     tmp-promise: "npm:^3.0.3"
     typescript: "npm:^4.6.3"
     yargs: "npm:^17.4.1"

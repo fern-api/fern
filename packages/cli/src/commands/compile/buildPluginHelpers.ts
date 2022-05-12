@@ -1,15 +1,21 @@
 import { CustomWireMessageEncoding } from "@fern-api/api";
 import { PluginHelper, PluginInvocation } from "@fern-api/compiler-commons";
 import { PluginHelpers } from "@fern-api/plugin-runner";
+import { getDownloadPathForHelper } from "./downloadHelper";
 
 export declare namespace buildPluginHelpers {
     export interface Args {
         pluginInvocation: PluginInvocation;
         nonStandardEncodings: CustomWireMessageEncoding[];
+        absolutePathToWorkspaceTempDir: string;
     }
 }
 
-export function buildPluginHelpers({ pluginInvocation, nonStandardEncodings }: buildPluginHelpers.Args): PluginHelpers {
+export function buildPluginHelpers({
+    pluginInvocation,
+    nonStandardEncodings,
+    absolutePathToWorkspaceTempDir,
+}: buildPluginHelpers.Args): PluginHelpers {
     const helpers: PluginHelpers = { encodings: {} };
 
     if (nonStandardEncodings.length > 0) {
@@ -23,7 +29,10 @@ export function buildPluginHelpers({ pluginInvocation, nonStandardEncodings }: b
             helpers.encodings[encoding] = {
                 name: helperForEncoding.name,
                 version: helperForEncoding.version,
-                absolutePath: "~/TODO",
+                absolutePath: getDownloadPathForHelper({
+                    helper: helperForEncoding,
+                    absolutePathToWorkspaceTempDir,
+                }),
             };
         });
     }
@@ -52,5 +61,5 @@ function doesHelperHandleEncoding(helper: PluginHelper, encoding: string): boole
     if (encoding !== "hathora") {
         return false;
     }
-    return helper.name === "hathora-typescript";
+    return helper.name === "@fern-typescript/hathora-encoding-helper";
 }
