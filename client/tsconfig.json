@@ -4,6 +4,7 @@
   "include": ["./src"],
   "references": [
     { "path": "../../api/fern-ir-typescript" },
+    { "path": "../../commons" },
     { "path": "../commons" },
     { "path": "../errors" },
     { "path": "../helpers/helper-manager" },

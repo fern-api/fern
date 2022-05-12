@@ -1,6 +1,6 @@
 import { Type } from "@fern-api/api";
+import { assertNever } from "@fern-api/commons";
 import {
-    assertNever,
     generateTypeReference,
     getOrCreateSourceFile,
     getRelativePathAsModuleSpecifierTo,
