@@ -25,7 +25,10 @@ export function convertWorkspaceDefinition({
                     ? plugin.helpers.map((helper) => ({
                           name: helper.name,
                           version: helper.version,
-                          locationOnDisk: helper.locationOnDisk,
+                          absoluteLocationOnDisk:
+                              helper.locationOnDisk != null
+                                  ? path.resolve(absolutePathToWorkspaceDir, helper.locationOnDisk)
+                                  : undefined,
                       }))
                     : [],
         })),
