@@ -1,0 +1,52 @@
+imports:
+  menu: blog.yml
+ids:
+  - PostId
+types:
+  BlogPost:
+    docs: A blog post
+    properties:
+      id: PostId
+      type: PostType
+      title: string
+      author: Author
+      content: string
+  PostType:
+    enum:
+      - LONG
+      - SHORT
+  Author:
+    union:
+      anonymous: {}
+      name: string
+errors:
+  PostNotFoundError:
+    http:
+      statusCode: 400
+    properties:
+      id: PostId
+services:
+  http:
+    PostsService:
+      base-path: /posts
+      endpoints:
+        createPost:
+          docs: Create a new blog post
+          method: POST
+          path: /create
+          request:
+            properties:
+              title: string
+              author: Author
+              content: string
+              postType: PostType
+          response: PostId
+        getPost:
+          method: GET
+          path: /{postId}
+          parameters:
+            postId: PostId
+          response: BlogPost
+          errors:
+            union:
+              notFound: PostNotFoundError

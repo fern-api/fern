@@ -1,4 +1,4 @@
 {
   "testMatch": ["**/__test__/*.test.ts{,x}"],
-  "transformIgnorePatterns": ["/node_modules/(?!lodash-es)"]
+  "transformIgnorePatterns": ["/node_modules/(?!lodash-es|url-join)"]
 }
