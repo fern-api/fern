@@ -8,5 +8,4 @@ plugins:
       mode: client
     helpers:
       - name: "@fern-typescript/hathora-encoding-helper"
-        version: 0.0.0
-        locationOnDisk: /Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/fern-typescript/helpers/built-in/hathora-encoding-helper/package.tgz
+        version: 0.0.60
