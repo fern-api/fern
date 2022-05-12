@@ -1,6 +1,6 @@
 import { loadProjectConfig } from "@fern-api/compiler-commons";
+import { getWorkspaces } from "../utils/getWorkspaces";
 import { compileWorkspace } from "./compileWorkspace";
-import { getWorkspaces } from "./getWorkspaces";
 
 export async function compileWorkspaces(commandLineWorkspaces: readonly string[]): Promise<void> {
     const projectConfig = await loadProjectConfig();

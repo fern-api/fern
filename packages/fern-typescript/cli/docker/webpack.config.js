@@ -19,6 +19,13 @@ module.exports = (_env, { mode = "production" }) => {
                 },
             ],
             noParse: [require.resolve("@ts-morph/common/dist/typescript.js")],
+            parser: {
+                javascript: {
+                    // this is needed because the dynamic import() for loading
+                    // helpers is transpiled to a dynamic require() by typescript
+                    commonjsMagicComments: true,
+                },
+            },
         },
         plugins: [new SimpleProgressWebpackPlugin()],
         optimization: {

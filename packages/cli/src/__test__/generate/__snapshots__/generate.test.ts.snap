@@ -1,5 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`fern generate tests hathora 1`] = `
+"import {
+    defaultFetcher,
+    Fetcher,
+    joinPaths,
+    Service,
+} from \\"@fern-typescript/service-utils\\";
+import * as model from \\"../../model\\";
+import * as endpoints from \\"./endpoints\\";
+
+export interface Client {
+    deletePost(request: model.PostId): Promise<endpoints.deletePost.Response>;
+}
+
+export class Client implements Client {
+    private baseUrl: string;
+    private fetcher: Fetcher;
+    private token: Service.Init[\\"token\\"];
+
+    constructor(args: Service.Init) {
+        this.fetcher = args.fetcher ?? defaultFetcher;
+        this.baseUrl = joinPaths(args.serverUrl, args.serviceBaseUrl);
+        this.token = args.token;
+    }
+}
+"
+`;
+
 exports[`fern generate tests simple-model 1`] = `
 "/**
  * A blog post

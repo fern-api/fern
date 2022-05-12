@@ -7,6 +7,7 @@ import os from "os";
 import path from "path";
 import tmp, { DirectoryResult } from "tmp-promise";
 import { buildPluginHelpers } from "./buildPluginHelpers";
+import { downloadHelper } from "./downloadHelper";
 import { handleCompilerFailure } from "./handleCompilerFailure";
 import { parseFernInput } from "./parseFernInput";
 
@@ -90,12 +91,22 @@ async function loadHelpersAndRunPlugin({
         await rm(pluginInvocation.absolutePathToOutput, { force: true, recursive: true });
     }
 
+    await Promise.all(
+        pluginInvocation.helpers.map((helper) =>
+            downloadHelper({ helper, absolutePathToWorkspaceTempDir: workspaceTempDir.path })
+        )
+    );
+
     await runPlugin({
         imageName: `${pluginInvocation.name}:${pluginInvocation.version}`,
         absolutePathToOutput: pluginInvocation.absolutePathToOutput,
         absolutePathToIr,
         pathToWriteConfigJson: configJson.path,
-        pluginHelpers: buildPluginHelpers({ pluginInvocation, nonStandardEncodings }),
+        pluginHelpers: buildPluginHelpers({
+            pluginInvocation,
+            nonStandardEncodings,
+            absolutePathToWorkspaceTempDir: workspaceTempDir.path,
+        }),
         absolutePathToProject:
             absolutePathToProjectConfig != null ? path.dirname(absolutePathToProjectConfig) : undefined,
         customConfig: pluginInvocation.config,
