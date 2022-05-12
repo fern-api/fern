@@ -7,10 +7,13 @@ types:
     properties:
       basePath: string
       name: types.NamedType
-  WireMessage:
-    extends: commons.WithDocs
+  Encoding:
+    union:
+      json: {}
+      custom: CustomWireMessageEncoding
+  CustomWireMessageEncoding:
     properties:
-      type: types.Type
+      encoding: string
   ResponseErrors:
     extends: commons.WithDocs
     properties:

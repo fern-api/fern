@@ -1,4 +1,4 @@
-import { IntermediateRepresentation } from "@fern-api/api";
+import { CustomWireMessageEncoding, IntermediateRepresentation } from "@fern-api/api";
 import { CompilerStage, RelativeFilePath } from "@fern-api/compiler-commons";
 import { RawSchemas } from "@fern-api/syntax-analysis";
 import { convertErrorDefinition } from "./converters/convertErrorDefinition";
@@ -10,13 +10,26 @@ import { convertToFernFilepath } from "./utils/convertToFernFilepath";
 import { noop } from "./utils/noop";
 import { visit } from "./utils/visit";
 
+export declare namespace IntermediateRepresentationGenerationStage {
+    export interface Success {
+        intermediateRepresentation: IntermediateRepresentation;
+        nonStandardEncodings: CustomWireMessageEncoding[];
+    }
+
+    export interface Args {
+        rawFernConfigurationSchemas: Record<RelativeFilePath, RawSchemas.RawFernConfigurationSchema>;
+        workspaceName: string | undefined;
+    }
+}
+
 export const IntermediateRepresentationGenerationStage: CompilerStage<
-    Record<RelativeFilePath, RawSchemas.RawFernConfigurationSchema>,
-    IntermediateRepresentation,
+    IntermediateRepresentationGenerationStage.Args,
+    IntermediateRepresentationGenerationStage.Success,
     void
 > = {
-    run: (schemas) => {
+    run: (args) => {
         const intermediateRepresentation: IntermediateRepresentation = {
+            workspaceName: args.workspaceName,
             types: [],
             errors: [],
             services: {
@@ -25,7 +38,9 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
             },
         };
 
-        for (const [filepath, schema] of Object.entries(schemas)) {
+        const nonStandardEncodings: CustomWireMessageEncoding[] = [];
+
+        for (const [filepath, schema] of Object.entries(args.rawFernConfigurationSchemas)) {
             const fernFilepath = convertToFernFilepath(filepath);
 
             const { imports = {} } = schema;
@@ -78,7 +93,13 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                     if (services.http != null) {
                         for (const [serviceId, serviceDefinition] of Object.entries(services.http)) {
                             intermediateRepresentation.services.http.push(
-                                convertHttpService({ serviceDefinition, serviceId, fernFilepath, imports })
+                                convertHttpService({
+                                    serviceDefinition,
+                                    serviceId,
+                                    fernFilepath,
+                                    imports,
+                                    nonStandardEncodings,
+                                })
                             );
                         }
                     }
@@ -91,6 +112,7 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                     serviceDefinition,
                                     fernFilepath,
                                     imports,
+                                    nonStandardEncodings,
                                 })
                             );
                         }
@@ -101,7 +123,10 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
 
         return {
             didSucceed: true,
-            result: intermediateRepresentation,
+            result: {
+                intermediateRepresentation,
+                nonStandardEncodings,
+            },
         };
     },
 };

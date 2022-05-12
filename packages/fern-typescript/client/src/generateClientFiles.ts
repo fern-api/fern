@@ -1,17 +1,20 @@
 import { IntermediateRepresentation } from "@fern-api/api";
-import { withDirectory } from "@fern-typescript/commons";
+import { getOrCreateDirectory, TypeResolver } from "@fern-typescript/commons";
 import { generateErrorFiles } from "@fern-typescript/errors";
-import { generateModelFiles, TypeResolver } from "@fern-typescript/model";
+import { HelperManager } from "@fern-typescript/helper-manager";
+import { generateModelFiles } from "@fern-typescript/model";
 import { Directory } from "ts-morph";
 import { generateHttpService } from "./generateHttpService";
 
-export function generateClientFiles({
+export async function generateClientFiles({
     intermediateRepresentation,
     directory,
+    helperManager,
 }: {
     intermediateRepresentation: IntermediateRepresentation;
     directory: Directory;
-}): void {
+    helperManager: HelperManager;
+}): Promise<void> {
     const typeResolver = new TypeResolver(intermediateRepresentation);
 
     const modelDirectory = generateModelFiles({
@@ -20,20 +23,22 @@ export function generateClientFiles({
         typeResolver,
     });
 
-    generateErrorFiles({
+    const errorsDirectory = generateErrorFiles({
         directory,
         intermediateRepresentation,
         modelDirectory,
     });
 
-    withDirectory({ containingModule: directory, name: "services" }, (servicesDirectory) => {
-        for (const service of intermediateRepresentation.services.http) {
-            generateHttpService({
-                service,
-                servicesDirectory,
-                modelDirectory,
-                typeResolver,
-            });
-        }
-    });
+    const servicesDirectory = getOrCreateDirectory(directory, "services");
+
+    for (const service of intermediateRepresentation.services.http) {
+        await generateHttpService({
+            service,
+            servicesDirectory,
+            modelDirectory,
+            errorsDirectory,
+            typeResolver,
+            helperManager,
+        });
+    }
 }

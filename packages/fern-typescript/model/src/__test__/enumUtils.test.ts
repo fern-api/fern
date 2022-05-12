@@ -15,6 +15,7 @@ describe("getKeyForEnum", () => {
             getKeyForEnum({
                 docs: undefined,
                 value: original,
+                name: original,
             })
         ).toBe(expected);
     });

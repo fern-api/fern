@@ -1,1 +1,0 @@
-export { parseFernDirectory } from "./parseFernDirectory";

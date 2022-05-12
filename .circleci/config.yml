@@ -3,13 +3,13 @@ orbs:
   node: circleci/node@5.0.1
 jobs:
   check:
-    docker:
-      - image: cimg/node:17.3.1
+    machine:
+      image: ubuntu-2004:current
     steps:
       - checkout
       - run:
           name: Run code-generation
-          command: ./fern.sh
+          command: npx fern-api@0.0.54 generate
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
@@ -18,9 +18,6 @@ jobs:
       - run:
           name: lint:eslint
           command: yarn lint:eslint
-      - run:
-          name: lint:style
-          command: yarn lint:style
       - run:
           name: Format
           command: yarn format:check
@@ -31,6 +28,9 @@ jobs:
           name: Compile
           command: yarn compile
       - run:
+          name: Build fern-typescript docker (for ETE tests)
+          command: yarn workspace fern-typescript dockerTagLocal
+      - run:
           name: Run tests
           command: yarn test --ci
       - run:
@@ -38,28 +38,39 @@ jobs:
           command: git --no-pager diff
 
   publish:
-    docker:
-      - image: cimg/node:17.3.1
+    machine:
+      image: ubuntu-2004:current
     steps:
       - checkout
       - run:
           name: Run code-generation
-          command: ./fern.sh
+          command: npx fern-api@0.0.54 generate
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
           name: Add version to package.json's
           command: yarn mrlint version $(git tag --points-at HEAD)
       - run:
+          name: Update yarn.lock with new versions
+          command: yarn
+      - run:
           name: Compile
           command: yarn compile
       - run:
           name: Publish all packages
           command: yarn run publish
+      - run:
+          name: Publish fern-typescript docker
+          command: |
+            projectVersion=$(git tag --points-at HEAD)
+            yarn workspace fern-typescript dockerTagVersion
+            echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
+            docker tag fern-typescript:"$projectVersion" fernapi/fern-typescript:"$projectVersion"
+            docker push fernapi/fern-typescript:"$projectVersion"
 
   publish-java-snapshot:
-    docker: [{ image: "cimg/node:17.3.1" }]
-    resource_class: small
+    machine:
+      image: ubuntu-2004:current
     environment:
       CIRCLE_TEST_REPORTS: /home/circleci/junit
       CIRCLE_ARTIFACTS: /home/circleci/artifacts
@@ -75,13 +86,12 @@ jobs:
             sudo ln -s /opt/java/zulu*/ /opt/java11
       - run:
           name: Run code-generation
-          command: ./fern.sh
+          command: npx fern-api@0.0.54 generate
       - run:
           name: Publish
           command: |
             export PATH="$PATH:$JAVA_HOME/bin"
-            cd packages/api/java-api
-            ./codegen.sh
+            cd packages/api/fern-ir-java
             ./gradlew artifactoryPublish
 
 workflows:
@@ -101,7 +111,9 @@ workflows:
               only: /.*/
           requires:
             - check
-          context: npm
+          context:
+            - npm
+            - docker-hub
 
       - publish-java-snapshot:
           filters:

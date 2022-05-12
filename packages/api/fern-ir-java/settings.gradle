@@ -1,0 +1,3 @@
+rootProject.name = 'fern-ir-java'
+
+include 'ir-api:model'

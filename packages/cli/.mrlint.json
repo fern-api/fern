@@ -1,0 +1,10 @@
+{
+  "type": "cli",
+  "cliName": "fern",
+  "private": false,
+  "rules": {
+    "depcheck": {
+      "ignores": ["@types/tmp"]
+    }
+  }
+}

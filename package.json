@@ -13,17 +13,14 @@
     "test": "yarn workspaces foreach --verbose --parallel run test",
     "lint:eslint": "eslint . --max-warnings 0",
     "lint:eslint:fix": "eslint . --fix --max-warnings 0",
-    "lint:style": "yarn workspaces foreach --verbose --parallel run lint:style",
-    "lint:style:fix": "yarn workspaces foreach --verbose --parallel run lint:style:fix",
     "lint:monorepo": "mrlint lint",
     "lint:monorepo:fix": "mrlint lint --fix",
-    "format": "prettier --write --ignore-unknown --ignore-path ./shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ./shared/.prettierignore \"**\"",
+    "format": "prettier --write --ignore-unknown --ignore-path ./shared/.prettierignore ",
+    "format:all": "yarn format \"**\"",
+    "format:check": "yarn format:all --check",
     "depcheck": "yarn workspaces foreach --verbose --parallel run depcheck",
     "prepare": "husky install",
-    "codegen": "run codegen:ts && run codegen:java",
-    "codegen:ts": "./fern.sh",
-    "codegen:java": "cd packages/api/java-api && ./codegen.sh",
+    "codegen": "fern generate",
     "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public"
   },
   "devDependencies": {
@@ -31,17 +28,12 @@
     "@typescript-eslint/parser": "^5.17.0",
     "depcheck": "^1.4.3",
     "eslint": "^8.12.0",
-    "eslint-plugin-react": "^7.29.4",
-    "eslint-plugin-react-hooks": "^4.4.0",
-    "fern-api": "0.0.20",
-    "fern-typescript": "0.0.20",
+    "fern-api": "0.0.54",
     "husky": "^7.0.4",
     "jest": "^27.5.1",
     "lint-staged": "^12.3.7",
-    "mrlint": "^0.0.12",
-    "prettier": "^2.6.1",
-    "react": "^18.0.0",
-    "stylelint": "^14.6.1"
+    "mrlint": "^0.0.18",
+    "prettier": "^2.6.2"
   },
   "packageManager": "yarn@3.2.0"
 }

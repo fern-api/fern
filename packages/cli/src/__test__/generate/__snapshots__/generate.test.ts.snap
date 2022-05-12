@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`fern generate tests simple-model 1`] = `
+"/**
+ * A blog post
+ */
+export interface Post {
+    id: string;
+    title: string;
+    content: string;
+}
+"
+`;

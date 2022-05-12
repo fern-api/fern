@@ -1,0 +1,14 @@
+name: Fern Intermediate Representation
+input: ./src
+plugins:
+  - name: fernapi/fern-typescript
+    version: 0.0.54
+    output: ./fern-ir-typescript/src/generated
+    config:
+      mode: model
+  - name: fernapi/fern-java
+    version: 0.0.23
+    output: ./fern-ir-java/ir-api
+    config:
+      packagePrefix: "com.fern"
+      mode: MODEL

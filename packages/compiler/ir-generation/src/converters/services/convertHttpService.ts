@@ -1,25 +1,36 @@
-import { FernFilepath, HttpEndpoint, HttpMethod, HttpService } from "@fern-api/api";
+import {
+    CustomWireMessageEncoding,
+    FernFilepath,
+    HttpAuth,
+    HttpEndpoint,
+    HttpMethod,
+    HttpService,
+} from "@fern-api/api";
 import { RawSchemas } from "@fern-api/syntax-analysis";
+import { assertNever } from "../../utils/assertNever";
 import { getDocs } from "../../utils/getDocs";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
-import { convertResponseErrors } from "./convertResponseErrors";
-import { convertWireMessage } from "./convertWireMessage";
+import { convertHttpRequest } from "./convertHttpRequest";
+import { convertHttpResponse } from "./convertHttpResponse";
 
 export function convertHttpService({
     serviceDefinition,
     serviceId,
     fernFilepath,
     imports,
+    nonStandardEncodings,
 }: {
     serviceDefinition: RawSchemas.HttpServiceSchema;
     serviceId: string;
     fernFilepath: FernFilepath;
     imports: Record<string, string>;
+    nonStandardEncodings: CustomWireMessageEncoding[];
 }): HttpService {
     const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
 
     return {
         docs: serviceDefinition.docs,
+        auth: serviceDefinition.auth != null ? convertHttpAuth(serviceDefinition.auth) : null,
         name: {
             name: serviceId,
             fernFilepath,
@@ -65,13 +76,19 @@ export function convertHttpService({
                         : [],
                 request:
                     endpoint.request != null
-                        ? convertWireMessage({ wireMessage: endpoint.request, fernFilepath, imports })
+                        ? convertHttpRequest({
+                              request: endpoint.request,
+                              fernFilepath,
+                              imports,
+                              nonStandardEncodings,
+                          })
                         : undefined,
-                response:
-                    endpoint.response != null
-                        ? convertWireMessage({ wireMessage: endpoint.response, fernFilepath, imports })
-                        : undefined,
-                errors: convertResponseErrors({ rawResponseErrors: endpoint.errors, fernFilepath, imports }),
+                response: convertHttpResponse({
+                    response: endpoint.response,
+                    fernFilepath,
+                    imports,
+                    nonStandardEncodings,
+                }),
             })
         ),
     };
@@ -89,5 +106,16 @@ function convertHttpMethod(method: RawSchemas.HttpEndpointSchema["method"]): Htt
             return HttpMethod.Patch;
         case "DELETE":
             return HttpMethod.Delete;
+        default:
+            assertNever(method);
+    }
+}
+
+function convertHttpAuth(auth: RawSchemas.AuthSchema): HttpAuth {
+    switch (auth) {
+        case "bearer":
+            return HttpAuth.Bearer;
+        default:
+            assertNever(auth);
     }
 }

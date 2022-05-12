@@ -28,4 +28,5 @@ export { WebSocketMessageResponseBehaviorSchema } from "./WebSocketMessageRespon
 export { WebSocketMessageResponseSchema } from "./WebSocketMessageResponseSchema";
 export { WebSocketMessageSchema } from "./WebSocketMessageSchema";
 export { WebSocketServiceSchema } from "./WebSocketServiceSchema";
+export { WireMessageSchema } from "./WireMessageSchema";
 export { WithDocsSchema } from "./WithDocsSchema";

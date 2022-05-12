@@ -1,0 +1,39 @@
+plugins {
+    id "com.palantir.git-version" version "0.14.0"
+    id "com.jfrog.artifactory" version "4.28.1"
+}
+
+group 'com.fern.ir'
+version gitVersion()
+
+artifactory {
+    contextUrl = 'https://usebirch.jfrog.io/artifactory'
+    publish {
+        contextUrl = 'https://usebirch.jfrog.io/artifactory'
+        repository {
+            repoKey = 'default-maven-local'
+            username ="$System.env.JFROG_USERNAME"
+            password = "$System.env.JFROG_API_KEY"
+        }
+        defaults {
+            publishArtifacts = true
+        }
+    }
+}
+
+allprojects {
+    apply plugin: "maven-publish"
+    apply plugin: "java-library"
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+            }
+        }
+    }
+
+    artifactoryPublish {
+        publications('mavenJava')
+    }
+}

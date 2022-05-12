@@ -10,6 +10,7 @@ types:
       title: string
       author: Author
       content: string
+      relatedPosts: list<Post>
 
   PostType:
     enum:
@@ -32,6 +33,7 @@ services:
   http:
     PostsService:
       base-path: /posts
+      auth: bearer
       endpoints:
         createPost:
           method: POST
@@ -48,11 +50,20 @@ services:
           path: /{postId}
           parameters:
             postId: commons.PostId
+          queryParameters:
+            page: optional<integer>
+            otherParam: integer
           response:
-            union:
-              a: Post
-              b: Post
-              c: Post
-          errors:
-            union:
-              notFound: PostNotFoundError
+            ok: Post
+            errors:
+              union:
+                notFound: PostNotFoundError
+        getPostV2:
+          method: GET
+          path: /get
+          request: commons.PostId
+          response:
+            ok: Post
+            errors:
+              union:
+                notFound: PostNotFoundError

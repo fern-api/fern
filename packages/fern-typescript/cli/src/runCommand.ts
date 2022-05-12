@@ -1,35 +1,28 @@
-import { writeFiles } from "@fern-typescript/commons";
-import { mkdir, rm } from "fs/promises";
-import { Project } from "ts-morph";
+import { PluginConfig } from "@fern-api/plugin-runner";
+import { withProject, writeFiles } from "@fern-typescript/commons";
+import { HelperManager } from "@fern-typescript/helper-manager";
 import { Command } from "./Command";
 import { loadIntermediateRepresentation } from "./commands/utils/loadIntermediateRepresentation";
+import { TypescriptPluginConfigSchema } from "./plugin/plugin-config/schemas/TypescriptPluginConfigSchema";
 
 export async function runCommand({
     command,
-    pathToIr,
-    outputDir,
+    config,
 }: {
     command: Command;
-    pathToIr: string;
-    outputDir: string;
+    config: PluginConfig<TypescriptPluginConfigSchema>;
 }): Promise<void> {
-    const intermediateRepresentation = await loadIntermediateRepresentation(pathToIr);
-
-    const project = new Project({
-        useInMemoryFileSystem: true,
-    });
-
-    command.run({
-        project,
-        intermediateRepresentation,
-    });
-
-    try {
-        await rm(outputDir, { recursive: true, force: true });
-        await mkdir(outputDir, { recursive: true });
-        await writeFiles(outputDir, project);
-    } catch (e) {
-        console.error("Failed to run command", e);
-        await rm(outputDir, { recursive: true, force: true });
+    if (config.output == null) {
+        throw new Error("Output directory is not specified.");
     }
+
+    const project = await withProject(async (p) => {
+        command.run({
+            project: p,
+            intermediateRepresentation: await loadIntermediateRepresentation(config.irFilepath),
+            helperManager: new HelperManager(config.helpers),
+        });
+    });
+
+    await writeFiles(config.output.path, project);
 }

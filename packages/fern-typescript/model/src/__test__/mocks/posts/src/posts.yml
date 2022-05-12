@@ -10,6 +10,9 @@ types:
       title: string
       author: Author
       content: string
+  BlogPostReference:
+    union:
+      post: Post
 
   PostType:
     enum:
@@ -45,7 +48,8 @@ services:
           parameters:
             postId: string
           request: CreatePostRequest
-          response: commons.PostId
-          errors:
-            union:
-              notFound: PostNotFoundError
+          response:
+            ok: commons.PostId
+            errors:
+              union:
+                notFound: PostNotFoundError

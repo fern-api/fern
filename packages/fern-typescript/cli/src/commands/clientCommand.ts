@@ -2,10 +2,11 @@ import { generateClientFiles } from "@fern-typescript/client";
 import { Command } from "../Command";
 
 export const clientCommand: Command = {
-    run: ({ project, intermediateRepresentation }) => {
+    run: ({ project, intermediateRepresentation, helperManager }) => {
         generateClientFiles({
-            directory: project.createDirectory("src"),
+            directory: project.createDirectory("."),
             intermediateRepresentation,
+            helperManager,
         });
     },
 };

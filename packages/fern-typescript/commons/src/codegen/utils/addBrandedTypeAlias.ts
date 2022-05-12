@@ -1,6 +1,4 @@
 import { StatementedNode, ts, Writers } from "ts-morph";
-import { FernWriters } from "../writers";
-import { getTextOfTsKeyword } from "./getTextOfTsKeyword";
 import { getTextOfTsNode } from "./getTextOfTsNode";
 import { maybeAddDocs } from "./maybeAddDocs";
 
@@ -20,13 +18,16 @@ export function addBrandedTypeAlias({
         isExported: true,
         type: Writers.intersectionType(
             getTextOfTsNode(baseType),
-            FernWriters.object
-                .writer()
-                .addProperty({
-                    key: `__${typeName}`,
-                    value: getTextOfTsKeyword(ts.SyntaxKind.VoidKeyword),
-                })
-                .toFunction()
+            getTextOfTsNode(
+                ts.factory.createTypeLiteralNode([
+                    ts.factory.createPropertySignature(
+                        undefined,
+                        ts.factory.createIdentifier(`__${typeName}`),
+                        undefined,
+                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword)
+                    ),
+                ])
+            )
         ),
     });
     maybeAddDocs(typeAlias, docs);

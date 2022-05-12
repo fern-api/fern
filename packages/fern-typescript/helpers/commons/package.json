@@ -1,0 +1,37 @@
+{
+  "name": "@fern-typescript/helper-commons",
+  "version": "0.0.0",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "clean": "tsc --build --clean",
+    "compile": "tsc --build",
+    "test": "jest --passWithNoTests",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../../.eslintignore",
+    "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../../../.eslintignore --fix",
+    "lint:style": "stylelint '**/*.scss' --allow-empty-input --max-warnings 0",
+    "lint:style:fix": "stylelint '**/*.scss' --allow-empty-input --max-warnings 0 --fix",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
+    "depcheck": "depcheck"
+  },
+  "dependencies": {
+    "zod": "^3.14.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.9",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-typescript": "^7.16.7",
+    "@types/jest": "^27.4.1",
+    "@types/node": "^17.0.25",
+    "depcheck": "^1.4.3",
+    "eslint": "^8.12.0",
+    "jest": "^27.5.1",
+    "prettier": "^2.6.2",
+    "stylelint": "^14.6.1",
+    "typescript": "^4.6.3"
+  }
+}

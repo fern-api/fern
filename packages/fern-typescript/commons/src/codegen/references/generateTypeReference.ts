@@ -1,31 +1,38 @@
-import { ContainerType, NamedType, PrimitiveType, TypeReference } from "@fern-api/api";
+import { ContainerType, PrimitiveType, TypeReference } from "@fern-api/api";
 import { Directory, SourceFile, ts } from "ts-morph";
-import { getImportPathForType } from "./getImportPathForType";
-
-const MODEL_NAMESPACE_IMPORT = "model";
+import { generateNamedTypeReference } from "./generateNamedTypeReference";
 
 export function generateTypeReference({
     reference,
     referencedIn,
     modelDirectory,
+    forceUseNamespaceImport,
 }: {
     reference: TypeReference;
     referencedIn: SourceFile;
     modelDirectory: Directory;
+    forceUseNamespaceImport?: generateNamedTypeReference.Args["forceUseNamespaceImport"];
 }): ts.TypeNode {
     return TypeReference._visit(reference, {
-        named: (named) => generateTypeNameReference({ typeName: named, referencedIn, modelDirectory }),
+        named: (named) =>
+            generateNamedTypeReference({
+                typeName: named,
+                referencedIn,
+                baseDirectory: modelDirectory,
+                baseDirectoryType: "model",
+                forceUseNamespaceImport,
+            }),
         primitive: (primitive) => {
-            return PrimitiveType.visit<ts.TypeNode>(primitive, {
-                Boolean: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword),
+            return PrimitiveType._visit<ts.TypeNode>(primitive, {
+                boolean: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword),
                 // TODO add datetime
                 // datetime: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                Double: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
-                Integer: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
-                Long: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
-                String: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                unknown: (value) => {
-                    throw new Error("Unexpected primitive type: " + value);
+                double: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
+                integer: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
+                long: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
+                string: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                _unknown: () => {
+                    throw new Error("Unexpected primitive type: " + primitive);
                 },
             });
         },
@@ -50,7 +57,7 @@ export function generateTypeReference({
                         ts.factory.createLiteralTypeNode(ts.factory.createNull()),
                         ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
                     ]),
-                unknown: () => {
+                _unknown: () => {
                     throw new Error("Unexpected container type: " + container._type);
                 },
             });
@@ -61,42 +68,8 @@ export function generateTypeReference({
                 ts.factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword),
             ]);
         },
-        unknown: () => {
+        _unknown: () => {
             throw new Error("Unexpected type reference: " + reference._type);
         },
     });
-}
-
-export function generateTypeNameReference({
-    typeName,
-    referencedIn,
-    modelDirectory,
-}: {
-    typeName: NamedType;
-    referencedIn: SourceFile;
-    modelDirectory: Directory;
-}): ts.TypeNode {
-    // if we're importing from within the model directory, then import from the
-    // actual filepath of the type
-    if (modelDirectory.isAncestorOf(referencedIn)) {
-        referencedIn.addImportDeclaration({
-            moduleSpecifier: getImportPathForType({ from: referencedIn, typeName, modelDirectory }),
-            namedImports: [{ name: typeName.name }],
-        });
-        return ts.factory.createTypeReferenceNode(typeName.name);
-    }
-
-    // otherwise, just use `import * as model`
-    referencedIn.addImportDeclaration({
-        moduleSpecifier: referencedIn.getRelativePathAsModuleSpecifierTo(modelDirectory),
-        namespaceImport: MODEL_NAMESPACE_IMPORT,
-    });
-
-    return ts.factory.createTypeReferenceNode(
-        ts.factory.createQualifiedName(
-            ts.factory.createIdentifier(MODEL_NAMESPACE_IMPORT),
-            ts.factory.createIdentifier(typeName.name)
-        ),
-        undefined
-    );
 }

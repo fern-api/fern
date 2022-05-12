@@ -3,19 +3,12 @@ module.exports = {
         browser: true,
         es2021: true,
     },
-    plugins: ["react", "@typescript-eslint"],
+    plugins: ["@typescript-eslint"],
     extends: [
         "eslint:recommended",
-        "plugin:react/recommended",
-        "plugin:react-hooks/recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/eslint-recommended",
     ],
-    settings: {
-        react: {
-            version: "detect",
-        },
-    },
     parser: "@typescript-eslint/parser",
     parserOptions: {
         ecmaFeatures: {
@@ -39,10 +32,6 @@ module.exports = {
         ],
         semi: ["error", "always"],
         indent: "off",
-        "react/jsx-uses-react": "off",
-        "react/react-in-jsx-scope": "off",
-        "react/prop-types": "off",
-        "react/display-name": "off",
         "@typescript-eslint/no-unused-vars": [
             "warn",
             {

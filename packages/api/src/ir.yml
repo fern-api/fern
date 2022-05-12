@@ -1,0 +1,21 @@
+imports:
+  types: types.yml
+  errors: errors.yml
+  http: services/http.yml
+  websocket: services/websocket.yml
+types:
+  IntermediateRepresentation:
+    docs: "Complete representation of the API schema"
+    properties:
+      workspaceName: optional<string>
+      types:
+        docs: "The types described by this API"
+        type: list<types.TypeDefinition>
+      services:
+        docs: "The services exposed by this API"
+        type: Services
+      errors: list<errors.ErrorDefinition>
+  Services:
+    properties:
+      http: list<http.HttpService>
+      websocket: list<websocket.WebSocketService>

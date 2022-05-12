@@ -3,11 +3,11 @@
   "compilerOptions": { "composite": true, "outDir": "./lib", "rootDir": "src", "module": "CommonJS" },
   "include": ["./src"],
   "references": [
-    { "path": "../../api/generated/ir" },
-    { "path": "../../compiler/cli" },
-    { "path": "../../compiler/compiler" },
+    { "path": "../../api/fern-ir-typescript" },
     { "path": "../commons" },
     { "path": "../errors" },
-    { "path": "../model" }
+    { "path": "../helpers/helper-manager" },
+    { "path": "../model" },
+    { "path": "../testing-utils" }
   ]
 }

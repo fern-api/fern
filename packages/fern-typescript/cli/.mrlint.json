@@ -1,4 +1,16 @@
 {
   "type": "cli",
-  "private": false
+  "private": false,
+  "rules": {
+    "package-json": {
+      "scripts": {
+        "dockerTagLocal": "./docker/create_docker.sh local",
+        "dockerTagVersion": "./docker/create_docker.sh $(yarn info fern-typescript --all --json | jq -r .children.Version)"
+      }
+    },
+    "depcheck": {
+      "ignores": ["webpack", "webpack-cli", "umd-compat-loader", "simple-progress-webpack-plugin"],
+      "ignore-patterns": ["docker"]
+    }
+  }
 }

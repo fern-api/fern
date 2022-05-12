@@ -1,0 +1,18 @@
+types:
+  PostId: string
+  Post:
+    docs: A blog post
+    properties:
+      id: string
+      title: string
+      content: string
+services:
+  http:
+    PostsService:
+      endpoints:
+        deletePost:
+          path: /delete
+          method: DELETE
+          request:
+            alias: PostId
+            encoding: hathora

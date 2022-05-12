@@ -31,6 +31,9 @@ types:
   EnumValue:
     extends: commons.WithDocs
     properties:
+      name:
+        type: string
+        docs: Name must start with an alphabet.
       value: string
 
   ObjectTypeDefinition:

@@ -1,4 +1,4 @@
-import { IntermediateRepresentation } from "@fern-api/api";
+import { CustomWireMessageEncoding, IntermediateRepresentation } from "@fern-api/api";
 import { SyntaxAnalysis } from "@fern-api/syntax-analysis/src/types";
 
 export declare namespace Compiler {
@@ -7,6 +7,7 @@ export declare namespace Compiler {
     export interface SuccessfulResult {
         didSucceed: true;
         intermediateRepresentation: IntermediateRepresentation;
+        nonStandardEncodings: CustomWireMessageEncoding[];
     }
 
     export interface FailedResult {
