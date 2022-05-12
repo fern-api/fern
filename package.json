@@ -26,7 +26,6 @@
     "@babel/preset-typescript": "^7.16.7",
     "@types/jest": "^27.5.0",
     "@types/postman-collection": "^3.5.7",
-    "@types/url-join": "^4.0.1",
     "depcheck": "^1.4.3",
     "eslint": "^8.15.0",
     "fern-api": "^0.0.62",
@@ -43,7 +42,6 @@
     "@fern-api/api": "^0.0.59",
     "@fern-api/compiler": "^0.0.59",
     "postman-collection": "^4.1.2",
-    "url-join": "^5.0.0",
     "zod": "^3.16.0"
   },
   "packageManager": "yarn@3.2.0"

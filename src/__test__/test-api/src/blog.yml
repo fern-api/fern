@@ -1,5 +1,3 @@
-imports:
-  menu: blog.yml
 ids:
   - PostId
 types:
@@ -31,17 +29,20 @@ services:
       base-path: /posts
       endpoints:
         createPost:
-          docs: Create a new blog post
+          docs: Creates a blog post and returns blog post id.
           method: POST
           path: /create
           request:
             properties:
               title: string
-              author: Author
+              author:
+                type: Author
+                docs: Author is the writer.
               content: string
               postType: PostType
           response: PostId
         getPost:
+          docs: Gets a blog post.
           method: GET
           path: /{postId}
           parameters:
