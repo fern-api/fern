@@ -16,6 +16,8 @@ Run `fern generate` to automatically generate **server stubs** and **type-safe c
 
 ## What languages are supported?
 
+The Fern compiler reads API definitions written in the [human-readable YML format](/docs/fern_definitions.md) and produces a JSON [intermediate representation](/docs/intermediate_representation.md) (IR).
+
 | **Language** | **Server Stub**  | **Client** |
 | ------------ | ---------------- | ---------- |
 | Java         | ✅               | ✅         |
@@ -89,9 +91,15 @@ The team welcomes contributions! To make code changes to one of the Fern repos:
 
 ## Getting started
 
-TODO
+### Installation
+
+`$ npm install -g fern-api`
+
+### Initialize Fern in your repo
 
 `fern init`
+
+### Generate code
 
 `fern generate`
 
