@@ -1,7 +1,7 @@
 import { FernFilepath, Type, TypeDefinition } from "@fern-api/api";
+import { assertNever } from "@fern-api/commons";
 import { RawSchemas } from "@fern-api/syntax-analysis";
 import { DEFAULT_UNION_TYPE_DISCRIMINANT } from "../../constants";
-import { assertNever } from "../../utils/assertNever";
 import { getDocs } from "../../utils/getDocs";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { parseTypeName } from "../../utils/parseTypeName";

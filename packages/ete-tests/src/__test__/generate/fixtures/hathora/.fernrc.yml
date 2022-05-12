@@ -8,4 +8,4 @@ plugins:
       mode: client
     helpers:
       - name: "@fern-typescript/hathora-encoding-helper"
-        version: 0.0.60
+        version: 0.0.61

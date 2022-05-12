@@ -3,7 +3,7 @@ import ts from "typescript";
 
 export const helper: FernTypescriptHelper = {
     encodings: {
-        json: {
+        hathora: {
             contentType: "application/json",
             generateEncode: ({ referenceToDecoded }) => {
                 return ts.factory.createCallExpression(

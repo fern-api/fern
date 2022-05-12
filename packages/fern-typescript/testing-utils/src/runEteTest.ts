@@ -1,13 +1,12 @@
 import { IntermediateRepresentation } from "@fern-api/api";
+import { compileTypescript } from "@fern-api/commons";
 import { compile } from "@fern-api/compiler";
 import { withProject, writeFiles } from "@fern-typescript/commons";
 import { parseFernInput } from "fern-api";
 import { rm } from "fs/promises";
-import glob from "glob-promise";
 import { vol } from "memfs";
 import path from "path";
 import { Directory } from "ts-morph";
-import ts from "typescript";
 
 export declare namespace runEteTest {
     export interface Args {
@@ -56,46 +55,4 @@ export async function runEteTest({ directory, generateFiles, outputToDisk = fals
 
 function deleteDirectory(directory: string): Promise<void> {
     return rm(directory, { force: true, recursive: true });
-}
-
-async function compileTypescript(directory: string) {
-    const typescriptFileNames = await glob("**/*.ts", {
-        cwd: directory,
-        absolute: true,
-    });
-
-    const program = ts.createProgram({
-        rootNames: typescriptFileNames,
-        options: {
-            noEmit: true,
-            noImplicitAny: false,
-            strict: true,
-            noUncheckedIndexedAccess: true,
-            noUnusedLocals: true,
-            noUnusedParameters: true,
-        },
-    });
-    const emitResult = program.emit();
-    const diagnostics = ts.getPreEmitDiagnostics(program).concat(emitResult.diagnostics);
-    if (diagnostics.length > 0) {
-        const errorMessage = [
-            `Failed to compile generated code. View files here: ${directory}\n`,
-            ...diagnostics.map((d) => `\t${getDiagnosticMessage(d)}`),
-        ].join("\n");
-        throw new Error(errorMessage);
-    }
-}
-
-function getDiagnosticMessage(diagnostic: ts.Diagnostic): string {
-    if (diagnostic.file) {
-        const message = ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n");
-        if (diagnostic.start != null) {
-            const { line, character } = ts.getLineAndCharacterOfPosition(diagnostic.file, diagnostic.start);
-            return `${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`;
-        } else {
-            return `${diagnostic.file.fileName}: ${message}`;
-        }
-    } else {
-        return ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n");
-    }
 }

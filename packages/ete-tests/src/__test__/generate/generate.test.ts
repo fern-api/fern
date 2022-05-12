@@ -1,3 +1,4 @@
+import { compileTypescript } from "@fern-api/commons";
 import execa from "execa";
 import { readFile, rm } from "fs/promises";
 import path from "path";
@@ -16,7 +17,7 @@ function itFixture(fixtureName: string) {
             const fixturePath = path.join(FIXTURES_DIR, fixtureName);
             const outputPath = path.join(fixturePath, "generated");
             await rm(outputPath, { force: true, recursive: true });
-            const cmd = execa("node", ["./cli", "generate", fixturePath], {
+            const cmd = execa("node", ["../cli/cli", "generate", fixturePath], {
                 env: {
                     NODE_ENV: "development",
                 },
@@ -31,6 +32,7 @@ function itFixture(fixtureName: string) {
                 .split("\n")
                 .map((s) => s.trim())
                 .filter((s) => s.length > 0);
+            await compileTypescript(outputPath);
             for (const expectedFile of expectedFiles) {
                 const fileContents = await readFile(path.join(outputPath, expectedFile));
                 expect(fileContents.toString()).toMatchSnapshot();

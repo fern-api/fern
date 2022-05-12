@@ -1,6 +1,6 @@
+import { assertNever } from "@fern-api/commons";
 import esutils from "esutils";
 import { CodeBlockWriter, WriterFunction, WriterFunctionOrValue } from "ts-morph";
-import { assertNever } from "../../assertNever";
 
 export declare namespace ObjectWriter {
     export type Block = Property | CustomWrite;
