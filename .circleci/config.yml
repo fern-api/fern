@@ -33,6 +33,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Update yarn.lock with new versions
+          command: yarn
+      - run:
           name: Compile
           command: yarn compile
       - run:
