@@ -1,18 +1,20 @@
 import { HttpEndpoint } from "@fern-api/api";
 import { generateTypeReference, getTextOfTsNode } from "@fern-typescript/commons";
-import { Directory, OptionalKind, PropertySignatureStructure, SourceFile, ts } from "ts-morph";
-import { REQUEST_BODY_PROPERTY_NAME, REQUEST_TYPE_NAME } from "./constants";
+import { Directory, OptionalKind, PropertySignatureStructure, SourceFile } from "ts-morph";
+import { ClientConstants } from "../../../constants";
+import { WireMessageBodyReference } from "../types";
+import { generateReferenceToWireMessageType } from "../utils";
 
 export function generateRequest({
     requestFile,
     endpoint,
     modelDirectory,
-    generateRequestBodyReference,
+    requestBodyReference,
 }: {
     requestFile: SourceFile;
     endpoint: HttpEndpoint;
     modelDirectory: Directory;
-    generateRequestBodyReference: ((referencedIn: SourceFile) => ts.TypeNode) | undefined;
+    requestBodyReference: WireMessageBodyReference | undefined;
 }): void {
     const properties: OptionalKind<PropertySignatureStructure>[] = [
         ...endpoint.parameters.map((parameter) => ({
@@ -39,15 +41,21 @@ export function generateRequest({
         })),
     ];
 
-    if (generateRequestBodyReference != null) {
+    if (requestBodyReference != null) {
         properties.push({
-            name: REQUEST_BODY_PROPERTY_NAME,
-            type: getTextOfTsNode(generateRequestBodyReference(requestFile)),
+            name: ClientConstants.Service.Endpoint.Types.Request.Properties.Body.PROPERTY_NAME,
+            type: getTextOfTsNode(
+                generateReferenceToWireMessageType({
+                    reference: requestBodyReference,
+                    referencedIn: requestFile,
+                    modelDirectory,
+                })
+            ),
         });
     }
 
     requestFile.addInterface({
-        name: REQUEST_TYPE_NAME,
+        name: ClientConstants.Service.Endpoint.Types.Request.TYPE_NAME,
         properties,
         isExported: true,
     });

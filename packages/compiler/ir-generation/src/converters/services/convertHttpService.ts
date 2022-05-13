@@ -77,15 +77,12 @@ export function convertHttpService({
                               docs: getDocs(headerType),
                           }))
                         : [],
-                request:
-                    endpoint.request != null
-                        ? convertHttpRequest({
-                              request: endpoint.request,
-                              fernFilepath,
-                              imports,
-                              nonStandardEncodings,
-                          })
-                        : undefined,
+                request: convertHttpRequest({
+                    request: endpoint.request,
+                    fernFilepath,
+                    imports,
+                    nonStandardEncodings,
+                }),
                 response: convertHttpResponse({
                     response: endpoint.response,
                     fernFilepath,

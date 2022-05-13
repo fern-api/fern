@@ -4,9 +4,11 @@ exports[`fern generate tests hathora 1`] = `
 "import {
     defaultFetcher,
     Fetcher,
+    isResponseOk,
     joinPaths,
     Service,
 } from \\"@fern-typescript/service-utils\\";
+import * as encoders from \\"../../encoders\\";
 import * as model from \\"../../model\\";
 import * as endpoints from \\"./endpoints\\";
 
@@ -34,22 +36,25 @@ export class Client implements Client {
             headers: {},
             token: this.token,
             body: {
-                content: JSON.stringify(request),
-                contentType: \\"application/json\\",
+                content: encoders.HathoraEncoder.Model.PostId.encode(request),
+                contentType: \\"application/octet-stream\\",
             },
         });
-        const response = JSON.parse(encodedResponse.toString());
 
-        if (response.statusCode >= 200 && response.statusCode < 300) {
+        if (isResponseOk(encodedResponse)) {
             return {
                 ok: true,
-                statusCode: response.statusCode,
+                statusCode: encodedResponse.statusCode,
             };
         } else {
+            const error =
+                encoders.HathoraEncoder.Services.PostsService.deletePost.ErrorBody.decode(
+                    encodedResponse.body
+                );
             return {
                 ok: false,
-                statusCode: response.statusCode,
-                error: response.body as endpoints.deletePost.ErrorBody,
+                statusCode: encodedResponse.statusCode,
+                error: error as endpoints.deletePost.ErrorBody,
             };
         }
     }

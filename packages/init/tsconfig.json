@@ -1,6 +1,15 @@
 {
   "extends": "../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "./lib", "rootDir": "src", "module": "CommonJS" },
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "dist/esm",
+    "rootDir": "src",
+    "module": "esnext",
+    "tsBuildInfoFile": "tsconfig.esm.tsbuildinfo"
+  },
   "include": ["./src"],
-  "references": [{ "path": "../compiler/commons" }, { "path": "../compiler/syntax-analysis" }]
+  "references": [
+    { "path": "../compiler/commons/tsconfig.json" },
+    { "path": "../compiler/syntax-analysis/tsconfig.json" }
+  ]
 }

@@ -1,19 +1,15 @@
 import { HttpEndpoint } from "@fern-api/api";
-import { getOrCreateSourceFile, getTextOfTsKeyword, getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
-import { Directory, OptionalKind, PropertySignatureStructure, ts, Writers } from "ts-morph";
-import { generateWireMessageBodyReference } from "../generateWireMessageBodyReference";
-import { GeneratedEndpointTypes } from "../types";
 import {
-    ERROR_BODY_PROPERTY_NAME,
-    ERROR_BODY_TYPE_NAME,
-    ERROR_RESPONSE_TYPE_NAME,
-    RESPONSE_BODY_PROPERTY_NAME,
-    RESPONSE_BODY_TYPE_NAME,
-    RESPONSE_OK_PROPERTY_NAME,
-    RESPONSE_STATUS_CODE_PROPERTY_NAME,
-    RESPONSE_TYPE_NAME,
-    SUCCESS_RESPONSE_TYPE_NAME,
-} from "./constants";
+    generateTypeReference,
+    getOrCreateSourceFile,
+    getTextOfTsKeyword,
+    getTextOfTsNode,
+    TypeResolver,
+} from "@fern-typescript/commons";
+import { Directory, OptionalKind, PropertySignatureStructure, SourceFile, ts, Writers } from "ts-morph";
+import { ClientConstants } from "../../../constants";
+import { generateWireMessageBodyReference } from "../generateWireMessageBodyReference";
+import { GeneratedEndpointTypes, WireMessageBodyReference } from "../types";
 import { generateErrorBodyReference } from "./generateErrorBodyReference";
 
 export declare namespace generateResponseTypes {
@@ -35,50 +31,46 @@ export function generateResponseTypes({
     errorsDirectory,
     typeResolver,
 }: generateResponseTypes.Args): generateResponseTypes.Return {
-    const successResponseBody =
-        endpoint.response.ok != null
-            ? generateWireMessageBodyReference({
-                  typeName: RESPONSE_BODY_TYPE_NAME,
-                  type: endpoint.response.ok,
-                  docs: endpoint.response.docs,
-                  endpointDirectory,
-                  modelDirectory,
-                  typeResolver,
-              })
-            : undefined;
+    const successBodyReference = generateWireMessageBodyReference({
+        typeName: ClientConstants.Service.Endpoint.Types.Response.Success.Properties.Body.TYPE_NAME,
+        type: endpoint.response.ok,
+        docs: endpoint.response.docs,
+        endpointDirectory,
+        modelDirectory,
+        typeResolver,
+    });
 
-    const responseFile = getOrCreateSourceFile(endpointDirectory, `${RESPONSE_TYPE_NAME}.ts`);
+    const responseFile = getOrCreateSourceFile(
+        endpointDirectory,
+        `${ClientConstants.Service.Endpoint.Types.Response.TYPE_NAME}.ts`
+    );
 
     responseFile.addTypeAlias({
-        name: RESPONSE_TYPE_NAME,
-        type: Writers.unionType(SUCCESS_RESPONSE_TYPE_NAME, ERROR_RESPONSE_TYPE_NAME),
+        name: ClientConstants.Service.Endpoint.Types.Response.TYPE_NAME,
+        type: Writers.unionType(
+            ClientConstants.Service.Endpoint.Types.Response.Success.TYPE_NAME,
+            ClientConstants.Service.Endpoint.Types.Response.Error.TYPE_NAME
+        ),
         isExported: true,
     });
 
-    responseFile.addInterface({
-        name: SUCCESS_RESPONSE_TYPE_NAME,
-        isExported: true,
-        properties: generateSuccessResponse({
-            successResponseBodyReference:
-                successResponseBody != null ? successResponseBody.generateTypeReference(responseFile) : undefined,
-        }),
+    addSuccessResponseInterface({
+        responseFile,
+        successBodyReference,
+        modelDirectory,
     });
 
-    const errorBodyFile = getOrCreateSourceFile(endpointDirectory, `${ERROR_BODY_TYPE_NAME}.ts`);
+    const errorBodyFile = getOrCreateSourceFile(
+        endpointDirectory,
+        `${ClientConstants.Service.Endpoint.Types.Response.Error.Properties.Body.TYPE_NAME}.ts`
+    );
     responseFile.addInterface({
-        name: ERROR_RESPONSE_TYPE_NAME,
+        name: ClientConstants.Service.Endpoint.Types.Response.Error.TYPE_NAME,
         isExported: true,
         properties: [
+            ...createBaseResponseProperties({ ok: false }),
             {
-                name: RESPONSE_OK_PROPERTY_NAME,
-                type: getTextOfTsNode(ts.factory.createLiteralTypeNode(ts.factory.createFalse())),
-            },
-            {
-                name: RESPONSE_STATUS_CODE_PROPERTY_NAME,
-                type: getTextOfTsKeyword(ts.SyntaxKind.NumberKeyword),
-            },
-            {
-                name: ERROR_BODY_PROPERTY_NAME,
+                name: ClientConstants.Service.Endpoint.Types.Response.Error.Properties.Body.PROPERTY_NAME,
                 type: getTextOfTsNode(
                     generateErrorBodyReference({
                         errors: endpoint.response.errors,
@@ -92,44 +84,68 @@ export function generateResponseTypes({
     });
 
     return {
-        successBodyReference:
-            successResponseBody != null
-                ? successResponseBody.file != null
-                    ? {
-                          isLocal: true,
-                          typeName: ts.factory.createIdentifier(RESPONSE_BODY_TYPE_NAME),
-                      }
-                    : {
-                          isLocal: false,
-                          generateTypeReference: successResponseBody.generateTypeReference,
-                      }
-                : undefined,
+        successBodyReference,
         encoding: endpoint.response.encoding,
     };
 }
 
-function generateSuccessResponse({
+function addSuccessResponseInterface({
+    successBodyReference,
+    responseFile,
+    modelDirectory,
+}: {
+    successBodyReference: WireMessageBodyReference | undefined;
+    responseFile: SourceFile;
+    modelDirectory: Directory;
+}): void {
+    const successResponseBodyReference =
+        successBodyReference != null
+            ? successBodyReference.isLocal
+                ? successBodyReference.generateTypeReference(responseFile)
+                : generateTypeReference({
+                      reference: successBodyReference.typeReference,
+                      referencedIn: responseFile,
+                      modelDirectory,
+                  })
+            : undefined;
+
+    responseFile.addInterface({
+        name: ClientConstants.Service.Endpoint.Types.Response.Success.TYPE_NAME,
+        isExported: true,
+        properties: generateSuccessResponseProperties({
+            successResponseBodyReference,
+        }),
+    });
+}
+
+function generateSuccessResponseProperties({
     successResponseBodyReference,
 }: {
     successResponseBodyReference: ts.TypeNode | undefined;
 }): OptionalKind<PropertySignatureStructure>[] {
-    const properties: OptionalKind<PropertySignatureStructure>[] = [
-        {
-            name: RESPONSE_OK_PROPERTY_NAME,
-            type: getTextOfTsNode(ts.factory.createLiteralTypeNode(ts.factory.createTrue())),
-        },
-        {
-            name: RESPONSE_STATUS_CODE_PROPERTY_NAME,
-            type: getTextOfTsKeyword(ts.SyntaxKind.NumberKeyword),
-        },
-    ];
+    const properties = createBaseResponseProperties({ ok: true });
 
     if (successResponseBodyReference != null) {
         properties.push({
-            name: RESPONSE_BODY_PROPERTY_NAME,
+            name: ClientConstants.Service.Endpoint.Types.Response.Success.Properties.Body.PROPERTY_NAME,
             type: getTextOfTsNode(successResponseBodyReference),
         });
     }
 
     return properties;
+}
+
+function createBaseResponseProperties({ ok }: { ok: boolean }): OptionalKind<PropertySignatureStructure>[] {
+    return [
+        {
+            name: ClientConstants.Service.Endpoint.Types.Response.Properties.OK,
+            type: getTextOfTsNode(
+                ts.factory.createLiteralTypeNode(ok ? ts.factory.createTrue() : ts.factory.createFalse())
+            ),
+        },
+        {
+            name: ClientConstants.Service.Endpoint.Types.Response.Properties.STATUS_CODE,
+            type: getTextOfTsKeyword(ts.SyntaxKind.NumberKeyword),
+        },
+    ];
 }

@@ -1,4 +1,4 @@
-import { CustomWireMessageEncoding, FernFilepath, HttpResponse, Type } from "@fern-api/api";
+import { CustomWireMessageEncoding, FernFilepath, HttpResponse, Type, TypeReference } from "@fern-api/api";
 import { RawSchemas } from "@fern-api/syntax-analysis";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { convertType } from "../type-definitions/convertTypeDefinition";
@@ -24,11 +24,11 @@ export function convertHttpResponse({
             nonStandardEncodings,
         }),
         ok:
-            response != null
-                ? typeof response === "string"
-                    ? Type.alias({ aliasOf: parseTypeReference(response) })
-                    : convertType({ typeDefinition: response.ok, fernFilepath, imports })
-                : undefined,
+            typeof response === "string"
+                ? Type.alias({ aliasOf: parseTypeReference(response) })
+                : response?.ok != null
+                ? convertType({ typeDefinition: response.ok, fernFilepath, imports })
+                : Type.alias({ aliasOf: TypeReference.void() }),
         errors: convertResponseErrors({
             rawResponseErrors: typeof response !== "string" ? response?.errors : undefined,
             fernFilepath,

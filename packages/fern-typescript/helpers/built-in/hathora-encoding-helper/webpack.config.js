@@ -10,7 +10,7 @@ module.exports = (_env, { mode = "production" }) => {
             rules: [
                 {
                     test: /\.ts$/,
-                    use: "ts-loader",
+                    loader: "ts-loader",
                     exclude: /node_modules/,
                 },
             ],

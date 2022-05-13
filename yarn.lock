@@ -31,7 +31,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:^7.1.0, @babel/core@npm:^7.12.3, @babel/core@npm:^7.17.9, @babel/core@npm:^7.7.2, @babel/core@npm:^7.8.0":
+"@babel/core@npm:^7.1.0, @babel/core@npm:^7.12.3, @babel/core@npm:^7.17.10, @babel/core@npm:^7.7.2, @babel/core@npm:^7.8.0":
   version: 7.17.10
   resolution: "@babel/core@npm:7.17.10"
   dependencies:
@@ -1139,7 +1139,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-env@npm:^7.16.11":
+"@babel/preset-env@npm:^7.17.10":
   version: 7.17.10
   resolution: "@babel/preset-env@npm:7.17.10"
   dependencies:
@@ -1334,8 +1334,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/add-plugin@workspace:packages/add-plugin"
   dependencies:
-    "@babel/core": "npm:^7.17.9"
-    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/core": "npm:^7.17.10"
+    "@babel/preset-env": "npm:^7.17.10"
     "@babel/preset-typescript": "npm:^7.16.7"
     "@fern-api/compiler-commons": "workspace:*"
     "@types/jest": "npm:^27.4.1"
@@ -1360,8 +1360,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/api@workspace:packages/api/fern-ir-typescript"
   dependencies:
-    "@babel/core": "npm:^7.17.9"
-    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/core": "npm:^7.17.10"
+    "@babel/preset-env": "npm:^7.17.10"
     "@babel/preset-typescript": "npm:^7.16.7"
     "@types/jest": "npm:^27.4.1"
     "@types/node": "npm:^17.0.25"
@@ -1378,8 +1378,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/commons@workspace:packages/commons"
   dependencies:
-    "@babel/core": "npm:^7.17.9"
-    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/core": "npm:^7.17.10"
+    "@babel/preset-env": "npm:^7.17.10"
     "@babel/preset-typescript": "npm:^7.16.7"
     "@types/jest": "npm:^27.4.1"
     "@types/node": "npm:^17.0.25"
@@ -1409,8 +1409,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/compiler-commons@workspace:packages/compiler/commons"
   dependencies:
-    "@babel/core": "npm:^7.17.9"
-    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/core": "npm:^7.17.10"
+    "@babel/preset-env": "npm:^7.17.10"
     "@babel/preset-typescript": "npm:^7.16.7"
     "@types/jest": "npm:^27.4.1"
     "@types/js-yaml": "npm:^4.0.5"
@@ -1443,8 +1443,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/compiler@workspace:packages/compiler/compiler"
   dependencies:
-    "@babel/core": "npm:^7.17.9"
-    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/core": "npm:^7.17.10"
+    "@babel/preset-env": "npm:^7.17.10"
     "@babel/preset-typescript": "npm:^7.16.7"
     "@fern-api/api": "workspace:*"
     "@fern-api/compiler-commons": "workspace:*"
@@ -1474,8 +1474,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/docker-utils@workspace:packages/compiler/plugins/docker-utils"
   dependencies:
-    "@babel/core": "npm:^7.17.9"
-    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/core": "npm:^7.17.10"
+    "@babel/preset-env": "npm:^7.17.10"
     "@babel/preset-typescript": "npm:^7.16.7"
     "@types/dockerode": "npm:^3.3.8"
     "@types/jest": "npm:^27.4.1"
@@ -1494,8 +1494,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/ete-tests@workspace:packages/ete-tests"
   dependencies:
-    "@babel/core": "npm:^7.17.9"
-    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/core": "npm:^7.17.10"
+    "@babel/preset-env": "npm:^7.17.10"
     "@babel/preset-typescript": "npm:^7.16.7"
     "@fern-api/commons": "workspace:*"
     "@fern-api/compiler-commons": "workspace:*"
@@ -1517,8 +1517,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/init@workspace:packages/init"
   dependencies:
-    "@babel/core": "npm:^7.17.9"
-    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/core": "npm:^7.17.10"
+    "@babel/preset-env": "npm:^7.17.10"
     "@babel/preset-typescript": "npm:^7.16.7"
     "@fern-api/compiler-commons": "workspace:*"
     "@fern-api/syntax-analysis": "workspace:*"
@@ -1550,8 +1550,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/ir-generation@workspace:packages/compiler/ir-generation"
   dependencies:
-    "@babel/core": "npm:^7.17.9"
-    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/core": "npm:^7.17.10"
+    "@babel/preset-env": "npm:^7.17.10"
     "@babel/preset-typescript": "npm:^7.16.7"
     "@fern-api/api": "workspace:*"
     "@fern-api/commons": "workspace:*"
@@ -1568,56 +1568,57 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/mrlint-commons@npm:0.0.18":
-  version: 0.0.18
-  resolution: "@fern-api/mrlint-commons@npm:0.0.18"
+"@fern-api/mrlint-commons@npm:0.0.20":
+  version: 0.0.20
+  resolution: "@fern-api/mrlint-commons@npm:0.0.20"
   dependencies:
-    "@fern-api/mrlint-virtual-file-system": "npm:0.0.18"
-  checksum: ad2c3dcc4b3d222cbb57de55acad189c779b9607b84509bafe2c1fbcecf98a95d0325ef24affdc816e7a69af7dba0b96c85957ad708eb9fc52163f1658d84d9a
+    "@fern-api/mrlint-virtual-file-system": "npm:0.0.20"
+  checksum: 0b747bf9cda7bda3df390fe4ab5294797dfdd6c0456fa4df1972c5d7fa0a14fb59caa8f4d66e40531fc03992ea9b6620280ce5d880bf5aa3f11a3b583cd66341
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-lint@npm:0.0.18":
-  version: 0.0.18
-  resolution: "@fern-api/mrlint-lint@npm:0.0.18"
+"@fern-api/mrlint-lint@npm:0.0.20":
+  version: 0.0.20
+  resolution: "@fern-api/mrlint-lint@npm:0.0.20"
   dependencies:
-    "@fern-api/mrlint-commons": "npm:0.0.18"
-    "@fern-api/mrlint-virtual-file-system": "npm:0.0.18"
+    "@fern-api/mrlint-commons": "npm:0.0.20"
+    "@fern-api/mrlint-virtual-file-system": "npm:0.0.20"
     chalk: "npm:^4.1.2"
     diff: "npm:^5.0.0"
     prettier: "npm:^2.6.2"
-  checksum: b1c8431fab60933433ec5f261062341fb523d7adcd62d5992c9c3a08bfa392e4e733dfdce3e3017466b6027a82d7d37853d13b5e3019251afaca501ebc622db8
+  checksum: 30baedab1046acccf1ef38ad470822514e1a79a9296b738d54782cace900e1544215de93d10607ac4f0a17128400332856ee7c30e55740c9667703900a99e915
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-parser@npm:0.0.18":
-  version: 0.0.18
-  resolution: "@fern-api/mrlint-parser@npm:0.0.18"
+"@fern-api/mrlint-parser@npm:0.0.20":
+  version: 0.0.20
+  resolution: "@fern-api/mrlint-parser@npm:0.0.20"
   dependencies:
-    "@fern-api/mrlint-commons": "npm:0.0.18"
+    "@fern-api/mrlint-commons": "npm:0.0.20"
+    "@fern-api/mrlint-rules": "npm:0.0.20"
     find-up: "npm:^5.0.0"
     glob: "npm:^7.2.0"
     js-yaml: "npm:^4.1.0"
     zod: "npm:^3.14.3"
-  checksum: 2539c71d73aeea79a7bbdf6055215887e4bfd6910886458652807c4ddcc9ea06c4d562e0ca2b8f1e085b67baa8a9548c88e80441506c3abe0759a48574f2be31
+  checksum: fe27bff1b92abe00e7381ae143fe31e01ee70bbe33a3a3a7de9531a4c908af31526c8c2b513b37abb8fd13c6d33de04d2f7ed6fe0628c7c1b1d0a9479acd3d4d
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-rules@npm:0.0.18":
-  version: 0.0.18
-  resolution: "@fern-api/mrlint-rules@npm:0.0.18"
+"@fern-api/mrlint-rules@npm:0.0.20":
+  version: 0.0.20
+  resolution: "@fern-api/mrlint-rules@npm:0.0.20"
   dependencies:
-    "@fern-api/mrlint-commons": "npm:0.0.18"
-    "@fern-api/mrlint-virtual-file-system": "npm:0.0.18"
+    "@fern-api/mrlint-commons": "npm:0.0.20"
+    "@fern-api/mrlint-virtual-file-system": "npm:0.0.20"
     immer: "npm:^9.0.12"
-  checksum: 29286f2da29f2de3313c13bf2d5f7fc2572be2697914e1e00f09d403c003521307d00c2743f7a01224b90a39ac59d91b12655b65ee11fa374344f927dc908a74
+  checksum: 242d9438af82e8bb62bbbd19024c632075782bdcac960e851626e445bfae71a485c9b7b6ff2b4f8e2c38c27dfaa452c528e89cdfcac0c34b644ca05cd8f24a39
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-virtual-file-system@npm:0.0.18":
-  version: 0.0.18
-  resolution: "@fern-api/mrlint-virtual-file-system@npm:0.0.18"
-  checksum: 7b6f1373d9d2d6127004e45465e78157baa64addcd8cb88d7c82113d722e75f84be7a4cc917434cbf1219ca61185c1e66ff5ae6a77b896ee8582b605799a6fd9
+"@fern-api/mrlint-virtual-file-system@npm:0.0.20":
+  version: 0.0.20
+  resolution: "@fern-api/mrlint-virtual-file-system@npm:0.0.20"
+  checksum: f953fe11773df5e7634872d09e86b3e263cecc35464e993e8e176c44566e120d3ecfa6eec53db8229966a480f9c6d2ca00679a74c86d9dd979dfcd26b871293d
   languageName: node
   linkType: hard
 
@@ -1635,8 +1636,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/plugin-runner@workspace:packages/compiler/plugins/plugin-runner"
   dependencies:
-    "@babel/core": "npm:^7.17.9"
-    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/core": "npm:^7.17.10"
+    "@babel/preset-env": "npm:^7.17.10"
     "@babel/preset-typescript": "npm:^7.16.7"
     "@fern-api/docker-utils": "workspace:*"
     "@types/jest": "npm:^27.4.1"
@@ -1665,8 +1666,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/syntax-analysis@workspace:packages/compiler/syntax-analysis"
   dependencies:
-    "@babel/core": "npm:^7.17.9"
-    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/core": "npm:^7.17.10"
+    "@babel/preset-env": "npm:^7.17.10"
     "@babel/preset-typescript": "npm:^7.16.7"
     "@fern-api/compiler-commons": "workspace:*"
     "@types/jest": "npm:^27.4.1"
@@ -1687,14 +1688,16 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/client@workspace:packages/fern-typescript/client"
   dependencies:
-    "@babel/core": "npm:^7.17.9"
-    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/core": "npm:^7.17.10"
+    "@babel/preset-env": "npm:^7.17.10"
     "@babel/preset-typescript": "npm:^7.16.7"
     "@fern-api/api": "workspace:*"
     "@fern-api/commons": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
+    "@fern-typescript/encoders": "workspace:*"
     "@fern-typescript/errors": "workspace:*"
     "@fern-typescript/helper-manager": "workspace:*"
+    "@fern-typescript/helper-utils": "workspace:*"
     "@fern-typescript/model": "workspace:*"
     "@fern-typescript/testing-utils": "workspace:*"
     "@types/jest": "npm:^27.4.1"
@@ -1713,8 +1716,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/commons@workspace:packages/fern-typescript/commons"
   dependencies:
-    "@babel/core": "npm:^7.17.9"
-    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/core": "npm:^7.17.10"
+    "@babel/preset-env": "npm:^7.17.10"
     "@babel/preset-typescript": "npm:^7.16.7"
     "@fern-api/api": "workspace:*"
     "@fern-api/commons": "workspace:*"
@@ -1735,12 +1738,34 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-typescript/encoders@workspace:*, @fern-typescript/encoders@workspace:packages/fern-typescript/encoders":
+  version: 0.0.0-use.local
+  resolution: "@fern-typescript/encoders@workspace:packages/fern-typescript/encoders"
+  dependencies:
+    "@babel/core": "npm:^7.17.10"
+    "@babel/preset-env": "npm:^7.17.10"
+    "@babel/preset-typescript": "npm:^7.16.7"
+    "@fern-api/api": "workspace:*"
+    "@fern-typescript/commons": "workspace:*"
+    "@fern-typescript/helper-manager": "workspace:*"
+    "@types/jest": "npm:^27.4.1"
+    "@types/node": "npm:^17.0.25"
+    depcheck: "npm:^1.4.3"
+    eslint: "npm:^8.12.0"
+    jest: "npm:^27.5.1"
+    prettier: "npm:^2.6.2"
+    stylelint: "npm:^14.6.1"
+    ts-morph: "npm:^14.0.0"
+    typescript: "npm:^4.6.3"
+  languageName: unknown
+  linkType: soft
+
 "@fern-typescript/errors@workspace:*, @fern-typescript/errors@workspace:packages/fern-typescript/errors":
   version: 0.0.0-use.local
   resolution: "@fern-typescript/errors@workspace:packages/fern-typescript/errors"
   dependencies:
-    "@babel/core": "npm:^7.17.9"
-    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/core": "npm:^7.17.10"
+    "@babel/preset-env": "npm:^7.17.10"
     "@babel/preset-typescript": "npm:^7.16.7"
     "@fern-api/api": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
@@ -1760,10 +1785,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/hathora-encoding-helper@workspace:packages/fern-typescript/helpers/built-in/hathora-encoding-helper"
   dependencies:
-    "@babel/core": "npm:^7.17.9"
-    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/core": "npm:^7.17.10"
+    "@babel/preset-env": "npm:^7.17.10"
     "@babel/preset-typescript": "npm:^7.16.7"
-    "@fern-typescript/helper-commons": "workspace:*"
+    "@fern-typescript/client": "workspace:*"
+    "@fern-typescript/helper-utils": "workspace:*"
     "@types/jest": "npm:^27.4.1"
     "@types/node": "npm:^17.0.25"
     depcheck: "npm:^1.4.3"
@@ -1777,13 +1803,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/helper-commons@workspace:*, @fern-typescript/helper-commons@workspace:packages/fern-typescript/helpers/commons":
+"@fern-typescript/helper-manager@workspace:*, @fern-typescript/helper-manager@workspace:packages/fern-typescript/helpers/helper-manager":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/helper-commons@workspace:packages/fern-typescript/helpers/commons"
+  resolution: "@fern-typescript/helper-manager@workspace:packages/fern-typescript/helpers/helper-manager"
   dependencies:
-    "@babel/core": "npm:^7.17.9"
-    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/core": "npm:^7.17.10"
+    "@babel/preset-env": "npm:^7.17.10"
     "@babel/preset-typescript": "npm:^7.16.7"
+    "@fern-api/api": "workspace:*"
+    "@fern-api/plugin-runner": "workspace:*"
+    "@fern-typescript/commons": "workspace:*"
+    "@fern-typescript/helper-utils": "workspace:*"
+    "@fern-typescript/json-encoding-helper": "workspace:*"
     "@types/jest": "npm:^27.4.1"
     "@types/node": "npm:^17.0.25"
     depcheck: "npm:^1.4.3"
@@ -1796,18 +1827,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/helper-manager@workspace:*, @fern-typescript/helper-manager@workspace:packages/fern-typescript/helpers/helper-manager":
+"@fern-typescript/helper-utils@workspace:*, @fern-typescript/helper-utils@workspace:packages/fern-typescript/helpers/utils":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/helper-manager@workspace:packages/fern-typescript/helpers/helper-manager"
+  resolution: "@fern-typescript/helper-utils@workspace:packages/fern-typescript/helpers/utils"
   dependencies:
-    "@babel/core": "npm:^7.17.9"
-    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/core": "npm:^7.17.10"
+    "@babel/preset-env": "npm:^7.17.10"
     "@babel/preset-typescript": "npm:^7.16.7"
     "@fern-api/api": "workspace:*"
-    "@fern-api/plugin-runner": "workspace:*"
-    "@fern-typescript/commons": "workspace:*"
-    "@fern-typescript/helper-commons": "workspace:*"
-    "@fern-typescript/json-encoding-helper": "workspace:*"
     "@types/jest": "npm:^27.4.1"
     "@types/node": "npm:^17.0.25"
     depcheck: "npm:^1.4.3"
@@ -1815,6 +1842,7 @@ __metadata:
     jest: "npm:^27.5.1"
     prettier: "npm:^2.6.2"
     stylelint: "npm:^14.6.1"
+    ts-morph: "npm:^14.0.0"
     typescript: "npm:^4.6.3"
   languageName: unknown
   linkType: soft
@@ -1823,10 +1851,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/json-encoding-helper@workspace:packages/fern-typescript/helpers/built-in/json-encoding-helper"
   dependencies:
-    "@babel/core": "npm:^7.17.9"
-    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/core": "npm:^7.17.10"
+    "@babel/preset-env": "npm:^7.17.10"
     "@babel/preset-typescript": "npm:^7.16.7"
-    "@fern-typescript/helper-commons": "workspace:*"
+    "@fern-typescript/helper-utils": "workspace:*"
     "@types/jest": "npm:^27.4.1"
     "@types/node": "npm:^17.0.25"
     depcheck: "npm:^1.4.3"
@@ -1842,8 +1870,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/model@workspace:packages/fern-typescript/model"
   dependencies:
-    "@babel/core": "npm:^7.17.9"
-    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/core": "npm:^7.17.10"
+    "@babel/preset-env": "npm:^7.17.10"
     "@babel/preset-typescript": "npm:^7.16.7"
     "@fern-api/api": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
@@ -1866,8 +1894,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/server@workspace:packages/fern-typescript/server"
   dependencies:
-    "@babel/core": "npm:^7.17.9"
-    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/core": "npm:^7.17.10"
+    "@babel/preset-env": "npm:^7.17.10"
     "@babel/preset-typescript": "npm:^7.16.7"
     "@fern-api/api": "workspace:*"
     "@types/jest": "npm:^27.4.1"
@@ -1886,8 +1914,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/service-utils@workspace:packages/fern-typescript/service-utils"
   dependencies:
-    "@babel/core": "npm:^7.17.9"
-    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/core": "npm:^7.17.10"
+    "@babel/preset-env": "npm:^7.17.10"
     "@babel/preset-typescript": "npm:^7.16.7"
     "@types/jest": "npm:^27.4.1"
     "@types/node": "npm:^17.0.25"
@@ -1906,8 +1934,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/testing-utils@workspace:packages/fern-typescript/testing-utils"
   dependencies:
-    "@babel/core": "npm:^7.17.9"
-    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/core": "npm:^7.17.10"
+    "@babel/preset-env": "npm:^7.17.10"
     "@babel/preset-typescript": "npm:^7.16.7"
     "@fern-api/api": "workspace:*"
     "@fern-api/commons": "workspace:*"
@@ -5104,8 +5132,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "fern-api@workspace:packages/cli"
   dependencies:
-    "@babel/core": "npm:^7.17.9"
-    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/core": "npm:^7.17.10"
+    "@babel/preset-env": "npm:^7.17.10"
     "@babel/preset-typescript": "npm:^7.16.7"
     "@fern-api/add-plugin": "workspace:*"
     "@fern-api/api": "workspace:*"
@@ -5143,8 +5171,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "fern-typescript@workspace:packages/fern-typescript/cli"
   dependencies:
-    "@babel/core": "npm:^7.17.9"
-    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/core": "npm:^7.17.10"
+    "@babel/preset-env": "npm:^7.17.10"
     "@babel/preset-typescript": "npm:^7.16.7"
     "@fern-api/api": "workspace:*"
     "@fern-api/plugin-runner": "workspace:*"
@@ -5184,7 +5212,7 @@ __metadata:
     husky: "npm:^7.0.4"
     jest: "npm:^27.5.1"
     lint-staged: "npm:^12.3.7"
-    mrlint: "npm:^0.0.18"
+    mrlint: "npm:^0.0.20"
     prettier: "npm:^2.6.2"
   languageName: unknown
   linkType: soft
@@ -7579,19 +7607,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mrlint@npm:^0.0.18":
-  version: 0.0.18
-  resolution: "mrlint@npm:0.0.18"
+"mrlint@npm:^0.0.20":
+  version: 0.0.20
+  resolution: "mrlint@npm:0.0.20"
   dependencies:
-    "@fern-api/mrlint-commons": "npm:0.0.18"
-    "@fern-api/mrlint-lint": "npm:0.0.18"
-    "@fern-api/mrlint-parser": "npm:0.0.18"
-    "@fern-api/mrlint-rules": "npm:0.0.18"
+    "@fern-api/mrlint-commons": "npm:0.0.20"
+    "@fern-api/mrlint-lint": "npm:0.0.20"
+    "@fern-api/mrlint-parser": "npm:0.0.20"
+    "@fern-api/mrlint-rules": "npm:0.0.20"
     chalk: "npm:^4.1.2"
     yargs: "npm:^17.3.1"
   bin:
     mrlint: ./cli
-  checksum: 77d8e562cea30f6fbe2c936a55149dee07b443e8e7b759dfa911b46347935615e32afeee0ac485bd683e5bc11a39374988fa6f784537730a7d5b3a87e30ae7bc
+  checksum: 0580861d402babb3b4eed8423d99fdaf412801a27a33cb3541b0fe7798c4410db1f8575861d497ca28d17254e1c11944c6926d1e470c6a631f3dd0eb6e0617c2
   languageName: node
   linkType: hard
 
