@@ -91,7 +91,6 @@ jobs:
           name: Publish
           command: |
             export PATH="$PATH:$JAVA_HOME/bin"
-            sudo chmod -R 777 packages/api/fern-ir-java/ir-api/build
             sudo chmod -R 777 packages/api/fern-ir-java/ir-api/model
             cd packages/api/fern-ir-java
             ./gradlew artifactoryPublish
