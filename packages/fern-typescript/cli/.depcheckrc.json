@@ -7,5 +7,5 @@
     "umd-compat-loader",
     "simple-progress-webpack-plugin"
   ],
-  "ignore-patterns": ["lib", "docker"]
+  "ignore-patterns": ["dist", "docker"]
 }

@@ -1,7 +1,7 @@
 import { IntermediateRepresentation } from "@fern-api/api";
 import { getOrCreateDirectory } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
-import { Directory, ts } from "ts-morph";
+import * as tsMorph from "ts-morph";
 
 export async function generateEncoderFiles({
     directory,
@@ -9,11 +9,11 @@ export async function generateEncoderFiles({
     intermediateRepresentation,
     helperManager,
 }: {
-    directory: Directory;
-    modelDirectory: Directory;
+    directory: tsMorph.Directory;
+    modelDirectory: tsMorph.Directory;
     intermediateRepresentation: IntermediateRepresentation;
     helperManager: HelperManager;
-}): Promise<Directory> {
+}): Promise<tsMorph.Directory> {
     const encodersDirectory = getOrCreateDirectory(directory, "encoders");
 
     const helpers = helperManager.getHelpers();
@@ -30,7 +30,7 @@ export async function generateEncoderFiles({
                         encoderDirectory,
                         modelDirectory,
                         intermediateRepresentation,
-                        ts,
+                        tsMorph,
                     });
                 }
             }

@@ -1,0 +1,19 @@
+{
+  "extends": "../../../shared/tsconfig.shared.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "dist/esm",
+    "rootDir": "src",
+    "module": "esnext",
+    "tsBuildInfoFile": "tsconfig.esm.tsbuildinfo"
+  },
+  "include": ["./src"],
+  "references": [
+    { "path": "../../api/fern-ir-typescript/tsconfig.esm.json" },
+    { "path": "../../compiler/plugins/plugin-runner/tsconfig.esm.json" },
+    { "path": "../client/tsconfig.esm.json" },
+    { "path": "../commons/tsconfig.esm.json" },
+    { "path": "../helpers/helper-manager/tsconfig.esm.json" },
+    { "path": "../model/tsconfig.esm.json" }
+  ]
+}

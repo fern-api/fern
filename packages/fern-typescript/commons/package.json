@@ -1,14 +1,20 @@
 {
   "name": "@fern-typescript/commons",
   "version": "0.0.0",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
   "files": [
-    "lib"
+    "dist"
   ],
+  "main": "./dist/cjs/index.js",
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/index.js",
+      "default": "./dist/esm/index.js"
+    }
+  },
+  "sideEffects": false,
   "scripts": {
-    "clean": "tsc --build --clean",
-    "compile": "tsc --build",
+    "clean": "tsc --build clean tsconfig.esm.json && tsc --build clean tsconfig.cjs.json",
+    "compile": "tsc --build tsconfig.esm.json && tsc --build tsconfig.cjs.json",
     "test": "jest --passWithNoTests",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore --fix",

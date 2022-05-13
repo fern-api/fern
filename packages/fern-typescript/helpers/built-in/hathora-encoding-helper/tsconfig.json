@@ -1,5 +1,5 @@
 {
   "extends": "../../../../../shared/tsconfig.shared.json",
-  "compilerOptions": { "declaration": false },
-  "references": [{ "path": "../../../client" }, { "path": "../../utils" }]
+  "compilerOptions": { "declaration": false, "module": "esnext" },
+  "references": [{ "path": "../../../client/tsconfig.esm.json" }, { "path": "../../utils/tsconfig.esm.json" }]
 }

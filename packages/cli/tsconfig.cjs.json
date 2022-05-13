@@ -1,0 +1,20 @@
+{
+  "extends": "../../shared/tsconfig.shared.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "dist/cjs",
+    "rootDir": "src",
+    "module": "CommonJS",
+    "tsBuildInfoFile": "tsconfig.cjs.tsbuildinfo"
+  },
+  "include": ["./src"],
+  "references": [
+    { "path": "../add-plugin/tsconfig.cjs.json" },
+    { "path": "../api/fern-ir-typescript/tsconfig.cjs.json" },
+    { "path": "../compiler/commons/tsconfig.cjs.json" },
+    { "path": "../compiler/compiler/tsconfig.cjs.json" },
+    { "path": "../compiler/plugins/plugin-runner/tsconfig.cjs.json" },
+    { "path": "../compiler/syntax-analysis/tsconfig.cjs.json" },
+    { "path": "../init/tsconfig.cjs.json" }
+  ]
+}
