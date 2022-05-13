@@ -6,12 +6,12 @@ types:
   HttpService:
     extends: serviceCommons.BaseService
     properties:
-      auth: optional<HttpAuth>
       endpoints: list<HttpEndpoint>
       headers: list<HttpHeader>
   HttpAuth:
     enum:
       - BEARER
+      - NONE
   HttpEndpoint:
     extends: commons.WithDocs
     properties:
@@ -23,6 +23,7 @@ types:
       queryParameters: list<QueryParameter>
       request: optional<HttpRequest>
       response: HttpResponse
+      auth: HttpAuth
   HttpMethod:
     enum:
       - GET

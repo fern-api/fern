@@ -30,7 +30,6 @@ export function convertHttpService({
 
     return {
         docs: serviceDefinition.docs,
-        auth: serviceDefinition.auth != null ? convertHttpAuth(serviceDefinition.auth) : null,
         name: {
             name: serviceId,
             fernFilepath,
@@ -47,6 +46,10 @@ export function convertHttpService({
         endpoints: Object.entries(serviceDefinition.endpoints).map(
             ([endpointId, endpoint]): HttpEndpoint => ({
                 endpointId,
+                auth:
+                    endpoint["auth-override"] != null
+                        ? convertHttpAuth(endpoint["auth-override"])
+                        : convertHttpAuth(serviceDefinition.auth),
                 docs: endpoint.docs,
                 method: convertHttpMethod(endpoint.method),
                 path: endpoint.path,
@@ -115,6 +118,8 @@ function convertHttpAuth(auth: RawSchemas.AuthSchema): HttpAuth {
     switch (auth) {
         case "bearer":
             return HttpAuth.Bearer;
+        case "none":
+            return HttpAuth.None;
         default:
             assertNever(auth);
     }

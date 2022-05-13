@@ -48,6 +48,7 @@ const BLOG_POST_API: RawSchemas.RawFernConfigurationSchema = {
     services: {
         http: {
             PostsService: {
+                auth: "none",
                 "base-path": "/posts",
                 endpoints: {
                     createPost: {
