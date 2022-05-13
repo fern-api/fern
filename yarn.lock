@@ -31,7 +31,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:^7.1.0, @babel/core@npm:^7.12.3, @babel/core@npm:^7.17.9, @babel/core@npm:^7.7.2, @babel/core@npm:^7.8.0":
+"@babel/core@npm:^7.1.0, @babel/core@npm:^7.12.3, @babel/core@npm:^7.17.10, @babel/core@npm:^7.17.9, @babel/core@npm:^7.7.2, @babel/core@npm:^7.8.0":
   version: 7.17.10
   resolution: "@babel/core@npm:7.17.10"
   dependencies:
@@ -1139,7 +1139,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-env@npm:^7.16.11":
+"@babel/preset-env@npm:^7.16.11, @babel/preset-env@npm:^7.17.10":
   version: 7.17.10
   resolution: "@babel/preset-env@npm:7.17.10"
   dependencies:
@@ -4818,8 +4818,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "fern-typescript@workspace:packages/fern-typescript/cli"
   dependencies:
-    "@babel/core": "npm:^7.17.9"
-    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/core": "npm:^7.17.10"
+    "@babel/preset-env": "npm:^7.17.10"
     "@babel/preset-typescript": "npm:^7.16.7"
     "@fern-api/api": "workspace:*"
     "@fern-api/plugin-runner": "workspace:*"

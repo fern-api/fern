@@ -1,8 +1,11 @@
 import { validateSchema } from "@fern-typescript/commons";
 import { FernTypescriptHelper } from "@fern-typescript/helper-utils";
+import path from "path";
 import { FernTypescriptHelperSchema } from "./helper-schema/FernTypescriptHelperSchema";
 
 export async function loadHelperFromDisk(pathToHelper: string): Promise<FernTypescriptHelper> {
-    const { helper } = await import(/* webpackIgnore: true */ pathToHelper);
+    const {
+        default: { helper },
+    } = await import(/* webpackIgnore: true */ path.join(pathToHelper, "dist", "bundle.js"));
     return validateSchema<FernTypescriptHelper>(FernTypescriptHelperSchema, helper);
 }

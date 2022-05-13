@@ -5,7 +5,6 @@
   "files": [
     "dist"
   ],
-  "sideEffects": false,
   "scripts": {
     "clean": "tsc --build --clean",
     "compile": "webpack",
