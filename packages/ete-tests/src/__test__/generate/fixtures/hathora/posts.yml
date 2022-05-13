@@ -9,6 +9,7 @@ types:
 services:
   http:
     PostsService:
+      auth: none
       endpoints:
         deletePost:
           path: /delete
