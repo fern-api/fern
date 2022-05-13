@@ -7,7 +7,7 @@ node_modules
 build
 lib
 dist
-tsconfig.tsbuildinfo
+tsconfig*tsbuildinfo
 bundle.js
 
 # environment
