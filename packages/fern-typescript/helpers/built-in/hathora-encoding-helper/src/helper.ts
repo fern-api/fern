@@ -1,5 +1,4 @@
 import { EncodeMethod, FernTypescriptHelper, tsMorph, VariableReference } from "@fern-typescript/helper-utils";
-import { VariableDeclarationKind } from "ts-morph";
 import { getMethodForModelTypeVariableReference } from "./getMethodForModelTypeVariableReference";
 import { getMethodForWireMessageVariableReference } from "./getMethodForWireMessageVariableReference";
 import { assertNever } from "./utils";
@@ -12,10 +11,10 @@ export const helper: FernTypescriptHelper = {
             _type: "fileBased",
             name: NAME,
             contentType: "application/octet-stream",
-            writeEncoder: ({ encoderDirectory }) => {
+            writeEncoder: ({ encoderDirectory, tsMorph }) => {
                 const sourceFile = encoderDirectory.createSourceFile(`${NAME}.ts`);
                 sourceFile.addVariableStatement({
-                    declarationKind: VariableDeclarationKind.Const,
+                    declarationKind: tsMorph.VariableDeclarationKind.Const,
                     declarations: [
                         {
                             name: NAME,
