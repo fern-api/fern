@@ -6,6 +6,7 @@
     "dist"
   ],
   "main": "./dist/cjs/index.js",
+  "types": "./dist/esm/index.d.ts",
   "exports": {
     ".": {
       "require": "./dist/cjs/index.js",
@@ -17,8 +18,8 @@
     "fern": "./cli"
   },
   "scripts": {
-    "clean": "tsc --build clean tsconfig.esm.json && tsc --build clean tsconfig.cjs.json",
-    "compile": "tsc --build tsconfig.esm.json && tsc --build tsconfig.cjs.json",
+    "clean": "tsc --build clean tsconfig.json && tsc --build clean tsconfig.cjs.json",
+    "compile": "tsc --build tsconfig.json && tsc --build tsconfig.cjs.json",
     "test": "jest --passWithNoTests",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
     "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore --fix",
@@ -34,8 +35,8 @@
     "execa": "^5.1.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.9",
-    "@babel/preset-env": "^7.16.11",
+    "@babel/core": "^7.17.10",
+    "@babel/preset-env": "^7.17.10",
     "@babel/preset-typescript": "^7.16.7",
     "@types/jest": "^27.4.1",
     "@types/node": "^17.0.25",

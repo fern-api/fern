@@ -5,6 +5,7 @@
     "dist"
   ],
   "main": "./dist/cjs/index.js",
+  "types": "./dist/esm/index.d.ts",
   "exports": {
     ".": {
       "require": "./dist/cjs/index.js",
@@ -14,8 +15,8 @@
   "sideEffects": false,
   "bin": "./cli",
   "scripts": {
-    "clean": "tsc --build clean tsconfig.esm.json && tsc --build clean tsconfig.cjs.json",
-    "compile": "tsc --build tsconfig.esm.json && tsc --build tsconfig.cjs.json",
+    "clean": "tsc --build clean tsconfig.json && tsc --build clean tsconfig.cjs.json",
+    "compile": "tsc --build tsconfig.json && tsc --build tsconfig.cjs.json",
     "test": "jest --passWithNoTests",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore --fix",

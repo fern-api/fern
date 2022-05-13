@@ -1,0 +1,12 @@
+{
+  "extends": "../../shared/tsconfig.shared.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "dist/esm",
+    "rootDir": "src",
+    "module": "esnext",
+    "tsBuildInfoFile": "tsconfig.esm.tsbuildinfo"
+  },
+  "include": ["./src"],
+  "references": []
+}
