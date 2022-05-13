@@ -3,9 +3,6 @@ plugins {
     id "com.jfrog.artifactory" version "4.28.1"
 }
 
-group 'com.fern.ir'
-version gitVersion()
-
 artifactory {
     contextUrl = 'https://usebirch.jfrog.io/artifactory'
     publish {
@@ -21,9 +18,14 @@ artifactory {
     }
 }
 
-allprojects {
+configure(subprojects.findAll {it.name == "model"}) {
+
+    group 'com.fern.ir'
+    version gitVersion()
+
     apply plugin: "maven-publish"
     apply plugin: "java-library"
+    apply plugin: "com.jfrog.artifactory"
 
     publishing {
         publications {
