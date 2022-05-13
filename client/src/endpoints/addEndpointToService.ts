@@ -1,16 +1,16 @@
-import { HttpEndpoint } from "@fern-api/api";
-import { getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
+import { HttpEndpoint, HttpService } from "@fern-api/api";
+import { generateTypeReference, getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import { ClassDeclaration, Directory, InterfaceDeclaration, Scope, ts } from "ts-morph";
-import { ENDPOINTS_NAMESPACE_IMPORT, ENDPOINT_PARAMETER_NAME } from "../constants";
+import { ClientConstants } from "../constants";
 import { generateEndpointMethodBody } from "./endpoint-method-body/generateEndpointMethodBody";
 import { generateEndpointTypes } from "./generate-endpoint-types/generateEndpointTypes";
-import { RESPONSE_TYPE_NAME } from "./generate-endpoint-types/response/constants";
 
 export async function addEndpointToService({
     endpoint,
     serviceInterface,
     serviceClass,
+    serviceDefinition,
     modelDirectory,
     errorsDirectory,
     endpointsDirectory,
@@ -20,6 +20,7 @@ export async function addEndpointToService({
     endpoint: HttpEndpoint;
     serviceInterface: InterfaceDeclaration;
     serviceClass: ClassDeclaration;
+    serviceDefinition: HttpService;
     endpointsDirectory: Directory;
     modelDirectory: Directory;
     errorsDirectory: Directory;
@@ -42,7 +43,7 @@ export async function addEndpointToService({
         return ts.factory.createTypeReferenceNode(
             ts.factory.createQualifiedName(
                 ts.factory.createQualifiedName(
-                    ts.factory.createIdentifier(ENDPOINTS_NAMESPACE_IMPORT),
+                    ts.factory.createIdentifier(ClientConstants.Service.NamespaceImports.ENDPOINTS),
                     ts.factory.createIdentifier(endpoint.endpointId)
                 ),
                 reference
@@ -54,11 +55,15 @@ export async function addEndpointToService({
         generatedEndpointTypes.endpointParameter != null
             ? [
                   {
-                      name: ENDPOINT_PARAMETER_NAME,
+                      name: ClientConstants.Service.Endpoint.Signature.REQUEST_PARAMETER,
                       type: getTextOfTsNode(
                           generatedEndpointTypes.endpointParameter.isLocal
                               ? getReferenceToEndpointType(generatedEndpointTypes.endpointParameter.typeName)
-                              : generatedEndpointTypes.endpointParameter.generateTypeReference(serviceFile)
+                              : generateTypeReference({
+                                    reference: generatedEndpointTypes.endpointParameter.typeReference,
+                                    referencedIn: serviceFile,
+                                    modelDirectory,
+                                })
                       ),
                   },
               ]
@@ -66,7 +71,9 @@ export async function addEndpointToService({
 
     const returnType = getTextOfTsNode(
         ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
-            getReferenceToEndpointType(ts.factory.createIdentifier(RESPONSE_TYPE_NAME)),
+            getReferenceToEndpointType(
+                ts.factory.createIdentifier(ClientConstants.Service.Endpoint.Types.Response.TYPE_NAME)
+            ),
         ])
     );
 
@@ -86,9 +93,11 @@ export async function addEndpointToService({
             endpoint,
             endpointTypes: generatedEndpointTypes,
             serviceFile,
+            serviceDefinition,
             getReferenceToEndpointType,
             typeResolver,
             helperManager,
+            modelDirectory,
         }),
     });
 }

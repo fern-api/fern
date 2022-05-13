@@ -126,6 +126,7 @@ export * from \\"./PostType\\";
   "/services/NoErrorsService/NoErrorsService.ts": "import {
     defaultFetcher,
     Fetcher,
+    isResponseOk,
     joinPaths,
     Service,
 } from \\"@fern-typescript/service-utils\\";
@@ -153,18 +154,18 @@ export class Client implements Client {
             headers: {},
             token: this.token,
         });
-        const response = JSON.parse(encodedResponse.toString());
 
-        if (response.statusCode >= 200 && response.statusCode < 300) {
+        if (isResponseOk(encodedResponse)) {
             return {
                 ok: true,
-                statusCode: response.statusCode,
+                statusCode: encodedResponse.statusCode,
             };
         } else {
+            const error = JSON.parse(encodedResponse.body.toString());
             return {
                 ok: false,
-                statusCode: response.statusCode,
-                error: response.body as endpoints.get.ErrorBody,
+                statusCode: encodedResponse.statusCode,
+                error: error as endpoints.get.ErrorBody,
             };
         }
     }
@@ -213,6 +214,7 @@ export * from \\"./NoErrorsService\\";
   "/services/PostsService/PostsService.ts": "import {
     defaultFetcher,
     Fetcher,
+    isResponseOk,
     joinPaths,
     Service,
 } from \\"@fern-typescript/service-utils\\";
@@ -253,19 +255,20 @@ export class Client implements Client {
                 contentType: \\"application/json\\",
             },
         });
-        const response = JSON.parse(encodedResponse.toString());
 
-        if (response.statusCode >= 200 && response.statusCode < 300) {
+        if (isResponseOk(encodedResponse)) {
+            const response = JSON.parse(encodedResponse.body.toString());
             return {
                 ok: true,
-                statusCode: response.statusCode,
-                body: response.body as model.PostId,
+                statusCode: encodedResponse.statusCode,
+                body: response as model.PostId,
             };
         } else {
+            const error = JSON.parse(encodedResponse.body.toString());
             return {
                 ok: false,
-                statusCode: response.statusCode,
-                error: response.body as endpoints.createPost.ErrorBody,
+                statusCode: encodedResponse.statusCode,
+                error: error as endpoints.createPost.ErrorBody,
             };
         }
     }
@@ -286,19 +289,20 @@ export class Client implements Client {
             token: this.token,
             queryParameters,
         });
-        const response = JSON.parse(encodedResponse.toString());
 
-        if (response.statusCode >= 200 && response.statusCode < 300) {
+        if (isResponseOk(encodedResponse)) {
+            const response = JSON.parse(encodedResponse.body.toString());
             return {
                 ok: true,
-                statusCode: response.statusCode,
-                body: response.body as model.Post,
+                statusCode: encodedResponse.statusCode,
+                body: response as model.Post,
             };
         } else {
+            const error = JSON.parse(encodedResponse.body.toString());
             return {
                 ok: false,
-                statusCode: response.statusCode,
-                error: response.body as endpoints.getPost.ErrorBody,
+                statusCode: encodedResponse.statusCode,
+                error: error as endpoints.getPost.ErrorBody,
             };
         }
     }
@@ -316,19 +320,20 @@ export class Client implements Client {
                 contentType: \\"application/json\\",
             },
         });
-        const response = JSON.parse(encodedResponse.toString());
 
-        if (response.statusCode >= 200 && response.statusCode < 300) {
+        if (isResponseOk(encodedResponse)) {
+            const response = JSON.parse(encodedResponse.body.toString());
             return {
                 ok: true,
-                statusCode: response.statusCode,
-                body: response.body as model.Post,
+                statusCode: encodedResponse.statusCode,
+                body: response as model.Post,
             };
         } else {
+            const error = JSON.parse(encodedResponse.body.toString());
             return {
                 ok: false,
-                statusCode: response.statusCode,
-                error: response.body as endpoints.getPostV2.ErrorBody,
+                statusCode: encodedResponse.statusCode,
+                error: error as endpoints.getPostV2.ErrorBody,
             };
         }
     }
@@ -638,6 +643,7 @@ export * from \\"./PostType\\";
   "/services/PostsService/PostsService.ts": "import {
     defaultFetcher,
     Fetcher,
+    isResponseOk,
     joinPaths,
     Service,
 } from \\"@fern-typescript/service-utils\\";
@@ -678,19 +684,20 @@ export class Client implements Client {
                 contentType: \\"application/json\\",
             },
         });
-        const response = JSON.parse(encodedResponse.toString());
 
-        if (response.statusCode >= 200 && response.statusCode < 300) {
+        if (isResponseOk(encodedResponse)) {
+            const response = JSON.parse(encodedResponse.body.toString());
             return {
                 ok: true,
-                statusCode: response.statusCode,
-                body: response.body as model.PostId,
+                statusCode: encodedResponse.statusCode,
+                body: response as model.PostId,
             };
         } else {
+            const error = JSON.parse(encodedResponse.body.toString());
             return {
                 ok: false,
-                statusCode: response.statusCode,
-                error: response.body as endpoints.createPost.ErrorBody,
+                statusCode: encodedResponse.statusCode,
+                error: error as endpoints.createPost.ErrorBody,
             };
         }
     }
@@ -711,19 +718,20 @@ export class Client implements Client {
             token: this.token,
             queryParameters,
         });
-        const response = JSON.parse(encodedResponse.toString());
 
-        if (response.statusCode >= 200 && response.statusCode < 300) {
+        if (isResponseOk(encodedResponse)) {
+            const response = JSON.parse(encodedResponse.body.toString());
             return {
                 ok: true,
-                statusCode: response.statusCode,
-                body: response.body as model.Post,
+                statusCode: encodedResponse.statusCode,
+                body: response as model.Post,
             };
         } else {
+            const error = JSON.parse(encodedResponse.body.toString());
             return {
                 ok: false,
-                statusCode: response.statusCode,
-                error: response.body as endpoints.getPost.ErrorBody,
+                statusCode: encodedResponse.statusCode,
+                error: error as endpoints.getPost.ErrorBody,
             };
         }
     }
@@ -741,19 +749,20 @@ export class Client implements Client {
                 contentType: \\"application/json\\",
             },
         });
-        const response = JSON.parse(encodedResponse.toString());
 
-        if (response.statusCode >= 200 && response.statusCode < 300) {
+        if (isResponseOk(encodedResponse)) {
+            const response = JSON.parse(encodedResponse.body.toString());
             return {
                 ok: true,
-                statusCode: response.statusCode,
-                body: response.body as model.Post,
+                statusCode: encodedResponse.statusCode,
+                body: response as model.Post,
             };
         } else {
+            const error = JSON.parse(encodedResponse.body.toString());
             return {
                 ok: false,
-                statusCode: response.statusCode,
-                error: response.body as endpoints.getPostV2.ErrorBody,
+                statusCode: encodedResponse.statusCode,
+                error: error as endpoints.getPostV2.ErrorBody,
             };
         }
     }

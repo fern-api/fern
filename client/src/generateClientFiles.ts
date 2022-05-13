@@ -1,5 +1,6 @@
 import { IntermediateRepresentation } from "@fern-api/api";
 import { getOrCreateDirectory, TypeResolver } from "@fern-typescript/commons";
+import { generateEncoderFiles } from "@fern-typescript/encoders";
 import { generateErrorFiles } from "@fern-typescript/errors";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import { generateModelFiles } from "@fern-typescript/model";
@@ -29,6 +30,13 @@ export async function generateClientFiles({
         modelDirectory,
     });
 
+    const encodersDirectory = await generateEncoderFiles({
+        directory,
+        intermediateRepresentation,
+        modelDirectory,
+        helperManager,
+    });
+
     const servicesDirectory = getOrCreateDirectory(directory, "services");
 
     for (const service of intermediateRepresentation.services.http) {
@@ -37,6 +45,7 @@ export async function generateClientFiles({
             servicesDirectory,
             modelDirectory,
             errorsDirectory,
+            encodersDirectory,
             typeResolver,
             helperManager,
         });

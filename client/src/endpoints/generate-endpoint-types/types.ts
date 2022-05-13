@@ -1,4 +1,4 @@
-import { Encoding } from "@fern-api/api";
+import { Encoding, TypeReference } from "@fern-api/api";
 import { SourceFile, ts } from "ts-morph";
 
 export interface GeneratedEndpointTypes {
@@ -10,7 +10,15 @@ export interface GeneratedEndpointTypes {
      * - undefined, if there is no body and no params
      */
     endpointParameter: EndpointParameterReference | undefined;
-    requestBody: { encoding: Encoding; reference: WireMessageBodyReference } | undefined;
+    requestBody:
+        | {
+              encoding: Encoding;
+              reference: WireMessageBodyReference;
+              // if specified, then you can access the body using this property
+              // (e.g. request[propertyName])
+              propertyName: string | undefined;
+          }
+        | undefined;
     response: {
         encoding: Encoding;
         successBodyReference: WireMessageBodyReference | undefined;
@@ -28,25 +36,20 @@ export interface LocalEndpointParameterReference {
 export interface ModelEndpointParameterReference {
     // is imported from the model
     isLocal: false;
-    generateTypeReference: (referencedIn: SourceFile) => ts.TypeNode;
+    typeReference: TypeReference;
 }
 
 export type WireMessageBodyReference = LocalWireMessageBodyReference | ModelWireMessageBodyReference;
 
-export interface LocalWireMessageBodyReference extends BaseWireMessageBodyReference {
+export interface LocalWireMessageBodyReference {
     // is located in a file local to this service, not imported from the model
     isLocal: true;
     typeName: ts.Identifier;
-}
-
-export interface ModelWireMessageBodyReference extends BaseWireMessageBodyReference {
-    // is imported from the model
-    isLocal: false;
     generateTypeReference: (referencedIn: SourceFile) => ts.TypeNode;
 }
 
-export interface BaseWireMessageBodyReference {
-    // if specified, then you can access the body using this property
-    // (e.g. request[propertyName])
-    propertyName?: string;
+export interface ModelWireMessageBodyReference {
+    // is imported from the model
+    isLocal: false;
+    typeReference: TypeReference.Named | TypeReference.Primitive;
 }

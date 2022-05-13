@@ -1,14 +1,22 @@
 {
   "extends": "../../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "./lib", "rootDir": "src", "module": "CommonJS" },
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "dist/esm",
+    "rootDir": "src",
+    "module": "esnext",
+    "tsBuildInfoFile": "tsconfig.esm.tsbuildinfo"
+  },
   "include": ["./src"],
   "references": [
-    { "path": "../../api/fern-ir-typescript" },
-    { "path": "../../commons" },
-    { "path": "../commons" },
-    { "path": "../errors" },
-    { "path": "../helpers/helper-manager" },
-    { "path": "../model" },
-    { "path": "../testing-utils" }
+    { "path": "../../api/fern-ir-typescript/tsconfig.json" },
+    { "path": "../../commons/tsconfig.json" },
+    { "path": "../commons/tsconfig.json" },
+    { "path": "../encoders/tsconfig.json" },
+    { "path": "../errors/tsconfig.json" },
+    { "path": "../helpers/helper-manager/tsconfig.json" },
+    { "path": "../helpers/utils/tsconfig.json" },
+    { "path": "../model/tsconfig.json" },
+    { "path": "../testing-utils/tsconfig.json" }
   ]
 }

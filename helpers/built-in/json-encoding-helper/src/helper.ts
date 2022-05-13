@@ -1,31 +1,32 @@
-import { FernTypescriptHelper } from "@fern-typescript/helper-commons";
+import { FernTypescriptHelper } from "@fern-typescript/helper-utils";
 
 export const helper: FernTypescriptHelper = {
     encodings: {
         json: {
+            _type: "inline",
             contentType: "application/json",
-            generateEncode: ({ referenceToDecoded, factory }) => {
-                return factory.createCallExpression(
-                    factory.createPropertyAccessExpression(
-                        factory.createIdentifier("JSON"),
-                        factory.createIdentifier("stringify")
+            generateEncode: ({ referenceToDecodedObject, tsMorph: { ts } }) => {
+                return ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(
+                        ts.factory.createIdentifier("JSON"),
+                        ts.factory.createIdentifier("stringify")
                     ),
                     undefined,
-                    [referenceToDecoded]
+                    [referenceToDecodedObject.variable]
                 );
             },
-            generateDecode: ({ referenceToEncodedBuffer, factory }) => {
-                return factory.createCallExpression(
-                    factory.createPropertyAccessExpression(
-                        factory.createIdentifier("JSON"),
-                        factory.createIdentifier("parse")
+            generateDecode: ({ referenceToEncodedBuffer, tsMorph: { ts } }) => {
+                return ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(
+                        ts.factory.createIdentifier("JSON"),
+                        ts.factory.createIdentifier("parse")
                     ),
                     undefined,
                     [
-                        factory.createCallExpression(
-                            factory.createPropertyAccessExpression(
-                                referenceToEncodedBuffer,
-                                factory.createIdentifier("toString")
+                        ts.factory.createCallExpression(
+                            ts.factory.createPropertyAccessExpression(
+                                referenceToEncodedBuffer.variable,
+                                ts.factory.createIdentifier("toString")
                             ),
                             undefined,
                             []

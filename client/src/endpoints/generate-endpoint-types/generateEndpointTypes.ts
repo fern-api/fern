@@ -1,7 +1,7 @@
 import { HttpEndpoint } from "@fern-api/api";
 import { getOrCreateDirectory, TypeResolver } from "@fern-typescript/commons";
 import { Directory } from "ts-morph";
-import { ENDPOINTS_DIRECTORY_NAME } from "../../constants";
+import { ClientConstants } from "../../constants";
 import { generateRequestTypes } from "./request/generateRequestTypes";
 import { generateResponseTypes } from "./response/generateResponseTypes";
 import { GeneratedEndpointTypes } from "./types";
@@ -29,7 +29,7 @@ export function generateEndpointTypes({
     });
 
     const endpointDirectory = serviceDirectory
-        .getDirectoryOrThrow(ENDPOINTS_DIRECTORY_NAME)
+        .getDirectoryOrThrow(ClientConstants.Files.ENDPOINTS_DIRECTORY_NAME)
         .getDirectoryOrThrow(endpoint.endpointId);
 
     return {
