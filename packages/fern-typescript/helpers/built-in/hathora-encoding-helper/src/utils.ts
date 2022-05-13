@@ -1,4 +1,4 @@
-import { EncodeMethod, tsTypes } from "@fern-typescript/helper-utils";
+import { EncodeMethod, tsMorph } from "@fern-typescript/helper-utils";
 
 export function assertNever(x: never): never {
     throw new Error("Unexpected value: " + JSON.stringify(x));
@@ -11,12 +11,12 @@ export function createEncoderMethodCall({
     method,
     variable,
 }: {
-    ts: typeof tsTypes;
-    referenceToEncoder: tsTypes.Expression;
+    ts: typeof tsMorph.ts;
+    referenceToEncoder: tsMorph.ts.Expression;
     propertyChainToMethod: readonly string[];
     method: EncodeMethod;
-    variable: tsTypes.Expression;
-}): tsTypes.CallExpression {
+    variable: tsMorph.ts.Expression;
+}): tsMorph.ts.CallExpression {
     return ts.factory.createCallExpression(
         createReferenceToEncoderMethod({ ts, referenceToEncoder, propertyChain: [...propertyChainToMethod, method] }),
         undefined,
@@ -29,10 +29,10 @@ function createReferenceToEncoderMethod({
     referenceToEncoder,
     propertyChain,
 }: {
-    ts: typeof tsTypes;
-    referenceToEncoder: tsTypes.Expression;
+    ts: typeof tsMorph.ts;
+    referenceToEncoder: tsMorph.ts.Expression;
     propertyChain: readonly string[];
-}): tsTypes.Expression {
+}): tsMorph.ts.Expression {
     return propertyChain.reduce(
         (referenceToMethod, property) => ts.factory.createPropertyAccessExpression(referenceToMethod, property),
         referenceToEncoder

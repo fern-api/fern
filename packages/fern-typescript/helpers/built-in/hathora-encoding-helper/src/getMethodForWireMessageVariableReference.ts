@@ -1,5 +1,5 @@
 import { ClientConstants } from "@fern-typescript/client";
-import { EncodeMethod, tsTypes, VariableReference } from "@fern-typescript/helper-utils";
+import { EncodeMethod, tsMorph, VariableReference } from "@fern-typescript/helper-utils";
 import { assertNever, createEncoderMethodCall } from "./utils";
 
 export function getMethodForWireMessageVariableReference({
@@ -9,10 +9,10 @@ export function getMethodForWireMessageVariableReference({
     referenceToEncoder,
 }: {
     variableReference: VariableReference.WireMessageBodyReference;
-    ts: typeof tsTypes;
+    ts: typeof tsMorph.ts;
     method: EncodeMethod;
-    referenceToEncoder: tsTypes.Expression;
-}): tsTypes.CallExpression {
+    referenceToEncoder: tsMorph.ts.Expression;
+}): tsMorph.ts.CallExpression {
     return createEncoderMethodCall({
         ts,
         referenceToEncoder,

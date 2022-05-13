@@ -5,7 +5,7 @@ export const helper: FernTypescriptHelper = {
         json: {
             _type: "inline",
             contentType: "application/json",
-            generateEncode: ({ referenceToDecodedObject, ts }) => {
+            generateEncode: ({ referenceToDecodedObject, tsMorph: { ts } }) => {
                 return ts.factory.createCallExpression(
                     ts.factory.createPropertyAccessExpression(
                         ts.factory.createIdentifier("JSON"),
@@ -15,7 +15,7 @@ export const helper: FernTypescriptHelper = {
                     [referenceToDecodedObject.variable]
                 );
             },
-            generateDecode: ({ referenceToEncodedBuffer, ts }) => {
+            generateDecode: ({ referenceToEncodedBuffer, tsMorph: { ts } }) => {
                 return ts.factory.createCallExpression(
                     ts.factory.createPropertyAccessExpression(
                         ts.factory.createIdentifier("JSON"),

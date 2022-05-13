@@ -1,4 +1,4 @@
-import { EncodeMethod, tsTypes, VariableReference } from "@fern-typescript/helper-utils";
+import { EncodeMethod, tsMorph, VariableReference } from "@fern-typescript/helper-utils";
 import { assertNever, createEncoderMethodCall } from "./utils";
 
 export function getMethodForModelTypeVariableReference({
@@ -8,10 +8,10 @@ export function getMethodForModelTypeVariableReference({
     referenceToEncoder,
 }: {
     variableReference: VariableReference.ModelReference;
-    ts: typeof tsTypes;
+    ts: typeof tsMorph.ts;
     method: EncodeMethod;
-    referenceToEncoder: tsTypes.Expression;
-}): tsTypes.CallExpression {
+    referenceToEncoder: tsMorph.ts.Expression;
+}): tsMorph.ts.CallExpression {
     return createEncoderMethodCall({
         ts,
         referenceToEncoder,

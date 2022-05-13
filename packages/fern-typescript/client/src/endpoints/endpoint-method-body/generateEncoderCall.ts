@@ -6,7 +6,7 @@ import {
     InlineEncoder,
     VariableReference,
 } from "@fern-typescript/helper-utils";
-import { ts } from "ts-morph";
+import * as tsMorph from "ts-morph";
 import { ClientConstants } from "../../constants";
 
 export function generateEncoderCall({
@@ -17,7 +17,7 @@ export function generateEncoderCall({
     encoder: Encoder;
     variableReference: VariableReference;
     method: EncodeMethod;
-}): ts.Expression {
+}): tsMorph.ts.Expression {
     switch (encoder._type) {
         case "fileBased":
             return generateFileBasedEncoderCall({ encoder, variableReference, method });
@@ -37,8 +37,8 @@ function generateFileBasedEncoderCall({
     variableReference: VariableReference;
     method: EncodeMethod;
 }) {
-    const referenceToEncoder = ts.factory.createPropertyAccessExpression(
-        ts.factory.createIdentifier(ClientConstants.Service.NamespaceImports.ENCODERS),
+    const referenceToEncoder = tsMorph.ts.factory.createPropertyAccessExpression(
+        tsMorph.ts.factory.createIdentifier(ClientConstants.Service.NamespaceImports.ENCODERS),
         encoder.name
     );
 
@@ -47,13 +47,13 @@ function generateFileBasedEncoderCall({
             return encoder.generateEncode({
                 referenceToDecodedObject: variableReference,
                 referenceToEncoder,
-                ts,
+                tsMorph,
             });
         case "decode":
             return encoder.generateDecode({
                 referenceToEncodedBuffer: variableReference,
                 referenceToEncoder,
-                ts,
+                tsMorph,
             });
         default:
             assertNever(method);
@@ -73,12 +73,12 @@ function generateInlineEncoderCall({
         case "encode":
             return encoder.generateEncode({
                 referenceToDecodedObject: variableReference,
-                ts,
+                tsMorph,
             });
         case "decode":
             return encoder.generateDecode({
                 referenceToEncodedBuffer: variableReference,
-                ts,
+                tsMorph,
             });
         default:
             assertNever(method);
