@@ -19,7 +19,8 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "zod": "^3.14.3"
+    "@fern-api/api": "workspace:*",
+    "ts-morph": "^14.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",

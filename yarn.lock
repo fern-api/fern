@@ -1696,6 +1696,7 @@ __metadata:
     "@fern-typescript/encoders": "workspace:*"
     "@fern-typescript/errors": "workspace:*"
     "@fern-typescript/helper-manager": "workspace:*"
+    "@fern-typescript/helper-utils": "workspace:*"
     "@fern-typescript/model": "workspace:*"
     "@fern-typescript/testing-utils": "workspace:*"
     "@types/jest": "npm:^27.4.1"
@@ -1786,7 +1787,6 @@ __metadata:
     "@babel/core": "npm:^7.17.9"
     "@babel/preset-env": "npm:^7.16.11"
     "@babel/preset-typescript": "npm:^7.16.7"
-    "@fern-api/api": "workspace:*"
     "@fern-typescript/client": "workspace:*"
     "@fern-typescript/helper-utils": "workspace:*"
     "@types/jest": "npm:^27.4.1"
@@ -1822,6 +1822,7 @@ __metadata:
     prettier: "npm:^2.6.2"
     stylelint: "npm:^14.6.1"
     typescript: "npm:^4.6.3"
+    zod: "npm:^3.14.3"
   languageName: unknown
   linkType: soft
 
@@ -1832,6 +1833,7 @@ __metadata:
     "@babel/core": "npm:^7.17.9"
     "@babel/preset-env": "npm:^7.16.11"
     "@babel/preset-typescript": "npm:^7.16.7"
+    "@fern-api/api": "workspace:*"
     "@types/jest": "npm:^27.4.1"
     "@types/node": "npm:^17.0.25"
     depcheck: "npm:^1.4.3"
@@ -1839,8 +1841,8 @@ __metadata:
     jest: "npm:^27.5.1"
     prettier: "npm:^2.6.2"
     stylelint: "npm:^14.6.1"
+    ts-morph: "npm:^14.0.0"
     typescript: "npm:^4.6.3"
-    zod: "npm:^3.14.3"
   languageName: unknown
   linkType: soft
 

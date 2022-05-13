@@ -9,6 +9,7 @@
     { "path": "../encoders" },
     { "path": "../errors" },
     { "path": "../helpers/helper-manager" },
+    { "path": "../helpers/utils" },
     { "path": "../model" },
     { "path": "../testing-utils" }
   ]

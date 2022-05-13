@@ -24,6 +24,7 @@
     "@fern-typescript/encoders": "workspace:*",
     "@fern-typescript/errors": "workspace:*",
     "@fern-typescript/helper-manager": "workspace:*",
+    "@fern-typescript/helper-utils": "workspace:*",
     "@fern-typescript/model": "workspace:*",
     "ts-morph": "^14.0.0"
   },

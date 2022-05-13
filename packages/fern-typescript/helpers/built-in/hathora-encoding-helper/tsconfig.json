@@ -1,15 +1,5 @@
 {
   "extends": "../../../../../shared/tsconfig.shared.json",
   "compilerOptions": { "declaration": false },
-  "references": [
-    {
-      "path": "../../../client"
-    },
-    {
-      "path": "../../../../api/fern-ir-typescript"
-    },
-    {
-      "path": "../../utils"
-    }
-  ]
+  "references": [{ "path": "../../../client" }, { "path": "../../utils" }]
 }
