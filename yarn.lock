@@ -1693,6 +1693,7 @@ __metadata:
     "@fern-api/api": "workspace:*"
     "@fern-api/commons": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
+    "@fern-typescript/encoders": "workspace:*"
     "@fern-typescript/errors": "workspace:*"
     "@fern-typescript/helper-manager": "workspace:*"
     "@fern-typescript/model": "workspace:*"
@@ -1735,6 +1736,28 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-typescript/encoders@workspace:*, @fern-typescript/encoders@workspace:packages/fern-typescript/encoders":
+  version: 0.0.0-use.local
+  resolution: "@fern-typescript/encoders@workspace:packages/fern-typescript/encoders"
+  dependencies:
+    "@babel/core": "npm:^7.17.9"
+    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/preset-typescript": "npm:^7.16.7"
+    "@fern-api/api": "workspace:*"
+    "@fern-typescript/commons": "workspace:*"
+    "@fern-typescript/helper-manager": "workspace:*"
+    "@types/jest": "npm:^27.4.1"
+    "@types/node": "npm:^17.0.25"
+    depcheck: "npm:^1.4.3"
+    eslint: "npm:^8.12.0"
+    jest: "npm:^27.5.1"
+    prettier: "npm:^2.6.2"
+    stylelint: "npm:^14.6.1"
+    ts-morph: "npm:^14.0.0"
+    typescript: "npm:^4.6.3"
+  languageName: unknown
+  linkType: soft
+
 "@fern-typescript/errors@workspace:*, @fern-typescript/errors@workspace:packages/fern-typescript/errors":
   version: 0.0.0-use.local
   resolution: "@fern-typescript/errors@workspace:packages/fern-typescript/errors"
@@ -1763,7 +1786,9 @@ __metadata:
     "@babel/core": "npm:^7.17.9"
     "@babel/preset-env": "npm:^7.16.11"
     "@babel/preset-typescript": "npm:^7.16.7"
-    "@fern-typescript/helper-commons": "workspace:*"
+    "@fern-api/api": "workspace:*"
+    "@fern-typescript/client": "workspace:*"
+    "@fern-typescript/helper-utils": "workspace:*"
     "@types/jest": "npm:^27.4.1"
     "@types/node": "npm:^17.0.25"
     depcheck: "npm:^1.4.3"
@@ -1777,9 +1802,32 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/helper-commons@workspace:*, @fern-typescript/helper-commons@workspace:packages/fern-typescript/helpers/commons":
+"@fern-typescript/helper-manager@workspace:*, @fern-typescript/helper-manager@workspace:packages/fern-typescript/helpers/helper-manager":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/helper-commons@workspace:packages/fern-typescript/helpers/commons"
+  resolution: "@fern-typescript/helper-manager@workspace:packages/fern-typescript/helpers/helper-manager"
+  dependencies:
+    "@babel/core": "npm:^7.17.9"
+    "@babel/preset-env": "npm:^7.16.11"
+    "@babel/preset-typescript": "npm:^7.16.7"
+    "@fern-api/api": "workspace:*"
+    "@fern-api/plugin-runner": "workspace:*"
+    "@fern-typescript/commons": "workspace:*"
+    "@fern-typescript/helper-utils": "workspace:*"
+    "@fern-typescript/json-encoding-helper": "workspace:*"
+    "@types/jest": "npm:^27.4.1"
+    "@types/node": "npm:^17.0.25"
+    depcheck: "npm:^1.4.3"
+    eslint: "npm:^8.12.0"
+    jest: "npm:^27.5.1"
+    prettier: "npm:^2.6.2"
+    stylelint: "npm:^14.6.1"
+    typescript: "npm:^4.6.3"
+  languageName: unknown
+  linkType: soft
+
+"@fern-typescript/helper-utils@workspace:*, @fern-typescript/helper-utils@workspace:packages/fern-typescript/helpers/utils":
+  version: 0.0.0-use.local
+  resolution: "@fern-typescript/helper-utils@workspace:packages/fern-typescript/helpers/utils"
   dependencies:
     "@babel/core": "npm:^7.17.9"
     "@babel/preset-env": "npm:^7.16.11"
@@ -1796,29 +1844,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/helper-manager@workspace:*, @fern-typescript/helper-manager@workspace:packages/fern-typescript/helpers/helper-manager":
-  version: 0.0.0-use.local
-  resolution: "@fern-typescript/helper-manager@workspace:packages/fern-typescript/helpers/helper-manager"
-  dependencies:
-    "@babel/core": "npm:^7.17.9"
-    "@babel/preset-env": "npm:^7.16.11"
-    "@babel/preset-typescript": "npm:^7.16.7"
-    "@fern-api/api": "workspace:*"
-    "@fern-api/plugin-runner": "workspace:*"
-    "@fern-typescript/commons": "workspace:*"
-    "@fern-typescript/helper-commons": "workspace:*"
-    "@fern-typescript/json-encoding-helper": "workspace:*"
-    "@types/jest": "npm:^27.4.1"
-    "@types/node": "npm:^17.0.25"
-    depcheck: "npm:^1.4.3"
-    eslint: "npm:^8.12.0"
-    jest: "npm:^27.5.1"
-    prettier: "npm:^2.6.2"
-    stylelint: "npm:^14.6.1"
-    typescript: "npm:^4.6.3"
-  languageName: unknown
-  linkType: soft
-
 "@fern-typescript/json-encoding-helper@workspace:*, @fern-typescript/json-encoding-helper@workspace:packages/fern-typescript/helpers/built-in/json-encoding-helper":
   version: 0.0.0-use.local
   resolution: "@fern-typescript/json-encoding-helper@workspace:packages/fern-typescript/helpers/built-in/json-encoding-helper"
@@ -1826,7 +1851,7 @@ __metadata:
     "@babel/core": "npm:^7.17.9"
     "@babel/preset-env": "npm:^7.16.11"
     "@babel/preset-typescript": "npm:^7.16.7"
-    "@fern-typescript/helper-commons": "workspace:*"
+    "@fern-typescript/helper-utils": "workspace:*"
     "@types/jest": "npm:^27.4.1"
     "@types/node": "npm:^17.0.25"
     depcheck: "npm:^1.4.3"

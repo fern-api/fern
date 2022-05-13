@@ -15,10 +15,10 @@ export interface PluginOutputConfig {
 }
 
 export interface PluginHelpers {
-    encodings: Record<string, PluginHelper>;
+    encodings: Record<string, PluginHelperReference>;
 }
 
-export interface PluginHelper {
+export interface PluginHelperReference {
     name: string;
     version: string;
     absolutePath: string;

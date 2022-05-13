@@ -21,7 +21,7 @@ types:
       headers: list<HttpHeader>
       parameters: list<PathParameter>
       queryParameters: list<QueryParameter>
-      request: optional<HttpRequest>
+      request: HttpRequest
       response: HttpResponse
   HttpMethod:
     enum:
@@ -53,6 +53,6 @@ types:
   HttpResponse:
     extends: commons.WithDocs
     properties:
-      ok: optional<types.Type>
+      ok: types.Type
       encoding: serviceCommons.Encoding
       errors: serviceCommons.ResponseErrors

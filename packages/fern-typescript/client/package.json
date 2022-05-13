@@ -21,6 +21,7 @@
   "dependencies": {
     "@fern-api/commons": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
+    "@fern-typescript/encoders": "workspace:*",
     "@fern-typescript/errors": "workspace:*",
     "@fern-typescript/helper-manager": "workspace:*",
     "@fern-typescript/model": "workspace:*",

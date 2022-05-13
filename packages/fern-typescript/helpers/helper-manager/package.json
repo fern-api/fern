@@ -22,7 +22,7 @@
     "@fern-api/api": "workspace:*",
     "@fern-api/plugin-runner": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
-    "@fern-typescript/helper-commons": "workspace:*",
+    "@fern-typescript/helper-utils": "workspace:*",
     "@fern-typescript/json-encoding-helper": "workspace:*"
   },
   "devDependencies": {

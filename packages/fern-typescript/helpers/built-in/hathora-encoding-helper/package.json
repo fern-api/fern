@@ -16,7 +16,9 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-typescript/helper-commons": "workspace:*"
+    "@fern-api/api": "workspace:*",
+    "@fern-typescript/client": "workspace:*",
+    "@fern-typescript/helper-utils": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",

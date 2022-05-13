@@ -16,3 +16,5 @@ services:
           request:
             alias: PostId
             encoding: hathora
+          response:
+            encoding: hathora

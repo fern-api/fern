@@ -16,7 +16,10 @@ export declare namespace runEteTest {
          */
         directory: string;
 
-        generateFiles: (args: { directory: Directory; intermediateRepresentation: IntermediateRepresentation }) => void;
+        generateFiles: (args: {
+            directory: Directory;
+            intermediateRepresentation: IntermediateRepresentation;
+        }) => void | Promise<void>;
 
         /**
          * If true, generated files are outputed to a generated/ directory.
@@ -34,8 +37,8 @@ export async function runEteTest({ directory, generateFiles, outputToDisk = fals
         throw new Error(JSON.stringify(compilerResult.failure));
     }
 
-    const project = await withProject((p) => {
-        generateFiles({
+    const project = await withProject(async (p) => {
+        await generateFiles({
             directory: p.createDirectory("/"),
             intermediateRepresentation: compilerResult.intermediateRepresentation,
         });

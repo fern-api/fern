@@ -1,132 +1,222 @@
-import { SourceFile, ts } from "ts-morph";
-import {
-    ERROR_BODY_PROPERTY_NAME,
-    ERROR_BODY_TYPE_NAME,
-    RESPONSE_BODY_PROPERTY_NAME,
-    RESPONSE_OK_PROPERTY_NAME,
-    RESPONSE_STATUS_CODE_PROPERTY_NAME,
-} from "../generate-endpoint-types/response/constants";
+import { HttpEndpoint, HttpService } from "@fern-api/api";
+import { HelperManager } from "@fern-typescript/helper-manager";
+import { Directory, SourceFile, ts } from "ts-morph";
+import { ClientConstants } from "../../constants";
 import { GeneratedEndpointTypes } from "../generate-endpoint-types/types";
-import {
-    FETCHER_RESPONSE_BODY_PROPERTY_NAME,
-    FETCHER_RESPONSE_STATUS_CODE_PROPERTY_NAME,
-    RESPONSE_VARIABLE_NAME,
-} from "./constants";
+import { generateReferenceToWireMessageType } from "../generate-endpoint-types/utils";
+import { generateEncoderCall } from "./generateEncoderCall";
 
-export function generateReturnResponse({
+export async function generateReturnResponse({
     serviceFile,
+    serviceDefinition,
+    endpoint,
     endpointTypes,
     getReferenceToEndpointType,
+    modelDirectory,
+    helperManager,
 }: {
     serviceFile: SourceFile;
+    serviceDefinition: HttpService;
+    endpoint: HttpEndpoint;
     endpointTypes: GeneratedEndpointTypes;
     getReferenceToEndpointType: (identifier: ts.Identifier) => ts.TypeReferenceNode;
-}): ts.Statement {
+    modelDirectory: Directory;
+    helperManager: HelperManager;
+}): Promise<ts.Statement> {
     return ts.factory.createIfStatement(
-        isStatusCodeOk(),
-        ts.factory.createBlock([
-            generateReturnSuccessResponse({ endpointTypes, getReferenceToEndpointType, serviceFile }),
-        ]),
-        ts.factory.createBlock([generateReturnErrorResponse({ getReferenceToEndpointType })])
-    );
-}
-
-function isStatusCodeOk() {
-    return ts.factory.createBinaryExpression(
-        ts.factory.createBinaryExpression(
-            ts.factory.createPropertyAccessExpression(
-                ts.factory.createIdentifier(RESPONSE_VARIABLE_NAME),
-                ts.factory.createIdentifier(FETCHER_RESPONSE_STATUS_CODE_PROPERTY_NAME)
-            ),
-            ts.factory.createToken(ts.SyntaxKind.GreaterThanEqualsToken),
-            ts.factory.createNumericLiteral("200")
+        ts.factory.createCallExpression(
+            ts.factory.createIdentifier(ClientConstants.Service.ServiceUtils.Imported.IS_RESPONSE_OK_FUNCTION),
+            undefined,
+            [ts.factory.createIdentifier(ClientConstants.Service.Endpoint.Variables.ENCODED_RESPONSE)]
         ),
-        ts.factory.createToken(ts.SyntaxKind.AmpersandAmpersandToken),
-        ts.factory.createBinaryExpression(
-            ts.factory.createPropertyAccessExpression(
-                ts.factory.createIdentifier(RESPONSE_VARIABLE_NAME),
-                ts.factory.createIdentifier(FETCHER_RESPONSE_STATUS_CODE_PROPERTY_NAME)
-            ),
-            ts.factory.createToken(ts.SyntaxKind.LessThanToken),
-            ts.factory.createNumericLiteral("300")
+        ts.factory.createBlock(
+            await generateReturnSuccessResponse({
+                serviceFile,
+                serviceDefinition,
+                endpoint,
+                endpointTypes,
+                getReferenceToEndpointType,
+                modelDirectory,
+                helperManager,
+            })
+        ),
+        ts.factory.createBlock(
+            await generateReturnErrorResponse({
+                serviceDefinition,
+                endpoint,
+                endpointTypes,
+                getReferenceToEndpointType,
+                helperManager,
+            })
         )
     );
 }
 
-function generateReturnSuccessResponse({
+async function generateReturnSuccessResponse({
     serviceFile,
+    serviceDefinition,
+    endpoint,
     endpointTypes,
     getReferenceToEndpointType,
+    modelDirectory,
+    helperManager,
 }: {
     serviceFile: SourceFile;
+    serviceDefinition: HttpService;
+    endpoint: HttpEndpoint;
     endpointTypes: GeneratedEndpointTypes;
     getReferenceToEndpointType: (identifier: ts.Identifier) => ts.TypeReferenceNode;
-}) {
-    const properties: ts.ObjectLiteralElementLike[] = [
-        ts.factory.createPropertyAssignment(
-            ts.factory.createIdentifier(RESPONSE_OK_PROPERTY_NAME),
-            ts.factory.createTrue()
-        ),
-        ts.factory.createPropertyAssignment(
-            ts.factory.createIdentifier(RESPONSE_STATUS_CODE_PROPERTY_NAME),
-            ts.factory.createPropertyAccessExpression(
-                ts.factory.createIdentifier(RESPONSE_VARIABLE_NAME),
-                ts.factory.createIdentifier(FETCHER_RESPONSE_STATUS_CODE_PROPERTY_NAME)
-            )
-        ),
-    ];
+    modelDirectory: Directory;
+    helperManager: HelperManager;
+}): Promise<ts.Statement[]> {
+    const statements: ts.Statement[] = [];
+
+    const properties: ts.ObjectLiteralElementLike[] = getBaseResponseProperties({ ok: true });
 
     if (endpointTypes.response.successBodyReference != null) {
+        const decodeResponseStatement = await generateDecodeResponse({
+            helperManager,
+            endpoint,
+            endpointTypes,
+            serviceDefinition,
+            decodedVariableName: ClientConstants.Service.Endpoint.Variables.DECODED_RESPONSE,
+            wireMessageType: "Response",
+        });
+        statements.push(decodeResponseStatement);
+
         properties.push(
             ts.factory.createPropertyAssignment(
-                ts.factory.createIdentifier(RESPONSE_BODY_PROPERTY_NAME),
+                ts.factory.createIdentifier(
+                    ClientConstants.Service.Endpoint.Types.Response.Success.Properties.Body.PROPERTY_NAME
+                ),
                 ts.factory.createAsExpression(
-                    ts.factory.createPropertyAccessExpression(
-                        ts.factory.createIdentifier(RESPONSE_VARIABLE_NAME),
-                        ts.factory.createIdentifier(FETCHER_RESPONSE_BODY_PROPERTY_NAME)
-                    ),
+                    ts.factory.createIdentifier(ClientConstants.Service.Endpoint.Variables.DECODED_RESPONSE),
                     endpointTypes.response.successBodyReference.isLocal
                         ? getReferenceToEndpointType(endpointTypes.response.successBodyReference.typeName)
-                        : endpointTypes.response.successBodyReference.generateTypeReference(serviceFile)
+                        : generateReferenceToWireMessageType({
+                              reference: endpointTypes.response.successBodyReference,
+                              referencedIn: serviceFile,
+                              modelDirectory,
+                          })
                 )
             )
         );
     }
 
-    return ts.factory.createReturnStatement(ts.factory.createObjectLiteralExpression(properties, true));
+    const returnStatement = ts.factory.createReturnStatement(
+        ts.factory.createObjectLiteralExpression(properties, true)
+    );
+    statements.push(returnStatement);
+
+    return statements;
 }
 
-function generateReturnErrorResponse({
+async function generateReturnErrorResponse({
+    serviceDefinition,
+    endpoint,
+    endpointTypes,
     getReferenceToEndpointType,
+    helperManager,
 }: {
+    serviceDefinition: HttpService;
+    endpoint: HttpEndpoint;
+    endpointTypes: GeneratedEndpointTypes;
     getReferenceToEndpointType: (identifier: ts.Identifier) => ts.TypeReferenceNode;
-}) {
-    return ts.factory.createReturnStatement(
+    helperManager: HelperManager;
+}): Promise<ts.Statement[]> {
+    const decodeErrorStatement = await generateDecodeResponse({
+        helperManager,
+        endpoint,
+        endpointTypes,
+        serviceDefinition,
+        decodedVariableName: ClientConstants.Service.Endpoint.Variables.DECODED_ERROR,
+        wireMessageType: "Error",
+    });
+
+    const returnStatement = ts.factory.createReturnStatement(
         ts.factory.createObjectLiteralExpression(
             [
+                ...getBaseResponseProperties({ ok: false }),
                 ts.factory.createPropertyAssignment(
-                    ts.factory.createIdentifier(RESPONSE_OK_PROPERTY_NAME),
-                    ts.factory.createFalse()
-                ),
-                ts.factory.createPropertyAssignment(
-                    ts.factory.createIdentifier(RESPONSE_STATUS_CODE_PROPERTY_NAME),
-                    ts.factory.createPropertyAccessExpression(
-                        ts.factory.createIdentifier(RESPONSE_VARIABLE_NAME),
-                        ts.factory.createIdentifier(FETCHER_RESPONSE_STATUS_CODE_PROPERTY_NAME)
-                    )
-                ),
-                ts.factory.createPropertyAssignment(
-                    ts.factory.createIdentifier(ERROR_BODY_PROPERTY_NAME),
+                    ts.factory.createIdentifier(
+                        ClientConstants.Service.Endpoint.Types.Response.Error.Properties.Body.PROPERTY_NAME
+                    ),
                     ts.factory.createAsExpression(
-                        ts.factory.createPropertyAccessExpression(
-                            ts.factory.createIdentifier(RESPONSE_VARIABLE_NAME),
-                            ts.factory.createIdentifier(FETCHER_RESPONSE_BODY_PROPERTY_NAME)
-                        ),
-                        getReferenceToEndpointType(ts.factory.createIdentifier(ERROR_BODY_TYPE_NAME))
+                        ts.factory.createIdentifier(ClientConstants.Service.Endpoint.Variables.DECODED_ERROR),
+                        getReferenceToEndpointType(
+                            ts.factory.createIdentifier(
+                                ClientConstants.Service.Endpoint.Types.Response.Error.Properties.Body.TYPE_NAME
+                            )
+                        )
                     )
                 ),
             ],
             true
+        )
+    );
+
+    return [decodeErrorStatement, returnStatement];
+}
+
+function getBaseResponseProperties({ ok }: { ok: boolean }): ts.ObjectLiteralElementLike[] {
+    return [
+        ts.factory.createPropertyAssignment(
+            ts.factory.createIdentifier(ClientConstants.Service.Endpoint.Types.Response.Properties.OK),
+            ok ? ts.factory.createTrue() : ts.factory.createFalse()
+        ),
+        ts.factory.createPropertyAssignment(
+            ts.factory.createIdentifier(ClientConstants.Service.Endpoint.Types.Response.Properties.STATUS_CODE),
+            ts.factory.createPropertyAccessExpression(
+                ts.factory.createIdentifier(ClientConstants.Service.Endpoint.Variables.ENCODED_RESPONSE),
+                ts.factory.createIdentifier(ClientConstants.Service.ServiceUtils.Fetcher.Response.STATUS_CODE)
+            )
+        ),
+    ];
+}
+
+async function generateDecodeResponse({
+    helperManager,
+    endpointTypes,
+    serviceDefinition,
+    endpoint,
+    decodedVariableName,
+    wireMessageType,
+}: {
+    helperManager: HelperManager;
+    endpointTypes: GeneratedEndpointTypes;
+    serviceDefinition: HttpService;
+    endpoint: HttpEndpoint;
+    decodedVariableName: string;
+    wireMessageType: "Response" | "Error";
+}): Promise<ts.Statement> {
+    const decoder = await helperManager.getEncoderForEncoding(endpointTypes.response.encoding);
+    const decodedResponse = generateEncoderCall({
+        encoder: decoder,
+        method: "decode",
+        variableReference: {
+            _type: "wireMessage",
+            wireMessageType,
+            serviceName: serviceDefinition.name.name,
+            endpointId: endpoint.endpointId,
+            variable: ts.factory.createPropertyAccessExpression(
+                ts.factory.createIdentifier(ClientConstants.Service.Endpoint.Variables.ENCODED_RESPONSE),
+                ts.factory.createIdentifier(ClientConstants.Service.ServiceUtils.Fetcher.Response.BODY)
+            ),
+        },
+    });
+
+    return ts.factory.createVariableStatement(
+        undefined,
+        ts.factory.createVariableDeclarationList(
+            [
+                ts.factory.createVariableDeclaration(
+                    ts.factory.createIdentifier(decodedVariableName),
+                    undefined,
+                    undefined,
+                    decodedResponse
+                ),
+            ],
+            ts.NodeFlags.Const
         )
     );
 }

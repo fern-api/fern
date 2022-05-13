@@ -4,15 +4,13 @@ import yargs from "yargs/yargs";
 import { addPluginToWorkspaces } from "./commands/add-plugin/addPluginToWorkspaces";
 import { compileWorkspaces } from "./commands/compile/compileWorkspaces";
 
-yargs(hideBin(process.argv))
+void yargs(hideBin(process.argv))
     .scriptName("fern")
     .strict()
     .command({
         command: "init",
         describe: "Initializes an example Fern API",
-        handler: (): void => {
-            initialize();
-        },
+        handler: initialize,
     })
     .command(
         ["$0 add <plugin> [workspaces...]"],
@@ -29,9 +27,7 @@ yargs(hideBin(process.argv))
                     choices: ["typescript", "java"] as const,
                     demandOption: true,
                 }),
-        (argv) => {
-            addPluginToWorkspaces(argv.workspaces ?? [], argv.plugin);
-        }
+        (argv) => addPluginToWorkspaces(argv.workspaces ?? [], argv.plugin)
     )
     .command(
         ["$0 [workspaces...]", "generate", "gen"],
@@ -43,9 +39,7 @@ yargs(hideBin(process.argv))
                 description:
                     "If omitted, every workspace specified in the project-level configuration (fern.config.json) will be processed.",
             }),
-        (argv) => {
-            compileWorkspaces(argv.workspaces ?? []);
-        }
+        (argv) => compileWorkspaces(argv.workspaces ?? [])
     )
     .demandCommand()
     .showHelpOnFail(true)

@@ -6,6 +6,7 @@
     { "path": "../../api/fern-ir-typescript" },
     { "path": "../../commons" },
     { "path": "../commons" },
+    { "path": "../encoders" },
     { "path": "../errors" },
     { "path": "../helpers/helper-manager" },
     { "path": "../model" },

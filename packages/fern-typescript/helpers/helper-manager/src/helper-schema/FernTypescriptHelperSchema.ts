@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { EncodingHandlersSchema } from "./EncodingHandlersSchema";
+import { EncoderSchema } from "./EncoderSchema";
 
 export const FernTypescriptHelperSchema = z.object({
-    encodings: z.optional(z.record(EncodingHandlersSchema)),
+    encodings: z.optional(z.record(EncoderSchema)),
 });
 
 export type FernTypescriptHelperSchema = z.infer<typeof FernTypescriptHelperSchema>;

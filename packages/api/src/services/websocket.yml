@@ -11,7 +11,7 @@ types:
     extends: commons.WithDocs
     properties:
       origin: WebSocketMessageOrigin
-      body: optional<WebSocketMessageBody>
+      body: WebSocketMessageBody
       response: WebSocketMessageResponse
   WebSocketMessageOrigin:
     enum:

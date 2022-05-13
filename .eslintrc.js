@@ -50,5 +50,6 @@ module.exports = {
                 allowHigherOrderFunctions: false,
             },
         ],
+        "@typescript-eslint/no-floating-promises": ["error"],
     },
 };

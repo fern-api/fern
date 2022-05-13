@@ -1,6 +1,6 @@
 import { Encoding } from "@fern-api/api";
 import { PluginHelper, PluginHelpers } from "@fern-api/plugin-runner";
-import { FernTypescriptHelper } from "@fern-typescript/helper-commons";
+import { Encoder, FernTypescriptHelper } from "@fern-typescript/helper-utils";
 import { helper as JsonEncodingHelper } from "@fern-typescript/json-encoding-helper";
 import { loadHelperFromDisk } from "./loadHelperFromDisk";
 
@@ -17,7 +17,27 @@ export class HelperManager {
 
     constructor(private helpers: PluginHelpers) {}
 
-    public async getHandlersForEncoding(encoding: Encoding): Promise<FernTypescriptHelper.Encodings.EncodingHandlers> {
+    public getHelpers(): PluginHelpers {
+        return this.helpers;
+    }
+
+    public async getOrLoadHelper(helperReference: PluginHelper): Promise<FernTypescriptHelper> {
+        let helpersWithName = this.loadedHelpers[helperReference.name];
+        if (helpersWithName == null) {
+            helpersWithName = {};
+            this.loadedHelpers[helperReference.name] = helpersWithName;
+        }
+
+        let helperAtVersion = helpersWithName[helperReference.version];
+        if (helperAtVersion == null) {
+            helperAtVersion = await loadHelperFromDisk(helperReference.absolutePath);
+            helpersWithName[helperReference.version] = helperAtVersion;
+        }
+
+        return helperAtVersion;
+    }
+
+    public async getEncoderForEncoding(encoding: Encoding): Promise<Encoder> {
         const { helper, name: helperName } = await this.getHelperForEncoding(encoding);
 
         const encodingStr = Encoding._visit(encoding, {
@@ -53,21 +73,5 @@ export class HelperManager {
                 };
             }
         }
-    }
-
-    private async getOrLoadHelper(helper: PluginHelper): Promise<FernTypescriptHelper> {
-        let helpersWithName = this.loadedHelpers[helper.name];
-        if (helpersWithName == null) {
-            helpersWithName = {};
-            this.loadedHelpers[helper.name] = helpersWithName;
-        }
-
-        let helperAtVersion = helpersWithName[helper.version];
-        if (helperAtVersion == null) {
-            helperAtVersion = await loadHelperFromDisk(helper.absolutePath);
-            helpersWithName[helper.version] = helperAtVersion;
-        }
-
-        return helperAtVersion;
     }
 }
