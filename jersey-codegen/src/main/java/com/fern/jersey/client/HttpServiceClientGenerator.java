@@ -10,15 +10,16 @@ import com.fern.codegen.utils.ClassNameUtils;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.jersey.JerseyServiceGeneratorUtils;
 import com.fern.model.codegen.Generator;
-import com.services.http.HttpEndpoint;
-import com.services.http.HttpService;
+import com.fern.types.services.http.HttpEndpoint;
+import com.fern.types.services.http.HttpResponse;
+import com.fern.types.services.http.HttpService;
+import com.fern.types.types.NamedType;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
-import com.types.NamedType;
 import feign.Feign;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
@@ -88,14 +89,16 @@ public final class HttpServiceClientGenerator extends Generator {
                 .className(generatedServiceClassName)
                 .httpService(httpService)
                 .generatedErrorDecoder(maybeGeneratedErrorDecoder)
-                .addAllGeneratedWireMessages(jerseyServiceGeneratorUtils.getGeneratedWireMessages())
+                .addAllHttpRequests(jerseyServiceGeneratorUtils.getGeneratedHttpRequests())
+                .addAllHttpResponses(jerseyServiceGeneratorUtils.getGeneratedHttpResponses())
                 .build();
     }
 
     private Optional<GeneratedErrorDecoder> getGeneratedErrorDecoder() {
         Optional<GeneratedErrorDecoder> maybeGeneratedErrorDecoder = Optional.empty();
         boolean shouldGenerateErrorDecoder = httpService.endpoints().stream()
-                        .map(HttpEndpoint::errors)
+                        .map(HttpEndpoint::response)
+                        .map(HttpResponse::errors)
                         .flatMap(responseErrors -> responseErrors.possibleErrors().stream())
                         .count()
                 > 0;

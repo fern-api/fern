@@ -7,13 +7,13 @@ import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.jersey.JerseyServiceGeneratorUtils;
 import com.fern.model.codegen.Generator;
-import com.services.http.HttpService;
+import com.fern.types.services.http.HttpService;
+import com.fern.types.types.NamedType;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
-import com.types.NamedType;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -67,7 +67,8 @@ public final class HttpServiceServerGenerator extends Generator {
                 .file(jerseyServiceJavaFile)
                 .className(generatedServiceClassName)
                 .httpService(httpService)
-                .addAllGeneratedWireMessages(jerseyServiceGeneratorUtils.getGeneratedWireMessages())
+                .addAllHttpRequests(jerseyServiceGeneratorUtils.getGeneratedHttpRequests())
+                .addAllHttpResponses(jerseyServiceGeneratorUtils.getGeneratedHttpResponses())
                 .build();
     }
 }

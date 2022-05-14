@@ -1,6 +1,5 @@
 package com.fern.java.client.cli;
 
-import com.fern.IntermediateRepresentation;
 import com.fern.codegen.GeneratedException;
 import com.fern.codegen.GeneratedHttpServiceClient;
 import com.fern.codegen.GeneratedHttpServiceServer;
@@ -11,9 +10,10 @@ import com.fern.jersey.client.HttpServiceClientGenerator;
 import com.fern.jersey.server.HttpServiceServerGenerator;
 import com.fern.model.codegen.ModelGenerator;
 import com.fern.model.codegen.ModelGeneratorResult;
+import com.fern.types.ir.IntermediateRepresentation;
+import com.fern.types.types.NamedType;
+import com.fern.types.types.TypeDefinition;
 import com.squareup.javapoet.JavaFile;
-import com.types.NamedType;
-import com.types.TypeDefinition;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -64,6 +64,8 @@ public final class ClientGeneratorCli {
 
         ModelGeneratorResult modelGeneratorResult = addModelFiles(ir, generatorContext, resultBuilder);
         switch (fernPluginConfig.customPluginConfig().mode()) {
+            case MODEL:
+                break;
             case CLIENT:
                 addClientFiles(ir, generatorContext, modelGeneratorResult, resultBuilder);
                 break;
@@ -122,7 +124,8 @@ public final class ClientGeneratorCli {
         for (GeneratedHttpServiceClient generatedHttpServiceClient : generatedHttpServiceClients) {
             resultBuilder.addClientFiles(generatedHttpServiceClient);
             generatedHttpServiceClient.generatedErrorDecoder().ifPresent(resultBuilder::addClientFiles);
-            resultBuilder.addAllModelFiles(generatedHttpServiceClient.generatedWireMessages());
+            resultBuilder.addAllModelFiles(generatedHttpServiceClient.httpRequests());
+            resultBuilder.addAllModelFiles(generatedHttpServiceClient.httpResponses());
             serviceClientPresent = true;
         }
         if (serviceClientPresent) {

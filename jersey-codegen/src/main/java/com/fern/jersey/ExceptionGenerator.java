@@ -1,7 +1,5 @@
 package com.fern.jersey;
 
-import com.errors.ErrorDefinition;
-import com.errors.ErrorProperty;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.codegen.GeneratedException;
@@ -10,6 +8,8 @@ import com.fern.codegen.stateless.generator.ApiExceptionGenerator;
 import com.fern.codegen.utils.ClassNameUtils;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.model.codegen.Generator;
+import com.fern.types.errors.ErrorDefinition;
+import com.fern.types.errors.ErrorProperty;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;

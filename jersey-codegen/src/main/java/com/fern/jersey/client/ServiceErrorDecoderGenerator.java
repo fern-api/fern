@@ -11,11 +11,12 @@ import com.fern.codegen.stateless.generator.ObjectMapperGenerator;
 import com.fern.codegen.utils.ClassNameUtils;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.model.codegen.Generator;
+import com.fern.types.services.http.HttpEndpoint;
+import com.fern.types.services.http.HttpService;
+import com.fern.types.types.NamedType;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.palantir.common.streams.KeyedStream;
-import com.services.http.HttpEndpoint;
-import com.services.http.HttpService;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
@@ -24,7 +25,6 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.TypeVariableName;
-import com.types.NamedType;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import java.io.IOException;
@@ -85,12 +85,12 @@ public final class ServiceErrorDecoderGenerator extends Generator {
                                 generatedException.errorDefinition().name(),
                         Function.identity()));
         httpService.endpoints().forEach(httpEndpoint -> {
-            httpEndpoint.errors().possibleErrors().forEach(responseError -> {
+            httpEndpoint.response().errors().possibleErrors().forEach(responseError -> {
                 errorToEndpoints.put(responseError.error(), httpEndpoint);
             });
         });
         httpService.endpoints().forEach(httpEndpoint -> {
-            if (!httpEndpoint.errors().possibleErrors().isEmpty()) {
+            if (!httpEndpoint.response().errors().possibleErrors().isEmpty()) {
                 ClassName endpointBaseException = generatorContext
                         .getClassNameUtils()
                         .getNestedClassName(
@@ -109,10 +109,12 @@ public final class ServiceErrorDecoderGenerator extends Generator {
     @Override
     public GeneratedErrorDecoder generate() {
         Map<HttpEndpoint, ClassName> endpointToBaseException = httpService.endpoints().stream()
-                .filter(httpEndpoint -> !httpEndpoint.errors().possibleErrors().isEmpty())
+                .filter(httpEndpoint ->
+                        !httpEndpoint.response().errors().possibleErrors().isEmpty())
                 .collect(Collectors.toMap(Function.identity(), baseExceptionClassNames::get));
         List<TypeSpec> baseExceptionTypeSpecs = httpService.endpoints().stream()
-                .filter(httpEndpoint -> !httpEndpoint.errors().possibleErrors().isEmpty())
+                .filter(httpEndpoint ->
+                        !httpEndpoint.response().errors().possibleErrors().isEmpty())
                 .map(this::getBaseEndpointExceptionInterface)
                 .collect(Collectors.toList());
         Map<NamedType, TypeSpec> nestedErrorTypeSpecs = KeyedStream.stream(errorToEndpoints.asMap())
@@ -150,7 +152,7 @@ public final class ServiceErrorDecoderGenerator extends Generator {
         CodeBlock.Builder codeBlockBuilder = CodeBlock.builder();
         boolean ifStatementStarted = false;
         for (HttpEndpoint httpEndpoint : httpService.endpoints()) {
-            if (httpEndpoint.errors().possibleErrors().isEmpty()) {
+            if (httpEndpoint.response().errors().possibleErrors().isEmpty()) {
                 continue;
             }
             codeBlockBuilder
@@ -222,7 +224,10 @@ public final class ServiceErrorDecoderGenerator extends Generator {
                                 "$T.$L",
                                 ClassName.get(JsonTypeInfo.As.class),
                                 JsonTypeInfo.As.EXISTING_PROPERTY.name())
-                        .addMember("property", "$S", httpEndpoint.errors().discriminant())
+                        .addMember(
+                                "property",
+                                "$S",
+                                httpEndpoint.response().errors().discriminant())
                         .addMember("visible", "true")
                         .addMember(
                                 "defaultImpl",
@@ -230,7 +235,7 @@ public final class ServiceErrorDecoderGenerator extends Generator {
                                 generatorContext.getUnknownRemoteExceptionFile().className())
                         .build());
         AnnotationSpec.Builder jsonSubTypeAnnotationBuilder = AnnotationSpec.builder(JsonSubTypes.class);
-        httpEndpoint.errors().possibleErrors().forEach(responseError -> {
+        httpEndpoint.response().errors().possibleErrors().forEach(responseError -> {
             AnnotationSpec subTypeAnnotation = AnnotationSpec.builder(JsonSubTypes.Type.class)
                     .addMember("value", "$T.class", errorClassNames.get(responseError.error()))
                     .addMember("name", "$S", responseError.discriminantValue())

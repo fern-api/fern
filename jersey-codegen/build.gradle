@@ -1,7 +1,7 @@
 dependencies {
     implementation project(':model-codegen')
     implementation project(':utils')
-    implementation 'com.fern:fern-api-model'
+    implementation 'com.fern.ir:model'
     implementation 'com.fern:fern-immutables-style'
     implementation 'com.squareup:javapoet'
     implementation 'org.slf4j:slf4j-api'

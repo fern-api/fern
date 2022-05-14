@@ -1,7 +1,7 @@
 package com.fern.codegen;
 
-import com.errors.ErrorDefinition;
 import com.fern.immutables.StagedBuilderStyle;
+import com.fern.types.errors.ErrorDefinition;
 import org.immutables.value.Value;
 
 @Value.Immutable

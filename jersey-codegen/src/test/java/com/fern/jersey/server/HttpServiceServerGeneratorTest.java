@@ -1,25 +1,28 @@
 package com.fern.jersey.server;
 
-import com.errors.ErrorDefinition;
-import com.errors.ErrorProperty;
-import com.errors.HttpErrorConfiguration;
 import com.fern.codegen.GeneratedException;
 import com.fern.codegen.GeneratedHttpServiceServer;
 import com.fern.codegen.GeneratorContext;
 import com.fern.jersey.ExceptionGenerator;
-import com.services.commons.ResponseError;
-import com.services.commons.ResponseErrors;
-import com.services.commons.WireMessage;
-import com.services.http.HttpEndpoint;
-import com.services.http.HttpMethod;
-import com.services.http.HttpService;
-import com.services.http.PathParameter;
-import com.types.AliasTypeDefinition;
-import com.types.FernFilepath;
-import com.types.NamedType;
-import com.types.PrimitiveType;
-import com.types.Type;
-import com.types.TypeReference;
+import com.fern.types.errors.ErrorDefinition;
+import com.fern.types.errors.ErrorProperty;
+import com.fern.types.errors.HttpErrorConfiguration;
+import com.fern.types.services.commons.Encoding;
+import com.fern.types.services.commons.ResponseError;
+import com.fern.types.services.commons.ResponseErrors;
+import com.fern.types.services.http.HttpAuth;
+import com.fern.types.services.http.HttpEndpoint;
+import com.fern.types.services.http.HttpMethod;
+import com.fern.types.services.http.HttpRequest;
+import com.fern.types.services.http.HttpResponse;
+import com.fern.types.services.http.HttpService;
+import com.fern.types.services.http.PathParameter;
+import com.fern.types.types.AliasTypeDefinition;
+import com.fern.types.types.FernFilepath;
+import com.fern.types.types.NamedType;
+import com.fern.types.types.PrimitiveType;
+import com.fern.types.types.Type;
+import com.fern.types.types.TypeReference;
 import java.util.Collections;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -34,39 +37,56 @@ public final class HttpServiceServerGeneratorTest {
     @Test
     public void test_basic() {
         HttpService testHttpService = HttpService.builder()
-                .basePath("/person")
                 .name(NamedType.builder()
                         .fernFilepath(FernFilepath.valueOf("fern"))
                         .name("PersonCrudService")
                         .build())
+                .basePath("/person")
                 .addEndpoints(HttpEndpoint.builder()
                         .path("/{personId}")
-                        .errors(ResponseErrors.builder().discriminant("").build())
+                        .request(HttpRequest.builder()
+                                .type(Type.alias(AliasTypeDefinition.builder().aliasOf(TypeReference._void()).build()))
+                                .encoding(Encoding.json())
+                                .build())
                         .method(HttpMethod.GET)
                         .endpointId("getPerson")
+                        .response(HttpResponse.builder()
+                                .encoding(Encoding.json())
+                                .errors(ResponseErrors.builder().discriminant("").build())
+                                .ok(Type.alias(AliasTypeDefinition.builder()
+                                        .aliasOf(TypeReference.named(NamedType.builder()
+                                            .fernFilepath(FernFilepath.valueOf("fern"))
+                                            .name("Person")
+                                            .build()))
+                                        .build()))
+                                .build())
+                        .auth(HttpAuth.NONE)
                         .addParameters(PathParameter.builder()
-                                .key("personId")
                                 .valueType(TypeReference.primitive(PrimitiveType.STRING))
+                                .key("personId")
                                 .build())
                         .build())
                 .addEndpoints(HttpEndpoint.builder()
                         .path("/create")
-                        .errors(ResponseErrors.builder().discriminant("").build())
-                        .method(HttpMethod.POST)
-                        .endpointId("createPerson")
-                        .request(WireMessage.builder()
+                        .request(HttpRequest.builder()
                                 .type(Type.alias(AliasTypeDefinition.builder()
                                         .aliasOf(TypeReference.named(NamedType.builder()
                                                 .fernFilepath(FernFilepath.valueOf("fern"))
                                                 .name("CreatePersonRequest")
                                                 .build()))
                                         .build()))
+                                .encoding(Encoding.json())
                                 .build())
-                        .response(WireMessage.builder()
-                                .type(Type.alias(AliasTypeDefinition.builder()
+                        .method(HttpMethod.POST)
+                        .endpointId("createPerson")
+                        .response(HttpResponse.builder()
+                                .encoding(Encoding.json())
+                                .errors(ResponseErrors.builder().discriminant("").build())
+                                .ok(Type.alias(AliasTypeDefinition.builder()
                                         .aliasOf(TypeReference.primitive(PrimitiveType.STRING))
                                         .build()))
                                 .build())
+                        .auth(HttpAuth.NONE)
                         .build())
                 .build();
         HttpServiceServerGenerator httpServiceServerGenerator = new HttpServiceServerGenerator(
@@ -83,55 +103,72 @@ public final class HttpServiceServerGeneratorTest {
                 .name("PersonIdNotFound")
                 .build())
             .addProperties(ErrorProperty.builder()
+                    .name("personId")
                     .type(TypeReference.primitive(PrimitiveType.STRING))
-                .name("personId")
                 .build())
             .http(HttpErrorConfiguration.builder()
                 .statusCode(400)
                 .build())
             .build();
         HttpService testHttpService = HttpService.builder()
-                .basePath("/person")
                 .name(NamedType.builder()
                         .fernFilepath(FernFilepath.valueOf("fern"))
                         .name("PersonCrudService")
                         .build())
+                .basePath("/person")
                 .addEndpoints(HttpEndpoint.builder()
                         .path("/{personId}")
-                        .errors(ResponseErrors.builder()
-                                .discriminant("_type")
-                                .addPossibleErrors(ResponseError.builder()
-                                    .error(personIdNotFound.name())
-                                    .discriminantValue("notFound")
-                                    .build())
+                        .request(HttpRequest.builder()
+                                .type(Type.alias(AliasTypeDefinition.builder().aliasOf(TypeReference._void()).build()))
+                                .encoding(Encoding.json())
                                 .build())
                         .method(HttpMethod.GET)
                         .endpointId("getPerson")
+                        .response(HttpResponse.builder()
+                                .encoding(Encoding.json())
+                                .errors(ResponseErrors.builder()
+                                        .discriminant("_type")
+                                        .addPossibleErrors(ResponseError.builder()
+                                                .error(personIdNotFound.name())
+                                                .discriminantValue("notFound")
+                                                .build())
+                                        .build())
+                                .ok(Type.alias(AliasTypeDefinition.builder()
+                                        .aliasOf(TypeReference.named(NamedType.builder()
+                                                .fernFilepath(FernFilepath.valueOf("fern"))
+                                                .name("Person")
+                                                .build()))
+                                        .build()))
+                                .build())
+                        .auth(HttpAuth.NONE)
                         .addParameters(PathParameter.builder()
-                                .key("personId")
                                 .valueType(TypeReference.primitive(PrimitiveType.STRING))
+                                .key("personId")
                                 .build())
                         .build())
                 .addEndpoints(HttpEndpoint.builder()
                         .path("/create")
-                        .errors(ResponseErrors.builder()
-                                .discriminant("_type")
-                                .build())
-                        .method(HttpMethod.POST)
-                        .endpointId("createPerson")
-                        .request(WireMessage.builder()
+                        .request(HttpRequest.builder()
                                 .type(Type.alias(AliasTypeDefinition.builder()
                                         .aliasOf(TypeReference.named(NamedType.builder()
                                                 .fernFilepath(FernFilepath.valueOf("fern"))
                                                 .name("CreatePersonRequest")
                                                 .build()))
                                         .build()))
+                                .encoding(Encoding.json())
                                 .build())
-                        .response(WireMessage.builder()
-                                .type(Type.alias(AliasTypeDefinition.builder()
+                        .method(HttpMethod.POST)
+                        .endpointId("createPerson")
+                        .response(HttpResponse.builder()
+                                .encoding(Encoding.json())
+                                .errors(ResponseErrors.builder()
+                                        .discriminant("_type")
+                                        .build())
+                                .ok(Type.alias(AliasTypeDefinition.builder()
                                         .aliasOf(TypeReference.primitive(PrimitiveType.STRING))
                                         .build()))
                                 .build())
+                        .auth(HttpAuth.NONE)
                         .build())
                 .build();
         ExceptionGenerator personIdNotFoundClientExceptionGenerator =

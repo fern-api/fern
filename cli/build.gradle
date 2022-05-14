@@ -9,7 +9,7 @@ dependencies {
     implementation project(':jersey-codegen')
     implementation 'com.fasterxml.jackson.core:jackson-databind'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
-    implementation 'com.fern:fern-api-model'
+    implementation 'com.fern.ir:model'
     implementation 'org.immutables:value::annotations'
     implementation 'com.fern:fern-immutables-style'
     implementation 'com.squareup:javapoet'

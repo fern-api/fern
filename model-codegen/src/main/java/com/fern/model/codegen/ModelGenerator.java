@@ -7,13 +7,13 @@ import com.fern.codegen.GeneratedObject;
 import com.fern.codegen.GeneratedUnion;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
-import com.types.AliasTypeDefinition;
-import com.types.EnumTypeDefinition;
-import com.types.NamedType;
-import com.types.ObjectTypeDefinition;
-import com.types.Type;
-import com.types.TypeDefinition;
-import com.types.UnionTypeDefinition;
+import com.fern.types.types.AliasTypeDefinition;
+import com.fern.types.types.EnumTypeDefinition;
+import com.fern.types.types.NamedType;
+import com.fern.types.types.ObjectTypeDefinition;
+import com.fern.types.types.Type;
+import com.fern.types.types.TypeDefinition;
+import com.fern.types.types.UnionTypeDefinition;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +44,7 @@ public final class ModelGenerator {
         modelGeneratorResultBuilder.putAllInterfaces(generatedInterfaces);
         typeDefinitions.forEach(typeDefinition -> typeDefinition
                 .shape()
-                .accept(new TypeDefinitionGenerator(typeDefinition, generatedInterfaces, modelGeneratorResultBuilder)));
+                .visit(new TypeDefinitionGenerator(typeDefinition, generatedInterfaces, modelGeneratorResultBuilder)));
         return modelGeneratorResultBuilder.build();
     }
 

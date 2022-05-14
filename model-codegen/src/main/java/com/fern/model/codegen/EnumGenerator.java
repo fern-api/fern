@@ -8,6 +8,9 @@ import com.fern.codegen.utils.ClassNameUtils;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.codegen.utils.VisitorUtils;
 import com.fern.codegen.utils.VisitorUtils.GeneratedVisitor;
+import com.fern.types.types.EnumTypeDefinition;
+import com.fern.types.types.EnumValue;
+import com.fern.types.types.NamedType;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
@@ -16,9 +19,6 @@ import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeSpec;
-import com.types.EnumTypeDefinition;
-import com.types.EnumValue;
-import com.types.NamedType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -27,7 +27,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.lang.model.element.Modifier;
-import org.apache.commons.lang3.StringUtils;
 
 public final class EnumGenerator extends Generator {
 
@@ -59,14 +58,7 @@ public final class EnumGenerator extends Generator {
             GeneratorContext generatorContext) {
         super(generatorContext, packageType);
         this.namedType = namedType;
-        this.enumTypeDefinition = EnumTypeDefinition.builder()
-                .addAllValues(enumTypeDefinition.values().stream()
-                        .map(EnumValue::value)
-                        .map(StringUtils::upperCase)
-                        .map(upperCasedEnum ->
-                                EnumValue.builder().value(upperCasedEnum).build())
-                        .collect(Collectors.toList()))
-                .build();
+        this.enumTypeDefinition = enumTypeDefinition;
         this.generatedEnumClassName =
                 generatorContext.getClassNameUtils().getClassNameForNamedType(namedType, packageType);
         this.valueFieldClassName = generatedEnumClassName.nestedClass(VALUE_TYPE_NAME);

@@ -1,14 +1,14 @@
 package com.fern.codegen.utils;
 
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
+import com.fern.types.types.ContainerType;
+import com.fern.types.types.MapType;
+import com.fern.types.types.NamedType;
+import com.fern.types.types.PrimitiveType;
+import com.fern.types.types.TypeReference;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
-import com.types.ContainerType;
-import com.types.MapType;
-import com.types.NamedType;
-import com.types.PrimitiveType;
-import com.types.TypeReference;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -26,7 +26,7 @@ class TypeReferenceUtils {
     }
 
     TypeName convertToTypeName(boolean primitiveAllowed, TypeReference typeReference) {
-        return typeReference.accept(new TypeReferenceToTypeNameConverter(primitiveAllowed));
+        return typeReference.visit(new TypeReferenceToTypeNameConverter(primitiveAllowed));
     }
 
     private final class TypeReferenceToTypeNameConverter implements TypeReference.Visitor<TypeName> {
@@ -45,14 +45,14 @@ class TypeReferenceUtils {
         @Override
         public TypeName visitPrimitive(PrimitiveType primitiveType) {
             if (primitiveAllowed) {
-                return primitiveType.accept(PrimitiveToTypeNameConverter.PRIMITIVE_ALLOWED_CONVERTER);
+                return primitiveType.visit(PrimitiveToTypeNameConverter.PRIMITIVE_ALLOWED_CONVERTER);
             }
-            return primitiveType.accept(PrimitiveToTypeNameConverter.PRIMITIVE_DISALLOWED_CONVERTER);
+            return primitiveType.visit(PrimitiveToTypeNameConverter.PRIMITIVE_DISALLOWED_CONVERTER);
         }
 
         @Override
         public TypeName visitContainer(ContainerType containerType) {
-            return containerType.accept(containerToTypeNameConverter);
+            return containerType.visit(containerToTypeNameConverter);
         }
 
         @Override
@@ -128,26 +128,26 @@ class TypeReferenceUtils {
         public TypeName visitMap(MapType mapType) {
             return ParameterizedTypeName.get(
                     ClassName.get(Map.class),
-                    mapType.keyType().accept(primitiveDisAllowedTypeReferenceConverter),
-                    mapType.valueType().accept(primitiveDisAllowedTypeReferenceConverter));
+                    mapType.keyType().visit(primitiveDisAllowedTypeReferenceConverter),
+                    mapType.valueType().visit(primitiveDisAllowedTypeReferenceConverter));
         }
 
         @Override
         public TypeName visitList(TypeReference typeReference) {
             return ParameterizedTypeName.get(
-                    ClassName.get(List.class), typeReference.accept(primitiveDisAllowedTypeReferenceConverter));
+                    ClassName.get(List.class), typeReference.visit(primitiveDisAllowedTypeReferenceConverter));
         }
 
         @Override
         public TypeName visitSet(TypeReference typeReference) {
             return ParameterizedTypeName.get(
-                    ClassName.get(Set.class), typeReference.accept(primitiveDisAllowedTypeReferenceConverter));
+                    ClassName.get(Set.class), typeReference.visit(primitiveDisAllowedTypeReferenceConverter));
         }
 
         @Override
         public TypeName visitOptional(TypeReference typeReference) {
             return ParameterizedTypeName.get(
-                    ClassName.get(Optional.class), typeReference.accept(primitiveDisAllowedTypeReferenceConverter));
+                    ClassName.get(Optional.class), typeReference.visit(primitiveDisAllowedTypeReferenceConverter));
         }
 
         @Override

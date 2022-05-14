@@ -1,5 +1,5 @@
 dependencies {
-    implementation 'com.fern:fern-api-model'
+    implementation 'com.fern.ir:model'
     implementation 'com.squareup:javapoet'
     implementation 'com.fasterxml.jackson.core:jackson-databind'
     implementation 'org.apache.commons:commons-lang3'

@@ -2,15 +2,15 @@ package com.fern.model.codegen;
 
 import com.fern.codegen.GeneratedInterface;
 import com.fern.java.test.TestConstants;
-import com.types.ContainerType;
-import com.types.FernFilepath;
-import com.types.NamedType;
-import com.types.ObjectProperty;
-import com.types.ObjectTypeDefinition;
-import com.types.PrimitiveType;
-import com.types.Type;
-import com.types.TypeDefinition;
-import com.types.TypeReference;
+import com.fern.types.types.ContainerType;
+import com.fern.types.types.FernFilepath;
+import com.fern.types.types.NamedType;
+import com.fern.types.types.ObjectProperty;
+import com.fern.types.types.ObjectTypeDefinition;
+import com.fern.types.types.PrimitiveType;
+import com.fern.types.types.Type;
+import com.fern.types.types.TypeDefinition;
+import com.fern.types.types.TypeReference;
 import org.junit.jupiter.api.Test;
 
 public class InterfaceGeneratorTest {
@@ -19,17 +19,17 @@ public class InterfaceGeneratorTest {
     public void test_basic() {
         ObjectTypeDefinition objectTypeDefinition = ObjectTypeDefinition.builder()
                 .addProperties(ObjectProperty.builder()
+                        .key("docs")
                         .valueType(TypeReference.container(
                                 ContainerType.optional(TypeReference.primitive(PrimitiveType.STRING))))
-                        .key("docs")
                         .build())
                 .build();
         TypeDefinition withDocsTypeDefinition = TypeDefinition.builder()
-                .shape(Type._object(objectTypeDefinition))
                 .name(NamedType.builder()
                         .fernFilepath(FernFilepath.valueOf("com/fern"))
                         .name("WithDocs")
                         .build())
+                .shape(Type._object(objectTypeDefinition))
                 .build();
         InterfaceGenerator interfaceGenerator = new InterfaceGenerator(
                 objectTypeDefinition, withDocsTypeDefinition.name(), TestConstants.GENERATOR_CONTEXT);

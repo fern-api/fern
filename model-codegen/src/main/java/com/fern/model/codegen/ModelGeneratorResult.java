@@ -5,7 +5,7 @@ import com.fern.codegen.GeneratedEnum;
 import com.fern.codegen.GeneratedInterface;
 import com.fern.codegen.GeneratedObject;
 import com.fern.codegen.GeneratedUnion;
-import com.types.NamedType;
+import com.fern.types.types.NamedType;
 import java.util.List;
 import java.util.Map;
 import org.immutables.value.Value;

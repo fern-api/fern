@@ -7,8 +7,8 @@ import com.fern.codegen.stateless.generator.ObjectMapperGenerator;
 import com.fern.codegen.utils.ClassNameUtils;
 import com.fern.codegen.utils.ImmutablesUtils;
 import com.fern.codegen.utils.VisitorUtils;
-import com.types.NamedType;
-import com.types.TypeDefinition;
+import com.fern.types.types.NamedType;
+import com.fern.types.types.TypeDefinition;
 import java.util.Map;
 import java.util.Optional;
 

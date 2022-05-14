@@ -1,14 +1,14 @@
 package com.fern.codegen.utils;
 
-import com.errors.ErrorDefinition;
-import com.errors.ErrorProperty;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fern.types.errors.ErrorDefinition;
+import com.fern.types.errors.ErrorProperty;
+import com.fern.types.types.ObjectProperty;
+import com.fern.types.types.ObjectTypeDefinition;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
-import com.types.ObjectProperty;
-import com.types.ObjectTypeDefinition;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;

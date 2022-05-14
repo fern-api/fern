@@ -3,12 +3,12 @@ package com.fern.model.codegen;
 import com.fern.codegen.GeneratedEnum;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.java.test.TestConstants;
-import com.types.EnumTypeDefinition;
-import com.types.EnumValue;
-import com.types.FernFilepath;
-import com.types.NamedType;
-import com.types.Type;
-import com.types.TypeDefinition;
+import com.fern.types.types.EnumTypeDefinition;
+import com.fern.types.types.EnumValue;
+import com.fern.types.types.FernFilepath;
+import com.fern.types.types.NamedType;
+import com.fern.types.types.Type;
+import com.fern.types.types.TypeDefinition;
 import org.junit.jupiter.api.Test;
 
 public class EnumGeneratorTest {
@@ -16,16 +16,16 @@ public class EnumGeneratorTest {
     @Test
     public void test_basic() {
         EnumTypeDefinition migrationStatusEnumDef = EnumTypeDefinition.builder()
-                .addValues(EnumValue.builder().value("RUNNING").build())
-                .addValues(EnumValue.builder().value("FAILED").build())
-                .addValues(EnumValue.builder().value("FINISHED").build())
+                .addValues(EnumValue.builder().name("RUNNING").value("running").build())
+                .addValues(EnumValue.builder().name("FAILED").value("FAILED").build())
+                .addValues(EnumValue.builder().name("FINISHED").value("FINISHED").build())
                 .build();
         TypeDefinition migrationStatusTypeDef = TypeDefinition.builder()
-                .shape(Type._enum(migrationStatusEnumDef))
                 .name(NamedType.builder()
                         .fernFilepath(FernFilepath.valueOf("com/trace/migration"))
                         .name("MigrationStatus")
                         .build())
+                .shape(Type._enum(migrationStatusEnumDef))
                 .build();
         EnumGenerator enumGenerator = new EnumGenerator(
                 migrationStatusTypeDef.name(), PackageType.TYPES, migrationStatusEnumDef,

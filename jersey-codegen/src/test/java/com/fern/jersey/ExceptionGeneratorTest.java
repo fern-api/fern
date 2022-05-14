@@ -1,14 +1,14 @@
 package com.fern.jersey;
 
-import com.errors.ErrorDefinition;
-import com.errors.ErrorProperty;
-import com.errors.HttpErrorConfiguration;
 import com.fern.codegen.GeneratedException;
 import com.fern.java.test.TestConstants;
-import com.types.FernFilepath;
-import com.types.NamedType;
-import com.types.PrimitiveType;
-import com.types.TypeReference;
+import com.fern.types.errors.ErrorDefinition;
+import com.fern.types.errors.ErrorProperty;
+import com.fern.types.errors.HttpErrorConfiguration;
+import com.fern.types.types.FernFilepath;
+import com.fern.types.types.NamedType;
+import com.fern.types.types.PrimitiveType;
+import com.fern.types.types.TypeReference;
 import org.junit.jupiter.api.Test;
 
 public class ExceptionGeneratorTest {
@@ -23,8 +23,8 @@ public class ExceptionGeneratorTest {
                                 .name("NotFoundError")
                                 .build())
                         .addProperties(ErrorProperty.builder()
-                                .type(TypeReference.primitive(PrimitiveType.STRING))
                                 .name("a")
+                                .type(TypeReference.primitive(PrimitiveType.STRING))
                                 .build())
                         .build(),
                 false);
@@ -42,8 +42,8 @@ public class ExceptionGeneratorTest {
                                 .name("NotFoundError")
                                 .build())
                         .addProperties(ErrorProperty.builder()
-                                .type(TypeReference.primitive(PrimitiveType.STRING))
                                 .name("a")
+                                .type(TypeReference.primitive(PrimitiveType.STRING))
                                 .build())
                         .http(HttpErrorConfiguration.builder().statusCode(500).build())
                         .build(),
