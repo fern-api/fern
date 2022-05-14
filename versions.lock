@@ -1,4 +1,6 @@
 # Run ./gradlew --write-locks to regenerate this file
+ch.qos.logback:logback-classic:1.2.6 (1 constraints: 0b05fc35)
+ch.qos.logback:logback-core:1.2.6 (1 constraints: 0a0d021d)
 ch.qos.reload4j:reload4j:1.2.19 (1 constraints: 8d0ae7ce)
 com.fasterxml.jackson:jackson-bom:2.13.0 (6 constraints: 9c715534)
 com.fasterxml.jackson.core:jackson-annotations:2.13.0 (3 constraints: c52e50f6)
@@ -27,11 +29,12 @@ net.sourceforge.argparse4j:argparse4j:0.9.0 (1 constraints: 0b050636)
 org.apache.commons:commons-lang3:3.12.0 (1 constraints: 38053b3b)
 org.checkerframework:checker-qual:3.12.0 (1 constraints: 480a3bbf)
 org.immutables:value:2.8.8 (2 constraints: 78120c20)
-org.slf4j:slf4j-api:1.7.36 (2 constraints: d30f1abd)
+org.slf4j:slf4j-api:1.7.36 (3 constraints: 101dfd7b)
 org.slf4j:slf4j-log4j12:1.7.36 (1 constraints: 43054b3b)
 org.slf4j:slf4j-reload4j:1.7.36 (1 constraints: bf09cfbc)
 
 [Test dependencies]
+io.github.origin-energy:java-snapshot-testing-junit5:3.2.7 (1 constraints: 0e050736)
 net.bytebuddy:byte-buddy:1.11.3 (1 constraints: 400b38de)
 net.bytebuddy:byte-buddy-agent:1.11.3 (1 constraints: 400b38de)
 org.apiguardian:apiguardian-api:1.1.0 (5 constraints: 0654a8a8)

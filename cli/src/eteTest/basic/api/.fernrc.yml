@@ -1,0 +1,9 @@
+name: Blog Post API
+input: src
+plugins:
+  - name: fern-java
+    version: latest
+    output: ./generated-java
+    config:
+      packagePrefix: com.blog
+      mode: CLIENT_AND_SERVER

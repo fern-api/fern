@@ -1,0 +1,785 @@
+basic[src/eteTest/basic/api/generated-java/.gitignore]=[
+*/
+
+]
+
+
+basic[src/eteTest/basic/api/generated-java/client/build.gradle]=[
+plugins {
+    id 'java-library'
+    id "org.inferred.processors" version "3.6.0"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    api project(':api:generated-java:model')
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.3'
+    implementation 'io.github.openfeign:feign-jackson:11.8'
+    implementation 'io.github.openfeign:feign-core:11.8'
+    implementation 'io.github.openfeign:feign-jaxrs2:11.8'
+
+    annotationProcessor 'org.immutables:value:2.8.8'
+    compileOnly 'org.immutables:value-annotations:2.8.8'
+}
+
+]
+
+
+basic[src/eteTest/basic/api/generated-java/client/src/main/java/com/blog/ClientObjectMappers.java]=[
+package com.blog;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+
+public final class ClientObjectMappers {
+  public static final ObjectMapper JSON_MAPPER = JsonMapper.builder()
+      .addModule(new Jdk8Module())
+      .build();
+
+  private ClientObjectMappers() {
+  }
+}
+
+]
+
+
+basic[src/eteTest/basic/api/generated-java/client/src/main/java/com/blog/UnknownRemoteException.java]=[
+package com.blog;
+
+import java.lang.String;
+import java.rmi.RemoteException;
+
+public final class UnknownRemoteException extends RemoteException {
+  public UnknownRemoteException(String s) {
+    super(s);
+  }
+}
+
+]
+
+
+basic[src/eteTest/basic/api/generated-java/client/src/main/java/com/blog/client/blog/PostsServiceClient.java]=[
+package com.blog.client.blog;
+
+import com.blog.ClientObjectMappers;
+import com.blog.UnknownRemoteException;
+import com.blog.errors.blog.PostNotFoundError;
+import com.blog.services.blog.CreatePostRequest;
+import com.blog.types.blog.BlogPost;
+import com.blog.types.blog.PostId;
+import feign.Feign;
+import feign.jackson.JacksonDecoder;
+import feign.jackson.JacksonEncoder;
+import feign.jaxrs.JAXRSContract;
+import java.lang.String;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+@Path("/posts")
+public interface PostsServiceClient {
+  @POST
+  @Path("/create")
+  void createPost(CreatePostRequest request);
+
+  @GET
+  @Path("/{postId}")
+  BlogPost getPost(@PathParam("postId") PostId postId) throws PostNotFoundError,
+      UnknownRemoteException;
+
+  static PostsServiceClient getClient(String url) {
+    return Feign.builder()
+        .contract(new JAXRSContract())
+        .decoder(new JacksonDecoder(ClientObjectMappers.JSON_MAPPER))
+        .encoder(new JacksonEncoder(ClientObjectMappers.JSON_MAPPER))
+        .errorDecoder(new PostsServiceErrorDecoder()).target(PostsServiceClient.class, url);
+  }
+}
+
+]
+
+
+basic[src/eteTest/basic/api/generated-java/client/src/main/java/com/blog/client/blog/PostsServiceErrorDecoder.java]=[
+package com.blog.client.blog;
+
+import com.blog.ClientObjectMappers;
+import com.blog.UnknownRemoteException;
+import com.blog.errors.blog.PostNotFoundError;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import feign.Response;
+import feign.codec.ErrorDecoder;
+import java.io.IOException;
+import java.lang.Class;
+import java.lang.Exception;
+import java.lang.Override;
+import java.lang.String;
+import org.immutables.value.Value;
+
+final class PostsServiceErrorDecoder implements ErrorDecoder {
+  @Override
+  public Exception decode(String methodKey, Response response) {
+    if (methodKey.contains("getPost")) {
+      return decodeException(response, GetPostException.class).getException();
+    }
+    return new UnknownRemoteException("Encountered exception for unknown method: " + methodKey);
+  }
+
+  private static <T extends ExceptionRetriever> ExceptionRetriever decodeException(
+      Response response, Class<T> clazz) {
+    try {
+      return ClientObjectMappers.JSON_MAPPER.readValue(response.body().asInputStream(), clazz);
+    }
+    catch (IOException e) {
+      return () -> new UnknownRemoteException("Failed to read error body");
+    }
+  }
+
+  interface ExceptionRetriever {
+    Exception getException();
+  }
+
+  @JsonTypeInfo(
+      use = JsonTypeInfo.Id.NAME,
+      include = JsonTypeInfo.As.EXISTING_PROPERTY,
+      property = "_type",
+      visible = true,
+      defaultImpl = UnknownRemoteException.class
+  )
+  @JsonSubTypes(@JsonSubTypes.Type(value = PostNotFoundErrorValue.class, name = "notFound"))
+  interface GetPostException extends ExceptionRetriever {
+  }
+
+  @Value.Immutable
+  @JsonDeserialize(
+      as = ImmutablePostNotFoundErrorValue.class
+  )
+  interface PostNotFoundErrorValue extends GetPostException {
+    @JsonValue
+    PostNotFoundError error();
+
+    @Override
+    default Exception getException() {
+      return error();
+    }
+  }
+}
+
+]
+
+
+basic[src/eteTest/basic/api/generated-java/client/src/main/java/com/blog/errors/blog/PostNotFoundError.java]=[
+package com.blog.errors.blog;
+
+import com.blog.ApiException;
+import com.blog.HttpApiException;
+import com.blog.StagedBuilderStyle;
+import com.blog.types.blog.PostId;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.lang.Exception;
+import java.lang.Override;
+import org.immutables.value.Value;
+
+@Value.Immutable
+@JsonDeserialize(
+    as = ImmutablePostNotFoundError.class
+)
+@StagedBuilderStyle
+@JsonIncludeProperties({"id"})
+public abstract class PostNotFoundError extends Exception implements ApiException, HttpApiException {
+  public static final int STATUS_CODE = 400;
+
+  public abstract PostId id();
+
+  public static ImmutablePostNotFoundError.IdBuildStage builder() {
+    return ImmutablePostNotFoundError.builder();
+  }
+
+  @Override
+  public int getStatusCode() {
+    return STATUS_CODE;
+  }
+}
+
+]
+
+
+basic[src/eteTest/basic/api/generated-java/model/build.gradle]=[
+plugins {
+    id 'java-library'
+    id "org.inferred.processors" version "3.6.0"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
+    implementation 'com.google.code.findbugs:annotations:3.0.1'
+
+    annotationProcessor 'org.immutables:value:2.8.8'
+    compileOnly 'org.immutables:value-annotations:2.8.8'
+}
+
+]
+
+
+basic[src/eteTest/basic/api/generated-java/model/src/main/java/com/blog/ApiException.java]=[
+package com.blog;
+
+public abstract interface ApiException {
+}
+
+]
+
+
+basic[src/eteTest/basic/api/generated-java/model/src/main/java/com/blog/AuthHeader.java]=[
+package com.blog;
+
+import com.fasterxml.jackson.annotation.JsonValue;
+import java.lang.Override;
+import java.lang.String;
+import org.immutables.value.Value;
+
+@Value.Immutable
+@PackagePrivateStyle
+public abstract class AuthHeader {
+  @Value.Parameter
+  @JsonValue
+  public abstract String authHeader();
+
+  public static AuthHeader valueOf(String authHeader) {
+    if (authHeader.startsWith("Bearer ")) {
+      return ImmutableAuthHeader.of(authHeader);
+    }
+    return ImmutableAuthHeader.of("Bearer " + authHeader);
+  }
+
+  @Override
+  public final String toString() {
+    return authHeader();
+  }
+}
+
+]
+
+
+basic[src/eteTest/basic/api/generated-java/model/src/main/java/com/blog/HttpApiException.java]=[
+package com.blog;
+
+public abstract interface HttpApiException {
+  int getStatusCode();
+}
+
+]
+
+
+basic[src/eteTest/basic/api/generated-java/model/src/main/java/com/blog/PackagePrivateStyle.java]=[
+package com.blog;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import org.immutables.value.Value;
+
+@Target({ElementType.PACKAGE, ElementType.TYPE})
+@Retention(RetentionPolicy.SOURCE)
+@Value.Style(
+    jdkOnly = true,
+    visibility = Value.Style.ImplementationVisibility.PACKAGE,
+    overshadowImplementation = true
+)
+public @interface PackagePrivateStyle {
+}
+
+]
+
+
+basic[src/eteTest/basic/api/generated-java/model/src/main/java/com/blog/StagedBuilderStyle.java]=[
+package com.blog;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import org.immutables.value.Value;
+
+@Target({ElementType.PACKAGE, ElementType.TYPE})
+@Retention(RetentionPolicy.SOURCE)
+@Value.Style(
+    jdkOnly = true,
+    stagedBuilder = true,
+    visibility = Value.Style.ImplementationVisibility.PACKAGE,
+    overshadowImplementation = true
+)
+public @interface StagedBuilderStyle {
+}
+
+]
+
+
+basic[src/eteTest/basic/api/generated-java/model/src/main/java/com/blog/services/blog/CreatePostRequest.java]=[
+package com.blog.services.blog;
+
+import com.blog.StagedBuilderStyle;
+import com.blog.types.blog.Author;
+import com.blog.types.blog.PostType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.lang.String;
+import org.immutables.value.Value;
+
+@Value.Immutable
+@StagedBuilderStyle
+@JsonDeserialize(
+    as = ImmutableCreatePostRequest.class
+)
+@JsonIgnoreProperties(
+    ignoreUnknown = true
+)
+public interface CreatePostRequest {
+  String title();
+
+  Author author();
+
+  PostType postType();
+
+  String content();
+
+  static ImmutableCreatePostRequest.TitleBuildStage builder() {
+    return ImmutableCreatePostRequest.builder();
+  }
+}
+
+]
+
+
+basic[src/eteTest/basic/api/generated-java/model/src/main/java/com/blog/types/blog/Author.java]=[
+package com.blog.types.blog;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Map;
+import java.util.Optional;
+import org.immutables.value.Value;
+
+@Value.Enclosing
+public final class Author {
+  private final InternalValue value;
+
+  @JsonCreator(
+      mode = JsonCreator.Mode.DELEGATING
+  )
+  private Author(InternalValue value) {
+    this.value = value;
+  }
+
+  @JsonValue
+  InternalValue getInternalValue() {
+    return value;
+  }
+
+  public static Author anonymous() {
+    return new Author(InternalAnonymousValue.of());
+  }
+
+  public static Author name(String value) {
+    return new Author(InternalNameValue.of(value));
+  }
+
+  public boolean isName() {
+    return value instanceof InternalNameValue;
+  }
+
+  public boolean isAnonymous() {
+    return value instanceof InternalAnonymousValue;
+  }
+
+  public Optional<String> getName() {
+    if (isName()) {
+      return Optional.of(((InternalNameValue) value).name());
+    }
+    return Optional.empty();
+  }
+
+  public <T> T visit(Visitor<T> visitor) {
+    return value.visit(visitor);
+  }
+
+  public interface Visitor<T> {
+    T visitAnonymous();
+
+    T visitName(String value);
+
+    T visitUnknown(String unknownType);
+  }
+
+  @JsonTypeInfo(
+      use = JsonTypeInfo.Id.NAME,
+      include = JsonTypeInfo.As.EXISTING_PROPERTY,
+      property = "_type",
+      visible = true,
+      defaultImpl = Unknown.class
+  )
+  @JsonSubTypes({
+      @JsonSubTypes.Type(value = InternalNameValue.class, name = "name"),
+      @JsonSubTypes.Type(value = InternalAnonymousValue.class, name = "anonymous")
+  })
+  @JsonIgnoreProperties(
+      ignoreUnknown = true
+  )
+  private interface InternalValue {
+    <T> T visit(Visitor<T> visitor);
+  }
+
+  @Value.Immutable
+  @JsonTypeName("name")
+  @JsonDeserialize(
+      as = ImmutableAuthor.InternalNameValue.class
+  )
+  interface InternalNameValue extends InternalValue {
+    String name();
+
+    @Override
+    default <T> T visit(Visitor<T> visitor) {
+      return visitor.visitName(name());
+    }
+
+    static InternalNameValue of(String value) {
+      return ImmutableAuthor.InternalNameValue.builder().name(value).build();
+    }
+  }
+
+  @Value.Immutable
+  @JsonTypeName("anonymous")
+  @JsonDeserialize(
+      as = ImmutableAuthor.InternalAnonymousValue.class
+  )
+  interface InternalAnonymousValue extends InternalValue {
+    @Override
+    default <T> T visit(Visitor<T> visitor) {
+      return visitor.visitAnonymous();
+    }
+
+    static InternalAnonymousValue of() {
+      return ImmutableAuthor.InternalAnonymousValue.builder().build();
+    }
+  }
+
+  @Value.Immutable
+  @JsonDeserialize(
+      as = ImmutableAuthor.Unknown.class
+  )
+  interface Unknown extends InternalValue {
+    @JsonValue
+    Map<String, Object> value();
+
+    default String type() {
+      return value().get("type").toString();
+    }
+
+    @Override
+    default <T> T visit(Visitor<T> visitor) {
+      return visitor.visitUnknown(type());
+    }
+  }
+}
+
+]
+
+
+basic[src/eteTest/basic/api/generated-java/model/src/main/java/com/blog/types/blog/BlogPost.java]=[
+package com.blog.types.blog;
+
+import com.blog.StagedBuilderStyle;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.lang.String;
+import org.immutables.value.Value;
+
+@Value.Immutable
+@StagedBuilderStyle
+@JsonDeserialize(
+    as = ImmutableBlogPost.class
+)
+@JsonIgnoreProperties(
+    ignoreUnknown = true
+)
+public interface BlogPost {
+  String content();
+
+  PostType type();
+
+  PostId id();
+
+  String title();
+
+  Author author();
+
+  static ImmutableBlogPost.ContentBuildStage builder() {
+    return ImmutableBlogPost.builder();
+  }
+}
+
+]
+
+
+basic[src/eteTest/basic/api/generated-java/model/src/main/java/com/blog/types/blog/PostId.java]=[
+package com.blog.types.blog;
+
+import com.blog.StagedBuilderStyle;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.lang.String;
+import org.immutables.value.Value;
+
+@Value.Immutable
+@StagedBuilderStyle
+@JsonDeserialize(
+    as = ImmutablePostId.class
+)
+public interface PostId {
+  @JsonValue
+  String value();
+
+  static PostId valueOf(String value) {
+    return ImmutablePostId.builder().value(value).build();
+  }
+}
+
+]
+
+
+basic[src/eteTest/basic/api/generated-java/model/src/main/java/com/blog/types/blog/PostType.java]=[
+package com.blog.types.blog;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Locale;
+import javax.annotation.Nonnull;
+
+public final class PostType {
+  public static final PostType SHORT = new PostType(Value.SHORT, "SHORT");
+
+  public static final PostType LONG = new PostType(Value.LONG, "LONG");
+
+  private final Value value;
+
+  private final String string;
+
+  PostType(Value value, String string) {
+    this.value = value;
+    this.string = string;
+  }
+
+  public Value getEnumValue() {
+    return value;
+  }
+
+  @Override
+  @JsonValue
+  public String toString() {
+    return this.string;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    return (this == other) 
+      || (other instanceof PostType && this.string.equals(((PostType) other).string));
+  }
+
+  @Override
+  public int hashCode() {
+    return this.string.hashCode();
+  }
+
+  public <T> T visit(Visitor<T> visitor) {
+    switch (value) {
+      case SHORT:
+        return visitor.visitSHORT();
+      case LONG:
+        return visitor.visitLONG();
+      case UNKNOWN:
+      default:
+        return visitor.visitUnknown(string);
+    }
+  }
+
+  @JsonCreator(
+      mode = JsonCreator.Mode.DELEGATING
+  )
+  public static PostType valueOf(@Nonnull String value) {
+    String upperCasedValue = value.toUpperCase(Locale.ROOT);
+    switch (upperCasedValue) {
+      case "SHORT":
+        return SHORT;
+      case "LONG":
+        return LONG;
+      default:
+        return new PostType(Value.UNKNOWN, upperCasedValue);
+    }
+  }
+
+  public enum Value {
+    LONG,
+
+    SHORT,
+
+    UNKNOWN
+  }
+
+  public interface Visitor<T> {
+    T visitLONG();
+
+    T visitSHORT();
+
+    T visitUnknown(String unknownType);
+  }
+}
+
+]
+
+
+basic[src/eteTest/basic/api/generated-java/server/build.gradle]=[
+plugins {
+    id 'java-library'
+    id "org.inferred.processors" version "3.6.0"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    api project(':api:generated-java:model')
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.3'
+    implementation 'io.github.openfeign:feign-jackson:11.8'
+    implementation 'io.github.openfeign:feign-core:11.8'
+    implementation 'io.github.openfeign:feign-jaxrs2:11.8'
+
+    annotationProcessor 'org.immutables:value:2.8.8'
+    compileOnly 'org.immutables:value-annotations:2.8.8'
+}
+
+]
+
+
+basic[src/eteTest/basic/api/generated-java/server/src/main/java/com/blog/ServerObjectMappers.java]=[
+package com.blog;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+
+public final class ServerObjectMappers {
+  public static final ObjectMapper JSON_MAPPER = JsonMapper.builder()
+      .addModule(new Jdk8Module())
+      .build();
+
+  private ServerObjectMappers() {
+  }
+}
+
+]
+
+
+basic[src/eteTest/basic/api/generated-java/server/src/main/java/com/blog/errors/blog/PostNotFoundError.java]=[
+package com.blog.errors.blog;
+
+import com.blog.ApiException;
+import com.blog.HttpApiException;
+import com.blog.StagedBuilderStyle;
+import com.blog.types.blog.PostId;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.lang.Override;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
+import org.immutables.value.Value;
+
+@Value.Immutable
+@JsonDeserialize(
+    as = ImmutablePostNotFoundError.class
+)
+@StagedBuilderStyle
+@JsonIncludeProperties({"id"})
+public abstract class PostNotFoundError extends WebApplicationException implements ApiException, HttpApiException {
+  public static final int STATUS_CODE = 400;
+
+  public abstract PostId id();
+
+  public static ImmutablePostNotFoundError.IdBuildStage builder() {
+    return ImmutablePostNotFoundError.builder();
+  }
+
+  @Override
+  public final Response getResponse() {
+    return Response.status(STATUS_CODE).entity(this).build();
+  }
+
+  @Override
+  public int getStatusCode() {
+    return STATUS_CODE;
+  }
+}
+
+]
+
+
+basic[src/eteTest/basic/api/generated-java/server/src/main/java/com/blog/server/blog/PostsService.java]=[
+package com.blog.server.blog;
+
+import com.blog.errors.blog.PostNotFoundError;
+import com.blog.services.blog.CreatePostRequest;
+import com.blog.types.blog.BlogPost;
+import com.blog.types.blog.PostId;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+@Path("/posts")
+public interface PostsService {
+  @POST
+  @Path("/create")
+  void createPost(CreatePostRequest request);
+
+  @GET
+  @Path("/{postId}")
+  BlogPost getPost(@PathParam("postId") PostId postId) throws PostNotFoundError;
+}
+
+]

@@ -20,6 +20,7 @@ plugins {
     id "net.ltgt.errorprone" version "2.0.2"
     id 'checkstyle'
     id "com.diffplug.spotless" version "6.4.2"
+    id 'com.palantir.baseline-circleci' version "4.100.0"
 }
 
 group 'io.github.fern-api'
@@ -73,6 +74,13 @@ allprojects {
 
     tasks.withType(JavaCompile).configureEach {
         options.errorprone.disableWarningsInGeneratedCode = true
+    }
+
+    test {
+        useJUnitPlatform()
+        testLogging {
+            events "passed", "skipped", "failed"
+        }
     }
 }
 

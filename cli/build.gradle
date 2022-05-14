@@ -1,6 +1,8 @@
 plugins {
     id 'java-library-distribution'
     id "com.palantir.docker" version "0.33.0"
+    id "org.unbroken-dome.test-sets" version "4.0.0"
+    id 'java'
 }
 
 dependencies {
@@ -13,6 +15,7 @@ dependencies {
     implementation 'org.immutables:value::annotations'
     implementation 'com.fern:fern-immutables-style'
     implementation 'com.squareup:javapoet'
+    implementation 'ch.qos.logback:logback-classic'
 
     annotationProcessor 'org.immutables:value'
 
@@ -21,6 +24,7 @@ dependencies {
     testImplementation 'org.assertj:assertj-core'
     testImplementation 'org.mockito:mockito-core'
     testImplementation 'org.mockito:mockito-junit-jupiter'
+    testImplementation 'io.github.origin-energy:java-snapshot-testing-junit5'
 }
 
 distributions {
@@ -60,3 +64,17 @@ artifactoryPublish {
 task dockerTagVersion {
     dependsOn ":cli:dockerTag${project.version}"
 }
+
+testSets {
+    eteTest
+}
+
+eteTest {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+rootProject.tasks.build.dependsOn eteTest
+tasks.eteTest.dependsOn ':cli:dockerTagLatest'
