@@ -15,7 +15,7 @@ import {
     RequestDefinition,
     ResponseDefinition,
 } from "postman-collection";
-import { getMockBody } from "./getMockBody";
+import { getMockBodyFromType } from "./getMockBody";
 
 const BASE_URL_VARIABLE_NAME = "base_url";
 const BASE_URL_VARIABLE = `{{${BASE_URL_VARIABLE_NAME}}}`;
@@ -88,7 +88,7 @@ function convertResponse(
     };
     if (httpEndpoint.response != null) {
         convertedResponse.description = httpEndpoint.response.docs ?? undefined;
-        convertedResponse.body = JSON.stringify(getMockBody(httpEndpoint.response, allTypes), undefined, 4);
+        convertedResponse.body = JSON.stringify(getMockBodyFromType(httpEndpoint.response.ok, allTypes), undefined, 4);
     }
     return convertedResponse;
 }
@@ -108,13 +108,13 @@ function convertRequest(
         },
         header: [APPLICATION_JSON_HEADER_DEFINITION],
         method: convertHttpMethod(httpEndpoint.method),
-        auth: httpService.auth != null ? convertAuth(httpService.auth) : undefined,
+        auth: convertAuth(httpEndpoint.auth),
     };
     if (httpEndpoint.request != null) {
         convertedRequest.description = httpEndpoint.docs ?? undefined;
         convertedRequest.body = {
             mode: "raw",
-            raw: JSON.stringify(getMockBody(httpEndpoint.request, allTypes), undefined, 4),
+            raw: JSON.stringify(getMockBodyFromType(httpEndpoint.request.type, allTypes), undefined, 4),
         };
     }
     return convertedRequest;
@@ -145,10 +145,13 @@ function convertHttpMethod(httpMethod: HttpMethod): string {
     });
 }
 
-function convertAuth(httpAuth: HttpAuth): RequestAuthDefinition {
+function convertAuth(httpAuth: HttpAuth): RequestAuthDefinition | undefined {
     return HttpAuth._visit(httpAuth, {
         bearer: () => {
             return { type: "bearer" };
+        },
+        none: () => {
+            return undefined;
         },
         _unknown: () => {
             throw new Error("Unexpected httpAuth:" + httpAuth);
