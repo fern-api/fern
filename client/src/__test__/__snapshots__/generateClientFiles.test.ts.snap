@@ -72,7 +72,7 @@ export const Author = {
                 return visitor._unknown();
         }
     },
-};
+} as const;
 ",
   "/model/posts/Post.ts": "import { PostId } from \\"../commons/PostId\\";
 import { Author } from \\"./Author\\";
@@ -109,7 +109,9 @@ export const PostType = {
                 return visitor._unknown();
         }
     },
-};
+
+    _values: (): PostType[] => [PostType.Long, PostType.Short],
+} as const;
 
 export declare namespace PostType {
     export interface _Visitor<Result> {
@@ -186,7 +188,7 @@ export const ErrorBody = {
     ): Result => {
         return visitor._unknown();
     },
-};
+} as const;
 ",
   "/services/NoErrorsService/endpoints/get/Response.ts": "import { ErrorBody } from \\"./ErrorBody\\";
 
@@ -354,7 +356,7 @@ export const ErrorBody = {
     ): Result => {
         return visitor._unknown();
     },
-};
+} as const;
 ",
   "/services/PostsService/endpoints/createPost/RequestBody.ts": "import * as model from \\"../../../../model\\";
 
@@ -418,7 +420,7 @@ export const ErrorBody = {
                 return visitor._unknown();
         }
     },
-};
+} as const;
 ",
   "/services/PostsService/endpoints/getPost/Request.ts": "import * as model from \\"../../../../model\\";
 
@@ -481,7 +483,7 @@ export const ErrorBody = {
                 return visitor._unknown();
         }
     },
-};
+} as const;
 ",
   "/services/PostsService/endpoints/getPostV2/Response.ts": "import * as model from \\"../../../../model\\";
 import { ErrorBody } from \\"./ErrorBody\\";
@@ -589,7 +591,7 @@ export const Author = {
                 return visitor._unknown();
         }
     },
-};
+} as const;
 ",
   "/model/posts/Post.ts": "import { PostId } from \\"../commons/PostId\\";
 import { Author } from \\"./Author\\";
@@ -626,7 +628,9 @@ export const PostType = {
                 return visitor._unknown();
         }
     },
-};
+
+    _values: (): PostType[] => [PostType.Long, PostType.Short],
+} as const;
 
 export declare namespace PostType {
     export interface _Visitor<Result> {
@@ -783,7 +787,7 @@ export const ErrorBody = {
     ): Result => {
         return visitor._unknown();
     },
-};
+} as const;
 ",
   "/services/PostsService/endpoints/createPost/RequestBody.ts": "import * as model from \\"../../../../model\\";
 
@@ -847,7 +851,7 @@ export const ErrorBody = {
                 return visitor._unknown();
         }
     },
-};
+} as const;
 ",
   "/services/PostsService/endpoints/getPost/Request.ts": "import * as model from \\"../../../../model\\";
 
@@ -910,7 +914,7 @@ export const ErrorBody = {
                 return visitor._unknown();
         }
     },
-};
+} as const;
 ",
   "/services/PostsService/endpoints/getPostV2/Response.ts": "import * as model from \\"../../../../model\\";
 import { ErrorBody } from \\"./ErrorBody\\";
