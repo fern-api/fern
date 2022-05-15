@@ -16,6 +16,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
+    "@fern-api/api": "workspace:*",
     "@fern-typescript/client": "workspace:*",
     "@fern-typescript/helper-utils": "workspace:*"
   },

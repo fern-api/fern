@@ -1788,6 +1788,7 @@ __metadata:
     "@babel/core": "npm:^7.17.10"
     "@babel/preset-env": "npm:^7.17.10"
     "@babel/preset-typescript": "npm:^7.16.7"
+    "@fern-api/api": "workspace:*"
     "@fern-typescript/client": "workspace:*"
     "@fern-typescript/helper-utils": "workspace:*"
     "@types/jest": "npm:^27.4.1"

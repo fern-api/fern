@@ -51,5 +51,13 @@ module.exports = {
             },
         ],
         "@typescript-eslint/no-floating-promises": ["error"],
+
+        "no-empty-function": "off",
+        "@typescript-eslint/no-empty-function": [
+            "error",
+            {
+                allow: ["private-constructors", "protected-constructors", "decoratedFunctions"],
+            },
+        ],
     },
 };

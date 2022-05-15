@@ -7,7 +7,7 @@ const FIXTURES_DIR = path.join(__dirname, "fixtures");
 
 describe("fern generate tests", () => {
     itFixture("simple-model");
-    itFixture("hathora");
+    // itFixture("hathora");
 });
 
 function itFixture(fixtureName: string) {

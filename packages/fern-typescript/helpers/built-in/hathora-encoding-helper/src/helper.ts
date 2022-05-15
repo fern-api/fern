@@ -1,29 +1,19 @@
 import { EncodeMethod, FernTypescriptHelper, tsMorph, VariableReference } from "@fern-typescript/helper-utils";
+import { ENCODER_NAME } from "./constants";
 import { getMethodForModelTypeVariableReference } from "./getMethodForModelTypeVariableReference";
 import { getMethodForWireMessageVariableReference } from "./getMethodForWireMessageVariableReference";
 import { assertNever } from "./utils";
-
-const NAME = "HathoraEncoder";
+import { writeEncoder } from "./writeEncoder";
 
 export const helper: FernTypescriptHelper = {
     encodings: {
         hathora: {
             _type: "fileBased",
-            name: NAME,
+            name: ENCODER_NAME,
             contentType: "application/octet-stream",
-            writeEncoder: ({ encoderDirectory, tsMorph }) => {
-                const sourceFile = encoderDirectory.createSourceFile(`${NAME}.ts`);
-                sourceFile.addVariableStatement({
-                    declarationKind: tsMorph.VariableDeclarationKind.Const,
-                    declarations: [
-                        {
-                            name: NAME,
-                            type: "any",
-                            initializer: "undefined",
-                        },
-                    ],
-                    isExported: true,
-                });
+            writeEncoder: ({ encoderDirectory, tsMorph, modelDirectory, intermediateRepresentation }) => {
+                const file = encoderDirectory.createSourceFile(`${ENCODER_NAME}.ts`);
+                writeEncoder({ intermediateRepresentation, tsMorph, file, modelDirectory });
             },
             generateEncode: ({ referenceToDecodedObject, referenceToEncoder, tsMorph: { ts } }) => {
                 return getMethodForVariableReference({
