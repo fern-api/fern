@@ -122,7 +122,7 @@ export const Author = {
                 return visitor._unknown();
         }
     },
-};
+} as const;
 ",
   "/model/posts/BlogPostReference.ts": "import * as model from \\"..\\";
 
@@ -156,7 +156,7 @@ export const BlogPostReference = {
                 return visitor._unknown();
         }
     },
-};
+} as const;
 ",
   "/model/posts/CreatePostRequest.ts": "import { Author } from \\"./Author\\";
 
@@ -200,7 +200,9 @@ export const PostType = {
                 return visitor._unknown();
         }
     },
-};
+
+    _values: (): PostType[] => [PostType.Long, PostType.Short],
+} as const;
 
 export declare namespace PostType {
     export interface _Visitor<Result> {
@@ -308,7 +310,15 @@ export const HttpMethod = {
                 return visitor._unknown();
         }
     },
-};
+
+    _values: (): HttpMethod[] => [
+        HttpMethod.Get,
+        HttpMethod.Post,
+        HttpMethod.Put,
+        HttpMethod.Patch,
+        HttpMethod.Delete,
+    ],
+} as const;
 
 export declare namespace HttpMethod {
     export interface _Visitor<Result> {
@@ -389,7 +399,12 @@ export const WebSocketMessageOrigin = {
                 return visitor._unknown();
         }
     },
-};
+
+    _values: (): WebSocketMessageOrigin[] => [
+        WebSocketMessageOrigin.Client,
+        WebSocketMessageOrigin.Server,
+    ],
+} as const;
 
 export declare namespace WebSocketMessageOrigin {
     export interface _Visitor<Result> {
@@ -428,7 +443,12 @@ export const WebSocketMessageResponseBehavior = {
                 return visitor._unknown();
         }
     },
-};
+
+    _values: (): WebSocketMessageResponseBehavior[] => [
+        WebSocketMessageResponseBehavior.Ongoing,
+        WebSocketMessageResponseBehavior.RequestResponse,
+    ],
+} as const;
 
 export declare namespace WebSocketMessageResponseBehavior {
     export interface _Visitor<Result> {
@@ -532,7 +552,7 @@ export const ContainerType = {
                 return visitor._unknown();
         }
     },
-};
+} as const;
 ",
   "/model/types/EnumTypeDefinition.ts": "import { EnumValue } from \\"./EnumValue\\";
 
@@ -623,7 +643,15 @@ export const PrimitiveType = {
                 return visitor._unknown();
         }
     },
-};
+
+    _values: (): PrimitiveType[] => [
+        PrimitiveType.Integer,
+        PrimitiveType.Double,
+        PrimitiveType.String,
+        PrimitiveType.Boolean,
+        PrimitiveType.Long,
+    ],
+} as const;
 
 export declare namespace PrimitiveType {
     export interface _Visitor<Result> {
@@ -709,7 +737,7 @@ export const Type = {
                 return visitor._unknown();
         }
     },
-};
+} as const;
 ",
   "/model/types/TypeDefinition.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
 import { NamedType } from \\"./NamedType\\";
@@ -796,7 +824,7 @@ export const TypeReference = {
                 return visitor._unknown();
         }
     },
-};
+} as const;
 ",
   "/model/types/UnionTypeDefinition.ts": "import { SingleUnionType } from \\"./SingleUnionType\\";
 
@@ -886,7 +914,7 @@ export const Author = {
                 return visitor._unknown();
         }
     },
-};
+} as const;
 ",
   "/model/posts/BlogPostReference.ts": "import * as model from \\"..\\";
 
@@ -920,7 +948,7 @@ export const BlogPostReference = {
                 return visitor._unknown();
         }
     },
-};
+} as const;
 ",
   "/model/posts/CreatePostRequest.ts": "import { Author } from \\"./Author\\";
 
@@ -964,7 +992,9 @@ export const PostType = {
                 return visitor._unknown();
         }
     },
-};
+
+    _values: (): PostType[] => [PostType.Long, PostType.Short],
+} as const;
 
 export declare namespace PostType {
     export interface _Visitor<Result> {

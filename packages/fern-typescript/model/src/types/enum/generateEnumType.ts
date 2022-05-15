@@ -1,4 +1,4 @@
-import { EnumTypeDefinition } from "@fern-api/api";
+import { EnumTypeDefinition, EnumValue } from "@fern-api/api";
 import {
     FernWriters,
     getTextOfTsNode,
@@ -34,10 +34,7 @@ export function generateEnumType({
     maybeAddDocs(typeAlias, docs);
 
     const visitorItems: visitorUtils.VisitableItem[] = shape.values.map((value) => ({
-        caseInSwitchStatement: ts.factory.createPropertyAccessExpression(
-            ts.factory.createIdentifier(typeName),
-            ts.factory.createIdentifier(getKeyForEnum(value))
-        ),
+        caseInSwitchStatement: getEnumValueReference({ typeName, enumValue: value }),
         keyInVisitor: lowerFirst(getKeyForEnum(value)),
         visitorArgument: undefined,
     }));
@@ -70,7 +67,7 @@ function createUtils({
     typeName: string;
     visitorItems: readonly visitorUtils.VisitableItem[];
 }): WriterFunction {
-    const writer = FernWriters.object.writer();
+    const writer = FernWriters.object.writer({ asConst: true });
 
     for (const value of shape.values) {
         writer.addProperty({
@@ -91,5 +88,31 @@ function createUtils({
         ),
     });
 
+    writer.addNewLine();
+    writer.addProperty({
+        key: "_values",
+        value: getTextOfTsNode(
+            ts.factory.createArrowFunction(
+                undefined,
+                undefined,
+                [],
+                ts.factory.createArrayTypeNode(
+                    ts.factory.createTypeReferenceNode(ts.factory.createIdentifier(typeName))
+                ),
+                undefined,
+                ts.factory.createArrayLiteralExpression(
+                    shape.values.map((enumValue) => getEnumValueReference({ typeName, enumValue }))
+                )
+            )
+        ),
+    });
+
     return writer.toFunction();
+}
+
+function getEnumValueReference({ typeName, enumValue }: { typeName: string; enumValue: EnumValue }) {
+    return ts.factory.createPropertyAccessExpression(
+        ts.factory.createIdentifier(typeName),
+        ts.factory.createIdentifier(getKeyForEnum(enumValue))
+    );
 }
