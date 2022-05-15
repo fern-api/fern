@@ -9,6 +9,7 @@ import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -25,18 +26,34 @@ public final class ImmutablesUtils {
         this.classNameUtils = classNameUtils;
     }
 
-    public Map<ObjectProperty, MethodSpec> getImmutablesPropertyMethods(ObjectTypeDefinition objectTypeDefinition) {
-        return objectTypeDefinition.properties().stream().collect(Collectors.toMap(Function.identity(), objectField -> {
-            TypeName returnType = classNameUtils.getTypeNameFromTypeReference(true, objectField.valueType());
-            return getKeyWordCompatibleImmutablesPropertyMethod(objectField.key(), returnType);
-        }));
+    public Map<ObjectProperty, MethodSpec> getOrderedImmutablesPropertyMethods(
+            ObjectTypeDefinition objectTypeDefinition) {
+        return objectTypeDefinition.properties().stream()
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        objectField -> {
+                            TypeName returnType =
+                                    classNameUtils.getTypeNameFromTypeReference(true, objectField.valueType());
+                            return getKeyWordCompatibleImmutablesPropertyMethod(objectField.key(), returnType);
+                        },
+                        (u, v) -> {
+                            throw new IllegalStateException(String.format("Duplicate key %s", u));
+                        },
+                        LinkedHashMap::new));
     }
 
-    public Map<ErrorProperty, MethodSpec> getImmutablesPropertyMethods(ErrorDefinition errorDefinition) {
-        return errorDefinition.properties().stream().collect(Collectors.toMap(Function.identity(), errorField -> {
-            TypeName returnType = classNameUtils.getTypeNameFromTypeReference(true, errorField.type());
-            return getKeyWordCompatibleImmutablesPropertyMethod(errorField.name(), returnType);
-        }));
+    public Map<ErrorProperty, MethodSpec> getOrderedImmutablesPropertyMethods(ErrorDefinition errorDefinition) {
+        return errorDefinition.properties().stream()
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        errorField -> {
+                            TypeName returnType = classNameUtils.getTypeNameFromTypeReference(true, errorField.type());
+                            return getKeyWordCompatibleImmutablesPropertyMethod(errorField.name(), returnType);
+                        },
+                        (u, v) -> {
+                            throw new IllegalStateException(String.format("Duplicate key %s", u));
+                        },
+                        LinkedHashMap::new));
     }
 
     public MethodSpec getKeyWordCompatibleImmutablesPropertyMethod(String methodName, TypeName returnType) {

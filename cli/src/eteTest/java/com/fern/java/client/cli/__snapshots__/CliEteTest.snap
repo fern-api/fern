@@ -358,9 +358,9 @@ public interface CreatePostRequest {
 
   Author author();
 
-  PostType postType();
-
   String content();
+
+  PostType postType();
 
   static ImmutableCreatePostRequest.TitleBuildStage builder() {
     return ImmutableCreatePostRequest.builder();
@@ -411,12 +411,12 @@ public final class Author {
     return new Author(InternalNameValue.of(value));
   }
 
-  public boolean isName() {
-    return value instanceof InternalNameValue;
-  }
-
   public boolean isAnonymous() {
     return value instanceof InternalAnonymousValue;
+  }
+
+  public boolean isName() {
+    return value instanceof InternalNameValue;
   }
 
   public Optional<String> getName() {
@@ -446,14 +446,30 @@ public final class Author {
       defaultImpl = Unknown.class
   )
   @JsonSubTypes({
-      @JsonSubTypes.Type(value = InternalNameValue.class, name = "name"),
-      @JsonSubTypes.Type(value = InternalAnonymousValue.class, name = "anonymous")
+      @JsonSubTypes.Type(value = InternalAnonymousValue.class, name = "anonymous"),
+      @JsonSubTypes.Type(value = InternalNameValue.class, name = "name")
   })
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
   private interface InternalValue {
     <T> T visit(Visitor<T> visitor);
+  }
+
+  @Value.Immutable
+  @JsonTypeName("anonymous")
+  @JsonDeserialize(
+      as = ImmutableAuthor.InternalAnonymousValue.class
+  )
+  interface InternalAnonymousValue extends InternalValue {
+    @Override
+    default <T> T visit(Visitor<T> visitor) {
+      return visitor.visitAnonymous();
+    }
+
+    static InternalAnonymousValue of() {
+      return ImmutableAuthor.InternalAnonymousValue.builder().build();
+    }
   }
 
   @Value.Immutable
@@ -471,22 +487,6 @@ public final class Author {
 
     static InternalNameValue of(String value) {
       return ImmutableAuthor.InternalNameValue.builder().name(value).build();
-    }
-  }
-
-  @Value.Immutable
-  @JsonTypeName("anonymous")
-  @JsonDeserialize(
-      as = ImmutableAuthor.InternalAnonymousValue.class
-  )
-  interface InternalAnonymousValue extends InternalValue {
-    @Override
-    default <T> T visit(Visitor<T> visitor) {
-      return visitor.visitAnonymous();
-    }
-
-    static InternalAnonymousValue of() {
-      return ImmutableAuthor.InternalAnonymousValue.builder().build();
     }
   }
 
@@ -530,17 +530,17 @@ import org.immutables.value.Value;
     ignoreUnknown = true
 )
 public interface BlogPost {
-  String content();
+  PostId id();
 
   PostType type();
-
-  PostId id();
 
   String title();
 
   Author author();
 
-  static ImmutableBlogPost.ContentBuildStage builder() {
+  String content();
+
+  static ImmutableBlogPost.IdBuildStage builder() {
     return ImmutableBlogPost.builder();
   }
 }

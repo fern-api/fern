@@ -79,7 +79,7 @@ public final class ExceptionGenerator extends Generator {
                             .build());
         }
         Map<ErrorProperty, MethodSpec> methodSpecsByProperty =
-                generatorContext.getImmutablesUtils().getImmutablesPropertyMethods(errorDefinition);
+                generatorContext.getImmutablesUtils().getOrderedImmutablesPropertyMethods(errorDefinition);
         errorExceptionTypeSpec.addAnnotation((getJsonIncludePropertiesAnnotationSpec(methodSpecsByProperty)));
         errorExceptionTypeSpec.addMethods(methodSpecsByProperty.values());
         errorExceptionTypeSpec.addMethod(generateStaticBuilder(methodSpecsByProperty));

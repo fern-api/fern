@@ -27,6 +27,14 @@ public class ObjectGeneratorTest {
                         .valueType(TypeReference.container(
                                 ContainerType.optional(TypeReference.primitive(PrimitiveType.STRING))))
                         .build())
+                .addProperties(ObjectProperty.builder()
+                        .key("points")
+                        .valueType(TypeReference.primitive(PrimitiveType.DOUBLE))
+                        .build())
+                .addProperties(ObjectProperty.builder()
+                        .key("id")
+                        .valueType(TypeReference.primitive(PrimitiveType.LONG))
+                        .build())
                 .build();
         ObjectGenerator objectGenerator = new ObjectGenerator(
                 NamedType.builder()

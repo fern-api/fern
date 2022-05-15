@@ -34,7 +34,7 @@ public final class InterfaceGenerator extends Generator {
                 .getClassNameUtils()
                 .getClassName(INTERFACE_PREFIX + namedType.name(), Optional.of(packageType), Optional.empty());
         Map<ObjectProperty, MethodSpec> methodSpecsByProperties =
-                generatorContext.getImmutablesUtils().getImmutablesPropertyMethods(objectTypeDefinition);
+                generatorContext.getImmutablesUtils().getOrderedImmutablesPropertyMethods(objectTypeDefinition);
         TypeSpec interfaceTypeSpec = TypeSpec.interfaceBuilder(generatedInterfaceClassName.simpleName())
                 .addModifiers(Modifier.PUBLIC)
                 .addMethods(methodSpecsByProperties.values())
