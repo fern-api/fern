@@ -5,7 +5,7 @@ types:
   BaseService:
     extends: commons.WithDocs
     properties:
-      basePath: string
+      basePath: optional<string>
       name: types.NamedType
   Encoding:
     union:

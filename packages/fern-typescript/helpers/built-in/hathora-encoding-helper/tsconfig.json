@@ -4,6 +4,11 @@
   "references": [
     { "path": "../../../client/tsconfig.json" },
     { "path": "../../utils/tsconfig.json" },
-    { "path": "../../../commons/tsconfig.json" }
-  ]
+    { "path": "../../../../api/fern-ir-typescript/tsconfig.json" }
+  ],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  }
 }

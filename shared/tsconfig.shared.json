@@ -19,6 +19,7 @@
     "strict": true,
     "isolatedModules": true,
     "baseUrl": ".",
+    "declaration": true,
     "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true

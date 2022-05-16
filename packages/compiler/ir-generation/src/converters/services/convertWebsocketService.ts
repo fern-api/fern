@@ -28,7 +28,7 @@ export function convertWebsocketService({
             fernFilepath,
             name: serviceId,
         },
-        basePath: serviceDefinition["base-path"] ?? "/",
+        basePath: serviceDefinition["base-path"],
         messages: Object.entries(serviceDefinition.messages).map(([messageName, message]) => ({
             name: messageName,
             docs: message.docs,
