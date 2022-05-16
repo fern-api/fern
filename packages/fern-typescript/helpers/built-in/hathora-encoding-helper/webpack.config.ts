@@ -24,7 +24,7 @@ const config = (_env: unknown, { mode = "production" }: webpack.WebpackOptionsNo
             filename: "bundle.js",
             library: { type: "commonjs" },
         },
-        plugins: [new SimpleProgressWebpackPlugin(), new BanModulesPlugin(["ts-morph", "typescript"])],
+        plugins: [new SimpleProgressWebpackPlugin({}), new BanModulesPlugin(["ts-morph", "typescript"])],
         optimization: {
             minimize: false,
         },
