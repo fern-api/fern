@@ -1,8 +1,6 @@
 import { lstat } from "fs/promises";
 import path from "path";
 
-// this test ensures we aren't bringing in ts-morph accidentally
-
 const MAX_BUNDLE_SIZE = 50_000; // 50kb
 
 it("bundle size", async () => {

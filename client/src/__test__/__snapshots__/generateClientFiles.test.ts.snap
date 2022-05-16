@@ -145,7 +145,7 @@ export class Client implements Client {
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
-        this.baseUrl = joinPaths(args.serverUrl, args.serviceBaseUrl);
+        this.baseUrl = args.serverUrl;
         this.token = args.token;
     }
 
@@ -240,7 +240,7 @@ export class Client implements Client {
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
-        this.baseUrl = joinPaths(args.serverUrl, args.serviceBaseUrl);
+        this.baseUrl = joinPaths(args.serverUrl, \\"/posts\\");
         this.token = args.token;
     }
 
@@ -671,7 +671,7 @@ export class Client implements Client {
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
-        this.baseUrl = joinPaths(args.serverUrl, args.serviceBaseUrl);
+        this.baseUrl = joinPaths(args.serverUrl, \\"/posts\\");
         this.token = args.token;
     }
 

@@ -1,8 +1,10 @@
 import { ClientConstants } from "@fern-typescript/client";
 import { EncodeMethod, tsMorph, VariableReference } from "@fern-typescript/helper-utils";
-import { assertNever, createEncoderMethodCall } from "./utils";
+import { HathoraEncoderConstants } from "../constants";
+import { assertNever } from "../utils/assertNever";
+import { createEncoderMethodCall } from "./utils";
 
-export function getMethodForWireMessageVariableReference({
+export function getMethodCallForWireMessageVariableReference({
     variableReference,
     ts,
     method,
@@ -19,7 +21,7 @@ export function getMethodForWireMessageVariableReference({
         method,
         variable: variableReference.variable,
         propertyChainToMethod: [
-            "Services",
+            HathoraEncoderConstants.Services.NAME,
             variableReference.serviceName,
             variableReference.endpointId,
             getBodyTypeNameFromWireMessageType(variableReference.wireMessageType),

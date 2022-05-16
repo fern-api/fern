@@ -1,7 +1,10 @@
 import { EncodeMethod, tsMorph, VariableReference } from "@fern-typescript/helper-utils";
-import { assertNever, createEncoderMethodCall } from "./utils";
+import { HathoraEncoderConstants } from "../constants";
+import { getEncoderNameForPrimitive } from "../encoder/writePrimitives";
+import { assertNever } from "../utils/assertNever";
+import { createEncoderMethodCall } from "./utils";
 
-export function getMethodForModelTypeVariableReference({
+export function getMethodCallForModelTypeVariableReference({
     variableReference,
     ts,
     method,
@@ -24,9 +27,12 @@ export function getMethodForModelTypeVariableReference({
 function createMethodReferencePropertyChain(variableReference: VariableReference.ModelReference): string[] {
     switch (variableReference.typeReference._type) {
         case "named":
-            return ["Model", variableReference.typeReference.name];
+            return [HathoraEncoderConstants.Model.NAME, variableReference.typeReference.name];
         case "primitive":
-            return ["Primitives", variableReference.typeReference.primitive];
+            return [
+                HathoraEncoderConstants.Primitives.NAME,
+                getEncoderNameForPrimitive(variableReference.typeReference.primitive),
+            ];
         default:
             assertNever(variableReference.typeReference);
     }

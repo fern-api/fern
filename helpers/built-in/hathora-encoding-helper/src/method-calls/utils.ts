@@ -1,9 +1,5 @@
 import { EncodeMethod, tsMorph } from "@fern-typescript/helper-utils";
 
-export function assertNever(x: never): never {
-    throw new Error("Unexpected value: " + JSON.stringify(x));
-}
-
 export function createEncoderMethodCall({
     ts,
     referenceToEncoder,
