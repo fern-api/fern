@@ -5,5 +5,10 @@
     { "path": "../../../client/tsconfig.json" },
     { "path": "../../utils/tsconfig.json" },
     { "path": "../../../commons/tsconfig.json" }
-  ]
+  ],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  }
 }

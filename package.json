@@ -30,11 +30,11 @@
     "depcheck": "^1.4.3",
     "docsify-cli": "^4.4.4",
     "eslint": "^8.12.0",
-    "fern-api": "0.0.54",
+    "fern-api": "0.0.65",
     "husky": "^7.0.4",
     "jest": "^27.5.1",
     "lint-staged": "^12.3.7",
-    "mrlint": "^0.0.20",
+    "mrlint": "^0.0.21",
     "prettier": "^2.6.2"
   },
   "packageManager": "yarn@3.2.0"

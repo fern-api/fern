@@ -1,18 +1,18 @@
 import { EncodeMethod, FernTypescriptHelper, tsMorph, VariableReference } from "@fern-typescript/helper-utils";
-import { ENCODER_NAME } from "./constants";
-import { getMethodForModelTypeVariableReference } from "./getMethodForModelTypeVariableReference";
-import { getMethodForWireMessageVariableReference } from "./getMethodForWireMessageVariableReference";
-import { assertNever } from "./utils";
-import { writeEncoder } from "./writeEncoder";
+import { HathoraEncoderConstants } from "./constants";
+import { writeEncoder } from "./encoder/writeEncoder";
+import { getMethodCallForModelTypeVariableReference } from "./method-calls/getMethodCallForModelTypeVariableReference";
+import { getMethodCallForWireMessageVariableReference } from "./method-calls/getMethodCallForWireMessageVariableReference";
+import { assertNever } from "./utils/assertNever";
 
 export const helper: FernTypescriptHelper = {
     encodings: {
         hathora: {
             _type: "fileBased",
-            name: ENCODER_NAME,
+            name: HathoraEncoderConstants.NAME,
             contentType: "application/octet-stream",
             writeEncoder: ({ encoderDirectory, tsMorph, modelDirectory, intermediateRepresentation }) => {
-                const file = encoderDirectory.createSourceFile(`${ENCODER_NAME}.ts`);
+                const file = encoderDirectory.createSourceFile(`${HathoraEncoderConstants.NAME}.ts`);
                 writeEncoder({ intermediateRepresentation, tsMorph, file, modelDirectory });
             },
             generateEncode: ({ referenceToDecodedObject, referenceToEncoder, tsMorph: { ts } }) => {
@@ -20,7 +20,7 @@ export const helper: FernTypescriptHelper = {
                     variableReference: referenceToDecodedObject,
                     referenceToEncoder,
                     ts,
-                    method: "encode",
+                    method: EncodeMethod.Encode,
                 });
             },
             generateDecode: ({ referenceToEncodedBuffer, referenceToEncoder, tsMorph: { ts } }) => {
@@ -28,7 +28,7 @@ export const helper: FernTypescriptHelper = {
                     variableReference: referenceToEncodedBuffer,
                     referenceToEncoder,
                     ts,
-                    method: "decode",
+                    method: EncodeMethod.Decode,
                 });
             },
         },
@@ -48,9 +48,9 @@ function getMethodForVariableReference({
 }): tsMorph.ts.CallExpression {
     switch (variableReference._type) {
         case "wireMessage":
-            return getMethodForWireMessageVariableReference({ variableReference, referenceToEncoder, ts, method });
+            return getMethodCallForWireMessageVariableReference({ variableReference, referenceToEncoder, ts, method });
         case "modelType":
-            return getMethodForModelTypeVariableReference({ variableReference, referenceToEncoder, ts, method });
+            return getMethodCallForModelTypeVariableReference({ variableReference, referenceToEncoder, ts, method });
         default:
             assertNever(variableReference);
     }

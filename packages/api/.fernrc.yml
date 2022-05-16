@@ -2,12 +2,12 @@ name: Fern Intermediate Representation
 input: ./src
 plugins:
   - name: fernapi/fern-typescript
-    version: 0.0.54
+    version: 0.0.65
     output: ./fern-ir-typescript/src/generated
     config:
       mode: model
   - name: fernapi/fern-java
-    version: 0.0.23
+    version: 0.0.29
     output: ./fern-ir-java/ir-api
     config:
       packagePrefix: "com.fern"

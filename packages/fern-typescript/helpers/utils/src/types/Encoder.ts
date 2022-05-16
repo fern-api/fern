@@ -4,6 +4,10 @@ import { VariableReference } from "./VariableReference";
 
 export type Encoding = string;
 export type EncodeMethod = "encode" | "decode";
+export const EncodeMethod = {
+    Encode: "encode",
+    Decode: "decode",
+} as const;
 
 // Encoders handle both the encoding and decoding (serialization and
 // deserialization).
