@@ -20,7 +20,6 @@ export const ClientConstants = {
                 Properties: {
                     FETCHER: "fetcher",
                     SERVER_URL: "serverUrl",
-                    SERVICE_BASE_URL: "serviceBaseUrl",
                     TOKEN: "token",
                 },
             },

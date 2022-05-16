@@ -34,7 +34,7 @@ export function convertHttpService({
             name: serviceId,
             fernFilepath,
         },
-        basePath: serviceDefinition["base-path"] ?? "/",
+        basePath: serviceDefinition["base-path"],
         headers:
             serviceDefinition.headers != null
                 ? Object.entries(serviceDefinition.headers).map(([header, headerType]) => ({

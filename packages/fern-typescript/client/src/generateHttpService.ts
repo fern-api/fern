@@ -118,7 +118,7 @@ async function generateService({
         ),
     });
 
-    addConstructor(serviceClass);
+    addConstructor({ serviceClass, serviceDefinition: service });
 
     const endpointsDirectory = getOrCreateDirectory(serviceDirectory, ClientConstants.Files.ENDPOINTS_DIRECTORY_NAME, {
         exportOptions: {
@@ -151,7 +151,13 @@ async function generateService({
         });
     }
 }
-function addConstructor(serviceClass: ClassDeclaration) {
+function addConstructor({
+    serviceClass,
+    serviceDefinition,
+}: {
+    serviceClass: ClassDeclaration;
+    serviceDefinition: HttpService;
+}) {
     const SERVICE_INIT_PARAMETER_NAME = "args";
     serviceClass.addConstructor({
         parameters: [
@@ -179,23 +185,26 @@ function addConstructor(serviceClass: ClassDeclaration) {
             getTextOfTsNode(
                 createClassMemberAssignment({
                     member: ClientConstants.Service.PrivateMembers.BASE_URL,
-                    initialValue: generateJoinPathsCall({
-                        file: serviceClass.getSourceFile(),
-                        paths: [
-                            ts.factory.createPropertyAccessExpression(
-                                ts.factory.createIdentifier(SERVICE_INIT_PARAMETER_NAME),
-                                ts.factory.createIdentifier(
-                                    ClientConstants.Service.ServiceUtils.ServiceInit.Properties.SERVER_URL
-                                )
-                            ),
-                            ts.factory.createPropertyAccessExpression(
-                                ts.factory.createIdentifier(SERVICE_INIT_PARAMETER_NAME),
-                                ts.factory.createIdentifier(
-                                    ClientConstants.Service.ServiceUtils.ServiceInit.Properties.SERVICE_BASE_URL
-                                )
-                            ),
-                        ],
-                    }),
+                    initialValue:
+                        serviceDefinition.basePath != null
+                            ? generateJoinPathsCall({
+                                  file: serviceClass.getSourceFile(),
+                                  paths: [
+                                      ts.factory.createPropertyAccessExpression(
+                                          ts.factory.createIdentifier(SERVICE_INIT_PARAMETER_NAME),
+                                          ts.factory.createIdentifier(
+                                              ClientConstants.Service.ServiceUtils.ServiceInit.Properties.SERVER_URL
+                                          )
+                                      ),
+                                      ts.factory.createStringLiteral(serviceDefinition.basePath),
+                                  ],
+                              })
+                            : ts.factory.createPropertyAccessExpression(
+                                  ts.factory.createIdentifier(SERVICE_INIT_PARAMETER_NAME),
+                                  ts.factory.createIdentifier(
+                                      ClientConstants.Service.ServiceUtils.ServiceInit.Properties.SERVER_URL
+                                  )
+                              ),
                 })
             ),
             getTextOfTsNode(
