@@ -23,7 +23,9 @@ jobs:
           command: yarn format:check
       - run:
           name: Check dependencies
-          command: yarn depcheck
+          command: |
+            yarn depcheck
+            yarn dlx @yarnpkg/doctor
       - run:
           name: Compile
           command: yarn compile

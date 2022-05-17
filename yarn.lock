@@ -1836,6 +1836,7 @@ __metadata:
     ts-node: "npm:^10.7.0"
     typescript: "npm:^4.6.4"
     webpack: "npm:^5.72.1"
+    webpack-cli: "npm:^4.9.2"
   languageName: unknown
   linkType: soft
 
@@ -2375,7 +2376,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ts-morph/common@npm:~0.13.0":
+"@ts-morph/common@npm:^0.13.0, @ts-morph/common@npm:~0.13.0":
   version: 0.13.0
   resolution: "@ts-morph/common@npm:0.13.0"
   dependencies:
@@ -5102,6 +5103,7 @@ __metadata:
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/helper-manager": "workspace:*"
     "@fern-typescript/model": "workspace:*"
+    "@ts-morph/common": "npm:^0.13.0"
     "@types/jest": "npm:^27.4.1"
     "@types/node": "npm:^17.0.33"
     depcheck: "npm:^1.4.3"
