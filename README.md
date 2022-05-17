@@ -2,17 +2,29 @@
 
 </p>
 
-TODO Fern makes it easy to define APIs.
+Fern makes it easier to build REST APIs. Fern is open source and interoperable with OpenAPI so you are never locked in.
 
-### Single source of truth
+A **Fern Definition** is an API description format for REST APIs (similar to the OpenAPI Spec) written to be a programming language-agnostic. **Fern Definitions** are written in YAML, allowing humans and computers to understand the capabilities of a service without having to read source code or inspect network requests.
 
-Define your data model and your APIs in **one place** in your repo.
+Developers are most successful using Fern when designing their APIs (in YAML) before writing source code.
 
-### Type-safe servers and clients
+Use cases for **Fern Definitions** include:
 
-Run `fern generate` to automatically generate **server stubs** and **type-safe clients**.
+- code generation for SDKs (i.e. clients & servers)
 
-> "Wow, this codegen is so idiomatic!" - Chuck Norris
+- interactive documentation (_e.g. docs.example.com_)
+
+- generating Postman Collections
+
+## Benefits of Fern
+
+- Single source of truth: Define your data model and APIs **one place** in your repo.
+
+- Type-safe servers and clients: Run `fern generate` to automatically generate **server stubs** and **type-safe clients**.
+
+  - Our codegen reads like it was written by a human, not a computer.
+
+    > _"Wow, this codegen is so idiomatic!"_ - Chuck Norris
 
 ## What languages are supported?
 
@@ -24,7 +36,7 @@ The Fern compiler reads API definitions written in the [human-readable YML forma
 | TypeScript   | 🚧 _in progress_ | ✅         |
 | Python       | 🚧               | 🚧         |
 
-_Interested in another language? [Get in touch](hey@buildwithfern.com)_
+_Interested in another language? [Get in touch.](hey@buildwithfern.com)_
 
 ## Let's do an example
 

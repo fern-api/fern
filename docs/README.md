@@ -1,6 +1,6 @@
 # Fern
 
-Fern is an open source framework that makes it easier to build APIs.
+Fern is an open source framework that makes it easier to build APIs. Fern is interoperable with Open API so you are never locked in.
 
 Fern allows you to
 
@@ -8,8 +8,6 @@ Fern allows you to
 2. Autogenerate idiomatic & typesafe clients and servers
 3. Supports WebSocket and REST APIs
 4. Easily manage backwards compatiblity
-
-Fern is interoperable with Open API so you are never locked in.
 
 ## Example Spec
 
