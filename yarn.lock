@@ -1942,7 +1942,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/service-utils@workspace:packages/fern-typescript/service-utils":
+"@fern-typescript/service-utils@workspace:*, @fern-typescript/service-utils@workspace:packages/fern-typescript/service-utils":
   version: 0.0.0-use.local
   resolution: "@fern-typescript/service-utils@workspace:packages/fern-typescript/service-utils"
   dependencies:
@@ -7225,6 +7225,14 @@ __metadata:
   checksum: 123361119829ab8115234f36ed8ef8f697b0f6f83ec9f9bc8f76da587487976d74bc874ffa892e7a66df607fa8f2cc758eed8db225e9cd3a84846350209e53db
   languageName: node
   linkType: hard
+
+"mocks-9972c7@workspace:packages/fern-typescript/client/src/__test__/mocks":
+  version: 0.0.0-use.local
+  resolution: "mocks-9972c7@workspace:packages/fern-typescript/client/src/__test__/mocks"
+  dependencies:
+    "@fern-typescript/service-utils": "workspace:*"
+  languageName: unknown
+  linkType: soft
 
 "mrlint@npm:^0.0.22":
   version: 0.0.22
