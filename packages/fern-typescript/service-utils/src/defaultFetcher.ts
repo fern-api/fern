@@ -1,5 +1,5 @@
 import fetch, { Headers } from "node-fetch";
-import { URL } from "url";
+import { URL } from "node:url";
 import { Fetcher } from "./Fetcher";
 
 export const defaultFetcher: Fetcher = async (args) => {
@@ -23,7 +23,7 @@ export const defaultFetcher: Fetcher = async (args) => {
         body: args.body?.content,
     });
 
-    const body = await fetchResponse.buffer();
+    const body = Buffer.from(await fetchResponse.arrayBuffer());
 
     return {
         statusCode: fetchResponse.status,
