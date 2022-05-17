@@ -11,7 +11,7 @@ const config = (_env: unknown, { mode = "production" }: webpack.WebpackOptionsNo
             rules: [
                 {
                     test: /\.ts$/,
-                    loader: "ts-loader",
+                    use: "ts-loader",
                     exclude: /node_modules/,
                 },
             ],
