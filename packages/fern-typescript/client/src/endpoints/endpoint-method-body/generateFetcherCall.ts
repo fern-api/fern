@@ -1,114 +1,117 @@
-import { HttpEndpoint } from "@fern-api/api";
+import { HttpEndpoint, HttpService } from "@fern-api/api";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import { SourceFile, StatementStructures, StructureKind, ts, VariableDeclarationKind } from "ts-morph";
-import {
-    BASE_URL_SERVICE_MEMBER,
-    ENDPOINT_PARAMETER_NAME,
-    FETCHER_SERVICE_MEMBER,
-    TOKEN_SERVICE_MEMBER,
-} from "../../constants";
+import { ClientConstants } from "../../constants";
 import { generateJoinPathsCall } from "../../utils/generateJoinPathsCall";
 import { GeneratedEndpointTypes } from "../generate-endpoint-types/types";
-import {
-    FETCHER_REQUEST_BODY_CONTENT_PROPERTY_NAME,
-    FETCHER_REQUEST_BODY_CONTENT_TYPE_PROPERTY_NAME,
-    FETCHER_REQUEST_BODY_PROPERTY_NAME,
-    FETCHER_REQUEST_HEADER_PARAMETER_NAME,
-    FETCHER_REQUEST_METHOD_PARAMETER_NAME,
-    FETCHER_REQUEST_QUERY_PARAMS_PARAMETER_NAME,
-    FETCHER_REQUEST_TOKEN_PROPERTY_NAME,
-    FETCHER_REQUEST_URL_PARAMETER_NAME,
-    QUERY_PARAMETERS_VARIABLE_NAME,
-    RESPONSE_VARIABLE_NAME,
-} from "./constants";
 import { convertPathToTemplateString } from "./convertPathToTemplateString";
-
-const ENCODED_RESPONSE_VARIABLE_NAME = "encodedResponse";
+import { generateEncoderCall } from "./generateEncoderCall";
 
 export async function generateFetcherCall({
     serviceFile,
+    serviceDefinition,
     endpoint,
     endpointTypes,
     includeQueryParams,
     helperManager,
 }: {
     serviceFile: SourceFile;
+    serviceDefinition: HttpService;
     endpoint: HttpEndpoint;
     endpointTypes: GeneratedEndpointTypes;
     includeQueryParams: boolean;
     helperManager: HelperManager;
-}): Promise<StatementStructures[]> {
+}): Promise<StatementStructures> {
     const fetcherArgs: ts.ObjectLiteralElementLike[] = [
         ts.factory.createPropertyAssignment(
-            ts.factory.createIdentifier(FETCHER_REQUEST_URL_PARAMETER_NAME),
+            ts.factory.createIdentifier(ClientConstants.Service.ServiceUtils.Fetcher.Parameters.URL),
             generateJoinPathsCall({
                 file: serviceFile,
                 paths: [
                     ts.factory.createPropertyAccessExpression(
                         ts.factory.createThis(),
-                        ts.factory.createIdentifier(BASE_URL_SERVICE_MEMBER)
+                        ts.factory.createIdentifier(ClientConstants.Service.PrivateMembers.BASE_URL)
                     ),
                     convertPathToTemplateString(endpoint.path),
                 ],
             })
         ),
         ts.factory.createPropertyAssignment(
-            ts.factory.createIdentifier(FETCHER_REQUEST_METHOD_PARAMETER_NAME),
+            ts.factory.createIdentifier(ClientConstants.Service.ServiceUtils.Fetcher.Parameters.METHOD),
             ts.factory.createStringLiteral(endpoint.method)
         ),
         ts.factory.createPropertyAssignment(
-            ts.factory.createIdentifier(FETCHER_REQUEST_HEADER_PARAMETER_NAME),
+            ts.factory.createIdentifier(ClientConstants.Service.ServiceUtils.Fetcher.Parameters.HEADERS),
             ts.factory.createObjectLiteralExpression([])
         ),
         ts.factory.createPropertyAssignment(
-            ts.factory.createIdentifier(FETCHER_REQUEST_TOKEN_PROPERTY_NAME),
+            ts.factory.createIdentifier(ClientConstants.Service.ServiceUtils.Fetcher.Parameters.TOKEN),
             ts.factory.createPropertyAccessExpression(
                 ts.factory.createThis(),
-                ts.factory.createIdentifier(TOKEN_SERVICE_MEMBER)
+                ts.factory.createIdentifier(ClientConstants.Service.PrivateMembers.TOKEN)
             )
         ),
     ];
 
     if (includeQueryParams) {
         fetcherArgs.push(
-            QUERY_PARAMETERS_VARIABLE_NAME === FETCHER_REQUEST_QUERY_PARAMS_PARAMETER_NAME
+            ClientConstants.Service.Endpoint.Variables.QUERY_PARAMETERS ===
+                ClientConstants.Service.ServiceUtils.Fetcher.Parameters.QUERY_PARAMS
                 ? ts.factory.createShorthandPropertyAssignment(
-                      ts.factory.createIdentifier(QUERY_PARAMETERS_VARIABLE_NAME)
+                      ts.factory.createIdentifier(ClientConstants.Service.Endpoint.Variables.QUERY_PARAMETERS)
                   )
                 : ts.factory.createPropertyAssignment(
-                      ts.factory.createIdentifier(FETCHER_REQUEST_QUERY_PARAMS_PARAMETER_NAME),
-                      ts.factory.createIdentifier(QUERY_PARAMETERS_VARIABLE_NAME)
+                      ts.factory.createIdentifier(ClientConstants.Service.ServiceUtils.Fetcher.Parameters.QUERY_PARAMS),
+                      ts.factory.createIdentifier(ClientConstants.Service.Endpoint.Variables.QUERY_PARAMETERS)
                   )
         );
     }
 
     if (endpointTypes.requestBody != null) {
         const requestBodyReference =
-            endpointTypes.requestBody.reference.propertyName != null
+            endpointTypes.requestBody.propertyName != null
                 ? ts.factory.createPropertyAccessExpression(
-                      ts.factory.createIdentifier(ENDPOINT_PARAMETER_NAME),
-                      endpointTypes.requestBody.reference.propertyName
+                      ts.factory.createIdentifier(ClientConstants.Service.Endpoint.Signature.REQUEST_PARAMETER),
+                      endpointTypes.requestBody.propertyName
                   )
-                : ts.factory.createIdentifier(ENDPOINT_PARAMETER_NAME);
+                : ts.factory.createIdentifier(ClientConstants.Service.Endpoint.Signature.REQUEST_PARAMETER);
 
-        const encodingHelper = await helperManager.getHandlersForEncoding(endpointTypes.requestBody.encoding);
-        const encodedRequestBody = encodingHelper.generateEncode({
-            referenceToDecoded: requestBodyReference,
+        const encoder = await helperManager.getEncoderForEncoding(endpointTypes.requestBody.encoding);
+        const encodedRequestBody = generateEncoderCall({
+            encoder,
+            method: "encode",
+            variableReference: endpointTypes.requestBody.reference.isLocal
+                ? {
+                      _type: "wireMessage",
+                      wireMessageType: "Request",
+                      serviceName: serviceDefinition.name.name,
+                      endpointId: endpoint.endpointId,
+                      variable: requestBodyReference,
+                  }
+                : {
+                      _type: "modelType",
+                      typeReference: endpointTypes.requestBody.reference.typeReference,
+                      variable: requestBodyReference,
+                  },
         });
 
         fetcherArgs.push(
             ts.factory.createPropertyAssignment(
-                ts.factory.createIdentifier(FETCHER_REQUEST_BODY_PROPERTY_NAME),
+                ts.factory.createIdentifier(ClientConstants.Service.ServiceUtils.Fetcher.Parameters.Body.PROPERTY_NAME),
                 ts.factory.createObjectLiteralExpression(
                     [
                         ts.factory.createPropertyAssignment(
-                            ts.factory.createIdentifier(FETCHER_REQUEST_BODY_CONTENT_PROPERTY_NAME),
+                            ts.factory.createIdentifier(
+                                ClientConstants.Service.ServiceUtils.Fetcher.Parameters.Body.Properties.CONTENT
+                            ),
                             encodedRequestBody
                         ),
                         ts.factory.createPropertyAssignment(
-                            ts.factory.createIdentifier(FETCHER_REQUEST_BODY_CONTENT_TYPE_PROPERTY_NAME),
-                            ts.factory.createStringLiteral(encodingHelper.contentType)
+                            ts.factory.createIdentifier(
+                                ClientConstants.Service.ServiceUtils.Fetcher.Parameters.Body.Properties.CONTENT_TYPE
+                            ),
+                            ts.factory.createStringLiteral(encoder.contentType)
                         ),
                     ],
                     true
@@ -117,18 +120,18 @@ export async function generateFetcherCall({
         );
     }
 
-    const fetcherCall: StatementStructures = {
+    return {
         kind: StructureKind.VariableStatement,
         declarationKind: VariableDeclarationKind.Const,
         declarations: [
             {
-                name: ENCODED_RESPONSE_VARIABLE_NAME,
+                name: ClientConstants.Service.Endpoint.Variables.ENCODED_RESPONSE,
                 initializer: getTextOfTsNode(
                     ts.factory.createAwaitExpression(
                         ts.factory.createCallExpression(
                             ts.factory.createPropertyAccessExpression(
                                 ts.factory.createThis(),
-                                ts.factory.createIdentifier(FETCHER_SERVICE_MEMBER)
+                                ts.factory.createIdentifier(ClientConstants.Service.PrivateMembers.FETCHER)
                             ),
                             undefined,
                             [ts.factory.createObjectLiteralExpression(fetcherArgs, true)]
@@ -138,21 +141,4 @@ export async function generateFetcherCall({
             },
         ],
     };
-
-    const decodingHelper = await helperManager.getHandlersForEncoding(endpointTypes.response.encoding);
-    const decodedResponse = decodingHelper.generateDecode({
-        referenceToEncodedBuffer: ts.factory.createIdentifier(ENCODED_RESPONSE_VARIABLE_NAME),
-    });
-    const decoderCall: StatementStructures = {
-        kind: StructureKind.VariableStatement,
-        declarationKind: VariableDeclarationKind.Const,
-        declarations: [
-            {
-                name: RESPONSE_VARIABLE_NAME,
-                initializer: getTextOfTsNode(decodedResponse),
-            },
-        ],
-    };
-
-    return [fetcherCall, decoderCall];
 }

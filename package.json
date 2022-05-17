@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "clean": "yarn workspaces foreach --verbose --parallel run clean && /bin/rm -rf ./packages/api/generated",
-    "compile": "yarn workspaces foreach --verbose --parallel --topological run compile",
+    "compile": "yarn workspaces foreach --verbose --parallel --topological-dev run compile",
     "test": "yarn workspaces foreach --verbose --parallel run test",
     "lint:eslint": "eslint . --max-warnings 0",
     "lint:eslint:fix": "eslint . --fix --max-warnings 0",
@@ -21,18 +21,20 @@
     "depcheck": "yarn workspaces foreach --verbose --parallel run depcheck",
     "prepare": "husky install",
     "codegen": "fern generate",
-    "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public"
+    "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public",
+    "preview:docs": "yarn docsify serve docs"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
     "depcheck": "^1.4.3",
+    "docsify-cli": "^4.4.4",
     "eslint": "^8.12.0",
-    "fern-api": "0.0.54",
+    "fern-api": "0.0.65",
     "husky": "^7.0.4",
     "jest": "^27.5.1",
     "lint-staged": "^12.3.7",
-    "mrlint": "^0.0.18",
+    "mrlint": "^0.0.21",
     "prettier": "^2.6.2"
   },
   "packageManager": "yarn@3.2.0"

@@ -5,7 +5,7 @@ module.exports = (_env, { mode = "production" }) => {
     return {
         mode,
         target: "node",
-        entry: path.join(__dirname, "../lib/cli.js"),
+        entry: path.join(__dirname, "../dist/esm/cli.js"),
         output: {
             path: __dirname,
             filename: "bundle.js",
@@ -19,6 +19,12 @@ module.exports = (_env, { mode = "production" }) => {
                 },
             ],
             noParse: [require.resolve("@ts-morph/common/dist/typescript.js")],
+            parser: {
+                javascript: {
+                    // this is needed for dynamically loading helpers
+                    commonjsMagicComments: true,
+                },
+            },
         },
         plugins: [new SimpleProgressWebpackPlugin()],
         optimization: {

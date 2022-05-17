@@ -1,0 +1,14 @@
+{
+  "extends": "../../../../../shared/tsconfig.shared.json",
+  "compilerOptions": { "declaration": false, "module": "esnext" },
+  "references": [
+    { "path": "../../../client/tsconfig.json" },
+    { "path": "../../utils/tsconfig.json" },
+    { "path": "../../../../api/fern-ir-typescript/tsconfig.json" }
+  ],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  }
+}

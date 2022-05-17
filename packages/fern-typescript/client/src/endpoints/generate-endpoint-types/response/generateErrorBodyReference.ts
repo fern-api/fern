@@ -2,7 +2,9 @@ import { ResponseErrors, TypeReference } from "@fern-api/api";
 import { generateNamedTypeReference, getRelativePathAsModuleSpecifierTo } from "@fern-typescript/commons";
 import { generateUnionType } from "@fern-typescript/model";
 import { Directory, SourceFile, ts } from "ts-morph";
-import { ERROR_BODY_TYPE_NAME } from "./constants";
+import { ClientConstants } from "../../../constants";
+
+const ERROR_BODY_TYPE_NAME = ClientConstants.Service.Endpoint.Types.Response.Error.Properties.Body.TYPE_NAME;
 
 export function generateErrorBodyReference({
     errors,

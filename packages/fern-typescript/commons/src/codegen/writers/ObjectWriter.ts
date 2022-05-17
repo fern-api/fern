@@ -1,8 +1,12 @@
+import { assertNever } from "@fern-api/commons";
 import esutils from "esutils";
 import { CodeBlockWriter, WriterFunction, WriterFunctionOrValue } from "ts-morph";
-import { assertNever } from "../../assertNever";
 
 export declare namespace ObjectWriter {
+    export interface Init {
+        asConst?: boolean;
+    }
+
     export type Block = Property | CustomWrite;
 
     export interface Property {
@@ -20,13 +24,14 @@ export declare namespace ObjectWriter {
 
 export class ObjectWriter {
     private blocks: ObjectWriter.Block[] = [];
+    private asConst: boolean;
 
-    static writer(): ObjectWriter {
-        return new ObjectWriter();
+    static writer(init: ObjectWriter.Init = {}): ObjectWriter {
+        return new ObjectWriter(init);
     }
 
-    private constructor() {
-        /* private */
+    private constructor({ asConst = false }: ObjectWriter.Init) {
+        this.asConst = asConst;
     }
 
     public addProperty(property: Omit<ObjectWriter.Property, "type">): this {
@@ -67,6 +72,10 @@ export class ObjectWriter {
                 });
             }
             writer.write("}");
+            if (this.asConst) {
+                writer.write(" as const");
+            }
+            writer.write(";");
         };
     }
 

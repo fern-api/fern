@@ -9,28 +9,22 @@ import {
 } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import { ClassDeclaration, Directory, Scope, ts } from "ts-morph";
-import {
-    BASE_URL_SERVICE_MEMBER,
-    ENDPOINTS_DIRECTORY_NAME,
-    ENDPOINTS_NAMESPACE_IMPORT,
-    FETCHER_SERVICE_MEMBER,
-    SERVICE_INIT_FETCHER_PROPERTY_NAME,
-    SERVICE_INIT_SERVER_URL_PROPERTY_NAME,
-    SERVICE_INIT_SERVICE_BASE_URL_PROPERTY_NAME,
-    SERVICE_INIT_TOKEN_PROPERTY_NAME,
-    TOKEN_SERVICE_MEMBER,
-} from "./constants";
+import { ClientConstants } from "./constants";
 import { addEndpointToService } from "./endpoints/addEndpointToService";
 import { generateJoinPathsCall } from "./utils/generateJoinPathsCall";
 
 const SERVICE_INIT_TYPE = ts.factory.createTypeReferenceNode(
-    ts.factory.createQualifiedName(ts.factory.createIdentifier("Service"), ts.factory.createIdentifier("Init"))
+    ts.factory.createQualifiedName(
+        ts.factory.createIdentifier(ClientConstants.Service.ServiceUtils.Imported.SERVICE_NAMESPACE),
+        ts.factory.createIdentifier(ClientConstants.Service.ServiceUtils.ServiceInit.TYPE_NAME)
+    )
 );
 
 export async function generateHttpService({
     servicesDirectory,
     modelDirectory,
     errorsDirectory,
+    encodersDirectory,
     service,
     typeResolver,
     helperManager,
@@ -38,6 +32,7 @@ export async function generateHttpService({
     servicesDirectory: Directory;
     modelDirectory: Directory;
     errorsDirectory: Directory;
+    encodersDirectory: Directory;
     service: HttpService;
     typeResolver: TypeResolver;
     helperManager: HelperManager;
@@ -53,6 +48,7 @@ export async function generateHttpService({
         serviceDirectory,
         modelDirectory,
         errorsDirectory,
+        encodersDirectory,
         typeResolver,
         helperManager,
     });
@@ -63,6 +59,7 @@ async function generateService({
     serviceDirectory,
     modelDirectory,
     errorsDirectory,
+    encodersDirectory,
     typeResolver,
     helperManager,
 }: {
@@ -70,12 +67,18 @@ async function generateService({
     serviceDirectory: Directory;
     modelDirectory: Directory;
     errorsDirectory: Directory;
+    encodersDirectory: Directory;
     typeResolver: TypeResolver;
     helperManager: HelperManager;
 }): Promise<void> {
     const serviceFile = getOrCreateSourceFile(serviceDirectory, `${service.name.name}.ts`);
     serviceFile.addImportDeclaration({
-        namedImports: ["Fetcher", "defaultFetcher", "Service"],
+        namedImports: [
+            ClientConstants.Service.ServiceUtils.Imported.FETCHER_TYPE_NAME,
+            ClientConstants.Service.ServiceUtils.Imported.DEFAULT_FETCHER,
+            ClientConstants.Service.ServiceUtils.Imported.SERVICE_NAMESPACE,
+            ClientConstants.Service.ServiceUtils.Imported.IS_RESPONSE_OK_FUNCTION,
+        ],
         moduleSpecifier: "@fern-typescript/service-utils",
     });
 
@@ -91,19 +94,21 @@ async function generateService({
     });
 
     serviceClass.addProperty({
-        name: BASE_URL_SERVICE_MEMBER,
+        name: ClientConstants.Service.PrivateMembers.BASE_URL,
         scope: Scope.Private,
         type: getTextOfTsKeyword(ts.SyntaxKind.StringKeyword),
     });
 
     serviceClass.addProperty({
-        name: FETCHER_SERVICE_MEMBER,
+        name: ClientConstants.Service.PrivateMembers.FETCHER,
         scope: Scope.Private,
-        type: getTextOfTsNode(ts.factory.createIdentifier("Fetcher")),
+        type: getTextOfTsNode(
+            ts.factory.createIdentifier(ClientConstants.Service.ServiceUtils.Imported.FETCHER_TYPE_NAME)
+        ),
     });
 
     serviceClass.addProperty({
-        name: TOKEN_SERVICE_MEMBER,
+        name: ClientConstants.Service.PrivateMembers.TOKEN,
         scope: Scope.Private,
         type: getTextOfTsNode(
             ts.factory.createIndexedAccessTypeNode(
@@ -113,9 +118,9 @@ async function generateService({
         ),
     });
 
-    addConstructor(serviceClass);
+    addConstructor({ serviceClass, serviceDefinition: service });
 
-    const endpointsDirectory = getOrCreateDirectory(serviceDirectory, ENDPOINTS_DIRECTORY_NAME, {
+    const endpointsDirectory = getOrCreateDirectory(serviceDirectory, ClientConstants.Files.ENDPOINTS_DIRECTORY_NAME, {
         exportOptions: {
             type: "namespace",
             namespace: "EndpointTypes",
@@ -123,8 +128,13 @@ async function generateService({
     });
 
     serviceFile.addImportDeclaration({
-        namespaceImport: ENDPOINTS_NAMESPACE_IMPORT,
+        namespaceImport: ClientConstants.Service.NamespaceImports.ENDPOINTS,
         moduleSpecifier: getRelativePathAsModuleSpecifierTo(serviceFile, endpointsDirectory),
+    });
+
+    serviceFile.addImportDeclaration({
+        namespaceImport: ClientConstants.Service.NamespaceImports.ENCODERS,
+        moduleSpecifier: getRelativePathAsModuleSpecifierTo(serviceFile, encodersDirectory),
     });
 
     for (const endpoint of service.endpoints) {
@@ -132,6 +142,7 @@ async function generateService({
             endpoint,
             serviceInterface,
             serviceClass,
+            serviceDefinition: service,
             modelDirectory,
             errorsDirectory,
             endpointsDirectory,
@@ -140,7 +151,13 @@ async function generateService({
         });
     }
 }
-function addConstructor(serviceClass: ClassDeclaration) {
+function addConstructor({
+    serviceClass,
+    serviceDefinition,
+}: {
+    serviceClass: ClassDeclaration;
+    serviceDefinition: HttpService;
+}) {
     const SERVICE_INIT_PARAMETER_NAME = "args";
     serviceClass.addConstructor({
         parameters: [
@@ -152,41 +169,50 @@ function addConstructor(serviceClass: ClassDeclaration) {
         statements: [
             getTextOfTsNode(
                 createClassMemberAssignment({
-                    member: FETCHER_SERVICE_MEMBER,
+                    member: ClientConstants.Service.PrivateMembers.FETCHER,
                     initialValue: ts.factory.createBinaryExpression(
                         ts.factory.createPropertyAccessExpression(
                             ts.factory.createIdentifier(SERVICE_INIT_PARAMETER_NAME),
-                            ts.factory.createIdentifier(SERVICE_INIT_FETCHER_PROPERTY_NAME)
+                            ts.factory.createIdentifier(
+                                ClientConstants.Service.ServiceUtils.ServiceInit.Properties.FETCHER
+                            )
                         ),
                         ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                        ts.factory.createIdentifier("defaultFetcher")
+                        ts.factory.createIdentifier(ClientConstants.Service.ServiceUtils.Imported.DEFAULT_FETCHER)
                     ),
                 })
             ),
             getTextOfTsNode(
                 createClassMemberAssignment({
-                    member: BASE_URL_SERVICE_MEMBER,
-                    initialValue: generateJoinPathsCall({
-                        file: serviceClass.getSourceFile(),
-                        paths: [
-                            ts.factory.createPropertyAccessExpression(
-                                ts.factory.createIdentifier(SERVICE_INIT_PARAMETER_NAME),
-                                ts.factory.createIdentifier(SERVICE_INIT_SERVER_URL_PROPERTY_NAME)
-                            ),
-                            ts.factory.createPropertyAccessExpression(
-                                ts.factory.createIdentifier(SERVICE_INIT_PARAMETER_NAME),
-                                ts.factory.createIdentifier(SERVICE_INIT_SERVICE_BASE_URL_PROPERTY_NAME)
-                            ),
-                        ],
-                    }),
+                    member: ClientConstants.Service.PrivateMembers.BASE_URL,
+                    initialValue:
+                        serviceDefinition.basePath != null
+                            ? generateJoinPathsCall({
+                                  file: serviceClass.getSourceFile(),
+                                  paths: [
+                                      ts.factory.createPropertyAccessExpression(
+                                          ts.factory.createIdentifier(SERVICE_INIT_PARAMETER_NAME),
+                                          ts.factory.createIdentifier(
+                                              ClientConstants.Service.ServiceUtils.ServiceInit.Properties.SERVER_URL
+                                          )
+                                      ),
+                                      ts.factory.createStringLiteral(serviceDefinition.basePath),
+                                  ],
+                              })
+                            : ts.factory.createPropertyAccessExpression(
+                                  ts.factory.createIdentifier(SERVICE_INIT_PARAMETER_NAME),
+                                  ts.factory.createIdentifier(
+                                      ClientConstants.Service.ServiceUtils.ServiceInit.Properties.SERVER_URL
+                                  )
+                              ),
                 })
             ),
             getTextOfTsNode(
                 createClassMemberAssignment({
-                    member: TOKEN_SERVICE_MEMBER,
+                    member: ClientConstants.Service.PrivateMembers.TOKEN,
                     initialValue: ts.factory.createPropertyAccessExpression(
                         ts.factory.createIdentifier(SERVICE_INIT_PARAMETER_NAME),
-                        ts.factory.createIdentifier(SERVICE_INIT_TOKEN_PROPERTY_NAME)
+                        ts.factory.createIdentifier(ClientConstants.Service.ServiceUtils.ServiceInit.Properties.TOKEN)
                     ),
                 })
             ),

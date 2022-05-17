@@ -39,7 +39,7 @@ export function getPluginConfig({
             version: helperForEncoding.version,
             absolutePath: absolutePathOnDocker,
         };
-        binds.push(`${helperForEncoding.absolutePath}:${absolutePathOnDocker}:ro`);
+        binds.push(`${helperForEncoding.absolutePath}:${absolutePathOnDocker}`);
     }
 
     return {

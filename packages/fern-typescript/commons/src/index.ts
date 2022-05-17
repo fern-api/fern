@@ -1,4 +1,3 @@
-export { assertNever } from "./assertNever";
 export { getOrCreateDirectory } from "./codegen/file-system/getOrCreateDirectory";
 export { getOrCreateSourceFile } from "./codegen/file-system/getOrCreateSourceFile";
 export { withProject } from "./codegen/file-system/withProject";

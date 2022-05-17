@@ -1,5 +1,5 @@
 import fetch, { Headers } from "node-fetch";
-import { URL } from "url";
+import { URL } from "node:url";
 import { Fetcher } from "./Fetcher";
 
 export const defaultFetcher: Fetcher = async (args) => {
@@ -8,7 +8,7 @@ export const defaultFetcher: Fetcher = async (args) => {
         headers.append("Content-Type", args.body.contentType);
     }
     if (args.token != null) {
-        const token = typeof args.token === "string" ? args.token : args.token();
+        const token = typeof args.token === "string" ? args.token : await args.token();
         headers.append("Authorization", `Bearer ${token}`);
     }
 
@@ -23,7 +23,7 @@ export const defaultFetcher: Fetcher = async (args) => {
         body: args.body?.content,
     });
 
-    const body = await fetchResponse.buffer();
+    const body = Buffer.from(await fetchResponse.arrayBuffer());
 
     return {
         statusCode: fetchResponse.status,

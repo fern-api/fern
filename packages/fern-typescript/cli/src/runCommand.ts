@@ -17,7 +17,7 @@ export async function runCommand({
     }
 
     const project = await withProject(async (p) => {
-        command.run({
+        await command.run({
             project: p,
             intermediateRepresentation: await loadIntermediateRepresentation(config.irFilepath),
             helperManager: new HelperManager(config.helpers),

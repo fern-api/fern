@@ -1,0 +1,1 @@
+export { generateEncoderFiles } from "./generateEncoderFiles";

@@ -7,8 +7,8 @@ export const HttpResponseSchema = z.union([
     z.string(),
     WithDocsSchema.extend({
         encoding: z.optional(z.string()),
-        ok: z.union([z.string(), TypeDefinitionSchema]),
-        errors: ResponseErrorsSchema,
+        ok: z.optional(z.union([z.string(), TypeDefinitionSchema])),
+        errors: z.optional(ResponseErrorsSchema),
     }),
 ]);
 

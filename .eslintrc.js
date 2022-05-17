@@ -50,5 +50,14 @@ module.exports = {
                 allowHigherOrderFunctions: false,
             },
         ],
+        "@typescript-eslint/no-floating-promises": ["error"],
+
+        "no-empty-function": "off",
+        "@typescript-eslint/no-empty-function": [
+            "error",
+            {
+                allow: ["private-constructors", "protected-constructors", "decoratedFunctions"],
+            },
+        ],
     },
 };

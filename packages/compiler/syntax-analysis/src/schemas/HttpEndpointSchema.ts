@@ -14,7 +14,7 @@ export const HttpEndpointSchema = z
         parameters: z.optional(z.record(HttpParameterSchema)),
         queryParameters: z.optional(z.record(HttpQueryParameterSchema)),
         headers: z.optional(z.record(HttpHeaderSchema)),
-        auth: z.optional(AuthSchema),
+        "auth-override": z.optional(AuthSchema),
         request: z.optional(HttpRequestSchema),
         response: z.optional(HttpResponseSchema),
     })

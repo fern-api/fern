@@ -155,7 +155,7 @@ function createUtils({
     visitorItems: readonly visitorUtils.VisitableItem[];
     discriminant: string;
 }): WriterFunction {
-    const writer = FernWriters.object.writer();
+    const writer = FernWriters.object.writer({ asConst: true });
 
     for (const singleUnionType of types) {
         writer.addProperty({

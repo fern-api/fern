@@ -6,8 +6,8 @@ import {
     HttpMethod,
     HttpService,
 } from "@fern-api/api";
+import { assertNever } from "@fern-api/commons";
 import { RawSchemas } from "@fern-api/syntax-analysis";
-import { assertNever } from "../../utils/assertNever";
 import { getDocs } from "../../utils/getDocs";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { convertHttpRequest } from "./convertHttpRequest";
@@ -30,12 +30,11 @@ export function convertHttpService({
 
     return {
         docs: serviceDefinition.docs,
-        auth: serviceDefinition.auth != null ? convertHttpAuth(serviceDefinition.auth) : null,
         name: {
             name: serviceId,
             fernFilepath,
         },
-        basePath: serviceDefinition["base-path"] ?? "/",
+        basePath: serviceDefinition["base-path"],
         headers:
             serviceDefinition.headers != null
                 ? Object.entries(serviceDefinition.headers).map(([header, headerType]) => ({
@@ -47,6 +46,10 @@ export function convertHttpService({
         endpoints: Object.entries(serviceDefinition.endpoints).map(
             ([endpointId, endpoint]): HttpEndpoint => ({
                 endpointId,
+                auth:
+                    endpoint["auth-override"] != null
+                        ? convertHttpAuth(endpoint["auth-override"])
+                        : convertHttpAuth(serviceDefinition.auth),
                 docs: endpoint.docs,
                 method: convertHttpMethod(endpoint.method),
                 path: endpoint.path,
@@ -74,15 +77,12 @@ export function convertHttpService({
                               docs: getDocs(headerType),
                           }))
                         : [],
-                request:
-                    endpoint.request != null
-                        ? convertHttpRequest({
-                              request: endpoint.request,
-                              fernFilepath,
-                              imports,
-                              nonStandardEncodings,
-                          })
-                        : undefined,
+                request: convertHttpRequest({
+                    request: endpoint.request,
+                    fernFilepath,
+                    imports,
+                    nonStandardEncodings,
+                }),
                 response: convertHttpResponse({
                     response: endpoint.response,
                     fernFilepath,
@@ -115,6 +115,8 @@ function convertHttpAuth(auth: RawSchemas.AuthSchema): HttpAuth {
     switch (auth) {
         case "bearer":
             return HttpAuth.Bearer;
+        case "none":
+            return HttpAuth.None;
         default:
             assertNever(auth);
     }

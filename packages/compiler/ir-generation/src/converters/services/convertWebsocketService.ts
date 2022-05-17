@@ -28,13 +28,14 @@ export function convertWebsocketService({
             fernFilepath,
             name: serviceId,
         },
-        basePath: serviceDefinition["base-path"] ?? "/",
+        basePath: serviceDefinition["base-path"],
         messages: Object.entries(serviceDefinition.messages).map(([messageName, message]) => ({
             name: messageName,
             docs: message.docs,
             origin: convertWebSocketMessageOrigin(message.origin),
             // TODO write converter
-            body: undefined,
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            body: undefined!,
             response: {
                 docs: typeof message.response !== "string" ? message.response?.docs : undefined,
                 behavior: convertWebSocketMessageResponseBehavior(
@@ -45,7 +46,8 @@ export function convertWebsocketService({
                     nonStandardEncodings,
                 }),
                 // TODO write converter
-                ok: undefined,
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                ok: undefined!,
                 errors: convertResponseErrors({
                     rawResponseErrors: typeof message.response !== "string" ? message.response?.errors : undefined,
                     fernFilepath,

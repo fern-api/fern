@@ -1,1 +1,1 @@
-export { parseFernInput } from "./parseFernInput";
+export { parseFernInput } from "./commands/compile/parseFernInput";

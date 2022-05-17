@@ -1,21 +1,21 @@
-import { FernTypescriptHelper } from "@fern-typescript/helper-commons";
-import ts from "typescript";
+import { FernTypescriptHelper } from "@fern-typescript/helper-utils";
 
 export const helper: FernTypescriptHelper = {
     encodings: {
         json: {
+            _type: "inline",
             contentType: "application/json",
-            generateEncode: ({ referenceToDecoded }) => {
+            generateEncode: ({ referenceToDecodedObject, tsMorph: { ts } }) => {
                 return ts.factory.createCallExpression(
                     ts.factory.createPropertyAccessExpression(
                         ts.factory.createIdentifier("JSON"),
                         ts.factory.createIdentifier("stringify")
                     ),
                     undefined,
-                    [referenceToDecoded]
+                    [referenceToDecodedObject.variable]
                 );
             },
-            generateDecode: ({ referenceToEncodedBuffer }) => {
+            generateDecode: ({ referenceToEncodedBuffer, tsMorph: { ts } }) => {
                 return ts.factory.createCallExpression(
                     ts.factory.createPropertyAccessExpression(
                         ts.factory.createIdentifier("JSON"),
@@ -25,7 +25,7 @@ export const helper: FernTypescriptHelper = {
                     [
                         ts.factory.createCallExpression(
                             ts.factory.createPropertyAccessExpression(
-                                referenceToEncodedBuffer,
+                                referenceToEncodedBuffer.variable,
                                 ts.factory.createIdentifier("toString")
                             ),
                             undefined,

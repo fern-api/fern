@@ -10,8 +10,8 @@ const MOCK_HELPERS_MANAGERS = new HelperManager({ encodings: {} });
 describe("generateClientFiles", () => {
     itFernETE("posts", {
         directory: path.join(MOCK_APIS_DIR, "posts"),
-        generateFiles: ({ directory, intermediateRepresentation }) => {
-            generateClientFiles({
+        generateFiles: async ({ directory, intermediateRepresentation }) => {
+            await generateClientFiles({
                 directory,
                 intermediateRepresentation,
                 helperManager: MOCK_HELPERS_MANAGERS,
@@ -22,8 +22,8 @@ describe("generateClientFiles", () => {
 
     itFernETE("no errors", {
         directory: path.join(MOCK_APIS_DIR, "no-errors"),
-        generateFiles: ({ directory, intermediateRepresentation }) => {
-            generateClientFiles({
+        generateFiles: async ({ directory, intermediateRepresentation }) => {
+            await generateClientFiles({
                 directory,
                 intermediateRepresentation,
                 helperManager: MOCK_HELPERS_MANAGERS,
