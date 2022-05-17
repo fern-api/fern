@@ -1,4 +1,9 @@
 {
   "type": "library",
-  "private": false
+  "private": false,
+  "rules": {
+    "depcheck": {
+      "ignores": ["@ts-morph/common"]
+    }
+  }
 }
