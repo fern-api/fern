@@ -1,8 +1,6 @@
 # Defining the data model
 
-## Defining Types
-
-With Fern, there are four ways to define a type:
+With Fern, you can make your own types! There are four ways to define a type:
 
 - [Objects](#objects)
 - [Unions](#objects)
@@ -23,7 +21,7 @@ types:
 
 Each property can reference an existing type, or a built-in [primitive](#primitives).
 
-**Code**
+**Equivalent code**
 
 In TypeScript, this might look something like:
 
@@ -53,7 +51,7 @@ types:
       radius: double
 ```
 
-**Code**
+**Equivalent code**
 
 In TypeScript, this might look something like:
 
@@ -89,7 +87,7 @@ types:
       reason: string
 ```
 
-**Code**
+**Equivalent code**
 
 In TypeScript, this might look something like:
 
@@ -103,46 +101,6 @@ interface Success {
 interface Failure {
   _type: "failure";
   reason: string;
-}
-```
-
-### Aliases
-
-An alias type is simply a renaming of an existing type. This is often done to improve the clarity of the data model.
-
-```yaml
-types:
-  DogName:
-    alias: string
-  Dog:
-    properties:
-      name: DogName
-      friends: list<DogName>
-```
-
-You can also define an alias inline:
-
-```diff diff-highlight
-types:
-- DogName:
--   alias: string
-+ DogName: string
-  Dog:
-    properties:
-      name: DogName
-      friends: list<DogName>
-```
-
-**Code**
-
-In TypeScript, this might look something like:
-
-```ts
-type DogName = string;
-
-interface Dog {
-  name: DogName;
-  friends: DogName[];
 }
 ```
 
@@ -173,6 +131,44 @@ enum Suit {
 }
 ```
 
+### Aliases
+
+An alias type renames an existing type. Use aliases to remove ambiguity. For example, without aliases:
+
+```yaml
+types:
+  Employee:
+    id: string
+    name: string
+    # hmm, is this the manager's name or ID?
+    manager: string
+```
+
+With aliases:
+
+```diff-yaml diff-highlight
+types:
++ EmployeeId: string
+  Employee:
++   id: EmployeeId
+    name: string
++   manager: EmployeeId
+```
+
+**Equivalent code**
+
+In TypeScript, this might look something like:
+
+```ts
+type EmployeeId = string;
+
+interface Employee {
+  id: EmployeeId;
+  name: string;
+  manager: EmployeeId;
+}
+```
+
 ## Built-in types
 
 Fern includes two kinds of built-in types: **primitives** and **containers**.
@@ -199,25 +195,24 @@ Containers wrap existing types. The included containers are
 ```yml
 types:
   KitchenSink:
+    docs: Quite the kitchen sink!
     properties:
       someMap: map<string, boolean>
       myList: list<integer>
-      maybeASet:
-        docs: This might be missing!
-        type: optional<set<string>>
+      maybeASet: optional<set<string>>
 ```
 
-**Code**
+**Equivalent code**
 
 In TypeScript, this might look something like:
 
 ```ts
+/**
+ * Quite the kitchen sink!
+ */
 interface KitchenSink {
   someMap: Record<string, boolean>;
   myList: number[];
-  /**
-   * This might be missing!
-   */
   maybeASet?: Set<string>;
 }
 ```
@@ -226,7 +221,7 @@ interface KitchenSink {
 
 IDs are a common pattern in API development and are given a special place in a Fern Definition.
 
-```
+```yaml
 ids:
   - RepoId
 types:
