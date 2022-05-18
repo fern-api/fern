@@ -63,7 +63,7 @@ chatsChannel.subscribeToNewChats({
 
 ## Errors
 
-Every message can specify [errors](#defining-errors) - i.e. responses that indicate that something went wrong. The message's `errors` field must be a union.
+Every message can specify [errors](defining-errors.md) - i.e. responses that indicate that something went wrong. The message's `errors` field must be a union.
 
 ```diff-yaml diff-highlight
  ids:

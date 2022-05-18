@@ -95,7 +95,7 @@ services:
 
 ## Errors
 
-Every endpoint can specify [errors](#defining-errors) - i.e. responses that indicate that something went wrong. The endpoint's `errors` field must be a union.
+Every endpoint can specify [errors](defining-errors.md) - i.e. responses that indicate that something went wrong. The endpoint's `errors` field must be a union.
 
 ```diff-yaml diff-highlight
  types:
