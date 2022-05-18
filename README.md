@@ -1,122 +1,55 @@
 # Fern
 
-</p>
+Fern is a framework for building APIs. You can think of it as an alternative to Swagger/OpenAPI.
 
-Fern makes it easier to build REST APIs. Fern is open source and interoperable with OpenAPI so you are never locked in.
+[View our docs ➚](https://docs.buildwithfern.com/#/)
 
-A **Fern Definition** is an API description format for REST APIs (similar to the OpenAPI Spec) written to be a programming language-agnostic. **Fern Definitions** are written in YAML, allowing humans and computers to understand the capabilities of a service without having to read source code or inspect network requests.
+### Goals
 
-Developers are most successful using Fern when designing their APIs (in YAML) before writing source code.
+**1. High quality code generation.**
 
-Use cases for **Fern Definitions** include:
+Generators can be written in any language, for any language. Generated servers and clients are idoimatic and easy to use.
 
-- code generation for SDKs (i.e. clients & servers)
+**2. Plugin support.**
 
-- interactive documentation (_e.g. docs.example.com_)
+Generators can define plugin points to expand their functionality. For example, a plugin might add support for gRPC or add Auth0 authorization checks for each endpoint.
 
-- generating Postman Collections
+**3. Protocol flexiblility.**
 
-## Benefits of Fern
+Use HTTP when you want RESTful calls. Use WebSockets when you want subscriptions. Use TCP when you care about performance. Fern manages the transport layer and provides similar interfaces so you can use the best protocol for the job.
 
-- Single source of truth: Define your data model and APIs **one place** in your repo.
+**4. Errors as a first class concept.**
 
-- Type-safe servers and clients: Run `fern generate` to automatically generate **server stubs** and **type-safe clients**.
+Every request can result in success or failure. Errors are strongly typed so it's easy for consumers to handle them.
 
-  - Our codegen reads like it was written by a human, not a computer.
+### How does it work?
 
-    > _"Wow, this codegen is so idiomatic!"_ - Chuck Norris
-
-## What languages are supported?
-
-The Fern compiler reads API definitions written in the [human-readable YML format](/docs/fern_definitions.md) and produces a JSON [intermediate representation](/docs/intermediate_representation.md) (IR).
-
-| **Language** | **Server Stub**  | **Client** |
-| ------------ | ---------------- | ---------- |
-| Java         | ✅               | ✅         |
-| TypeScript   | 🚧 _in progress_ | ✅         |
-| Python       | 🚧               | 🚧         |
-
-_Interested in another language? [Get in touch.](hey@buildwithfern.com)_
-
-## Let's do an example
-
-Here's a simple API to get the current weather report:
+An API begins as a **Fern Definition**, a set of YAML files that describe your API. For example, here's a Fern Definition for a simple API to get the current day of the week:
 
 ```yaml
-# api.yml
-
 types:
-  WeatherReport:
-    properties:
-      tempInFahrenheit: double
-      humidity:
-        type: integer
-        docs: a number between 0 and 100
-      conditions: WeatherConditions
-  WeatherConditions:
+  DayOfWeek:
     enum:
-      - SUNNY
-      - CLOUDY
-      - RAINY
-
+      - SUNDAY
+      - MONDAY
+      - TUESDAY
+      - WEDNESDAY
+      - THURSDAY
+      - FRIDAY
+      - SATURDAY
 services:
-  http:
-    WeatherService:
-      base-path: /weather
-      endpoints:
-        getWeather:
-          method: GET
-          path: /{zipCode}
-          parameters:
-            zipCode: string
-          response: WeatherReport
+  DayOfWeekService:
+    endpoints:
+      getCurrentDayOfWeek:
+        response: DayOfWeek
 ```
 
-### The server
+Fern reads in the Definition, validates it, and invokes generators. Some examples of generators are:
 
-Here's the Typescript/express server stubs that Fern generates:
-
-TODO
-
-### The client
-
-Let's say we published the client to npm... TODO make this better. Here's an example of someone consuming it:
-
-```ts
-import { WeatherService } from "weather-api";
-
-const weatherService = WeatherService.create({
-  baseUrl:
-})
-
-const weatherReport = await Weather
-
-```
-
-## Contributing
-
-The team welcomes contributions! To make code changes to one of the Fern repos:
-
-- Fork the repo and make a branch
-- Write your code
-- Open a PR (optionally linking to a Github issue)
-
-## Getting started
-
-### Installation
-
-`$ npm install -g fern-api`
-
-### Initialize Fern in your repo
-
-`fern init`
-
-### Generate code
-
-`fern generate`
-
-`fern add`
-
-## License
-
-This tooling is made available under the [MIT License](LICENSE).
+| Generator         | Description                                                               |
+| ----------------- | ------------------------------------------------------------------------- |
+| `fern-typescript` | converts a Fern Definition to a TypeScript server and a TypeScript client |
+| `fern-java`       | converts a Fern Definition to a Java server and a Java client             |
+| `fern-postman`    | converts a Fern Definition to a Postman collection                        |
+| `fern-openapi`    | converts a Fern Definition to a OpenAPI spec                              |
+| `fern-docs`       | converts a Fern Definition to an interactive documentation site           |

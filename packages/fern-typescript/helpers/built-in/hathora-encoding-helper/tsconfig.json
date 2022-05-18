@@ -1,14 +1,16 @@
 {
   "extends": "../../../../../shared/tsconfig.shared.json",
-  "compilerOptions": { "declaration": false, "module": "esnext" },
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "dist",
+    "sourceMap": false,
+    "rootDir": "src"
+  },
+  "include": ["src"],
+  "exclude": ["src/**/__test__"],
   "references": [
     { "path": "../../../client/tsconfig.json" },
     { "path": "../../utils/tsconfig.json" },
     { "path": "../../../../api/fern-ir-typescript/tsconfig.json" }
-  ],
-  "ts-node": {
-    "compilerOptions": {
-      "module": "CommonJS"
-    }
-  }
+  ]
 }

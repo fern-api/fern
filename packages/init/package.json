@@ -19,8 +19,6 @@
     "test": "jest --passWithNoTests",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
     "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore --fix",
-    "lint:style": "stylelint '**/*.scss' --allow-empty-input --max-warnings 0",
-    "lint:style:fix": "stylelint '**/*.scss' --allow-empty-input --max-warnings 0 --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck"
@@ -41,7 +39,6 @@
     "eslint": "^8.12.0",
     "jest": "^27.5.1",
     "prettier": "^2.6.2",
-    "stylelint": "^14.6.1",
     "typescript": "^4.6.4"
   }
 }
