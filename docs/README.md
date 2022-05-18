@@ -1,13 +1,108 @@
 # Fern
 
-Fern is an open source framework that makes it easier to build APIs. Fern is interoperable with Open API so you are never locked in.
+What is Fern?
 
-Fern allows you to
+Fern is a compiler.
 
-1. Define a source-of-truth for your API
-2. Autogenerate idiomatic & typesafe clients and servers
-3. Supports WebSocket and REST APIs
-4. Easily manage backwards compatiblity
+What is it compiling?
+
+Fern compiles a Fern Definition into server stubs and clients.
+
+What is a Fern Definition?
+
+A Fern Definition is a collection of YAML files that describe:
+
+- A data model
+- Services, which communicate messages over a network.
+
+What does Fern do?
+
+- design my API (fern.yml)
+- Implement my server (server stubs)
+- Use clients for testing (auto-generated)
+- Publish SDKs for others to use
+
+Fern is not tied to particular protocols or technologies. This means that Fern:
+
+- communicates over HTTP, WebSocket, and whatever comes next
+- encodes using JSON, gRPC, and whatever comes next
+- can generate servers and clients in any programming language
+
+**How does it work?**
+
+- Fern uses plugins
+- Plugins can convert a Fern Definition into generated code
+- Plugins can declare their own plugin points - i.e. plugins can have plugins
+- Open source - anyone can write a plugin
+
+One word: plugins.
+
+Plugins put the control in the developer's hands.
+
+You have the opinions not us.
+
+We won't force your hand.
+
+While OpenAPI forces you to write your code generator
+
+Our learnings from OpenAPI are:
+
+- Different languages are better for different
+
+We designed the Fern compiler so that anyone can build on top. Even plugins can have plugins!
+
+We'll never tell you.
+
+The Fern compiler is
+
+Plugins are our secret sauce.
+
+We designed Fern
+
+Our plugin-based compiler means that we make very few assumptions about how data is transferred. And plugins can be written in any language.
+
+Our plugin-based compiler si . **What does this mean?**
+
+Fern is an alternative
+OpenAPI
+AsyncAPI
+Home rolling
+
+Why we're frustrated with OpenAPI.
+
+1. Spec is too flexible (anyOf)
+1. Spec is hard for a human to read
+1. Codegen sucks, sometimes doesn't even compile
+1. Code generators can't have plugins
+   - e.g. Auth0
+1. No WebSocket support
+1. No GraphQL support
+1. Must be JSON
+
+Our plugin-based compiler means that are agnostic:
+
+- protocol (HTTP, Websocket)
+- Encoding (JSON, buf, xml, custom binary)
+- Language (servers and clients in any language)
+
+Use fern to:
+
+- code generation for SDKs (i.e. clients & servers)
+- interactive documentation (_e.g. docs.example.com_)
+
+Fern makes it easy to build REST APIs. Fern is open source and interoperable with OpenAPI so you are never locked in.
+
+A **Fern Definition** is an API description format for REST APIs (similar to the OpenAPI Spec) written to be a programming language-agnostic. **Fern Definitions** are written in YAML, allowing humans and computers to understand the capabilities of a service without having to read source code or inspect network requests.
+
+Developers are most successful using Fern when designing their APIs (in YAML) before writing source code.
+
+Use cases for **Fern Definitions** include:
+
+- code generation for SDKs (i.e. clients & servers)
+
+- interactive documentation (_e.g. docs.example.com_)
+
+- generating Postman Collections
 
 ## Example Spec
 
