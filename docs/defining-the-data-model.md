@@ -226,7 +226,7 @@ interface KitchenSink {
 
 IDs are a common pattern in API development and are given a special place in a Fern Definition.
 
-```
+```yaml
 ids:
   - RepoId
 types:
