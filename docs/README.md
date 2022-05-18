@@ -2,19 +2,23 @@
 
 Fern is a framework for building APIs. You can think of it as an alternative to Swagger/OpenAPI.
 
-### Goals:
+### Goals
 
 **1. High quality code generation.**
 
 Generators can be written in any language, for any language. Generated servers and clients are idoimatic and easy to use.
 
-**2. First class plugin support.**
+**2. Plugin support.**
 
 Generators can define plugin points to expand their functionality. For example, a plugin might add support for gRPC or add Auth0 authorization checks for each endpoint.
 
 **3. Protocol flexiblility.**
 
 Use HTTP when you want RESTful calls. Use WebSockets when you want subscriptions. Use TCP when you care about performance. Fern manages the transport layer and provides similar interfaces so you can use the best protocol for the job.
+
+**4. Errors as a first class concept.**
+
+Every request can result in success or failure. Errors are strongly typed, and consumers are forced to handle them.
 
 ### How does it work?
 
@@ -33,8 +37,9 @@ types:
       - SATURDAY
 services:
   DayOfWeekService:
-    getDayOfWeek:
-      response: DayOfWeek
+    endpoints:
+      getCurrentDayOfWeek:
+        response: DayOfWeek
 ```
 
 Fern reads in the Definition, validates it, and invokes generators. Some examples of generators are:
