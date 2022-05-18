@@ -18,7 +18,7 @@ Use HTTP when you want RESTful calls. Use WebSockets when you want subscriptions
 
 **4. Errors as a first class concept.**
 
-Every request can result in success or failure. Errors are strongly typed, and consumers are forced to handle them.
+Every request can result in success or failure. Errors are strongly typed so it's easy for consumers to handle them.
 
 ### How does it work?
 
