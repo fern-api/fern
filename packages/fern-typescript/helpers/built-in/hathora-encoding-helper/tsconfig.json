@@ -7,7 +7,6 @@
     "rootDir": "src"
   },
   "include": ["src"],
-  "exclude": ["src/**/__test__"],
   "references": [
     { "path": "../../../client/tsconfig.json" },
     { "path": "../../utils/tsconfig.json" },

@@ -1,10 +1,12 @@
 import {
+    ContainerType,
     CustomWireMessageEncoding,
     FernFilepath,
     HttpAuth,
     HttpEndpoint,
     HttpMethod,
     HttpService,
+    TypeReference,
 } from "@fern-api/api";
 import { assertNever } from "@fern-api/commons";
 import { RawSchemas } from "@fern-api/syntax-analysis";
@@ -63,11 +65,19 @@ export function convertHttpService({
                         : [],
                 queryParameters:
                     endpoint.queryParameters != null
-                        ? Object.entries(endpoint.queryParameters).map(([parameterName, parameterType]) => ({
-                              docs: typeof parameterType !== "string" ? parameterType.docs : undefined,
-                              key: parameterName,
-                              valueType: parseTypeReference(parameterType),
-                          }))
+                        ? Object.entries(endpoint.queryParameters).map(([parameterName, parameterType]) => {
+                              const valueType = parseTypeReference(parameterType);
+                              return {
+                                  docs: typeof parameterType !== "string" ? parameterType.docs : undefined,
+                                  key: parameterName,
+                                  // query parameters are always optional, so wrap the valueType in an optional
+                                  // container if it's not already optional
+                                  valueType:
+                                      valueType._type === "container" && valueType.container._type === "optional"
+                                          ? valueType
+                                          : TypeReference.container(ContainerType.optional(valueType)),
+                              };
+                          })
                         : [],
                 headers:
                     endpoint.headers != null

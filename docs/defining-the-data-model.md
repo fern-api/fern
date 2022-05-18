@@ -108,7 +108,7 @@ interface Failure {
 
 An enum type represents a collection of allowed values.
 
-```ts
+```yaml
 types:
   Suit:
     enum:
