@@ -18,6 +18,7 @@ export async function writeFiles(
             parser: "typescript",
             plugins: [organizeImportsPlugin],
             tabWidth: 4,
+            filepath,
         });
 
         await fileSystem.writeFile(filepath, formatted);
