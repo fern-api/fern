@@ -1,4 +1,4 @@
-import { EncodeMethod, tsMorph } from "@fern-typescript/helper-utils";
+import { EncodeMethod, TsMorph, tsMorph } from "@fern-typescript/helper-utils";
 
 export function createEncoderMethodCall({
     ts,
@@ -7,17 +7,27 @@ export function createEncoderMethodCall({
     method,
     variable,
 }: {
-    ts: typeof tsMorph.ts;
+    ts: TsMorph["ts"];
     referenceToEncoder: tsMorph.ts.Expression;
     propertyChainToMethod: readonly string[];
     method: EncodeMethod;
     variable: tsMorph.ts.Expression;
 }): tsMorph.ts.CallExpression {
-    return ts.factory.createCallExpression(
+    const encoderCall = ts.factory.createCallExpression(
         createReferenceToEncoderMethod({ ts, referenceToEncoder, propertyChain: [...propertyChainToMethod, method] }),
         undefined,
         [variable]
     );
+    switch (method) {
+        case "decode":
+            return encoderCall;
+        case "encode":
+            return ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(encoderCall, ts.factory.createIdentifier("toBuffer")),
+                undefined,
+                undefined
+            );
+    }
 }
 
 function createReferenceToEncoderMethod({
@@ -25,7 +35,7 @@ function createReferenceToEncoderMethod({
     referenceToEncoder,
     propertyChain,
 }: {
-    ts: typeof tsMorph.ts;
+    ts: TsMorph["ts"];
     referenceToEncoder: tsMorph.ts.Expression;
     propertyChain: readonly string[];
 }): tsMorph.ts.Expression {

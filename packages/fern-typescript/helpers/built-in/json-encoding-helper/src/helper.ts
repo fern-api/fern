@@ -25,11 +25,15 @@ export const helper: FernTypescriptHelper = {
                     [
                         ts.factory.createCallExpression(
                             ts.factory.createPropertyAccessExpression(
-                                referenceToEncodedBuffer.variable,
-                                ts.factory.createIdentifier("toString")
+                                ts.factory.createNewExpression(
+                                    ts.factory.createIdentifier("TextDecoder"),
+                                    undefined,
+                                    []
+                                ),
+                                ts.factory.createIdentifier("decode")
                             ),
                             undefined,
-                            []
+                            [referenceToEncodedBuffer.variable]
                         ),
                     ]
                 );

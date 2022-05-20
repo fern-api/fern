@@ -1,4 +1,4 @@
-import { EncodeMethod, FernTypescriptHelper, tsMorph, VariableReference } from "@fern-typescript/helper-utils";
+import { EncodeMethod, FernTypescriptHelper, TsMorph, tsMorph, VariableReference } from "@fern-typescript/helper-utils";
 import { HathoraEncoderConstants } from "./constants";
 import { writeEncoder } from "./encoder/writeEncoder";
 import { getMethodCallForModelTypeVariableReference } from "./method-calls/getMethodCallForModelTypeVariableReference";
@@ -16,7 +16,7 @@ export const helper: FernTypescriptHelper = {
                 writeEncoder({ intermediateRepresentation, tsMorph, file, modelDirectory });
             },
             generateEncode: ({ referenceToDecodedObject, referenceToEncoder, tsMorph: { ts } }) => {
-                return getMethodForVariableReference({
+                return getMethodCallForVariableReference({
                     variableReference: referenceToDecodedObject,
                     referenceToEncoder,
                     ts,
@@ -24,7 +24,7 @@ export const helper: FernTypescriptHelper = {
                 });
             },
             generateDecode: ({ referenceToEncodedBuffer, referenceToEncoder, tsMorph: { ts } }) => {
-                return getMethodForVariableReference({
+                return getMethodCallForVariableReference({
                     variableReference: referenceToEncodedBuffer,
                     referenceToEncoder,
                     ts,
@@ -35,7 +35,7 @@ export const helper: FernTypescriptHelper = {
     },
 };
 
-function getMethodForVariableReference({
+function getMethodCallForVariableReference({
     variableReference,
     referenceToEncoder,
     ts,
@@ -43,7 +43,7 @@ function getMethodForVariableReference({
 }: {
     variableReference: VariableReference;
     referenceToEncoder: tsMorph.ts.Expression;
-    ts: typeof tsMorph.ts;
+    ts: TsMorph["ts"];
     method: EncodeMethod;
 }): tsMorph.ts.CallExpression {
     switch (variableReference._type) {

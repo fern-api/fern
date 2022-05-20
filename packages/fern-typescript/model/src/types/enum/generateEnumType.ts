@@ -89,6 +89,7 @@ function createUtils({
     });
 
     writer.addNewLine();
+
     writer.addProperty({
         key: "_values",
         value: getTextOfTsNode(

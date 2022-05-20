@@ -1760,6 +1760,7 @@ __metadata:
     "@types/esutils": "npm:^2.0.0"
     "@types/jest": "npm:^27.4.1"
     "@types/node": "npm:^17.0.33"
+    "@types/prettier": "npm:^2.6.1"
     depcheck: "npm:^1.4.3"
     eslint: "npm:^8.12.0"
     esutils: "npm:^2.0.3"
@@ -2625,7 +2626,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/prettier@npm:^2.1.5":
+"@types/prettier@npm:^2.1.5, @types/prettier@npm:^2.6.1":
   version: 2.6.1
   resolution: "@types/prettier@npm:2.6.1"
   checksum: 88f8324f32e7bfe02736988a38e4108183884831dd42ac881590a53432c0fa4f08a79b207c76c6f2fa9a49b1139de6ef70c006144323fb352a447c762d66c21d
@@ -3572,6 +3573,16 @@ __metadata:
   version: 5.2.2
   resolution: "big.js@npm:5.2.2"
   checksum: 1c63accd17ba7d86676380280190cf748c6f715b74ddc36a3999d20689f78e59f6f76958fb811d40b57efca8dfaaacdc4508521d06a8a8d1e86194bc0f4b4575
+  languageName: node
+  linkType: hard
+
+"bin-serde@npm:*":
+  version: 1.1.1
+  resolution: "bin-serde@npm:1.1.1"
+  dependencies:
+    utf8-buffer: "npm:^1.0.0"
+    utf8-buffer-size: "npm:^0.0.4"
+  checksum: 0d1f6db4ffe8a74e7a11a7d7f6e915d6d9fb3020b664a6698ef6e9e507c27b551cd90f4dce75d2394d0cd0778913f73fcd4ff7fe9d5edba8b59e04c1d0fdb1d2
   languageName: node
   linkType: hard
 
@@ -5588,6 +5599,15 @@ __metadata:
   checksum: 3e8c4d87ccd9c160d61a5db829b5fb647acac79e482476c857d5d1dc580517c6a77cf84337808f28361f6263008ce1ce5aff44407bd9241af93c623ef8d8d4f1
   languageName: node
   linkType: hard
+
+"hathora-78bdcd@workspace:packages/ete-tests/src/__test__/generate/fixtures/hathora":
+  version: 0.0.0-use.local
+  resolution: "hathora-78bdcd@workspace:packages/ete-tests/src/__test__/generate/fixtures/hathora"
+  dependencies:
+    "@fern-typescript/service-utils": "workspace:*"
+    bin-serde: "npm:*"
+  languageName: unknown
+  linkType: soft
 
 "html-encoding-sniffer@npm:^2.0.1":
   version: 2.0.1
@@ -9355,6 +9375,20 @@ __metadata:
   dependencies:
     prepend-http: "npm:^2.0.0"
   checksum: f5e84305a7ed1e087bc1c0d263fe05ab432619b4f3ce957a78dcd2b2d989e28b1a3169a7cf8ce9e780e4c45d613f029d38dcf68d7b39b77dbdff197dceb3ac53
+  languageName: node
+  linkType: hard
+
+"utf8-buffer-size@npm:^0.0.4":
+  version: 0.0.4
+  resolution: "utf8-buffer-size@npm:0.0.4"
+  checksum: d0cc9c53c958b7d97545437e3f53ab2fa20323dc93691b44c25c2480b097726642106698de8e82ff55a850b176368fc4406e601ae2e9d47b74a522850c9244d1
+  languageName: node
+  linkType: hard
+
+"utf8-buffer@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "utf8-buffer@npm:1.0.0"
+  checksum: 6a18acbe41f70f80d2a46ee08c21b668f1860f31ef9062398465481deca8fb1ccf87e35108c98bb3fd4e1def3bbc61e61b885ae8669bdf4516fc7aee5805e5bb
   languageName: node
   linkType: hard
 
