@@ -72,6 +72,8 @@ export const Author = {
                 return visitor._unknown();
         }
     },
+
+    _types: (): Author[\\"_type\\"][] => [\\"anonymous\\", \\"named\\"],
 } as const;
 ",
   "/model/posts/Post.ts": "import { PostId } from \\"../commons/PostId\\";
@@ -163,7 +165,9 @@ export class Client implements Client {
                 statusCode: encodedResponse.statusCode,
             };
         } else {
-            const error = JSON.parse(encodedResponse.body.toString());
+            const error = JSON.parse(
+                new TextDecoder().decode(encodedResponse.body)
+            );
             return {
                 ok: false,
                 statusCode: encodedResponse.statusCode,
@@ -188,6 +192,8 @@ export const ErrorBody = {
     ): Result => {
         return visitor._unknown();
     },
+
+    _types: (): ErrorBody[\\"_type\\"][] => [],
 } as const;
 ",
   "/services/NoErrorsService/endpoints/get/Response.ts": "import { ErrorBody } from \\"./ErrorBody\\";
@@ -259,14 +265,18 @@ export class Client implements Client {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(encodedResponse.body.toString());
+            const response = JSON.parse(
+                new TextDecoder().decode(encodedResponse.body)
+            );
             return {
                 ok: true,
                 statusCode: encodedResponse.statusCode,
                 body: response as model.PostId,
             };
         } else {
-            const error = JSON.parse(encodedResponse.body.toString());
+            const error = JSON.parse(
+                new TextDecoder().decode(encodedResponse.body)
+            );
             return {
                 ok: false,
                 statusCode: encodedResponse.statusCode,
@@ -293,14 +303,18 @@ export class Client implements Client {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(encodedResponse.body.toString());
+            const response = JSON.parse(
+                new TextDecoder().decode(encodedResponse.body)
+            );
             return {
                 ok: true,
                 statusCode: encodedResponse.statusCode,
                 body: response as model.Post,
             };
         } else {
-            const error = JSON.parse(encodedResponse.body.toString());
+            const error = JSON.parse(
+                new TextDecoder().decode(encodedResponse.body)
+            );
             return {
                 ok: false,
                 statusCode: encodedResponse.statusCode,
@@ -324,14 +338,18 @@ export class Client implements Client {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(encodedResponse.body.toString());
+            const response = JSON.parse(
+                new TextDecoder().decode(encodedResponse.body)
+            );
             return {
                 ok: true,
                 statusCode: encodedResponse.statusCode,
                 body: response as model.Post,
             };
         } else {
-            const error = JSON.parse(encodedResponse.body.toString());
+            const error = JSON.parse(
+                new TextDecoder().decode(encodedResponse.body)
+            );
             return {
                 ok: false,
                 statusCode: encodedResponse.statusCode,
@@ -356,6 +374,8 @@ export const ErrorBody = {
     ): Result => {
         return visitor._unknown();
     },
+
+    _types: (): ErrorBody[\\"_type\\"][] => [],
 } as const;
 ",
   "/services/PostsService/endpoints/createPost/RequestBody.ts": "import * as model from \\"../../../../model\\";
@@ -420,6 +440,8 @@ export const ErrorBody = {
                 return visitor._unknown();
         }
     },
+
+    _types: (): ErrorBody[\\"_type\\"][] => [\\"notFound\\"],
 } as const;
 ",
   "/services/PostsService/endpoints/getPost/Request.ts": "import * as model from \\"../../../../model\\";
@@ -483,6 +505,8 @@ export const ErrorBody = {
                 return visitor._unknown();
         }
     },
+
+    _types: (): ErrorBody[\\"_type\\"][] => [\\"notFound\\"],
 } as const;
 ",
   "/services/PostsService/endpoints/getPostV2/Response.ts": "import * as model from \\"../../../../model\\";
@@ -591,6 +615,8 @@ export const Author = {
                 return visitor._unknown();
         }
     },
+
+    _types: (): Author[\\"_type\\"][] => [\\"anonymous\\", \\"named\\"],
 } as const;
 ",
   "/model/posts/Post.ts": "import { PostId } from \\"../commons/PostId\\";
@@ -690,14 +716,18 @@ export class Client implements Client {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(encodedResponse.body.toString());
+            const response = JSON.parse(
+                new TextDecoder().decode(encodedResponse.body)
+            );
             return {
                 ok: true,
                 statusCode: encodedResponse.statusCode,
                 body: response as model.PostId,
             };
         } else {
-            const error = JSON.parse(encodedResponse.body.toString());
+            const error = JSON.parse(
+                new TextDecoder().decode(encodedResponse.body)
+            );
             return {
                 ok: false,
                 statusCode: encodedResponse.statusCode,
@@ -724,14 +754,18 @@ export class Client implements Client {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(encodedResponse.body.toString());
+            const response = JSON.parse(
+                new TextDecoder().decode(encodedResponse.body)
+            );
             return {
                 ok: true,
                 statusCode: encodedResponse.statusCode,
                 body: response as model.Post,
             };
         } else {
-            const error = JSON.parse(encodedResponse.body.toString());
+            const error = JSON.parse(
+                new TextDecoder().decode(encodedResponse.body)
+            );
             return {
                 ok: false,
                 statusCode: encodedResponse.statusCode,
@@ -755,14 +789,18 @@ export class Client implements Client {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(encodedResponse.body.toString());
+            const response = JSON.parse(
+                new TextDecoder().decode(encodedResponse.body)
+            );
             return {
                 ok: true,
                 statusCode: encodedResponse.statusCode,
                 body: response as model.Post,
             };
         } else {
-            const error = JSON.parse(encodedResponse.body.toString());
+            const error = JSON.parse(
+                new TextDecoder().decode(encodedResponse.body)
+            );
             return {
                 ok: false,
                 statusCode: encodedResponse.statusCode,
@@ -787,6 +825,8 @@ export const ErrorBody = {
     ): Result => {
         return visitor._unknown();
     },
+
+    _types: (): ErrorBody[\\"_type\\"][] => [],
 } as const;
 ",
   "/services/PostsService/endpoints/createPost/RequestBody.ts": "import * as model from \\"../../../../model\\";
@@ -851,6 +891,8 @@ export const ErrorBody = {
                 return visitor._unknown();
         }
     },
+
+    _types: (): ErrorBody[\\"_type\\"][] => [\\"notFound\\"],
 } as const;
 ",
   "/services/PostsService/endpoints/getPost/Request.ts": "import * as model from \\"../../../../model\\";
@@ -914,6 +956,8 @@ export const ErrorBody = {
                 return visitor._unknown();
         }
     },
+
+    _types: (): ErrorBody[\\"_type\\"][] => [\\"notFound\\"],
 } as const;
 ",
   "/services/PostsService/endpoints/getPostV2/Response.ts": "import * as model from \\"../../../../model\\";

@@ -122,6 +122,8 @@ export const Author = {
                 return visitor._unknown();
         }
     },
+
+    _types: (): Author[\\"_type\\"][] => [\\"anonymous\\", \\"named\\"],
 } as const;
 ",
   "/model/posts/BlogPostReference.ts": "import * as model from \\"..\\";
@@ -156,6 +158,8 @@ export const BlogPostReference = {
                 return visitor._unknown();
         }
     },
+
+    _types: (): BlogPostReference[\\"_type\\"][] => [\\"post\\"],
 } as const;
 ",
   "/model/posts/CreatePostRequest.ts": "import { Author } from \\"./Author\\";
@@ -552,6 +556,8 @@ export const ContainerType = {
                 return visitor._unknown();
         }
     },
+
+    _types: (): ContainerType[\\"_type\\"][] => [\\"list\\", \\"map\\", \\"optional\\", \\"set\\"],
 } as const;
 ",
   "/model/types/EnumTypeDefinition.ts": "import { EnumValue } from \\"./EnumValue\\";
@@ -737,6 +743,8 @@ export const Type = {
                 return visitor._unknown();
         }
     },
+
+    _types: (): Type[\\"_type\\"][] => [\\"alias\\", \\"enum\\", \\"object\\", \\"union\\"],
 } as const;
 ",
   "/model/types/TypeDefinition.ts": "import { WithDocs } from \\"../commons/WithDocs\\";
@@ -824,6 +832,13 @@ export const TypeReference = {
                 return visitor._unknown();
         }
     },
+
+    _types: (): TypeReference[\\"_type\\"][] => [
+        \\"container\\",
+        \\"named\\",
+        \\"primitive\\",
+        \\"void\\",
+    ],
 } as const;
 ",
   "/model/types/UnionTypeDefinition.ts": "import { SingleUnionType } from \\"./SingleUnionType\\";
@@ -914,6 +929,8 @@ export const Author = {
                 return visitor._unknown();
         }
     },
+
+    _types: (): Author[\\"_type\\"][] => [\\"anonymous\\", \\"named\\"],
 } as const;
 ",
   "/model/posts/BlogPostReference.ts": "import * as model from \\"..\\";
@@ -948,6 +965,8 @@ export const BlogPostReference = {
                 return visitor._unknown();
         }
     },
+
+    _types: (): BlogPostReference[\\"_type\\"][] => [\\"post\\"],
 } as const;
 ",
   "/model/posts/CreatePostRequest.ts": "import { Author } from \\"./Author\\";

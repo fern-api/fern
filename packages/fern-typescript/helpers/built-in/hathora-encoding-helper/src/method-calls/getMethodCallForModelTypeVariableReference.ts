@@ -1,8 +1,8 @@
-import { EncodeMethod, tsMorph, VariableReference } from "@fern-typescript/helper-utils";
+import { EncodeMethod, TsMorph, tsMorph, VariableReference } from "@fern-typescript/helper-utils";
 import { HathoraEncoderConstants } from "../constants";
 import { getEncoderNameForPrimitive } from "../encoder/writePrimitives";
 import { assertNever } from "../utils/assertNever";
-import { createEncoderMethodCall } from "./utils";
+import { createEncoderMethodCall } from "./createEncoderMethodCall";
 
 export function getMethodCallForModelTypeVariableReference({
     variableReference,
@@ -11,7 +11,7 @@ export function getMethodCallForModelTypeVariableReference({
     referenceToEncoder,
 }: {
     variableReference: VariableReference.ModelReference;
-    ts: typeof tsMorph.ts;
+    ts: TsMorph["ts"];
     method: EncodeMethod;
     referenceToEncoder: tsMorph.ts.Expression;
 }): tsMorph.ts.CallExpression {

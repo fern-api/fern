@@ -21,10 +21,8 @@ export const defaultFetcher: Fetcher = async (args) => {
         body: args.body?.content,
     });
 
-    const body = Buffer.from(await fetchResponse.arrayBuffer());
-
     return {
         statusCode: fetchResponse.status,
-        body,
+        body: new Uint8Array(await fetchResponse.arrayBuffer()),
     };
 };

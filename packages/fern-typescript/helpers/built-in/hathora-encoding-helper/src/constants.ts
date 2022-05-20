@@ -1,6 +1,14 @@
 export const HathoraEncoderConstants = {
     NAME: "HathoraEncoder",
 
+    BinSerDe: {
+        NAMESPACE_IMPORT: "binSerde",
+        Exports: {
+            READER: "Reader",
+            WRITER: "Writer",
+        },
+    },
+
     Primitives: {
         NAME: "Primitives",
     },
