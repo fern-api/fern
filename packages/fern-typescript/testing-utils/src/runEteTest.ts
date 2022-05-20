@@ -52,7 +52,8 @@ export async function runEteTest({ directory, generateFiles, outputToDisk = fals
         await deleteDirectory(generatedDir);
     }
 
-    await writeFiles(generatedDir, project, vol.promises);
+    // use "/" as the base directory since this full path is stored in the snapshot
+    await writeFiles("/", project, vol.promises);
     expect(vol.toJSON()).toMatchSnapshot();
 }
 
