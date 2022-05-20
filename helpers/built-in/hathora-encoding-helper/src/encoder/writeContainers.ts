@@ -3,7 +3,7 @@ import { TsMorph, tsMorph } from "@fern-typescript/helper-utils";
 import { generateBinSerdeMethodCall } from "./bin-serde/generateBinSerdeMethodCall";
 import { constructEncodeMethods, ENCODE_PARAMETER_NAME } from "./constructEncodeMethods";
 
-export function writePrimitives({ ts }: { ts: TsMorph["ts"] }): tsMorph.ts.ObjectLiteralExpression {
+export function writeContainer({ ts }: { ts: TsMorph["ts"] }): tsMorph.ts.ObjectLiteralExpression {
     return ts.factory.createObjectLiteralExpression(
         PrimitiveType._values().map((primitiveType) =>
             ts.factory.createPropertyAssignment(

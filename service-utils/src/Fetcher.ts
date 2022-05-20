@@ -8,13 +8,13 @@ export declare namespace Fetcher {
         token?: string | (() => string | Promise<string>);
         queryParameters?: URLSearchParams;
         body?: {
-            content: string | Buffer | ArrayBuffer;
+            content: string | ArrayBuffer;
             contentType: string;
         };
     }
 
     export interface Response {
         statusCode: number;
-        body: Buffer;
+        body: Uint8Array;
     }
 }

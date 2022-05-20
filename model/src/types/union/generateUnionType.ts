@@ -179,6 +179,29 @@ function createUtils({
         ),
     });
 
+    writer.addNewLine();
+
+    writer.addProperty({
+        key: "_types",
+        value: getTextOfTsNode(
+            ts.factory.createArrowFunction(
+                undefined,
+                undefined,
+                [],
+                ts.factory.createArrayTypeNode(
+                    ts.factory.createIndexedAccessTypeNode(
+                        ts.factory.createTypeReferenceNode(ts.factory.createIdentifier(typeName), undefined),
+                        ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(discriminant))
+                    )
+                ),
+                undefined,
+                ts.factory.createArrayLiteralExpression(
+                    types.map((type) => ts.factory.createStringLiteral(type.discriminantValue))
+                )
+            )
+        ),
+    });
+
     return writer.toFunction();
 }
 
