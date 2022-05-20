@@ -52,7 +52,7 @@ export async function runEteTest({ directory, generateFiles, outputToDisk = fals
         await deleteDirectory(generatedDir);
     }
 
-    await writeFiles("/", project, vol.promises);
+    await writeFiles(generatedDir, project, vol.promises);
     expect(vol.toJSON()).toMatchSnapshot();
 }
 
