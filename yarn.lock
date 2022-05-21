@@ -1347,12 +1347,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/add-plugin@npm:0.0.65":
-  version: 0.0.65
-  resolution: "@fern-api/add-plugin@npm:0.0.65"
+"@fern-api/add-plugin@npm:0.0.70":
+  version: 0.0.70
+  resolution: "@fern-api/add-plugin@npm:0.0.70"
   dependencies:
-    "@fern-api/compiler-commons": "npm:0.0.65"
-  checksum: 45b5ebaca49de7ad73d2446d522630112523c99752a3bc953be006a21a1947d12b5c62914296710b44196477924bd096f7bbc41db2d71497d42b865b974c0391
+    "@fern-api/compiler-commons": "npm:0.0.70"
+  checksum: a025962fb75f8fa544f0c650fdd7c842c1b837d36dedb96649229575f08245d688c24db4646c3de2ba61dafd09b67b722cd8402a119e6c754f6bf527bbdadca8
   languageName: node
   linkType: hard
 
@@ -1374,10 +1374,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/api@npm:0.0.65":
-  version: 0.0.65
-  resolution: "@fern-api/api@npm:0.0.65"
-  checksum: 756f21fe4f7bbff6c49054d277b9dfd25b6e755c88fba455d22075e12d7b01cbe173859a2b0de84e7527557c39ccf397256b0d7d125f8503f8c1c58f9932fda1
+"@fern-api/api@npm:0.0.70":
+  version: 0.0.70
+  resolution: "@fern-api/api@npm:0.0.70"
+  checksum: ee988fda7fa79f51583a087de1dbe3a838f57378c02877f056f5627d8d9efb0081b49f705bf2755f063071eed2db077826fca8d4026a624b7b634a61165b23c1
   languageName: node
   linkType: hard
 
@@ -1398,14 +1398,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/commons@npm:0.0.65":
-  version: 0.0.65
-  resolution: "@fern-api/commons@npm:0.0.65"
+"@fern-api/commons@npm:0.0.70":
+  version: 0.0.70
+  resolution: "@fern-api/commons@npm:0.0.70"
   dependencies:
     glob: "npm:^7.2.0"
     glob-promise: "npm:^4.2.2"
-    typescript: "npm:^4.6.3"
-  checksum: 125cf48c9ef4cbe181b5ce35c832481a612e8b40c2ab33afc443b0cac945fcfc96dd74abbec2446c33f25677f15b9c66c36b5e14af9c7a8ba3c200ed6254680b
+    typescript: "npm:^4.6.4"
+  checksum: a425df771c37e654827c504384838a5e64e6788a840cf464a4a05cb021ac768b9e56077b8ea5b456c54139e9263591ab329f868930e43906c8fd837c405b9ac6
   languageName: node
   linkType: hard
 
@@ -1428,14 +1428,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/compiler-commons@npm:0.0.65":
-  version: 0.0.65
-  resolution: "@fern-api/compiler-commons@npm:0.0.65"
+"@fern-api/compiler-commons@npm:0.0.70":
+  version: 0.0.70
+  resolution: "@fern-api/compiler-commons@npm:0.0.70"
   dependencies:
     find-up: "npm:^5.0.0"
     js-yaml: "npm:^4.1.0"
     zod: "npm:^3.14.3"
-  checksum: 3b59ee1f2f8fc351197933b8dd38d486fd92455e1cd1284ce6d303911dd55c50a04861301f80d951201917e8a5803d1eb06c84543cb7e0d8de3ff33f2d3196c5
+  checksum: ce0450beb9a1725adfca93b34fadef1d79830a1b3b9e4dcd173a554777ad1adc2a88aa09142e3c960e37f248ac5dd837e3afcf3929f47cb8d6a5c9e9c610fb9e
   languageName: node
   linkType: hard
 
@@ -1460,15 +1460,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/compiler@npm:0.0.65":
-  version: 0.0.65
-  resolution: "@fern-api/compiler@npm:0.0.65"
+"@fern-api/compiler@npm:0.0.70":
+  version: 0.0.70
+  resolution: "@fern-api/compiler@npm:0.0.70"
   dependencies:
-    "@fern-api/api": "npm:0.0.65"
-    "@fern-api/compiler-commons": "npm:0.0.65"
-    "@fern-api/ir-generation": "npm:0.0.65"
-    "@fern-api/syntax-analysis": "npm:0.0.65"
-  checksum: 26e944cfbf5109bb41ca1d97e5ce0d5ec6fa6e0ab02c88f81c9a859bdeab77e0245abf59bfa91f345fc890a17ee34fba9d0159cae841cd9545f0fa08221fe3f1
+    "@fern-api/api": "npm:0.0.70"
+    "@fern-api/compiler-commons": "npm:0.0.70"
+    "@fern-api/ir-generation": "npm:0.0.70"
+    "@fern-api/syntax-analysis": "npm:0.0.70"
+  checksum: b42c7a1e91d93503fdc36d9da5f16f57cfbb6bdd8b93eb1dfb4728b71ac6a8ea968306438996ed6f82fbe9c87c88e3fe401dfc1d86097c996ead18d0e19d2c74
   languageName: node
   linkType: hard
 
@@ -1493,12 +1493,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/docker-utils@npm:0.0.65":
-  version: 0.0.65
-  resolution: "@fern-api/docker-utils@npm:0.0.65"
+"@fern-api/docker-utils@npm:0.0.70":
+  version: 0.0.70
+  resolution: "@fern-api/docker-utils@npm:0.0.70"
   dependencies:
     dockerode: "npm:^3.3.1"
-  checksum: fc6a01068f439a5837991d1c3247e3125dbe5e6eaf18ee6c77d0062ca397c903c6fec203b2d013c54cad3c13b5d30bce680a1cdced332aedea13d3bb43e737fd
+  checksum: ea6616a2a32451814b555452f53354d8cca2d7269e3a0a25424fe6b0e3d01a1e91f23eb5867256b1a652208aa01f3ff66bbadb6957b440e9336305cbfd85e0e5
   languageName: node
   linkType: hard
 
@@ -1543,14 +1543,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/init@npm:0.0.65":
-  version: 0.0.65
-  resolution: "@fern-api/init@npm:0.0.65"
+"@fern-api/init@npm:0.0.70":
+  version: 0.0.70
+  resolution: "@fern-api/init@npm:0.0.70"
   dependencies:
-    "@fern-api/compiler-commons": "npm:0.0.65"
-    "@fern-api/syntax-analysis": "npm:0.0.65"
+    "@fern-api/compiler-commons": "npm:0.0.70"
+    "@fern-api/syntax-analysis": "npm:0.0.70"
     js-yaml: "npm:^4.1.0"
-  checksum: 2da4895be759756fbdbc422a0acc2f2c0f1cba6f123905ffa11c0c2873bbc48efeae25534b1fb7bd782a5d82ccb2ca0a7041643a6705ebeedbc667da828d30bc
+  checksum: 3630bb5e23df8ffaea95ebc153c0019c55a18797b5fb33ba87e137c1bf95832a75c4eae39024f4769c9abc09cf8d41bf7dd3fe1e1f1085ff4ac2bd9b9851641b
   languageName: node
   linkType: hard
 
@@ -1575,15 +1575,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/ir-generation@npm:0.0.65":
-  version: 0.0.65
-  resolution: "@fern-api/ir-generation@npm:0.0.65"
+"@fern-api/ir-generation@npm:0.0.70":
+  version: 0.0.70
+  resolution: "@fern-api/ir-generation@npm:0.0.70"
   dependencies:
-    "@fern-api/api": "npm:0.0.65"
-    "@fern-api/commons": "npm:0.0.65"
-    "@fern-api/compiler-commons": "npm:0.0.65"
-    "@fern-api/syntax-analysis": "npm:0.0.65"
-  checksum: f75adf45beadeaedc23c3fb64b0ad4d54f9337701d47da0268233cd60d8d27f8cd9eb06b9d61a5f0ce7c893e38a448a9676e541b5e895d46e36237046957dd7e
+    "@fern-api/api": "npm:0.0.70"
+    "@fern-api/commons": "npm:0.0.70"
+    "@fern-api/compiler-commons": "npm:0.0.70"
+    "@fern-api/syntax-analysis": "npm:0.0.70"
+  checksum: d3aa99316e0c41065f1d1bb8c1a1228034163c24b8c96a8458215a8859032272f87d57f6be42a82a3dd105aac5b2aed4e77a166b6ba636ae70af98c26dcf9caa
   languageName: node
   linkType: hard
 
@@ -1662,12 +1662,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/plugin-runner@npm:0.0.65":
-  version: 0.0.65
-  resolution: "@fern-api/plugin-runner@npm:0.0.65"
+"@fern-api/plugin-runner@npm:0.0.70":
+  version: 0.0.70
+  resolution: "@fern-api/plugin-runner@npm:0.0.70"
   dependencies:
-    "@fern-api/docker-utils": "npm:0.0.65"
-  checksum: 0cee67af667183590d92e2c945b85055f88adce9ceead26dd7cbf6308d09711664c48ef3add36ec855c451c6547989638f0da58100f1a2fdd0d2dc9d02d725e0
+    "@fern-api/docker-utils": "npm:0.0.70"
+  checksum: 83ae3deb4646e1557cfaa45f5c576ea025b1135aa5716b8b149717c89c7b275f12cf45160df6bbfdf8e946ee2358049b637a1dd6e5e6d105fdfc7aec017ee253
   languageName: node
   linkType: hard
 
@@ -1689,14 +1689,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/syntax-analysis@npm:0.0.65":
-  version: 0.0.65
-  resolution: "@fern-api/syntax-analysis@npm:0.0.65"
+"@fern-api/syntax-analysis@npm:0.0.70":
+  version: 0.0.70
+  resolution: "@fern-api/syntax-analysis@npm:0.0.70"
   dependencies:
-    "@fern-api/compiler-commons": "npm:0.0.65"
+    "@fern-api/compiler-commons": "npm:0.0.70"
     js-yaml: "npm:^4.1.0"
     zod: "npm:^3.14.3"
-  checksum: 82ce1013d4214752c5fa3d25a4c42d89c06d625fa71b0f71b14b180819605da2ebfa9c98d8e76888a4198e0600de262db76e5af25ba7e911d9b71cba2dfc299c
+  checksum: 35863ca28f486f900986bb1f44baf27ed52cf7560b3f275cb529c4de54b0fb087a2527c73020e6cdd91d8739c77741558a68b920b0cdd5e557966ad3324f58d5
   languageName: node
   linkType: hard
 
@@ -1824,6 +1824,7 @@ __metadata:
     "@babel/preset-typescript": "npm:^7.16.7"
     "@fern-api/api": "workspace:*"
     "@fern-typescript/client": "workspace:*"
+    "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/helper-utils": "workspace:*"
     "@types/jest": "npm:^27.4.1"
     "@types/node": "npm:^17.0.33"
@@ -5037,17 +5038,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fern-api@npm:0.0.65":
-  version: 0.0.65
-  resolution: "fern-api@npm:0.0.65"
+"fern-api@npm:0.0.70":
+  version: 0.0.70
+  resolution: "fern-api@npm:0.0.70"
   dependencies:
-    "@fern-api/add-plugin": "npm:0.0.65"
-    "@fern-api/api": "npm:0.0.65"
-    "@fern-api/compiler": "npm:0.0.65"
-    "@fern-api/compiler-commons": "npm:0.0.65"
-    "@fern-api/init": "npm:0.0.65"
-    "@fern-api/plugin-runner": "npm:0.0.65"
-    "@fern-api/syntax-analysis": "npm:0.0.65"
+    "@fern-api/add-plugin": "npm:0.0.70"
+    "@fern-api/api": "npm:0.0.70"
+    "@fern-api/compiler": "npm:0.0.70"
+    "@fern-api/compiler-commons": "npm:0.0.70"
+    "@fern-api/init": "npm:0.0.70"
+    "@fern-api/plugin-runner": "npm:0.0.70"
+    "@fern-api/syntax-analysis": "npm:0.0.70"
     chalk: "npm:^4.1.2"
     execa: "npm:^5.1.1"
     glob: "npm:^7.2.0"
@@ -5059,7 +5060,7 @@ __metadata:
     zod: "npm:^3.14.3"
   bin:
     fern: ./cli
-  checksum: 2e3d1d60be91b5434cf6c1927460db99934050b3fd01faabb1e89aa4e7134d325e00e74b6bf9da0f8ab2a290309577be0099bede3f26d0288d3d3c431c98c43b
+  checksum: 8f56aa205eaf5e989c8701535b8a9cc114865f12188a2c5eeca1ca3c88c29c8d9aec7c62e2e22dcc5b3f5361b215864fab2498953c1c08394cf886d74dd853eb
   languageName: node
   linkType: hard
 
@@ -5142,7 +5143,7 @@ __metadata:
     depcheck: "npm:^1.4.3"
     docsify-cli: "npm:^4.4.4"
     eslint: "npm:^8.12.0"
-    fern-api: "npm:0.0.65"
+    fern-api: "npm:0.0.70"
     husky: "npm:^7.0.4"
     jest: "npm:^27.5.1"
     lint-staged: "npm:^12.3.7"
@@ -9236,7 +9237,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.6.3, typescript@npm:^4.6.4":
+"typescript@npm:^4.6.4":
   version: 4.6.4
   resolution: "typescript@npm:4.6.4"
   bin:
@@ -9246,7 +9247,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^4.6.3#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^4.6.4#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A^4.6.4#optional!builtin<compat/typescript>":
   version: 4.6.4
   resolution: "typescript@patch:typescript@npm%3A4.6.4#optional!builtin<compat/typescript>::version=4.6.4&hash=7ad353"
   bin:

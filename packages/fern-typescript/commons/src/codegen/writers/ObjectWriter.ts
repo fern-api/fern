@@ -5,6 +5,7 @@ import { CodeBlockWriter, WriterFunction, WriterFunctionOrValue } from "ts-morph
 export declare namespace ObjectWriter {
     export interface Init {
         asConst?: boolean;
+        newlinesBetweenProperties?: boolean;
     }
 
     export type Block = Property | CustomWrite;
@@ -25,13 +26,15 @@ export declare namespace ObjectWriter {
 export class ObjectWriter {
     private blocks: ObjectWriter.Block[] = [];
     private asConst: boolean;
+    private newlinesBetweenProperties: boolean;
 
     static writer(init: ObjectWriter.Init = {}): ObjectWriter {
         return new ObjectWriter(init);
     }
 
-    private constructor({ asConst = false }: ObjectWriter.Init) {
+    private constructor({ asConst = false, newlinesBetweenProperties = false }: ObjectWriter.Init) {
         this.asConst = asConst;
+        this.newlinesBetweenProperties = newlinesBetweenProperties;
     }
 
     public addProperty(property: Omit<ObjectWriter.Property, "type">): this {
@@ -39,6 +42,17 @@ export class ObjectWriter {
             ...property,
             type: "property",
         });
+        return this;
+    }
+
+    public addProperties(properties: Record<string, ObjectWriter.Property["value"]>): this {
+        for (const [key, value] of Object.entries(properties)) {
+            this.blocks.push({
+                key,
+                value,
+                type: "property",
+            });
+        }
         return this;
     }
 
@@ -75,7 +89,6 @@ export class ObjectWriter {
             if (this.asConst) {
                 writer.write(" as const");
             }
-            writer.write(";");
         };
     }
 
@@ -89,6 +102,9 @@ export class ObjectWriter {
         writeValue(writer, property.value);
         writer.write(",");
         writer.newLine();
+        if (this.newlinesBetweenProperties) {
+            writer.newLine();
+        }
     }
 }
 

@@ -5,29 +5,19 @@ export function createEncoderMethodCall({
     referenceToEncoder,
     propertyChainToMethod,
     method,
-    variable,
+    args,
 }: {
     ts: TsMorph["ts"];
     referenceToEncoder: tsMorph.ts.Expression;
     propertyChainToMethod: readonly string[];
     method: EncodeMethod;
-    variable: tsMorph.ts.Expression;
+    args: readonly tsMorph.ts.Expression[];
 }): tsMorph.ts.CallExpression {
-    const encoderCall = ts.factory.createCallExpression(
+    return ts.factory.createCallExpression(
         createReferenceToEncoderMethod({ ts, referenceToEncoder, propertyChain: [...propertyChainToMethod, method] }),
         undefined,
-        [variable]
+        args
     );
-    switch (method) {
-        case "decode":
-            return encoderCall;
-        case "encode":
-            return ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(encoderCall, ts.factory.createIdentifier("toBuffer")),
-                undefined,
-                undefined
-            );
-    }
 }
 
 function createReferenceToEncoderMethod({

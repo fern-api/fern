@@ -16,12 +16,19 @@ export const helper: FernTypescriptHelper = {
                 writeEncoder({ intermediateRepresentation, tsMorph, file, modelDirectory });
             },
             generateEncode: ({ referenceToDecodedObject, referenceToEncoder, tsMorph: { ts } }) => {
-                return getMethodCallForVariableReference({
-                    variableReference: referenceToDecodedObject,
-                    referenceToEncoder,
-                    ts,
-                    method: EncodeMethod.Encode,
-                });
+                return ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(
+                        getMethodCallForVariableReference({
+                            variableReference: referenceToDecodedObject,
+                            referenceToEncoder,
+                            ts,
+                            method: EncodeMethod.Encode,
+                        }),
+                        ts.factory.createIdentifier("toBuffer")
+                    ),
+                    undefined,
+                    undefined
+                );
             },
             generateDecode: ({ referenceToEncodedBuffer, referenceToEncoder, tsMorph: { ts } }) => {
                 return getMethodCallForVariableReference({
@@ -50,7 +57,13 @@ function getMethodCallForVariableReference({
         case "wireMessage":
             return getMethodCallForWireMessageVariableReference({ variableReference, referenceToEncoder, ts, method });
         case "modelType":
-            return getMethodCallForModelTypeVariableReference({ variableReference, referenceToEncoder, ts, method });
+            return getMethodCallForModelTypeVariableReference({
+                typeReference: variableReference.typeReference,
+                referenceToEncoder,
+                ts,
+                method,
+                args: [variableReference.variable],
+            });
         default:
             assertNever(variableReference);
     }
