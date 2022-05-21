@@ -1,39 +1,43 @@
-import { EncodeMethod, TsMorph, tsMorph, VariableReference } from "@fern-typescript/helper-utils";
-import { HathoraEncoderConstants } from "../constants";
-import { getEncoderNameForPrimitive } from "../encoder/writePrimitives";
-import { assertNever } from "../utils/assertNever";
+import { TypeReference } from "@fern-api/api";
+import { EncodeMethod, TsMorph, tsMorph } from "@fern-typescript/helper-utils";
+import { getEncoderNameForContainer, getEncoderNameForPrimitive, HathoraEncoderConstants } from "../constants";
 import { createEncoderMethodCall } from "./createEncoderMethodCall";
 
 export function getMethodCallForModelTypeVariableReference({
-    variableReference,
     ts,
+    typeReference,
     method,
     referenceToEncoder,
+    args,
 }: {
-    variableReference: VariableReference.ModelReference;
     ts: TsMorph["ts"];
+    typeReference: TypeReference;
     method: EncodeMethod;
     referenceToEncoder: tsMorph.ts.Expression;
+    args: readonly tsMorph.ts.Expression[];
 }): tsMorph.ts.CallExpression {
     return createEncoderMethodCall({
         ts,
         referenceToEncoder,
-        propertyChainToMethod: createMethodReferencePropertyChain(variableReference),
+        propertyChainToMethod: createMethodReferencePropertyChain(typeReference),
         method,
-        variable: variableReference.variable,
+        args,
     });
 }
 
-function createMethodReferencePropertyChain(variableReference: VariableReference.ModelReference): string[] {
-    switch (variableReference.typeReference._type) {
-        case "named":
-            return [HathoraEncoderConstants.Model.NAME, variableReference.typeReference.name];
-        case "primitive":
-            return [
-                HathoraEncoderConstants.Primitives.NAME,
-                getEncoderNameForPrimitive(variableReference.typeReference.primitive),
-            ];
-        default:
-            assertNever(variableReference.typeReference);
-    }
+function createMethodReferencePropertyChain(typeReference: TypeReference): string[] {
+    return TypeReference._visit<string[]>(typeReference, {
+        named: ({ name }) => [HathoraEncoderConstants.Model.NAME, name],
+        primitive: (primitive) => [HathoraEncoderConstants.Primitives.NAME, getEncoderNameForPrimitive(primitive)],
+        container: (container) => [
+            HathoraEncoderConstants.Containers.NAME,
+            getEncoderNameForContainer(container._type),
+        ],
+        void: () => {
+            throw new Error("Cannot encode/decode void");
+        },
+        _unknown: () => {
+            throw new Error("Unknown type reference: " + typeReference._type);
+        },
+    });
 }

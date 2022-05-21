@@ -19,13 +19,13 @@ export function getMethodCallForWireMessageVariableReference({
         ts,
         referenceToEncoder,
         method,
-        variable: variableReference.variable,
         propertyChainToMethod: [
             HathoraEncoderConstants.Services.NAME,
             variableReference.serviceName,
             variableReference.endpointId,
             getBodyTypeNameFromWireMessageType(variableReference.wireMessageType),
         ],
+        args: [variableReference.variable],
     });
 }
 
