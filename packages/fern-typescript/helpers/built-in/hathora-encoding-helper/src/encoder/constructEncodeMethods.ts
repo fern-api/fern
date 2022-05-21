@@ -7,9 +7,15 @@ export const BIN_SERDE_WRITER_VARIABLE_NAME = "writer";
 export const BIN_SERDE_READER_VARIABLE_NAME = "reader";
 
 export interface EncodeMethods {
+    typeParameters?: tsMorph.ts.TypeParameterDeclaration[];
     decodedType: tsMorph.ts.TypeNode;
-    encodeBody: tsMorph.ts.Statement[];
-    decodeBody: tsMorph.ts.Statement[];
+    encode: SimpleFunctionBody;
+    decode: SimpleFunctionBody;
+}
+
+export interface SimpleFunctionBody {
+    additionalParameters?: tsMorph.ts.ParameterDeclaration[];
+    statements: tsMorph.ts.Statement[];
 }
 
 export declare namespace constructEncodeMethods {
@@ -33,7 +39,7 @@ export function constructEncodeMethods({
                 undefined,
                 ts.factory.createIdentifier(EncodeMethod.Encode),
                 undefined,
-                undefined,
+                methods.typeParameters,
                 [
                     ts.factory.createParameterDeclaration(
                         undefined,
@@ -43,6 +49,7 @@ export function constructEncodeMethods({
                         undefined,
                         methods.decodedType
                     ),
+                    ...(methods.encode.additionalParameters ?? []),
                     ts.factory.createParameterDeclaration(
                         undefined,
                         undefined,
@@ -58,7 +65,7 @@ export function constructEncodeMethods({
                     ),
                 ],
                 generateBinSerdeTypeReference(ts, HathoraEncoderConstants.BinSerDe.Exports.WRITER),
-                ts.factory.createBlock(methods.encodeBody)
+                ts.factory.createBlock(methods.encode.statements)
             ),
             ts.factory.createMethodDeclaration(
                 undefined,
@@ -66,7 +73,7 @@ export function constructEncodeMethods({
                 undefined,
                 ts.factory.createIdentifier(EncodeMethod.Decode),
                 undefined,
-                undefined,
+                methods.typeParameters,
                 [
                     ts.factory.createParameterDeclaration(
                         undefined,
@@ -79,6 +86,7 @@ export function constructEncodeMethods({
                             generateBinSerdeTypeReference(ts, HathoraEncoderConstants.BinSerDe.Exports.READER),
                         ])
                     ),
+                    ...(methods.decode.additionalParameters ?? []),
                 ],
                 methods.decodedType,
                 ts.factory.createBlock([
@@ -116,7 +124,7 @@ export function constructEncodeMethods({
                             ts.NodeFlags.Const
                         )
                     ),
-                    ...methods.decodeBody,
+                    ...methods.decode.statements,
                 ])
             ),
         ],

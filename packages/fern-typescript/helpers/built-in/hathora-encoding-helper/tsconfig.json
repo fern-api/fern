@@ -7,9 +7,9 @@
     "rootDir": "src"
   },
   "include": ["src"],
-  "exclude": ["src/**/__test__"],
   "references": [
     { "path": "../../../client/tsconfig.json" },
+    { "path": "../../../commons/tsconfig.json" },
     { "path": "../../utils/tsconfig.json" },
     { "path": "../../../../api/fern-ir-typescript/tsconfig.json" }
   ]

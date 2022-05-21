@@ -14,10 +14,8 @@ export async function writeFiles(
         const filepath = path.join(baseDir, file.getFilePath());
         await fileSystem.mkdir(path.dirname(filepath), { recursive: true });
 
-        const prettierOptions = await prettier.resolveConfig(filepath);
         const formatted = prettier.format(file.getFullText(), {
-            ...prettierOptions,
-            plugins: [...(prettierOptions?.plugins ?? []), organizeImportsPlugin],
+            plugins: [organizeImportsPlugin],
             filepath,
         });
 
