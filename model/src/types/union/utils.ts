@@ -6,7 +6,7 @@ import {
     TypeResolver,
 } from "@fern-typescript/commons";
 import { upperFirst } from "lodash";
-import { Directory, SourceFile } from "ts-morph";
+import { Directory, SourceFile, ts } from "ts-morph";
 import { SingleUnionTypeWithResolvedValueType } from "./generateUnionType";
 
 export const FORCE_USE_MODEL_NAMESPACE_IMPORT = true;
@@ -38,6 +38,7 @@ export function getResolvedTypeForSingleUnionType({
                         baseDirectory: modelDirectory,
                         baseDirectoryType: "model",
                         forceUseNamespaceImport: FORCE_USE_MODEL_NAMESPACE_IMPORT,
+                        factory: ts.factory,
                     }),
                     isExtendable: true,
                 };
@@ -49,6 +50,8 @@ export function getResolvedTypeForSingleUnionType({
                         referencedIn: file,
                         modelDirectory,
                         forceUseNamespaceImport: FORCE_USE_MODEL_NAMESPACE_IMPORT,
+                        factory: ts.factory,
+                        SyntaxKind: ts.SyntaxKind,
                     }),
                     isExtendable: false,
                 };

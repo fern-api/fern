@@ -121,19 +121,14 @@ function getEncodeMethod(ts: TsMorph["ts"]): SimpleFunctionBody {
                                 ts.factory.createBindingElement(
                                     undefined,
                                     undefined,
-                                    ts.factory.createIdentifier(KEY_VARIABLE_NAME),
-                                    undefined
+                                    ts.factory.createIdentifier(KEY_VARIABLE_NAME)
                                 ),
                                 ts.factory.createBindingElement(
                                     undefined,
                                     undefined,
-                                    ts.factory.createIdentifier(VALUE_VARIABLE_NAME),
-                                    undefined
+                                    ts.factory.createIdentifier(VALUE_VARIABLE_NAME)
                                 ),
-                            ]),
-                            undefined,
-                            undefined,
-                            undefined
+                            ])
                         ),
                     ],
                     ts.NodeFlags.Const
@@ -145,12 +140,12 @@ function getEncodeMethod(ts: TsMorph["ts"]): SimpleFunctionBody {
                             getMethodCallForModelTypeVariableReference({
                                 ts,
                                 typeReference: TypeReference.primitive(PrimitiveType.String),
-                                method: "encode",
                                 referenceToEncoder: ts.factory.createIdentifier(HathoraEncoderConstants.NAME),
-                                args: [
-                                    ts.factory.createIdentifier(KEY_VARIABLE_NAME),
-                                    ts.factory.createIdentifier(BIN_SERDE_WRITER_VARIABLE_NAME),
-                                ],
+                                args: {
+                                    method: "encode",
+                                    variableToEncode: ts.factory.createIdentifier(KEY_VARIABLE_NAME),
+                                    binSerdeWriter: ts.factory.createIdentifier(BIN_SERDE_WRITER_VARIABLE_NAME),
+                                },
                             })
                         ),
                         ts.factory.createExpressionStatement(
@@ -276,11 +271,14 @@ function getDecodeMethod(ts: TsMorph["ts"]): SimpleFunctionBody {
                                         getMethodCallForModelTypeVariableReference({
                                             ts,
                                             typeReference: TypeReference.primitive(PrimitiveType.String),
-                                            method: "decode",
                                             referenceToEncoder: ts.factory.createIdentifier(
                                                 HathoraEncoderConstants.NAME
                                             ),
-                                            args: [ts.factory.createIdentifier(BIN_SERDE_READER_VARIABLE_NAME)],
+                                            args: {
+                                                method: "decode",
+                                                bufferOrBinSerdeReader:
+                                                    ts.factory.createIdentifier(BIN_SERDE_READER_VARIABLE_NAME),
+                                            },
                                         })
                                     ),
                                 ],
