@@ -1,12 +1,6 @@
 {
   "extends": "../../shared/tsconfig.shared.json",
-  "compilerOptions": {
-    "composite": true,
-    "outDir": "dist/cjs",
-    "rootDir": "src",
-    "module": "CommonJS",
-    "tsBuildInfoFile": "tsconfig.cjs.tsbuildinfo"
-  },
+  "compilerOptions": { "composite": true, "outDir": "dist/cjs", "rootDir": "src", "module": "CommonJS" },
   "include": ["./src"],
   "references": []
 }
