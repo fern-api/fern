@@ -1,5 +1,4 @@
 import path from "path";
-import PnpWebpackPlugin from "pnp-webpack-plugin";
 import SimpleProgressWebpackPlugin from "simple-progress-webpack-plugin";
 import * as webpack from "webpack";
 
@@ -14,7 +13,6 @@ const config = (_env: unknown, { mode = "production" }: webpack.WebpackOptionsNo
                     test: /\.ts$/,
                     loader: "ts-loader",
                     exclude: /node_modules/,
-                    options: PnpWebpackPlugin.tsLoaderOptions(),
                 },
             ],
         },
