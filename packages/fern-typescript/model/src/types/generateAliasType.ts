@@ -25,6 +25,8 @@ export function generateAliasType({
                     reference: shape.aliasOf,
                     referencedIn: file,
                     modelDirectory,
+                    factory: ts.factory,
+                    SyntaxKind: ts.SyntaxKind,
                 })
             ),
             isExported: true,

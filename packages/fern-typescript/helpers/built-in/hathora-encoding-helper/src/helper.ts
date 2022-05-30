@@ -11,9 +11,9 @@ export const helper: FernTypescriptHelper = {
             _type: "fileBased",
             name: HathoraEncoderConstants.NAME,
             contentType: "application/octet-stream",
-            writeEncoder: ({ encoderDirectory, tsMorph, modelDirectory, intermediateRepresentation }) => {
+            writeEncoder: ({ encoderDirectory, tsMorph, modelDirectory, intermediateRepresentation, typeResolver }) => {
                 const file = encoderDirectory.createSourceFile(`${HathoraEncoderConstants.NAME}.ts`);
-                writeEncoder({ intermediateRepresentation, tsMorph, file, modelDirectory });
+                writeEncoder({ intermediateRepresentation, tsMorph, file, modelDirectory, typeResolver });
             },
             generateEncode: ({ referenceToDecodedObject, referenceToEncoder, tsMorph: { ts } }) => {
                 return ts.factory.createCallExpression(
@@ -61,10 +61,31 @@ function getMethodCallForVariableReference({
                 typeReference: variableReference.typeReference,
                 referenceToEncoder,
                 ts,
-                method,
-                args: [variableReference.variable],
+                args: getModelMethodCallArguments({ variable: variableReference.variable, method }),
             });
         default:
             assertNever(variableReference);
+    }
+}
+
+function getModelMethodCallArguments({
+    variable,
+    method,
+}: {
+    variable: tsMorph.ts.Expression;
+    method: EncodeMethod;
+}): getMethodCallForModelTypeVariableReference.MethodCallArguments {
+    switch (method) {
+        case "encode":
+            return {
+                method: "encode",
+                variableToEncode: variable,
+                binSerdeWriter: undefined,
+            };
+        case "decode":
+            return {
+                method: "decode",
+                bufferOrBinSerdeReader: variable,
+            };
     }
 }

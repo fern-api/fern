@@ -1,5 +1,6 @@
 import { NamedType } from "@fern-api/api";
 import { Directory, SourceFile, ts } from "ts-morph";
+import { NodeFactory } from "typescript";
 import { getRelativePathAsModuleSpecifierTo } from "../utils/getRelativePathAsModuleSpecifierTo";
 import { getImportPathForNamedType } from "./getImportPathForNamedType";
 
@@ -22,6 +23,8 @@ export declare namespace generateNamedTypeReference {
          *   otherwise: the type is imported directly from its source file.
          */
         forceUseNamespaceImport?: boolean;
+
+        factory: NodeFactory;
     }
 }
 
@@ -31,6 +34,7 @@ export function generateNamedTypeReference({
     baseDirectory,
     baseDirectoryType,
     forceUseNamespaceImport = false,
+    factory,
 }: generateNamedTypeReference.Args): ts.TypeNode {
     const moduleSpecifier = getImportPathForNamedType({ from: referencedIn, typeName, baseDirectory });
     const isTypeInCurrentFile = moduleSpecifier === `./${referencedIn.getBaseNameWithoutExtension()}`;
@@ -43,10 +47,10 @@ export function generateNamedTypeReference({
                 namespaceImport,
             });
 
-            return ts.factory.createTypeReferenceNode(
-                ts.factory.createQualifiedName(
-                    ts.factory.createIdentifier(namespaceImport),
-                    ts.factory.createIdentifier(typeName.name)
+            return factory.createTypeReferenceNode(
+                factory.createQualifiedName(
+                    factory.createIdentifier(namespaceImport),
+                    factory.createIdentifier(typeName.name)
                 ),
                 undefined
             );
@@ -58,7 +62,7 @@ export function generateNamedTypeReference({
         }
     }
 
-    return ts.factory.createTypeReferenceNode(typeName.name);
+    return factory.createTypeReferenceNode(typeName.name);
 }
 
 function getNamespaceImport(baseDirectoryType: generateNamedTypeReference.Args["baseDirectoryType"]): string {

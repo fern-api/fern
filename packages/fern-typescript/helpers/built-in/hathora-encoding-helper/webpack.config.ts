@@ -1,4 +1,5 @@
 import path from "path";
+import PnpWebpackPlugin from "pnp-webpack-plugin";
 import SimpleProgressWebpackPlugin from "simple-progress-webpack-plugin";
 import * as webpack from "webpack";
 
@@ -11,8 +12,9 @@ const config = (_env: unknown, { mode = "production" }: webpack.WebpackOptionsNo
             rules: [
                 {
                     test: /\.ts$/,
-                    use: "ts-loader",
+                    loader: "ts-loader",
                     exclude: /node_modules/,
+                    options: PnpWebpackPlugin.tsLoaderOptions(),
                 },
             ],
         },
@@ -38,7 +40,7 @@ class BanModulesPlugin implements webpack.WebpackPluginInstance {
         compiler.hooks.thisCompilation.tap(BanModulesPlugin.NAME, (compilation) => {
             compilation.hooks.afterOptimizeChunks.tap(BanModulesPlugin.NAME, (chunks) => {
                 for (const chunk of chunks) {
-                    for (const module of chunk.modulesIterable) {
+                    compilation.chunkGraph.getChunkModules(chunk).forEach((module) => {
                         for (const bannedModule of this.bannedModules) {
                             if (module.context?.includes(`/node_modules/${bannedModule}`)) {
                                 compilation.errors.push(
@@ -48,7 +50,7 @@ class BanModulesPlugin implements webpack.WebpackPluginInstance {
                                 );
                             }
                         }
-                    }
+                    });
                 }
             });
         });

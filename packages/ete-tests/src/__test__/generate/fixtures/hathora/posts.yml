@@ -5,7 +5,7 @@ types:
     properties:
       id: string
       title: string
-      content: string
+      content: list<list<string>>
 services:
   http:
     PostsService:

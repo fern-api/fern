@@ -1,4 +1,5 @@
 import { IntermediateRepresentation } from "@fern-api/api";
+import { TypeResolver } from "@fern-typescript/commons";
 import * as tsMorph from "ts-morph";
 import { VariableReference } from "./VariableReference";
 
@@ -70,6 +71,7 @@ export declare namespace FileBasedEncoder {
             modelDirectory: tsMorph.Directory;
             intermediateRepresentation: IntermediateRepresentation;
             tsMorph: typeof tsMorph;
+            typeResolver: TypeResolver;
         }
     }
 }

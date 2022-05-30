@@ -73,16 +73,16 @@ function getEncodeMethod(ts: TsMorph["ts"]): SimpleFunctionBody {
                 getMethodCallForModelTypeVariableReference({
                     ts,
                     typeReference: TypeReference.primitive(PrimitiveType.Boolean),
-                    method: "encode",
                     referenceToEncoder: ts.factory.createIdentifier(HathoraEncoderConstants.NAME),
-                    args: [
-                        ts.factory.createBinaryExpression(
+                    args: {
+                        method: "encode",
+                        variableToEncode: ts.factory.createBinaryExpression(
                             ts.factory.createIdentifier(ENCODE_PARAMETER_NAME),
                             ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
                             ts.factory.createNull()
                         ),
-                        ts.factory.createIdentifier(BIN_SERDE_WRITER_VARIABLE_NAME),
-                    ],
+                        binSerdeWriter: ts.factory.createIdentifier(BIN_SERDE_WRITER_VARIABLE_NAME),
+                    },
                 })
             ),
             ts.factory.createIfStatement(
@@ -144,9 +144,11 @@ function getDecodeMethod(ts: TsMorph["ts"]): SimpleFunctionBody {
                     getMethodCallForModelTypeVariableReference({
                         ts,
                         typeReference: TypeReference.primitive(PrimitiveType.Boolean),
-                        method: "decode",
                         referenceToEncoder: ts.factory.createIdentifier(HathoraEncoderConstants.NAME),
-                        args: [ts.factory.createIdentifier(BIN_SERDE_READER_VARIABLE_NAME)],
+                        args: {
+                            method: "decode",
+                            bufferOrBinSerdeReader: ts.factory.createIdentifier(BIN_SERDE_READER_VARIABLE_NAME),
+                        },
                     }),
                     ts.factory.createToken(ts.SyntaxKind.QuestionToken),
                     ts.factory.createCallExpression(ts.factory.createIdentifier(READ_VALUE_PARAMETER_NAME), undefined, [

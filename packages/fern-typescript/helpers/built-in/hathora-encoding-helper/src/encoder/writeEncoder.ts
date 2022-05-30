@@ -1,8 +1,9 @@
 import { IntermediateRepresentation } from "@fern-api/api";
-import { FernWriters } from "@fern-typescript/commons";
+import { FernWriters, TypeResolver } from "@fern-typescript/commons";
 import { createPrinter, TsMorph, tsMorph } from "@fern-typescript/helper-utils";
 import { HathoraEncoderConstants } from "../constants";
 import { writeContainers } from "./containers/writeContainers";
+import { writeModel } from "./model/writeModel";
 import { writePrimitives } from "./writePrimitives";
 
 export declare namespace writeEncoder {
@@ -11,10 +12,18 @@ export declare namespace writeEncoder {
         modelDirectory: tsMorph.Directory;
         intermediateRepresentation: IntermediateRepresentation;
         tsMorph: TsMorph;
+        typeResolver: TypeResolver;
     }
 }
 
-export function writeEncoder({ file, tsMorph, tsMorph: { ts } }: writeEncoder.Args): void {
+export function writeEncoder({
+    file,
+    tsMorph,
+    tsMorph: { ts },
+    intermediateRepresentation,
+    typeResolver,
+    modelDirectory,
+}: writeEncoder.Args): void {
     const printNode = createPrinter(tsMorph);
 
     file.addImportDeclaration({
@@ -26,7 +35,13 @@ export function writeEncoder({ file, tsMorph, tsMorph: { ts } }: writeEncoder.Ar
     objectWriter.addProperties({
         [HathoraEncoderConstants.Primitives.NAME]: writePrimitives(tsMorph),
         [HathoraEncoderConstants.Containers.NAME]: writeContainers(tsMorph),
-        [HathoraEncoderConstants.Model.NAME]: printNode(ts.factory.createStringLiteral("TODO")),
+        [HathoraEncoderConstants.Model.NAME]: writeModel({
+            types: intermediateRepresentation.types,
+            tsMorph,
+            typeResolver,
+            file,
+            modelDirectory,
+        }),
         [HathoraEncoderConstants.Services.NAME]: printNode(ts.factory.createStringLiteral("TODO")),
         [HathoraEncoderConstants.Errors.NAME]: printNode(ts.factory.createStringLiteral("TODO")),
     });

@@ -1,6 +1,6 @@
 import { HttpEndpoint } from "@fern-api/api";
 import { generateTypeReference, getTextOfTsNode } from "@fern-typescript/commons";
-import { Directory, OptionalKind, PropertySignatureStructure, SourceFile } from "ts-morph";
+import { Directory, OptionalKind, PropertySignatureStructure, SourceFile, ts } from "ts-morph";
 import { ClientConstants } from "../../../constants";
 import { WireMessageBodyReference } from "../types";
 import { generateReferenceToWireMessageType } from "../utils";
@@ -25,6 +25,8 @@ export function generateRequest({
                     reference: parameter.valueType,
                     referencedIn: requestFile,
                     modelDirectory,
+                    factory: ts.factory,
+                    SyntaxKind: ts.SyntaxKind,
                 })
             ),
         })),
@@ -36,6 +38,8 @@ export function generateRequest({
                     reference: queryParameter.valueType,
                     referencedIn: requestFile,
                     modelDirectory,
+                    factory: ts.factory,
+                    SyntaxKind: ts.SyntaxKind,
                 })
             ),
         })),

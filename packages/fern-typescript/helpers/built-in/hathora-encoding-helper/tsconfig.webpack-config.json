@@ -1,8 +1,10 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es5",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "target": "esnext",
     "esModuleInterop": true,
     "downlevelIteration": true
-  }
+  },
+  "include": ["webpack.config.ts"]
 }

@@ -4,9 +4,11 @@
     "composite": true,
     "outDir": "dist/cjs",
     "rootDir": "src",
-    "module": "CommonJS",
-    "tsBuildInfoFile": "tsconfig.cjs.tsbuildinfo"
+    "module": "CommonJS"
   },
   "include": ["./src"],
-  "references": [{ "path": "../../../api/fern-ir-typescript/tsconfig.cjs.json" }]
+  "references": [
+    { "path": "../../../api/fern-ir-typescript/tsconfig.cjs.json" },
+    { "path": "../../commons/tsconfig.cjs.json" }
+  ]
 }
