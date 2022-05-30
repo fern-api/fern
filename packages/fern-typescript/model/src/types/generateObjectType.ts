@@ -5,7 +5,7 @@ import {
     getTextOfTsNode,
     maybeAddDocs,
 } from "@fern-typescript/commons";
-import { Directory, SourceFile } from "ts-morph";
+import { Directory, SourceFile, ts } from "ts-morph";
 
 export function generateObjectType({
     typeName,
@@ -29,6 +29,7 @@ export function generateObjectType({
                     referencedIn: file,
                     baseDirectory: modelDirectory,
                     baseDirectoryType: "model",
+                    factory: ts.factory,
                 });
 
                 return reference;
@@ -38,7 +39,13 @@ export function generateObjectType({
             const property = {
                 name: field.key,
                 type: getTextOfTsNode(
-                    generateTypeReference({ reference: field.valueType, referencedIn: file, modelDirectory })
+                    generateTypeReference({
+                        reference: field.valueType,
+                        referencedIn: file,
+                        modelDirectory,
+                        factory: ts.factory,
+                        SyntaxKind: ts.SyntaxKind,
+                    })
                 ),
                 docs: field.docs != null ? [{ description: field.docs }] : undefined,
             };

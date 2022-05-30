@@ -5,7 +5,7 @@ import {
     getOrCreateSourceFile,
     getTextOfTsNode,
 } from "@fern-typescript/commons";
-import { Directory } from "ts-morph";
+import { Directory, ts } from "ts-morph";
 
 export function generateError({
     error,
@@ -30,7 +30,13 @@ export function generateError({
             name: property.name,
             docs: property.docs != null ? [property.docs] : undefined,
             type: getTextOfTsNode(
-                generateTypeReference({ reference: property.type, referencedIn: file, modelDirectory })
+                generateTypeReference({
+                    reference: property.type,
+                    referencedIn: file,
+                    modelDirectory,
+                    factory: ts.factory,
+                    SyntaxKind: ts.SyntaxKind,
+                })
             ),
         })),
     });

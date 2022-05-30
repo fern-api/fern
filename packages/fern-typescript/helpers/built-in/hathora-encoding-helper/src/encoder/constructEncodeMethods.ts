@@ -75,6 +75,7 @@ export function constructEncodeMethods({
                 undefined,
                 methods.typeParameters,
                 [
+                    ...(methods.decode.additionalParameters ?? []),
                     ts.factory.createParameterDeclaration(
                         undefined,
                         undefined,
@@ -86,7 +87,6 @@ export function constructEncodeMethods({
                             generateBinSerdeTypeReference(ts, HathoraEncoderConstants.BinSerDe.Exports.READER),
                         ])
                     ),
-                    ...(methods.decode.additionalParameters ?? []),
                 ],
                 methods.decodedType,
                 ts.factory.createBlock([
