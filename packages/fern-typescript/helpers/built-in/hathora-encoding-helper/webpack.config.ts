@@ -10,8 +10,17 @@ export default (_env: unknown, { mode = "production" }: webpack.WebpackOptionsNo
         module: {
             rules: [
                 {
+                    test: /\.js$/,
+                    resolve: {
+                        fullySpecified: false,
+                    },
+                },
+                {
                     test: /\.ts$/,
                     loader: "ts-loader",
+                    options: {
+                        projectReferences: true,
+                    },
                     exclude: /node_modules/,
                 },
             ],

@@ -10,9 +10,15 @@ module.exports = (_env, { mode = "production" }) => {
             path: __dirname,
             filename: "bundle.js",
         },
-        // https://github.com/dsherret/ts-morph/issues/171#issuecomment-1107867732
         module: {
             rules: [
+                {
+                    test: /\.js$/,
+                    resolve: {
+                        fullySpecified: false,
+                    },
+                },
+                // https://github.com/dsherret/ts-morph/issues/171#issuecomment-1107867732
                 {
                     test: /node_modules[\\|/]code-block-writer[\\|/]umd[\\|/]/,
                     use: { loader: "umd-compat-loader" },
