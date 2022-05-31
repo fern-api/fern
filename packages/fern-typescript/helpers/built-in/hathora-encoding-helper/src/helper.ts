@@ -1,4 +1,4 @@
-import { EncodeMethod, FernTypescriptHelper, tsMorph, VariableReference } from "@fern-typescript/helper-utils";
+import { EncodeMethod, FernTypescriptHelper, TsMorph, tsMorph, VariableReference } from "@fern-typescript/helper-utils";
 import { HathoraEncoderConstants } from "./constants";
 import { writeEncoder } from "./encoder/writeEncoder";
 import { getMethodCallForModelTypeVariableReference } from "./method-calls/getMethodCallForModelTypeVariableReference";
@@ -11,20 +11,27 @@ export const helper: FernTypescriptHelper = {
             _type: "fileBased",
             name: HathoraEncoderConstants.NAME,
             contentType: "application/octet-stream",
-            writeEncoder: ({ encoderDirectory, tsMorph, modelDirectory, intermediateRepresentation }) => {
+            writeEncoder: ({ encoderDirectory, tsMorph, modelDirectory, intermediateRepresentation, typeResolver }) => {
                 const file = encoderDirectory.createSourceFile(`${HathoraEncoderConstants.NAME}.ts`);
-                writeEncoder({ intermediateRepresentation, tsMorph, file, modelDirectory });
+                writeEncoder({ intermediateRepresentation, tsMorph, file, modelDirectory, typeResolver });
             },
             generateEncode: ({ referenceToDecodedObject, referenceToEncoder, tsMorph: { ts } }) => {
-                return getMethodForVariableReference({
-                    variableReference: referenceToDecodedObject,
-                    referenceToEncoder,
-                    ts,
-                    method: EncodeMethod.Encode,
-                });
+                return ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(
+                        getMethodCallForVariableReference({
+                            variableReference: referenceToDecodedObject,
+                            referenceToEncoder,
+                            ts,
+                            method: EncodeMethod.Encode,
+                        }),
+                        ts.factory.createIdentifier("toBuffer")
+                    ),
+                    undefined,
+                    undefined
+                );
             },
             generateDecode: ({ referenceToEncodedBuffer, referenceToEncoder, tsMorph: { ts } }) => {
-                return getMethodForVariableReference({
+                return getMethodCallForVariableReference({
                     variableReference: referenceToEncodedBuffer,
                     referenceToEncoder,
                     ts,
@@ -35,7 +42,7 @@ export const helper: FernTypescriptHelper = {
     },
 };
 
-function getMethodForVariableReference({
+function getMethodCallForVariableReference({
     variableReference,
     referenceToEncoder,
     ts,
@@ -43,15 +50,42 @@ function getMethodForVariableReference({
 }: {
     variableReference: VariableReference;
     referenceToEncoder: tsMorph.ts.Expression;
-    ts: typeof tsMorph.ts;
+    ts: TsMorph["ts"];
     method: EncodeMethod;
 }): tsMorph.ts.CallExpression {
     switch (variableReference._type) {
         case "wireMessage":
             return getMethodCallForWireMessageVariableReference({ variableReference, referenceToEncoder, ts, method });
         case "modelType":
-            return getMethodCallForModelTypeVariableReference({ variableReference, referenceToEncoder, ts, method });
+            return getMethodCallForModelTypeVariableReference({
+                typeReference: variableReference.typeReference,
+                referenceToEncoder,
+                ts,
+                args: getModelMethodCallArguments({ variable: variableReference.variable, method }),
+            });
         default:
             assertNever(variableReference);
+    }
+}
+
+function getModelMethodCallArguments({
+    variable,
+    method,
+}: {
+    variable: tsMorph.ts.Expression;
+    method: EncodeMethod;
+}): getMethodCallForModelTypeVariableReference.MethodCallArguments {
+    switch (method) {
+        case "encode":
+            return {
+                method: "encode",
+                variableToEncode: variable,
+                binSerdeWriter: undefined,
+            };
+        case "decode":
+            return {
+                method: "decode",
+                bufferOrBinSerdeReader: variable,
+            };
     }
 }

@@ -35,6 +35,7 @@ export async function generateClientFiles({
         intermediateRepresentation,
         modelDirectory,
         helperManager,
+        typeResolver,
     });
 
     const servicesDirectory = getOrCreateDirectory(directory, "services");

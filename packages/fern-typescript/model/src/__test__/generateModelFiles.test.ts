@@ -13,7 +13,6 @@ describe("generateModelFiles", () => {
                 intermediateRepresentation,
             });
         },
-        outputToDisk: true,
     });
 
     itFernETE("fern IR", {

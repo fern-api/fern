@@ -1,7 +1,7 @@
 import glob from "glob-promise";
-import ts from "typescript";
+import ts, { CompilerOptions } from "typescript";
 
-export async function compileTypescript(directory: string): Promise<void> {
+export async function compileTypescript(directory: string, options?: CompilerOptions): Promise<void> {
     const typescriptFileNames = await glob("**/*.ts", {
         cwd: directory,
         absolute: true,
@@ -16,6 +16,7 @@ export async function compileTypescript(directory: string): Promise<void> {
             noUncheckedIndexedAccess: true,
             noUnusedLocals: true,
             noUnusedParameters: true,
+            ...options,
         },
     });
     const emitResult = program.emit();

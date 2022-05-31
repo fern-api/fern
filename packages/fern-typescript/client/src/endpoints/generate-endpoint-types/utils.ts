@@ -19,6 +19,8 @@ export function generateReferenceToWireMessageType({
             reference: reference.typeReference,
             referencedIn,
             modelDirectory,
+            factory: ts.factory,
+            SyntaxKind: ts.SyntaxKind,
         });
     }
 }
