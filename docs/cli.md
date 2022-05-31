@@ -1,3 +1,0 @@
-init
-generate
-add

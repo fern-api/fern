@@ -1,94 +1,53 @@
 # Fern
 
-Fern is an open source framework that makes it easier to build APIs.
+> **Fern is a framework for building APIs.** You can think of it as an alternative to OpenAPI/Swagger.
 
-Fern allows you to
+### Goals
 
-1. Define a source-of-truth for your API
-2. Autogenerate idiomatic & typesafe clients and servers
-3. Supports WebSocket and REST APIs
-4. Easily manage backwards compatiblity
+**1. High-quality code generation.**
 
-Fern is interoperable with Open API so you are never locked in.
+Generators can be written in any language, for any language. Generated servers and clients are idiomatic and easy to use.
 
-## Example Spec
+**2. Plugin support.**
 
-Below we have written out a sample spec for a Food Delivery App.
+Generators can define plugin points to expand their functionality. For example, a plugin may add support for gRPC or could add Auth0 authorization checks for each endpoint.
+
+**3. Protocol flexibility.**
+
+Use HTTP when you want RESTful calls. Use WebSockets when you want subscriptions. Use TCP when you care about performance. Fern manages the transport layer and provides similar interfaces so you can use the best protocol for the job.
+
+**4. Errors as a first-class concept.**
+
+Every request can result in success or failure. Errors are strongly typed so it's easy for consumers to handle them.
+
+### How does it work?
+
+An API begins as a **Fern Definition**, a set of YAML files that describe your API. For example, here's a Fern Definition for a simple API to get the current day of the week:
 
 ```yaml
-ids:
-  - MenuItemId
-  - OrderId: long
-
 types:
-  DeliveryMethod:
+  DayOfWeek:
     enum:
-      - PICKUP
-      - DELIVERY
-  OrderStatus:
-    union:
-      pickup: PickupOrderStatus
-      delivery: DeliveryOrderStatus
-  PickupOrderStatus:
-    enum:
-      - PREPARING
-      - READY_FOR_PICKUP
-      - PICKED_UP
-  DeliveryOrderStatus:
-    enum:
-      - PREPARING
-      - ON_THE_WAY
-      - DELIVERED
-
+      - SUNDAY
+      - MONDAY
+      - TUESDAY
+      - WEDNESDAY
+      - THURSDAY
+      - FRIDAY
+      - SATURDAY
 services:
-  http:
-    OrderService:
-      base-path: /order
-      endpoints:
-        addItemToCart:
-          docs: Adds a menu item to a cart.
-          method: POST
-          path: /add
-          request:
-            properties:
-              menuItemId: MenuItemId
-              quantity: integer
-        placeOrder:
-          method: POST
-          path: /order/new
-          request:
-            properties:
-              deliveryMethod: DeliveryMethod
-              tip: optional<double>
-          response: OrderId
-          errors:
-            union:
-              emptyCart: EmptyCartError
-
-  websocket:
-    OrderStatusChannel:
-      messages:
-        subscribeToOrderStatus:
-          origin: client
-          body: OrderId
-          response:
-            properties:
-              orderStatus: OrderStatus
-              etaInMinutes: integer
-            behavior: ongoing
-          errors:
-            union:
-              notFound: OrderNotFoundError
-
-errors:
-  OrderNotFoundError:
-    http:
-      statusCode: 404
-  EmptyCartError:
-    http:
-      statusCode: 400
+  DayOfWeekService:
+    endpoints:
+      getCurrentDayOfWeek:
+        response: DayOfWeek
 ```
 
-The app has REST endpoints so that clients can add items to their cart and place orders. It also has a websocket channel where a client can subscribe to updates about an order's ETA.
+Fern reads in the Definition, validates it, and invokes generators. Some examples of generators are:
 
-This spec can be used to generate clients and servers.
+| Generator         | Description                                                                              |
+| ----------------- | ---------------------------------------------------------------------------------------- |
+| `fern-typescript` | converts a Fern Definition to a TypeScript server and a TypeScript client                |
+| `fern-java`       | converts a Fern Definition to a Java server and a Java client                            |
+| `fern-postman`    | converts a Fern Definition to a [Postman Collection](https://www.postman.com/collection) |
+| `fern-openapi`    | converts a Fern Definition to an [OpenAPI Spec](https://swagger.io/resources/open-api/)  |
+| `fern-docs`       | converts a Fern Definition to an interactive documentation site                          |
