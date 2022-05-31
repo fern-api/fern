@@ -1827,6 +1827,7 @@ __metadata:
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/helper-utils": "workspace:*"
     "@fern-typescript/model": "workspace:*"
+    "@ts-morph/common": "npm:^0.13.0"
     "@types/jest": "npm:^27.4.1"
     "@types/node": "npm:^17.0.33"
     "@types/webpack": "npm:^5.28.0"
@@ -1838,6 +1839,7 @@ __metadata:
     ts-loader: "npm:^9.3.0"
     ts-node: "npm:^10.7.0"
     typescript: "npm:^4.6.4"
+    umd-compat-loader: "npm:^2.1.2"
     webpack: "npm:^5.72.1"
     webpack-cli: "npm:^4.9.2"
   languageName: unknown
