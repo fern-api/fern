@@ -32,7 +32,6 @@ export function generateErrorBodyReference({
                     referencedIn: errorBodyFile,
                     baseDirectory: errorsDirectory,
                     baseDirectoryType: "errors",
-                    factory: ts.factory,
                 }),
                 isExtendable: true,
             },

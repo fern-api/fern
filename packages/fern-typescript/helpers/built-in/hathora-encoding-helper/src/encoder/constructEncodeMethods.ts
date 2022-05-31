@@ -1,4 +1,4 @@
-import { EncodeMethod, TsMorph, tsMorph } from "@fern-typescript/helper-utils";
+import { EncodeMethod, ts } from "@fern-typescript/helper-utils";
 import { HathoraEncoderConstants } from "../constants";
 import { generateBinSerdeTypeReference, generateBinSerdeValueReference } from "./bin-serde/generateBinSerdeReference";
 
@@ -7,28 +7,24 @@ export const BIN_SERDE_WRITER_VARIABLE_NAME = "writer";
 export const BIN_SERDE_READER_VARIABLE_NAME = "reader";
 
 export interface EncodeMethods {
-    typeParameters?: tsMorph.ts.TypeParameterDeclaration[];
-    decodedType: tsMorph.ts.TypeNode;
+    typeParameters?: ts.TypeParameterDeclaration[];
+    decodedType: ts.TypeNode;
     encode: SimpleFunctionBody;
     decode: SimpleFunctionBody;
 }
 
 export interface SimpleFunctionBody {
-    additionalParameters?: tsMorph.ts.ParameterDeclaration[];
-    statements: tsMorph.ts.Statement[];
+    additionalParameters?: ts.ParameterDeclaration[];
+    statements: ts.Statement[];
 }
 
 export declare namespace constructEncodeMethods {
     export interface Args {
         methods: EncodeMethods;
-        ts: TsMorph["ts"];
     }
 }
 
-export function constructEncodeMethods({
-    methods,
-    ts,
-}: constructEncodeMethods.Args): tsMorph.ts.ObjectLiteralExpression {
+export function constructEncodeMethods({ methods }: constructEncodeMethods.Args): ts.ObjectLiteralExpression {
     const PARAMETER_NAME = "maybeReader";
 
     return ts.factory.createObjectLiteralExpression(
@@ -58,13 +54,13 @@ export function constructEncodeMethods({
                         undefined,
                         undefined,
                         ts.factory.createNewExpression(
-                            generateBinSerdeValueReference(ts, HathoraEncoderConstants.BinSerDe.Exports.WRITER),
+                            generateBinSerdeValueReference(HathoraEncoderConstants.BinSerDe.Exports.WRITER),
                             undefined,
                             []
                         )
                     ),
                 ],
-                generateBinSerdeTypeReference(ts, HathoraEncoderConstants.BinSerDe.Exports.WRITER),
+                generateBinSerdeTypeReference(HathoraEncoderConstants.BinSerDe.Exports.WRITER),
                 ts.factory.createBlock(methods.encode.statements)
             ),
             ts.factory.createMethodDeclaration(
@@ -84,7 +80,7 @@ export function constructEncodeMethods({
                         undefined,
                         ts.factory.createUnionTypeNode([
                             ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Uint8Array")),
-                            generateBinSerdeTypeReference(ts, HathoraEncoderConstants.BinSerDe.Exports.READER),
+                            generateBinSerdeTypeReference(HathoraEncoderConstants.BinSerDe.Exports.READER),
                         ])
                     ),
                 ],
@@ -110,7 +106,6 @@ export function constructEncodeMethods({
                                         ts.factory.createToken(ts.SyntaxKind.QuestionToken),
                                         ts.factory.createNewExpression(
                                             generateBinSerdeValueReference(
-                                                ts,
                                                 HathoraEncoderConstants.BinSerDe.Exports.READER
                                             ),
                                             undefined,

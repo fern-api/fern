@@ -1,32 +1,34 @@
 import { Type, TypeDefinition, TypeReference } from "@fern-api/api";
-import { FernWriters, generateTypeReference, TypeResolver } from "@fern-typescript/commons";
-import { createPrinter, TsMorph, tsMorph } from "@fern-typescript/helper-utils";
+import { FernWriters, generateTypeReference, getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
+import { tsMorph } from "@fern-typescript/helper-utils";
 import { constructEncodeMethods, EncodeMethods } from "../constructEncodeMethods";
+import { getEncodeMethodsForAlias } from "./getEncodeMethodsForAlias";
 import { getEncodeMethodsForObject } from "./getEncodeMethodsForObject";
 
 export function writeModel({
     types,
-    tsMorph,
     typeResolver,
     file,
     modelDirectory,
 }: {
     types: readonly TypeDefinition[];
-    tsMorph: TsMorph;
     typeResolver: TypeResolver;
     file: tsMorph.SourceFile;
     modelDirectory: tsMorph.Directory;
 }): tsMorph.WriterFunction {
-    const printNode = createPrinter(tsMorph);
     const writer = FernWriters.object.writer({ newlinesBetweenProperties: true });
 
     for (const type of types) {
         writer.addProperty({
             key: type.name.name,
-            value: printNode(
+            value: getTextOfTsNode(
                 constructEncodeMethods({
-                    methods: getEncodeMethodsForType({ type, ts: tsMorph.ts, typeResolver, file, modelDirectory }),
-                    ts: tsMorph.ts,
+                    methods: getEncodeMethodsForType({
+                        typeDefinition: type,
+                        typeResolver,
+                        file,
+                        modelDirectory,
+                    }),
                 })
             ),
         });
@@ -36,40 +38,42 @@ export function writeModel({
 }
 
 function getEncodeMethodsForType({
-    type,
+    typeDefinition,
     typeResolver,
     file,
     modelDirectory,
-    ts,
 }: {
-    type: TypeDefinition;
-    ts: TsMorph["ts"];
+    typeDefinition: TypeDefinition;
     typeResolver: TypeResolver;
     file: tsMorph.SourceFile;
     modelDirectory: tsMorph.Directory;
 }): EncodeMethods {
     const decodedType = generateTypeReference({
-        reference: TypeReference.named(type.name),
+        reference: TypeReference.named(typeDefinition.name),
         referencedIn: file,
         modelDirectory,
-        factory: ts.factory,
-        SyntaxKind: ts.SyntaxKind,
     });
-    return Type._visit<EncodeMethods>(type.shape, {
-        alias: () => {
-            return { decodedType, encode: { statements: [] }, decode: { statements: [] } };
+    return Type._visit<EncodeMethods>(typeDefinition.shape, {
+        alias: (alias) => {
+            return getEncodeMethodsForAlias({
+                shape: alias,
+                decodedType,
+                file,
+                modelDirectory,
+                typeDefinition: typeDefinition,
+            });
         },
         enum: () => {
             return { decodedType, encode: { statements: [] }, decode: { statements: [] } };
         },
         object: (object) => {
-            return getEncodeMethodsForObject({ object, typeResolver, decodedType, ts });
+            return getEncodeMethodsForObject({ object, typeResolver, decodedType });
         },
         union: () => {
             return { decodedType, encode: { statements: [] }, decode: { statements: [] } };
         },
         _unknown: () => {
-            throw new Error("Unknown type: " + type.shape._type);
+            throw new Error("Unknown type: " + typeDefinition.shape._type);
         },
     });
 }

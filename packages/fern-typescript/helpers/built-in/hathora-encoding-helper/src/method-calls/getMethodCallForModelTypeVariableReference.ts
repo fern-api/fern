@@ -1,13 +1,12 @@
 import { ContainerType, TypeReference } from "@fern-api/api";
-import { TsMorph, tsMorph } from "@fern-typescript/helper-utils";
+import ts from "typescript";
 import { getEncoderNameForContainer, getEncoderNameForPrimitive, HathoraEncoderConstants } from "../constants";
 import { createEncoderMethodCall } from "./createEncoderMethodCall";
 
 export declare namespace getMethodCallForModelTypeVariableReference {
     export interface Args {
-        ts: TsMorph["ts"];
         typeReference: TypeReference;
-        referenceToEncoder: tsMorph.ts.Expression;
+        referenceToEncoder: ts.Expression;
         args: MethodCallArguments;
     }
 
@@ -15,28 +14,26 @@ export declare namespace getMethodCallForModelTypeVariableReference {
 
     export interface EncodeMethodCallArguments {
         method: "encode";
-        variableToEncode: tsMorph.ts.Expression;
-        binSerdeWriter: tsMorph.ts.Expression | undefined;
+        variableToEncode: ts.Expression;
+        binSerdeWriter: ts.Expression | undefined;
     }
 
     export interface DecodeMethodCallArguments {
         method: "decode";
-        bufferOrBinSerdeReader: tsMorph.ts.Expression;
+        bufferOrBinSerdeReader: ts.Expression;
     }
 }
 
 export function getMethodCallForModelTypeVariableReference({
-    ts,
     typeReference,
     referenceToEncoder,
     args,
-}: getMethodCallForModelTypeVariableReference.Args): tsMorph.ts.CallExpression {
+}: getMethodCallForModelTypeVariableReference.Args): ts.CallExpression {
     return createEncoderMethodCall({
-        ts,
         referenceToEncoder,
         propertyChainToMethod: createMethodReferencePropertyChain(typeReference),
         method: args.method,
-        args: getArgsForMethod({ ts, typeReference, referenceToEncoder, args }),
+        args: getArgsForMethod({ typeReference, referenceToEncoder, args }),
     });
 }
 
@@ -58,23 +55,22 @@ function createMethodReferencePropertyChain(typeReference: TypeReference): strin
 }
 
 function getArgsForMethod({
-    ts,
     typeReference,
     referenceToEncoder,
     args,
-}: getMethodCallForModelTypeVariableReference.Args): tsMorph.ts.Expression[] {
+}: getMethodCallForModelTypeVariableReference.Args): ts.Expression[] {
     switch (args.method) {
         case "encode": {
             const argsExpressions = [args.variableToEncode];
-            argsExpressions.push(...getAdditionalArgsForContainer({ ts, typeReference, referenceToEncoder, args }));
+            argsExpressions.push(...getAdditionalArgsForContainer({ typeReference, referenceToEncoder, args }));
             if (args.binSerdeWriter != null) {
                 argsExpressions.push(args.binSerdeWriter);
             }
             return argsExpressions;
         }
         case "decode": {
-            const argsExpressions: tsMorph.ts.Expression[] = [];
-            argsExpressions.push(...getAdditionalArgsForContainer({ ts, typeReference, referenceToEncoder, args }));
+            const argsExpressions: ts.Expression[] = [];
+            argsExpressions.push(...getAdditionalArgsForContainer({ typeReference, referenceToEncoder, args }));
             argsExpressions.push(args.bufferOrBinSerdeReader);
             return argsExpressions;
         }
@@ -82,26 +78,25 @@ function getArgsForMethod({
 }
 
 function getAdditionalArgsForContainer({
-    ts,
     typeReference,
     referenceToEncoder,
     args,
-}: getMethodCallForModelTypeVariableReference.Args): tsMorph.ts.Expression[] {
+}: getMethodCallForModelTypeVariableReference.Args): ts.Expression[] {
     if (typeReference._type !== "container") {
         return [];
     }
     return ContainerType._visit(typeReference.container, {
         list: (itemType) => {
-            return getRecursiveMethodCall({ ts, itemType, referenceToEncoder, args });
+            return getRecursiveMethodCall({ itemType, referenceToEncoder, args });
         },
         set: (itemType) => {
-            return getRecursiveMethodCall({ ts, itemType, referenceToEncoder, args });
+            return getRecursiveMethodCall({ itemType, referenceToEncoder, args });
         },
         optional: (itemType) => {
-            return getRecursiveMethodCall({ ts, itemType, referenceToEncoder, args });
+            return getRecursiveMethodCall({ itemType, referenceToEncoder, args });
         },
         map: ({ valueType }) => {
-            return getRecursiveMethodCall({ ts, itemType: valueType, referenceToEncoder, args });
+            return getRecursiveMethodCall({ itemType: valueType, referenceToEncoder, args });
         },
         _unknown: () => {
             throw new Error("Unknown container type: " + typeReference.container._type);
@@ -110,16 +105,14 @@ function getAdditionalArgsForContainer({
 }
 
 function getRecursiveMethodCall({
-    ts,
     itemType,
     referenceToEncoder,
     args,
 }: {
-    ts: TsMorph["ts"];
     itemType: TypeReference;
-    referenceToEncoder: tsMorph.ts.Expression;
+    referenceToEncoder: ts.Expression;
     args: getMethodCallForModelTypeVariableReference.MethodCallArguments;
-}): tsMorph.ts.Expression[] {
+}): ts.Expression[] {
     switch (args.method) {
         case "encode": {
             const ITEM_PARAMETER_NAME = "item";
@@ -145,7 +138,6 @@ function getRecursiveMethodCall({
                     undefined,
                     undefined,
                     getMethodCallForModelTypeVariableReference({
-                        ts,
                         typeReference: itemType,
                         referenceToEncoder,
                         args: {
@@ -174,7 +166,6 @@ function getRecursiveMethodCall({
                     undefined,
                     undefined,
                     getMethodCallForModelTypeVariableReference({
-                        ts,
                         typeReference: itemType,
                         referenceToEncoder,
                         args: {

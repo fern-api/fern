@@ -1,14 +1,10 @@
 {
   "extends": "../../../../../shared/tsconfig.shared.json",
-  "compilerOptions": {
-    "composite": true,
-    "outDir": "dist",
-    "sourceMap": false,
-    "rootDir": "src"
-  },
+  "compilerOptions": { "composite": true, "outDir": "dist", "sourceMap": false, "rootDir": "src" },
   "include": ["src"],
   "references": [
     { "path": "../../../client/tsconfig.json" },
+    { "path": "../../../model/tsconfig.json" },
     { "path": "../../../commons/tsconfig.json" },
     { "path": "../../utils/tsconfig.json" },
     { "path": "../../../../api/fern-ir-typescript/tsconfig.json" }

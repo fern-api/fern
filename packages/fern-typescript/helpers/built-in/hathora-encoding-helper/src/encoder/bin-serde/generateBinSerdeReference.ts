@@ -1,7 +1,7 @@
-import { tsMorph, TsMorph } from "@fern-typescript/helper-utils";
+import { ts } from "@fern-typescript/helper-utils";
 import { HathoraEncoderConstants } from "../../constants";
 
-export function generateBinSerdeTypeReference(ts: TsMorph["ts"], imported: string): tsMorph.ts.TypeNode {
+export function generateBinSerdeTypeReference(imported: string): ts.TypeNode {
     return ts.factory.createTypeReferenceNode(
         ts.factory.createQualifiedName(
             ts.factory.createIdentifier(HathoraEncoderConstants.BinSerDe.NAMESPACE_IMPORT),
@@ -10,10 +10,7 @@ export function generateBinSerdeTypeReference(ts: TsMorph["ts"], imported: strin
     );
 }
 
-export function generateBinSerdeValueReference(
-    ts: TsMorph["ts"],
-    imported: string
-): tsMorph.ts.PropertyAccessExpression {
+export function generateBinSerdeValueReference(imported: string): ts.PropertyAccessExpression {
     return ts.factory.createPropertyAccessExpression(
         ts.factory.createIdentifier(HathoraEncoderConstants.BinSerDe.NAMESPACE_IMPORT),
         ts.factory.createIdentifier(imported)

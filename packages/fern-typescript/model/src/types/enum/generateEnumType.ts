@@ -55,6 +55,14 @@ export function generateEnumType({
         isExported: true,
         hasDeclareKeyword: true,
     });
+
+    for (const value of shape.values) {
+        moduleDeclaration.addTypeAlias({
+            name: getKeyForEnum(value),
+            type: getTextOfTsNode(ts.factory.createStringLiteral(value.value)),
+        });
+    }
+
     moduleDeclaration.addInterface(visitorUtils.generateVisitorInterface(visitorItems));
 }
 

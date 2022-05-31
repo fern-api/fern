@@ -2,6 +2,8 @@ import { AliasTypeDefinition, PrimitiveType } from "@fern-api/api";
 import { addBrandedTypeAlias, generateTypeReference, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { Directory, SourceFile, ts, VariableDeclarationKind, Writers } from "ts-morph";
 
+export const ALIAS_UTILS_OF_KEY = "of";
+
 export function generateAliasType({
     file,
     typeName,
@@ -15,7 +17,7 @@ export function generateAliasType({
     shape: AliasTypeDefinition;
     modelDirectory: Directory;
 }): void {
-    if (shape.aliasOf._type === "primitive" && shape.aliasOf.primitive === PrimitiveType.String) {
+    if (shouldUseBrandedTypeForAlias(shape)) {
         generateStringAlias({ file, typeName, docs });
     } else {
         const typeAlias = file.addTypeAlias({
@@ -25,14 +27,16 @@ export function generateAliasType({
                     reference: shape.aliasOf,
                     referencedIn: file,
                     modelDirectory,
-                    factory: ts.factory,
-                    SyntaxKind: ts.SyntaxKind,
                 })
             ),
             isExported: true,
         });
         maybeAddDocs(typeAlias, docs);
     }
+}
+
+export function shouldUseBrandedTypeForAlias(shape: AliasTypeDefinition): boolean {
+    return shape.aliasOf._type === "primitive" && shape.aliasOf.primitive === PrimitiveType.String;
 }
 
 function generateStringAlias({
@@ -52,7 +56,7 @@ function generateStringAlias({
             {
                 name: typeName,
                 initializer: Writers.object({
-                    of: getTextOfTsNode(getOf(typeName)),
+                    [ALIAS_UTILS_OF_KEY]: getTextOfTsNode(getOf(typeName)),
                 }),
             },
         ],

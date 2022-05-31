@@ -7,15 +7,11 @@ export function generateTypeReference({
     referencedIn,
     modelDirectory,
     forceUseNamespaceImport,
-    factory,
-    SyntaxKind,
 }: {
     reference: TypeReference;
     referencedIn: SourceFile;
     modelDirectory: Directory;
     forceUseNamespaceImport?: generateNamedTypeReference.Args["forceUseNamespaceImport"];
-    factory: ts.NodeFactory;
-    SyntaxKind: typeof ts.SyntaxKind;
 }): ts.TypeNode {
     return TypeReference._visit(reference, {
         named: (named) =>
@@ -25,17 +21,16 @@ export function generateTypeReference({
                 baseDirectory: modelDirectory,
                 baseDirectoryType: "model",
                 forceUseNamespaceImport,
-                factory,
             }),
         primitive: (primitive) => {
             return PrimitiveType._visit<ts.TypeNode>(primitive, {
-                boolean: () => factory.createKeywordTypeNode(SyntaxKind.BooleanKeyword),
+                boolean: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword),
                 // TODO add datetime
                 // datetime: () => dropInfactory.createKeywordTypeNode(dropInTs.SyntaxKind.StringKeyword),
-                double: () => factory.createKeywordTypeNode(SyntaxKind.NumberKeyword),
-                integer: () => factory.createKeywordTypeNode(SyntaxKind.NumberKeyword),
-                long: () => factory.createKeywordTypeNode(SyntaxKind.NumberKeyword),
-                string: () => factory.createKeywordTypeNode(SyntaxKind.StringKeyword),
+                double: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
+                integer: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
+                long: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
+                string: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
                 _unknown: () => {
                     throw new Error("Unexpected primitive type: " + primitive);
                 },
@@ -44,41 +39,35 @@ export function generateTypeReference({
         container: (container) => {
             return ContainerType._visit<ts.TypeNode>(container, {
                 map: (map) =>
-                    factory.createTypeReferenceNode(factory.createIdentifier("Record"), [
+                    ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [
                         generateTypeReference({
                             reference: map.keyType,
                             referencedIn,
                             modelDirectory,
-                            factory,
-                            SyntaxKind,
                         }),
                         generateTypeReference({
                             reference: map.valueType,
                             referencedIn,
                             modelDirectory,
-                            factory,
-                            SyntaxKind,
                         }),
                     ]),
                 list: (list) =>
-                    factory.createArrayTypeNode(
-                        generateTypeReference({ reference: list, referencedIn, modelDirectory, factory, SyntaxKind })
+                    ts.factory.createArrayTypeNode(
+                        generateTypeReference({ reference: list, referencedIn, modelDirectory })
                     ),
                 set: (set) =>
-                    factory.createArrayTypeNode(
-                        generateTypeReference({ reference: set, referencedIn, modelDirectory, factory, SyntaxKind })
+                    ts.factory.createArrayTypeNode(
+                        generateTypeReference({ reference: set, referencedIn, modelDirectory })
                     ),
                 optional: (optional) =>
-                    factory.createUnionTypeNode([
+                    ts.factory.createUnionTypeNode([
                         generateTypeReference({
                             reference: optional,
                             referencedIn,
                             modelDirectory,
-                            factory,
-                            SyntaxKind,
                         }),
-                        factory.createLiteralTypeNode(factory.createNull()),
-                        factory.createKeywordTypeNode(SyntaxKind.UndefinedKeyword),
+                        ts.factory.createLiteralTypeNode(ts.factory.createNull()),
+                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
                     ]),
                 _unknown: () => {
                     throw new Error("Unexpected container type: " + container._type);
@@ -86,9 +75,9 @@ export function generateTypeReference({
             });
         },
         void: () => {
-            return factory.createTypeReferenceNode(factory.createIdentifier("Record"), [
-                factory.createKeywordTypeNode(SyntaxKind.StringKeyword),
-                factory.createKeywordTypeNode(SyntaxKind.NeverKeyword),
+            return ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [
+                ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                ts.factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword),
             ]);
         },
         _unknown: () => {

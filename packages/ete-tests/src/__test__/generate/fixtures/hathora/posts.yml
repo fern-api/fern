@@ -3,7 +3,7 @@ types:
   Post:
     docs: A blog post
     properties:
-      id: string
+      id: PostId
       title: string
       content: list<list<string>>
       mySet: set<boolean>
