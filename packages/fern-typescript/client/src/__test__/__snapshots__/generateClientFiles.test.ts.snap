@@ -288,7 +288,9 @@ export class Client implements Client {
     if (request.page != null) {
       queryParameters.append(\\"page\\", request.page.toString());
     }
-    queryParameters.append(\\"otherParam\\", request.otherParam.toString());
+    if (request.otherParam != null) {
+      queryParameters.append(\\"otherParam\\", request.otherParam.toString());
+    }
 
     const encodedResponse = await this.fetcher({
       url: joinPaths(this.baseUrl, \`/\${request.postId}\`),
@@ -441,7 +443,7 @@ export const ErrorBody = {
 export interface Request {
   postId: model.PostId;
   page: number | null | undefined;
-  otherParam: number;
+  otherParam: number | null | undefined;
 }
 ",
   "/services/PostsService/endpoints/getPost/Response.ts": "import * as model from \\"../../../../model\\";
@@ -733,7 +735,9 @@ export class Client implements Client {
     if (request.page != null) {
       queryParameters.append(\\"page\\", request.page.toString());
     }
-    queryParameters.append(\\"otherParam\\", request.otherParam.toString());
+    if (request.otherParam != null) {
+      queryParameters.append(\\"otherParam\\", request.otherParam.toString());
+    }
 
     const encodedResponse = await this.fetcher({
       url: joinPaths(this.baseUrl, \`/\${request.postId}\`),
@@ -886,7 +890,7 @@ export const ErrorBody = {
 export interface Request {
   postId: model.PostId;
   page: number | null | undefined;
-  otherParam: number;
+  otherParam: number | null | undefined;
 }
 ",
   "/services/PostsService/endpoints/getPost/Response.ts": "import * as model from \\"../../../../model\\";
