@@ -23,7 +23,14 @@ export default (_env: unknown, { mode = "production" }: webpack.WebpackOptionsNo
                     },
                     exclude: /node_modules/,
                 },
+                // https://github.com/dsherret/ts-morph/issues/171#issuecomment-1107867732
+                {
+                    test: /node_modules[\\|/]code-block-writer[\\|/]umd[\\|/]/,
+                    use: { loader: "umd-compat-loader" },
+                },
             ],
+            // https://github.com/dsherret/ts-morph/issues/171#issuecomment-1107867732
+            noParse: [require.resolve("@ts-morph/common/dist/typescript.js")],
             parser: {
                 javascript: {
                     // this is needed for dynamically loading helpers
