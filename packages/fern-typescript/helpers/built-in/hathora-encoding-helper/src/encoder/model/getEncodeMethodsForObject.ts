@@ -21,13 +21,12 @@ export function getEncodeMethodsForObject({
     decodedType: tsMorph.ts.TypeNode;
     ts: TsMorph["ts"];
 }): EncodeMethods {
-    const allProperties = getAllProperties({ object, typeResolver });
-    const sortedProperties = allProperties.sort((a, b) => (a.key < b.key ? -1 : 1));
+    const properties = getAllProperties({ object, typeResolver });
     return {
         decodedType,
         encode: {
             statements: [
-                ...sortedProperties.map((property) =>
+                ...properties.map((property) =>
                     ts.factory.createExpressionStatement(
                         getMethodCallForModelTypeVariableReference({
                             ts,
@@ -51,7 +50,7 @@ export function getEncodeMethodsForObject({
             statements: [
                 ts.factory.createReturnStatement(
                     ts.factory.createObjectLiteralExpression(
-                        sortedProperties.map((property) =>
+                        properties.map((property) =>
                             ts.factory.createPropertyAssignment(
                                 ts.factory.createIdentifier(property.key),
                                 getMethodCallForModelTypeVariableReference({
