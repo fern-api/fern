@@ -38,10 +38,14 @@ types:
       - FRIDAY
       - SATURDAY
 services:
-  DayOfWeekService:
-    endpoints:
-      getCurrentDayOfWeek:
-        response: DayOfWeek
+  http:
+    DayOfWeekService:
+      auth: none
+      endpoints:
+        getCurrentDayOfWeek:
+          method: GET
+          path: /day-of-week
+          response: DayOfWeek
 ```
 
 Fern reads in the Definition, validates it, and invokes generators. Some examples of generators are:
