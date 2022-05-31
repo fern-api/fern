@@ -15,7 +15,7 @@
   "sideEffects": false,
   "scripts": {
     "clean": "tsc --build --clean tsconfig.json && tsc --build --clean tsconfig.cjs.json",
-    "compile": "tsc --build tsconfig.json && tsc --build tsconfig.cjs.json",
+    "compile": "tsc --build tsconfig.json && tsc --build tsconfig.cjs.json && echo '{ \"type\": \"commonjs\" }' > dist/cjs/package.json && echo '{ \"type\": \"module\" }' > dist/esm/package.json",
     "test": "jest --passWithNoTests",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
     "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore --fix",

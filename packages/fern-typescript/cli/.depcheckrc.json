@@ -2,11 +2,11 @@
   "ignores": [
     "@types/jest",
     "@types/node",
-    "webpack",
     "webpack-cli",
     "umd-compat-loader",
-    "simple-progress-webpack-plugin",
-    "@ts-morph/common"
+    "@ts-morph/common",
+    "ts-loader",
+    "ts-node"
   ],
-  "ignore-patterns": ["dist", "docker"]
+  "ignore-patterns": ["dist", "docker/bundle.js"]
 }
