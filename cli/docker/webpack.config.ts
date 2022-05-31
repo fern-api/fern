@@ -6,7 +6,7 @@ export default (_env: unknown, { mode = "production" }: webpack.WebpackOptionsNo
     return {
         mode,
         target: "node",
-        entry: path.join(__dirname, "./src/index.ts"),
+        entry: path.join(__dirname, "../src/cli.ts"),
         module: {
             rules: [
                 {
@@ -31,14 +31,19 @@ export default (_env: unknown, { mode = "production" }: webpack.WebpackOptionsNo
             ],
             // https://github.com/dsherret/ts-morph/issues/171#issuecomment-1107867732
             noParse: [require.resolve("@ts-morph/common/dist/typescript.js")],
+            parser: {
+                javascript: {
+                    // this is needed for dynamically loading helpers
+                    commonjsMagicComments: true,
+                },
+            },
         },
         resolve: {
             extensions: [".ts", ".js"],
         },
         output: {
-            path: path.join(__dirname, "dist"),
+            path: __dirname,
             filename: "bundle.js",
-            library: { type: "commonjs" },
         },
         plugins: [new SimpleProgressWebpackPlugin({})],
         optimization: {

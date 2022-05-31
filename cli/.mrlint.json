@@ -9,8 +9,8 @@
       }
     },
     "depcheck": {
-      "ignores": ["webpack", "webpack-cli", "umd-compat-loader", "simple-progress-webpack-plugin", "@ts-morph/common"],
-      "ignore-patterns": ["docker"]
+      "ignores": ["webpack-cli", "umd-compat-loader", "@ts-morph/common", "ts-loader", "ts-node"],
+      "ignore-patterns": ["docker/bundle.js"]
     }
   }
 }
