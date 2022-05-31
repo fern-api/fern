@@ -5,7 +5,7 @@ import {
     getOrCreateSourceFile,
     getTextOfTsNode,
 } from "@fern-typescript/commons";
-import { Directory, ts } from "ts-morph";
+import { Directory } from "ts-morph";
 
 export function generateError({
     error,
@@ -34,8 +34,6 @@ export function generateError({
                     reference: property.type,
                     referencedIn: file,
                     modelDirectory,
-                    factory: ts.factory,
-                    SyntaxKind: ts.SyntaxKind,
                 })
             ),
         })),

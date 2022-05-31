@@ -1,5 +1,5 @@
 import { PrimitiveType, TypeReference } from "@fern-api/api";
-import { TsMorph } from "@fern-typescript/helper-utils";
+import { ts } from "@fern-typescript/helper-utils";
 import { HathoraEncoderConstants } from "../../constants";
 import { getMethodCallForModelTypeVariableReference } from "../../method-calls/getMethodCallForModelTypeVariableReference";
 import { generateBinSerdeTypeReference } from "../bin-serde/generateBinSerdeReference";
@@ -13,7 +13,7 @@ import {
 
 const VALUE_TYPE_PARAMETER = "T";
 
-export function getEncodeMethodsForOptional(ts: TsMorph["ts"]): EncodeMethods {
+export function getEncodeMethodsForOptional(): EncodeMethods {
     return {
         typeParameters: [ts.factory.createTypeParameterDeclaration(VALUE_TYPE_PARAMETER)],
         decodedType: ts.factory.createUnionTypeNode([
@@ -21,12 +21,12 @@ export function getEncodeMethodsForOptional(ts: TsMorph["ts"]): EncodeMethods {
             ts.factory.createLiteralTypeNode(ts.factory.createNull()),
             ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
         ]),
-        encode: getEncodeMethod(ts),
-        decode: getDecodeMethod(ts),
+        encode: getEncodeMethod(),
+        decode: getDecodeMethod(),
     };
 }
 
-function getEncodeMethod(ts: TsMorph["ts"]): SimpleFunctionBody {
+function getEncodeMethod(): SimpleFunctionBody {
     const WRITE_VALUE_PARAMETER_NAME = "writeValue";
     const VALUE_VARIABLE_NAME = "value";
 
@@ -59,7 +59,7 @@ function getEncodeMethod(ts: TsMorph["ts"]): SimpleFunctionBody {
                             undefined,
                             ts.factory.createIdentifier(BIN_SERDE_WRITER_VARIABLE_NAME),
                             undefined,
-                            generateBinSerdeTypeReference(ts, HathoraEncoderConstants.BinSerDe.Exports.WRITER),
+                            generateBinSerdeTypeReference(HathoraEncoderConstants.BinSerDe.Exports.WRITER),
                             undefined
                         ),
                     ],
@@ -71,7 +71,6 @@ function getEncodeMethod(ts: TsMorph["ts"]): SimpleFunctionBody {
         statements: [
             ts.factory.createExpressionStatement(
                 getMethodCallForModelTypeVariableReference({
-                    ts,
                     typeReference: TypeReference.primitive(PrimitiveType.Boolean),
                     referenceToEncoder: ts.factory.createIdentifier(HathoraEncoderConstants.NAME),
                     args: {
@@ -109,7 +108,7 @@ function getEncodeMethod(ts: TsMorph["ts"]): SimpleFunctionBody {
     };
 }
 
-function getDecodeMethod(ts: TsMorph["ts"]): SimpleFunctionBody {
+function getDecodeMethod(): SimpleFunctionBody {
     const READ_VALUE_PARAMETER_NAME = "readValue";
 
     return {
@@ -129,7 +128,7 @@ function getDecodeMethod(ts: TsMorph["ts"]): SimpleFunctionBody {
                             undefined,
                             ts.factory.createIdentifier(BIN_SERDE_READER_VARIABLE_NAME),
                             undefined,
-                            generateBinSerdeTypeReference(ts, HathoraEncoderConstants.BinSerDe.Exports.READER),
+                            generateBinSerdeTypeReference(HathoraEncoderConstants.BinSerDe.Exports.READER),
                             undefined
                         ),
                     ],
@@ -142,7 +141,6 @@ function getDecodeMethod(ts: TsMorph["ts"]): SimpleFunctionBody {
             ts.factory.createReturnStatement(
                 ts.factory.createConditionalExpression(
                     getMethodCallForModelTypeVariableReference({
-                        ts,
                         typeReference: TypeReference.primitive(PrimitiveType.Boolean),
                         referenceToEncoder: ts.factory.createIdentifier(HathoraEncoderConstants.NAME),
                         args: {

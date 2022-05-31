@@ -1,6 +1,6 @@
 import { ContainerType } from "@fern-api/api";
-import { FernWriters } from "@fern-typescript/commons";
-import { createPrinter, TsMorph, tsMorph } from "@fern-typescript/helper-utils";
+import { FernWriters, getTextOfTsNode } from "@fern-typescript/commons";
+import { tsMorph } from "@fern-typescript/helper-utils";
 import { getEncoderNameForContainer } from "../../constants";
 import { assertNever } from "../../utils/assertNever";
 import { constructEncodeMethods, EncodeMethods } from "../constructEncodeMethods";
@@ -8,17 +8,15 @@ import { getEncodeMethodsForList } from "./getEncodeMethodsForList";
 import { getEncodeMethodsForMap } from "./getEncodeMethodsForMap";
 import { getEncodeMethodsForOptional } from "./getEncodeMethodsForOptional";
 
-export function writeContainers(tsMorph: TsMorph): tsMorph.WriterFunction {
-    const printNode = createPrinter(tsMorph);
+export function writeContainers(): tsMorph.WriterFunction {
     const writer = FernWriters.object.writer({ newlinesBetweenProperties: true });
 
     for (const containerType of ContainerType._types()) {
         writer.addProperty({
             key: getEncoderNameForContainer(containerType),
-            value: printNode(
+            value: getTextOfTsNode(
                 constructEncodeMethods({
-                    methods: getEncodeMethodsForContainer({ containerType, ts: tsMorph.ts }),
-                    ts: tsMorph.ts,
+                    methods: getEncodeMethodsForContainer({ containerType }),
                 })
             ),
         });
@@ -27,21 +25,15 @@ export function writeContainers(tsMorph: TsMorph): tsMorph.WriterFunction {
     return writer.toFunction();
 }
 
-function getEncodeMethodsForContainer({
-    containerType,
-    ts,
-}: {
-    containerType: ContainerType["_type"];
-    ts: TsMorph["ts"];
-}): EncodeMethods {
+function getEncodeMethodsForContainer({ containerType }: { containerType: ContainerType["_type"] }): EncodeMethods {
     switch (containerType) {
         case "list":
         case "set": // Fern sets are just treated as lists in TS
-            return getEncodeMethodsForList(ts);
+            return getEncodeMethodsForList();
         case "map":
-            return getEncodeMethodsForMap(ts);
+            return getEncodeMethodsForMap();
         case "optional":
-            return getEncodeMethodsForOptional(ts);
+            return getEncodeMethodsForOptional();
         default:
             assertNever(containerType);
     }

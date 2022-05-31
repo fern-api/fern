@@ -106,8 +106,6 @@ function addSuccessResponseInterface({
                       reference: successBodyReference.typeReference,
                       referencedIn: responseFile,
                       modelDirectory,
-                      factory: ts.factory,
-                      SyntaxKind: ts.SyntaxKind,
                   })
             : undefined;
 

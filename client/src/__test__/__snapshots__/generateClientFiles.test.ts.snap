@@ -113,6 +113,9 @@ export const PostType = {
 } as const;
 
 export declare namespace PostType {
+  type Long = \\"LONG\\";
+  type Short = \\"SHORT\\";
+
   export interface _Visitor<Result> {
     long: () => Result;
     short: () => Result;
@@ -645,6 +648,9 @@ export const PostType = {
 } as const;
 
 export declare namespace PostType {
+  type Long = \\"LONG\\";
+  type Short = \\"SHORT\\";
+
   export interface _Visitor<Result> {
     long: () => Result;
     short: () => Result;
