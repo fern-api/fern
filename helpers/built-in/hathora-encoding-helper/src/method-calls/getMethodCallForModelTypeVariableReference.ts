@@ -91,17 +91,17 @@ function getAdditionalArgsForContainer({
         return [];
     }
     return ContainerType._visit(typeReference.container, {
-        list: (listItemType) => {
-            return getAdditionalArgsForList({ ts, listItemType, referenceToEncoder, args });
+        list: (itemType) => {
+            return getRecursiveMethodCall({ ts, itemType, referenceToEncoder, args });
         },
-        set: () => {
-            throw new Error("TODO");
+        set: (itemType) => {
+            return getRecursiveMethodCall({ ts, itemType, referenceToEncoder, args });
         },
-        optional: () => {
-            throw new Error("TODO");
+        optional: (itemType) => {
+            return getRecursiveMethodCall({ ts, itemType, referenceToEncoder, args });
         },
-        map: () => {
-            throw new Error("TODO");
+        map: ({ valueType }) => {
+            return getRecursiveMethodCall({ ts, itemType: valueType, referenceToEncoder, args });
         },
         _unknown: () => {
             throw new Error("Unknown container type: " + typeReference.container._type);
@@ -109,14 +109,14 @@ function getAdditionalArgsForContainer({
     });
 }
 
-function getAdditionalArgsForList({
+function getRecursiveMethodCall({
     ts,
-    listItemType,
+    itemType,
     referenceToEncoder,
     args,
 }: {
     ts: TsMorph["ts"];
-    listItemType: TypeReference;
+    itemType: TypeReference;
     referenceToEncoder: tsMorph.ts.Expression;
     args: getMethodCallForModelTypeVariableReference.MethodCallArguments;
 }): tsMorph.ts.Expression[] {
@@ -146,7 +146,7 @@ function getAdditionalArgsForList({
                     undefined,
                     getMethodCallForModelTypeVariableReference({
                         ts,
-                        typeReference: listItemType,
+                        typeReference: itemType,
                         referenceToEncoder,
                         args: {
                             method: "encode",
@@ -175,7 +175,7 @@ function getAdditionalArgsForList({
                     undefined,
                     getMethodCallForModelTypeVariableReference({
                         ts,
-                        typeReference: listItemType,
+                        typeReference: itemType,
                         referenceToEncoder,
                         args: {
                             method: "decode",
