@@ -2,7 +2,7 @@ import path from "path";
 import SimpleProgressWebpackPlugin from "simple-progress-webpack-plugin";
 import * as webpack from "webpack";
 
-const config = (_env: unknown, { mode = "production" }: webpack.WebpackOptionsNormalized): webpack.Configuration => {
+export default (_env: unknown, { mode = "production" }: webpack.WebpackOptionsNormalized): webpack.Configuration => {
     return {
         mode,
         target: "node",
@@ -24,43 +24,9 @@ const config = (_env: unknown, { mode = "production" }: webpack.WebpackOptionsNo
             filename: "bundle.js",
             library: { type: "commonjs" },
         },
-        plugins: [new SimpleProgressWebpackPlugin({}), new BanModulesPlugin(["ts-morph", "typescript"])],
+        plugins: [new SimpleProgressWebpackPlugin({})],
         optimization: {
             minimize: false,
         },
     };
 };
-
-class BanModulesPlugin implements webpack.WebpackPluginInstance {
-    private static NAME = "BanModulesPlugin";
-    constructor(private readonly bannedModules: string[]) {}
-    public apply = (compiler: webpack.Compiler) => {
-        compiler.hooks.thisCompilation.tap(BanModulesPlugin.NAME, (compilation) => {
-            compilation.hooks.afterOptimizeChunks.tap(BanModulesPlugin.NAME, (chunks) => {
-                for (const chunk of chunks) {
-                    compilation.chunkGraph.getChunkModules(chunk).forEach((module) => {
-                        for (const bannedModule of this.bannedModules) {
-                            if (module.context?.includes(`/node_modules/${bannedModule}`)) {
-                                compilation.errors.push(
-                                    new BannedDependencyError(`${bannedModule} is banned`, {
-                                        name: module.context,
-                                    })
-                                );
-                            }
-                        }
-                    });
-                }
-            });
-        });
-    };
-}
-
-class BannedDependencyError extends webpack.WebpackError {
-    constructor(message: string, loc: webpack.WebpackError["loc"]) {
-        super(message);
-        this.name = "BannedDependencyError";
-        this.loc = loc;
-    }
-}
-
-export default config;

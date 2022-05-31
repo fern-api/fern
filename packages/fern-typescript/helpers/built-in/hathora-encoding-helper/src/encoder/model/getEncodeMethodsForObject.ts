@@ -1,6 +1,6 @@
 import { ObjectProperty, ObjectTypeDefinition } from "@fern-api/api";
 import { TypeResolver } from "@fern-typescript/commons";
-import { tsMorph, TsMorph } from "@fern-typescript/helper-utils";
+import { ts } from "@fern-typescript/helper-utils";
 import { HathoraEncoderConstants } from "../../constants";
 import { getMethodCallForModelTypeVariableReference } from "../../method-calls/getMethodCallForModelTypeVariableReference";
 import {
@@ -14,12 +14,10 @@ export function getEncodeMethodsForObject({
     object,
     typeResolver,
     decodedType,
-    ts,
 }: {
     object: ObjectTypeDefinition;
     typeResolver: TypeResolver;
-    decodedType: tsMorph.ts.TypeNode;
-    ts: TsMorph["ts"];
+    decodedType: ts.TypeNode;
 }): EncodeMethods {
     const properties = getAllProperties({ object, typeResolver });
     return {
@@ -29,7 +27,6 @@ export function getEncodeMethodsForObject({
                 ...properties.map((property) =>
                     ts.factory.createExpressionStatement(
                         getMethodCallForModelTypeVariableReference({
-                            ts,
                             typeReference: property.valueType,
                             referenceToEncoder: ts.factory.createIdentifier(HathoraEncoderConstants.NAME),
                             args: {
@@ -54,7 +51,6 @@ export function getEncodeMethodsForObject({
                             ts.factory.createPropertyAssignment(
                                 ts.factory.createIdentifier(property.key),
                                 getMethodCallForModelTypeVariableReference({
-                                    ts,
                                     typeReference: property.valueType,
                                     referenceToEncoder: ts.factory.createIdentifier(HathoraEncoderConstants.NAME),
                                     args: {

@@ -18,7 +18,7 @@
     "fern": "./cli"
   },
   "scripts": {
-    "clean": "tsc --build clean tsconfig.json && tsc --build clean tsconfig.cjs.json",
+    "clean": "tsc --build --clean tsconfig.json && tsc --build --clean tsconfig.cjs.json",
     "compile": "tsc --build tsconfig.json && tsc --build tsconfig.cjs.json",
     "test": "jest --passWithNoTests",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",

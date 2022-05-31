@@ -1,21 +1,19 @@
 import { PrimitiveType } from "@fern-api/api";
-import { FernWriters } from "@fern-typescript/commons";
-import { createPrinter, TsMorph, tsMorph } from "@fern-typescript/helper-utils";
+import { FernWriters, getTextOfTsNode } from "@fern-typescript/commons";
+import { ts, tsMorph } from "@fern-typescript/helper-utils";
 import { getEncoderNameForPrimitive } from "../constants";
 import { generateBinSerdeMethodCall } from "./bin-serde/generateBinSerdeMethodCall";
 import { constructEncodeMethods, EncodeMethods, ENCODE_PARAMETER_NAME } from "./constructEncodeMethods";
 
-export function writePrimitives(tsMorph: TsMorph): tsMorph.WriterFunction {
-    const printNode = createPrinter(tsMorph);
+export function writePrimitives(): tsMorph.WriterFunction {
     const writer = FernWriters.object.writer({ newlinesBetweenProperties: true });
 
     for (const primitiveType of PrimitiveType._values()) {
         writer.addProperty({
             key: getEncoderNameForPrimitive(primitiveType),
-            value: printNode(
+            value: getTextOfTsNode(
                 constructEncodeMethods({
-                    methods: getEncodeMethodsForPrimitive({ primitiveType, ts: tsMorph.ts }),
-                    ts: tsMorph.ts,
+                    methods: getEncodeMethodsForPrimitive({ primitiveType }),
                 })
             ),
         });
@@ -24,13 +22,7 @@ export function writePrimitives(tsMorph: TsMorph): tsMorph.WriterFunction {
     return writer.toFunction();
 }
 
-function getEncodeMethodsForPrimitive({
-    primitiveType,
-    ts,
-}: {
-    primitiveType: PrimitiveType;
-    ts: TsMorph["ts"];
-}): EncodeMethods {
+function getEncodeMethodsForPrimitive({ primitiveType }: { primitiveType: PrimitiveType }): EncodeMethods {
     return PrimitiveType._visit<EncodeMethods>(primitiveType, {
         integer: () => ({
             decodedType: ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
@@ -38,7 +30,6 @@ function getEncodeMethodsForPrimitive({
                 statements: [
                     ts.factory.createReturnStatement(
                         generateBinSerdeMethodCall({
-                            ts,
                             utility: "writer",
                             method: "writeVarint",
                             args: [ts.factory.createIdentifier(ENCODE_PARAMETER_NAME)],
@@ -50,7 +41,6 @@ function getEncodeMethodsForPrimitive({
                 statements: [
                     ts.factory.createReturnStatement(
                         generateBinSerdeMethodCall({
-                            ts,
                             utility: "reader",
                             method: "readVarint",
                         })
@@ -64,7 +54,6 @@ function getEncodeMethodsForPrimitive({
                 statements: [
                     ts.factory.createReturnStatement(
                         generateBinSerdeMethodCall({
-                            ts,
                             utility: "writer",
                             method: "writeFloat",
                             args: [ts.factory.createIdentifier(ENCODE_PARAMETER_NAME)],
@@ -76,7 +65,6 @@ function getEncodeMethodsForPrimitive({
                 statements: [
                     ts.factory.createReturnStatement(
                         generateBinSerdeMethodCall({
-                            ts,
                             utility: "reader",
                             method: "readFloat",
                         })
@@ -90,7 +78,6 @@ function getEncodeMethodsForPrimitive({
                 statements: [
                     ts.factory.createReturnStatement(
                         generateBinSerdeMethodCall({
-                            ts,
                             utility: "writer",
                             method: "writeString",
                             args: [ts.factory.createIdentifier(ENCODE_PARAMETER_NAME)],
@@ -102,7 +89,6 @@ function getEncodeMethodsForPrimitive({
                 statements: [
                     ts.factory.createReturnStatement(
                         generateBinSerdeMethodCall({
-                            ts,
                             utility: "reader",
                             method: "readString",
                         })
@@ -116,7 +102,6 @@ function getEncodeMethodsForPrimitive({
                 statements: [
                     ts.factory.createReturnStatement(
                         generateBinSerdeMethodCall({
-                            ts,
                             utility: "writer",
                             method: "writeUInt8",
                             args: [
@@ -137,7 +122,6 @@ function getEncodeMethodsForPrimitive({
                     ts.factory.createReturnStatement(
                         ts.factory.createBinaryExpression(
                             generateBinSerdeMethodCall({
-                                ts,
                                 utility: "reader",
                                 method: "readUInt8",
                             }),

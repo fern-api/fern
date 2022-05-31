@@ -4,9 +4,9 @@ import {
     Encoder,
     FileBasedEncoder,
     InlineEncoder,
+    ts,
     VariableReference,
 } from "@fern-typescript/helper-utils";
-import * as tsMorph from "ts-morph";
 import { ClientConstants } from "../../constants";
 
 export function generateEncoderCall({
@@ -17,7 +17,7 @@ export function generateEncoderCall({
     encoder: Encoder;
     variableReference: VariableReference;
     method: EncodeMethod;
-}): tsMorph.ts.Expression {
+}): ts.Expression {
     switch (encoder._type) {
         case "fileBased":
             return generateFileBasedEncoderCall({ encoder, variableReference, method });
@@ -37,8 +37,8 @@ function generateFileBasedEncoderCall({
     variableReference: VariableReference;
     method: EncodeMethod;
 }) {
-    const referenceToEncoder = tsMorph.ts.factory.createPropertyAccessExpression(
-        tsMorph.ts.factory.createIdentifier(ClientConstants.Service.NamespaceImports.ENCODERS),
+    const referenceToEncoder = ts.factory.createPropertyAccessExpression(
+        ts.factory.createIdentifier(ClientConstants.Service.NamespaceImports.ENCODERS),
         encoder.name
     );
 
@@ -47,13 +47,11 @@ function generateFileBasedEncoderCall({
             return encoder.generateEncode({
                 referenceToDecodedObject: variableReference,
                 referenceToEncoder,
-                tsMorph,
             });
         case "decode":
             return encoder.generateDecode({
                 referenceToEncodedBuffer: variableReference,
                 referenceToEncoder,
-                tsMorph,
             });
         default:
             assertNever(method);
@@ -73,12 +71,10 @@ function generateInlineEncoderCall({
         case "encode":
             return encoder.generateEncode({
                 referenceToDecodedObject: variableReference,
-                tsMorph,
             });
         case "decode":
             return encoder.generateDecode({
                 referenceToEncodedBuffer: variableReference,
-                tsMorph,
             });
         default:
             assertNever(method);

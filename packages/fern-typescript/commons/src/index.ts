@@ -5,6 +5,7 @@ export { generateNamedTypeReference } from "./codegen/references/generateNamedTy
 export { generateTypeReference } from "./codegen/references/generateTypeReference";
 export { getFilePathForError } from "./codegen/references/getFilePathForError";
 export { getFilePathForNamedType } from "./codegen/references/getFilePathForNamedType";
+export { generateTypeUtilsReference } from "./codegen/type-utils/generateTypeUtilsReference";
 export { addBrandedTypeAlias } from "./codegen/utils/addBrandedTypeAlias";
 export { getRelativePathAsModuleSpecifierTo } from "./codegen/utils/getRelativePathAsModuleSpecifierTo";
 export { getTextOfTsKeyword } from "./codegen/utils/getTextOfTsKeyword";

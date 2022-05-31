@@ -63,8 +63,6 @@ export async function addEndpointToService({
                                     reference: generatedEndpointTypes.endpointParameter.typeReference,
                                     referencedIn: serviceFile,
                                     modelDirectory,
-                                    factory: ts.factory,
-                                    SyntaxKind: ts.SyntaxKind,
                                 })
                       ),
                   },

@@ -206,6 +206,9 @@ export const PostType = {
 } as const;
 
 export declare namespace PostType {
+  type Long = \\"LONG\\";
+  type Short = \\"SHORT\\";
+
   export interface _Visitor<Result> {
     long: () => Result;
     short: () => Result;
@@ -322,6 +325,12 @@ export const HttpMethod = {
 } as const;
 
 export declare namespace HttpMethod {
+  type Get = \\"GET\\";
+  type Post = \\"POST\\";
+  type Put = \\"PUT\\";
+  type Patch = \\"PATCH\\";
+  type Delete = \\"DELETE\\";
+
   export interface _Visitor<Result> {
     get: () => Result;
     post: () => Result;
@@ -408,6 +417,9 @@ export const WebSocketMessageOrigin = {
 } as const;
 
 export declare namespace WebSocketMessageOrigin {
+  type Client = \\"CLIENT\\";
+  type Server = \\"SERVER\\";
+
   export interface _Visitor<Result> {
     client: () => Result;
     server: () => Result;
@@ -452,6 +464,9 @@ export const WebSocketMessageResponseBehavior = {
 } as const;
 
 export declare namespace WebSocketMessageResponseBehavior {
+  type Ongoing = \\"ONGOING\\";
+  type RequestResponse = \\"REQUEST_RESPONSE\\";
+
   export interface _Visitor<Result> {
     ongoing: () => Result;
     requestResponse: () => Result;
@@ -657,6 +672,12 @@ export const PrimitiveType = {
 } as const;
 
 export declare namespace PrimitiveType {
+  type Integer = \\"INTEGER\\";
+  type Double = \\"DOUBLE\\";
+  type String = \\"STRING\\";
+  type Boolean = \\"BOOLEAN\\";
+  type Long = \\"LONG\\";
+
   export interface _Visitor<Result> {
     integer: () => Result;
     double: () => Result;
@@ -1010,6 +1031,9 @@ export const PostType = {
 } as const;
 
 export declare namespace PostType {
+  type Long = \\"LONG\\";
+  type Short = \\"SHORT\\";
+
   export interface _Visitor<Result> {
     long: () => Result;
     short: () => Result;
