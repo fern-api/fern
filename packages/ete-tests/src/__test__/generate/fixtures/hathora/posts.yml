@@ -6,6 +6,8 @@ types:
       id: string
       title: string
       content: list<list<string>>
+      mySet: set<boolean>
+      myMap: map<string, optional<integer>>
 services:
   http:
     PostsService:
