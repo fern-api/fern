@@ -1,0 +1,40 @@
+{
+  "name": "webpack-tester",
+  "version": "0.0.0",
+  "main": "dist/bundle.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "tsc --build --clean",
+    "compile": "TS_NODE_PROJECT=\"tsconfig.webpack-config.json\" webpack",
+    "test": "jest --passWithNoTests",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../../../.eslintignore",
+    "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../../../../.eslintignore --fix",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../../../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../../../shared/.prettierignore \"**\"",
+    "depcheck": "depcheck"
+  },
+  "dependencies": {
+    "@fern-typescript/helper-utils": "workspace:*"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.10",
+    "@babel/preset-env": "^7.17.10",
+    "@babel/preset-typescript": "^7.16.7",
+    "@types/jest": "^27.4.1",
+    "@types/node": "^17.0.33",
+    "@types/webpack": "^5.28.0",
+    "depcheck": "^1.4.3",
+    "eslint": "^8.12.0",
+    "jest": "^27.5.1",
+    "prettier": "^2.6.2",
+    "simple-progress-webpack-plugin": "^2.0.0",
+    "ts-loader": "^9.3.0",
+    "ts-node": "^10.7.0",
+    "tsconfig-paths-webpack-plugin": "^3.5.2",
+    "typescript": "^4.6.4",
+    "webpack": "^5.72.1",
+    "webpack-cli": "^4.9.2"
+  }
+}
