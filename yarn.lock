@@ -2583,13 +2583,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/json5@npm:^0.0.29":
-  version: 0.0.29
-  resolution: "@types/json5@npm:0.0.29"
-  checksum: 4f7f0667d7573ce2888e01e5e887c9661bb2a7e7fd79aae3c57391e812e87cc2fadc4dc1616530f33e63798a011fabe816f41730b511050aba702688466765fd
-  languageName: node
-  linkType: hard
-
 "@types/keyv@npm:^3.1.1":
   version: 3.1.4
   resolution: "@types/keyv@npm:3.1.4"
@@ -4652,7 +4645,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"enhanced-resolve@npm:^5.0.0, enhanced-resolve@npm:^5.7.0, enhanced-resolve@npm:^5.9.3":
+"enhanced-resolve@npm:^5.0.0, enhanced-resolve@npm:^5.9.3":
   version: 5.9.3
   resolution: "enhanced-resolve@npm:5.9.3"
   dependencies:
@@ -7172,7 +7165,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimist@npm:^1.2.0, minimist@npm:^1.2.6":
+"minimist@npm:^1.2.0":
   version: 1.2.6
   resolution: "minimist@npm:1.2.6"
   checksum: b0286df020a110fa0173e71d8c9903748eb2cc939396d04a61bc224635393c564bc264d04a16e36d51e5489be513f98d7dbe5c2cf11598da11c91f6a18b9449e
@@ -8760,13 +8753,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"strip-bom@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "strip-bom@npm:3.0.0"
-  checksum: 115a5e3d9edddfd0f719604747ccb28c47ffb46a914a854e5430af163ef9965aba377b90a692531310e53c72191733c791fbf1751ae5b2bbe492c169fd759314
-  languageName: node
-  linkType: hard
-
 "strip-bom@npm:^4.0.0":
   version: 4.0.0
   resolution: "strip-bom@npm:4.0.0"
@@ -9158,29 +9144,6 @@ __metadata:
     ts-node-transpile-only: dist/bin-transpile.js
     ts-script: dist/bin-script-deprecated.js
   checksum: f9b0b03068f3917015c016b95c98ace66c03ad98502b6996054b7b01bd308feeef03489509ca3ed71248ee7e85758e61ae72220288ff2ee10a048a07ccb80a6f
-  languageName: node
-  linkType: hard
-
-"tsconfig-paths-webpack-plugin@npm:^3.5.2":
-  version: 3.5.2
-  resolution: "tsconfig-paths-webpack-plugin@npm:3.5.2"
-  dependencies:
-    chalk: "npm:^4.1.0"
-    enhanced-resolve: "npm:^5.7.0"
-    tsconfig-paths: "npm:^3.9.0"
-  checksum: 7130bfca078fa22b5f0e515695a6e8ec90683d6ddcd4b0fd3404e45b92ac0ccd000ac7342a8a93abcc3c042e6fe153b3f66aa2d126398fec2173b3adad33297f
-  languageName: node
-  linkType: hard
-
-"tsconfig-paths@npm:^3.9.0":
-  version: 3.14.1
-  resolution: "tsconfig-paths@npm:3.14.1"
-  dependencies:
-    "@types/json5": "npm:^0.0.29"
-    json5: "npm:^1.0.1"
-    minimist: "npm:^1.2.6"
-    strip-bom: "npm:^3.0.0"
-  checksum: 7f856252e523597e8fc3234b2f992d6d76a807793cb59bd2d924db9beb2594bfe7a18ee93898088733cb55b1cce4be306924a5da5f760eff137d4c2d7bf85fad
   languageName: node
   linkType: hard
 
@@ -9594,31 +9557,6 @@ __metadata:
   checksum: aaccb99ee23afcfa1ebddbd7101f7cf15cdc3d72afe37258cf6d852eb6cfedf540086fae3a53b2c65412040eb2e1a3e7b1bff077b09eaf4f82f032a8211d6a6f
   languageName: node
   linkType: hard
-
-"webpack-tester@workspace:packages/fern-typescript/helpers/built-in/webpack-tester":
-  version: 0.0.0-use.local
-  resolution: "webpack-tester@workspace:packages/fern-typescript/helpers/built-in/webpack-tester"
-  dependencies:
-    "@babel/core": "npm:^7.17.10"
-    "@babel/preset-env": "npm:^7.17.10"
-    "@babel/preset-typescript": "npm:^7.16.7"
-    "@fern-typescript/helper-utils": "workspace:*"
-    "@types/jest": "npm:^27.4.1"
-    "@types/node": "npm:^17.0.33"
-    "@types/webpack": "npm:^5.28.0"
-    depcheck: "npm:^1.4.3"
-    eslint: "npm:^8.12.0"
-    jest: "npm:^27.5.1"
-    prettier: "npm:^2.6.2"
-    simple-progress-webpack-plugin: "npm:^2.0.0"
-    ts-loader: "npm:^9.3.0"
-    ts-node: "npm:^10.7.0"
-    tsconfig-paths-webpack-plugin: "npm:^3.5.2"
-    typescript: "npm:^4.6.4"
-    webpack: "npm:^5.72.1"
-    webpack-cli: "npm:^4.9.2"
-  languageName: unknown
-  linkType: soft
 
 "webpack@npm:^5, webpack@npm:^5.72.1":
   version: 5.72.1
