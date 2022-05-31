@@ -7,7 +7,7 @@
   ],
   "scripts": {
     "clean": "tsc --build --clean",
-    "compile": "TS_NODE_PROJECT=\"tsconfig.webpack-config.json\" webpack",
+    "compile": "TS_NODE_PROJECT=\"tsconfig.webpack.json\" webpack",
     "test": "jest --passWithNoTests",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../../../.eslintignore",
     "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../../../../.eslintignore --fix",
