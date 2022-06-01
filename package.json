@@ -22,7 +22,8 @@
     "depcheck": "yarn workspaces foreach --verbose --parallel run depcheck",
     "codegen": "fern generate",
     "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public",
-    "docs:preview": "yarn docsify serve docs"
+    "docs:preview": "yarn docsify serve docs",
+    "fern:local": "ts-node --project packages/cli/tsconfig.cjs.json packages/cli/src/cli.ts"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.17.0",
@@ -30,12 +31,13 @@
     "depcheck": "^1.4.3",
     "docsify-cli": "^4.4.4",
     "eslint": "^8.12.0",
-    "fern-api": "0.0.70",
+    "fern-api": "workspace:*",
     "husky": "^7.0.4",
     "jest": "^27.5.1",
     "lint-staged": "^12.3.7",
     "mrlint": "^0.0.26",
     "prettier": "^2.6.2",
+    "ts-node": "^10.8.0",
     "typescript": "^4.6.4"
   },
   "packageManager": "yarn@3.2.1"

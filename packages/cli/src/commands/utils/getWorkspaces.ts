@@ -27,7 +27,6 @@ async function collectWorkspaceDefinitions({
             "No project configuration found. If you're intentionally running from outside a project, you must manually specify the workspace(s)."
         );
     }
-
     const workspacesGlobs = projectConfig.workspaces;
     const allWorkspaces: string[] = [];
     for (const workspacesGlob of workspacesGlobs) {
