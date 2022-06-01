@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`fern add tests fern add 1`] = `
+"name: Blog Post API
+input: src
+plugins:
+  - name: fernapi/fern-java
+    version: 0.0.29
+    output: generated-java
+    config:
+      packagePrefix: com
+      mode: CLIENT_AND_SERVER
+  - name: fernapi/fern-typescript
+    version: 0.0.71
+    output: generated-typescript
+    config:
+      mode: client
+  - name: fernapi/fern-postman
+    version: 0.0.3
+    output: generated-postman
+"
+`;

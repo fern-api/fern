@@ -24,7 +24,7 @@ void yargs(hideBin(process.argv))
                         "If omitted, every workspace specified in the project-level configuration (fern.config.json) will be processed.",
                 })
                 .positional("plugin", {
-                    choices: ["typescript", "java"] as const,
+                    choices: ["typescript", "java", "postman"] as const,
                     demandOption: true,
                 }),
         async (argv) => {

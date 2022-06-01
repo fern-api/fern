@@ -1,1 +1,1 @@
-export { addJavaPlugin, addTypescriptPlugin } from "./addPlugin";
+export { addJavaPlugin, addTypescriptPlugin, addPostmanPlugin } from "./addPlugin";
