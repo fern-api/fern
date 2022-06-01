@@ -4,11 +4,11 @@
 node_modules
 
 # production
-build
-lib
-dist
-tsconfig*tsbuildinfo
-bundle.js
+packages/**/build
+packages/**/lib
+packages/**/dist
+packages/**/tsconfig*tsbuildinfo
+packages/**/bundle.js
 
 # environment
 .env.local
@@ -32,4 +32,4 @@ lerna-debug.log*
 !.yarn/versions
 
 # fern
-generated
+packages/**/generated
