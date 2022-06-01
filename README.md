@@ -24,7 +24,7 @@ Every request can result in success or failure. Errors are strongly typed so it'
 
 ### How does it work?
 
-An API begins as a **Fern Definition**, a set of YAML files that describe your API. For example, here's a Fern Definition for a simple API to get the current day of the week:
+An API begins as a **Fern Definition**, a set of YAML files that describe your API. For example, here's a **Fern Definition** for a simple API to get the current day of the week:
 
 ```yaml
 types:
