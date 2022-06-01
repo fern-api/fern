@@ -13,7 +13,7 @@ void yargs(hideBin(process.argv))
         handler: initialize,
     })
     .command(
-        ["$0 add <plugin> [workspaces...]"],
+        ["add <plugin> [workspaces...]"],
         "Add a plugin to .fernrc.yml",
         (yargs) =>
             yargs
@@ -27,10 +27,12 @@ void yargs(hideBin(process.argv))
                     choices: ["typescript", "java"] as const,
                     demandOption: true,
                 }),
-        (argv) => addPluginToWorkspaces(argv.workspaces ?? [], argv.plugin)
+        async (argv) => {
+            await addPluginToWorkspaces(argv.workspaces ?? [], argv.plugin);
+        }
     )
     .command(
-        ["$0 [workspaces...]", "generate", "gen"],
+        ["generate [workspaces...]", "gen"],
         "Generate typesafe servers and clients",
         (yargs) =>
             yargs.positional("workspaces", {
