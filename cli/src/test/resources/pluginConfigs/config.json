@@ -9,6 +9,6 @@
   },
   "customConfig": {
     "packagePrefix": "com.fern",
-    "mode": "MODEL"
+    "mode": "model"
   }
 }
