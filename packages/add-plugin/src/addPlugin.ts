@@ -21,12 +21,24 @@ function addPluginIfNotPresent(
     pluginName: string,
     getDefaultPluginInvocationSchema: () => PluginInvocationSchema
 ): WorkspaceDefinitionSchema {
-    const pluginInstalled = workspaceDefinition.plugins.some((plugin) => plugin.name === pluginName);
+    const pluginInstalled =
+        workspaceDefinition.plugins != null
+            ? workspaceDefinition.plugins.some((plugin) => plugin.name === pluginName)
+            : workspaceDefinition.generators?.some((plugin) => plugin.name === pluginName);
     if (!pluginInstalled) {
-        return {
-            ...workspaceDefinition,
-            plugins: [...workspaceDefinition.plugins, getDefaultPluginInvocationSchema()],
-        };
+        if (workspaceDefinition.plugins != null) {
+            return {
+                ...workspaceDefinition,
+                plugins: [...workspaceDefinition.plugins, getDefaultPluginInvocationSchema()],
+            };
+        } else if (workspaceDefinition.generators != null) {
+            return {
+                ...workspaceDefinition,
+                generators: [...workspaceDefinition.generators, getDefaultPluginInvocationSchema()],
+            };
+        } else {
+            throw new Error("Neither plugins or generators were specified!");
+        }
     }
     return workspaceDefinition;
 }

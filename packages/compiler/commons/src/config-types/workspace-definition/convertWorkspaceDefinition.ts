@@ -1,4 +1,5 @@
 import path from "path";
+import { PluginInvocationSchema } from "./schemas/PluginInvocationSchema";
 import { WorkspaceDefinitionSchema } from "./schemas/WorkspaceDefinitionSchema";
 import { WorkspaceDefinition } from "./WorkspaceDefinition";
 
@@ -14,7 +15,7 @@ export function convertWorkspaceDefinition({
         _absolutePath: absolutePathToWorkspaceDir,
         name: definition.name,
         absolutePathToInput: path.resolve(absolutePathToWorkspaceDir, getDefinitionLocation(definition)),
-        plugins: definition.plugins.map((plugin) => ({
+        plugins: getGenerators(definition).map((plugin) => ({
             name: plugin.name,
             version: plugin.version,
             absolutePathToOutput:
@@ -35,12 +36,22 @@ export function convertWorkspaceDefinition({
     };
 }
 
-function getDefinitionLocation(definition: WorkspaceDefinitionSchema) {
+function getDefinitionLocation(definition: WorkspaceDefinitionSchema): string {
     if (definition.definition != null) {
         return definition.definition;
     } else if (definition.input != null) {
         return definition.input;
     } else {
         throw new Error(".fernrc.yml is missing definition");
+    }
+}
+
+function getGenerators(definition: WorkspaceDefinitionSchema): PluginInvocationSchema[] {
+    if (definition.generators != null) {
+        return definition.generators;
+    } else if (definition.plugins != null) {
+        return definition.plugins;
+    } else {
+        throw new Error(".fernrc.yml is missing generators");
     }
 }

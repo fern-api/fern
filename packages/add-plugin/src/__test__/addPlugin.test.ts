@@ -8,7 +8,11 @@ describe("addPlugin", () => {
             plugins: [],
         };
         const updatedWorkspaceDefinition = addJavaPlugin(workspaceDefinition);
-        expect(updatedWorkspaceDefinition.plugins.length).toEqual(1);
+        if (updatedWorkspaceDefinition.plugins != null) {
+            expect(updatedWorkspaceDefinition.plugins.length).toEqual(1);
+        } else {
+            expect(updatedWorkspaceDefinition.generators?.length).toEqual(1);
+        }
     });
     it("skip plugin if present", () => {
         const workspaceDefinition: WorkspaceDefinitionSchema = {
