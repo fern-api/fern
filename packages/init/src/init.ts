@@ -30,7 +30,7 @@ async function writeApiSubDirectoryIfNotExists(): Promise<void> {
 
 const BLOG_POST_API_WORKSPACE_DEFINITION: WorkspaceDefinitionSchema = {
     name: "Blog Post API",
-    input: SRC_DIRECTORY,
+    definition: SRC_DIRECTORY,
     plugins: [],
 };
 

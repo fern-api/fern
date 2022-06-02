@@ -16,10 +16,10 @@ const BLOG_POST_API: RawSchemas.RawFernConfigurationSchema = {
             docs: "A blog post",
             properties: {
                 id: "PostId",
-                type: "PostType",
                 title: "string",
                 author: "Author",
                 content: "string",
+                postType: "PostType",
             },
         },
         PostType: {

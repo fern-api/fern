@@ -3,7 +3,8 @@ import { PluginInvocationSchema } from "./PluginInvocationSchema";
 
 export const WorkspaceDefinitionSchema = z.strictObject({
     name: z.optional(z.string()),
-    input: z.string(),
+    input: z.optional(z.string()),
+    definition: z.optional(z.string()),
     plugins: z.array(PluginInvocationSchema),
 });
 
