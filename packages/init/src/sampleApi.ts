@@ -10,9 +10,6 @@ export async function writeSampleApiToDirectory(dir: string): Promise<void> {
 const BLOG_POST_API_FILENAME = "blog.yml";
 
 const BLOG_POST_API: RawSchemas.RawFernConfigurationSchema = {
-    imports: {
-        menu: BLOG_POST_API_FILENAME,
-    },
     ids: ["PostId"],
     types: {
         BlogPost: {
@@ -62,6 +59,9 @@ const BLOG_POST_API: RawSchemas.RawFernConfigurationSchema = {
                                 content: "string",
                                 postType: "PostType",
                             },
+                        },
+                        response: {
+                            ok: "PostId",
                         },
                     },
                     getPost: {
