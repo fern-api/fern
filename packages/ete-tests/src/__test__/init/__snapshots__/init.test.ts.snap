@@ -10,7 +10,7 @@ exports[`fern init tests fern init 1`] = `
 
 exports[`fern init tests fern init 2`] = `
 "name: Blog Post API
-input: src
+definition: src
 plugins: []
 "
 `;
@@ -23,10 +23,10 @@ types:
     docs: A blog post
     properties:
       id: PostId
-      type: PostType
       title: string
       author: Author
       content: string
+      postType: PostType
   PostType:
     enum:
       - LONG

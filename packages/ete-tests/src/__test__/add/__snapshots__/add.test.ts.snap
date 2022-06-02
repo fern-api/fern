@@ -2,14 +2,14 @@
 
 exports[`fern add tests fern add 1`] = `
 "name: Blog Post API
-input: src
+definition: src
 plugins:
   - name: fernapi/fern-java
-    version: 0.0.29
+    version: 0.0.30
     output: generated-java
     config:
       packagePrefix: com
-      mode: CLIENT_AND_SERVER
+      mode: client_and_server
   - name: fernapi/fern-typescript
     version: 0.0.71
     output: generated-typescript

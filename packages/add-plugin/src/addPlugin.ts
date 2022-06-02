@@ -34,11 +34,11 @@ function addPluginIfNotPresent(
 function getJavaPluginConfigSchema(): PluginInvocationSchema {
     return {
         name: JAVA_PLUGIN_NAME,
-        version: "0.0.29",
+        version: "0.0.30",
         output: "generated-java",
         config: {
             packagePrefix: "com",
-            mode: "CLIENT_AND_SERVER",
+            mode: "client_and_server",
         },
     };
 }

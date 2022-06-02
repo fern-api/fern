@@ -13,7 +13,7 @@ export function convertWorkspaceDefinition({
     return {
         _absolutePath: absolutePathToWorkspaceDir,
         name: definition.name,
-        absolutePathToInput: path.resolve(absolutePathToWorkspaceDir, definition.input),
+        absolutePathToInput: path.resolve(absolutePathToWorkspaceDir, getDefinitionLocation(definition)),
         plugins: definition.plugins.map((plugin) => ({
             name: plugin.name,
             version: plugin.version,
@@ -33,4 +33,14 @@ export function convertWorkspaceDefinition({
                     : [],
         })),
     };
+}
+
+function getDefinitionLocation(definition: WorkspaceDefinitionSchema) {
+    if (definition.definition != null) {
+        return definition.definition;
+    } else if (definition.input != null) {
+        return definition.input;
+    } else {
+        throw new Error(".fernrc.yml is missing definition");
+    }
 }
