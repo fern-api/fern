@@ -11,7 +11,7 @@ exports[`fern init tests fern init 1`] = `
 exports[`fern init tests fern init 2`] = `
 "name: Blog Post API
 definition: src
-plugins: []
+generators: []
 "
 `;
 

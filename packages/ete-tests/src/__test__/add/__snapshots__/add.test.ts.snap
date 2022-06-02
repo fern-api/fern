@@ -3,7 +3,7 @@
 exports[`fern add tests fern add 1`] = `
 "name: Blog Post API
 definition: src
-plugins:
+generators:
   - name: fernapi/fern-java
     version: 0.0.30
     output: generated-java
