@@ -22,14 +22,14 @@ const BLOG_POST_API: RawSchemas.RawFernConfigurationSchema = {
                 postType: "PostType",
             },
         },
-        PostType: {
-            enum: ["LONG", "SHORT"],
-        },
         Author: {
             union: {
                 anonymous: {},
                 name: "string",
             },
+        },
+        PostType: {
+            enum: ["LONG", "SHORT"],
         },
     },
     errors: {
