@@ -131,11 +131,6 @@ async function generateService({
     });
 
     serviceFile.addImportDeclaration({
-        namespaceImport: ClientConstants.Service.NamespaceImports.ENDPOINTS,
-        moduleSpecifier: getRelativePathAsModuleSpecifierTo(serviceFile, endpointsDirectory),
-    });
-
-    serviceFile.addImportDeclaration({
         namespaceImport: ClientConstants.Service.NamespaceImports.ENCODERS,
         moduleSpecifier: getRelativePathAsModuleSpecifierTo(serviceFile, encodersDirectory),
     });
@@ -150,7 +145,6 @@ async function generateService({
             errorsDirectory,
             endpointsDirectory,
             servicesDirectory,
-            serviceDirectory,
             typeResolver,
             helperManager,
         });
