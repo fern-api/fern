@@ -1,5 +1,5 @@
 import { Encoding, TypeReference } from "@fern-api/api";
-import { SourceFile, ts } from "ts-morph";
+import { EndpointTypeName } from "../generateEndpointTypeReference";
 
 export interface GeneratedEndpointTypes {
     methodName: string;
@@ -30,7 +30,7 @@ export type EndpointParameterReference = LocalEndpointParameterReference | Model
 export interface LocalEndpointParameterReference {
     // is located in a file local to this service, not imported from the model
     isLocal: true;
-    typeName: ts.Identifier;
+    typeName: EndpointTypeName;
 }
 
 export interface ModelEndpointParameterReference {
@@ -44,8 +44,7 @@ export type WireMessageBodyReference = LocalWireMessageBodyReference | ModelWire
 export interface LocalWireMessageBodyReference {
     // is located in a file local to this service, not imported from the model
     isLocal: true;
-    typeName: ts.Identifier;
-    generateTypeReference: (referencedIn: SourceFile) => ts.TypeNode;
+    typeName: EndpointTypeName;
 }
 
 export interface ModelWireMessageBodyReference {

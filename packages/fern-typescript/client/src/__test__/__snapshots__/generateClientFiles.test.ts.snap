@@ -214,7 +214,7 @@ export * from \\"./Response\\";
 ",
   "/services/NoErrorsService/endpoints/index.ts": "export * as get from \\"./get\\";
 ",
-  "/services/NoErrorsService/index.ts": "export * as EndpointTypes from \\"./endpoints\\";
+  "/services/NoErrorsService/index.ts": "export * as Endpoints from \\"./endpoints\\";
 export * from \\"./NoErrorsService\\";
 ",
   "/services/PostsService/PostsService.ts": "import {
@@ -527,7 +527,7 @@ export * from \\"./Response\\";
 export * as getPost from \\"./getPost\\";
 export * as getPostV2 from \\"./getPostV2\\";
 ",
-  "/services/PostsService/index.ts": "export * as EndpointTypes from \\"./endpoints\\";
+  "/services/PostsService/index.ts": "export * as Endpoints from \\"./endpoints\\";
 export * from \\"./PostsService\\";
 ",
   "/services/index.ts": "export * as NoErrorsService from \\"./NoErrorsService\\";
@@ -974,7 +974,7 @@ export * from \\"./Response\\";
 export * as getPost from \\"./getPost\\";
 export * as getPostV2 from \\"./getPostV2\\";
 ",
-  "/services/PostsService/index.ts": "export * as EndpointTypes from \\"./endpoints\\";
+  "/services/PostsService/index.ts": "export * as Endpoints from \\"./endpoints\\";
 export * from \\"./PostsService\\";
 ",
   "/services/index.ts": "export * as PostsService from \\"./PostsService\\";

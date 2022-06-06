@@ -1,13 +1,14 @@
 import { Type } from "@fern-api/api";
 import { assertNever } from "@fern-api/commons";
-import { getOrCreateSourceFile, getRelativePathAsModuleSpecifierTo, TypeResolver } from "@fern-typescript/commons";
+import { getOrCreateSourceFile, TypeResolver } from "@fern-typescript/commons";
 import { generateType } from "@fern-typescript/model";
-import { Directory, ts } from "ts-morph";
+import { Directory } from "ts-morph";
+import { EndpointTypeName } from "../generateEndpointTypeReference";
 import { WireMessageBodyReference } from "./types";
 
 export declare namespace generateWireMessageBodyReference {
     export interface Args {
-        typeName: string;
+        typeName: EndpointTypeName;
         type: Type;
         docs: string | null | undefined;
         endpointDirectory: Directory;
@@ -33,7 +34,7 @@ export function generateWireMessageBodyReference({
                     typeReference: type.aliasOf,
                 };
             case "container":
-                // generate an new file for this aliased type
+                // generate a new file for this aliased type
                 break;
             case "void":
                 return undefined;
@@ -54,13 +55,6 @@ export function generateWireMessageBodyReference({
 
     return {
         isLocal: true,
-        typeName: ts.factory.createIdentifier(typeName),
-        generateTypeReference: (referencedIn) => {
-            referencedIn.addImportDeclaration({
-                namedImports: [typeName],
-                moduleSpecifier: getRelativePathAsModuleSpecifierTo(referencedIn, wireMessageFile),
-            });
-            return ts.factory.createTypeReferenceNode(typeName);
-        },
+        typeName,
     };
 }

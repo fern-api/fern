@@ -4,10 +4,15 @@ types:
     docs: A blog post
     properties:
       id: PostId
+      type: PostType
       title: string
       content: list<list<string>>
       mySet: set<boolean>
       myMap: map<string, optional<integer>>
+  PostType:
+    enum:
+      - PRIVATE
+      - PUBLIC
 services:
   http:
     PostsService:
@@ -20,4 +25,9 @@ services:
             alias: PostId
             encoding: hathora
           response:
+            ok:
+              properties:
+                a: string
+                b: boolean
+                c: Post
             encoding: hathora

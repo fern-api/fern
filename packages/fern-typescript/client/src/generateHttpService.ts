@@ -49,6 +49,7 @@ export async function generateHttpService({
         modelDirectory,
         errorsDirectory,
         encodersDirectory,
+        servicesDirectory,
         typeResolver,
         helperManager,
     });
@@ -59,6 +60,7 @@ async function generateService({
     serviceDirectory,
     modelDirectory,
     errorsDirectory,
+    servicesDirectory,
     encodersDirectory,
     typeResolver,
     helperManager,
@@ -67,6 +69,7 @@ async function generateService({
     serviceDirectory: Directory;
     modelDirectory: Directory;
     errorsDirectory: Directory;
+    servicesDirectory: Directory;
     encodersDirectory: Directory;
     typeResolver: TypeResolver;
     helperManager: HelperManager;
@@ -123,7 +126,7 @@ async function generateService({
     const endpointsDirectory = getOrCreateDirectory(serviceDirectory, ClientConstants.Files.ENDPOINTS_DIRECTORY_NAME, {
         exportOptions: {
             type: "namespace",
-            namespace: "EndpointTypes",
+            namespace: ClientConstants.Files.ENDPOINTS_NAMESPACE_EXPORT,
         },
     });
 
@@ -146,6 +149,8 @@ async function generateService({
             modelDirectory,
             errorsDirectory,
             endpointsDirectory,
+            servicesDirectory,
+            serviceDirectory,
             typeResolver,
             helperManager,
         });

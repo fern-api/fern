@@ -4,20 +4,20 @@ import { HelperManager } from "@fern-typescript/helper-manager";
 import { Directory } from "ts-morph";
 
 export async function generateEncoderFiles({
-    directory,
+    encodersDirectory,
     modelDirectory,
+    servicesDirectory,
     intermediateRepresentation,
     helperManager,
     typeResolver,
 }: {
-    directory: Directory;
+    encodersDirectory: Directory;
     modelDirectory: Directory;
+    servicesDirectory: Directory;
     intermediateRepresentation: IntermediateRepresentation;
     helperManager: HelperManager;
     typeResolver: TypeResolver;
 }): Promise<Directory> {
-    const encodersDirectory = getOrCreateDirectory(directory, "encoders");
-
     const helpers = helperManager.getHelpers();
     for (const helperReference of Object.values(helpers.encodings)) {
         const helper = await helperManager.getOrLoadHelper(helperReference);
@@ -31,6 +31,7 @@ export async function generateEncoderFiles({
                     encoder.writeEncoder({
                         encoderDirectory,
                         modelDirectory,
+                        servicesDirectory,
                         intermediateRepresentation,
                         typeResolver,
                     });

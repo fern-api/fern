@@ -1,9 +1,10 @@
 import { HttpEndpoint, HttpService } from "@fern-api/api";
+import { generateTypeReference } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import { Directory, SourceFile, ts } from "ts-morph";
 import { ClientConstants } from "../../constants";
 import { GeneratedEndpointTypes } from "../generate-endpoint-types/types";
-import { generateReferenceToWireMessageType } from "../generate-endpoint-types/utils";
+import { EndpointTypeName } from "../generateEndpointTypeReference";
 import { generateEncoderCall } from "./generateEncoderCall";
 
 export async function generateReturnResponse({
@@ -19,7 +20,7 @@ export async function generateReturnResponse({
     serviceDefinition: HttpService;
     endpoint: HttpEndpoint;
     endpointTypes: GeneratedEndpointTypes;
-    getReferenceToEndpointType: (identifier: ts.Identifier) => ts.TypeReferenceNode;
+    getReferenceToEndpointType: (typeName: EndpointTypeName) => ts.TypeReferenceNode;
     modelDirectory: Directory;
     helperManager: HelperManager;
 }): Promise<ts.Statement> {
@@ -65,7 +66,7 @@ async function generateReturnSuccessResponse({
     serviceDefinition: HttpService;
     endpoint: HttpEndpoint;
     endpointTypes: GeneratedEndpointTypes;
-    getReferenceToEndpointType: (identifier: ts.Identifier) => ts.TypeReferenceNode;
+    getReferenceToEndpointType: (typeName: EndpointTypeName) => ts.TypeReferenceNode;
     modelDirectory: Directory;
     helperManager: HelperManager;
 }): Promise<ts.Statement[]> {
@@ -93,8 +94,8 @@ async function generateReturnSuccessResponse({
                     ts.factory.createIdentifier(ClientConstants.Service.Endpoint.Variables.DECODED_RESPONSE),
                     endpointTypes.response.successBodyReference.isLocal
                         ? getReferenceToEndpointType(endpointTypes.response.successBodyReference.typeName)
-                        : generateReferenceToWireMessageType({
-                              reference: endpointTypes.response.successBodyReference,
+                        : generateTypeReference({
+                              reference: endpointTypes.response.successBodyReference.typeReference,
                               referencedIn: serviceFile,
                               modelDirectory,
                           })
@@ -121,7 +122,7 @@ async function generateReturnErrorResponse({
     serviceDefinition: HttpService;
     endpoint: HttpEndpoint;
     endpointTypes: GeneratedEndpointTypes;
-    getReferenceToEndpointType: (identifier: ts.Identifier) => ts.TypeReferenceNode;
+    getReferenceToEndpointType: (typeName: EndpointTypeName) => ts.TypeReferenceNode;
     helperManager: HelperManager;
 }): Promise<ts.Statement[]> {
     const decodeErrorStatement = await generateDecodeResponse({
@@ -144,9 +145,7 @@ async function generateReturnErrorResponse({
                     ts.factory.createAsExpression(
                         ts.factory.createIdentifier(ClientConstants.Service.Endpoint.Variables.DECODED_ERROR),
                         getReferenceToEndpointType(
-                            ts.factory.createIdentifier(
-                                ClientConstants.Service.Endpoint.Types.Response.Error.Properties.Body.TYPE_NAME
-                            )
+                            ClientConstants.Service.Endpoint.Types.Response.Error.Properties.Body.TYPE_NAME
                         )
                     )
                 ),

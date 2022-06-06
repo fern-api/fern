@@ -27,7 +27,7 @@ export const HathoraEncoderConstants = {
     Errors: {
         NAME: "Errors",
     },
-};
+} as const;
 
 export function getEncoderNameForPrimitive(primitiveType: PrimitiveType): string {
     return PrimitiveType._visit(primitiveType, {

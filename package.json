@@ -27,6 +27,7 @@
     "fern:local": "ts-node --project packages/cli/tsconfig.cjs.json packages/cli/src/cli.ts"
   },
   "devDependencies": {
+    "@types/node": "^17.0.33",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
     "depcheck": "^1.4.3",

@@ -65,6 +65,7 @@ export declare namespace FileBasedEncoder {
             // FileBasedEncoder
             encoderDirectory: Directory;
             modelDirectory: Directory;
+            servicesDirectory: Directory;
             intermediateRepresentation: IntermediateRepresentation;
             typeResolver: TypeResolver;
         }
