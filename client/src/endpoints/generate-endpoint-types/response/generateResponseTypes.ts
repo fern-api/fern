@@ -1,23 +1,21 @@
-import { HttpEndpoint } from "@fern-api/api";
-import {
-    generateTypeReference,
-    getOrCreateSourceFile,
-    getTextOfTsKeyword,
-    getTextOfTsNode,
-    TypeResolver,
-} from "@fern-typescript/commons";
+import { HttpEndpoint, NamedType } from "@fern-api/api";
+import { getOrCreateSourceFile, getTextOfTsKeyword, getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
 import { Directory, OptionalKind, PropertySignatureStructure, SourceFile, ts, Writers } from "ts-morph";
 import { ClientConstants } from "../../../constants";
+import { generateEndpointTypeReference } from "../../generateEndpointTypeReference";
 import { generateWireMessageBodyReference } from "../generateWireMessageBodyReference";
 import { GeneratedEndpointTypes, WireMessageBodyReference } from "../types";
-import { generateErrorBodyReference } from "./generateErrorBodyReference";
+import { generateReferenceToWireMessageType } from "../utils";
+import { generateErrorBody } from "./generateErrorBody";
 
 export declare namespace generateResponseTypes {
     export interface Args {
+        serviceName: NamedType;
         endpoint: HttpEndpoint;
         endpointDirectory: Directory;
         modelDirectory: Directory;
         errorsDirectory: Directory;
+        servicesDirectory: Directory;
         typeResolver: TypeResolver;
     }
 
@@ -25,10 +23,12 @@ export declare namespace generateResponseTypes {
 }
 
 export function generateResponseTypes({
+    serviceName,
     endpoint,
     endpointDirectory,
     modelDirectory,
     errorsDirectory,
+    servicesDirectory,
     typeResolver,
 }: generateResponseTypes.Args): generateResponseTypes.Return {
     const successBodyReference = generateWireMessageBodyReference({
@@ -55,15 +55,25 @@ export function generateResponseTypes({
     });
 
     addSuccessResponseInterface({
+        endpoint,
+        serviceName,
         responseFile,
         successBodyReference,
         modelDirectory,
+        servicesDirectory,
     });
 
     const errorBodyFile = getOrCreateSourceFile(
         endpointDirectory,
         `${ClientConstants.Service.Endpoint.Types.Response.Error.Properties.Body.TYPE_NAME}.ts`
     );
+
+    generateErrorBody({
+        errors: endpoint.response.errors,
+        errorBodyFile,
+        errorsDirectory,
+    });
+
     responseFile.addInterface({
         name: ClientConstants.Service.Endpoint.Types.Response.Error.TYPE_NAME,
         isExported: true,
@@ -72,11 +82,12 @@ export function generateResponseTypes({
             {
                 name: ClientConstants.Service.Endpoint.Types.Response.Error.Properties.Body.PROPERTY_NAME,
                 type: getTextOfTsNode(
-                    generateErrorBodyReference({
-                        errors: endpoint.response.errors,
-                        errorBodyFile,
+                    generateEndpointTypeReference({
+                        serviceName,
+                        endpointId: endpoint.endpointId,
+                        typeName: ClientConstants.Service.Endpoint.Types.Response.Error.Properties.Body.TYPE_NAME,
                         referencedIn: responseFile,
-                        errorsDirectory,
+                        servicesDirectory,
                     })
                 ),
             },
@@ -90,23 +101,30 @@ export function generateResponseTypes({
 }
 
 function addSuccessResponseInterface({
+    serviceName,
+    endpoint,
     successBodyReference,
     responseFile,
     modelDirectory,
+    servicesDirectory,
 }: {
+    serviceName: NamedType;
+    endpoint: HttpEndpoint;
     successBodyReference: WireMessageBodyReference | undefined;
     responseFile: SourceFile;
     modelDirectory: Directory;
+    servicesDirectory: Directory;
 }): void {
     const successResponseBodyReference =
         successBodyReference != null
-            ? successBodyReference.isLocal
-                ? successBodyReference.generateTypeReference(responseFile)
-                : generateTypeReference({
-                      reference: successBodyReference.typeReference,
-                      referencedIn: responseFile,
-                      modelDirectory,
-                  })
+            ? generateReferenceToWireMessageType({
+                  serviceName,
+                  endpointId: endpoint.endpointId,
+                  reference: successBodyReference,
+                  referencedIn: responseFile,
+                  servicesDirectory,
+                  modelDirectory,
+              })
             : undefined;
 
     responseFile.addInterface({
