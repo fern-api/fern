@@ -1,6 +1,6 @@
-import { HttpEndpoint, HttpRequest } from "@fern-api/api";
+import { HttpEndpoint, HttpRequest, NamedType } from "@fern-api/api";
 import { getOrCreateSourceFile, TypeResolver } from "@fern-typescript/commons";
-import { Directory, ts } from "ts-morph";
+import { Directory } from "ts-morph";
 import { ClientConstants } from "../../../constants";
 import { generateWireMessageBodyReference } from "../generateWireMessageBodyReference";
 import { GeneratedEndpointTypes, LocalEndpointParameterReference } from "../types";
@@ -9,8 +9,10 @@ import { generateRequest } from "./generateRequest";
 export declare namespace generateRequestTypes {
     export interface Args {
         endpoint: HttpEndpoint;
+        serviceName: NamedType;
         endpointDirectory: Directory;
         modelDirectory: Directory;
+        servicesDirectory: Directory;
         typeResolver: TypeResolver;
     }
 
@@ -19,8 +21,10 @@ export declare namespace generateRequestTypes {
 
 export function generateRequestTypes({
     endpoint,
+    serviceName,
     endpointDirectory,
     modelDirectory,
+    servicesDirectory,
     typeResolver,
 }: generateRequestTypes.Args): generateRequestTypes.Return {
     const numParameters = endpoint.parameters.length + endpoint.queryParameters.length;
@@ -48,9 +52,7 @@ export function generateRequestTypes({
             endpointParameter: requestBodyReference.isLocal
                 ? {
                       isLocal: true,
-                      typeName: ts.factory.createIdentifier(
-                          ClientConstants.Service.Endpoint.Types.Request.Properties.Body.TYPE_NAME
-                      ),
+                      typeName: ClientConstants.Service.Endpoint.Types.Request.Properties.Body.TYPE_NAME,
                   }
                 : {
                       isLocal: false,
@@ -71,7 +73,7 @@ export function generateRequestTypes({
     );
     const endpointParameter: LocalEndpointParameterReference = {
         isLocal: true,
-        typeName: ts.factory.createIdentifier(ClientConstants.Service.Endpoint.Types.Request.TYPE_NAME),
+        typeName: ClientConstants.Service.Endpoint.Types.Request.TYPE_NAME,
     };
 
     // generate the Request type (in the request file). The request type will contain
@@ -79,7 +81,9 @@ export function generateRequestTypes({
     generateRequest({
         requestFile,
         endpoint,
+        serviceName,
         modelDirectory,
+        servicesDirectory,
         requestBodyReference,
     });
 

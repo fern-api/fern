@@ -1,6 +1,7 @@
 export const ClientConstants = {
     Files: {
         ENDPOINTS_DIRECTORY_NAME: "endpoints",
+        ENDPOINTS_NAMESPACE_EXPORT: "Endpoints",
     },
     Service: {
         NamespaceImports: {
@@ -105,4 +106,4 @@ export const ClientConstants = {
             },
         },
     },
-};
+} as const;

@@ -5,6 +5,7 @@ import { ClassDeclaration, Directory, InterfaceDeclaration, Scope, ts } from "ts
 import { ClientConstants } from "../constants";
 import { generateEndpointMethodBody } from "./endpoint-method-body/generateEndpointMethodBody";
 import { generateEndpointTypes } from "./generate-endpoint-types/generateEndpointTypes";
+import { EndpointTypeName, generateEndpointTypeReference } from "./generateEndpointTypeReference";
 
 export async function addEndpointToService({
     endpoint,
@@ -14,6 +15,8 @@ export async function addEndpointToService({
     modelDirectory,
     errorsDirectory,
     endpointsDirectory,
+    serviceDirectory,
+    servicesDirectory,
     typeResolver,
     helperManager,
 }: {
@@ -24,31 +27,32 @@ export async function addEndpointToService({
     endpointsDirectory: Directory;
     modelDirectory: Directory;
     errorsDirectory: Directory;
+    servicesDirectory: Directory;
+    serviceDirectory: Directory;
     typeResolver: TypeResolver;
     helperManager: HelperManager;
 }): Promise<void> {
     const serviceFile = serviceInterface.getSourceFile();
-    const serviceDirectory = serviceFile.getDirectory();
 
     const generatedEndpointTypes = generateEndpointTypes({
         endpoint,
+        serviceName: serviceDefinition.name,
         serviceDirectory,
         endpointsDirectory,
         modelDirectory,
         errorsDirectory,
+        servicesDirectory,
         typeResolver,
     });
 
-    const getReferenceToEndpointType = (reference: ts.Identifier): ts.TypeReferenceNode => {
-        return ts.factory.createTypeReferenceNode(
-            ts.factory.createQualifiedName(
-                ts.factory.createQualifiedName(
-                    ts.factory.createIdentifier(ClientConstants.Service.NamespaceImports.ENDPOINTS),
-                    ts.factory.createIdentifier(endpoint.endpointId)
-                ),
-                reference
-            )
-        );
+    const getReferenceToEndpointType = (typeName: EndpointTypeName): ts.TypeReferenceNode => {
+        return generateEndpointTypeReference({
+            serviceName: serviceDefinition.name,
+            typeName,
+            endpointId: endpoint.endpointId,
+            servicesDirectory,
+            referencedIn: serviceFile,
+        });
     };
 
     const parameters =
@@ -71,9 +75,7 @@ export async function addEndpointToService({
 
     const returnType = getTextOfTsNode(
         ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
-            getReferenceToEndpointType(
-                ts.factory.createIdentifier(ClientConstants.Service.Endpoint.Types.Response.TYPE_NAME)
-            ),
+            getReferenceToEndpointType(ClientConstants.Service.Endpoint.Types.Response.TYPE_NAME),
         ])
     );
 

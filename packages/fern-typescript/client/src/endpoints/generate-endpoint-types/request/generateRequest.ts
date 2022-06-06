@@ -1,4 +1,4 @@
-import { HttpEndpoint } from "@fern-api/api";
+import { HttpEndpoint, NamedType } from "@fern-api/api";
 import { generateTypeReference, getTextOfTsNode } from "@fern-typescript/commons";
 import { Directory, OptionalKind, PropertySignatureStructure, SourceFile } from "ts-morph";
 import { ClientConstants } from "../../../constants";
@@ -8,12 +8,16 @@ import { generateReferenceToWireMessageType } from "../utils";
 export function generateRequest({
     requestFile,
     endpoint,
+    serviceName,
     modelDirectory,
+    servicesDirectory,
     requestBodyReference,
 }: {
     requestFile: SourceFile;
     endpoint: HttpEndpoint;
+    serviceName: NamedType;
     modelDirectory: Directory;
+    servicesDirectory: Directory;
     requestBodyReference: WireMessageBodyReference | undefined;
 }): void {
     const properties: OptionalKind<PropertySignatureStructure>[] = [
@@ -46,9 +50,12 @@ export function generateRequest({
             name: ClientConstants.Service.Endpoint.Types.Request.Properties.Body.PROPERTY_NAME,
             type: getTextOfTsNode(
                 generateReferenceToWireMessageType({
+                    endpointId: endpoint.endpointId,
+                    serviceName,
                     reference: requestBodyReference,
                     referencedIn: requestFile,
                     modelDirectory,
+                    servicesDirectory,
                 })
             ),
         });

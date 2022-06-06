@@ -10,6 +10,8 @@ import { lowerFirst } from "lodash";
 import { SourceFile, ts, VariableDeclarationKind, WriterFunction } from "ts-morph";
 import { getKeyForEnum } from "./utils";
 
+export const ENUM_VALUES_PROPERTY_KEY = "_values";
+
 export function generateEnumType({
     file,
     typeName,
@@ -99,7 +101,7 @@ function createUtils({
     writer.addNewLine();
 
     writer.addProperty({
-        key: "_values",
+        key: ENUM_VALUES_PROPERTY_KEY,
         value: getTextOfTsNode(
             ts.factory.createArrowFunction(
                 undefined,

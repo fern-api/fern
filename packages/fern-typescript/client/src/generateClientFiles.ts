@@ -30,16 +30,9 @@ export async function generateClientFiles({
         modelDirectory,
     });
 
-    const encodersDirectory = await generateEncoderFiles({
-        directory,
-        intermediateRepresentation,
-        modelDirectory,
-        helperManager,
-        typeResolver,
-    });
+    const encodersDirectory = getOrCreateDirectory(directory, "encoders");
 
     const servicesDirectory = getOrCreateDirectory(directory, "services");
-
     for (const service of intermediateRepresentation.services.http) {
         await generateHttpService({
             service,
@@ -51,4 +44,13 @@ export async function generateClientFiles({
             helperManager,
         });
     }
+
+    await generateEncoderFiles({
+        encodersDirectory,
+        intermediateRepresentation,
+        modelDirectory,
+        servicesDirectory,
+        helperManager,
+        typeResolver,
+    });
 }

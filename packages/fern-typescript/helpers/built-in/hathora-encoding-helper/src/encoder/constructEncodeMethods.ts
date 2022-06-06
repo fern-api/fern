@@ -95,24 +95,23 @@ export function constructEncodeMethods({ methods }: constructEncodeMethods.Args)
                                     undefined,
                                     undefined,
                                     ts.factory.createConditionalExpression(
-                                        ts.factory.createCallExpression(
-                                            ts.factory.createPropertyAccessExpression(
-                                                ts.factory.createIdentifier("ArrayBuffer"),
-                                                ts.factory.createIdentifier("isView")
-                                            ),
-                                            undefined,
-                                            [ts.factory.createIdentifier(PARAMETER_NAME)]
+                                        ts.factory.createBinaryExpression(
+                                            ts.factory.createIdentifier(PARAMETER_NAME),
+                                            ts.factory.createToken(ts.SyntaxKind.InstanceOfKeyword),
+                                            generateBinSerdeValueReference(
+                                                HathoraEncoderConstants.BinSerDe.Exports.READER
+                                            )
                                         ),
                                         ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                                        ts.factory.createIdentifier(PARAMETER_NAME),
+                                        ts.factory.createToken(ts.SyntaxKind.ColonToken),
                                         ts.factory.createNewExpression(
                                             generateBinSerdeValueReference(
                                                 HathoraEncoderConstants.BinSerDe.Exports.READER
                                             ),
                                             undefined,
                                             [ts.factory.createIdentifier(PARAMETER_NAME)]
-                                        ),
-                                        ts.factory.createToken(ts.SyntaxKind.ColonToken),
-                                        ts.factory.createIdentifier(PARAMETER_NAME)
+                                        )
                                     )
                                 ),
                             ],

@@ -5035,6 +5035,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "fern@workspace:."
   dependencies:
+    "@types/node": "npm:^17.0.33"
     "@typescript-eslint/eslint-plugin": "npm:^5.17.0"
     "@typescript-eslint/parser": "npm:^5.17.0"
     depcheck: "npm:^1.4.3"

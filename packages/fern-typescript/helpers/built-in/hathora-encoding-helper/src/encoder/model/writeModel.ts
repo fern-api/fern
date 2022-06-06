@@ -2,7 +2,9 @@ import { Type, TypeDefinition, TypeReference } from "@fern-api/api";
 import { FernWriters, generateTypeReference, getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
 import { tsMorph } from "@fern-typescript/helper-utils";
 import { constructEncodeMethods, EncodeMethods } from "../constructEncodeMethods";
+import { NOT_IMPLEMENTED_ENCODE_METHODS } from "../utils";
 import { getEncodeMethodsForAlias } from "./getEncodeMethodsForAlias";
+import { getEncodeMethodsForEnum } from "./getEncodeMethodsForEnum";
 import { getEncodeMethodsForObject } from "./getEncodeMethodsForObject";
 
 export function writeModel({
@@ -25,6 +27,11 @@ export function writeModel({
                 constructEncodeMethods({
                     methods: getEncodeMethodsForType({
                         typeDefinition: type,
+                        decodedType: generateTypeReference({
+                            reference: TypeReference.named(type.name),
+                            referencedIn: file,
+                            modelDirectory,
+                        }),
                         typeResolver,
                         file,
                         modelDirectory,
@@ -37,22 +44,19 @@ export function writeModel({
     return writer.toFunction();
 }
 
-function getEncodeMethodsForType({
+export function getEncodeMethodsForType({
     typeDefinition,
+    decodedType,
     typeResolver,
     file,
     modelDirectory,
 }: {
     typeDefinition: TypeDefinition;
+    decodedType: tsMorph.ts.TypeNode;
     typeResolver: TypeResolver;
     file: tsMorph.SourceFile;
     modelDirectory: tsMorph.Directory;
 }): EncodeMethods {
-    const decodedType = generateTypeReference({
-        reference: TypeReference.named(typeDefinition.name),
-        referencedIn: file,
-        modelDirectory,
-    });
     return Type._visit<EncodeMethods>(typeDefinition.shape, {
         alias: (alias) => {
             return getEncodeMethodsForAlias({
@@ -64,13 +68,20 @@ function getEncodeMethodsForType({
             });
         },
         enum: () => {
-            return { decodedType, encode: { statements: [] }, decode: { statements: [] } };
+            return getEncodeMethodsForEnum({
+                decodedType,
+                typeDefinition,
+                file,
+                modelDirectory,
+            });
         },
         object: (object) => {
             return getEncodeMethodsForObject({ object, typeResolver, decodedType });
         },
         union: () => {
-            return { decodedType, encode: { statements: [] }, decode: { statements: [] } };
+            // TODO implement this once IR is more descriptive about union types
+            // https://github.com/fern-api/fern/issues/63
+            return NOT_IMPLEMENTED_ENCODE_METHODS;
         },
         _unknown: () => {
             throw new Error("Unknown type: " + typeDefinition.shape._type);

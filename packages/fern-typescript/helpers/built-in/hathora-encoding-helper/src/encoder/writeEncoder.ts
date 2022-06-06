@@ -4,12 +4,14 @@ import { ts, tsMorph } from "@fern-typescript/helper-utils";
 import { HathoraEncoderConstants } from "../constants";
 import { writeContainers } from "./containers/writeContainers";
 import { writeModel } from "./model/writeModel";
-import { writePrimitives } from "./writePrimitives";
+import { writePrimitives } from "./primitives/writePrimitives";
+import { writeServices } from "./services/writeServices";
 
 export declare namespace writeEncoder {
     export interface Args {
         file: tsMorph.SourceFile;
         modelDirectory: tsMorph.Directory;
+        servicesDirectory: tsMorph.Directory;
         intermediateRepresentation: IntermediateRepresentation;
         typeResolver: TypeResolver;
     }
@@ -20,6 +22,7 @@ export function writeEncoder({
     intermediateRepresentation,
     typeResolver,
     modelDirectory,
+    servicesDirectory,
 }: writeEncoder.Args): void {
     file.addImportDeclaration({
         namespaceImport: HathoraEncoderConstants.BinSerDe.NAMESPACE_IMPORT,
@@ -36,7 +39,13 @@ export function writeEncoder({
             file,
             modelDirectory,
         }),
-        [HathoraEncoderConstants.Services.NAME]: getTextOfTsNode(ts.factory.createStringLiteral("TODO")),
+        [HathoraEncoderConstants.Services.NAME]: writeServices({
+            services: intermediateRepresentation.services,
+            typeResolver,
+            file,
+            modelDirectory,
+            servicesDirectory,
+        }),
         [HathoraEncoderConstants.Errors.NAME]: getTextOfTsNode(ts.factory.createStringLiteral("TODO")),
     });
 
