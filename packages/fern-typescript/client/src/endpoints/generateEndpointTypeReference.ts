@@ -1,6 +1,5 @@
 import { NamedType } from "@fern-api/api";
 import { getRelativePathAsModuleSpecifierTo } from "@fern-typescript/commons";
-import path from "path";
 import { Directory, SourceFile, ts } from "ts-morph";
 import { ClientConstants } from "../constants";
 
@@ -31,9 +30,8 @@ export function generateEndpointTypeReference({
     servicesDirectory,
 }: generateEndpointTypeReference.Args): ts.TypeReferenceNode {
     const serviceDirectory = servicesDirectory.getDirectoryOrThrow(serviceName);
-    const endpointDirectory = serviceDirectory.getDirectoryOrThrow(
-        path.join(ClientConstants.Files.ENDPOINTS_DIRECTORY_NAME, endpointId)
-    );
+    const endpointsDirectory = serviceDirectory.getDirectoryOrThrow(ClientConstants.Files.ENDPOINTS_DIRECTORY_NAME);
+    const endpointDirectory = endpointsDirectory.getDirectoryOrThrow(endpointId);
     const typeFile = endpointDirectory.getSourceFileOrThrow(`${typeName}.ts`);
 
     // if inside the endpoint directory, just use a relative import
@@ -48,7 +46,7 @@ export function generateEndpointTypeReference({
     // if inside the service directory, import * as endpoints
     if (serviceDirectory.isAncestorOf(referencedIn)) {
         referencedIn.addImportDeclaration({
-            moduleSpecifier: getRelativePathAsModuleSpecifierTo(referencedIn, endpointDirectory),
+            moduleSpecifier: getRelativePathAsModuleSpecifierTo(referencedIn, endpointsDirectory),
             namespaceImport: ClientConstants.Files.ENDPOINTS_DIRECTORY_NAME,
         });
         return ts.factory.createTypeReferenceNode(

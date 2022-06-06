@@ -15,7 +15,6 @@ export async function addEndpointToService({
     modelDirectory,
     errorsDirectory,
     endpointsDirectory,
-    serviceDirectory,
     servicesDirectory,
     typeResolver,
     helperManager,
@@ -28,7 +27,6 @@ export async function addEndpointToService({
     modelDirectory: Directory;
     errorsDirectory: Directory;
     servicesDirectory: Directory;
-    serviceDirectory: Directory;
     typeResolver: TypeResolver;
     helperManager: HelperManager;
 }): Promise<void> {
@@ -37,7 +35,6 @@ export async function addEndpointToService({
     const generatedEndpointTypes = generateEndpointTypes({
         endpoint,
         serviceName: serviceDefinition.name,
-        serviceDirectory,
         endpointsDirectory,
         modelDirectory,
         errorsDirectory,
