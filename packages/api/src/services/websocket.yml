@@ -16,7 +16,7 @@ types:
   WebSocketMessage:
     extends: commons.WithDocs
     properties:
-      request: WebSocketMessageRequest
+      request: optional<WebSocketMessageRequest>
       response: WebSocketMessageResponse
   WebSocketMessageRequest:
     extends: commons.WithDocs

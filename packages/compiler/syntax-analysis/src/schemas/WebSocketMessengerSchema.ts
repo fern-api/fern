@@ -4,7 +4,7 @@ import { WithDocsSchema } from "./WithDocsSchema";
 
 export const WebSocketMessengerSchema = z
     .strictObject({
-        messages: z.record(WebSocketMessageSchema),
+        messages: z.optional(z.record(WebSocketMessageSchema)),
     })
     .merge(WithDocsSchema);
 

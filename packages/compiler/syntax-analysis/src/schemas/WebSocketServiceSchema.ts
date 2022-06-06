@@ -7,8 +7,8 @@ export const WebSocketServiceSchema = BaseServiceSchema.merge(
     z.strictObject({
         path: z.string(),
         init: z.optional(EncodableTypeDefinitionSchema),
-        client: WebSocketMessengerSchema,
-        server: WebSocketMessengerSchema,
+        client: z.optional(WebSocketMessengerSchema),
+        server: z.optional(WebSocketMessengerSchema),
     })
 );
 

@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { TypeDefinitionSchema } from "./TypeDefinitionSchema";
+import { EncodableTypeDefinitionSchema } from "./EncodableTypeDefinitionSchema";
 
-export const HttpRequestSchema = TypeDefinitionSchema;
+export const HttpRequestSchema = EncodableTypeDefinitionSchema;
 
 export type HttpRequestSchema = z.infer<typeof HttpRequestSchema>;
