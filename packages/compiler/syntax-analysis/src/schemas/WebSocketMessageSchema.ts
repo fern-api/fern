@@ -1,12 +1,11 @@
 import { z } from "zod";
-import { WebSocketMessageBodySchema } from "./WebSocketMessageBodySchema";
 import { WebSocketMessageResponseSchema } from "./WebSocketMessageResponseSchema";
+import { WebSocketRequestSchema } from "./WebSocketRequestSchema";
 import { WithDocsSchema } from "./WithDocsSchema";
 
 export const WebSocketMessageSchema = z
     .strictObject({
-        origin: z.enum(["client", "server"]),
-        body: z.optional(WebSocketMessageBodySchema),
+        request: z.optional(WebSocketRequestSchema),
         response: z.optional(WebSocketMessageResponseSchema),
     })
     .merge(WithDocsSchema);

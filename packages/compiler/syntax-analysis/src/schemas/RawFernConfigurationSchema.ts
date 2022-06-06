@@ -7,7 +7,7 @@ import { TypeDefinitionSchema } from "./TypeDefinitionSchema";
 export const RawFernConfigurationSchema = z.strictObject({
     imports: z.optional(z.record(z.string())),
     ids: z.optional(z.array(IdSchema)),
-    types: z.optional(z.record(z.union([z.string(), TypeDefinitionSchema]))),
+    types: z.optional(z.record(TypeDefinitionSchema)),
     services: z.optional(ServicesSchema),
     errors: z.optional(z.record(ErrorDefinitionSchema)),
 });

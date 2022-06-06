@@ -6,18 +6,19 @@ types:
   WebSocketService:
     extends: serviceCommons.BaseService
     properties:
+      path: string
+      client: WebSocketMessenger
+      server: WebSocketMessenger
+  WebSocketMessenger:
+    extends: commons.WithDocs
+    properties:
       messages: list<WebSocketMessage>
   WebSocketMessage:
     extends: commons.WithDocs
     properties:
-      origin: WebSocketMessageOrigin
-      body: WebSocketMessageBody
+      request: optional<WebSocketMessageRequest>
       response: WebSocketMessageResponse
-  WebSocketMessageOrigin:
-    enum:
-      - CLIENT
-      - SERVER
-  WebSocketMessageBody:
+  WebSocketMessageRequest:
     extends: commons.WithDocs
     properties:
       type: types.Type
@@ -25,11 +26,6 @@ types:
   WebSocketMessageResponse:
     extends: commons.WithDocs
     properties:
-      behavior: WebSocketMessageResponseBehavior
       encoding: serviceCommons.Encoding
       ok: optional<types.Type>
       errors: serviceCommons.ResponseErrors
-  WebSocketMessageResponseBehavior:
-    enum:
-      - ONGOING
-      - REQUEST_RESPONSE

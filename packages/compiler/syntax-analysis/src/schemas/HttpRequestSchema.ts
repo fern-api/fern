@@ -1,11 +1,6 @@
 import { z } from "zod";
-import { extendTypeDefinitionSchema } from "./TypeDefinitionSchema";
+import { EncodableTypeDefinitionSchema } from "./EncodableTypeDefinitionSchema";
 
-export const HttpRequestSchema = z.union([
-    z.string(),
-    extendTypeDefinitionSchema({
-        encoding: z.optional(z.string()),
-    }),
-]);
+export const HttpRequestSchema = EncodableTypeDefinitionSchema;
 
 export type HttpRequestSchema = z.infer<typeof HttpRequestSchema>;
