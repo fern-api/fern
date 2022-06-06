@@ -8,6 +8,7 @@ import { UnionSchema } from "./UnionSchema";
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function extendTypeDefinitionSchema<T extends z.ZodRawShape>(extension: T) {
     return z.union([
+        z.string(),
         ObjectSchema.extend(extension),
         UnionSchema.extend(extension),
         AliasSchema.extend(extension),

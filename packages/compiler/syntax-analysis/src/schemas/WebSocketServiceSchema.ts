@@ -1,10 +1,14 @@
 import { z } from "zod";
 import { BaseServiceSchema } from "./BaseServiceSchema";
-import { WebSocketMessageSchema } from "./WebSocketMessageSchema";
+import { EncodableTypeDefinitionSchema } from "./EncodableTypeDefinitionSchema";
+import { WebSocketMessengerSchema } from "./WebSocketMessengerSchema";
 
 export const WebSocketServiceSchema = BaseServiceSchema.merge(
     z.strictObject({
-        messages: z.record(WebSocketMessageSchema),
+        path: z.string(),
+        init: z.optional(EncodableTypeDefinitionSchema),
+        client: WebSocketMessengerSchema,
+        server: WebSocketMessengerSchema,
     })
 );
 

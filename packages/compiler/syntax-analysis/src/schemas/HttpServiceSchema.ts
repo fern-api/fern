@@ -5,6 +5,7 @@ import { HttpHeaderSchema } from "./HttpHeaderSchema";
 
 export const HttpServiceSchema = BaseServiceSchema.merge(
     z.strictObject({
+        "base-path": z.optional(z.string()),
         headers: z.optional(z.record(HttpHeaderSchema)),
         endpoints: z.record(HttpEndpointSchema),
     })
