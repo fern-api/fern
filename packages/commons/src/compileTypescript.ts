@@ -16,7 +16,6 @@ export async function compileTypescript(directory: string, options?: CompilerOpt
             noUncheckedIndexedAccess: true,
             noUnusedLocals: true,
             noUnusedParameters: true,
-            esModuleInterop: true,
             ...options,
         },
     });
