@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "dependencies": {
+    "@fern-typescript/service-utils": "workspace:*",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/uuid": "^8.3.4"
+  }
+}

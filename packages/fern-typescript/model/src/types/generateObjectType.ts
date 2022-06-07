@@ -1,10 +1,5 @@
 import { ObjectTypeDefinition } from "@fern-api/api";
-import {
-    generateNamedTypeReference,
-    generateTypeReference,
-    getTextOfTsNode,
-    maybeAddDocs,
-} from "@fern-typescript/commons";
+import { getNamedTypeReference, getTextOfTsNode, getTypeReference, maybeAddDocs } from "@fern-typescript/commons";
 import { Directory, SourceFile } from "ts-morph";
 
 export function generateObjectType({
@@ -24,7 +19,7 @@ export function generateObjectType({
         name: typeName,
         extends: shape.extends
             .map((typeName) => {
-                const reference = generateNamedTypeReference({
+                const reference = getNamedTypeReference({
                     typeName,
                     referencedIn: file,
                     baseDirectory: modelDirectory,
@@ -38,7 +33,7 @@ export function generateObjectType({
             const property = {
                 name: field.key,
                 type: getTextOfTsNode(
-                    generateTypeReference({
+                    getTypeReference({
                         reference: field.valueType,
                         referencedIn: file,
                         modelDirectory,

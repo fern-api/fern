@@ -1,9 +1,9 @@
 import { ErrorDefinition } from "@fern-api/api";
 import {
-    generateTypeReference,
     getFilePathForError,
     getOrCreateSourceFile,
     getTextOfTsNode,
+    getTypeReference,
 } from "@fern-typescript/commons";
 import { Directory } from "ts-morph";
 
@@ -30,7 +30,7 @@ export function generateError({
             name: property.name,
             docs: property.docs != null ? [property.docs] : undefined,
             type: getTextOfTsNode(
-                generateTypeReference({
+                getTypeReference({
                     reference: property.type,
                     referencedIn: file,
                     modelDirectory,

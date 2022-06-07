@@ -7,8 +7,16 @@ types:
     extends: serviceCommons.BaseService
     properties:
       path: string
+      init: WebSocketInit
       client: WebSocketMessenger
       server: WebSocketMessenger
+      messagePropertyKeys: WebSocketMessagePropertyKeys
+  WebSocketInit:
+    extends: commons.WithDocs
+    properties:
+      type: types.Type
+      operationName: string
+      encoding: serviceCommons.Encoding
   WebSocketMessenger:
     extends: commons.WithDocs
     properties:
@@ -16,7 +24,7 @@ types:
   WebSocketMessage:
     extends: commons.WithDocs
     properties:
-      request: optional<WebSocketMessageRequest>
+      request: WebSocketMessageRequest
       response: WebSocketMessageResponse
   WebSocketMessageRequest:
     extends: commons.WithDocs
@@ -27,5 +35,10 @@ types:
     extends: commons.WithDocs
     properties:
       encoding: serviceCommons.Encoding
-      ok: optional<types.Type>
+      ok: types.Type
       errors: serviceCommons.ResponseErrors
+  WebSocketMessagePropertyKeys:
+    properties:
+      id: string
+      operation: string
+      body: string

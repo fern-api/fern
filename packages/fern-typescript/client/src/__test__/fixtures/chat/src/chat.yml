@@ -1,0 +1,28 @@
+ids:
+  - PostId
+
+types:
+  Post:
+    docs: A blog post
+    properties:
+      id: PostId
+      title: string
+      content: string
+      relatedPosts: list<Post>
+
+services:
+  websocket:
+    ChatService:
+      path: /chat
+      auth: none
+      init:
+        properties:
+          browser: string
+      client:
+        messages:
+          createPost:
+            request:
+              properties:
+                title: string
+                content: string
+            response: PostId

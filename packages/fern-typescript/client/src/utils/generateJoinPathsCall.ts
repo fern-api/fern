@@ -1,7 +1,5 @@
 import { SourceFile, ts } from "ts-morph";
 
-const FUNCTION_NAME = "joinPaths";
-
 export function generateJoinPathsCall({
     file,
     paths,
@@ -10,8 +8,12 @@ export function generateJoinPathsCall({
     paths: readonly ts.Expression[];
 }): ts.CallExpression {
     file.addImportDeclaration({
-        namedImports: [FUNCTION_NAME],
-        moduleSpecifier: "@fern-typescript/service-utils",
+        defaultImport: "path",
+        moduleSpecifier: "path",
     });
-    return ts.factory.createCallExpression(ts.factory.createIdentifier(FUNCTION_NAME), undefined, paths);
+    return ts.factory.createCallExpression(
+        ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier("path"), "join"),
+        undefined,
+        paths
+    );
 }

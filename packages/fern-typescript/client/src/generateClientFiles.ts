@@ -5,7 +5,8 @@ import { generateErrorFiles } from "@fern-typescript/errors";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import { generateModelFiles } from "@fern-typescript/model";
 import { Directory } from "ts-morph";
-import { generateHttpService } from "./generateHttpService";
+import { generateHttpService } from "./http/generateHttpService";
+import { generateWebSocketChannel } from "./websocket/generateWebSocketChannel";
 
 export async function generateClientFiles({
     intermediateRepresentation,
@@ -36,6 +37,18 @@ export async function generateClientFiles({
     for (const service of intermediateRepresentation.services.http) {
         await generateHttpService({
             service,
+            servicesDirectory,
+            modelDirectory,
+            errorsDirectory,
+            encodersDirectory,
+            typeResolver,
+            helperManager,
+        });
+    }
+
+    for (const channel of intermediateRepresentation.services.websocket) {
+        await generateWebSocketChannel({
+            channel,
             servicesDirectory,
             modelDirectory,
             errorsDirectory,
