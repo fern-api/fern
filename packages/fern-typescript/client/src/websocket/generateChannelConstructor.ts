@@ -1,4 +1,4 @@
-import { WebSocketService } from "@fern-api/api";
+import { WebSocketChannel } from "@fern-api/api";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { ClassDeclaration, SourceFile, ts } from "ts-morph";
 import { ClientConstants } from "../constants";
@@ -14,7 +14,7 @@ export function generateChannelConstructor({
     file,
 }: {
     channelClass: ClassDeclaration;
-    channelDefinition: WebSocketService;
+    channelDefinition: WebSocketChannel;
     initTypeReference: ServiceTypeReference | undefined;
     file: SourceFile;
 }): void {
@@ -76,7 +76,7 @@ function generateCreateAndResolveSocket({
     initTypeReference,
 }: {
     file: SourceFile;
-    channelDefinition: WebSocketService;
+    channelDefinition: WebSocketChannel;
     initTypeReference: ServiceTypeReference | undefined;
 }): ts.Statement[] {
     return [
@@ -143,7 +143,7 @@ function generateOnOpen({
     channelDefinition,
     initTypeReference,
 }: {
-    channelDefinition: WebSocketService;
+    channelDefinition: WebSocketChannel;
     initTypeReference: ServiceTypeReference | undefined;
 }) {
     const INIT_MESSAGE_VARIABLE_NAME = "initMessage";
@@ -169,7 +169,7 @@ function generateOnOpen({
                                 ),
                                 undefined,
                                 [
-                                    ts.factory.createStringLiteral(channelDefinition.init.operationName),
+                                    ts.factory.createStringLiteral(channelDefinition.init.operationId),
                                     ts.factory.createPropertyAccessExpression(
                                         ts.factory.createIdentifier(
                                             ClientConstants.WebsocketChannel.Constructor.PARAMETER_NAME
@@ -218,7 +218,7 @@ function generateOnOpen({
     return statements;
 }
 
-function generateOnMessage({ channelDefinition }: { channelDefinition: WebSocketService }): ts.ArrowFunction {
+function generateOnMessage({ channelDefinition }: { channelDefinition: WebSocketChannel }): ts.ArrowFunction {
     const MESSAGE_DATA_PROPERTY_NAME = "data";
     const MESSAGE_VARIABLE_NAME = "message";
 
@@ -281,7 +281,7 @@ function generateOnMessage({ channelDefinition }: { channelDefinition: WebSocket
                             ),
                             ts.factory.createPropertyAccessExpression(
                                 ts.factory.createIdentifier(MESSAGE_VARIABLE_NAME),
-                                ts.factory.createIdentifier(channelDefinition.messagePropertyKeys.id)
+                                ts.factory.createIdentifier(channelDefinition.operationProperties.id)
                             )
                         ),
                         ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),

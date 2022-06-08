@@ -3,41 +3,47 @@ imports:
   commons: ../commons.yml
   types: ../types.yml
 types:
-  WebSocketService:
-    extends: serviceCommons.BaseService
+  WebSocketChannel:
+    extends: commons.WithDocs
     properties:
+      name: types.NamedType
       path: string
       init: WebSocketInit
       client: WebSocketMessenger
       server: WebSocketMessenger
-      messagePropertyKeys: WebSocketMessagePropertyKeys
+      operationProperties: WebSocketOperationProperties
   WebSocketInit:
     extends: commons.WithDocs
     properties:
-      type: types.Type
-      operationName: string
       encoding: serviceCommons.Encoding
+      type: types.Type
+      operationId: string
   WebSocketMessenger:
     extends: commons.WithDocs
     properties:
-      messages: list<WebSocketMessage>
-  WebSocketMessage:
+      operations: list<WebSocketOperation>
+  WebSocketOperation:
     extends: commons.WithDocs
     properties:
-      request: WebSocketMessageRequest
-      response: WebSocketMessageResponse
-  WebSocketMessageRequest:
+      operationId: string
+      request: WebSocketRequest
+      response: WebSocketResponse
+  WebSocketRequest:
+    extends: commons.WithDocs
+    properties:
+      encoding: serviceCommons.Encoding
+      type: types.Type
+  WebSocketResponse:
+    extends: commons.WithDocs
+    properties:
+      encoding: serviceCommons.Encoding
+      ok: WebSocketOkResponse
+      failed: serviceCommons.FailedResponse
+  WebSocketOkResponse:
     extends: commons.WithDocs
     properties:
       type: types.Type
-      encoding: serviceCommons.Encoding
-  WebSocketMessageResponse:
-    extends: commons.WithDocs
-    properties:
-      encoding: serviceCommons.Encoding
-      ok: types.Type
-      errors: serviceCommons.ResponseErrors
-  WebSocketMessagePropertyKeys:
+  WebSocketOperationProperties:
     properties:
       id: string
       operation: string

@@ -1,7 +1,6 @@
 import { ErrorDefinition, FernFilepath } from "@fern-api/api";
 import { RawSchemas } from "@fern-api/syntax-analysis";
-import { getDocs } from "../utils/getDocs";
-import { createTypeReferenceParser } from "../utils/parseInlineType";
+import { convertType } from "./type-definitions/convertTypeDefinition";
 
 export function convertErrorDefinition({
     errorName,
@@ -14,8 +13,6 @@ export function convertErrorDefinition({
     errorDefinition: RawSchemas.ErrorDefinitionSchema;
     imports: Record<string, string>;
 }): ErrorDefinition {
-    const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
-
     return {
         name: {
             name: errorName,
@@ -28,13 +25,6 @@ export function convertErrorDefinition({
                       statusCode: errorDefinition.http.statusCode,
                   }
                 : undefined,
-        properties:
-            errorDefinition.properties != null
-                ? Object.entries(errorDefinition.properties).map(([propertyName, property]) => ({
-                      name: propertyName,
-                      docs: getDocs(property),
-                      type: parseTypeReference(property),
-                  }))
-                : [],
+        type: convertType({ typeDefinition: errorDefinition.type, fernFilepath, imports }),
     };
 }

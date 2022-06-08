@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { WebSocketMessageSchema } from "./WebSocketMessageSchema";
+import { WebSocketOperationSchema } from "./WebSocketOperationSchema";
 import { WithDocsSchema } from "./WithDocsSchema";
 
 export const WebSocketMessengerSchema = z
     .strictObject({
-        messages: z.optional(z.record(WebSocketMessageSchema)),
+        operations: z.optional(z.record(WebSocketOperationSchema)),
     })
     .merge(WithDocsSchema);
 

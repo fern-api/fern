@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@fern-typescript/commons": "workspace:*",
+    "@fern-typescript/model": "workspace:*",
     "ts-morph": "^14.0.0"
   },
   "devDependencies": {

@@ -34,8 +34,8 @@ export function generateResponseTypes({
 }: generateResponseTypes.Args): generateResponseTypes.Return {
     const successBodyReference = generateServiceTypeReference({
         typeName: ClientConstants.HttpService.Endpoint.Types.Response.Success.Properties.Body.TYPE_NAME,
-        type: endpoint.response.ok,
-        docs: endpoint.response.docs,
+        type: endpoint.response.ok.type,
+        docs: endpoint.response.ok.docs,
         typeDirectory: endpointDirectory,
         modelDirectory,
         typeResolver,
@@ -70,7 +70,7 @@ export function generateResponseTypes({
     );
 
     generateErrorBody({
-        errors: endpoint.response.errors,
+        failedResponse: endpoint.response.failed,
         errorBodyFile,
         errorsDirectory,
     });

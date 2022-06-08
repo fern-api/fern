@@ -1,4 +1,4 @@
-import { WebSocketService } from "@fern-api/api";
+import { WebSocketChannel } from "@fern-api/api";
 import {
     getOrCreateDirectory,
     getOrCreateSourceFile,
@@ -37,7 +37,7 @@ export async function generateWebSocketChannel({
     modelDirectory: Directory;
     errorsDirectory: Directory;
     encodersDirectory: Directory;
-    channel: WebSocketService;
+    channel: WebSocketChannel;
     typeResolver: TypeResolver;
     helperManager: HelperManager;
 }): Promise<void> {
@@ -65,7 +65,7 @@ async function generateChannel({
     modelDirectory,
     typeResolver,
 }: {
-    channel: WebSocketService;
+    channel: WebSocketChannel;
     channelDirectory: Directory;
     modelDirectory: Directory;
     errorsDirectory: Directory;
@@ -139,7 +139,7 @@ function generateInitTypeReference({
     typeResolver,
 }: {
     file: SourceFile;
-    channel: WebSocketService;
+    channel: WebSocketChannel;
     modelDirectory: Directory;
     typeResolver: TypeResolver;
 }): ServiceTypeReference | undefined {
@@ -170,7 +170,7 @@ function addNamespace({
 }: {
     file: SourceFile;
     modelDirectory: Directory;
-    channelDefinition: WebSocketService;
+    channelDefinition: WebSocketChannel;
     initTypeReference: ServiceTypeReference | undefined;
 }) {
     const serviceNamespace = file.addModule({
@@ -228,7 +228,7 @@ function addRequestToNamespace({
     channelDefinition,
 }: {
     serviceNamespace: ModuleDeclaration;
-    channelDefinition: WebSocketService;
+    channelDefinition: WebSocketChannel;
 }) {
     const MESSAGE_TYPE_PARAMETER = "T";
 
@@ -242,15 +242,15 @@ function addRequestToNamespace({
         ],
         properties: [
             {
-                name: channelDefinition.messagePropertyKeys.id,
+                name: channelDefinition.operationProperties.id,
                 type: getTextOfTsKeyword(ts.SyntaxKind.StringKeyword),
             },
             {
-                name: channelDefinition.messagePropertyKeys.operation,
+                name: channelDefinition.operationProperties.operation,
                 type: getTextOfTsKeyword(ts.SyntaxKind.StringKeyword),
             },
             {
-                name: channelDefinition.messagePropertyKeys.body,
+                name: channelDefinition.operationProperties.body,
                 type: MESSAGE_TYPE_PARAMETER,
             },
         ],
@@ -262,7 +262,7 @@ function addResponseToNamespace({
     channelDefinition,
 }: {
     serviceNamespace: ModuleDeclaration;
-    channelDefinition: WebSocketService;
+    channelDefinition: WebSocketChannel;
 }) {
     const MESSAGE_TYPE_PARAMETER = "T";
 
@@ -276,16 +276,16 @@ function addResponseToNamespace({
         ],
         properties: [
             {
-                name: channelDefinition.messagePropertyKeys.id,
+                name: channelDefinition.operationProperties.id,
                 type: getTextOfTsKeyword(ts.SyntaxKind.StringKeyword),
             },
             {
-                name: channelDefinition.messagePropertyKeys.operation,
+                name: channelDefinition.operationProperties.operation,
                 type: getTextOfTsKeyword(ts.SyntaxKind.StringKeyword),
                 hasQuestionToken: true,
             },
             {
-                name: channelDefinition.messagePropertyKeys.body,
+                name: channelDefinition.operationProperties.body,
                 type: MESSAGE_TYPE_PARAMETER,
             },
         ],

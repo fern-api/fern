@@ -1,15 +1,15 @@
 import { z } from "zod";
 import { FailedResponseSchema } from "./FailedResponseSchema";
-import { HttpOkResponseSchema } from "./HttpOkResponseSchema";
+import { WebSocketOkResponseSchema } from "./WebSocketOkResponseSchema";
 import { WithDocsSchema } from "./WithDocsSchema";
 
-export const HttpResponseSchema = z.union([
+export const WebSocketResponseSchema = z.union([
     z.string(),
     WithDocsSchema.extend({
         encoding: z.optional(z.string()),
-        ok: z.optional(HttpOkResponseSchema),
+        ok: z.optional(WebSocketOkResponseSchema),
         failed: z.optional(FailedResponseSchema),
     }),
 ]);
 
-export type HttpResponseSchema = z.infer<typeof HttpResponseSchema>;
+export type WebSocketResponseSchema = z.infer<typeof WebSocketResponseSchema>;

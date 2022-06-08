@@ -1,5 +1,4 @@
 {
-  "type": "cli",
-  "cliName": "fern",
+  "type": "library",
   "private": true
 }

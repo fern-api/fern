@@ -6,13 +6,8 @@ types:
     extends: commons.WithDocs
     properties:
       name: types.NamedType
-      properties: list<ErrorProperty>
+      type: types.Type
       http: optional<HttpErrorConfiguration>
-  ErrorProperty:
-    extends: commons.WithDocs
-    properties:
-      name: string
-      type: types.TypeReference
   HttpErrorConfiguration:
     properties:
       statusCode: integer

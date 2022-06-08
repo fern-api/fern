@@ -26,8 +26,9 @@ errors:
   PostNotFoundError:
     http:
       statusCode: 404
-    properties:
-      id: commons.PostId
+    type:
+      properties:
+        id: commons.PostId
 
 services:
   http:
@@ -39,11 +40,12 @@ services:
           method: POST
           path: /
           request:
-            properties:
-              type: PostType
-              title: string
-              author: Author
-              content: string
+            type:
+              properties:
+                type: PostType
+                title: string
+                author: Author
+                content: string
           response: commons.PostId
         getPost:
           method: GET
@@ -55,8 +57,8 @@ services:
             otherParam: integer
           response:
             ok: Post
-            errors:
-              union:
+            failed:
+              errors:
                 notFound: PostNotFoundError
         getPostV2:
           method: GET
@@ -64,6 +66,6 @@ services:
           request: commons.PostId
           response:
             ok: Post
-            errors:
-              union:
+            failed:
+              errors:
                 notFound: PostNotFoundError

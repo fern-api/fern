@@ -67,9 +67,9 @@ export function parseInlineType({ type, fernFilepath, imports }: parseInlineType
     );
 }
 
-export function createTypeReferenceParser(
-    args: Omit<parseInlineType.Args, "type">
-): (type: RawSchemas.TypeReferenceSchema) => TypeReference {
+export type TypeReferenceParser = (type: RawSchemas.TypeReferenceSchema) => TypeReference;
+
+export function createTypeReferenceParser(args: Omit<parseInlineType.Args, "type">): TypeReferenceParser {
     return (type) => {
         const typeAsString = typeof type === "string" ? type : type.type;
         if (typeAsString == null) {
