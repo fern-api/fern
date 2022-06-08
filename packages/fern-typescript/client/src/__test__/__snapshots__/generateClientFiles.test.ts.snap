@@ -132,6 +132,7 @@ export * from \\"./PostType\\";
   Fetcher,
   isResponseOk,
   Service,
+  Token,
 } from \\"@fern-typescript/service-utils\\";
 import * as path from \\"path\\";
 import * as endpoints from \\"./endpoints\\";
@@ -143,7 +144,7 @@ export interface Client {
 export class Client implements Client {
   private baseUrl: string;
   private fetcher: Fetcher;
-  private token: Service.Init[\\"token\\"];
+  private token: Token | undefined;
 
   constructor(args: Service.Init) {
     this.fetcher = args.fetcher ?? defaultFetcher;
@@ -222,6 +223,7 @@ export * from \\"./NoErrorsService\\";
   Fetcher,
   isResponseOk,
   Service,
+  Token,
 } from \\"@fern-typescript/service-utils\\";
 import * as path from \\"path\\";
 import * as model from \\"../../model\\";
@@ -240,7 +242,7 @@ export interface Client {
 export class Client implements Client {
   private baseUrl: string;
   private fetcher: Fetcher;
-  private token: Service.Init[\\"token\\"];
+  private token: Token | undefined;
 
   constructor(args: Service.Init) {
     this.fetcher = args.fetcher ?? defaultFetcher;
@@ -669,6 +671,7 @@ export * from \\"./PostType\\";
   Fetcher,
   isResponseOk,
   Service,
+  Token,
 } from \\"@fern-typescript/service-utils\\";
 import * as path from \\"path\\";
 import * as model from \\"../../model\\";
@@ -687,7 +690,7 @@ export interface Client {
 export class Client implements Client {
   private baseUrl: string;
   private fetcher: Fetcher;
-  private token: Service.Init[\\"token\\"];
+  private token: Token | undefined;
 
   constructor(args: Service.Init) {
     this.fetcher = args.fetcher ?? defaultFetcher;
