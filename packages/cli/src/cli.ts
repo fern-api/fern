@@ -45,7 +45,7 @@ void yargs(hideBin(process.argv))
     )
     .command(
         ["convert <openapiPath> <fernDefinitionDir>"],
-        "Converts Open API to Fern definition",
+        "Converts Open API to Fern definition. This is incubating and not guaranteed to succeed.",
         (yargs) =>
             yargs
                 .positional("openapiPath", {
