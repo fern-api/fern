@@ -22,7 +22,8 @@ types:
   Author:
     union:
       anonymous: {}
-      named: string
+      named:
+        type: string
 
   CreatePostRequest:
     properties:
@@ -34,8 +35,7 @@ errors:
   PostNotFoundError:
     http:
       statusCode: 404
-    properties:
-      id: commons.PostId
+    type: string
 
 services:
   http:
@@ -50,7 +50,10 @@ services:
             postId: string
           request: CreatePostRequest
           response:
-            ok: commons.PostId
-            errors:
-              union:
+            ok:
+              type:
+                properties:
+                  a: number
+            failed:
+              errors:
                 notFound: PostNotFoundError

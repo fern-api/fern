@@ -22,7 +22,8 @@ services:
         messages:
           createPost:
             request:
-              properties:
-                title: string
-                content: string
+              type:
+                properties:
+                  title: string
+                  content: string
             response: PostId

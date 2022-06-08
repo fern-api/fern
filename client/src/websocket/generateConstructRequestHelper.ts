@@ -1,4 +1,4 @@
-import { WebSocketService } from "@fern-api/api";
+import { WebSocketChannel } from "@fern-api/api";
 import { getTextOfTsKeyword, getTextOfTsNode } from "@fern-typescript/commons";
 import { ClassDeclaration, Scope, SourceFile, ts } from "ts-morph";
 import { ClientConstants } from "../constants";
@@ -11,7 +11,7 @@ export function generateConstructRequestHelper({
     file,
 }: {
     channelClass: ClassDeclaration;
-    channelDefinition: WebSocketService;
+    channelDefinition: WebSocketChannel;
     file: SourceFile;
 }): void {
     file.addImportDeclaration({
@@ -24,11 +24,11 @@ export function generateConstructRequestHelper({
         typeParameters: [MESSAGE_TYPE_PARAMETER],
         parameters: [
             {
-                name: channelDefinition.messagePropertyKeys.operation,
+                name: channelDefinition.operationProperties.operation,
                 type: getTextOfTsKeyword(ts.SyntaxKind.StringKeyword),
             },
             {
-                name: channelDefinition.messagePropertyKeys.body,
+                name: channelDefinition.operationProperties.body,
                 type: MESSAGE_TYPE_PARAMETER,
             },
         ],
@@ -45,7 +45,7 @@ export function generateConstructRequestHelper({
                     ts.factory.createObjectLiteralExpression(
                         [
                             ts.factory.createPropertyAssignment(
-                                ts.factory.createIdentifier(channelDefinition.messagePropertyKeys.id),
+                                ts.factory.createIdentifier(channelDefinition.operationProperties.id),
                                 ts.factory.createCallExpression(
                                     ts.factory.createPropertyAccessExpression(
                                         ts.factory.createIdentifier("uuid"),
@@ -56,10 +56,10 @@ export function generateConstructRequestHelper({
                                 )
                             ),
                             ts.factory.createShorthandPropertyAssignment(
-                                ts.factory.createIdentifier(channelDefinition.messagePropertyKeys.operation)
+                                ts.factory.createIdentifier(channelDefinition.operationProperties.operation)
                             ),
                             ts.factory.createShorthandPropertyAssignment(
-                                ts.factory.createIdentifier(channelDefinition.messagePropertyKeys.body)
+                                ts.factory.createIdentifier(channelDefinition.operationProperties.body)
                             ),
                         ],
                         true
