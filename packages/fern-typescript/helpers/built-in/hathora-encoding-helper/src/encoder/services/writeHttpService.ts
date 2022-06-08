@@ -81,7 +81,7 @@ function writeHttpEndpoint({
         });
     }
 
-    if (endpoint.response.ok._type !== "alias") {
+    if (endpoint.response.ok.type._type !== "alias") {
         writer.addProperty({
             key: ClientConstants.HttpService.Endpoint.Types.Response.Success.Properties.Body.TYPE_NAME,
             value: getTextOfTsNode(
@@ -102,7 +102,7 @@ function writeHttpEndpoint({
                                     .TYPE_NAME,
                                 fernFilepath: service.name.fernFilepath,
                             },
-                            shape: endpoint.response.ok,
+                            shape: endpoint.response.ok.type,
                         },
                         typeResolver,
                         file,

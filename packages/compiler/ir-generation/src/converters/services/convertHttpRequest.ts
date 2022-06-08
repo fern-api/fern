@@ -20,6 +20,11 @@ export function convertHttpRequest({
             rawEncoding: typeof request !== "string" ? request?.encoding : undefined,
             nonStandardEncodings,
         }),
-        type: convertServiceTypeDefinition({ typeDefinition: request, fernFilepath, imports }),
+        type: convertServiceTypeDefinition({
+            typeDefinitionOrShorthand: request,
+            getTypeDefinition: (request) => request.type,
+            fernFilepath,
+            imports,
+        }),
     };
 }

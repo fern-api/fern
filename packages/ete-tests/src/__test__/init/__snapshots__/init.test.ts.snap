@@ -52,11 +52,12 @@ services:
           method: POST
           path: /create
           request:
-            properties:
-              title: string
-              author: Author
-              content: string
-              postType: PostType
+            type:
+              properties:
+                title: string
+                author: Author
+                content: string
+                postType: PostType
           response:
             ok: PostId
         getPost:
@@ -66,8 +67,8 @@ services:
             postId: PostId
           response:
             ok: BlogPost
-            errors:
-              union:
+            failed:
+              errors:
                 notFound: PostNotFoundError
 "
 `;

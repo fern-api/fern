@@ -4,7 +4,7 @@ import { RawSchemas } from "@fern-api/syntax-analysis";
 import { convertErrorDefinition } from "./converters/convertErrorDefinition";
 import { convertId } from "./converters/convertId";
 import { convertHttpService } from "./converters/services/convertHttpService";
-import { convertWebsocketService } from "./converters/services/convertWebsocketService";
+import { convertWebsocketChannel } from "./converters/services/convertWebsocketChannel";
 import { convertTypeDefinition } from "./converters/type-definitions/convertTypeDefinition";
 import { convertToFernFilepath } from "./utils/convertToFernFilepath";
 import { noop } from "./utils/noop";
@@ -105,11 +105,11 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                     }
 
                     if (services.websocket != null) {
-                        for (const [serviceId, serviceDefinition] of Object.entries(services.websocket)) {
+                        for (const [channelId, channelDefinition] of Object.entries(services.websocket)) {
                             intermediateRepresentation.services.websocket.push(
-                                convertWebsocketService({
-                                    serviceId,
-                                    serviceDefinition,
+                                convertWebsocketChannel({
+                                    channelId,
+                                    channelDefinition,
                                     fernFilepath,
                                     imports,
                                     nonStandardEncodings,

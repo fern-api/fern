@@ -1,12 +1,12 @@
-import { FernFilepath, ResponseErrors } from "@fern-api/api";
-import { convertResponseErrors } from "../converters/services/convertResponseErrors";
+import { FailedResponse, FernFilepath } from "@fern-api/api";
+import { convertFailedResponse } from "../converters/services/convertFailedResponse";
 
 describe("convertResponseErrors", () => {
     it("reference to an error in another file", () => {
-        const actualResponseErrors = convertResponseErrors({
-            rawResponseErrors: {
+        const actualResponseErrors = convertFailedResponse({
+            rawFailedResponse: {
                 discriminant: "_some_other_discriminant",
-                union: {
+                errors: {
                     unauthorized: "commons.UnauthorizedError",
                 },
             },
@@ -16,10 +16,10 @@ describe("convertResponseErrors", () => {
             },
         });
 
-        const expectedResponseErrors: ResponseErrors = {
+        const expectedResponseErrors: FailedResponse = {
             docs: undefined,
             discriminant: "_some_other_discriminant",
-            possibleErrors: [
+            errors: [
                 {
                     discriminantValue: "unauthorized",
                     docs: undefined,

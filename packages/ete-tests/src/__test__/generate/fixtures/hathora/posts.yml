@@ -22,12 +22,14 @@ services:
           path: /delete
           method: DELETE
           request:
-            alias: PostId
+            type:
+              alias: PostId
             encoding: hathora
           response:
             ok:
-              properties:
-                a: string
-                b: boolean
-                c: Post
+              types:
+                properties:
+                  a: string
+                  b: boolean
+                  c: Post
             encoding: hathora

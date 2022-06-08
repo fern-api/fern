@@ -1,7 +1,6 @@
 export const ClientConstants = {
     Files: {
         ENDPOINTS_DIRECTORY_NAME: "endpoints",
-        ENDPOINTS_NAMESPACE_EXPORT: "Endpoints",
     },
     WebsocketChannel: {
         CLIENT_NAME: "Client",

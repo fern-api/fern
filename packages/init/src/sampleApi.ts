@@ -53,11 +53,13 @@ const BLOG_POST_API: RawSchemas.RawFernConfigurationSchema = {
                         method: "POST",
                         path: "/create",
                         request: {
-                            properties: {
-                                title: "string",
-                                author: "Author",
-                                content: "string",
-                                postType: "PostType",
+                            type: {
+                                properties: {
+                                    title: "string",
+                                    author: "Author",
+                                    content: "string",
+                                    postType: "PostType",
+                                },
                             },
                         },
                         response: {
@@ -72,8 +74,8 @@ const BLOG_POST_API: RawSchemas.RawFernConfigurationSchema = {
                         },
                         response: {
                             ok: "BlogPost",
-                            errors: {
-                                union: {
+                            failed: {
+                                errors: {
                                     notFound: "PostNotFoundError",
                                 },
                             },

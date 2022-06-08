@@ -123,12 +123,7 @@ async function generateService({
 
     addConstructor({ serviceClass, serviceDefinition: service });
 
-    const endpointsDirectory = getOrCreateDirectory(serviceDirectory, ClientConstants.Files.ENDPOINTS_DIRECTORY_NAME, {
-        exportOptions: {
-            type: "namespace",
-            namespace: ClientConstants.Files.ENDPOINTS_NAMESPACE_EXPORT,
-        },
-    });
+    const endpointsDirectory = getOrCreateDirectory(serviceDirectory, ClientConstants.Files.ENDPOINTS_DIRECTORY_NAME);
 
     // TODO delete this and add a "generateReferenceToEncoder" method that adds the import when needed
     serviceFile.addImportDeclaration({

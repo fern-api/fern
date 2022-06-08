@@ -18,4 +18,4 @@ types:
   Services:
     properties:
       http: list<http.HttpService>
-      websocket: list<websocket.WebSocketService>
+      websocket: list<websocket.WebSocketChannel>

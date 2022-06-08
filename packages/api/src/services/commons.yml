@@ -2,10 +2,6 @@ imports:
   commons: ../commons.yml
   types: ../types.yml
 types:
-  BaseService:
-    extends: commons.WithDocs
-    properties:
-      name: types.NamedType
   Encoding:
     union:
       json: {}
@@ -13,11 +9,11 @@ types:
   CustomWireMessageEncoding:
     properties:
       encoding: string
-  ResponseErrors:
+  FailedResponse:
     extends: commons.WithDocs
     properties:
       discriminant: string
-      possibleErrors: list<ResponseError>
+      errors: list<ResponseError>
   ResponseError:
     extends: commons.WithDocs
     properties:

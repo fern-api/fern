@@ -17,7 +17,6 @@ describe("generateClientFiles", () => {
                 helperManager: MOCK_HELPERS_MANAGERS,
             });
         },
-        outputToDisk: true,
     });
 
     itFernETE("no errors", {

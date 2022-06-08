@@ -4,8 +4,9 @@ imports:
   types: ../types.yml
 types:
   HttpService:
-    extends: serviceCommons.BaseService
+    extends: commons.WithDocs
     properties:
+      name: types.NamedType
       basePath: optional<string>
       endpoints: list<HttpEndpoint>
       headers: list<HttpHeader>
@@ -50,11 +51,15 @@ types:
   HttpRequest:
     extends: commons.WithDocs
     properties:
-      type: types.Type
       encoding: serviceCommons.Encoding
+      type: types.Type
   HttpResponse:
     extends: commons.WithDocs
     properties:
-      ok: types.Type
       encoding: serviceCommons.Encoding
-      errors: serviceCommons.ResponseErrors
+      ok: HttpOkResponse
+      failed: serviceCommons.FailedResponse
+  HttpOkResponse:
+    extends: commons.WithDocs
+    properties:
+      type: types.Type
