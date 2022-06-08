@@ -81,6 +81,7 @@ async function generateService({
             ClientConstants.HttpService.ServiceUtils.Imported.DEFAULT_FETCHER,
             ClientConstants.HttpService.ServiceUtils.Imported.SERVICE_NAMESPACE,
             ClientConstants.HttpService.ServiceUtils.Imported.IS_RESPONSE_OK_FUNCTION,
+            ClientConstants.HttpService.ServiceUtils.Imported.TOKEN_TYPE_NAME,
         ],
         moduleSpecifier: "@fern-typescript/service-utils",
     });
@@ -114,10 +115,12 @@ async function generateService({
         name: ClientConstants.HttpService.PrivateMembers.TOKEN,
         scope: Scope.Private,
         type: getTextOfTsNode(
-            ts.factory.createIndexedAccessTypeNode(
-                SERVICE_INIT_TYPE,
-                ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral("token"))
-            )
+            ts.factory.createUnionTypeNode([
+                ts.factory.createTypeReferenceNode(
+                    ts.factory.createIdentifier(ClientConstants.HttpService.ServiceUtils.Imported.TOKEN_TYPE_NAME)
+                ),
+                ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
+            ])
         ),
     });
 

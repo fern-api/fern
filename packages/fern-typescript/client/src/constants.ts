@@ -42,6 +42,7 @@ export const ClientConstants = {
                 DEFAULT_FETCHER: "defaultFetcher",
                 SERVICE_NAMESPACE: "Service",
                 IS_RESPONSE_OK_FUNCTION: "isResponseOk",
+                TOKEN_TYPE_NAME: "Token",
             },
             ServiceInit: {
                 TYPE_NAME: "Init",
