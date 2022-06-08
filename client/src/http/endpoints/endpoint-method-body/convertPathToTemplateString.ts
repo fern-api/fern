@@ -1,5 +1,5 @@
 import { ts } from "ts-morph";
-import { ClientConstants } from "../../constants";
+import { ClientConstants } from "../../../constants";
 
 const TEMPLATE_SPAN_REGEX = /\{(.*?)\}([^{]*)/g;
 
@@ -19,7 +19,7 @@ export function convertPathToTemplateString(path: string): ts.Expression {
             }
             return ts.factory.createTemplateSpan(
                 ts.factory.createPropertyAccessExpression(
-                    ts.factory.createIdentifier(ClientConstants.Service.Endpoint.Signature.REQUEST_PARAMETER),
+                    ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Signature.REQUEST_PARAMETER),
                     ts.factory.createIdentifier(expression)
                 ),
                 index === matches.length - 1

@@ -31,11 +31,11 @@ function getBodyTypeNameFromWireMessageType(
 ): string {
     switch (wireMessageType) {
         case "Request":
-            return ClientConstants.Service.Endpoint.Types.Request.Properties.Body.TYPE_NAME;
+            return ClientConstants.HttpService.Endpoint.Types.Request.Properties.Body.TYPE_NAME;
         case "Response":
-            return ClientConstants.Service.Endpoint.Types.Response.Success.Properties.Body.TYPE_NAME;
+            return ClientConstants.HttpService.Endpoint.Types.Response.Success.Properties.Body.TYPE_NAME;
         case "Error":
-            return ClientConstants.Service.Endpoint.Types.Response.Error.Properties.Body.TYPE_NAME;
+            return ClientConstants.HttpService.Endpoint.Types.Response.Error.Properties.Body.TYPE_NAME;
         default:
             assertNever(wireMessageType);
     }

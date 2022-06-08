@@ -1,5 +1,5 @@
 import { HttpEndpoint, HttpService } from "@fern-api/api";
-import { ClientConstants, generateEndpointTypeReference } from "@fern-typescript/client";
+import { ClientConstants, getLocalEndpointTypeReference } from "@fern-typescript/client";
 import { FernWriters, getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
 import { tsMorph } from "@fern-typescript/helper-utils";
 import { constructEncodeMethods } from "../constructEncodeMethods";
@@ -53,21 +53,21 @@ function writeHttpEndpoint({
     const writer = FernWriters.object.writer({ newlinesBetweenProperties: true });
     if (endpoint.request.type._type !== "alias") {
         writer.addProperty({
-            key: ClientConstants.Service.Endpoint.Types.Request.Properties.Body.TYPE_NAME,
+            key: ClientConstants.HttpService.Endpoint.Types.Request.Properties.Body.TYPE_NAME,
             value: getTextOfTsNode(
                 constructEncodeMethods({
                     methods: getEncodeMethodsForType({
-                        decodedType: generateEndpointTypeReference({
+                        decodedType: getLocalEndpointTypeReference({
                             serviceName: service.name,
                             endpointId: endpoint.endpointId,
-                            typeName: ClientConstants.Service.Endpoint.Types.Request.Properties.Body.TYPE_NAME,
+                            typeName: ClientConstants.HttpService.Endpoint.Types.Request.Properties.Body.TYPE_NAME,
                             referencedIn: file,
                             servicesDirectory,
                         }),
                         typeDefinition: {
                             docs: undefined,
                             name: {
-                                name: ClientConstants.Service.Endpoint.Types.Request.Properties.Body.TYPE_NAME,
+                                name: ClientConstants.HttpService.Endpoint.Types.Request.Properties.Body.TYPE_NAME,
                                 fernFilepath: service.name.fernFilepath,
                             },
                             shape: endpoint.request.type,
@@ -83,21 +83,23 @@ function writeHttpEndpoint({
 
     if (endpoint.response.ok._type !== "alias") {
         writer.addProperty({
-            key: ClientConstants.Service.Endpoint.Types.Response.Success.Properties.Body.TYPE_NAME,
+            key: ClientConstants.HttpService.Endpoint.Types.Response.Success.Properties.Body.TYPE_NAME,
             value: getTextOfTsNode(
                 constructEncodeMethods({
                     methods: getEncodeMethodsForType({
-                        decodedType: generateEndpointTypeReference({
+                        decodedType: getLocalEndpointTypeReference({
                             serviceName: service.name,
                             endpointId: endpoint.endpointId,
-                            typeName: ClientConstants.Service.Endpoint.Types.Response.Success.Properties.Body.TYPE_NAME,
+                            typeName:
+                                ClientConstants.HttpService.Endpoint.Types.Response.Success.Properties.Body.TYPE_NAME,
                             referencedIn: file,
                             servicesDirectory,
                         }),
                         typeDefinition: {
                             docs: undefined,
                             name: {
-                                name: ClientConstants.Service.Endpoint.Types.Response.Success.Properties.Body.TYPE_NAME,
+                                name: ClientConstants.HttpService.Endpoint.Types.Response.Success.Properties.Body
+                                    .TYPE_NAME,
                                 fernFilepath: service.name.fernFilepath,
                             },
                             shape: endpoint.response.ok,

@@ -1,8 +1,10 @@
 import { HttpEndpoint, HttpRequest, NamedType } from "@fern-api/api";
 import { getOrCreateSourceFile, TypeResolver } from "@fern-typescript/commons";
 import { Directory } from "ts-morph";
-import { ClientConstants } from "../../../constants";
-import { generateWireMessageBodyReference } from "../generateWireMessageBodyReference";
+import { ClientConstants } from "../../../../constants";
+import { generateServiceTypeReference } from "../../../../service-types/generateServiceTypeReference";
+import { ServiceTypeReference } from "../../../../service-types/types";
+import { EndpointTypeName } from "../../getLocalEndpointTypeReference";
 import { GeneratedEndpointTypes, LocalEndpointParameterReference } from "../types";
 import { generateRequest } from "./generateRequest";
 
@@ -52,7 +54,7 @@ export function generateRequestTypes({
             endpointParameter: requestBodyReference.isLocal
                 ? {
                       isLocal: true,
-                      typeName: ClientConstants.Service.Endpoint.Types.Request.Properties.Body.TYPE_NAME,
+                      typeName: ClientConstants.HttpService.Endpoint.Types.Request.Properties.Body.TYPE_NAME,
                   }
                 : {
                       isLocal: false,
@@ -69,11 +71,11 @@ export function generateRequestTypes({
     // since there are some parameters, then we need a Request type that includes those parameters
     const requestFile = getOrCreateSourceFile(
         endpointDirectory,
-        `${ClientConstants.Service.Endpoint.Types.Request.TYPE_NAME}.ts`
+        `${ClientConstants.HttpService.Endpoint.Types.Request.TYPE_NAME}.ts`
     );
     const endpointParameter: LocalEndpointParameterReference = {
         isLocal: true,
-        typeName: ClientConstants.Service.Endpoint.Types.Request.TYPE_NAME,
+        typeName: ClientConstants.HttpService.Endpoint.Types.Request.TYPE_NAME,
     };
 
     // generate the Request type (in the request file). The request type will contain
@@ -94,7 +96,7 @@ export function generateRequestTypes({
                 ? {
                       encoding: endpoint.request.encoding,
                       reference: requestBodyReference,
-                      propertyName: ClientConstants.Service.Endpoint.Types.Request.Properties.Body.PROPERTY_NAME,
+                      propertyName: ClientConstants.HttpService.Endpoint.Types.Request.Properties.Body.PROPERTY_NAME,
                   }
                 : undefined,
     };
@@ -110,12 +112,12 @@ function getRequestBody({
     endpointDirectory: Directory;
     modelDirectory: Directory;
     typeResolver: TypeResolver;
-}) {
-    return generateWireMessageBodyReference({
-        typeName: ClientConstants.Service.Endpoint.Types.Request.Properties.Body.TYPE_NAME,
+}): ServiceTypeReference<EndpointTypeName> | undefined {
+    return generateServiceTypeReference({
+        typeName: ClientConstants.HttpService.Endpoint.Types.Request.Properties.Body.TYPE_NAME,
         type: request.type,
         docs: request.docs,
-        endpointDirectory,
+        typeDirectory: endpointDirectory,
         modelDirectory,
         typeResolver,
     });

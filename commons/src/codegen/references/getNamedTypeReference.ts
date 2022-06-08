@@ -3,7 +3,7 @@ import { Directory, SourceFile, ts } from "ts-morph";
 import { getRelativePathAsModuleSpecifierTo } from "../utils/getRelativePathAsModuleSpecifierTo";
 import { getImportPathForNamedType } from "./getImportPathForNamedType";
 
-export declare namespace generateNamedTypeReference {
+export declare namespace getNamedTypeReference {
     export interface Args {
         typeName: NamedType;
         referencedIn: SourceFile;
@@ -25,13 +25,13 @@ export declare namespace generateNamedTypeReference {
     }
 }
 
-export function generateNamedTypeReference({
+export function getNamedTypeReference({
     typeName,
     referencedIn,
     baseDirectory,
     baseDirectoryType,
     forceUseNamespaceImport = false,
-}: generateNamedTypeReference.Args): ts.TypeNode {
+}: getNamedTypeReference.Args): ts.TypeNode {
     const moduleSpecifier = getImportPathForNamedType({ from: referencedIn, typeName, baseDirectory });
     const isTypeInCurrentFile = moduleSpecifier === `./${referencedIn.getBaseNameWithoutExtension()}`;
     if (!isTypeInCurrentFile) {
@@ -61,7 +61,7 @@ export function generateNamedTypeReference({
     return ts.factory.createTypeReferenceNode(typeName.name);
 }
 
-export function getNamespaceImport(baseDirectoryType: generateNamedTypeReference.Args["baseDirectoryType"]): string {
+export function getNamespaceImport(baseDirectoryType: getNamedTypeReference.Args["baseDirectoryType"]): string {
     switch (baseDirectoryType) {
         case "model":
             return "model";

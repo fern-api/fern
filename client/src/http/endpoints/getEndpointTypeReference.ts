@@ -1,11 +1,11 @@
 import { NamedType } from "@fern-api/api";
-import { generateTypeReference } from "@fern-typescript/commons";
+import { getTypeReference } from "@fern-typescript/commons";
 import { Directory, SourceFile, ts } from "ts-morph";
-import { generateEndpointTypeReference } from "../generateEndpointTypeReference";
-import { WireMessageBodyReference } from "./types";
+import { ServiceTypeReference } from "../../service-types/types";
+import { EndpointTypeName, getLocalEndpointTypeReference } from "./getLocalEndpointTypeReference";
 
 // adds an import to the `referencedIn` file and returns a reference to the imported type
-export function generateReferenceToWireMessageType({
+export function getEndpointTypeReference({
     serviceName,
     endpointId,
     servicesDirectory,
@@ -18,10 +18,10 @@ export function generateReferenceToWireMessageType({
     referencedIn: SourceFile;
     modelDirectory: Directory;
     servicesDirectory: Directory;
-    reference: WireMessageBodyReference;
+    reference: ServiceTypeReference<EndpointTypeName>;
 }): ts.TypeNode {
     if (reference.isLocal) {
-        return generateEndpointTypeReference({
+        return getLocalEndpointTypeReference({
             serviceName,
             endpointId,
             typeName: reference.typeName,
@@ -29,7 +29,7 @@ export function generateReferenceToWireMessageType({
             servicesDirectory,
         });
     } else {
-        return generateTypeReference({
+        return getTypeReference({
             reference: reference.typeReference,
             referencedIn,
             modelDirectory,

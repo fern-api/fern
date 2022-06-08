@@ -3,13 +3,13 @@ import { itFernETE } from "@fern-typescript/testing-utils";
 import path from "path";
 import { generateClientFiles } from "../generateClientFiles";
 
-const MOCK_APIS_DIR = path.join(__dirname, "mocks");
+const FIXTURES_DIR = path.join(__dirname, "fixtures");
 
 const MOCK_HELPERS_MANAGERS = new HelperManager({ encodings: {} });
 
 describe("generateClientFiles", () => {
     itFernETE("posts", {
-        directory: path.join(MOCK_APIS_DIR, "posts"),
+        directory: path.join(FIXTURES_DIR, "posts"),
         generateFiles: async ({ directory, intermediateRepresentation }) => {
             await generateClientFiles({
                 directory,
@@ -21,7 +21,7 @@ describe("generateClientFiles", () => {
     });
 
     itFernETE("no errors", {
-        directory: path.join(MOCK_APIS_DIR, "no-errors"),
+        directory: path.join(FIXTURES_DIR, "no-errors"),
         generateFiles: async ({ directory, intermediateRepresentation }) => {
             await generateClientFiles({
                 directory,
@@ -30,4 +30,17 @@ describe("generateClientFiles", () => {
             });
         },
     });
+
+    /*
+    itFernETE("chat app", {
+        directory: path.join(FIXTURES_DIR, "chat"),
+        generateFiles: async ({ directory, intermediateRepresentation }) => {
+            await generateClientFiles({
+                directory,
+                intermediateRepresentation,
+                helperManager: MOCK_HELPERS_MANAGERS,
+            });
+        },
+    });
+    */
 });

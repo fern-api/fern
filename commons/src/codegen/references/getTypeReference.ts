@@ -1,8 +1,8 @@
 import { ContainerType, PrimitiveType, TypeReference } from "@fern-api/api";
 import { Directory, SourceFile, ts } from "ts-morph";
-import { generateNamedTypeReference } from "./generateNamedTypeReference";
+import { getNamedTypeReference } from "./getNamedTypeReference";
 
-export function generateTypeReference({
+export function getTypeReference({
     reference,
     referencedIn,
     modelDirectory,
@@ -11,11 +11,11 @@ export function generateTypeReference({
     reference: TypeReference;
     referencedIn: SourceFile;
     modelDirectory: Directory;
-    forceUseNamespaceImport?: generateNamedTypeReference.Args["forceUseNamespaceImport"];
+    forceUseNamespaceImport?: getNamedTypeReference.Args["forceUseNamespaceImport"];
 }): ts.TypeNode {
     return TypeReference._visit(reference, {
         named: (named) =>
-            generateNamedTypeReference({
+            getNamedTypeReference({
                 typeName: named,
                 referencedIn,
                 baseDirectory: modelDirectory,
@@ -40,28 +40,24 @@ export function generateTypeReference({
             return ContainerType._visit<ts.TypeNode>(container, {
                 map: (map) =>
                     ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [
-                        generateTypeReference({
+                        getTypeReference({
                             reference: map.keyType,
                             referencedIn,
                             modelDirectory,
                         }),
-                        generateTypeReference({
+                        getTypeReference({
                             reference: map.valueType,
                             referencedIn,
                             modelDirectory,
                         }),
                     ]),
                 list: (list) =>
-                    ts.factory.createArrayTypeNode(
-                        generateTypeReference({ reference: list, referencedIn, modelDirectory })
-                    ),
+                    ts.factory.createArrayTypeNode(getTypeReference({ reference: list, referencedIn, modelDirectory })),
                 set: (set) =>
-                    ts.factory.createArrayTypeNode(
-                        generateTypeReference({ reference: set, referencedIn, modelDirectory })
-                    ),
+                    ts.factory.createArrayTypeNode(getTypeReference({ reference: set, referencedIn, modelDirectory })),
                 optional: (optional) =>
                     ts.factory.createUnionTypeNode([
-                        generateTypeReference({
+                        getTypeReference({
                             reference: optional,
                             referencedIn,
                             modelDirectory,

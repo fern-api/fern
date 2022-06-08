@@ -1,7 +1,7 @@
 import { TypeDefinition } from "@fern-api/api";
 import { Directory, SourceFile, ts } from "ts-morph";
-import { getNamespaceImport } from "../references/generateNamedTypeReference";
 import { getImportPathForNamedType } from "../references/getImportPathForNamedType";
+import { getNamespaceImport } from "../references/getNamedTypeReference";
 import { getRelativePathAsModuleSpecifierTo } from "../utils/getRelativePathAsModuleSpecifierTo";
 
 export function generateTypeUtilsReference({

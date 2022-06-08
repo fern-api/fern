@@ -1,18 +1,18 @@
 import { NamedType } from "@fern-api/api";
 import { getRelativePathAsModuleSpecifierTo } from "@fern-typescript/commons";
 import { Directory, SourceFile, ts } from "ts-morph";
-import { ClientConstants } from "../constants";
+import { ClientConstants } from "../../constants";
 
 const SERVICES_NAMESPACE_IMPORT = "Services";
 
 export type EndpointTypeName =
-    | typeof ClientConstants.Service.Endpoint.Types.Request.TYPE_NAME
-    | typeof ClientConstants.Service.Endpoint.Types.Request.Properties.Body.TYPE_NAME
-    | typeof ClientConstants.Service.Endpoint.Types.Response.TYPE_NAME
-    | typeof ClientConstants.Service.Endpoint.Types.Response.Success.Properties.Body.TYPE_NAME
-    | typeof ClientConstants.Service.Endpoint.Types.Response.Error.Properties.Body.TYPE_NAME;
+    | typeof ClientConstants.HttpService.Endpoint.Types.Request.TYPE_NAME
+    | typeof ClientConstants.HttpService.Endpoint.Types.Request.Properties.Body.TYPE_NAME
+    | typeof ClientConstants.HttpService.Endpoint.Types.Response.TYPE_NAME
+    | typeof ClientConstants.HttpService.Endpoint.Types.Response.Success.Properties.Body.TYPE_NAME
+    | typeof ClientConstants.HttpService.Endpoint.Types.Response.Error.Properties.Body.TYPE_NAME;
 
-export declare namespace generateEndpointTypeReference {
+export declare namespace getLocalEndpointTypeReference {
     export interface Args {
         serviceName: NamedType;
         endpointId: string;
@@ -22,13 +22,13 @@ export declare namespace generateEndpointTypeReference {
     }
 }
 
-export function generateEndpointTypeReference({
+export function getLocalEndpointTypeReference({
     serviceName: { name: serviceName },
     endpointId,
     typeName,
     referencedIn,
     servicesDirectory,
-}: generateEndpointTypeReference.Args): ts.TypeReferenceNode {
+}: getLocalEndpointTypeReference.Args): ts.TypeReferenceNode {
     const serviceDirectory = servicesDirectory.getDirectoryOrThrow(serviceName);
     const endpointsDirectory = serviceDirectory.getDirectoryOrThrow(ClientConstants.Files.ENDPOINTS_DIRECTORY_NAME);
     const endpointDirectory = endpointsDirectory.getDirectoryOrThrow(endpointId);

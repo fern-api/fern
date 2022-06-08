@@ -1,9 +1,10 @@
 import { HttpEndpoint, NamedType } from "@fern-api/api";
-import { generateTypeReference, getTextOfTsNode } from "@fern-typescript/commons";
+import { getTextOfTsNode, getTypeReference } from "@fern-typescript/commons";
 import { Directory, OptionalKind, PropertySignatureStructure, SourceFile } from "ts-morph";
-import { ClientConstants } from "../../../constants";
-import { WireMessageBodyReference } from "../types";
-import { generateReferenceToWireMessageType } from "../utils";
+import { ClientConstants } from "../../../../constants";
+import { ServiceTypeReference } from "../../../../service-types/types";
+import { getEndpointTypeReference } from "../../getEndpointTypeReference";
+import { EndpointTypeName } from "../../getLocalEndpointTypeReference";
 
 export function generateRequest({
     requestFile,
@@ -18,14 +19,14 @@ export function generateRequest({
     serviceName: NamedType;
     modelDirectory: Directory;
     servicesDirectory: Directory;
-    requestBodyReference: WireMessageBodyReference | undefined;
+    requestBodyReference: ServiceTypeReference<EndpointTypeName> | undefined;
 }): void {
     const properties: OptionalKind<PropertySignatureStructure>[] = [
         ...endpoint.parameters.map((parameter) => ({
             name: parameter.key,
             docs: parameter.docs != null ? [parameter.docs] : undefined,
             type: getTextOfTsNode(
-                generateTypeReference({
+                getTypeReference({
                     reference: parameter.valueType,
                     referencedIn: requestFile,
                     modelDirectory,
@@ -36,7 +37,7 @@ export function generateRequest({
             name: queryParameter.key,
             docs: queryParameter.docs != null ? [queryParameter.docs] : undefined,
             type: getTextOfTsNode(
-                generateTypeReference({
+                getTypeReference({
                     reference: queryParameter.valueType,
                     referencedIn: requestFile,
                     modelDirectory,
@@ -47,9 +48,9 @@ export function generateRequest({
 
     if (requestBodyReference != null) {
         properties.push({
-            name: ClientConstants.Service.Endpoint.Types.Request.Properties.Body.PROPERTY_NAME,
+            name: ClientConstants.HttpService.Endpoint.Types.Request.Properties.Body.PROPERTY_NAME,
             type: getTextOfTsNode(
-                generateReferenceToWireMessageType({
+                getEndpointTypeReference({
                     endpointId: endpoint.endpointId,
                     serviceName,
                     reference: requestBodyReference,
@@ -62,7 +63,7 @@ export function generateRequest({
     }
 
     requestFile.addInterface({
-        name: ClientConstants.Service.Endpoint.Types.Request.TYPE_NAME,
+        name: ClientConstants.HttpService.Endpoint.Types.Request.TYPE_NAME,
         properties,
         isExported: true,
     });

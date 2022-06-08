@@ -1,7 +1,7 @@
 import { HttpEndpoint, NamedType, PrimitiveType, QueryParameter, TypeReference } from "@fern-api/api";
 import { ResolvedType, TypeResolver } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
-import { ClientConstants } from "../../constants";
+import { ClientConstants } from "../../../constants";
 
 export function generateConstructQueryParams({
     endpoint,
@@ -22,7 +22,7 @@ export function generateConstructQueryParams({
             ts.factory.createVariableDeclarationList(
                 [
                     ts.factory.createVariableDeclaration(
-                        ts.factory.createIdentifier(ClientConstants.Service.Endpoint.Variables.QUERY_PARAMETERS),
+                        ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.QUERY_PARAMETERS),
                         undefined,
                         undefined,
                         ts.factory.createNewExpression(ts.factory.createIdentifier("URLSearchParams"), undefined, [])
@@ -39,7 +39,7 @@ export function generateConstructQueryParams({
         const appendStatement = ts.factory.createExpressionStatement(
             ts.factory.createCallExpression(
                 ts.factory.createPropertyAccessExpression(
-                    ts.factory.createIdentifier(ClientConstants.Service.Endpoint.Variables.QUERY_PARAMETERS),
+                    ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.QUERY_PARAMETERS),
                     ts.factory.createIdentifier("append")
                 ),
                 undefined,
@@ -136,7 +136,7 @@ function isPrimitiveStringLike(primitive: PrimitiveType): boolean {
 
 function getQueryParameterReference(queryParameter: QueryParameter): ts.PropertyAccessExpression {
     return ts.factory.createPropertyAccessExpression(
-        ts.factory.createIdentifier(ClientConstants.Service.Endpoint.Signature.REQUEST_PARAMETER),
+        ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Signature.REQUEST_PARAMETER),
         ts.factory.createIdentifier(queryParameter.key)
     );
 }

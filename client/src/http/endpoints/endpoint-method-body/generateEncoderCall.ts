@@ -7,7 +7,7 @@ import {
     ts,
     VariableReference,
 } from "@fern-typescript/helper-utils";
-import { ClientConstants } from "../../constants";
+import { ClientConstants } from "../../../constants";
 
 export function generateEncoderCall({
     encoder,
@@ -38,7 +38,7 @@ function generateFileBasedEncoderCall({
     method: EncodeMethod;
 }) {
     const referenceToEncoder = ts.factory.createPropertyAccessExpression(
-        ts.factory.createIdentifier(ClientConstants.Service.NamespaceImports.ENCODERS),
+        ts.factory.createIdentifier(ClientConstants.HttpService.NamespaceImports.ENCODERS),
         encoder.name
     );
 

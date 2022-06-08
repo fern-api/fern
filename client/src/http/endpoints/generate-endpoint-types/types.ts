@@ -1,5 +1,6 @@
 import { Encoding, TypeReference } from "@fern-api/api";
-import { EndpointTypeName } from "../generateEndpointTypeReference";
+import { ServiceTypeReference } from "../../../service-types/types";
+import { EndpointTypeName } from "../getLocalEndpointTypeReference";
 
 export interface GeneratedEndpointTypes {
     methodName: string;
@@ -13,7 +14,7 @@ export interface GeneratedEndpointTypes {
     requestBody:
         | {
               encoding: Encoding;
-              reference: WireMessageBodyReference;
+              reference: ServiceTypeReference<EndpointTypeName>;
               // if specified, then you can access the body using this property
               // (e.g. request[propertyName])
               propertyName: string | undefined;
@@ -21,7 +22,7 @@ export interface GeneratedEndpointTypes {
         | undefined;
     response: {
         encoding: Encoding;
-        successBodyReference: WireMessageBodyReference | undefined;
+        successBodyReference: ServiceTypeReference<EndpointTypeName> | undefined;
     };
 }
 
@@ -37,18 +38,4 @@ export interface ModelEndpointParameterReference {
     // is imported from the model
     isLocal: false;
     typeReference: TypeReference;
-}
-
-export type WireMessageBodyReference = LocalWireMessageBodyReference | ModelWireMessageBodyReference;
-
-export interface LocalWireMessageBodyReference {
-    // is located in a file local to this service, not imported from the model
-    isLocal: true;
-    typeName: EndpointTypeName;
-}
-
-export interface ModelWireMessageBodyReference {
-    // is imported from the model
-    isLocal: false;
-    typeReference: TypeReference.Named | TypeReference.Primitive;
 }

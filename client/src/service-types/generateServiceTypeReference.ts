@@ -1,41 +1,39 @@
 import { Type } from "@fern-api/api";
 import { assertNever } from "@fern-api/commons";
-import { getOrCreateSourceFile, TypeResolver } from "@fern-typescript/commons";
+import { TypeResolver } from "@fern-typescript/commons";
 import { generateType } from "@fern-typescript/model";
 import { Directory } from "ts-morph";
-import { EndpointTypeName } from "../generateEndpointTypeReference";
-import { WireMessageBodyReference } from "./types";
+import { ServiceTypeReference } from "./types";
+import { getFileNameForServiceType } from "./utils";
 
-export declare namespace generateWireMessageBodyReference {
-    export interface Args {
-        typeName: EndpointTypeName;
+export declare namespace generateServiceTypeReference {
+    export interface Args<T extends string> {
+        typeName: T;
         type: Type;
         docs: string | null | undefined;
-        endpointDirectory: Directory;
+        typeDirectory: Directory;
         modelDirectory: Directory;
         typeResolver: TypeResolver;
     }
 }
 
-export function generateWireMessageBodyReference({
+export function generateServiceTypeReference<T extends string>({
     typeName,
     type,
     docs,
-    endpointDirectory,
+    typeDirectory,
     modelDirectory,
     typeResolver,
-}: generateWireMessageBodyReference.Args): WireMessageBodyReference | undefined {
+}: generateServiceTypeReference.Args<T>): ServiceTypeReference<T> | undefined {
     if (type._type === "alias") {
         switch (type.aliasOf._type) {
             case "named":
             case "primitive":
+            case "container":
                 return {
                     isLocal: false,
                     typeReference: type.aliasOf,
                 };
-            case "container":
-                // generate a new file for this aliased type
-                break;
             case "void":
                 return undefined;
             default:
@@ -43,7 +41,7 @@ export function generateWireMessageBodyReference({
         }
     }
 
-    const wireMessageFile = getOrCreateSourceFile(endpointDirectory, `${typeName}.ts`);
+    const wireMessageFile = typeDirectory.createSourceFile(getFileNameForServiceType(typeName));
     generateType({
         type,
         docs,
@@ -55,6 +53,7 @@ export function generateWireMessageBodyReference({
 
     return {
         isLocal: true,
+        file: wireMessageFile,
         typeName,
     };
 }
