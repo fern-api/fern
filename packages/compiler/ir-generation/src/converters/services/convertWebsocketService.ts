@@ -2,6 +2,7 @@ import { CustomWireMessageEncoding, FernFilepath, WebSocketMessenger, WebSocketS
 import { RawSchemas } from "@fern-api/syntax-analysis";
 import { convertEncoding } from "./convertEncoding";
 import { convertResponseErrors } from "./convertResponseErrors";
+import { convertServiceTypeDefinition } from "./convertServiceTypeDefinition";
 
 export function convertWebsocketService({
     serviceDefinition,
@@ -11,13 +12,26 @@ export function convertWebsocketService({
     nonStandardEncodings,
 }: {
     serviceId: string;
-    serviceDefinition: RawSchemas.WebSocketServiceSchema;
+    serviceDefinition: RawSchemas.WebSocketChannelSchema;
     fernFilepath: FernFilepath;
     imports: Record<string, string>;
     nonStandardEncodings: CustomWireMessageEncoding[];
 }): WebSocketService {
     return {
         docs: serviceDefinition.docs,
+        init: {
+            docs: typeof serviceDefinition.init !== "string" ? serviceDefinition.init?.docs : undefined,
+            type: convertServiceTypeDefinition({
+                typeDefinition: serviceDefinition.init,
+                fernFilepath,
+                imports,
+            }),
+            encoding: convertEncoding({
+                rawEncoding: typeof serviceDefinition.init !== "string" ? serviceDefinition.init?.encoding : undefined,
+                nonStandardEncodings,
+            }),
+            operationName: "_init",
+        },
         name: {
             fernFilepath,
             name: serviceId,
@@ -35,6 +49,11 @@ export function convertWebsocketService({
             imports,
             nonStandardEncodings,
         }),
+        messagePropertyKeys: {
+            id: "id",
+            operation: "operation",
+            body: "body",
+        },
     };
 }
 
@@ -56,9 +75,18 @@ function convertWebSocketMessenger({
                 ? Object.entries(messenger.messages).map(([messageName, message]) => ({
                       docs: message.docs,
                       name: messageName,
-                      // TODO write converter
-                      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                      request: undefined!,
+                      request: {
+                          docs: typeof message.request !== "string" ? message.request?.docs : undefined,
+                          type: convertServiceTypeDefinition({
+                              typeDefinition: message.request,
+                              fernFilepath,
+                              imports,
+                          }),
+                          encoding: convertEncoding({
+                              rawEncoding: typeof message.request !== "string" ? message.request?.encoding : undefined,
+                              nonStandardEncodings,
+                          }),
+                      },
                       response: {
                           docs: typeof message.response !== "string" ? message.response?.docs : undefined,
                           encoding: convertEncoding({
@@ -66,9 +94,12 @@ function convertWebSocketMessenger({
                                   typeof message.response !== "string" ? message.response?.encoding : undefined,
                               nonStandardEncodings,
                           }),
-                          // TODO write converter
-                          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                          ok: undefined!,
+                          ok: convertServiceTypeDefinition({
+                              typeDefinition:
+                                  typeof message.response !== "string" ? message.response?.ok : message.response,
+                              fernFilepath,
+                              imports,
+                          }),
                           errors: convertResponseErrors({
                               rawResponseErrors:
                                   typeof message.response !== "string" ? message.response?.errors : undefined,

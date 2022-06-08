@@ -131,9 +131,9 @@ export * from \\"./PostType\\";
   defaultFetcher,
   Fetcher,
   isResponseOk,
-  joinPaths,
   Service,
 } from \\"@fern-typescript/service-utils\\";
+import * as path from \\"path\\";
 import * as endpoints from \\"./endpoints\\";
 
 export interface Client {
@@ -147,13 +147,13 @@ export class Client implements Client {
 
   constructor(args: Service.Init) {
     this.fetcher = args.fetcher ?? defaultFetcher;
-    this.baseUrl = args.serverUrl;
+    this.baseUrl = args.origin;
     this.token = args.token;
   }
 
   public async get(): Promise<endpoints.get.Response> {
     const encodedResponse = await this.fetcher({
-      url: joinPaths(this.baseUrl, \\"/\\"),
+      url: path.join(this.baseUrl, \\"/\\"),
       method: \\"GET\\",
       headers: {},
       token: this.token,
@@ -221,9 +221,9 @@ export * from \\"./NoErrorsService\\";
   defaultFetcher,
   Fetcher,
   isResponseOk,
-  joinPaths,
   Service,
 } from \\"@fern-typescript/service-utils\\";
+import * as path from \\"path\\";
 import * as model from \\"../../model\\";
 import * as endpoints from \\"./endpoints\\";
 
@@ -244,7 +244,7 @@ export class Client implements Client {
 
   constructor(args: Service.Init) {
     this.fetcher = args.fetcher ?? defaultFetcher;
-    this.baseUrl = joinPaths(args.serverUrl, \\"/posts\\");
+    this.baseUrl = path.join(args.origin, \\"/posts\\");
     this.token = args.token;
   }
 
@@ -252,7 +252,7 @@ export class Client implements Client {
     request: endpoints.createPost.RequestBody
   ): Promise<endpoints.createPost.Response> {
     const encodedResponse = await this.fetcher({
-      url: joinPaths(this.baseUrl, \\"/\\"),
+      url: path.join(this.baseUrl, \\"/\\"),
       method: \\"POST\\",
       headers: {},
       token: this.token,
@@ -293,7 +293,7 @@ export class Client implements Client {
     }
 
     const encodedResponse = await this.fetcher({
-      url: joinPaths(this.baseUrl, \`/\${request.postId}\`),
+      url: path.join(this.baseUrl, \`/\${request.postId}\`),
       method: \\"GET\\",
       headers: {},
       token: this.token,
@@ -323,7 +323,7 @@ export class Client implements Client {
     request: model.PostId
   ): Promise<endpoints.getPostV2.Response> {
     const encodedResponse = await this.fetcher({
-      url: joinPaths(this.baseUrl, \\"/get\\"),
+      url: path.join(this.baseUrl, \\"/get\\"),
       method: \\"GET\\",
       headers: {},
       token: this.token,
@@ -668,9 +668,9 @@ export * from \\"./PostType\\";
   defaultFetcher,
   Fetcher,
   isResponseOk,
-  joinPaths,
   Service,
 } from \\"@fern-typescript/service-utils\\";
+import * as path from \\"path\\";
 import * as model from \\"../../model\\";
 import * as endpoints from \\"./endpoints\\";
 
@@ -691,7 +691,7 @@ export class Client implements Client {
 
   constructor(args: Service.Init) {
     this.fetcher = args.fetcher ?? defaultFetcher;
-    this.baseUrl = joinPaths(args.serverUrl, \\"/posts\\");
+    this.baseUrl = path.join(args.origin, \\"/posts\\");
     this.token = args.token;
   }
 
@@ -699,7 +699,7 @@ export class Client implements Client {
     request: endpoints.createPost.RequestBody
   ): Promise<endpoints.createPost.Response> {
     const encodedResponse = await this.fetcher({
-      url: joinPaths(this.baseUrl, \\"/\\"),
+      url: path.join(this.baseUrl, \\"/\\"),
       method: \\"POST\\",
       headers: {},
       token: this.token,
@@ -740,7 +740,7 @@ export class Client implements Client {
     }
 
     const encodedResponse = await this.fetcher({
-      url: joinPaths(this.baseUrl, \`/\${request.postId}\`),
+      url: path.join(this.baseUrl, \`/\${request.postId}\`),
       method: \\"GET\\",
       headers: {},
       token: this.token,
@@ -770,7 +770,7 @@ export class Client implements Client {
     request: model.PostId
   ): Promise<endpoints.getPostV2.Response> {
     const encodedResponse = await this.fetcher({
-      url: joinPaths(this.baseUrl, \\"/get\\"),
+      url: path.join(this.baseUrl, \\"/get\\"),
       method: \\"GET\\",
       headers: {},
       token: this.token,

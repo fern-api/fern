@@ -1,10 +1,5 @@
 import { NamedType, SingleUnionType, TypeReference } from "@fern-api/api";
-import {
-    generateNamedTypeReference,
-    generateTypeReference,
-    ResolvedType,
-    TypeResolver,
-} from "@fern-typescript/commons";
+import { getNamedTypeReference, getTypeReference, ResolvedType, TypeResolver } from "@fern-typescript/commons";
 import { upperFirst } from "lodash";
 import { Directory, SourceFile } from "ts-morph";
 import { SingleUnionTypeWithResolvedValueType } from "./generateUnionType";
@@ -32,7 +27,7 @@ export function getResolvedTypeForSingleUnionType({
         {
             namedObject: (named) => {
                 return {
-                    type: generateNamedTypeReference({
+                    type: getNamedTypeReference({
                         typeName: named,
                         referencedIn: file,
                         baseDirectory: modelDirectory,
@@ -44,7 +39,7 @@ export function getResolvedTypeForSingleUnionType({
             },
             nonObject: () => {
                 return {
-                    type: generateTypeReference({
+                    type: getTypeReference({
                         reference: singleUnionType.valueType,
                         referencedIn: file,
                         modelDirectory,

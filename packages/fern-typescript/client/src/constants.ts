@@ -3,9 +3,37 @@ export const ClientConstants = {
         ENDPOINTS_DIRECTORY_NAME: "endpoints",
         ENDPOINTS_NAMESPACE_EXPORT: "Endpoints",
     },
-    Service: {
+    WebsocketChannel: {
+        CLIENT_NAME: "Client",
+        Namespace: {
+            Args: {
+                TYPE_NAME: "Args",
+                Properties: {
+                    ORIGIN: "origin",
+                    Init: {
+                        NAME: "init",
+                        TYPE_NAME: "Init",
+                    },
+                },
+            },
+            CLIENT_MESSAGE: "ClientMessage",
+            SERVER_MESSAGE: "ServerMessage",
+        },
+        Constructor: {
+            PARAMETER_NAME: "args",
+        },
+        PrivateMembers: {
+            SOCKET: "socket",
+            CALLBACKS: "callbacks",
+        },
+        PrivateMethods: {
+            CONSTRUCT_MESSAGE: "_constructMessage",
+        },
+    },
+    HttpService: {
+        CLIENT_NAME: "Client",
+
         NamespaceImports: {
-            ENDPOINTS: "endpoints",
             ENCODERS: "encoders",
         },
         ServiceUtils: {
@@ -20,7 +48,7 @@ export const ClientConstants = {
 
                 Properties: {
                     FETCHER: "fetcher",
-                    SERVER_URL: "serverUrl",
+                    ORIGIN: "origin",
                     TOKEN: "token",
                 },
             },

@@ -1,8 +1,7 @@
-import { CustomWireMessageEncoding, FernFilepath, HttpRequest, Type, TypeReference } from "@fern-api/api";
+import { CustomWireMessageEncoding, FernFilepath, HttpRequest } from "@fern-api/api";
 import { RawSchemas } from "@fern-api/syntax-analysis";
-import { createTypeReferenceParser } from "../../utils/parseInlineType";
-import { convertType } from "../type-definitions/convertTypeDefinition";
 import { convertEncoding } from "./convertEncoding";
+import { convertServiceTypeDefinition } from "./convertServiceTypeDefinition";
 
 export function convertHttpRequest({
     request,
@@ -15,18 +14,12 @@ export function convertHttpRequest({
     imports: Record<string, string>;
     nonStandardEncodings: CustomWireMessageEncoding[];
 }): HttpRequest {
-    const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
     return {
         docs: typeof request !== "string" ? request?.docs : undefined,
         encoding: convertEncoding({
             rawEncoding: typeof request !== "string" ? request?.encoding : undefined,
             nonStandardEncodings,
         }),
-        type:
-            request != null
-                ? typeof request === "string"
-                    ? Type.alias({ aliasOf: parseTypeReference(request) })
-                    : convertType({ typeDefinition: request, fernFilepath, imports })
-                : Type.alias({ aliasOf: TypeReference.void() }),
+        type: convertServiceTypeDefinition({ typeDefinition: request, fernFilepath, imports }),
     };
 }

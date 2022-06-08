@@ -1,5 +1,5 @@
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { convertPathToTemplateString } from "../endpoints/endpoint-method-body/convertPathToTemplateString";
+import { convertPathToTemplateString } from "../http/endpoints/endpoint-method-body/convertPathToTemplateString";
 
 describe("convertPathToTemplateString", () => {
     it("/posts", () => {

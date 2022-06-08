@@ -1,5 +1,5 @@
 import { Type, TypeDefinition, TypeReference } from "@fern-api/api";
-import { FernWriters, generateTypeReference, getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
+import { FernWriters, getTextOfTsNode, getTypeReference, TypeResolver } from "@fern-typescript/commons";
 import { tsMorph } from "@fern-typescript/helper-utils";
 import { constructEncodeMethods, EncodeMethods } from "../constructEncodeMethods";
 import { NOT_IMPLEMENTED_ENCODE_METHODS } from "../utils";
@@ -27,7 +27,7 @@ export function writeModel({
                 constructEncodeMethods({
                     methods: getEncodeMethodsForType({
                         typeDefinition: type,
-                        decodedType: generateTypeReference({
+                        decodedType: getTypeReference({
                             reference: TypeReference.named(type.name),
                             referencedIn: file,
                             modelDirectory,

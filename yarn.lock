@@ -2782,6 +2782,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/uuid@npm:^8.3.4":
+  version: 8.3.4
+  resolution: "@types/uuid@npm:8.3.4"
+  checksum: 42fa6d1868c459444c257fe418f624067aabfbe550ce97d9c124c5759a16f03bc475dc82086eefee807571608830b2f955e688c0e63e40aad5eb29b573471492
+  languageName: node
+  linkType: hard
+
 "@types/webpack@npm:^5.28.0":
   version: 5.28.0
   resolution: "@types/webpack@npm:5.28.0"
@@ -5354,6 +5361,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fixtures-e250b6@workspace:packages/fern-typescript/client/src/__test__/fixtures":
+  version: 0.0.0-use.local
+  resolution: "fixtures-e250b6@workspace:packages/fern-typescript/client/src/__test__/fixtures"
+  dependencies:
+    "@fern-typescript/service-utils": "workspace:*"
+    "@types/uuid": "npm:^8.3.4"
+    uuid: "npm:^8.3.2"
+  languageName: unknown
+  linkType: soft
+
 "flat-cache@npm:^3.0.4":
   version: 3.0.4
   resolution: "flat-cache@npm:3.0.4"
@@ -7394,14 +7411,6 @@ __metadata:
   checksum: 123361119829ab8115234f36ed8ef8f697b0f6f83ec9f9bc8f76da587487976d74bc874ffa892e7a66df607fa8f2cc758eed8db225e9cd3a84846350209e53db
   languageName: node
   linkType: hard
-
-"mocks-9972c7@workspace:packages/fern-typescript/client/src/__test__/mocks":
-  version: 0.0.0-use.local
-  resolution: "mocks-9972c7@workspace:packages/fern-typescript/client/src/__test__/mocks"
-  dependencies:
-    "@fern-typescript/service-utils": "workspace:*"
-  languageName: unknown
-  linkType: soft
 
 "mrlint@npm:^0.0.26":
   version: 0.0.26
@@ -9604,6 +9613,15 @@ __metadata:
   version: 1.0.1
   resolution: "utils-merge@npm:1.0.1"
   checksum: b72b8d7a0f7d63a9b1ced39a44b292994111c93cf9c4da8a561e4fe0d0232af7217a53d5aae3a950fb7ab6f423baf3e0d2d7c7c33dd6c4ec78d0a3c720ee6adb
+  languageName: node
+  linkType: hard
+
+"uuid@npm:^8.3.2":
+  version: 8.3.2
+  resolution: "uuid@npm:8.3.2"
+  bin:
+    uuid: dist/bin/uuid
+  checksum: 236a12282c6fa32f326aa1b6d5699a843572e9ab7de84a1507a6b7c315fdcf55bf6ed333fd37d35c5c656f4cb96af998844e1c8cae281c442a1ec3b66df62962
   languageName: node
   linkType: hard
 
