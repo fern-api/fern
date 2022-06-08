@@ -3,6 +3,7 @@ import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 import { addPluginToWorkspaces } from "./commands/add-plugin/addPluginToWorkspaces";
 import { compileWorkspaces } from "./commands/compile/compileWorkspaces";
+import { convertOpenApiToFernApiDefinition } from "./commands/convert-openapi/convertOpenApi";
 
 void yargs(hideBin(process.argv))
     .scriptName("fern")
@@ -58,7 +59,7 @@ void yargs(hideBin(process.argv))
                     demandOption: true,
                     description: "Output directory for your Fern API definition",
                 }),
-        (argv) => compileWorkspaces(argv.workspaces ?? [])
+        (argv) => convertOpenApiToFernApiDefinition(argv.openapiPath, argv.fernDefinitionDir)
     )
     .demandCommand()
     .showHelpOnFail(true)
