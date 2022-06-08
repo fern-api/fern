@@ -43,6 +43,23 @@ void yargs(hideBin(process.argv))
             }),
         (argv) => compileWorkspaces(argv.workspaces ?? [])
     )
+    .command(
+        ["convert <openapiPath> <fernDefinitionDir>"],
+        "Converts Open API to Fern definition. This is incubating and not guaranteed to succeed.",
+        (yargs) =>
+            yargs
+                .positional("openapiPath", {
+                    type: "string",
+                    demandOption: true,
+                    description: "Path to your Open API definition",
+                })
+                .positional("fernDefinitionDir", {
+                    type: "string",
+                    demandOption: true,
+                    description: "Output directory for your Fern API definition",
+                }),
+        (argv) => compileWorkspaces(argv.workspaces ?? [])
+    )
     .demandCommand()
     .showHelpOnFail(true)
     .parse();

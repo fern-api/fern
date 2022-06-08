@@ -32,6 +32,7 @@
     "@fern-api/compiler": "workspace:*",
     "@fern-api/compiler-commons": "workspace:*",
     "@fern-api/init": "workspace:*",
+    "@fern-api/openapi-converter": "workspace:*",
     "@fern-api/plugin-runner": "workspace:*",
     "@fern-api/syntax-analysis": "workspace:*",
     "chalk": "^4.1.2",
