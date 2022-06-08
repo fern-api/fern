@@ -9,6 +9,7 @@
     { "path": "../compiler/compiler/tsconfig.json" },
     { "path": "../compiler/plugins/plugin-runner/tsconfig.json" },
     { "path": "../compiler/syntax-analysis/tsconfig.json" },
-    { "path": "../init/tsconfig.json" }
+    { "path": "../init/tsconfig.json" },
+    { "path": "../openapi-converter/tsconfig.json" }
   ]
 }

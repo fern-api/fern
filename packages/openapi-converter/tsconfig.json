@@ -2,5 +2,5 @@
   "extends": "../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "dist/esm", "rootDir": "src" },
   "include": ["./src"],
-  "references": [{ "path": "../compiler/commons/tsconfig.json" }]
+  "references": [{ "path": "../compiler/syntax-analysis/tsconfig.json" }]
 }
