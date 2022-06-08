@@ -1589,8 +1589,6 @@ __metadata:
     jest: "npm:^27.5.1"
     prettier: "npm:^2.6.2"
     typescript: "npm:^4.6.4"
-  bin:
-    fern: ./cli
   languageName: unknown
   linkType: soft
 
@@ -1879,6 +1877,7 @@ __metadata:
     "@babel/preset-typescript": "npm:^7.16.7"
     "@fern-api/api": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
+    "@fern-typescript/model": "workspace:*"
     "@types/jest": "npm:^27.4.1"
     "@types/node": "npm:^17.0.33"
     depcheck: "npm:^1.4.3"

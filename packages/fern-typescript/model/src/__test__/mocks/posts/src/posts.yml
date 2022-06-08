@@ -47,14 +47,13 @@ services:
           method: GET
           path: /{postId}
           parameters:
-            postId:
-              docs:
-              type: string
+            postId: string
           request: CreatePostRequest
           response:
             ok:
               type:
                 properties:
                   a: number
-            errors:
-              notFound: PostNotFoundError
+            failed:
+              errors:
+                notFound: PostNotFoundError

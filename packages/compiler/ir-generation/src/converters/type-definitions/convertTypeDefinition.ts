@@ -1,4 +1,4 @@
-import { FernFilepath, Type, TypeDefinition } from "@fern-api/api";
+import { FernFilepath, Type, TypeDefinition, TypeReference } from "@fern-api/api";
 import { assertNever } from "@fern-api/commons";
 import { RawSchemas } from "@fern-api/syntax-analysis";
 import { DEFAULT_UNION_TYPE_DISCRIMINANT } from "../../constants";
@@ -33,10 +33,13 @@ export function convertType({
     fernFilepath,
     imports,
 }: {
-    typeDefinition: RawSchemas.TypeDefinitionSchema | string;
+    typeDefinition: RawSchemas.TypeDefinitionSchema | string | null | undefined;
     fernFilepath: FernFilepath;
     imports: Record<string, string>;
 }): Type {
+    if (typeDefinition == null) {
+        return Type.alias({ aliasOf: TypeReference.void() });
+    }
     const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
 
     if (typeof typeDefinition === "string" || isRawAliasDefinition(typeDefinition)) {

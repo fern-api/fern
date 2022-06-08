@@ -29,6 +29,7 @@ export async function generateClientFiles({
         directory,
         intermediateRepresentation,
         modelDirectory,
+        typeResolver,
     });
 
     const encodersDirectory = getOrCreateDirectory(directory, "encoders");

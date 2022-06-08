@@ -4,6 +4,7 @@
   "include": ["./src"],
   "references": [
     { "path": "../../api/fern-ir-typescript/tsconfig.cjs.json" },
-    { "path": "../commons/tsconfig.cjs.json" }
+    { "path": "../commons/tsconfig.cjs.json" },
+    { "path": "../model/tsconfig.cjs.json" }
   ]
 }

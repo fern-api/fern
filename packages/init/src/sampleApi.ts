@@ -37,8 +37,10 @@ const BLOG_POST_API: RawSchemas.RawFernConfigurationSchema = {
             http: {
                 statusCode: 400,
             },
-            properties: {
-                id: "PostId",
+            type: {
+                properties: {
+                    id: "PostId",
+                },
             },
         },
     },

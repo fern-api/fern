@@ -1,11 +1,11 @@
 import { z } from "zod";
-import { ErrorPropertySchema } from "./ErrorPropertySchema";
 import { HttpErrorConfigurationSchema } from "./HttpErrorConfigurationSchema";
+import { TypeDefinitionSchema } from "./TypeDefinitionSchema";
 import { WithDocsSchema } from "./WithDocsSchema";
 
 export const ErrorDefinitionSchema = WithDocsSchema.extend({
     http: z.optional(HttpErrorConfigurationSchema),
-    properties: z.optional(z.record(ErrorPropertySchema)),
+    type: z.optional(TypeDefinitionSchema),
 });
 
 export type ErrorDefinitionSchema = z.infer<typeof ErrorDefinitionSchema>;

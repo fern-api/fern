@@ -8,10 +8,10 @@ import {
 } from "@fern-api/api";
 import { RawSchemas } from "@fern-api/syntax-analysis";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
+import { convertInlineTypeDefinition } from "../type-definitions/convertInlineTypeDefinition";
 import { convertType } from "../type-definitions/convertTypeDefinition";
 import { convertEncoding } from "./convertEncoding";
 import { convertFailedResponse } from "./convertFailedResponse";
-import { convertServiceTypeDefinition } from "./convertServiceTypeDefinition";
 
 export function convertWebsocketChannel({
     channelDefinition,
@@ -88,7 +88,7 @@ function convertWebSocketMessenger({
                       operationId,
                       request: {
                           docs: typeof operation.request !== "string" ? operation.request?.docs : undefined,
-                          type: convertServiceTypeDefinition({
+                          type: convertInlineTypeDefinition({
                               typeDefinitionOrShorthand: operation.request,
                               getTypeDefinition: (request) => request.type,
                               fernFilepath,
@@ -109,7 +109,7 @@ function convertWebSocketMessenger({
                           }),
                           ok: {
                               docs: typeof operation.response !== "string" ? operation.response?.docs : undefined,
-                              type: convertServiceTypeDefinition({
+                              type: convertInlineTypeDefinition({
                                   typeDefinitionOrShorthand: operation.response,
                                   getTypeDefinition: (response) =>
                                       typeof response.ok == "string" ? response.ok : response.ok?.type,

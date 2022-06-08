@@ -1,9 +1,9 @@
 import { FernFilepath, Type, TypeReference } from "@fern-api/api";
 import { TypeDefinitionSchema } from "@fern-api/syntax-analysis/src/schemas";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
-import { convertType } from "../type-definitions/convertTypeDefinition";
+import { convertType } from "./convertTypeDefinition";
 
-export function convertServiceTypeDefinition<T>({
+export function convertInlineTypeDefinition<T>({
     typeDefinitionOrShorthand,
     getTypeDefinition,
     fernFilepath,
@@ -24,10 +24,5 @@ export function convertServiceTypeDefinition<T>({
     }
 
     const typeDefinition = getTypeDefinition(typeDefinitionOrShorthand);
-
-    if (typeDefinition == null) {
-        return Type.alias({ aliasOf: TypeReference.void() });
-    }
-
     return convertType({ typeDefinition, fernFilepath, imports });
 }

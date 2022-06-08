@@ -1,4 +1,4 @@
-import { ErrorDefinition, FernFilepath, TypeReference } from "@fern-api/api";
+import { ErrorDefinition, FernFilepath, Type, TypeReference } from "@fern-api/api";
 import { convertErrorDefinition } from "../converters/convertErrorDefinition";
 
 describe("convertErrorDefinition", () => {
@@ -6,8 +6,10 @@ describe("convertErrorDefinition", () => {
         const definition = convertErrorDefinition({
             errorName: "UnauthorizedError",
             errorDefinition: {
-                properties: {
-                    postId: "commons.PostId",
+                type: {
+                    properties: {
+                        postId: "commons.PostId",
+                    },
                 },
             },
             fernFilepath: FernFilepath.of("path/to/service"),
@@ -23,16 +25,19 @@ describe("convertErrorDefinition", () => {
                 fernFilepath: FernFilepath.of("path/to/service"),
             },
             http: undefined,
-            properties: [
-                {
-                    docs: undefined,
-                    name: "postId",
-                    type: TypeReference.named({
-                        fernFilepath: FernFilepath.of("path/to/commons"),
-                        name: "PostId",
-                    }),
-                },
-            ],
+            type: Type.object({
+                extends: [],
+                properties: [
+                    {
+                        docs: undefined,
+                        key: "postId",
+                        valueType: TypeReference.named({
+                            fernFilepath: FernFilepath.of("path/to/commons"),
+                            name: "PostId",
+                        }),
+                    },
+                ],
+            }),
         };
 
         expect(definition).toEqual(expectedDefinition);

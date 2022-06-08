@@ -39,8 +39,9 @@ errors:
   PostNotFoundError:
     http:
       statusCode: 400
-    properties:
-      id: PostId
+    type:
+      properties:
+        id: PostId
 services:
   http:
     PostsService:
