@@ -1,1 +1,1 @@
-export type Token = string | undefined | (() => Promise<string | undefined>);
+export type Token = string | undefined | (() => string | undefined);
