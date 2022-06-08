@@ -20,29 +20,28 @@ export declare namespace OpenApiConverter {
 
 export enum OpenApiConversionFailure {
     FAILED_TO_PARSE_OPENAPI,
+    OTHER,
 }
 
-export function convertOpenApi(openapiFilepath: string): OpenApiConverter.Result {
-    let result: OpenApiConverter.Result | undefined = undefined;
-    SwaggerParser.parse(openapiFilepath, (err, api) => {
-        if (err || api === undefined || !isOpenApiV3(api)) {
-            result = {
-                didSucceed: false,
-                failure: OpenApiConversionFailure.FAILED_TO_PARSE_OPENAPI,
-            };
-            return;
-        }
-        const convertedFernConfiguration: Required<RawSchemas.RawFernConfigurationSchema> = {
-            errors: {},
-            imports: {},
-            ids: [],
-            types: {},
-            services: {},
+export async function convertOpenApi(openapiFilepath: string): Promise<OpenApiConverter.Result> {
+    const openApi = await SwaggerParser.parse(openapiFilepath);
+    if (openApi === undefined || !isOpenApiV3(openApi)) {
+        return {
+            didSucceed: false,
+            failure: OpenApiConversionFailure.FAILED_TO_PARSE_OPENAPI,
         };
-
-        if (api.components !== undefined && api.components.schemas !== undefined) {
-            for (const typeName of Object.keys(api.components.schemas)) {
-                const typeDefinition = api.components.schemas[typeName];
+    }
+    const convertedFernConfiguration: Required<RawSchemas.RawFernConfigurationSchema> = {
+        errors: {},
+        imports: {},
+        ids: [],
+        types: {},
+        services: {},
+    };
+    try {
+        if (openApi.components !== undefined && openApi.components.schemas !== undefined) {
+            for (const typeName of Object.keys(openApi.components.schemas)) {
+                const typeDefinition = openApi.components.schemas[typeName];
                 if (typeDefinition !== undefined && isSchemaObject(typeDefinition)) {
                     const fernConversionResult = convertToFernType(typeName, typeDefinition);
                     for (const [convertedTypeName, convertedTypeDefinition] of Object.entries(
@@ -53,19 +52,20 @@ export function convertOpenApi(openapiFilepath: string): OpenApiConverter.Result
                 }
             }
         }
-
-        const fernService = convertToFernService(api.paths);
+        const fernService = convertToFernService(openApi.paths, openApi.components?.securitySchemes);
         convertedFernConfiguration.services["http"] = {};
         convertedFernConfiguration.services["http"]["OpenApiService"] = fernService;
-        result = {
+        return {
             didSucceed: true,
             fernConfiguration: convertedFernConfiguration,
         };
-    });
-    if (result == undefined) {
-        throw new Error("Failed to convert OpenApi definition to fern");
+    } catch (e) {
+        console.log(e);
+        return {
+            didSucceed: false,
+            failure: OpenApiConversionFailure.OTHER,
+        };
     }
-    return result;
 }
 
 function isSchemaObject(

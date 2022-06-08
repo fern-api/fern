@@ -1724,6 +1724,7 @@ __metadata:
     "@fern-api/syntax-analysis": "workspace:*"
     "@types/jest": "npm:^27.4.1"
     "@types/js-yaml": "npm:^4.0.5"
+    "@types/lodash": "npm:^4.14.182"
     "@types/node": "npm:^17.0.33"
     depcheck: "npm:^1.4.3"
     eslint: "npm:^8.12.0"

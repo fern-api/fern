@@ -1,8 +1,14 @@
 import { RawSchemas } from "@fern-api/syntax-analysis";
 import { OpenAPIV3 } from "openapi-types";
-import { isReferenceObject, isSchemaObject, getTypeNameFromReferenceObject } from "./typeConverter";
+import { lowerFirst } from "lodash";
+import { getTypeNameFromReferenceObject } from "./typeConverter";
+import { isReferenceObject, isSchemaObject } from "./utils";
+import { OpenApiSecuritySchemes } from "./types";
 
-export function convertToFernService(paths: OpenAPIV3.PathsObject): RawSchemas.HttpServiceSchema {
+export function convertToFernService(
+    paths: OpenAPIV3.PathsObject,
+    securitySchemes: undefined | OpenApiSecuritySchemes
+): RawSchemas.HttpServiceSchema {
     const fernEndpoints: Record<string, RawSchemas.HttpEndpointSchema> = {};
     for (const pathName of Object.keys(paths)) {
         const pathEndpoints = paths[pathName];
@@ -15,9 +21,25 @@ export function convertToFernService(paths: OpenAPIV3.PathsObject): RawSchemas.H
         });
     }
     return {
-        auth: "none",
+        auth: convertToFernAuth(securitySchemes),
         endpoints: fernEndpoints,
     };
+}
+
+function convertToFernAuth(securitySchemes: undefined | OpenApiSecuritySchemes) {
+    if (securitySchemes !== undefined) {
+        for (const key of Object.keys(securitySchemes)) {
+            const securitySchemeValue = securitySchemes[key];
+            if (
+                securitySchemeValue !== undefined &&
+                !isReferenceObject(securitySchemeValue) &&
+                (securitySchemeValue.type === "oauth2" || securitySchemeValue.type === "http")
+            ) {
+                return "bearer";
+            }
+        }
+    }
+    return "none";
 }
 
 function convertToFernEndpoint(
@@ -30,19 +52,19 @@ function convertToFernEndpoint(
     }
     if (pathItem.get !== undefined) {
         const fernGetEndpoint = getFernHttpEndpoint(pathName, pathItem.get, "GET");
-        fernHttpEndpoints[fernGetEndpoint.operationId] = fernGetEndpoint.convertedEndpoint;
+        fernHttpEndpoints[lowerFirst(fernGetEndpoint.operationId)] = fernGetEndpoint.convertedEndpoint;
     }
     if (pathItem.post !== undefined) {
         const fernPostEndpoint = getFernHttpEndpoint(pathName, pathItem.post, "POST");
-        fernHttpEndpoints[fernPostEndpoint.operationId] = fernPostEndpoint.convertedEndpoint;
+        fernHttpEndpoints[lowerFirst(fernPostEndpoint.operationId)] = fernPostEndpoint.convertedEndpoint;
     }
     if (pathItem.put !== undefined) {
         const fernPutEndpoint = getFernHttpEndpoint(pathName, pathItem.put, "PUT");
-        fernHttpEndpoints[fernPutEndpoint.operationId] = fernPutEndpoint.convertedEndpoint;
+        fernHttpEndpoints[lowerFirst(fernPutEndpoint.operationId)] = fernPutEndpoint.convertedEndpoint;
     }
     if (pathItem.delete !== undefined) {
         const fernDeleteEndpoint = getFernHttpEndpoint(pathName, pathItem.delete, "DELETE");
-        fernHttpEndpoints[fernDeleteEndpoint.operationId] = fernDeleteEndpoint.convertedEndpoint;
+        fernHttpEndpoints[lowerFirst(fernDeleteEndpoint.operationId)] = fernDeleteEndpoint.convertedEndpoint;
     }
     // TODO(dsinghvi): handle patch endpoints
     // if (pathItem.patch !== undefined) {
@@ -67,14 +89,16 @@ function getFernHttpEndpoint(
     response = openApiResponse === undefined ? undefined : convertToFernType(openApiResponse);
 
     let request: RawSchemas.TypeDefinitionSchema | string | undefined = undefined;
-    const openApiRequest = getRequestMaybe(httpOperation);
+    const openApiRequest = httpOperation.requestBody;
     request = openApiRequest === undefined ? undefined : convertToFernType(openApiRequest);
 
+    const convertedParameters = getFernPathParameters(httpOperation);
     return {
         convertedEndpoint: {
             method: httpMethod,
             path: pathName,
-            parameters: getFernPathParameters(httpOperation),
+            parameters: convertedParameters.pathParameters,
+            queryParameters: convertedParameters.queryParameters,
             docs: httpOperation.description,
             response,
             request,
@@ -92,10 +116,6 @@ function getResponseMaybe(
         return httpOperation.responses["201"];
     }
     return undefined;
-}
-
-function getRequestMaybe(httpOperation: OpenAPIV3.OperationObject) {
-    return httpOperation.requestBody;
 }
 
 function getOperationIdOrThrow(httpOperation: OpenAPIV3.OperationObject): string {
@@ -125,23 +145,35 @@ function convertToFernType(
     throw new Error("Failed to convert response object to fern response");
 }
 
-function getFernPathParameters(
-    pathOperation: OpenAPIV3.OperationObject
-): Record<string, RawSchemas.HttpParameterSchema> {
+interface ConvertedParameters {
+    pathParameters: Record<string, RawSchemas.HttpParameterSchema>;
+    queryParameters: Record<string, RawSchemas.HttpQueryParameterSchema>;
+}
+
+function getFernPathParameters(pathOperation: OpenAPIV3.OperationObject): ConvertedParameters {
     const pathParameters: Record<string, RawSchemas.HttpParameterSchema> = {};
+    const queryParameters: Record<string, RawSchemas.HttpQueryParameterSchema> = {};
     pathOperation.parameters?.forEach((parameter) => {
         if (isReferenceObject(parameter)) {
             throw new Error("Converting reference type parameters is unsupported. Ref=" + parameter.$ref);
         }
-        pathParameters[parameter.name] = convertToFernParameter(parameter);
+        if (parameter.in === "path") {
+            pathParameters[parameter.name] = convertToFernParameter(parameter);
+        } else if (parameter.in === "query") {
+            let convertedParameter = convertToFernParameter(parameter);
+            if (!parameter.required) {
+                convertedParameter = `optional<${convertedParameter}>`;
+            }
+            queryParameters[parameter.name] = convertedParameter;
+        }
     });
-    return pathParameters;
+    return {
+        pathParameters,
+        queryParameters,
+    };
 }
 
-function convertToFernParameter(parameter: OpenAPIV3.ParameterObject): RawSchemas.HttpParameterSchema {
-    if (parameter.in !== "path") {
-        throw new Error("Converting non path parameters is unsupported. Parameter=" + parameter.name);
-    }
+function convertToFernParameter(parameter: OpenAPIV3.ParameterObject): string {
     if (parameter.schema !== undefined) {
         if (isSchemaObject(parameter.schema)) {
             return convertSchemaToFernParameter(parameter.schema, parameter.name);
@@ -152,10 +184,7 @@ function convertToFernParameter(parameter: OpenAPIV3.ParameterObject): RawSchema
     throw new Error("Failed to convert parameter. Parameter=" + parameter.name);
 }
 
-function convertSchemaToFernParameter(
-    schemaObject: OpenAPIV3.SchemaObject,
-    parameterName: string
-): RawSchemas.HttpParameterSchema {
+function convertSchemaToFernParameter(schemaObject: OpenAPIV3.SchemaObject, parameterName: string): string {
     if (schemaObject.type == undefined) {
         throw new Error("Expected parameter schemas to have type. Parameter=" + parameterName);
     }
