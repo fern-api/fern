@@ -133,7 +133,7 @@ export * from \\"./PostType\\";
   isResponseOk,
   Service,
 } from \\"@fern-typescript/service-utils\\";
-import path from \\"path\\";
+import * as path from \\"path\\";
 import * as endpoints from \\"./endpoints\\";
 
 export interface Client {
@@ -223,7 +223,7 @@ export * from \\"./NoErrorsService\\";
   isResponseOk,
   Service,
 } from \\"@fern-typescript/service-utils\\";
-import path from \\"path\\";
+import * as path from \\"path\\";
 import * as model from \\"../../model\\";
 import * as endpoints from \\"./endpoints\\";
 
@@ -670,7 +670,7 @@ export * from \\"./PostType\\";
   isResponseOk,
   Service,
 } from \\"@fern-typescript/service-utils\\";
-import path from \\"path\\";
+import * as path from \\"path\\";
 import * as model from \\"../../model\\";
 import * as endpoints from \\"./endpoints\\";
 
