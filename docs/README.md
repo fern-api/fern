@@ -2,6 +2,11 @@
 
 > **Fern is a framework for building APIs.** You can think of it as an alternative to OpenAPI/Swagger.
 
+<a href="https://www.loom.com/share/410f13c725ab4403aac77b237f9fe1f1" target="_blank">
+    <p>Demo: building an API with Fern</p>
+    <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/410f13c725ab4403aac77b237f9fe1f1-1654645327734-with-play.gif">
+  </a>
+
 ### Goals
 
 **1. High-quality code generation.**
