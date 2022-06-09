@@ -1,5 +1,5 @@
 import { HttpEndpoint, HttpService } from "@fern-api/api";
-import { ClientConstants, getLocalEndpointTypeReference } from "@fern-typescript/client";
+import { ClientConstants, getLocalServiceTypeReference } from "@fern-typescript/client";
 import { FernWriters, getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
 import { tsMorph } from "@fern-typescript/helper-utils";
 import { constructEncodeMethods } from "../constructEncodeMethods";
@@ -57,9 +57,9 @@ function writeHttpEndpoint({
             value: getTextOfTsNode(
                 constructEncodeMethods({
                     methods: getEncodeMethodsForType({
-                        decodedType: getLocalEndpointTypeReference({
-                            serviceName: service.name,
-                            endpointId: endpoint.endpointId,
+                        decodedType: getLocalServiceTypeReference({
+                            serviceOrChannelName: service.name,
+                            endpointOrOperationId: endpoint.endpointId,
                             typeName: ClientConstants.HttpService.Endpoint.Types.Request.Properties.Body.TYPE_NAME,
                             referencedIn: file,
                             servicesDirectory,
@@ -83,23 +83,21 @@ function writeHttpEndpoint({
 
     if (endpoint.response.ok.type._type !== "alias") {
         writer.addProperty({
-            key: ClientConstants.HttpService.Endpoint.Types.Response.Success.Properties.Body.TYPE_NAME,
+            key: ClientConstants.Commons.Types.Response.Success.Properties.Body.TYPE_NAME,
             value: getTextOfTsNode(
                 constructEncodeMethods({
                     methods: getEncodeMethodsForType({
-                        decodedType: getLocalEndpointTypeReference({
-                            serviceName: service.name,
-                            endpointId: endpoint.endpointId,
-                            typeName:
-                                ClientConstants.HttpService.Endpoint.Types.Response.Success.Properties.Body.TYPE_NAME,
+                        decodedType: getLocalServiceTypeReference({
+                            serviceOrChannelName: service.name,
+                            endpointOrOperationId: endpoint.endpointId,
+                            typeName: ClientConstants.Commons.Types.Response.Success.Properties.Body.TYPE_NAME,
                             referencedIn: file,
                             servicesDirectory,
                         }),
                         typeDefinition: {
                             docs: undefined,
                             name: {
-                                name: ClientConstants.HttpService.Endpoint.Types.Response.Success.Properties.Body
-                                    .TYPE_NAME,
+                                name: ClientConstants.Commons.Types.Response.Success.Properties.Body.TYPE_NAME,
                                 fernFilepath: service.name.fernFilepath,
                             },
                             shape: endpoint.response.ok.type,

@@ -1,29 +1,24 @@
 ids:
-  - PostId
+  - ChatMessageId
 
 types:
-  Post:
-    docs: A blog post
+  ChatMessage:
     properties:
-      id: PostId
+      id: ChatMessageId
       title: string
       content: string
-      relatedPosts: list<Post>
 
 services:
   websocket:
     ChatService:
       path: /chat
       auth: none
-      init:
-        properties:
-          browser: string
       client:
-        messages:
-          createPost:
+        operations:
+          sendChat:
             request:
               type:
                 properties:
                   title: string
                   content: string
-            response: PostId
+            response: ChatMessage

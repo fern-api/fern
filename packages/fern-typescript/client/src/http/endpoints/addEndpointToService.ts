@@ -1,11 +1,20 @@
 import { HttpEndpoint, HttpService } from "@fern-api/api";
 import { getTextOfTsNode, getTypeReference, TypeResolver } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
-import { ClassDeclaration, Directory, InterfaceDeclaration, Scope, ts } from "ts-morph";
+import {
+    ClassDeclaration,
+    Directory,
+    InterfaceDeclaration,
+    OptionalKind,
+    ParameterDeclarationStructure,
+    Scope,
+    ts,
+} from "ts-morph";
+import { getLocalServiceTypeReference } from "../../commons/service-types/get-service-type-reference/getLocalServiceTypeReference";
+import { ServiceTypeName } from "../../commons/service-types/types";
 import { ClientConstants } from "../../constants";
 import { generateEndpointMethodBody } from "./endpoint-method-body/generateEndpointMethodBody";
-import { generateEndpointTypes } from "./generate-endpoint-types/generateEndpointTypes";
-import { EndpointTypeName, getLocalEndpointTypeReference } from "./getLocalEndpointTypeReference";
+import { generateEndpointTypes } from "./endpoint-types/generateEndpointTypes";
 
 export async function addEndpointToService({
     endpoint,
@@ -42,37 +51,56 @@ export async function addEndpointToService({
         typeResolver,
     });
 
-    const getReferenceToLocalEndpointType = (typeName: EndpointTypeName): ts.TypeReferenceNode => {
-        return getLocalEndpointTypeReference({
-            serviceName: serviceDefinition.name,
+    const getReferenceToLocalServiceType = (typeName: ServiceTypeName): ts.TypeReferenceNode => {
+        return getLocalServiceTypeReference({
+            serviceOrChannelName: serviceDefinition.name,
             typeName,
-            endpointId: endpoint.endpointId,
+            endpointOrOperationId: endpoint.endpointId,
             servicesDirectory,
             referencedIn: serviceFile,
         });
     };
 
-    const parameters =
-        generatedEndpointTypes.endpointParameter != null
-            ? [
-                  {
-                      name: ClientConstants.HttpService.Endpoint.Signature.REQUEST_PARAMETER,
-                      type: getTextOfTsNode(
-                          generatedEndpointTypes.endpointParameter.isLocal
-                              ? getReferenceToLocalEndpointType(generatedEndpointTypes.endpointParameter.typeName)
-                              : getTypeReference({
-                                    reference: generatedEndpointTypes.endpointParameter.typeReference,
-                                    referencedIn: serviceFile,
-                                    modelDirectory,
-                                })
-                      ),
-                  },
-              ]
+    const parameters: OptionalKind<ParameterDeclarationStructure>[] =
+        generatedEndpointTypes.request != null
+            ? generatedEndpointTypes.request.wrapper != null
+                ? [
+                      {
+                          name: ClientConstants.HttpService.Endpoint.Signature.REQUEST_PARAMETER,
+                          type: getTextOfTsNode(
+                              generatedEndpointTypes.request.wrapper.reference.isLocal
+                                  ? getReferenceToLocalServiceType(
+                                        generatedEndpointTypes.request.wrapper.reference.typeName
+                                    )
+                                  : getTypeReference({
+                                        reference: generatedEndpointTypes.request.wrapper.reference.typeReference,
+                                        referencedIn: serviceFile,
+                                        modelDirectory,
+                                    })
+                          ),
+                      },
+                  ]
+                : generatedEndpointTypes.request.body != null
+                ? [
+                      {
+                          name: ClientConstants.HttpService.Endpoint.Signature.REQUEST_PARAMETER,
+                          type: getTextOfTsNode(
+                              generatedEndpointTypes.request.body.isLocal
+                                  ? getReferenceToLocalServiceType(generatedEndpointTypes.request.body.typeName)
+                                  : getTypeReference({
+                                        reference: generatedEndpointTypes.request.body.typeReference,
+                                        referencedIn: serviceFile,
+                                        modelDirectory,
+                                    })
+                          ),
+                      },
+                  ]
+                : []
             : [];
 
     const returnType = getTextOfTsNode(
         ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
-            getReferenceToLocalEndpointType(ClientConstants.HttpService.Endpoint.Types.Response.TYPE_NAME),
+            getReferenceToLocalServiceType(generatedEndpointTypes.response.reference.typeName),
         ])
     );
 
@@ -93,7 +121,7 @@ export async function addEndpointToService({
             endpointTypes: generatedEndpointTypes,
             serviceFile,
             serviceDefinition,
-            getReferenceToLocalEndpointType,
+            getReferenceToLocalServiceType,
             typeResolver,
             helperManager,
             modelDirectory,

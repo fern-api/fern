@@ -1,21 +1,17 @@
 export const ClientConstants = {
-    Files: {
-        ENDPOINTS_DIRECTORY_NAME: "endpoints",
-    },
     WebsocketChannel: {
         CLIENT_NAME: "Client",
+
+        Files: {
+            OPERATIONS_DIRECTORY_NAME: "operations",
+        },
         Namespace: {
             Args: {
                 TYPE_NAME: "Args",
                 Properties: {
                     ORIGIN: "origin",
-                    Init: {
-                        NAME: "init",
-                        TYPE_NAME: "Init",
-                    },
                 },
             },
-            CLIENT_MESSAGE: "ClientMessage",
             SERVER_MESSAGE: "ServerMessage",
         },
         Constructor: {
@@ -25,13 +21,38 @@ export const ClientConstants = {
             SOCKET: "socket",
             CALLBACKS: "callbacks",
         },
-        PrivateMethods: {
-            CONSTRUCT_MESSAGE: "_constructMessage",
+        Methods: {
+            DISCONNECT: "_disconnect",
+            ON_MESSAGE: "_onMessage",
+        },
+        Operation: {
+            Signature: {
+                REQUEST_PARAMETER: "request",
+            },
+            Types: {
+                Request: {
+                    Properties: {
+                        ID: "id",
+                        OPERATION: "operation",
+                        BODY: "body",
+                    },
+                },
+                Response: {
+                    Properties: {
+                        ID: "id",
+                        REPLY_TO: "replyTo",
+                    },
+                },
+            },
         },
     },
+
     HttpService: {
         CLIENT_NAME: "Client",
 
+        Files: {
+            ENDPOINTS_DIRECTORY_NAME: "endpoints",
+        },
         NamespaceImports: {
             ENCODERS: "encoders",
         },
@@ -91,43 +112,52 @@ export const ClientConstants = {
                 DECODED_ERROR: "error",
             },
             Types: {
-                Request: {
-                    TYPE_NAME: "Request",
+                Response: {
+                    Properties: {
+                        STATUS_CODE: "statusCode",
+                    },
+                },
+            },
+        },
+    },
+
+    Commons: {
+        Types: {
+            Request: {
+                TYPE_NAME: "Request",
+
+                Properties: {
+                    Body: {
+                        PROPERTY_NAME: "body",
+                        TYPE_NAME: "RequestBody",
+                    },
+                },
+            },
+            Response: {
+                TYPE_NAME: "Response",
+
+                Properties: {
+                    OK: "ok",
+                },
+
+                Success: {
+                    TYPE_NAME: "SuccessResponse",
 
                     Properties: {
                         Body: {
                             PROPERTY_NAME: "body",
-                            TYPE_NAME: "RequestBody",
+                            TYPE_NAME: "ResponseBody",
                         },
                     },
                 },
-                Response: {
-                    TYPE_NAME: "Response",
+
+                Error: {
+                    TYPE_NAME: "ErrorResponse",
 
                     Properties: {
-                        OK: "ok",
-                        STATUS_CODE: "statusCode",
-                    },
-
-                    Success: {
-                        TYPE_NAME: "SuccessResponse",
-
-                        Properties: {
-                            Body: {
-                                PROPERTY_NAME: "body",
-                                TYPE_NAME: "ResponseBody",
-                            },
-                        },
-                    },
-
-                    Error: {
-                        TYPE_NAME: "ErrorResponse",
-
-                        Properties: {
-                            Body: {
-                                PROPERTY_NAME: "error",
-                                TYPE_NAME: "ErrorBody",
-                            },
+                        Body: {
+                            PROPERTY_NAME: "error",
+                            TYPE_NAME: "ErrorBody",
                         },
                     },
                 },

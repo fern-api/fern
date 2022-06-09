@@ -1,0 +1,65 @@
+import path from "path";
+import * as uuid from "uuid";
+import { ChatService } from "../generated/services";
+
+export declare namespace Client {
+    interface Args {
+        origin: string;
+    }
+
+    type ServerMessage = ChatService.sendChat.Response;
+}
+
+export interface Client {}
+
+export class Client implements Client {
+    private socket: Promise<WebSocket>;
+    private callbacks: Record<string, (response: any) => void> = {};
+
+    constructor(args: Client.Args) {
+        this.socket = new Promise((resolve) => {
+            const socket = new WebSocket(path.join(args.origin, "/chat"));
+            socket.onopen = () => {
+                resolve(socket);
+            };
+            socket.onmessage = this._onMessage;
+        });
+    }
+
+    public async sendChat(body: ChatService.sendChat.RequestBody): Promise<ChatService.sendChat.Response> {
+        const socket = await this.socket;
+        return new Promise((resolve) => {
+            const message: ChatService.sendChat.Request = {
+                id: uuid.v4(),
+                operation: "sendChat",
+                body,
+            };
+            this.callbacks[message.id] = resolve;
+            socket.send(JSON.stringify(message));
+        });
+    }
+
+    public async _disconnect(): Promise<void> {
+        const socket = await this.socket;
+        return new Promise((resolve) => {
+            socket.onclose = () => {
+                resolve();
+            };
+            socket.close();
+        });
+    }
+
+    private _onMessage(event: MessageEvent) {
+        const message = JSON.parse(event.data) as Client.ServerMessage;
+        if ("operation" in message) {
+            // TODO handle server's request
+        } else {
+            const callback = this.callbacks[message.replyTo];
+            if (callback != null) {
+                callback(message);
+            } else {
+                // TODO send error response to server (404)
+            }
+        }
+    }
+}
