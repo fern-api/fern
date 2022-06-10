@@ -17,7 +17,7 @@ export declare namespace IntermediateRepresentationGenerationStage {
     }
 
     export interface Args {
-        rawFernConfigurationSchemas: Record<RelativeFilePath, RawSchemas.RawFernConfigurationSchema>;
+        rawFernConfigurationSchemas: Record<RelativeFilePath, RawSchemas.FernConfigurationSchema>;
         workspaceName: string | undefined;
     }
 }

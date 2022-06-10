@@ -76,6 +76,7 @@ export function generateResponse({
         failedResponse,
         errorBodyFile,
         errorsDirectory,
+        typeResolver,
     });
 
     responseFile.addInterface({

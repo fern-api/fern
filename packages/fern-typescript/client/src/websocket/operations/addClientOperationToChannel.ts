@@ -81,7 +81,8 @@ export function addClientOperationToChannel({
                               : getTypeReference({
                                     reference: generatedOperationTypes.request.body.typeReference,
                                     referencedIn: channelFile,
-                                    modelDirectory,
+                                    baseDirectory: modelDirectory,
+                                    baseDirectoryType: "model",
                                 })
                       ),
                   },

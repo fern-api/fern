@@ -9,7 +9,7 @@ export async function writeSampleApiToDirectory(dir: string): Promise<void> {
 
 const BLOG_POST_API_FILENAME = "blog.yml";
 
-const BLOG_POST_API: RawSchemas.RawFernConfigurationSchema = {
+const BLOG_POST_API: RawSchemas.FernConfigurationSchema = {
     ids: ["PostId"],
     types: {
         BlogPost: {
@@ -71,7 +71,7 @@ const BLOG_POST_API: RawSchemas.RawFernConfigurationSchema = {
                     getPost: {
                         method: "GET",
                         path: "/{postId}",
-                        parameters: {
+                        "path-parameters": {
                             postId: "PostId",
                         },
                         response: {

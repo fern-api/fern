@@ -55,17 +55,17 @@ export function convertHttpService({
                 docs: endpoint.docs,
                 method: convertHttpMethod(endpoint.method),
                 path: endpoint.path,
-                parameters:
-                    endpoint.parameters != null
-                        ? Object.entries(endpoint.parameters).map(([parameterName, parameterType]) => ({
+                pathParameters:
+                    endpoint["path-parameters"] != null
+                        ? Object.entries(endpoint["path-parameters"]).map(([parameterName, parameterType]) => ({
                               docs: typeof parameterType !== "string" ? parameterType.docs : undefined,
                               key: parameterName,
                               valueType: parseTypeReference(parameterType),
                           }))
                         : [],
                 queryParameters:
-                    endpoint.queryParameters != null
-                        ? Object.entries(endpoint.queryParameters).map(([parameterName, parameterType]) => {
+                    endpoint["query-parameters"] != null
+                        ? Object.entries(endpoint["query-parameters"]).map(([parameterName, parameterType]) => {
                               const valueType = parseTypeReference(parameterType);
                               return {
                                   docs: typeof parameterType !== "string" ? parameterType.docs : undefined,

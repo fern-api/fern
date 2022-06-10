@@ -50,9 +50,9 @@ services:
         getPost:
           method: GET
           path: /{postId}
-          parameters:
+          path-parameters:
             postId: commons.PostId
-          queryParameters:
+          query-parameters:
             page: optional<integer>
             otherParam: integer
           response:

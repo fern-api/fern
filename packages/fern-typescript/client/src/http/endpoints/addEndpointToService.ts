@@ -75,7 +75,8 @@ export async function addEndpointToService({
                                   : getTypeReference({
                                         reference: generatedEndpointTypes.request.wrapper.reference.typeReference,
                                         referencedIn: serviceFile,
-                                        modelDirectory,
+                                        baseDirectory: modelDirectory,
+                                        baseDirectoryType: "model",
                                     })
                           ),
                       },
@@ -90,7 +91,8 @@ export async function addEndpointToService({
                                   : getTypeReference({
                                         reference: generatedEndpointTypes.request.body.typeReference,
                                         referencedIn: serviceFile,
-                                        modelDirectory,
+                                        baseDirectory: modelDirectory,
+                                        baseDirectoryType: "model",
                                     })
                           ),
                       },

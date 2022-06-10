@@ -1,7 +1,7 @@
 import { FailedResponse, FernFilepath } from "@fern-api/api";
 import { RawSchemas } from "@fern-api/syntax-analysis";
 import { DEFAULT_UNION_TYPE_DISCRIMINANT } from "../../constants";
-import { parseTypeName } from "../../utils/parseTypeName";
+import { createTypeReferenceParser } from "../../utils/parseInlineType";
 
 export function convertFailedResponse({
     rawFailedResponse,
@@ -12,6 +12,8 @@ export function convertFailedResponse({
     fernFilepath: FernFilepath;
     imports: Record<string, string>;
 }): FailedResponse {
+    const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
+
     return {
         docs: rawFailedResponse?.docs,
         discriminant: rawFailedResponse?.discriminant ?? DEFAULT_UNION_TYPE_DISCRIMINANT,
@@ -21,11 +23,9 @@ export function convertFailedResponse({
                 : Object.entries(rawFailedResponse.errors).map(([discriminantValue, errorReference]) => ({
                       docs: typeof errorReference !== "string" ? errorReference.docs : undefined,
                       discriminantValue,
-                      error: parseTypeName({
-                          typeName: typeof errorReference === "string" ? errorReference : errorReference.error,
-                          fernFilepath,
-                          imports,
-                      }),
+                      error: parseTypeReference(
+                          typeof errorReference === "string" ? errorReference : { type: errorReference.error }
+                      ),
                   })),
     };
 }

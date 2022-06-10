@@ -10,8 +10,8 @@ import { WithDocsSchema } from "./WithDocsSchema";
 export const HttpEndpointSchema = WithDocsSchema.extend({
     method: z.enum(["GET", "POST", "PUT", "PATCH", "DELETE"]),
     path: z.string(),
-    parameters: z.optional(z.record(HttpParameterSchema)),
-    queryParameters: z.optional(z.record(HttpQueryParameterSchema)),
+    ["path-parameters"]: z.optional(z.record(HttpParameterSchema)),
+    ["query-parameters"]: z.optional(z.record(HttpQueryParameterSchema)),
     headers: z.optional(z.record(HttpHeaderSchema)),
     "auth-override": z.optional(AuthSchema),
     request: z.optional(HttpRequestSchema),

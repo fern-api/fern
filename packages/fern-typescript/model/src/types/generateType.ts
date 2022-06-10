@@ -5,7 +5,6 @@ import { generateEnumType } from "./enum/generateEnumType";
 import { generateAliasType } from "./generateAliasType";
 import { generateObjectType } from "./generateObjectType";
 import { generateUnionType } from "./union/generateUnionType";
-import { getResolvedTypeForSingleUnionType } from "./union/utils";
 
 export function generateType({
     type,
@@ -38,17 +37,10 @@ export function generateType({
                 typeName,
                 docs,
                 discriminant: unionTypeDefinition.discriminant,
-                types: unionTypeDefinition.types.map((singleUnionType) => {
-                    return {
-                        ...singleUnionType,
-                        resolvedValueType: getResolvedTypeForSingleUnionType({
-                            singleUnionType,
-                            typeResolver,
-                            modelDirectory,
-                            file,
-                        }),
-                    };
-                }),
+                types: unionTypeDefinition.types,
+                typeResolver,
+                baseDirectory: modelDirectory,
+                baseDirectoryType: "model",
             });
         },
         alias: (alias) => {

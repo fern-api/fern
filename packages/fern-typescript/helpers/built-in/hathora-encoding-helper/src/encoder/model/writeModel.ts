@@ -30,7 +30,8 @@ export function writeModel({
                         decodedType: getTypeReference({
                             reference: TypeReference.named(type.name),
                             referencedIn: file,
-                            modelDirectory,
+                            baseDirectory: modelDirectory,
+                            baseDirectoryType: "model",
                         }),
                         typeResolver,
                         file,
