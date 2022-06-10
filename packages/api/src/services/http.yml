@@ -21,7 +21,7 @@ types:
       path: string
       method: HttpMethod
       headers: list<HttpHeader>
-      parameters: list<PathParameter>
+      pathParameters: list<PathParameter>
       queryParameters: list<QueryParameter>
       request: HttpRequest
       response: HttpResponse

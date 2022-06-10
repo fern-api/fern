@@ -46,7 +46,7 @@ services:
         getPost:
           method: GET
           path: /{postId}
-          parameters:
+          path-parameters:
             postId: string
           request: CreatePostRequest
           response:
