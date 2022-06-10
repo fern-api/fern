@@ -64,7 +64,7 @@ services:
         getPost:
           method: GET
           path: /{postId}
-          parameters:
+          path-parameters:
             postId: PostId
           response:
             ok: BlogPost
