@@ -8,18 +8,10 @@ types:
     properties:
       name: types.NamedType
       path: string
-      init: WebSocketInit
       client: WebSocketMessenger
       server: WebSocketMessenger
       operationProperties: WebSocketOperationProperties
-  WebSocketInit:
-    extends: commons.WithDocs
-    properties:
-      encoding: serviceCommons.Encoding
-      type: types.Type
-      operationId: string
   WebSocketMessenger:
-    extends: commons.WithDocs
     properties:
       operations: list<WebSocketOperation>
   WebSocketOperation:

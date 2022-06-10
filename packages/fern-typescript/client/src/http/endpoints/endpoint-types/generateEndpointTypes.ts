@@ -1,8 +1,8 @@
 import { HttpEndpoint, NamedType } from "@fern-api/api";
 import { getOrCreateDirectory, TypeResolver } from "@fern-typescript/commons";
 import { Directory } from "ts-morph";
-import { generateRequestTypes } from "./request/generateRequestTypes";
-import { generateResponseTypes } from "./response/generateResponseTypes";
+import { generateRequestTypes } from "./generateRequestTypes";
+import { generateResponseTypes } from "./generateResponseTypes";
 import { GeneratedEndpointTypes } from "./types";
 
 export function generateEndpointTypes({
@@ -31,7 +31,7 @@ export function generateEndpointTypes({
 
     return {
         methodName: endpoint.endpointId,
-        ...generateRequestTypes({
+        request: generateRequestTypes({
             serviceName,
             endpoint,
             endpointDirectory,

@@ -1,15 +1,6 @@
-import {
-    CustomWireMessageEncoding,
-    FernFilepath,
-    Type,
-    TypeReference,
-    WebSocketChannel,
-    WebSocketMessenger,
-} from "@fern-api/api";
+import { CustomWireMessageEncoding, FernFilepath, WebSocketChannel, WebSocketMessenger } from "@fern-api/api";
 import { RawSchemas } from "@fern-api/syntax-analysis";
-import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { convertInlineTypeDefinition } from "../type-definitions/convertInlineTypeDefinition";
-import { convertType } from "../type-definitions/convertTypeDefinition";
 import { convertEncoding } from "./convertEncoding";
 import { convertFailedResponse } from "./convertFailedResponse";
 
@@ -26,7 +17,6 @@ export function convertWebsocketChannel({
     imports: Record<string, string>;
     nonStandardEncodings: CustomWireMessageEncoding[];
 }): WebSocketChannel {
-    const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
     return {
         docs: channelDefinition.docs,
         name: {
@@ -34,20 +24,6 @@ export function convertWebsocketChannel({
             name: channelId,
         },
         path: channelDefinition.path,
-        init: {
-            docs: typeof channelDefinition.init !== "string" ? channelDefinition.init?.docs : undefined,
-            type:
-                channelDefinition.init != null
-                    ? typeof channelDefinition.init === "string"
-                        ? Type.alias({ aliasOf: parseTypeReference(channelDefinition.init) })
-                        : convertType({ typeDefinition: channelDefinition.init.type, fernFilepath, imports })
-                    : Type.alias({ aliasOf: TypeReference.void() }),
-            encoding: convertEncoding({
-                rawEncoding: typeof channelDefinition.init !== "string" ? channelDefinition.init?.encoding : undefined,
-                nonStandardEncodings,
-            }),
-            operationId: "_init",
-        },
         client: convertWebSocketMessenger({
             messenger: channelDefinition.client,
             fernFilepath,
@@ -80,7 +56,6 @@ function convertWebSocketMessenger({
     nonStandardEncodings: CustomWireMessageEncoding[];
 }): WebSocketMessenger {
     return {
-        docs: messenger?.docs,
         operations:
             messenger?.operations != null
                 ? Object.entries(messenger.operations).map(([operationId, operation]) => ({

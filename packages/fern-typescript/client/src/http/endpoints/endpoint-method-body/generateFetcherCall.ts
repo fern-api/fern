@@ -4,7 +4,7 @@ import { HelperManager } from "@fern-typescript/helper-manager";
 import { SourceFile, StatementStructures, StructureKind, ts, VariableDeclarationKind } from "ts-morph";
 import { ClientConstants } from "../../../constants";
 import { generateJoinPathsCall } from "../../../utils/generateJoinPathsCall";
-import { GeneratedEndpointTypes } from "../generate-endpoint-types/types";
+import { GeneratedEndpointTypes } from "../endpoint-types/types";
 import { convertPathToTemplateString } from "./convertPathToTemplateString";
 import { generateEncoderCall } from "./generateEncoderCall";
 
@@ -70,20 +70,20 @@ export async function generateFetcherCall({
         );
     }
 
-    if (endpointTypes.requestBody != null) {
+    if (endpointTypes.request?.body != null) {
         const requestBodyReference =
-            endpointTypes.requestBody.propertyName != null
+            endpointTypes.request.wrapper != null
                 ? ts.factory.createPropertyAccessExpression(
                       ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Signature.REQUEST_PARAMETER),
-                      endpointTypes.requestBody.propertyName
+                      endpointTypes.request.wrapper.propertyName
                   )
                 : ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Signature.REQUEST_PARAMETER);
 
-        const encoder = await helperManager.getEncoderForEncoding(endpointTypes.requestBody.encoding);
+        const encoder = await helperManager.getEncoderForEncoding(endpoint.request.encoding);
         const encodedRequestBody = generateEncoderCall({
             encoder,
             method: "encode",
-            variableReference: endpointTypes.requestBody.reference.isLocal
+            variableReference: endpointTypes.request.body.isLocal
                 ? {
                       _type: "wireMessage",
                       wireMessageType: "Request",
@@ -93,7 +93,7 @@ export async function generateFetcherCall({
                   }
                 : {
                       _type: "modelType",
-                      typeReference: endpointTypes.requestBody.reference.typeReference,
+                      typeReference: endpointTypes.request.body.typeReference,
                       variable: requestBodyReference,
                   },
         });

@@ -8,7 +8,7 @@ export function generateJoinPathsCall({
     paths: readonly ts.Expression[];
 }): ts.CallExpression {
     file.addImportDeclaration({
-        namespaceImport: "path",
+        defaultImport: "path",
         moduleSpecifier: "path",
     });
     return ts.factory.createCallExpression(

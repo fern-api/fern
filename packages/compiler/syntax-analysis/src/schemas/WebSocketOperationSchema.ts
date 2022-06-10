@@ -3,11 +3,9 @@ import { WebSocketRequestSchema } from "./WebSocketRequestSchema";
 import { WebSocketResponseSchema } from "./WebSocketResponseSchema";
 import { WithDocsSchema } from "./WithDocsSchema";
 
-export const WebSocketOperationSchema = z
-    .strictObject({
-        request: z.optional(WebSocketRequestSchema),
-        response: z.optional(WebSocketResponseSchema),
-    })
-    .merge(WithDocsSchema);
+export const WebSocketOperationSchema = WithDocsSchema.extend({
+    request: z.optional(WebSocketRequestSchema),
+    response: z.optional(WebSocketResponseSchema),
+});
 
 export type WebSocketOperationSchema = z.infer<typeof WebSocketOperationSchema>;

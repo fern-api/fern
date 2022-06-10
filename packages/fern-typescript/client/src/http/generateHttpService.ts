@@ -5,6 +5,7 @@ import {
     getRelativePathAsModuleSpecifierTo,
     getTextOfTsKeyword,
     getTextOfTsNode,
+    maybeAddDocs,
     TypeResolver,
 } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
@@ -96,6 +97,7 @@ async function generateService({
         implements: [ClientConstants.HttpService.CLIENT_NAME],
         isExported: true,
     });
+    maybeAddDocs(serviceClass, service.docs);
 
     serviceClass.addProperty({
         name: ClientConstants.HttpService.PrivateMembers.BASE_URL,
@@ -126,7 +128,10 @@ async function generateService({
 
     addConstructor({ serviceClass, serviceDefinition: service });
 
-    const endpointsDirectory = getOrCreateDirectory(serviceDirectory, ClientConstants.Files.ENDPOINTS_DIRECTORY_NAME);
+    const endpointsDirectory = getOrCreateDirectory(
+        serviceDirectory,
+        ClientConstants.HttpService.Files.ENDPOINTS_DIRECTORY_NAME
+    );
 
     // TODO delete this and add a "generateReferenceToEncoder" method that adds the import when needed
     serviceFile.addImportDeclaration({
