@@ -16,9 +16,6 @@ jobs:
           name: lint:monorepo
           command: yarn lint:monorepo
       - run:
-          name: lint:eslint
-          command: yarn lint:eslint
-      - run:
           name: Format
           command: yarn format:check
       - run:
@@ -29,6 +26,9 @@ jobs:
       - run:
           name: Compile
           command: yarn compile
+      - run:
+          name: lint:eslint
+          command: yarn lint:eslint
       - run:
           name: Build fern-typescript docker (for ETE tests)
           command: yarn workspace fern-typescript dockerTagLocal
