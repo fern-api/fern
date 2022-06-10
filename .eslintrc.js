@@ -3,11 +3,13 @@ module.exports = {
         browser: true,
         es2021: true,
     },
-    plugins: ["@typescript-eslint"],
+    plugins: ["@typescript-eslint", "jest"],
     extends: [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "plugin:jest/recommended",
     ],
     parser: "@typescript-eslint/parser",
     parserOptions: {
@@ -19,6 +21,9 @@ module.exports = {
         project: ["./tsconfig.eslint.json", "./packages/**/tsconfig.json"],
         allowAutomaticSingleRunInference: true,
         tsconfigRootDir: __dirname,
+    },
+    env: {
+        "jest/globals": true,
     },
     ignorePatterns: ["*.js"],
     rules: {
@@ -59,5 +64,11 @@ module.exports = {
                 allow: ["private-constructors", "protected-constructors", "decoratedFunctions"],
             },
         ],
+        "@typescript-eslint/no-unsafe-call": "off",
+        "@typescript-eslint/no-unsafe-member-access": "off",
+        "@typescript-eslint/no-unsafe-assignment": "off",
+        "@typescript-eslint/no-unsafe-return": "off",
+        "@typescript-eslint/no-unsafe-argument": "off",
+        "jest/unbound-method": ["error"],
     },
 };

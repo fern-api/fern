@@ -1,36 +1,36 @@
 import path from "path";
-import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_PATH_TO_IR, DOCKER_PLUGINS_DIRECTORY } from "./constants";
-import { PluginConfig, PluginHelpers, PluginOutputConfig } from "./PluginConfig";
+import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_GENERATORS_DIRECTORY, DOCKER_PATH_TO_IR } from "./constants";
+import { GeneratorConfig, GeneratorHelpers, GeneratorOutputConfig } from "./GeneratorConfig";
 
-export declare namespace getPluginConfig {
+export declare namespace getGeneratorConfig {
     export interface Args {
-        pluginHelpers: PluginHelpers;
+        helpers: GeneratorHelpers;
         absolutePathToProject: string | undefined;
         absolutePathToOutput: string | undefined;
         customConfig: unknown;
     }
 
     export interface Return {
-        config: PluginConfig;
+        config: GeneratorConfig;
         binds: string[];
     }
 }
 
-export function getPluginConfig({
-    pluginHelpers,
+export function getGeneratorConfig({
+    helpers,
     absolutePathToProject,
     absolutePathToOutput,
     customConfig,
-}: getPluginConfig.Args): getPluginConfig.Return {
+}: getGeneratorConfig.Args): getGeneratorConfig.Return {
     const binds: string[] = [];
 
     // convert paths in helpers from host to docker
-    const convertedHelpers: PluginConfig["helpers"] = {
+    const convertedHelpers: GeneratorConfig["helpers"] = {
         encodings: {},
     };
-    for (const [encoding, helperForEncoding] of Object.entries(pluginHelpers.encodings)) {
+    for (const [encoding, helperForEncoding] of Object.entries(helpers.encodings)) {
         const absolutePathOnDocker = path.join(
-            DOCKER_PLUGINS_DIRECTORY,
+            DOCKER_GENERATORS_DIRECTORY,
             helperForEncoding.name,
             helperForEncoding.version
         );
@@ -46,7 +46,7 @@ export function getPluginConfig({
         binds,
         config: {
             irFilepath: DOCKER_PATH_TO_IR,
-            output: getPluginOutputConfig({ absolutePathToProject, absolutePathToOutput }),
+            output: getGeneratorOutputConfig({ absolutePathToProject, absolutePathToOutput }),
             customConfig,
             helpers: convertedHelpers,
         },
@@ -54,13 +54,13 @@ export function getPluginConfig({
 }
 
 // exported for testing
-export function getPluginOutputConfig({
+export function getGeneratorOutputConfig({
     absolutePathToProject,
     absolutePathToOutput,
 }: {
     absolutePathToProject: string | undefined;
     absolutePathToOutput: string | undefined;
-}): PluginOutputConfig | null {
+}): GeneratorOutputConfig | null {
     if (absolutePathToOutput == null) {
         return null;
     }

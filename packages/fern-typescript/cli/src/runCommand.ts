@@ -1,16 +1,16 @@
-import { PluginConfig } from "@fern-api/plugin-runner";
+import { GeneratorConfig } from "@fern-api/generator-runner";
 import { withProject, writeFiles } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import { Command } from "./Command";
 import { loadIntermediateRepresentation } from "./commands/utils/loadIntermediateRepresentation";
-import { TypescriptPluginConfigSchema } from "./plugin/plugin-config/schemas/TypescriptPluginConfigSchema";
+import { TypescriptGeneratorConfigSchema } from "./generator/generator-config/schemas/TypescriptGeneratorConfigSchema";
 
 export async function runCommand({
     command,
     config,
 }: {
     command: Command;
-    config: PluginConfig<TypescriptPluginConfigSchema>;
+    config: GeneratorConfig<TypescriptGeneratorConfigSchema>;
 }): Promise<void> {
     if (config.output == null) {
         throw new Error("Output directory is not specified.");

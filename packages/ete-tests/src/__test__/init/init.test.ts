@@ -19,13 +19,15 @@ describe("fern init tests", () => {
         cmd.stdout?.pipe(process.stdout);
         cmd.stderr?.pipe(process.stderr);
         await cmd;
-        await matchAgainstSnapshot(path.join(GENERATED_DIR, PROJECT_CONFIG_FILENAME));
-        await matchAgainstSnapshot(path.join(GENERATED_API_DIR, WORKSPACE_DEFINITION_FILENAME));
-        await matchAgainstSnapshot(path.join(GENERATED_API_DIR, "src", "blog.yml"));
+        expect(await getFileContentsAsString(path.join(GENERATED_DIR, PROJECT_CONFIG_FILENAME))).toMatchSnapshot();
+        expect(
+            await getFileContentsAsString(path.join(GENERATED_API_DIR, WORKSPACE_DEFINITION_FILENAME))
+        ).toMatchSnapshot();
+        expect(await getFileContentsAsString(path.join(GENERATED_API_DIR, "src", "blog.yml"))).toMatchSnapshot();
     }, 10_000);
 });
 
-async function matchAgainstSnapshot(filepath: string) {
+async function getFileContentsAsString(filepath: string) {
     const fileContents = await readFile(filepath);
-    expect(fileContents.toString()).toMatchSnapshot();
+    return fileContents.toString();
 }

@@ -17,7 +17,7 @@ export async function loadWorkspaceDefinitionSchema(
 export async function loadWorkspaceDefinition(absolutePathToDefinition: string): Promise<WorkspaceDefinition> {
     const validated = await loadWorkspaceDefinitionSchema(absolutePathToDefinition);
     return convertWorkspaceDefinition({
-        definition: validated,
+        workspaceDefinition: validated,
         absolutePathToDefinition,
     });
 }

@@ -2,23 +2,23 @@
 // validate the zod validator in fern-typescript at compiler time. (zod handles
 // undefined by making the property optional, which we don't want to do.)
 
-export interface PluginConfig<CustomConfig = unknown> {
+export interface GeneratorConfig<CustomConfig = unknown> {
     irFilepath: string;
-    output: PluginOutputConfig | null;
-    helpers: PluginHelpers;
+    output: GeneratorOutputConfig | null;
+    helpers: GeneratorHelpers;
     customConfig: CustomConfig;
 }
 
-export interface PluginOutputConfig {
+export interface GeneratorOutputConfig {
     path: string;
     pathRelativeToRootOnHost: string | null;
 }
 
-export interface PluginHelpers {
-    encodings: Record<string, PluginHelperReference>;
+export interface GeneratorHelpers {
+    encodings: Record<string, GeneratorHelperReference>;
 }
 
-export interface PluginHelperReference {
+export interface GeneratorHelperReference {
     name: string;
     version: string;
     absolutePath: string;

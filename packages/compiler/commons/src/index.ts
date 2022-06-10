@@ -6,11 +6,11 @@ export {
     loadWorkspaceDefinitionSchema,
     WORKSPACE_DEFINITION_FILENAME,
 } from "./config-types/workspace-definition/loadWorkspaceDefinition";
-export type { PluginInvocationSchema } from "./config-types/workspace-definition/schemas/PluginInvocationSchema";
+export type { GeneratorInvocationSchema } from "./config-types/workspace-definition/schemas/GeneratorInvocationSchema";
 export type { WorkspaceDefinitionSchema } from "./config-types/workspace-definition/schemas/WorkspaceDefinitionSchema";
 export type {
-    PluginHelper,
-    PluginInvocation,
+    GeneratorHelper,
+    GeneratorInvocation,
     WorkspaceDefinition,
 } from "./config-types/workspace-definition/WorkspaceDefinition";
 export type { FernFile } from "./FernFile";

@@ -1,18 +1,18 @@
 import { runDocker } from "@fern-api/docker-utils";
 import { writeFile } from "fs/promises";
 import path from "path";
-import { getPluginConfig } from "./getPluginConfig";
-import { PluginHelpers } from "./PluginConfig";
+import { GeneratorHelpers } from "./GeneratorConfig";
+import { getGeneratorConfig } from "./getGeneratorConfig";
 
 const DOCKER_FERN_DIRECTORY = "/fern";
 const DOCKER_CODEGEN_OUTPUT_DIRECTORY = path.join(DOCKER_FERN_DIRECTORY, "output");
-const DOCKER_PLUGIN_CONFIG_PATH = path.join(DOCKER_FERN_DIRECTORY, "config.json");
+const DOCKER_GENERATOR_CONFIG_PATH = path.join(DOCKER_FERN_DIRECTORY, "config.json");
 const DOCKER_PATH_TO_IR = path.join(DOCKER_FERN_DIRECTORY, "ir.json");
 
-export declare namespace runPlugin {
+export declare namespace runGenerator {
     export interface Args {
         imageName: string;
-        pluginHelpers: PluginHelpers;
+        helpers: GeneratorHelpers;
         customConfig: unknown;
 
         absolutePathToIr: string;
@@ -22,17 +22,17 @@ export declare namespace runPlugin {
     }
 }
 
-export async function runPlugin({
+export async function runGenerator({
     imageName,
     absolutePathToOutput,
     absolutePathToIr,
     pathToWriteConfigJson,
     absolutePathToProject,
-    pluginHelpers,
+    helpers,
     customConfig,
-}: runPlugin.Args): Promise<void> {
+}: runGenerator.Args): Promise<void> {
     const binds = [
-        `${pathToWriteConfigJson}:${DOCKER_PLUGIN_CONFIG_PATH}:ro`,
+        `${pathToWriteConfigJson}:${DOCKER_GENERATOR_CONFIG_PATH}:ro`,
         `${absolutePathToIr}:${DOCKER_PATH_TO_IR}:ro`,
     ];
 
@@ -40,19 +40,19 @@ export async function runPlugin({
         binds.push(`${absolutePathToOutput}:${DOCKER_CODEGEN_OUTPUT_DIRECTORY}`);
     }
 
-    const { config, binds: bindsForPlugins } = getPluginConfig({
-        pluginHelpers,
+    const { config, binds: bindsForGenerators } = getGeneratorConfig({
+        helpers,
         absolutePathToOutput,
         absolutePathToProject,
         customConfig,
     });
-    binds.push(...bindsForPlugins);
+    binds.push(...bindsForGenerators);
 
     await writeFile(pathToWriteConfigJson, JSON.stringify(config, undefined, 4));
 
     await runDocker({
         imageName,
-        args: [DOCKER_PLUGIN_CONFIG_PATH],
+        args: [DOCKER_GENERATOR_CONFIG_PATH],
         binds,
     });
 }

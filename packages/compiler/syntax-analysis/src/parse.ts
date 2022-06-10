@@ -22,7 +22,7 @@ export async function parse(files: readonly FernFile[]): Promise<Parser.Result> 
     const parsedFiles: Record<RelativeFilePath, ParsedFileContents> = {};
     const failures: Record<RelativeFilePath, SyntaxAnalysis.FileParseFailure> = {};
 
-    async function parseFilePath(file: FernFile) {
+    function parseFilePath(file: FernFile) {
         try {
             const parsed = yaml.load(file.fileContents);
             parsedFiles[file.filepath] = parsed;

@@ -1,22 +1,22 @@
 import { CustomWireMessageEncoding } from "@fern-api/api";
-import { PluginHelper, PluginInvocation } from "@fern-api/compiler-commons";
-import { PluginHelpers } from "@fern-api/plugin-runner";
+import { GeneratorHelper, GeneratorInvocation } from "@fern-api/compiler-commons";
+import { GeneratorHelpers } from "@fern-api/generator-runner";
 import { getDownloadPathForHelper } from "./downloadHelper";
 
-export declare namespace buildPluginHelpers {
+export declare namespace buildGeneratorHelpers {
     export interface Args {
-        pluginInvocation: PluginInvocation;
+        generatorInvocation: GeneratorInvocation;
         nonStandardEncodings: CustomWireMessageEncoding[];
         absolutePathToWorkspaceTempDir: string;
     }
 }
 
-export function buildPluginHelpers({
-    pluginInvocation,
+export function buildGeneratorHelpers({
+    generatorInvocation,
     nonStandardEncodings,
     absolutePathToWorkspaceTempDir,
-}: buildPluginHelpers.Args): PluginHelpers {
-    const helpers: PluginHelpers = { encodings: {} };
+}: buildGeneratorHelpers.Args): GeneratorHelpers {
+    const helpers: GeneratorHelpers = { encodings: {} };
 
     if (nonStandardEncodings.length > 0) {
         const uniqueNonStandardEncodings = nonStandardEncodings.reduce((unique, { encoding }) => {
@@ -25,7 +25,7 @@ export function buildPluginHelpers({
         }, new Set<string>());
 
         uniqueNonStandardEncodings.forEach((encoding) => {
-            const helperForEncoding = getHelperForEncoding({ encoding, pluginInvocation });
+            const helperForEncoding = getHelperForEncoding({ encoding, generatorInvocation });
             helpers.encodings[encoding] = {
                 name: helperForEncoding.name,
                 version: helperForEncoding.version,
@@ -42,12 +42,14 @@ export function buildPluginHelpers({
 
 function getHelperForEncoding({
     encoding,
-    pluginInvocation,
+    generatorInvocation,
 }: {
     encoding: string;
-    pluginInvocation: PluginInvocation;
-}): PluginHelper {
-    const [helper, ...rest] = pluginInvocation.helpers.filter((helper) => doesHelperHandleEncoding(helper, encoding));
+    generatorInvocation: GeneratorInvocation;
+}): GeneratorHelper {
+    const [helper, ...rest] = generatorInvocation.helpers.filter((helper) =>
+        doesHelperHandleEncoding(helper, encoding)
+    );
     if (helper == null) {
         throw new Error("No helpers handle the encoding: " + encoding);
     }
@@ -57,7 +59,7 @@ function getHelperForEncoding({
     return helper;
 }
 
-function doesHelperHandleEncoding(helper: PluginHelper, encoding: string): boolean {
+function doesHelperHandleEncoding(helper: GeneratorHelper, encoding: string): boolean {
     if (encoding !== "hathora") {
         return false;
     }

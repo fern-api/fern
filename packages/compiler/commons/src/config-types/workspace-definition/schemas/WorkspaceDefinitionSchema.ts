@@ -1,12 +1,10 @@
 import { z } from "zod";
-import { PluginInvocationSchema } from "./PluginInvocationSchema";
+import { GeneratorInvocationSchema } from "./GeneratorInvocationSchema";
 
 export const WorkspaceDefinitionSchema = z.strictObject({
     name: z.optional(z.string()),
-    input: z.optional(z.string()),
-    definition: z.optional(z.string()),
-    plugins: z.optional(z.array(PluginInvocationSchema)),
-    generators: z.optional(z.array(PluginInvocationSchema)),
+    definition: z.string(),
+    generators: z.array(GeneratorInvocationSchema),
 });
 
 export type WorkspaceDefinitionSchema = z.infer<typeof WorkspaceDefinitionSchema>;

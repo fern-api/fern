@@ -1,6 +1,6 @@
 name: Posts
-input: ./api
-plugins:
+definition: ./api
+generators:
   - name: fern-typescript
     version: local
     output: ./generated

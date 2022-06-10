@@ -1,27 +1,27 @@
-import { getPluginOutputConfig } from "../getPluginConfig";
+import { getGeneratorOutputConfig } from "../getGeneratorConfig";
 
-describe("getPluginOutputConfig", () => {
+describe("getGeneratorOutputConfig", () => {
     it("path relative to root", () => {
-        const pluginOutputConfig = getPluginOutputConfig({
+        const outputConfig = getGeneratorOutputConfig({
             absolutePathToProject: "/path/to/root",
             absolutePathToOutput: "/path/to/root/path/to/output",
         });
-        expect(pluginOutputConfig?.pathRelativeToRootOnHost).toEqual("path/to/output");
+        expect(outputConfig?.pathRelativeToRootOnHost).toEqual("path/to/output");
     });
 
     it("no path relative to root", () => {
-        const pluginOutputConfig = getPluginOutputConfig({
+        const outputConfig = getGeneratorOutputConfig({
             absolutePathToProject: undefined,
             absolutePathToOutput: "/path/to/root/path/to/output",
         });
-        expect(pluginOutputConfig?.pathRelativeToRootOnHost).toEqual(null);
+        expect(outputConfig?.pathRelativeToRootOnHost).toEqual(null);
     });
 
     it("no output path", () => {
-        const pluginOutputConfig = getPluginOutputConfig({
+        const outputConfig = getGeneratorOutputConfig({
             absolutePathToProject: "/path/to/root",
             absolutePathToOutput: undefined,
         });
-        expect(pluginOutputConfig).toBeNull();
+        expect(outputConfig).toBeNull();
     });
 });

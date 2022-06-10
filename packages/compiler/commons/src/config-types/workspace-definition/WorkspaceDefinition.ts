@@ -3,19 +3,19 @@ export interface WorkspaceDefinition {
     _absolutePath: string;
 
     name: string | undefined;
-    absolutePathToInput: string;
-    plugins: PluginInvocation[];
+    absolutePathToDefinition: string;
+    generators: GeneratorInvocation[];
 }
 
-export interface PluginInvocation {
+export interface GeneratorInvocation {
     name: string;
     version: string;
     absolutePathToOutput: string | undefined;
     config: unknown;
-    helpers: PluginHelper[];
+    helpers: GeneratorHelper[];
 }
 
-export interface PluginHelper {
+export interface GeneratorHelper {
     name: string;
     version: string;
     absoluteLocationOnDisk: string | undefined;
