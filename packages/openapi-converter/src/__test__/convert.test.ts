@@ -1,7 +1,7 @@
-import path from "path";
-import { readFile, rm, writeFile, mkdir } from "fs/promises";
-import { convertOpenApi } from "../openapiConverter";
+import { mkdir, readFile, rm, writeFile } from "fs/promises";
 import yaml from "js-yaml";
+import path from "path";
+import { convertOpenApi } from "../openapiConverter";
 
 const OPEN_API_DEFINITION_FILENAME = "openapi.json";
 const FERN_API_DEFINITION_FILENAME = "fern.yml";
@@ -14,6 +14,7 @@ describe("fern generate tests", () => {
 
 function itFixture(fixtureName: string) {
     it(
+        // eslint-disable-next-line jest/valid-title
         fixtureName,
         async () => {
             const fixturePath = path.join(FIXTURES_DIR, fixtureName);

@@ -1,6 +1,6 @@
 name: Posts
 input: ./posts.yml
-plugins:
+generators:
   - name: fern-typescript
     version: local
     output: ./generated

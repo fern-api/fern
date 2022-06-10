@@ -4,7 +4,7 @@
   "include": ["./src"],
   "references": [
     { "path": "../../../api/fern-ir-typescript/tsconfig.cjs.json" },
-    { "path": "../../../compiler/plugins/plugin-runner/tsconfig.cjs.json" },
+    { "path": "../../../compiler/generators/generator-runner/tsconfig.cjs.json" },
     { "path": "../../commons/tsconfig.cjs.json" },
     { "path": "../built-in/json-encoding-helper/tsconfig.cjs.json" },
     { "path": "../utils/tsconfig.cjs.json" }

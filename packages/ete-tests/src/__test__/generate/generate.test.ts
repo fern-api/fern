@@ -12,6 +12,7 @@ describe("fern generate tests", () => {
 
 function itFixture(fixtureName: string) {
     it(
+        // eslint-disable-next-line jest/valid-title
         fixtureName,
         async () => {
             const fixturePath = path.join(FIXTURES_DIR, fixtureName);

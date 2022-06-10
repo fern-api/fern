@@ -3,25 +3,25 @@ import { convertWorkspaceDefinition } from "../convertWorkspaceDefinition";
 describe("convertWorkspaceDefinition", () => {
     it("relative input path", () => {
         const result = convertWorkspaceDefinition({
-            definition: {
-                input: "my/input",
-                plugins: [],
+            workspaceDefinition: {
+                definition: "my/definition",
+                generators: [],
             },
             absolutePathToDefinition: "/path/to/definition/.fernrc.yml",
         });
         expect(result._absolutePath).toBe("/path/to/definition");
-        expect(result.absolutePathToInput).toBe("/path/to/definition/my/input");
+        expect(result.absolutePathToDefinition).toBe("/path/to/definition/my/definition");
     });
 
     it("absolute input path", () => {
         const result = convertWorkspaceDefinition({
-            definition: {
-                input: "/my/input",
-                plugins: [],
+            workspaceDefinition: {
+                definition: "/my/definition",
+                generators: [],
             },
             absolutePathToDefinition: "/path/to/definition/.fernrc.yml",
         });
         expect(result._absolutePath).toBe("/path/to/definition");
-        expect(result.absolutePathToInput).toBe("/my/input");
+        expect(result.absolutePathToDefinition).toBe("/my/definition");
     });
 });

@@ -1,7 +1,7 @@
 import { initialize } from "@fern-api/init";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
-import { addPluginToWorkspaces } from "./commands/add-plugin/addPluginToWorkspaces";
+import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { compileWorkspaces } from "./commands/compile/compileWorkspaces";
 import { convertOpenApiToFernApiDefinition } from "./commands/convert-openapi/convertOpenApi";
 
@@ -14,8 +14,8 @@ void yargs(hideBin(process.argv))
         handler: initialize,
     })
     .command(
-        ["add <plugin> [workspaces...]"],
-        "Add a plugin to .fernrc.yml",
+        ["add <generator> [workspaces...]"],
+        "Add a generator to .fernrc.yml",
         (yargs) =>
             yargs
                 .positional("workspaces", {
@@ -24,12 +24,12 @@ void yargs(hideBin(process.argv))
                     description:
                         "If omitted, every workspace specified in the project-level configuration (fern.config.json) will be processed.",
                 })
-                .positional("plugin", {
+                .positional("generator", {
                     choices: ["typescript", "java", "postman"] as const,
                     demandOption: true,
                 }),
         async (argv) => {
-            await addPluginToWorkspaces(argv.workspaces ?? [], argv.plugin);
+            await addGeneratorToWorkspaces(argv.workspaces ?? [], argv.generator);
         }
     )
     .command(

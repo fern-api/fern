@@ -1,4 +1,4 @@
-import { PluginHelper } from "@fern-api/compiler-commons";
+import { GeneratorHelper } from "@fern-api/compiler-commons";
 import execa from "execa";
 import { cp, mkdir, rm } from "fs/promises";
 import path from "path";
@@ -9,7 +9,7 @@ export async function downloadHelper({
     helper,
     absolutePathToWorkspaceTempDir,
 }: {
-    helper: PluginHelper;
+    helper: GeneratorHelper;
     absolutePathToWorkspaceTempDir: string;
 }): Promise<void> {
     const absolutePathToHelper = getDownloadPathForHelper({ helper, absolutePathToWorkspaceTempDir });
@@ -29,7 +29,7 @@ export async function downloadHelper({
 }
 
 // returns absolute path to tgz
-async function downloadHelperTgz(helper: PluginHelper) {
+async function downloadHelperTgz(helper: GeneratorHelper) {
     const dirToUnpackIn = await tmp.dir();
 
     const { stdout } = await execa("npm", [
@@ -57,7 +57,7 @@ export function getDownloadPathForHelper({
     helper,
     absolutePathToWorkspaceTempDir,
 }: {
-    helper: PluginHelper;
+    helper: GeneratorHelper;
     absolutePathToWorkspaceTempDir: string;
 }): string {
     return path.join(absolutePathToWorkspaceTempDir, helper.name, helper.version);

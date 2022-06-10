@@ -14,7 +14,8 @@ describe("fern add tests", () => {
         await add("java");
         await add("typescript");
         await add("postman");
-        await matchAgainstSnapshot(path.join(GENERATED_API_DIR, WORKSPACE_DEFINITION_FILENAME));
+        const fileContents = await readFile(path.join(GENERATED_API_DIR, WORKSPACE_DEFINITION_FILENAME));
+        expect(fileContents.toString()).toMatchSnapshot();
     }, 10_000);
 });
 
@@ -30,16 +31,11 @@ async function init() {
     await init;
 }
 
-async function add(plugin: string) {
-    await execa("node", [path.join(process.cwd(), "../cli/cli"), "add", plugin], {
+async function add(generator: string) {
+    await execa("node", [path.join(process.cwd(), "../cli/cli"), "add", generator], {
         env: {
             NODE_ENV: "development",
         },
         cwd: GENERATED_DIR,
     });
-}
-
-async function matchAgainstSnapshot(filepath: string) {
-    const fileContents = await readFile(filepath);
-    expect(fileContents.toString()).toMatchSnapshot();
 }

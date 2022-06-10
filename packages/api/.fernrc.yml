@@ -1,6 +1,6 @@
 name: Fern Intermediate Representation
 input: ./src
-plugins:
+generators:
   - name: fernapi/fern-typescript
     version: 0.0.70
     output: ./fern-ir-typescript/src/generated

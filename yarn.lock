@@ -1415,18 +1415,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/add-plugin@npm:0.0.70":
-  version: 0.0.70
-  resolution: "@fern-api/add-plugin@npm:0.0.70"
-  dependencies:
-    "@fern-api/compiler-commons": "npm:0.0.70"
-  checksum: a025962fb75f8fa544f0c650fdd7c842c1b837d36dedb96649229575f08245d688c24db4646c3de2ba61dafd09b67b722cd8402a119e6c754f6bf527bbdadca8
-  languageName: node
-  linkType: hard
-
-"@fern-api/add-plugin@workspace:*, @fern-api/add-plugin@workspace:packages/add-plugin":
+"@fern-api/add-generator@workspace:*, @fern-api/add-generator@workspace:packages/add-generator":
   version: 0.0.0-use.local
-  resolution: "@fern-api/add-plugin@workspace:packages/add-plugin"
+  resolution: "@fern-api/add-generator@workspace:packages/add-generator"
   dependencies:
     "@babel/core": "npm:^7.17.10"
     "@babel/preset-env": "npm:^7.17.10"
@@ -1441,6 +1432,15 @@ __metadata:
     typescript: "npm:^4.6.4"
   languageName: unknown
   linkType: soft
+
+"@fern-api/add-plugin@npm:0.0.70":
+  version: 0.0.70
+  resolution: "@fern-api/add-plugin@npm:0.0.70"
+  dependencies:
+    "@fern-api/compiler-commons": "npm:0.0.70"
+  checksum: a025962fb75f8fa544f0c650fdd7c842c1b837d36dedb96649229575f08245d688c24db4646c3de2ba61dafd09b67b722cd8402a119e6c754f6bf527bbdadca8
+  languageName: node
+  linkType: hard
 
 "@fern-api/api@npm:0.0.70":
   version: 0.0.70
@@ -1570,9 +1570,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/docker-utils@workspace:*, @fern-api/docker-utils@workspace:packages/compiler/plugins/docker-utils":
+"@fern-api/docker-utils@workspace:*, @fern-api/docker-utils@workspace:packages/compiler/generators/docker-utils":
   version: 0.0.0-use.local
-  resolution: "@fern-api/docker-utils@workspace:packages/compiler/plugins/docker-utils"
+  resolution: "@fern-api/docker-utils@workspace:packages/compiler/generators/docker-utils"
   dependencies:
     "@babel/core": "npm:^7.17.10"
     "@babel/preset-env": "npm:^7.17.10"
@@ -1603,6 +1603,24 @@ __metadata:
     depcheck: "npm:^1.4.3"
     eslint: "npm:^8.12.0"
     execa: "npm:^5.1.1"
+    jest: "npm:^27.5.1"
+    prettier: "npm:^2.6.2"
+    typescript: "npm:^4.6.4"
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/generator-runner@workspace:*, @fern-api/generator-runner@workspace:packages/compiler/generators/generator-runner":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/generator-runner@workspace:packages/compiler/generators/generator-runner"
+  dependencies:
+    "@babel/core": "npm:^7.17.10"
+    "@babel/preset-env": "npm:^7.17.10"
+    "@babel/preset-typescript": "npm:^7.16.7"
+    "@fern-api/docker-utils": "workspace:*"
+    "@types/jest": "npm:^27.4.1"
+    "@types/node": "npm:^17.0.33"
+    depcheck: "npm:^1.4.3"
+    eslint: "npm:^8.12.0"
     jest: "npm:^27.5.1"
     prettier: "npm:^2.6.2"
     typescript: "npm:^4.6.4"
@@ -1760,24 +1778,6 @@ __metadata:
   checksum: 83ae3deb4646e1557cfaa45f5c576ea025b1135aa5716b8b149717c89c7b275f12cf45160df6bbfdf8e946ee2358049b637a1dd6e5e6d105fdfc7aec017ee253
   languageName: node
   linkType: hard
-
-"@fern-api/plugin-runner@workspace:*, @fern-api/plugin-runner@workspace:packages/compiler/plugins/plugin-runner":
-  version: 0.0.0-use.local
-  resolution: "@fern-api/plugin-runner@workspace:packages/compiler/plugins/plugin-runner"
-  dependencies:
-    "@babel/core": "npm:^7.17.10"
-    "@babel/preset-env": "npm:^7.17.10"
-    "@babel/preset-typescript": "npm:^7.16.7"
-    "@fern-api/docker-utils": "workspace:*"
-    "@types/jest": "npm:^27.4.1"
-    "@types/node": "npm:^17.0.33"
-    depcheck: "npm:^1.4.3"
-    eslint: "npm:^8.12.0"
-    jest: "npm:^27.5.1"
-    prettier: "npm:^2.6.2"
-    typescript: "npm:^4.6.4"
-  languageName: unknown
-  linkType: soft
 
 "@fern-api/syntax-analysis@npm:0.0.70":
   version: 0.0.70
@@ -1944,7 +1944,7 @@ __metadata:
     "@babel/preset-env": "npm:^7.17.10"
     "@babel/preset-typescript": "npm:^7.16.7"
     "@fern-api/api": "workspace:*"
-    "@fern-api/plugin-runner": "workspace:*"
+    "@fern-api/generator-runner": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/helper-utils": "workspace:*"
     "@fern-typescript/json-encoding-helper": "workspace:*"
@@ -2932,7 +2932,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/utils@npm:5.27.1":
+"@typescript-eslint/utils@npm:5.27.1, @typescript-eslint/utils@npm:^5.10.0":
   version: 5.27.1
   resolution: "@typescript-eslint/utils@npm:5.27.1"
   dependencies:
@@ -4912,6 +4912,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-plugin-jest@npm:^26.5.3":
+  version: 26.5.3
+  resolution: "eslint-plugin-jest@npm:26.5.3"
+  dependencies:
+    "@typescript-eslint/utils": "npm:^5.10.0"
+  peerDependencies:
+    "@typescript-eslint/eslint-plugin": ^5.0.0
+    eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
+  peerDependenciesMeta:
+    "@typescript-eslint/eslint-plugin":
+      optional: true
+    jest:
+      optional: true
+  checksum: e5c86ee6cca718c40a555c15a1afb489e64de75dcd2dea2081c452fcaea8376868b3233330e4f5d5f4204ed9766114abf4ebfc481b06a2c412cb715bb6cdb282
+  languageName: node
+  linkType: hard
+
 "eslint-scope@npm:5.1.1, eslint-scope@npm:^5.1.1":
   version: 5.1.1
   resolution: "eslint-scope@npm:5.1.1"
@@ -5266,13 +5283,13 @@ __metadata:
     "@babel/core": "npm:^7.17.10"
     "@babel/preset-env": "npm:^7.17.10"
     "@babel/preset-typescript": "npm:^7.16.7"
-    "@fern-api/add-plugin": "workspace:*"
+    "@fern-api/add-generator": "workspace:*"
     "@fern-api/api": "workspace:*"
     "@fern-api/compiler": "workspace:*"
     "@fern-api/compiler-commons": "workspace:*"
+    "@fern-api/generator-runner": "workspace:*"
     "@fern-api/init": "workspace:*"
     "@fern-api/openapi-converter": "workspace:*"
-    "@fern-api/plugin-runner": "workspace:*"
     "@fern-api/syntax-analysis": "workspace:*"
     "@types/jest": "npm:^27.4.1"
     "@types/node": "npm:^17.0.33"
@@ -5306,7 +5323,7 @@ __metadata:
     "@babel/preset-env": "npm:^7.17.10"
     "@babel/preset-typescript": "npm:^7.16.7"
     "@fern-api/api": "workspace:*"
-    "@fern-api/plugin-runner": "workspace:*"
+    "@fern-api/generator-runner": "workspace:*"
     "@fern-typescript/client": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/helper-manager": "workspace:*"
@@ -5342,6 +5359,7 @@ __metadata:
     depcheck: "npm:^1.4.3"
     docsify-cli: "npm:^4.4.4"
     eslint: "npm:^8.17.0"
+    eslint-plugin-jest: "npm:^26.5.3"
     fern-api: "npm:0.0.70"
     husky: "npm:^7.0.4"
     jest: "npm:^27.5.1"

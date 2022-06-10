@@ -24,7 +24,7 @@ import { generateDisconnect } from "./generateDisconnect";
 import { generateOnMessage } from "./generateOnMessage";
 import { addClientOperationToChannel } from "./operations/addClientOperationToChannel";
 
-export async function generateWebSocketChannel({
+export function generateWebSocketChannel({
     servicesDirectory,
     modelDirectory,
     errorsDirectory,
@@ -38,14 +38,14 @@ export async function generateWebSocketChannel({
     channel: WebSocketChannel;
     typeResolver: TypeResolver;
     helperManager: HelperManager;
-}): Promise<void> {
+}): void {
     const channelDirectory = getOrCreateDirectory(servicesDirectory, channel.name.name, {
         exportOptions: {
             type: "namespace",
             namespace: channel.name.name,
         },
     });
-    await generateChannel({
+    generateChannel({
         channel,
         channelDirectory,
         modelDirectory,
@@ -55,7 +55,7 @@ export async function generateWebSocketChannel({
     });
 }
 
-async function generateChannel({
+function generateChannel({
     channel,
     channelDirectory,
     modelDirectory,
@@ -69,7 +69,7 @@ async function generateChannel({
     errorsDirectory: Directory;
     servicesDirectory: Directory;
     typeResolver: TypeResolver;
-}): Promise<void> {
+}): void {
     const channelFile = getOrCreateSourceFile(channelDirectory, `${channel.name.name}.ts`);
     const channelNamespace = addNamespace({ file: channelFile });
 

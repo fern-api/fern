@@ -1,12 +1,12 @@
 import { CustomWireMessageEncoding } from "@fern-api/api";
 import { compile, Compiler } from "@fern-api/compiler";
-import { loadWorkspaceDefinition, PluginInvocation, WorkspaceDefinition } from "@fern-api/compiler-commons";
-import { runPlugin } from "@fern-api/plugin-runner";
+import { GeneratorInvocation, loadWorkspaceDefinition, WorkspaceDefinition } from "@fern-api/compiler-commons";
+import { runGenerator } from "@fern-api/generator-runner";
 import { rm, writeFile } from "fs/promises";
 import os from "os";
 import path from "path";
 import tmp, { DirectoryResult } from "tmp-promise";
-import { buildPluginHelpers } from "./buildPluginHelpers";
+import { buildGeneratorHelpers } from "./buildGeneratorHelpers";
 import { downloadHelper } from "./downloadHelper";
 import { handleCompilerFailure } from "./handleCompilerFailure";
 import { parseFernInput } from "./parseFernInput";
@@ -20,21 +20,21 @@ export async function compileWorkspace({
 }): Promise<void> {
     const workspaceDefinition = await loadWorkspaceDefinition(absolutePathToWorkspaceDefinition);
 
-    const files = await parseFernInput(workspaceDefinition.absolutePathToInput);
+    const files = await parseFernInput(workspaceDefinition.absolutePathToDefinition);
     const compileResult = await compile(files, workspaceDefinition.name);
     if (!compileResult.didSucceed) {
         handleCompilerFailure(compileResult.failure);
         return;
     }
 
-    await runPlugins({
+    await runGenerators({
         workspaceDefinition,
         absolutePathToProjectConfig,
         compileResult,
     });
 }
 
-async function runPlugins({
+async function runGenerators({
     workspaceDefinition,
     absolutePathToProjectConfig,
     compileResult,
@@ -43,7 +43,7 @@ async function runPlugins({
     absolutePathToProjectConfig: string | undefined;
     compileResult: Compiler.SuccessfulResult;
 }): Promise<void> {
-    if (workspaceDefinition.plugins.length === 0) {
+    if (workspaceDefinition.generators.length === 0) {
         return;
     }
 
@@ -58,9 +58,9 @@ async function runPlugins({
     await writeFile(absolutePathToIr, JSON.stringify(compileResult.intermediateRepresentation));
 
     await Promise.all(
-        workspaceDefinition.plugins.map(async (pluginInvocation) =>
-            loadHelpersAndRunPlugin({
-                pluginInvocation,
+        workspaceDefinition.generators.map(async (generatorInvocation) =>
+            loadHelpersAndRunGenerator({
+                generatorInvocation,
                 workspaceTempDir,
                 absolutePathToIr,
                 absolutePathToProjectConfig,
@@ -70,14 +70,14 @@ async function runPlugins({
     );
 }
 
-async function loadHelpersAndRunPlugin({
-    pluginInvocation,
+async function loadHelpersAndRunGenerator({
+    generatorInvocation,
     workspaceTempDir,
     absolutePathToIr,
     absolutePathToProjectConfig,
     nonStandardEncodings,
 }: {
-    pluginInvocation: PluginInvocation;
+    generatorInvocation: GeneratorInvocation;
     workspaceTempDir: DirectoryResult;
     absolutePathToIr: string;
     absolutePathToProjectConfig: string | undefined;
@@ -87,28 +87,28 @@ async function loadHelpersAndRunPlugin({
         tmpdir: workspaceTempDir.path,
     });
 
-    if (pluginInvocation.absolutePathToOutput != null) {
-        await rm(pluginInvocation.absolutePathToOutput, { force: true, recursive: true });
+    if (generatorInvocation.absolutePathToOutput != null) {
+        await rm(generatorInvocation.absolutePathToOutput, { force: true, recursive: true });
     }
 
     await Promise.all(
-        pluginInvocation.helpers.map((helper) =>
+        generatorInvocation.helpers.map((helper) =>
             downloadHelper({ helper, absolutePathToWorkspaceTempDir: workspaceTempDir.path })
         )
     );
 
-    await runPlugin({
-        imageName: `${pluginInvocation.name}:${pluginInvocation.version}`,
-        absolutePathToOutput: pluginInvocation.absolutePathToOutput,
+    await runGenerator({
+        imageName: `${generatorInvocation.name}:${generatorInvocation.version}`,
+        absolutePathToOutput: generatorInvocation.absolutePathToOutput,
         absolutePathToIr,
         pathToWriteConfigJson: configJson.path,
-        pluginHelpers: buildPluginHelpers({
-            pluginInvocation,
+        helpers: buildGeneratorHelpers({
+            generatorInvocation,
             nonStandardEncodings,
             absolutePathToWorkspaceTempDir: workspaceTempDir.path,
         }),
         absolutePathToProject:
             absolutePathToProjectConfig != null ? path.dirname(absolutePathToProjectConfig) : undefined,
-        customConfig: pluginInvocation.config,
+        customConfig: generatorInvocation.config,
     });
 }
