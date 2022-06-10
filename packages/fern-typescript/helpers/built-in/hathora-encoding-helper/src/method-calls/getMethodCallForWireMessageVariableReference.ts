@@ -31,7 +31,7 @@ function getBodyTypeNameFromWireMessageType(
 ): string {
     switch (wireMessageType) {
         case "Request":
-            return ClientConstants.HttpService.Endpoint.Types.Request.Properties.Body.TYPE_NAME;
+            return ClientConstants.Commons.Types.Request.Properties.Body.TYPE_NAME;
         case "Response":
             return ClientConstants.Commons.Types.Response.Success.Properties.Body.TYPE_NAME;
         case "Error":
