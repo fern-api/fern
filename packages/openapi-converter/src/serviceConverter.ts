@@ -1,9 +1,9 @@
 import { RawSchemas } from "@fern-api/syntax-analysis";
-import { OpenAPIV3 } from "openapi-types";
 import { lowerFirst } from "lodash";
+import { OpenAPIV3 } from "openapi-types";
 import { getTypeNameFromReferenceObject } from "./typeConverter";
-import { isReferenceObject, isSchemaObject } from "./utils";
 import { OpenApiSecuritySchemes } from "./types";
+import { isReferenceObject, isSchemaObject } from "./utils";
 
 export function convertToFernService(
     paths: OpenAPIV3.PathsObject,
@@ -97,8 +97,8 @@ function getFernHttpEndpoint(
         convertedEndpoint: {
             method: httpMethod,
             path: pathName,
-            parameters: convertedParameters.pathParameters,
-            queryParameters: convertedParameters.queryParameters,
+            "path-parameters": convertedParameters.pathParameters,
+            "query-parameters": convertedParameters.queryParameters,
             docs: httpOperation.description,
             response,
             request,

@@ -71,7 +71,7 @@ const BLOG_POST_API: RawSchemas.FernConfigurationSchema = {
                     getPost: {
                         method: "GET",
                         path: "/{postId}",
-                        parameters: {
+                        "path-parameters": {
                             postId: "PostId",
                         },
                         response: {
