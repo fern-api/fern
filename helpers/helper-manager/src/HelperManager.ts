@@ -1,5 +1,5 @@
 import { Encoding } from "@fern-api/api";
-import { PluginHelper, PluginHelpers } from "@fern-api/plugin-runner";
+import { GeneratorHelperReference, GeneratorHelpers } from "@fern-api/generator-runner";
 import { Encoder, FernTypescriptHelper } from "@fern-typescript/helper-utils";
 import { helper as JsonEncodingHelper } from "@fern-typescript/json-encoding-helper";
 import { loadHelperFromDisk } from "./loadHelperFromDisk";
@@ -15,13 +15,13 @@ interface HelperWithName {
 export class HelperManager {
     private loadedHelpers: Record<HelperName, Record<HelperVersion, FernTypescriptHelper>> = {};
 
-    constructor(private helpers: PluginHelpers) {}
+    constructor(private helpers: GeneratorHelpers) {}
 
-    public getHelpers(): PluginHelpers {
+    public getHelpers(): GeneratorHelpers {
         return this.helpers;
     }
 
-    public async getOrLoadHelper(helperReference: PluginHelper): Promise<FernTypescriptHelper> {
+    public async getOrLoadHelper(helperReference: GeneratorHelperReference): Promise<FernTypescriptHelper> {
         let helpersWithName = this.loadedHelpers[helperReference.name];
         if (helpersWithName == null) {
             helpersWithName = {};

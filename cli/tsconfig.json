@@ -4,7 +4,7 @@
   "include": ["./src"],
   "references": [
     { "path": "../../api/fern-ir-typescript/tsconfig.json" },
-    { "path": "../../compiler/plugins/plugin-runner/tsconfig.json" },
+    { "path": "../../compiler/generators/generator-runner/tsconfig.json" },
     { "path": "../client/tsconfig.json" },
     { "path": "../commons/tsconfig.json" },
     { "path": "../helpers/helper-manager/tsconfig.json" },

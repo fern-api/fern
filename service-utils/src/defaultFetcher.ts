@@ -5,8 +5,9 @@ export const defaultFetcher: Fetcher = async (args) => {
     if (args.body != null) {
         headers.append("Content-Type", args.body.contentType);
     }
-    if (args.token != null) {
-        const token = typeof args.token === "string" ? args.token : await args.token();
+
+    const token = typeof args.token === "function" ? await args.token() : args.token;
+    if (token != null) {
         headers.append("Authorization", `Bearer ${token}`);
     }
 

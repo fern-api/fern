@@ -1,4 +1,4 @@
-import { PluginConfig } from "@fern-api/plugin-runner";
+import { GeneratorConfig } from "@fern-api/generator-runner";
 import { validateSchema } from "@fern-typescript/commons";
 import { readFile } from "fs/promises";
 import { Command } from "../Command";
@@ -6,14 +6,14 @@ import { clientCommand } from "../commands/clientCommand";
 import { modelCommand } from "../commands/modelCommand";
 import { serverCommand } from "../commands/serverCommand";
 import { runCommand } from "../runCommand";
-import { FernPluginConfigSchema } from "./plugin-config/schemas/FernPluginConfigSchema";
-import { TypescriptPluginConfigSchema } from "./plugin-config/schemas/TypescriptPluginConfigSchema";
+import { FernGeneratorConfigSchema } from "./generator-config/schemas/FernGeneratorConfigSchema";
+import { TypescriptGeneratorConfigSchema } from "./generator-config/schemas/TypescriptGeneratorConfigSchema";
 
-export async function runPlugin(pathToConfig: string): Promise<void> {
+export async function runGenerator(pathToConfig: string): Promise<void> {
     const configStr = await readFile(pathToConfig);
     const configParsed = JSON.parse(configStr.toString()) as unknown;
-    const config = await validateSchema<PluginConfig<TypescriptPluginConfigSchema>>(
-        FernPluginConfigSchema,
+    const config = await validateSchema<GeneratorConfig<TypescriptGeneratorConfigSchema>>(
+        FernGeneratorConfigSchema,
         configParsed
     );
 
@@ -21,7 +21,7 @@ export async function runPlugin(pathToConfig: string): Promise<void> {
     await runCommand({ command, config });
 }
 
-function getCommand(config: FernPluginConfigSchema): Command {
+function getCommand(config: FernGeneratorConfigSchema): Command {
     switch (config.customConfig.mode) {
         case "client":
             return clientCommand;

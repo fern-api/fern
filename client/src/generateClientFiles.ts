@@ -48,7 +48,7 @@ export async function generateClientFiles({
     }
 
     for (const channel of intermediateRepresentation.services.websocket) {
-        await generateWebSocketChannel({
+        generateWebSocketChannel({
             channel,
             servicesDirectory,
             modelDirectory,
