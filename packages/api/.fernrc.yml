@@ -1,5 +1,5 @@
 name: Fern Intermediate Representation
-input: ./src
+definition: ./src
 generators:
   - name: fernapi/fern-typescript
     version: 0.0.74

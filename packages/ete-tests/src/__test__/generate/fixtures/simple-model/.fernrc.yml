@@ -1,5 +1,5 @@
 name: Posts
-input: ./api
+definition: ./api
 generators:
   - name: fern-typescript
     version: local
