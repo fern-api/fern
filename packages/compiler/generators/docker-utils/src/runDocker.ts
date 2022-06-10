@@ -15,7 +15,6 @@ export async function runDocker({ imageName, args, binds }: runDocker.Args): Pro
     try {
         await tryRun();
     } catch (e) {
-        // eslint-disable-next-line
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         if ((e as any)?.statusCode === 404) {
             await pullImage(docker, imageName);

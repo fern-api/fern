@@ -5,7 +5,7 @@ const TYPESCRIPT_ESLINT_PARSER_OPTIONS = new Set(["project", "allowAutomaticSing
 
 module.exports = {
     ...DEFAULT_CONFIG,
-    plugins: DEFAULT_CONFIG.plugins.filter((p) => p !== TYPESCRIPT_ESLINT),
+    // plugins: DEFAULT_CONFIG.plugins.filter((p) => p !== TYPESCRIPT_ESLINT),
     extends: [
         ...DEFAULT_CONFIG.extends.filter((extended) => !extended.startsWith(`plugin:${TYPESCRIPT_ESLINT}/`)),
         // needed to disable recommended eslint rules that don't apply
