@@ -24,7 +24,7 @@ export function generateRequestTypes({
     typeResolver,
 }: generateRequestTypes.Args): GeneratedRequest {
     const getAdditionalProperties = [
-        ...[...endpoint.parameters, ...endpoint.queryParameters].map(
+        ...[...endpoint.pathParameters, ...endpoint.queryParameters].map(
             (parameter) =>
                 (requestFile: SourceFile): OptionalKind<PropertySignatureStructure> => ({
                     name: parameter.key,
@@ -32,7 +32,8 @@ export function generateRequestTypes({
                         getTypeReference({
                             reference: parameter.valueType,
                             referencedIn: requestFile,
-                            modelDirectory,
+                            baseDirectory: modelDirectory,
+                            baseDirectoryType: "model",
                         })
                     ),
                 })

@@ -36,7 +36,8 @@ export function generateObjectType({
                     getTypeReference({
                         reference: field.valueType,
                         referencedIn: file,
-                        modelDirectory,
+                        baseDirectory: modelDirectory,
+                        baseDirectoryType: "model",
                     })
                 ),
                 docs: field.docs != null ? [{ description: field.docs }] : undefined,
