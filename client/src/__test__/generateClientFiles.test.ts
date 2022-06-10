@@ -30,7 +30,6 @@ describe("generateClientFiles", () => {
         },
     });
 
-    /*
     itFernETE("chat app", {
         directory: path.join(FIXTURES_DIR, "chat"),
         generateFiles: async ({ directory, intermediateRepresentation }) => {
@@ -41,5 +40,4 @@ describe("generateClientFiles", () => {
             });
         },
     });
-    */
 });

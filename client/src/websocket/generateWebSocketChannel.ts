@@ -2,10 +2,9 @@ import { WebSocketChannel } from "@fern-api/api";
 import {
     getOrCreateDirectory,
     getOrCreateSourceFile,
-    getRelativePathAsModuleSpecifierTo,
     getTextOfTsKeyword,
     getTextOfTsNode,
-    getTypeReference,
+    maybeAddDocs,
     TypeResolver,
 } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
@@ -18,20 +17,19 @@ import {
     SourceFile,
     ts,
 } from "ts-morph";
+import { getLocalServiceTypeReference } from "../commons/service-types/get-service-type-reference/getLocalServiceTypeReference";
 import { ClientConstants } from "../constants";
-import { generateServiceTypeReference } from "../service-types/generateServiceTypeReference";
-import { ServiceTypeReference } from "../service-types/types";
 import { generateChannelConstructor } from "./generateChannelConstructor";
-import { generateConstructRequestHelper } from "./generateConstructRequestHelper";
+import { generateDisconnect } from "./generateDisconnect";
+import { generateOnMessage } from "./generateOnMessage";
+import { addClientOperationToChannel } from "./operations/addClientOperationToChannel";
 
 export async function generateWebSocketChannel({
     servicesDirectory,
     modelDirectory,
     errorsDirectory,
-    encodersDirectory,
     channel,
     typeResolver,
-    helperManager,
 }: {
     servicesDirectory: Directory;
     modelDirectory: Directory;
@@ -52,10 +50,8 @@ export async function generateWebSocketChannel({
         channelDirectory,
         modelDirectory,
         errorsDirectory,
-        encodersDirectory,
         servicesDirectory,
         typeResolver,
-        helperManager,
     });
 }
 
@@ -63,6 +59,8 @@ async function generateChannel({
     channel,
     channelDirectory,
     modelDirectory,
+    errorsDirectory,
+    servicesDirectory,
     typeResolver,
 }: {
     channel: WebSocketChannel;
@@ -70,16 +68,12 @@ async function generateChannel({
     modelDirectory: Directory;
     errorsDirectory: Directory;
     servicesDirectory: Directory;
-    encodersDirectory: Directory;
     typeResolver: TypeResolver;
-    helperManager: HelperManager;
 }): Promise<void> {
     const channelFile = getOrCreateSourceFile(channelDirectory, `${channel.name.name}.ts`);
+    const channelNamespace = addNamespace({ file: channelFile });
 
-    const initTypeReference = generateInitTypeReference({ file: channelFile, channel, modelDirectory, typeResolver });
-    addNamespace({ file: channelFile, modelDirectory, initTypeReference, channelDefinition: channel });
-
-    channelFile.addInterface({
+    const channelInterface = channelFile.addInterface({
         name: ClientConstants.WebsocketChannel.CLIENT_NAME,
         isExported: true,
     });
@@ -89,6 +83,7 @@ async function generateChannel({
         implements: [ClientConstants.WebsocketChannel.CLIENT_NAME],
         isExported: true,
     });
+    maybeAddDocs(channelClass, channel.docs);
 
     channelClass.addProperty({
         name: ClientConstants.WebsocketChannel.PrivateMembers.SOCKET,
@@ -115,7 +110,7 @@ async function generateChannel({
                             undefined,
                             ts.factory.createIdentifier("response"),
                             undefined,
-                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword)
+                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
                         ),
                     ],
                     ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword)
@@ -125,76 +120,52 @@ async function generateChannel({
         initializer: getTextOfTsNode(ts.factory.createObjectLiteralExpression([])),
     });
 
-    generateChannelConstructor({ channelClass, channelDefinition: channel, initTypeReference, file: channelFile });
+    generateChannelConstructor({ channelClass, channelDefinition: channel, file: channelFile });
 
-    // TODO generate operation method calls
+    const serverMessageTypes: ts.TypeNode[] = [];
 
-    generateConstructRequestHelper({ channelClass, channelDefinition: channel, file: channelFile });
-}
-
-function generateInitTypeReference({
-    file,
-    channel,
-    modelDirectory,
-    typeResolver,
-}: {
-    file: SourceFile;
-    channel: WebSocketChannel;
-    modelDirectory: Directory;
-    typeResolver: TypeResolver;
-}): ServiceTypeReference | undefined {
-    const initTypeReference = generateServiceTypeReference({
-        typeName: ClientConstants.WebsocketChannel.Namespace.Args.Properties.Init.TYPE_NAME,
-        type: channel.init.type,
-        docs: channel.init.docs,
-        typeDirectory: file.getDirectory(),
-        modelDirectory,
-        typeResolver,
-    });
-
-    if (initTypeReference != null && initTypeReference.isLocal) {
-        file.addImportDeclaration({
-            namedImports: [ClientConstants.WebsocketChannel.Namespace.Args.Properties.Init.TYPE_NAME],
-            moduleSpecifier: getRelativePathAsModuleSpecifierTo(file, initTypeReference.file),
+    for (const operation of channel.client.operations) {
+        const { generatedOperationTypes } = addClientOperationToChannel({
+            operation,
+            channelClass,
+            channelInterface,
+            channel,
+            modelDirectory,
+            servicesDirectory,
+            errorsDirectory,
+            typeResolver,
         });
+        serverMessageTypes.push(
+            getLocalServiceTypeReference({
+                serviceOrChannelName: channel.name,
+                typeName: generatedOperationTypes.response.reference.typeName,
+                endpointOrOperationId: operation.operationId,
+                servicesDirectory,
+                referencedIn: channelFile,
+            })
+        );
     }
 
-    return initTypeReference;
+    channelNamespace.addTypeAlias({
+        name: ClientConstants.WebsocketChannel.Namespace.SERVER_MESSAGE,
+        type: getTextOfTsNode(ts.factory.createUnionTypeNode(serverMessageTypes)),
+    });
+
+    generateDisconnect({ channelClass });
+    generateOnMessage({ channelClass });
 }
 
-function addNamespace({
-    file,
-    modelDirectory,
-    channelDefinition,
-    initTypeReference,
-}: {
-    file: SourceFile;
-    modelDirectory: Directory;
-    channelDefinition: WebSocketChannel;
-    initTypeReference: ServiceTypeReference | undefined;
-}) {
-    const serviceNamespace = file.addModule({
+function addNamespace({ file }: { file: SourceFile }): ModuleDeclaration {
+    const channelNamespace = file.addModule({
         name: ClientConstants.WebsocketChannel.CLIENT_NAME,
         isExported: true,
         hasDeclareKeyword: true,
     });
-
-    addArgsToNamespace({ serviceNamespace, modelDirectory, initTypeReference, file });
-    addRequestToNamespace({ serviceNamespace, channelDefinition });
-    addResponseToNamespace({ serviceNamespace, channelDefinition });
+    addArgsToNamespace({ channelNamespace });
+    return channelNamespace;
 }
 
-function addArgsToNamespace({
-    serviceNamespace,
-    modelDirectory,
-    initTypeReference,
-    file,
-}: {
-    serviceNamespace: ModuleDeclaration;
-    modelDirectory: Directory;
-    initTypeReference: ServiceTypeReference | undefined;
-    file: SourceFile;
-}) {
+function addArgsToNamespace({ channelNamespace }: { channelNamespace: ModuleDeclaration }) {
     const properties: OptionalKind<PropertySignatureStructure>[] = [
         {
             name: ClientConstants.WebsocketChannel.Namespace.Args.Properties.ORIGIN,
@@ -202,92 +173,10 @@ function addArgsToNamespace({
         },
     ];
 
-    if (initTypeReference != null) {
-        properties.push({
-            name: ClientConstants.WebsocketChannel.Namespace.Args.Properties.Init.NAME,
-            type: initTypeReference.isLocal
-                ? initTypeReference.typeName
-                : getTextOfTsNode(
-                      getTypeReference({
-                          reference: initTypeReference.typeReference,
-                          referencedIn: file,
-                          modelDirectory,
-                      })
-                  ),
-        });
-    }
+    // TODO add token if auth is required
 
-    serviceNamespace.addInterface({
+    channelNamespace.addInterface({
         name: ClientConstants.WebsocketChannel.Namespace.Args.TYPE_NAME,
         properties,
-    });
-}
-
-function addRequestToNamespace({
-    serviceNamespace,
-    channelDefinition,
-}: {
-    serviceNamespace: ModuleDeclaration;
-    channelDefinition: WebSocketChannel;
-}) {
-    const MESSAGE_TYPE_PARAMETER = "T";
-
-    serviceNamespace.addInterface({
-        name: ClientConstants.WebsocketChannel.Namespace.CLIENT_MESSAGE,
-        typeParameters: [
-            {
-                name: MESSAGE_TYPE_PARAMETER,
-                default: "unknown",
-            },
-        ],
-        properties: [
-            {
-                name: channelDefinition.operationProperties.id,
-                type: getTextOfTsKeyword(ts.SyntaxKind.StringKeyword),
-            },
-            {
-                name: channelDefinition.operationProperties.operation,
-                type: getTextOfTsKeyword(ts.SyntaxKind.StringKeyword),
-            },
-            {
-                name: channelDefinition.operationProperties.body,
-                type: MESSAGE_TYPE_PARAMETER,
-            },
-        ],
-    });
-}
-
-function addResponseToNamespace({
-    serviceNamespace,
-    channelDefinition,
-}: {
-    serviceNamespace: ModuleDeclaration;
-    channelDefinition: WebSocketChannel;
-}) {
-    const MESSAGE_TYPE_PARAMETER = "T";
-
-    serviceNamespace.addInterface({
-        name: ClientConstants.WebsocketChannel.Namespace.SERVER_MESSAGE,
-        typeParameters: [
-            {
-                name: MESSAGE_TYPE_PARAMETER,
-                default: "unknown",
-            },
-        ],
-        properties: [
-            {
-                name: channelDefinition.operationProperties.id,
-                type: getTextOfTsKeyword(ts.SyntaxKind.StringKeyword),
-            },
-            {
-                name: channelDefinition.operationProperties.operation,
-                type: getTextOfTsKeyword(ts.SyntaxKind.StringKeyword),
-                hasQuestionToken: true,
-            },
-            {
-                name: channelDefinition.operationProperties.body,
-                type: MESSAGE_TYPE_PARAMETER,
-            },
-        ],
     });
 }

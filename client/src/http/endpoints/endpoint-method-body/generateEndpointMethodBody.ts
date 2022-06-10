@@ -2,8 +2,8 @@ import { HttpEndpoint, HttpService } from "@fern-api/api";
 import { getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import { Directory, SourceFile, StatementStructures, ts, WriterFunction } from "ts-morph";
-import { GeneratedEndpointTypes } from "../generate-endpoint-types/types";
-import { EndpointTypeName } from "../getLocalEndpointTypeReference";
+import { ServiceTypeName } from "../../../commons/service-types/types";
+import { GeneratedEndpointTypes } from "../endpoint-types/types";
 import { generateConstructQueryParams } from "./generateConstructQueryParams";
 import { generateFetcherCall } from "./generateFetcherCall";
 import { generateReturnResponse } from "./generateReturnResponse";
@@ -13,7 +13,7 @@ export async function generateEndpointMethodBody({
     endpointTypes,
     serviceFile,
     serviceDefinition,
-    getReferenceToLocalEndpointType,
+    getReferenceToLocalServiceType,
     typeResolver,
     helperManager,
     modelDirectory,
@@ -22,7 +22,7 @@ export async function generateEndpointMethodBody({
     endpointTypes: GeneratedEndpointTypes;
     serviceFile: SourceFile;
     serviceDefinition: HttpService;
-    getReferenceToLocalEndpointType: (typeName: EndpointTypeName) => ts.TypeReferenceNode;
+    getReferenceToLocalServiceType: (typeName: ServiceTypeName) => ts.TypeReferenceNode;
     typeResolver: TypeResolver;
     helperManager: HelperManager;
     modelDirectory: Directory;
@@ -53,7 +53,7 @@ export async function generateEndpointMethodBody({
         getTextOfTsNode(
             await generateReturnResponse({
                 endpointTypes,
-                getReferenceToLocalEndpointType,
+                getReferenceToLocalServiceType,
                 serviceFile,
                 modelDirectory,
                 serviceDefinition,

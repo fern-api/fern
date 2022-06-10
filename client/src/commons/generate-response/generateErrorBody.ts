@@ -2,7 +2,7 @@ import { FailedResponse, TypeReference } from "@fern-api/api";
 import { getNamedTypeReference } from "@fern-typescript/commons";
 import { generateUnionType } from "@fern-typescript/model";
 import { Directory, SourceFile } from "ts-morph";
-import { ClientConstants } from "../../../../constants";
+import { ClientConstants } from "../../constants";
 
 export function generateErrorBody({
     failedResponse,
@@ -15,7 +15,7 @@ export function generateErrorBody({
 }): void {
     generateUnionType({
         file: errorBodyFile,
-        typeName: ClientConstants.HttpService.Endpoint.Types.Response.Error.Properties.Body.TYPE_NAME,
+        typeName: ClientConstants.Commons.Types.Response.Error.Properties.Body.TYPE_NAME,
         docs: failedResponse.docs,
         discriminant: failedResponse.discriminant,
         types: failedResponse.errors.map((error) => ({
