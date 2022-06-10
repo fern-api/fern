@@ -4,12 +4,12 @@ import { IdSchema } from "./IdSchema";
 import { ServicesSchema } from "./ServicesSchema";
 import { TypeDefinitionSchema } from "./TypeDefinitionSchema";
 
-export const RawFernConfigurationSchema = z.strictObject({
+export const FernConfigurationSchema = z.strictObject({
     imports: z.optional(z.record(z.string())),
     ids: z.optional(z.array(IdSchema)),
     types: z.optional(z.record(TypeDefinitionSchema)),
     services: z.optional(ServicesSchema),
-    errors: z.optional(z.record(ErrorDefinitionSchema)),
+    errors: z.optional(z.record(z.union([z.string(), ErrorDefinitionSchema]))),
 });
 
-export type RawFernConfigurationSchema = z.infer<typeof RawFernConfigurationSchema>;
+export type FernConfigurationSchema = z.infer<typeof FernConfigurationSchema>;

@@ -32,7 +32,8 @@ export function getServiceTypeReference({
         return getTypeReference({
             reference: reference.typeReference,
             referencedIn,
-            modelDirectory,
+            baseDirectory: modelDirectory,
+            baseDirectoryType: "model",
         });
     }
 }

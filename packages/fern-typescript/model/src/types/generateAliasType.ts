@@ -26,7 +26,8 @@ export function generateAliasType({
                 getTypeReference({
                     reference: shape.aliasOf,
                     referencedIn: file,
-                    modelDirectory,
+                    baseDirectory: modelDirectory,
+                    baseDirectoryType: "model",
                 })
             ),
             isExported: true,

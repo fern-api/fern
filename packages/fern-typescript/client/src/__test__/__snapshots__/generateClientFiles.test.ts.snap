@@ -224,23 +224,39 @@ export * from \\"./operations\\";
 ",
   "/services/ChatService/operations/index.ts": "export * as sendChat from \\"./sendChat\\";
 ",
-  "/services/ChatService/operations/sendChat/ErrorBody.ts": "export type ErrorBody = never;
+  "/services/ChatService/operations/sendChat/ErrorBody.ts": "export type ErrorBody = ErrorBody.Message;
 
 export declare namespace ErrorBody {
+  interface Message {
+    _type: \\"message\\";
+    message: string;
+  }
+
   export interface _Visitor<Result> {
+    message: (value: string) => Result;
     _unknown: () => Result;
   }
 }
 
 export const ErrorBody = {
+  message: (value: string): ErrorBody.Message => ({
+    message: value,
+    _type: \\"message\\",
+  }),
+
   _visit: <Result>(
-    _value: ErrorBody,
+    value: ErrorBody,
     visitor: ErrorBody._Visitor<Result>
   ): Result => {
-    return visitor._unknown();
+    switch (value._type) {
+      case \\"message\\":
+        return visitor.message(value.message);
+      default:
+        return visitor._unknown();
+    }
   },
 
-  _types: (): ErrorBody[\\"_type\\"][] => [],
+  _types: (): ErrorBody[\\"_type\\"][] => [\\"message\\"],
 } as const;
 ",
   "/services/ChatService/operations/sendChat/Request.ts": "import * as ChatService from \\"../..\\";

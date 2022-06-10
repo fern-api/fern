@@ -1,5 +1,6 @@
-import { ErrorDefinition, FernFilepath } from "@fern-api/api";
+import { ErrorDefinition, FernFilepath, Type } from "@fern-api/api";
 import { RawSchemas } from "@fern-api/syntax-analysis";
+import { createTypeReferenceParser } from "../utils/parseInlineType";
 import { convertType } from "./type-definitions/convertTypeDefinition";
 
 export function convertErrorDefinition({
@@ -10,21 +11,28 @@ export function convertErrorDefinition({
 }: {
     errorName: string;
     fernFilepath: FernFilepath;
-    errorDefinition: RawSchemas.ErrorDefinitionSchema;
+    errorDefinition: RawSchemas.ErrorDefinitionSchema | string;
     imports: Record<string, string>;
 }): ErrorDefinition {
+    const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
+
     return {
         name: {
             name: errorName,
             fernFilepath,
         },
-        docs: errorDefinition.docs,
+        docs: typeof errorDefinition !== "string" ? errorDefinition.docs : undefined,
         http:
-            errorDefinition.http != null
+            typeof errorDefinition !== "string" && errorDefinition.http != null
                 ? {
                       statusCode: errorDefinition.http.statusCode,
                   }
                 : undefined,
-        type: convertType({ typeDefinition: errorDefinition.type, fernFilepath, imports }),
+        type:
+            typeof errorDefinition === "string"
+                ? Type.alias({
+                      aliasOf: parseTypeReference(errorDefinition),
+                  })
+                : convertType({ typeDefinition: errorDefinition.type, fernFilepath, imports }),
     };
 }

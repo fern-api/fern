@@ -1,10 +1,10 @@
 import { RelativeFilePath } from "@fern-api/compiler-commons";
 import { ZodError } from "zod";
-import { RawFernConfigurationSchema } from "./schemas/RawFernConfigurationSchema";
+import { FernConfigurationSchema } from "./schemas";
 
 export declare namespace SyntaxAnalysis {
     export interface SuccessfulResult {
-        validatedFiles: Record<RelativeFilePath, RawFernConfigurationSchema>;
+        validatedFiles: Record<RelativeFilePath, FernConfigurationSchema>;
     }
 
     export interface FailedResult {
@@ -25,7 +25,7 @@ export declare namespace SyntaxAnalysis {
 
     export interface StructureValidationFailure {
         type: SyntaxAnalysisFailureType.STRUCTURE_VALIDATION;
-        error: ZodError<RawFernConfigurationSchema>;
+        error: ZodError<FernConfigurationSchema>;
     }
 }
 

@@ -1,15 +1,15 @@
-import { RawSchemas } from "@fern-api/syntax-analysis";
 import SwaggerParser from "@apidevtools/swagger-parser";
-import { OpenAPIV3, OpenAPI } from "openapi-types";
-import { convertToFernType } from "./typeConverter";
+import { RawSchemas } from "@fern-api/syntax-analysis";
+import { OpenAPI, OpenAPIV3 } from "openapi-types";
 import { convertToFernService } from "./serviceConverter";
+import { convertToFernType } from "./typeConverter";
 
 export declare namespace OpenApiConverter {
     type Result = SuccessfulResult | FailedResult;
 
     interface SuccessfulResult {
         didSucceed: true;
-        fernConfiguration: RawSchemas.RawFernConfigurationSchema;
+        fernConfiguration: RawSchemas.FernConfigurationSchema;
     }
 
     interface FailedResult {
@@ -31,7 +31,7 @@ export async function convertOpenApi(openapiFilepath: string): Promise<OpenApiCo
             failure: OpenApiConversionFailure.FAILED_TO_PARSE_OPENAPI,
         };
     }
-    const convertedFernConfiguration: Required<RawSchemas.RawFernConfigurationSchema> = {
+    const convertedFernConfiguration: Required<RawSchemas.FernConfigurationSchema> = {
         errors: {},
         imports: {},
         ids: [],

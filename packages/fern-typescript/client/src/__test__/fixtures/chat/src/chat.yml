@@ -21,4 +21,8 @@ services:
                 properties:
                   title: string
                   content: string
-            response: ChatMessage
+            response:
+              ok: ChatMessage
+              failed:
+                errors:
+                  message: string

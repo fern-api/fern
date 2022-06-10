@@ -1,5 +1,5 @@
 import { RelativeFilePath } from "@fern-api/compiler-commons";
-import { RawFernConfigurationSchema } from "./schemas/RawFernConfigurationSchema";
+import { FernConfigurationSchema } from "./schemas/FernConfigurationSchema";
 import { SyntaxAnalysis, SyntaxAnalysisFailureType } from "./types";
 
 export declare namespace Validator {
@@ -7,7 +7,7 @@ export declare namespace Validator {
 
     export interface SuccessfulResult {
         didSucceed: true;
-        validatedFiles: Record<RelativeFilePath, RawFernConfigurationSchema>;
+        validatedFiles: Record<RelativeFilePath, FernConfigurationSchema>;
     }
 
     export interface FailedResult {
@@ -17,11 +17,11 @@ export declare namespace Validator {
 }
 
 export function validate(files: Record<RelativeFilePath, unknown>): Validator.Result {
-    const validatedFiles: Record<RelativeFilePath, RawFernConfigurationSchema> = {};
+    const validatedFiles: Record<RelativeFilePath, FernConfigurationSchema> = {};
     const failures: Record<RelativeFilePath, SyntaxAnalysis.StructureValidationFailure> = {};
 
     for (const [relativeFilePath, parsedFileContents] of Object.entries(files)) {
-        const parsed = RawFernConfigurationSchema.safeParse(parsedFileContents);
+        const parsed = FernConfigurationSchema.safeParse(parsedFileContents);
         if (parsed.success) {
             validatedFiles[relativeFilePath] = parsed.data;
         } else {
