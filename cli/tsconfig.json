@@ -3,8 +3,8 @@
   "compilerOptions": { "composite": true, "outDir": "dist/esm", "rootDir": "src" },
   "include": ["./src"],
   "references": [
-    { "path": "../../api/fern-ir-typescript/tsconfig.json" },
     { "path": "../../compiler/generators/generator-runner/tsconfig.json" },
+    { "path": "../../compiler/ir-types/fern-ir-typescript/tsconfig.json" },
     { "path": "../client/tsconfig.json" },
     { "path": "../commons/tsconfig.json" },
     { "path": "../helpers/helper-manager/tsconfig.json" },
