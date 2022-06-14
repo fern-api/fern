@@ -3,7 +3,7 @@
 set -e
 
 TAG="$1"
-DOCKER_NAME=fern-typescript:"$TAG"
+DOCKER_NAME=fernapi/fern-typescript:"$TAG"
 
 PACKAGE_DIR="$(pwd)"
 DOCKER_DIR="$PACKAGE_DIR/docker"
