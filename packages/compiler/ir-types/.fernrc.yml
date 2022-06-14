@@ -6,7 +6,6 @@ generators:
     output: ./fern-ir-typescript/src/generated
     config:
       mode: model
-    publish: npm
   - name: fernapi/fern-java
     version: 0.0.29
     output: ./fern-ir-java/ir-api
