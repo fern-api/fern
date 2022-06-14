@@ -1,4 +1,4 @@
-import { GeneratorHelper } from "@fern-api/compiler-commons";
+import { GeneratorHelper } from "@fern-api/commons";
 import execa from "execa";
 import { cp, mkdir, rm } from "fs/promises";
 import path from "path";

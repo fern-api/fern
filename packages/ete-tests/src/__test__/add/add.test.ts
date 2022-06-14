@@ -1,4 +1,4 @@
-import { WORKSPACE_DEFINITION_FILENAME } from "@fern-api/compiler-commons";
+import { WORKSPACE_DEFINITION_FILENAME } from "@fern-api/commons";
 import execa from "execa";
 import { mkdir, readFile, rm } from "fs/promises";
 import path from "path";

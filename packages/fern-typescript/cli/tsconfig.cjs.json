@@ -3,8 +3,8 @@
   "compilerOptions": { "composite": true, "outDir": "dist/cjs", "rootDir": "src", "module": "CommonJS" },
   "include": ["./src"],
   "references": [
-    { "path": "../../api/fern-ir-typescript/tsconfig.cjs.json" },
     { "path": "../../compiler/generators/generator-runner/tsconfig.cjs.json" },
+    { "path": "../../compiler/ir-types/fern-ir-typescript/tsconfig.cjs.json" },
     { "path": "../client/tsconfig.cjs.json" },
     { "path": "../commons/tsconfig.cjs.json" },
     { "path": "../helpers/helper-manager/tsconfig.cjs.json" },

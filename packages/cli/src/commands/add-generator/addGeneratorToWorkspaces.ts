@@ -1,5 +1,5 @@
 import { addJavaGenerator, addPostmanGenerator, addTypescriptGenerator } from "@fern-api/add-generator";
-import { loadWorkspaceDefinitionSchema, WorkspaceDefinitionSchema } from "@fern-api/compiler-commons";
+import { loadWorkspaceDefinitionSchema, WorkspaceDefinitionSchema } from "@fern-api/commons";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { getWorkspaces } from "../utils/getWorkspaces";

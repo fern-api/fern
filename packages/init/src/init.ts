@@ -3,7 +3,7 @@ import {
     PROJECT_CONFIG_FILENAME,
     WorkspaceDefinitionSchema,
     WORKSPACE_DEFINITION_FILENAME,
-} from "@fern-api/compiler-commons";
+} from "@fern-api/commons";
 import { lstat, mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
