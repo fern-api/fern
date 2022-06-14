@@ -4,10 +4,11 @@
   "include": ["./src"],
   "references": [
     { "path": "../add-generator/tsconfig.cjs.json" },
-    { "path": "../api/fern-ir-typescript/tsconfig.cjs.json" },
+    { "path": "../commons/tsconfig.cjs.json" },
     { "path": "../compiler/commons/tsconfig.cjs.json" },
     { "path": "../compiler/compiler/tsconfig.cjs.json" },
     { "path": "../compiler/generators/generator-runner/tsconfig.cjs.json" },
+    { "path": "../compiler/ir-types/fern-ir-typescript/tsconfig.cjs.json" },
     { "path": "../compiler/syntax-analysis/tsconfig.cjs.json" },
     { "path": "../init/tsconfig.cjs.json" },
     { "path": "../openapi-converter/tsconfig.cjs.json" }

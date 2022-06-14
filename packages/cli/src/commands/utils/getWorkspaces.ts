@@ -1,4 +1,4 @@
-import { loadProjectConfig, ProjectConfig, WORKSPACE_DEFINITION_FILENAME } from "@fern-api/compiler-commons";
+import { loadProjectConfig, ProjectConfig, WORKSPACE_DEFINITION_FILENAME } from "@fern-api/commons";
 import { lstat } from "fs/promises";
 import glob from "glob-promise";
 

@@ -3,9 +3,9 @@
   "compilerOptions": { "composite": true, "outDir": "dist/esm", "rootDir": "src" },
   "include": ["./src"],
   "references": [
-    { "path": "../../api/fern-ir-typescript/tsconfig.json" },
     { "path": "../../commons/tsconfig.json" },
     { "path": "../commons/tsconfig.json" },
+    { "path": "../ir-types/fern-ir-typescript/tsconfig.json" },
     { "path": "../syntax-analysis/tsconfig.json" }
   ]
 }

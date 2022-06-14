@@ -7,6 +7,7 @@ export const GeneratorInvocationSchema = z.strictObject({
     output: z.optional(z.string()),
     config: z.unknown(),
     helpers: z.optional(z.array(GeneratorHelperReferenceSchema)),
+    publish: z.optional(z.enum(["npm"])),
 });
 
 export type GeneratorInvocationSchema = z.infer<typeof GeneratorInvocationSchema>;

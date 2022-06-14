@@ -1,4 +1,4 @@
-import { loadProjectConfig } from "@fern-api/compiler-commons";
+import { loadProjectConfig } from "@fern-api/commons";
 import { getWorkspaces } from "../utils/getWorkspaces";
 import { compileWorkspace } from "./compileWorkspace";
 

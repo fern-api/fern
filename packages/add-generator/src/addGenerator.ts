@@ -1,4 +1,4 @@
-import { GeneratorInvocationSchema, WorkspaceDefinitionSchema } from "@fern-api/compiler-commons";
+import { GeneratorInvocationSchema, WorkspaceDefinitionSchema } from "@fern-api/commons";
 
 const JAVA_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
     name: "fernapi/fern-java",

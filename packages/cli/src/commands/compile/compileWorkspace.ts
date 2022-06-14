@@ -1,6 +1,6 @@
 import { CustomWireMessageEncoding } from "@fern-api/api";
+import { GeneratorInvocation, loadWorkspaceDefinition, WorkspaceDefinition } from "@fern-api/commons";
 import { compile, Compiler } from "@fern-api/compiler";
-import { GeneratorInvocation, loadWorkspaceDefinition, WorkspaceDefinition } from "@fern-api/compiler-commons";
 import { runGenerator } from "@fern-api/generator-runner";
 import { rm, writeFile } from "fs/promises";
 import os from "os";

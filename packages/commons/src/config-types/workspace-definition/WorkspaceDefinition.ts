@@ -13,7 +13,10 @@ export interface GeneratorInvocation {
     absolutePathToOutput: string | undefined;
     config: unknown;
     helpers: GeneratorHelper[];
+    publish: PublishRegistry | undefined;
 }
+
+export type PublishRegistry = "npm";
 
 export interface GeneratorHelper {
     name: string;

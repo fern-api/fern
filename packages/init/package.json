@@ -24,7 +24,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/compiler-commons": "workspace:*",
+    "@fern-api/commons": "workspace:*",
     "@fern-api/syntax-analysis": "workspace:*",
     "js-yaml": "^4.1.0"
   },

@@ -24,7 +24,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/compiler-commons": "workspace:*"
+    "@fern-api/commons": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.17.10",

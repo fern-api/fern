@@ -26,7 +26,6 @@
   },
   "dependencies": {
     "@fern-api/commons": "workspace:*",
-    "@fern-api/compiler-commons": "workspace:*",
     "execa": "^5.1.1"
   },
   "devDependencies": {

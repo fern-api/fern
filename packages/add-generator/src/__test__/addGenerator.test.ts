@@ -1,4 +1,4 @@
-import { WorkspaceDefinitionSchema } from "@fern-api/compiler-commons";
+import { WorkspaceDefinitionSchema } from "@fern-api/commons";
 import { addJavaGenerator, addTypescriptGenerator } from "../addGenerator";
 
 describe("addGenerator", () => {

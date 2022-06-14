@@ -4,6 +4,7 @@ import yargs from "yargs/yargs";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { compileWorkspaces } from "./commands/compile/compileWorkspaces";
 import { convertOpenApiToFernApiDefinition } from "./commands/convert-openapi/convertOpenApi";
+import { publishWorkspaces } from "./commands/publish/publishWorkspaces";
 
 void yargs(hideBin(process.argv))
     .scriptName("fern")
@@ -45,8 +46,29 @@ void yargs(hideBin(process.argv))
         (argv) => compileWorkspaces(argv.workspaces ?? [])
     )
     .command(
+        ["publish [workspaces...] [--publishVersion]"],
+        "Publish to supported registries.",
+        (yargs) =>
+            yargs
+                .positional("workspaces", {
+                    array: true,
+                    type: "string",
+                    description:
+                        "If omitted, every workspace specified in the project-level configuration (fern.config.json) will be processed.",
+                })
+                .positional("publishVersion", {
+                    type: "string",
+                    description: "Package version",
+                }),
+        (argv) =>
+            publishWorkspaces({
+                workspaces: argv.workspaces ?? [],
+                version: argv.publishVersion,
+            })
+    )
+    .command(
         ["convert <openapiPath> <fernDefinitionDir>"],
-        "Converts Open API to Fern definition. This is incubating and not guaranteed to succeed.",
+        "Converts Open API to Fern definition.",
         (yargs) =>
             yargs
                 .positional("openapiPath", {

@@ -31,6 +31,7 @@ export function convertWorkspaceDefinition({
                                   : undefined,
                       }))
                     : [],
+            publish: generator.publish,
         })),
     };
 }
