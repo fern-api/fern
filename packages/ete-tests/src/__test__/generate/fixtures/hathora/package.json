@@ -1,7 +1,0 @@
-{
-  "private": true,
-  "dependencies": {
-    "@fern-typescript/service-utils": "workspace:*",
-    "bin-serde": "*"
-  }
-}

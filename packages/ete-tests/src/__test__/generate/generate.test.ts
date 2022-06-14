@@ -35,9 +35,15 @@ function itFixture(fixtureName: string) {
                 .filter((s) => s.length > 0);
             await compileTypescript(outputPath);
             for (const expectedFile of expectedFiles) {
-                const fileContents = await readFile(path.join(outputPath, expectedFile));
-                expect(fileContents.toString()).toMatchSnapshot();
+                let fileContents: string;
+                try {
+                    fileContents = (await readFile(path.join(outputPath, expectedFile))).toString();
+                } catch (e) {
+                    throw new Error(`Expected file ${expectedFile} to exist, but it does not.`);
+                }
+                expect(fileContents).toMatchSnapshot();
             }
+            await rm(outputPath, { force: true, recursive: true });
         },
         90_000
     );

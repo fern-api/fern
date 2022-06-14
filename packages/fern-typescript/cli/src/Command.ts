@@ -1,10 +1,12 @@
 import { IntermediateRepresentation } from "@fern-api/api";
 import { HelperManager } from "@fern-typescript/helper-manager";
-import { Project } from "ts-morph";
+import { Volume } from "memfs/lib/volume";
 
 export declare namespace Command {
     export interface Args {
-        project: Project;
+        packageName: string;
+        packageVersion: string;
+        volume: Volume;
         intermediateRepresentation: IntermediateRepresentation;
         helperManager: HelperManager;
     }

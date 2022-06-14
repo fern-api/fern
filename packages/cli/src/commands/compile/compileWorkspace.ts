@@ -110,5 +110,6 @@ async function loadHelpersAndRunGenerator({
         absolutePathToProject:
             absolutePathToProjectConfig != null ? path.dirname(absolutePathToProjectConfig) : undefined,
         customConfig: generatorInvocation.config,
+        workspaceVersion: "0.1.2",
     });
 }

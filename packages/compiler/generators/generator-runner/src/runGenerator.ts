@@ -14,6 +14,7 @@ export declare namespace runGenerator {
         imageName: string;
         helpers: GeneratorHelpers;
         customConfig: unknown;
+        workspaceVersion: string;
 
         absolutePathToIr: string;
         absolutePathToOutput: string | undefined;
@@ -24,6 +25,7 @@ export declare namespace runGenerator {
 
 export async function runGenerator({
     imageName,
+    workspaceVersion,
     absolutePathToOutput,
     absolutePathToIr,
     pathToWriteConfigJson,
@@ -45,6 +47,7 @@ export async function runGenerator({
         absolutePathToOutput,
         absolutePathToProject,
         customConfig,
+        workspaceVersion,
     });
     binds.push(...bindsForGenerators);
 

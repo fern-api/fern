@@ -1,21 +1,50 @@
 import { IntermediateRepresentation } from "@fern-api/api";
-import { getOrCreateDirectory, TypeResolver } from "@fern-typescript/commons";
+import { generateTypeScriptProject, getOrCreateDirectory, TypeResolver } from "@fern-typescript/commons";
 import { generateEncoderFiles } from "@fern-typescript/encoders";
 import { generateErrorFiles } from "@fern-typescript/errors";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import { generateModelFiles } from "@fern-typescript/model";
+import { Volume } from "memfs/lib/volume";
 import { Directory } from "ts-morph";
 import { generateHttpService } from "./http/generateHttpService";
 import { generateWebSocketChannel } from "./websocket/generateWebSocketChannel";
 
-export async function generateClientFiles({
+export async function generateClientProject({
     intermediateRepresentation,
-    directory,
     helperManager,
+    packageName,
+    packageVersion,
+    volume,
 }: {
     intermediateRepresentation: IntermediateRepresentation;
-    directory: Directory;
     helperManager: HelperManager;
+    packageName: string;
+    packageVersion: string;
+    volume: Volume;
+}): Promise<void> {
+    await generateTypeScriptProject({
+        volume,
+        packageName,
+        packageVersion,
+        generateSrc: (directory) => generateClientFiles({ intermediateRepresentation, helperManager, directory }),
+        packageDependencies: {
+            "@fern-typescript/service-utils": "0.0.0",
+            uuid: "^8.3.2",
+        },
+        packageDevDependencies: {
+            "@types/uuid": "^8.3.4",
+        },
+    });
+}
+
+async function generateClientFiles({
+    intermediateRepresentation,
+    helperManager,
+    directory,
+}: {
+    intermediateRepresentation: IntermediateRepresentation;
+    helperManager: HelperManager;
+    directory: Directory;
 }): Promise<void> {
     const typeResolver = new TypeResolver(intermediateRepresentation);
 

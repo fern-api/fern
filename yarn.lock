@@ -1831,6 +1831,7 @@ __metadata:
     depcheck: "npm:^1.4.3"
     eslint: "npm:^8.12.0"
     jest: "npm:^27.5.1"
+    memfs: "npm:^3.4.1"
     prettier: "npm:^2.6.2"
     ts-morph: "npm:^14.0.0"
     typescript: "npm:^4.6.4"
@@ -2013,6 +2014,7 @@ __metadata:
     eslint: "npm:^8.12.0"
     jest: "npm:^27.5.1"
     lodash: "npm:^4.17.21"
+    memfs: "npm:^3.4.1"
     prettier: "npm:^2.6.2"
     ts-morph: "npm:^14.0.0"
     typescript: "npm:^4.6.4"
@@ -2038,7 +2040,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/service-utils@workspace:*, @fern-typescript/service-utils@workspace:packages/fern-typescript/service-utils":
+"@fern-typescript/service-utils@workspace:packages/fern-typescript/service-utils":
   version: 0.0.0-use.local
   resolution: "@fern-typescript/service-utils@workspace:packages/fern-typescript/service-utils"
   dependencies:
@@ -2794,13 +2796,6 @@ __metadata:
   version: 0.2.3
   resolution: "@types/tmp@npm:0.2.3"
   checksum: ec94f7a39f6accaeb88b27390b7b43bbc39b4cdbf77e15b73184fcfa0605f415eb0f81d1a9d68138ad08355562301c878e00ce6ee800d3c20529ea19d6ad1759
-  languageName: node
-  linkType: hard
-
-"@types/uuid@npm:^8.3.4":
-  version: 8.3.4
-  resolution: "@types/uuid@npm:8.3.4"
-  checksum: 42fa6d1868c459444c257fe418f624067aabfbe550ce97d9c124c5759a16f03bc475dc82086eefee807571608830b2f955e688c0e63e40aad5eb29b573471492
   languageName: node
   linkType: hard
 
@@ -3716,16 +3711,6 @@ __metadata:
   version: 5.2.2
   resolution: "big.js@npm:5.2.2"
   checksum: 1c63accd17ba7d86676380280190cf748c6f715b74ddc36a3999d20689f78e59f6f76958fb811d40b57efca8dfaaacdc4508521d06a8a8d1e86194bc0f4b4575
-  languageName: node
-  linkType: hard
-
-"bin-serde@npm:*":
-  version: 1.1.1
-  resolution: "bin-serde@npm:1.1.1"
-  dependencies:
-    utf8-buffer: "npm:^1.0.0"
-    utf8-buffer-size: "npm:^0.0.4"
-  checksum: 0d1f6db4ffe8a74e7a11a7d7f6e915d6d9fb3020b664a6698ef6e9e507c27b551cd90f4dce75d2394d0cd0778913f73fcd4ff7fe9d5edba8b59e04c1d0fdb1d2
   languageName: node
   linkType: hard
 
@@ -5334,6 +5319,7 @@ __metadata:
     depcheck: "npm:^1.4.3"
     eslint: "npm:^8.12.0"
     jest: "npm:^27.5.1"
+    memfs: "npm:^3.4.1"
     prettier: "npm:^2.6.2"
     simple-progress-webpack-plugin: "npm:^2.0.0"
     ts-loader: "npm:^9.3.0"
@@ -5439,16 +5425,6 @@ __metadata:
   checksum: 4d6f51423a974f370ce34dd00982d764e160121e4d823f46b2b79b180a34c0a23a1d09aa83851f0d1a78226be8281100ef3b4cd6990b226ed961acfa2be4a36c
   languageName: node
   linkType: hard
-
-"fixtures-e250b6@workspace:packages/fern-typescript/client/src/__test__/fixtures":
-  version: 0.0.0-use.local
-  resolution: "fixtures-e250b6@workspace:packages/fern-typescript/client/src/__test__/fixtures"
-  dependencies:
-    "@fern-typescript/service-utils": "workspace:*"
-    "@types/uuid": "npm:^8.3.4"
-    uuid: "npm:^8.3.2"
-  languageName: unknown
-  linkType: soft
 
 "flat-cache@npm:^3.0.4":
   version: 3.0.4
@@ -5828,15 +5804,6 @@ __metadata:
   checksum: 3e8c4d87ccd9c160d61a5db829b5fb647acac79e482476c857d5d1dc580517c6a77cf84337808f28361f6263008ce1ce5aff44407bd9241af93c623ef8d8d4f1
   languageName: node
   linkType: hard
-
-"hathora-78bdcd@workspace:packages/ete-tests/src/__test__/generate/fixtures/hathora":
-  version: 0.0.0-use.local
-  resolution: "hathora-78bdcd@workspace:packages/ete-tests/src/__test__/generate/fixtures/hathora"
-  dependencies:
-    "@fern-typescript/service-utils": "workspace:*"
-    bin-serde: "npm:*"
-  languageName: unknown
-  linkType: soft
 
 "html-encoding-sniffer@npm:^2.0.1":
   version: 2.0.1
@@ -9667,20 +9634,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"utf8-buffer-size@npm:^0.0.4":
-  version: 0.0.4
-  resolution: "utf8-buffer-size@npm:0.0.4"
-  checksum: d0cc9c53c958b7d97545437e3f53ab2fa20323dc93691b44c25c2480b097726642106698de8e82ff55a850b176368fc4406e601ae2e9d47b74a522850c9244d1
-  languageName: node
-  linkType: hard
-
-"utf8-buffer@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "utf8-buffer@npm:1.0.0"
-  checksum: 6a18acbe41f70f80d2a46ee08c21b668f1860f31ef9062398465481deca8fb1ccf87e35108c98bb3fd4e1def3bbc61e61b885ae8669bdf4516fc7aee5805e5bb
-  languageName: node
-  linkType: hard
-
 "util-deprecate@npm:^1.0.1":
   version: 1.0.2
   resolution: "util-deprecate@npm:1.0.2"
@@ -9692,15 +9645,6 @@ __metadata:
   version: 1.0.1
   resolution: "utils-merge@npm:1.0.1"
   checksum: b72b8d7a0f7d63a9b1ced39a44b292994111c93cf9c4da8a561e4fe0d0232af7217a53d5aae3a950fb7ab6f423baf3e0d2d7c7c33dd6c4ec78d0a3c720ee6adb
-  languageName: node
-  linkType: hard
-
-"uuid@npm:^8.3.2":
-  version: 8.3.2
-  resolution: "uuid@npm:8.3.2"
-  bin:
-    uuid: dist/bin/uuid
-  checksum: 236a12282c6fa32f326aa1b6d5699a843572e9ab7de84a1507a6b7c315fdcf55bf6ed333fd37d35c5c656f4cb96af998844e1c8cae281c442a1ec3b66df62962
   languageName: node
   linkType: hard
 

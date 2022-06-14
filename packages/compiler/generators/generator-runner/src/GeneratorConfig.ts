@@ -4,6 +4,7 @@
 
 export interface GeneratorConfig<CustomConfig = unknown> {
     irFilepath: string;
+    workspaceVersion: string;
     output: GeneratorOutputConfig | null;
     helpers: GeneratorHelpers;
     customConfig: CustomConfig;

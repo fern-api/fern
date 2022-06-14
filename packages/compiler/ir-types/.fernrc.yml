@@ -1,4 +1,4 @@
-name: Fern Intermediate Representation
+name: fern-ir-types
 definition: ./src
 generators:
   - name: fernapi/fern-typescript

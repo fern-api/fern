@@ -6,3 +6,4 @@ generators:
     output: ./generated
     config:
       mode: model
+      packageName: posts

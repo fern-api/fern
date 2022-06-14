@@ -1,12 +1,11 @@
 import { IntermediateRepresentation } from "@fern-api/api";
 import { compileTypescript } from "@fern-api/commons";
 import { compile } from "@fern-api/compiler";
-import { withProject, writeFiles } from "@fern-typescript/commons";
+import { writeVolumeToDisk } from "@fern-typescript/commons";
 import { parseFernInput } from "fern-api";
 import { rm } from "fs/promises";
-import { vol } from "memfs";
+import { Volume } from "memfs/lib/volume";
 import path from "path";
-import { Directory } from "ts-morph";
 
 export declare namespace runEteTest {
     export interface Args {
@@ -17,7 +16,7 @@ export declare namespace runEteTest {
         directory: string;
 
         generateFiles: (args: {
-            directory: Directory;
+            volume: Volume;
             intermediateRepresentation: IntermediateRepresentation;
         }) => void | Promise<void>;
 
@@ -37,24 +36,23 @@ export async function runEteTest({ directory, generateFiles, outputToDisk = fals
         throw new Error(JSON.stringify(compilerResult.failure));
     }
 
-    const project = await withProject(async (p) => {
-        await generateFiles({
-            directory: p.createDirectory("/"),
-            intermediateRepresentation: compilerResult.intermediateRepresentation,
-        });
+    const volume = new Volume();
+
+    await generateFiles({
+        volume,
+        intermediateRepresentation: compilerResult.intermediateRepresentation,
     });
 
     // write to disk to check compilation
     await deleteDirectory(generatedDir);
-    await writeFiles(generatedDir, project);
+    await writeVolumeToDisk(volume, generatedDir);
     await compileTypescript(generatedDir);
     if (!outputToDisk) {
         await deleteDirectory(generatedDir);
     }
 
     // use "/" as the base directory since this full path is stored in the snapshot
-    await writeFiles("/", project, vol.promises);
-    expect(vol.toJSON()).toMatchSnapshot();
+    expect(volume.toJSON()).toMatchSnapshot();
 }
 
 function deleteDirectory(directory: string): Promise<void> {
