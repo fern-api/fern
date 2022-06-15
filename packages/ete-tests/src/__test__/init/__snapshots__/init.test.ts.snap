@@ -70,6 +70,6 @@ services:
             ok: BlogPost
             failed:
               errors:
-                notFound: PostNotFoundError
+                - PostNotFoundError
 "
 `;

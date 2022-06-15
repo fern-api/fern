@@ -77,9 +77,7 @@ const BLOG_POST_API: RawSchemas.FernConfigurationSchema = {
                         response: {
                             ok: "BlogPost",
                             failed: {
-                                errors: {
-                                    notFound: "PostNotFoundError",
-                                },
+                                errors: ["PostNotFoundError"],
                             },
                         },
                     },
