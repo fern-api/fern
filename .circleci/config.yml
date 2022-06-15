@@ -7,11 +7,11 @@ jobs:
       image: ubuntu-2004:current
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: yarn-berry
       - run:
           name: Run code-generation
           command: npm install -g fern-api && fern generate
+      - node/install-packages:
+          pkg-manager: yarn-berry
       - run:
           name: lint:monorepo
           command: yarn lint:monorepo
@@ -44,11 +44,11 @@ jobs:
       image: ubuntu-2004:current
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: yarn-berry
       - run:
           name: Run code-generation
           command: npm install -g fern-api && fern generate
+      - node/install-packages:
+          pkg-manager: yarn-berry
       - run:
           name: Add version to package.json's
           command: yarn mrlint version $(git tag --points-at HEAD)
