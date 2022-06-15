@@ -9,12 +9,12 @@ Array [
     \\"files\\": [
         \\"lib\\"
     ],
-    \\"main\\": \\"./lib/cjs/src/index.js\\",
-    \\"types\\": \\"./lib/cjs/src/index.d.ts\\",
+    \\"main\\": \\"./lib/cjs/index.js\\",
+    \\"types\\": \\"./lib/cjs/index.d.ts\\",
     \\"exports\\": {
         \\".\\": {
-            \\"require\\": \\"./lib/cjs/src/index.js\\",
-            \\"default\\": \\"./lib/esm/src/index.js\\"
+            \\"require\\": \\"./lib/cjs/index.js\\",
+            \\"default\\": \\"./lib/esm/index.js\\"
         }
     },
     \\"sideEffects\\": false,
@@ -89,6 +89,7 @@ export interface Post {
         \\"module\\": \\"esnext\\",
         \\"target\\": \\"esnext\\",
         \\"outDir\\": \\"lib/esm\\",
+        \\"rootDir\\": \\"src\\",
         \\"moduleResolution\\": \\"node\\",
         \\"esModuleInterop\\": true,
         \\"strict\\": true,
@@ -113,6 +114,7 @@ export interface Post {
         \\"module\\": \\"commonjs\\",
         \\"target\\": \\"esnext\\",
         \\"outDir\\": \\"lib/cjs\\",
+        \\"rootDir\\": \\"src\\",
         \\"moduleResolution\\": \\"node\\",
         \\"esModuleInterop\\": true,
         \\"strict\\": true,
