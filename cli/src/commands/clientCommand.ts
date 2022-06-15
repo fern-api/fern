@@ -1,12 +1,14 @@
-import { generateClientFiles } from "@fern-typescript/client";
+import { generateClientProject } from "@fern-typescript/client";
 import { Command } from "../Command";
 
 export const clientCommand: Command = {
-    run: async ({ project, intermediateRepresentation, helperManager }) => {
-        await generateClientFiles({
-            directory: project.createDirectory("."),
+    run: async ({ intermediateRepresentation, helperManager, volume, packageName, packageVersion }) => {
+        await generateClientProject({
             intermediateRepresentation,
             helperManager,
+            packageName,
+            packageVersion,
+            volume,
         });
     },
 };
