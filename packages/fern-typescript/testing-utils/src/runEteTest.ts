@@ -48,7 +48,13 @@ export async function runEteTest({ directory, generateFiles, outputToDisk = fals
     await writeVolumeToDisk(volume, generatedDir);
     // write empty yarn.lock so yarn knows it's a standalone project
     await writeFile(path.join(generatedDir, "yarn.lock"), "");
-    await execa("yarn", ["install"], { cwd: generatedDir });
+    await execa("yarn", ["install"], {
+        cwd: generatedDir,
+        env: {
+            // set enableImmutableInstalls=false so we can modify yarn.lock, even when in CI
+            YARN_ENABLE_IMMUTABLE_INSTALLS: "false",
+        },
+    });
     await execa("yarn", ["compile"], { cwd: generatedDir });
     if (!outputToDisk) {
         await deleteDirectory(generatedDir);
