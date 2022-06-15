@@ -18,7 +18,7 @@ export function convertFailedResponse({
         errors:
             rawFailedResponse?.errors == null
                 ? []
-                : Object.entries(rawFailedResponse.errors).map(([_index, errorReference]) => {
+                : Object.values(rawFailedResponse.errors).map((errorReference) => {
                       const errorTypeName = typeof errorReference === "string" ? errorReference : errorReference.error;
                       const parsedErrorTypeName = parseTypeName({
                           typeName: errorTypeName,
