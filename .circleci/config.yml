@@ -94,7 +94,7 @@ jobs:
           command: |
             export PATH="$PATH:$JAVA_HOME/bin"
             sudo chmod -R 777 packages/compiler/ir-types/fern-ir-java/ir-api/model
-            cd packages/api/fern-ir-java
+            cd packages/compiler/ir-types/fern-ir-java
             ./gradlew artifactoryPublish
 
 workflows:
