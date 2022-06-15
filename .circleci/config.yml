@@ -67,7 +67,6 @@ jobs:
             projectVersion=$(git tag --points-at HEAD)
             yarn workspace fern-typescript dockerTagVersion
             echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
-            docker tag fern-typescript:"$projectVersion" fernapi/fern-typescript:"$projectVersion"
             docker push fernapi/fern-typescript:"$projectVersion"
 
   publish-java-snapshot:
