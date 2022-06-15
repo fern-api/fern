@@ -117,10 +117,10 @@ workflows:
             - npm
             - docker-hub
 
-      - publish-java-snapshot:
-          filters:
-            branches:
-              only: main
-            tags:
-              ignore: /.*/
-          context: jfrog
+      #- publish-java-snapshot:
+      #    filters:
+      #      branches:
+      #        only: main
+      #      tags:
+      #        ignore: /.*/
+      #    context: jfrog

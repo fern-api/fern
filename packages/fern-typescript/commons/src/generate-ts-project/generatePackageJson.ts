@@ -8,6 +8,7 @@ import {
     RELATIVE_OUT_DIR_PATH,
 } from "./utils";
 
+export const COMPILE_PROJECT_SCRIPT_NAME = "compile";
 export const BUILD_PROJECT_SCRIPT_NAME = "build";
 
 export async function generatePackageJson({
@@ -30,16 +31,17 @@ export async function generatePackageJson({
                 name: packageName,
                 version: packageVersion,
                 files: [RELATIVE_OUT_DIR_PATH],
-                main: path.join(RELATIVE_CJS_OUT_DIR_PATH, "index.js"),
-                types: path.join(RELATIVE_ESM_OUT_DIR_PATH, "index.d.ts"),
+                main: `./${path.join(RELATIVE_CJS_OUT_DIR_PATH, "index.js")}`,
+                types: `./${path.join(RELATIVE_ESM_OUT_DIR_PATH, "index.d.ts")}`,
                 exports: {
                     ".": {
-                        require: path.join(RELATIVE_CJS_OUT_DIR_PATH, "index.js"),
-                        default: path.join(RELATIVE_ESM_OUT_DIR_PATH, "index.js"),
+                        require: `./${path.join(RELATIVE_CJS_OUT_DIR_PATH, "index.js")}`,
+                        default: `./${path.join(RELATIVE_ESM_OUT_DIR_PATH, "index.js")}`,
                     },
                 },
                 sideEffects: false,
                 scripts: {
+                    [COMPILE_PROJECT_SCRIPT_NAME]: `tsc --project ${ESM_TSCONFIG_PATH}`,
                     [BUILD_PROJECT_SCRIPT_NAME]: [
                         `tsc --project ${ESM_TSCONFIG_PATH}`,
                         `tsc --project ${CJS_TSCONFIG_PATH}`,

@@ -6,8 +6,6 @@ export type ModuleType = "commonjs" | "esm";
 export const CJS_TSCONFIG_PATH = "tsconfig.cjs.json";
 export const ESM_TSCONFIG_PATH = "tsconfig.json";
 
-const SRC_DIRECTORY = "src";
-
 export async function generateTsConfig(volume: Volume, moduleType: ModuleType): Promise<void> {
     await volume.promises.writeFile(
         getPathToProjectFile(getFilePath(moduleType)),
@@ -17,7 +15,6 @@ export async function generateTsConfig(volume: Volume, moduleType: ModuleType): 
                     composite: true,
                     module: getModule(moduleType),
                     target: "esnext",
-                    rootDir: SRC_DIRECTORY,
                     outDir: getOutDir(moduleType),
                     moduleResolution: "node",
                     esModuleInterop: true,
@@ -29,7 +26,7 @@ export async function generateTsConfig(volume: Volume, moduleType: ModuleType): 
                     noUnusedLocals: true,
                     noUnusedParameters: true,
                 },
-                include: [SRC_DIRECTORY],
+                include: ["src"],
             },
             undefined,
             4
