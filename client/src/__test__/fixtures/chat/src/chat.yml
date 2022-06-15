@@ -8,6 +8,10 @@ types:
       title: string
       content: string
 
+errors:
+  GenericMessage:
+    type: string
+
 services:
   websocket:
     ChatService:
@@ -25,4 +29,4 @@ services:
               ok: ChatMessage
               failed:
                 errors:
-                  message: string
+                  - GenericMessage
