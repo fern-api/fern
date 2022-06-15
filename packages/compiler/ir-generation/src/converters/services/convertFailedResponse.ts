@@ -1,6 +1,5 @@
 import { FailedResponse, FernFilepath } from "@fern-api/api";
 import { RawSchemas } from "@fern-api/syntax-analysis";
-import { DEFAULT_UNION_TYPE_DISCRIMINANT } from "../../constants";
 import { parseTypeName } from "../../utils/parseTypeName";
 
 export function convertFailedResponse({
@@ -14,7 +13,7 @@ export function convertFailedResponse({
 }): FailedResponse {
     return {
         docs: rawFailedResponse?.docs,
-        discriminant: rawFailedResponse?.discriminant ?? DEFAULT_UNION_TYPE_DISCRIMINANT,
+        discriminant: rawFailedResponse?.discriminant ?? "_error",
         errors:
             rawFailedResponse?.errors == null
                 ? []
