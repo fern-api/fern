@@ -1,19 +1,6 @@
 {
-  "compilerOptions": {
-    "composite": true,
-    "module": "esnext",
-    "target": "esnext",
-    "rootDir": "src",
-    "outDir": "lib/esm",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "strict": true,
-    "declaration": true,
-    "noFallthroughCasesInSwitch": true,
-    "forceConsistentCasingInFileNames": true,
-    "noUncheckedIndexedAccess": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true
-  },
-  "include": ["src"]
+  "extends": "../../../../shared/tsconfig.shared.json",
+  "compilerOptions": { "composite": true, "outDir": "lib/cjs", "rootDir": "src", "module": "CommonJS" },
+  "include": ["./src"],
+  "references": []
 }
