@@ -1,6 +1,6 @@
 import { IntermediateRepresentation } from "@fern-api/api";
 import { compile } from "@fern-api/compiler";
-import { writeVolumeToDisk } from "@fern-typescript/commons";
+import { BUILD_PROJECT_SCRIPT_NAME, writeVolumeToDisk } from "@fern-typescript/commons";
 import execa from "execa";
 import { parseFernInput } from "fern-api";
 import { rm, writeFile } from "fs/promises";
@@ -70,5 +70,5 @@ export async function installAndCompileGeneratedProject(dir: string): Promise<vo
             YARN_ENABLE_IMMUTABLE_INSTALLS: "false",
         },
     });
-    await execa("yarn", ["compile"], { cwd: dir });
+    await execa("yarn", [BUILD_PROJECT_SCRIPT_NAME], { cwd: dir });
 }

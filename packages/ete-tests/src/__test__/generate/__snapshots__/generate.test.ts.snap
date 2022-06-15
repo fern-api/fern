@@ -1,7 +1,55 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`fern generate tests simple-model 1`] = `
-"/**
+Array [
+  Object {
+    "contents": "{
+    \\"name\\": \\"posts\\",
+    \\"version\\": \\"0.1.2\\",
+    \\"files\\": [
+        \\"lib\\"
+    ],
+    \\"main\\": \\"lib/cjs/index.js\\",
+    \\"types\\": \\"lib/esm/index.d.ts\\",
+    \\"exports\\": {
+        \\".\\": {
+            \\"require\\": \\"lib/cjs/index.js\\",
+            \\"default\\": \\"lib/esm/index.js\\"
+        }
+    },
+    \\"sideEffects\\": false,
+    \\"scripts\\": {
+        \\"build\\": \\"tsc --project tsconfig.json && tsc --project tsconfig.cjs.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"commonjs\\\\\\" }' > lib/cjs/package.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"module\\\\\\" }' > lib/esm/package.json\\"
+    },
+    \\"dependencies\\": {},
+    \\"devDependencies\\": {
+        \\"@types/node\\": \\"^17.0.33\\",
+        \\"typescript\\": \\"^4.6.4\\"
+    }
+}",
+    "name": "package.json",
+    "type": "file",
+  },
+  Object {
+    "contents": Array [
+      Object {
+        "contents": "export * from \\"./model\\";
+",
+        "name": "index.ts",
+        "type": "file",
+      },
+      Object {
+        "contents": Array [
+          Object {
+            "contents": "export * from \\"./posts\\";
+",
+            "name": "index.ts",
+            "type": "file",
+          },
+          Object {
+            "contents": Array [
+              Object {
+                "contents": "/**
  * A blog post
  */
 export interface Post {
@@ -9,5 +57,77 @@ export interface Post {
   title: string;
   content: string;
 }
-"
+",
+                "name": "Post.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "export * from \\"./Post\\";
+",
+                "name": "index.ts",
+                "type": "file",
+              },
+            ],
+            "name": "posts",
+            "type": "directory",
+          },
+        ],
+        "name": "model",
+        "type": "directory",
+      },
+    ],
+    "name": "src",
+    "type": "directory",
+  },
+  Object {
+    "contents": "{
+    \\"compilerOptions\\": {
+        \\"composite\\": true,
+        \\"module\\": \\"commonjs\\",
+        \\"target\\": \\"esnext\\",
+        \\"rootDir\\": \\"src\\",
+        \\"outDir\\": \\"lib/cjs\\",
+        \\"moduleResolution\\": \\"node\\",
+        \\"esModuleInterop\\": true,
+        \\"strict\\": true,
+        \\"declaration\\": true,
+        \\"noFallthroughCasesInSwitch\\": true,
+        \\"forceConsistentCasingInFileNames\\": true,
+        \\"noUncheckedIndexedAccess\\": true,
+        \\"noUnusedLocals\\": true,
+        \\"noUnusedParameters\\": true
+    },
+    \\"include\\": [
+        \\"src\\"
+    ]
+}",
+    "name": "tsconfig.cjs.json",
+    "type": "file",
+  },
+  Object {
+    "contents": "{
+    \\"compilerOptions\\": {
+        \\"composite\\": true,
+        \\"module\\": \\"esnext\\",
+        \\"target\\": \\"esnext\\",
+        \\"rootDir\\": \\"src\\",
+        \\"outDir\\": \\"lib/esm\\",
+        \\"moduleResolution\\": \\"node\\",
+        \\"esModuleInterop\\": true,
+        \\"strict\\": true,
+        \\"declaration\\": true,
+        \\"noFallthroughCasesInSwitch\\": true,
+        \\"forceConsistentCasingInFileNames\\": true,
+        \\"noUncheckedIndexedAccess\\": true,
+        \\"noUnusedLocals\\": true,
+        \\"noUnusedParameters\\": true
+    },
+    \\"include\\": [
+        \\"src\\"
+    ]
+}",
+    "name": "tsconfig.json",
+    "type": "file",
+  },
+]
 `;
