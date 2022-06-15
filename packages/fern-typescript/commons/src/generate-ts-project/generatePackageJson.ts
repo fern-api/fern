@@ -3,7 +3,10 @@ import path from "path";
 import { CJS_TSCONFIG_PATH, ESM_TSCONFIG_PATH } from "./generateTsConfig";
 import {
     getPathToProjectFile,
+    RELATIVE_CJS_ENTRYPOINT,
     RELATIVE_CJS_OUT_DIR_PATH,
+    RELATIVE_CJS_TYPES_ENTRYPOINT,
+    RELATIVE_ESM_ENTRYPOINT,
     RELATIVE_ESM_OUT_DIR_PATH,
     RELATIVE_OUT_DIR_PATH,
 } from "./utils";
@@ -30,12 +33,12 @@ export async function generatePackageJson({
                 name: packageName,
                 version: packageVersion,
                 files: [RELATIVE_OUT_DIR_PATH],
-                main: `./${path.join(RELATIVE_CJS_OUT_DIR_PATH, "index.js")}`,
-                types: `./${path.join(RELATIVE_CJS_OUT_DIR_PATH, "index.d.ts")}`,
+                main: `./${RELATIVE_CJS_ENTRYPOINT}`,
+                types: `./${RELATIVE_CJS_TYPES_ENTRYPOINT}`,
                 exports: {
                     ".": {
-                        require: `./${path.join(RELATIVE_CJS_OUT_DIR_PATH, "index.js")}`,
-                        default: `./${path.join(RELATIVE_ESM_OUT_DIR_PATH, "index.js")}`,
+                        require: `./${RELATIVE_CJS_ENTRYPOINT}`,
+                        default: `./${RELATIVE_ESM_ENTRYPOINT}`,
                     },
                 },
                 sideEffects: false,
