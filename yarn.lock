@@ -2072,6 +2072,7 @@ __metadata:
     "@types/node": "npm:^17.0.33"
     depcheck: "npm:^1.4.3"
     eslint: "npm:^8.12.0"
+    execa: "npm:^5.1.1"
     fern-api: "workspace:*"
     jest: "npm:^27.5.1"
     memfs: "npm:^3.4.1"

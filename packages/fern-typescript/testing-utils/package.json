@@ -28,6 +28,7 @@
     "@fern-api/commons": "workspace:*",
     "@fern-api/compiler": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
+    "execa": "^5.1.1",
     "fern-api": "workspace:*",
     "memfs": "^3.4.1",
     "typescript": "^4.6.4"

@@ -70,6 +70,7 @@ async function writePackageJson({
                 },
                 devDependencies: {
                     ...packageDevDependencies,
+                    "@types/node": "^17.0.33",
                     typescript: "^4.6.4",
                 },
             },
@@ -89,6 +90,7 @@ async function writeTsConfigJson(volume: Volume) {
                     target: "esnext",
                     outDir: COMPILED_TYPESCRIPT_OUT_DIR,
                     moduleResolution: "node",
+                    esModuleInterop: true,
                     strict: true,
                     declaration: true,
                     noFallthroughCasesInSwitch: true,

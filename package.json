@@ -6,7 +6,8 @@
   "private": true,
   "workspaces": [
     "packages/**",
-    "!packages/**/dist"
+    "!packages/**/dist",
+    "!packages/**/__test__"
   ],
   "scripts": {
     "clean": "yarn workspaces foreach --verbose --parallel run clean && /bin/rm -rf ./packages/api/generated",

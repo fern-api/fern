@@ -13,11 +13,12 @@ Object {
         \\"compile\\": \\"tsc\\"
     },
     \\"dependencies\\": {
-        \\"@fern-typescript/service-utils\\": \\"0.0.0\\",
+        \\"@fern-typescript/service-utils\\": \\"0.0.79\\",
         \\"uuid\\": \\"^8.3.2\\"
     },
     \\"devDependencies\\": {
         \\"@types/uuid\\": \\"^8.3.4\\",
+        \\"@types/node\\": \\"^17.0.33\\",
         \\"typescript\\": \\"^4.6.4\\"
     }
 }",
@@ -203,6 +204,7 @@ export * from \\"./Response\\";
         \\"target\\": \\"esnext\\",
         \\"outDir\\": \\"lib\\",
         \\"moduleResolution\\": \\"node\\",
+        \\"esModuleInterop\\": true,
         \\"strict\\": true,
         \\"declaration\\": true,
         \\"noFallthroughCasesInSwitch\\": true,
@@ -231,11 +233,12 @@ Object {
         \\"compile\\": \\"tsc\\"
     },
     \\"dependencies\\": {
-        \\"@fern-typescript/service-utils\\": \\"0.0.0\\",
+        \\"@fern-typescript/service-utils\\": \\"0.0.79\\",
         \\"uuid\\": \\"^8.3.2\\"
     },
     \\"devDependencies\\": {
         \\"@types/uuid\\": \\"^8.3.4\\",
+        \\"@types/node\\": \\"^17.0.33\\",
         \\"typescript\\": \\"^4.6.4\\"
     }
 }",
@@ -340,6 +343,7 @@ export * from \\"./NoErrorsService\\";
         \\"target\\": \\"esnext\\",
         \\"outDir\\": \\"lib\\",
         \\"moduleResolution\\": \\"node\\",
+        \\"esModuleInterop\\": true,
         \\"strict\\": true,
         \\"declaration\\": true,
         \\"noFallthroughCasesInSwitch\\": true,
@@ -368,11 +372,12 @@ Object {
         \\"compile\\": \\"tsc\\"
     },
     \\"dependencies\\": {
-        \\"@fern-typescript/service-utils\\": \\"0.0.0\\",
+        \\"@fern-typescript/service-utils\\": \\"0.0.79\\",
         \\"uuid\\": \\"^8.3.2\\"
     },
     \\"devDependencies\\": {
         \\"@types/uuid\\": \\"^8.3.4\\",
+        \\"@types/node\\": \\"^17.0.33\\",
         \\"typescript\\": \\"^4.6.4\\"
     }
 }",
@@ -825,6 +830,7 @@ export * from \\"./PostsService\\";
         \\"target\\": \\"esnext\\",
         \\"outDir\\": \\"lib\\",
         \\"moduleResolution\\": \\"node\\",
+        \\"esModuleInterop\\": true,
         \\"strict\\": true,
         \\"declaration\\": true,
         \\"noFallthroughCasesInSwitch\\": true,

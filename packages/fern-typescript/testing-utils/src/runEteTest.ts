@@ -1,9 +1,9 @@
 import { IntermediateRepresentation } from "@fern-api/api";
-import { compileTypescript } from "@fern-api/commons";
 import { compile } from "@fern-api/compiler";
 import { writeVolumeToDisk } from "@fern-typescript/commons";
+import execa from "execa";
 import { parseFernInput } from "fern-api";
-import { rm } from "fs/promises";
+import { rm, writeFile } from "fs/promises";
 import { Volume } from "memfs/lib/volume";
 import path from "path";
 
@@ -46,7 +46,10 @@ export async function runEteTest({ directory, generateFiles, outputToDisk = fals
     // write to disk to check compilation
     await deleteDirectory(generatedDir);
     await writeVolumeToDisk(volume, generatedDir);
-    await compileTypescript(generatedDir);
+    // write empty yarn.lock so yarn knows it's a standalone project
+    await writeFile(path.join(generatedDir, "yarn.lock"), "");
+    await execa("yarn", ["install"], { cwd: generatedDir });
+    await execa("yarn", ["compile"], { cwd: generatedDir });
     if (!outputToDisk) {
         await deleteDirectory(generatedDir);
     }

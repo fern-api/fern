@@ -28,7 +28,7 @@ export async function generateClientProject({
         packageVersion,
         generateSrc: (directory) => generateClientFiles({ intermediateRepresentation, helperManager, directory }),
         packageDependencies: {
-            "@fern-typescript/service-utils": "0.0.0",
+            "@fern-typescript/service-utils": "0.0.79",
             uuid: "^8.3.2",
         },
         packageDevDependencies: {
