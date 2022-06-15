@@ -6,12 +6,13 @@
   "private": true,
   "workspaces": [
     "packages/**",
-    "!packages/**/dist",
+    "!packages/**/lib",
     "!packages/**/__test__"
   ],
   "scripts": {
     "clean": "yarn workspaces foreach --verbose --parallel run clean && /bin/rm -rf ./packages/api/generated",
     "compile": "yarn workspaces foreach --verbose --parallel --topological-dev run compile",
+    "compile:all": "yarn workspaces foreach --verbose --parallel --topological-dev run compile:all",
     "test": "yarn workspaces foreach --verbose --parallel run test",
     "lint:eslint": "eslint --max-warnings 0 .",
     "lint:eslint:fix": "yarn lint:eslint --fix",
@@ -39,7 +40,7 @@
     "husky": "^7.0.4",
     "jest": "^27.5.1",
     "lint-staged": "^12.3.7",
-    "mrlint": "^0.0.26",
+    "mrlint": "^0.0.29",
     "prettier": "^2.6.2",
     "ts-node": "^10.8.0",
     "typescript": "^4.6.4"
