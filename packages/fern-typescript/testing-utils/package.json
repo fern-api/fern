@@ -25,7 +25,6 @@
   },
   "dependencies": {
     "@fern-api/api": "workspace:*",
-    "@fern-api/commons": "workspace:*",
     "@fern-api/compiler": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "execa": "^5.1.1",
