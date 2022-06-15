@@ -2076,7 +2076,6 @@ __metadata:
     jest: "npm:^27.5.1"
     memfs: "npm:^3.4.1"
     prettier: "npm:^2.6.2"
-    ts-morph: "npm:^14.0.0"
     typescript: "npm:^4.6.4"
   languageName: unknown
   linkType: soft
@@ -5323,7 +5322,6 @@ __metadata:
     prettier: "npm:^2.6.2"
     simple-progress-webpack-plugin: "npm:^2.0.0"
     ts-loader: "npm:^9.3.0"
-    ts-morph: "npm:^14.0.0"
     ts-node: "npm:^10.7.0"
     typescript: "npm:^4.6.4"
     umd-compat-loader: "npm:^2.1.2"
