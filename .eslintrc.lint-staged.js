@@ -21,7 +21,7 @@ module.exports = {
     ),
     rules: Object.entries(DEFAULT_CONFIG.rules).reduce(
         (newRules, [ruleId, rule]) => {
-            if (!ruleId.startsWith(`${TYPESCRIPT_ESLINT}/`)) {
+            if (!ruleId.startsWith(`${TYPESCRIPT_ESLINT}/` || rule === "off")) {
                 newRules[ruleId] = rule;
             }
             return newRules;
