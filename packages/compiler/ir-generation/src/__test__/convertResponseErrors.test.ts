@@ -1,4 +1,4 @@
-import { FailedResponse, FernFilepath, TypeReference } from "@fern-api/api";
+import { FailedResponse, FernFilepath } from "@fern-api/api";
 import { convertFailedResponse } from "../converters/services/convertFailedResponse";
 
 describe("convertResponseErrors", () => {
@@ -6,9 +6,7 @@ describe("convertResponseErrors", () => {
         const actualResponseErrors = convertFailedResponse({
             rawFailedResponse: {
                 discriminant: "_some_other_discriminant",
-                errors: {
-                    unauthorized: "commons.UnauthorizedError",
-                },
+                errors: ["commons.UnauthorizedError"],
             },
             fernFilepath: FernFilepath.of("path/to/service"),
             imports: {
@@ -21,12 +19,12 @@ describe("convertResponseErrors", () => {
             discriminant: "_some_other_discriminant",
             errors: [
                 {
-                    discriminantValue: "unauthorized",
+                    discriminantValue: "UnauthorizedError",
                     docs: undefined,
-                    error: TypeReference.named({
+                    error: {
                         fernFilepath: FernFilepath.of("path/to/commons"),
                         name: "UnauthorizedError",
-                    }),
+                    },
                 },
             ],
         };

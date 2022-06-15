@@ -57,7 +57,7 @@ jobs:
           command: yarn
       - run:
           name: Compile
-          command: yarn compile
+          command: yarn compile:all
       - run:
           name: Publish all packages
           command: yarn run publish

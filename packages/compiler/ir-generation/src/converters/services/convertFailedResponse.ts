@@ -1,7 +1,7 @@
 import { FailedResponse, FernFilepath } from "@fern-api/api";
 import { RawSchemas } from "@fern-api/syntax-analysis";
 import { DEFAULT_UNION_TYPE_DISCRIMINANT } from "../../constants";
-import { createTypeReferenceParser } from "../../utils/parseInlineType";
+import { parseTypeName } from "../../utils/parseTypeName";
 
 export function convertFailedResponse({
     rawFailedResponse,
@@ -12,20 +12,24 @@ export function convertFailedResponse({
     fernFilepath: FernFilepath;
     imports: Record<string, string>;
 }): FailedResponse {
-    const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
-
     return {
         docs: rawFailedResponse?.docs,
         discriminant: rawFailedResponse?.discriminant ?? DEFAULT_UNION_TYPE_DISCRIMINANT,
         errors:
             rawFailedResponse?.errors == null
                 ? []
-                : Object.entries(rawFailedResponse.errors).map(([discriminantValue, errorReference]) => ({
-                      docs: typeof errorReference !== "string" ? errorReference.docs : undefined,
-                      discriminantValue,
-                      error: parseTypeReference(
-                          typeof errorReference === "string" ? errorReference : { type: errorReference.error }
-                      ),
-                  })),
+                : Object.values(rawFailedResponse.errors).map((errorReference) => {
+                      const errorTypeName = typeof errorReference === "string" ? errorReference : errorReference.error;
+                      const parsedErrorTypeName = parseTypeName({
+                          typeName: errorTypeName,
+                          fernFilepath,
+                          imports,
+                      });
+                      return {
+                          docs: typeof errorReference !== "string" ? errorReference.docs : undefined,
+                          discriminantValue: parsedErrorTypeName.name,
+                          error: parsedErrorTypeName,
+                      };
+                  }),
     };
 }
