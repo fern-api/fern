@@ -3,8 +3,8 @@ import { getPathToProjectFile, RELATIVE_CJS_OUT_DIR_PATH, RELATIVE_ESM_OUT_DIR_P
 
 export type ModuleType = "commonjs" | "esm";
 
-export const CJS_TSCONFIG_PATH = "tsconfig.cjs.json";
-export const ESM_TSCONFIG_PATH = "tsconfig.json";
+export const CJS_TSCONFIG_PATH = "tsconfig.json";
+export const ESM_TSCONFIG_PATH = "tsconfig.esm.json";
 
 export async function generateTsConfig(volume: Volume, moduleType: ModuleType): Promise<void> {
     await volume.promises.writeFile(
