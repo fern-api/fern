@@ -2,20 +2,23 @@
   "name": "@fern-typescript/model",
   "version": "0.0.0",
   "files": [
-    "dist"
+    "lib"
   ],
-  "main": "./dist/cjs/index.js",
-  "types": "./dist/esm/index.d.ts",
+  "main": "./lib/cjs/index.js",
+  "types": "./lib/cjs/index.d.ts",
   "exports": {
     ".": {
-      "require": "./dist/cjs/index.js",
-      "default": "./dist/esm/index.js"
+      "require": "./lib/cjs/index.js",
+      "default": "./lib/esm/index.js"
     }
   },
   "sideEffects": false,
   "scripts": {
-    "clean": "tsc --build --clean tsconfig.json && tsc --build --clean tsconfig.cjs.json",
-    "compile": "tsc --build tsconfig.json && tsc --build tsconfig.cjs.json && echo '{ \"type\": \"commonjs\" }' > dist/cjs/package.json && echo '{ \"type\": \"module\" }' > dist/esm/package.json",
+    "clean": "tsc --build --clean tsconfig.esm.json && tsc --build --clean tsconfig.json",
+    "compile": "yarn run compile:cjs",
+    "compile:all": "run-p compile:esm compile:cjs",
+    "compile:esm": "tsc --build tsconfig.esm.json && echo '{ \"type\": \"module\" }' > lib/esm/package.json",
+    "compile:cjs": "tsc --build tsconfig.json && echo '{ \"type\": \"commonjs\" }' > lib/cjs/package.json",
     "test": "jest --passWithNoTests",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore --fix",
@@ -41,6 +44,7 @@
     "depcheck": "^1.4.3",
     "eslint": "^8.12.0",
     "jest": "^27.5.1",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.6.2",
     "typescript": "^4.6.4"
   }

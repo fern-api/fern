@@ -8,5 +8,5 @@
     "ts-loader",
     "ts-node"
   ],
-  "ignore-patterns": ["dist", "docker/bundle.js"]
+  "ignore-patterns": ["lib", "docker/bundle.js"]
 }
