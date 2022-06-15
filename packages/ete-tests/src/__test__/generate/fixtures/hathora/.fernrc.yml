@@ -1,7 +1,7 @@
 name: Posts
 definition: ./posts.yml
 generators:
-  - name: fern-typescript
+  - name: fernapi/fern-typescript
     version: local
     output: ./generated
     config:

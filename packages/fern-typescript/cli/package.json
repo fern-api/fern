@@ -32,7 +32,7 @@
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/helper-manager": "workspace:*",
     "@fern-typescript/model": "workspace:*",
-    "ts-morph": "^14.0.0",
+    "memfs": "^3.4.1",
     "zod": "^3.14.3"
   },
   "devDependencies": {

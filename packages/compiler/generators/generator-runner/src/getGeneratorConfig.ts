@@ -8,6 +8,7 @@ export declare namespace getGeneratorConfig {
         absolutePathToProject: string | undefined;
         absolutePathToOutput: string | undefined;
         customConfig: unknown;
+        workspaceVersion: string;
     }
 
     export interface Return {
@@ -21,6 +22,7 @@ export function getGeneratorConfig({
     absolutePathToProject,
     absolutePathToOutput,
     customConfig,
+    workspaceVersion,
 }: getGeneratorConfig.Args): getGeneratorConfig.Return {
     const binds: string[] = [];
 
@@ -46,6 +48,7 @@ export function getGeneratorConfig({
         binds,
         config: {
             irFilepath: DOCKER_PATH_TO_IR,
+            workspaceVersion,
             output: getGeneratorOutputConfig({ absolutePathToProject, absolutePathToOutput }),
             customConfig,
             helpers: convertedHelpers,
