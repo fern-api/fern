@@ -23,7 +23,7 @@
     "depcheck": "yarn workspaces foreach --verbose --parallel run depcheck",
     "codegen": "fern generate",
     "codegen:local": "yarn fern:local generate",
-    "fern:local": "ts-node --project packages/cli/tsconfig.cjs.json packages/cli/src/cli.ts",
+    "fern:local": "yarn workspace fern-api compile && node packages/cli/cli",
     "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public",
     "docs:preview": "yarn docsify serve docs"
   },

@@ -8,17 +8,19 @@ Object {
     \\"files\\": [
         \\"lib\\"
     ],
-    \\"main\\": \\"lib/cjs/index.js\\",
-    \\"types\\": \\"lib/esm/index.d.ts\\",
+    \\"main\\": \\"./lib/cjs/index.js\\",
+    \\"types\\": \\"./lib/cjs/index.d.ts\\",
     \\"exports\\": {
         \\".\\": {
-            \\"require\\": \\"lib/cjs/index.js\\",
-            \\"default\\": \\"lib/esm/index.js\\"
+            \\"require\\": \\"./lib/cjs/index.js\\",
+            \\"default\\": \\"./lib/esm/index.js\\"
         }
     },
     \\"sideEffects\\": false,
     \\"scripts\\": {
-        \\"build\\": \\"tsc --project tsconfig.json && tsc --project tsconfig.cjs.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"commonjs\\\\\\" }' > lib/cjs/package.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"module\\\\\\" }' > lib/esm/package.json\\"
+        \\"build\\": \\"run-p build:esm build:cjs\\",
+        \\"build:esm\\": \\"tsc --project tsconfig.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"module\\\\\\" }' > lib/esm/package.json\\",
+        \\"build:cjs\\": \\"tsc --project tsconfig.cjs.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"commonjs\\\\\\" }' > lib/cjs/package.json\\"
     },
     \\"dependencies\\": {
         \\"@fern-typescript/service-utils\\": \\"0.0.79\\",
@@ -27,6 +29,7 @@ Object {
     \\"devDependencies\\": {
         \\"@types/uuid\\": \\"^8.3.4\\",
         \\"@types/node\\": \\"^17.0.33\\",
+        \\"npm-run-all\\": \\"^4.1.5\\",
         \\"typescript\\": \\"^4.6.4\\"
     }
 }",
@@ -211,7 +214,6 @@ export * from \\"./Response\\";
         \\"composite\\": true,
         \\"module\\": \\"commonjs\\",
         \\"target\\": \\"esnext\\",
-        \\"rootDir\\": \\"src\\",
         \\"outDir\\": \\"lib/cjs\\",
         \\"moduleResolution\\": \\"node\\",
         \\"esModuleInterop\\": true,
@@ -232,7 +234,6 @@ export * from \\"./Response\\";
         \\"composite\\": true,
         \\"module\\": \\"esnext\\",
         \\"target\\": \\"esnext\\",
-        \\"rootDir\\": \\"src\\",
         \\"outDir\\": \\"lib/esm\\",
         \\"moduleResolution\\": \\"node\\",
         \\"esModuleInterop\\": true,
@@ -259,17 +260,19 @@ Object {
     \\"files\\": [
         \\"lib\\"
     ],
-    \\"main\\": \\"lib/cjs/index.js\\",
-    \\"types\\": \\"lib/esm/index.d.ts\\",
+    \\"main\\": \\"./lib/cjs/index.js\\",
+    \\"types\\": \\"./lib/cjs/index.d.ts\\",
     \\"exports\\": {
         \\".\\": {
-            \\"require\\": \\"lib/cjs/index.js\\",
-            \\"default\\": \\"lib/esm/index.js\\"
+            \\"require\\": \\"./lib/cjs/index.js\\",
+            \\"default\\": \\"./lib/esm/index.js\\"
         }
     },
     \\"sideEffects\\": false,
     \\"scripts\\": {
-        \\"build\\": \\"tsc --project tsconfig.json && tsc --project tsconfig.cjs.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"commonjs\\\\\\" }' > lib/cjs/package.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"module\\\\\\" }' > lib/esm/package.json\\"
+        \\"build\\": \\"run-p build:esm build:cjs\\",
+        \\"build:esm\\": \\"tsc --project tsconfig.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"module\\\\\\" }' > lib/esm/package.json\\",
+        \\"build:cjs\\": \\"tsc --project tsconfig.cjs.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"commonjs\\\\\\" }' > lib/cjs/package.json\\"
     },
     \\"dependencies\\": {
         \\"@fern-typescript/service-utils\\": \\"0.0.79\\",
@@ -278,6 +281,7 @@ Object {
     \\"devDependencies\\": {
         \\"@types/uuid\\": \\"^8.3.4\\",
         \\"@types/node\\": \\"^17.0.33\\",
+        \\"npm-run-all\\": \\"^4.1.5\\",
         \\"typescript\\": \\"^4.6.4\\"
     }
 }",
@@ -381,7 +385,6 @@ export * from \\"./NoErrorsService\\";
         \\"composite\\": true,
         \\"module\\": \\"commonjs\\",
         \\"target\\": \\"esnext\\",
-        \\"rootDir\\": \\"src\\",
         \\"outDir\\": \\"lib/cjs\\",
         \\"moduleResolution\\": \\"node\\",
         \\"esModuleInterop\\": true,
@@ -402,7 +405,6 @@ export * from \\"./NoErrorsService\\";
         \\"composite\\": true,
         \\"module\\": \\"esnext\\",
         \\"target\\": \\"esnext\\",
-        \\"rootDir\\": \\"src\\",
         \\"outDir\\": \\"lib/esm\\",
         \\"moduleResolution\\": \\"node\\",
         \\"esModuleInterop\\": true,
@@ -429,17 +431,19 @@ Object {
     \\"files\\": [
         \\"lib\\"
     ],
-    \\"main\\": \\"lib/cjs/index.js\\",
-    \\"types\\": \\"lib/esm/index.d.ts\\",
+    \\"main\\": \\"./lib/cjs/index.js\\",
+    \\"types\\": \\"./lib/cjs/index.d.ts\\",
     \\"exports\\": {
         \\".\\": {
-            \\"require\\": \\"lib/cjs/index.js\\",
-            \\"default\\": \\"lib/esm/index.js\\"
+            \\"require\\": \\"./lib/cjs/index.js\\",
+            \\"default\\": \\"./lib/esm/index.js\\"
         }
     },
     \\"sideEffects\\": false,
     \\"scripts\\": {
-        \\"build\\": \\"tsc --project tsconfig.json && tsc --project tsconfig.cjs.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"commonjs\\\\\\" }' > lib/cjs/package.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"module\\\\\\" }' > lib/esm/package.json\\"
+        \\"build\\": \\"run-p build:esm build:cjs\\",
+        \\"build:esm\\": \\"tsc --project tsconfig.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"module\\\\\\" }' > lib/esm/package.json\\",
+        \\"build:cjs\\": \\"tsc --project tsconfig.cjs.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"commonjs\\\\\\" }' > lib/cjs/package.json\\"
     },
     \\"dependencies\\": {
         \\"@fern-typescript/service-utils\\": \\"0.0.79\\",
@@ -448,6 +452,7 @@ Object {
     \\"devDependencies\\": {
         \\"@types/uuid\\": \\"^8.3.4\\",
         \\"@types/node\\": \\"^17.0.33\\",
+        \\"npm-run-all\\": \\"^4.1.5\\",
         \\"typescript\\": \\"^4.6.4\\"
     }
 }",
@@ -899,7 +904,6 @@ export * from \\"./PostsService\\";
         \\"composite\\": true,
         \\"module\\": \\"commonjs\\",
         \\"target\\": \\"esnext\\",
-        \\"rootDir\\": \\"src\\",
         \\"outDir\\": \\"lib/cjs\\",
         \\"moduleResolution\\": \\"node\\",
         \\"esModuleInterop\\": true,
@@ -920,7 +924,6 @@ export * from \\"./PostsService\\";
         \\"composite\\": true,
         \\"module\\": \\"esnext\\",
         \\"target\\": \\"esnext\\",
-        \\"rootDir\\": \\"src\\",
         \\"outDir\\": \\"lib/esm\\",
         \\"moduleResolution\\": \\"node\\",
         \\"esModuleInterop\\": true,
