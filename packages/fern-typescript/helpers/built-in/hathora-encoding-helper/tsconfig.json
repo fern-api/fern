@@ -1,6 +1,12 @@
 {
   "extends": "../../../../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "dist", "sourceMap": false, "rootDir": "src" },
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "dist",
+    "sourceMap": false,
+    "rootDir": "src",
+    "module": "commonjs"
+  },
   "include": ["src"],
   "references": [
     { "path": "../../../client/tsconfig.json" },
