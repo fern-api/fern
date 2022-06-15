@@ -46,16 +46,8 @@ export async function runEteTest({ directory, generateFiles, outputToDisk = fals
     // write to disk to check compilation
     await deleteDirectory(generatedDir);
     await writeVolumeToDisk(volume, generatedDir);
-    // write empty yarn.lock so yarn knows it's a standalone project
-    await writeFile(path.join(generatedDir, "yarn.lock"), "");
-    await execa("yarn", ["install"], {
-        cwd: generatedDir,
-        env: {
-            // set enableImmutableInstalls=false so we can modify yarn.lock, even when in CI
-            YARN_ENABLE_IMMUTABLE_INSTALLS: "false",
-        },
-    });
-    await execa("yarn", ["compile"], { cwd: generatedDir });
+    await installAndCompileGeneratedProject(generatedDir);
+
     if (!outputToDisk) {
         await deleteDirectory(generatedDir);
     }
@@ -66,4 +58,17 @@ export async function runEteTest({ directory, generateFiles, outputToDisk = fals
 
 function deleteDirectory(directory: string): Promise<void> {
     return rm(directory, { force: true, recursive: true });
+}
+
+export async function installAndCompileGeneratedProject(dir: string): Promise<void> {
+    // write empty yarn.lock so yarn knows it's a standalone project
+    await writeFile(path.join(dir, "yarn.lock"), "");
+    await execa("yarn", ["install"], {
+        cwd: dir,
+        env: {
+            // set enableImmutableInstalls=false so we can modify yarn.lock, even when in CI
+            YARN_ENABLE_IMMUTABLE_INSTALLS: "false",
+        },
+    });
+    await execa("yarn", ["compile"], { cwd: dir });
 }

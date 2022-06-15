@@ -1,5 +1,4 @@
 export { assertNever } from "./assertNever";
-export { compileTypescript } from "./compileTypescript";
 export { loadProjectConfig, PROJECT_CONFIG_FILENAME } from "./config-types/project-config/loadProjectConfig";
 export type { ProjectConfig } from "./config-types/project-config/loadProjectConfig";
 export { ProjectConfigSchema } from "./config-types/project-config/schemas/ProjectConfigSchema";

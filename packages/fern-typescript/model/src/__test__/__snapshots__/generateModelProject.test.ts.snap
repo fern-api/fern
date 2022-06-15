@@ -14,6 +14,7 @@ Object {
     },
     \\"dependencies\\": {},
     \\"devDependencies\\": {
+        \\"@types/node\\": \\"^17.0.33\\",
         \\"typescript\\": \\"^4.6.4\\"
     }
 }",
@@ -750,6 +751,7 @@ export * from \\"./UnionTypeDefinition\\";
         \\"target\\": \\"esnext\\",
         \\"outDir\\": \\"lib\\",
         \\"moduleResolution\\": \\"node\\",
+        \\"esModuleInterop\\": true,
         \\"strict\\": true,
         \\"declaration\\": true,
         \\"noFallthroughCasesInSwitch\\": true,
@@ -779,6 +781,7 @@ Object {
     },
     \\"dependencies\\": {},
     \\"devDependencies\\": {
+        \\"@types/node\\": \\"^17.0.33\\",
         \\"typescript\\": \\"^4.6.4\\"
     }
 }",
@@ -948,6 +951,7 @@ export * from \\"./PostType\\";
         \\"target\\": \\"esnext\\",
         \\"outDir\\": \\"lib\\",
         \\"moduleResolution\\": \\"node\\",
+        \\"esModuleInterop\\": true,
         \\"strict\\": true,
         \\"declaration\\": true,
         \\"noFallthroughCasesInSwitch\\": true,
