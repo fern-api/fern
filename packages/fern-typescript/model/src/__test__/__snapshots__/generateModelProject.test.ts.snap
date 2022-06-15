@@ -8,12 +8,12 @@ Object {
     \\"files\\": [
         \\"lib\\"
     ],
-    \\"main\\": \\"./lib/cjs/index.js\\",
-    \\"types\\": \\"./lib/cjs/index.d.ts\\",
+    \\"main\\": \\"./lib/cjs/src/index.js\\",
+    \\"types\\": \\"./lib/cjs/src/index.d.ts\\",
     \\"exports\\": {
         \\".\\": {
-            \\"require\\": \\"./lib/cjs/index.js\\",
-            \\"default\\": \\"./lib/esm/index.js\\"
+            \\"require\\": \\"./lib/cjs/src/index.js\\",
+            \\"default\\": \\"./lib/esm/src/index.js\\"
         }
     },
     \\"sideEffects\\": false,
@@ -807,12 +807,12 @@ Object {
     \\"files\\": [
         \\"lib\\"
     ],
-    \\"main\\": \\"./lib/cjs/index.js\\",
-    \\"types\\": \\"./lib/cjs/index.d.ts\\",
+    \\"main\\": \\"./lib/cjs/src/index.js\\",
+    \\"types\\": \\"./lib/cjs/src/index.d.ts\\",
     \\"exports\\": {
         \\".\\": {
-            \\"require\\": \\"./lib/cjs/index.js\\",
-            \\"default\\": \\"./lib/esm/index.js\\"
+            \\"require\\": \\"./lib/cjs/src/index.js\\",
+            \\"default\\": \\"./lib/esm/src/index.js\\"
         }
     },
     \\"sideEffects\\": false,

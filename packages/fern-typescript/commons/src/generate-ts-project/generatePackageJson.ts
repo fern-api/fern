@@ -43,6 +43,7 @@ export async function generatePackageJson({
                 },
                 sideEffects: false,
                 scripts: {
+                    // TODO make these scripts more DRY
                     [BUILD_PROJECT_SCRIPT_NAME]: `run-p ${BUILD_PROJECT_SCRIPT_NAME}:esm ${BUILD_PROJECT_SCRIPT_NAME}:cjs`,
                     [`${BUILD_PROJECT_SCRIPT_NAME}:esm`]: [
                         `tsc --project ${ESM_TSCONFIG_PATH}`,
