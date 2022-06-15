@@ -48,7 +48,7 @@ async function tryRunDocker({
         }),
         {
             Binds: binds,
-            User: os.userInfo().uid,
+            User: os.userInfo().uid.toString(),
         }
     );
 
