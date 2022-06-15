@@ -19,8 +19,8 @@ Object {
     \\"sideEffects\\": false,
     \\"scripts\\": {
         \\"build\\": \\"run-p build:esm build:cjs\\",
-        \\"build:esm\\": \\"tsc --project tsconfig.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"module\\\\\\" }' > lib/esm/package.json\\",
-        \\"build:cjs\\": \\"tsc --project tsconfig.cjs.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"commonjs\\\\\\" }' > lib/cjs/package.json\\"
+        \\"build:esm\\": \\"tsc --project tsconfig.esm.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"module\\\\\\" }' > lib/esm/package.json\\",
+        \\"build:cjs\\": \\"tsc --project tsconfig.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"commonjs\\\\\\" }' > lib/cjs/package.json\\"
     },
     \\"dependencies\\": {
         \\"@fern-typescript/service-utils\\": \\"0.0.79\\",
@@ -224,12 +224,12 @@ export * from \\"./Response\\";
 ",
   "/src/services/index.ts": "export * as ChatService from \\"./ChatService\\";
 ",
-  "/tsconfig.cjs.json": "{
+  "/tsconfig.esm.json": "{
     \\"compilerOptions\\": {
         \\"composite\\": true,
-        \\"module\\": \\"commonjs\\",
+        \\"module\\": \\"esnext\\",
         \\"target\\": \\"esnext\\",
-        \\"outDir\\": \\"lib/cjs\\",
+        \\"outDir\\": \\"lib/esm\\",
         \\"moduleResolution\\": \\"node\\",
         \\"esModuleInterop\\": true,
         \\"strict\\": true,
@@ -247,9 +247,9 @@ export * from \\"./Response\\";
   "/tsconfig.json": "{
     \\"compilerOptions\\": {
         \\"composite\\": true,
-        \\"module\\": \\"esnext\\",
+        \\"module\\": \\"commonjs\\",
         \\"target\\": \\"esnext\\",
-        \\"outDir\\": \\"lib/esm\\",
+        \\"outDir\\": \\"lib/cjs\\",
         \\"moduleResolution\\": \\"node\\",
         \\"esModuleInterop\\": true,
         \\"strict\\": true,
@@ -286,8 +286,8 @@ Object {
     \\"sideEffects\\": false,
     \\"scripts\\": {
         \\"build\\": \\"run-p build:esm build:cjs\\",
-        \\"build:esm\\": \\"tsc --project tsconfig.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"module\\\\\\" }' > lib/esm/package.json\\",
-        \\"build:cjs\\": \\"tsc --project tsconfig.cjs.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"commonjs\\\\\\" }' > lib/cjs/package.json\\"
+        \\"build:esm\\": \\"tsc --project tsconfig.esm.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"module\\\\\\" }' > lib/esm/package.json\\",
+        \\"build:cjs\\": \\"tsc --project tsconfig.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"commonjs\\\\\\" }' > lib/cjs/package.json\\"
     },
     \\"dependencies\\": {
         \\"@fern-typescript/service-utils\\": \\"0.0.79\\",
@@ -395,12 +395,12 @@ export * from \\"./NoErrorsService\\";
 ",
   "/src/services/index.ts": "export * as NoErrorsService from \\"./NoErrorsService\\";
 ",
-  "/tsconfig.cjs.json": "{
+  "/tsconfig.esm.json": "{
     \\"compilerOptions\\": {
         \\"composite\\": true,
-        \\"module\\": \\"commonjs\\",
+        \\"module\\": \\"esnext\\",
         \\"target\\": \\"esnext\\",
-        \\"outDir\\": \\"lib/cjs\\",
+        \\"outDir\\": \\"lib/esm\\",
         \\"moduleResolution\\": \\"node\\",
         \\"esModuleInterop\\": true,
         \\"strict\\": true,
@@ -418,9 +418,9 @@ export * from \\"./NoErrorsService\\";
   "/tsconfig.json": "{
     \\"compilerOptions\\": {
         \\"composite\\": true,
-        \\"module\\": \\"esnext\\",
+        \\"module\\": \\"commonjs\\",
         \\"target\\": \\"esnext\\",
-        \\"outDir\\": \\"lib/esm\\",
+        \\"outDir\\": \\"lib/cjs\\",
         \\"moduleResolution\\": \\"node\\",
         \\"esModuleInterop\\": true,
         \\"strict\\": true,
@@ -457,8 +457,8 @@ Object {
     \\"sideEffects\\": false,
     \\"scripts\\": {
         \\"build\\": \\"run-p build:esm build:cjs\\",
-        \\"build:esm\\": \\"tsc --project tsconfig.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"module\\\\\\" }' > lib/esm/package.json\\",
-        \\"build:cjs\\": \\"tsc --project tsconfig.cjs.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"commonjs\\\\\\" }' > lib/cjs/package.json\\"
+        \\"build:esm\\": \\"tsc --project tsconfig.esm.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"module\\\\\\" }' > lib/esm/package.json\\",
+        \\"build:cjs\\": \\"tsc --project tsconfig.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"commonjs\\\\\\" }' > lib/cjs/package.json\\"
     },
     \\"dependencies\\": {
         \\"@fern-typescript/service-utils\\": \\"0.0.79\\",
@@ -918,12 +918,12 @@ export * from \\"./PostsService\\";
 ",
   "/src/services/index.ts": "export * as PostsService from \\"./PostsService\\";
 ",
-  "/tsconfig.cjs.json": "{
+  "/tsconfig.esm.json": "{
     \\"compilerOptions\\": {
         \\"composite\\": true,
-        \\"module\\": \\"commonjs\\",
+        \\"module\\": \\"esnext\\",
         \\"target\\": \\"esnext\\",
-        \\"outDir\\": \\"lib/cjs\\",
+        \\"outDir\\": \\"lib/esm\\",
         \\"moduleResolution\\": \\"node\\",
         \\"esModuleInterop\\": true,
         \\"strict\\": true,
@@ -941,9 +941,9 @@ export * from \\"./PostsService\\";
   "/tsconfig.json": "{
     \\"compilerOptions\\": {
         \\"composite\\": true,
-        \\"module\\": \\"esnext\\",
+        \\"module\\": \\"commonjs\\",
         \\"target\\": \\"esnext\\",
-        \\"outDir\\": \\"lib/esm\\",
+        \\"outDir\\": \\"lib/cjs\\",
         \\"moduleResolution\\": \\"node\\",
         \\"esModuleInterop\\": true,
         \\"strict\\": true,
