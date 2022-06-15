@@ -1,0 +1,16 @@
+plugins {
+    id 'java-library'
+    id "org.inferred.processors" version "3.6.0"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
+    implementation 'com.google.code.findbugs:annotations:3.0.1'
+
+    annotationProcessor 'org.immutables:value:2.8.8'
+    compileOnly 'org.immutables:value-annotations:2.8.8'
+}
