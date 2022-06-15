@@ -2,14 +2,13 @@ name: fern-ir-types
 definition: ./src
 generators:
   - name: fernapi/fern-typescript
-    version: 0.0.82
-    output: ./fern-ir-typescript
+    version: 0.0.74
+    output: ./fern-ir-typescript/src/generated
     config:
       mode: model
-      packageName: "@fern-api/api"
-  # - name: fernapi/fern-java
-  #   version: 0.0.29
-  #   output: ./fern-ir-java/ir-api
-  #   config:
-  #     packagePrefix: "com.fern"
-  #     mode: MODEL
+  - name: fernapi/fern-java
+    version: 0.0.29
+    output: ./fern-ir-java/ir-api
+    config:
+      packagePrefix: "com.fern"
+      mode: MODEL
