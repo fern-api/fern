@@ -35,7 +35,7 @@ describe("runDocker", () => {
 
         const fileExists = await doesPathExist(path.join(HOST_OUTPUT_DIR, expectedOutputFileName));
         expect(fileExists).toBe(true);
-    });
+    }, 15_000);
 });
 
 async function doesPathExist(filepath: string): Promise<boolean> {

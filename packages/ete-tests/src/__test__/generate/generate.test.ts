@@ -1,7 +1,8 @@
 import { installAndCompileGeneratedProject } from "@fern-typescript/testing-utils";
 import execa from "execa";
-import { readFile, rm } from "fs/promises";
+import { rm } from "fs/promises";
 import path from "path";
+import { getDirectoryContents } from "./getDirectoryContents";
 
 const FIXTURES_DIR = path.join(__dirname, "fixtures");
 
@@ -19,7 +20,7 @@ function itFixture(fixtureName: string) {
             const outputPath = path.join(fixturePath, "generated");
             await rm(outputPath, { force: true, recursive: true });
 
-            const cmd = execa("node", ["../cli/cli", "generate", fixturePath], {
+            const cmd = execa("node", [path.join(__dirname, "../../../../cli/cli"), "generate", fixturePath], {
                 env: {
                     NODE_ENV: "development",
                 },
@@ -28,24 +29,11 @@ function itFixture(fixtureName: string) {
             cmd.stderr?.pipe(process.stderr);
             await cmd;
 
+            const directoryContents = await getDirectoryContents(outputPath);
+            expect(directoryContents).toMatchSnapshot();
+
             await installAndCompileGeneratedProject(outputPath);
 
-            const expectedFilesBuffer = await readFile(path.join(fixturePath, "expectedFiles.txt"));
-            const expectedFiles = expectedFilesBuffer
-                .toString()
-                .split("\n")
-                .map((s) => s.trim())
-                .filter((s) => s.length > 0);
-
-            for (const expectedFile of expectedFiles) {
-                let fileContents: string;
-                try {
-                    fileContents = (await readFile(path.join(outputPath, expectedFile))).toString();
-                } catch (e) {
-                    throw new Error(`Expected file ${expectedFile} to exist, but it does not.`);
-                }
-                expect(fileContents).toMatchSnapshot();
-            }
             await rm(outputPath, { force: true, recursive: true });
         },
         90_000

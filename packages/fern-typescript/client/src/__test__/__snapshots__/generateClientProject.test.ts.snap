@@ -8,9 +8,17 @@ Object {
     \\"files\\": [
         \\"lib\\"
     ],
-    \\"main\\": \\"lib/index.js\\",
+    \\"main\\": \\"lib/cjs/index.js\\",
+    \\"types\\": \\"lib/esm/index.d.ts\\",
+    \\"exports\\": {
+        \\".\\": {
+            \\"require\\": \\"lib/cjs/index.js\\",
+            \\"default\\": \\"lib/esm/index.js\\"
+        }
+    },
+    \\"sideEffects\\": false,
     \\"scripts\\": {
-        \\"compile\\": \\"tsc\\"
+        \\"build\\": \\"tsc --project tsconfig.json && tsc --project tsconfig.cjs.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"commonjs\\\\\\" }' > lib/cjs/package.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"module\\\\\\" }' > lib/esm/package.json\\"
     },
     \\"dependencies\\": {
         \\"@fern-typescript/service-utils\\": \\"0.0.79\\",
@@ -198,11 +206,13 @@ export * from \\"./Response\\";
 ",
   "/src/services/index.ts": "export * as ChatService from \\"./ChatService\\";
 ",
-  "/tsconfig.json": "{
+  "/tsconfig.cjs.json": "{
     \\"compilerOptions\\": {
-        \\"module\\": \\"CommonJS\\",
+        \\"composite\\": true,
+        \\"module\\": \\"commonjs\\",
         \\"target\\": \\"esnext\\",
-        \\"outDir\\": \\"lib\\",
+        \\"rootDir\\": \\"src\\",
+        \\"outDir\\": \\"lib/cjs\\",
         \\"moduleResolution\\": \\"node\\",
         \\"esModuleInterop\\": true,
         \\"strict\\": true,
@@ -214,7 +224,28 @@ export * from \\"./Response\\";
         \\"noUnusedParameters\\": true
     },
     \\"include\\": [
-        \\"./src\\"
+        \\"src\\"
+    ]
+}",
+  "/tsconfig.json": "{
+    \\"compilerOptions\\": {
+        \\"composite\\": true,
+        \\"module\\": \\"esnext\\",
+        \\"target\\": \\"esnext\\",
+        \\"rootDir\\": \\"src\\",
+        \\"outDir\\": \\"lib/esm\\",
+        \\"moduleResolution\\": \\"node\\",
+        \\"esModuleInterop\\": true,
+        \\"strict\\": true,
+        \\"declaration\\": true,
+        \\"noFallthroughCasesInSwitch\\": true,
+        \\"forceConsistentCasingInFileNames\\": true,
+        \\"noUncheckedIndexedAccess\\": true,
+        \\"noUnusedLocals\\": true,
+        \\"noUnusedParameters\\": true
+    },
+    \\"include\\": [
+        \\"src\\"
     ]
 }",
 }
@@ -228,9 +259,17 @@ Object {
     \\"files\\": [
         \\"lib\\"
     ],
-    \\"main\\": \\"lib/index.js\\",
+    \\"main\\": \\"lib/cjs/index.js\\",
+    \\"types\\": \\"lib/esm/index.d.ts\\",
+    \\"exports\\": {
+        \\".\\": {
+            \\"require\\": \\"lib/cjs/index.js\\",
+            \\"default\\": \\"lib/esm/index.js\\"
+        }
+    },
+    \\"sideEffects\\": false,
     \\"scripts\\": {
-        \\"compile\\": \\"tsc\\"
+        \\"build\\": \\"tsc --project tsconfig.json && tsc --project tsconfig.cjs.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"commonjs\\\\\\" }' > lib/cjs/package.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"module\\\\\\" }' > lib/esm/package.json\\"
     },
     \\"dependencies\\": {
         \\"@fern-typescript/service-utils\\": \\"0.0.79\\",
@@ -337,11 +376,13 @@ export * from \\"./NoErrorsService\\";
 ",
   "/src/services/index.ts": "export * as NoErrorsService from \\"./NoErrorsService\\";
 ",
-  "/tsconfig.json": "{
+  "/tsconfig.cjs.json": "{
     \\"compilerOptions\\": {
-        \\"module\\": \\"CommonJS\\",
+        \\"composite\\": true,
+        \\"module\\": \\"commonjs\\",
         \\"target\\": \\"esnext\\",
-        \\"outDir\\": \\"lib\\",
+        \\"rootDir\\": \\"src\\",
+        \\"outDir\\": \\"lib/cjs\\",
         \\"moduleResolution\\": \\"node\\",
         \\"esModuleInterop\\": true,
         \\"strict\\": true,
@@ -353,7 +394,28 @@ export * from \\"./NoErrorsService\\";
         \\"noUnusedParameters\\": true
     },
     \\"include\\": [
-        \\"./src\\"
+        \\"src\\"
+    ]
+}",
+  "/tsconfig.json": "{
+    \\"compilerOptions\\": {
+        \\"composite\\": true,
+        \\"module\\": \\"esnext\\",
+        \\"target\\": \\"esnext\\",
+        \\"rootDir\\": \\"src\\",
+        \\"outDir\\": \\"lib/esm\\",
+        \\"moduleResolution\\": \\"node\\",
+        \\"esModuleInterop\\": true,
+        \\"strict\\": true,
+        \\"declaration\\": true,
+        \\"noFallthroughCasesInSwitch\\": true,
+        \\"forceConsistentCasingInFileNames\\": true,
+        \\"noUncheckedIndexedAccess\\": true,
+        \\"noUnusedLocals\\": true,
+        \\"noUnusedParameters\\": true
+    },
+    \\"include\\": [
+        \\"src\\"
     ]
 }",
 }
@@ -367,9 +429,17 @@ Object {
     \\"files\\": [
         \\"lib\\"
     ],
-    \\"main\\": \\"lib/index.js\\",
+    \\"main\\": \\"lib/cjs/index.js\\",
+    \\"types\\": \\"lib/esm/index.d.ts\\",
+    \\"exports\\": {
+        \\".\\": {
+            \\"require\\": \\"lib/cjs/index.js\\",
+            \\"default\\": \\"lib/esm/index.js\\"
+        }
+    },
+    \\"sideEffects\\": false,
     \\"scripts\\": {
-        \\"compile\\": \\"tsc\\"
+        \\"build\\": \\"tsc --project tsconfig.json && tsc --project tsconfig.cjs.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"commonjs\\\\\\" }' > lib/cjs/package.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"module\\\\\\" }' > lib/esm/package.json\\"
     },
     \\"dependencies\\": {
         \\"@fern-typescript/service-utils\\": \\"0.0.79\\",
@@ -824,11 +894,13 @@ export * from \\"./PostsService\\";
 ",
   "/src/services/index.ts": "export * as PostsService from \\"./PostsService\\";
 ",
-  "/tsconfig.json": "{
+  "/tsconfig.cjs.json": "{
     \\"compilerOptions\\": {
-        \\"module\\": \\"CommonJS\\",
+        \\"composite\\": true,
+        \\"module\\": \\"commonjs\\",
         \\"target\\": \\"esnext\\",
-        \\"outDir\\": \\"lib\\",
+        \\"rootDir\\": \\"src\\",
+        \\"outDir\\": \\"lib/cjs\\",
         \\"moduleResolution\\": \\"node\\",
         \\"esModuleInterop\\": true,
         \\"strict\\": true,
@@ -840,7 +912,28 @@ export * from \\"./PostsService\\";
         \\"noUnusedParameters\\": true
     },
     \\"include\\": [
-        \\"./src\\"
+        \\"src\\"
+    ]
+}",
+  "/tsconfig.json": "{
+    \\"compilerOptions\\": {
+        \\"composite\\": true,
+        \\"module\\": \\"esnext\\",
+        \\"target\\": \\"esnext\\",
+        \\"rootDir\\": \\"src\\",
+        \\"outDir\\": \\"lib/esm\\",
+        \\"moduleResolution\\": \\"node\\",
+        \\"esModuleInterop\\": true,
+        \\"strict\\": true,
+        \\"declaration\\": true,
+        \\"noFallthroughCasesInSwitch\\": true,
+        \\"forceConsistentCasingInFileNames\\": true,
+        \\"noUncheckedIndexedAccess\\": true,
+        \\"noUnusedLocals\\": true,
+        \\"noUnusedParameters\\": true
+    },
+    \\"include\\": [
+        \\"src\\"
     ]
 }",
 }
