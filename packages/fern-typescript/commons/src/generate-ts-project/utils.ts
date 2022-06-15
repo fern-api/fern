@@ -8,3 +8,21 @@ export function getPathToProjectFile(relativePath: string): string {
     // the project lives at the root of the Volume
     return path.join(path.sep, relativePath);
 }
+
+const RELATIVE_ENTRYPOINT_WITHOUT_EXTENSION = "src/index";
+export const RELATIVE_CJS_ENTRYPOINT = path.join(
+    RELATIVE_CJS_OUT_DIR_PATH,
+    `${RELATIVE_ENTRYPOINT_WITHOUT_EXTENSION}.js`
+);
+export const RELATIVE_CJS_TYPES_ENTRYPOINT = path.join(
+    RELATIVE_CJS_OUT_DIR_PATH,
+    `${RELATIVE_ENTRYPOINT_WITHOUT_EXTENSION}.d.ts`
+);
+export const RELATIVE_ESM_ENTRYPOINT = path.join(
+    RELATIVE_ESM_OUT_DIR_PATH,
+    `${RELATIVE_ENTRYPOINT_WITHOUT_EXTENSION}.js`
+);
+export const RELATIVE_ESM_TYPES_ENTRYPOINT = path.join(
+    RELATIVE_CJS_OUT_DIR_PATH,
+    `${RELATIVE_ENTRYPOINT_WITHOUT_EXTENSION}.d.ts`
+);

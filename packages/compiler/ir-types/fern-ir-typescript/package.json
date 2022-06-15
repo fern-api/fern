@@ -1,23 +1,26 @@
 {
-    "name": "@fern-api/api",
-    "version": "0.1.2",
-    "files": [
-        "lib"
-    ],
-    "main": "lib/cjs/index.js",
-    "types": "lib/esm/index.d.ts",
-    "exports": {
-        ".": {
-            "require": "lib/cjs/index.js",
-            "default": "lib/esm/index.js"
-        }
-    },
-    "sideEffects": false,
-    "scripts": {
-        "build": "tsc --project tsconfig.json && tsc --project tsconfig.cjs.json && echo '{ \"type\": \"commonjs\" }' > lib/cjs/package.json && echo '{ \"type\": \"module\" }' > lib/esm/package.json"
-    },
-    "devDependencies": {
-        "@types/node": "^17.0.33",
-        "typescript": "^4.6.4"
+  "name": "@fern-api/api",
+  "version": "0.1.2",
+  "files": [
+    "lib"
+  ],
+  "main": "./lib/cjs/src/index.js",
+  "types": "./lib/cjs/src/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./lib/cjs/src/index.js",
+      "default": "./lib/esm/src/index.js"
     }
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "run-p build:esm build:cjs",
+    "build:esm": "tsc --project tsconfig.esm.json && echo '{ \"type\": \"module\" }' > lib/esm/package.json",
+    "build:cjs": "tsc --project tsconfig.json && echo '{ \"type\": \"commonjs\" }' > lib/cjs/package.json"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.33",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^4.6.4"
+  }
 }

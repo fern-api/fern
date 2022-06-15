@@ -1,10 +1,9 @@
 {
   "compilerOptions": {
     "composite": true,
-    "module": "esnext",
+    "module": "commonjs",
     "target": "esnext",
-    "rootDir": "src",
-    "outDir": "lib/esm",
+    "outDir": "lib/cjs",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "strict": true,
