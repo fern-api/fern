@@ -8,9 +8,17 @@ Object {
     \\"files\\": [
         \\"lib\\"
     ],
-    \\"main\\": \\"lib/index.js\\",
+    \\"main\\": \\"lib/cjs/index.js\\",
+    \\"types\\": \\"lib/esm/index.d.ts\\",
+    \\"exports\\": {
+        \\".\\": {
+            \\"require\\": \\"lib/cjs/index.js\\",
+            \\"default\\": \\"lib/esm/index.js\\"
+        }
+    },
+    \\"sideEffects\\": false,
     \\"scripts\\": {
-        \\"compile\\": \\"tsc\\"
+        \\"build\\": \\"tsc --project tsconfig.json && tsc --project tsconfig.cjs.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"commonjs\\\\\\" }' > lib/cjs/package.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"module\\\\\\" }' > lib/esm/package.json\\"
     },
     \\"dependencies\\": {},
     \\"devDependencies\\": {
@@ -745,11 +753,13 @@ export * from \\"./TypeDefinition\\";
 export * from \\"./TypeReference\\";
 export * from \\"./UnionTypeDefinition\\";
 ",
-  "/tsconfig.json": "{
+  "/tsconfig.cjs.json": "{
     \\"compilerOptions\\": {
-        \\"module\\": \\"CommonJS\\",
+        \\"composite\\": true,
+        \\"module\\": \\"commonjs\\",
         \\"target\\": \\"esnext\\",
-        \\"outDir\\": \\"lib\\",
+        \\"rootDir\\": \\"src\\",
+        \\"outDir\\": \\"lib/cjs\\",
         \\"moduleResolution\\": \\"node\\",
         \\"esModuleInterop\\": true,
         \\"strict\\": true,
@@ -761,7 +771,28 @@ export * from \\"./UnionTypeDefinition\\";
         \\"noUnusedParameters\\": true
     },
     \\"include\\": [
-        \\"./src\\"
+        \\"src\\"
+    ]
+}",
+  "/tsconfig.json": "{
+    \\"compilerOptions\\": {
+        \\"composite\\": true,
+        \\"module\\": \\"esnext\\",
+        \\"target\\": \\"esnext\\",
+        \\"rootDir\\": \\"src\\",
+        \\"outDir\\": \\"lib/esm\\",
+        \\"moduleResolution\\": \\"node\\",
+        \\"esModuleInterop\\": true,
+        \\"strict\\": true,
+        \\"declaration\\": true,
+        \\"noFallthroughCasesInSwitch\\": true,
+        \\"forceConsistentCasingInFileNames\\": true,
+        \\"noUncheckedIndexedAccess\\": true,
+        \\"noUnusedLocals\\": true,
+        \\"noUnusedParameters\\": true
+    },
+    \\"include\\": [
+        \\"src\\"
     ]
 }",
 }
@@ -775,9 +806,17 @@ Object {
     \\"files\\": [
         \\"lib\\"
     ],
-    \\"main\\": \\"lib/index.js\\",
+    \\"main\\": \\"lib/cjs/index.js\\",
+    \\"types\\": \\"lib/esm/index.d.ts\\",
+    \\"exports\\": {
+        \\".\\": {
+            \\"require\\": \\"lib/cjs/index.js\\",
+            \\"default\\": \\"lib/esm/index.js\\"
+        }
+    },
+    \\"sideEffects\\": false,
     \\"scripts\\": {
-        \\"compile\\": \\"tsc\\"
+        \\"build\\": \\"tsc --project tsconfig.json && tsc --project tsconfig.cjs.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"commonjs\\\\\\" }' > lib/cjs/package.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"module\\\\\\" }' > lib/esm/package.json\\"
     },
     \\"dependencies\\": {},
     \\"devDependencies\\": {
@@ -945,11 +984,13 @@ export * from \\"./CreatePostRequest\\";
 export * from \\"./Post\\";
 export * from \\"./PostType\\";
 ",
-  "/tsconfig.json": "{
+  "/tsconfig.cjs.json": "{
     \\"compilerOptions\\": {
-        \\"module\\": \\"CommonJS\\",
+        \\"composite\\": true,
+        \\"module\\": \\"commonjs\\",
         \\"target\\": \\"esnext\\",
-        \\"outDir\\": \\"lib\\",
+        \\"rootDir\\": \\"src\\",
+        \\"outDir\\": \\"lib/cjs\\",
         \\"moduleResolution\\": \\"node\\",
         \\"esModuleInterop\\": true,
         \\"strict\\": true,
@@ -961,7 +1002,28 @@ export * from \\"./PostType\\";
         \\"noUnusedParameters\\": true
     },
     \\"include\\": [
-        \\"./src\\"
+        \\"src\\"
+    ]
+}",
+  "/tsconfig.json": "{
+    \\"compilerOptions\\": {
+        \\"composite\\": true,
+        \\"module\\": \\"esnext\\",
+        \\"target\\": \\"esnext\\",
+        \\"rootDir\\": \\"src\\",
+        \\"outDir\\": \\"lib/esm\\",
+        \\"moduleResolution\\": \\"node\\",
+        \\"esModuleInterop\\": true,
+        \\"strict\\": true,
+        \\"declaration\\": true,
+        \\"noFallthroughCasesInSwitch\\": true,
+        \\"forceConsistentCasingInFileNames\\": true,
+        \\"noUncheckedIndexedAccess\\": true,
+        \\"noUnusedLocals\\": true,
+        \\"noUnusedParameters\\": true
+    },
+    \\"include\\": [
+        \\"src\\"
     ]
 }",
 }
