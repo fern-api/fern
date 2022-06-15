@@ -56,4 +56,4 @@ services:
                   a: number
             failed:
               errors:
-                notFound: PostNotFoundError
+                - PostNotFoundError
