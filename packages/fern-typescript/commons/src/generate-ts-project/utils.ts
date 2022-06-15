@@ -9,7 +9,8 @@ export function getPathToProjectFile(relativePath: string): string {
     return path.join(path.sep, relativePath);
 }
 
-const RELATIVE_ENTRYPOINT_WITHOUT_EXTENSION = "src/index";
+// not including src/ since we're using rootDir=src in the tsconfig.json
+const RELATIVE_ENTRYPOINT_WITHOUT_EXTENSION = "index";
 export const RELATIVE_CJS_ENTRYPOINT = path.join(
     RELATIVE_CJS_OUT_DIR_PATH,
     `${RELATIVE_ENTRYPOINT_WITHOUT_EXTENSION}.js`
