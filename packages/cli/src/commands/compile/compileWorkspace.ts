@@ -2,7 +2,7 @@ import { CustomWireMessageEncoding } from "@fern-api/api";
 import { GeneratorInvocation, loadWorkspaceDefinition, WorkspaceDefinition } from "@fern-api/commons";
 import { compile, Compiler } from "@fern-api/compiler";
 import { runGenerator } from "@fern-api/generator-runner";
-import { rm, writeFile } from "fs/promises";
+import { mkdir, rm, writeFile } from "fs/promises";
 import os from "os";
 import path from "path";
 import tmp, { DirectoryResult } from "tmp-promise";
@@ -89,6 +89,7 @@ async function loadHelpersAndRunGenerator({
 
     if (generatorInvocation.absolutePathToOutput != null) {
         await rm(generatorInvocation.absolutePathToOutput, { force: true, recursive: true });
+        await mkdir(generatorInvocation.absolutePathToOutput, { recursive: true });
     }
 
     await Promise.all(

@@ -1,4 +1,5 @@
 import Docker from "dockerode";
+import os from "os";
 import { Writable } from "stream";
 
 export declare namespace runDocker {
@@ -47,6 +48,7 @@ async function tryRunDocker({
         }),
         {
             Binds: binds,
+            User: os.userInfo().uid,
         }
     );
 
