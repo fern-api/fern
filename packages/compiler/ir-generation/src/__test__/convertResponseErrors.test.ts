@@ -6,9 +6,7 @@ describe("convertResponseErrors", () => {
         const actualResponseErrors = convertFailedResponse({
             rawFailedResponse: {
                 discriminant: "_some_other_discriminant",
-                errors: {
-                    unauthorized: "commons.UnauthorizedError",
-                },
+                errors: ["commons.UnauthorizedError"],
             },
             fernFilepath: FernFilepath.of("path/to/service"),
             imports: {

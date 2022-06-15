@@ -1,4 +1,4 @@
-import { FailedResponse, SingleUnionType } from "@fern-api/api";
+import { FailedResponse, SingleUnionType, TypeReference } from "@fern-api/api";
 import { TypeResolver } from "@fern-typescript/commons";
 import { generateUnionType } from "@fern-typescript/model";
 import { Directory, SourceFile } from "ts-morph";
@@ -24,7 +24,7 @@ export function generateErrorBody({
             (error): SingleUnionType => ({
                 docs: error.docs,
                 discriminantValue: error.discriminantValue,
-                valueType: error.error,
+                valueType: TypeReference.named(error.error),
             })
         ),
         typeResolver,
