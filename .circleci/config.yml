@@ -11,7 +11,7 @@ jobs:
           pkg-manager: yarn-berry
       - run:
           name: Run code-generation
-          command: npx fern generate
+          command: npx --yes fern-api generate
       - run:
           name: lint:monorepo
           command: yarn lint:monorepo
@@ -48,7 +48,7 @@ jobs:
           pkg-manager: yarn-berry
       - run:
           name: Run code-generation
-          command: npx fern generate
+          command: npx --yes fern-api generate
       - run:
           name: Add version to package.json's
           command: yarn mrlint version $(git tag --points-at HEAD)
@@ -87,7 +87,7 @@ jobs:
             sudo ln -s /opt/java/zulu*/ /opt/java11
       - run:
           name: Run code-generation
-          command: npx fern generate
+          command: npx --yes fern-api generate
       - run:
           name: Publish
           command: |
