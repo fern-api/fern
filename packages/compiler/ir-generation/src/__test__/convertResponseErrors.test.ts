@@ -19,12 +19,12 @@ describe("convertResponseErrors", () => {
             discriminant: "_some_other_discriminant",
             errors: [
                 {
-                    discriminantValue: "unauthorized",
+                    discriminantValue: "UnauthorizedError",
                     docs: undefined,
-                    error: TypeReference.named({
+                    error: {
                         fernFilepath: FernFilepath.of("path/to/commons"),
                         name: "UnauthorizedError",
-                    }),
+                    },
                 },
             ],
         };

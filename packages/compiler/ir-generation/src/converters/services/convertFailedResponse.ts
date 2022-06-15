@@ -18,14 +18,18 @@ export function convertFailedResponse({
         errors:
             rawFailedResponse?.errors == null
                 ? []
-                : Object.entries(rawFailedResponse.errors).map(([discriminantValue, errorReference]) => ({
-                      docs: typeof errorReference !== "string" ? errorReference.docs : undefined,
-                      discriminantValue,
-                      error: parseTypeName({
-                          typeName: typeof errorReference === "string" ? errorReference : errorReference.error,
+                : Object.entries(rawFailedResponse.errors).map(([_index, errorReference]) => {
+                      const errorTypeName = typeof errorReference === "string" ? errorReference : errorReference.error;
+                      const parsedErrorTypeName = parseTypeName({
+                          typeName: errorTypeName,
                           fernFilepath,
                           imports,
-                      }),
-                  })),
+                      });
+                      return {
+                          docs: typeof errorReference !== "string" ? errorReference.docs : undefined,
+                          discriminantValue: parsedErrorTypeName.name,
+                          error: parsedErrorTypeName,
+                      };
+                  }),
     };
 }
