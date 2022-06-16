@@ -8,7 +8,7 @@ generators:
       mode: model
       packageName: "@fern-api/api"
   - name: fernapi/fern-java
-    version: 0.0.29
+    version: 0.0.31
     output: ./fern-ir-java/ir-api
     config:
       packagePrefix: "com.fern"
