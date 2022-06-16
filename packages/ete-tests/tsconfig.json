@@ -2,5 +2,6 @@
   "extends": "../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib/cjs", "rootDir": "src", "module": "CommonJS" },
   "include": ["./src"],
+  "exclude": ["./src/**/__test__/**/generated"],
   "references": [{ "path": "../commons/tsconfig.json" }, { "path": "../fern-typescript/testing-utils/tsconfig.json" }]
 }

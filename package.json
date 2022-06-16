@@ -40,7 +40,7 @@
     "husky": "^7.0.4",
     "jest": "^27.5.1",
     "lint-staged": "^12.3.7",
-    "mrlint": "^0.0.29",
+    "mrlint": "^0.0.30",
     "prettier": "^2.6.2",
     "ts-node": "^10.8.0",
     "typescript": "^4.6.4"
