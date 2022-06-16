@@ -12,7 +12,7 @@ const JAVA_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
 
 const TYPESCRIPT_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
     name: "fernapi/fern-typescript",
-    version: "0.0.71",
+    version: "0.0.86",
     output: "generated-typescript",
     config: {
         mode: "client",
@@ -21,7 +21,7 @@ const TYPESCRIPT_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
 
 const POSTMAN_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
     name: "fernapi/fern-postman",
-    version: "0.0.3",
+    version: "0.0.5",
     output: "generated-postman",
 };
 
