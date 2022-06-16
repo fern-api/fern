@@ -1,12 +1,13 @@
-import { SingleUnionType } from "@fern-api/api";
+import { SingleUnionType, TypeReference } from "@fern-api/api";
 import {
     FernWriters,
     getNamedTypeReference,
     getTextOfTsNode,
+    getTypeReference,
     getWriterForMultiLineUnionType,
     maybeAddDocs,
     TypeResolver,
-    visitorUtils,
+    visitorUtils
 } from "@fern-typescript/commons";
 import {
     Directory,
@@ -16,13 +17,21 @@ import {
     SourceFile,
     ts,
     VariableDeclarationKind,
-    WriterFunction,
+    WriterFunction
 } from "ts-morph";
 import { getKeyForUnion, getResolvedTypeForSingleUnionType, ResolvedSingleUnionType } from "./utils";
 
-export interface SingleUnionTypeWithResolvedValueType {
+interface SingleUnionTypeWithResolvedValueType {
     originalType: SingleUnionType;
     resolvedType: ResolvedSingleUnionType | undefined;
+}
+
+export declare namespace generateUnionType {
+    export interface ObjectProperty {
+        key: string;
+        valueType: TypeReference;
+        generateValueCreator: () => ts.
+    }
 }
 
 export function generateUnionType({
@@ -31,7 +40,9 @@ export function generateUnionType({
     docs,
     discriminant,
     types,
+    additionalProperties = [],
     typeResolver,
+    modelDirectory,
     baseDirectory,
     baseDirectoryType,
 }: {
@@ -40,7 +51,9 @@ export function generateUnionType({
     docs: string | null | undefined;
     discriminant: string;
     types: SingleUnionType[];
+    additionalProperties?: generateUnionType.ObjectProperty[];
     typeResolver: TypeResolver;
+    modelDirectory: Directory;
     baseDirectory: Directory;
     baseDirectoryType: getNamedTypeReference.Args["baseDirectoryType"];
 }): void {
@@ -82,6 +95,20 @@ export function generateUnionType({
         const interfaceNode = module.addInterface(
             generateDiscriminatedSingleUnionTypeInterface({ discriminant, singleUnionType: originalType })
         );
+
+        for (const additionalProperty of additionalProperties) {
+            interfaceNode.addProperty({
+                name: additionalProperty.key,
+                type: getTextOfTsNode(
+                    getTypeReference({
+                        reference: additionalProperty.valueType,
+                        referencedIn: file,
+                        baseDirectory: modelDirectory,
+                        baseDirectoryType: "model",
+                    })
+                ),
+            });
+        }
 
         if (resolvedType != null) {
             if (resolvedType.isExtendable) {
@@ -178,7 +205,7 @@ function createUtils({
     for (const singleUnionType of types) {
         writer.addProperty({
             key: singleUnionType.originalType.discriminantValue,
-            value: getTextOfTsNode(generateCreator({ typeName, singleUnionType, discriminant })),
+            value: getTextOfTsNode(generateCreator({ typeName, singleUnionType, discriminant, additionalProperties })),
         });
         writer.addNewLine();
     }

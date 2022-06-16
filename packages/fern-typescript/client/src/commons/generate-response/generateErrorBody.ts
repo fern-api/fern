@@ -1,4 +1,4 @@
-import { FailedResponse, SingleUnionType, TypeReference } from "@fern-api/api";
+import { FailedResponse, PrimitiveType, SingleUnionType, TypeReference } from "@fern-api/api";
 import { TypeResolver } from "@fern-typescript/commons";
 import { generateUnionType } from "@fern-typescript/model";
 import { Directory, SourceFile } from "ts-morph";
@@ -7,11 +7,13 @@ import { ClientConstants } from "../../constants";
 export function generateErrorBody({
     failedResponse,
     errorBodyFile,
+    modelDirectory,
     errorsDirectory,
     typeResolver,
 }: {
     failedResponse: FailedResponse;
     errorBodyFile: SourceFile;
+    modelDirectory: Directory;
     errorsDirectory: Directory;
     typeResolver: TypeResolver;
 }): void {
@@ -27,7 +29,14 @@ export function generateErrorBody({
                 valueType: TypeReference.named(error.error),
             })
         ),
+        additionalProperties: [
+            {
+                key: failedResponse.errorProperties.errorInstanceId,
+                valueType: TypeReference.primitive(PrimitiveType.String),
+            },
+        ],
         typeResolver,
+        modelDirectory,
         baseDirectory: errorsDirectory,
         baseDirectoryType: "errors",
     });

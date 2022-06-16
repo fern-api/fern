@@ -17,6 +17,9 @@ describe("convertResponseErrors", () => {
         const expectedResponseErrors: FailedResponse = {
             docs: undefined,
             discriminant: "_some_other_discriminant",
+            errorProperties: {
+                errorInstanceId: "_errorInstanceId",
+            },
             errors: [
                 {
                     discriminantValue: "UnauthorizedError",
