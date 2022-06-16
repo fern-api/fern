@@ -1,24 +1,28 @@
 package com.fern.jersey.client;
 
+import com.fern.codegen.GeneratedEndpointModel;
+import com.fern.codegen.GeneratedError;
 import com.fern.codegen.GeneratedErrorDecoder;
-import com.fern.codegen.GeneratedException;
 import com.fern.codegen.GeneratedHttpServiceClient;
-import com.fern.codegen.GeneratedInterface;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.stateless.generator.ObjectMapperGenerator;
 import com.fern.codegen.utils.ClassNameUtils;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
+import com.fern.jersey.HttpAuthToParameterSpec;
+import com.fern.jersey.HttpMethodAnnotationVisitor;
 import com.fern.jersey.JerseyServiceGeneratorUtils;
 import com.fern.model.codegen.Generator;
 import com.fern.types.services.http.HttpEndpoint;
 import com.fern.types.services.http.HttpResponse;
 import com.fern.types.services.http.HttpService;
 import com.fern.types.types.NamedType;
+import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeSpec;
 import feign.Feign;
 import feign.jackson.JacksonDecoder;
@@ -27,6 +31,7 @@ import feign.jaxrs.JAXRSContract;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 import javax.ws.rs.Consumes;
@@ -42,22 +47,24 @@ public final class HttpServiceClientGenerator extends Generator {
 
     private final HttpService httpService;
     private final ClassName generatedServiceClassName;
-    private final List<GeneratedException> generatedExceptions;
+    private final Map<NamedType, GeneratedError> generatedErrors;
     private final JerseyServiceGeneratorUtils jerseyServiceGeneratorUtils;
+    private final Map<HttpEndpoint, GeneratedEndpointModel> generatedEndpointModels;
 
     public HttpServiceClientGenerator(
             GeneratorContext generatorContext,
-            Map<NamedType, GeneratedInterface> generatedInterfaces,
-            List<GeneratedException> generatedExceptions,
+            List<GeneratedEndpointModel> generatedEndpointModels,
+            Map<NamedType, GeneratedError> generatedErrors,
             HttpService httpService) {
         super(generatorContext, PackageType.CLIENT);
         this.httpService = httpService;
-        this.generatedExceptions = generatedExceptions;
         this.generatedServiceClassName = generatorContext
                 .getClassNameUtils()
                 .getClassNameForNamedType(httpService.name(), packageType, Optional.of(CLIENT_CLASS_NAME_SUFFIX));
-        this.jerseyServiceGeneratorUtils = new JerseyServiceGeneratorUtils(
-                generatorContext, generatedInterfaces, generatedExceptions, httpService);
+        this.jerseyServiceGeneratorUtils = new JerseyServiceGeneratorUtils(generatorContext);
+        this.generatedEndpointModels = generatedEndpointModels.stream()
+                .collect(Collectors.toMap(GeneratedEndpointModel::httpEndpoint, Function.identity()));
+        this.generatedErrors = generatedErrors;
     }
 
     @Override
@@ -74,7 +81,7 @@ public final class HttpServiceClientGenerator extends Generator {
                         .addMember("value", "$S", httpService.basePath())
                         .build());
         List<MethodSpec> httpEndpointMethods = httpService.endpoints().stream()
-                .map(httpEndpoint -> jerseyServiceGeneratorUtils.getHttpEndpointMethodSpec(httpEndpoint, true))
+                .map(httpEndpoint -> getHttpEndpointMethodSpec(httpEndpoint))
                 .collect(Collectors.toList());
         Optional<GeneratedErrorDecoder> maybeGeneratedErrorDecoder = getGeneratedErrorDecoder();
         TypeSpec jerseyServiceTypeSpec = jerseyServiceBuilder
@@ -89,22 +96,68 @@ public final class HttpServiceClientGenerator extends Generator {
                 .className(generatedServiceClassName)
                 .httpService(httpService)
                 .generatedErrorDecoder(maybeGeneratedErrorDecoder)
-                .addAllHttpRequests(jerseyServiceGeneratorUtils.getGeneratedHttpRequests())
-                .addAllHttpResponses(jerseyServiceGeneratorUtils.getGeneratedHttpResponses())
                 .build();
+    }
+
+    private MethodSpec getHttpEndpointMethodSpec(HttpEndpoint httpEndpoint) {
+        MethodSpec.Builder endpointMethodBuilder = MethodSpec.methodBuilder(httpEndpoint.endpointId())
+                .addAnnotation(httpEndpoint.method().visit(HttpMethodAnnotationVisitor.INSTANCE))
+                .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT);
+        if (httpService.basePath().isPresent()) {
+            endpointMethodBuilder.addAnnotation(AnnotationSpec.builder(Path.class)
+                    .addMember("value", "$S", httpService.basePath().get())
+                    .build());
+        }
+        httpEndpoint
+                .auth()
+                .visit(new HttpAuthToParameterSpec(generatorContext))
+                .ifPresent(endpointMethodBuilder::addParameter);
+        httpEndpoint.headers().stream()
+                .map(jerseyServiceGeneratorUtils::getHeaderParameterSpec)
+                .forEach(endpointMethodBuilder::addParameter);
+        httpEndpoint.pathParameters().stream()
+                .map(jerseyServiceGeneratorUtils::getPathParameterSpec)
+                .forEach(endpointMethodBuilder::addParameter);
+        httpEndpoint.queryParameters().stream()
+                .map(jerseyServiceGeneratorUtils::getQueryParameterSpec)
+                .forEach(endpointMethodBuilder::addParameter);
+        GeneratedEndpointModel generatedEndpointModel = generatedEndpointModels.get(httpEndpoint);
+        jerseyServiceGeneratorUtils
+                .getPayloadTypeName(generatedEndpointModel.generatedHttpRequest())
+                .ifPresent(typeName -> {
+                    endpointMethodBuilder.addParameter(
+                            ParameterSpec.builder(typeName, "request").build());
+                });
+        jerseyServiceGeneratorUtils
+                .getPayloadTypeName(generatedEndpointModel.generatedHttpResponse())
+                .ifPresent(endpointMethodBuilder::returns);
+
+        List<ClassName> errorClassNames = httpEndpoint.response().failed().errors().stream()
+                .map(responseError -> generatedErrors.get(responseError.error()).className())
+                .collect(Collectors.toList());
+        endpointMethodBuilder.addExceptions(errorClassNames);
+        if (!errorClassNames.isEmpty()) {
+            endpointMethodBuilder.addException(
+                    generatorContext.getUnknownRemoteExceptionFile().className());
+        }
+        return endpointMethodBuilder.build();
     }
 
     private Optional<GeneratedErrorDecoder> getGeneratedErrorDecoder() {
         Optional<GeneratedErrorDecoder> maybeGeneratedErrorDecoder = Optional.empty();
         boolean shouldGenerateErrorDecoder = httpService.endpoints().stream()
                         .map(HttpEndpoint::response)
-                        .map(HttpResponse::errors)
-                        .flatMap(responseErrors -> responseErrors.possibleErrors().stream())
+                        .map(HttpResponse::failed)
+                        .flatMap(failedResponse -> failedResponse.errors().stream())
                         .count()
                 > 0;
         if (shouldGenerateErrorDecoder) {
-            ServiceErrorDecoderGenerator serviceErrorDecoderGenerator =
-                    new ServiceErrorDecoderGenerator(generatorContext, httpService, generatedExceptions);
+            ServiceErrorDecoderGenerator serviceErrorDecoderGenerator = new ServiceErrorDecoderGenerator(
+                    generatorContext,
+                    httpService,
+                    KeyedStream.stream(generatedEndpointModels)
+                            .map(GeneratedEndpointModel::errorFile)
+                            .collectToMap());
             maybeGeneratedErrorDecoder = Optional.of(serviceErrorDecoderGenerator.generate());
         }
         return maybeGeneratedErrorDecoder;

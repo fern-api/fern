@@ -6,11 +6,11 @@ import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderStyle
-public interface GeneratedException extends IGeneratedFile {
+public interface GeneratedError extends IGeneratedFile {
 
     ErrorDefinition errorDefinition();
 
-    static ImmutableGeneratedException.FileBuildStage builder() {
-        return ImmutableGeneratedException.builder();
+    static ImmutableGeneratedError.FileBuildStage builder() {
+        return ImmutableGeneratedError.builder();
     }
 }

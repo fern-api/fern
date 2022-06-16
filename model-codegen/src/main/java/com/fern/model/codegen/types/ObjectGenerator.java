@@ -1,4 +1,4 @@
-package com.fern.model.codegen;
+package com.fern.model.codegen.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -7,6 +7,7 @@ import com.fern.codegen.GeneratedObject;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.IGeneratedFile;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
+import com.fern.model.codegen.Generator;
 import com.fern.types.types.NamedType;
 import com.fern.types.types.ObjectProperty;
 import com.fern.types.types.ObjectTypeDefinition;

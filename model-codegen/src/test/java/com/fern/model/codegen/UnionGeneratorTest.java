@@ -4,6 +4,7 @@ import com.fern.codegen.GeneratedUnion;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.java.test.TestConstants;
+import com.fern.model.codegen.types.UnionGenerator;
 import com.fern.types.types.ContainerType;
 import com.fern.types.types.FernFilepath;
 import com.fern.types.types.NamedType;
@@ -24,31 +25,31 @@ public class UnionGeneratorTest {
         UnionTypeDefinition unionTypeDefinition = UnionTypeDefinition.builder()
                 .discriminant("_type")
                 .addTypes(SingleUnionType.builder()
-                        .valueType(TypeReference.primitive(PrimitiveType.INTEGER))
                         .discriminantValue("integerValue")
+                        .valueType(TypeReference.primitive(PrimitiveType.INTEGER))
                         .build())
                 .addTypes(SingleUnionType.builder()
-                        .valueType(TypeReference.primitive(PrimitiveType.BOOLEAN))
                         .discriminantValue("booleanValue")
+                        .valueType(TypeReference.primitive(PrimitiveType.BOOLEAN))
                         .build())
                 .addTypes(SingleUnionType.builder()
-                        .valueType(TypeReference.primitive(PrimitiveType.DOUBLE))
                         .discriminantValue("doubleValue")
+                        .valueType(TypeReference.primitive(PrimitiveType.DOUBLE))
                         .build())
                 .addTypes(SingleUnionType.builder()
-                        .valueType(TypeReference.primitive(PrimitiveType.STRING))
                         .discriminantValue("stringValue")
-                        .build())
-                .addTypes(SingleUnionType.builder()
                         .valueType(TypeReference.primitive(PrimitiveType.STRING))
-                        .discriminantValue("charValue")
                         .build())
                 .addTypes(SingleUnionType.builder()
+                        .discriminantValue("charValue")
+                        .valueType(TypeReference.primitive(PrimitiveType.STRING))
+                        .build())
+                .addTypes(SingleUnionType.builder()
+                        .discriminantValue("mapValue")
                         .valueType(TypeReference.container(ContainerType.list(TypeReference.named(NamedType.builder()
                                 .fernFilepath(FernFilepath.valueOf("com/birch/trace/commons"))
                                 .name("VariableValue")
                                 .build()))))
-                        .discriminantValue("mapValue")
                         .build())
                 .build();
         TypeDefinition variableValueTypeDefinition = TypeDefinition.builder()
@@ -60,7 +61,8 @@ public class UnionGeneratorTest {
                 .build();
         GeneratorContext generatorContext = new GeneratorContext(
                 Optional.of(TestConstants.PACKAGE_PREFIX),
-                Collections.singletonMap(variableValueTypeDefinition.name(), variableValueTypeDefinition));
+                Collections.singletonMap(variableValueTypeDefinition.name(), variableValueTypeDefinition),
+                Collections.emptyMap());
         UnionGenerator unionGenerator = new UnionGenerator(
                 variableValueTypeDefinition.name(),
                 PackageType.TYPES,
@@ -75,16 +77,16 @@ public class UnionGeneratorTest {
         UnionTypeDefinition unionTypeDefinition = UnionTypeDefinition.builder()
                 .discriminant("_type")
                 .addTypes(SingleUnionType.builder()
-                        .valueType(TypeReference.primitive(PrimitiveType.INTEGER))
                         .discriminantValue("integervalue")
+                        .valueType(TypeReference.primitive(PrimitiveType.INTEGER))
                         .build())
                 .addTypes(SingleUnionType.builder()
-                        .valueType(TypeReference.primitive(PrimitiveType.BOOLEAN))
                         .discriminantValue("booleanvalue")
+                        .valueType(TypeReference.primitive(PrimitiveType.BOOLEAN))
                         .build())
                 .addTypes(SingleUnionType.builder()
-                        .valueType(TypeReference.primitive(PrimitiveType.DOUBLE))
                         .discriminantValue("doublevalue")
+                        .valueType(TypeReference.primitive(PrimitiveType.DOUBLE))
                         .build())
                 .build();
         TypeDefinition variableValueTypeDefinition = TypeDefinition.builder()
@@ -95,7 +97,8 @@ public class UnionGeneratorTest {
                 .shape(Type.union(unionTypeDefinition))
                 .build();
         GeneratorContext generatorContext = new GeneratorContext(Optional.of(TestConstants.PACKAGE_PREFIX),
-                Collections.singletonMap(variableValueTypeDefinition.name(), variableValueTypeDefinition));
+                Collections.singletonMap(variableValueTypeDefinition.name(), variableValueTypeDefinition),
+                Collections.emptyMap());
         UnionGenerator unionGenerator = new UnionGenerator(
                 variableValueTypeDefinition.name(),
                 PackageType.TYPES,

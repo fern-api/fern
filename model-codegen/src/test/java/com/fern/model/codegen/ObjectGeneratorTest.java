@@ -4,6 +4,8 @@ import com.fern.codegen.GeneratedInterface;
 import com.fern.codegen.GeneratedObject;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.java.test.TestConstants;
+import com.fern.model.codegen.types.InterfaceGenerator;
+import com.fern.model.codegen.types.ObjectGenerator;
 import com.fern.types.types.ContainerType;
 import com.fern.types.types.FernFilepath;
 import com.fern.types.types.NamedType;

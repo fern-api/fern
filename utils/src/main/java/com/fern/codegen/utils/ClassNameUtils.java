@@ -99,7 +99,7 @@ public final class ClassNameUtils {
                 return "server";
             case CLIENT:
                 return "client";
-            case REQUEST_RESPONSES:
+            case SERVICES:
                 return "services";
             case ERRORS:
                 return "errors";
@@ -112,7 +112,7 @@ public final class ClassNameUtils {
         TYPES,
         SERVER,
         CLIENT,
-        REQUEST_RESPONSES,
+        SERVICES,
         ERRORS,
     }
 }

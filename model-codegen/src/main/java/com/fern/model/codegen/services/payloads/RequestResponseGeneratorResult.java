@@ -1,4 +1,4 @@
-package com.fern.jersey;
+package com.fern.model.codegen.services.payloads;
 
 import com.fern.codegen.IGeneratedFile;
 import com.fern.immutables.StagedBuilderStyle;

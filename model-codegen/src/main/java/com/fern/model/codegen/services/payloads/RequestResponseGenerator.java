@@ -1,4 +1,4 @@
-package com.fern.jersey;
+package com.fern.model.codegen.services.payloads;
 
 import com.fern.codegen.GeneratedEnum;
 import com.fern.codegen.GeneratedInterface;
@@ -6,9 +6,9 @@ import com.fern.codegen.GeneratedObject;
 import com.fern.codegen.GeneratedUnion;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
-import com.fern.model.codegen.EnumGenerator;
-import com.fern.model.codegen.ObjectGenerator;
-import com.fern.model.codegen.UnionGenerator;
+import com.fern.model.codegen.types.EnumGenerator;
+import com.fern.model.codegen.types.ObjectGenerator;
+import com.fern.model.codegen.types.UnionGenerator;
 import com.fern.types.services.http.HttpEndpoint;
 import com.fern.types.services.http.HttpService;
 import com.fern.types.types.AliasTypeDefinition;
@@ -74,8 +74,8 @@ public final class RequestResponseGenerator {
 
         @Override
         public RequestResponseGeneratorResult visitEnum(EnumTypeDefinition enumTypeDefinition) {
-            EnumGenerator enumGenerator = new EnumGenerator(
-                    getNamedType(), PackageType.REQUEST_RESPONSES, enumTypeDefinition, generatorContext);
+            EnumGenerator enumGenerator =
+                    new EnumGenerator(getNamedType(), PackageType.SERVICES, enumTypeDefinition, generatorContext);
             GeneratedEnum generatedEnum = enumGenerator.generate();
             return RequestResponseGeneratorResult.builder()
                     .typeName(generatedEnum.className())
@@ -92,7 +92,7 @@ public final class RequestResponseGenerator {
                     .collect(Collectors.toList());
             ObjectGenerator objectGenerator = new ObjectGenerator(
                     getNamedType(),
-                    PackageType.REQUEST_RESPONSES,
+                    PackageType.SERVICES,
                     objectTypeDefinition,
                     extendedInterfaces,
                     Optional.empty(),
@@ -106,8 +106,8 @@ public final class RequestResponseGenerator {
 
         @Override
         public RequestResponseGeneratorResult visitUnion(UnionTypeDefinition unionTypeDefinition) {
-            UnionGenerator unionGenerator = new UnionGenerator(
-                    getNamedType(), PackageType.REQUEST_RESPONSES, unionTypeDefinition, generatorContext);
+            UnionGenerator unionGenerator =
+                    new UnionGenerator(getNamedType(), PackageType.SERVICES, unionTypeDefinition, generatorContext);
             GeneratedUnion generatedUnion = unionGenerator.generate();
             return RequestResponseGeneratorResult.builder()
                     .typeName(generatedUnion.className())

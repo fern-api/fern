@@ -1,4 +1,4 @@
-package com.fern.model.codegen;
+package com.fern.model.codegen.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -8,6 +8,7 @@ import com.fern.codegen.utils.ClassNameUtils;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.codegen.utils.VisitorUtils;
 import com.fern.codegen.utils.VisitorUtils.GeneratedVisitor;
+import com.fern.model.codegen.Generator;
 import com.fern.types.types.EnumTypeDefinition;
 import com.fern.types.types.EnumValue;
 import com.fern.types.types.NamedType;

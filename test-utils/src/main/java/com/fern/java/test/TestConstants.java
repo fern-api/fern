@@ -9,7 +9,7 @@ public final class TestConstants {
     public static final String PACKAGE_PREFIX = "com";
 
     public static final GeneratorContext GENERATOR_CONTEXT =
-            new GeneratorContext(Optional.of(PACKAGE_PREFIX), Collections.emptyMap());
+            new GeneratorContext(Optional.of(PACKAGE_PREFIX), Collections.emptyMap(), Collections.emptyMap());
 
     private TestConstants() {}
 }

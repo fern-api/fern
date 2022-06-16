@@ -3,6 +3,7 @@ package com.fern.model.codegen;
 import com.fern.codegen.GeneratedEnum;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.java.test.TestConstants;
+import com.fern.model.codegen.types.EnumGenerator;
 import com.fern.types.types.EnumTypeDefinition;
 import com.fern.types.types.EnumValue;
 import com.fern.types.types.FernFilepath;
