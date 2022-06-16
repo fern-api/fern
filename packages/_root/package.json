@@ -25,7 +25,7 @@
     "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
-    "depcheck": "depcheck"
+    "depcheck": "exit 0"
   },
   "dependencies": {
     "@fern-api/add-generator": "workspace:*",
