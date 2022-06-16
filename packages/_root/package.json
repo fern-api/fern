@@ -1,5 +1,5 @@
 {
-  "name": "@fern-api/_root",
+  "name": "@fern-api/compile-root",
   "version": "0.0.0",
   "private": true,
   "files": [

@@ -10,7 +10,7 @@ import { promisify } from "util";
 const promisifiedExec = promisify(exec);
 
 const MONOREPO_ROOT_PACKAGE = "fern";
-const COMPILE_ROOT_PACKAGE = "@fern-api/_root";
+const COMPILE_ROOT_PACKAGE = "@fern-api/compile-root";
 
 interface YarnPackage {
     name: string;
