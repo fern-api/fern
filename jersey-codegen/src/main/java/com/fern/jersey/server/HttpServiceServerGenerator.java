@@ -139,7 +139,7 @@ public final class HttpServiceServerGenerator extends Generator {
                 endpointMethodCodeBlock
                         .beginControlFlow("catch ($T e)", generatedError.className())
                         .addStatement(
-                                "throw new $T.$L(e)",
+                                "throw $T.$L(e)",
                                 generatedEndpointError.className(),
                                 generatedEndpointError
                                         .constructorsByResponseError()

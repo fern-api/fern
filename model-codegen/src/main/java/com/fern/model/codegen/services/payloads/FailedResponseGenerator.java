@@ -209,7 +209,7 @@ public final class FailedResponseGenerator extends Generator {
                                 "include",
                                 "$T.$L",
                                 ClassName.get(JsonTypeInfo.As.class),
-                                JsonTypeInfo.As.EXISTING_PROPERTY.name())
+                                JsonTypeInfo.As.PROPERTY.name())
                         .addMember("property", "$S", failedResponse.discriminant())
                         .addMember("visible", "true")
                         .build());

@@ -81,7 +81,7 @@ public final class HttpServiceClientGenerator extends Generator {
                         .addMember("value", "$S", httpService.basePath())
                         .build());
         List<MethodSpec> httpEndpointMethods = httpService.endpoints().stream()
-                .map(httpEndpoint -> getHttpEndpointMethodSpec(httpEndpoint))
+                .map(this::getHttpEndpointMethodSpec)
                 .collect(Collectors.toList());
         Optional<GeneratedErrorDecoder> maybeGeneratedErrorDecoder = getGeneratedErrorDecoder();
         TypeSpec jerseyServiceTypeSpec = jerseyServiceBuilder

@@ -300,7 +300,7 @@ public final class UnionGenerator extends Generator {
                                 "include",
                                 "$T.$L",
                                 ClassName.get(JsonTypeInfo.As.class),
-                                JsonTypeInfo.As.EXISTING_PROPERTY.name())
+                                JsonTypeInfo.As.PROPERTY.name())
                         .addMember("property", "$S", unionTypeDefinition.discriminant())
                         .addMember("visible", "true")
                         .addMember("defaultImpl", "$T.class", unknownInternalValueClassName)

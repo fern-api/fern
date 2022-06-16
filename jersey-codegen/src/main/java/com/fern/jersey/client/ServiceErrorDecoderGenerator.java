@@ -22,6 +22,7 @@ import feign.codec.ErrorDecoder;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 import javax.lang.model.element.Modifier;
 
 public final class ServiceErrorDecoderGenerator extends Generator {
@@ -37,6 +38,7 @@ public final class ServiceErrorDecoderGenerator extends Generator {
     private static final String DECODE_EXCEPTION_METHOD_NAME = "decodeException";
     private static final String DECODE_EXCEPTION_RESPONSE_PARAMETER_NAME = "response";
     private static final String DECODE_EXCEPTION_CLAZZ_PARAMETER_NAME = "clazz";
+    private static final String DECODE_EXCEPTION_RETRIEVER_PARAMETER_NAME = "exceptionRetriever";
 
     private final HttpService httpService;
     private final ClassName errorDecoderClassName;
@@ -95,9 +97,10 @@ public final class ServiceErrorDecoderGenerator extends Generator {
                             DECODE_METHOD_KEY_PARAMETER_NAME,
                             httpEndpoint.endpointId())
                     .addStatement(
-                            "return $L($L, $T.class).$L()",
+                            "return $L($L, $T.class, $T::$L)",
                             DECODE_EXCEPTION_METHOD_NAME,
                             DECODE_METHOD_RESPONSE_PARAMETER_NAME,
+                            maybeGeneratedEndpointErrorFile.get().className(),
                             maybeGeneratedEndpointErrorFile.get().className(),
                             FailedResponseGenerator.GET_NESTED_ERROR_METHOD_NAME)
                     .endControlFlow();
@@ -115,22 +118,28 @@ public final class ServiceErrorDecoderGenerator extends Generator {
         return MethodSpec.methodBuilder(DECODE_EXCEPTION_METHOD_NAME)
                 .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
                 .addTypeVariable(genericReturnType)
-                .returns(genericReturnType)
+                .returns(ClassNameUtils.EXCEPTION_CLASS_NAME)
                 .addParameter(FEIGN_RESPONSE_PARAMETER_TYPE, DECODE_EXCEPTION_RESPONSE_PARAMETER_NAME)
                 .addParameter(
                         ParameterizedTypeName.get(ClassName.get(Class.class), genericReturnType),
                         DECODE_EXCEPTION_CLAZZ_PARAMETER_NAME)
+                .addParameter(
+                        ParameterizedTypeName.get(
+                                ClassName.get(Function.class), genericReturnType, ClassNameUtils.EXCEPTION_CLASS_NAME),
+                        DECODE_EXCEPTION_RETRIEVER_PARAMETER_NAME)
                 .beginControlFlow("try")
                 .addStatement(
-                        "return $T.$L.readValue($L.body().asInputStream(), $L)",
+                        "$T value = $T.$L.readValue($L.body().asInputStream(), $L)",
+                        genericReturnType,
                         generatorContext.getClientObjectMappersFile().className(),
                         ObjectMapperGenerator.JSON_MAPPER_FIELD_NAME,
                         DECODE_EXCEPTION_RESPONSE_PARAMETER_NAME,
                         DECODE_EXCEPTION_CLAZZ_PARAMETER_NAME)
+                .addStatement("return $L.apply(value)", DECODE_EXCEPTION_RETRIEVER_PARAMETER_NAME)
                 .endControlFlow()
                 .beginControlFlow("catch ($T e)", ClassName.get(IOException.class))
                 .addStatement(
-                        "return () -> new $T($S)",
+                        "return new $T($S)",
                         generatorContext.getUnknownRemoteExceptionFile().className(),
                         "Failed to read error body")
                 .endControlFlow()

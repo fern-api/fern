@@ -26,14 +26,17 @@ public final class TypeDefinitionGenerator implements Type.Visitor<IGeneratedFil
     private final TypeDefinition typeDefinition;
     private final GeneratorContext generatorContext;
     private final Map<NamedType, GeneratedInterface> generatedInterfaces;
+    private final PackageType packageType;
 
     public TypeDefinitionGenerator(
             TypeDefinition typeDefinition,
             GeneratorContext generatorContext,
-            Map<NamedType, GeneratedInterface> generatedInterfaces) {
+            Map<NamedType, GeneratedInterface> generatedInterfaces,
+            PackageType packageType) {
         this.typeDefinition = typeDefinition;
         this.generatorContext = generatorContext;
         this.generatedInterfaces = generatedInterfaces;
+        this.packageType = packageType;
     }
 
     @Override
@@ -47,7 +50,7 @@ public final class TypeDefinitionGenerator implements Type.Visitor<IGeneratedFil
                 .collect(Collectors.toList());
         ObjectGenerator objectGenerator = new ObjectGenerator(
                 typeDefinition.name(),
-                PackageType.TYPES,
+                packageType,
                 objectTypeDefinition,
                 extendedInterfaces,
                 selfInterface,
@@ -58,21 +61,21 @@ public final class TypeDefinitionGenerator implements Type.Visitor<IGeneratedFil
     @Override
     public IGeneratedFile visitUnion(UnionTypeDefinition unionTypeDefinition) {
         UnionGenerator unionGenerator =
-                new UnionGenerator(typeDefinition.name(), PackageType.TYPES, unionTypeDefinition, generatorContext);
+                new UnionGenerator(typeDefinition.name(), packageType, unionTypeDefinition, generatorContext);
         return unionGenerator.generate();
     }
 
     @Override
     public IGeneratedFile visitAlias(AliasTypeDefinition aliasTypeDefinition) {
         AliasGenerator aliasGenerator =
-                new AliasGenerator(aliasTypeDefinition, PackageType.TYPES, typeDefinition.name(), generatorContext);
+                new AliasGenerator(aliasTypeDefinition, packageType, typeDefinition.name(), generatorContext);
         return aliasGenerator.generate();
     }
 
     @Override
     public IGeneratedFile visitEnum(EnumTypeDefinition enumTypeDefinition) {
         EnumGenerator enumGenerator =
-                new EnumGenerator(typeDefinition.name(), PackageType.TYPES, enumTypeDefinition, generatorContext);
+                new EnumGenerator(typeDefinition.name(), packageType, enumTypeDefinition, generatorContext);
         return enumGenerator.generate();
     }
 
