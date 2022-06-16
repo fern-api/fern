@@ -1,5 +1,6 @@
 lib
 build
+dist
 .yarn
 .husky
 generated

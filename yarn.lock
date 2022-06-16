@@ -1415,50 +1415,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/_root@workspace:packages/_root":
-  version: 0.0.0-use.local
-  resolution: "@fern-api/_root@workspace:packages/_root"
-  dependencies:
-    "@babel/core": "npm:^7.17.10"
-    "@babel/preset-env": "npm:^7.17.10"
-    "@babel/preset-typescript": "npm:^7.16.7"
-    "@fern-api/add-generator": "workspace:*"
-    "@fern-api/api": "workspace:*"
-    "@fern-api/commons": "workspace:*"
-    "@fern-api/compiler": "workspace:*"
-    "@fern-api/compiler-commons": "workspace:*"
-    "@fern-api/docker-utils": "workspace:*"
-    "@fern-api/ete-tests": "workspace:*"
-    "@fern-api/generator-runner": "workspace:*"
-    "@fern-api/init": "workspace:*"
-    "@fern-api/ir-generation": "workspace:*"
-    "@fern-api/openapi-converter": "workspace:*"
-    "@fern-api/syntax-analysis": "workspace:*"
-    "@fern-typescript/client": "workspace:*"
-    "@fern-typescript/commons": "workspace:*"
-    "@fern-typescript/encoders": "workspace:*"
-    "@fern-typescript/errors": "workspace:*"
-    "@fern-typescript/hathora-encoding-helper": "workspace:*"
-    "@fern-typescript/helper-manager": "workspace:*"
-    "@fern-typescript/helper-utils": "workspace:*"
-    "@fern-typescript/json-encoding-helper": "workspace:*"
-    "@fern-typescript/model": "workspace:*"
-    "@fern-typescript/server": "workspace:*"
-    "@fern-typescript/service-utils": "workspace:*"
-    "@fern-typescript/testing-utils": "workspace:*"
-    "@types/jest": "npm:^27.4.1"
-    "@types/node": "npm:^17.0.33"
-    depcheck: "npm:^1.4.3"
-    eslint: "npm:^8.12.0"
-    fern-api: "workspace:*"
-    fern-typescript: "workspace:*"
-    jest: "npm:^27.5.1"
-    npm-run-all: "npm:^4.1.5"
-    prettier: "npm:^2.6.2"
-    typescript: "npm:^4.6.4"
-  languageName: unknown
-  linkType: soft
-
 "@fern-api/add-generator@npm:0.0.85":
   version: 0.0.85
   resolution: "@fern-api/add-generator@npm:0.0.85"
@@ -1535,6 +1491,50 @@ __metadata:
     prettier: "npm:^2.6.2"
     typescript: "npm:^4.6.4"
     zod: "npm:^3.14.3"
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/compile-root@workspace:packages/_root":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/compile-root@workspace:packages/_root"
+  dependencies:
+    "@babel/core": "npm:^7.17.10"
+    "@babel/preset-env": "npm:^7.17.10"
+    "@babel/preset-typescript": "npm:^7.16.7"
+    "@fern-api/add-generator": "workspace:*"
+    "@fern-api/api": "workspace:*"
+    "@fern-api/commons": "workspace:*"
+    "@fern-api/compiler": "workspace:*"
+    "@fern-api/compiler-commons": "workspace:*"
+    "@fern-api/docker-utils": "workspace:*"
+    "@fern-api/ete-tests": "workspace:*"
+    "@fern-api/generator-runner": "workspace:*"
+    "@fern-api/init": "workspace:*"
+    "@fern-api/ir-generation": "workspace:*"
+    "@fern-api/openapi-converter": "workspace:*"
+    "@fern-api/syntax-analysis": "workspace:*"
+    "@fern-typescript/client": "workspace:*"
+    "@fern-typescript/commons": "workspace:*"
+    "@fern-typescript/encoders": "workspace:*"
+    "@fern-typescript/errors": "workspace:*"
+    "@fern-typescript/hathora-encoding-helper": "workspace:*"
+    "@fern-typescript/helper-manager": "workspace:*"
+    "@fern-typescript/helper-utils": "workspace:*"
+    "@fern-typescript/json-encoding-helper": "workspace:*"
+    "@fern-typescript/model": "workspace:*"
+    "@fern-typescript/server": "workspace:*"
+    "@fern-typescript/service-utils": "workspace:*"
+    "@fern-typescript/testing-utils": "workspace:*"
+    "@types/jest": "npm:^27.4.1"
+    "@types/node": "npm:^17.0.33"
+    depcheck: "npm:^1.4.3"
+    eslint: "npm:^8.12.0"
+    fern-api: "workspace:*"
+    fern-typescript: "workspace:*"
+    jest: "npm:^27.5.1"
+    npm-run-all: "npm:^4.1.5"
+    prettier: "npm:^2.6.2"
+    typescript: "npm:^4.6.4"
   languageName: unknown
   linkType: soft
 
