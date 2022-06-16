@@ -1415,6 +1415,50 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fern-api/_root@workspace:packages/_root":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/_root@workspace:packages/_root"
+  dependencies:
+    "@babel/core": "npm:^7.17.10"
+    "@babel/preset-env": "npm:^7.17.10"
+    "@babel/preset-typescript": "npm:^7.16.7"
+    "@fern-api/add-generator": "workspace:*"
+    "@fern-api/api": "workspace:*"
+    "@fern-api/commons": "workspace:*"
+    "@fern-api/compiler": "workspace:*"
+    "@fern-api/compiler-commons": "workspace:*"
+    "@fern-api/docker-utils": "workspace:*"
+    "@fern-api/ete-tests": "workspace:*"
+    "@fern-api/generator-runner": "workspace:*"
+    "@fern-api/init": "workspace:*"
+    "@fern-api/ir-generation": "workspace:*"
+    "@fern-api/openapi-converter": "workspace:*"
+    "@fern-api/syntax-analysis": "workspace:*"
+    "@fern-typescript/client": "workspace:*"
+    "@fern-typescript/commons": "workspace:*"
+    "@fern-typescript/encoders": "workspace:*"
+    "@fern-typescript/errors": "workspace:*"
+    "@fern-typescript/hathora-encoding-helper": "workspace:*"
+    "@fern-typescript/helper-manager": "workspace:*"
+    "@fern-typescript/helper-utils": "workspace:*"
+    "@fern-typescript/json-encoding-helper": "workspace:*"
+    "@fern-typescript/model": "workspace:*"
+    "@fern-typescript/server": "workspace:*"
+    "@fern-typescript/service-utils": "workspace:*"
+    "@fern-typescript/testing-utils": "workspace:*"
+    "@types/jest": "npm:^27.4.1"
+    "@types/node": "npm:^17.0.33"
+    depcheck: "npm:^1.4.3"
+    eslint: "npm:^8.12.0"
+    fern-api: "workspace:*"
+    fern-typescript: "workspace:*"
+    jest: "npm:^27.5.1"
+    npm-run-all: "npm:^4.1.5"
+    prettier: "npm:^2.6.2"
+    typescript: "npm:^4.6.4"
+  languageName: unknown
+  linkType: soft
+
 "@fern-api/add-generator@npm:0.0.85":
   version: 0.0.85
   resolution: "@fern-api/add-generator@npm:0.0.85"
@@ -1582,7 +1626,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/ete-tests@workspace:packages/ete-tests":
+"@fern-api/ete-tests@workspace:*, @fern-api/ete-tests@workspace:packages/ete-tests":
   version: 0.0.0-use.local
   resolution: "@fern-api/ete-tests@workspace:packages/ete-tests"
   dependencies:
@@ -1923,7 +1967,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/hathora-encoding-helper@workspace:packages/fern-typescript/helpers/built-in/hathora-encoding-helper":
+"@fern-typescript/hathora-encoding-helper@workspace:*, @fern-typescript/hathora-encoding-helper@workspace:packages/fern-typescript/helpers/built-in/hathora-encoding-helper":
   version: 0.0.0-use.local
   resolution: "@fern-typescript/hathora-encoding-helper@workspace:packages/fern-typescript/helpers/built-in/hathora-encoding-helper"
   dependencies:
@@ -2042,7 +2086,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/server@workspace:packages/fern-typescript/server":
+"@fern-typescript/server@workspace:*, @fern-typescript/server@workspace:packages/fern-typescript/server":
   version: 0.0.0-use.local
   resolution: "@fern-typescript/server@workspace:packages/fern-typescript/server"
   dependencies:
@@ -2062,7 +2106,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/service-utils@workspace:packages/fern-typescript/service-utils":
+"@fern-typescript/service-utils@workspace:*, @fern-typescript/service-utils@workspace:packages/fern-typescript/service-utils":
   version: 0.0.0-use.local
   resolution: "@fern-typescript/service-utils@workspace:packages/fern-typescript/service-utils"
   dependencies:
@@ -5381,7 +5425,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"fern-typescript@workspace:packages/fern-typescript/cli":
+"fern-typescript@workspace:*, fern-typescript@workspace:packages/fern-typescript/cli":
   version: 0.0.0-use.local
   resolution: "fern-typescript@workspace:packages/fern-typescript/cli"
   dependencies:
@@ -5420,17 +5464,21 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "fern@workspace:."
   dependencies:
+    "@types/lodash": "npm:^4.14.182"
     "@types/node": "npm:^17.0.33"
     "@typescript-eslint/eslint-plugin": "npm:^5.27.1"
     "@typescript-eslint/parser": "npm:^5.27.1"
+    chalk: "npm:^4.1.2"
     depcheck: "npm:^1.4.3"
     docsify-cli: "npm:^4.4.4"
     eslint: "npm:^8.17.0"
     eslint-plugin-jest: "npm:^26.5.3"
     fern-api: "npm:0.0.85"
     husky: "npm:^7.0.4"
+    immer: "npm:^9.0.15"
     jest: "npm:^27.5.1"
     lint-staged: "npm:^12.3.7"
+    lodash: "npm:^4.17.21"
     mrlint: "npm:^0.0.30"
     prettier: "npm:^2.6.2"
     ts-node: "npm:^10.8.0"
@@ -6078,6 +6126,13 @@ __metadata:
   version: 9.0.14
   resolution: "immer@npm:9.0.14"
   checksum: 2886b4eebc0f4e4806db1d8f37df5ed232559653a312c8d25dc47bc24051989cf81e8ee6a0420fb26e18da1dfabababb6e042d51811707c859299865a25683f6
+  languageName: node
+  linkType: hard
+
+"immer@npm:^9.0.15":
+  version: 9.0.15
+  resolution: "immer@npm:9.0.15"
+  checksum: 1805963014da1349a7164066692f2246a634e3197d7e48b3d33bb88447b4841d7c314ef414bb0059e83d46bd883b39add2a8d96dff40a54943d2ba8000ba109d
   languageName: node
   linkType: hard
 
