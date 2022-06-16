@@ -5,7 +5,7 @@ exports[`fern add tests fern add 1`] = `
 definition: src
 generators:
   - name: fernapi/fern-java
-    version: 0.0.30
+    version: 0.0.32
     output: generated-java
     config:
       packagePrefix: com
