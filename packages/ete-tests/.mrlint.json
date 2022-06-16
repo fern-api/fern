@@ -1,4 +1,9 @@
 {
   "type": "library",
-  "private": true
+  "private": true,
+  "rules": {
+    "ts-config": {
+      "exclude": ["./src/**/__test__/**/generated"]
+    }
+  }
 }
