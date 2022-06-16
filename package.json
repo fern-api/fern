@@ -39,8 +39,8 @@
     "webpack-cli": "^4.9.2"
   },
   "dependencies": {
-    "@fern-api/api": "^0.0.64",
-    "@fern-api/compiler": "^0.0.64",
+    "@fern-api/api": "^0.0.86",
+    "@fern-api/compiler": "^0.0.86",
     "postman-collection": "^4.1.2",
     "zod": "^3.16.0"
   },

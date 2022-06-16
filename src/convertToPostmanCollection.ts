@@ -88,7 +88,11 @@ function convertResponse(
     };
     if (httpEndpoint.response != null) {
         convertedResponse.description = httpEndpoint.response.docs ?? undefined;
-        convertedResponse.body = JSON.stringify(getMockBodyFromType(httpEndpoint.response.ok, allTypes), undefined, 4);
+        convertedResponse.body = JSON.stringify(
+            getMockBodyFromType(httpEndpoint.response.ok.type, allTypes),
+            undefined,
+            4
+        );
     }
     return convertedResponse;
 }
@@ -101,10 +105,7 @@ function convertRequest(
     let convertedRequest: RequestDefinition = {
         url: {
             host: [BASE_URL_VARIABLE],
-            path: [
-                ...convertPathToPostmanPathArray(httpService.basePath),
-                ...convertPathToPostmanPathArray(httpEndpoint.path),
-            ],
+            path: getPathArray(httpService.basePath, httpEndpoint.path),
         },
         header: [APPLICATION_JSON_HEADER_DEFINITION],
         method: convertHttpMethod(httpEndpoint.method),
@@ -118,6 +119,15 @@ function convertRequest(
         };
     }
     return convertedRequest;
+}
+
+function getPathArray(basePath: string | undefined | null, endpointPath: string) {
+    const path: string[] = [];
+    if (basePath != null) {
+        convertPathToPostmanPathArray(basePath).forEach((part) => path.push(part));
+    }
+    convertPathToPostmanPathArray(endpointPath).forEach((part) => path.push(part));
+    return path;
 }
 
 function convertPathToPostmanPathArray(path: string): string[] {
