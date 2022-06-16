@@ -36,7 +36,7 @@
     "docsify-cli": "^4.4.4",
     "eslint": "^8.17.0",
     "eslint-plugin-jest": "^26.5.3",
-    "fern-api": "0.0.74",
+    "fern-api": "0.0.85",
     "husky": "^7.0.4",
     "jest": "^27.5.1",
     "lint-staged": "^12.3.7",

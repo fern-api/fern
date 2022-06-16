@@ -1,5 +1,7 @@
 lib
 build
 .yarn
+.husky
 generated
 bundle.js
+.pnp*
