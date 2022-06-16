@@ -154,7 +154,7 @@ export type ErrorBody = ErrorBody.GenericMessage;
 
 export declare namespace ErrorBody {
   interface GenericMessage {
-    _type: \\"GenericMessage\\";
+    _error: \\"GenericMessage\\";
     GenericMessage: errors.GenericMessage;
   }
 
@@ -167,14 +167,14 @@ export declare namespace ErrorBody {
 export const ErrorBody = {
   GenericMessage: (value: errors.GenericMessage): ErrorBody.GenericMessage => ({
     GenericMessage: value,
-    _type: \\"GenericMessage\\",
+    _error: \\"GenericMessage\\",
   }),
 
   _visit: <Result>(
     value: ErrorBody,
     visitor: ErrorBody._Visitor<Result>
   ): Result => {
-    switch (value._type) {
+    switch (value._error) {
       case \\"GenericMessage\\":
         return visitor.GenericMessage(value.GenericMessage);
       default:
@@ -182,7 +182,7 @@ export const ErrorBody = {
     }
   },
 
-  _types: (): ErrorBody[\\"_type\\"][] => [\\"GenericMessage\\"],
+  _types: (): ErrorBody[\\"_error\\"][] => [\\"GenericMessage\\"],
 } as const;
 ",
   "/src/services/ChatService/operations/sendChat/Request.ts": "import * as ChatService from \\"../..\\";
@@ -369,7 +369,7 @@ export const ErrorBody = {
     return visitor._unknown();
   },
 
-  _types: (): ErrorBody[\\"_type\\"][] => [],
+  _types: (): ErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
   "/src/services/NoErrorsService/endpoints/get/Response.ts": "import * as NoErrorsService from \\"../..\\";
@@ -755,7 +755,7 @@ export const ErrorBody = {
     return visitor._unknown();
   },
 
-  _types: (): ErrorBody[\\"_type\\"][] => [],
+  _types: (): ErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
   "/src/services/PostsService/endpoints/createPost/Request.ts": "import * as model from \\"../../../../model\\";
@@ -794,7 +794,7 @@ export type ErrorBody = ErrorBody.PostNotFoundError;
 
 export declare namespace ErrorBody {
   interface PostNotFoundError extends errors.PostNotFoundError {
-    _type: \\"PostNotFoundError\\";
+    _error: \\"PostNotFoundError\\";
   }
 
   export interface _Visitor<Result> {
@@ -808,14 +808,14 @@ export const ErrorBody = {
     value: errors.PostNotFoundError
   ): ErrorBody.PostNotFoundError => ({
     ...value,
-    _type: \\"PostNotFoundError\\",
+    _error: \\"PostNotFoundError\\",
   }),
 
   _visit: <Result>(
     value: ErrorBody,
     visitor: ErrorBody._Visitor<Result>
   ): Result => {
-    switch (value._type) {
+    switch (value._error) {
       case \\"PostNotFoundError\\":
         return visitor.PostNotFoundError(value);
       default:
@@ -823,7 +823,7 @@ export const ErrorBody = {
     }
   },
 
-  _types: (): ErrorBody[\\"_type\\"][] => [\\"PostNotFoundError\\"],
+  _types: (): ErrorBody[\\"_error\\"][] => [\\"PostNotFoundError\\"],
 } as const;
 ",
   "/src/services/PostsService/endpoints/getPost/Request.ts": "import * as model from \\"../../../../model\\";
@@ -861,7 +861,7 @@ export type ErrorBody = ErrorBody.PostNotFoundError;
 
 export declare namespace ErrorBody {
   interface PostNotFoundError extends errors.PostNotFoundError {
-    _type: \\"PostNotFoundError\\";
+    _error: \\"PostNotFoundError\\";
   }
 
   export interface _Visitor<Result> {
@@ -875,14 +875,14 @@ export const ErrorBody = {
     value: errors.PostNotFoundError
   ): ErrorBody.PostNotFoundError => ({
     ...value,
-    _type: \\"PostNotFoundError\\",
+    _error: \\"PostNotFoundError\\",
   }),
 
   _visit: <Result>(
     value: ErrorBody,
     visitor: ErrorBody._Visitor<Result>
   ): Result => {
-    switch (value._type) {
+    switch (value._error) {
       case \\"PostNotFoundError\\":
         return visitor.PostNotFoundError(value);
       default:
@@ -890,7 +890,7 @@ export const ErrorBody = {
     }
   },
 
-  _types: (): ErrorBody[\\"_type\\"][] => [\\"PostNotFoundError\\"],
+  _types: (): ErrorBody[\\"_error\\"][] => [\\"PostNotFoundError\\"],
 } as const;
 ",
   "/src/services/PostsService/endpoints/getPostV2/Response.ts": "import * as PostsService from \\"../..\\";

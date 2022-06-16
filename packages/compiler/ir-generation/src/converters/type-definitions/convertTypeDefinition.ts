@@ -1,7 +1,6 @@
 import { FernFilepath, Type, TypeDefinition, TypeReference } from "@fern-api/api";
 import { assertNever } from "@fern-api/commons";
 import { RawSchemas } from "@fern-api/syntax-analysis";
-import { DEFAULT_UNION_TYPE_DISCRIMINANT } from "../../constants";
 import { getDocs } from "../../utils/getDocs";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { parseTypeName } from "../../utils/parseTypeName";
@@ -76,7 +75,7 @@ export function convertType({
 
     if (isRawUnionDefinition(typeDefinition)) {
         return Type.union({
-            discriminant: typeDefinition.discriminant ?? DEFAULT_UNION_TYPE_DISCRIMINANT,
+            discriminant: typeDefinition.discriminant ?? "_type",
             types: Object.entries(typeDefinition.union).map(([discriminantValue, unionedType]) => ({
                 discriminantValue,
                 valueType: parseTypeReference(unionedType),
