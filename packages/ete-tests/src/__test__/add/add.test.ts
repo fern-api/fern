@@ -20,7 +20,7 @@ describe("fern add tests", () => {
 });
 
 async function init() {
-    const init = execa("node", [path.join(process.cwd(), "../cli/cli"), "init"], {
+    const init = execa("node", [path.join(__dirname, "../../../../cli/cli"), "init"], {
         env: {
             NODE_ENV: "development",
         },
@@ -32,7 +32,7 @@ async function init() {
 }
 
 async function add(generator: string) {
-    await execa("node", [path.join(process.cwd(), "../cli/cli"), "add", generator], {
+    await execa("node", [path.join(__dirname, "../../../../cli/cli"), "add", generator], {
         env: {
             NODE_ENV: "development",
         },
