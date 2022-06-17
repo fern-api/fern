@@ -4,16 +4,22 @@ import { BUILD_PROJECT_SCRIPT_NAME, writeVolumeToDisk } from "@fern-typescript/c
 import execa from "execa";
 import { parseFernInput } from "fern-api";
 import { rm, writeFile } from "fs/promises";
+import IS_CI from "is-ci";
 import { Volume } from "memfs/lib/volume";
 import path from "path";
 
 export declare namespace runEteTest {
     export interface Args {
         /**
-         * directory for the ETE test. Should contain a src/ directory will the
+         * the file where the test lives.
+         */
+        testFile: string;
+
+        /**
+         * fixture for the ETE test. Should contain a src/ directory will the
          * fern yaml files.
          */
-        directory: string;
+        pathToFixture: string;
 
         generateFiles: (args: {
             volume: Volume;
@@ -22,15 +28,34 @@ export declare namespace runEteTest {
 
         /**
          * If true, generated files are outputed to a generated/ directory.
+         * enforced to false on CI
          */
         outputToDisk?: boolean;
     }
 }
 
-export async function runEteTest({ directory, generateFiles, outputToDisk = false }: runEteTest.Args): Promise<void> {
-    const generatedDir = path.join(directory, "generated");
+export async function runEteTest({
+    testFile,
+    pathToFixture,
+    generateFiles,
+    outputToDisk = false,
+}: runEteTest.Args): Promise<void> {
+    const testDirectory = path.dirname(testFile);
 
-    const files = await parseFernInput(path.join(directory, "src"));
+    let checkCompilation = true;
+    if (IS_CI || Math.random() > 0) {
+        outputToDisk = false;
+        checkCompilation = await hasFileChangedOnBranchInCI(
+            path.join(testDirectory, "__snapshots__", `${path.basename(testFile)}.snap`)
+        );
+    }
+
+    const absolutePathToFixture = path.resolve(testDirectory, pathToFixture);
+
+    const pathToGenerated = path.join(absolutePathToFixture, "generated");
+    await deleteDirectory(pathToGenerated);
+
+    const files = await parseFernInput(path.join(absolutePathToFixture, "src"));
     const compilerResult = await compile(files, undefined);
     if (!compilerResult.didSucceed) {
         throw new Error(JSON.stringify(compilerResult.failure));
@@ -43,21 +68,23 @@ export async function runEteTest({ directory, generateFiles, outputToDisk = fals
         intermediateRepresentation: compilerResult.intermediateRepresentation,
     });
 
-    // write to disk to check compilation
-    await deleteDirectory(generatedDir);
-    await writeVolumeToDisk(volume, generatedDir);
-    await installAndCompileGeneratedProject(generatedDir);
+    if (outputToDisk || checkCompilation) {
+        await writeVolumeToDisk(volume, pathToGenerated);
 
-    if (!outputToDisk) {
-        await deleteDirectory(generatedDir);
+        if (checkCompilation) {
+            await installAndCompileGeneratedProject(pathToGenerated);
+        }
+
+        if (!outputToDisk) {
+            await deleteDirectory(pathToGenerated);
+        }
     }
 
-    // use "/" as the base directory since this full path is stored in the snapshot
     expect(volume.toJSON()).toMatchSnapshot();
 }
 
-function deleteDirectory(directory: string): Promise<void> {
-    return rm(directory, { force: true, recursive: true });
+function deleteDirectory(pathToDirectory: string): Promise<void> {
+    return rm(pathToDirectory, { force: true, recursive: true });
 }
 
 export async function installAndCompileGeneratedProject(dir: string): Promise<void> {
@@ -71,4 +98,20 @@ export async function installAndCompileGeneratedProject(dir: string): Promise<vo
         },
     });
     await execa("yarn", [BUILD_PROJECT_SCRIPT_NAME], { cwd: dir });
+}
+
+const BRANCH_ENV_VAR = "CIRCLE_BRANCH";
+async function hasFileChangedOnBranchInCI(filepath: string): Promise<boolean> {
+    const branch = process.env[BRANCH_ENV_VAR] ?? "zk/root-level-jest";
+    if (branch == null) {
+        throw new Error(`Cannot check if file has changed because ${BRANCH_ENV_VAR} is not defined`);
+    }
+
+    try {
+        const mergeBaseResult = await execa("git", ["merge-base", branch, "main"]);
+        await execa("git", ["diff", "--exit-code", "--quiet", branch, mergeBaseResult.stdout, filepath]);
+        return false;
+    } catch (e) {
+        return true;
+    }
 }

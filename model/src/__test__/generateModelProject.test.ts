@@ -2,11 +2,12 @@ import { itFernETE } from "@fern-typescript/testing-utils";
 import path from "path";
 import { generateModelProject } from "../generateModelProject";
 
-const MOCK_APIS_DIR = path.join(__dirname, "mocks");
+const FIXTURES_DIR = "fixtures";
 
 describe("generateModelProject", () => {
     itFernETE("posts", {
-        directory: path.join(MOCK_APIS_DIR, "posts"),
+        testFile: __filename,
+        pathToFixture: path.join(FIXTURES_DIR, "posts"),
         generateFiles: async ({ volume, intermediateRepresentation }) => {
             await generateModelProject({
                 packageName: "posts",
@@ -18,7 +19,8 @@ describe("generateModelProject", () => {
     });
 
     itFernETE("fern IR", {
-        directory: path.join(MOCK_APIS_DIR, "fern-ir"),
+        testFile: __filename,
+        pathToFixture: path.join(FIXTURES_DIR, "fern-ir"),
         generateFiles: async ({ volume, intermediateRepresentation }) => {
             await generateModelProject({
                 packageName: "posts",
