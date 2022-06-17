@@ -1,8 +1,9 @@
-import { SingleUnionType } from "@fern-api/api";
+import { SingleUnionType, TypeReference } from "@fern-api/api";
 import {
     FernWriters,
     getNamedTypeReference,
     getTextOfTsNode,
+    getTypeReference,
     getWriterForMultiLineUnionType,
     maybeAddDocs,
     TypeResolver,
@@ -20,9 +21,17 @@ import {
 } from "ts-morph";
 import { getKeyForUnion, getResolvedTypeForSingleUnionType, ResolvedSingleUnionType } from "./utils";
 
-export interface SingleUnionTypeWithResolvedValueType {
+interface SingleUnionTypeWithResolvedValueType {
     originalType: SingleUnionType;
     resolvedType: ResolvedSingleUnionType | undefined;
+}
+
+export declare namespace generateUnionType {
+    export interface ObjectProperty {
+        key: string;
+        valueType: TypeReference;
+        generateValueCreator: (args: { file: SourceFile }) => ts.Expression;
+    }
 }
 
 export function generateUnionType({
@@ -31,7 +40,9 @@ export function generateUnionType({
     docs,
     discriminant,
     types,
+    additionalPropertiesForEveryType = [],
     typeResolver,
+    modelDirectory,
     baseDirectory,
     baseDirectoryType,
 }: {
@@ -40,7 +51,9 @@ export function generateUnionType({
     docs: string | null | undefined;
     discriminant: string;
     types: SingleUnionType[];
+    additionalPropertiesForEveryType?: generateUnionType.ObjectProperty[];
     typeResolver: TypeResolver;
+    modelDirectory: Directory;
     baseDirectory: Directory;
     baseDirectoryType: getNamedTypeReference.Args["baseDirectoryType"];
 }): void {
@@ -82,6 +95,20 @@ export function generateUnionType({
         const interfaceNode = module.addInterface(
             generateDiscriminatedSingleUnionTypeInterface({ discriminant, singleUnionType: originalType })
         );
+
+        for (const additionalProperty of additionalPropertiesForEveryType) {
+            interfaceNode.addProperty({
+                name: additionalProperty.key,
+                type: getTextOfTsNode(
+                    getTypeReference({
+                        reference: additionalProperty.valueType,
+                        referencedIn: file,
+                        baseDirectory: modelDirectory,
+                        baseDirectoryType: "model",
+                    })
+                ),
+            });
+        }
 
         if (resolvedType != null) {
             if (resolvedType.isExtendable) {
@@ -126,6 +153,8 @@ export function generateUnionType({
                     types: resolvedTypes,
                     discriminant,
                     visitorItems,
+                    additionalPropertiesForEveryType,
+                    file,
                 }),
             },
         ],
@@ -166,19 +195,31 @@ function createUtils({
     typeName,
     types,
     visitorItems,
+    additionalPropertiesForEveryType,
     discriminant,
+    file,
 }: {
     typeName: string;
     types: SingleUnionTypeWithResolvedValueType[];
     visitorItems: readonly visitorUtils.VisitableItem[];
+    additionalPropertiesForEveryType: generateUnionType.ObjectProperty[];
     discriminant: string;
+    file: SourceFile;
 }): WriterFunction {
     const writer = FernWriters.object.writer({ asConst: true });
 
     for (const singleUnionType of types) {
         writer.addProperty({
             key: singleUnionType.originalType.discriminantValue,
-            value: getTextOfTsNode(generateCreator({ typeName, singleUnionType, discriminant })),
+            value: getTextOfTsNode(
+                generateCreator({
+                    typeName,
+                    singleUnionType,
+                    discriminant,
+                    additionalPropertiesForEveryType,
+                    file,
+                })
+            ),
         });
         writer.addNewLine();
     }
@@ -227,10 +268,14 @@ function generateCreator({
     typeName,
     discriminant,
     singleUnionType,
+    additionalPropertiesForEveryType,
+    file,
 }: {
     typeName: string;
     discriminant: string;
     singleUnionType: SingleUnionTypeWithResolvedValueType;
+    additionalPropertiesForEveryType: generateUnionType.ObjectProperty[];
+    file: SourceFile;
 }): ts.ArrowFunction {
     const VALUE_PARAMETER_NAME = "value";
 
@@ -248,7 +293,7 @@ function generateCreator({
               )
             : undefined;
 
-    const additionalObjectProperties =
+    const maybeValueAssignment =
         parameterType != null
             ? parameterType.isExtendable
                 ? [ts.factory.createSpreadAssignment(ts.factory.createIdentifier(VALUE_PARAMETER_NAME))]
@@ -269,10 +314,16 @@ function generateCreator({
         ts.factory.createParenthesizedExpression(
             ts.factory.createObjectLiteralExpression(
                 [
-                    ...additionalObjectProperties,
+                    ...maybeValueAssignment,
                     ts.factory.createPropertyAssignment(
                         ts.factory.createIdentifier(discriminant),
                         ts.factory.createStringLiteral(singleUnionType.originalType.discriminantValue)
+                    ),
+                    ...additionalPropertiesForEveryType.map((additionalProperty) =>
+                        ts.factory.createPropertyAssignment(
+                            ts.factory.createIdentifier(additionalProperty.key),
+                            additionalProperty.generateValueCreator({ file })
+                        )
                     ),
                 ],
                 true

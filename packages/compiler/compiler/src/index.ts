@@ -1,3 +1,2 @@
 export { compile } from "./compiler";
-export { CompilerFailureType } from "./types";
-export type { Compiler } from "./types";
+export { CompilerFailureType, type Compiler } from "./types";
