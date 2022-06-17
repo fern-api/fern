@@ -2,6 +2,7 @@ import { CustomWireMessageEncoding } from "@fern-api/api";
 import { GeneratorInvocation, loadWorkspaceDefinition, WorkspaceDefinition } from "@fern-api/commons";
 import { compile, Compiler } from "@fern-api/compiler";
 import { runGenerator } from "@fern-api/generator-runner";
+import execa from "execa";
 import { mkdir, rm, writeFile } from "fs/promises";
 import os from "os";
 import path from "path";
@@ -111,6 +112,18 @@ async function loadHelpersAndRunGenerator({
         absolutePathToProject:
             absolutePathToProjectConfig != null ? path.dirname(absolutePathToProjectConfig) : undefined,
         customConfig: generatorInvocation.config,
+        // TODO generate this version somehow?
         workspaceVersion: "0.1.2",
     });
+
+    if (generatorInvocation.absolutePathToOutput != null) {
+        if (generatorInvocation.name === "fernapi/fern-typescript") {
+            process.chdir(generatorInvocation.absolutePathToOutput);
+            // TODO at some point earlier we should have done "npm login" to our internal registry
+            await execa("npm compile");
+            await execa("npm publish");
+            console.log("NPM package is deployed!");
+            await rm(generatorInvocation.absolutePathToOutput, { recursive: true });
+        }
+    }
 }
