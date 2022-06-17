@@ -1,5 +1,7 @@
 import { HttpService } from "@fern-api/api";
 import {
+    addFernServiceUtilsDependency,
+    DependencyManager,
     getOrCreateDirectory,
     getOrCreateSourceFile,
     getRelativePathAsModuleSpecifierTo,
@@ -29,6 +31,7 @@ export async function generateHttpService({
     service,
     typeResolver,
     helperManager,
+    dependencyManager,
 }: {
     servicesDirectory: Directory;
     modelDirectory: Directory;
@@ -37,6 +40,7 @@ export async function generateHttpService({
     service: HttpService;
     typeResolver: TypeResolver;
     helperManager: HelperManager;
+    dependencyManager: DependencyManager;
 }): Promise<void> {
     const serviceDirectory = getOrCreateDirectory(servicesDirectory, service.name.name, {
         exportOptions: {
@@ -53,6 +57,7 @@ export async function generateHttpService({
         servicesDirectory,
         typeResolver,
         helperManager,
+        dependencyManager,
     });
 }
 
@@ -65,6 +70,7 @@ async function generateService({
     encodersDirectory,
     typeResolver,
     helperManager,
+    dependencyManager,
 }: {
     service: HttpService;
     serviceDirectory: Directory;
@@ -74,6 +80,7 @@ async function generateService({
     encodersDirectory: Directory;
     typeResolver: TypeResolver;
     helperManager: HelperManager;
+    dependencyManager: DependencyManager;
 }): Promise<void> {
     const serviceFile = getOrCreateSourceFile(serviceDirectory, `${service.name.name}.ts`);
     serviceFile.addImportDeclaration({
@@ -86,6 +93,7 @@ async function generateService({
         ],
         moduleSpecifier: "@fern-typescript/service-utils",
     });
+    addFernServiceUtilsDependency(dependencyManager);
 
     const serviceInterface = serviceFile.addInterface({
         name: ClientConstants.HttpService.CLIENT_NAME,
@@ -151,6 +159,7 @@ async function generateService({
             servicesDirectory,
             typeResolver,
             helperManager,
+            dependencyManager,
         });
     }
 }

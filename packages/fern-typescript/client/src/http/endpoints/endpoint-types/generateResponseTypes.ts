@@ -1,5 +1,5 @@
 import { HttpEndpoint, NamedType } from "@fern-api/api";
-import { getTextOfTsKeyword, TypeResolver } from "@fern-typescript/commons";
+import { DependencyManager, getTextOfTsKeyword, TypeResolver } from "@fern-typescript/commons";
 import { Directory, ts } from "ts-morph";
 import { generateResponse } from "../../../commons/generate-response/generateResponse";
 import { getServiceTypeReference } from "../../../commons/service-types/get-service-type-reference/getServiceTypeReference";
@@ -15,6 +15,7 @@ export declare namespace generateResponseTypes {
         errorsDirectory: Directory;
         servicesDirectory: Directory;
         typeResolver: TypeResolver;
+        dependencyManager: DependencyManager;
     }
 
     export type Return = GeneratedEndpointTypes["response"];
@@ -28,11 +29,13 @@ export function generateResponseTypes({
     errorsDirectory,
     servicesDirectory,
     typeResolver,
+    dependencyManager,
 }: generateResponseTypes.Args): generateResponseTypes.Return {
     const { reference, successBodyReference } = generateResponse({
         errorsDirectory,
         modelDirectory,
         typeResolver,
+        dependencyManager,
         successResponse: {
             type: endpoint.response.ok.type,
             docs: endpoint.response.ok.docs,

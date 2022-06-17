@@ -1,5 +1,5 @@
 import { FailedResponse, Type } from "@fern-api/api";
-import { getOrCreateSourceFile, getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
+import { DependencyManager, getOrCreateSourceFile, getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
 import { Directory, OptionalKind, PropertySignatureStructure, SourceFile, ts, Writers } from "ts-morph";
 import { ClientConstants } from "../../constants";
 import { generateServiceTypeReference } from "../service-types/generateServiceTypeReference";
@@ -12,6 +12,7 @@ export declare namespace generateResponse {
         errorsDirectory: Directory;
         modelDirectory: Directory;
         typeResolver: TypeResolver;
+        dependencyManager: DependencyManager;
         successResponse: {
             docs: string | null | undefined;
             type: Type;
@@ -34,6 +35,7 @@ export function generateResponse({
     errorsDirectory,
     modelDirectory,
     typeResolver,
+    dependencyManager,
     successResponse,
     failedResponse,
     getTypeReferenceToServiceType,
@@ -77,6 +79,8 @@ export function generateResponse({
         errorBodyFile,
         errorsDirectory,
         typeResolver,
+        modelDirectory,
+        dependencyManager,
     });
 
     responseFile.addInterface({

@@ -13,7 +13,11 @@ types:
     extends: commons.WithDocs
     properties:
       discriminant: string
+      errorProperties: ResponseErrorProperties
       errors: list<ResponseError>
+  ResponseErrorProperties:
+    properties:
+      errorInstanceId: string
   ResponseError:
     extends: commons.WithDocs
     properties:
