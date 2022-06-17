@@ -42,6 +42,7 @@ export async function runEteTest({
     checkCompilation = false,
 }: runEteTest.Args): Promise<void> {
     const generatedDir = path.join(directory, "generated");
+    await deleteDirectory(generatedDir);
 
     const files = await parseFernInput(path.join(directory, "src"));
     const compilerResult = await compile(files, undefined);
@@ -58,8 +59,6 @@ export async function runEteTest({
 
     if (!IS_CI) {
         if (outputToDisk || checkCompilation) {
-            // write to disk
-            await deleteDirectory(generatedDir);
             await writeVolumeToDisk(volume, generatedDir);
 
             if (checkCompilation) {
