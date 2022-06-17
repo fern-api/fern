@@ -8,7 +8,7 @@ const ETE_TESTS_PACKAGE = "@fern-api/ete-tests";
 
 export default async (): Promise<Config> => {
     const packages = await getAllPackages({
-        // in CI, only run test on the changed packages
+        // in CI, only run tests on the changed packages
         since: IS_CI,
     });
 
