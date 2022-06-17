@@ -1,3 +1,3 @@
 module.exports = {
-    ...require("../../../shared/babel.config.shared.json"),
+    presets: [["@babel/preset-env", { targets: { node: "current" } }], "@babel/preset-typescript"],
 };
