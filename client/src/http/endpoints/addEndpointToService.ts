@@ -1,5 +1,5 @@
 import { HttpEndpoint, HttpService } from "@fern-api/api";
-import { getTextOfTsNode, getTypeReference, TypeResolver } from "@fern-typescript/commons";
+import { DependencyManager, getTextOfTsNode, getTypeReference, TypeResolver } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import {
     ClassDeclaration,
@@ -27,6 +27,7 @@ export async function addEndpointToService({
     servicesDirectory,
     typeResolver,
     helperManager,
+    dependencyManager,
 }: {
     endpoint: HttpEndpoint;
     serviceInterface: InterfaceDeclaration;
@@ -38,6 +39,7 @@ export async function addEndpointToService({
     servicesDirectory: Directory;
     typeResolver: TypeResolver;
     helperManager: HelperManager;
+    dependencyManager: DependencyManager;
 }): Promise<void> {
     const serviceFile = serviceInterface.getSourceFile();
 
@@ -49,6 +51,7 @@ export async function addEndpointToService({
         errorsDirectory,
         servicesDirectory,
         typeResolver,
+        dependencyManager,
     });
 
     const getReferenceToLocalServiceType = (typeName: ServiceTypeName): ts.TypeReferenceNode => {

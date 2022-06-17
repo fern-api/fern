@@ -39,6 +39,7 @@ export function generateType({
                 discriminant: unionTypeDefinition.discriminant,
                 types: unionTypeDefinition.types,
                 typeResolver,
+                modelDirectory,
                 baseDirectory: modelDirectory,
                 baseDirectoryType: "model",
             });

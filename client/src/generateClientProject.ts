@@ -1,5 +1,11 @@
 import { IntermediateRepresentation } from "@fern-api/api";
-import { generateTypeScriptProject, getOrCreateDirectory, TypeResolver } from "@fern-typescript/commons";
+import {
+    DependencyManager,
+    GeneratedProjectSrcInfo,
+    generateTypeScriptProject,
+    getOrCreateDirectory,
+    TypeResolver,
+} from "@fern-typescript/commons";
 import { generateEncoderFiles } from "@fern-typescript/encoders";
 import { generateErrorFiles } from "@fern-typescript/errors";
 import { HelperManager } from "@fern-typescript/helper-manager";
@@ -27,13 +33,6 @@ export async function generateClientProject({
         packageName,
         packageVersion,
         generateSrc: (directory) => generateClientFiles({ intermediateRepresentation, helperManager, directory }),
-        packageDependencies: {
-            "@fern-typescript/service-utils": "0.0.79",
-            uuid: "^8.3.2",
-        },
-        packageDevDependencies: {
-            "@types/uuid": "^8.3.4",
-        },
     });
 }
 
@@ -45,7 +44,8 @@ async function generateClientFiles({
     intermediateRepresentation: IntermediateRepresentation;
     helperManager: HelperManager;
     directory: Directory;
-}): Promise<void> {
+}): Promise<GeneratedProjectSrcInfo> {
+    const dependencyManager = new DependencyManager();
     const typeResolver = new TypeResolver(intermediateRepresentation);
 
     const modelDirectory = generateModelFiles({
@@ -73,6 +73,7 @@ async function generateClientFiles({
             encodersDirectory,
             typeResolver,
             helperManager,
+            dependencyManager,
         });
     }
 
@@ -85,6 +86,7 @@ async function generateClientFiles({
             encodersDirectory,
             typeResolver,
             helperManager,
+            dependencyManager,
         });
     }
 
@@ -96,4 +98,8 @@ async function generateClientFiles({
         helperManager,
         typeResolver,
     });
+
+    return {
+        dependencies: dependencyManager.getDependencies(),
+    };
 }

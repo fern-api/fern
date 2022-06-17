@@ -1,6 +1,6 @@
 export { getOrCreateDirectory } from "./codegen/file-system/getOrCreateDirectory";
 export { getOrCreateSourceFile } from "./codegen/file-system/getOrCreateSourceFile";
-export { withProject } from "./codegen/file-system/withProject";
+export { ProjectCreator } from "./codegen/file-system/ProjectCreator";
 export { getFilePathForError } from "./codegen/references/getFilePathForError";
 export { getFilePathForNamedType } from "./codegen/references/getFilePathForNamedType";
 export { getNamedTypeReference } from "./codegen/references/getNamedTypeReference";
@@ -14,8 +14,14 @@ export { maybeAddDocs } from "./codegen/utils/maybeAddDocs";
 export * as visitorUtils from "./codegen/utils/visitorUtils";
 export { FernWriters } from "./codegen/writers";
 export { getWriterForMultiLineUnionType } from "./codegen/writers/getWriterForMultiLineUnionType";
+export { addFernServiceUtilsDependency } from "./dependencies/addFernServiceUtilsDependency";
+export { addUuidDependency } from "./dependencies/addUuidDependency";
+export { DependencyManager } from "./dependencies/DependencyManager";
 export { BUILD_PROJECT_SCRIPT_NAME } from "./generate-ts-project/generatePackageJson";
-export { generateTypeScriptProject } from "./generate-ts-project/generateTypeScriptProject";
+export {
+    generateTypeScriptProject,
+    type GeneratedProjectSrcInfo,
+} from "./generate-ts-project/generateTypeScriptProject";
 export { TypeResolver } from "./type-resolver/TypeResolver";
 export { ResolvedType } from "./type-resolver/types";
 export { validateSchema } from "./validateSchema";
