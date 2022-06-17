@@ -1,0 +1,33 @@
+{
+  "extends": "../../shared/tsconfig.shared.json",
+  "compilerOptions": { "composite": true, "outDir": "lib/cjs", "rootDir": "src", "module": "CommonJS" },
+  "include": ["./src"],
+  "references": [
+    { "path": "../add-generator/tsconfig.json" },
+    { "path": "../cli/tsconfig.json" },
+    { "path": "../commons/tsconfig.json" },
+    { "path": "../compiler/commons/tsconfig.json" },
+    { "path": "../compiler/compiler/tsconfig.json" },
+    { "path": "../compiler/generators/docker-utils/tsconfig.json" },
+    { "path": "../compiler/generators/generator-runner/tsconfig.json" },
+    { "path": "../compiler/ir-generation/tsconfig.json" },
+    { "path": "../compiler/ir-types/fern-ir-typescript/tsconfig.json" },
+    { "path": "../compiler/syntax-analysis/tsconfig.json" },
+    { "path": "../ete-tests/tsconfig.json" },
+    { "path": "../fern-typescript/cli/tsconfig.json" },
+    { "path": "../fern-typescript/client/tsconfig.json" },
+    { "path": "../fern-typescript/commons/tsconfig.json" },
+    { "path": "../fern-typescript/encoders/tsconfig.json" },
+    { "path": "../fern-typescript/errors/tsconfig.json" },
+    { "path": "../fern-typescript/helpers/built-in/hathora-encoding-helper/tsconfig.json" },
+    { "path": "../fern-typescript/helpers/built-in/json-encoding-helper/tsconfig.json" },
+    { "path": "../fern-typescript/helpers/helper-manager/tsconfig.json" },
+    { "path": "../fern-typescript/helpers/utils/tsconfig.json" },
+    { "path": "../fern-typescript/model/tsconfig.json" },
+    { "path": "../fern-typescript/server/tsconfig.json" },
+    { "path": "../fern-typescript/service-utils/tsconfig.json" },
+    { "path": "../fern-typescript/testing-utils/tsconfig.json" },
+    { "path": "../init/tsconfig.json" },
+    { "path": "../openapi-converter/tsconfig.json" }
+  ]
+}
