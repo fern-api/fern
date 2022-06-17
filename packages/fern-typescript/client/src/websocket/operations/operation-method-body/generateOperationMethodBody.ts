@@ -1,5 +1,5 @@
 import { WebSocketOperation } from "@fern-api/api";
-import { getTextOfTsNode } from "@fern-typescript/commons";
+import { addUuidDependency, DependencyManager, getTextOfTsNode } from "@fern-typescript/commons";
 import { SourceFile, StatementStructures, ts, WriterFunction } from "ts-morph";
 import { ServiceTypeName } from "../../../commons/service-types/types";
 import { ClientConstants } from "../../../constants";
@@ -13,11 +13,13 @@ export function generateOperationMethodBody({
     operationTypes,
     channelFile,
     getReferenceToLocalServiceType,
+    dependencyManager,
 }: {
     operation: WebSocketOperation;
     operationTypes: GeneratedOperationTypes;
     channelFile: SourceFile;
     getReferenceToLocalServiceType: (typeName: ServiceTypeName) => ts.TypeReferenceNode;
+    dependencyManager: DependencyManager;
 }): (StatementStructures | WriterFunction | string)[] {
     return [
         (writer) => {
@@ -77,6 +79,7 @@ export function generateOperationMethodBody({
                                 channelFile,
                                 getReferenceToLocalServiceType,
                                 operationTypes,
+                                dependencyManager,
                             }),
                             true
                         )
@@ -92,16 +95,19 @@ function generatePromiseBody({
     channelFile,
     getReferenceToLocalServiceType,
     operationTypes,
+    dependencyManager,
 }: {
     operation: WebSocketOperation;
     channelFile: SourceFile;
     getReferenceToLocalServiceType: (typeName: ServiceTypeName) => ts.TypeReferenceNode;
     operationTypes: GeneratedOperationTypes;
+    dependencyManager: DependencyManager;
 }): ts.Statement[] {
     channelFile.addImportDeclaration({
         moduleSpecifier: "uuid",
         defaultImport: "uuid",
     });
+    addUuidDependency(dependencyManager);
 
     const messageElements: ts.ObjectLiteralElementLike[] = [
         ts.factory.createPropertyAssignment(

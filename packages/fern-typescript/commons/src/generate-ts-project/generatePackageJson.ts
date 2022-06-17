@@ -1,5 +1,6 @@
 import { Volume } from "memfs/lib/volume";
 import path from "path";
+import { PackageDependencies } from "../dependencies/DependencyManager";
 import { CJS_TSCONFIG_PATH, ESM_TSCONFIG_PATH } from "./generateTsConfig";
 import {
     getPathToProjectFile,
@@ -17,14 +18,12 @@ export async function generatePackageJson({
     volume,
     packageName,
     packageVersion,
-    packageDependencies = {},
-    packageDevDependencies = {},
+    dependencies,
 }: {
     volume: Volume;
     packageName: string;
     packageVersion: string;
-    packageDependencies?: Record<string, string>;
-    packageDevDependencies?: Record<string, string>;
+    dependencies: PackageDependencies | undefined;
 }): Promise<void> {
     await volume.promises.writeFile(
         getPathToProjectFile("package.json"),
@@ -55,10 +54,10 @@ export async function generatePackageJson({
                     ].join(" && "),
                 },
                 dependencies: {
-                    ...packageDependencies,
+                    ...dependencies?.dependencies,
                 },
                 devDependencies: {
-                    ...packageDevDependencies,
+                    ...dependencies?.devDependencies,
                     "@types/node": "^17.0.33",
                     "npm-run-all": "^4.1.5",
                     typescript: "^4.6.4",

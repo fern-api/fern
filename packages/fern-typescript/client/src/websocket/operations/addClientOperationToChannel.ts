@@ -1,5 +1,11 @@
 import { WebSocketChannel, WebSocketOperation } from "@fern-api/api";
-import { getOrCreateDirectory, getTextOfTsNode, getTypeReference, TypeResolver } from "@fern-typescript/commons";
+import {
+    DependencyManager,
+    getOrCreateDirectory,
+    getTextOfTsNode,
+    getTypeReference,
+    TypeResolver,
+} from "@fern-typescript/commons";
 import {
     ClassDeclaration,
     Directory,
@@ -26,6 +32,7 @@ export declare namespace addClientOperationToChannel {
         errorsDirectory: Directory;
         servicesDirectory: Directory;
         typeResolver: TypeResolver;
+        dependencyManager: DependencyManager;
     }
 
     export interface Return {
@@ -42,6 +49,7 @@ export function addClientOperationToChannel({
     errorsDirectory,
     servicesDirectory,
     typeResolver,
+    dependencyManager,
 }: addClientOperationToChannel.Args): addClientOperationToChannel.Return {
     const channelFile = channelClass.getSourceFile();
     const channelDirectory = channelFile.getDirectory();
@@ -58,6 +66,7 @@ export function addClientOperationToChannel({
         errorsDirectory,
         servicesDirectory,
         typeResolver,
+        dependencyManager,
     });
 
     const getReferenceToLocalServiceType = (typeName: ServiceTypeName): ts.TypeReferenceNode => {
@@ -112,6 +121,7 @@ export function addClientOperationToChannel({
             operationTypes: generatedOperationTypes,
             channelFile,
             getReferenceToLocalServiceType,
+            dependencyManager,
         }),
     });
 

@@ -1,0 +1,18 @@
+{
+  "extends": "../../../../../shared/tsconfig.shared.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "dist",
+    "sourceMap": false,
+    "rootDir": "src",
+    "module": "esnext"
+  },
+  "include": ["src"],
+  "references": [
+    { "path": "../../../client/tsconfig.json" },
+    { "path": "../../../model/tsconfig.json" },
+    { "path": "../../../commons/tsconfig.json" },
+    { "path": "../../utils/tsconfig.json" },
+    { "path": "../../../../compiler/ir-types/fern-ir-typescript/tsconfig.json" }
+  ]
+}
