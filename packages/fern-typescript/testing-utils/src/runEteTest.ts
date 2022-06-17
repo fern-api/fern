@@ -4,6 +4,7 @@ import { BUILD_PROJECT_SCRIPT_NAME, writeVolumeToDisk } from "@fern-typescript/c
 import execa from "execa";
 import { parseFernInput } from "fern-api";
 import { rm, writeFile } from "fs/promises";
+import IS_CI from "is-ci";
 import { Volume } from "memfs/lib/volume";
 import path from "path";
 
@@ -21,13 +22,25 @@ export declare namespace runEteTest {
         }) => void | Promise<void>;
 
         /**
+         * If true, generated files are built and compiled.
+         * enforced to false on CI.
+         */
+        checkCompilation?: boolean;
+
+        /**
          * If true, generated files are outputed to a generated/ directory.
+         * enforced to false on CI
          */
         outputToDisk?: boolean;
     }
 }
 
-export async function runEteTest({ directory, generateFiles, outputToDisk = false }: runEteTest.Args): Promise<void> {
+export async function runEteTest({
+    directory,
+    generateFiles,
+    outputToDisk = false,
+    checkCompilation = false,
+}: runEteTest.Args): Promise<void> {
     const generatedDir = path.join(directory, "generated");
 
     const files = await parseFernInput(path.join(directory, "src"));
@@ -43,13 +56,20 @@ export async function runEteTest({ directory, generateFiles, outputToDisk = fals
         intermediateRepresentation: compilerResult.intermediateRepresentation,
     });
 
-    // write to disk to check compilation
-    await deleteDirectory(generatedDir);
-    await writeVolumeToDisk(volume, generatedDir);
-    await installAndCompileGeneratedProject(generatedDir);
+    if (!IS_CI) {
+        if (outputToDisk || checkCompilation) {
+            // write to disk
+            await deleteDirectory(generatedDir);
+            await writeVolumeToDisk(volume, generatedDir);
 
-    if (!outputToDisk) {
-        await deleteDirectory(generatedDir);
+            if (checkCompilation) {
+                await installAndCompileGeneratedProject(generatedDir);
+            }
+
+            if (!outputToDisk) {
+                await deleteDirectory(generatedDir);
+            }
+        }
     }
 
     // use "/" as the base directory since this full path is stored in the snapshot
