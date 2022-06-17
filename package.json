@@ -14,7 +14,7 @@
     "compile": "yarn compile:prepare && yarn workspace @fern-api/compile-root run compile",
     "compile:prepare": "ts-node scripts/checkRootPackage.ts --fix",
     "compile:all": "yarn workspaces foreach --verbose --parallel --topological-dev run compile:all",
-    "test": "yarn workspaces foreach --verbose --parallel run test --since=main",
+    "test": "yarn run compile && yarn workspaces foreach --verbose --parallel --since run test",
     "test:all": "yarn run compile && jest --passWithNoTests",
     "lint:eslint": "eslint --max-warnings 0 .",
     "lint:eslint:fix": "yarn lint:eslint --fix",

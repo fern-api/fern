@@ -11,21 +11,20 @@ import path from "path";
 export declare namespace runEteTest {
     export interface Args {
         /**
-         * directory for the ETE test. Should contain a src/ directory will the
+         * the file where the test lives.
+         */
+        testFile: string;
+
+        /**
+         * fixture for the ETE test. Should contain a src/ directory will the
          * fern yaml files.
          */
-        directory: string;
+        pathToFixture: string;
 
         generateFiles: (args: {
             volume: Volume;
             intermediateRepresentation: IntermediateRepresentation;
         }) => void | Promise<void>;
-
-        /**
-         * If true, generated files are built and compiled.
-         * enforced to false on CI.
-         */
-        checkCompilation?: boolean;
 
         /**
          * If true, generated files are outputed to a generated/ directory.
@@ -36,15 +35,27 @@ export declare namespace runEteTest {
 }
 
 export async function runEteTest({
-    directory,
+    testFile,
+    pathToFixture,
     generateFiles,
     outputToDisk = false,
-    checkCompilation = false,
 }: runEteTest.Args): Promise<void> {
-    const generatedDir = path.join(directory, "generated");
-    await deleteDirectory(generatedDir);
+    const testDirectory = path.dirname(testFile);
 
-    const files = await parseFernInput(path.join(directory, "src"));
+    let checkCompilation = true;
+    if (IS_CI) {
+        outputToDisk = false;
+        checkCompilation = await hasFileChangedOnBranchInCI(
+            path.join(testDirectory, "__snapshots__", path.basename(testFile, `${path.extname(testFile)}.snap`))
+        );
+    }
+
+    const absolutePathToFixture = path.resolve(testDirectory, pathToFixture);
+
+    const pathToGenerated = path.join(absolutePathToFixture, "generated");
+    await deleteDirectory(pathToGenerated);
+
+    const files = await parseFernInput(path.join(absolutePathToFixture, "src"));
     const compilerResult = await compile(files, undefined);
     if (!compilerResult.didSucceed) {
         throw new Error(JSON.stringify(compilerResult.failure));
@@ -57,26 +68,23 @@ export async function runEteTest({
         intermediateRepresentation: compilerResult.intermediateRepresentation,
     });
 
-    if (!IS_CI) {
-        if (outputToDisk || checkCompilation) {
-            await writeVolumeToDisk(volume, generatedDir);
+    if (outputToDisk || checkCompilation) {
+        await writeVolumeToDisk(volume, pathToGenerated);
 
-            if (checkCompilation) {
-                await installAndCompileGeneratedProject(generatedDir);
-            }
+        if (checkCompilation) {
+            await installAndCompileGeneratedProject(pathToGenerated);
+        }
 
-            if (!outputToDisk) {
-                await deleteDirectory(generatedDir);
-            }
+        if (!outputToDisk) {
+            await deleteDirectory(pathToGenerated);
         }
     }
 
-    // use "/" as the base directory since this full path is stored in the snapshot
     expect(volume.toJSON()).toMatchSnapshot();
 }
 
-function deleteDirectory(directory: string): Promise<void> {
-    return rm(directory, { force: true, recursive: true });
+function deleteDirectory(pathToDirectory: string): Promise<void> {
+    return rm(pathToDirectory, { force: true, recursive: true });
 }
 
 export async function installAndCompileGeneratedProject(dir: string): Promise<void> {
@@ -90,4 +98,20 @@ export async function installAndCompileGeneratedProject(dir: string): Promise<vo
         },
     });
     await execa("yarn", [BUILD_PROJECT_SCRIPT_NAME], { cwd: dir });
+}
+
+const BRANCH_ENV_VAR = "CIRCLE_BRANCH";
+async function hasFileChangedOnBranchInCI(filepath: string): Promise<boolean> {
+    const branch = process.env[BRANCH_ENV_VAR];
+    if (branch == null) {
+        throw new Error(`Cannot check if file has changed because ${BRANCH_ENV_VAR} is not defined`);
+    }
+
+    try {
+        const mergeBaseResult = await execa("git", ["merge-base", branch, "main"]);
+        await execa("git", ["diff", "--exit-code", "--quiet", branch, mergeBaseResult.stdout, filepath]);
+        return false;
+    } catch {
+        return true;
+    }
 }
