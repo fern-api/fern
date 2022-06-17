@@ -23,7 +23,6 @@ Object {
         \\"build:cjs\\": \\"tsc --project tsconfig.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"commonjs\\\\\\" }' > lib/cjs/package.json\\"
     },
     \\"dependencies\\": {
-        \\"@fern-typescript/service-utils\\": \\"0.0.79\\",
         \\"uuid\\": \\"^8.3.2\\"
     },
     \\"devDependencies\\": {
@@ -148,13 +147,15 @@ export * from \\"./operations\\";
 ",
   "/src/services/ChatService/operations/index.ts": "export * as sendChat from \\"./sendChat\\";
 ",
-  "/src/services/ChatService/operations/sendChat/ErrorBody.ts": "import * as errors from \\"../../../../errors\\";
+  "/src/services/ChatService/operations/sendChat/ErrorBody.ts": "import * as uuid from \\"uuid\\";
+import * as errors from \\"../../../../errors\\";
 
 export type ErrorBody = ErrorBody.GenericMessage;
 
 export declare namespace ErrorBody {
   interface GenericMessage {
     _error: \\"GenericMessage\\";
+    _errorInstanceId: string;
     GenericMessage: errors.GenericMessage;
   }
 
@@ -168,6 +169,7 @@ export const ErrorBody = {
   GenericMessage: (value: errors.GenericMessage): ErrorBody.GenericMessage => ({
     GenericMessage: value,
     _error: \\"GenericMessage\\",
+    _errorInstanceId: uuid.v4(),
   }),
 
   _visit: <Result>(

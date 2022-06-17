@@ -6,26 +6,17 @@ import { isEqual } from "lodash";
 import path from "path";
 import process from "process";
 import { promisify } from "util";
+import { getAllPackages } from "./getAllPackages";
 
 const promisifiedExec = promisify(exec);
 
-const MONOREPO_ROOT_PACKAGE = "fern";
 const COMPILE_ROOT_PACKAGE = "@fern-api/compile-root";
-
-interface YarnPackage {
-    name: string;
-    location: string;
-}
 
 async function main() {
     const argv = process.argv;
     const shouldFix = argv[2] === "--fix";
 
-    const { stdout } = await promisifiedExec("yarn workspaces list --json");
-    const packages = stdout
-        .trim()
-        .split("\n")
-        .map((line): YarnPackage => JSON.parse(line));
+    const packages = await getAllPackages();
 
     const rootPackage = packages.find((p) => p.name === COMPILE_ROOT_PACKAGE);
     if (rootPackage == null) {
@@ -38,8 +29,7 @@ async function main() {
     const oldDependencies = rootPackageJson.dependencies as Record<string, string>;
     const newDependencies = packages
         .map((p) => p.name)
-        .filter((name) => name !== MONOREPO_ROOT_PACKAGE && name !== COMPILE_ROOT_PACKAGE)
-        .sort()
+        .filter((name) => name !== COMPILE_ROOT_PACKAGE)
         .reduce(
             (dependencies, name) => ({
                 ...dependencies,

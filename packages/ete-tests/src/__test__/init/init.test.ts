@@ -10,7 +10,7 @@ describe("fern init tests", () => {
     it("fern init", async () => {
         await rm(GENERATED_DIR, { force: true, recursive: true });
         await mkdir(GENERATED_DIR);
-        const cmd = execa("node", [path.join(process.cwd(), "../cli/cli"), "init"], {
+        const cmd = execa("node", [path.join(__dirname, "../../../../cli/cli"), "init"], {
             env: {
                 NODE_ENV: "development",
             },
