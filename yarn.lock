@@ -1900,57 +1900,57 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/mrlint-commons@npm:0.0.31":
-  version: 0.0.31
-  resolution: "@fern-api/mrlint-commons@npm:0.0.31"
+"@fern-api/mrlint-commons@npm:0.0.33":
+  version: 0.0.33
+  resolution: "@fern-api/mrlint-commons@npm:0.0.33"
   dependencies:
-    "@fern-api/mrlint-virtual-file-system": 0.0.31
-  checksum: 2de13317361ded1786c9287baf2cd77b19a3d329860f036fe59395a469546deb9fda1291e19310b78ee53e8cc8a808ac92a4b4860c02819bc5a9c5b1a0a24170
+    "@fern-api/mrlint-virtual-file-system": 0.0.33
+  checksum: d68319f93c4af00bba70a7f5bb028f399a4a9a95abc3049ab0ae411d36f52226f545485a44f8fe5a816ce98fb184074747c74a4b0faa5aac78d7ad1b376ae5bc
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-lint@npm:0.0.31":
-  version: 0.0.31
-  resolution: "@fern-api/mrlint-lint@npm:0.0.31"
+"@fern-api/mrlint-lint@npm:0.0.33":
+  version: 0.0.33
+  resolution: "@fern-api/mrlint-lint@npm:0.0.33"
   dependencies:
-    "@fern-api/mrlint-commons": 0.0.31
-    "@fern-api/mrlint-virtual-file-system": 0.0.31
+    "@fern-api/mrlint-commons": 0.0.33
+    "@fern-api/mrlint-virtual-file-system": 0.0.33
     chalk: ^4.1.2
     diff: ^5.0.0
     prettier: ^2.6.2
-  checksum: 9cc599534e21a7e7b25aa474421176db2a2c92083a12b427fd9361211fa30f4bd4b6e7b5658a699aa695ba00219a668b96256f85ec0a01f2be733d5ed059d7c0
+  checksum: 118930aa50a6c83cd009f0d5097669f67f9e7b6de322e28bb80cf4480c512d483c7132f6ede3cceae2077bdd5a6e799b949c77b555dc5814ac198d115b2f5da7
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-parser@npm:0.0.31":
-  version: 0.0.31
-  resolution: "@fern-api/mrlint-parser@npm:0.0.31"
+"@fern-api/mrlint-parser@npm:0.0.33":
+  version: 0.0.33
+  resolution: "@fern-api/mrlint-parser@npm:0.0.33"
   dependencies:
-    "@fern-api/mrlint-commons": 0.0.31
-    "@fern-api/mrlint-rules": 0.0.31
+    "@fern-api/mrlint-commons": 0.0.33
+    "@fern-api/mrlint-rules": 0.0.33
     execa: ^5.1.1
     find-up: ^5.0.0
     js-yaml: ^4.1.0
     zod: ^3.14.3
-  checksum: 164983635e35ea6ec4270452c44910e19081d77f4d88cb8e30bdde6d77453a55e6fe2fe3935d55dedba8dfe69c3bbdc293b170271e641680170d94e1e7a64f21
+  checksum: df8abcf748ddfe609a5e8d2d20fc82fb6f5e59a96c9314191228c62b632f9adda46dbd6444ffa03e5176a63936bb7ea4e2341f425c3324abb1ae6040a44f72d8
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-rules@npm:0.0.31":
-  version: 0.0.31
-  resolution: "@fern-api/mrlint-rules@npm:0.0.31"
+"@fern-api/mrlint-rules@npm:0.0.33":
+  version: 0.0.33
+  resolution: "@fern-api/mrlint-rules@npm:0.0.33"
   dependencies:
-    "@fern-api/mrlint-commons": 0.0.31
-    "@fern-api/mrlint-virtual-file-system": 0.0.31
+    "@fern-api/mrlint-commons": 0.0.33
+    "@fern-api/mrlint-virtual-file-system": 0.0.33
     immer: ^9.0.12
-  checksum: b027541dd664fb991e0a3534b2a4f1c8b0542cbe6e0b8e8ac4cd36dd28336cea4657b1e12271258441bd6b19359787a837073e4b306402af1ea01839f2f99d1d
+  checksum: edb2ded6912e95c7f3264219c5844233a097be864881e4aa8b28cc0b55dada9f7ebfac0e83a304638cec4b8d778f9261f826fb304a8a9fc77b6f6028e4337fcc
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-virtual-file-system@npm:0.0.31":
-  version: 0.0.31
-  resolution: "@fern-api/mrlint-virtual-file-system@npm:0.0.31"
-  checksum: 1c60b6c94a9c07240e093b30f329b3af522f45f17b47ff1a2efcadcff4ea6080fa123b84fd54a89fb1576774d5ed4c1d4aecd404a644c99fbc26103fea2f1521
+"@fern-api/mrlint-virtual-file-system@npm:0.0.33":
+  version: 0.0.33
+  resolution: "@fern-api/mrlint-virtual-file-system@npm:0.0.33"
+  checksum: c4327df31f8d0867230bf3e0ba9af6cbee46048ce0c40b5c7ebe40abef2a27f2b352e608df2c1e039496171e863d1710c019eae058366c25f500934738e3feeb
   languageName: node
   linkType: hard
 
@@ -5532,6 +5532,7 @@ __metadata:
     "@babel/core": ^7.18.5
     "@babel/preset-env": ^7.18.2
     "@babel/preset-typescript": ^7.17.12
+    "@types/is-ci": ^3.0.0
     "@types/jest": ^28.1.2
     "@types/lodash": ^4.14.182
     "@types/node": ^17.0.33
@@ -5542,13 +5543,15 @@ __metadata:
     docsify-cli: ^4.4.4
     eslint: ^8.17.0
     eslint-plugin-jest: ^26.5.3
+    execa: ^5.1.1
     fern-api: 0.0.85
     husky: ^7.0.4
     immer: ^9.0.15
+    is-ci: ^3.0.1
     jest: ^28.1.1
     lint-staged: ^12.3.7
     lodash: ^4.17.21
-    mrlint: ^0.0.31
+    mrlint: ^0.0.33
     prettier: ^2.6.2
     ts-node: ^10.8.0
     typescript: ^4.6.4
@@ -7726,19 +7729,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mrlint@npm:^0.0.31":
-  version: 0.0.31
-  resolution: "mrlint@npm:0.0.31"
+"mrlint@npm:^0.0.33":
+  version: 0.0.33
+  resolution: "mrlint@npm:0.0.33"
   dependencies:
-    "@fern-api/mrlint-commons": 0.0.31
-    "@fern-api/mrlint-lint": 0.0.31
-    "@fern-api/mrlint-parser": 0.0.31
-    "@fern-api/mrlint-rules": 0.0.31
+    "@fern-api/mrlint-commons": 0.0.33
+    "@fern-api/mrlint-lint": 0.0.33
+    "@fern-api/mrlint-parser": 0.0.33
+    "@fern-api/mrlint-rules": 0.0.33
     chalk: ^4.1.2
     yargs: ^17.3.1
   bin:
     mrlint: ./cli
-  checksum: 5adfb8aab41c26f692de5aa99b5fa18f7d8486151b8098d2c4581453cfa9891f5a73de0244b5be9b3ccfef996981ccce8b9517fd498aff78feab4660db42b23c
+  checksum: 3c2d051a730c518d58be210940856de0862548f027d7cc1d691ecbaa507a61cf12b10cb7c32eae8b8811e34ff0e169f0cae165168feccd38d4240590a4a5d679
   languageName: node
   linkType: hard
 

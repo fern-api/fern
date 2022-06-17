@@ -1,4 +1,4 @@
-import { exec } from "./promifisiedExec";
+import execa from "execa";
 
 export interface YarnPackage {
     name: string;
@@ -7,8 +7,13 @@ export interface YarnPackage {
 
 const MONOREPO_ROOT_PACKAGE = "fern";
 
-export async function getAllPackages(): Promise<YarnPackage[]> {
-    const { stdout } = await exec("yarn workspaces list --json");
+export async function getAllPackages({ since = false }: { since?: boolean } = {}): Promise<YarnPackage[]> {
+    const args = ["workspaces", "list", "--json"];
+    if (since) {
+        args.push("--since");
+    }
+
+    const { stdout } = await execa("yarn", args);
     return stdout
         .trim()
         .split("\n")

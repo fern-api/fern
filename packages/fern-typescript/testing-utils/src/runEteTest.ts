@@ -43,10 +43,10 @@ export async function runEteTest({
     const testDirectory = path.dirname(testFile);
 
     let checkCompilation = true;
-    if (IS_CI) {
+    if (IS_CI || Math.random() > 0) {
         outputToDisk = false;
         checkCompilation = await hasFileChangedOnBranchInCI(
-            path.join(testDirectory, "__snapshots__", path.basename(testFile, `${path.extname(testFile)}.snap`))
+            path.join(testDirectory, "__snapshots__", `${path.basename(testFile)}.snap`)
         );
     }
 
@@ -102,7 +102,7 @@ export async function installAndCompileGeneratedProject(dir: string): Promise<vo
 
 const BRANCH_ENV_VAR = "CIRCLE_BRANCH";
 async function hasFileChangedOnBranchInCI(filepath: string): Promise<boolean> {
-    const branch = process.env[BRANCH_ENV_VAR];
+    const branch = process.env[BRANCH_ENV_VAR] ?? "zk/root-level-jest";
     if (branch == null) {
         throw new Error(`Cannot check if file has changed because ${BRANCH_ENV_VAR} is not defined`);
     }
@@ -111,7 +111,7 @@ async function hasFileChangedOnBranchInCI(filepath: string): Promise<boolean> {
         const mergeBaseResult = await execa("git", ["merge-base", branch, "main"]);
         await execa("git", ["diff", "--exit-code", "--quiet", branch, mergeBaseResult.stdout, filepath]);
         return false;
-    } catch {
+    } catch (e) {
         return true;
     }
 }

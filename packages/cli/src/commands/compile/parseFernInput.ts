@@ -7,7 +7,7 @@ export async function parseFernInput(absolutePathToInput: string): Promise<FernF
     try {
         const stats = await lstat(absolutePathToInput);
         if (stats.isFile()) {
-            const relativeFilepath = path.basename(absolutePathToInput, path.extname(absolutePathToInput));
+            const relativeFilepath = path.basename(absolutePathToInput);
             return [
                 await createFernFile({
                     relativeFilepath,
