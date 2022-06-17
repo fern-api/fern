@@ -12,9 +12,16 @@ export async function getAllPackages({ since = false }: { since?: boolean } = {}
     }
 
     const { stdout } = await execa("yarn", args);
-    return stdout
-        .trim()
+    const trimmedStdout = stdout.trim();
+
+    if (trimmedStdout === "") {
+        return [];
+    }
+
+    return trimmedStdout
         .split("\n")
-        .map((line): YarnPackage => JSON.parse(line))
+        .map((line): YarnPackage => {
+            return JSON.parse(line);
+        })
         .filter((p) => p.location !== ".");
 }
