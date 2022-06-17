@@ -34,7 +34,7 @@ jobs:
           command: yarn workspace fern-typescript dockerTagLocal
       - run:
           name: Run tests
-          command: yarn test --ci
+          command: yarn test:changed --ci
       - run:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff

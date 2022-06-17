@@ -15,6 +15,7 @@
     "compile:prepare": "ts-node scripts/check-root-package.ts --fix",
     "compile:all": "yarn workspaces foreach --verbose --parallel --topological-dev run compile:all",
     "test": "yarn workspaces foreach --verbose --parallel run test",
+    "test:changed": "yarn workspaces foreach --verbose --parallel --since=main run test",
     "lint:eslint": "eslint --max-warnings 0 .",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "lint:monorepo": "mrlint lint",
