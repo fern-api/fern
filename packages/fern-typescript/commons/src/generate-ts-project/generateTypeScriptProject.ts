@@ -2,7 +2,7 @@ import { Volume } from "memfs/lib/volume";
 import { Directory } from "ts-morph";
 import { ProjectCreator } from "../codegen/file-system/ProjectCreator";
 import { PackageDependencies } from "../dependencies/DependencyManager";
-import { writeProject } from "../writeProject";
+import { writeProjectToVolume } from "../writeProject";
 import { generatePackageJson } from "./generatePackageJson";
 import { generateTsConfig } from "./generateTsConfig";
 
@@ -26,7 +26,7 @@ export async function generateTypeScriptProject({
     const projectCreator = new ProjectCreator();
     const generatedSrcInfo = await projectCreator.withProject((p) => generateSrc(p.createDirectory("src")));
     const project = await projectCreator.finalize();
-    await writeProject(project, volume);
+    await writeProjectToVolume(project, volume);
 
     await generatePackageJson({
         volume,

@@ -1,4 +1,6 @@
-export { default as tsMorph, ts } from "ts-morph";
+import * as tsMorph from "ts-morph";
+
+export { ts } from "ts-morph";
 export {
     EncodeMethod,
     type BaseEncoder,
@@ -9,3 +11,4 @@ export {
 } from "./types/Encoder";
 export { type FernTypescriptHelper } from "./types/FernTypescriptHelper";
 export { type VariableReference } from "./types/VariableReference";
+export { tsMorph };

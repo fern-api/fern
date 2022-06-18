@@ -2,6 +2,7 @@
   "extends": "../../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib/cjs", "rootDir": "src", "module": "CommonJS" },
   "include": ["./src"],
+  "exclude": ["./src/**/__test__/**/generated"],
   "references": [
     { "path": "../../compiler/generators/generator-runner/tsconfig.json" },
     { "path": "../../compiler/ir-types/fern-ir-typescript/tsconfig.json" },
