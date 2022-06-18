@@ -168,14 +168,14 @@ public final class HttpServiceServerGenerator extends Generator {
             String endpointImplMethodName, Optional<TypeName> returnPayload, MethodSpec.Builder endpointMethodBuilder) {
         CodeBlock.Builder implCallBuilder = CodeBlock.builder();
         String args =
-                endpointMethodBuilder.parameters.stream().map(_unused -> "$L").collect(Collectors.joining());
-        String argNames = endpointMethodBuilder.parameters.stream()
+                endpointMethodBuilder.parameters.stream().map(_unused -> "$L").collect(Collectors.joining(", "));
+        List<String> argNames = endpointMethodBuilder.parameters.stream()
                 .map(parameterSpec -> parameterSpec.name)
-                .collect(Collectors.joining());
+                .collect(Collectors.toList());
         if (returnPayload.isPresent()) {
-            implCallBuilder.addStatement("return " + endpointImplMethodName + "(" + args + ")", argNames);
+            implCallBuilder.addStatement("return " + endpointImplMethodName + "(" + args + ")", argNames.toArray());
         } else {
-            implCallBuilder.addStatement(endpointImplMethodName + "(" + args + ")", argNames);
+            implCallBuilder.addStatement(endpointImplMethodName + "(" + args + ")", argNames.toArray());
         }
         return implCallBuilder.build();
     }
