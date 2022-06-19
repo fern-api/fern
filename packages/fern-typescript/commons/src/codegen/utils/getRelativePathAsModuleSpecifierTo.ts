@@ -1,10 +1,9 @@
 import path from "path";
-import { Directory } from "ts-morph";
-import { SourceFileManager } from "../SourceFileManager";
+import { Directory, SourceFile } from "ts-morph";
 
 export function getRelativePathAsModuleSpecifierTo(
-    from: SourceFileManager | Directory,
-    to: SourceFileManager | Directory | string
+    from: SourceFile | Directory,
+    to: SourceFile | Directory | string
 ): string {
     const fromFilePath = getFilePathOfDirectory(from);
     const toFilePath = typeof to === "string" ? to : getFilePath(to);
@@ -19,18 +18,18 @@ export function getRelativePathAsModuleSpecifierTo(
     return `./${relativePathWithoutExtension}`;
 }
 
-function getFilePathOfDirectory(item: SourceFileManager | Directory) {
-    if (isDirectory(item)) {
-        return item.getPath();
+function getFilePathOfDirectory(item: SourceFile | Directory) {
+    if (isSourceFile(item)) {
+        return item.getDirectoryPath();
     } else {
-        return item.file.getDirectoryPath();
+        return item.getPath();
     }
 }
 
-function getFilePath(item: SourceFileManager | Directory): string {
-    return isDirectory(item) ? item.getPath() : item.file.getFilePath();
+function getFilePath(item: SourceFile | Directory): string {
+    return isSourceFile(item) ? item.getFilePath() : item.getPath();
 }
 
-function isDirectory(item: SourceFileManager | Directory): item is Directory {
-    return (item as Directory).getPath != null;
+function isSourceFile(item: SourceFile | Directory): item is SourceFile {
+    return (item as SourceFile).getFilePath != null;
 }

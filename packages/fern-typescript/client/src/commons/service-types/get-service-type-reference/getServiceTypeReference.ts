@@ -1,6 +1,6 @@
 import { NamedType } from "@fern-api/api";
-import { getTypeReference, SourceFileManager } from "@fern-typescript/commons";
-import { Directory, ts } from "ts-morph";
+import { getTypeReference } from "@fern-typescript/commons";
+import { Directory, SourceFile, ts } from "ts-morph";
 import { ServiceTypeReference } from "../types";
 import { getLocalServiceTypeReference } from "./getLocalServiceTypeReference";
 
@@ -15,7 +15,7 @@ export function getServiceTypeReference({
 }: {
     serviceOrChannelName: NamedType;
     endpointOrOperationId: string;
-    referencedIn: SourceFileManager;
+    referencedIn: SourceFile;
     modelDirectory: Directory;
     servicesDirectory: Directory;
     reference: ServiceTypeReference;

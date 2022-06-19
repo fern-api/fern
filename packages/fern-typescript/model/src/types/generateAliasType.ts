@@ -1,12 +1,6 @@
 import { AliasTypeDefinition, PrimitiveType } from "@fern-api/api";
-import {
-    addBrandedTypeAlias,
-    getTextOfTsNode,
-    getTypeReference,
-    maybeAddDocs,
-    SourceFileManager,
-} from "@fern-typescript/commons";
-import { Directory, ts, VariableDeclarationKind, Writers } from "ts-morph";
+import { addBrandedTypeAlias, getTextOfTsNode, getTypeReference, maybeAddDocs } from "@fern-typescript/commons";
+import { Directory, SourceFile, ts, VariableDeclarationKind, Writers } from "ts-morph";
 
 export const ALIAS_UTILS_OF_KEY = "of";
 
@@ -17,7 +11,7 @@ export function generateAliasType({
     shape,
     modelDirectory,
 }: {
-    file: SourceFileManager;
+    file: SourceFile;
     typeName: string;
     docs: string | null | undefined;
     shape: AliasTypeDefinition;
@@ -26,7 +20,7 @@ export function generateAliasType({
     if (shouldUseBrandedTypeForAlias(shape)) {
         generateStringAlias({ file, typeName, docs });
     } else {
-        const typeAlias = file.file.addTypeAlias({
+        const typeAlias = file.addTypeAlias({
             name: typeName,
             type: getTextOfTsNode(
                 getTypeReference({
@@ -51,13 +45,13 @@ function generateStringAlias({
     typeName,
     docs,
 }: {
-    file: SourceFileManager;
+    file: SourceFile;
     typeName: string;
     docs: string | null | undefined;
 }) {
-    addBrandedTypeAlias({ node: file.file, typeName, docs });
+    addBrandedTypeAlias({ node: file, typeName, docs });
 
-    file.file.addVariableStatement({
+    file.addVariableStatement({
         declarationKind: VariableDeclarationKind.Const,
         declarations: [
             {

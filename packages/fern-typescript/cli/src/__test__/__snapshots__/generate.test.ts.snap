@@ -154,7 +154,7 @@ import * as model from \\"..\\";
 import * as model from \\"..\\";
 import * as model from \\"..\\";
 
-export type DebugVariableValue = 
+export type DebugVariableValue =
     | DebugVariableValue.IntegerValue
     | DebugVariableValue.BooleanValue
     | DebugVariableValue.DoubleValue
@@ -247,90 +247,90 @@ export declare namespace DebugVariableValue {
 }
 
 export const DebugVariableValue = {
-        integerValue: (value: number): DebugVariableValue.IntegerValue => ({
-            integerValue: value,
-            _type: \\"integerValue\\"
-        }),
+    integerValue: (value: number): DebugVariableValue.IntegerValue => ({
+        integerValue: value,
+        _type: \\"integerValue\\"
+    }),
 
-        booleanValue: (value: boolean): DebugVariableValue.BooleanValue => ({
-            booleanValue: value,
-            _type: \\"booleanValue\\"
-        }),
+    booleanValue: (value: boolean): DebugVariableValue.BooleanValue => ({
+        booleanValue: value,
+        _type: \\"booleanValue\\"
+    }),
 
-        doubleValue: (value: number): DebugVariableValue.DoubleValue => ({
-            doubleValue: value,
-            _type: \\"doubleValue\\"
-        }),
+    doubleValue: (value: number): DebugVariableValue.DoubleValue => ({
+        doubleValue: value,
+        _type: \\"doubleValue\\"
+    }),
 
-        stringValue: (value: string): DebugVariableValue.StringValue => ({
-            stringValue: value,
-            _type: \\"stringValue\\"
-        }),
+    stringValue: (value: string): DebugVariableValue.StringValue => ({
+        stringValue: value,
+        _type: \\"stringValue\\"
+    }),
 
-        charValue: (value: string): DebugVariableValue.CharValue => ({
-            charValue: value,
-            _type: \\"charValue\\"
-        }),
+    charValue: (value: string): DebugVariableValue.CharValue => ({
+        charValue: value,
+        _type: \\"charValue\\"
+    }),
 
-        mapValue: (value: model.DebugMapValue): DebugVariableValue.MapValue => ({
-            ...value,
-            _type: \\"mapValue\\"
-        }),
+    mapValue: (value: model.DebugMapValue): DebugVariableValue.MapValue => ({
+        ...value,
+        _type: \\"mapValue\\"
+    }),
 
-        listValue: (value: DebugVariableValue[]): DebugVariableValue.ListValue => ({
-            listValue: value,
-            _type: \\"listValue\\"
-        }),
+    listValue: (value: DebugVariableValue[]): DebugVariableValue.ListValue => ({
+        listValue: value,
+        _type: \\"listValue\\"
+    }),
 
-        binaryTreeNodeValue: (value: model.BinaryTreeNodeAndTreeValue): DebugVariableValue.BinaryTreeNodeValue => ({
-            ...value,
-            _type: \\"binaryTreeNodeValue\\"
-        }),
+    binaryTreeNodeValue: (value: model.BinaryTreeNodeAndTreeValue): DebugVariableValue.BinaryTreeNodeValue => ({
+        ...value,
+        _type: \\"binaryTreeNodeValue\\"
+    }),
 
-        singlyLinkedListNodeValue: (value: model.SinglyLinkedListNodeAndListValue): DebugVariableValue.SinglyLinkedListNodeValue => ({
-            ...value,
-            _type: \\"singlyLinkedListNodeValue\\"
-        }),
+    singlyLinkedListNodeValue: (value: model.SinglyLinkedListNodeAndListValue): DebugVariableValue.SinglyLinkedListNodeValue => ({
+        ...value,
+        _type: \\"singlyLinkedListNodeValue\\"
+    }),
 
-        doublyLinkedListNodeValue: (value: model.DoublyLinkedListNodeAndListValue): DebugVariableValue.DoublyLinkedListNodeValue => ({
-            ...value,
-            _type: \\"doublyLinkedListNodeValue\\"
-        }),
+    doublyLinkedListNodeValue: (value: model.DoublyLinkedListNodeAndListValue): DebugVariableValue.DoublyLinkedListNodeValue => ({
+        ...value,
+        _type: \\"doublyLinkedListNodeValue\\"
+    }),
 
-        undefinedValue: (): DebugVariableValue.UndefinedValue => ({
-            _type: \\"undefinedValue\\"
-        }),
+    undefinedValue: (): DebugVariableValue.UndefinedValue => ({
+        _type: \\"undefinedValue\\"
+    }),
 
-        nullValue: (): DebugVariableValue.NullValue => ({
-            _type: \\"nullValue\\"
-        }),
+    nullValue: (): DebugVariableValue.NullValue => ({
+        _type: \\"nullValue\\"
+    }),
 
-        genericValue: (value: model.GenericValue): DebugVariableValue.GenericValue => ({
-            ...value,
-            _type: \\"genericValue\\"
-        }),
+    genericValue: (value: model.GenericValue): DebugVariableValue.GenericValue => ({
+        ...value,
+        _type: \\"genericValue\\"
+    }),
 
-        _visit: <Result>(value: DebugVariableValue, visitor: DebugVariableValue._Visitor<Result>): Result => {
-            switch (value._type) {
-                case \\"integerValue\\": return visitor.integerValue(value.integerValue);
-                case \\"booleanValue\\": return visitor.booleanValue(value.booleanValue);
-                case \\"doubleValue\\": return visitor.doubleValue(value.doubleValue);
-                case \\"stringValue\\": return visitor.stringValue(value.stringValue);
-                case \\"charValue\\": return visitor.charValue(value.charValue);
-                case \\"mapValue\\": return visitor.mapValue(value);
-                case \\"listValue\\": return visitor.listValue(value.listValue);
-                case \\"binaryTreeNodeValue\\": return visitor.binaryTreeNodeValue(value);
-                case \\"singlyLinkedListNodeValue\\": return visitor.singlyLinkedListNodeValue(value);
-                case \\"doublyLinkedListNodeValue\\": return visitor.doublyLinkedListNodeValue(value);
-                case \\"undefinedValue\\": return visitor.undefinedValue();
-                case \\"nullValue\\": return visitor.nullValue();
-                case \\"genericValue\\": return visitor.genericValue(value);
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: DebugVariableValue, visitor: DebugVariableValue._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"integerValue\\": return visitor.integerValue(value.integerValue);
+            case \\"booleanValue\\": return visitor.booleanValue(value.booleanValue);
+            case \\"doubleValue\\": return visitor.doubleValue(value.doubleValue);
+            case \\"stringValue\\": return visitor.stringValue(value.stringValue);
+            case \\"charValue\\": return visitor.charValue(value.charValue);
+            case \\"mapValue\\": return visitor.mapValue(value);
+            case \\"listValue\\": return visitor.listValue(value.listValue);
+            case \\"binaryTreeNodeValue\\": return visitor.binaryTreeNodeValue(value);
+            case \\"singlyLinkedListNodeValue\\": return visitor.singlyLinkedListNodeValue(value);
+            case \\"doublyLinkedListNodeValue\\": return visitor.doublyLinkedListNodeValue(value);
+            case \\"undefinedValue\\": return visitor.undefinedValue();
+            case \\"nullValue\\": return visitor.nullValue();
+            case \\"genericValue\\": return visitor.genericValue(value);
+            default: return visitor._unknown();
+        }
+    },
 
-        _types: (): DebugVariableValue[\\"_type\\"][] => [\\"integerValue\\", \\"booleanValue\\", \\"doubleValue\\", \\"stringValue\\", \\"charValue\\", \\"mapValue\\", \\"listValue\\", \\"binaryTreeNodeValue\\", \\"singlyLinkedListNodeValue\\", \\"doublyLinkedListNodeValue\\", \\"undefinedValue\\", \\"nullValue\\", \\"genericValue\\"],
-    } as const;
+    _types: (): DebugVariableValue[\\"_type\\"][] => [\\"integerValue\\", \\"booleanValue\\", \\"doubleValue\\", \\"stringValue\\", \\"charValue\\", \\"mapValue\\", \\"listValue\\", \\"binaryTreeNodeValue\\", \\"singlyLinkedListNodeValue\\", \\"doublyLinkedListNodeValue\\", \\"undefinedValue\\", \\"nullValue\\", \\"genericValue\\"],
+} as const;
 ",
                 "name": "DebugVariableValue.ts",
                 "type": "file",
@@ -406,27 +406,27 @@ export interface KeyValuePair {
                 "type": "file",
               },
               Object {
-                "contents": "export type Language = 
+                "contents": "export type Language =
     | \\"JAVA\\"
     | \\"JAVASCRIPT\\"
     | \\"PYTHON\\";
 
 export const Language = {
-        Java: \\"JAVA\\",
-        Javascript: \\"JAVASCRIPT\\",
-        Python: \\"PYTHON\\",
+    Java: \\"JAVA\\",
+    Javascript: \\"JAVASCRIPT\\",
+    Python: \\"PYTHON\\",
 
-        _visit: <Result>(value: Language, visitor: Language._Visitor<Result>): Result => {
-            switch (value) {
-                case Language.Java: return visitor.java();
-                case Language.Javascript: return visitor.javascript();
-                case Language.Python: return visitor.python();
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: Language, visitor: Language._Visitor<Result>): Result => {
+        switch (value) {
+            case Language.Java: return visitor.java();
+            case Language.Javascript: return visitor.javascript();
+            case Language.Python: return visitor.python();
+            default: return visitor._unknown();
+        }
+    },
 
-        _values: (): Language[] => [Language.Java, Language.Javascript, Language.Python],
-    } as const;
+    _values: (): Language[] => [Language.Java, Language.Javascript, Language.Python],
+} as const;
 
 export declare namespace Language {
     type Java = \\"JAVA\\";
@@ -480,24 +480,24 @@ export interface MapValue {
               },
               Object {
                 "contents": "export type NodeId = string & {
-        __NodeId: void;
-    };
+    __NodeId: void;
+};
 
 export const NodeId = {
-        of: (value: string): NodeId => value as NodeId
-    };
+    of: (value: string): NodeId => value as NodeId
+};
 ",
                 "name": "NodeId.ts",
                 "type": "file",
               },
               Object {
                 "contents": "export type ProblemId = string & {
-        __ProblemId: void;
-    };
+    __ProblemId: void;
+};
 
 export const ProblemId = {
-        of: (value: string): ProblemId => value as ProblemId
-    };
+    of: (value: string): ProblemId => value as ProblemId
+};
 ",
                 "name": "ProblemId.ts",
                 "type": "file",
@@ -565,12 +565,12 @@ export interface TestCaseWithExpectedResult {
               },
               Object {
                 "contents": "export type UserId = string & {
-        __UserId: void;
-    };
+    __UserId: void;
+};
 
 export const UserId = {
-        of: (value: string): UserId => value as UserId
-    };
+    of: (value: string): UserId => value as UserId
+};
 ",
                 "name": "UserId.ts",
                 "type": "file",
@@ -579,7 +579,7 @@ export const UserId = {
                 "contents": "import * as model from \\"..\\";
 import * as model from \\"..\\";
 
-export type VariableType = 
+export type VariableType =
     | VariableType.IntegerType
     | VariableType.DoubleType
     | VariableType.BooleanType
@@ -648,66 +648,66 @@ export declare namespace VariableType {
 }
 
 export const VariableType = {
-        integerType: (): VariableType.IntegerType => ({
-            _type: \\"integerType\\"
-        }),
+    integerType: (): VariableType.IntegerType => ({
+        _type: \\"integerType\\"
+    }),
 
-        doubleType: (): VariableType.DoubleType => ({
-            _type: \\"doubleType\\"
-        }),
+    doubleType: (): VariableType.DoubleType => ({
+        _type: \\"doubleType\\"
+    }),
 
-        booleanType: (): VariableType.BooleanType => ({
-            _type: \\"booleanType\\"
-        }),
+    booleanType: (): VariableType.BooleanType => ({
+        _type: \\"booleanType\\"
+    }),
 
-        stringType: (): VariableType.StringType => ({
-            _type: \\"stringType\\"
-        }),
+    stringType: (): VariableType.StringType => ({
+        _type: \\"stringType\\"
+    }),
 
-        charType: (): VariableType.CharType => ({
-            _type: \\"charType\\"
-        }),
+    charType: (): VariableType.CharType => ({
+        _type: \\"charType\\"
+    }),
 
-        listType: (value: model.ListType): VariableType.ListType => ({
-            ...value,
-            _type: \\"listType\\"
-        }),
+    listType: (value: model.ListType): VariableType.ListType => ({
+        ...value,
+        _type: \\"listType\\"
+    }),
 
-        mapType: (value: model.MapType): VariableType.MapType => ({
-            ...value,
-            _type: \\"mapType\\"
-        }),
+    mapType: (value: model.MapType): VariableType.MapType => ({
+        ...value,
+        _type: \\"mapType\\"
+    }),
 
-        binaryTreeType: (): VariableType.BinaryTreeType => ({
-            _type: \\"binaryTreeType\\"
-        }),
+    binaryTreeType: (): VariableType.BinaryTreeType => ({
+        _type: \\"binaryTreeType\\"
+    }),
 
-        singlyLinkedListType: (): VariableType.SinglyLinkedListType => ({
-            _type: \\"singlyLinkedListType\\"
-        }),
+    singlyLinkedListType: (): VariableType.SinglyLinkedListType => ({
+        _type: \\"singlyLinkedListType\\"
+    }),
 
-        doublyLinkedListType: (): VariableType.DoublyLinkedListType => ({
-            _type: \\"doublyLinkedListType\\"
-        }),
+    doublyLinkedListType: (): VariableType.DoublyLinkedListType => ({
+        _type: \\"doublyLinkedListType\\"
+    }),
 
-        _visit: <Result>(value: VariableType, visitor: VariableType._Visitor<Result>): Result => {
-            switch (value._type) {
-                case \\"integerType\\": return visitor.integerType();
-                case \\"doubleType\\": return visitor.doubleType();
-                case \\"booleanType\\": return visitor.booleanType();
-                case \\"stringType\\": return visitor.stringType();
-                case \\"charType\\": return visitor.charType();
-                case \\"listType\\": return visitor.listType(value);
-                case \\"mapType\\": return visitor.mapType(value);
-                case \\"binaryTreeType\\": return visitor.binaryTreeType();
-                case \\"singlyLinkedListType\\": return visitor.singlyLinkedListType();
-                case \\"doublyLinkedListType\\": return visitor.doublyLinkedListType();
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: VariableType, visitor: VariableType._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"integerType\\": return visitor.integerType();
+            case \\"doubleType\\": return visitor.doubleType();
+            case \\"booleanType\\": return visitor.booleanType();
+            case \\"stringType\\": return visitor.stringType();
+            case \\"charType\\": return visitor.charType();
+            case \\"listType\\": return visitor.listType(value);
+            case \\"mapType\\": return visitor.mapType(value);
+            case \\"binaryTreeType\\": return visitor.binaryTreeType();
+            case \\"singlyLinkedListType\\": return visitor.singlyLinkedListType();
+            case \\"doublyLinkedListType\\": return visitor.doublyLinkedListType();
+            default: return visitor._unknown();
+        }
+    },
 
-        _types: (): VariableType[\\"_type\\"][] => [\\"integerType\\", \\"doubleType\\", \\"booleanType\\", \\"stringType\\", \\"charType\\", \\"listType\\", \\"mapType\\", \\"binaryTreeType\\", \\"singlyLinkedListType\\", \\"doublyLinkedListType\\"],
-    } as const;
+    _types: (): VariableType[\\"_type\\"][] => [\\"integerType\\", \\"doubleType\\", \\"booleanType\\", \\"stringType\\", \\"charType\\", \\"listType\\", \\"mapType\\", \\"binaryTreeType\\", \\"singlyLinkedListType\\", \\"doublyLinkedListType\\"],
+} as const;
 ",
                 "name": "VariableType.ts",
                 "type": "file",
@@ -718,7 +718,7 @@ import * as model from \\"..\\";
 import * as model from \\"..\\";
 import * as model from \\"..\\";
 
-export type VariableValue = 
+export type VariableValue =
     | VariableValue.IntegerValue
     | VariableValue.BooleanValue
     | VariableValue.DoubleValue
@@ -799,79 +799,79 @@ export declare namespace VariableValue {
 }
 
 export const VariableValue = {
-        integerValue: (value: number): VariableValue.IntegerValue => ({
-            integerValue: value,
-            _type: \\"integerValue\\"
-        }),
+    integerValue: (value: number): VariableValue.IntegerValue => ({
+        integerValue: value,
+        _type: \\"integerValue\\"
+    }),
 
-        booleanValue: (value: boolean): VariableValue.BooleanValue => ({
-            booleanValue: value,
-            _type: \\"booleanValue\\"
-        }),
+    booleanValue: (value: boolean): VariableValue.BooleanValue => ({
+        booleanValue: value,
+        _type: \\"booleanValue\\"
+    }),
 
-        doubleValue: (value: number): VariableValue.DoubleValue => ({
-            doubleValue: value,
-            _type: \\"doubleValue\\"
-        }),
+    doubleValue: (value: number): VariableValue.DoubleValue => ({
+        doubleValue: value,
+        _type: \\"doubleValue\\"
+    }),
 
-        stringValue: (value: string): VariableValue.StringValue => ({
-            stringValue: value,
-            _type: \\"stringValue\\"
-        }),
+    stringValue: (value: string): VariableValue.StringValue => ({
+        stringValue: value,
+        _type: \\"stringValue\\"
+    }),
 
-        charValue: (value: string): VariableValue.CharValue => ({
-            charValue: value,
-            _type: \\"charValue\\"
-        }),
+    charValue: (value: string): VariableValue.CharValue => ({
+        charValue: value,
+        _type: \\"charValue\\"
+    }),
 
-        mapValue: (value: model.MapValue): VariableValue.MapValue => ({
-            ...value,
-            _type: \\"mapValue\\"
-        }),
+    mapValue: (value: model.MapValue): VariableValue.MapValue => ({
+        ...value,
+        _type: \\"mapValue\\"
+    }),
 
-        listValue: (value: VariableValue[]): VariableValue.ListValue => ({
-            listValue: value,
-            _type: \\"listValue\\"
-        }),
+    listValue: (value: VariableValue[]): VariableValue.ListValue => ({
+        listValue: value,
+        _type: \\"listValue\\"
+    }),
 
-        binaryTreeValue: (value: model.BinaryTreeValue): VariableValue.BinaryTreeValue => ({
-            ...value,
-            _type: \\"binaryTreeValue\\"
-        }),
+    binaryTreeValue: (value: model.BinaryTreeValue): VariableValue.BinaryTreeValue => ({
+        ...value,
+        _type: \\"binaryTreeValue\\"
+    }),
 
-        singlyLinkedListValue: (value: model.SinglyLinkedListValue): VariableValue.SinglyLinkedListValue => ({
-            ...value,
-            _type: \\"singlyLinkedListValue\\"
-        }),
+    singlyLinkedListValue: (value: model.SinglyLinkedListValue): VariableValue.SinglyLinkedListValue => ({
+        ...value,
+        _type: \\"singlyLinkedListValue\\"
+    }),
 
-        doublyLinkedListValue: (value: model.DoublyLinkedListValue): VariableValue.DoublyLinkedListValue => ({
-            ...value,
-            _type: \\"doublyLinkedListValue\\"
-        }),
+    doublyLinkedListValue: (value: model.DoublyLinkedListValue): VariableValue.DoublyLinkedListValue => ({
+        ...value,
+        _type: \\"doublyLinkedListValue\\"
+    }),
 
-        nullValue: (): VariableValue.NullValue => ({
-            _type: \\"nullValue\\"
-        }),
+    nullValue: (): VariableValue.NullValue => ({
+        _type: \\"nullValue\\"
+    }),
 
-        _visit: <Result>(value: VariableValue, visitor: VariableValue._Visitor<Result>): Result => {
-            switch (value._type) {
-                case \\"integerValue\\": return visitor.integerValue(value.integerValue);
-                case \\"booleanValue\\": return visitor.booleanValue(value.booleanValue);
-                case \\"doubleValue\\": return visitor.doubleValue(value.doubleValue);
-                case \\"stringValue\\": return visitor.stringValue(value.stringValue);
-                case \\"charValue\\": return visitor.charValue(value.charValue);
-                case \\"mapValue\\": return visitor.mapValue(value);
-                case \\"listValue\\": return visitor.listValue(value.listValue);
-                case \\"binaryTreeValue\\": return visitor.binaryTreeValue(value);
-                case \\"singlyLinkedListValue\\": return visitor.singlyLinkedListValue(value);
-                case \\"doublyLinkedListValue\\": return visitor.doublyLinkedListValue(value);
-                case \\"nullValue\\": return visitor.nullValue();
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: VariableValue, visitor: VariableValue._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"integerValue\\": return visitor.integerValue(value.integerValue);
+            case \\"booleanValue\\": return visitor.booleanValue(value.booleanValue);
+            case \\"doubleValue\\": return visitor.doubleValue(value.doubleValue);
+            case \\"stringValue\\": return visitor.stringValue(value.stringValue);
+            case \\"charValue\\": return visitor.charValue(value.charValue);
+            case \\"mapValue\\": return visitor.mapValue(value);
+            case \\"listValue\\": return visitor.listValue(value.listValue);
+            case \\"binaryTreeValue\\": return visitor.binaryTreeValue(value);
+            case \\"singlyLinkedListValue\\": return visitor.singlyLinkedListValue(value);
+            case \\"doublyLinkedListValue\\": return visitor.doublyLinkedListValue(value);
+            case \\"nullValue\\": return visitor.nullValue();
+            default: return visitor._unknown();
+        }
+    },
 
-        _types: (): VariableValue[\\"_type\\"][] => [\\"integerValue\\", \\"booleanValue\\", \\"doubleValue\\", \\"stringValue\\", \\"charValue\\", \\"mapValue\\", \\"listValue\\", \\"binaryTreeValue\\", \\"singlyLinkedListValue\\", \\"doublyLinkedListValue\\", \\"nullValue\\"],
-    } as const;
+    _types: (): VariableValue[\\"_type\\"][] => [\\"integerValue\\", \\"booleanValue\\", \\"doubleValue\\", \\"stringValue\\", \\"charValue\\", \\"mapValue\\", \\"listValue\\", \\"binaryTreeValue\\", \\"singlyLinkedListValue\\", \\"doublyLinkedListValue\\", \\"nullValue\\"],
+} as const;
 ",
                 "name": "VariableValue.ts",
                 "type": "file",
@@ -971,27 +971,27 @@ export interface Migration {
                 "type": "file",
               },
               Object {
-                "contents": "export type MigrationStatus = 
+                "contents": "export type MigrationStatus =
     | \\"RUNNING\\"
     | \\"FAILED\\"
     | \\"FINISHED\\";
 
 export const MigrationStatus = {
-        Running: \\"RUNNING\\",
-        Failed: \\"FAILED\\",
-        Finished: \\"FINISHED\\",
+    Running: \\"RUNNING\\",
+    Failed: \\"FAILED\\",
+    Finished: \\"FINISHED\\",
 
-        _visit: <Result>(value: MigrationStatus, visitor: MigrationStatus._Visitor<Result>): Result => {
-            switch (value) {
-                case MigrationStatus.Running: return visitor.running();
-                case MigrationStatus.Failed: return visitor.failed();
-                case MigrationStatus.Finished: return visitor.finished();
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: MigrationStatus, visitor: MigrationStatus._Visitor<Result>): Result => {
+        switch (value) {
+            case MigrationStatus.Running: return visitor.running();
+            case MigrationStatus.Failed: return visitor.failed();
+            case MigrationStatus.Finished: return visitor.finished();
+            default: return visitor._unknown();
+        }
+    },
 
-        _values: (): MigrationStatus[] => [MigrationStatus.Running, MigrationStatus.Failed, MigrationStatus.Finished],
-    } as const;
+    _values: (): MigrationStatus[] => [MigrationStatus.Running, MigrationStatus.Failed, MigrationStatus.Finished],
+} as const;
 
 export declare namespace MigrationStatus {
     type Running = \\"RUNNING\\";
@@ -1039,12 +1039,12 @@ export interface Playlist {
               },
               Object {
                 "contents": "export type PlaylistId = string & {
-        __PlaylistId: void;
-    };
+    __PlaylistId: void;
+};
 
 export const PlaylistId = {
-        of: (value: string): PlaylistId => value as PlaylistId
-    };
+    of: (value: string): PlaylistId => value as PlaylistId
+};
 ",
                 "name": "PlaylistId.ts",
                 "type": "file",
@@ -1065,7 +1065,7 @@ export * from \\"./PlaylistId\\";
               Object {
                 "contents": "import * as model from \\"..\\";
 
-export type CreateProblemError = 
+export type CreateProblemError =
     | CreateProblemError.Generic;
 
 export declare namespace CreateProblemError {
@@ -1080,20 +1080,20 @@ export declare namespace CreateProblemError {
 }
 
 export const CreateProblemError = {
-        generic: (value: model.GenericCreateProblemError): CreateProblemError.Generic => ({
-            ...value,
-            _type: \\"generic\\"
-        }),
+    generic: (value: model.GenericCreateProblemError): CreateProblemError.Generic => ({
+        ...value,
+        _type: \\"generic\\"
+    }),
 
-        _visit: <Result>(value: CreateProblemError, visitor: CreateProblemError._Visitor<Result>): Result => {
-            switch (value._type) {
-                case \\"generic\\": return visitor.generic(value);
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: CreateProblemError, visitor: CreateProblemError._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"generic\\": return visitor.generic(value);
+            default: return visitor._unknown();
+        }
+    },
 
-        _types: (): CreateProblemError[\\"_type\\"][] => [\\"generic\\"],
-    } as const;
+    _types: (): CreateProblemError[\\"_type\\"][] => [\\"generic\\"],
+} as const;
 ",
                 "name": "CreateProblemError.ts",
                 "type": "file",
@@ -1123,7 +1123,7 @@ export interface CreateProblemRequest {
                 "contents": "import * as model from \\"..\\";
 import * as model from \\"..\\";
 
-export type CreateProblemResponse = 
+export type CreateProblemResponse =
     | CreateProblemResponse.Success
     | CreateProblemResponse.Error;
 
@@ -1146,26 +1146,26 @@ export declare namespace CreateProblemResponse {
 }
 
 export const CreateProblemResponse = {
-        success: (value: model.ProblemId): CreateProblemResponse.Success => ({
-            success: value,
-            _type: \\"success\\"
-        }),
+    success: (value: model.ProblemId): CreateProblemResponse.Success => ({
+        success: value,
+        _type: \\"success\\"
+    }),
 
-        error: (value: model.CreateProblemError): CreateProblemResponse.Error => ({
-            error: value,
-            _type: \\"error\\"
-        }),
+    error: (value: model.CreateProblemError): CreateProblemResponse.Error => ({
+        error: value,
+        _type: \\"error\\"
+    }),
 
-        _visit: <Result>(value: CreateProblemResponse, visitor: CreateProblemResponse._Visitor<Result>): Result => {
-            switch (value._type) {
-                case \\"success\\": return visitor.success(value.success);
-                case \\"error\\": return visitor.error(value.error);
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: CreateProblemResponse, visitor: CreateProblemResponse._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"success\\": return visitor.success(value.success);
+            case \\"error\\": return visitor.error(value.error);
+            default: return visitor._unknown();
+        }
+    },
 
-        _types: (): CreateProblemResponse[\\"_type\\"][] => [\\"success\\", \\"error\\"],
-    } as const;
+    _types: (): CreateProblemResponse[\\"_type\\"][] => [\\"success\\", \\"error\\"],
+} as const;
 ",
                 "name": "CreateProblemResponse.ts",
                 "type": "file",
@@ -1217,7 +1217,7 @@ export interface ProblemDescription {
               Object {
                 "contents": "import * as model from \\"..\\";
 
-export type ProblemDescriptionBoard = 
+export type ProblemDescriptionBoard =
     | ProblemDescriptionBoard.Html
     | ProblemDescriptionBoard.Variable
     | ProblemDescriptionBoard.TestCaseId;
@@ -1247,32 +1247,32 @@ export declare namespace ProblemDescriptionBoard {
 }
 
 export const ProblemDescriptionBoard = {
-        html: (value: string): ProblemDescriptionBoard.Html => ({
-            html: value,
-            _type: \\"html\\"
-        }),
+    html: (value: string): ProblemDescriptionBoard.Html => ({
+        html: value,
+        _type: \\"html\\"
+    }),
 
-        variable: (value: model.VariableValue): ProblemDescriptionBoard.Variable => ({
-            variable: value,
-            _type: \\"variable\\"
-        }),
+    variable: (value: model.VariableValue): ProblemDescriptionBoard.Variable => ({
+        variable: value,
+        _type: \\"variable\\"
+    }),
 
-        testCaseId: (value: string): ProblemDescriptionBoard.TestCaseId => ({
-            testCaseId: value,
-            _type: \\"testCaseId\\"
-        }),
+    testCaseId: (value: string): ProblemDescriptionBoard.TestCaseId => ({
+        testCaseId: value,
+        _type: \\"testCaseId\\"
+    }),
 
-        _visit: <Result>(value: ProblemDescriptionBoard, visitor: ProblemDescriptionBoard._Visitor<Result>): Result => {
-            switch (value._type) {
-                case \\"html\\": return visitor.html(value.html);
-                case \\"variable\\": return visitor.variable(value.variable);
-                case \\"testCaseId\\": return visitor.testCaseId(value.testCaseId);
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: ProblemDescriptionBoard, visitor: ProblemDescriptionBoard._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"html\\": return visitor.html(value.html);
+            case \\"variable\\": return visitor.variable(value.variable);
+            case \\"testCaseId\\": return visitor.testCaseId(value.testCaseId);
+            default: return visitor._unknown();
+        }
+    },
 
-        _types: (): ProblemDescriptionBoard[\\"_type\\"][] => [\\"html\\", \\"variable\\", \\"testCaseId\\"],
-    } as const;
+    _types: (): ProblemDescriptionBoard[\\"_type\\"][] => [\\"html\\", \\"variable\\", \\"testCaseId\\"],
+} as const;
 ",
                 "name": "ProblemDescriptionBoard.ts",
                 "type": "file",
@@ -1360,7 +1360,7 @@ export * from \\"./VariableTypeAndName\\";
                 "contents": "import * as model from \\"..\\";
 import * as model from \\"..\\";
 
-export type AssertCorrectnessCheck = 
+export type AssertCorrectnessCheck =
     | AssertCorrectnessCheck.DeepEquality
     | AssertCorrectnessCheck.Custom;
 
@@ -1381,26 +1381,26 @@ export declare namespace AssertCorrectnessCheck {
 }
 
 export const AssertCorrectnessCheck = {
-        deepEquality: (value: model.DeepEqualityCorrectnessCheck): AssertCorrectnessCheck.DeepEquality => ({
-            ...value,
-            _type: \\"deepEquality\\"
-        }),
+    deepEquality: (value: model.DeepEqualityCorrectnessCheck): AssertCorrectnessCheck.DeepEquality => ({
+        ...value,
+        _type: \\"deepEquality\\"
+    }),
 
-        custom: (value: model.VoidFunctionDefinitionThatTakesActualResult): AssertCorrectnessCheck.Custom => ({
-            ...value,
-            _type: \\"custom\\"
-        }),
+    custom: (value: model.VoidFunctionDefinitionThatTakesActualResult): AssertCorrectnessCheck.Custom => ({
+        ...value,
+        _type: \\"custom\\"
+    }),
 
-        _visit: <Result>(value: AssertCorrectnessCheck, visitor: AssertCorrectnessCheck._Visitor<Result>): Result => {
-            switch (value._type) {
-                case \\"deepEquality\\": return visitor.deepEquality(value);
-                case \\"custom\\": return visitor.custom(value);
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: AssertCorrectnessCheck, visitor: AssertCorrectnessCheck._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"deepEquality\\": return visitor.deepEquality(value);
+            case \\"custom\\": return visitor.custom(value);
+            default: return visitor._unknown();
+        }
+    },
 
-        _types: (): AssertCorrectnessCheck[\\"_type\\"][] => [\\"deepEquality\\", \\"custom\\"],
-    } as const;
+    _types: (): AssertCorrectnessCheck[\\"_type\\"][] => [\\"deepEquality\\", \\"custom\\"],
+} as const;
 ",
                 "name": "AssertCorrectnessCheck.ts",
                 "type": "file",
@@ -1461,7 +1461,7 @@ export interface CreateProblemRequestV2 {
 import { Language } from \\"../commons/Language\\";
 import { Files } from \\"./Files\\";
 
-export type CustomFiles = 
+export type CustomFiles =
     | CustomFiles.Basic
     | CustomFiles.Custom;
 
@@ -1483,26 +1483,26 @@ export declare namespace CustomFiles {
 }
 
 export const CustomFiles = {
-        basic: (value: model.BasicCustomFiles): CustomFiles.Basic => ({
-            ...value,
-            _type: \\"basic\\"
-        }),
+    basic: (value: model.BasicCustomFiles): CustomFiles.Basic => ({
+        ...value,
+        _type: \\"basic\\"
+    }),
 
-        custom: (value: Record<Language, Files>): CustomFiles.Custom => ({
-            custom: value,
-            _type: \\"custom\\"
-        }),
+    custom: (value: Record<Language, Files>): CustomFiles.Custom => ({
+        custom: value,
+        _type: \\"custom\\"
+    }),
 
-        _visit: <Result>(value: CustomFiles, visitor: CustomFiles._Visitor<Result>): Result => {
-            switch (value._type) {
-                case \\"basic\\": return visitor.basic(value);
-                case \\"custom\\": return visitor.custom(value.custom);
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: CustomFiles, visitor: CustomFiles._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"basic\\": return visitor.basic(value);
+            case \\"custom\\": return visitor.custom(value.custom);
+            default: return visitor._unknown();
+        }
+    },
 
-        _types: (): CustomFiles[\\"_type\\"][] => [\\"basic\\", \\"custom\\"],
-    } as const;
+    _types: (): CustomFiles[\\"_type\\"][] => [\\"basic\\", \\"custom\\"],
+} as const;
 ",
                 "name": "CustomFiles.ts",
                 "type": "file",
@@ -1575,7 +1575,7 @@ export interface FunctionImplementationForMultipleLanguages {
 import * as model from \\"..\\";
 import * as model from \\"..\\";
 
-export type FunctionSignature = 
+export type FunctionSignature =
     | FunctionSignature.Void
     | FunctionSignature.NonVoid
     /**
@@ -1604,32 +1604,32 @@ export declare namespace FunctionSignature {
 }
 
 export const FunctionSignature = {
-        void: (value: model.VoidFunctionSignature): FunctionSignature.Void => ({
-            ...value,
-            _type: \\"void\\"
-        }),
+    void: (value: model.VoidFunctionSignature): FunctionSignature.Void => ({
+        ...value,
+        _type: \\"void\\"
+    }),
 
-        nonVoid: (value: model.NonVoidFunctionSignature): FunctionSignature.NonVoid => ({
-            ...value,
-            _type: \\"nonVoid\\"
-        }),
+    nonVoid: (value: model.NonVoidFunctionSignature): FunctionSignature.NonVoid => ({
+        ...value,
+        _type: \\"nonVoid\\"
+    }),
 
-        voidThatTakesActualResult: (value: model.VoidFunctionSignatureThatTakesActualResult): FunctionSignature.VoidThatTakesActualResult => ({
-            ...value,
-            _type: \\"voidThatTakesActualResult\\"
-        }),
+    voidThatTakesActualResult: (value: model.VoidFunctionSignatureThatTakesActualResult): FunctionSignature.VoidThatTakesActualResult => ({
+        ...value,
+        _type: \\"voidThatTakesActualResult\\"
+    }),
 
-        _visit: <Result>(value: FunctionSignature, visitor: FunctionSignature._Visitor<Result>): Result => {
-            switch (value._type) {
-                case \\"void\\": return visitor.void(value);
-                case \\"nonVoid\\": return visitor.nonVoid(value);
-                case \\"voidThatTakesActualResult\\": return visitor.voidThatTakesActualResult(value);
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: FunctionSignature, visitor: FunctionSignature._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"void\\": return visitor.void(value);
+            case \\"nonVoid\\": return visitor.nonVoid(value);
+            case \\"voidThatTakesActualResult\\": return visitor.voidThatTakesActualResult(value);
+            default: return visitor._unknown();
+        }
+    },
 
-        _types: (): FunctionSignature[\\"_type\\"][] => [\\"void\\", \\"nonVoid\\", \\"voidThatTakesActualResult\\"],
-    } as const;
+    _types: (): FunctionSignature[\\"_type\\"][] => [\\"void\\", \\"nonVoid\\", \\"voidThatTakesActualResult\\"],
+} as const;
 ",
                 "name": "FunctionSignature.ts",
                 "type": "file",
@@ -1782,12 +1782,12 @@ export interface Parameter {
               },
               Object {
                 "contents": "export type ParameterId = string & {
-        __ParameterId: void;
-    };
+    __ParameterId: void;
+};
 
 export const ParameterId = {
-        of: (value: string): ParameterId => value as ParameterId
-    };
+    of: (value: string): ParameterId => value as ParameterId
+};
 ",
                 "name": "ParameterId.ts",
                 "type": "file",
@@ -1829,7 +1829,7 @@ export interface ProblemInfoV2 {
                 "contents": "import * as model from \\"..\\";
 import * as model from \\"..\\";
 
-export type TestCaseFunction = 
+export type TestCaseFunction =
     | TestCaseFunction.WithActualResult
     | TestCaseFunction.Custom;
 
@@ -1850,38 +1850,38 @@ export declare namespace TestCaseFunction {
 }
 
 export const TestCaseFunction = {
-        withActualResult: (value: model.TestCaseWithActualResultImplementation): TestCaseFunction.WithActualResult => ({
-            ...value,
-            _type: \\"withActualResult\\"
-        }),
+    withActualResult: (value: model.TestCaseWithActualResultImplementation): TestCaseFunction.WithActualResult => ({
+        ...value,
+        _type: \\"withActualResult\\"
+    }),
 
-        custom: (value: model.VoidFunctionDefinition): TestCaseFunction.Custom => ({
-            ...value,
-            _type: \\"custom\\"
-        }),
+    custom: (value: model.VoidFunctionDefinition): TestCaseFunction.Custom => ({
+        ...value,
+        _type: \\"custom\\"
+    }),
 
-        _visit: <Result>(value: TestCaseFunction, visitor: TestCaseFunction._Visitor<Result>): Result => {
-            switch (value._type) {
-                case \\"withActualResult\\": return visitor.withActualResult(value);
-                case \\"custom\\": return visitor.custom(value);
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: TestCaseFunction, visitor: TestCaseFunction._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"withActualResult\\": return visitor.withActualResult(value);
+            case \\"custom\\": return visitor.custom(value);
+            default: return visitor._unknown();
+        }
+    },
 
-        _types: (): TestCaseFunction[\\"_type\\"][] => [\\"withActualResult\\", \\"custom\\"],
-    } as const;
+    _types: (): TestCaseFunction[\\"_type\\"][] => [\\"withActualResult\\", \\"custom\\"],
+} as const;
 ",
                 "name": "TestCaseFunction.ts",
                 "type": "file",
               },
               Object {
                 "contents": "export type TestCaseId = string & {
-        __TestCaseId: void;
-    };
+    __TestCaseId: void;
+};
 
 export const TestCaseId = {
-        of: (value: string): TestCaseId => value as TestCaseId
-    };
+    of: (value: string): TestCaseId => value as TestCaseId
+};
 ",
                 "name": "TestCaseId.ts",
                 "type": "file",
@@ -1911,7 +1911,7 @@ export interface TestCaseImplementationDescription {
               Object {
                 "contents": "import * as model from \\"..\\";
 
-export type TestCaseImplementationDescriptionBoard = 
+export type TestCaseImplementationDescriptionBoard =
     | TestCaseImplementationDescriptionBoard.Html
     | TestCaseImplementationDescriptionBoard.ParamId;
 
@@ -1934,26 +1934,26 @@ export declare namespace TestCaseImplementationDescriptionBoard {
 }
 
 export const TestCaseImplementationDescriptionBoard = {
-        html: (value: string): TestCaseImplementationDescriptionBoard.Html => ({
-            html: value,
-            _type: \\"html\\"
-        }),
+    html: (value: string): TestCaseImplementationDescriptionBoard.Html => ({
+        html: value,
+        _type: \\"html\\"
+    }),
 
-        paramId: (value: model.ParameterId): TestCaseImplementationDescriptionBoard.ParamId => ({
-            paramId: value,
-            _type: \\"paramId\\"
-        }),
+    paramId: (value: model.ParameterId): TestCaseImplementationDescriptionBoard.ParamId => ({
+        paramId: value,
+        _type: \\"paramId\\"
+    }),
 
-        _visit: <Result>(value: TestCaseImplementationDescriptionBoard, visitor: TestCaseImplementationDescriptionBoard._Visitor<Result>): Result => {
-            switch (value._type) {
-                case \\"html\\": return visitor.html(value.html);
-                case \\"paramId\\": return visitor.paramId(value.paramId);
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: TestCaseImplementationDescriptionBoard, visitor: TestCaseImplementationDescriptionBoard._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"html\\": return visitor.html(value.html);
+            case \\"paramId\\": return visitor.paramId(value.paramId);
+            default: return visitor._unknown();
+        }
+    },
 
-        _types: (): TestCaseImplementationDescriptionBoard[\\"_type\\"][] => [\\"html\\", \\"paramId\\"],
-    } as const;
+    _types: (): TestCaseImplementationDescriptionBoard[\\"_type\\"][] => [\\"html\\", \\"paramId\\"],
+} as const;
 ",
                 "name": "TestCaseImplementationDescriptionBoard.ts",
                 "type": "file",
@@ -1962,7 +1962,7 @@ export const TestCaseImplementationDescriptionBoard = {
                 "contents": "import * as model from \\"..\\";
 import * as model from \\"..\\";
 
-export type TestCaseImplementationReference = 
+export type TestCaseImplementationReference =
     | TestCaseImplementationReference.TemplateId
     | TestCaseImplementationReference.Implementation;
 
@@ -1984,26 +1984,26 @@ export declare namespace TestCaseImplementationReference {
 }
 
 export const TestCaseImplementationReference = {
-        templateId: (value: model.TestCaseTemplateId): TestCaseImplementationReference.TemplateId => ({
-            templateId: value,
-            _type: \\"templateId\\"
-        }),
+    templateId: (value: model.TestCaseTemplateId): TestCaseImplementationReference.TemplateId => ({
+        templateId: value,
+        _type: \\"templateId\\"
+    }),
 
-        implementation: (value: model.TestCaseImplementation): TestCaseImplementationReference.Implementation => ({
-            ...value,
-            _type: \\"implementation\\"
-        }),
+    implementation: (value: model.TestCaseImplementation): TestCaseImplementationReference.Implementation => ({
+        ...value,
+        _type: \\"implementation\\"
+    }),
 
-        _visit: <Result>(value: TestCaseImplementationReference, visitor: TestCaseImplementationReference._Visitor<Result>): Result => {
-            switch (value._type) {
-                case \\"templateId\\": return visitor.templateId(value.templateId);
-                case \\"implementation\\": return visitor.implementation(value);
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: TestCaseImplementationReference, visitor: TestCaseImplementationReference._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"templateId\\": return visitor.templateId(value.templateId);
+            case \\"implementation\\": return visitor.implementation(value);
+            default: return visitor._unknown();
+        }
+    },
 
-        _types: (): TestCaseImplementationReference[\\"_type\\"][] => [\\"templateId\\", \\"implementation\\"],
-    } as const;
+    _types: (): TestCaseImplementationReference[\\"_type\\"][] => [\\"templateId\\", \\"implementation\\"],
+} as const;
 ",
                 "name": "TestCaseImplementationReference.ts",
                 "type": "file",
@@ -2035,12 +2035,12 @@ export interface TestCaseTemplate {
               },
               Object {
                 "contents": "export type TestCaseTemplateId = string & {
-        __TestCaseTemplateId: void;
-    };
+    __TestCaseTemplateId: void;
+};
 
 export const TestCaseTemplateId = {
-        of: (value: string): TestCaseTemplateId => value as TestCaseTemplateId
-    };
+    of: (value: string): TestCaseTemplateId => value as TestCaseTemplateId
+};
 ",
                 "name": "TestCaseTemplateId.ts",
                 "type": "file",
@@ -2181,7 +2181,7 @@ export * from \\"./VoidFunctionSignatureThatTakesActualResult\\";
 import * as model from \\"..\\";
 import * as model from \\"..\\";
 
-export type ActualResult = 
+export type ActualResult =
     | ActualResult.Value
     | ActualResult.Exception
     | ActualResult.ExceptionV2;
@@ -2210,32 +2210,32 @@ export declare namespace ActualResult {
 }
 
 export const ActualResult = {
-        value: (value: model.VariableValue): ActualResult.Value => ({
-            value: value,
-            _type: \\"value\\"
-        }),
+    value: (value: model.VariableValue): ActualResult.Value => ({
+        value: value,
+        _type: \\"value\\"
+    }),
 
-        exception: (value: model.ExceptionInfo): ActualResult.Exception => ({
-            ...value,
-            _type: \\"exception\\"
-        }),
+    exception: (value: model.ExceptionInfo): ActualResult.Exception => ({
+        ...value,
+        _type: \\"exception\\"
+    }),
 
-        exceptionV2: (value: model.ExceptionV2): ActualResult.ExceptionV2 => ({
-            exceptionV2: value,
-            _type: \\"exceptionV2\\"
-        }),
+    exceptionV2: (value: model.ExceptionV2): ActualResult.ExceptionV2 => ({
+        exceptionV2: value,
+        _type: \\"exceptionV2\\"
+    }),
 
-        _visit: <Result>(value: ActualResult, visitor: ActualResult._Visitor<Result>): Result => {
-            switch (value._type) {
-                case \\"value\\": return visitor.value(value.value);
-                case \\"exception\\": return visitor.exception(value);
-                case \\"exceptionV2\\": return visitor.exceptionV2(value.exceptionV2);
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: ActualResult, visitor: ActualResult._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"value\\": return visitor.value(value.value);
+            case \\"exception\\": return visitor.exception(value);
+            case \\"exceptionV2\\": return visitor.exceptionV2(value.exceptionV2);
+            default: return visitor._unknown();
+        }
+    },
 
-        _types: (): ActualResult[\\"_type\\"][] => [\\"value\\", \\"exception\\", \\"exceptionV2\\"],
-    } as const;
+    _types: (): ActualResult[\\"_type\\"][] => [\\"value\\", \\"exception\\", \\"exceptionV2\\"],
+} as const;
 ",
                 "name": "ActualResult.ts",
                 "type": "file",
@@ -2265,7 +2265,7 @@ import * as model from \\"..\\";
 import * as model from \\"..\\";
 import * as model from \\"..\\";
 
-export type CodeExecutionUpdate = 
+export type CodeExecutionUpdate =
     /**
      * Statuses if an executor for the session isn't ready (Before RunningResponse). */
     | CodeExecutionUpdate.BuildingExecutor
@@ -2362,80 +2362,80 @@ export declare namespace CodeExecutionUpdate {
 }
 
 export const CodeExecutionUpdate = {
-        buildingExecutor: (value: model.BuildingExecutorResponse): CodeExecutionUpdate.BuildingExecutor => ({
-            ...value,
-            _type: \\"buildingExecutor\\"
-        }),
+    buildingExecutor: (value: model.BuildingExecutorResponse): CodeExecutionUpdate.BuildingExecutor => ({
+        ...value,
+        _type: \\"buildingExecutor\\"
+    }),
 
-        running: (value: model.RunningResponse): CodeExecutionUpdate.Running => ({
-            ...value,
-            _type: \\"running\\"
-        }),
+    running: (value: model.RunningResponse): CodeExecutionUpdate.Running => ({
+        ...value,
+        _type: \\"running\\"
+    }),
 
-        errored: (value: model.ErroredResponse): CodeExecutionUpdate.Errored => ({
-            ...value,
-            _type: \\"errored\\"
-        }),
+    errored: (value: model.ErroredResponse): CodeExecutionUpdate.Errored => ({
+        ...value,
+        _type: \\"errored\\"
+    }),
 
-        stopped: (value: model.StoppedResponse): CodeExecutionUpdate.Stopped => ({
-            ...value,
-            _type: \\"stopped\\"
-        }),
+    stopped: (value: model.StoppedResponse): CodeExecutionUpdate.Stopped => ({
+        ...value,
+        _type: \\"stopped\\"
+    }),
 
-        graded: (value: model.GradedResponse): CodeExecutionUpdate.Graded => ({
-            ...value,
-            _type: \\"graded\\"
-        }),
+    graded: (value: model.GradedResponse): CodeExecutionUpdate.Graded => ({
+        ...value,
+        _type: \\"graded\\"
+    }),
 
-        gradedV2: (value: model.GradedResponseV2): CodeExecutionUpdate.GradedV2 => ({
-            ...value,
-            _type: \\"gradedV2\\"
-        }),
+    gradedV2: (value: model.GradedResponseV2): CodeExecutionUpdate.GradedV2 => ({
+        ...value,
+        _type: \\"gradedV2\\"
+    }),
 
-        workspaceRan: (value: model.WorkspaceRanResponse): CodeExecutionUpdate.WorkspaceRan => ({
-            ...value,
-            _type: \\"workspaceRan\\"
-        }),
+    workspaceRan: (value: model.WorkspaceRanResponse): CodeExecutionUpdate.WorkspaceRan => ({
+        ...value,
+        _type: \\"workspaceRan\\"
+    }),
 
-        recording: (value: model.RecordingResponseNotification): CodeExecutionUpdate.Recording => ({
-            ...value,
-            _type: \\"recording\\"
-        }),
+    recording: (value: model.RecordingResponseNotification): CodeExecutionUpdate.Recording => ({
+        ...value,
+        _type: \\"recording\\"
+    }),
 
-        recorded: (value: model.RecordedResponseNotification): CodeExecutionUpdate.Recorded => ({
-            ...value,
-            _type: \\"recorded\\"
-        }),
+    recorded: (value: model.RecordedResponseNotification): CodeExecutionUpdate.Recorded => ({
+        ...value,
+        _type: \\"recorded\\"
+    }),
 
-        invalidRequest: (value: model.InvalidRequestResponse): CodeExecutionUpdate.InvalidRequest => ({
-            ...value,
-            _type: \\"invalidRequest\\"
-        }),
+    invalidRequest: (value: model.InvalidRequestResponse): CodeExecutionUpdate.InvalidRequest => ({
+        ...value,
+        _type: \\"invalidRequest\\"
+    }),
 
-        finished: (value: model.FinishedResponse): CodeExecutionUpdate.Finished => ({
-            ...value,
-            _type: \\"finished\\"
-        }),
+    finished: (value: model.FinishedResponse): CodeExecutionUpdate.Finished => ({
+        ...value,
+        _type: \\"finished\\"
+    }),
 
-        _visit: <Result>(value: CodeExecutionUpdate, visitor: CodeExecutionUpdate._Visitor<Result>): Result => {
-            switch (value._type) {
-                case \\"buildingExecutor\\": return visitor.buildingExecutor(value);
-                case \\"running\\": return visitor.running(value);
-                case \\"errored\\": return visitor.errored(value);
-                case \\"stopped\\": return visitor.stopped(value);
-                case \\"graded\\": return visitor.graded(value);
-                case \\"gradedV2\\": return visitor.gradedV2(value);
-                case \\"workspaceRan\\": return visitor.workspaceRan(value);
-                case \\"recording\\": return visitor.recording(value);
-                case \\"recorded\\": return visitor.recorded(value);
-                case \\"invalidRequest\\": return visitor.invalidRequest(value);
-                case \\"finished\\": return visitor.finished(value);
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: CodeExecutionUpdate, visitor: CodeExecutionUpdate._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"buildingExecutor\\": return visitor.buildingExecutor(value);
+            case \\"running\\": return visitor.running(value);
+            case \\"errored\\": return visitor.errored(value);
+            case \\"stopped\\": return visitor.stopped(value);
+            case \\"graded\\": return visitor.graded(value);
+            case \\"gradedV2\\": return visitor.gradedV2(value);
+            case \\"workspaceRan\\": return visitor.workspaceRan(value);
+            case \\"recording\\": return visitor.recording(value);
+            case \\"recorded\\": return visitor.recorded(value);
+            case \\"invalidRequest\\": return visitor.invalidRequest(value);
+            case \\"finished\\": return visitor.finished(value);
+            default: return visitor._unknown();
+        }
+    },
 
-        _types: (): CodeExecutionUpdate[\\"_type\\"][] => [\\"buildingExecutor\\", \\"running\\", \\"errored\\", \\"stopped\\", \\"graded\\", \\"gradedV2\\", \\"workspaceRan\\", \\"recording\\", \\"recorded\\", \\"invalidRequest\\", \\"finished\\"],
-    } as const;
+    _types: (): CodeExecutionUpdate[\\"_type\\"][] => [\\"buildingExecutor\\", \\"running\\", \\"errored\\", \\"stopped\\", \\"graded\\", \\"gradedV2\\", \\"workspaceRan\\", \\"recording\\", \\"recorded\\", \\"invalidRequest\\", \\"finished\\"],
+} as const;
 ",
                 "name": "CodeExecutionUpdate.ts",
                 "type": "file",
@@ -2465,7 +2465,7 @@ export interface CustomTestCasesUnsupported {
 import * as model from \\"..\\";
 import * as model from \\"..\\";
 
-export type ErrorInfo = 
+export type ErrorInfo =
     | ErrorInfo.CompileError
     /**
      * If the submission cannot be executed and throws a runtime error before getting to any of the testcases.
@@ -2498,32 +2498,32 @@ export declare namespace ErrorInfo {
 }
 
 export const ErrorInfo = {
-        compileError: (value: model.CompileError): ErrorInfo.CompileError => ({
-            ...value,
-            _type: \\"compileError\\"
-        }),
+    compileError: (value: model.CompileError): ErrorInfo.CompileError => ({
+        ...value,
+        _type: \\"compileError\\"
+    }),
 
-        runtimeError: (value: model.RuntimeError): ErrorInfo.RuntimeError => ({
-            ...value,
-            _type: \\"runtimeError\\"
-        }),
+    runtimeError: (value: model.RuntimeError): ErrorInfo.RuntimeError => ({
+        ...value,
+        _type: \\"runtimeError\\"
+    }),
 
-        internalError: (value: model.InternalError): ErrorInfo.InternalError => ({
-            ...value,
-            _type: \\"internalError\\"
-        }),
+    internalError: (value: model.InternalError): ErrorInfo.InternalError => ({
+        ...value,
+        _type: \\"internalError\\"
+    }),
 
-        _visit: <Result>(value: ErrorInfo, visitor: ErrorInfo._Visitor<Result>): Result => {
-            switch (value._type) {
-                case \\"compileError\\": return visitor.compileError(value);
-                case \\"runtimeError\\": return visitor.runtimeError(value);
-                case \\"internalError\\": return visitor.internalError(value);
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: ErrorInfo, visitor: ErrorInfo._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"compileError\\": return visitor.compileError(value);
+            case \\"runtimeError\\": return visitor.runtimeError(value);
+            case \\"internalError\\": return visitor.internalError(value);
+            default: return visitor._unknown();
+        }
+    },
 
-        _types: (): ErrorInfo[\\"_type\\"][] => [\\"compileError\\", \\"runtimeError\\", \\"internalError\\"],
-    } as const;
+    _types: (): ErrorInfo[\\"_type\\"][] => [\\"compileError\\", \\"runtimeError\\", \\"internalError\\"],
+} as const;
 ",
                 "name": "ErrorInfo.ts",
                 "type": "file",
@@ -2553,7 +2553,7 @@ export interface ErroredResponse {
               Object {
                 "contents": "import * as model from \\"..\\";
 
-export type ExceptionV2 = 
+export type ExceptionV2 =
     | ExceptionV2.Generic
     | ExceptionV2.Timeout;
 
@@ -2574,25 +2574,25 @@ export declare namespace ExceptionV2 {
 }
 
 export const ExceptionV2 = {
-        generic: (value: model.ExceptionInfo): ExceptionV2.Generic => ({
-            ...value,
-            _type: \\"generic\\"
-        }),
+    generic: (value: model.ExceptionInfo): ExceptionV2.Generic => ({
+        ...value,
+        _type: \\"generic\\"
+    }),
 
-        timeout: (): ExceptionV2.Timeout => ({
-            _type: \\"timeout\\"
-        }),
+    timeout: (): ExceptionV2.Timeout => ({
+        _type: \\"timeout\\"
+    }),
 
-        _visit: <Result>(value: ExceptionV2, visitor: ExceptionV2._Visitor<Result>): Result => {
-            switch (value._type) {
-                case \\"generic\\": return visitor.generic(value);
-                case \\"timeout\\": return visitor.timeout();
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: ExceptionV2, visitor: ExceptionV2._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"generic\\": return visitor.generic(value);
+            case \\"timeout\\": return visitor.timeout();
+            default: return visitor._unknown();
+        }
+    },
 
-        _types: (): ExceptionV2[\\"_type\\"][] => [\\"generic\\", \\"timeout\\"],
-    } as const;
+    _types: (): ExceptionV2[\\"_type\\"][] => [\\"generic\\", \\"timeout\\"],
+} as const;
 ",
                 "name": "ExceptionV2.ts",
                 "type": "file",
@@ -2628,7 +2628,7 @@ export interface ExecutionSessionState {
                 "type": "file",
               },
               Object {
-                "contents": "export type ExecutionSessionStatus = 
+                "contents": "export type ExecutionSessionStatus =
     | \\"CREATING_CONTAINER\\"
     | \\"PROVISIONING_CONTAINER\\"
     | \\"PENDING_CONTAINER\\"
@@ -2637,27 +2637,27 @@ export interface ExecutionSessionState {
     | \\"FAILED_TO_LAUNCH\\";
 
 export const ExecutionSessionStatus = {
-        CreatingContainer: \\"CREATING_CONTAINER\\",
-        ProvisioningContainer: \\"PROVISIONING_CONTAINER\\",
-        PendingContainer: \\"PENDING_CONTAINER\\",
-        RunningContainer: \\"RUNNING_CONTAINER\\",
-        LiveContainer: \\"LIVE_CONTAINER\\",
-        FailedToLaunch: \\"FAILED_TO_LAUNCH\\",
+    CreatingContainer: \\"CREATING_CONTAINER\\",
+    ProvisioningContainer: \\"PROVISIONING_CONTAINER\\",
+    PendingContainer: \\"PENDING_CONTAINER\\",
+    RunningContainer: \\"RUNNING_CONTAINER\\",
+    LiveContainer: \\"LIVE_CONTAINER\\",
+    FailedToLaunch: \\"FAILED_TO_LAUNCH\\",
 
-        _visit: <Result>(value: ExecutionSessionStatus, visitor: ExecutionSessionStatus._Visitor<Result>): Result => {
-            switch (value) {
-                case ExecutionSessionStatus.CreatingContainer: return visitor.creatingContainer();
-                case ExecutionSessionStatus.ProvisioningContainer: return visitor.provisioningContainer();
-                case ExecutionSessionStatus.PendingContainer: return visitor.pendingContainer();
-                case ExecutionSessionStatus.RunningContainer: return visitor.runningContainer();
-                case ExecutionSessionStatus.LiveContainer: return visitor.liveContainer();
-                case ExecutionSessionStatus.FailedToLaunch: return visitor.failedToLaunch();
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: ExecutionSessionStatus, visitor: ExecutionSessionStatus._Visitor<Result>): Result => {
+        switch (value) {
+            case ExecutionSessionStatus.CreatingContainer: return visitor.creatingContainer();
+            case ExecutionSessionStatus.ProvisioningContainer: return visitor.provisioningContainer();
+            case ExecutionSessionStatus.PendingContainer: return visitor.pendingContainer();
+            case ExecutionSessionStatus.RunningContainer: return visitor.runningContainer();
+            case ExecutionSessionStatus.LiveContainer: return visitor.liveContainer();
+            case ExecutionSessionStatus.FailedToLaunch: return visitor.failedToLaunch();
+            default: return visitor._unknown();
+        }
+    },
 
-        _values: (): ExecutionSessionStatus[] => [ExecutionSessionStatus.CreatingContainer, ExecutionSessionStatus.ProvisioningContainer, ExecutionSessionStatus.PendingContainer, ExecutionSessionStatus.RunningContainer, ExecutionSessionStatus.LiveContainer, ExecutionSessionStatus.FailedToLaunch],
-    } as const;
+    _values: (): ExecutionSessionStatus[] => [ExecutionSessionStatus.CreatingContainer, ExecutionSessionStatus.ProvisioningContainer, ExecutionSessionStatus.PendingContainer, ExecutionSessionStatus.RunningContainer, ExecutionSessionStatus.LiveContainer, ExecutionSessionStatus.FailedToLaunch],
+} as const;
 
 export declare namespace ExecutionSessionStatus {
     type CreatingContainer = \\"CREATING_CONTAINER\\";
@@ -2793,7 +2793,7 @@ export interface InternalError {
 import * as model from \\"..\\";
 import * as model from \\"..\\";
 
-export type InvalidRequestCause = 
+export type InvalidRequestCause =
     /**
      * The submission request references a submission id that doesn't exist. */
     | InvalidRequestCause.SubmissionIdNotFound
@@ -2824,32 +2824,32 @@ export declare namespace InvalidRequestCause {
 }
 
 export const InvalidRequestCause = {
-        submissionIdNotFound: (value: model.SubmissionIdNotFound): InvalidRequestCause.SubmissionIdNotFound => ({
-            ...value,
-            _type: \\"submissionIdNotFound\\"
-        }),
+    submissionIdNotFound: (value: model.SubmissionIdNotFound): InvalidRequestCause.SubmissionIdNotFound => ({
+        ...value,
+        _type: \\"submissionIdNotFound\\"
+    }),
 
-        customTestCasesUnsupported: (value: model.CustomTestCasesUnsupported): InvalidRequestCause.CustomTestCasesUnsupported => ({
-            ...value,
-            _type: \\"customTestCasesUnsupported\\"
-        }),
+    customTestCasesUnsupported: (value: model.CustomTestCasesUnsupported): InvalidRequestCause.CustomTestCasesUnsupported => ({
+        ...value,
+        _type: \\"customTestCasesUnsupported\\"
+    }),
 
-        unexpectedLanguage: (value: model.UnexpectedLanguageError): InvalidRequestCause.UnexpectedLanguage => ({
-            ...value,
-            _type: \\"unexpectedLanguage\\"
-        }),
+    unexpectedLanguage: (value: model.UnexpectedLanguageError): InvalidRequestCause.UnexpectedLanguage => ({
+        ...value,
+        _type: \\"unexpectedLanguage\\"
+    }),
 
-        _visit: <Result>(value: InvalidRequestCause, visitor: InvalidRequestCause._Visitor<Result>): Result => {
-            switch (value._type) {
-                case \\"submissionIdNotFound\\": return visitor.submissionIdNotFound(value);
-                case \\"customTestCasesUnsupported\\": return visitor.customTestCasesUnsupported(value);
-                case \\"unexpectedLanguage\\": return visitor.unexpectedLanguage(value);
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: InvalidRequestCause, visitor: InvalidRequestCause._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"submissionIdNotFound\\": return visitor.submissionIdNotFound(value);
+            case \\"customTestCasesUnsupported\\": return visitor.customTestCasesUnsupported(value);
+            case \\"unexpectedLanguage\\": return visitor.unexpectedLanguage(value);
+            default: return visitor._unknown();
+        }
+    },
 
-        _types: (): InvalidRequestCause[\\"_type\\"][] => [\\"submissionIdNotFound\\", \\"customTestCasesUnsupported\\", \\"unexpectedLanguage\\"],
-    } as const;
+    _types: (): InvalidRequestCause[\\"_type\\"][] => [\\"submissionIdNotFound\\", \\"customTestCasesUnsupported\\", \\"unexpectedLanguage\\"],
+} as const;
 ",
                 "name": "InvalidRequestCause.ts",
                 "type": "file",
@@ -2927,7 +2927,7 @@ export interface RunningResponse {
                 "type": "file",
               },
               Object {
-                "contents": "export type RunningSubmissionState = 
+                "contents": "export type RunningSubmissionState =
     | \\"QUEUEING_SUBMISSION\\"
     | \\"KILLING_HISTORICAL_SUBMISSIONS\\"
     | \\"WRITING_SUBMISSION_TO_FILE\\"
@@ -2935,25 +2935,25 @@ export interface RunningResponse {
     | \\"RUNNING_SUBMISSION\\";
 
 export const RunningSubmissionState = {
-        QueueingSubmission: \\"QUEUEING_SUBMISSION\\",
-        KillingHistoricalSubmissions: \\"KILLING_HISTORICAL_SUBMISSIONS\\",
-        WritingSubmissionToFile: \\"WRITING_SUBMISSION_TO_FILE\\",
-        CompilingSubmission: \\"COMPILING_SUBMISSION\\",
-        RunningSubmission: \\"RUNNING_SUBMISSION\\",
+    QueueingSubmission: \\"QUEUEING_SUBMISSION\\",
+    KillingHistoricalSubmissions: \\"KILLING_HISTORICAL_SUBMISSIONS\\",
+    WritingSubmissionToFile: \\"WRITING_SUBMISSION_TO_FILE\\",
+    CompilingSubmission: \\"COMPILING_SUBMISSION\\",
+    RunningSubmission: \\"RUNNING_SUBMISSION\\",
 
-        _visit: <Result>(value: RunningSubmissionState, visitor: RunningSubmissionState._Visitor<Result>): Result => {
-            switch (value) {
-                case RunningSubmissionState.QueueingSubmission: return visitor.queueingSubmission();
-                case RunningSubmissionState.KillingHistoricalSubmissions: return visitor.killingHistoricalSubmissions();
-                case RunningSubmissionState.WritingSubmissionToFile: return visitor.writingSubmissionToFile();
-                case RunningSubmissionState.CompilingSubmission: return visitor.compilingSubmission();
-                case RunningSubmissionState.RunningSubmission: return visitor.runningSubmission();
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: RunningSubmissionState, visitor: RunningSubmissionState._Visitor<Result>): Result => {
+        switch (value) {
+            case RunningSubmissionState.QueueingSubmission: return visitor.queueingSubmission();
+            case RunningSubmissionState.KillingHistoricalSubmissions: return visitor.killingHistoricalSubmissions();
+            case RunningSubmissionState.WritingSubmissionToFile: return visitor.writingSubmissionToFile();
+            case RunningSubmissionState.CompilingSubmission: return visitor.compilingSubmission();
+            case RunningSubmissionState.RunningSubmission: return visitor.runningSubmission();
+            default: return visitor._unknown();
+        }
+    },
 
-        _values: (): RunningSubmissionState[] => [RunningSubmissionState.QueueingSubmission, RunningSubmissionState.KillingHistoricalSubmissions, RunningSubmissionState.WritingSubmissionToFile, RunningSubmissionState.CompilingSubmission, RunningSubmissionState.RunningSubmission],
-    } as const;
+    _values: (): RunningSubmissionState[] => [RunningSubmissionState.QueueingSubmission, RunningSubmissionState.KillingHistoricalSubmissions, RunningSubmissionState.WritingSubmissionToFile, RunningSubmissionState.CompilingSubmission, RunningSubmissionState.RunningSubmission],
+} as const;
 
 export declare namespace RunningSubmissionState {
     type QueueingSubmission = \\"QUEUEING_SUBMISSION\\";
@@ -2995,12 +2995,12 @@ export interface Scope {
               },
               Object {
                 "contents": "export type ShareId = string & {
-        __ShareId: void;
-    };
+    __ShareId: void;
+};
 
 export const ShareId = {
-        of: (value: string): ShareId => value as ShareId
-    };
+    of: (value: string): ShareId => value as ShareId
+};
 ",
                 "name": "ShareId.ts",
                 "type": "file",
@@ -3082,12 +3082,12 @@ export interface StoppedResponse {
               },
               Object {
                 "contents": "export type SubmissionId = string & {
-        __SubmissionId: void;
-    };
+    __SubmissionId: void;
+};
 
 export const SubmissionId = {
-        of: (value: string): SubmissionId => value as SubmissionId
-    };
+    of: (value: string): SubmissionId => value as SubmissionId
+};
 ",
                 "name": "SubmissionId.ts",
                 "type": "file",
@@ -3108,7 +3108,7 @@ import * as model from \\"..\\";
 import * as model from \\"..\\";
 import * as model from \\"..\\";
 
-export type SubmissionRequest = 
+export type SubmissionRequest =
     | SubmissionRequest.InitializeProblemRequest
     | SubmissionRequest.InitializeWorkspaceRequest
     | SubmissionRequest.SubmitV2
@@ -3147,43 +3147,43 @@ export declare namespace SubmissionRequest {
 }
 
 export const SubmissionRequest = {
-        initializeProblemRequest: (value: model.InitializeProblemRequest): SubmissionRequest.InitializeProblemRequest => ({
-            ...value,
-            _type: \\"initializeProblemRequest\\"
-        }),
+    initializeProblemRequest: (value: model.InitializeProblemRequest): SubmissionRequest.InitializeProblemRequest => ({
+        ...value,
+        _type: \\"initializeProblemRequest\\"
+    }),
 
-        initializeWorkspaceRequest: (): SubmissionRequest.InitializeWorkspaceRequest => ({
-            _type: \\"initializeWorkspaceRequest\\"
-        }),
+    initializeWorkspaceRequest: (): SubmissionRequest.InitializeWorkspaceRequest => ({
+        _type: \\"initializeWorkspaceRequest\\"
+    }),
 
-        submitV2: (value: model.SubmitRequestV2): SubmissionRequest.SubmitV2 => ({
-            ...value,
-            _type: \\"submitV2\\"
-        }),
+    submitV2: (value: model.SubmitRequestV2): SubmissionRequest.SubmitV2 => ({
+        ...value,
+        _type: \\"submitV2\\"
+    }),
 
-        workspaceSubmit: (value: model.WorkspaceSubmitRequest): SubmissionRequest.WorkspaceSubmit => ({
-            ...value,
-            _type: \\"workspaceSubmit\\"
-        }),
+    workspaceSubmit: (value: model.WorkspaceSubmitRequest): SubmissionRequest.WorkspaceSubmit => ({
+        ...value,
+        _type: \\"workspaceSubmit\\"
+    }),
 
-        stop: (value: model.StopRequest): SubmissionRequest.Stop => ({
-            ...value,
-            _type: \\"stop\\"
-        }),
+    stop: (value: model.StopRequest): SubmissionRequest.Stop => ({
+        ...value,
+        _type: \\"stop\\"
+    }),
 
-        _visit: <Result>(value: SubmissionRequest, visitor: SubmissionRequest._Visitor<Result>): Result => {
-            switch (value._type) {
-                case \\"initializeProblemRequest\\": return visitor.initializeProblemRequest(value);
-                case \\"initializeWorkspaceRequest\\": return visitor.initializeWorkspaceRequest();
-                case \\"submitV2\\": return visitor.submitV2(value);
-                case \\"workspaceSubmit\\": return visitor.workspaceSubmit(value);
-                case \\"stop\\": return visitor.stop(value);
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: SubmissionRequest, visitor: SubmissionRequest._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"initializeProblemRequest\\": return visitor.initializeProblemRequest(value);
+            case \\"initializeWorkspaceRequest\\": return visitor.initializeWorkspaceRequest();
+            case \\"submitV2\\": return visitor.submitV2(value);
+            case \\"workspaceSubmit\\": return visitor.workspaceSubmit(value);
+            case \\"stop\\": return visitor.stop(value);
+            default: return visitor._unknown();
+        }
+    },
 
-        _types: (): SubmissionRequest[\\"_type\\"][] => [\\"initializeProblemRequest\\", \\"initializeWorkspaceRequest\\", \\"submitV2\\", \\"workspaceSubmit\\", \\"stop\\"],
-    } as const;
+    _types: (): SubmissionRequest[\\"_type\\"][] => [\\"initializeProblemRequest\\", \\"initializeWorkspaceRequest\\", \\"submitV2\\", \\"workspaceSubmit\\", \\"stop\\"],
+} as const;
 ",
                 "name": "SubmissionRequest.ts",
                 "type": "file",
@@ -3194,7 +3194,7 @@ import * as model from \\"..\\";
 import * as model from \\"..\\";
 import * as model from \\"..\\";
 
-export type SubmissionResponse = 
+export type SubmissionResponse =
     | SubmissionResponse.ServerInitialized
     | SubmissionResponse.ProblemInitialized
     | SubmissionResponse.WorkspaceInitialized
@@ -3241,48 +3241,48 @@ export declare namespace SubmissionResponse {
 }
 
 export const SubmissionResponse = {
-        serverInitialized: (): SubmissionResponse.ServerInitialized => ({
-            _type: \\"serverInitialized\\"
-        }),
+    serverInitialized: (): SubmissionResponse.ServerInitialized => ({
+        _type: \\"serverInitialized\\"
+    }),
 
-        problemInitialized: (value: model.ProblemId): SubmissionResponse.ProblemInitialized => ({
-            problemInitialized: value,
-            _type: \\"problemInitialized\\"
-        }),
+    problemInitialized: (value: model.ProblemId): SubmissionResponse.ProblemInitialized => ({
+        problemInitialized: value,
+        _type: \\"problemInitialized\\"
+    }),
 
-        workspaceInitialized: (): SubmissionResponse.WorkspaceInitialized => ({
-            _type: \\"workspaceInitialized\\"
-        }),
+    workspaceInitialized: (): SubmissionResponse.WorkspaceInitialized => ({
+        _type: \\"workspaceInitialized\\"
+    }),
 
-        serverErrored: (value: model.ExceptionInfo): SubmissionResponse.ServerErrored => ({
-            ...value,
-            _type: \\"serverErrored\\"
-        }),
+    serverErrored: (value: model.ExceptionInfo): SubmissionResponse.ServerErrored => ({
+        ...value,
+        _type: \\"serverErrored\\"
+    }),
 
-        codeExecutionUpdate: (value: model.CodeExecutionUpdate): SubmissionResponse.CodeExecutionUpdate => ({
-            codeExecutionUpdate: value,
-            _type: \\"codeExecutionUpdate\\"
-        }),
+    codeExecutionUpdate: (value: model.CodeExecutionUpdate): SubmissionResponse.CodeExecutionUpdate => ({
+        codeExecutionUpdate: value,
+        _type: \\"codeExecutionUpdate\\"
+    }),
 
-        terminated: (value: model.TerminatedResponse): SubmissionResponse.Terminated => ({
-            ...value,
-            _type: \\"terminated\\"
-        }),
+    terminated: (value: model.TerminatedResponse): SubmissionResponse.Terminated => ({
+        ...value,
+        _type: \\"terminated\\"
+    }),
 
-        _visit: <Result>(value: SubmissionResponse, visitor: SubmissionResponse._Visitor<Result>): Result => {
-            switch (value._type) {
-                case \\"serverInitialized\\": return visitor.serverInitialized();
-                case \\"problemInitialized\\": return visitor.problemInitialized(value.problemInitialized);
-                case \\"workspaceInitialized\\": return visitor.workspaceInitialized();
-                case \\"serverErrored\\": return visitor.serverErrored(value);
-                case \\"codeExecutionUpdate\\": return visitor.codeExecutionUpdate(value.codeExecutionUpdate);
-                case \\"terminated\\": return visitor.terminated(value);
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: SubmissionResponse, visitor: SubmissionResponse._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"serverInitialized\\": return visitor.serverInitialized();
+            case \\"problemInitialized\\": return visitor.problemInitialized(value.problemInitialized);
+            case \\"workspaceInitialized\\": return visitor.workspaceInitialized();
+            case \\"serverErrored\\": return visitor.serverErrored(value);
+            case \\"codeExecutionUpdate\\": return visitor.codeExecutionUpdate(value.codeExecutionUpdate);
+            case \\"terminated\\": return visitor.terminated(value);
+            default: return visitor._unknown();
+        }
+    },
 
-        _types: (): SubmissionResponse[\\"_type\\"][] => [\\"serverInitialized\\", \\"problemInitialized\\", \\"workspaceInitialized\\", \\"serverErrored\\", \\"codeExecutionUpdate\\", \\"terminated\\"],
-    } as const;
+    _types: (): SubmissionResponse[\\"_type\\"][] => [\\"serverInitialized\\", \\"problemInitialized\\", \\"workspaceInitialized\\", \\"serverErrored\\", \\"codeExecutionUpdate\\", \\"terminated\\"],
+} as const;
 ",
                 "name": "SubmissionResponse.ts",
                 "type": "file",
@@ -3323,7 +3323,7 @@ export interface SubmissionStateV2 {
 import * as model from \\"..\\";
 import * as model from \\"..\\";
 
-export type SubmissionStatusForTestCase = 
+export type SubmissionStatusForTestCase =
     | SubmissionStatusForTestCase.Graded
     | SubmissionStatusForTestCase.GradedV2
     | SubmissionStatusForTestCase.Traced;
@@ -3351,32 +3351,32 @@ export declare namespace SubmissionStatusForTestCase {
 }
 
 export const SubmissionStatusForTestCase = {
-        graded: (value: model.TestCaseResultWithStdout): SubmissionStatusForTestCase.Graded => ({
-            ...value,
-            _type: \\"graded\\"
-        }),
+    graded: (value: model.TestCaseResultWithStdout): SubmissionStatusForTestCase.Graded => ({
+        ...value,
+        _type: \\"graded\\"
+    }),
 
-        gradedV2: (value: model.TestCaseGrade): SubmissionStatusForTestCase.GradedV2 => ({
-            gradedV2: value,
-            _type: \\"gradedV2\\"
-        }),
+    gradedV2: (value: model.TestCaseGrade): SubmissionStatusForTestCase.GradedV2 => ({
+        gradedV2: value,
+        _type: \\"gradedV2\\"
+    }),
 
-        traced: (value: model.TracedTestCase): SubmissionStatusForTestCase.Traced => ({
-            ...value,
-            _type: \\"traced\\"
-        }),
+    traced: (value: model.TracedTestCase): SubmissionStatusForTestCase.Traced => ({
+        ...value,
+        _type: \\"traced\\"
+    }),
 
-        _visit: <Result>(value: SubmissionStatusForTestCase, visitor: SubmissionStatusForTestCase._Visitor<Result>): Result => {
-            switch (value._type) {
-                case \\"graded\\": return visitor.graded(value);
-                case \\"gradedV2\\": return visitor.gradedV2(value.gradedV2);
-                case \\"traced\\": return visitor.traced(value);
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: SubmissionStatusForTestCase, visitor: SubmissionStatusForTestCase._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"graded\\": return visitor.graded(value);
+            case \\"gradedV2\\": return visitor.gradedV2(value.gradedV2);
+            case \\"traced\\": return visitor.traced(value);
+            default: return visitor._unknown();
+        }
+    },
 
-        _types: (): SubmissionStatusForTestCase[\\"_type\\"][] => [\\"graded\\", \\"gradedV2\\", \\"traced\\"],
-    } as const;
+    _types: (): SubmissionStatusForTestCase[\\"_type\\"][] => [\\"graded\\", \\"gradedV2\\", \\"traced\\"],
+} as const;
 ",
                 "name": "SubmissionStatusForTestCase.ts",
                 "type": "file",
@@ -3385,7 +3385,7 @@ export const SubmissionStatusForTestCase = {
                 "contents": "import * as model from \\"..\\";
 import * as model from \\"..\\";
 
-export type SubmissionStatusV2 = 
+export type SubmissionStatusV2 =
     | SubmissionStatusV2.Test
     | SubmissionStatusV2.Workspace;
 
@@ -3406,26 +3406,26 @@ export declare namespace SubmissionStatusV2 {
 }
 
 export const SubmissionStatusV2 = {
-        test: (value: model.TestSubmissionStatusV2): SubmissionStatusV2.Test => ({
-            ...value,
-            _type: \\"test\\"
-        }),
+    test: (value: model.TestSubmissionStatusV2): SubmissionStatusV2.Test => ({
+        ...value,
+        _type: \\"test\\"
+    }),
 
-        workspace: (value: model.WorkspaceSubmissionStatusV2): SubmissionStatusV2.Workspace => ({
-            ...value,
-            _type: \\"workspace\\"
-        }),
+    workspace: (value: model.WorkspaceSubmissionStatusV2): SubmissionStatusV2.Workspace => ({
+        ...value,
+        _type: \\"workspace\\"
+    }),
 
-        _visit: <Result>(value: SubmissionStatusV2, visitor: SubmissionStatusV2._Visitor<Result>): Result => {
-            switch (value._type) {
-                case \\"test\\": return visitor.test(value);
-                case \\"workspace\\": return visitor.workspace(value);
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: SubmissionStatusV2, visitor: SubmissionStatusV2._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"test\\": return visitor.test(value);
+            case \\"workspace\\": return visitor.workspace(value);
+            default: return visitor._unknown();
+        }
+    },
 
-        _types: (): SubmissionStatusV2[\\"_type\\"][] => [\\"test\\", \\"workspace\\"],
-    } as const;
+    _types: (): SubmissionStatusV2[\\"_type\\"][] => [\\"test\\", \\"workspace\\"],
+} as const;
 ",
                 "name": "SubmissionStatusV2.ts",
                 "type": "file",
@@ -3434,21 +3434,21 @@ export const SubmissionStatusV2 = {
                 "contents": "/**
  * Keep in sync with SubmissionType.
  */
-export type SubmissionTypeEnum = 
+export type SubmissionTypeEnum =
     | \\"TEST\\";
 
 export const SubmissionTypeEnum = {
-        Test: \\"TEST\\",
+    Test: \\"TEST\\",
 
-        _visit: <Result>(value: SubmissionTypeEnum, visitor: SubmissionTypeEnum._Visitor<Result>): Result => {
-            switch (value) {
-                case SubmissionTypeEnum.Test: return visitor.test();
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: SubmissionTypeEnum, visitor: SubmissionTypeEnum._Visitor<Result>): Result => {
+        switch (value) {
+            case SubmissionTypeEnum.Test: return visitor.test();
+            default: return visitor._unknown();
+        }
+    },
 
-        _values: (): SubmissionTypeEnum[] => [SubmissionTypeEnum.Test],
-    } as const;
+    _values: (): SubmissionTypeEnum[] => [SubmissionTypeEnum.Test],
+} as const;
 
 export declare namespace SubmissionTypeEnum {
     type Test = \\"TEST\\";
@@ -3466,7 +3466,7 @@ export declare namespace SubmissionTypeEnum {
                 "contents": "import * as model from \\"..\\";
 import * as model from \\"..\\";
 
-export type SubmissionTypeState = 
+export type SubmissionTypeState =
     | SubmissionTypeState.Test
     | SubmissionTypeState.Workspace;
 
@@ -3487,26 +3487,26 @@ export declare namespace SubmissionTypeState {
 }
 
 export const SubmissionTypeState = {
-        test: (value: model.TestSubmissionState): SubmissionTypeState.Test => ({
-            ...value,
-            _type: \\"test\\"
-        }),
+    test: (value: model.TestSubmissionState): SubmissionTypeState.Test => ({
+        ...value,
+        _type: \\"test\\"
+    }),
 
-        workspace: (value: model.WorkspaceSubmissionState): SubmissionTypeState.Workspace => ({
-            ...value,
-            _type: \\"workspace\\"
-        }),
+    workspace: (value: model.WorkspaceSubmissionState): SubmissionTypeState.Workspace => ({
+        ...value,
+        _type: \\"workspace\\"
+    }),
 
-        _visit: <Result>(value: SubmissionTypeState, visitor: SubmissionTypeState._Visitor<Result>): Result => {
-            switch (value._type) {
-                case \\"test\\": return visitor.test(value);
-                case \\"workspace\\": return visitor.workspace(value);
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: SubmissionTypeState, visitor: SubmissionTypeState._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"test\\": return visitor.test(value);
+            case \\"workspace\\": return visitor.workspace(value);
+            default: return visitor._unknown();
+        }
+    },
 
-        _types: (): SubmissionTypeState[\\"_type\\"][] => [\\"test\\", \\"workspace\\"],
-    } as const;
+    _types: (): SubmissionTypeState[\\"_type\\"][] => [\\"test\\", \\"workspace\\"],
+} as const;
 ",
                 "name": "SubmissionTypeState.ts",
                 "type": "file",
@@ -3540,7 +3540,7 @@ export interface SubmitRequestV2 {
                 "contents": "import * as model from \\"..\\";
 import * as model from \\"..\\";
 
-export type TestCaseGrade = 
+export type TestCaseGrade =
     | TestCaseGrade.Hidden
     | TestCaseGrade.NonHidden;
 
@@ -3561,26 +3561,26 @@ export declare namespace TestCaseGrade {
 }
 
 export const TestCaseGrade = {
-        hidden: (value: model.TestCaseHiddenGrade): TestCaseGrade.Hidden => ({
-            ...value,
-            _type: \\"hidden\\"
-        }),
+    hidden: (value: model.TestCaseHiddenGrade): TestCaseGrade.Hidden => ({
+        ...value,
+        _type: \\"hidden\\"
+    }),
 
-        nonHidden: (value: model.TestCaseNonHiddenGrade): TestCaseGrade.NonHidden => ({
-            ...value,
-            _type: \\"nonHidden\\"
-        }),
+    nonHidden: (value: model.TestCaseNonHiddenGrade): TestCaseGrade.NonHidden => ({
+        ...value,
+        _type: \\"nonHidden\\"
+    }),
 
-        _visit: <Result>(value: TestCaseGrade, visitor: TestCaseGrade._Visitor<Result>): Result => {
-            switch (value._type) {
-                case \\"hidden\\": return visitor.hidden(value);
-                case \\"nonHidden\\": return visitor.nonHidden(value);
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: TestCaseGrade, visitor: TestCaseGrade._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"hidden\\": return visitor.hidden(value);
+            case \\"nonHidden\\": return visitor.nonHidden(value);
+            default: return visitor._unknown();
+        }
+    },
 
-        _types: (): TestCaseGrade[\\"_type\\"][] => [\\"hidden\\", \\"nonHidden\\"],
-    } as const;
+    _types: (): TestCaseGrade[\\"_type\\"][] => [\\"hidden\\", \\"nonHidden\\"],
+} as const;
 ",
                 "name": "TestCaseGrade.ts",
                 "type": "file",
@@ -3652,7 +3652,7 @@ export interface TestSubmissionState {
 import * as model from \\"..\\";
 import { SubmissionStatusForTestCase } from \\"./SubmissionStatusForTestCase\\";
 
-export type TestSubmissionStatus = 
+export type TestSubmissionStatus =
     | TestSubmissionStatus.Stopped
     | TestSubmissionStatus.Errored
     | TestSubmissionStatus.Running
@@ -3688,37 +3688,37 @@ export declare namespace TestSubmissionStatus {
 }
 
 export const TestSubmissionStatus = {
-        stopped: (): TestSubmissionStatus.Stopped => ({
-            _type: \\"stopped\\"
-        }),
+    stopped: (): TestSubmissionStatus.Stopped => ({
+        _type: \\"stopped\\"
+    }),
 
-        errored: (value: model.ErrorInfo): TestSubmissionStatus.Errored => ({
-            errored: value,
-            _type: \\"errored\\"
-        }),
+    errored: (value: model.ErrorInfo): TestSubmissionStatus.Errored => ({
+        errored: value,
+        _type: \\"errored\\"
+    }),
 
-        running: (value: model.RunningSubmissionState): TestSubmissionStatus.Running => ({
-            running: value,
-            _type: \\"running\\"
-        }),
+    running: (value: model.RunningSubmissionState): TestSubmissionStatus.Running => ({
+        running: value,
+        _type: \\"running\\"
+    }),
 
-        testCaseIdToState: (value: Record<string, SubmissionStatusForTestCase>): TestSubmissionStatus.TestCaseIdToState => ({
-            testCaseIdToState: value,
-            _type: \\"testCaseIdToState\\"
-        }),
+    testCaseIdToState: (value: Record<string, SubmissionStatusForTestCase>): TestSubmissionStatus.TestCaseIdToState => ({
+        testCaseIdToState: value,
+        _type: \\"testCaseIdToState\\"
+    }),
 
-        _visit: <Result>(value: TestSubmissionStatus, visitor: TestSubmissionStatus._Visitor<Result>): Result => {
-            switch (value._type) {
-                case \\"stopped\\": return visitor.stopped();
-                case \\"errored\\": return visitor.errored(value.errored);
-                case \\"running\\": return visitor.running(value.running);
-                case \\"testCaseIdToState\\": return visitor.testCaseIdToState(value.testCaseIdToState);
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: TestSubmissionStatus, visitor: TestSubmissionStatus._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"stopped\\": return visitor.stopped();
+            case \\"errored\\": return visitor.errored(value.errored);
+            case \\"running\\": return visitor.running(value.running);
+            case \\"testCaseIdToState\\": return visitor.testCaseIdToState(value.testCaseIdToState);
+            default: return visitor._unknown();
+        }
+    },
 
-        _types: (): TestSubmissionStatus[\\"_type\\"][] => [\\"stopped\\", \\"errored\\", \\"running\\", \\"testCaseIdToState\\"],
-    } as const;
+    _types: (): TestSubmissionStatus[\\"_type\\"][] => [\\"stopped\\", \\"errored\\", \\"running\\", \\"testCaseIdToState\\"],
+} as const;
 ",
                 "name": "TestSubmissionStatus.ts",
                 "type": "file",
@@ -3756,7 +3756,7 @@ import * as model from \\"..\\";
 import * as model from \\"..\\";
 import * as model from \\"..\\";
 
-export type TestSubmissionUpdateInfo = 
+export type TestSubmissionUpdateInfo =
     | TestSubmissionUpdateInfo.Running
     | TestSubmissionUpdateInfo.Stopped
     | TestSubmissionUpdateInfo.Errored
@@ -3803,48 +3803,48 @@ export declare namespace TestSubmissionUpdateInfo {
 }
 
 export const TestSubmissionUpdateInfo = {
-        running: (value: model.RunningSubmissionState): TestSubmissionUpdateInfo.Running => ({
-            running: value,
-            _type: \\"running\\"
-        }),
+    running: (value: model.RunningSubmissionState): TestSubmissionUpdateInfo.Running => ({
+        running: value,
+        _type: \\"running\\"
+    }),
 
-        stopped: (): TestSubmissionUpdateInfo.Stopped => ({
-            _type: \\"stopped\\"
-        }),
+    stopped: (): TestSubmissionUpdateInfo.Stopped => ({
+        _type: \\"stopped\\"
+    }),
 
-        errored: (value: model.ErrorInfo): TestSubmissionUpdateInfo.Errored => ({
-            errored: value,
-            _type: \\"errored\\"
-        }),
+    errored: (value: model.ErrorInfo): TestSubmissionUpdateInfo.Errored => ({
+        errored: value,
+        _type: \\"errored\\"
+    }),
 
-        gradedTestCase: (value: model.GradedTestCaseUpdate): TestSubmissionUpdateInfo.GradedTestCase => ({
-            ...value,
-            _type: \\"gradedTestCase\\"
-        }),
+    gradedTestCase: (value: model.GradedTestCaseUpdate): TestSubmissionUpdateInfo.GradedTestCase => ({
+        ...value,
+        _type: \\"gradedTestCase\\"
+    }),
 
-        recordedTestCase: (value: model.RecordedTestCaseUpdate): TestSubmissionUpdateInfo.RecordedTestCase => ({
-            ...value,
-            _type: \\"recordedTestCase\\"
-        }),
+    recordedTestCase: (value: model.RecordedTestCaseUpdate): TestSubmissionUpdateInfo.RecordedTestCase => ({
+        ...value,
+        _type: \\"recordedTestCase\\"
+    }),
 
-        finished: (): TestSubmissionUpdateInfo.Finished => ({
-            _type: \\"finished\\"
-        }),
+    finished: (): TestSubmissionUpdateInfo.Finished => ({
+        _type: \\"finished\\"
+    }),
 
-        _visit: <Result>(value: TestSubmissionUpdateInfo, visitor: TestSubmissionUpdateInfo._Visitor<Result>): Result => {
-            switch (value._type) {
-                case \\"running\\": return visitor.running(value.running);
-                case \\"stopped\\": return visitor.stopped();
-                case \\"errored\\": return visitor.errored(value.errored);
-                case \\"gradedTestCase\\": return visitor.gradedTestCase(value);
-                case \\"recordedTestCase\\": return visitor.recordedTestCase(value);
-                case \\"finished\\": return visitor.finished();
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: TestSubmissionUpdateInfo, visitor: TestSubmissionUpdateInfo._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"running\\": return visitor.running(value.running);
+            case \\"stopped\\": return visitor.stopped();
+            case \\"errored\\": return visitor.errored(value.errored);
+            case \\"gradedTestCase\\": return visitor.gradedTestCase(value);
+            case \\"recordedTestCase\\": return visitor.recordedTestCase(value);
+            case \\"finished\\": return visitor.finished();
+            default: return visitor._unknown();
+        }
+    },
 
-        _types: (): TestSubmissionUpdateInfo[\\"_type\\"][] => [\\"running\\", \\"stopped\\", \\"errored\\", \\"gradedTestCase\\", \\"recordedTestCase\\", \\"finished\\"],
-    } as const;
+    _types: (): TestSubmissionUpdateInfo[\\"_type\\"][] => [\\"running\\", \\"stopped\\", \\"errored\\", \\"gradedTestCase\\", \\"recordedTestCase\\", \\"finished\\"],
+} as const;
 ",
                 "name": "TestSubmissionUpdateInfo.ts",
                 "type": "file",
@@ -4026,7 +4026,7 @@ import * as model from \\"..\\";
 import * as model from \\"..\\";
 import * as model from \\"..\\";
 
-export type WorkspaceSubmissionStatus = 
+export type WorkspaceSubmissionStatus =
     | WorkspaceSubmissionStatus.Stopped
     | WorkspaceSubmissionStatus.Errored
     | WorkspaceSubmissionStatus.Running
@@ -4067,43 +4067,43 @@ export declare namespace WorkspaceSubmissionStatus {
 }
 
 export const WorkspaceSubmissionStatus = {
-        stopped: (): WorkspaceSubmissionStatus.Stopped => ({
-            _type: \\"stopped\\"
-        }),
+    stopped: (): WorkspaceSubmissionStatus.Stopped => ({
+        _type: \\"stopped\\"
+    }),
 
-        errored: (value: model.ErrorInfo): WorkspaceSubmissionStatus.Errored => ({
-            errored: value,
-            _type: \\"errored\\"
-        }),
+    errored: (value: model.ErrorInfo): WorkspaceSubmissionStatus.Errored => ({
+        errored: value,
+        _type: \\"errored\\"
+    }),
 
-        running: (value: model.RunningSubmissionState): WorkspaceSubmissionStatus.Running => ({
-            running: value,
-            _type: \\"running\\"
-        }),
+    running: (value: model.RunningSubmissionState): WorkspaceSubmissionStatus.Running => ({
+        running: value,
+        _type: \\"running\\"
+    }),
 
-        ran: (value: model.WorkspaceRunDetails): WorkspaceSubmissionStatus.Ran => ({
-            ...value,
-            _type: \\"ran\\"
-        }),
+    ran: (value: model.WorkspaceRunDetails): WorkspaceSubmissionStatus.Ran => ({
+        ...value,
+        _type: \\"ran\\"
+    }),
 
-        traced: (value: model.WorkspaceRunDetails): WorkspaceSubmissionStatus.Traced => ({
-            ...value,
-            _type: \\"traced\\"
-        }),
+    traced: (value: model.WorkspaceRunDetails): WorkspaceSubmissionStatus.Traced => ({
+        ...value,
+        _type: \\"traced\\"
+    }),
 
-        _visit: <Result>(value: WorkspaceSubmissionStatus, visitor: WorkspaceSubmissionStatus._Visitor<Result>): Result => {
-            switch (value._type) {
-                case \\"stopped\\": return visitor.stopped();
-                case \\"errored\\": return visitor.errored(value.errored);
-                case \\"running\\": return visitor.running(value.running);
-                case \\"ran\\": return visitor.ran(value);
-                case \\"traced\\": return visitor.traced(value);
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: WorkspaceSubmissionStatus, visitor: WorkspaceSubmissionStatus._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"stopped\\": return visitor.stopped();
+            case \\"errored\\": return visitor.errored(value.errored);
+            case \\"running\\": return visitor.running(value.running);
+            case \\"ran\\": return visitor.ran(value);
+            case \\"traced\\": return visitor.traced(value);
+            default: return visitor._unknown();
+        }
+    },
 
-        _types: (): WorkspaceSubmissionStatus[\\"_type\\"][] => [\\"stopped\\", \\"errored\\", \\"running\\", \\"ran\\", \\"traced\\"],
-    } as const;
+    _types: (): WorkspaceSubmissionStatus[\\"_type\\"][] => [\\"stopped\\", \\"errored\\", \\"running\\", \\"ran\\", \\"traced\\"],
+} as const;
 ",
                 "name": "WorkspaceSubmissionStatus.ts",
                 "type": "file",
@@ -4136,7 +4136,7 @@ import * as model from \\"..\\";
 import * as model from \\"..\\";
 import * as model from \\"..\\";
 
-export type WorkspaceSubmissionUpdateInfo = 
+export type WorkspaceSubmissionUpdateInfo =
     | WorkspaceSubmissionUpdateInfo.Running
     | WorkspaceSubmissionUpdateInfo.Ran
     | WorkspaceSubmissionUpdateInfo.Stopped
@@ -4189,53 +4189,53 @@ export declare namespace WorkspaceSubmissionUpdateInfo {
 }
 
 export const WorkspaceSubmissionUpdateInfo = {
-        running: (value: model.RunningSubmissionState): WorkspaceSubmissionUpdateInfo.Running => ({
-            running: value,
-            _type: \\"running\\"
-        }),
+    running: (value: model.RunningSubmissionState): WorkspaceSubmissionUpdateInfo.Running => ({
+        running: value,
+        _type: \\"running\\"
+    }),
 
-        ran: (value: model.WorkspaceRunDetails): WorkspaceSubmissionUpdateInfo.Ran => ({
-            ...value,
-            _type: \\"ran\\"
-        }),
+    ran: (value: model.WorkspaceRunDetails): WorkspaceSubmissionUpdateInfo.Ran => ({
+        ...value,
+        _type: \\"ran\\"
+    }),
 
-        stopped: (): WorkspaceSubmissionUpdateInfo.Stopped => ({
-            _type: \\"stopped\\"
-        }),
+    stopped: (): WorkspaceSubmissionUpdateInfo.Stopped => ({
+        _type: \\"stopped\\"
+    }),
 
-        traced: (): WorkspaceSubmissionUpdateInfo.Traced => ({
-            _type: \\"traced\\"
-        }),
+    traced: (): WorkspaceSubmissionUpdateInfo.Traced => ({
+        _type: \\"traced\\"
+    }),
 
-        tracedV2: (value: model.WorkspaceTracedUpdate): WorkspaceSubmissionUpdateInfo.TracedV2 => ({
-            ...value,
-            _type: \\"tracedV2\\"
-        }),
+    tracedV2: (value: model.WorkspaceTracedUpdate): WorkspaceSubmissionUpdateInfo.TracedV2 => ({
+        ...value,
+        _type: \\"tracedV2\\"
+    }),
 
-        errored: (value: model.ErrorInfo): WorkspaceSubmissionUpdateInfo.Errored => ({
-            errored: value,
-            _type: \\"errored\\"
-        }),
+    errored: (value: model.ErrorInfo): WorkspaceSubmissionUpdateInfo.Errored => ({
+        errored: value,
+        _type: \\"errored\\"
+    }),
 
-        finished: (): WorkspaceSubmissionUpdateInfo.Finished => ({
-            _type: \\"finished\\"
-        }),
+    finished: (): WorkspaceSubmissionUpdateInfo.Finished => ({
+        _type: \\"finished\\"
+    }),
 
-        _visit: <Result>(value: WorkspaceSubmissionUpdateInfo, visitor: WorkspaceSubmissionUpdateInfo._Visitor<Result>): Result => {
-            switch (value._type) {
-                case \\"running\\": return visitor.running(value.running);
-                case \\"ran\\": return visitor.ran(value);
-                case \\"stopped\\": return visitor.stopped();
-                case \\"traced\\": return visitor.traced();
-                case \\"tracedV2\\": return visitor.tracedV2(value);
-                case \\"errored\\": return visitor.errored(value.errored);
-                case \\"finished\\": return visitor.finished();
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: WorkspaceSubmissionUpdateInfo, visitor: WorkspaceSubmissionUpdateInfo._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"running\\": return visitor.running(value.running);
+            case \\"ran\\": return visitor.ran(value);
+            case \\"stopped\\": return visitor.stopped();
+            case \\"traced\\": return visitor.traced();
+            case \\"tracedV2\\": return visitor.tracedV2(value);
+            case \\"errored\\": return visitor.errored(value.errored);
+            case \\"finished\\": return visitor.finished();
+            default: return visitor._unknown();
+        }
+    },
 
-        _types: (): WorkspaceSubmissionUpdateInfo[\\"_type\\"][] => [\\"running\\", \\"ran\\", \\"stopped\\", \\"traced\\", \\"tracedV2\\", \\"errored\\", \\"finished\\"],
-    } as const;
+    _types: (): WorkspaceSubmissionUpdateInfo[\\"_type\\"][] => [\\"running\\", \\"ran\\", \\"stopped\\", \\"traced\\", \\"tracedV2\\", \\"errored\\", \\"finished\\"],
+} as const;
 ",
                 "name": "WorkspaceSubmissionUpdateInfo.ts",
                 "type": "file",
@@ -4422,11 +4422,11 @@ export class Client implements Client {
 
     public async updateTestSubmissionStatus(request: AdminService.updateTestSubmissionStatus.Request): Promise<AdminService.updateTestSubmissionStatus.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \`/store-test-submission-status/\${request.submissionId}\`),
-                method: \\"POST\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \`/store-test-submission-status/\${request.submissionId}\`),
+            method: \\"POST\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             return {
@@ -4446,11 +4446,11 @@ export class Client implements Client {
 
     public async sendTestSubmissionUpdate(request: AdminService.sendTestSubmissionUpdate.Request): Promise<AdminService.sendTestSubmissionUpdate.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \`/store-test-submission-status-v2/\${request.submissionId}\`),
-                method: \\"POST\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \`/store-test-submission-status-v2/\${request.submissionId}\`),
+            method: \\"POST\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             return {
@@ -4470,11 +4470,11 @@ export class Client implements Client {
 
     public async updateWorkspaceSubmissionStatus(request: AdminService.updateWorkspaceSubmissionStatus.Request): Promise<AdminService.updateWorkspaceSubmissionStatus.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \`/store-workspace-submission-status/\${request.submissionId}\`),
-                method: \\"POST\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \`/store-workspace-submission-status/\${request.submissionId}\`),
+            method: \\"POST\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             return {
@@ -4494,11 +4494,11 @@ export class Client implements Client {
 
     public async sendWorkspaceSubmissionUpdate(request: AdminService.sendWorkspaceSubmissionUpdate.Request): Promise<AdminService.sendWorkspaceSubmissionUpdate.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \`/store-workspace-submission-status-v2/\${request.submissionId}\`),
-                method: \\"POST\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \`/store-workspace-submission-status-v2/\${request.submissionId}\`),
+            method: \\"POST\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             return {
@@ -4518,11 +4518,11 @@ export class Client implements Client {
 
     public async storeTracedTestCase(request: AdminService.storeTracedTestCase.Request): Promise<AdminService.storeTracedTestCase.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \`/store-test-trace/submission/\${request.submissionId}/testCase/\${request.testCaseId}\`),
-                method: \\"POST\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \`/store-test-trace/submission/\${request.submissionId}/testCase/\${request.testCaseId}\`),
+            method: \\"POST\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             return {
@@ -4542,11 +4542,11 @@ export class Client implements Client {
 
     public async storeTracedTestCaseV2(request: AdminService.storeTracedTestCaseV2.Request): Promise<AdminService.storeTracedTestCaseV2.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \`/store-test-trace-v2/submission/\${request.submissionId}/testCase/\${request.testCaseId}\`),
-                method: \\"POST\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \`/store-test-trace-v2/submission/\${request.submissionId}/testCase/\${request.testCaseId}\`),
+            method: \\"POST\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             return {
@@ -4566,11 +4566,11 @@ export class Client implements Client {
 
     public async storeTracedWorkspace(request: AdminService.storeTracedWorkspace.Request): Promise<AdminService.storeTracedWorkspace.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \`/store-workspace-trace/submission/\${request.submissionId}\`),
-                method: \\"POST\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \`/store-workspace-trace/submission/\${request.submissionId}\`),
+            method: \\"POST\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             return {
@@ -4590,11 +4590,11 @@ export class Client implements Client {
 
     public async storeTracedWorkspaceV2(request: AdminService.storeTracedWorkspaceV2.Request): Promise<AdminService.storeTracedWorkspaceV2.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \`/store-workspace-trace-v2/submission/\${request.submissionId}\`),
-                method: \\"POST\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \`/store-workspace-trace-v2/submission/\${request.submissionId}\`),
+            method: \\"POST\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             return {
@@ -4643,12 +4643,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -4708,12 +4708,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -4773,12 +4773,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -4839,12 +4839,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -4906,12 +4906,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -4971,12 +4971,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -5036,12 +5036,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -5101,12 +5101,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -5217,11 +5217,11 @@ export class Client implements Client {
 
     public async createExecutionSession(request: ExecutionSesssionManagementService.createExecutionSession.Request): Promise<ExecutionSesssionManagementService.createExecutionSession.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \`/create-session/\${request.language}\`),
-                method: \\"POST\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \`/create-session/\${request.language}\`),
+            method: \\"POST\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -5243,11 +5243,11 @@ export class Client implements Client {
 
     public async getExecutionSession(request: ExecutionSesssionManagementService.getExecutionSession.Request): Promise<ExecutionSesssionManagementService.getExecutionSession.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \`/\${request.sessionId}\`),
-                method: \\"GET\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \`/\${request.sessionId}\`),
+            method: \\"GET\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -5269,11 +5269,11 @@ export class Client implements Client {
 
     public async stopExecutionSession(request: ExecutionSesssionManagementService.stopExecutionSession.Request): Promise<ExecutionSesssionManagementService.stopExecutionSession.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \`/stop/\${request.sessionId}\`),
-                method: \\"DELETE\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \`/stop/\${request.sessionId}\`),
+            method: \\"DELETE\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             return {
@@ -5293,11 +5293,11 @@ export class Client implements Client {
 
     public async getExecutionSessionsState(): Promise<ExecutionSesssionManagementService.getExecutionSessionsState.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \\"/execution-sessions-state\\"),
-                method: \\"GET\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \\"/execution-sessions-state\\"),
+            method: \\"GET\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -5335,12 +5335,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -5400,12 +5400,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -5463,12 +5463,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -5526,12 +5526,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -5623,11 +5623,11 @@ export class Client implements Client {
 
     public async getHomepageProblems(): Promise<HomepageProblemService.getHomepageProblems.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \\"/\\"),
-                method: \\"GET\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \\"/\\"),
+            method: \\"GET\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -5649,15 +5649,15 @@ export class Client implements Client {
 
     public async setHomepageProblems(request: model.ProblemId[]): Promise<HomepageProblemService.setHomepageProblems.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \\"/\\"),
-                method: \\"POST\\",
-                headers: {},
-                token: this.token,
-                body: {
-                    content: JSON.stringify(request),
-                    contentType: \\"application/json\\"
-                }
-            });
+            url: path.join(this.baseUrl, \\"/\\"),
+            method: \\"POST\\",
+            headers: {},
+            token: this.token,
+            body: {
+                content: JSON.stringify(request),
+                contentType: \\"application/json\\"
+            }
+        });
 
         if (isResponseOk(encodedResponse)) {
             return {
@@ -5693,12 +5693,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -5754,12 +5754,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -5837,11 +5837,11 @@ export class Client implements Client {
 
     public async getAttemptedMigrations(): Promise<MigrationInfoService.getAttemptedMigrations.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \\"/all\\"),
-                method: \\"GET\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \\"/all\\"),
+            method: \\"GET\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -5879,12 +5879,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -5993,15 +5993,15 @@ export class Client implements Client {
 
     public async createPlaylist(request: PlaylistCrudService.createPlaylist.Request): Promise<PlaylistCrudService.createPlaylist.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \\"/create\\"),
-                method: \\"POST\\",
-                headers: {},
-                token: this.token,
-                body: {
-                    content: JSON.stringify(request),
-                    contentType: \\"application/json\\"
-                }
-            });
+            url: path.join(this.baseUrl, \\"/create\\"),
+            method: \\"POST\\",
+            headers: {},
+            token: this.token,
+            body: {
+                content: JSON.stringify(request),
+                contentType: \\"application/json\\"
+            }
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -6023,11 +6023,11 @@ export class Client implements Client {
 
     public async getPlaylists(): Promise<PlaylistCrudService.getPlaylists.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \\"/all\\"),
-                method: \\"GET\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \\"/all\\"),
+            method: \\"GET\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -6049,11 +6049,11 @@ export class Client implements Client {
 
     public async getPlaylist(request: PlaylistCrudService.getPlaylist.Request): Promise<PlaylistCrudService.getPlaylist.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \`/\${request.playlistId}\`),
-                method: \\"GET\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \`/\${request.playlistId}\`),
+            method: \\"GET\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -6075,15 +6075,15 @@ export class Client implements Client {
 
     public async updatePlaylist(request: PlaylistCrudService.updatePlaylist.Request): Promise<PlaylistCrudService.updatePlaylist.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \`/\${request.playlistId}\`),
-                method: \\"PUT\\",
-                headers: {},
-                token: this.token,
-                body: {
-                    content: JSON.stringify(request.body),
-                    contentType: \\"application/json\\"
-                }
-            });
+            url: path.join(this.baseUrl, \`/\${request.playlistId}\`),
+            method: \\"PUT\\",
+            headers: {},
+            token: this.token,
+            body: {
+                content: JSON.stringify(request.body),
+                contentType: \\"application/json\\"
+            }
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -6105,11 +6105,11 @@ export class Client implements Client {
 
     public async deletePlaylist(request: PlaylistCrudService.deletePlaylist.Request): Promise<PlaylistCrudService.deletePlaylist.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \`/\${request.playlistId}\`),
-                method: \\"DELETE\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \`/\${request.playlistId}\`),
+            method: \\"DELETE\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             return {
@@ -6145,12 +6145,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -6211,12 +6211,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -6274,12 +6274,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -6339,12 +6339,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -6403,12 +6403,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -6531,11 +6531,11 @@ export class Client implements Client {
 
     public async createProblem(request: ProblemCrudService.createProblem.Request): Promise<ProblemCrudService.createProblem.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \\"/create\\"),
-                method: \\"POST\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \\"/create\\"),
+            method: \\"POST\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -6557,11 +6557,11 @@ export class Client implements Client {
 
     public async updateProblem(request: ProblemCrudService.updateProblem.Request): Promise<ProblemCrudService.updateProblem.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \`/update/\${request.problemId}\`),
-                method: \\"POST\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \`/update/\${request.problemId}\`),
+            method: \\"POST\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -6583,11 +6583,11 @@ export class Client implements Client {
 
     public async deleteProblem(request: ProblemCrudService.deleteProblem.Request): Promise<ProblemCrudService.deleteProblem.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \`/delete/\${request.problemId}\`),
-                method: \\"DELETE\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \`/delete/\${request.problemId}\`),
+            method: \\"DELETE\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             return {
@@ -6607,11 +6607,11 @@ export class Client implements Client {
 
     public async getDefaultStarterFiles(request: ProblemCrudService.getDefaultStarterFiles.Request): Promise<ProblemCrudService.getDefaultStarterFiles.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \\"/default-starter-files\\"),
-                method: \\"POST\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \\"/default-starter-files\\"),
+            method: \\"POST\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -6649,12 +6649,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -6714,12 +6714,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -6777,12 +6777,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -6851,12 +6851,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -6992,11 +6992,11 @@ export class Client implements Client {
 
     public async createProblem(request: ProblemCrudServiceV2.createProblem.Request): Promise<ProblemCrudServiceV2.createProblem.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \\"/create\\"),
-                method: \\"POST\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \\"/create\\"),
+            method: \\"POST\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -7018,11 +7018,11 @@ export class Client implements Client {
 
     public async updateProblem(request: ProblemCrudServiceV2.updateProblem.Request): Promise<ProblemCrudServiceV2.updateProblem.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \`/update/\${request.problemId}\`),
-                method: \\"POST\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \`/update/\${request.problemId}\`),
+            method: \\"POST\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -7044,11 +7044,11 @@ export class Client implements Client {
 
     public async deleteProblem(request: ProblemCrudServiceV2.deleteProblem.Request): Promise<ProblemCrudServiceV2.deleteProblem.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \`/delete/\${request.problemId}\`),
-                method: \\"DELETE\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \`/delete/\${request.problemId}\`),
+            method: \\"DELETE\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             return {
@@ -7068,11 +7068,11 @@ export class Client implements Client {
 
     public async getFunctionSignature(request: ProblemCrudServiceV2.getFunctionSignature.Request): Promise<ProblemCrudServiceV2.getFunctionSignature.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \\"/function-signature\\"),
-                method: \\"POST\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \\"/function-signature\\"),
+            method: \\"POST\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -7094,11 +7094,11 @@ export class Client implements Client {
 
     public async getBasicSolutionFile(request: ProblemCrudServiceV2.getBasicSolutionFile.Request): Promise<ProblemCrudServiceV2.getBasicSolutionFile.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \\"/basic-solution-file\\"),
-                method: \\"POST\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \\"/basic-solution-file\\"),
+            method: \\"POST\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -7120,11 +7120,11 @@ export class Client implements Client {
 
     public async getDefaultDirectoryForProblemFiles(): Promise<ProblemCrudServiceV2.getDefaultDirectoryForProblemFiles.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \\"/default-problem-files-directory\\"),
-                method: \\"GET\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \\"/default-problem-files-directory\\"),
+            method: \\"GET\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -7146,11 +7146,11 @@ export class Client implements Client {
 
     public async getGeneratedTestCaseFile(request: ProblemCrudServiceV2.getGeneratedTestCaseFile.Request): Promise<ProblemCrudServiceV2.getGeneratedTestCaseFile.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \\"/generated-test-case-file\\"),
-                method: \\"POST\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \\"/generated-test-case-file\\"),
+            method: \\"POST\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -7172,11 +7172,11 @@ export class Client implements Client {
 
     public async getGeneratedTestCaseTemplateFile(request: ProblemCrudServiceV2.getGeneratedTestCaseTemplateFile.Request): Promise<ProblemCrudServiceV2.getGeneratedTestCaseTemplateFile.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \\"/generated-test-case-template-file\\"),
-                method: \\"POST\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \\"/generated-test-case-template-file\\"),
+            method: \\"POST\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -7214,12 +7214,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -7279,12 +7279,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -7342,12 +7342,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -7407,12 +7407,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -7461,12 +7461,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -7526,12 +7526,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -7592,12 +7592,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -7671,12 +7671,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -7786,11 +7786,11 @@ export class Client implements Client {
 
     public async getLightweightProblems(): Promise<ProblemInfoServicV2.getLightweightProblems.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \\"/lightweight-problem-info\\"),
-                method: \\"GET\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \\"/lightweight-problem-info\\"),
+            method: \\"GET\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -7812,11 +7812,11 @@ export class Client implements Client {
 
     public async getProblems(): Promise<ProblemInfoServicV2.getProblems.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \\"/problem-info\\"),
-                method: \\"GET\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \\"/problem-info\\"),
+            method: \\"GET\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -7838,11 +7838,11 @@ export class Client implements Client {
 
     public async getLatestProblem(request: ProblemInfoServicV2.getLatestProblem.Request): Promise<ProblemInfoServicV2.getLatestProblem.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \`/problem-info/\${request.problemId}\`),
-                method: \\"GET\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \`/problem-info/\${request.problemId}\`),
+            method: \\"GET\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -7864,11 +7864,11 @@ export class Client implements Client {
 
     public async getProblemVersion(request: ProblemInfoServicV2.getProblemVersion.Request): Promise<ProblemInfoServicV2.getProblemVersion.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \`/problem-info/\${request.problemId}/version/\${request.problemVersion}\`),
-                method: \\"GET\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \`/problem-info/\${request.problemId}/version/\${request.problemVersion}\`),
+            method: \\"GET\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -7906,12 +7906,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -7971,12 +7971,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -8025,12 +8025,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -8091,12 +8091,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -8206,11 +8206,11 @@ export class Client implements Client {
 
     public async getProblems(): Promise<ProblemInfoService.getProblems.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \\"/problem-info\\"),
-                method: \\"GET\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \\"/problem-info\\"),
+            method: \\"GET\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -8232,11 +8232,11 @@ export class Client implements Client {
 
     public async getLatestProblem(request: ProblemInfoService.getLatestProblem.Request): Promise<ProblemInfoService.getLatestProblem.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \`/problem-info/\${request.problemId}\`),
-                method: \\"GET\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \`/problem-info/\${request.problemId}\`),
+            method: \\"GET\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -8258,11 +8258,11 @@ export class Client implements Client {
 
     public async getProblemVersion(request: ProblemInfoService.getProblemVersion.Request): Promise<ProblemInfoService.getProblemVersion.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \`/problem-info/\${request.problemId}/version/\${request.problemVersion}\`),
-                method: \\"GET\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \`/problem-info/\${request.problemId}/version/\${request.problemVersion}\`),
+            method: \\"GET\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -8284,11 +8284,11 @@ export class Client implements Client {
 
     public async getExpectedResult(request: ProblemInfoService.getExpectedResult.Request): Promise<ProblemInfoService.getExpectedResult.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \`/expected-result/\${request.problemId}\`),
-                method: \\"POST\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \`/expected-result/\${request.problemId}\`),
+            method: \\"POST\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -8326,12 +8326,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -8393,12 +8393,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -8458,12 +8458,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -8524,12 +8524,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -8652,11 +8652,11 @@ export class Client implements Client {
 
     public async getSubmissionState(request: SubmissionInfoService.getSubmissionState.Request): Promise<SubmissionInfoService.getSubmissionState.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \`/\${request.submissionId}\`),
-                method: \\"GET\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \`/\${request.submissionId}\`),
+            method: \\"GET\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -8678,11 +8678,11 @@ export class Client implements Client {
 
     public async getSubmissionStateV2(request: SubmissionInfoService.getSubmissionStateV2.Request): Promise<SubmissionInfoService.getSubmissionStateV2.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \`/v2/\${request.submissionId}\`),
-                method: \\"GET\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \`/v2/\${request.submissionId}\`),
+            method: \\"GET\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -8704,11 +8704,11 @@ export class Client implements Client {
 
     public async getTraceResponsesPage(request: SubmissionInfoService.getTraceResponsesPage.Request): Promise<SubmissionInfoService.getTraceResponsesPage.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \`/trace-respose/\${request.submissionId}/testCase/\${request.testCaseId}\`),
-                method: \\"POST\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \`/trace-respose/\${request.submissionId}/testCase/\${request.testCaseId}\`),
+            method: \\"POST\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -8730,11 +8730,11 @@ export class Client implements Client {
 
     public async getTraceResponsesV2Page(request: SubmissionInfoService.getTraceResponsesV2Page.Request): Promise<SubmissionInfoService.getTraceResponsesV2Page.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \`/trace-response-v2/\${request.submissionId}/testCase/\${request.testCaseId}\`),
-                method: \\"POST\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \`/trace-response-v2/\${request.submissionId}/testCase/\${request.testCaseId}\`),
+            method: \\"POST\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -8756,11 +8756,11 @@ export class Client implements Client {
 
     public async getTraceResponsesPageForWorkspace(request: SubmissionInfoService.getTraceResponsesPageForWorkspace.Request): Promise<SubmissionInfoService.getTraceResponsesPageForWorkspace.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \`/workspace-trace-response/\${request.submissionId}\`),
-                method: \\"POST\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \`/workspace-trace-response/\${request.submissionId}\`),
+            method: \\"POST\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -8782,11 +8782,11 @@ export class Client implements Client {
 
     public async getTraceResponsesV2PageForWorkspace(request: SubmissionInfoService.getTraceResponsesV2PageForWorkspace.Request): Promise<SubmissionInfoService.getTraceResponsesV2PageForWorkspace.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \`/workspace-trace-response-v2/\${request.submissionId}\`),
-                method: \\"POST\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \`/workspace-trace-response-v2/\${request.submissionId}\`),
+            method: \\"POST\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -8824,12 +8824,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -8889,12 +8889,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -8954,12 +8954,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -9022,12 +9022,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -9089,12 +9089,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -9158,12 +9158,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -9272,11 +9272,11 @@ export class Client implements Client {
 
     public async setNumWarmInstances(request: SysPropCrudService.setNumWarmInstances.Request): Promise<SysPropCrudService.setNumWarmInstances.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \`/num-warm-instances/\${request.language}/\${request.numWarmInstances}\`),
-                method: \\"PUT\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \`/num-warm-instances/\${request.language}/\${request.numWarmInstances}\`),
+            method: \\"PUT\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             return {
@@ -9296,11 +9296,11 @@ export class Client implements Client {
 
     public async getNumWarmInstances(): Promise<SysPropCrudService.getNumWarmInstances.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \\"/num-warm-instances\\"),
-                method: \\"GET\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \\"/num-warm-instances\\"),
+            method: \\"GET\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -9338,12 +9338,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -9399,12 +9399,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -9499,11 +9499,11 @@ export class Client implements Client {
 
     public async getWorkspaceStarterFiles(): Promise<WorkspaceInfoService.getWorkspaceStarterFiles.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \\"/get-workspace-starter-files\\"),
-                method: \\"GET\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \\"/get-workspace-starter-files\\"),
+            method: \\"GET\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -9525,11 +9525,11 @@ export class Client implements Client {
 
     public async getWorkspaceStarterFilesV2(): Promise<WorkspaceInfoService.getWorkspaceStarterFilesV2.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \\"/get-workspace-starter-files-v2\\"),
-                method: \\"GET\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \\"/get-workspace-starter-files-v2\\"),
+            method: \\"GET\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -9567,12 +9567,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",
@@ -9621,12 +9621,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
                         "name": "ErrorBody.ts",
                         "type": "file",

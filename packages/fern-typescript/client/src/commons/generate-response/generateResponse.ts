@@ -1,13 +1,6 @@
 import { FailedResponse, Type } from "@fern-api/api";
-import {
-    createSourceFile,
-    DependencyManager,
-    getOrCreateSourceFile,
-    getTextOfTsNode,
-    SourceFileManager,
-    TypeResolver,
-} from "@fern-typescript/commons";
-import { Directory, OptionalKind, PropertySignatureStructure, ts, Writers } from "ts-morph";
+import { DependencyManager, getOrCreateSourceFile, getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
+import { Directory, OptionalKind, PropertySignatureStructure, SourceFile, ts, Writers } from "ts-morph";
 import { ClientConstants } from "../../constants";
 import { generateServiceTypeReference } from "../service-types/generateServiceTypeReference";
 import { LocalServiceTypeReference, ServiceTypeReference } from "../service-types/types";
@@ -27,7 +20,7 @@ export declare namespace generateResponse {
         failedResponse: FailedResponse;
         getTypeReferenceToServiceType: (args: {
             reference: ServiceTypeReference;
-            referencedIn: SourceFileManager;
+            referencedIn: SourceFile;
         }) => ts.TypeNode;
         additionalProperties?: OptionalKind<PropertySignatureStructure>[];
     }
@@ -58,9 +51,9 @@ export function generateResponse({
         typeResolver,
     });
 
-    const responseFile = createSourceFile(directory, `${ClientConstants.Commons.Types.Response.TYPE_NAME}.ts`);
+    const responseFile = directory.createSourceFile(`${ClientConstants.Commons.Types.Response.TYPE_NAME}.ts`);
 
-    responseFile.file.addTypeAlias({
+    responseFile.addTypeAlias({
         name: ClientConstants.Commons.Types.Response.TYPE_NAME,
         type: Writers.unionType(
             ClientConstants.Commons.Types.Response.Success.TYPE_NAME,
@@ -90,7 +83,7 @@ export function generateResponse({
         dependencyManager,
     });
 
-    responseFile.file.addInterface({
+    responseFile.addInterface({
         name: ClientConstants.Commons.Types.Response.Error.TYPE_NAME,
         isExported: true,
         properties: [
@@ -129,11 +122,8 @@ function addSuccessResponseInterface({
     additionalProperties,
 }: {
     successBodyReference: ServiceTypeReference | undefined;
-    getTypeReferenceToServiceType: (args: {
-        reference: ServiceTypeReference;
-        referencedIn: SourceFileManager;
-    }) => ts.TypeNode;
-    responseFile: SourceFileManager;
+    getTypeReferenceToServiceType: (args: { reference: ServiceTypeReference; referencedIn: SourceFile }) => ts.TypeNode;
+    responseFile: SourceFile;
     additionalProperties: OptionalKind<PropertySignatureStructure>[];
 }): void {
     const successResponseBodyReference =
@@ -141,7 +131,7 @@ function addSuccessResponseInterface({
             ? getTypeReferenceToServiceType({ reference: successBodyReference, referencedIn: responseFile })
             : undefined;
 
-    responseFile.file.addInterface({
+    responseFile.addInterface({
         name: ClientConstants.Commons.Types.Response.Success.TYPE_NAME,
         isExported: true,
         properties: generateSuccessResponseProperties({

@@ -1,5 +1,5 @@
 import { AliasTypeDefinition, TypeDefinition } from "@fern-api/api";
-import { generateTypeUtilsReference, SourceFileManager } from "@fern-typescript/commons";
+import { generateTypeUtilsReference } from "@fern-typescript/commons";
 import { ts, tsMorph } from "@fern-typescript/helper-utils";
 import { ALIAS_UTILS_OF_KEY, shouldUseBrandedTypeForAlias } from "@fern-typescript/model";
 import { HathoraEncoderConstants } from "../../constants";
@@ -22,7 +22,7 @@ export function getEncodeMethodsForAlias({
     typeDefinition: TypeDefinition;
     shape: AliasTypeDefinition;
     decodedType: ts.TypeNode;
-    file: SourceFileManager;
+    file: tsMorph.SourceFile;
     modelDirectory: tsMorph.Directory;
 }): EncodeMethods {
     return {
@@ -54,7 +54,7 @@ export function generateDecode({
 }: {
     typeDefinition: TypeDefinition;
     shape: AliasTypeDefinition;
-    file: SourceFileManager;
+    file: tsMorph.SourceFile;
     modelDirectory: tsMorph.Directory;
 }): SimpleFunctionBody {
     let decodeCall: ts.Expression = getMethodCallForModelTypeVariableReference({

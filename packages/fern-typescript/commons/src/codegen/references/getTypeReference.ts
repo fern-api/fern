@@ -1,6 +1,5 @@
 import { ContainerType, PrimitiveType, TypeReference } from "@fern-api/api";
-import { Directory, ts } from "ts-morph";
-import { SourceFileManager } from "../SourceFileManager";
+import { Directory, SourceFile, ts } from "ts-morph";
 import { getNamedTypeReference } from "./getNamedTypeReference";
 
 export function getTypeReference({
@@ -11,7 +10,7 @@ export function getTypeReference({
     forceUseNamespaceImport,
 }: {
     reference: TypeReference;
-    referencedIn: SourceFileManager;
+    referencedIn: SourceFile;
     baseDirectory: Directory;
     baseDirectoryType: getNamedTypeReference.Args["baseDirectoryType"];
     forceUseNamespaceImport?: getNamedTypeReference.Args["forceUseNamespaceImport"];

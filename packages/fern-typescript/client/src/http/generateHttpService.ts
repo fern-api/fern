@@ -8,7 +8,6 @@ import {
     getTextOfTsKeyword,
     getTextOfTsNode,
     maybeAddDocs,
-    SourceFileManager,
     TypeResolver,
 } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
@@ -96,12 +95,12 @@ async function generateService({
     });
     addFernServiceUtilsDependency(dependencyManager);
 
-    const serviceInterface = serviceFile.file.addInterface({
+    const serviceInterface = serviceFile.addInterface({
         name: ClientConstants.HttpService.CLIENT_NAME,
         isExported: true,
     });
 
-    const serviceClass = serviceFile.file.addClass({
+    const serviceClass = serviceFile.addClass({
         name: ClientConstants.HttpService.CLIENT_NAME,
         implements: [ClientConstants.HttpService.CLIENT_NAME],
         isExported: true,
@@ -135,7 +134,7 @@ async function generateService({
         ),
     });
 
-    addConstructor({ serviceFile, serviceClass, serviceDefinition: service });
+    addConstructor({ serviceClass, serviceDefinition: service });
 
     const endpointsDirectory = getOrCreateDirectory(
         serviceDirectory,
@@ -151,7 +150,6 @@ async function generateService({
     for (const endpoint of service.endpoints) {
         await addEndpointToService({
             endpoint,
-            serviceFile,
             serviceInterface,
             serviceClass,
             serviceDefinition: service,
@@ -166,11 +164,9 @@ async function generateService({
     }
 }
 function addConstructor({
-    serviceFile,
     serviceClass,
     serviceDefinition,
 }: {
-    serviceFile: SourceFileManager;
     serviceClass: ClassDeclaration;
     serviceDefinition: HttpService;
 }) {
@@ -204,7 +200,7 @@ function addConstructor({
                     initialValue:
                         serviceDefinition.basePath != null
                             ? generateJoinPathsCall({
-                                  file: serviceFile,
+                                  file: serviceClass.getSourceFile(),
                                   paths: [
                                       ts.factory.createPropertyAccessExpression(
                                           ts.factory.createIdentifier(SERVICE_INIT_PARAMETER_NAME),

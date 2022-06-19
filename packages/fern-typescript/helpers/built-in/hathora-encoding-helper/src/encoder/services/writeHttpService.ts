@@ -1,6 +1,6 @@
 import { HttpEndpoint, HttpService } from "@fern-api/api";
 import { ClientConstants, getLocalServiceTypeReference } from "@fern-typescript/client";
-import { FernWriters, getTextOfTsNode, SourceFileManager, TypeResolver } from "@fern-typescript/commons";
+import { FernWriters, getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
 import { tsMorph } from "@fern-typescript/helper-utils";
 import { constructEncodeMethods } from "../constructEncodeMethods";
 import { getEncodeMethodsForType } from "../model/writeModel";
@@ -14,7 +14,7 @@ export function writeHttpService({
 }: {
     service: HttpService;
     typeResolver: TypeResolver;
-    file: SourceFileManager;
+    file: tsMorph.SourceFile;
     modelDirectory: tsMorph.Directory;
     servicesDirectory: tsMorph.Directory;
 }): tsMorph.WriterFunction {
@@ -46,7 +46,7 @@ function writeHttpEndpoint({
     endpoint: HttpEndpoint;
     service: HttpService;
     typeResolver: TypeResolver;
-    file: SourceFileManager;
+    file: tsMorph.SourceFile;
     modelDirectory: tsMorph.Directory;
     servicesDirectory: tsMorph.Directory;
 }): tsMorph.WriterFunction {

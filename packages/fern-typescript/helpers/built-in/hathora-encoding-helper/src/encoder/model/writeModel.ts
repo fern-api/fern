@@ -1,11 +1,5 @@
 import { Type, TypeDefinition, TypeReference } from "@fern-api/api";
-import {
-    FernWriters,
-    getTextOfTsNode,
-    getTypeReference,
-    SourceFileManager,
-    TypeResolver,
-} from "@fern-typescript/commons";
+import { FernWriters, getTextOfTsNode, getTypeReference, TypeResolver } from "@fern-typescript/commons";
 import { tsMorph } from "@fern-typescript/helper-utils";
 import { constructEncodeMethods, EncodeMethods } from "../constructEncodeMethods";
 import { NOT_IMPLEMENTED_ENCODE_METHODS } from "../utils";
@@ -21,7 +15,7 @@ export function writeModel({
 }: {
     types: readonly TypeDefinition[];
     typeResolver: TypeResolver;
-    file: SourceFileManager;
+    file: tsMorph.SourceFile;
     modelDirectory: tsMorph.Directory;
 }): tsMorph.WriterFunction {
     const writer = FernWriters.object.writer({ newlinesBetweenProperties: true });
@@ -61,7 +55,7 @@ export function getEncodeMethodsForType({
     typeDefinition: TypeDefinition;
     decodedType: tsMorph.ts.TypeNode;
     typeResolver: TypeResolver;
-    file: SourceFileManager;
+    file: tsMorph.SourceFile;
     modelDirectory: tsMorph.Directory;
 }): EncodeMethods {
     return Type._visit<EncodeMethods>(typeDefinition.shape, {

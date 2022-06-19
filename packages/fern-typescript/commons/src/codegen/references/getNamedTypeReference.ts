@@ -1,13 +1,12 @@
 import { NamedType } from "@fern-api/api";
-import { Directory, ts } from "ts-morph";
-import { SourceFileManager } from "../SourceFileManager";
+import { Directory, SourceFile, ts } from "ts-morph";
 import { getRelativePathAsModuleSpecifierTo } from "../utils/getRelativePathAsModuleSpecifierTo";
 import { getImportPathForNamedType } from "./getImportPathForNamedType";
 
 export declare namespace getNamedTypeReference {
     export interface Args {
         typeName: NamedType;
-        referencedIn: SourceFileManager;
+        referencedIn: SourceFile;
         /**
          * the directory where the original type lives.
          * for types, this should be the model directory.
@@ -34,9 +33,9 @@ export function getNamedTypeReference({
     forceUseNamespaceImport = false,
 }: getNamedTypeReference.Args): ts.TypeNode {
     const moduleSpecifier = getImportPathForNamedType({ from: referencedIn, typeName, baseDirectory });
-    const isTypeInCurrentFile = moduleSpecifier === `./${referencedIn.file.getBaseNameWithoutExtension()}`;
+    const isTypeInCurrentFile = moduleSpecifier === `./${referencedIn.getBaseNameWithoutExtension()}`;
     if (!isTypeInCurrentFile) {
-        const shouldUseNamespaceImport = forceUseNamespaceImport || !baseDirectory.isAncestorOf(referencedIn.file);
+        const shouldUseNamespaceImport = forceUseNamespaceImport || !baseDirectory.isAncestorOf(referencedIn);
         if (shouldUseNamespaceImport) {
             const namespaceImport = getNamespaceImport(baseDirectoryType);
             referencedIn.addImportDeclaration({

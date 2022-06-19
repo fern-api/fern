@@ -1,5 +1,5 @@
 import { IntermediateRepresentation } from "@fern-api/api";
-import { FernWriters, getTextOfTsNode, SourceFileManager, TypeResolver } from "@fern-typescript/commons";
+import { FernWriters, getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
 import { ts, tsMorph } from "@fern-typescript/helper-utils";
 import { HathoraEncoderConstants } from "../constants";
 import { writeContainers } from "./containers/writeContainers";
@@ -9,7 +9,7 @@ import { writeServices } from "./services/writeServices";
 
 export declare namespace writeEncoder {
     export interface Args {
-        file: SourceFileManager;
+        file: tsMorph.SourceFile;
         modelDirectory: tsMorph.Directory;
         servicesDirectory: tsMorph.Directory;
         intermediateRepresentation: IntermediateRepresentation;
@@ -49,7 +49,7 @@ export function writeEncoder({
         [HathoraEncoderConstants.Errors.NAME]: getTextOfTsNode(ts.factory.createStringLiteral("TODO")),
     });
 
-    file.file.addVariableStatement({
+    file.addVariableStatement({
         declarationKind: tsMorph.VariableDeclarationKind.Const,
         declarations: [
             {

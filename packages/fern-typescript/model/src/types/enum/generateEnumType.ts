@@ -4,11 +4,10 @@ import {
     getTextOfTsNode,
     getWriterForMultiLineUnionType,
     maybeAddDocs,
-    SourceFileManager,
     visitorUtils,
 } from "@fern-typescript/commons";
 import { lowerFirst } from "lodash";
-import { ts, VariableDeclarationKind, WriterFunction } from "ts-morph";
+import { SourceFile, ts, VariableDeclarationKind, WriterFunction } from "ts-morph";
 import { getKeyForEnum } from "./utils";
 
 export const ENUM_VALUES_PROPERTY_KEY = "_values";
@@ -19,12 +18,12 @@ export function generateEnumType({
     docs,
     shape,
 }: {
-    file: SourceFileManager;
+    file: SourceFile;
     typeName: string;
     docs: string | null | undefined;
     shape: EnumTypeDefinition;
 }): void {
-    const typeAlias = file.file.addTypeAlias({
+    const typeAlias = file.addTypeAlias({
         name: typeName,
         type: getWriterForMultiLineUnionType(
             shape.values.map((value) => ({
@@ -42,7 +41,7 @@ export function generateEnumType({
         visitorArgument: undefined,
     }));
 
-    file.file.addVariableStatement({
+    file.addVariableStatement({
         declarationKind: VariableDeclarationKind.Const,
         declarations: [
             {
@@ -53,7 +52,7 @@ export function generateEnumType({
         isExported: true,
     });
 
-    const moduleDeclaration = file.file.addModule({
+    const moduleDeclaration = file.addModule({
         name: typeName,
         isExported: true,
         hasDeclareKeyword: true,

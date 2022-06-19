@@ -1,5 +1,5 @@
 import { Services } from "@fern-api/api";
-import { FernWriters, SourceFileManager, TypeResolver } from "@fern-typescript/commons";
+import { FernWriters, TypeResolver } from "@fern-typescript/commons";
 import { tsMorph } from "@fern-typescript/helper-utils";
 import { writeHttpService } from "./writeHttpService";
 
@@ -12,7 +12,7 @@ export function writeServices({
 }: {
     services: Services;
     typeResolver: TypeResolver;
-    file: SourceFileManager;
+    file: tsMorph.SourceFile;
     modelDirectory: tsMorph.Directory;
     servicesDirectory: tsMorph.Directory;
 }): tsMorph.WriterFunction {

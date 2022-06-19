@@ -1,6 +1,6 @@
 import { WebSocketChannel } from "@fern-api/api";
-import { getTextOfTsNode, SourceFileManager } from "@fern-typescript/commons";
-import { ClassDeclaration, ts } from "ts-morph";
+import { getTextOfTsNode } from "@fern-typescript/commons";
+import { ClassDeclaration, SourceFile, ts } from "ts-morph";
 import { ClientConstants } from "../constants";
 import { generateJoinPathsCall } from "../utils/generateJoinPathsCall";
 
@@ -13,7 +13,7 @@ export function generateChannelConstructor({
 }: {
     channelClass: ClassDeclaration;
     channelDefinition: WebSocketChannel;
-    file: SourceFileManager;
+    file: SourceFile;
 }): void {
     channelClass.addConstructor({
         parameters: [
@@ -70,7 +70,7 @@ function generateCreateAndResolveSocket({
     file,
     channelDefinition,
 }: {
-    file: SourceFileManager;
+    file: SourceFile;
     channelDefinition: WebSocketChannel;
 }): ts.Statement[] {
     return [

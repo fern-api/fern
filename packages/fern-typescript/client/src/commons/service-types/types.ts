@@ -1,5 +1,5 @@
 import { TypeReference } from "@fern-api/api";
-import { SourceFileManager } from "@fern-typescript/commons";
+import { SourceFile } from "ts-morph";
 import { ClientConstants } from "../../constants";
 
 export type ServiceTypeReference = LocalServiceTypeReference | ModelServiceTypeReference;
@@ -8,7 +8,7 @@ export interface LocalServiceTypeReference {
     // is located in a file local to this service, not imported from the model
     isLocal: true;
     typeName: ServiceTypeName;
-    file: SourceFileManager;
+    file: SourceFile;
 }
 
 export interface ModelServiceTypeReference {

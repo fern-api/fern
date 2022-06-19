@@ -1,6 +1,5 @@
 import { NamedType } from "@fern-api/api";
-import { Directory } from "ts-morph";
-import { SourceFileManager } from "../SourceFileManager";
+import { Directory, SourceFile } from "ts-morph";
 import { getRelativePathAsModuleSpecifierTo } from "../utils/getRelativePathAsModuleSpecifierTo";
 import { getFilePathForNamedType } from "./getFilePathForNamedType";
 
@@ -15,7 +14,7 @@ export function getImportPathForNamedType({
      * for errors, this should be the errors directory.
      */
     baseDirectory: Directory;
-    from: SourceFileManager;
+    from: SourceFile;
     typeName: NamedType;
 }): string {
     const filepathForType = getFilePathForNamedType({

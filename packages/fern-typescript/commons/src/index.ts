@@ -1,11 +1,10 @@
 export { getOrCreateDirectory } from "./codegen/file-system/getOrCreateDirectory";
-export { createSourceFile, getOrCreateSourceFile } from "./codegen/file-system/getOrCreateSourceFile";
+export { getOrCreateSourceFile } from "./codegen/file-system/getOrCreateSourceFile";
 export { ProjectCreator } from "./codegen/file-system/ProjectCreator";
 export { getFilePathForError } from "./codegen/references/getFilePathForError";
 export { getFilePathForNamedType } from "./codegen/references/getFilePathForNamedType";
 export { getNamedTypeReference } from "./codegen/references/getNamedTypeReference";
 export { getTypeReference } from "./codegen/references/getTypeReference";
-export { SourceFileManager } from "./codegen/SourceFileManager";
 export { generateTypeUtilsReference } from "./codegen/type-utils/generateTypeUtilsReference";
 export { addBrandedTypeAlias } from "./codegen/utils/addBrandedTypeAlias";
 export { getRelativePathAsModuleSpecifierTo } from "./codegen/utils/getRelativePathAsModuleSpecifierTo";

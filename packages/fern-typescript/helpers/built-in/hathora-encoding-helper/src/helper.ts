@@ -1,4 +1,3 @@
-import { createSourceFile } from "@fern-typescript/commons";
 import { EncodeMethod, FernTypescriptHelper, ts, VariableReference } from "@fern-typescript/helper-utils";
 import { HathoraEncoderConstants } from "./constants";
 import { writeEncoder } from "./encoder/writeEncoder";
@@ -19,7 +18,7 @@ export const helper: FernTypescriptHelper = {
                 intermediateRepresentation,
                 typeResolver,
             }) => {
-                const file = createSourceFile(encoderDirectory, `${HathoraEncoderConstants.NAME}.ts`);
+                const file = encoderDirectory.createSourceFile(`${HathoraEncoderConstants.NAME}.ts`);
                 writeEncoder({ intermediateRepresentation, file, modelDirectory, servicesDirectory, typeResolver });
             },
             generateEncode: ({ referenceToDecodedObject, referenceToEncoder }) => {

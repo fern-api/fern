@@ -1,13 +1,7 @@
 import { NamedType, SingleUnionType, TypeReference } from "@fern-api/api";
-import {
-    getNamedTypeReference,
-    getTypeReference,
-    ResolvedType,
-    SourceFileManager,
-    TypeResolver,
-} from "@fern-typescript/commons";
+import { getNamedTypeReference, getTypeReference, ResolvedType, TypeResolver } from "@fern-typescript/commons";
 import { upperFirst } from "lodash";
-import { Directory, ts } from "ts-morph";
+import { Directory, SourceFile, ts } from "ts-morph";
 
 export const FORCE_USE_MODEL_NAMESPACE_IMPORT = true;
 
@@ -29,7 +23,7 @@ export function getResolvedTypeForSingleUnionType({
 }: {
     singleUnionType: SingleUnionType;
     typeResolver: TypeResolver;
-    file: SourceFileManager;
+    file: SourceFile;
     baseDirectory: Directory;
     baseDirectoryType: getNamedTypeReference.Args["baseDirectoryType"];
 }): ResolvedSingleUnionType | undefined {

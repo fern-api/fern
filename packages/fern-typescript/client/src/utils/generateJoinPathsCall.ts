@@ -1,11 +1,10 @@
-import { SourceFileManager } from "@fern-typescript/commons";
-import { ts } from "ts-morph";
+import { SourceFile, ts } from "ts-morph";
 
 export function generateJoinPathsCall({
     file,
     paths,
 }: {
-    file: SourceFileManager;
+    file: SourceFile;
     paths: readonly ts.Expression[];
 }): ts.CallExpression {
     file.addImportDeclaration({

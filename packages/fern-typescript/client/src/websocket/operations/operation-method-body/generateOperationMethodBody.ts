@@ -1,6 +1,6 @@
 import { WebSocketOperation } from "@fern-api/api";
-import { addUuidDependency, DependencyManager, getTextOfTsNode, SourceFileManager } from "@fern-typescript/commons";
-import { StatementStructures, ts, WriterFunction } from "ts-morph";
+import { addUuidDependency, DependencyManager, getTextOfTsNode } from "@fern-typescript/commons";
+import { SourceFile, StatementStructures, ts, WriterFunction } from "ts-morph";
 import { ServiceTypeName } from "../../../commons/service-types/types";
 import { ClientConstants } from "../../../constants";
 import { GeneratedOperationTypes } from "../operation-types/types";
@@ -17,7 +17,7 @@ export function generateOperationMethodBody({
 }: {
     operation: WebSocketOperation;
     operationTypes: GeneratedOperationTypes;
-    channelFile: SourceFileManager;
+    channelFile: SourceFile;
     getReferenceToLocalServiceType: (typeName: ServiceTypeName) => ts.TypeReferenceNode;
     dependencyManager: DependencyManager;
 }): (StatementStructures | WriterFunction | string)[] {
@@ -98,7 +98,7 @@ function generatePromiseBody({
     dependencyManager,
 }: {
     operation: WebSocketOperation;
-    channelFile: SourceFileManager;
+    channelFile: SourceFile;
     getReferenceToLocalServiceType: (typeName: ServiceTypeName) => ts.TypeReferenceNode;
     operationTypes: GeneratedOperationTypes;
     dependencyManager: DependencyManager;
