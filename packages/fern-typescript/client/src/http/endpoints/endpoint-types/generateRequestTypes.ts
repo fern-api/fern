@@ -1,6 +1,6 @@
 import { HttpEndpoint, NamedType } from "@fern-api/api";
-import { getTextOfTsNode, getTypeReference, TypeResolver } from "@fern-typescript/commons";
-import { Directory, OptionalKind, PropertySignatureStructure, SourceFile } from "ts-morph";
+import { getTextOfTsNode, getTypeReference, SourceFileManager, TypeResolver } from "@fern-typescript/commons";
+import { Directory, OptionalKind, PropertySignatureStructure } from "ts-morph";
 import { GeneratedRequest, generateRequest } from "../../../commons/generate-request/generateRequest";
 import { getServiceTypeReference } from "../../../commons/service-types/get-service-type-reference/getServiceTypeReference";
 
@@ -26,7 +26,7 @@ export function generateRequestTypes({
     const getAdditionalProperties = [
         ...[...endpoint.pathParameters, ...endpoint.queryParameters].map(
             (parameter) =>
-                (requestFile: SourceFile): OptionalKind<PropertySignatureStructure> => ({
+                (requestFile: SourceFileManager): OptionalKind<PropertySignatureStructure> => ({
                     name: parameter.key,
                     type: getTextOfTsNode(
                         getTypeReference({

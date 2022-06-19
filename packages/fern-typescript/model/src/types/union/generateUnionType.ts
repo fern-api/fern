@@ -6,6 +6,7 @@ import {
     getTypeReference,
     getWriterForMultiLineUnionType,
     maybeAddDocs,
+    SourceFileManager,
     TypeResolver,
     visitorUtils,
 } from "@fern-typescript/commons";
@@ -14,7 +15,6 @@ import {
     InterfaceDeclaration,
     InterfaceDeclarationStructure,
     OptionalKind,
-    SourceFile,
     ts,
     VariableDeclarationKind,
     WriterFunction,
@@ -30,7 +30,7 @@ export declare namespace generateUnionType {
     export interface ObjectProperty {
         key: string;
         valueType: TypeReference;
-        generateValueCreator: (args: { file: SourceFile }) => ts.Expression;
+        generateValueCreator: (args: { file: SourceFileManager }) => ts.Expression;
     }
 }
 
@@ -46,7 +46,7 @@ export function generateUnionType({
     baseDirectory,
     baseDirectoryType,
 }: {
-    file: SourceFile;
+    file: SourceFileManager;
     typeName: string;
     docs: string | null | undefined;
     discriminant: string;
@@ -67,7 +67,7 @@ export function generateUnionType({
             file,
         }),
     }));
-    const typeAlias = file.addTypeAlias({
+    const typeAlias = file.file.addTypeAlias({
         name: typeName,
         type: getWriterForMultiLineUnionType(
             types.map((type) => ({
@@ -85,7 +85,7 @@ export function generateUnionType({
     });
     maybeAddDocs(typeAlias, docs);
 
-    const module = file.addModule({
+    const module = file.file.addModule({
         name: typeName,
         isExported: true,
         hasDeclareKeyword: true,
@@ -143,7 +143,7 @@ export function generateUnionType({
 
     module.addInterface(visitorUtils.generateVisitorInterface(visitorItems));
 
-    file.addVariableStatement({
+    file.file.addVariableStatement({
         declarationKind: VariableDeclarationKind.Const,
         declarations: [
             {
@@ -204,7 +204,7 @@ function createUtils({
     visitorItems: readonly visitorUtils.VisitableItem[];
     additionalPropertiesForEveryType: generateUnionType.ObjectProperty[];
     discriminant: string;
-    file: SourceFile;
+    file: SourceFileManager;
 }): WriterFunction {
     const writer = FernWriters.object.writer({ asConst: true });
 
@@ -275,7 +275,7 @@ function generateCreator({
     discriminant: string;
     singleUnionType: SingleUnionTypeWithResolvedValueType;
     additionalPropertiesForEveryType: generateUnionType.ObjectProperty[];
-    file: SourceFile;
+    file: SourceFileManager;
 }): ts.ArrowFunction {
     const VALUE_PARAMETER_NAME = "value";
 

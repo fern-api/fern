@@ -1,7 +1,7 @@
 import { HttpEndpoint, HttpService } from "@fern-api/api";
-import { getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
+import { getTextOfTsNode, SourceFileManager, TypeResolver } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
-import { Directory, SourceFile, StatementStructures, ts, WriterFunction } from "ts-morph";
+import { Directory, StatementStructures, ts, WriterFunction } from "ts-morph";
 import { ServiceTypeName } from "../../../commons/service-types/types";
 import { GeneratedEndpointTypes } from "../endpoint-types/types";
 import { generateConstructQueryParams } from "./generateConstructQueryParams";
@@ -20,7 +20,7 @@ export async function generateEndpointMethodBody({
 }: {
     endpoint: HttpEndpoint;
     endpointTypes: GeneratedEndpointTypes;
-    serviceFile: SourceFile;
+    serviceFile: SourceFileManager;
     serviceDefinition: HttpService;
     getReferenceToLocalServiceType: (typeName: ServiceTypeName) => ts.TypeReferenceNode;
     typeResolver: TypeResolver;

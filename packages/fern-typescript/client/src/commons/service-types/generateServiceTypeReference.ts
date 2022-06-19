@@ -1,6 +1,6 @@
 import { Type } from "@fern-api/api";
 import { assertNever } from "@fern-api/commons";
-import { TypeResolver } from "@fern-typescript/commons";
+import { createSourceFile, TypeResolver } from "@fern-typescript/commons";
 import { generateType } from "@fern-typescript/model";
 import { Directory } from "ts-morph";
 import { ServiceTypeName, ServiceTypeReference } from "./types";
@@ -41,7 +41,7 @@ export function generateServiceTypeReference({
         }
     }
 
-    const wireMessageFile = typeDirectory.createSourceFile(getFileNameForServiceType(typeName));
+    const wireMessageFile = createSourceFile(typeDirectory, getFileNameForServiceType(typeName));
     generateType({
         type,
         docs,

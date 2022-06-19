@@ -4,6 +4,7 @@ import {
     getOrCreateDirectory,
     getTextOfTsNode,
     getTypeReference,
+    SourceFileManager,
     TypeResolver,
 } from "@fern-typescript/commons";
 import {
@@ -25,6 +26,7 @@ import { GeneratedOperationTypes } from "./operation-types/types";
 export declare namespace addClientOperationToChannel {
     export interface Args {
         channel: WebSocketChannel;
+        channelFile: SourceFileManager;
         channelClass: ClassDeclaration;
         channelInterface: InterfaceDeclaration;
         operation: WebSocketOperation;
@@ -42,6 +44,7 @@ export declare namespace addClientOperationToChannel {
 
 export function addClientOperationToChannel({
     channel,
+    channelFile,
     channelInterface,
     channelClass,
     operation,
@@ -51,8 +54,7 @@ export function addClientOperationToChannel({
     typeResolver,
     dependencyManager,
 }: addClientOperationToChannel.Args): addClientOperationToChannel.Return {
-    const channelFile = channelClass.getSourceFile();
-    const channelDirectory = channelFile.getDirectory();
+    const channelDirectory = channelFile.file.getDirectory();
     const operationsDirectory = getOrCreateDirectory(
         channelDirectory,
         ClientConstants.WebsocketChannel.Files.OPERATIONS_DIRECTORY_NAME

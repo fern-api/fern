@@ -1,6 +1,12 @@
 import { ObjectTypeDefinition } from "@fern-api/api";
-import { getNamedTypeReference, getTextOfTsNode, getTypeReference, maybeAddDocs } from "@fern-typescript/commons";
-import { Directory, SourceFile } from "ts-morph";
+import {
+    getNamedTypeReference,
+    getTextOfTsNode,
+    getTypeReference,
+    maybeAddDocs,
+    SourceFileManager,
+} from "@fern-typescript/commons";
+import { Directory } from "ts-morph";
 
 export function generateObjectType({
     typeName,
@@ -9,13 +15,13 @@ export function generateObjectType({
     shape,
     modelDirectory,
 }: {
-    file: SourceFile;
+    file: SourceFileManager;
     docs: string | null | undefined;
     typeName: string;
     shape: ObjectTypeDefinition;
     modelDirectory: Directory;
 }): void {
-    const node = file.addInterface({
+    const node = file.file.addInterface({
         name: typeName,
         extends: shape.extends
             .map((typeName) => {

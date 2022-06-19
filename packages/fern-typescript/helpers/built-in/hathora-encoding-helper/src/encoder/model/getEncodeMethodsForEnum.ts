@@ -1,5 +1,5 @@
 import { PrimitiveType, TypeDefinition, TypeReference } from "@fern-api/api";
-import { generateTypeUtilsReference } from "@fern-typescript/commons";
+import { generateTypeUtilsReference, SourceFileManager } from "@fern-typescript/commons";
 import { ts, tsMorph } from "@fern-typescript/helper-utils";
 import { ENUM_VALUES_PROPERTY_KEY } from "@fern-typescript/model";
 import { HathoraEncoderConstants } from "../../constants";
@@ -21,7 +21,7 @@ export function getEncodeMethodsForEnum({
     typeDefinition: TypeDefinition;
     decodedType: ts.TypeNode;
     modelDirectory: tsMorph.Directory;
-    file: tsMorph.SourceFile;
+    file: SourceFileManager;
 }): EncodeMethods {
     return {
         decodedType,
@@ -35,7 +35,7 @@ function getEncode({
     modelDirectory,
 }: {
     typeDefinition: TypeDefinition;
-    file: tsMorph.SourceFile;
+    file: SourceFileManager;
     modelDirectory: tsMorph.Directory;
 }): SimpleFunctionBody {
     const INDEX_VARIABLE_NAME = "index";
@@ -124,7 +124,7 @@ function getDecode({
     modelDirectory,
 }: {
     typeDefinition: TypeDefinition;
-    file: tsMorph.SourceFile;
+    file: SourceFileManager;
     modelDirectory: tsMorph.Directory;
 }): SimpleFunctionBody {
     const INDEX_VARIABLE_NAME = "index";

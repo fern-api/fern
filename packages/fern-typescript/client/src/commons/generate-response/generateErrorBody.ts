@@ -1,7 +1,7 @@
 import { FailedResponse, PrimitiveType, SingleUnionType, TypeReference } from "@fern-api/api";
-import { addUuidDependency, DependencyManager, TypeResolver } from "@fern-typescript/commons";
+import { addUuidDependency, DependencyManager, SourceFileManager, TypeResolver } from "@fern-typescript/commons";
 import { generateUnionType } from "@fern-typescript/model";
-import { Directory, SourceFile, ts } from "ts-morph";
+import { Directory, ts } from "ts-morph";
 import { ClientConstants } from "../../constants";
 
 export function generateErrorBody({
@@ -13,7 +13,7 @@ export function generateErrorBody({
     dependencyManager,
 }: {
     failedResponse: FailedResponse;
-    errorBodyFile: SourceFile;
+    errorBodyFile: SourceFileManager;
     modelDirectory: Directory;
     errorsDirectory: Directory;
     typeResolver: TypeResolver;

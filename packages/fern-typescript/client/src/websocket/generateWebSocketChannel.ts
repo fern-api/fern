@@ -6,18 +6,11 @@ import {
     getTextOfTsKeyword,
     getTextOfTsNode,
     maybeAddDocs,
+    SourceFileManager,
     TypeResolver,
 } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
-import {
-    Directory,
-    ModuleDeclaration,
-    OptionalKind,
-    PropertySignatureStructure,
-    Scope,
-    SourceFile,
-    ts,
-} from "ts-morph";
+import { Directory, ModuleDeclaration, OptionalKind, PropertySignatureStructure, Scope, ts } from "ts-morph";
 import { getLocalServiceTypeReference } from "../commons/service-types/get-service-type-reference/getLocalServiceTypeReference";
 import { ClientConstants } from "../constants";
 import { generateChannelConstructor } from "./generateChannelConstructor";
@@ -79,12 +72,12 @@ function generateChannel({
     const channelFile = getOrCreateSourceFile(channelDirectory, `${channel.name.name}.ts`);
     const channelNamespace = addNamespace({ file: channelFile });
 
-    const channelInterface = channelFile.addInterface({
+    const channelInterface = channelFile.file.addInterface({
         name: ClientConstants.WebsocketChannel.CLIENT_NAME,
         isExported: true,
     });
 
-    const channelClass = channelFile.addClass({
+    const channelClass = channelFile.file.addClass({
         name: ClientConstants.WebsocketChannel.CLIENT_NAME,
         implements: [ClientConstants.WebsocketChannel.CLIENT_NAME],
         isExported: true,
@@ -133,6 +126,7 @@ function generateChannel({
     for (const operation of channel.client.operations) {
         const { generatedOperationTypes } = addClientOperationToChannel({
             operation,
+            channelFile,
             channelClass,
             channelInterface,
             channel,
@@ -162,8 +156,8 @@ function generateChannel({
     generateOnMessage({ channelClass });
 }
 
-function addNamespace({ file }: { file: SourceFile }): ModuleDeclaration {
-    const channelNamespace = file.addModule({
+function addNamespace({ file }: { file: SourceFileManager }): ModuleDeclaration {
+    const channelNamespace = file.file.addModule({
         name: ClientConstants.WebsocketChannel.CLIENT_NAME,
         isExported: true,
         hasDeclareKeyword: true,

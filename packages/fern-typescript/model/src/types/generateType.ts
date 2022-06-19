@@ -1,6 +1,6 @@
 import { Type } from "@fern-api/api";
-import { TypeResolver } from "@fern-typescript/commons";
-import { Directory, SourceFile } from "ts-morph";
+import { SourceFileManager, TypeResolver } from "@fern-typescript/commons";
+import { Directory } from "ts-morph";
 import { generateEnumType } from "./enum/generateEnumType";
 import { generateAliasType } from "./generateAliasType";
 import { generateObjectType } from "./generateObjectType";
@@ -19,7 +19,7 @@ export function generateType({
     docs: string | null | undefined;
     typeResolver: TypeResolver;
     modelDirectory: Directory;
-    file: SourceFile;
+    file: SourceFileManager;
 }): void {
     Type._visit(type, {
         object: (object) => {

@@ -1,7 +1,7 @@
 import { HttpEndpoint, HttpService } from "@fern-api/api";
-import { getTypeReference } from "@fern-typescript/commons";
+import { getTypeReference, SourceFileManager } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
-import { Directory, SourceFile, ts } from "ts-morph";
+import { Directory, ts } from "ts-morph";
 import { ServiceTypeName } from "../../../commons/service-types/types";
 import { ClientConstants } from "../../../constants";
 import { GeneratedEndpointTypes } from "../endpoint-types/types";
@@ -16,7 +16,7 @@ export async function generateReturnResponse({
     modelDirectory,
     helperManager,
 }: {
-    serviceFile: SourceFile;
+    serviceFile: SourceFileManager;
     serviceDefinition: HttpService;
     endpoint: HttpEndpoint;
     endpointTypes: GeneratedEndpointTypes;
@@ -62,7 +62,7 @@ async function generateReturnSuccessResponse({
     modelDirectory,
     helperManager,
 }: {
-    serviceFile: SourceFile;
+    serviceFile: SourceFileManager;
     serviceDefinition: HttpService;
     endpoint: HttpEndpoint;
     endpointTypes: GeneratedEndpointTypes;

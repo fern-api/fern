@@ -1,6 +1,6 @@
 import { NamedType } from "@fern-api/api";
-import { getRelativePathAsModuleSpecifierTo } from "@fern-typescript/commons";
-import { Directory, SourceFile, ts } from "ts-morph";
+import { getRelativePathAsModuleSpecifierTo, SourceFileManager } from "@fern-typescript/commons";
+import { Directory, ts } from "ts-morph";
 import { ServiceTypeName } from "../types";
 
 const SERVICES_NAMESPACE_IMPORT = "Services";
@@ -10,7 +10,7 @@ export declare namespace getLocalServiceTypeReference {
         serviceOrChannelName: NamedType;
         endpointOrOperationId: string;
         typeName: ServiceTypeName;
-        referencedIn: SourceFile;
+        referencedIn: SourceFileManager;
         servicesDirectory: Directory;
     }
 }
@@ -26,7 +26,7 @@ export function getLocalServiceTypeReference({
 
     // if inside the services directory, import the service from the root of the services directory to mimic how a
     // consumer would import the type
-    if (servicesDirectory.isAncestorOf(referencedIn)) {
+    if (servicesDirectory.isAncestorOf(referencedIn.file)) {
         referencedIn.addImportDeclaration({
             moduleSpecifier: getRelativePathAsModuleSpecifierTo(referencedIn, serviceDirectory),
             namespaceImport: serviceOrChannelName,

@@ -1,7 +1,8 @@
 import { TypeDefinition } from "@fern-api/api";
-import { Directory, SourceFile, ts } from "ts-morph";
+import { Directory, ts } from "ts-morph";
 import { getImportPathForNamedType } from "../references/getImportPathForNamedType";
 import { getNamespaceImport } from "../references/getNamedTypeReference";
+import { SourceFileManager } from "../SourceFileManager";
 import { getRelativePathAsModuleSpecifierTo } from "../utils/getRelativePathAsModuleSpecifierTo";
 
 export function generateTypeUtilsReference({
@@ -10,7 +11,7 @@ export function generateTypeUtilsReference({
     modelDirectory,
 }: {
     typeDefinition: TypeDefinition;
-    referencedIn: SourceFile;
+    referencedIn: SourceFileManager;
     modelDirectory: Directory;
 }): ts.Expression {
     const moduleSpecifier = getImportPathForNamedType({
@@ -18,9 +19,9 @@ export function generateTypeUtilsReference({
         typeName: typeDefinition.name,
         baseDirectory: modelDirectory,
     });
-    const isTypeInCurrentFile = moduleSpecifier === `./${referencedIn.getBaseNameWithoutExtension()}`;
+    const isTypeInCurrentFile = moduleSpecifier === `./${referencedIn.file.getBaseNameWithoutExtension()}`;
     if (!isTypeInCurrentFile) {
-        if (!modelDirectory.isAncestorOf(referencedIn)) {
+        if (!modelDirectory.isAncestorOf(referencedIn.file)) {
             const namespaceImport = getNamespaceImport("model");
             referencedIn.addImportDeclaration({
                 moduleSpecifier: getRelativePathAsModuleSpecifierTo(referencedIn, modelDirectory),

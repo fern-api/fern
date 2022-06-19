@@ -1,6 +1,6 @@
 import { Type } from "@fern-api/api";
-import { getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
-import { Directory, OptionalKind, PropertySignatureStructure, SourceFile, ts } from "ts-morph";
+import { createSourceFile, getTextOfTsNode, SourceFileManager, TypeResolver } from "@fern-typescript/commons";
+import { Directory, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 import { ClientConstants } from "../../constants";
 import { generateServiceTypeReference } from "../service-types/generateServiceTypeReference";
 import { ServiceTypeReference } from "../service-types/types";
@@ -26,7 +26,7 @@ export declare namespace generateRequest {
         modelDirectory: Directory;
         getTypeReferenceToServiceType: (args: {
             reference: ServiceTypeReference;
-            referencedIn: SourceFile;
+            referencedIn: SourceFileManager;
         }) => ts.TypeNode;
         body: {
             type: Type;
@@ -34,7 +34,7 @@ export declare namespace generateRequest {
         };
         additionalProperties?: (
             | OptionalKind<PropertySignatureStructure>
-            | ((file: SourceFile) => OptionalKind<PropertySignatureStructure>)
+            | ((file: SourceFileManager) => OptionalKind<PropertySignatureStructure>)
         )[];
         typeResolver: TypeResolver;
     }
@@ -68,7 +68,7 @@ export function generateRequest({
         }
     }
 
-    const requestFile = directory.createSourceFile(`${ClientConstants.Commons.Types.Request.TYPE_NAME}.ts`);
+    const requestFile = createSourceFile(directory, `${ClientConstants.Commons.Types.Request.TYPE_NAME}.ts`);
 
     const requestBodyReference = generateServiceTypeReference({
         // put the request body in its own RequestBody type/file
@@ -96,7 +96,7 @@ export function generateRequest({
         });
     }
 
-    requestFile.addInterface({
+    requestFile.file.addInterface({
         name: ClientConstants.Commons.Types.Request.TYPE_NAME,
         properties,
         isExported: true,

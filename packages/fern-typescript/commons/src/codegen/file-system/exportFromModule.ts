@@ -25,8 +25,8 @@ export declare namespace exportFromModule {
 export function exportFromModule({ module, pathToExport, options }: exportFromModule.Args): void {
     const indexTs = getOrCreateSourceFile(module, "index.ts");
     const moduleSpecifier = getRelativePathAsModuleSpecifierTo(module, pathToExport);
-    if (indexTs.getExportDeclaration(moduleSpecifier) == null) {
-        indexTs.addExportDeclaration({
+    if (indexTs.file.getExportDeclaration(moduleSpecifier) == null) {
+        indexTs.file.addExportDeclaration({
             moduleSpecifier,
             namespaceExport: options?.type === "namespace" ? options.namespace : undefined,
             namedExports: options?.type === "namedExports" ? options.exports : undefined,
