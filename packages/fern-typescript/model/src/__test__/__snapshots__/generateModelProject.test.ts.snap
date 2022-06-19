@@ -138,7 +138,6 @@ import { HttpHeader } from \\"./HttpHeader\\";
 import { PathParameter } from \\"./PathParameter\\";
 import { QueryParameter } from \\"./QueryParameter\\";
 import { WireMessage } from \\"../commons/WireMessage\\";
-import { WireMessage } from \\"../commons/WireMessage\\";
 import { ResponseErrors } from \\"../commons/ResponseErrors\\";
 
 export interface HttpEndpoint extends WithDocs {
@@ -345,9 +344,6 @@ export interface AliasTypeDefinition {
 }
 ",
   "/src/model/types/ContainerType.ts": "import * as model from \\"..\\";
-import * as model from \\"..\\";
-import * as model from \\"..\\";
-import * as model from \\"..\\";
 
 export type ContainerType =
     | ContainerType.List
@@ -442,7 +438,6 @@ export const FernFilepath = {
 };
 ",
   "/src/model/types/MapType.ts": "import { TypeReference } from \\"./TypeReference\\";
-import { TypeReference } from \\"./TypeReference\\";
 
 export interface MapType {
     keyType: TypeReference;
@@ -529,9 +524,6 @@ export interface SingleUnionType extends WithDocs {
 }
 ",
   "/src/model/types/Type.ts": "import * as model from \\"..\\";
-import * as model from \\"..\\";
-import * as model from \\"..\\";
-import * as model from \\"..\\";
 
 export type Type =
     | Type.Alias
@@ -612,8 +604,6 @@ export interface TypeDefinition extends WithDocs {
 }
 ",
   "/src/model/types/TypeReference.ts": "import * as model from \\"..\\";
-import * as model from \\"..\\";
-import * as model from \\"..\\";
 
 export type TypeReference =
     | TypeReference.Container
