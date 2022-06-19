@@ -1,3 +1,9 @@
 lib
 build
 dist
+.yarn
+.husky
+generated
+bundle.js
+.pnp*
+../packages/compiler/ir-types/fern-ir-typescript
