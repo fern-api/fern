@@ -4294,7 +4294,6 @@ export * from \\"./WorkspaceTracedUpdate\\";
               Object {
                 "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
-import * as encoders from \\"../../encoders\\";
 import * as AdminService from \\".\\";
 
 export interface Client {
@@ -5064,7 +5063,6 @@ export * from \\"./AdminService\\";
               Object {
                 "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
-import * as encoders from \\"../../encoders\\";
 import * as ExecutionSesssionManagementService from \\".\\";
 import * as model from \\"../../model\\";
 
@@ -5469,7 +5467,6 @@ export * from \\"./ExecutionSesssionManagementService\\";
               Object {
                 "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
-import * as encoders from \\"../../encoders\\";
 import * as HomepageProblemService from \\".\\";
 import * as model from \\"../../model\\";
 
@@ -5682,7 +5679,6 @@ export * from \\"./HomepageProblemService\\";
               Object {
                 "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
-import * as encoders from \\"../../encoders\\";
 import * as MigrationInfoService from \\".\\";
 import * as model from \\"../../model\\";
 
@@ -5813,7 +5809,6 @@ export * from \\"./MigrationInfoService\\";
               Object {
                 "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
-import * as encoders from \\"../../encoders\\";
 import * as PlaylistCrudService from \\".\\";
 import * as model from \\"../../model\\";
 
@@ -6335,7 +6330,6 @@ export * from \\"./PlaylistCrudService\\";
               Object {
                 "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
-import * as encoders from \\"../../encoders\\";
 import * as ProblemCrudService from \\".\\";
 import * as model from \\"../../model\\";
 
@@ -6753,7 +6747,6 @@ export * from \\"./ProblemCrudService\\";
               Object {
                 "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
-import * as encoders from \\"../../encoders\\";
 import * as ProblemCrudServiceV2 from \\".\\";
 import * as model from \\"../../model\\";
 
@@ -7532,7 +7525,6 @@ export * from \\"./ProblemCrudServiceV2\\";
               Object {
                 "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
-import * as encoders from \\"../../encoders\\";
 import * as ProblemInfoServicV2 from \\".\\";
 import * as model from \\"../../model\\";
 
@@ -7932,7 +7924,6 @@ export * from \\"./ProblemInfoServicV2\\";
               Object {
                 "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
-import * as encoders from \\"../../encoders\\";
 import * as ProblemInfoService from \\".\\";
 import * as model from \\"../../model\\";
 
@@ -8347,7 +8338,6 @@ export * from \\"./ProblemInfoService\\";
               Object {
                 "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
-import * as encoders from \\"../../encoders\\";
 import * as SubmissionInfoService from \\".\\";
 import * as model from \\"../../model\\";
 
@@ -8963,7 +8953,6 @@ export * from \\"./SubmissionInfoService\\";
               Object {
                 "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
-import * as encoders from \\"../../encoders\\";
 import * as SysPropCrudService from \\".\\";
 import * as model from \\"../../model\\";
 
@@ -9184,7 +9173,6 @@ export * from \\"./SysPropCrudService\\";
               Object {
                 "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
-import * as encoders from \\"../../encoders\\";
 import * as WorkspaceInfoService from \\".\\";
 import * as model from \\"../../model\\";
 

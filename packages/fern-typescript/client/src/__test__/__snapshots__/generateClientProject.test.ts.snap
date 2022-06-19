@@ -299,7 +299,6 @@ Object {
   "/src/index.ts": "export * from \\"./services\\";
 ",
   "/src/services/NoErrorsService/NoErrorsService.ts": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
-import * as encoders from \\"../../encoders\\";
 import * as NoErrorsService from \\".\\";
 import path from \\"path\\";
 
@@ -586,7 +585,6 @@ export * from \\"./PostType\\";
 ",
   "/src/services/PostsService/PostsService.ts": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
-import * as encoders from \\"../../encoders\\";
 import * as PostsService from \\".\\";
 import * as model from \\"../../model\\";
 
