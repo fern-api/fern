@@ -2066,7 +2066,6 @@ __metadata:
     "@types/esutils": ^2.0.0
     "@types/jest": ^28.1.2
     "@types/node": ^17.0.33
-    "@types/prettier": ^2.6.1
     depcheck: ^1.4.3
     eslint: ^8.12.0
     esutils: ^2.0.3
@@ -3012,7 +3011,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/prettier@npm:^2.1.5, @types/prettier@npm:^2.6.1":
+"@types/prettier@npm:^2.1.5":
   version: 2.6.1
   resolution: "@types/prettier@npm:2.6.1"
   checksum: b25ec46d18129fa40c1a1f42feb7406e8f19901ba5261ba3c71600ad14996ae07b4f4b727a9b83da673948011e59d870fc519166f05b5d49e9ad39db1aea8c93

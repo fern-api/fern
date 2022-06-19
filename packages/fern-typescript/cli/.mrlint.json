@@ -9,7 +9,15 @@
       }
     },
     "depcheck": {
-      "ignores": ["webpack-cli", "umd-compat-loader", "@ts-morph/common", "ts-loader", "ts-node"],
+      "ignores": [
+        "webpack-cli",
+        "umd-compat-loader",
+        "@ts-morph/common",
+        "ts-loader",
+        "ts-node",
+        "webpack-bundle-analyzer",
+        "@types/webpack-bundle-analyzer"
+      ],
       "ignore-patterns": ["docker/bundle.js"]
     },
     "ts-config": {
