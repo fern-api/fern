@@ -5522,6 +5522,7 @@ __metadata:
     "@babel/preset-env": ^7.18.2
     "@babel/preset-typescript": ^7.17.12
     "@fern-api/api": "workspace:*"
+    "@fern-api/commons": "workspace:*"
     "@fern-api/generator-runner": "workspace:*"
     "@fern-typescript/client": "workspace:*"
     "@fern-typescript/commons": "workspace:*"

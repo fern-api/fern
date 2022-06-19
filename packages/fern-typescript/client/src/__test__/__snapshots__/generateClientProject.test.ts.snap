@@ -33,12 +33,12 @@ Object {
     }
 }",
   "/src/errors/chat/GenericMessage.ts": "export type GenericMessage = string & {
-        __GenericMessage: void;
-    };
+    __GenericMessage: void;
+};
 
 export const GenericMessage = {
-        of: (value: string): GenericMessage => value as GenericMessage
-    };
+    of: (value: string): GenericMessage => value as GenericMessage
+};
 ",
   "/src/errors/chat/index.ts": "export * from \\"./GenericMessage\\";
 ",
@@ -57,12 +57,12 @@ export interface ChatMessage {
 }
 ",
   "/src/model/chat/ChatMessageId.ts": "export type ChatMessageId = string & {
-        __ChatMessageId: void;
-    };
+    __ChatMessageId: void;
+};
 
 export const ChatMessageId = {
-        of: (value: string): ChatMessageId => value as ChatMessageId
-    };
+    of: (value: string): ChatMessageId => value as ChatMessageId
+};
 ",
   "/src/model/chat/index.ts": "export * from \\"./ChatMessage\\";
 export * from \\"./ChatMessageId\\";
@@ -151,7 +151,7 @@ export * from \\"./ChatService\\";
   "/src/services/ChatService/operations/sendChat/ErrorBody.ts": "import * as errors from \\"../../../../errors\\";
 import * as uuid from \\"uuid\\";
 
-export type ErrorBody = 
+export type ErrorBody =
     | ErrorBody.GenericMessage;
 
 export declare namespace ErrorBody {
@@ -168,21 +168,21 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        GenericMessage: (value: errors.GenericMessage): ErrorBody.GenericMessage => ({
-            GenericMessage: value,
-            _error: \\"GenericMessage\\",
-            _errorInstanceId: uuid.v4()
-        }),
+    GenericMessage: (value: errors.GenericMessage): ErrorBody.GenericMessage => ({
+        GenericMessage: value,
+        _error: \\"GenericMessage\\",
+        _errorInstanceId: uuid.v4()
+    }),
 
-        _visit: <Result>(value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            switch (value._error) {
-                case \\"GenericMessage\\": return visitor.GenericMessage(value.GenericMessage);
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        switch (value._error) {
+            case \\"GenericMessage\\": return visitor.GenericMessage(value.GenericMessage);
+            default: return visitor._unknown();
+        }
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [\\"GenericMessage\\"],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [\\"GenericMessage\\"],
+} as const;
 ",
   "/src/services/ChatService/operations/sendChat/Request.ts": "import * as ChatService from \\"../..\\";
 
@@ -324,11 +324,11 @@ export class Client implements Client {
 
     public async get(): Promise<NoErrorsService.get.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \\"/\\"),
-                method: \\"GET\\",
-                headers: {},
-                token: this.token
-            });
+            url: path.join(this.baseUrl, \\"/\\"),
+            method: \\"GET\\",
+            headers: {},
+            token: this.token
+        });
 
         if (isResponseOk(encodedResponse)) {
             return {
@@ -356,12 +356,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
   "/src/services/NoErrorsService/endpoints/get/Response.ts": "import * as NoErrorsService from \\"../..\\";
 
@@ -484,19 +484,19 @@ export * from \\"./services\\";
  * An ID of a blog post
  */
 export type PostId = string & {
-        __PostId: void;
-    };
+    __PostId: void;
+};
 
 export const PostId = {
-        of: (value: string): PostId => value as PostId
-    };
+    of: (value: string): PostId => value as PostId
+};
 ",
   "/src/model/commons/index.ts": "export * from \\"./PostId\\";
 ",
   "/src/model/index.ts": "export * from \\"./commons\\";
 export * from \\"./posts\\";
 ",
-  "/src/model/posts/Author.ts": "export type Author = 
+  "/src/model/posts/Author.ts": "export type Author =
     | Author.Anonymous
     | Author.Named;
 
@@ -518,25 +518,25 @@ export declare namespace Author {
 }
 
 export const Author = {
-        anonymous: (): Author.Anonymous => ({
-            _type: \\"anonymous\\"
-        }),
+    anonymous: (): Author.Anonymous => ({
+        _type: \\"anonymous\\"
+    }),
 
-        named: (value: string): Author.Named => ({
-            named: value,
-            _type: \\"named\\"
-        }),
+    named: (value: string): Author.Named => ({
+        named: value,
+        _type: \\"named\\"
+    }),
 
-        _visit: <Result>(value: Author, visitor: Author._Visitor<Result>): Result => {
-            switch (value._type) {
-                case \\"anonymous\\": return visitor.anonymous();
-                case \\"named\\": return visitor.named(value.named);
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: Author, visitor: Author._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"anonymous\\": return visitor.anonymous();
+            case \\"named\\": return visitor.named(value.named);
+            default: return visitor._unknown();
+        }
+    },
 
-        _types: (): Author[\\"_type\\"][] => [\\"anonymous\\", \\"named\\"],
-    } as const;
+    _types: (): Author[\\"_type\\"][] => [\\"anonymous\\", \\"named\\"],
+} as const;
 ",
   "/src/model/posts/Post.ts": "import { PostId } from \\"../commons/PostId\\";
 import { PostType } from \\"./PostType\\";
@@ -554,24 +554,24 @@ export interface Post {
     relatedPosts: Post[];
 }
 ",
-  "/src/model/posts/PostType.ts": "export type PostType = 
+  "/src/model/posts/PostType.ts": "export type PostType =
     | \\"LONG\\"
     | \\"SHORT\\";
 
 export const PostType = {
-        Long: \\"LONG\\",
-        Short: \\"SHORT\\",
+    Long: \\"LONG\\",
+    Short: \\"SHORT\\",
 
-        _visit: <Result>(value: PostType, visitor: PostType._Visitor<Result>): Result => {
-            switch (value) {
-                case PostType.Long: return visitor.long();
-                case PostType.Short: return visitor.short();
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: PostType, visitor: PostType._Visitor<Result>): Result => {
+        switch (value) {
+            case PostType.Long: return visitor.long();
+            case PostType.Short: return visitor.short();
+            default: return visitor._unknown();
+        }
+    },
 
-        _values: (): PostType[] => [PostType.Long, PostType.Short],
-    } as const;
+    _values: (): PostType[] => [PostType.Long, PostType.Short],
+} as const;
 
 export declare namespace PostType {
     type Long = \\"LONG\\";
@@ -626,15 +626,15 @@ export class Client implements Client {
 
     public async createPost(request: PostsService.createPost.Request): Promise<PostsService.createPost.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \\"/\\"),
-                method: \\"POST\\",
-                headers: {},
-                token: this.token,
-                body: {
-                    content: JSON.stringify(request),
-                    contentType: \\"application/json\\"
-                }
-            });
+            url: path.join(this.baseUrl, \\"/\\"),
+            method: \\"POST\\",
+            headers: {},
+            token: this.token,
+            body: {
+                content: JSON.stringify(request),
+                contentType: \\"application/json\\"
+            }
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -664,12 +664,12 @@ export class Client implements Client {
         }
 
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \`/\${request.postId}\`),
-                method: \\"GET\\",
-                headers: {},
-                token: this.token,
-                queryParameters
-            });
+            url: path.join(this.baseUrl, \`/\${request.postId}\`),
+            method: \\"GET\\",
+            headers: {},
+            token: this.token,
+            queryParameters
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -691,15 +691,15 @@ export class Client implements Client {
 
     public async getPostV2(request: model.PostId): Promise<PostsService.getPostV2.Response> {
         const encodedResponse = await this.fetcher({
-                url: path.join(this.baseUrl, \\"/get\\"),
-                method: \\"GET\\",
-                headers: {},
-                token: this.token,
-                body: {
-                    content: JSON.stringify(request),
-                    contentType: \\"application/json\\"
-                }
-            });
+            url: path.join(this.baseUrl, \\"/get\\"),
+            method: \\"GET\\",
+            headers: {},
+            token: this.token,
+            body: {
+                content: JSON.stringify(request),
+                contentType: \\"application/json\\"
+            }
+        });
 
         if (isResponseOk(encodedResponse)) {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
@@ -729,12 +729,12 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            return visitor._unknown();
-        },
+    _visit: <Result>(_value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [],
+} as const;
 ",
   "/src/services/PostsService/endpoints/createPost/Request.ts": "import * as model from \\"../../../../model\\";
 import * as model from \\"../../../../model\\";
@@ -770,7 +770,7 @@ export * from \\"./Response\\";
   "/src/services/PostsService/endpoints/getPost/ErrorBody.ts": "import * as errors from \\"../../../../errors\\";
 import * as uuid from \\"uuid\\";
 
-export type ErrorBody = 
+export type ErrorBody =
     | ErrorBody.PostNotFoundError;
 
 export declare namespace ErrorBody {
@@ -786,21 +786,21 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        PostNotFoundError: (value: errors.PostNotFoundError): ErrorBody.PostNotFoundError => ({
-            ...value,
-            _error: \\"PostNotFoundError\\",
-            _errorInstanceId: uuid.v4()
-        }),
+    PostNotFoundError: (value: errors.PostNotFoundError): ErrorBody.PostNotFoundError => ({
+        ...value,
+        _error: \\"PostNotFoundError\\",
+        _errorInstanceId: uuid.v4()
+    }),
 
-        _visit: <Result>(value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            switch (value._error) {
-                case \\"PostNotFoundError\\": return visitor.PostNotFoundError(value);
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        switch (value._error) {
+            case \\"PostNotFoundError\\": return visitor.PostNotFoundError(value);
+            default: return visitor._unknown();
+        }
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [\\"PostNotFoundError\\"],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [\\"PostNotFoundError\\"],
+} as const;
 ",
   "/src/services/PostsService/endpoints/getPost/Request.ts": "import * as model from \\"../../../../model\\";
 
@@ -834,7 +834,7 @@ export * from \\"./Response\\";
   "/src/services/PostsService/endpoints/getPostV2/ErrorBody.ts": "import * as errors from \\"../../../../errors\\";
 import * as uuid from \\"uuid\\";
 
-export type ErrorBody = 
+export type ErrorBody =
     | ErrorBody.PostNotFoundError;
 
 export declare namespace ErrorBody {
@@ -850,21 +850,21 @@ export declare namespace ErrorBody {
 }
 
 export const ErrorBody = {
-        PostNotFoundError: (value: errors.PostNotFoundError): ErrorBody.PostNotFoundError => ({
-            ...value,
-            _error: \\"PostNotFoundError\\",
-            _errorInstanceId: uuid.v4()
-        }),
+    PostNotFoundError: (value: errors.PostNotFoundError): ErrorBody.PostNotFoundError => ({
+        ...value,
+        _error: \\"PostNotFoundError\\",
+        _errorInstanceId: uuid.v4()
+    }),
 
-        _visit: <Result>(value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
-            switch (value._error) {
-                case \\"PostNotFoundError\\": return visitor.PostNotFoundError(value);
-                default: return visitor._unknown();
-            }
-        },
+    _visit: <Result>(value: ErrorBody, visitor: ErrorBody._Visitor<Result>): Result => {
+        switch (value._error) {
+            case \\"PostNotFoundError\\": return visitor.PostNotFoundError(value);
+            default: return visitor._unknown();
+        }
+    },
 
-        _types: (): ErrorBody[\\"_error\\"][] => [\\"PostNotFoundError\\"],
-    } as const;
+    _types: (): ErrorBody[\\"_error\\"][] => [\\"PostNotFoundError\\"],
+} as const;
 ",
   "/src/services/PostsService/endpoints/getPostV2/Response.ts": "import * as model from \\"../../../../model\\";
 import * as PostsService from \\"../..\\";

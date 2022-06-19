@@ -4,6 +4,7 @@
   "include": ["./src"],
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
+    { "path": "../../commons/tsconfig.json" },
     { "path": "../../compiler/generators/generator-runner/tsconfig.json" },
     { "path": "../../compiler/ir-types/fern-ir-typescript/tsconfig.json" },
     { "path": "../client/tsconfig.json" },
