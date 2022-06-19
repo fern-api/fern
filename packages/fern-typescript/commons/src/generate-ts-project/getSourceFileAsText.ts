@@ -1,16 +1,6 @@
-import { Volume } from "memfs/lib/volume";
-import path from "path";
-import { ImportDeclaration, ImportDeclarationStructure, OptionalKind, Project, SourceFile } from "ts-morph";
+import { ImportDeclaration, ImportDeclarationStructure, OptionalKind, SourceFile } from "ts-morph";
 
-export async function writeProjectToVolume(project: Project, volume: Volume): Promise<void> {
-    for (const file of project.getSourceFiles()) {
-        const filepath = file.getFilePath();
-        await volume.promises.mkdir(path.dirname(filepath), { recursive: true });
-        await volume.promises.writeFile(filepath, getFullText(file));
-    }
-}
-
-function getFullText(file: SourceFile): string {
+export function getSourceFileAsText(file: SourceFile): string {
     mergeImportsInFile(file);
     file.formatText();
     return file.getFullText();

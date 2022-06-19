@@ -1,10 +1,10 @@
 import { Volume } from "memfs/lib/volume";
 import { Directory } from "ts-morph";
-import { ProjectCreator } from "../codegen/file-system/ProjectCreator";
 import { PackageDependencies } from "../dependencies/DependencyManager";
-import { writeProjectToVolume } from "../writeProjectToVolume";
+import { ProjectCreator } from "../file-system/ProjectCreator";
 import { generatePackageJson } from "./generatePackageJson";
 import { generateTsConfig } from "./generateTsConfig";
+import { writeProjectToVolume } from "./writeProjectToVolume";
 
 export interface GeneratedProjectSrcInfo {
     dependencies: PackageDependencies;
