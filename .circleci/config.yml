@@ -2,7 +2,7 @@ version: 2.1
 orbs:
   node: circleci/node@5.0.1
 jobs:
-  check:
+  lint:
     machine:
       image: ubuntu-2004:current
     steps:
@@ -22,11 +22,24 @@ jobs:
           name: Check dependencies
           command: yarn depcheck
       - run:
-          name: Compile
-          command: yarn compile
-      - run:
           name: lint:eslint
           command: yarn lint:eslint
+      - run:
+          name: Ensure no changes to git-tracked files
+          command: git --no-pager diff
+  compile-and-test:
+    machine:
+      image: ubuntu-2004:current
+    steps:
+      - checkout
+      - run:
+          name: Run code-generation
+          command: npm install -g fern-api && fern generate
+      - node/install-packages:
+          pkg-manager: yarn-berry
+      - run:
+          name: Compile
+          command: yarn compile
       - run:
           name: Build fern-typescript docker (for ETE tests)
           command: yarn workspace fern-typescript dockerTagLocal
@@ -98,7 +111,12 @@ workflows:
   version: 2
   build:
     jobs:
-      - check:
+      - lint:
+          filters:
+            tags:
+              only: /.*/
+
+      - compile-and-test:
           filters:
             tags:
               only: /.*/
@@ -110,7 +128,8 @@ workflows:
             tags:
               only: /.*/
           requires:
-            - check
+            - lint
+            - compile-and-test
           context:
             - npm
             - docker-hub
