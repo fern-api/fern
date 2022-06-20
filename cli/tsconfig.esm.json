@@ -2,7 +2,9 @@
   "extends": "../../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib/esm", "rootDir": "src", "module": "esnext" },
   "include": ["./src"],
+  "exclude": ["./src/**/__test__/**/generated"],
   "references": [
+    { "path": "../../commons/tsconfig.esm.json" },
     { "path": "../../compiler/generators/generator-runner/tsconfig.esm.json" },
     { "path": "../../compiler/ir-types/fern-ir-typescript/tsconfig.esm.json" },
     { "path": "../client/tsconfig.esm.json" },

@@ -1,5 +1,5 @@
 import { Directory } from "ts-morph";
-import { getRelativePathAsModuleSpecifierTo } from "../utils/getRelativePathAsModuleSpecifierTo";
+import { getRelativePathAsModuleSpecifierTo } from "../codegen/utils/getRelativePathAsModuleSpecifierTo";
 import { getOrCreateSourceFile } from "./getOrCreateSourceFile";
 
 export declare namespace exportFromModule {

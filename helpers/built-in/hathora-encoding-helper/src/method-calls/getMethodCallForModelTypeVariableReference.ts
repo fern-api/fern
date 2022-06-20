@@ -1,5 +1,5 @@
 import { ContainerType, TypeReference } from "@fern-api/api";
-import ts from "typescript";
+import { ts } from "@fern-typescript/helper-utils";
 import { getEncoderNameForContainer, getEncoderNameForPrimitive, HathoraEncoderConstants } from "../constants";
 import { createEncoderMethodCall } from "./createEncoderMethodCall";
 

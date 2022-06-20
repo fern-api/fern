@@ -7,20 +7,31 @@ import {
     ts,
     VariableReference,
 } from "@fern-typescript/helper-utils";
-import { ClientConstants } from "../../../constants";
+import { Directory, SourceFile } from "ts-morph";
+import { generateEncoderReference } from "../../../utils/generateEncoderReference";
 
 export function generateEncoderCall({
     encoder,
     variableReference,
     method,
+    encodersDirectory,
+    referencedIn,
 }: {
     encoder: Encoder;
     variableReference: VariableReference;
     method: EncodeMethod;
+    encodersDirectory: Directory;
+    referencedIn: SourceFile;
 }): ts.Expression {
     switch (encoder._type) {
         case "fileBased":
-            return generateFileBasedEncoderCall({ encoder, variableReference, method });
+            return generateFileBasedEncoderCall({
+                encoder,
+                variableReference,
+                method,
+                encodersDirectory,
+                referencedIn,
+            });
         case "inline":
             return generateInlineEncoderCall({ encoder, variableReference, method });
         default:
@@ -32,15 +43,20 @@ function generateFileBasedEncoderCall({
     encoder,
     variableReference,
     method,
+    referencedIn,
+    encodersDirectory,
 }: {
     encoder: FileBasedEncoder;
     variableReference: VariableReference;
     method: EncodeMethod;
+    encodersDirectory: Directory;
+    referencedIn: SourceFile;
 }) {
-    const referenceToEncoder = ts.factory.createPropertyAccessExpression(
-        ts.factory.createIdentifier(ClientConstants.HttpService.NamespaceImports.ENCODERS),
-        encoder.name
-    );
+    const referenceToEncoder = generateEncoderReference({
+        encoder,
+        encodersDirectory,
+        referencedIn,
+    });
 
     switch (method) {
         case "encode":

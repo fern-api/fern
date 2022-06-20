@@ -25,6 +25,7 @@ export async function addEndpointToService({
     errorsDirectory,
     endpointsDirectory,
     servicesDirectory,
+    encodersDirectory,
     typeResolver,
     helperManager,
     dependencyManager,
@@ -37,6 +38,7 @@ export async function addEndpointToService({
     modelDirectory: Directory;
     errorsDirectory: Directory;
     servicesDirectory: Directory;
+    encodersDirectory: Directory;
     typeResolver: TypeResolver;
     helperManager: HelperManager;
     dependencyManager: DependencyManager;
@@ -130,6 +132,7 @@ export async function addEndpointToService({
             typeResolver,
             helperManager,
             modelDirectory,
+            encodersDirectory,
         }),
     });
 }

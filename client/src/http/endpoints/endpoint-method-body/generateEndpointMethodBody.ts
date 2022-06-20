@@ -17,6 +17,7 @@ export async function generateEndpointMethodBody({
     typeResolver,
     helperManager,
     modelDirectory,
+    encodersDirectory,
 }: {
     endpoint: HttpEndpoint;
     endpointTypes: GeneratedEndpointTypes;
@@ -26,6 +27,7 @@ export async function generateEndpointMethodBody({
     typeResolver: TypeResolver;
     helperManager: HelperManager;
     modelDirectory: Directory;
+    encodersDirectory: Directory;
 }): Promise<(StatementStructures | WriterFunction | string)[]> {
     const queryParameterStatements = generateConstructQueryParams({ endpoint, typeResolver });
 
@@ -46,6 +48,7 @@ export async function generateEndpointMethodBody({
             serviceDefinition,
             includeQueryParams: queryParameterStatements.length > 0,
             helperManager,
+            encodersDirectory,
         }),
         (writer) => {
             writer.newLine();
@@ -59,6 +62,7 @@ export async function generateEndpointMethodBody({
                 serviceDefinition,
                 endpoint,
                 helperManager,
+                encodersDirectory,
             })
         ),
     ];

@@ -4,7 +4,6 @@ import {
     DependencyManager,
     getOrCreateDirectory,
     getOrCreateSourceFile,
-    getRelativePathAsModuleSpecifierTo,
     getTextOfTsKeyword,
     getTextOfTsNode,
     maybeAddDocs,
@@ -141,12 +140,6 @@ async function generateService({
         ClientConstants.HttpService.Files.ENDPOINTS_DIRECTORY_NAME
     );
 
-    // TODO delete this and add a "generateReferenceToEncoder" method that adds the import when needed
-    serviceFile.addImportDeclaration({
-        namespaceImport: ClientConstants.HttpService.NamespaceImports.ENCODERS,
-        moduleSpecifier: getRelativePathAsModuleSpecifierTo(serviceFile, encodersDirectory),
-    });
-
     for (const endpoint of service.endpoints) {
         await addEndpointToService({
             endpoint,
@@ -157,6 +150,7 @@ async function generateService({
             errorsDirectory,
             endpointsDirectory,
             servicesDirectory,
+            encodersDirectory,
             typeResolver,
             helperManager,
             dependencyManager,
