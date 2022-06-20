@@ -1,8 +1,9 @@
 import { NamedType, WebSocketOperation } from "@fern-api/api";
 import { getTextOfTsKeyword, getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
-import { GeneratedRequest, generateRequest, getServiceTypeReference } from "@fern-typescript/service-types";
 import { Directory, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
-import { ClientConstants } from "../../../constants";
+import { GeneratedRequest, generateRequest } from "../commons/generate-request/generateRequest";
+import { getServiceTypeReference } from "../commons/service-type-reference/get-service-type-reference/getServiceTypeReference";
+import { ServiceTypesConstants } from "../constants";
 
 export declare namespace generateRequestTypes {
     export interface Args {
@@ -25,11 +26,11 @@ export function generateRequestTypes({
 }: generateRequestTypes.Args): GeneratedRequest {
     const additionalProperties: OptionalKind<PropertySignatureStructure>[] = [
         {
-            name: ClientConstants.WebsocketChannel.Operation.Types.Request.Properties.ID,
+            name: ServiceTypesConstants.WebsocketChannel.Request.Properties.ID,
             type: getTextOfTsKeyword(ts.SyntaxKind.StringKeyword),
         },
         {
-            name: ClientConstants.WebsocketChannel.Operation.Types.Request.Properties.OPERATION,
+            name: ServiceTypesConstants.WebsocketChannel.Request.Properties.OPERATION,
             type: getTextOfTsNode(
                 ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(operation.operationId))
             ),

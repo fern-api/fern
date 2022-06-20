@@ -3,9 +3,9 @@ import { DependencyManager, getOrCreateDirectory, TypeResolver } from "@fern-typ
 import { Directory } from "ts-morph";
 import { generateRequestTypes } from "./generateRequestTypes";
 import { generateResponseTypes } from "./generateResponseTypes";
-import { GeneratedOperationTypes } from "./types";
+import { GeneratedWebSocketOperationTypes } from "./types";
 
-export function generateOperationTypes({
+export function generateWebSocketOperationTypes({
     channel,
     operation,
     operationsDirectory,
@@ -21,7 +21,7 @@ export function generateOperationTypes({
     servicesDirectory: Directory;
     typeResolver: TypeResolver;
     dependencyManager: DependencyManager;
-}): GeneratedOperationTypes {
+}): GeneratedWebSocketOperationTypes {
     const operationDirectory = getOrCreateDirectory(operationsDirectory, operation.operationId, {
         exportOptions: {
             type: "namespace",

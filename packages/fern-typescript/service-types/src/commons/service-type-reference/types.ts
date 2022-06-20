@@ -1,6 +1,6 @@
 import { TypeReference } from "@fern-api/api";
 import { SourceFile } from "ts-morph";
-import { ServiceTypesConstants } from "../constants";
+import { ServiceTypesConstants } from "../../constants";
 
 export type ServiceTypeReference = LocalServiceTypeReference | ModelServiceTypeReference;
 
@@ -18,8 +18,8 @@ export interface ModelServiceTypeReference {
 }
 
 export type ServiceTypeName =
-    | typeof ServiceTypesConstants.Types.Request.TYPE_NAME
-    | typeof ServiceTypesConstants.Types.Request.Properties.Body.TYPE_NAME
-    | typeof ServiceTypesConstants.Types.Response.TYPE_NAME
-    | typeof ServiceTypesConstants.Types.Response.Success.Properties.Body.TYPE_NAME
-    | typeof ServiceTypesConstants.Types.Response.Error.Properties.Body.TYPE_NAME;
+    | typeof ServiceTypesConstants.Commons.Request.TYPE_NAME
+    | typeof ServiceTypesConstants.Commons.Request.Properties.Body.TYPE_NAME
+    | typeof ServiceTypesConstants.Commons.Response.TYPE_NAME
+    | typeof ServiceTypesConstants.Commons.Response.Success.Properties.Body.TYPE_NAME
+    | typeof ServiceTypesConstants.Commons.Response.Error.Properties.Body.TYPE_NAME;
