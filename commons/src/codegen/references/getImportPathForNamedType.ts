@@ -1,25 +1,23 @@
 import { NamedType } from "@fern-api/api";
 import { Directory, SourceFile } from "ts-morph";
 import { getRelativePathAsModuleSpecifierTo } from "../utils/getRelativePathAsModuleSpecifierTo";
-import { getFilePathForNamedType } from "./getFilePathForNamedType";
+import { getFilePathForNamedType, TypeCategory } from "./getFilePathForNamedType";
 
 export function getImportPathForNamedType({
-    baseDirectory,
+    modelDirectory,
     from,
     typeName,
+    typeCategory,
 }: {
-    /**
-     * the directory where the original type lives.
-     * for types, this should be the model directory.
-     * for errors, this should be the errors directory.
-     */
-    baseDirectory: Directory;
+    modelDirectory: Directory;
     from: SourceFile;
     typeName: NamedType;
+    typeCategory: TypeCategory;
 }): string {
     const filepathForType = getFilePathForNamedType({
-        baseDirectory,
+        modelDirectory,
         typeName,
+        typeCategory,
     });
     return getRelativePathAsModuleSpecifierTo(from, filepathForType);
 }

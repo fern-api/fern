@@ -22,7 +22,6 @@ export async function addEndpointToService({
     serviceClass,
     serviceDefinition,
     modelDirectory,
-    errorsDirectory,
     endpointsDirectory,
     servicesDirectory,
     encodersDirectory,
@@ -36,7 +35,6 @@ export async function addEndpointToService({
     serviceDefinition: HttpService;
     endpointsDirectory: Directory;
     modelDirectory: Directory;
-    errorsDirectory: Directory;
     servicesDirectory: Directory;
     encodersDirectory: Directory;
     typeResolver: TypeResolver;
@@ -50,7 +48,6 @@ export async function addEndpointToService({
         serviceName: serviceDefinition.name,
         endpointsDirectory,
         modelDirectory,
-        errorsDirectory,
         servicesDirectory,
         typeResolver,
         dependencyManager,
@@ -80,8 +77,7 @@ export async function addEndpointToService({
                                   : getTypeReference({
                                         reference: generatedEndpointTypes.request.wrapper.reference.typeReference,
                                         referencedIn: serviceFile,
-                                        baseDirectory: modelDirectory,
-                                        baseDirectoryType: "model",
+                                        modelDirectory,
                                     })
                           ),
                       },
@@ -96,8 +92,7 @@ export async function addEndpointToService({
                                   : getTypeReference({
                                         reference: generatedEndpointTypes.request.body.typeReference,
                                         referencedIn: serviceFile,
-                                        baseDirectory: modelDirectory,
-                                        baseDirectoryType: "model",
+                                        modelDirectory,
                                     })
                           ),
                       },

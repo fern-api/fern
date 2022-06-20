@@ -32,7 +32,10 @@ Object {
         \\"typescript\\": \\"^4.6.4\\"
     }
 }",
-  "/src/errors/chat/GenericMessage.ts": "export type GenericMessage = string & {
+  "/src/index.ts": "export * from \\"./model\\";
+export * from \\"./services\\";
+",
+  "/src/model/chat/errors/GenericMessage.ts": "export type GenericMessage = string & {
     __GenericMessage: void;
 };
 
@@ -40,15 +43,12 @@ export const GenericMessage = {
     of: (value: string): GenericMessage => value as GenericMessage
 };
 ",
-  "/src/errors/chat/index.ts": "export * from \\"./GenericMessage\\";
+  "/src/model/chat/errors/index.ts": "export * from \\"./GenericMessage\\";
 ",
-  "/src/errors/index.ts": "export * from \\"./chat\\";
+  "/src/model/chat/index.ts": "export * from \\"./errors\\";
+export * from \\"./types\\";
 ",
-  "/src/index.ts": "export * from \\"./errors\\";
-export * from \\"./model\\";
-export * from \\"./services\\";
-",
-  "/src/model/chat/ChatMessage.ts": "import { ChatMessageId } from \\"./ChatMessageId\\";
+  "/src/model/chat/types/ChatMessage.ts": "import { ChatMessageId } from \\"./ChatMessageId\\";
 
 export interface ChatMessage {
     id: ChatMessageId;
@@ -56,7 +56,7 @@ export interface ChatMessage {
     content: string;
 }
 ",
-  "/src/model/chat/ChatMessageId.ts": "export type ChatMessageId = string & {
+  "/src/model/chat/types/ChatMessageId.ts": "export type ChatMessageId = string & {
     __ChatMessageId: void;
 };
 
@@ -64,7 +64,7 @@ export const ChatMessageId = {
     of: (value: string): ChatMessageId => value as ChatMessageId
 };
 ",
-  "/src/model/chat/index.ts": "export * from \\"./ChatMessage\\";
+  "/src/model/chat/types/index.ts": "export * from \\"./ChatMessage\\";
 export * from \\"./ChatMessageId\\";
 ",
   "/src/model/index.ts": "export * from \\"./chat\\";
@@ -145,7 +145,7 @@ export * from \\"./ChatService\\";
 ",
   "/src/services/ChatService/operations/index.ts": "export * as sendChat from \\"./sendChat\\";
 ",
-  "/src/services/ChatService/operations/sendChat/ErrorBody.ts": "import * as errors from \\"../../../../errors\\";
+  "/src/services/ChatService/operations/sendChat/ErrorBody.ts": "import * as model from \\"../../../../model\\";
 import * as uuid from \\"uuid\\";
 
 export type ErrorBody =
@@ -155,17 +155,17 @@ export declare namespace ErrorBody {
     interface GenericMessage {
         _error: \\"GenericMessage\\";
         _errorInstanceId: string;
-        GenericMessage: errors.GenericMessage;
+        GenericMessage: model.GenericMessage;
     }
 
     export interface _Visitor<Result> {
-        GenericMessage: (value: errors.GenericMessage) => Result;
+        GenericMessage: (value: model.GenericMessage) => Result;
         _unknown: () => Result;
     }
 }
 
 export const ErrorBody = {
-    GenericMessage: (value: errors.GenericMessage): ErrorBody.GenericMessage => ({
+    GenericMessage: (value: model.GenericMessage): ErrorBody.GenericMessage => ({
         GenericMessage: value,
         _error: \\"GenericMessage\\",
         _errorInstanceId: uuid.v4()
@@ -461,21 +461,12 @@ Object {
         \\"typescript\\": \\"^4.6.4\\"
     }
 }",
-  "/src/errors/index.ts": "export * from \\"./posts\\";
-",
-  "/src/errors/posts/PostNotFoundError.ts": "import * as model from \\"../../model\\";
-
-export interface PostNotFoundError {
-    id: model.PostId;
-}
-",
-  "/src/errors/posts/index.ts": "export * from \\"./PostNotFoundError\\";
-",
-  "/src/index.ts": "export * from \\"./errors\\";
-export * from \\"./model\\";
+  "/src/index.ts": "export * from \\"./model\\";
 export * from \\"./services\\";
 ",
-  "/src/model/commons/PostId.ts": "/**
+  "/src/model/commons/index.ts": "export * from \\"./types\\";
+",
+  "/src/model/commons/types/PostId.ts": "/**
  * An ID of a blog post
  */
 export type PostId = string & {
@@ -486,12 +477,23 @@ export const PostId = {
     of: (value: string): PostId => value as PostId
 };
 ",
-  "/src/model/commons/index.ts": "export * from \\"./PostId\\";
+  "/src/model/commons/types/index.ts": "export * from \\"./PostId\\";
 ",
   "/src/model/index.ts": "export * from \\"./commons\\";
 export * from \\"./posts\\";
 ",
-  "/src/model/posts/Author.ts": "export type Author =
+  "/src/model/posts/errors/PostNotFoundError.ts": "import { PostId } from \\"../../commons/types/PostId\\";
+
+export interface PostNotFoundError {
+    id: PostId;
+}
+",
+  "/src/model/posts/errors/index.ts": "export * from \\"./PostNotFoundError\\";
+",
+  "/src/model/posts/index.ts": "export * from \\"./errors\\";
+export * from \\"./types\\";
+",
+  "/src/model/posts/types/Author.ts": "export type Author =
     | Author.Anonymous
     | Author.Named;
 
@@ -533,7 +535,7 @@ export const Author = {
     _types: (): Author[\\"_type\\"][] => [\\"anonymous\\", \\"named\\"],
 } as const;
 ",
-  "/src/model/posts/Post.ts": "import { PostId } from \\"../commons/PostId\\";
+  "/src/model/posts/types/Post.ts": "import { PostId } from \\"../../commons/types/PostId\\";
 import { PostType } from \\"./PostType\\";
 import { Author } from \\"./Author\\";
 
@@ -549,7 +551,7 @@ export interface Post {
     relatedPosts: Post[];
 }
 ",
-  "/src/model/posts/PostType.ts": "export type PostType =
+  "/src/model/posts/types/PostType.ts": "export type PostType =
     | \\"LONG\\"
     | \\"SHORT\\";
 
@@ -579,7 +581,7 @@ export declare namespace PostType {
     }
 }
 ",
-  "/src/model/posts/index.ts": "export * from \\"./Author\\";
+  "/src/model/posts/types/index.ts": "export * from \\"./Author\\";
 export * from \\"./Post\\";
 export * from \\"./PostType\\";
 ",
@@ -747,26 +749,26 @@ export interface ErrorResponse {
 export * from \\"./Request\\";
 export * from \\"./Response\\";
 ",
-  "/src/services/PostsService/endpoints/getPost/ErrorBody.ts": "import * as errors from \\"../../../../errors\\";
+  "/src/services/PostsService/endpoints/getPost/ErrorBody.ts": "import * as model from \\"../../../../model\\";
 import * as uuid from \\"uuid\\";
 
 export type ErrorBody =
     | ErrorBody.PostNotFoundError;
 
 export declare namespace ErrorBody {
-    interface PostNotFoundError extends errors.PostNotFoundError {
+    interface PostNotFoundError extends model.PostNotFoundError {
         _error: \\"PostNotFoundError\\";
         _errorInstanceId: string;
     }
 
     export interface _Visitor<Result> {
-        PostNotFoundError: (value: errors.PostNotFoundError) => Result;
+        PostNotFoundError: (value: model.PostNotFoundError) => Result;
         _unknown: () => Result;
     }
 }
 
 export const ErrorBody = {
-    PostNotFoundError: (value: errors.PostNotFoundError): ErrorBody.PostNotFoundError => ({
+    PostNotFoundError: (value: model.PostNotFoundError): ErrorBody.PostNotFoundError => ({
         ...value,
         _error: \\"PostNotFoundError\\",
         _errorInstanceId: uuid.v4()
@@ -811,26 +813,26 @@ export interface ErrorResponse {
 export * from \\"./Request\\";
 export * from \\"./Response\\";
 ",
-  "/src/services/PostsService/endpoints/getPostV2/ErrorBody.ts": "import * as errors from \\"../../../../errors\\";
+  "/src/services/PostsService/endpoints/getPostV2/ErrorBody.ts": "import * as model from \\"../../../../model\\";
 import * as uuid from \\"uuid\\";
 
 export type ErrorBody =
     | ErrorBody.PostNotFoundError;
 
 export declare namespace ErrorBody {
-    interface PostNotFoundError extends errors.PostNotFoundError {
+    interface PostNotFoundError extends model.PostNotFoundError {
         _error: \\"PostNotFoundError\\";
         _errorInstanceId: string;
     }
 
     export interface _Visitor<Result> {
-        PostNotFoundError: (value: errors.PostNotFoundError) => Result;
+        PostNotFoundError: (value: model.PostNotFoundError) => Result;
         _unknown: () => Result;
     }
 }
 
 export const ErrorBody = {
-    PostNotFoundError: (value: errors.PostNotFoundError): ErrorBody.PostNotFoundError => ({
+    PostNotFoundError: (value: model.PostNotFoundError): ErrorBody.PostNotFoundError => ({
         ...value,
         _error: \\"PostNotFoundError\\",
         _errorInstanceId: uuid.v4()

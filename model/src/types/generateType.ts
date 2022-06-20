@@ -40,8 +40,6 @@ export function generateType({
                 types: unionTypeDefinition.types,
                 typeResolver,
                 modelDirectory,
-                baseDirectory: modelDirectory,
-                baseDirectoryType: "model",
             });
         },
         alias: (alias) => {

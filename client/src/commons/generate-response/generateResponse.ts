@@ -9,7 +9,6 @@ import { generateErrorBody } from "./generateErrorBody";
 export declare namespace generateResponse {
     export interface Args {
         directory: Directory;
-        errorsDirectory: Directory;
         modelDirectory: Directory;
         typeResolver: TypeResolver;
         dependencyManager: DependencyManager;
@@ -32,7 +31,6 @@ export declare namespace generateResponse {
 }
 
 export function generateResponse({
-    errorsDirectory,
     modelDirectory,
     typeResolver,
     dependencyManager,
@@ -77,7 +75,6 @@ export function generateResponse({
     generateErrorBody({
         failedResponse,
         errorBodyFile,
-        errorsDirectory,
         typeResolver,
         modelDirectory,
         dependencyManager,

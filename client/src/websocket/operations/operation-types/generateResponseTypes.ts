@@ -12,7 +12,6 @@ export declare namespace generateResponseTypes {
         operation: WebSocketOperation;
         operationDirectory: Directory;
         modelDirectory: Directory;
-        errorsDirectory: Directory;
         servicesDirectory: Directory;
         typeResolver: TypeResolver;
         dependencyManager: DependencyManager;
@@ -26,13 +25,11 @@ export function generateResponseTypes({
     operation,
     operationDirectory,
     modelDirectory,
-    errorsDirectory,
     servicesDirectory,
     typeResolver,
     dependencyManager,
 }: generateResponseTypes.Args): generateResponseTypes.Return {
     const { reference, successBodyReference } = generateResponse({
-        errorsDirectory,
         modelDirectory,
         typeResolver,
         dependencyManager,

@@ -10,7 +10,6 @@ export function generateOperationTypes({
     operation,
     operationsDirectory,
     modelDirectory,
-    errorsDirectory,
     servicesDirectory,
     typeResolver,
     dependencyManager,
@@ -19,7 +18,6 @@ export function generateOperationTypes({
     operation: WebSocketOperation;
     operationsDirectory: Directory;
     modelDirectory: Directory;
-    errorsDirectory: Directory;
     servicesDirectory: Directory;
     typeResolver: TypeResolver;
     dependencyManager: DependencyManager;
@@ -46,7 +44,6 @@ export function generateOperationTypes({
             operation,
             operationDirectory,
             modelDirectory,
-            errorsDirectory,
             servicesDirectory,
             typeResolver,
             dependencyManager,

@@ -11,7 +11,6 @@ export function generateEndpointTypes({
     endpointsDirectory,
     servicesDirectory,
     modelDirectory,
-    errorsDirectory,
     typeResolver,
     dependencyManager,
 }: {
@@ -19,7 +18,6 @@ export function generateEndpointTypes({
     endpoint: HttpEndpoint;
     endpointsDirectory: Directory;
     modelDirectory: Directory;
-    errorsDirectory: Directory;
     servicesDirectory: Directory;
     typeResolver: TypeResolver;
     dependencyManager: DependencyManager;
@@ -46,7 +44,6 @@ export function generateEndpointTypes({
             endpoint,
             endpointDirectory,
             modelDirectory,
-            errorsDirectory,
             servicesDirectory,
             typeResolver,
             dependencyManager,
