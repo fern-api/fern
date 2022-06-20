@@ -1,7 +1,8 @@
 import { HttpEndpoint, NamedType } from "@fern-api/api";
 import { getTextOfTsNode, getTypeReference, TypeResolver } from "@fern-typescript/commons";
-import { GeneratedRequest, generateRequest, getServiceTypeReference } from "@fern-typescript/service-types";
 import { Directory, OptionalKind, PropertySignatureStructure, SourceFile } from "ts-morph";
+import { GeneratedRequest, generateRequest } from "../commons/generate-request/generateRequest";
+import { getServiceTypeReference } from "../commons/service-type-reference/get-service-type-reference/getServiceTypeReference";
 
 export declare namespace generateRequestTypes {
     export interface Args {
