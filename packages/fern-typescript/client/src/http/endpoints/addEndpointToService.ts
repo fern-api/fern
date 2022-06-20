@@ -1,7 +1,11 @@
 import { HttpEndpoint, HttpService } from "@fern-api/api";
 import { DependencyManager, getTextOfTsNode, getTypeReference, TypeResolver } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
-import { getLocalServiceTypeReference, ServiceTypeName } from "@fern-typescript/service-types";
+import {
+    generateHttpEndpointTypes,
+    getLocalServiceTypeReference,
+    ServiceTypeName,
+} from "@fern-typescript/service-types";
 import {
     ClassDeclaration,
     Directory,
@@ -13,7 +17,6 @@ import {
 } from "ts-morph";
 import { ClientConstants } from "../../constants";
 import { generateEndpointMethodBody } from "./endpoint-method-body/generateEndpointMethodBody";
-import { generateEndpointTypes } from "./endpoint-types/generateEndpointTypes";
 
 export async function addEndpointToService({
     endpoint,
@@ -42,7 +45,7 @@ export async function addEndpointToService({
 }): Promise<void> {
     const serviceFile = serviceInterface.getSourceFile();
 
-    const generatedEndpointTypes = generateEndpointTypes({
+    const generatedEndpointTypes = generateHttpEndpointTypes({
         endpoint,
         serviceName: serviceDefinition.name,
         endpointsDirectory,

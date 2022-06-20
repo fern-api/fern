@@ -1,9 +1,10 @@
 import { HttpEndpoint, NamedType } from "@fern-api/api";
 import { DependencyManager, getTextOfTsKeyword, TypeResolver } from "@fern-typescript/commons";
-import { generateResponse, getServiceTypeReference } from "@fern-typescript/service-types";
 import { Directory, ts } from "ts-morph";
-import { ClientConstants } from "../../../constants";
-import { GeneratedEndpointTypes } from "./types";
+import { generateResponse } from "../commons/generate-response/generateResponse";
+import { getServiceTypeReference } from "../commons/service-type-reference/get-service-type-reference/getServiceTypeReference";
+import { ServiceTypesConstants } from "../constants";
+import { GeneratedHttpEndpointTypes } from "./types";
 
 export declare namespace generateResponseTypes {
     export interface Args {
@@ -16,7 +17,7 @@ export declare namespace generateResponseTypes {
         dependencyManager: DependencyManager;
     }
 
-    export type Return = GeneratedEndpointTypes["response"];
+    export type Return = GeneratedHttpEndpointTypes["response"];
 }
 
 export function generateResponseTypes({
@@ -49,7 +50,7 @@ export function generateResponseTypes({
         directory: endpointDirectory,
         additionalProperties: [
             {
-                name: ClientConstants.HttpService.Endpoint.Types.Response.Properties.STATUS_CODE,
+                name: ServiceTypesConstants.HttpEndpint.Response.Properties.STATUS_CODE,
                 type: getTextOfTsKeyword(ts.SyntaxKind.NumberKeyword),
             },
         ],

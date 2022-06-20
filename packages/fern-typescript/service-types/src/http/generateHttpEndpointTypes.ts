@@ -3,9 +3,9 @@ import { DependencyManager, getOrCreateDirectory, TypeResolver } from "@fern-typ
 import { Directory } from "ts-morph";
 import { generateRequestTypes } from "./generateRequestTypes";
 import { generateResponseTypes } from "./generateResponseTypes";
-import { GeneratedEndpointTypes } from "./types";
+import { GeneratedHttpEndpointTypes } from "./types";
 
-export function generateEndpointTypes({
+export function generateHttpEndpointTypes({
     serviceName,
     endpoint,
     endpointsDirectory,
@@ -21,7 +21,7 @@ export function generateEndpointTypes({
     servicesDirectory: Directory;
     typeResolver: TypeResolver;
     dependencyManager: DependencyManager;
-}): GeneratedEndpointTypes {
+}): GeneratedHttpEndpointTypes {
     const endpointDirectory = getOrCreateDirectory(endpointsDirectory, endpoint.endpointId, {
         exportOptions: {
             type: "namespace",

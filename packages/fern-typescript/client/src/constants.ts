@@ -96,13 +96,6 @@ export const ClientConstants = {
                 DECODED_RESPONSE: "response",
                 DECODED_ERROR: "error",
             },
-            Types: {
-                Response: {
-                    Properties: {
-                        STATUS_CODE: "statusCode",
-                    },
-                },
-            },
         },
     },
 } as const;
