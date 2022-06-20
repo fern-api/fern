@@ -1,15 +1,9 @@
 import { IntermediateRepresentation } from "@fern-api/api";
-import {
-    generateTypeScriptProject,
-    getFilePathForNamedType,
-    getOrCreateDirectory,
-    getOrCreateSourceFile,
-    TypeResolver,
-} from "@fern-typescript/commons";
+import { generateTypeScriptProject, getOrCreateDirectory, TypeResolver } from "@fern-typescript/commons";
 import { Volume } from "memfs/lib/volume";
 import { Directory } from "ts-morph";
 import { generateErrorFiles } from "./errors/generateErrorFiles";
-import { generateType } from "./types/generateType";
+import { generateTypeFiles } from "./types/generateTypeFiles";
 
 export async function generateModelProject({
     packageName,
@@ -29,8 +23,7 @@ export async function generateModelProject({
         packageName,
         packageVersion,
         generateSrc: (directory) => {
-            const modelDirectory = generateModelFiles({ intermediateRepresentation, typeResolver, directory });
-            generateErrorFiles({ intermediateRepresentation, typeResolver, modelDirectory });
+            generateModelFiles({ intermediateRepresentation, typeResolver, directory });
         },
     });
 }
@@ -45,22 +38,7 @@ export function generateModelFiles({
     typeResolver: TypeResolver;
 }): Directory {
     const modelDirectory = getOrCreateDirectory(directory, "model");
-    for (const typeDefinition of intermediateRepresentation.types) {
-        const filepath = getFilePathForNamedType({
-            modelDirectory,
-            typeName: typeDefinition.name,
-            typeCategory: "type",
-        });
-
-        const file = getOrCreateSourceFile(modelDirectory, filepath);
-        generateType({
-            type: typeDefinition.shape,
-            typeName: typeDefinition.name.name,
-            docs: typeDefinition.docs,
-            typeResolver,
-            modelDirectory,
-            file,
-        });
-    }
+    generateTypeFiles({ intermediateRepresentation, typeResolver, modelDirectory });
+    generateErrorFiles({ intermediateRepresentation, typeResolver, modelDirectory });
     return modelDirectory;
 }

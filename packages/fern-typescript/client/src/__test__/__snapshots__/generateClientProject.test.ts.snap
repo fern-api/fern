@@ -35,7 +35,18 @@ Object {
   "/src/index.ts": "export * from \\"./model\\";
 export * from \\"./services\\";
 ",
-  "/src/model/chat/index.ts": "export * from \\"./types\\";
+  "/src/model/chat/errors/GenericMessage.ts": "export type GenericMessage = string & {
+    __GenericMessage: void;
+};
+
+export const GenericMessage = {
+    of: (value: string): GenericMessage => value as GenericMessage
+};
+",
+  "/src/model/chat/errors/index.ts": "export * from \\"./GenericMessage\\";
+",
+  "/src/model/chat/index.ts": "export * from \\"./errors\\";
+export * from \\"./types\\";
 ",
   "/src/model/chat/types/ChatMessage.ts": "import { ChatMessageId } from \\"./ChatMessageId\\";
 
@@ -471,7 +482,16 @@ export const PostId = {
   "/src/model/index.ts": "export * from \\"./commons\\";
 export * from \\"./posts\\";
 ",
-  "/src/model/posts/index.ts": "export * from \\"./types\\";
+  "/src/model/posts/errors/PostNotFoundError.ts": "import { PostId } from \\"../../commons/types/PostId\\";
+
+export interface PostNotFoundError {
+    id: PostId;
+}
+",
+  "/src/model/posts/errors/index.ts": "export * from \\"./PostNotFoundError\\";
+",
+  "/src/model/posts/index.ts": "export * from \\"./errors\\";
+export * from \\"./types\\";
 ",
   "/src/model/posts/types/Author.ts": "export type Author =
     | Author.Anonymous
