@@ -3,16 +3,18 @@ orbs:
   node: circleci/node@5.0.1
 jobs:
   install:
-  machine: true
-  steps:
-    - checkout
-    - run:
-        name: Run code-generation
-        command: npm install -g fern-api && fern generate
-    - node/install-packages:
-        pkg-manager: yarn-berry
+    machine:
+      image: ubuntu-2004:current
+    steps:
+      - checkout
+      - run:
+          name: Run code-generation
+          command: npm install -g fern-api && fern generate
+      - node/install-packages:
+          pkg-manager: yarn-berry
   lint:
-    machine: true
+    machine:
+      image: ubuntu-2004:current
     steps:
       - checkout
       - run:
@@ -36,7 +38,8 @@ jobs:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff
   compile-and-test:
-    machine: true
+    machine:
+      image: ubuntu-2004:current
     resource_class: 2xlarge
     steps:
       - checkout
@@ -59,7 +62,8 @@ jobs:
           command: git --no-pager diff
 
   publish:
-    machine: true
+    machine:
+      image: ubuntu-2004:current
     steps:
       - checkout
       - run:
@@ -88,7 +92,8 @@ jobs:
             docker push fernapi/fern-typescript:"$projectVersion"
 
   publish-java-snapshot:
-    machine: true
+    machine:
+      image: ubuntu-2004:current
     environment:
       CIRCLE_TEST_REPORTS: /home/circleci/junit
       CIRCLE_ARTIFACTS: /home/circleci/artifacts
