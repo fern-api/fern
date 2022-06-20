@@ -1,5 +1,5 @@
 {
-  "name": "@fern-typescript/model",
+  "name": "@fern-typescript/types",
   "version": "0.0.0",
   "files": [
     "lib"
@@ -29,8 +29,6 @@
   "dependencies": {
     "@fern-api/api": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
-    "@fern-typescript/errors": "workspace:*",
-    "@fern-typescript/types": "workspace:*",
     "lodash": "^4.17.21",
     "memfs": "^3.4.1",
     "ts-morph": "^14.0.0"

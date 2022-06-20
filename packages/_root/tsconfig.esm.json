@@ -18,6 +18,7 @@
     { "path": "../fern-typescript/client/tsconfig.esm.json" },
     { "path": "../fern-typescript/commons/tsconfig.esm.json" },
     { "path": "../fern-typescript/encoders/tsconfig.esm.json" },
+    { "path": "../fern-typescript/errors/tsconfig.esm.json" },
     { "path": "../fern-typescript/helpers/built-in/hathora-encoding-helper/tsconfig.esm.json" },
     { "path": "../fern-typescript/helpers/built-in/json-encoding-helper/tsconfig.esm.json" },
     { "path": "../fern-typescript/helpers/helper-manager/tsconfig.esm.json" },
@@ -27,6 +28,7 @@
     { "path": "../fern-typescript/service-types/tsconfig.esm.json" },
     { "path": "../fern-typescript/service-utils/tsconfig.esm.json" },
     { "path": "../fern-typescript/testing-utils/tsconfig.esm.json" },
+    { "path": "../fern-typescript/types/tsconfig.esm.json" },
     { "path": "../init/tsconfig.esm.json" },
     { "path": "../openapi-converter/tsconfig.esm.json" }
   ]

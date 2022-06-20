@@ -1,7 +1,7 @@
 import { ErrorDefinition } from "@fern-api/api";
 import { getFilePathForNamedType, getOrCreateSourceFile, TypeResolver } from "@fern-typescript/commons";
+import { generateType } from "@fern-typescript/types";
 import { Directory } from "ts-morph";
-import { generateType } from "../types/generateType";
 
 export function generateError({
     error,

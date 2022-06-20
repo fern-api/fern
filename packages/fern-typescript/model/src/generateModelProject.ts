@@ -1,9 +1,9 @@
 import { IntermediateRepresentation } from "@fern-api/api";
 import { generateTypeScriptProject, getOrCreateDirectory, TypeResolver } from "@fern-typescript/commons";
+import { generateErrorFiles } from "@fern-typescript/errors";
+import { generateTypeFiles } from "@fern-typescript/types";
 import { Volume } from "memfs/lib/volume";
 import { Directory } from "ts-morph";
-import { generateErrorFiles } from "./errors/generateErrorFiles";
-import { generateTypeFiles } from "./types/generateTypeFiles";
 
 export async function generateModelProject({
     packageName,

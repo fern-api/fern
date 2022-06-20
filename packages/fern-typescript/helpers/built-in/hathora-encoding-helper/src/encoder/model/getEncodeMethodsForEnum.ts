@@ -1,7 +1,7 @@
 import { PrimitiveType, TypeDefinition, TypeReference } from "@fern-api/api";
 import { generateTypeUtilsReference } from "@fern-typescript/commons";
 import { ts, tsMorph } from "@fern-typescript/helper-utils";
-import { ENUM_VALUES_PROPERTY_KEY } from "@fern-typescript/model";
+import { ENUM_VALUES_PROPERTY_KEY } from "@fern-typescript/types";
 import { HathoraEncoderConstants } from "../../constants";
 import { getMethodCallForModelTypeVariableReference } from "../../method-calls/getMethodCallForModelTypeVariableReference";
 import {

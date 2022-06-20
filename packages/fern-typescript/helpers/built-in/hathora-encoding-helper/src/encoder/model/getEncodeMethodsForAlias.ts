@@ -1,7 +1,7 @@
 import { AliasTypeDefinition, TypeDefinition } from "@fern-api/api";
 import { generateTypeUtilsReference } from "@fern-typescript/commons";
 import { ts, tsMorph } from "@fern-typescript/helper-utils";
-import { ALIAS_UTILS_OF_KEY, shouldUseBrandedTypeForAlias } from "@fern-typescript/model";
+import { ALIAS_UTILS_OF_KEY, shouldUseBrandedTypeForAlias } from "@fern-typescript/types";
 import { HathoraEncoderConstants } from "../../constants";
 import { getMethodCallForModelTypeVariableReference } from "../../method-calls/getMethodCallForModelTypeVariableReference";
 import {
