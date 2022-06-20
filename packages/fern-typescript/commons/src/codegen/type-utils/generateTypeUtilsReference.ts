@@ -1,8 +1,6 @@
 import { TypeDefinition } from "@fern-api/api";
 import { Directory, SourceFile, ts } from "ts-morph";
-import { getImportPathForNamedType } from "../references/getImportPathForNamedType";
-import { getNamespaceImport } from "../references/getNamedTypeReference";
-import { getRelativePathAsModuleSpecifierTo } from "../utils/getRelativePathAsModuleSpecifierTo";
+import { getReferenceToModel } from "../utils/getReferenceToModel";
 
 export function generateTypeUtilsReference({
     typeDefinition,
@@ -13,31 +11,18 @@ export function generateTypeUtilsReference({
     referencedIn: SourceFile;
     modelDirectory: Directory;
 }): ts.Expression {
-    const moduleSpecifier = getImportPathForNamedType({
-        from: referencedIn,
+    return getReferenceToModel({
         typeName: typeDefinition.name,
-        baseDirectory: modelDirectory,
+        typeCategory: "error",
+        referencedIn,
+        modelDirectory,
+        forceUseNamespaceImport: false,
+        constructQualifiedReference: ({ namespaceImport, referenceWithoutNamespace }) =>
+            namespaceImport != null
+                ? ts.factory.createPropertyAccessExpression(
+                      ts.factory.createIdentifier(namespaceImport),
+                      ts.factory.createIdentifier(typeDefinition.name.name)
+                  )
+                : referenceWithoutNamespace,
     });
-    const isTypeInCurrentFile = moduleSpecifier === `./${referencedIn.getBaseNameWithoutExtension()}`;
-    if (!isTypeInCurrentFile) {
-        if (!modelDirectory.isAncestorOf(referencedIn)) {
-            const namespaceImport = getNamespaceImport("model");
-            referencedIn.addImportDeclaration({
-                moduleSpecifier: getRelativePathAsModuleSpecifierTo(referencedIn, modelDirectory),
-                namespaceImport,
-            });
-
-            return ts.factory.createPropertyAccessExpression(
-                ts.factory.createIdentifier(namespaceImport),
-                ts.factory.createIdentifier(typeDefinition.name.name)
-            );
-        } else {
-            referencedIn.addImportDeclaration({
-                moduleSpecifier,
-                namedImports: [{ name: typeDefinition.name.name }],
-            });
-        }
-    }
-
-    return ts.factory.createIdentifier(typeDefinition.name.name);
 }

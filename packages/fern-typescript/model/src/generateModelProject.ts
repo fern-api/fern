@@ -1,14 +1,9 @@
 import { IntermediateRepresentation } from "@fern-api/api";
-import {
-    generateTypeScriptProject,
-    getFilePathForNamedType,
-    getOrCreateDirectory,
-    getOrCreateSourceFile,
-    TypeResolver,
-} from "@fern-typescript/commons";
+import { generateTypeScriptProject, getOrCreateDirectory, TypeResolver } from "@fern-typescript/commons";
 import { Volume } from "memfs/lib/volume";
 import { Directory } from "ts-morph";
-import { generateType } from "./types/generateType";
+import { generateErrorFiles } from "./errors/generateErrorFiles";
+import { generateTypeFiles } from "./types/generateTypeFiles";
 
 export async function generateModelProject({
     packageName,
@@ -43,21 +38,7 @@ export function generateModelFiles({
     typeResolver: TypeResolver;
 }): Directory {
     const modelDirectory = getOrCreateDirectory(directory, "model");
-    for (const typeDefinition of intermediateRepresentation.types) {
-        const filepath = getFilePathForNamedType({
-            baseDirectory: modelDirectory,
-            typeName: typeDefinition.name,
-        });
-
-        const file = getOrCreateSourceFile(modelDirectory, filepath);
-        generateType({
-            type: typeDefinition.shape,
-            typeName: typeDefinition.name.name,
-            docs: typeDefinition.docs,
-            typeResolver,
-            modelDirectory,
-            file,
-        });
-    }
+    generateTypeFiles({ intermediateRepresentation, typeResolver, modelDirectory });
+    generateErrorFiles({ intermediateRepresentation, typeResolver, modelDirectory });
     return modelDirectory;
 }

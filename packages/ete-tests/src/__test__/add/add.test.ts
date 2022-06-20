@@ -16,7 +16,7 @@ describe("fern add tests", () => {
         await add("postman");
         const fileContents = await readFile(path.join(GENERATED_API_DIR, WORKSPACE_DEFINITION_FILENAME));
         expect(fileContents.toString()).toMatchSnapshot();
-    }, 10_000);
+    }, 30_000);
 });
 
 async function init() {

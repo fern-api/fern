@@ -29,7 +29,6 @@ export declare namespace addClientOperationToChannel {
         channelInterface: InterfaceDeclaration;
         operation: WebSocketOperation;
         modelDirectory: Directory;
-        errorsDirectory: Directory;
         servicesDirectory: Directory;
         typeResolver: TypeResolver;
         dependencyManager: DependencyManager;
@@ -46,7 +45,6 @@ export function addClientOperationToChannel({
     channelClass,
     operation,
     modelDirectory,
-    errorsDirectory,
     servicesDirectory,
     typeResolver,
     dependencyManager,
@@ -63,7 +61,6 @@ export function addClientOperationToChannel({
         operation,
         operationsDirectory,
         modelDirectory,
-        errorsDirectory,
         servicesDirectory,
         typeResolver,
         dependencyManager,
@@ -90,8 +87,7 @@ export function addClientOperationToChannel({
                               : getTypeReference({
                                     reference: generatedOperationTypes.request.body.typeReference,
                                     referencedIn: channelFile,
-                                    baseDirectory: modelDirectory,
-                                    baseDirectoryType: "model",
+                                    modelDirectory,
                                 })
                       ),
                   },

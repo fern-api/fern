@@ -43,7 +43,7 @@ export async function runEteTest({
     const testDirectory = path.dirname(testFile);
 
     let checkCompilation = true;
-    if (IS_CI || Math.random() > 0) {
+    if (IS_CI) {
         outputToDisk = false;
         checkCompilation = await hasFileChangedOnBranchInCI(
             path.join(testDirectory, "__snapshots__", `${path.basename(testFile)}.snap`)

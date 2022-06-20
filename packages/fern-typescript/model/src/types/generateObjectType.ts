@@ -21,9 +21,9 @@ export function generateObjectType({
             .map((typeName) => {
                 const reference = getNamedTypeReference({
                     typeName,
+                    typeCategory: "type",
                     referencedIn: file,
-                    baseDirectory: modelDirectory,
-                    baseDirectoryType: "model",
+                    modelDirectory,
                 });
 
                 return reference;
@@ -36,8 +36,7 @@ export function generateObjectType({
                     getTypeReference({
                         reference: field.valueType,
                         referencedIn: file,
-                        baseDirectory: modelDirectory,
-                        baseDirectoryType: "model",
+                        modelDirectory,
                     })
                 ),
                 docs: field.docs != null ? [{ description: field.docs }] : undefined,

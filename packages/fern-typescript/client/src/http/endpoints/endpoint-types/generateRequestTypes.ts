@@ -32,8 +32,7 @@ export function generateRequestTypes({
                         getTypeReference({
                             reference: parameter.valueType,
                             referencedIn: requestFile,
-                            baseDirectory: modelDirectory,
-                            baseDirectoryType: "model",
+                            modelDirectory,
                         })
                     ),
                 })

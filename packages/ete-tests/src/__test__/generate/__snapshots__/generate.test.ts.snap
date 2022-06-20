@@ -52,7 +52,15 @@ Array [
           Object {
             "contents": Array [
               Object {
-                "contents": "/**
+                "contents": "export * from \\"./types\\";
+",
+                "name": "index.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": Array [
+                  Object {
+                    "contents": "/**
  * A blog post
  */
 export interface Post {
@@ -61,14 +69,18 @@ export interface Post {
     content: string;
 }
 ",
-                "name": "Post.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "export * from \\"./Post\\";
+                    "name": "Post.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export * from \\"./Post\\";
 ",
-                "name": "index.ts",
-                "type": "file",
+                    "name": "index.ts",
+                    "type": "file",
+                  },
+                ],
+                "name": "types",
+                "type": "directory",
               },
             ],
             "name": "posts",

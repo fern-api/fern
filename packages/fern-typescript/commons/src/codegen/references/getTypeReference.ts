@@ -5,14 +5,12 @@ import { getNamedTypeReference } from "./getNamedTypeReference";
 export function getTypeReference({
     reference,
     referencedIn,
-    baseDirectory,
-    baseDirectoryType,
+    modelDirectory,
     forceUseNamespaceImport,
 }: {
     reference: TypeReference;
     referencedIn: SourceFile;
-    baseDirectory: Directory;
-    baseDirectoryType: getNamedTypeReference.Args["baseDirectoryType"];
+    modelDirectory: Directory;
     forceUseNamespaceImport?: getNamedTypeReference.Args["forceUseNamespaceImport"];
 }): ts.TypeNode {
     return TypeReference._visit(reference, {
@@ -20,8 +18,8 @@ export function getTypeReference({
             getNamedTypeReference({
                 typeName: named,
                 referencedIn,
-                baseDirectory: baseDirectory,
-                baseDirectoryType,
+                modelDirectory,
+                typeCategory: "type",
                 forceUseNamespaceImport,
             }),
         primitive: (primitive) => {
@@ -43,31 +41,24 @@ export function getTypeReference({
                         getTypeReference({
                             reference: map.keyType,
                             referencedIn,
-                            baseDirectory,
-                            baseDirectoryType,
+                            modelDirectory,
                         }),
                         getTypeReference({
                             reference: map.valueType,
                             referencedIn,
-                            baseDirectory,
-                            baseDirectoryType,
+                            modelDirectory,
                         }),
                     ]),
                 list: (list) =>
-                    ts.factory.createArrayTypeNode(
-                        getTypeReference({ reference: list, referencedIn, baseDirectory, baseDirectoryType })
-                    ),
+                    ts.factory.createArrayTypeNode(getTypeReference({ reference: list, referencedIn, modelDirectory })),
                 set: (set) =>
-                    ts.factory.createArrayTypeNode(
-                        getTypeReference({ reference: set, referencedIn, baseDirectory, baseDirectoryType })
-                    ),
+                    ts.factory.createArrayTypeNode(getTypeReference({ reference: set, referencedIn, modelDirectory })),
                 optional: (optional) =>
                     ts.factory.createUnionTypeNode([
                         getTypeReference({
                             reference: optional,
                             referencedIn,
-                            baseDirectory,
-                            baseDirectoryType,
+                            modelDirectory,
                         }),
                         ts.factory.createLiteralTypeNode(ts.factory.createNull()),
                         ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),

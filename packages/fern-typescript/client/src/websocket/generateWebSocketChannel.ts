@@ -28,14 +28,12 @@ import { addClientOperationToChannel } from "./operations/addClientOperationToCh
 export function generateWebSocketChannel({
     servicesDirectory,
     modelDirectory,
-    errorsDirectory,
     channel,
     typeResolver,
     dependencyManager,
 }: {
     servicesDirectory: Directory;
     modelDirectory: Directory;
-    errorsDirectory: Directory;
     encodersDirectory: Directory;
     channel: WebSocketChannel;
     typeResolver: TypeResolver;
@@ -52,7 +50,6 @@ export function generateWebSocketChannel({
         channel,
         channelDirectory,
         modelDirectory,
-        errorsDirectory,
         servicesDirectory,
         typeResolver,
         dependencyManager,
@@ -63,7 +60,6 @@ function generateChannel({
     channel,
     channelDirectory,
     modelDirectory,
-    errorsDirectory,
     servicesDirectory,
     typeResolver,
     dependencyManager,
@@ -71,7 +67,6 @@ function generateChannel({
     channel: WebSocketChannel;
     channelDirectory: Directory;
     modelDirectory: Directory;
-    errorsDirectory: Directory;
     servicesDirectory: Directory;
     typeResolver: TypeResolver;
     dependencyManager: DependencyManager;
@@ -138,7 +133,6 @@ function generateChannel({
             channel,
             modelDirectory,
             servicesDirectory,
-            errorsDirectory,
             typeResolver,
             dependencyManager,
         });

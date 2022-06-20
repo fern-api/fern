@@ -8,7 +8,6 @@
     { "path": "../../compiler/ir-types/fern-ir-typescript/tsconfig.esm.json" },
     { "path": "../commons/tsconfig.esm.json" },
     { "path": "../encoders/tsconfig.esm.json" },
-    { "path": "../errors/tsconfig.esm.json" },
     { "path": "../helpers/helper-manager/tsconfig.esm.json" },
     { "path": "../helpers/utils/tsconfig.esm.json" },
     { "path": "../model/tsconfig.esm.json" },

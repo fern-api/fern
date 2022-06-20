@@ -105,8 +105,7 @@ async function generateReturnSuccessResponse({
                         : getTypeReference({
                               reference: endpointTypes.response.successBodyReference.typeReference,
                               referencedIn: serviceFile,
-                              baseDirectory: modelDirectory,
-                              baseDirectoryType: "model",
+                              modelDirectory,
                           })
                 )
             )

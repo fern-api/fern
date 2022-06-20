@@ -8,14 +8,12 @@ export function generateErrorBody({
     failedResponse,
     errorBodyFile,
     modelDirectory,
-    errorsDirectory,
     typeResolver,
     dependencyManager,
 }: {
     failedResponse: FailedResponse;
     errorBodyFile: SourceFile;
     modelDirectory: Directory;
-    errorsDirectory: Directory;
     typeResolver: TypeResolver;
     dependencyManager: DependencyManager;
 }): void {
@@ -54,7 +52,5 @@ export function generateErrorBody({
         ],
         typeResolver,
         modelDirectory,
-        baseDirectory: errorsDirectory,
-        baseDirectoryType: "errors",
     });
 }

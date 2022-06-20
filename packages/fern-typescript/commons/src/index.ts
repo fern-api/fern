@@ -1,4 +1,3 @@
-export { getFilePathForError } from "./codegen/references/getFilePathForError";
 export { getFilePathForNamedType } from "./codegen/references/getFilePathForNamedType";
 export { getNamedTypeReference } from "./codegen/references/getNamedTypeReference";
 export { getTypeReference } from "./codegen/references/getTypeReference";
