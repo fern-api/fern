@@ -8,6 +8,7 @@ import {
 } from "@fern-typescript/commons";
 import { Volume } from "memfs/lib/volume";
 import { Directory } from "ts-morph";
+import { generateErrorFiles } from "./errors/generateErrorFiles";
 import { generateType } from "./types/generateType";
 
 export async function generateModelProject({
@@ -28,7 +29,8 @@ export async function generateModelProject({
         packageName,
         packageVersion,
         generateSrc: (directory) => {
-            generateModelFiles({ intermediateRepresentation, typeResolver, directory });
+            const modelDirectory = generateModelFiles({ intermediateRepresentation, typeResolver, directory });
+            generateErrorFiles({ intermediateRepresentation, typeResolver, modelDirectory });
         },
     });
 }
@@ -45,8 +47,9 @@ export function generateModelFiles({
     const modelDirectory = getOrCreateDirectory(directory, "model");
     for (const typeDefinition of intermediateRepresentation.types) {
         const filepath = getFilePathForNamedType({
-            baseDirectory: modelDirectory,
+            modelDirectory,
             typeName: typeDefinition.name,
+            typeCategory: "type",
         });
 
         const file = getOrCreateSourceFile(modelDirectory, filepath);

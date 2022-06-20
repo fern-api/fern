@@ -7,7 +7,6 @@ import {
     TypeResolver,
 } from "@fern-typescript/commons";
 import { generateEncoderFiles } from "@fern-typescript/encoders";
-import { generateErrorFiles } from "@fern-typescript/errors";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import { generateModelFiles } from "@fern-typescript/model";
 import { Volume } from "memfs/lib/volume";
@@ -54,13 +53,6 @@ async function generateClientFiles({
         typeResolver,
     });
 
-    const errorsDirectory = generateErrorFiles({
-        directory,
-        intermediateRepresentation,
-        modelDirectory,
-        typeResolver,
-    });
-
     const encodersDirectory = getOrCreateDirectory(directory, "encoders");
 
     const servicesDirectory = getOrCreateDirectory(directory, "services");
@@ -69,7 +61,6 @@ async function generateClientFiles({
             service,
             servicesDirectory,
             modelDirectory,
-            errorsDirectory,
             encodersDirectory,
             typeResolver,
             helperManager,
@@ -82,7 +73,6 @@ async function generateClientFiles({
             channel,
             servicesDirectory,
             modelDirectory,
-            errorsDirectory,
             encodersDirectory,
             typeResolver,
             helperManager,

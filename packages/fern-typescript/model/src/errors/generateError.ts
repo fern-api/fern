@@ -1,25 +1,24 @@
 import { ErrorDefinition } from "@fern-api/api";
-import { getFilePathForError, getOrCreateSourceFile, TypeResolver } from "@fern-typescript/commons";
-import { generateType } from "@fern-typescript/model";
+import { getFilePathForNamedType, getOrCreateSourceFile, TypeResolver } from "@fern-typescript/commons";
 import { Directory } from "ts-morph";
+import { generateType } from "../types/generateType";
 
 export function generateError({
     error,
-    errorsDirectory,
     modelDirectory,
     typeResolver,
 }: {
     error: ErrorDefinition;
-    errorsDirectory: Directory;
     modelDirectory: Directory;
     typeResolver: TypeResolver;
 }): void {
-    const filepath = getFilePathForError({
-        errorsDirectory,
-        error: error.name,
+    const filepath = getFilePathForNamedType({
+        typeName: error.name,
+        typeCategory: "error",
+        modelDirectory,
     });
 
-    const file = getOrCreateSourceFile(errorsDirectory, filepath);
+    const file = getOrCreateSourceFile(modelDirectory, filepath);
 
     generateType({
         type: error.type,

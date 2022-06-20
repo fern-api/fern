@@ -1,7 +1,6 @@
 import { SingleUnionType, TypeReference } from "@fern-api/api";
 import {
     FernWriters,
-    getNamedTypeReference,
     getTextOfTsNode,
     getTypeReference,
     getWriterForMultiLineUnionType,
@@ -43,8 +42,6 @@ export function generateUnionType({
     additionalPropertiesForEveryType = [],
     typeResolver,
     modelDirectory,
-    baseDirectory,
-    baseDirectoryType,
 }: {
     file: SourceFile;
     typeName: string;
@@ -54,16 +51,13 @@ export function generateUnionType({
     additionalPropertiesForEveryType?: generateUnionType.ObjectProperty[];
     typeResolver: TypeResolver;
     modelDirectory: Directory;
-    baseDirectory: Directory;
-    baseDirectoryType: getNamedTypeReference.Args["baseDirectoryType"];
 }): void {
     const resolvedTypes: SingleUnionTypeWithResolvedValueType[] = types.map((type) => ({
         originalType: type,
         resolvedType: getResolvedTypeForSingleUnionType({
             singleUnionType: type,
             typeResolver,
-            baseDirectory,
-            baseDirectoryType,
+            modelDirectory,
             file,
         }),
     }));
@@ -103,8 +97,7 @@ export function generateUnionType({
                     getTypeReference({
                         reference: additionalProperty.valueType,
                         referencedIn: file,
-                        baseDirectory: modelDirectory,
-                        baseDirectoryType: "model",
+                        modelDirectory,
                     })
                 ),
             });

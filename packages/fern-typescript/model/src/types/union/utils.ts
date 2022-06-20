@@ -18,23 +18,21 @@ export function getResolvedTypeForSingleUnionType({
     singleUnionType,
     typeResolver,
     file,
-    baseDirectory,
-    baseDirectoryType,
+    modelDirectory,
 }: {
     singleUnionType: SingleUnionType;
     typeResolver: TypeResolver;
     file: SourceFile;
-    baseDirectory: Directory;
-    baseDirectoryType: getNamedTypeReference.Args["baseDirectoryType"];
+    modelDirectory: Directory;
 }): ResolvedSingleUnionType | undefined {
     return visitResolvedTypeReference<ResolvedSingleUnionType | undefined>(singleUnionType.valueType, typeResolver, {
         namedObject: (named) => {
             return {
                 type: getNamedTypeReference({
                     typeName: named,
+                    typeCategory: "type",
                     referencedIn: file,
-                    baseDirectory,
-                    baseDirectoryType,
+                    modelDirectory,
                     forceUseNamespaceImport: FORCE_USE_MODEL_NAMESPACE_IMPORT,
                 }),
                 isExtendable: true,
@@ -45,8 +43,7 @@ export function getResolvedTypeForSingleUnionType({
                 type: getTypeReference({
                     reference: singleUnionType.valueType,
                     referencedIn: file,
-                    baseDirectory,
-                    baseDirectoryType,
+                    modelDirectory,
                     forceUseNamespaceImport: FORCE_USE_MODEL_NAMESPACE_IMPORT,
                 }),
                 isExtendable: false,

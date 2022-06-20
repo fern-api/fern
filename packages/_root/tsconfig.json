@@ -18,7 +18,6 @@
     { "path": "../fern-typescript/client/tsconfig.json" },
     { "path": "../fern-typescript/commons/tsconfig.json" },
     { "path": "../fern-typescript/encoders/tsconfig.json" },
-    { "path": "../fern-typescript/errors/tsconfig.json" },
     { "path": "../fern-typescript/helpers/built-in/hathora-encoding-helper/tsconfig.json" },
     { "path": "../fern-typescript/helpers/built-in/json-encoding-helper/tsconfig.json" },
     { "path": "../fern-typescript/helpers/helper-manager/tsconfig.json" },
