@@ -22,14 +22,12 @@ export function getLocalServiceTypeReference({
     referencedIn,
     servicesDirectory,
 }: getLocalServiceTypeReference.Args): ts.TypeReferenceNode {
-    const serviceDirectory = servicesDirectory.getDirectoryOrThrow(serviceOrChannelName);
-
     // if inside the services directory, import the service from the root of the services directory to mimic how a
     // consumer would import the type
     if (servicesDirectory.isAncestorOf(referencedIn)) {
         referencedIn.addImportDeclaration({
-            moduleSpecifier: getRelativePathAsModuleSpecifierTo(referencedIn, serviceDirectory),
-            namespaceImport: serviceOrChannelName,
+            moduleSpecifier: getRelativePathAsModuleSpecifierTo(referencedIn, servicesDirectory),
+            namedImports: [serviceOrChannelName],
         });
         return ts.factory.createTypeReferenceNode(
             ts.factory.createQualifiedName(
