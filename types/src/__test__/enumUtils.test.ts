@@ -1,4 +1,4 @@
-import { getKeyForEnum } from "../types/enum/utils";
+import { getKeyForEnum } from "../enum/utils";
 
 describe("getKeyForEnum", () => {
     test.each`

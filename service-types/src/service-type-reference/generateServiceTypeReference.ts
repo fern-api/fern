@@ -1,7 +1,7 @@
 import { Type } from "@fern-api/api";
 import { assertNever } from "@fern-api/commons";
 import { TypeResolver } from "@fern-typescript/commons";
-import { generateType } from "@fern-typescript/model";
+import { generateType } from "@fern-typescript/types";
 import { Directory } from "ts-morph";
 import { ServiceTypeName, ServiceTypeReference } from "./types";
 import { getFileNameForServiceType } from "./utils";
