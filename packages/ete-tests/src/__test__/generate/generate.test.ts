@@ -1,8 +1,8 @@
+import { getDirectoryContents } from "@fern-api/commons";
 import { installAndCompileGeneratedProject } from "@fern-typescript/testing-utils";
 import execa from "execa";
 import { rm } from "fs/promises";
 import path from "path";
-import { getDirectoryContents } from "./getDirectoryContents";
 
 const FIXTURES_DIR = path.join(__dirname, "fixtures");
 

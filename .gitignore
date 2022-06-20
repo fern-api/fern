@@ -8,7 +8,6 @@ packages/**/build
 packages/**/lib
 packages/**/dist
 packages/**/tsconfig*tsbuildinfo
-packages/**/bundle.js
 
 # environment
 .env.local

@@ -1,0 +1,9 @@
+name: Trace
+definition: ./src
+generators:
+  - name: fernapi/fern-typescript
+    version: local
+    output: ./generated
+    config:
+      mode: client
+      packageName: trace

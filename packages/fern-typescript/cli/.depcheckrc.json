@@ -6,7 +6,9 @@
     "umd-compat-loader",
     "@ts-morph/common",
     "ts-loader",
-    "ts-node"
+    "ts-node",
+    "webpack-bundle-analyzer",
+    "@types/webpack-bundle-analyzer"
   ],
   "ignore-patterns": ["lib", "docker/bundle.js"]
 }

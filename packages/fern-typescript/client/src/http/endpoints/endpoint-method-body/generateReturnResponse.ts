@@ -14,6 +14,7 @@ export async function generateReturnResponse({
     endpointTypes,
     getReferenceToLocalServiceType,
     modelDirectory,
+    encodersDirectory,
     helperManager,
 }: {
     serviceFile: SourceFile;
@@ -22,6 +23,7 @@ export async function generateReturnResponse({
     endpointTypes: GeneratedEndpointTypes;
     getReferenceToLocalServiceType: (typeName: ServiceTypeName) => ts.TypeReferenceNode;
     modelDirectory: Directory;
+    encodersDirectory: Directory;
     helperManager: HelperManager;
 }): Promise<ts.Statement> {
     return ts.factory.createIfStatement(
@@ -37,6 +39,7 @@ export async function generateReturnResponse({
                 endpoint,
                 endpointTypes,
                 getReferenceToLocalServiceType,
+                encodersDirectory,
                 modelDirectory,
                 helperManager,
             })
@@ -44,10 +47,12 @@ export async function generateReturnResponse({
         ts.factory.createBlock(
             await generateReturnErrorResponse({
                 serviceDefinition,
+                serviceFile,
                 endpoint,
                 endpointTypes,
                 getReferenceToLocalServiceType,
                 helperManager,
+                encodersDirectory,
             })
         )
     );
@@ -60,6 +65,7 @@ async function generateReturnSuccessResponse({
     endpointTypes,
     getReferenceToLocalServiceType,
     modelDirectory,
+    encodersDirectory,
     helperManager,
 }: {
     serviceFile: SourceFile;
@@ -68,6 +74,7 @@ async function generateReturnSuccessResponse({
     endpointTypes: GeneratedEndpointTypes;
     getReferenceToLocalServiceType: (typeName: ServiceTypeName) => ts.TypeReferenceNode;
     modelDirectory: Directory;
+    encodersDirectory: Directory;
     helperManager: HelperManager;
 }): Promise<ts.Statement[]> {
     const statements: ts.Statement[] = [];
@@ -79,8 +86,10 @@ async function generateReturnSuccessResponse({
             helperManager,
             endpoint,
             serviceDefinition,
+            serviceFile,
             decodedVariableName: ClientConstants.HttpService.Endpoint.Variables.DECODED_RESPONSE,
             wireMessageType: "Response",
+            encodersDirectory,
         });
         statements.push(decodeResponseStatement);
 
@@ -117,12 +126,16 @@ async function generateReturnErrorResponse({
     endpoint,
     getReferenceToLocalServiceType,
     helperManager,
+    serviceFile,
+    encodersDirectory,
 }: {
     serviceDefinition: HttpService;
+    serviceFile: SourceFile;
     endpoint: HttpEndpoint;
     endpointTypes: GeneratedEndpointTypes;
     getReferenceToLocalServiceType: (typeName: ServiceTypeName) => ts.TypeReferenceNode;
     helperManager: HelperManager;
+    encodersDirectory: Directory;
 }): Promise<ts.Statement[]> {
     const decodeErrorStatement = await generateDecodeResponse({
         helperManager,
@@ -130,6 +143,8 @@ async function generateReturnErrorResponse({
         serviceDefinition,
         decodedVariableName: ClientConstants.HttpService.Endpoint.Variables.DECODED_ERROR,
         wireMessageType: "Error",
+        serviceFile,
+        encodersDirectory,
     });
 
     const returnStatement = ts.factory.createReturnStatement(
@@ -174,15 +189,19 @@ function getBaseResponseProperties({ ok }: { ok: boolean }): ts.ObjectLiteralEle
 async function generateDecodeResponse({
     helperManager,
     serviceDefinition,
+    serviceFile,
     endpoint,
     decodedVariableName,
     wireMessageType,
+    encodersDirectory,
 }: {
     helperManager: HelperManager;
     serviceDefinition: HttpService;
+    serviceFile: SourceFile;
     endpoint: HttpEndpoint;
     decodedVariableName: string;
     wireMessageType: "Response" | "Error";
+    encodersDirectory: Directory;
 }): Promise<ts.Statement> {
     const decoder = await helperManager.getEncoderForEncoding(endpoint.response.encoding);
     const decodedResponse = generateEncoderCall({
@@ -198,6 +217,8 @@ async function generateDecodeResponse({
                 ts.factory.createIdentifier(ClientConstants.HttpService.ServiceUtils.Fetcher.Response.BODY)
             ),
         },
+        referencedIn: serviceFile,
+        encodersDirectory,
     });
 
     return ts.factory.createVariableStatement(

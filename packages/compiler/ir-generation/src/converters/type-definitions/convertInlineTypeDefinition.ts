@@ -1,5 +1,5 @@
 import { FernFilepath, Type, TypeReference } from "@fern-api/api";
-import { TypeDefinitionSchema } from "@fern-api/syntax-analysis/src/schemas";
+import { RawSchemas } from "@fern-api/syntax-analysis";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { convertType } from "./convertTypeDefinition";
 
@@ -10,7 +10,7 @@ export function convertInlineTypeDefinition<T>({
     imports,
 }: {
     typeDefinitionOrShorthand: T | string | null | undefined;
-    getTypeDefinition: (value: T) => TypeDefinitionSchema | string | null | undefined;
+    getTypeDefinition: (value: T) => RawSchemas.TypeDefinitionSchema | string | null | undefined;
     fernFilepath: FernFilepath;
     imports: Record<string, string>;
 }): Type {

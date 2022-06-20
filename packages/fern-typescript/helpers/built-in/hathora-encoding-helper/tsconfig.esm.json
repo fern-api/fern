@@ -9,10 +9,10 @@
   },
   "include": ["src"],
   "references": [
-    { "path": "../../../client/tsconfig.json" },
-    { "path": "../../../model/tsconfig.json" },
-    { "path": "../../../commons/tsconfig.json" },
-    { "path": "../../utils/tsconfig.json" },
-    { "path": "../../../../compiler/ir-types/fern-ir-typescript/tsconfig.json" }
+    { "path": "../../../client/tsconfig.esm.json" },
+    { "path": "../../../model/tsconfig.esm.json" },
+    { "path": "../../../commons/tsconfig.esm.json" },
+    { "path": "../../utils/tsconfig.esm.json" },
+    { "path": "../../../../compiler/ir-types/fern-ir-typescript/tsconfig.esm.json" }
   ]
 }
