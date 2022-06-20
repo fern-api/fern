@@ -40,7 +40,7 @@ jobs:
   compile-and-test:
     machine:
       image: ubuntu-2004:current
-    resource_class: large
+    resource_class: xlarge
     steps:
       - checkout
       - run:
