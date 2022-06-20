@@ -1,9 +1,12 @@
 import { WebSocketOperation } from "@fern-api/api";
 import { addUuidDependency, DependencyManager, getTextOfTsNode } from "@fern-typescript/commons";
-import { ServiceTypeName, ServiceTypesConstants } from "@fern-typescript/service-types";
+import {
+    GeneratedWebSocketOperationTypes,
+    ServiceTypeName,
+    ServiceTypesConstants,
+} from "@fern-typescript/service-types";
 import { SourceFile, StatementStructures, ts, WriterFunction } from "ts-morph";
 import { ClientConstants } from "../../../constants";
-import { GeneratedOperationTypes } from "../operation-types/types";
 
 const SOCKET_LOCAL_VARIABLE_NAME = "socket";
 const MESSAGE_LOCAL_VARIABLE_NAME = "message";
@@ -16,7 +19,7 @@ export function generateOperationMethodBody({
     dependencyManager,
 }: {
     operation: WebSocketOperation;
-    operationTypes: GeneratedOperationTypes;
+    operationTypes: GeneratedWebSocketOperationTypes;
     channelFile: SourceFile;
     getReferenceToLocalServiceType: (typeName: ServiceTypeName) => ts.TypeReferenceNode;
     dependencyManager: DependencyManager;
@@ -100,7 +103,7 @@ function generatePromiseBody({
     operation: WebSocketOperation;
     channelFile: SourceFile;
     getReferenceToLocalServiceType: (typeName: ServiceTypeName) => ts.TypeReferenceNode;
-    operationTypes: GeneratedOperationTypes;
+    operationTypes: GeneratedWebSocketOperationTypes;
     dependencyManager: DependencyManager;
 }): ts.Statement[] {
     channelFile.addImportDeclaration({
@@ -111,7 +114,7 @@ function generatePromiseBody({
 
     const messageElements: ts.ObjectLiteralElementLike[] = [
         ts.factory.createPropertyAssignment(
-            ts.factory.createIdentifier(ClientConstants.WebsocketChannel.Operation.Types.Request.Properties.ID),
+            ts.factory.createIdentifier(ServiceTypesConstants.WebsocketChannel.Request.Properties.ID),
             ts.factory.createCallExpression(
                 ts.factory.createPropertyAccessExpression(
                     ts.factory.createIdentifier("uuid"),
@@ -122,14 +125,14 @@ function generatePromiseBody({
             )
         ),
         ts.factory.createPropertyAssignment(
-            ts.factory.createIdentifier(ClientConstants.WebsocketChannel.Operation.Types.Request.Properties.OPERATION),
+            ts.factory.createIdentifier(ServiceTypesConstants.WebsocketChannel.Request.Properties.OPERATION),
             ts.factory.createStringLiteral(operation.operationId)
         ),
     ];
     if (operationTypes.request?.body != null) {
         messageElements.push(
             ts.factory.createPropertyAssignment(
-                ts.factory.createIdentifier(ClientConstants.WebsocketChannel.Operation.Types.Request.Properties.BODY),
+                ts.factory.createIdentifier(ServiceTypesConstants.Commons.Request.Properties.Body.PROPERTY_NAME),
                 ts.factory.createIdentifier(ClientConstants.WebsocketChannel.Operation.Signature.REQUEST_PARAMETER)
             )
         );
@@ -143,7 +146,7 @@ function generatePromiseBody({
                     ts.factory.createVariableDeclaration(
                         ts.factory.createIdentifier(MESSAGE_LOCAL_VARIABLE_NAME),
                         undefined,
-                        getReferenceToLocalServiceType(ServiceTypesConstants.Types.Request.TYPE_NAME),
+                        getReferenceToLocalServiceType(ServiceTypesConstants.Commons.Request.TYPE_NAME),
                         ts.factory.createObjectLiteralExpression(messageElements, true)
                     ),
                 ],
@@ -159,9 +162,7 @@ function generatePromiseBody({
                     ),
                     ts.factory.createPropertyAccessExpression(
                         ts.factory.createIdentifier(MESSAGE_LOCAL_VARIABLE_NAME),
-                        ts.factory.createIdentifier(
-                            ClientConstants.WebsocketChannel.Operation.Types.Request.Properties.ID
-                        )
+                        ts.factory.createIdentifier(ServiceTypesConstants.WebsocketChannel.Request.Properties.ID)
                     )
                 ),
                 ts.factory.createToken(ts.SyntaxKind.EqualsToken),

@@ -53,21 +53,21 @@ function writeHttpEndpoint({
     const writer = FernWriters.object.writer({ newlinesBetweenProperties: true });
     if (endpoint.request.type._type !== "alias") {
         writer.addProperty({
-            key: ServiceTypesConstants.Types.Request.Properties.Body.TYPE_NAME,
+            key: ServiceTypesConstants.Commons.Request.Properties.Body.TYPE_NAME,
             value: getTextOfTsNode(
                 constructEncodeMethods({
                     methods: getEncodeMethodsForType({
                         decodedType: getLocalServiceTypeReference({
                             serviceOrChannelName: service.name,
                             endpointOrOperationId: endpoint.endpointId,
-                            typeName: ServiceTypesConstants.Types.Request.Properties.Body.TYPE_NAME,
+                            typeName: ServiceTypesConstants.Commons.Request.Properties.Body.TYPE_NAME,
                             referencedIn: file,
                             servicesDirectory,
                         }),
                         typeDefinition: {
                             docs: undefined,
                             name: {
-                                name: ServiceTypesConstants.Types.Request.Properties.Body.TYPE_NAME,
+                                name: ServiceTypesConstants.Commons.Request.Properties.Body.TYPE_NAME,
                                 fernFilepath: service.name.fernFilepath,
                             },
                             shape: endpoint.request.type,
@@ -83,21 +83,21 @@ function writeHttpEndpoint({
 
     if (endpoint.response.ok.type._type !== "alias") {
         writer.addProperty({
-            key: ServiceTypesConstants.Types.Response.Success.Properties.Body.TYPE_NAME,
+            key: ServiceTypesConstants.Commons.Response.Success.Properties.Body.TYPE_NAME,
             value: getTextOfTsNode(
                 constructEncodeMethods({
                     methods: getEncodeMethodsForType({
                         decodedType: getLocalServiceTypeReference({
                             serviceOrChannelName: service.name,
                             endpointOrOperationId: endpoint.endpointId,
-                            typeName: ServiceTypesConstants.Types.Response.Success.Properties.Body.TYPE_NAME,
+                            typeName: ServiceTypesConstants.Commons.Response.Success.Properties.Body.TYPE_NAME,
                             referencedIn: file,
                             servicesDirectory,
                         }),
                         typeDefinition: {
                             docs: undefined,
                             name: {
-                                name: ServiceTypesConstants.Types.Response.Success.Properties.Body.TYPE_NAME,
+                                name: ServiceTypesConstants.Commons.Response.Success.Properties.Body.TYPE_NAME,
                                 fernFilepath: service.name.fernFilepath,
                             },
                             shape: endpoint.response.ok.type,

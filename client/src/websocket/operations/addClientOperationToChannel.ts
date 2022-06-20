@@ -6,7 +6,12 @@ import {
     getTypeReference,
     TypeResolver,
 } from "@fern-typescript/commons";
-import { getLocalServiceTypeReference, ServiceTypeName } from "@fern-typescript/service-types";
+import {
+    GeneratedWebSocketOperationTypes,
+    generateWebSocketOperationTypes,
+    getLocalServiceTypeReference,
+    ServiceTypeName,
+} from "@fern-typescript/service-types";
 import {
     ClassDeclaration,
     Directory,
@@ -18,8 +23,6 @@ import {
 } from "ts-morph";
 import { ClientConstants } from "../../constants";
 import { generateOperationMethodBody } from "./operation-method-body/generateOperationMethodBody";
-import { generateOperationTypes } from "./operation-types/generateOperationTypes";
-import { GeneratedOperationTypes } from "./operation-types/types";
 
 export declare namespace addClientOperationToChannel {
     export interface Args {
@@ -34,7 +37,7 @@ export declare namespace addClientOperationToChannel {
     }
 
     export interface Return {
-        generatedOperationTypes: GeneratedOperationTypes;
+        generatedOperationTypes: GeneratedWebSocketOperationTypes;
     }
 }
 
@@ -55,7 +58,7 @@ export function addClientOperationToChannel({
         ClientConstants.WebsocketChannel.Files.OPERATIONS_DIRECTORY_NAME
     );
 
-    const generatedOperationTypes = generateOperationTypes({
+    const generatedOperationTypes = generateWebSocketOperationTypes({
         channel,
         operation,
         operationsDirectory,

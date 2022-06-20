@@ -29,21 +29,6 @@ export const ClientConstants = {
             Signature: {
                 REQUEST_PARAMETER: "request",
             },
-            Types: {
-                Request: {
-                    Properties: {
-                        ID: "id",
-                        OPERATION: "operation",
-                        BODY: "body",
-                    },
-                },
-                Response: {
-                    Properties: {
-                        ID: "id",
-                        REPLY_TO: "replyTo",
-                    },
-                },
-            },
         },
     },
 

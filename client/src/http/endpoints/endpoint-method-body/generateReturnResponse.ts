@@ -95,7 +95,9 @@ async function generateReturnSuccessResponse({
 
         properties.push(
             ts.factory.createPropertyAssignment(
-                ts.factory.createIdentifier(ServiceTypesConstants.Types.Response.Success.Properties.Body.PROPERTY_NAME),
+                ts.factory.createIdentifier(
+                    ServiceTypesConstants.Commons.Response.Success.Properties.Body.PROPERTY_NAME
+                ),
                 ts.factory.createAsExpression(
                     ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.DECODED_RESPONSE),
                     endpointTypes.response.successBodyReference.isLocal
@@ -150,12 +152,12 @@ async function generateReturnErrorResponse({
                 ...getBaseResponseProperties({ ok: false }),
                 ts.factory.createPropertyAssignment(
                     ts.factory.createIdentifier(
-                        ServiceTypesConstants.Types.Response.Error.Properties.Body.PROPERTY_NAME
+                        ServiceTypesConstants.Commons.Response.Error.Properties.Body.PROPERTY_NAME
                     ),
                     ts.factory.createAsExpression(
                         ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.DECODED_ERROR),
                         getReferenceToLocalServiceType(
-                            ServiceTypesConstants.Types.Response.Error.Properties.Body.TYPE_NAME
+                            ServiceTypesConstants.Commons.Response.Error.Properties.Body.TYPE_NAME
                         )
                     )
                 ),
@@ -170,7 +172,7 @@ async function generateReturnErrorResponse({
 function getBaseResponseProperties({ ok }: { ok: boolean }): ts.ObjectLiteralElementLike[] {
     return [
         ts.factory.createPropertyAssignment(
-            ts.factory.createIdentifier(ServiceTypesConstants.Types.Response.Properties.OK),
+            ts.factory.createIdentifier(ServiceTypesConstants.Commons.Response.Properties.OK),
             ok ? ts.factory.createTrue() : ts.factory.createFalse()
         ),
         ts.factory.createPropertyAssignment(
