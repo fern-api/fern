@@ -1,6 +1,7 @@
 import { HttpEndpoint, HttpService } from "@fern-api/api";
 import { DependencyManager, getTextOfTsNode, getTypeReference, TypeResolver } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
+import { getLocalServiceTypeReference, ServiceTypeName } from "@fern-typescript/service-types";
 import {
     ClassDeclaration,
     Directory,
@@ -10,8 +11,6 @@ import {
     Scope,
     ts,
 } from "ts-morph";
-import { getLocalServiceTypeReference } from "../../commons/service-types/get-service-type-reference/getLocalServiceTypeReference";
-import { ServiceTypeName } from "../../commons/service-types/types";
 import { ClientConstants } from "../../constants";
 import { generateEndpointMethodBody } from "./endpoint-method-body/generateEndpointMethodBody";
 import { generateEndpointTypes } from "./endpoint-types/generateEndpointTypes";

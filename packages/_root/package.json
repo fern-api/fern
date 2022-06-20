@@ -49,6 +49,7 @@
     "@fern-typescript/json-encoding-helper": "workspace:*",
     "@fern-typescript/model": "workspace:*",
     "@fern-typescript/server": "workspace:*",
+    "@fern-typescript/service-types": "workspace:*",
     "@fern-typescript/service-utils": "workspace:*",
     "@fern-typescript/testing-utils": "workspace:*",
     "fern-api": "workspace:*",

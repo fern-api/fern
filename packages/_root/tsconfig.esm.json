@@ -24,6 +24,7 @@
     { "path": "../fern-typescript/helpers/utils/tsconfig.esm.json" },
     { "path": "../fern-typescript/model/tsconfig.esm.json" },
     { "path": "../fern-typescript/server/tsconfig.esm.json" },
+    { "path": "../fern-typescript/service-types/tsconfig.esm.json" },
     { "path": "../fern-typescript/service-utils/tsconfig.esm.json" },
     { "path": "../fern-typescript/testing-utils/tsconfig.esm.json" },
     { "path": "../init/tsconfig.esm.json" },
