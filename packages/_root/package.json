@@ -43,6 +43,7 @@
     "@fern-typescript/client": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/encoders": "workspace:*",
+    "@fern-typescript/errors": "workspace:*",
     "@fern-typescript/hathora-encoding-helper": "workspace:*",
     "@fern-typescript/helper-manager": "workspace:*",
     "@fern-typescript/helper-utils": "workspace:*",
@@ -52,6 +53,7 @@
     "@fern-typescript/service-types": "workspace:*",
     "@fern-typescript/service-utils": "workspace:*",
     "@fern-typescript/testing-utils": "workspace:*",
+    "@fern-typescript/types": "workspace:*",
     "fern-api": "workspace:*",
     "fern-typescript": "workspace:*"
   },

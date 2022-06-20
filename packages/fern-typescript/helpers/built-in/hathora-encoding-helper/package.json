@@ -19,8 +19,8 @@
     "@fern-api/api": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/helper-utils": "workspace:*",
-    "@fern-typescript/model": "workspace:*",
-    "@fern-typescript/service-types": "workspace:*"
+    "@fern-typescript/service-types": "workspace:*",
+    "@fern-typescript/types": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",

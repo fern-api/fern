@@ -1,6 +1,6 @@
 import { FailedResponse, PrimitiveType, SingleUnionType, TypeReference } from "@fern-api/api";
 import { addUuidDependency, DependencyManager, TypeResolver } from "@fern-typescript/commons";
-import { generateUnionType } from "@fern-typescript/model";
+import { generateUnionType } from "@fern-typescript/types";
 import { Directory, SourceFile, ts } from "ts-morph";
 import { ServiceTypesConstants } from "../constants";
 
