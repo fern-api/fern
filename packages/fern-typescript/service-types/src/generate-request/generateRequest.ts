@@ -1,9 +1,9 @@
 import { Type } from "@fern-api/api";
 import { getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
 import { Directory, OptionalKind, PropertySignatureStructure, SourceFile, ts } from "ts-morph";
-import { ClientConstants } from "../../constants";
-import { generateServiceTypeReference } from "../service-types/generateServiceTypeReference";
-import { ServiceTypeReference } from "../service-types/types";
+import { ServiceTypesConstants } from "../constants";
+import { generateServiceTypeReference } from "../service-type-reference/generateServiceTypeReference";
+import { ServiceTypeReference } from "../service-type-reference/types";
 
 /**
  * TODO this is kinda weird. For endpoints wrapper refers to something the consumer passes in (e.g. it includes query
@@ -51,7 +51,7 @@ export function generateRequest({
     if (additionalProperties.length === 0) {
         const requestBodyReference = generateServiceTypeReference({
             // use the request body as the Request (don't generate a RequestBody type at all)
-            typeName: ClientConstants.Commons.Types.Request.TYPE_NAME,
+            typeName: ServiceTypesConstants.Types.Request.TYPE_NAME,
             type: body.type,
             docs: body.docs,
             typeDirectory: directory,
@@ -68,11 +68,11 @@ export function generateRequest({
         }
     }
 
-    const requestFile = directory.createSourceFile(`${ClientConstants.Commons.Types.Request.TYPE_NAME}.ts`);
+    const requestFile = directory.createSourceFile(`${ServiceTypesConstants.Types.Request.TYPE_NAME}.ts`);
 
     const requestBodyReference = generateServiceTypeReference({
         // put the request body in its own RequestBody type/file
-        typeName: ClientConstants.Commons.Types.Request.Properties.Body.TYPE_NAME,
+        typeName: ServiceTypesConstants.Types.Request.Properties.Body.TYPE_NAME,
         type: body.type,
         docs: body.docs,
         typeDirectory: directory,
@@ -86,7 +86,7 @@ export function generateRequest({
 
     if (requestBodyReference != null) {
         properties.push({
-            name: ClientConstants.Commons.Types.Request.Properties.Body.PROPERTY_NAME,
+            name: ServiceTypesConstants.Types.Request.Properties.Body.PROPERTY_NAME,
             type: getTextOfTsNode(
                 getTypeReferenceToServiceType({
                     reference: requestBodyReference,
@@ -97,7 +97,7 @@ export function generateRequest({
     }
 
     requestFile.addInterface({
-        name: ClientConstants.Commons.Types.Request.TYPE_NAME,
+        name: ServiceTypesConstants.Types.Request.TYPE_NAME,
         properties,
         isExported: true,
     });
@@ -106,10 +106,10 @@ export function generateRequest({
         wrapper: {
             reference: {
                 isLocal: true,
-                typeName: ClientConstants.Commons.Types.Request.TYPE_NAME,
+                typeName: ServiceTypesConstants.Types.Request.TYPE_NAME,
                 file: requestFile,
             },
-            propertyName: ClientConstants.Commons.Types.Request.Properties.Body.PROPERTY_NAME,
+            propertyName: ServiceTypesConstants.Types.Request.Properties.Body.PROPERTY_NAME,
         },
         body: requestBodyReference,
     };

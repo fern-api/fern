@@ -11,7 +11,6 @@
     { "path": "../helpers/helper-manager/tsconfig.json" },
     { "path": "../helpers/utils/tsconfig.json" },
     { "path": "../model/tsconfig.json" },
-    { "path": "../service-types/tsconfig.json" },
     { "path": "../testing-utils/tsconfig.json" }
   ]
 }

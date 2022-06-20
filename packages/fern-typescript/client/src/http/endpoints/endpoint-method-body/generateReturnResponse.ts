@@ -1,8 +1,8 @@
 import { HttpEndpoint, HttpService } from "@fern-api/api";
 import { getTypeReference } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
+import { ServiceTypeName, ServiceTypesConstants } from "@fern-typescript/service-types";
 import { Directory, SourceFile, ts } from "ts-morph";
-import { ServiceTypeName } from "../../../commons/service-types/types";
 import { ClientConstants } from "../../../constants";
 import { GeneratedEndpointTypes } from "../endpoint-types/types";
 import { generateEncoderCall } from "./generateEncoderCall";
@@ -95,9 +95,7 @@ async function generateReturnSuccessResponse({
 
         properties.push(
             ts.factory.createPropertyAssignment(
-                ts.factory.createIdentifier(
-                    ClientConstants.Commons.Types.Response.Success.Properties.Body.PROPERTY_NAME
-                ),
+                ts.factory.createIdentifier(ServiceTypesConstants.Types.Response.Success.Properties.Body.PROPERTY_NAME),
                 ts.factory.createAsExpression(
                     ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.DECODED_RESPONSE),
                     endpointTypes.response.successBodyReference.isLocal
@@ -152,12 +150,12 @@ async function generateReturnErrorResponse({
                 ...getBaseResponseProperties({ ok: false }),
                 ts.factory.createPropertyAssignment(
                     ts.factory.createIdentifier(
-                        ClientConstants.Commons.Types.Response.Error.Properties.Body.PROPERTY_NAME
+                        ServiceTypesConstants.Types.Response.Error.Properties.Body.PROPERTY_NAME
                     ),
                     ts.factory.createAsExpression(
                         ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.DECODED_ERROR),
                         getReferenceToLocalServiceType(
-                            ClientConstants.Commons.Types.Response.Error.Properties.Body.TYPE_NAME
+                            ServiceTypesConstants.Types.Response.Error.Properties.Body.TYPE_NAME
                         )
                     )
                 ),
@@ -172,7 +170,7 @@ async function generateReturnErrorResponse({
 function getBaseResponseProperties({ ok }: { ok: boolean }): ts.ObjectLiteralElementLike[] {
     return [
         ts.factory.createPropertyAssignment(
-            ts.factory.createIdentifier(ClientConstants.Commons.Types.Response.Properties.OK),
+            ts.factory.createIdentifier(ServiceTypesConstants.Types.Response.Properties.OK),
             ok ? ts.factory.createTrue() : ts.factory.createFalse()
         ),
         ts.factory.createPropertyAssignment(

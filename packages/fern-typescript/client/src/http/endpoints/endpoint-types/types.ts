@@ -1,5 +1,4 @@
-import { GeneratedRequest } from "../../../commons/generate-request/generateRequest";
-import { LocalServiceTypeReference, ServiceTypeReference } from "../../../commons/service-types/types";
+import { GeneratedRequest, LocalServiceTypeReference, ServiceTypeReference } from "@fern-typescript/service-types";
 
 export interface GeneratedEndpointTypes {
     methodName: string;

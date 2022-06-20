@@ -1,5 +1,5 @@
-import { ClientConstants } from "@fern-typescript/client";
 import { EncodeMethod, ts, VariableReference } from "@fern-typescript/helper-utils";
+import { ServiceTypesConstants } from "@fern-typescript/service-types";
 import { HathoraEncoderConstants } from "../constants";
 import { assertNever } from "../utils/assertNever";
 import { createEncoderMethodCall } from "./createEncoderMethodCall";
@@ -31,11 +31,11 @@ function getBodyTypeNameFromWireMessageType(
 ): string {
     switch (wireMessageType) {
         case "Request":
-            return ClientConstants.Commons.Types.Request.Properties.Body.TYPE_NAME;
+            return ServiceTypesConstants.Types.Request.Properties.Body.TYPE_NAME;
         case "Response":
-            return ClientConstants.Commons.Types.Response.Success.Properties.Body.TYPE_NAME;
+            return ServiceTypesConstants.Types.Response.Success.Properties.Body.TYPE_NAME;
         case "Error":
-            return ClientConstants.Commons.Types.Response.Error.Properties.Body.TYPE_NAME;
+            return ServiceTypesConstants.Types.Response.Error.Properties.Body.TYPE_NAME;
         default:
             assertNever(wireMessageType);
     }

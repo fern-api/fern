@@ -1,8 +1,7 @@
 import { NamedType, WebSocketOperation } from "@fern-api/api";
 import { getTextOfTsKeyword, getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
+import { GeneratedRequest, generateRequest, getServiceTypeReference } from "@fern-typescript/service-types";
 import { Directory, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
-import { GeneratedRequest, generateRequest } from "../../../commons/generate-request/generateRequest";
-import { getServiceTypeReference } from "../../../commons/service-types/get-service-type-reference/getServiceTypeReference";
 import { ClientConstants } from "../../../constants";
 
 export declare namespace generateRequestTypes {

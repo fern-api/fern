@@ -1,8 +1,7 @@
 import { HttpEndpoint, NamedType } from "@fern-api/api";
 import { DependencyManager, getTextOfTsKeyword, TypeResolver } from "@fern-typescript/commons";
+import { generateResponse, getServiceTypeReference } from "@fern-typescript/service-types";
 import { Directory, ts } from "ts-morph";
-import { generateResponse } from "../../../commons/generate-response/generateResponse";
-import { getServiceTypeReference } from "../../../commons/service-types/get-service-type-reference/getServiceTypeReference";
 import { ClientConstants } from "../../../constants";
 import { GeneratedEndpointTypes } from "./types";
 
