@@ -4294,7 +4294,7 @@ export * from \\"./WorkspaceTracedUpdate\\";
               Object {
                 "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
-import * as AdminService from \\".\\";
+import { AdminService } from \\"..\\";
 
 export interface Client {
     updateTestSubmissionStatus(request: AdminService.updateTestSubmissionStatus.Request): Promise<AdminService.updateTestSubmissionStatus.Response>;
@@ -4563,7 +4563,7 @@ export interface Request {
                         "type": "file",
                       },
                       Object {
-                        "contents": "import * as AdminService from \\"../..\\";
+                        "contents": "import { AdminService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -4627,7 +4627,7 @@ export interface Request {
                         "type": "file",
                       },
                       Object {
-                        "contents": "import * as AdminService from \\"../..\\";
+                        "contents": "import { AdminService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -4692,7 +4692,7 @@ export interface Request {
                         "type": "file",
                       },
                       Object {
-                        "contents": "import * as AdminService from \\"../..\\";
+                        "contents": "import { AdminService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -4757,7 +4757,7 @@ export interface Request {
                         "type": "file",
                       },
                       Object {
-                        "contents": "import * as AdminService from \\"../..\\";
+                        "contents": "import { AdminService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -4821,7 +4821,7 @@ export interface Request {
                         "type": "file",
                       },
                       Object {
-                        "contents": "import * as AdminService from \\"../..\\";
+                        "contents": "import { AdminService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -4885,7 +4885,7 @@ export interface Request {
                         "type": "file",
                       },
                       Object {
-                        "contents": "import * as AdminService from \\"../..\\";
+                        "contents": "import { AdminService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -4949,7 +4949,7 @@ export interface Request {
                         "type": "file",
                       },
                       Object {
-                        "contents": "import * as AdminService from \\"../..\\";
+                        "contents": "import { AdminService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -5013,7 +5013,7 @@ export interface Request {
                         "type": "file",
                       },
                       Object {
-                        "contents": "import * as AdminService from \\"../..\\";
+                        "contents": "import { AdminService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -5063,7 +5063,7 @@ export * from \\"./AdminService\\";
               Object {
                 "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
-import * as ExecutionSesssionManagementService from \\".\\";
+import { ExecutionSesssionManagementService } from \\"..\\";
 import * as model from \\"../../model\\";
 
 export interface Client {
@@ -5229,7 +5229,7 @@ export interface Request {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as ExecutionSesssionManagementService from \\"../..\\";
+import { ExecutionSesssionManagementService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -5292,7 +5292,7 @@ export const ErrorBody = {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as ExecutionSesssionManagementService from \\"../..\\";
+import { ExecutionSesssionManagementService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -5347,7 +5347,7 @@ export const ErrorBody = {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as ExecutionSesssionManagementService from \\"../..\\";
+import { ExecutionSesssionManagementService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -5417,7 +5417,7 @@ export const ErrorBody = {
                         "type": "file",
                       },
                       Object {
-                        "contents": "import * as ExecutionSesssionManagementService from \\"../..\\";
+                        "contents": "import { ExecutionSesssionManagementService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -5467,7 +5467,7 @@ export * from \\"./ExecutionSesssionManagementService\\";
               Object {
                 "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
-import * as HomepageProblemService from \\".\\";
+import { HomepageProblemService } from \\"..\\";
 import * as model from \\"../../model\\";
 
 export interface Client {
@@ -5570,7 +5570,7 @@ export const ErrorBody = {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as HomepageProblemService from \\"../..\\";
+import { HomepageProblemService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -5630,7 +5630,7 @@ export const ErrorBody = {
                         "type": "file",
                       },
                       Object {
-                        "contents": "import * as HomepageProblemService from \\"../..\\";
+                        "contents": "import { HomepageProblemService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -5679,7 +5679,7 @@ export * from \\"./HomepageProblemService\\";
               Object {
                 "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
-import * as MigrationInfoService from \\".\\";
+import { MigrationInfoService } from \\"..\\";
 import * as model from \\"../../model\\";
 
 export interface Client {
@@ -5753,7 +5753,7 @@ export const ErrorBody = {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as MigrationInfoService from \\"../..\\";
+import { MigrationInfoService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -5809,7 +5809,7 @@ export * from \\"./MigrationInfoService\\";
               Object {
                 "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
-import * as PlaylistCrudService from \\".\\";
+import { PlaylistCrudService } from \\"..\\";
 import * as model from \\"../../model\\";
 
 export interface Client {
@@ -6008,7 +6008,7 @@ export interface Request {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as PlaylistCrudService from \\"../..\\";
+import { PlaylistCrudService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -6072,7 +6072,7 @@ export interface Request {
                         "type": "file",
                       },
                       Object {
-                        "contents": "import * as PlaylistCrudService from \\"../..\\";
+                        "contents": "import { PlaylistCrudService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -6136,7 +6136,7 @@ export interface Request {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as PlaylistCrudService from \\"../..\\";
+import { PlaylistCrudService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -6191,7 +6191,7 @@ export const ErrorBody = {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as PlaylistCrudService from \\"../..\\";
+import { PlaylistCrudService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -6255,7 +6255,7 @@ export const ErrorBody = {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as PlaylistCrudService from \\"../..\\";
+import { PlaylistCrudService } from \\"../../..\\";
 
 export interface Request {
     playlistId: model.PlaylistId;
@@ -6278,7 +6278,7 @@ export interface RequestBody {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as PlaylistCrudService from \\"../..\\";
+import { PlaylistCrudService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -6330,7 +6330,7 @@ export * from \\"./PlaylistCrudService\\";
               Object {
                 "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
-import * as ProblemCrudService from \\".\\";
+import { ProblemCrudService } from \\"..\\";
 import * as model from \\"../../model\\";
 
 export interface Client {
@@ -6493,7 +6493,7 @@ export interface Request {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as ProblemCrudService from \\"../..\\";
+import { ProblemCrudService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -6557,7 +6557,7 @@ export interface Request {
                         "type": "file",
                       },
                       Object {
-                        "contents": "import * as ProblemCrudService from \\"../..\\";
+                        "contents": "import { ProblemCrudService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -6621,7 +6621,7 @@ export interface Request {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as ProblemCrudService from \\"../..\\";
+import { ProblemCrudService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -6696,7 +6696,7 @@ export interface Request {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as ProblemCrudService from \\"../..\\";
+import { ProblemCrudService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -6747,7 +6747,7 @@ export * from \\"./ProblemCrudService\\";
               Object {
                 "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
-import * as ProblemCrudServiceV2 from \\".\\";
+import { ProblemCrudServiceV2 } from \\"..\\";
 import * as model from \\"../../model\\";
 
 export interface Client {
@@ -7018,7 +7018,7 @@ export interface Request {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as ProblemCrudServiceV2 from \\"../..\\";
+import { ProblemCrudServiceV2 } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -7082,7 +7082,7 @@ export interface Request {
                         "type": "file",
                       },
                       Object {
-                        "contents": "import * as ProblemCrudServiceV2 from \\"../..\\";
+                        "contents": "import { ProblemCrudServiceV2 } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -7146,7 +7146,7 @@ export interface Request {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as ProblemCrudServiceV2 from \\"../..\\";
+import { ProblemCrudServiceV2 } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -7201,7 +7201,7 @@ export const ErrorBody = {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as ProblemCrudServiceV2 from \\"../..\\";
+import { ProblemCrudServiceV2 } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -7265,7 +7265,7 @@ export interface Request {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as ProblemCrudServiceV2 from \\"../..\\";
+import { ProblemCrudServiceV2 } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -7330,7 +7330,7 @@ export interface Request {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as ProblemCrudServiceV2 from \\"../..\\";
+import { ProblemCrudServiceV2 } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -7395,7 +7395,7 @@ export interface Request {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as ProblemCrudServiceV2 from \\"../..\\";
+import { ProblemCrudServiceV2 } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -7474,7 +7474,7 @@ export interface Request {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as ProblemCrudServiceV2 from \\"../..\\";
+import { ProblemCrudServiceV2 } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -7525,7 +7525,7 @@ export * from \\"./ProblemCrudServiceV2\\";
               Object {
                 "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
-import * as ProblemInfoServicV2 from \\".\\";
+import { ProblemInfoServicV2 } from \\"..\\";
 import * as model from \\"../../model\\";
 
 export interface Client {
@@ -7690,7 +7690,7 @@ export interface Request {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as ProblemInfoServicV2 from \\"../..\\";
+import { ProblemInfoServicV2 } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -7745,7 +7745,7 @@ export const ErrorBody = {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as ProblemInfoServicV2 from \\"../..\\";
+import { ProblemInfoServicV2 } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -7810,7 +7810,7 @@ export interface Request {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as ProblemInfoServicV2 from \\"../..\\";
+import { ProblemInfoServicV2 } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -7865,7 +7865,7 @@ export const ErrorBody = {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as ProblemInfoServicV2 from \\"../..\\";
+import { ProblemInfoServicV2 } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -7924,7 +7924,7 @@ export * from \\"./ProblemInfoServicV2\\";
               Object {
                 "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
-import * as ProblemInfoService from \\".\\";
+import { ProblemInfoService } from \\"..\\";
 import * as model from \\"../../model\\";
 
 export interface Client {
@@ -8093,7 +8093,7 @@ export interface Request {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as ProblemInfoService from \\"../..\\";
+import { ProblemInfoService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -8158,7 +8158,7 @@ export interface Request {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as ProblemInfoService from \\"../..\\";
+import { ProblemInfoService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -8224,7 +8224,7 @@ export interface Request {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as ProblemInfoService from \\"../..\\";
+import { ProblemInfoService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -8279,7 +8279,7 @@ export const ErrorBody = {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as ProblemInfoService from \\"../..\\";
+import { ProblemInfoService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -8338,7 +8338,7 @@ export * from \\"./ProblemInfoService\\";
               Object {
                 "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
-import * as SubmissionInfoService from \\".\\";
+import { SubmissionInfoService } from \\"..\\";
 import * as model from \\"../../model\\";
 
 export interface Client {
@@ -8560,7 +8560,7 @@ export interface Request {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as SubmissionInfoService from \\"../..\\";
+import { SubmissionInfoService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -8625,7 +8625,7 @@ export interface Request {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as SubmissionInfoService from \\"../..\\";
+import { SubmissionInfoService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -8692,7 +8692,7 @@ export interface Request {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as SubmissionInfoService from \\"../..\\";
+import { SubmissionInfoService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -8758,7 +8758,7 @@ export interface Request {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as SubmissionInfoService from \\"../..\\";
+import { SubmissionInfoService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -8825,7 +8825,7 @@ export interface Request {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as SubmissionInfoService from \\"../..\\";
+import { SubmissionInfoService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -8891,7 +8891,7 @@ export interface Request {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as SubmissionInfoService from \\"../..\\";
+import { SubmissionInfoService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -8953,7 +8953,7 @@ export * from \\"./SubmissionInfoService\\";
               Object {
                 "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
-import * as SysPropCrudService from \\".\\";
+import { SysPropCrudService } from \\"..\\";
 import * as model from \\"../../model\\";
 
 export interface Client {
@@ -9052,7 +9052,7 @@ export const ErrorBody = {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as SysPropCrudService from \\"../..\\";
+import { SysPropCrudService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -9123,7 +9123,7 @@ export interface Request {
                         "type": "file",
                       },
                       Object {
-                        "contents": "import * as SysPropCrudService from \\"../..\\";
+                        "contents": "import { SysPropCrudService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -9173,7 +9173,7 @@ export * from \\"./SysPropCrudService\\";
               Object {
                 "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
-import * as WorkspaceInfoService from \\".\\";
+import { WorkspaceInfoService } from \\"..\\";
 import * as model from \\"../../model\\";
 
 export interface Client {
@@ -9274,7 +9274,7 @@ export const ErrorBody = {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as WorkspaceInfoService from \\"../..\\";
+import { WorkspaceInfoService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
@@ -9328,7 +9328,7 @@ export const ErrorBody = {
                       },
                       Object {
                         "contents": "import * as model from \\"../../../../model\\";
-import * as WorkspaceInfoService from \\"../..\\";
+import { WorkspaceInfoService } from \\"../../..\\";
 
 export type Response = SuccessResponse | ErrorResponse;
 
