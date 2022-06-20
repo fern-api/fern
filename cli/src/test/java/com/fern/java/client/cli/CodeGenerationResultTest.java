@@ -10,7 +10,6 @@ public class CodeGenerationResultTest {
             .irFilepath("ir.json")
             .output(OutputConfig.builder()
                     .path("output")
-                    .pathRelativeToRootOnHost("memory-api/memory-java-api")
                     .build())
             .customPluginConfig(CustomPluginConfig.builder()
                     .mode(Mode.CLIENT_AND_SERVER)

@@ -1,8 +1,7 @@
 {
   "irFilepath": "/fern/ir.json",
   "output": {
-    "path": "/fern/output",
-    "pathRelativeToRootOnHost": "../packages/api/fern-ir-java/ir-api"
+    "path": "/fern/output"
   },
   "helpers": {
     "encodings": {}

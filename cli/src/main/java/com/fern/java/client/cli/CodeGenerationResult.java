@@ -2,9 +2,8 @@ package com.fern.java.client.cli;
 
 import com.fern.codegen.IGeneratedFile;
 import com.fern.java.client.cli.CustomPluginConfig.Mode;
-import java.util.Arrays;
+import com.fern.java.client.cli.FernPluginConfig.PublishConfig;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.immutables.value.Value;
 import org.immutables.value.Value.Style.ImplementationVisibility;
 
@@ -49,7 +48,7 @@ public abstract class CodeGenerationResult {
                 + "}\n"
                 + "\n"
                 + "dependencies {\n"
-                + "    api project('" + getModelSubprojectDependency(pluginConfig) + "')\n"
+                + "    api project(':" + pluginConfig.getModelProjectName() + "')\n"
                 + "    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'\n"
                 + "    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.3'\n"
                 + "    implementation 'io.github.openfeign:feign-jackson:11.8'\n"
@@ -73,7 +72,7 @@ public abstract class CodeGenerationResult {
                 + "}\n"
                 + "\n"
                 + "dependencies {\n"
-                + "    api project('" + getModelSubprojectDependency(pluginConfig) + "')\n"
+                + "    api project(':" + pluginConfig.getModelProjectName() + "')\n"
                 + "    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'\n"
                 + "    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.3'\n"
                 + "    implementation 'io.github.openfeign:feign-jackson:11.8'\n"
@@ -91,21 +90,43 @@ public abstract class CodeGenerationResult {
         if (mode.equals(Mode.CLIENT_AND_SERVER) || mode.equals(Mode.CLIENT)) {
             settingsGradle += "include 'client'\n";
         }
-        if (mode.equals(Mode.CLIENT_AND_SERVER) || mode.equals(Mode.CLIENT)) {
+        if (mode.equals(Mode.CLIENT_AND_SERVER) || mode.equals(Mode.SERVER)) {
             settingsGradle += "include 'server'\n";
         }
         return settingsGradle;
     }
 
-    static String getModelSubprojectDependency(FernPluginConfig fernPluginConfig) {
-        String gradleDependency =
-                Arrays.asList(fernPluginConfig
-                                .output()
-                                .pathRelativeToRootOnHost()
-                                .split("/"))
-                        .stream()
-                        .collect(Collectors.joining(":"));
-        return ":" + gradleDependency + ":model";
+    public static String getBuildDotGradle(PublishConfig publishConfig) {
+        return "plugins {\n"
+                + "    id 'maven-publish'\n"
+                + "}\n"
+                + "\n"
+                + "configure(subprojects.findAll {}) {\n"
+                + "\n"
+                + "    group '" + publishConfig.coordinate() + "'\n"
+                + "    version '" + publishConfig.version() + "'\n"
+                + "\n"
+                + "    apply plugin: \"maven-publish\"\n"
+                + "    apply plugin: \"java-library\"\n"
+                + "\n"
+                + "    publishing {\n"
+                + "        publications {\n"
+                + "            mavenJava(MavenPublication) {\n"
+                + "                from components.java\n"
+                + "            }\n"
+                + "        }\n"
+                + "        repositories {\n"
+                + "            maven {\n"
+                + "                url '" + publishConfig.url() + "'\n"
+                + "                credentials {\n"
+                + "                    username '" + publishConfig.username() + "'\n"
+                + "                    password '" + publishConfig.password() + "'\n"
+                + "                }\n"
+                + "            }\n"
+                + "        }\n"
+                + "    }\n"
+                + "}\n"
+                + "\n";
     }
 
     static ImmutableCodeGenerationResult.Builder builder() {
