@@ -1,10 +1,9 @@
 import { HttpEndpoint, HttpService } from "@fern-api/api";
 import { getTypeReference } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
-import { ServiceTypeName, ServiceTypesConstants } from "@fern-typescript/service-types";
+import { GeneratedHttpEndpointTypes, ServiceTypeName, ServiceTypesConstants } from "@fern-typescript/service-types";
 import { Directory, SourceFile, ts } from "ts-morph";
 import { ClientConstants } from "../../../constants";
-import { GeneratedEndpointTypes } from "../endpoint-types/types";
 import { generateEncoderCall } from "./generateEncoderCall";
 
 export async function generateReturnResponse({
@@ -20,7 +19,7 @@ export async function generateReturnResponse({
     serviceFile: SourceFile;
     serviceDefinition: HttpService;
     endpoint: HttpEndpoint;
-    endpointTypes: GeneratedEndpointTypes;
+    endpointTypes: GeneratedHttpEndpointTypes;
     getReferenceToLocalServiceType: (typeName: ServiceTypeName) => ts.TypeReferenceNode;
     modelDirectory: Directory;
     encodersDirectory: Directory;
@@ -71,7 +70,7 @@ async function generateReturnSuccessResponse({
     serviceFile: SourceFile;
     serviceDefinition: HttpService;
     endpoint: HttpEndpoint;
-    endpointTypes: GeneratedEndpointTypes;
+    endpointTypes: GeneratedHttpEndpointTypes;
     getReferenceToLocalServiceType: (typeName: ServiceTypeName) => ts.TypeReferenceNode;
     modelDirectory: Directory;
     encodersDirectory: Directory;
@@ -131,7 +130,7 @@ async function generateReturnErrorResponse({
     serviceDefinition: HttpService;
     serviceFile: SourceFile;
     endpoint: HttpEndpoint;
-    endpointTypes: GeneratedEndpointTypes;
+    endpointTypes: GeneratedHttpEndpointTypes;
     getReferenceToLocalServiceType: (typeName: ServiceTypeName) => ts.TypeReferenceNode;
     helperManager: HelperManager;
     encodersDirectory: Directory;
@@ -176,7 +175,7 @@ function getBaseResponseProperties({ ok }: { ok: boolean }): ts.ObjectLiteralEle
             ok ? ts.factory.createTrue() : ts.factory.createFalse()
         ),
         ts.factory.createPropertyAssignment(
-            ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Types.Response.Properties.STATUS_CODE),
+            ts.factory.createIdentifier(ServiceTypesConstants.HttpEndpint.Response.Properties.STATUS_CODE),
             ts.factory.createPropertyAccessExpression(
                 ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.ENCODED_RESPONSE),
                 ts.factory.createIdentifier(ClientConstants.HttpService.ServiceUtils.Fetcher.Response.STATUS_CODE)

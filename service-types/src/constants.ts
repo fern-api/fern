@@ -41,6 +41,14 @@ export const ServiceTypesConstants = {
         },
     },
 
+    HttpEndpint: {
+        Response: {
+            Properties: {
+                STATUS_CODE: "statusCode",
+            },
+        },
+    },
+
     WebsocketChannel: {
         Request: {
             Properties: {

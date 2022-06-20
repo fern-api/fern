@@ -1,10 +1,10 @@
 import { HttpEndpoint, HttpService } from "@fern-api/api";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
+import { GeneratedHttpEndpointTypes } from "@fern-typescript/service-types";
 import { Directory, SourceFile, StatementStructures, StructureKind, ts, VariableDeclarationKind } from "ts-morph";
 import { ClientConstants } from "../../../constants";
 import { generateJoinPathsCall } from "../../../utils/generateJoinPathsCall";
-import { GeneratedEndpointTypes } from "../endpoint-types/types";
 import { convertPathToTemplateString } from "./convertPathToTemplateString";
 import { generateEncoderCall } from "./generateEncoderCall";
 
@@ -20,7 +20,7 @@ export async function generateFetcherCall({
     serviceFile: SourceFile;
     serviceDefinition: HttpService;
     endpoint: HttpEndpoint;
-    endpointTypes: GeneratedEndpointTypes;
+    endpointTypes: GeneratedHttpEndpointTypes;
     includeQueryParams: boolean;
     helperManager: HelperManager;
     encodersDirectory: Directory;
