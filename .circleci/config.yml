@@ -40,7 +40,6 @@ jobs:
   compile-and-test:
     machine:
       image: ubuntu-2004:current
-    resource_class: 2xlarge
     steps:
       - checkout
       - run:
@@ -56,7 +55,7 @@ jobs:
           command: yarn workspace fern-typescript dockerTagLocal
       - run:
           name: Run tests
-          command: yarn test --ci --runInBand
+          command: yarn test --ci
       - run:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff
