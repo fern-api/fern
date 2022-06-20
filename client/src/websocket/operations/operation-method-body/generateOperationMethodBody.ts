@@ -1,7 +1,7 @@
 import { WebSocketOperation } from "@fern-api/api";
 import { addUuidDependency, DependencyManager, getTextOfTsNode } from "@fern-typescript/commons";
+import { ServiceTypeName, ServiceTypesConstants } from "@fern-typescript/service-types";
 import { SourceFile, StatementStructures, ts, WriterFunction } from "ts-morph";
-import { ServiceTypeName } from "../../../commons/service-types/types";
 import { ClientConstants } from "../../../constants";
 import { GeneratedOperationTypes } from "../operation-types/types";
 
@@ -143,7 +143,7 @@ function generatePromiseBody({
                     ts.factory.createVariableDeclaration(
                         ts.factory.createIdentifier(MESSAGE_LOCAL_VARIABLE_NAME),
                         undefined,
-                        getReferenceToLocalServiceType(ClientConstants.Commons.Types.Request.TYPE_NAME),
+                        getReferenceToLocalServiceType(ServiceTypesConstants.Types.Request.TYPE_NAME),
                         ts.factory.createObjectLiteralExpression(messageElements, true)
                     ),
                 ],

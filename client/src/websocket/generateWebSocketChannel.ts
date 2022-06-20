@@ -9,6 +9,7 @@ import {
     TypeResolver,
 } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
+import { getLocalServiceTypeReference } from "@fern-typescript/service-types";
 import {
     Directory,
     ModuleDeclaration,
@@ -18,7 +19,6 @@ import {
     SourceFile,
     ts,
 } from "ts-morph";
-import { getLocalServiceTypeReference } from "../commons/service-types/get-service-type-reference/getLocalServiceTypeReference";
 import { ClientConstants } from "../constants";
 import { generateChannelConstructor } from "./generateChannelConstructor";
 import { generateDisconnect } from "./generateDisconnect";

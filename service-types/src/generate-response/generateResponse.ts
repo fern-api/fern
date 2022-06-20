@@ -1,9 +1,9 @@
 import { FailedResponse, Type } from "@fern-api/api";
 import { DependencyManager, getOrCreateSourceFile, getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
 import { Directory, OptionalKind, PropertySignatureStructure, SourceFile, ts, Writers } from "ts-morph";
-import { ClientConstants } from "../../constants";
-import { generateServiceTypeReference } from "../service-types/generateServiceTypeReference";
-import { LocalServiceTypeReference, ServiceTypeReference } from "../service-types/types";
+import { ServiceTypesConstants } from "../constants";
+import { generateServiceTypeReference } from "../service-type-reference/generateServiceTypeReference";
+import { LocalServiceTypeReference, ServiceTypeReference } from "../service-type-reference/types";
 import { generateErrorBody } from "./generateErrorBody";
 
 export declare namespace generateResponse {
@@ -41,7 +41,7 @@ export function generateResponse({
     additionalProperties = [],
 }: generateResponse.Args): generateResponse.Return {
     const successBodyReference = generateServiceTypeReference({
-        typeName: ClientConstants.Commons.Types.Response.Success.Properties.Body.TYPE_NAME,
+        typeName: ServiceTypesConstants.Types.Response.Success.Properties.Body.TYPE_NAME,
         type: successResponse.type,
         docs: successResponse.docs,
         typeDirectory: directory,
@@ -49,13 +49,13 @@ export function generateResponse({
         typeResolver,
     });
 
-    const responseFile = directory.createSourceFile(`${ClientConstants.Commons.Types.Response.TYPE_NAME}.ts`);
+    const responseFile = directory.createSourceFile(`${ServiceTypesConstants.Types.Response.TYPE_NAME}.ts`);
 
     responseFile.addTypeAlias({
-        name: ClientConstants.Commons.Types.Response.TYPE_NAME,
+        name: ServiceTypesConstants.Types.Response.TYPE_NAME,
         type: Writers.unionType(
-            ClientConstants.Commons.Types.Response.Success.TYPE_NAME,
-            ClientConstants.Commons.Types.Response.Error.TYPE_NAME
+            ServiceTypesConstants.Types.Response.Success.TYPE_NAME,
+            ServiceTypesConstants.Types.Response.Error.TYPE_NAME
         ),
         isExported: true,
     });
@@ -69,7 +69,7 @@ export function generateResponse({
 
     const errorBodyFile = getOrCreateSourceFile(
         directory,
-        `${ClientConstants.Commons.Types.Response.Error.Properties.Body.TYPE_NAME}.ts`
+        `${ServiceTypesConstants.Types.Response.Error.Properties.Body.TYPE_NAME}.ts`
     );
 
     generateErrorBody({
@@ -81,18 +81,18 @@ export function generateResponse({
     });
 
     responseFile.addInterface({
-        name: ClientConstants.Commons.Types.Response.Error.TYPE_NAME,
+        name: ServiceTypesConstants.Types.Response.Error.TYPE_NAME,
         isExported: true,
         properties: [
             ...createBaseResponseProperties({ ok: false }),
             ...additionalProperties,
             {
-                name: ClientConstants.Commons.Types.Response.Error.Properties.Body.PROPERTY_NAME,
+                name: ServiceTypesConstants.Types.Response.Error.Properties.Body.PROPERTY_NAME,
                 type: getTextOfTsNode(
                     getTypeReferenceToServiceType({
                         reference: {
                             isLocal: true,
-                            typeName: ClientConstants.Commons.Types.Response.Error.Properties.Body.TYPE_NAME,
+                            typeName: ServiceTypesConstants.Types.Response.Error.Properties.Body.TYPE_NAME,
                             file: errorBodyFile,
                         },
                         referencedIn: responseFile,
@@ -105,7 +105,7 @@ export function generateResponse({
     return {
         reference: {
             isLocal: true,
-            typeName: ClientConstants.Commons.Types.Response.TYPE_NAME,
+            typeName: ServiceTypesConstants.Types.Response.TYPE_NAME,
             file: responseFile,
         },
         successBodyReference,
@@ -129,7 +129,7 @@ function addSuccessResponseInterface({
             : undefined;
 
     responseFile.addInterface({
-        name: ClientConstants.Commons.Types.Response.Success.TYPE_NAME,
+        name: ServiceTypesConstants.Types.Response.Success.TYPE_NAME,
         isExported: true,
         properties: generateSuccessResponseProperties({
             successResponseBodyReference,
@@ -149,7 +149,7 @@ function generateSuccessResponseProperties({
 
     if (successResponseBodyReference != null) {
         properties.push({
-            name: ClientConstants.Commons.Types.Response.Success.Properties.Body.PROPERTY_NAME,
+            name: ServiceTypesConstants.Types.Response.Success.Properties.Body.PROPERTY_NAME,
             type: getTextOfTsNode(successResponseBodyReference),
         });
     }
@@ -160,7 +160,7 @@ function generateSuccessResponseProperties({
 function createBaseResponseProperties({ ok }: { ok: boolean }): OptionalKind<PropertySignatureStructure>[] {
     return [
         {
-            name: ClientConstants.Commons.Types.Response.Properties.OK,
+            name: ServiceTypesConstants.Types.Response.Properties.OK,
             type: getTextOfTsNode(
                 ts.factory.createLiteralTypeNode(ok ? ts.factory.createTrue() : ts.factory.createFalse())
             ),

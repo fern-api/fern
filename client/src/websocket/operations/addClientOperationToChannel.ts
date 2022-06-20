@@ -6,6 +6,7 @@ import {
     getTypeReference,
     TypeResolver,
 } from "@fern-typescript/commons";
+import { getLocalServiceTypeReference, ServiceTypeName } from "@fern-typescript/service-types";
 import {
     ClassDeclaration,
     Directory,
@@ -15,8 +16,6 @@ import {
     Scope,
     ts,
 } from "ts-morph";
-import { getLocalServiceTypeReference } from "../../commons/service-types/get-service-type-reference/getLocalServiceTypeReference";
-import { ServiceTypeName } from "../../commons/service-types/types";
 import { ClientConstants } from "../../constants";
 import { generateOperationMethodBody } from "./operation-method-body/generateOperationMethodBody";
 import { generateOperationTypes } from "./operation-types/generateOperationTypes";

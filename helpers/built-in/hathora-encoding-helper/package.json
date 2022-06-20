@@ -17,10 +17,10 @@
   },
   "dependencies": {
     "@fern-api/api": "workspace:*",
-    "@fern-typescript/client": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/helper-utils": "workspace:*",
-    "@fern-typescript/model": "workspace:*"
+    "@fern-typescript/model": "workspace:*",
+    "@fern-typescript/service-types": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",
