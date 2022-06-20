@@ -1,4 +1,5 @@
 import { getTextOfTsKeyword, getTextOfTsNode } from "@fern-typescript/commons";
+import { ServiceTypesConstants } from "@fern-typescript/service-types";
 import { ClassDeclaration, Scope, ts } from "ts-morph";
 import { ClientConstants } from "../constants";
 
@@ -57,9 +58,7 @@ export function generateOnMessage({ channelClass }: { channelClass: ClassDeclara
             ),
             ts.factory.createIfStatement(
                 ts.factory.createBinaryExpression(
-                    ts.factory.createStringLiteral(
-                        ClientConstants.WebsocketChannel.Operation.Types.Request.Properties.OPERATION
-                    ),
+                    ts.factory.createStringLiteral(ServiceTypesConstants.WebsocketChannel.Request.Properties.OPERATION),
                     ts.factory.createToken(ts.SyntaxKind.InKeyword),
                     ts.factory.createIdentifier(MESSAGE_LOCAL_VARIABLE_NAME)
                 ),
@@ -98,8 +97,7 @@ export function generateOnMessage({ channelClass }: { channelClass: ClassDeclara
                                             ts.factory.createPropertyAccessExpression(
                                                 ts.factory.createIdentifier(MESSAGE_LOCAL_VARIABLE_NAME),
                                                 ts.factory.createIdentifier(
-                                                    ClientConstants.WebsocketChannel.Operation.Types.Response.Properties
-                                                        .REPLY_TO
+                                                    ServiceTypesConstants.WebsocketChannel.Response.Properties.REPLY_TO
                                                 )
                                             )
                                         )

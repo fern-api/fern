@@ -2,7 +2,7 @@ import { FailedResponse, PrimitiveType, SingleUnionType, TypeReference } from "@
 import { addUuidDependency, DependencyManager, TypeResolver } from "@fern-typescript/commons";
 import { generateUnionType } from "@fern-typescript/types";
 import { Directory, SourceFile, ts } from "ts-morph";
-import { ServiceTypesConstants } from "../constants";
+import { ServiceTypesConstants } from "../../constants";
 
 export function generateErrorBody({
     failedResponse,
@@ -19,7 +19,7 @@ export function generateErrorBody({
 }): void {
     generateUnionType({
         file: errorBodyFile,
-        typeName: ServiceTypesConstants.Types.Response.Error.Properties.Body.TYPE_NAME,
+        typeName: ServiceTypesConstants.Commons.Response.Error.Properties.Body.TYPE_NAME,
         docs: failedResponse.docs,
         discriminant: failedResponse.discriminant,
         types: failedResponse.errors.map(

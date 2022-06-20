@@ -1,5 +1,5 @@
 export const ServiceTypesConstants = {
-    Types: {
+    Commons: {
         Request: {
             TYPE_NAME: "Request",
 
@@ -37,6 +37,21 @@ export const ServiceTypesConstants = {
                         TYPE_NAME: "ErrorBody",
                     },
                 },
+            },
+        },
+    },
+
+    WebsocketChannel: {
+        Request: {
+            Properties: {
+                ID: "id",
+                OPERATION: "operation",
+            },
+        },
+        Response: {
+            Properties: {
+                ID: "id",
+                REPLY_TO: "replyTo",
             },
         },
     },

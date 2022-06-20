@@ -1,9 +1,10 @@
 import { NamedType, WebSocketOperation } from "@fern-api/api";
 import { DependencyManager, getTextOfTsKeyword, TypeResolver } from "@fern-typescript/commons";
-import { generateResponse, getServiceTypeReference } from "@fern-typescript/service-types";
 import { Directory, ts } from "ts-morph";
-import { ClientConstants } from "../../../constants";
-import { GeneratedOperationTypes } from "./types";
+import { generateResponse } from "../commons/generate-response/generateResponse";
+import { getServiceTypeReference } from "../commons/service-type-reference/get-service-type-reference/getServiceTypeReference";
+import { ServiceTypesConstants } from "../constants";
+import { GeneratedWebSocketOperationTypes } from "./types";
 
 export declare namespace generateResponseTypes {
     export interface Args {
@@ -16,7 +17,7 @@ export declare namespace generateResponseTypes {
         dependencyManager: DependencyManager;
     }
 
-    export type Return = GeneratedOperationTypes["response"];
+    export type Return = GeneratedWebSocketOperationTypes["response"];
 }
 
 export function generateResponseTypes({
@@ -49,11 +50,11 @@ export function generateResponseTypes({
         directory: operationDirectory,
         additionalProperties: [
             {
-                name: ClientConstants.WebsocketChannel.Operation.Types.Response.Properties.ID,
+                name: ServiceTypesConstants.WebsocketChannel.Response.Properties.ID,
                 type: getTextOfTsKeyword(ts.SyntaxKind.StringKeyword),
             },
             {
-                name: ClientConstants.WebsocketChannel.Operation.Types.Response.Properties.REPLY_TO,
+                name: ServiceTypesConstants.WebsocketChannel.Response.Properties.REPLY_TO,
                 type: getTextOfTsKeyword(ts.SyntaxKind.StringKeyword),
             },
         ],
