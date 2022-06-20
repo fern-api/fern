@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public final class ClientGeneratorCli {
 
@@ -190,6 +191,29 @@ public final class ClientGeneratorCli {
             writeFileContents(
                     Paths.get(outputDirectory, "server", BUILD_GRADLE),
                     CodeGenerationResult.getServerBuildGradle(fernPluginConfig));
+        }
+
+        writeFileContents(
+                Paths.get(outputDirectory, "settings.gradle"),
+                CodeGenerationResult.getSettingsDotGradle(
+                        fernPluginConfig.customPluginConfig().mode()));
+        Path gradleResourcesFolder = Paths.get("/gradle-resources");
+        try (Stream<Path> gradleResources = Files.walk(gradleResourcesFolder)) {
+            gradleResources.forEach(gradleResource -> {
+                Path pathToCreate =
+                        Paths.get(outputDirectory).resolve(gradleResourcesFolder.relativize(gradleResource));
+                try {
+                    if (Files.isRegularFile(gradleResource)) {
+                        Files.move(gradleResource, pathToCreate);
+                    } else if (Files.isDirectory(gradleResource) && !Files.exists(pathToCreate)) {
+                        Files.createDirectory(pathToCreate);
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException("Failed to output gradle file: " + gradleResource.toAbsolutePath(), e);
+                }
+            });
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to output gradle files", e);
         }
     }
 

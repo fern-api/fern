@@ -1,6 +1,6 @@
 name: Blog Post API
-input: src
-plugins:
+definition: src
+generators:
   - name: fern-java
     version: latest
     output: ./generated-java

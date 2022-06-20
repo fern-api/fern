@@ -9,7 +9,6 @@ org.apache.commons:commons-lang3 = 3.12.0
 
 # logging
 org.slf4j:slf4j-api = 1.7.36
-org.slf4j:slf4j-log4j12 = 1.7.36
 
 # fern
 com.fern:fern-immutables-style = 0.0.15-2-g2ec8163

@@ -48,6 +48,6 @@ services:
             postId: PostId
           response:
             ok: BlogPost
-            errors:
-              union:
-                notFound: PostNotFoundError
+            failed:
+              errors:
+                - PostNotFoundError

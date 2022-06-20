@@ -39,7 +39,7 @@ public class CliEteTest {
     private static void fernGenerate(String workingDirectory) {
         int exitCode;
         try {
-            ProcessBuilder pb = new ProcessBuilder(new String[]{"fern", "generate"})
+            ProcessBuilder pb = new ProcessBuilder(new String[]{"fern", "generate", "./api"})
                     .directory(new File(workingDirectory));
 
             Map<String, String> env = pb.environment();

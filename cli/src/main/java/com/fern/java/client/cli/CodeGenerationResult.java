@@ -1,6 +1,7 @@
 package com.fern.java.client.cli;
 
 import com.fern.codegen.IGeneratedFile;
+import com.fern.java.client.cli.CustomPluginConfig.Mode;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -82,6 +83,18 @@ public abstract class CodeGenerationResult {
                 + "    annotationProcessor 'org.immutables:value:2.8.8'\n"
                 + "    compileOnly 'org.immutables:value-annotations:2.8.8'\n"
                 + "}\n";
+    }
+
+    public static String getSettingsDotGradle(CustomPluginConfig.Mode mode) {
+        String settingsGradle = "rootProject.name = 'fern-generated-java'\n" + "\n" + "include 'model'\n";
+
+        if (mode.equals(Mode.CLIENT_AND_SERVER) || mode.equals(Mode.CLIENT)) {
+            settingsGradle += "include 'client'\n";
+        }
+        if (mode.equals(Mode.CLIENT_AND_SERVER) || mode.equals(Mode.CLIENT)) {
+            settingsGradle += "include 'server'\n";
+        }
+        return settingsGradle;
     }
 
     static String getModelSubprojectDependency(FernPluginConfig fernPluginConfig) {
