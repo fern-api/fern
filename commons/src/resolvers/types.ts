@@ -12,6 +12,7 @@ export type ResolvedType =
     | ResolvedType.Enum
     | ResolvedType.Container
     | ResolvedType.Primitive
+    | ResolvedType.Unknown
     | ResolvedType.Void;
 
 export declare namespace ResolvedType {
@@ -37,6 +38,10 @@ export declare namespace ResolvedType {
         primitive: PrimitiveType;
     }
 
+    interface Unknown {
+        _type: "unknown";
+    }
+
     interface Void {
         _type: "void";
     }
@@ -47,6 +52,7 @@ export declare namespace ResolvedType {
         enum: (value: EnumTypeDefinition) => Result;
         container: (value: ContainerType) => Result;
         primitive: (value: PrimitiveType) => Result;
+        unknown: () => Result;
         void: () => Result;
         _unknown: () => Result;
     }
@@ -82,6 +88,10 @@ export const ResolvedType = {
         _type: "void",
     }),
 
+    unknown: (): ResolvedType.Unknown => ({
+        _type: "unknown",
+    }),
+
     _visit: <Result>(value: ResolvedType, visitor: ResolvedType._Visitor<Result>): Result => {
         switch (value._type) {
             case "object":
@@ -94,6 +104,8 @@ export const ResolvedType = {
                 return visitor.container(value.container);
             case "primitive":
                 return visitor.primitive(value.primitive);
+            case "unknown":
+                return visitor.unknown();
             case "void":
                 return visitor.void();
             default:
