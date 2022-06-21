@@ -13,7 +13,7 @@ export function generateUuidCall({
 
     file.addImportDeclaration({
         moduleSpecifier: "uuid",
-        defaultImport: "uuid",
+        namespaceImport: "uuid",
     });
 
     return ts.factory.createCallExpression(

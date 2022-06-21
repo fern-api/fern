@@ -71,7 +71,7 @@ export * from \\"./ChatMessageId\\";
 ",
   "/src/services/ChatService/ChatService.ts": "import path from \\"path\\";
 import { ChatService } from \\"..\\";
-import uuid from \\"uuid\\";
+import * as uuid from \\"uuid\\";
 
 export declare namespace Client {
     interface Args {
@@ -146,7 +146,7 @@ export * from \\"./ChatService\\";
   "/src/services/ChatService/operations/index.ts": "export * as sendChat from \\"./sendChat\\";
 ",
   "/src/services/ChatService/operations/sendChat/ErrorBody.ts": "import * as model from \\"../../../../model\\";
-import uuid from \\"uuid\\";
+import * as uuid from \\"uuid\\";
 
 export type ErrorBody =
     | ErrorBody.GenericMessage;
@@ -750,7 +750,7 @@ export * from \\"./Request\\";
 export * from \\"./Response\\";
 ",
   "/src/services/PostsService/endpoints/getPost/ErrorBody.ts": "import * as model from \\"../../../../model\\";
-import uuid from \\"uuid\\";
+import * as uuid from \\"uuid\\";
 
 export type ErrorBody =
     | ErrorBody.PostNotFoundError;
@@ -814,7 +814,7 @@ export * from \\"./Request\\";
 export * from \\"./Response\\";
 ",
   "/src/services/PostsService/endpoints/getPostV2/ErrorBody.ts": "import * as model from \\"../../../../model\\";
-import uuid from \\"uuid\\";
+import * as uuid from \\"uuid\\";
 
 export type ErrorBody =
     | ErrorBody.PostNotFoundError;
