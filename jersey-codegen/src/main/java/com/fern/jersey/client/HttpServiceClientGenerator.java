@@ -103,11 +103,9 @@ public final class HttpServiceClientGenerator extends Generator {
         MethodSpec.Builder endpointMethodBuilder = MethodSpec.methodBuilder(httpEndpoint.endpointId())
                 .addAnnotation(httpEndpoint.method().visit(HttpMethodAnnotationVisitor.INSTANCE))
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT);
-        if (httpService.basePath().isPresent()) {
-            endpointMethodBuilder.addAnnotation(AnnotationSpec.builder(Path.class)
-                    .addMember("value", "$S", httpService.basePath().get())
-                    .build());
-        }
+        endpointMethodBuilder.addAnnotation(AnnotationSpec.builder(Path.class)
+                .addMember("value", "$S", httpService.basePath().orElse("/"))
+                .build());
         httpEndpoint
                 .auth()
                 .visit(new HttpAuthToParameterSpec(generatorContext))

@@ -66,11 +66,9 @@ public final class HttpServiceServerGenerator extends Generator {
                 .addAnnotation(AnnotationSpec.builder(Produces.class)
                         .addMember("value", "$T.APPLICATION_JSON", MediaType.class)
                         .build());
-        if (httpService.basePath().isPresent()) {
-            jerseyServiceBuilder.addAnnotation(AnnotationSpec.builder(Path.class)
-                    .addMember("value", "$S", httpService.basePath().get())
-                    .build());
-        }
+        jerseyServiceBuilder.addAnnotation(AnnotationSpec.builder(Path.class)
+                .addMember("value", "$S", httpService.basePath().orElse("/"))
+                .build());
         List<MethodSpec> httpEndpointMethods = httpService.endpoints().stream()
                 .map(this::getHttpEndpointMethodSpec)
                 .flatMap(httpEndpointServerMethods ->
