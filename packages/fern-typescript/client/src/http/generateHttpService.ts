@@ -8,6 +8,7 @@ import {
     getTextOfTsKeyword,
     getTextOfTsNode,
     maybeAddDocs,
+    ModelContext,
     TypeResolver,
 } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
@@ -26,6 +27,7 @@ const SERVICE_INIT_TYPE = ts.factory.createTypeReferenceNode(
 export async function generateHttpService({
     servicesDirectory,
     modelDirectory,
+    modelContext,
     encodersDirectory,
     service,
     typeResolver,
@@ -35,6 +37,7 @@ export async function generateHttpService({
 }: {
     servicesDirectory: Directory;
     modelDirectory: Directory;
+    modelContext: ModelContext;
     encodersDirectory: Directory;
     service: HttpService;
     typeResolver: TypeResolver;
@@ -52,6 +55,7 @@ export async function generateHttpService({
         service,
         serviceDirectory,
         modelDirectory,
+        modelContext,
         encodersDirectory,
         typeResolver,
         errorResolver,
@@ -64,6 +68,7 @@ async function generateService({
     service,
     serviceDirectory,
     modelDirectory,
+    modelContext,
     encodersDirectory,
     typeResolver,
     errorResolver,
@@ -73,6 +78,7 @@ async function generateService({
     service: HttpService;
     serviceDirectory: Directory;
     modelDirectory: Directory;
+    modelContext: ModelContext;
     encodersDirectory: Directory;
     typeResolver: TypeResolver;
     errorResolver: ErrorResolver;
@@ -140,6 +146,7 @@ async function generateService({
             serviceClass,
             serviceDefinition: service,
             modelDirectory,
+            modelContext,
             encodersDirectory,
             typeResolver,
             errorResolver,

@@ -1,5 +1,5 @@
 import { HttpEndpoint, TypeName } from "@fern-api/api";
-import { getTextOfTsNode, getTypeReference, TypeResolver } from "@fern-typescript/commons";
+import { getTextOfTsNode, getTypeReference, ModelContext, TypeResolver } from "@fern-typescript/commons";
 import { Directory, OptionalKind, PropertySignatureStructure, SourceFile } from "ts-morph";
 import { GeneratedRequest, generateRequest } from "../commons/generate-request/generateRequest";
 import { getServiceTypeReference } from "../commons/service-type-reference/get-service-type-reference/getServiceTypeReference";
@@ -11,6 +11,7 @@ export declare namespace generateRequestTypes {
         endpoint: HttpEndpoint;
         serviceName: TypeName;
         modelDirectory: Directory;
+        modelContext: ModelContext;
         typeResolver: TypeResolver;
     }
 }
@@ -19,6 +20,7 @@ export function generateRequestTypes({
     endpoint,
     serviceName,
     modelDirectory,
+    modelContext,
     typeResolver,
 }: generateRequestTypes.Args): GeneratedRequest {
     const getAdditionalProperties = [
@@ -39,11 +41,13 @@ export function generateRequestTypes({
 
     return generateRequest({
         modelDirectory,
+        modelContext,
         getTypeReferenceToServiceType: ({ reference, referencedIn }) =>
             getServiceTypeReference({
                 reference,
                 referencedIn,
                 modelDirectory,
+                modelContext,
             }),
         body: {
             type: endpoint.request.type,

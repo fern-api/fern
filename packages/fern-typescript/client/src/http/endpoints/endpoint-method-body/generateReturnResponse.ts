@@ -1,4 +1,5 @@
 import { HttpEndpoint, HttpService } from "@fern-api/api";
+import { ModelContext } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import {
     GeneratedHttpEndpointTypes,
@@ -15,6 +16,7 @@ export async function generateReturnResponse({
     endpoint,
     endpointTypes,
     modelDirectory,
+    modelContext,
     encodersDirectory,
     helperManager,
 }: {
@@ -23,6 +25,7 @@ export async function generateReturnResponse({
     endpoint: HttpEndpoint;
     endpointTypes: GeneratedHttpEndpointTypes;
     modelDirectory: Directory;
+    modelContext: ModelContext;
     encodersDirectory: Directory;
     helperManager: HelperManager;
 }): Promise<ts.Statement> {
@@ -41,6 +44,7 @@ export async function generateReturnResponse({
                 encodersDirectory,
                 modelDirectory,
                 helperManager,
+                modelContext,
             })
         ),
         ts.factory.createBlock(
@@ -52,6 +56,7 @@ export async function generateReturnResponse({
                 helperManager,
                 encodersDirectory,
                 modelDirectory,
+                modelContext,
             })
         )
     );
@@ -63,6 +68,7 @@ async function generateReturnSuccessResponse({
     endpoint,
     endpointTypes,
     modelDirectory,
+    modelContext,
     encodersDirectory,
     helperManager,
 }: {
@@ -71,6 +77,7 @@ async function generateReturnSuccessResponse({
     endpoint: HttpEndpoint;
     endpointTypes: GeneratedHttpEndpointTypes;
     modelDirectory: Directory;
+    modelContext: ModelContext;
     encodersDirectory: Directory;
     helperManager: HelperManager;
 }): Promise<ts.Statement[]> {
@@ -101,6 +108,7 @@ async function generateReturnSuccessResponse({
                         reference: endpointTypes.response.successBodyReference,
                         referencedIn: serviceFile,
                         modelDirectory,
+                        modelContext,
                     })
                 )
             )
@@ -123,6 +131,7 @@ async function generateReturnErrorResponse({
     serviceFile,
     encodersDirectory,
     modelDirectory,
+    modelContext,
 }: {
     serviceDefinition: HttpService;
     serviceFile: SourceFile;
@@ -131,6 +140,7 @@ async function generateReturnErrorResponse({
     helperManager: HelperManager;
     encodersDirectory: Directory;
     modelDirectory: Directory;
+    modelContext: ModelContext;
 }): Promise<ts.Statement[]> {
     const statements: ts.Statement[] = [];
     const returnStatementProperties: ts.ObjectLiteralElementLike[] = getBaseResponseProperties({ ok: false });
@@ -156,6 +166,7 @@ async function generateReturnErrorResponse({
                         reference: endpointTypes.response.errorBodyReference,
                         referencedIn: serviceFile,
                         modelDirectory,
+                        modelContext,
                     })
                 )
             )

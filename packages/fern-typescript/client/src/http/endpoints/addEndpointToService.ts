@@ -1,5 +1,11 @@
 import { HttpEndpoint, HttpService } from "@fern-api/api";
-import { DependencyManager, ErrorResolver, getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
+import {
+    DependencyManager,
+    ErrorResolver,
+    getTextOfTsNode,
+    ModelContext,
+    TypeResolver,
+} from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import { generateHttpEndpointTypes, getServiceTypeReference } from "@fern-typescript/service-types";
 import {
@@ -20,6 +26,7 @@ export async function addEndpointToService({
     serviceClass,
     serviceDefinition,
     modelDirectory,
+    modelContext,
     encodersDirectory,
     typeResolver,
     errorResolver,
@@ -31,6 +38,7 @@ export async function addEndpointToService({
     serviceClass: ClassDeclaration;
     serviceDefinition: HttpService;
     modelDirectory: Directory;
+    modelContext: ModelContext;
     encodersDirectory: Directory;
     typeResolver: TypeResolver;
     errorResolver: ErrorResolver;
@@ -43,6 +51,7 @@ export async function addEndpointToService({
         endpoint,
         serviceName: serviceDefinition.name,
         modelDirectory,
+        modelContext,
         typeResolver,
         errorResolver,
         dependencyManager,
@@ -59,6 +68,7 @@ export async function addEndpointToService({
                                   reference: generatedEndpointTypes.request.wrapper.reference,
                                   referencedIn: serviceFile,
                                   modelDirectory,
+                                  modelContext,
                               })
                           ),
                       },
@@ -72,6 +82,7 @@ export async function addEndpointToService({
                                   reference: generatedEndpointTypes.request.body,
                                   referencedIn: serviceFile,
                                   modelDirectory,
+                                  modelContext,
                               })
                           ),
                       },
@@ -85,6 +96,7 @@ export async function addEndpointToService({
                 reference: generatedEndpointTypes.response.reference,
                 referencedIn: serviceFile,
                 modelDirectory,
+                modelContext,
             }),
         ])
     );
@@ -109,6 +121,7 @@ export async function addEndpointToService({
             typeResolver,
             helperManager,
             modelDirectory,
+            modelContext,
             encodersDirectory,
         }),
     });

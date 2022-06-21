@@ -1,5 +1,5 @@
 import { WebSocketOperation } from "@fern-api/api";
-import { DependencyManager, generateUuidCall, getTextOfTsNode } from "@fern-typescript/commons";
+import { DependencyManager, generateUuidCall, getTextOfTsNode, ModelContext } from "@fern-typescript/commons";
 import {
     GeneratedWebSocketOperationTypes,
     getServiceTypeReference,
@@ -17,12 +17,14 @@ export function generateOperationMethodBody({
     channelFile,
     dependencyManager,
     modelDirectory,
+    modelContext,
 }: {
     operation: WebSocketOperation;
     operationTypes: GeneratedWebSocketOperationTypes;
     channelFile: SourceFile;
     dependencyManager: DependencyManager;
     modelDirectory: Directory;
+    modelContext: ModelContext;
 }): (StatementStructures | WriterFunction | string)[] {
     return [
         (writer) => {
@@ -83,6 +85,7 @@ export function generateOperationMethodBody({
                                 operationTypes,
                                 dependencyManager,
                                 modelDirectory,
+                                modelContext,
                             }),
                             true
                         )
@@ -99,12 +102,14 @@ function generatePromiseBody({
     operationTypes,
     dependencyManager,
     modelDirectory,
+    modelContext,
 }: {
     operation: WebSocketOperation;
     channelFile: SourceFile;
     operationTypes: GeneratedWebSocketOperationTypes;
     dependencyManager: DependencyManager;
     modelDirectory: Directory;
+    modelContext: ModelContext;
 }): ts.Statement[] {
     const messageElements: ts.ObjectLiteralElementLike[] = [
         ts.factory.createPropertyAssignment(
@@ -142,6 +147,7 @@ function generatePromiseBody({
                             reference: operationTypes.request.wrapper.reference,
                             referencedIn: channelFile,
                             modelDirectory,
+                            modelContext,
                         }),
                         ts.factory.createObjectLiteralExpression(messageElements, true)
                     ),

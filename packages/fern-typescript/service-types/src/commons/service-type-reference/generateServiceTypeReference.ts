@@ -1,6 +1,6 @@
 import { Type } from "@fern-api/api";
 import { assertNever } from "@fern-api/commons";
-import { getOrCreateSourceFile, TypeResolver } from "@fern-typescript/commons";
+import { getOrCreateSourceFile, ModelContext, TypeResolver } from "@fern-typescript/commons";
 import { generateType } from "@fern-typescript/types";
 import { Directory } from "ts-morph";
 import { ServiceTypeMetadata, ServiceTypeReference } from "./types";
@@ -11,6 +11,7 @@ export declare namespace generateServiceTypeReference {
         type: Type;
         docs: string | null | undefined;
         modelDirectory: Directory;
+        modelContext: ModelContext;
         typeResolver: TypeResolver;
     }
 }
@@ -20,6 +21,7 @@ export function generateServiceTypeReference({
     type,
     docs,
     modelDirectory,
+    modelContext,
     typeResolver,
 }: generateServiceTypeReference.Args): ServiceTypeReference | undefined {
     if (type._type === "alias") {
@@ -46,7 +48,7 @@ export function generateServiceTypeReference({
         docs,
         typeName: metadata.typeName,
         typeResolver,
-        modelDirectory,
+        modelContext,
         file,
     });
 

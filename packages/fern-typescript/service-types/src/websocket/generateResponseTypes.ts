@@ -1,5 +1,11 @@
 import { TypeName, WebSocketOperation } from "@fern-api/api";
-import { DependencyManager, ErrorResolver, getTextOfTsKeyword, TypeResolver } from "@fern-typescript/commons";
+import {
+    DependencyManager,
+    ErrorResolver,
+    getTextOfTsKeyword,
+    ModelContext,
+    TypeResolver,
+} from "@fern-typescript/commons";
 import { Directory, ts } from "ts-morph";
 import { generateResponse } from "../commons/generate-response/generateResponse";
 import { getServiceTypeReference } from "../commons/service-type-reference/get-service-type-reference/getServiceTypeReference";
@@ -12,6 +18,7 @@ export declare namespace generateResponseTypes {
         channelName: TypeName;
         operation: WebSocketOperation;
         modelDirectory: Directory;
+        modelContext: ModelContext;
         typeResolver: TypeResolver;
         errorResolver: ErrorResolver;
         dependencyManager: DependencyManager;
@@ -24,12 +31,14 @@ export function generateResponseTypes({
     channelName,
     operation,
     modelDirectory,
+    modelContext,
     typeResolver,
     errorResolver,
     dependencyManager,
 }: generateResponseTypes.Args): generateResponseTypes.Return {
     const { reference, successBodyReference, errorBodyReference } = generateResponse({
         modelDirectory,
+        modelContext,
         typeResolver,
         errorResolver,
         dependencyManager,
@@ -43,6 +52,7 @@ export function generateResponseTypes({
                 reference,
                 referencedIn,
                 modelDirectory,
+                modelContext,
             }),
         additionalProperties: [
             {

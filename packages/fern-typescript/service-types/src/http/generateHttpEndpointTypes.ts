@@ -1,5 +1,5 @@
 import { HttpEndpoint, TypeName } from "@fern-api/api";
-import { DependencyManager, ErrorResolver, TypeResolver } from "@fern-typescript/commons";
+import { DependencyManager, ErrorResolver, ModelContext, TypeResolver } from "@fern-typescript/commons";
 import { Directory } from "ts-morph";
 import { generateRequestTypes } from "./generateRequestTypes";
 import { generateResponseTypes } from "./generateResponseTypes";
@@ -9,6 +9,7 @@ export function generateHttpEndpointTypes({
     serviceName,
     endpoint,
     modelDirectory,
+    modelContext,
     typeResolver,
     errorResolver,
     dependencyManager,
@@ -16,6 +17,7 @@ export function generateHttpEndpointTypes({
     serviceName: TypeName;
     endpoint: HttpEndpoint;
     modelDirectory: Directory;
+    modelContext: ModelContext;
     typeResolver: TypeResolver;
     errorResolver: ErrorResolver;
     dependencyManager: DependencyManager;
@@ -25,12 +27,14 @@ export function generateHttpEndpointTypes({
             serviceName,
             endpoint,
             modelDirectory,
+            modelContext,
             typeResolver,
         }),
         response: generateResponseTypes({
             serviceName,
             endpoint,
             modelDirectory,
+            modelContext,
             typeResolver,
             errorResolver,
             dependencyManager,

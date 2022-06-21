@@ -1,5 +1,5 @@
 import { Type } from "@fern-api/api";
-import { getOrCreateSourceFile, getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
+import { getOrCreateSourceFile, getTextOfTsNode, ModelContext, TypeResolver } from "@fern-typescript/commons";
 import { Directory, OptionalKind, PropertySignatureStructure, SourceFile, ts } from "ts-morph";
 import { ServiceTypesConstants } from "../../constants";
 import { generateServiceTypeReference } from "../service-type-reference/generateServiceTypeReference";
@@ -23,6 +23,7 @@ export interface GeneratedRequest {
 export declare namespace generateRequest {
     export interface Args {
         modelDirectory: Directory;
+        modelContext: ModelContext;
         requestMetadata: ServiceTypeMetadata;
         requestBodyMetadata: ServiceTypeMetadata;
         getTypeReferenceToServiceType: (args: {
@@ -43,6 +44,7 @@ export declare namespace generateRequest {
 
 export function generateRequest({
     modelDirectory,
+    modelContext,
     requestMetadata,
     requestBodyMetadata,
     getTypeReferenceToServiceType,
@@ -57,6 +59,7 @@ export function generateRequest({
             type: body.type,
             docs: body.docs,
             modelDirectory,
+            modelContext,
             typeResolver,
         });
         if (requestBodyReference == null) {
@@ -77,6 +80,7 @@ export function generateRequest({
         type: body.type,
         docs: body.docs,
         modelDirectory,
+        modelContext,
         typeResolver,
     });
 

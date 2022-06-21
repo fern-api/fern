@@ -1,5 +1,5 @@
 import { HttpEndpoint, HttpService } from "@fern-api/api";
-import { getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
+import { getTextOfTsNode, ModelContext, TypeResolver } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import { GeneratedHttpEndpointTypes } from "@fern-typescript/service-types";
 import { Directory, SourceFile, StatementStructures, WriterFunction } from "ts-morph";
@@ -15,6 +15,7 @@ export async function generateEndpointMethodBody({
     typeResolver,
     helperManager,
     modelDirectory,
+    modelContext,
     encodersDirectory,
 }: {
     endpoint: HttpEndpoint;
@@ -24,6 +25,7 @@ export async function generateEndpointMethodBody({
     typeResolver: TypeResolver;
     helperManager: HelperManager;
     modelDirectory: Directory;
+    modelContext: ModelContext;
     encodersDirectory: Directory;
 }): Promise<(StatementStructures | WriterFunction | string)[]> {
     const queryParameterStatements = generateConstructQueryParams({ endpoint, typeResolver });
@@ -55,6 +57,7 @@ export async function generateEndpointMethodBody({
                 endpointTypes,
                 serviceFile,
                 modelDirectory,
+                modelContext,
                 serviceDefinition,
                 endpoint,
                 helperManager,

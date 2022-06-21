@@ -4,6 +4,7 @@ import {
     ErrorResolver,
     getOrCreateSourceFile,
     getTextOfTsNode,
+    ModelContext,
     TypeResolver,
 } from "@fern-typescript/commons";
 import {
@@ -27,6 +28,7 @@ import { generateErrorBody } from "./generateErrorBody";
 export declare namespace generateResponse {
     export interface Args {
         modelDirectory: Directory;
+        modelContext: ModelContext;
         responseMetadata: ServiceTypeMetadata;
         successBodyMetadata: ServiceTypeMetadata;
         errorBodyMetadata: ServiceTypeMetadata;
@@ -54,6 +56,7 @@ export declare namespace generateResponse {
 
 export function generateResponse({
     modelDirectory,
+    modelContext,
     responseMetadata,
     successBodyMetadata,
     errorBodyMetadata,
@@ -101,6 +104,7 @@ export function generateResponse({
         type: successResponse.type,
         docs: successResponse.docs,
         modelDirectory,
+        modelContext,
         typeResolver,
     });
     addSuccessResponseInterface({
@@ -112,6 +116,7 @@ export function generateResponse({
 
     const { errorBodyReference } = maybeGenerateErrorBody({
         modelDirectory,
+        modelContext,
         errorBodyMetadata,
         failedResponse,
         typeResolver,
@@ -233,6 +238,7 @@ function createBaseResponseProperties({ ok }: { ok: boolean }): OptionalKind<Pro
 
 function maybeGenerateErrorBody({
     modelDirectory,
+    modelContext,
     errorBodyMetadata,
     failedResponse,
     typeResolver,
@@ -240,6 +246,7 @@ function maybeGenerateErrorBody({
     dependencyManager,
 }: {
     modelDirectory: Directory;
+    modelContext: ModelContext;
     errorBodyMetadata: ServiceTypeMetadata;
     failedResponse: FailedResponse;
     typeResolver: TypeResolver;
@@ -257,7 +264,7 @@ function maybeGenerateErrorBody({
         errorBodyMetadata,
         typeResolver,
         errorResolver,
-        modelDirectory,
+        modelContext,
         dependencyManager,
     });
 

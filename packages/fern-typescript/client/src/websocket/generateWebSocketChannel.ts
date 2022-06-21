@@ -7,6 +7,7 @@ import {
     getTextOfTsKeyword,
     getTextOfTsNode,
     maybeAddDocs,
+    ModelContext,
     TypeResolver,
 } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
@@ -29,6 +30,7 @@ import { addClientOperationToChannel } from "./operations/addClientOperationToCh
 export function generateWebSocketChannel({
     servicesDirectory,
     modelDirectory,
+    modelContext,
     channel,
     typeResolver,
     errorResolver,
@@ -36,6 +38,7 @@ export function generateWebSocketChannel({
 }: {
     servicesDirectory: Directory;
     modelDirectory: Directory;
+    modelContext: ModelContext;
     encodersDirectory: Directory;
     channel: WebSocketChannel;
     typeResolver: TypeResolver;
@@ -53,6 +56,7 @@ export function generateWebSocketChannel({
         channel,
         channelDirectory,
         modelDirectory,
+        modelContext,
         errorResolver,
         typeResolver,
         dependencyManager,
@@ -63,6 +67,7 @@ function generateChannel({
     channel,
     channelDirectory,
     modelDirectory,
+    modelContext,
     typeResolver,
     errorResolver,
     dependencyManager,
@@ -70,6 +75,7 @@ function generateChannel({
     channel: WebSocketChannel;
     channelDirectory: Directory;
     modelDirectory: Directory;
+    modelContext: ModelContext;
     typeResolver: TypeResolver;
     errorResolver: ErrorResolver;
     dependencyManager: DependencyManager;
@@ -135,6 +141,7 @@ function generateChannel({
             channelInterface,
             channel,
             modelDirectory,
+            modelContext,
             typeResolver,
             errorResolver,
             dependencyManager,
@@ -144,6 +151,7 @@ function generateChannel({
                 reference: generatedOperationTypes.response.reference,
                 referencedIn: channelFile,
                 modelDirectory,
+                modelContext,
             })
         );
     }

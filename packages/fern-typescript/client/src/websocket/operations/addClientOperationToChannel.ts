@@ -1,5 +1,11 @@
 import { WebSocketChannel, WebSocketOperation } from "@fern-api/api";
-import { DependencyManager, ErrorResolver, getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
+import {
+    DependencyManager,
+    ErrorResolver,
+    getTextOfTsNode,
+    ModelContext,
+    TypeResolver,
+} from "@fern-typescript/commons";
 import {
     GeneratedWebSocketOperationTypes,
     generateWebSocketOperationTypes,
@@ -24,6 +30,7 @@ export declare namespace addClientOperationToChannel {
         channelInterface: InterfaceDeclaration;
         operation: WebSocketOperation;
         modelDirectory: Directory;
+        modelContext: ModelContext;
         typeResolver: TypeResolver;
         errorResolver: ErrorResolver;
         dependencyManager: DependencyManager;
@@ -40,6 +47,7 @@ export function addClientOperationToChannel({
     channelClass,
     operation,
     modelDirectory,
+    modelContext,
     typeResolver,
     errorResolver,
     dependencyManager,
@@ -50,6 +58,7 @@ export function addClientOperationToChannel({
         channel,
         operation,
         modelDirectory,
+        modelContext,
         typeResolver,
         errorResolver,
         dependencyManager,
@@ -65,6 +74,7 @@ export function addClientOperationToChannel({
                               reference: generatedOperationTypes.request.body,
                               referencedIn: channelFile,
                               modelDirectory,
+                              modelContext,
                           })
                       ),
                   },
@@ -77,6 +87,7 @@ export function addClientOperationToChannel({
                 reference: generatedOperationTypes.response.reference,
                 referencedIn: channelFile,
                 modelDirectory,
+                modelContext,
             }),
         ])
     );
@@ -99,6 +110,7 @@ export function addClientOperationToChannel({
             channelFile,
             dependencyManager,
             modelDirectory,
+            modelContext,
         }),
     });
 

@@ -1,4 +1,4 @@
-import { getTypeReference } from "@fern-typescript/commons";
+import { ImportStrategy, ModelContext } from "@fern-typescript/commons";
 import { Directory, SourceFile, ts } from "ts-morph";
 import { ServiceTypeReference } from "../types";
 import { getInlinedServiceTypeReference } from "./getInlinedServiceTypeReference";
@@ -8,9 +8,11 @@ export function getServiceTypeReference({
     reference,
     referencedIn,
     modelDirectory,
+    modelContext,
 }: {
     referencedIn: SourceFile;
     modelDirectory: Directory;
+    modelContext: ModelContext;
     reference: ServiceTypeReference;
 }): ts.TypeNode {
     if (reference.isInlined) {
@@ -20,10 +22,10 @@ export function getServiceTypeReference({
             modelDirectory,
         });
     } else {
-        return getTypeReference({
+        return modelContext.getReferenceToType({
             reference: reference.typeReference,
             referencedIn,
-            modelDirectory,
+            importStrategy: ImportStrategy.NAMED_IMPORT,
         });
     }
 }
