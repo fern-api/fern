@@ -8,9 +8,9 @@ types:
     docs: "A type, which is a name and a shape"
     extends: commons.WithDocs
     properties:
-      name: NamedType
+      name: TypeName
       shape: Type
-  NamedType:
+  TypeName:
     properties:
       fernFilepath: FernFilepath
       name: string
@@ -40,7 +40,7 @@ types:
     properties:
       extends:
         docs: "A list of other types to inherit from"
-        type: list<NamedType>
+        type: list<TypeName>
       properties: list<ObjectProperty>
   ObjectProperty:
     extends: commons.WithDocs
@@ -61,7 +61,7 @@ types:
   TypeReference:
     union:
       container: ContainerType
-      named: NamedType
+      named: TypeName
       primitive: PrimitiveType
       void: {}
   ContainerType:

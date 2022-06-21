@@ -77,7 +77,7 @@ function getAllProperties({
 }): ObjectProperty[] {
     return [
         ...object.extends.flatMap((extending) => {
-            const resolvedType = typeResolver.resolveNamedType(extending);
+            const resolvedType = typeResolver.resolveTypeName(extending);
             if (resolvedType._type !== "object") {
                 throw new Error("Cannot extend from non-object. Extending: " + resolvedType._type);
             }

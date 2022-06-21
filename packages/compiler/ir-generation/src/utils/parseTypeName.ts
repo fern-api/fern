@@ -1,4 +1,4 @@
-import { FernFilepath, NamedType } from "@fern-api/api";
+import { FernFilepath, TypeName } from "@fern-api/api";
 import { parseReference } from "./parseReference";
 
 export function parseTypeName({
@@ -9,7 +9,7 @@ export function parseTypeName({
     typeName: string;
     fernFilepath: FernFilepath;
     imports: Record<string, string>;
-}): NamedType {
+}): TypeName {
     const reference = parseReference({
         reference: typeName,
         fernFilepath,

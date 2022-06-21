@@ -6,7 +6,7 @@ types:
   WebSocketChannel:
     extends: commons.WithDocs
     properties:
-      name: types.NamedType
+      name: serviceCommons.ServiceName
       path: string
       client: WebSocketMessenger
       server: WebSocketMessenger

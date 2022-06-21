@@ -1,89 +1,62 @@
-import { NamedType, SingleUnionType, TypeReference } from "@fern-api/api";
-import { getNamedTypeReference, getTypeReference, ResolvedType, TypeResolver } from "@fern-typescript/commons";
+import { Type, TypeReference } from "@fern-api/api";
+import { getTypeReference, ResolvedType, resolveType, TypeResolver } from "@fern-typescript/commons";
 import { upperFirst } from "lodash";
 import { Directory, SourceFile, ts } from "ts-morph";
 
-export const FORCE_USE_MODEL_NAMESPACE_IMPORT = true;
+// import the entire model as a namespace to prevent clashing with union subtypes
+export const FORCE_USE_MODEL_NAMESPACE_IMPORT_FOR_UNION_TYPES = true;
 
-export function getKeyForUnion({ discriminantValue }: SingleUnionType): string {
+export function getKeyForUnion({ discriminantValue }: ResolvedSingleUnionType): string {
     return upperFirst(discriminantValue);
 }
 
 export interface ResolvedSingleUnionType {
+    docs: string | null | undefined;
+    discriminantValue: string;
+    valueType: ResolvedSingleUnionValueType | undefined;
+}
+
+export interface ResolvedSingleUnionValueType {
     type: ts.TypeNode;
     isExtendable: boolean;
 }
 
-export function getResolvedTypeForSingleUnionType({
-    singleUnionType,
+export function getResolvedValueTypeForSingleUnionType({
+    valueType,
     typeResolver,
     file,
     modelDirectory,
 }: {
-    singleUnionType: SingleUnionType;
+    valueType: TypeReference;
     typeResolver: TypeResolver;
     file: SourceFile;
     modelDirectory: Directory;
-}): ResolvedSingleUnionType | undefined {
-    return visitResolvedTypeReference<ResolvedSingleUnionType | undefined>(singleUnionType.valueType, typeResolver, {
-        namedObject: (named) => {
-            return {
-                type: getNamedTypeReference({
-                    typeName: named,
-                    typeCategory: "type",
-                    referencedIn: file,
-                    modelDirectory,
-                    forceUseNamespaceImport: FORCE_USE_MODEL_NAMESPACE_IMPORT,
-                }),
-                isExtendable: true,
-            };
-        },
-        nonObject: () => {
-            return {
-                type: getTypeReference({
-                    reference: singleUnionType.valueType,
-                    referencedIn: file,
-                    modelDirectory,
-                    forceUseNamespaceImport: FORCE_USE_MODEL_NAMESPACE_IMPORT,
-                }),
-                isExtendable: false,
-            };
-        },
-        void: () => undefined,
-    });
+}): ResolvedSingleUnionValueType | undefined {
+    const resolvedType =
+        valueType._type === "named"
+            ? typeResolver.resolveTypeName(valueType)
+            : resolveType(
+                  Type.alias({
+                      aliasOf: valueType,
+                  }),
+                  (typeName) => typeResolver.resolveTypeName(typeName)
+              );
+
+    if (resolvedType._type === "void") {
+        return undefined;
+    }
+
+    return {
+        isExtendable: isTypeExtendable(resolvedType),
+        type: getTypeReference({
+            reference: valueType,
+            referencedIn: file,
+            modelDirectory,
+            forceUseNamespaceImport: FORCE_USE_MODEL_NAMESPACE_IMPORT_FOR_UNION_TYPES,
+        }),
+    };
 }
 
-export function visitResolvedTypeReference<R>(
-    typeReference: TypeReference,
-    typeResolver: TypeResolver,
-    visitor: TypeReferenceVisitor<R>
-): R {
-    return TypeReference._visit(typeReference, {
-        named: (named) => {
-            const resolved = typeResolver.resolveNamedType(named);
-            return ResolvedType._visit(resolved, {
-                object: () => visitor.namedObject(named),
-                union: visitor.nonObject,
-                enum: visitor.nonObject,
-                container: visitor.nonObject,
-                primitive: visitor.nonObject,
-                void: visitor.void,
-                _unknown: () => {
-                    throw new Error("Unexpected resolved type: " + resolved._type);
-                },
-            });
-        },
-        primitive: () => visitor.nonObject(),
-        container: () => visitor.nonObject(),
-        void: () => visitor.void(),
-        _unknown: () => {
-            throw new Error("Unexpected type reference: " + typeReference._type);
-        },
-    });
-}
-
-export interface TypeReferenceVisitor<R> {
-    namedObject: (typeName: NamedType) => R;
-    nonObject: () => R;
-    void: () => R;
+export function isTypeExtendable(resolvedType: ResolvedType): boolean {
+    return resolvedType._type === "object";
 }
