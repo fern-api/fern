@@ -1,8 +1,5 @@
 imports:
   commons: commons.yml
-ids:
-  - name: FernFilepath
-    docs: "A filepath to a Fern spec file, excluding the file extension"
 types:
   TypeDefinition:
     docs: "A type, which is a name and a shape"
@@ -12,7 +9,7 @@ types:
       shape: Type
   NamedType:
     properties:
-      fernFilepath: FernFilepath
+      fernFilepath: commons.FernFilepath
       name: string
   Type:
     union:

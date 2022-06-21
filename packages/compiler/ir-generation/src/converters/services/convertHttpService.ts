@@ -6,6 +6,8 @@ import {
     HttpEndpoint,
     HttpMethod,
     HttpService,
+    InlinedServiceTypeDefinition,
+    NamedService,
     TypeReference,
 } from "@fern-api/api";
 import { assertNever } from "@fern-api/commons";
@@ -21,21 +23,25 @@ export function convertHttpService({
     fernFilepath,
     imports,
     nonStandardEncodings,
+    addInlinedServiceType,
 }: {
     serviceDefinition: RawSchemas.HttpServiceSchema;
     serviceId: string;
     fernFilepath: FernFilepath;
     imports: Record<string, string>;
     nonStandardEncodings: CustomWireMessageEncoding[];
+    addInlinedServiceType: (inlinedServiceType: InlinedServiceTypeDefinition) => void;
 }): HttpService {
     const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
 
+    const serviceName: NamedService = {
+        name: serviceId,
+        fernFilepath,
+    };
+
     return {
         docs: serviceDefinition.docs,
-        name: {
-            name: serviceId,
-            fernFilepath,
-        },
+        name: serviceName,
         basePath: serviceDefinition["base-path"],
         headers:
             serviceDefinition.headers != null
@@ -88,16 +94,22 @@ export function convertHttpService({
                           }))
                         : [],
                 request: convertHttpRequest({
+                    serviceName,
+                    endpointId,
                     request: endpoint.request,
                     fernFilepath,
                     imports,
                     nonStandardEncodings,
+                    addInlinedServiceType,
                 }),
                 response: convertHttpResponse({
+                    serviceName,
+                    endpointId,
                     response: endpoint.response,
                     fernFilepath,
                     imports,
                     nonStandardEncodings,
+                    addInlinedServiceType,
                 }),
             })
         ),

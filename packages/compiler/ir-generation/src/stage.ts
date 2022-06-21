@@ -30,7 +30,9 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
     run: (args) => {
         const intermediateRepresentation: IntermediateRepresentation = {
             workspaceName: args.workspaceName,
-            types: [],
+            modelTypes: [],
+            inlinedServiceTypes: [],
+            inlinedOperationTypes: [],
             errors: [],
             services: {
                 http: [],
@@ -53,7 +55,7 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                     }
 
                     for (const id of ids) {
-                        intermediateRepresentation.types.push(convertId({ id, fernFilepath, imports }));
+                        intermediateRepresentation.modelTypes.push(convertId({ id, fernFilepath, imports }));
                     }
                 },
                 types: (types) => {
@@ -62,7 +64,7 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                     }
 
                     for (const [typeName, typeDefinition] of Object.entries(types)) {
-                        intermediateRepresentation.types.push(
+                        intermediateRepresentation.modelTypes.push(
                             convertTypeDefinition({
                                 typeName,
                                 typeDefinition,
@@ -99,6 +101,9 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                     fernFilepath,
                                     imports,
                                     nonStandardEncodings,
+                                    addInlinedServiceType: (inlinedServiceType) => {
+                                        intermediateRepresentation.inlinedServiceTypes.push(inlinedServiceType);
+                                    },
                                 })
                             );
                         }
@@ -113,6 +118,9 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                                     fernFilepath,
                                     imports,
                                     nonStandardEncodings,
+                                    addInlinedOperationType: (inlinedOperationType) => {
+                                        intermediateRepresentation.inlinedOperationTypes.push(inlinedOperationType);
+                                    },
                                 })
                             );
                         }

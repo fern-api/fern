@@ -1,5 +1,6 @@
 imports:
   types: types.yml
+  inlinedServiceTypes: services/inlined-service-types.yml
   errors: errors.yml
   http: services/http.yml
   websocket: services/websocket.yml
@@ -8,9 +9,13 @@ types:
     docs: "Complete representation of the API schema"
     properties:
       workspaceName: optional<string>
-      types:
+      modelTypes:
         docs: "The types described by this API"
         type: list<types.TypeDefinition>
+      inlinedServiceTypes:
+        type: list<inlinedServiceTypes.InlinedServiceTypeDefinition>
+      inlinedOperationTypes:
+        type: list<inlinedServiceTypes.InlinedOperationTypeDefinition>
       services:
         docs: "The services exposed by this API"
         type: Services

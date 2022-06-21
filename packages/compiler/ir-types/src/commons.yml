@@ -1,3 +1,6 @@
+ids:
+  - name: FernFilepath
+    docs: "A filepath to a Fern spec file, excluding the file extension"
 types:
   WithDocs:
     properties:

@@ -2,11 +2,12 @@ imports:
   serviceCommons: ./commons.yml
   commons: ../commons.yml
   types: ../types.yml
+  inlinedServiceTypes: ./inlined-service-types.yml
 types:
   HttpService:
     extends: commons.WithDocs
     properties:
-      name: types.NamedType
+      name: serviceCommons.NamedService
       basePath: optional<string>
       endpoints: list<HttpEndpoint>
       headers: list<HttpHeader>
@@ -52,7 +53,7 @@ types:
     extends: commons.WithDocs
     properties:
       encoding: serviceCommons.Encoding
-      type: types.Type
+      type: HttpServiceTypeReference
   HttpResponse:
     extends: commons.WithDocs
     properties:
@@ -62,4 +63,8 @@ types:
   HttpOkResponse:
     extends: commons.WithDocs
     properties:
-      type: types.Type
+      type: HttpServiceTypeReference
+  HttpServiceTypeReference:
+    union:
+      model: types.TypeReference
+      inlined: inlinedServiceTypes.InlinedServiceTypeName

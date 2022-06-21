@@ -5,9 +5,13 @@ types:
   ErrorDefinition:
     extends: commons.WithDocs
     properties:
-      name: types.NamedType
+      name: types.ErrorName
       type: types.Type
       http: optional<HttpErrorConfiguration>
+  NamedError:
+    properties:
+      fernFilepath: commons.FernFilepath
+      name: string
   HttpErrorConfiguration:
     properties:
       statusCode: integer

@@ -14,7 +14,7 @@ export class TypeResolver {
     constructor(intermediateRepresentation: IntermediateRepresentation) {
         const allTypes: Record<Filepath, Record<SimpleTypeName, Type>> = {};
 
-        for (const type of intermediateRepresentation.types) {
+        for (const type of intermediateRepresentation.modelTypes) {
             let typesAtFilepath = allTypes[type.name.fernFilepath];
             if (typesAtFilepath == null) {
                 typesAtFilepath = {};
@@ -23,26 +23,10 @@ export class TypeResolver {
 
             typesAtFilepath[type.name.name] = type.shape;
         }
-        for (const type of intermediateRepresentation.types) {
+        for (const type of intermediateRepresentation.modelTypes) {
             this.resolveTypeRecursive({
                 allTypes,
                 typeName: type.name,
-            });
-        }
-
-        for (const error of intermediateRepresentation.errors) {
-            let typesAtFilepath = allTypes[error.name.fernFilepath];
-            if (typesAtFilepath == null) {
-                typesAtFilepath = {};
-                allTypes[error.name.fernFilepath] = typesAtFilepath;
-            }
-
-            typesAtFilepath[error.name.name] = error.type;
-        }
-        for (const error of intermediateRepresentation.errors) {
-            this.resolveTypeRecursive({
-                allTypes,
-                typeName: error.name,
             });
         }
     }

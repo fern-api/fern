@@ -2,11 +2,12 @@ imports:
   serviceCommons: ./commons.yml
   commons: ../commons.yml
   types: ../types.yml
+  inlinedServiceTypes: ./inlined-service-types.yml
 types:
   WebSocketChannel:
     extends: commons.WithDocs
     properties:
-      name: types.NamedType
+      name: serviceCommons.NamedChannel
       path: string
       client: WebSocketMessenger
       server: WebSocketMessenger
@@ -24,7 +25,7 @@ types:
     extends: commons.WithDocs
     properties:
       encoding: serviceCommons.Encoding
-      type: types.Type
+      type: WebSocketOperationInlinedTypeReference
   WebSocketResponse:
     extends: commons.WithDocs
     properties:
@@ -34,9 +35,13 @@ types:
   WebSocketOkResponse:
     extends: commons.WithDocs
     properties:
-      type: types.Type
+      type: WebSocketOperationInlinedTypeReference
   WebSocketOperationProperties:
     properties:
       id: string
       operation: string
       body: string
+  WebSocketOperationInlinedTypeReference:
+    union:
+      model: types.TypeReference
+      inlined: inlinedServiceTypes.InlinedOperationTypeName

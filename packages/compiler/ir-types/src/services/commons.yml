@@ -1,6 +1,7 @@
 imports:
   commons: ../commons.yml
-  types: ../types.yml
+  # TODO commons probably shouldn't rely on errors
+  errors: ../errors.yml
 types:
   Encoding:
     union:
@@ -9,6 +10,7 @@ types:
   CustomWireMessageEncoding:
     properties:
       encoding: string
+
   FailedResponse:
     extends: commons.WithDocs
     properties:
@@ -22,4 +24,20 @@ types:
     extends: commons.WithDocs
     properties:
       discriminantValue: string
-      error: types.NamedType
+      error: errors.NamedError
+
+  NamedInlinedServiceType:
+    properties:
+      fernFilepath: commons.FernFilepath
+      name: string
+
+  # TODO move to http commons?
+  NamedService:
+    properties:
+      fernFilepath: commons.FernFilepath
+      name: string
+  # TODO move to websocket commons?
+  NamedChannel:
+    properties:
+      fernFilepath: commons.FernFilepath
+      name: string

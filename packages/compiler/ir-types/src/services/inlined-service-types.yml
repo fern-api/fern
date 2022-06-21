@@ -1,0 +1,39 @@
+imports:
+  commons: commons.yml
+  serviceCommons: services/commons.yml
+  types: types.yml
+types:
+  # TODO move this to a http folder?
+  InlinedServiceTypeDefinition:
+    properties:
+      name: InlinedServiceTypeName
+      shape: types.Type
+  InlinedServiceTypeName:
+    properties:
+      serviceName: serviceCommons.NamedService
+      endpointId: string
+      messageType: ServiceMessageType
+  ServiceMessageType:
+    enum:
+      - REQUEST
+      - OK_RESPONSE
+
+  # TODO move this to a websocket folder?
+  InlinedOperationTypeDefinition:
+    properties:
+      name: InlinedOperationTypeName
+      shape: types.Type
+  InlinedOperationTypeName:
+    properties:
+      channelName: serviceCommons.NamedService
+      operationId: string
+      origin: WebSocketOperationOrigin
+      messageType: OperationMessageType
+  OperationMessageType:
+    enum:
+      - REQUEST
+      - OK_RESPONSE
+  WebSocketOperationOrigin:
+    enum:
+      - CLIENT
+      - SERVER

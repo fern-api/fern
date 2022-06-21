@@ -13,7 +13,7 @@ export declare namespace VariableReference {
 
     interface ModelReference extends BaseReference {
         _type: "modelType";
-        typeReference: Exclude<TypeReference, TypeReference.Void>;
+        typeReference: TypeReference;
     }
 
     interface BaseReference {

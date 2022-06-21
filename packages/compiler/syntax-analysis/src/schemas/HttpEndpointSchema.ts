@@ -14,8 +14,8 @@ export const HttpEndpointSchema = WithDocsSchema.extend({
     ["query-parameters"]: z.optional(z.record(HttpQueryParameterSchema)),
     headers: z.optional(z.record(HttpHeaderSchema)),
     "auth-override": z.optional(AuthSchema),
-    request: z.optional(HttpRequestSchema),
-    response: z.optional(HttpResponseSchema),
+    request: z.optional(z.union([z.string(), HttpRequestSchema])),
+    response: z.optional(z.union([z.string(), HttpResponseSchema])),
 });
 
 export type HttpEndpointSchema = z.infer<typeof HttpEndpointSchema>;

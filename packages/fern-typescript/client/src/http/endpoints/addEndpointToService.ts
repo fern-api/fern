@@ -1,11 +1,7 @@
 import { HttpEndpoint, HttpService } from "@fern-api/api";
 import { DependencyManager, getTextOfTsNode, getTypeReference, TypeResolver } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
-import {
-    generateHttpEndpointTypes,
-    getLocalServiceTypeReference,
-    ServiceTypeName,
-} from "@fern-typescript/service-types";
+import { getLocalServiceTypeReference, ServiceTypeName } from "@fern-typescript/service-types";
 import {
     ClassDeclaration,
     Directory,
@@ -45,16 +41,6 @@ export async function addEndpointToService({
 }): Promise<void> {
     const serviceFile = serviceInterface.getSourceFile();
 
-    const generatedEndpointTypes = generateHttpEndpointTypes({
-        endpoint,
-        serviceName: serviceDefinition.name,
-        endpointsDirectory,
-        modelDirectory,
-        servicesDirectory,
-        typeResolver,
-        dependencyManager,
-    });
-
     const getReferenceToLocalServiceType = (typeName: ServiceTypeName): ts.TypeReferenceNode => {
         return getLocalServiceTypeReference({
             serviceOrChannelName: serviceDefinition.name,
@@ -66,40 +52,38 @@ export async function addEndpointToService({
     };
 
     const parameters: OptionalKind<ParameterDeclarationStructure>[] =
-        generatedEndpointTypes.request != null
-            ? generatedEndpointTypes.request.wrapper != null
-                ? [
-                      {
-                          name: ClientConstants.HttpService.Endpoint.Signature.REQUEST_PARAMETER,
-                          type: getTextOfTsNode(
-                              generatedEndpointTypes.request.wrapper.reference.isLocal
-                                  ? getReferenceToLocalServiceType(
-                                        generatedEndpointTypes.request.wrapper.reference.typeName
-                                    )
-                                  : getTypeReference({
-                                        reference: generatedEndpointTypes.request.wrapper.reference.typeReference,
-                                        referencedIn: serviceFile,
-                                        modelDirectory,
-                                    })
-                          ),
-                      },
-                  ]
-                : generatedEndpointTypes.request.body != null
-                ? [
-                      {
-                          name: ClientConstants.HttpService.Endpoint.Signature.REQUEST_PARAMETER,
-                          type: getTextOfTsNode(
-                              generatedEndpointTypes.request.body.isLocal
-                                  ? getReferenceToLocalServiceType(generatedEndpointTypes.request.body.typeName)
-                                  : getTypeReference({
-                                        reference: generatedEndpointTypes.request.body.typeReference,
-                                        referencedIn: serviceFile,
-                                        modelDirectory,
-                                    })
-                          ),
-                      },
-                  ]
-                : []
+        endpoint.request.type._type !== "model" || endpoint.request.type.model._type !== "void"
+            ? [
+                  {
+                      name: ClientConstants.HttpService.Endpoint.Signature.REQUEST_PARAMETER,
+                      type: getTextOfTsNode(
+                          generatedEndpointTypes.request.wrapper.reference.isLocal
+                              ? getReferenceToLocalServiceType(
+                                    generatedEndpointTypes.request.wrapper.reference.typeName
+                                )
+                              : getTypeReference({
+                                    reference: generatedEndpointTypes.request.wrapper.reference.typeReference,
+                                    referencedIn: serviceFile,
+                                    modelDirectory,
+                                })
+                      ),
+                  },
+              ]
+            : generatedEndpointTypes.request.body != null
+            ? [
+                  {
+                      name: ClientConstants.HttpService.Endpoint.Signature.REQUEST_PARAMETER,
+                      type: getTextOfTsNode(
+                          generatedEndpointTypes.request.body.isLocal
+                              ? getReferenceToLocalServiceType(generatedEndpointTypes.request.body.typeName)
+                              : getTypeReference({
+                                    reference: generatedEndpointTypes.request.body.typeReference,
+                                    referencedIn: serviceFile,
+                                    modelDirectory,
+                                })
+                      ),
+                  },
+              ]
             : [];
 
     const returnType = getTextOfTsNode(
