@@ -1,7 +1,12 @@
 imports:
   commons: ../commons.yml
   types: ../types.yml
+  errors: ../errors.yml
 types:
+  ServiceName:
+    properties:
+      fernFilepath: types.FernFilepath
+      name: string
   Encoding:
     union:
       json: {}
@@ -22,4 +27,4 @@ types:
     extends: commons.WithDocs
     properties:
       discriminantValue: string
-      error: types.NamedType
+      error: errors.ErrorName

@@ -1,11 +1,11 @@
-import { FernFilepath, IntermediateRepresentation, NamedType, Type, TypeReference } from "@fern-api/api";
+import { FernFilepath, IntermediateRepresentation, Type, TypeName, TypeReference } from "@fern-api/api";
 import { ResolvedType } from "./types";
 
 type Filepath = string;
 type SimpleTypeName = string;
 
 /**
- * TypeResolver converts a NamedType to a "resolved" value by following all
+ * TypeResolver converts a TypeName to a "resolved" value by following all
  * aliases and unwrapping all containers.
  */
 export class TypeResolver {
@@ -29,25 +29,9 @@ export class TypeResolver {
                 typeName: type.name,
             });
         }
-
-        for (const error of intermediateRepresentation.errors) {
-            let typesAtFilepath = allTypes[error.name.fernFilepath];
-            if (typesAtFilepath == null) {
-                typesAtFilepath = {};
-                allTypes[error.name.fernFilepath] = typesAtFilepath;
-            }
-
-            typesAtFilepath[error.name.name] = error.type;
-        }
-        for (const error of intermediateRepresentation.errors) {
-            this.resolveTypeRecursive({
-                allTypes,
-                typeName: error.name,
-            });
-        }
     }
 
-    public resolveNamedType(typeName: NamedType): ResolvedType {
+    public resolveTypeName(typeName: TypeName): ResolvedType {
         const resolvedType = this.resolvedTypes[typeName.fernFilepath]?.[typeName.name];
         if (resolvedType == null) {
             throw new Error("Type not found: " + typeNameToString(typeName));
@@ -61,7 +45,7 @@ export class TypeResolver {
         seen = {},
     }: {
         allTypes: Record<Filepath, Record<SimpleTypeName, Type>>;
-        typeName: NamedType;
+        typeName: TypeName;
         seen?: Record<Filepath, Set<SimpleTypeName>>;
     }): ResolvedType {
         let seenAtFilepath = seen[typeName.fernFilepath];
@@ -95,32 +79,37 @@ export class TypeResolver {
         allTypes: Record<Filepath, Record<SimpleTypeName, Type>>,
         seen: Record<Filepath, Set<SimpleTypeName>>
     ): ResolvedType {
-        return Type._visit<ResolvedType>(type, {
-            object: ResolvedType.object,
-            union: ResolvedType.union,
-            alias: (alias) =>
-                TypeReference._visit<ResolvedType>(alias.aliasOf, {
-                    named: (named) =>
-                        this.resolveTypeRecursive({
-                            allTypes,
-                            typeName: named,
-                            seen,
-                        }),
-                    primitive: ResolvedType.primitive,
-                    container: ResolvedType.container,
-                    void: ResolvedType.void,
-                    _unknown: () => {
-                        throw new Error("Unkonwn Alias type reference: " + alias.aliasOf._type);
-                    },
-                }),
-            enum: ResolvedType.enum,
-            _unknown: () => {
-                throw new Error("Unkonwn Type: " + type._type);
-            },
-        });
+        return resolveType(type, (typeName) =>
+            this.resolveTypeRecursive({
+                allTypes,
+                typeName: typeName,
+                seen,
+            })
+        );
     }
 }
 
-function typeNameToString(typeName: NamedType) {
+export function resolveType(type: Type, resolveNamedType: (typeName: TypeName) => ResolvedType): ResolvedType {
+    return Type._visit<ResolvedType>(type, {
+        object: ResolvedType.object,
+        union: ResolvedType.union,
+        alias: (alias) =>
+            TypeReference._visit<ResolvedType>(alias.aliasOf, {
+                named: resolveNamedType,
+                primitive: ResolvedType.primitive,
+                container: ResolvedType.container,
+                void: ResolvedType.void,
+                _unknown: () => {
+                    throw new Error("Unkonwn Alias type reference: " + alias.aliasOf._type);
+                },
+            }),
+        enum: ResolvedType.enum,
+        _unknown: () => {
+            throw new Error("Unkonwn Type: " + type._type);
+        },
+    });
+}
+
+function typeNameToString(typeName: TypeName) {
     return `${typeName.fernFilepath}.${typeName.name}`;
 }

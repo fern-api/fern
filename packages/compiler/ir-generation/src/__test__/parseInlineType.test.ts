@@ -3,10 +3,10 @@ import { parseInlineType } from "../utils/parseInlineType";
 
 describe("parse inline types", () => {
     it("nested containers", () => {
-        const dummyNamedType = "Dummy";
+        const dummyTypeName = "Dummy";
         const dummyFernFilepath = FernFilepath.of("dummy");
         const parsedTypeReference = parseInlineType({
-            type: "optional<list<" + dummyNamedType + ">>",
+            type: "optional<list<" + dummyTypeName + ">>",
             fernFilepath: dummyFernFilepath,
             imports: {},
         });
@@ -16,7 +16,7 @@ describe("parse inline types", () => {
                     ContainerType.list(
                         TypeReference.named({
                             fernFilepath: dummyFernFilepath,
-                            name: dummyNamedType,
+                            name: dummyTypeName,
                         })
                     )
                 )

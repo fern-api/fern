@@ -1,4 +1,4 @@
-import { PrimitiveType, TypeDefinition, TypeReference } from "@fern-api/api";
+import { ModelReference, PrimitiveType, TypeDefinition, TypeReference } from "@fern-api/api";
 import { generateTypeUtilsReference } from "@fern-typescript/commons";
 import { ts, tsMorph } from "@fern-typescript/helper-utils";
 import { ENUM_VALUES_PROPERTY_KEY } from "@fern-typescript/types";
@@ -55,7 +55,7 @@ function getEncode({
                                     ts.factory.createCallExpression(
                                         ts.factory.createPropertyAccessExpression(
                                             generateTypeUtilsReference({
-                                                typeDefinition,
+                                                reference: ModelReference.type(typeDefinition.name),
                                                 referencedIn: file,
                                                 modelDirectory,
                                             }),
@@ -165,7 +165,7 @@ function getDecode({
                                 ts.factory.createCallExpression(
                                     ts.factory.createPropertyAccessExpression(
                                         generateTypeUtilsReference({
-                                            typeDefinition,
+                                            reference: ModelReference.type(typeDefinition.name),
                                             referencedIn: file,
                                             modelDirectory,
                                         }),

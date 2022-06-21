@@ -1,4 +1,4 @@
-import { NamedType } from "@fern-api/api";
+import { TypeName } from "@fern-api/api";
 import { getRelativePathAsModuleSpecifierTo } from "@fern-typescript/commons";
 import { Directory, SourceFile, ts } from "ts-morph";
 import { ServiceTypeName } from "../types";
@@ -7,7 +7,7 @@ const SERVICES_NAMESPACE_IMPORT = "Services";
 
 export declare namespace getLocalServiceTypeReference {
     export interface Args {
-        serviceOrChannelName: NamedType;
+        serviceOrChannelName: TypeName;
         endpointOrOperationId: string;
         typeName: ServiceTypeName;
         referencedIn: SourceFile;

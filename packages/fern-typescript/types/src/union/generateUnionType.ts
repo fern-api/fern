@@ -1,11 +1,10 @@
-import { SingleUnionType, TypeReference } from "@fern-api/api";
+import { TypeReference } from "@fern-api/api";
 import {
     FernWriters,
     getTextOfTsNode,
     getTypeReference,
     getWriterForMultiLineUnionType,
     maybeAddDocs,
-    TypeResolver,
     visitorUtils,
 } from "@fern-typescript/commons";
 import {
@@ -18,14 +17,19 @@ import {
     VariableDeclarationKind,
     WriterFunction,
 } from "ts-morph";
-import { getKeyForUnion, getResolvedTypeForSingleUnionType, ResolvedSingleUnionType } from "./utils";
-
-interface SingleUnionTypeWithResolvedValueType {
-    originalType: SingleUnionType;
-    resolvedType: ResolvedSingleUnionType | undefined;
-}
+import { getKeyForUnion, ResolvedSingleUnionType, ResolvedSingleUnionValueType } from "./utils";
 
 export declare namespace generateUnionType {
+    export interface Args {
+        file: SourceFile;
+        typeName: string;
+        docs: string | null | undefined;
+        discriminant: string;
+        resolvedTypes: ResolvedSingleUnionType[];
+        additionalPropertiesForEveryType?: ObjectProperty[];
+        modelDirectory: Directory;
+    }
+
     export interface ObjectProperty {
         key: string;
         valueType: TypeReference;
@@ -38,33 +42,14 @@ export function generateUnionType({
     typeName,
     docs,
     discriminant,
-    types,
+    resolvedTypes,
     additionalPropertiesForEveryType = [],
-    typeResolver,
     modelDirectory,
-}: {
-    file: SourceFile;
-    typeName: string;
-    docs: string | null | undefined;
-    discriminant: string;
-    types: SingleUnionType[];
-    additionalPropertiesForEveryType?: generateUnionType.ObjectProperty[];
-    typeResolver: TypeResolver;
-    modelDirectory: Directory;
-}): void {
-    const resolvedTypes: SingleUnionTypeWithResolvedValueType[] = types.map((type) => ({
-        originalType: type,
-        resolvedType: getResolvedTypeForSingleUnionType({
-            singleUnionType: type,
-            typeResolver,
-            modelDirectory,
-            file,
-        }),
-    }));
+}: generateUnionType.Args): void {
     const typeAlias = file.addTypeAlias({
         name: typeName,
         type: getWriterForMultiLineUnionType(
-            types.map((type) => ({
+            resolvedTypes.map((type) => ({
                 node: ts.factory.createTypeReferenceNode(
                     ts.factory.createQualifiedName(
                         ts.factory.createIdentifier(typeName),
@@ -85,9 +70,9 @@ export function generateUnionType({
         hasDeclareKeyword: true,
     });
 
-    for (const { resolvedType, originalType } of resolvedTypes) {
+    for (const resolvedType of resolvedTypes) {
         const interfaceNode = module.addInterface(
-            generateDiscriminatedSingleUnionTypeInterface({ discriminant, singleUnionType: originalType })
+            generateDiscriminatedSingleUnionTypeInterface({ discriminant, resolvedType })
         );
 
         for (const additionalProperty of additionalPropertiesForEveryType) {
@@ -103,31 +88,35 @@ export function generateUnionType({
             });
         }
 
-        if (resolvedType != null) {
-            if (resolvedType.isExtendable) {
-                interfaceNode.addExtends(getTextOfTsNode(resolvedType.type));
+        if (resolvedType.valueType != null) {
+            if (resolvedType.valueType.isExtendable) {
+                interfaceNode.addExtends(getTextOfTsNode(resolvedType.valueType.type));
             } else {
-                addNonExtendableProperty(interfaceNode, originalType, resolvedType.type);
+                addNonExtendableProperty({
+                    interfaceNode,
+                    resolvedSingleUnionType: resolvedType,
+                    resolvedValueType: resolvedType.valueType,
+                });
             }
         }
     }
 
-    const visitorItems: visitorUtils.VisitableItem[] = resolvedTypes.map(({ resolvedType, originalType }) => {
+    const visitorItems: visitorUtils.VisitableItem[] = resolvedTypes.map((resolvedType) => {
         return {
-            caseInSwitchStatement: ts.factory.createStringLiteral(originalType.discriminantValue),
-            keyInVisitor: originalType.discriminantValue,
+            caseInSwitchStatement: ts.factory.createStringLiteral(resolvedType.discriminantValue),
+            keyInVisitor: resolvedType.discriminantValue,
             visitorArgument:
-                resolvedType != null
-                    ? resolvedType.isExtendable
+                resolvedType.valueType != null
+                    ? resolvedType.valueType.isExtendable
                         ? {
-                              type: resolvedType.type,
+                              type: resolvedType.valueType.type,
                               argument: ts.factory.createIdentifier(visitorUtils.VALUE_PARAMETER_NAME),
                           }
                         : {
-                              type: resolvedType.type,
+                              type: resolvedType.valueType.type,
                               argument: ts.factory.createPropertyAccessExpression(
                                   ts.factory.createIdentifier(visitorUtils.VALUE_PARAMETER_NAME),
-                                  ts.factory.createIdentifier(originalType.discriminantValue)
+                                  ts.factory.createIdentifier(resolvedType.discriminantValue)
                               ),
                           }
                     : undefined,
@@ -157,30 +146,34 @@ export function generateUnionType({
 
 function generateDiscriminatedSingleUnionTypeInterface({
     discriminant,
-    singleUnionType,
+    resolvedType,
 }: {
     discriminant: string;
-    singleUnionType: SingleUnionType;
+    resolvedType: ResolvedSingleUnionType;
 }): OptionalKind<InterfaceDeclarationStructure> {
     return {
-        name: getKeyForUnion(singleUnionType),
+        name: getKeyForUnion(resolvedType),
         properties: [
             {
                 name: discriminant,
-                type: getTextOfTsNode(ts.factory.createStringLiteral(singleUnionType.discriminantValue)),
+                type: getTextOfTsNode(ts.factory.createStringLiteral(resolvedType.discriminantValue)),
             },
         ],
     };
 }
 
-function addNonExtendableProperty(
-    interfaceNode: InterfaceDeclaration,
-    singleUnionType: SingleUnionType,
-    resolvedValueType: ts.Node
-) {
+function addNonExtendableProperty({
+    interfaceNode,
+    resolvedSingleUnionType,
+    resolvedValueType,
+}: {
+    interfaceNode: InterfaceDeclaration;
+    resolvedSingleUnionType: ResolvedSingleUnionType;
+    resolvedValueType: ResolvedSingleUnionValueType;
+}) {
     interfaceNode.addProperty({
-        name: singleUnionType.discriminantValue,
-        type: getTextOfTsNode(resolvedValueType),
+        name: resolvedSingleUnionType.discriminantValue,
+        type: getTextOfTsNode(resolvedValueType.type),
     });
 }
 
@@ -193,7 +186,7 @@ function createUtils({
     file,
 }: {
     typeName: string;
-    types: SingleUnionTypeWithResolvedValueType[];
+    types: ResolvedSingleUnionType[];
     visitorItems: readonly visitorUtils.VisitableItem[];
     additionalPropertiesForEveryType: generateUnionType.ObjectProperty[];
     discriminant: string;
@@ -203,7 +196,7 @@ function createUtils({
 
     for (const singleUnionType of types) {
         writer.addProperty({
-            key: singleUnionType.originalType.discriminantValue,
+            key: singleUnionType.discriminantValue,
             value: getTextOfTsNode(
                 generateCreator({
                     typeName,
@@ -248,7 +241,7 @@ function createUtils({
                 ),
                 undefined,
                 ts.factory.createArrayLiteralExpression(
-                    types.map(({ originalType }) => ts.factory.createStringLiteral(originalType.discriminantValue))
+                    types.map((type) => ts.factory.createStringLiteral(type.discriminantValue))
                 )
             )
         ),
@@ -266,13 +259,14 @@ function generateCreator({
 }: {
     typeName: string;
     discriminant: string;
-    singleUnionType: SingleUnionTypeWithResolvedValueType;
+    singleUnionType: ResolvedSingleUnionType;
     additionalPropertiesForEveryType: generateUnionType.ObjectProperty[];
     file: SourceFile;
 }): ts.ArrowFunction {
     const VALUE_PARAMETER_NAME = "value";
 
-    const parameterType = singleUnionType.resolvedType;
+    const parameterType = singleUnionType.valueType;
+
     const parameter =
         parameterType != null
             ? ts.factory.createParameterDeclaration(
@@ -292,7 +286,7 @@ function generateCreator({
                 ? [ts.factory.createSpreadAssignment(ts.factory.createIdentifier(VALUE_PARAMETER_NAME))]
                 : [
                       ts.factory.createPropertyAssignment(
-                          ts.factory.createIdentifier(singleUnionType.originalType.discriminantValue),
+                          ts.factory.createIdentifier(singleUnionType.discriminantValue),
                           ts.factory.createIdentifier(VALUE_PARAMETER_NAME)
                       ),
                   ]
@@ -302,7 +296,7 @@ function generateCreator({
         undefined,
         undefined,
         parameter != null ? [parameter] : [],
-        getQualifiedUnionTypeReference({ typeName, singleUnionType: singleUnionType.originalType }),
+        getQualifiedUnionTypeReference({ typeName, singleUnionType }),
         undefined,
         ts.factory.createParenthesizedExpression(
             ts.factory.createObjectLiteralExpression(
@@ -310,7 +304,7 @@ function generateCreator({
                     ...maybeValueAssignment,
                     ts.factory.createPropertyAssignment(
                         ts.factory.createIdentifier(discriminant),
-                        ts.factory.createStringLiteral(singleUnionType.originalType.discriminantValue)
+                        ts.factory.createStringLiteral(singleUnionType.discriminantValue)
                     ),
                     ...additionalPropertiesForEveryType.map((additionalProperty) =>
                         ts.factory.createPropertyAssignment(
@@ -330,7 +324,7 @@ function getQualifiedUnionTypeReference({
     singleUnionType,
 }: {
     typeName: string;
-    singleUnionType: SingleUnionType;
+    singleUnionType: ResolvedSingleUnionType;
 }) {
     return ts.factory.createTypeReferenceNode(
         ts.factory.createQualifiedName(

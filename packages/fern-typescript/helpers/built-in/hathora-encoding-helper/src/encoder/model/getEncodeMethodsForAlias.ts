@@ -1,4 +1,4 @@
-import { AliasTypeDefinition, TypeDefinition } from "@fern-api/api";
+import { AliasTypeDefinition, ModelReference, TypeDefinition } from "@fern-api/api";
 import { generateTypeUtilsReference } from "@fern-typescript/commons";
 import { ts, tsMorph } from "@fern-typescript/helper-utils";
 import { ALIAS_UTILS_OF_KEY, shouldUseBrandedTypeForAlias } from "@fern-typescript/types";
@@ -69,7 +69,11 @@ export function generateDecode({
     if (shouldUseBrandedTypeForAlias(shape)) {
         decodeCall = ts.factory.createCallExpression(
             ts.factory.createPropertyAccessExpression(
-                generateTypeUtilsReference({ typeDefinition, referencedIn: file, modelDirectory }),
+                generateTypeUtilsReference({
+                    reference: ModelReference.type(typeDefinition.name),
+                    referencedIn: file,
+                    modelDirectory,
+                }),
                 ts.factory.createIdentifier(ALIAS_UTILS_OF_KEY)
             ),
             undefined,

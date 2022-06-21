@@ -1,0 +1,12 @@
+# These types aren't actually present in the IR, but may be helpful
+# for generators
+
+imports:
+  types: ./types.yml
+  errors: ./errors.yml
+
+types:
+  ModelReference:
+    union:
+      type: types.TypeName
+      error: errors.ErrorName

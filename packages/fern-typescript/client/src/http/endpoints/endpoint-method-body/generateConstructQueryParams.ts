@@ -1,4 +1,4 @@
-import { HttpEndpoint, NamedType, PrimitiveType, QueryParameter, TypeReference } from "@fern-api/api";
+import { HttpEndpoint, PrimitiveType, QueryParameter, TypeName, TypeReference } from "@fern-api/api";
 import { ResolvedType, TypeResolver } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 import { ClientConstants } from "../../../constants";
@@ -97,7 +97,7 @@ function isTypeReferenceStringLike({
     typeResolver: TypeResolver;
 }): boolean {
     return TypeReference._visit(typeReference, {
-        named: (namedType) => isNamedTypeStringLike({ namedType, typeResolver }),
+        named: (namedType) => isTypeNameStringLike({ namedType, typeResolver }),
         container: () => false,
         primitive: isPrimitiveStringLike,
         void: () => false,
@@ -105,14 +105,14 @@ function isTypeReferenceStringLike({
     });
 }
 
-function isNamedTypeStringLike({
+function isTypeNameStringLike({
     namedType,
     typeResolver,
 }: {
-    namedType: NamedType;
+    namedType: TypeName;
     typeResolver: TypeResolver;
 }): boolean {
-    return ResolvedType._visit(typeResolver.resolveNamedType(namedType), {
+    return ResolvedType._visit(typeResolver.resolveTypeName(namedType), {
         object: () => false,
         union: () => false,
         enum: () => true,

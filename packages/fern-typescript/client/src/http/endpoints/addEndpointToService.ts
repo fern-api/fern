@@ -1,5 +1,11 @@
 import { HttpEndpoint, HttpService } from "@fern-api/api";
-import { DependencyManager, getTextOfTsNode, getTypeReference, TypeResolver } from "@fern-typescript/commons";
+import {
+    DependencyManager,
+    ErrorResolver,
+    getTextOfTsNode,
+    getTypeReference,
+    TypeResolver,
+} from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import {
     generateHttpEndpointTypes,
@@ -28,6 +34,7 @@ export async function addEndpointToService({
     servicesDirectory,
     encodersDirectory,
     typeResolver,
+    errorResolver,
     helperManager,
     dependencyManager,
 }: {
@@ -40,6 +47,7 @@ export async function addEndpointToService({
     servicesDirectory: Directory;
     encodersDirectory: Directory;
     typeResolver: TypeResolver;
+    errorResolver: ErrorResolver;
     helperManager: HelperManager;
     dependencyManager: DependencyManager;
 }): Promise<void> {
@@ -52,6 +60,7 @@ export async function addEndpointToService({
         modelDirectory,
         servicesDirectory,
         typeResolver,
+        errorResolver,
         dependencyManager,
     });
 

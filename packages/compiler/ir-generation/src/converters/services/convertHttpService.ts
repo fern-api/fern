@@ -1,6 +1,7 @@
 import {
     ContainerType,
     CustomWireMessageEncoding,
+    EndpointId,
     FernFilepath,
     HttpAuth,
     HttpEndpoint,
@@ -47,7 +48,7 @@ export function convertHttpService({
                 : [],
         endpoints: Object.entries(serviceDefinition.endpoints).map(
             ([endpointId, endpoint]): HttpEndpoint => ({
-                endpointId,
+                endpointId: EndpointId.of(endpointId),
                 auth:
                     endpoint["auth-override"] != null
                         ? convertHttpAuth(endpoint["auth-override"])

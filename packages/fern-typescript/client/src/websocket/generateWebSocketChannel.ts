@@ -1,6 +1,7 @@
 import { WebSocketChannel } from "@fern-api/api";
 import {
     DependencyManager,
+    ErrorResolver,
     getOrCreateDirectory,
     getOrCreateSourceFile,
     getTextOfTsKeyword,
@@ -30,6 +31,7 @@ export function generateWebSocketChannel({
     modelDirectory,
     channel,
     typeResolver,
+    errorResolver,
     dependencyManager,
 }: {
     servicesDirectory: Directory;
@@ -37,6 +39,7 @@ export function generateWebSocketChannel({
     encodersDirectory: Directory;
     channel: WebSocketChannel;
     typeResolver: TypeResolver;
+    errorResolver: ErrorResolver;
     helperManager: HelperManager;
     dependencyManager: DependencyManager;
 }): void {
@@ -51,6 +54,7 @@ export function generateWebSocketChannel({
         channelDirectory,
         modelDirectory,
         servicesDirectory,
+        errorResolver,
         typeResolver,
         dependencyManager,
     });
@@ -62,6 +66,7 @@ function generateChannel({
     modelDirectory,
     servicesDirectory,
     typeResolver,
+    errorResolver,
     dependencyManager,
 }: {
     channel: WebSocketChannel;
@@ -69,6 +74,7 @@ function generateChannel({
     modelDirectory: Directory;
     servicesDirectory: Directory;
     typeResolver: TypeResolver;
+    errorResolver: ErrorResolver;
     dependencyManager: DependencyManager;
 }): void {
     const channelFile = getOrCreateSourceFile(channelDirectory, `${channel.name.name}.ts`);
@@ -134,6 +140,7 @@ function generateChannel({
             modelDirectory,
             servicesDirectory,
             typeResolver,
+            errorResolver,
             dependencyManager,
         });
         serverMessageTypes.push(

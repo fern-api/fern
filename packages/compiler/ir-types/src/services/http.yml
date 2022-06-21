@@ -2,11 +2,13 @@ imports:
   serviceCommons: ./commons.yml
   commons: ../commons.yml
   types: ../types.yml
+ids:
+  - EndpointId
 types:
   HttpService:
     extends: commons.WithDocs
     properties:
-      name: types.NamedType
+      name: serviceCommons.ServiceName
       basePath: optional<string>
       endpoints: list<HttpEndpoint>
       headers: list<HttpHeader>
@@ -17,7 +19,7 @@ types:
   HttpEndpoint:
     extends: commons.WithDocs
     properties:
-      endpointId: string
+      endpointId: EndpointId
       path: string
       method: HttpMethod
       headers: list<HttpHeader>

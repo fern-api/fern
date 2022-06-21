@@ -1,4 +1,4 @@
-import { NamedType, WebSocketOperation } from "@fern-api/api";
+import { TypeName, WebSocketOperation } from "@fern-api/api";
 import { getTextOfTsKeyword, getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
 import { Directory, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 import { GeneratedRequest, generateRequest } from "../commons/generate-request/generateRequest";
@@ -7,7 +7,7 @@ import { ServiceTypesConstants } from "../constants";
 
 export declare namespace generateRequestTypes {
     export interface Args {
-        channelName: NamedType;
+        channelName: TypeName;
         operation: WebSocketOperation;
         operationDirectory: Directory;
         modelDirectory: Directory;

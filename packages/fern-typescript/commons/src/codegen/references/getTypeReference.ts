@@ -1,6 +1,6 @@
-import { ContainerType, PrimitiveType, TypeReference } from "@fern-api/api";
+import { ContainerType, ModelReference, PrimitiveType, TypeReference } from "@fern-api/api";
 import { Directory, SourceFile, ts } from "ts-morph";
-import { getNamedTypeReference } from "./getNamedTypeReference";
+import { getModelTypeReference } from "./getModelTypeReference";
 
 export function getTypeReference({
     reference,
@@ -11,15 +11,14 @@ export function getTypeReference({
     reference: TypeReference;
     referencedIn: SourceFile;
     modelDirectory: Directory;
-    forceUseNamespaceImport?: getNamedTypeReference.Args["forceUseNamespaceImport"];
+    forceUseNamespaceImport?: getModelTypeReference.Args["forceUseNamespaceImport"];
 }): ts.TypeNode {
     return TypeReference._visit(reference, {
-        named: (named) =>
-            getNamedTypeReference({
-                typeName: named,
+        named: (typeName) =>
+            getModelTypeReference({
+                reference: ModelReference.type(typeName),
                 referencedIn,
                 modelDirectory,
-                typeCategory: "type",
                 forceUseNamespaceImport,
             }),
         primitive: (primitive) => {

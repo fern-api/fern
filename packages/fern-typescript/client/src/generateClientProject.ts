@@ -1,6 +1,7 @@
 import { IntermediateRepresentation } from "@fern-api/api";
 import {
     DependencyManager,
+    ErrorResolver,
     GeneratedProjectSrcInfo,
     generateTypeScriptProject,
     getOrCreateDirectory,
@@ -46,6 +47,7 @@ async function generateClientFiles({
 }): Promise<GeneratedProjectSrcInfo> {
     const dependencyManager = new DependencyManager();
     const typeResolver = new TypeResolver(intermediateRepresentation);
+    const errorResolver = new ErrorResolver(intermediateRepresentation);
 
     const modelDirectory = generateModelFiles({
         directory,
@@ -63,6 +65,7 @@ async function generateClientFiles({
             modelDirectory,
             encodersDirectory,
             typeResolver,
+            errorResolver,
             helperManager,
             dependencyManager,
         });
@@ -75,6 +78,7 @@ async function generateClientFiles({
             modelDirectory,
             encodersDirectory,
             typeResolver,
+            errorResolver,
             helperManager,
             dependencyManager,
         });
