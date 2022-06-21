@@ -30,6 +30,7 @@ export function generateServiceTypeReference({
             case "named":
             case "primitive":
             case "container":
+            case "unknown":
                 return {
                     isLocal: false,
                     typeReference: type.aliasOf,

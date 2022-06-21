@@ -99,6 +99,7 @@ export function resolveType(type: Type, resolveNamedType: (typeName: TypeName) =
                 primitive: ResolvedType.primitive,
                 container: ResolvedType.container,
                 void: ResolvedType.void,
+                unknown: ResolvedType.unknown,
                 _unknown: () => {
                     throw new Error("Unkonwn Alias type reference: " + alias.aliasOf._type);
                 },

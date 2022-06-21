@@ -13,7 +13,7 @@ export function getTypeReference({
     modelDirectory: Directory;
     forceUseNamespaceImport?: getModelTypeReference.Args["forceUseNamespaceImport"];
 }): ts.TypeNode {
-    return TypeReference._visit(reference, {
+    return TypeReference._visit<ts.TypeNode>(reference, {
         named: (typeName) =>
             getModelTypeReference({
                 reference: ModelReference.type(typeName),
@@ -66,6 +66,9 @@ export function getTypeReference({
                     throw new Error("Unexpected container type: " + container._type);
                 },
             });
+        },
+        unknown: () => {
+            return ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword);
         },
         void: () => {
             return ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [

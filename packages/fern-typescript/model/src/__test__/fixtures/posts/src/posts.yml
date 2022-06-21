@@ -10,6 +10,7 @@ types:
       title: string
       author: Author
       content: string
+      customConfig: unknown
   BlogPostReference:
     union:
       post: Post

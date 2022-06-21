@@ -16,6 +16,23 @@ export declare namespace parseInlineType {
 }
 
 export function parseInlineType({ type, fernFilepath, imports }: parseInlineType.Args): TypeReference {
+    switch (type) {
+        case "integer":
+            return TypeReference.primitive(PrimitiveType.Integer);
+        case "double":
+            return TypeReference.primitive(PrimitiveType.Double);
+        case "long":
+            return TypeReference.primitive(PrimitiveType.Long);
+        case "string":
+            return TypeReference.primitive(PrimitiveType.String);
+        case "boolean":
+            return TypeReference.primitive(PrimitiveType.Boolean);
+        case "void":
+            return TypeReference.void();
+        case "unknown":
+            return TypeReference.unknown();
+    }
+
     function parseInlineTypeRecursive(typeToRecurse: string) {
         return parseInlineType({ type: typeToRecurse, fernFilepath, imports });
     }
@@ -43,19 +60,6 @@ export function parseInlineType({ type, fernFilepath, imports }: parseInlineType
     const optionalMatch = type.match(OPTIONAL_REGEX);
     if (optionalMatch != null && optionalMatch[1] != null) {
         return TypeReference.container(ContainerType.optional(parseInlineTypeRecursive(optionalMatch[1])));
-    }
-
-    switch (type) {
-        case "integer":
-            return TypeReference.primitive(PrimitiveType.Integer);
-        case "double":
-            return TypeReference.primitive(PrimitiveType.Double);
-        case "long":
-            return TypeReference.primitive(PrimitiveType.Long);
-        case "string":
-            return TypeReference.primitive(PrimitiveType.String);
-        case "boolean":
-            return TypeReference.primitive(PrimitiveType.Boolean);
     }
 
     return TypeReference.named(
