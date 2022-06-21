@@ -49,8 +49,8 @@ async function generateClientFiles({
     const typeResolver = new TypeResolver(intermediateRepresentation);
     const errorResolver = new ErrorResolver(intermediateRepresentation);
 
-    const modelDirectory = generateModelFiles({
-        directory,
+    const modelContext = generateModelFiles({
+        modelDirectory: directory.createDirectory("model"),
         intermediateRepresentation,
         typeResolver,
     });
