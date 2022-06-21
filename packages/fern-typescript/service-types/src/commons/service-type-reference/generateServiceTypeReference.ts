@@ -1,27 +1,24 @@
 import { Type } from "@fern-api/api";
 import { assertNever } from "@fern-api/commons";
-import { TypeResolver } from "@fern-typescript/commons";
+import { getOrCreateSourceFile, TypeResolver } from "@fern-typescript/commons";
 import { generateType } from "@fern-typescript/types";
 import { Directory } from "ts-morph";
-import { ServiceTypeName, ServiceTypeReference } from "./types";
-import { getFileNameForServiceType } from "./utils";
+import { ServiceTypeMetadata, ServiceTypeReference } from "./types";
 
 export declare namespace generateServiceTypeReference {
     export interface Args {
-        typeName: ServiceTypeName;
+        metadata: ServiceTypeMetadata;
         type: Type;
         docs: string | null | undefined;
-        typeDirectory: Directory;
         modelDirectory: Directory;
         typeResolver: TypeResolver;
     }
 }
 
 export function generateServiceTypeReference({
-    typeName,
+    metadata,
     type,
     docs,
-    typeDirectory,
     modelDirectory,
     typeResolver,
 }: generateServiceTypeReference.Args): ServiceTypeReference | undefined {
@@ -32,7 +29,7 @@ export function generateServiceTypeReference({
             case "container":
             case "unknown":
                 return {
-                    isLocal: false,
+                    isInlined: false,
                     typeReference: type.aliasOf,
                 };
             case "void":
@@ -42,19 +39,20 @@ export function generateServiceTypeReference({
         }
     }
 
-    const wireMessageFile = typeDirectory.createSourceFile(getFileNameForServiceType(typeName));
+    const file = getOrCreateSourceFile(modelDirectory, metadata.filepath);
+
     generateType({
         type,
         docs,
-        typeName,
+        typeName: metadata.typeName,
         typeResolver,
         modelDirectory,
-        file: wireMessageFile,
+        file,
     });
 
     return {
-        isLocal: true,
-        file: wireMessageFile,
-        typeName,
+        isInlined: true,
+        file,
+        metadata,
     };
 }

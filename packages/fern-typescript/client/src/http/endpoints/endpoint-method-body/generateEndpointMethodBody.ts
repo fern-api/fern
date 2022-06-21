@@ -1,8 +1,8 @@
 import { HttpEndpoint, HttpService } from "@fern-api/api";
 import { getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
-import { GeneratedHttpEndpointTypes, ServiceTypeName } from "@fern-typescript/service-types";
-import { Directory, SourceFile, StatementStructures, ts, WriterFunction } from "ts-morph";
+import { GeneratedHttpEndpointTypes } from "@fern-typescript/service-types";
+import { Directory, SourceFile, StatementStructures, WriterFunction } from "ts-morph";
 import { generateConstructQueryParams } from "./generateConstructQueryParams";
 import { generateFetcherCall } from "./generateFetcherCall";
 import { generateReturnResponse } from "./generateReturnResponse";
@@ -12,7 +12,6 @@ export async function generateEndpointMethodBody({
     endpointTypes,
     serviceFile,
     serviceDefinition,
-    getReferenceToLocalServiceType,
     typeResolver,
     helperManager,
     modelDirectory,
@@ -22,7 +21,6 @@ export async function generateEndpointMethodBody({
     endpointTypes: GeneratedHttpEndpointTypes;
     serviceFile: SourceFile;
     serviceDefinition: HttpService;
-    getReferenceToLocalServiceType: (typeName: ServiceTypeName) => ts.TypeReferenceNode;
     typeResolver: TypeResolver;
     helperManager: HelperManager;
     modelDirectory: Directory;
@@ -55,7 +53,6 @@ export async function generateEndpointMethodBody({
         getTextOfTsNode(
             await generateReturnResponse({
                 endpointTypes,
-                getReferenceToLocalServiceType,
                 serviceFile,
                 modelDirectory,
                 serviceDefinition,

@@ -1,13 +1,12 @@
-import { ModelReference } from "@fern-api/api";
 import { Directory, SourceFile, ts } from "ts-morph";
-import { getImportPathForModelReference } from "../references/getImportPathForModelReference";
 import { getRelativePathAsModuleSpecifierTo } from "./getRelativePathAsModuleSpecifierTo";
 
 export const MODEL_NAMESPACE_IMPORT = "model";
 
 export declare namespace getQualifiedReferenceToModel {
     export interface Args<T = unknown> {
-        reference: ModelReference;
+        typeName: string;
+        filepathOfReference: string;
         referencedIn: SourceFile;
         modelDirectory: Directory;
         /**
@@ -36,21 +35,14 @@ export declare namespace getQualifiedReferenceToModel {
 }
 
 export function getQualifiedReferenceToModel<T>({
-    reference,
+    typeName,
+    filepathOfReference,
     referencedIn,
     modelDirectory,
     forceUseNamespaceImport = false,
     constructQualifiedReference,
 }: getQualifiedReferenceToModel.Args<T>): T {
-    const name = ModelReference._visit(reference, {
-        type: ({ name }) => name,
-        error: ({ name }) => name,
-        _unknown: () => {
-            throw new Error("Unknown model reference: " + reference._type);
-        },
-    });
-
-    const moduleSpecifier = getImportPathForModelReference({ modelDirectory, from: referencedIn, reference });
+    const moduleSpecifier = getRelativePathAsModuleSpecifierTo(referencedIn, filepathOfReference);
     const isTypeInCurrentFile = moduleSpecifier === `./${referencedIn.getBaseNameWithoutExtension()}`;
     if (!isTypeInCurrentFile) {
         const shouldUseNamespaceImport = forceUseNamespaceImport || !modelDirectory.isAncestorOf(referencedIn);
@@ -61,19 +53,19 @@ export function getQualifiedReferenceToModel<T>({
             });
             return constructQualifiedReference({
                 namespaceImport: MODEL_NAMESPACE_IMPORT,
-                referenceWithoutNamespace: ts.factory.createIdentifier(name),
+                referenceWithoutNamespace: ts.factory.createIdentifier(typeName),
             });
         } else {
             referencedIn.addImportDeclaration({
                 moduleSpecifier,
-                namedImports: [{ name }],
+                namedImports: [{ name: typeName }],
             });
         }
     }
 
     return constructQualifiedReference({
         namespaceImport: undefined,
-        referenceWithoutNamespace: ts.factory.createIdentifier(name),
+        referenceWithoutNamespace: ts.factory.createIdentifier(typeName),
     });
 }
 

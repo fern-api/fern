@@ -4,14 +4,13 @@ import { Directory, OptionalKind, PropertySignatureStructure, ts } from "ts-morp
 import { GeneratedRequest, generateRequest } from "../commons/generate-request/generateRequest";
 import { getServiceTypeReference } from "../commons/service-type-reference/get-service-type-reference/getServiceTypeReference";
 import { ServiceTypesConstants } from "../constants";
+import { getMetadataForWebSocketOperationType } from "./getMetadataForWebSocketOperationType";
 
 export declare namespace generateRequestTypes {
     export interface Args {
         channelName: TypeName;
         operation: WebSocketOperation;
-        operationDirectory: Directory;
         modelDirectory: Directory;
-        servicesDirectory: Directory;
         typeResolver: TypeResolver;
     }
 }
@@ -19,9 +18,7 @@ export declare namespace generateRequestTypes {
 export function generateRequestTypes({
     channelName,
     operation,
-    operationDirectory,
     modelDirectory,
-    servicesDirectory,
     typeResolver,
 }: generateRequestTypes.Args): GeneratedRequest {
     const additionalProperties: OptionalKind<PropertySignatureStructure>[] = [
@@ -38,15 +35,11 @@ export function generateRequestTypes({
     ];
 
     return generateRequest({
-        directory: operationDirectory,
         modelDirectory,
         getTypeReferenceToServiceType: ({ reference, referencedIn }) =>
             getServiceTypeReference({
-                serviceOrChannelName: channelName,
-                endpointOrOperationId: operation.operationId,
                 reference,
                 referencedIn,
-                servicesDirectory,
                 modelDirectory,
             }),
         body: {
@@ -55,5 +48,17 @@ export function generateRequestTypes({
         },
         typeResolver,
         additionalProperties,
+        requestMetadata: getMetadataForWebSocketOperationType({
+            modelDirectory,
+            channelName,
+            operationId: operation.operationId,
+            type: ServiceTypesConstants.Commons.Request.TYPE_NAME,
+        }),
+        requestBodyMetadata: getMetadataForWebSocketOperationType({
+            modelDirectory,
+            channelName,
+            operationId: operation.operationId,
+            type: ServiceTypesConstants.Commons.Request.Properties.Body.TYPE_NAME,
+        }),
     });
 }

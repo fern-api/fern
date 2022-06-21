@@ -1,6 +1,8 @@
 import { ModelReference } from "@fern-api/api";
 import { Directory, SourceFile, ts } from "ts-morph";
 import { createQualifiedTypeReference, getQualifiedReferenceToModel } from "../utils/getQualifiedReferenceToModel";
+import { getFilePathForModelReference } from "./getFilePathForModelReference";
+import { getNameOfModelReference } from "./getNameOfModelReference";
 
 export declare namespace getModelTypeReference {
     export interface Args {
@@ -18,7 +20,8 @@ export function getModelTypeReference({
     forceUseNamespaceImport,
 }: getModelTypeReference.Args): ts.TypeNode {
     return getQualifiedReferenceToModel({
-        reference,
+        typeName: getNameOfModelReference(reference),
+        filepathOfReference: getFilePathForModelReference({ reference, modelDirectory }),
         referencedIn,
         modelDirectory,
         forceUseNamespaceImport,

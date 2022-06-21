@@ -11,7 +11,6 @@ export declare namespace writeEncoder {
     export interface Args {
         file: tsMorph.SourceFile;
         modelDirectory: tsMorph.Directory;
-        servicesDirectory: tsMorph.Directory;
         intermediateRepresentation: IntermediateRepresentation;
         typeResolver: TypeResolver;
     }
@@ -22,7 +21,6 @@ export function writeEncoder({
     intermediateRepresentation,
     typeResolver,
     modelDirectory,
-    servicesDirectory,
 }: writeEncoder.Args): void {
     file.addImportDeclaration({
         namespaceImport: HathoraEncoderConstants.BinSerDe.NAMESPACE_IMPORT,
@@ -44,7 +42,6 @@ export function writeEncoder({
             typeResolver,
             file,
             modelDirectory,
-            servicesDirectory,
         }),
         [HathoraEncoderConstants.Errors.NAME]: getTextOfTsNode(ts.factory.createStringLiteral("TODO")),
     });

@@ -4,15 +4,14 @@ import { Directory, ts } from "ts-morph";
 import { generateResponse } from "../commons/generate-response/generateResponse";
 import { getServiceTypeReference } from "../commons/service-type-reference/get-service-type-reference/getServiceTypeReference";
 import { ServiceTypesConstants } from "../constants";
+import { getMetadataForWebSocketOperationType } from "./getMetadataForWebSocketOperationType";
 import { GeneratedWebSocketOperationTypes } from "./types";
 
 export declare namespace generateResponseTypes {
     export interface Args {
         channelName: TypeName;
         operation: WebSocketOperation;
-        operationDirectory: Directory;
         modelDirectory: Directory;
-        servicesDirectory: Directory;
         typeResolver: TypeResolver;
         errorResolver: ErrorResolver;
         dependencyManager: DependencyManager;
@@ -24,14 +23,12 @@ export declare namespace generateResponseTypes {
 export function generateResponseTypes({
     channelName,
     operation,
-    operationDirectory,
     modelDirectory,
-    servicesDirectory,
     typeResolver,
     errorResolver,
     dependencyManager,
 }: generateResponseTypes.Args): generateResponseTypes.Return {
-    const { reference, successBodyReference } = generateResponse({
+    const { reference, successBodyReference, errorBodyReference } = generateResponse({
         modelDirectory,
         typeResolver,
         errorResolver,
@@ -43,14 +40,10 @@ export function generateResponseTypes({
         failedResponse: operation.response.failed,
         getTypeReferenceToServiceType: ({ reference, referencedIn }) =>
             getServiceTypeReference({
-                serviceOrChannelName: channelName,
-                endpointOrOperationId: operation.operationId,
                 reference,
                 referencedIn,
-                servicesDirectory,
                 modelDirectory,
             }),
-        directory: operationDirectory,
         additionalProperties: [
             {
                 name: ServiceTypesConstants.WebsocketChannel.Response.Properties.ID,
@@ -61,7 +54,25 @@ export function generateResponseTypes({
                 type: getTextOfTsKeyword(ts.SyntaxKind.StringKeyword),
             },
         ],
+        responseMetadata: getMetadataForWebSocketOperationType({
+            modelDirectory,
+            channelName,
+            operationId: operation.operationId,
+            type: ServiceTypesConstants.Commons.Response.TYPE_NAME,
+        }),
+        successBodyMetadata: getMetadataForWebSocketOperationType({
+            modelDirectory,
+            channelName,
+            operationId: operation.operationId,
+            type: ServiceTypesConstants.Commons.Response.Success.Properties.Body.TYPE_NAME,
+        }),
+        errorBodyMetadata: getMetadataForWebSocketOperationType({
+            modelDirectory,
+            channelName,
+            operationId: operation.operationId,
+            type: ServiceTypesConstants.Commons.Response.Error.Properties.Body.TYPE_NAME,
+        }),
     });
 
-    return { reference, successBodyReference };
+    return { reference, successBodyReference, errorBodyReference };
 }

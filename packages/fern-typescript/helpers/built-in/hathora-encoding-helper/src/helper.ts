@@ -11,15 +11,9 @@ export const helper: FernTypescriptHelper = {
             _type: "fileBased",
             name: HathoraEncoderConstants.NAME,
             contentType: "application/octet-stream",
-            writeEncoder: ({
-                encoderDirectory,
-                modelDirectory,
-                servicesDirectory,
-                intermediateRepresentation,
-                typeResolver,
-            }) => {
+            writeEncoder: ({ encoderDirectory, modelDirectory, intermediateRepresentation, typeResolver }) => {
                 const file = encoderDirectory.createSourceFile(`${HathoraEncoderConstants.NAME}.ts`);
-                writeEncoder({ intermediateRepresentation, file, modelDirectory, servicesDirectory, typeResolver });
+                writeEncoder({ intermediateRepresentation, file, modelDirectory, typeResolver });
             },
             generateEncode: ({ referenceToDecodedObject, referenceToEncoder }) => {
                 return ts.factory.createCallExpression(

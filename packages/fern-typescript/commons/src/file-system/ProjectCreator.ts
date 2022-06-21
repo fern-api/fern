@@ -15,16 +15,19 @@ export class ProjectCreator {
     }
 
     public async finalize(): Promise<Project> {
-        await this.project.save();
-        for (const directory of this.project.getDirectories()) {
+        for (const directory of this.project.getRootDirectories()) {
             this.finalizeDirectory(directory);
         }
+        await this.project.save();
         return this.project;
     }
 
-    private finalizeDirectory(directory: Directory): void {
+    private finalizeDirectory(directory: Directory, depth = 0): void {
         for (const subdirectory of directory.getDirectories()) {
-            this.finalizeDirectory(subdirectory);
+            this.finalizeDirectory(subdirectory, depth + 1);
+            if (subdirectory.wasForgotten()) {
+                continue;
+            }
             if (subdirectory.getSourceFile("index.ts") != null) {
                 exportFromModule({
                     module: directory,
@@ -40,6 +43,10 @@ export class ProjectCreator {
                     pathToExport: sourceFile.getFilePath(),
                 });
             }
+        }
+
+        if (directory.getSourceFiles().length === 0 && directory.getDirectories().length === 0) {
+            directory.delete();
         }
     }
 }

@@ -1,7 +1,10 @@
 import { HttpEndpoint, HttpService } from "@fern-api/api";
-import { getTypeReference } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
-import { GeneratedHttpEndpointTypes, ServiceTypeName, ServiceTypesConstants } from "@fern-typescript/service-types";
+import {
+    GeneratedHttpEndpointTypes,
+    getServiceTypeReference,
+    ServiceTypesConstants,
+} from "@fern-typescript/service-types";
 import { Directory, SourceFile, ts } from "ts-morph";
 import { ClientConstants } from "../../../constants";
 import { generateEncoderCall } from "./generateEncoderCall";
@@ -11,7 +14,6 @@ export async function generateReturnResponse({
     serviceDefinition,
     endpoint,
     endpointTypes,
-    getReferenceToLocalServiceType,
     modelDirectory,
     encodersDirectory,
     helperManager,
@@ -20,7 +22,6 @@ export async function generateReturnResponse({
     serviceDefinition: HttpService;
     endpoint: HttpEndpoint;
     endpointTypes: GeneratedHttpEndpointTypes;
-    getReferenceToLocalServiceType: (typeName: ServiceTypeName) => ts.TypeReferenceNode;
     modelDirectory: Directory;
     encodersDirectory: Directory;
     helperManager: HelperManager;
@@ -37,7 +38,6 @@ export async function generateReturnResponse({
                 serviceDefinition,
                 endpoint,
                 endpointTypes,
-                getReferenceToLocalServiceType,
                 encodersDirectory,
                 modelDirectory,
                 helperManager,
@@ -49,9 +49,9 @@ export async function generateReturnResponse({
                 serviceFile,
                 endpoint,
                 endpointTypes,
-                getReferenceToLocalServiceType,
                 helperManager,
                 encodersDirectory,
+                modelDirectory,
             })
         )
     );
@@ -62,7 +62,6 @@ async function generateReturnSuccessResponse({
     serviceDefinition,
     endpoint,
     endpointTypes,
-    getReferenceToLocalServiceType,
     modelDirectory,
     encodersDirectory,
     helperManager,
@@ -71,7 +70,6 @@ async function generateReturnSuccessResponse({
     serviceDefinition: HttpService;
     endpoint: HttpEndpoint;
     endpointTypes: GeneratedHttpEndpointTypes;
-    getReferenceToLocalServiceType: (typeName: ServiceTypeName) => ts.TypeReferenceNode;
     modelDirectory: Directory;
     encodersDirectory: Directory;
     helperManager: HelperManager;
@@ -99,13 +97,11 @@ async function generateReturnSuccessResponse({
                 ),
                 ts.factory.createAsExpression(
                     ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.DECODED_RESPONSE),
-                    endpointTypes.response.successBodyReference.isLocal
-                        ? getReferenceToLocalServiceType(endpointTypes.response.successBodyReference.typeName)
-                        : getTypeReference({
-                              reference: endpointTypes.response.successBodyReference.typeReference,
-                              referencedIn: serviceFile,
-                              modelDirectory,
-                          })
+                    getServiceTypeReference({
+                        reference: endpointTypes.response.successBodyReference,
+                        referencedIn: serviceFile,
+                        modelDirectory,
+                    })
                 )
             )
         );
@@ -122,50 +118,56 @@ async function generateReturnSuccessResponse({
 async function generateReturnErrorResponse({
     serviceDefinition,
     endpoint,
-    getReferenceToLocalServiceType,
+    endpointTypes,
     helperManager,
     serviceFile,
     encodersDirectory,
+    modelDirectory,
 }: {
     serviceDefinition: HttpService;
     serviceFile: SourceFile;
     endpoint: HttpEndpoint;
     endpointTypes: GeneratedHttpEndpointTypes;
-    getReferenceToLocalServiceType: (typeName: ServiceTypeName) => ts.TypeReferenceNode;
     helperManager: HelperManager;
     encodersDirectory: Directory;
+    modelDirectory: Directory;
 }): Promise<ts.Statement[]> {
-    const decodeErrorStatement = await generateDecodeResponse({
-        helperManager,
-        endpoint,
-        serviceDefinition,
-        decodedVariableName: ClientConstants.HttpService.Endpoint.Variables.DECODED_ERROR,
-        wireMessageType: "Error",
-        serviceFile,
-        encodersDirectory,
-    });
+    const statements: ts.Statement[] = [];
+    const returnStatementProperties: ts.ObjectLiteralElementLike[] = getBaseResponseProperties({ ok: false });
+
+    if (endpointTypes.response.errorBodyReference != null) {
+        const decodeErrorStatement = await generateDecodeResponse({
+            helperManager,
+            endpoint,
+            serviceDefinition,
+            decodedVariableName: ClientConstants.HttpService.Endpoint.Variables.DECODED_ERROR,
+            wireMessageType: "Error",
+            serviceFile,
+            encodersDirectory,
+        });
+        statements.push(decodeErrorStatement);
+
+        returnStatementProperties.push(
+            ts.factory.createPropertyAssignment(
+                ts.factory.createIdentifier(ServiceTypesConstants.Commons.Response.Error.Properties.Body.PROPERTY_NAME),
+                ts.factory.createAsExpression(
+                    ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.DECODED_ERROR),
+                    getServiceTypeReference({
+                        reference: endpointTypes.response.errorBodyReference,
+                        referencedIn: serviceFile,
+                        modelDirectory,
+                    })
+                )
+            )
+        );
+    }
 
     const returnStatement = ts.factory.createReturnStatement(
-        ts.factory.createObjectLiteralExpression(
-            [
-                ...getBaseResponseProperties({ ok: false }),
-                ts.factory.createPropertyAssignment(
-                    ts.factory.createIdentifier(
-                        ServiceTypesConstants.Commons.Response.Error.Properties.Body.PROPERTY_NAME
-                    ),
-                    ts.factory.createAsExpression(
-                        ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.DECODED_ERROR),
-                        getReferenceToLocalServiceType(
-                            ServiceTypesConstants.Commons.Response.Error.Properties.Body.TYPE_NAME
-                        )
-                    )
-                ),
-            ],
-            true
-        )
+        ts.factory.createObjectLiteralExpression(returnStatementProperties, true)
     );
+    statements.push(returnStatement);
 
-    return [decodeErrorStatement, returnStatement];
+    return statements;
 }
 
 function getBaseResponseProperties({ ok }: { ok: boolean }): ts.ObjectLiteralElementLike[] {

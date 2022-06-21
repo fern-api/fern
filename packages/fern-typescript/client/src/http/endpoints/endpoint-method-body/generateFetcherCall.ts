@@ -85,7 +85,7 @@ export async function generateFetcherCall({
         const encodedRequestBody = generateEncoderCall({
             encoder,
             method: "encode",
-            variableReference: endpointTypes.request.body.isLocal
+            variableReference: endpointTypes.request.body.isInlined
                 ? {
                       _type: "wireMessage",
                       wireMessageType: "Request",
