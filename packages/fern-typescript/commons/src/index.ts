@@ -1,8 +1,13 @@
-export { getFilePathForModelReference } from "./codegen/references/getFilePathForModelReference";
+export { getFilePathForModelReference, getFilePathInModel } from "./codegen/references/getFilePathForModelReference";
 export { getModelTypeReference } from "./codegen/references/getModelTypeReference";
 export { getTypeReference } from "./codegen/references/getTypeReference";
 export { generateTypeUtilsReference } from "./codegen/type-utils/generateTypeUtilsReference";
 export { addBrandedTypeAlias } from "./codegen/utils/addBrandedTypeAlias";
+export {
+    createPropertyAccessExpression,
+    createQualifiedTypeReference,
+    getQualifiedReferenceToModel,
+} from "./codegen/utils/getQualifiedReferenceToModel";
 export { getRelativePathAsModuleSpecifierTo } from "./codegen/utils/getRelativePathAsModuleSpecifierTo";
 export { getTextOfTsKeyword } from "./codegen/utils/getTextOfTsKeyword";
 export { getTextOfTsNode } from "./codegen/utils/getTextOfTsNode";

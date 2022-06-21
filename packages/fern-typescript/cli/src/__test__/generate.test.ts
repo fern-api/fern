@@ -1,6 +1,7 @@
 import { getDirectoryContents } from "@fern-api/commons";
 import { GeneratorConfig } from "@fern-api/generator-runner";
-import { rm, writeFile } from "fs/promises";
+import { installAndCompileGeneratedProject } from "@fern-typescript/testing-utils";
+import { writeFile } from "fs/promises";
 import path from "path";
 import { runGenerator } from "../generator/runGenerator";
 
@@ -38,11 +39,13 @@ describe("runGenerator", () => {
                 await writeFile(configPath, JSON.stringify(config, undefined, 4));
                 await runGenerator(configPath);
 
+                await installAndCompileGeneratedProject(outputPath);
+
                 const directoryContents = await getDirectoryContents(outputPath);
                 expect(directoryContents).toMatchSnapshot();
 
-                await rm(configPath);
-                await rm(outputPath, { recursive: true });
+                // await rm(configPath);
+                // await rm(outputPath, { recursive: true });
             },
             60_000
         );

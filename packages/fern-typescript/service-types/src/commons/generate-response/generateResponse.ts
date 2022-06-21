@@ -6,16 +6,30 @@ import {
     getTextOfTsNode,
     TypeResolver,
 } from "@fern-typescript/commons";
-import { Directory, OptionalKind, PropertySignatureStructure, SourceFile, ts, Writers } from "ts-morph";
+import {
+    Directory,
+    ModuleDeclaration,
+    OptionalKind,
+    PropertySignatureStructure,
+    SourceFile,
+    ts,
+    Writers,
+} from "ts-morph";
 import { ServiceTypesConstants } from "../../constants";
 import { generateServiceTypeReference } from "../service-type-reference/generateServiceTypeReference";
-import { LocalServiceTypeReference, ServiceTypeReference } from "../service-type-reference/types";
+import {
+    InlinedServiceTypeReference,
+    ServiceTypeMetadata,
+    ServiceTypeReference,
+} from "../service-type-reference/types";
 import { generateErrorBody } from "./generateErrorBody";
 
 export declare namespace generateResponse {
     export interface Args {
-        directory: Directory;
         modelDirectory: Directory;
+        responseMetadata: ServiceTypeMetadata;
+        successBodyMetadata: ServiceTypeMetadata;
+        errorBodyMetadata: ServiceTypeMetadata;
         typeResolver: TypeResolver;
         errorResolver: ErrorResolver;
         dependencyManager: DependencyManager;
@@ -32,112 +46,117 @@ export declare namespace generateResponse {
     }
 
     export interface Return {
-        reference: LocalServiceTypeReference;
+        reference: InlinedServiceTypeReference;
         successBodyReference: ServiceTypeReference | undefined;
+        errorBodyReference: ServiceTypeReference | undefined;
     }
 }
 
 export function generateResponse({
     modelDirectory,
+    responseMetadata,
+    successBodyMetadata,
+    errorBodyMetadata,
     typeResolver,
     errorResolver,
     dependencyManager,
     successResponse,
     failedResponse,
     getTypeReferenceToServiceType,
-    directory,
     additionalProperties = [],
 }: generateResponse.Args): generateResponse.Return {
-    const successBodyReference = generateServiceTypeReference({
-        typeName: ServiceTypesConstants.Commons.Response.Success.Properties.Body.TYPE_NAME,
-        type: successResponse.type,
-        docs: successResponse.docs,
-        typeDirectory: directory,
-        modelDirectory,
-        typeResolver,
-    });
-
-    const responseFile = directory.createSourceFile(`${ServiceTypesConstants.Commons.Response.TYPE_NAME}.ts`);
+    const responseFile = getOrCreateSourceFile(modelDirectory, responseMetadata.filepath);
 
     responseFile.addTypeAlias({
-        name: ServiceTypesConstants.Commons.Response.TYPE_NAME,
+        name: responseMetadata.typeName,
         type: Writers.unionType(
-            ServiceTypesConstants.Commons.Response.Success.TYPE_NAME,
-            ServiceTypesConstants.Commons.Response.Error.TYPE_NAME
+            getTextOfTsNode(
+                ts.factory.createTypeReferenceNode(
+                    ts.factory.createQualifiedName(
+                        ts.factory.createIdentifier(responseMetadata.typeName),
+                        ts.factory.createIdentifier(ServiceTypesConstants.Commons.Response.Success.TYPE_NAME)
+                    ),
+                    undefined
+                )
+            ),
+            getTextOfTsNode(
+                ts.factory.createTypeReferenceNode(
+                    ts.factory.createQualifiedName(
+                        ts.factory.createIdentifier(responseMetadata.typeName),
+                        ts.factory.createIdentifier(ServiceTypesConstants.Commons.Response.Error.TYPE_NAME)
+                    ),
+                    undefined
+                )
+            )
         ),
         isExported: true,
     });
 
+    const responseNamespace = responseFile.addModule({
+        name: responseMetadata.typeName,
+    });
+
+    const successBodyReference = generateServiceTypeReference({
+        metadata: successBodyMetadata,
+        type: successResponse.type,
+        docs: successResponse.docs,
+        modelDirectory,
+        typeResolver,
+    });
     addSuccessResponseInterface({
-        responseFile,
+        responseNamespace,
         successBodyReference,
         getTypeReferenceToServiceType,
         additionalProperties,
     });
 
-    const errorBodyFile = getOrCreateSourceFile(
-        directory,
-        `${ServiceTypesConstants.Commons.Response.Error.Properties.Body.TYPE_NAME}.ts`
-    );
-
-    generateErrorBody({
+    const { errorBodyReference } = maybeGenerateErrorBody({
+        modelDirectory,
+        errorBodyMetadata,
         failedResponse,
-        errorBodyFile,
         typeResolver,
         errorResolver,
-        modelDirectory,
         dependencyManager,
     });
 
-    responseFile.addInterface({
-        name: ServiceTypesConstants.Commons.Response.Error.TYPE_NAME,
-        isExported: true,
-        properties: [
-            ...createBaseResponseProperties({ ok: false }),
-            ...additionalProperties,
-            {
-                name: ServiceTypesConstants.Commons.Response.Error.Properties.Body.PROPERTY_NAME,
-                type: getTextOfTsNode(
-                    getTypeReferenceToServiceType({
-                        reference: {
-                            isLocal: true,
-                            typeName: ServiceTypesConstants.Commons.Response.Error.Properties.Body.TYPE_NAME,
-                            file: errorBodyFile,
-                        },
-                        referencedIn: responseFile,
-                    })
-                ),
-            },
-        ],
+    addErrorResponseInterface({
+        responseNamespace,
+        additionalProperties,
+        getTypeReferenceToServiceType,
+        errorBodyReference,
     });
 
     return {
         reference: {
-            isLocal: true,
-            typeName: ServiceTypesConstants.Commons.Response.TYPE_NAME,
+            isInlined: true,
+            metadata: responseMetadata,
             file: responseFile,
         },
         successBodyReference,
+        errorBodyReference,
     };
 }
 
 function addSuccessResponseInterface({
     successBodyReference,
     getTypeReferenceToServiceType,
-    responseFile,
+    responseNamespace,
     additionalProperties,
 }: {
     successBodyReference: ServiceTypeReference | undefined;
     getTypeReferenceToServiceType: (args: { reference: ServiceTypeReference; referencedIn: SourceFile }) => ts.TypeNode;
-    responseFile: SourceFile;
+    responseNamespace: ModuleDeclaration;
     additionalProperties: OptionalKind<PropertySignatureStructure>[];
 }): void {
     const successResponseBodyReference =
         successBodyReference != null
-            ? getTypeReferenceToServiceType({ reference: successBodyReference, referencedIn: responseFile })
+            ? getTypeReferenceToServiceType({
+                  reference: successBodyReference,
+                  referencedIn: responseNamespace.getSourceFile(),
+              })
             : undefined;
 
-    responseFile.addInterface({
+    responseNamespace.addInterface({
         name: ServiceTypesConstants.Commons.Response.Success.TYPE_NAME,
         isExported: true,
         properties: generateSuccessResponseProperties({
@@ -166,6 +185,41 @@ function generateSuccessResponseProperties({
     return properties;
 }
 
+function addErrorResponseInterface({
+    responseNamespace,
+    additionalProperties,
+    getTypeReferenceToServiceType,
+    errorBodyReference,
+}: {
+    responseNamespace: ModuleDeclaration;
+    additionalProperties: OptionalKind<PropertySignatureStructure>[];
+    getTypeReferenceToServiceType: (args: { reference: ServiceTypeReference; referencedIn: SourceFile }) => ts.TypeNode;
+    errorBodyReference: ServiceTypeReference | undefined;
+}) {
+    const properties: OptionalKind<PropertySignatureStructure>[] = [
+        ...createBaseResponseProperties({ ok: false }),
+        ...additionalProperties,
+    ];
+
+    if (errorBodyReference != null) {
+        properties.push({
+            name: ServiceTypesConstants.Commons.Response.Error.Properties.Body.PROPERTY_NAME,
+            type: getTextOfTsNode(
+                getTypeReferenceToServiceType({
+                    reference: errorBodyReference,
+                    referencedIn: responseNamespace.getSourceFile(),
+                })
+            ),
+        });
+    }
+
+    responseNamespace.addInterface({
+        name: ServiceTypesConstants.Commons.Response.Error.TYPE_NAME,
+        isExported: true,
+        properties,
+    });
+}
+
 function createBaseResponseProperties({ ok }: { ok: boolean }): OptionalKind<PropertySignatureStructure>[] {
     return [
         {
@@ -175,4 +229,43 @@ function createBaseResponseProperties({ ok }: { ok: boolean }): OptionalKind<Pro
             ),
         },
     ];
+}
+
+function maybeGenerateErrorBody({
+    modelDirectory,
+    errorBodyMetadata,
+    failedResponse,
+    typeResolver,
+    errorResolver,
+    dependencyManager,
+}: {
+    modelDirectory: Directory;
+    errorBodyMetadata: ServiceTypeMetadata;
+    failedResponse: FailedResponse;
+    typeResolver: TypeResolver;
+    errorResolver: ErrorResolver;
+    dependencyManager: DependencyManager;
+}): { errorBodyReference: ServiceTypeReference | undefined } {
+    if (failedResponse.errors.length === 0) {
+        return { errorBodyReference: undefined };
+    }
+
+    const errorBodyFile = getOrCreateSourceFile(modelDirectory, errorBodyMetadata.filepath);
+    generateErrorBody({
+        failedResponse,
+        errorBodyFile,
+        errorBodyMetadata,
+        typeResolver,
+        errorResolver,
+        modelDirectory,
+        dependencyManager,
+    });
+
+    return {
+        errorBodyReference: {
+            isInlined: true,
+            metadata: errorBodyMetadata,
+            file: errorBodyFile,
+        },
+    };
 }

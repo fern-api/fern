@@ -11,7 +11,6 @@ import {
 } from "@fern-api/api";
 import { assertNever } from "@fern-api/commons";
 import { RawSchemas } from "@fern-api/syntax-analysis";
-import path from "path";
 import { getDocs } from "../../utils/getDocs";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { convertHttpRequest } from "./convertHttpRequest";
@@ -56,7 +55,7 @@ export function convertHttpService({
                         : convertHttpAuth(serviceDefinition.auth),
                 docs: endpoint.docs,
                 method: convertHttpMethod(endpoint.method),
-                path: endpoint.path.startsWith("/") ? endpoint.path : path.join("/", endpoint.path),
+                path: endpoint.path,
                 pathParameters:
                     endpoint["path-parameters"] != null
                         ? Object.entries(endpoint["path-parameters"]).map(([parameterName, parameterType]) => ({

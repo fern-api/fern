@@ -1,9 +1,9 @@
 import { Type } from "@fern-api/api";
-import { getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
+import { getOrCreateSourceFile, getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
 import { Directory, OptionalKind, PropertySignatureStructure, SourceFile, ts } from "ts-morph";
 import { ServiceTypesConstants } from "../../constants";
 import { generateServiceTypeReference } from "../service-type-reference/generateServiceTypeReference";
-import { ServiceTypeReference } from "../service-type-reference/types";
+import { ServiceTypeMetadata, ServiceTypeReference } from "../service-type-reference/types";
 
 /**
  * TODO this is kinda weird. For endpoints wrapper refers to something the consumer passes in (e.g. it includes query
@@ -22,8 +22,9 @@ export interface GeneratedRequest {
 
 export declare namespace generateRequest {
     export interface Args {
-        directory: Directory;
         modelDirectory: Directory;
+        requestMetadata: ServiceTypeMetadata;
+        requestBodyMetadata: ServiceTypeMetadata;
         getTypeReferenceToServiceType: (args: {
             reference: ServiceTypeReference;
             referencedIn: SourceFile;
@@ -41,8 +42,9 @@ export declare namespace generateRequest {
 }
 
 export function generateRequest({
-    directory,
     modelDirectory,
+    requestMetadata,
+    requestBodyMetadata,
     getTypeReferenceToServiceType,
     body,
     additionalProperties = [],
@@ -51,10 +53,9 @@ export function generateRequest({
     if (additionalProperties.length === 0) {
         const requestBodyReference = generateServiceTypeReference({
             // use the request body as the Request (don't generate a RequestBody type at all)
-            typeName: ServiceTypesConstants.Commons.Request.TYPE_NAME,
+            metadata: requestMetadata,
             type: body.type,
             docs: body.docs,
-            typeDirectory: directory,
             modelDirectory,
             typeResolver,
         });
@@ -68,14 +69,13 @@ export function generateRequest({
         }
     }
 
-    const requestFile = directory.createSourceFile(`${ServiceTypesConstants.Commons.Request.TYPE_NAME}.ts`);
+    const requestFile = getOrCreateSourceFile(modelDirectory, requestMetadata.filepath);
 
     const requestBodyReference = generateServiceTypeReference({
         // put the request body in its own RequestBody type/file
-        typeName: ServiceTypesConstants.Commons.Request.Properties.Body.TYPE_NAME,
+        metadata: requestBodyMetadata,
         type: body.type,
         docs: body.docs,
-        typeDirectory: directory,
         modelDirectory,
         typeResolver,
     });
@@ -97,7 +97,7 @@ export function generateRequest({
     }
 
     requestFile.addInterface({
-        name: ServiceTypesConstants.Commons.Request.TYPE_NAME,
+        name: requestMetadata.typeName,
         properties,
         isExported: true,
     });
@@ -105,8 +105,8 @@ export function generateRequest({
     return {
         wrapper: {
             reference: {
-                isLocal: true,
-                typeName: ServiceTypesConstants.Commons.Request.TYPE_NAME,
+                isInlined: true,
+                metadata: requestMetadata,
                 file: requestFile,
             },
             propertyName: ServiceTypesConstants.Commons.Request.Properties.Body.PROPERTY_NAME,

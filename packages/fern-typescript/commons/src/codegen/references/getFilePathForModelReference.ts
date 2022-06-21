@@ -1,6 +1,7 @@
 import { ModelReference } from "@fern-api/api";
 import path from "path";
 import { Directory } from "ts-morph";
+import { getNameOfModelReference } from "./getNameOfModelReference";
 
 export type TypeCategory = "error" | "type";
 
@@ -20,14 +21,6 @@ export function getFilePathForModelReference({ reference, modelDirectory }: getF
         },
     });
 
-    const name = ModelReference._visit(reference, {
-        type: ({ name }) => name,
-        error: ({ name }) => name,
-        _unknown: () => {
-            throw new Error("Unknown model reference: " + reference._type);
-        },
-    });
-
     const intermediateDirectories = ModelReference._visit(reference, {
         type: () => ["types"],
         error: () => ["errors"],
@@ -36,5 +29,29 @@ export function getFilePathForModelReference({ reference, modelDirectory }: getF
         },
     });
 
-    return path.join(modelDirectory.getPath(), fernFilepath, ...intermediateDirectories, `${name}.ts`);
+    return getFilePathInModel({
+        modelDirectory,
+        fernFilepath,
+        intermediateDirectories,
+        filenameWithoutExtension: getNameOfModelReference(reference),
+    });
+}
+
+export function getFilePathInModel({
+    modelDirectory,
+    fernFilepath,
+    intermediateDirectories,
+    filenameWithoutExtension,
+}: {
+    modelDirectory: Directory;
+    fernFilepath: string;
+    intermediateDirectories: string[];
+    filenameWithoutExtension: string;
+}): string {
+    return path.join(
+        modelDirectory.getPath(),
+        fernFilepath,
+        ...intermediateDirectories,
+        `${filenameWithoutExtension}.ts`
+    );
 }

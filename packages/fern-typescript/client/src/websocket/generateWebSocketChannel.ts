@@ -10,7 +10,7 @@ import {
     TypeResolver,
 } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
-import { getLocalServiceTypeReference } from "@fern-typescript/service-types";
+import { getServiceTypeReference } from "@fern-typescript/service-types";
 import {
     Directory,
     ModuleDeclaration,
@@ -53,7 +53,6 @@ export function generateWebSocketChannel({
         channel,
         channelDirectory,
         modelDirectory,
-        servicesDirectory,
         errorResolver,
         typeResolver,
         dependencyManager,
@@ -64,7 +63,6 @@ function generateChannel({
     channel,
     channelDirectory,
     modelDirectory,
-    servicesDirectory,
     typeResolver,
     errorResolver,
     dependencyManager,
@@ -72,7 +70,6 @@ function generateChannel({
     channel: WebSocketChannel;
     channelDirectory: Directory;
     modelDirectory: Directory;
-    servicesDirectory: Directory;
     typeResolver: TypeResolver;
     errorResolver: ErrorResolver;
     dependencyManager: DependencyManager;
@@ -138,18 +135,15 @@ function generateChannel({
             channelInterface,
             channel,
             modelDirectory,
-            servicesDirectory,
             typeResolver,
             errorResolver,
             dependencyManager,
         });
         serverMessageTypes.push(
-            getLocalServiceTypeReference({
-                serviceOrChannelName: channel.name,
-                typeName: generatedOperationTypes.response.reference.typeName,
-                endpointOrOperationId: operation.operationId,
-                servicesDirectory,
+            getServiceTypeReference({
+                reference: generatedOperationTypes.response.reference,
                 referencedIn: channelFile,
+                modelDirectory,
             })
         );
     }

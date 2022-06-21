@@ -10,6 +10,7 @@
     { "path": "../client/tsconfig.json" },
     { "path": "../commons/tsconfig.json" },
     { "path": "../helpers/helper-manager/tsconfig.json" },
-    { "path": "../model/tsconfig.json" }
+    { "path": "../model/tsconfig.json" },
+    { "path": "../testing-utils/tsconfig.json" }
   ]
 }

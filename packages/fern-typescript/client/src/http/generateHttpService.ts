@@ -53,7 +53,6 @@ export async function generateHttpService({
         serviceDirectory,
         modelDirectory,
         encodersDirectory,
-        servicesDirectory,
         typeResolver,
         errorResolver,
         helperManager,
@@ -65,7 +64,6 @@ async function generateService({
     service,
     serviceDirectory,
     modelDirectory,
-    servicesDirectory,
     encodersDirectory,
     typeResolver,
     errorResolver,
@@ -75,7 +73,6 @@ async function generateService({
     service: HttpService;
     serviceDirectory: Directory;
     modelDirectory: Directory;
-    servicesDirectory: Directory;
     encodersDirectory: Directory;
     typeResolver: TypeResolver;
     errorResolver: ErrorResolver;
@@ -136,11 +133,6 @@ async function generateService({
 
     addConstructor({ serviceClass, serviceDefinition: service });
 
-    const endpointsDirectory = getOrCreateDirectory(
-        serviceDirectory,
-        ClientConstants.HttpService.Files.ENDPOINTS_DIRECTORY_NAME
-    );
-
     for (const endpoint of service.endpoints) {
         await addEndpointToService({
             endpoint,
@@ -148,8 +140,6 @@ async function generateService({
             serviceClass,
             serviceDefinition: service,
             modelDirectory,
-            endpointsDirectory,
-            servicesDirectory,
             encodersDirectory,
             typeResolver,
             errorResolver,

@@ -14,11 +14,12 @@ import {
     ResolvedSingleUnionValueType,
 } from "@fern-typescript/types";
 import { Directory, SourceFile } from "ts-morph";
-import { ServiceTypesConstants } from "../../constants";
+import { ServiceTypeMetadata } from "../service-type-reference/types";
 
 export function generateErrorBody({
     failedResponse,
     errorBodyFile,
+    errorBodyMetadata,
     modelDirectory,
     typeResolver,
     errorResolver,
@@ -26,6 +27,7 @@ export function generateErrorBody({
 }: {
     failedResponse: FailedResponse;
     errorBodyFile: SourceFile;
+    errorBodyMetadata: ServiceTypeMetadata;
     modelDirectory: Directory;
     typeResolver: TypeResolver;
     errorResolver: ErrorResolver;
@@ -33,7 +35,7 @@ export function generateErrorBody({
 }): void {
     generateUnionType({
         file: errorBodyFile,
-        typeName: ServiceTypesConstants.Commons.Response.Error.Properties.Body.TYPE_NAME,
+        typeName: errorBodyMetadata.typeName,
         docs: failedResponse.docs,
         discriminant: failedResponse.discriminant,
         resolvedTypes: failedResponse.errors.map((error) => ({

@@ -1,7 +1,7 @@
 import { HttpEndpoint, HttpService } from "@fern-api/api";
 import { FernWriters, getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
-import { tsMorph } from "@fern-typescript/helper-utils";
-import { getLocalServiceTypeReference, ServiceTypesConstants } from "@fern-typescript/service-types";
+import { ts, tsMorph } from "@fern-typescript/helper-utils";
+import { ServiceTypesConstants } from "@fern-typescript/service-types";
 import { constructEncodeMethods } from "../constructEncodeMethods";
 import { getEncodeMethodsForType } from "../model/writeModel";
 
@@ -10,13 +10,11 @@ export function writeHttpService({
     typeResolver,
     file,
     modelDirectory,
-    servicesDirectory,
 }: {
     service: HttpService;
     typeResolver: TypeResolver;
     file: tsMorph.SourceFile;
     modelDirectory: tsMorph.Directory;
-    servicesDirectory: tsMorph.Directory;
 }): tsMorph.WriterFunction {
     const writer = FernWriters.object.writer({ newlinesBetweenProperties: true });
     for (const endpoint of service.endpoints) {
@@ -28,7 +26,6 @@ export function writeHttpService({
                 typeResolver,
                 file,
                 modelDirectory,
-                servicesDirectory,
             }),
         });
     }
@@ -41,14 +38,12 @@ function writeHttpEndpoint({
     typeResolver,
     file,
     modelDirectory,
-    servicesDirectory,
 }: {
     endpoint: HttpEndpoint;
     service: HttpService;
     typeResolver: TypeResolver;
     file: tsMorph.SourceFile;
     modelDirectory: tsMorph.Directory;
-    servicesDirectory: tsMorph.Directory;
 }): tsMorph.WriterFunction {
     const writer = FernWriters.object.writer({ newlinesBetweenProperties: true });
     if (endpoint.request.type._type !== "alias") {
@@ -57,13 +52,7 @@ function writeHttpEndpoint({
             value: getTextOfTsNode(
                 constructEncodeMethods({
                     methods: getEncodeMethodsForType({
-                        decodedType: getLocalServiceTypeReference({
-                            serviceOrChannelName: service.name,
-                            endpointOrOperationId: endpoint.endpointId,
-                            typeName: ServiceTypesConstants.Commons.Request.Properties.Body.TYPE_NAME,
-                            referencedIn: file,
-                            servicesDirectory,
-                        }),
+                        decodedType: ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword),
                         typeDefinition: {
                             docs: undefined,
                             name: {
@@ -87,13 +76,7 @@ function writeHttpEndpoint({
             value: getTextOfTsNode(
                 constructEncodeMethods({
                     methods: getEncodeMethodsForType({
-                        decodedType: getLocalServiceTypeReference({
-                            serviceOrChannelName: service.name,
-                            endpointOrOperationId: endpoint.endpointId,
-                            typeName: ServiceTypesConstants.Commons.Response.Success.Properties.Body.TYPE_NAME,
-                            referencedIn: file,
-                            servicesDirectory,
-                        }),
+                        decodedType: ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword),
                         typeDefinition: {
                             docs: undefined,
                             name: {

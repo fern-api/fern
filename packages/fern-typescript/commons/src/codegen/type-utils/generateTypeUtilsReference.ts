@@ -1,5 +1,7 @@
 import { ModelReference } from "@fern-api/api";
 import { Directory, SourceFile, ts } from "ts-morph";
+import { getFilePathForModelReference } from "../references/getFilePathForModelReference";
+import { getNameOfModelReference } from "../references/getNameOfModelReference";
 import { createPropertyAccessExpression, getQualifiedReferenceToModel } from "../utils/getQualifiedReferenceToModel";
 
 export function generateTypeUtilsReference({
@@ -12,7 +14,8 @@ export function generateTypeUtilsReference({
     modelDirectory: Directory;
 }): ts.Expression {
     return getQualifiedReferenceToModel({
-        reference,
+        typeName: getNameOfModelReference(reference),
+        filepathOfReference: getFilePathForModelReference({ reference, modelDirectory }),
         referencedIn,
         modelDirectory,
         forceUseNamespaceImport: false,
