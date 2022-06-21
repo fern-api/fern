@@ -783,8 +783,6 @@ Object {
         \\"typescript\\": \\"^4.6.4\\"
     }
 }",
-  "/src/index.ts": "export * from \\"./model\\";
-",
   "/src/model/commons/index.ts": "export * from \\"./types\\";
 ",
   "/src/model/commons/types/PostId.ts": "/**
@@ -800,8 +798,8 @@ export const PostId = {
 ",
   "/src/model/commons/types/index.ts": "export * from \\"./PostId\\";
 ",
-  "/src/model/index.ts": "export * from \\"./commons\\";
-export * from \\"./posts\\";
+  "/src/model/index.ts": "export * as commons from \\"./commons\\";
+export * as posts from \\"./posts\\";
 ",
   "/src/model/posts/errors/PostNotFoundError.ts": "export type PostNotFoundError = string & {
     __PostNotFoundError: void;
@@ -813,8 +811,8 @@ export const PostNotFoundError = {
 ",
   "/src/model/posts/errors/index.ts": "export * from \\"./PostNotFoundError\\";
 ",
-  "/src/model/posts/index.ts": "export * from \\"./errors\\";
-export * from \\"./types\\";
+  "/src/model/posts/index.ts": "export * from \\"./types\\";
+export * from \\"./errors\\";
 ",
   "/src/model/posts/types/Author.ts": "export type Author =
     | Author.Anonymous
@@ -864,18 +862,18 @@ export type BlogPostReference =
     | BlogPostReference.Post;
 
 export declare namespace BlogPostReference {
-    interface Post extends model.Post {
+    interface Post extends model.posts.Post {
         _type: \\"post\\";
     }
 
     export interface _Visitor<Result> {
-        post: (value: model.Post) => Result;
+        post: (value: model.posts.Post) => Result;
         _unknown: () => Result;
     }
 }
 
 export const BlogPostReference = {
-    post: (value: model.Post): BlogPostReference.Post => ({
+    post: (value: model.posts.Post): BlogPostReference.Post => ({
         ...value,
         _type: \\"post\\"
     }),
@@ -890,7 +888,7 @@ export const BlogPostReference = {
     _types: (): BlogPostReference[\\"_type\\"][] => [\\"post\\"],
 } as const;
 ",
-  "/src/model/posts/types/CreatePostRequest.ts": "import { Author } from \\"./Author\\";
+  "/src/model/posts/types/CreatePostRequest.ts": "import { Author } from \\"..\\";
 
 export interface CreatePostRequest {
     title: string;
@@ -898,9 +896,8 @@ export interface CreatePostRequest {
     content: string;
 }
 ",
-  "/src/model/posts/types/Post.ts": "import { PostId } from \\"../../commons/types/PostId\\";
-import { PostType } from \\"./PostType\\";
-import { Author } from \\"./Author\\";
+  "/src/model/posts/types/Post.ts": "import { PostId } from \\"../../commons\\";
+import { Author, PostType } from \\"..\\";
 
 /**
  * A blog post
@@ -944,11 +941,11 @@ export declare namespace PostType {
     }
 }
 ",
-  "/src/model/posts/types/index.ts": "export * from \\"./Author\\";
+  "/src/model/posts/types/index.ts": "export * from \\"./Post\\";
 export * from \\"./BlogPostReference\\";
-export * from \\"./CreatePostRequest\\";
-export * from \\"./Post\\";
 export * from \\"./PostType\\";
+export * from \\"./Author\\";
+export * from \\"./CreatePostRequest\\";
 ",
   "/tsconfig.esm.json": "{
     \\"compilerOptions\\": {

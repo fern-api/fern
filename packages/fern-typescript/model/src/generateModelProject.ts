@@ -1,5 +1,5 @@
 import { IntermediateRepresentation } from "@fern-api/api";
-import { generateTypeScriptProject, getOrCreateDirectory, TypeResolver } from "@fern-typescript/commons";
+import { generateTypeScriptProject, ModelContext, TypeResolver } from "@fern-typescript/commons";
 import { generateErrorFiles } from "@fern-typescript/errors";
 import { generateTypeFiles } from "@fern-typescript/types";
 import { Volume } from "memfs/lib/volume";
@@ -37,8 +37,9 @@ export function generateModelFiles({
     directory: Directory;
     typeResolver: TypeResolver;
 }): Directory {
-    const modelDirectory = getOrCreateDirectory(directory, "model");
-    generateTypeFiles({ intermediateRepresentation, typeResolver, modelDirectory });
-    generateErrorFiles({ intermediateRepresentation, typeResolver, modelDirectory });
+    const modelDirectory = directory.createDirectory("model");
+    const modelContext = new ModelContext(modelDirectory);
+    generateTypeFiles({ intermediateRepresentation, typeResolver, modelContext });
+    generateErrorFiles({ intermediateRepresentation, typeResolver, modelContext });
     return modelDirectory;
 }

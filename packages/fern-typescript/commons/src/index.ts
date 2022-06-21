@@ -22,6 +22,7 @@ export {
     type GeneratedProjectSrcInfo,
 } from "./generate-ts-project/generateTypeScriptProject";
 export { writeVolumeToDisk } from "./generate-ts-project/writeVolumeToDisk";
+export { ImportStrategy, ModelContext } from "./model-context/ModelContext";
 export { ErrorResolver } from "./resolvers/ErrorResolver";
 export { resolveType, TypeResolver } from "./resolvers/TypeResolver";
 export { ResolvedType } from "./resolvers/types";

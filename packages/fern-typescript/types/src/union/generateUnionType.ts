@@ -2,13 +2,13 @@ import { TypeReference } from "@fern-api/api";
 import {
     FernWriters,
     getTextOfTsNode,
-    getTypeReference,
     getWriterForMultiLineUnionType,
+    ImportStrategy,
     maybeAddDocs,
+    ModelContext,
     visitorUtils,
 } from "@fern-typescript/commons";
 import {
-    Directory,
     InterfaceDeclaration,
     InterfaceDeclarationStructure,
     OptionalKind,
@@ -27,7 +27,7 @@ export declare namespace generateUnionType {
         discriminant: string;
         resolvedTypes: ResolvedSingleUnionType[];
         additionalPropertiesForEveryType?: ObjectProperty[];
-        modelDirectory: Directory;
+        modelContext: ModelContext;
     }
 
     export interface ObjectProperty {
@@ -44,7 +44,7 @@ export function generateUnionType({
     discriminant,
     resolvedTypes,
     additionalPropertiesForEveryType = [],
-    modelDirectory,
+    modelContext,
 }: generateUnionType.Args): void {
     const typeAlias = file.addTypeAlias({
         name: typeName,
@@ -79,10 +79,10 @@ export function generateUnionType({
             interfaceNode.addProperty({
                 name: additionalProperty.key,
                 type: getTextOfTsNode(
-                    getTypeReference({
+                    modelContext.getReferenceToType({
                         reference: additionalProperty.valueType,
                         referencedIn: file,
-                        modelDirectory,
+                        importStrategy: ImportStrategy.MODEL_NAMESPACE_IMPORT,
                     })
                 ),
             });

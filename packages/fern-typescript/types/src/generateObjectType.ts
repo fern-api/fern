@@ -1,41 +1,39 @@
-import { ModelReference, ObjectTypeDefinition } from "@fern-api/api";
-import { getModelTypeReference, getTextOfTsNode, getTypeReference, maybeAddDocs } from "@fern-typescript/commons";
-import { Directory, SourceFile } from "ts-morph";
+import { ObjectTypeDefinition, TypeReference } from "@fern-api/api";
+import { getTextOfTsNode, ImportStrategy, maybeAddDocs, ModelContext } from "@fern-typescript/commons";
+import { SourceFile } from "ts-morph";
 
 export function generateObjectType({
     typeName,
     docs,
     file,
     shape,
-    modelDirectory,
+    modelContext,
 }: {
     file: SourceFile;
     docs: string | null | undefined;
     typeName: string;
     shape: ObjectTypeDefinition;
-    modelDirectory: Directory;
+    modelContext: ModelContext;
 }): void {
     const node = file.addInterface({
         name: typeName,
         extends: shape.extends
-            .map((typeName) => {
-                const reference = getModelTypeReference({
-                    reference: ModelReference.type(typeName),
+            .map((typeName) =>
+                modelContext.getReferenceToType({
+                    reference: TypeReference.named(typeName),
                     referencedIn: file,
-                    modelDirectory,
-                });
-
-                return reference;
-            })
+                    importStrategy: ImportStrategy.NAMED_IMPORT,
+                })
+            )
             .map(getTextOfTsNode),
         properties: shape.properties.map((field) => {
             const property = {
                 name: field.key,
                 type: getTextOfTsNode(
-                    getTypeReference({
+                    modelContext.getReferenceToType({
                         reference: field.valueType,
                         referencedIn: file,
-                        modelDirectory,
+                        importStrategy: ImportStrategy.NAMED_IMPORT,
                     })
                 ),
                 docs: field.docs != null ? [{ description: field.docs }] : undefined,
