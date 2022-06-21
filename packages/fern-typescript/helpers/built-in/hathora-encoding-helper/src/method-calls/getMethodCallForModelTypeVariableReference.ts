@@ -45,6 +45,9 @@ function createMethodReferencePropertyChain(typeReference: TypeReference): strin
             HathoraEncoderConstants.Containers.NAME,
             getEncoderNameForContainer(container._type),
         ],
+        unknown: () => {
+            throw new Error("Cannot encode/decode unknown");
+        },
         void: () => {
             throw new Error("Cannot encode/decode void");
         },

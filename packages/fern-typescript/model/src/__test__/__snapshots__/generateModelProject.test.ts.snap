@@ -911,6 +911,7 @@ export interface Post {
     title: string;
     author: Author;
     content: string;
+    customConfig: unknown;
 }
 ",
   "/src/model/posts/types/PostType.ts": "export type PostType =

@@ -63,6 +63,7 @@ types:
       container: ContainerType
       named: TypeName
       primitive: PrimitiveType
+      unknown: {}
       void: {}
   ContainerType:
     union:

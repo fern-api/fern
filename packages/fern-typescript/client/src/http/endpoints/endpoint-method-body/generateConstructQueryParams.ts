@@ -101,6 +101,7 @@ function isTypeReferenceStringLike({
         container: () => false,
         primitive: isPrimitiveStringLike,
         void: () => false,
+        unknown: () => false,
         _unknown: () => false,
     });
 }
@@ -118,6 +119,7 @@ function isTypeNameStringLike({
         enum: () => true,
         container: () => false,
         primitive: isPrimitiveStringLike,
+        unknown: () => false,
         void: () => false,
         _unknown: () => false,
     });
