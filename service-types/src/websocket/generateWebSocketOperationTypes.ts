@@ -1,5 +1,5 @@
 import { WebSocketChannel, WebSocketOperation } from "@fern-api/api";
-import { DependencyManager, getOrCreateDirectory, TypeResolver } from "@fern-typescript/commons";
+import { DependencyManager, ErrorResolver, getOrCreateDirectory, TypeResolver } from "@fern-typescript/commons";
 import { Directory } from "ts-morph";
 import { generateRequestTypes } from "./generateRequestTypes";
 import { generateResponseTypes } from "./generateResponseTypes";
@@ -12,6 +12,7 @@ export function generateWebSocketOperationTypes({
     modelDirectory,
     servicesDirectory,
     typeResolver,
+    errorResolver,
     dependencyManager,
 }: {
     channel: WebSocketChannel;
@@ -19,6 +20,7 @@ export function generateWebSocketOperationTypes({
     operationsDirectory: Directory;
     modelDirectory: Directory;
     servicesDirectory: Directory;
+    errorResolver: ErrorResolver;
     typeResolver: TypeResolver;
     dependencyManager: DependencyManager;
 }): GeneratedWebSocketOperationTypes {
@@ -46,6 +48,7 @@ export function generateWebSocketOperationTypes({
             modelDirectory,
             servicesDirectory,
             typeResolver,
+            errorResolver,
             dependencyManager,
         }),
     };

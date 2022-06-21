@@ -1,5 +1,5 @@
 import { WebSocketOperation } from "@fern-api/api";
-import { addUuidDependency, DependencyManager, getTextOfTsNode } from "@fern-typescript/commons";
+import { DependencyManager, generateUuidCall, getTextOfTsNode } from "@fern-typescript/commons";
 import {
     GeneratedWebSocketOperationTypes,
     ServiceTypeName,
@@ -106,23 +106,10 @@ function generatePromiseBody({
     operationTypes: GeneratedWebSocketOperationTypes;
     dependencyManager: DependencyManager;
 }): ts.Statement[] {
-    channelFile.addImportDeclaration({
-        moduleSpecifier: "uuid",
-        defaultImport: "uuid",
-    });
-    addUuidDependency(dependencyManager);
-
     const messageElements: ts.ObjectLiteralElementLike[] = [
         ts.factory.createPropertyAssignment(
             ts.factory.createIdentifier(ServiceTypesConstants.WebsocketChannel.Request.Properties.ID),
-            ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(
-                    ts.factory.createIdentifier("uuid"),
-                    ts.factory.createIdentifier("v4")
-                ),
-                undefined,
-                []
-            )
+            generateUuidCall({ file: channelFile, dependencyManager })
         ),
         ts.factory.createPropertyAssignment(
             ts.factory.createIdentifier(ServiceTypesConstants.WebsocketChannel.Request.Properties.OPERATION),

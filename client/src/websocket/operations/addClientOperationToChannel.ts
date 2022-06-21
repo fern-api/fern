@@ -1,6 +1,7 @@
 import { WebSocketChannel, WebSocketOperation } from "@fern-api/api";
 import {
     DependencyManager,
+    ErrorResolver,
     getOrCreateDirectory,
     getTextOfTsNode,
     getTypeReference,
@@ -33,6 +34,7 @@ export declare namespace addClientOperationToChannel {
         modelDirectory: Directory;
         servicesDirectory: Directory;
         typeResolver: TypeResolver;
+        errorResolver: ErrorResolver;
         dependencyManager: DependencyManager;
     }
 
@@ -49,6 +51,7 @@ export function addClientOperationToChannel({
     modelDirectory,
     servicesDirectory,
     typeResolver,
+    errorResolver,
     dependencyManager,
 }: addClientOperationToChannel.Args): addClientOperationToChannel.Return {
     const channelFile = channelClass.getSourceFile();
@@ -65,6 +68,7 @@ export function addClientOperationToChannel({
         modelDirectory,
         servicesDirectory,
         typeResolver,
+        errorResolver,
         dependencyManager,
     });
 

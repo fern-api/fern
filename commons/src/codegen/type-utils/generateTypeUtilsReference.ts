@@ -1,28 +1,21 @@
-import { TypeDefinition } from "@fern-api/api";
+import { ModelReference } from "@fern-api/api";
 import { Directory, SourceFile, ts } from "ts-morph";
-import { getReferenceToModel } from "../utils/getReferenceToModel";
+import { createPropertyAccessExpression, getQualifiedReferenceToModel } from "../utils/getQualifiedReferenceToModel";
 
 export function generateTypeUtilsReference({
-    typeDefinition,
+    reference,
     referencedIn,
     modelDirectory,
 }: {
-    typeDefinition: TypeDefinition;
+    reference: ModelReference;
     referencedIn: SourceFile;
     modelDirectory: Directory;
 }): ts.Expression {
-    return getReferenceToModel({
-        typeName: typeDefinition.name,
-        typeCategory: "error",
+    return getQualifiedReferenceToModel({
+        reference,
         referencedIn,
         modelDirectory,
         forceUseNamespaceImport: false,
-        constructQualifiedReference: ({ namespaceImport, referenceWithoutNamespace }) =>
-            namespaceImport != null
-                ? ts.factory.createPropertyAccessExpression(
-                      ts.factory.createIdentifier(namespaceImport),
-                      ts.factory.createIdentifier(typeDefinition.name.name)
-                  )
-                : referenceWithoutNamespace,
+        constructQualifiedReference: createPropertyAccessExpression,
     });
 }

@@ -2,6 +2,7 @@ import { HttpService } from "@fern-api/api";
 import {
     addFernServiceUtilsDependency,
     DependencyManager,
+    ErrorResolver,
     getOrCreateDirectory,
     getOrCreateSourceFile,
     getTextOfTsKeyword,
@@ -28,6 +29,7 @@ export async function generateHttpService({
     encodersDirectory,
     service,
     typeResolver,
+    errorResolver,
     helperManager,
     dependencyManager,
 }: {
@@ -36,6 +38,7 @@ export async function generateHttpService({
     encodersDirectory: Directory;
     service: HttpService;
     typeResolver: TypeResolver;
+    errorResolver: ErrorResolver;
     helperManager: HelperManager;
     dependencyManager: DependencyManager;
 }): Promise<void> {
@@ -52,6 +55,7 @@ export async function generateHttpService({
         encodersDirectory,
         servicesDirectory,
         typeResolver,
+        errorResolver,
         helperManager,
         dependencyManager,
     });
@@ -64,6 +68,7 @@ async function generateService({
     servicesDirectory,
     encodersDirectory,
     typeResolver,
+    errorResolver,
     helperManager,
     dependencyManager,
 }: {
@@ -73,6 +78,7 @@ async function generateService({
     servicesDirectory: Directory;
     encodersDirectory: Directory;
     typeResolver: TypeResolver;
+    errorResolver: ErrorResolver;
     helperManager: HelperManager;
     dependencyManager: DependencyManager;
 }): Promise<void> {
@@ -146,6 +152,7 @@ async function generateService({
             servicesDirectory,
             encodersDirectory,
             typeResolver,
+            errorResolver,
             helperManager,
             dependencyManager,
         });

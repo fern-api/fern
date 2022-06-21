@@ -1,7 +1,19 @@
-import { FailedResponse, PrimitiveType, SingleUnionType, TypeReference } from "@fern-api/api";
-import { addUuidDependency, DependencyManager, TypeResolver } from "@fern-typescript/commons";
-import { generateUnionType } from "@fern-typescript/types";
-import { Directory, SourceFile, ts } from "ts-morph";
+import { FailedResponse, ModelReference, PrimitiveType, ResponseError, TypeReference } from "@fern-api/api";
+import {
+    DependencyManager,
+    ErrorResolver,
+    generateUuidCall,
+    getModelTypeReference,
+    resolveType,
+    TypeResolver,
+} from "@fern-typescript/commons";
+import {
+    FORCE_USE_MODEL_NAMESPACE_IMPORT_FOR_UNION_TYPES,
+    generateUnionType,
+    isTypeExtendable,
+    ResolvedSingleUnionValueType,
+} from "@fern-typescript/types";
+import { Directory, SourceFile } from "ts-morph";
 import { ServiceTypesConstants } from "../../constants";
 
 export function generateErrorBody({
@@ -9,12 +21,14 @@ export function generateErrorBody({
     errorBodyFile,
     modelDirectory,
     typeResolver,
+    errorResolver,
     dependencyManager,
 }: {
     failedResponse: FailedResponse;
     errorBodyFile: SourceFile;
     modelDirectory: Directory;
     typeResolver: TypeResolver;
+    errorResolver: ErrorResolver;
     dependencyManager: DependencyManager;
 }): void {
     generateUnionType({
@@ -22,35 +36,52 @@ export function generateErrorBody({
         typeName: ServiceTypesConstants.Commons.Response.Error.Properties.Body.TYPE_NAME,
         docs: failedResponse.docs,
         discriminant: failedResponse.discriminant,
-        types: failedResponse.errors.map(
-            (error): SingleUnionType => ({
-                docs: error.docs,
-                discriminantValue: error.discriminantValue,
-                valueType: TypeReference.named(error.error),
-            })
-        ),
+        resolvedTypes: failedResponse.errors.map((error) => ({
+            docs: error.docs,
+            discriminantValue: error.discriminantValue,
+            valueType: getValueType({ error, file: errorBodyFile, modelDirectory, typeResolver, errorResolver }),
+        })),
         additionalPropertiesForEveryType: [
             {
                 key: failedResponse.errorProperties.errorInstanceId,
                 valueType: TypeReference.primitive(PrimitiveType.String),
                 generateValueCreator: ({ file }) => {
-                    file.addImportDeclaration({
-                        moduleSpecifier: "uuid",
-                        namespaceImport: "uuid",
-                    });
-                    addUuidDependency(dependencyManager);
-                    return ts.factory.createCallExpression(
-                        ts.factory.createPropertyAccessExpression(
-                            ts.factory.createIdentifier("uuid"),
-                            ts.factory.createIdentifier("v4")
-                        ),
-                        undefined,
-                        []
-                    );
+                    return generateUuidCall({ file, dependencyManager });
                 },
             },
         ],
-        typeResolver,
         modelDirectory,
     });
+}
+
+function getValueType({
+    error,
+    file,
+    modelDirectory,
+    typeResolver,
+    errorResolver,
+}: {
+    error: ResponseError;
+    file: SourceFile;
+    modelDirectory: Directory;
+    typeResolver: TypeResolver;
+    errorResolver: ErrorResolver;
+}): ResolvedSingleUnionValueType | undefined {
+    const errorDefinition = errorResolver.resolveError(error.error);
+
+    const resolvedType = resolveType(errorDefinition.type, (typeName) => typeResolver.resolveTypeName(typeName));
+
+    if (resolvedType._type === "void") {
+        return undefined;
+    }
+
+    return {
+        isExtendable: isTypeExtendable(resolvedType),
+        type: getModelTypeReference({
+            reference: ModelReference.error(error.error),
+            referencedIn: file,
+            modelDirectory,
+            forceUseNamespaceImport: FORCE_USE_MODEL_NAMESPACE_IMPORT_FOR_UNION_TYPES,
+        }),
+    };
 }
