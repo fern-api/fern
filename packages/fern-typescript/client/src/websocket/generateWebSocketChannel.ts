@@ -1,15 +1,14 @@
 import { WebSocketChannel } from "@fern-api/api";
 import {
+    createDirectoriesForFernFilepath,
     DependencyManager,
-    getOrCreateDirectory,
-    getOrCreateSourceFile,
+    exportFromModule,
     getTextOfTsKeyword,
     getTextOfTsNode,
     maybeAddDocs,
     ModelContext,
 } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
-import { getWebSocketServiceTypeReference } from "@fern-typescript/service-types";
 import {
     Directory,
     ModuleDeclaration,
@@ -57,9 +56,9 @@ function generateChannel({
     modelContext: ModelContext;
     dependencyManager: DependencyManager;
 }): void {
-    const packageDirectory = getOrCreateDirectory(servicesDirectory, channel.name.fernFilepath);
-    const channelFile = getOrCreateSourceFile(packageDirectory, `${channel.name.name}.ts`);
-    // TODO add export
+    const packageDirectory = createDirectoriesForFernFilepath(servicesDirectory, channel.name.fernFilepath);
+    const channelFile = packageDirectory.createSourceFile(`${channel.name.name}.ts`);
+    exportFromModule(channelFile);
 
     const channelNamespace = addNamespace({ file: channelFile, channel });
 
@@ -124,10 +123,9 @@ function generateChannel({
             dependencyManager,
         });
         serverMessageTypes.push(
-            getWebSocketServiceTypeReference({
+            modelContext.getReferenceToWebSocketChannelType({
                 reference: generatedOperationTypes.response.reference,
                 referencedIn: channelFile,
-                modelContext,
             })
         );
     }

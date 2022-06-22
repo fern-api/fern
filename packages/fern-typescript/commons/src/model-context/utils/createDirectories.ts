@@ -1,25 +1,14 @@
-import { Directory, SourceFile } from "ts-morph";
+import { FernFilepath } from "@fern-api/api";
+import { Directory } from "ts-morph";
 import { exportFromModule, ExportStrategy } from "./exportFromModule";
-
-export interface PathToSourceFile {
-    directories: DirectoryNameWithExportStrategy[];
-    fileName: string;
-    exportStrategy: ExportStrategy;
-}
+import { getPackagePath } from "./getPackagePath";
 
 export interface DirectoryNameWithExportStrategy {
     directoryName: string;
     exportStrategy: ExportStrategy;
 }
 
-export function createSourceFile(parent: Directory, path: PathToSourceFile): SourceFile {
-    const directory = createDirectories(parent, path.directories);
-    const sourceFile = directory.createSourceFile(path.fileName);
-    exportFromModule(sourceFile, path.exportStrategy);
-    return sourceFile;
-}
-
-function createDirectories(parent: Directory, path: DirectoryNameWithExportStrategy[]): Directory {
+export function createDirectories(parent: Directory, path: DirectoryNameWithExportStrategy[]): Directory {
     let directory = parent;
 
     for (const part of path) {
@@ -27,6 +16,21 @@ function createDirectories(parent: Directory, path: DirectoryNameWithExportStrat
         if (nextDirectory == null) {
             nextDirectory = directory.createDirectory(part.directoryName);
             exportFromModule(nextDirectory, part.exportStrategy);
+        }
+        directory = nextDirectory;
+    }
+
+    return directory;
+}
+
+export function createDirectoriesForFernFilepath(parent: Directory, fernFilepath: FernFilepath): Directory {
+    let directory = parent;
+
+    for (const part of getPackagePath(fernFilepath)) {
+        let nextDirectory = directory.getDirectory(part.directoryName);
+        if (nextDirectory == null) {
+            nextDirectory = directory.createDirectory(part.directoryName);
+            exportFromModule(nextDirectory, { type: "namespace", namespaceExport: part.namespaceExport });
         }
         directory = nextDirectory;
     }

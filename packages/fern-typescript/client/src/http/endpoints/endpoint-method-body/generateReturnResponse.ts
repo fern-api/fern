@@ -1,11 +1,7 @@
 import { HttpEndpoint, HttpService } from "@fern-api/api";
-import { ModelContext } from "@fern-typescript/commons";
+import { GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
-import {
-    GeneratedHttpEndpointTypes,
-    getHttpServiceTypeReference,
-    ServiceTypesConstants,
-} from "@fern-typescript/service-types";
+import { ServiceTypesConstants } from "@fern-typescript/service-types";
 import { Directory, SourceFile, ts } from "ts-morph";
 import { ClientConstants } from "../../../constants";
 import { generateEncoderCall } from "./generateEncoderCall";
@@ -98,10 +94,9 @@ async function generateReturnSuccessResponse({
                 ),
                 ts.factory.createAsExpression(
                     ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.DECODED_RESPONSE),
-                    getHttpServiceTypeReference({
+                    modelContext.getReferenceToHttpServiceType({
                         reference: endpointTypes.response.successBodyReference,
                         referencedIn: serviceFile,
-                        modelContext,
                     })
                 )
             )
@@ -153,10 +148,9 @@ async function generateReturnErrorResponse({
                 ts.factory.createIdentifier(ServiceTypesConstants.Commons.Response.Error.Properties.Body.PROPERTY_NAME),
                 ts.factory.createAsExpression(
                     ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.DECODED_ERROR),
-                    getHttpServiceTypeReference({
+                    modelContext.getReferenceToHttpServiceType({
                         reference: endpointTypes.response.errorBodyReference,
                         referencedIn: serviceFile,
-                        modelContext,
                     })
                 )
             )

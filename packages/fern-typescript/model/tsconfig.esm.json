@@ -7,6 +7,7 @@
     { "path": "../../compiler/ir-types/fern-ir-typescript/tsconfig.esm.json" },
     { "path": "../commons/tsconfig.esm.json" },
     { "path": "../errors/tsconfig.esm.json" },
+    { "path": "../service-types/tsconfig.esm.json" },
     { "path": "../testing-utils/tsconfig.esm.json" },
     { "path": "../types/tsconfig.esm.json" }
   ]

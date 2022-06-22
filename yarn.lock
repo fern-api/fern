@@ -2199,6 +2199,7 @@ __metadata:
     "@fern-api/api": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/errors": "workspace:*"
+    "@fern-typescript/service-types": "workspace:*"
     "@fern-typescript/testing-utils": "workspace:*"
     "@fern-typescript/types": "workspace:*"
     "@types/jest": ^28.1.2

@@ -1,11 +1,14 @@
 import { HttpEndpoint, TypeName } from "@fern-api/api";
-import { DependencyManager, getTextOfTsKeyword, ModelContext } from "@fern-typescript/commons";
+import {
+    DependencyManager,
+    GeneratedHttpEndpointTypes,
+    getTextOfTsKeyword,
+    ModelContext,
+} from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 import { generateResponse } from "../commons/generate-response/generateResponse";
-import { getHttpServiceTypeReference } from "../commons/service-type-reference/get-service-type-reference/getHttpServiceTypeReference";
 import { ServiceTypesConstants } from "../constants";
 import { createHttpServiceTypeFileWriter } from "./createHttpServiceTypeFileWriter";
-import { GeneratedHttpEndpointTypes } from "./types";
 
 export declare namespace generateResponseTypes {
     export interface Args {
@@ -33,10 +36,9 @@ export function generateResponseTypes({
         },
         failedResponse: endpoint.response.failed,
         getTypeReferenceToServiceType: ({ reference, referencedIn }) =>
-            getHttpServiceTypeReference({
+            modelContext.getReferenceToHttpServiceType({
                 reference,
                 referencedIn,
-                modelContext,
             }),
         additionalProperties: [
             {

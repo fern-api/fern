@@ -2,7 +2,6 @@ import { HttpEndpoint, TypeName } from "@fern-api/api";
 import { getTextOfTsNode, HttpServiceTypeMetadata, ModelContext } from "@fern-typescript/commons";
 import { OptionalKind, PropertySignatureStructure, SourceFile } from "ts-morph";
 import { GeneratedRequest, generateRequest } from "../commons/generate-request/generateRequest";
-import { getHttpServiceTypeReference } from "../commons/service-type-reference/get-service-type-reference/getHttpServiceTypeReference";
 import { createHttpServiceTypeFileWriter } from "./createHttpServiceTypeFileWriter";
 
 export declare namespace generateRequestTypes {
@@ -36,10 +35,9 @@ export function generateRequestTypes({
     return generateRequest({
         modelContext,
         getTypeReferenceToServiceType: ({ reference, referencedIn }) =>
-            getHttpServiceTypeReference({
+            modelContext.getReferenceToHttpServiceType({
                 reference,
                 referencedIn,
-                modelContext,
             }),
         body: {
             type: endpoint.request.type,

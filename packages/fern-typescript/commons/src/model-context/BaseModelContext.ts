@@ -2,7 +2,8 @@ import { FernFilepath } from "@fern-api/api";
 import path from "path";
 import { Directory, ImportSpecifierStructure, OptionalKind, SourceFile, ts } from "ts-morph";
 import { getRelativePathAsModuleSpecifierTo } from "../codegen/utils/getRelativePathAsModuleSpecifierTo";
-import { createSourceFile, DirectoryNameWithExportStrategy, PathToSourceFile } from "./utils/createDirectories";
+import { DirectoryNameWithExportStrategy } from "./utils/createDirectories";
+import { createSourceFile, PathToSourceFile } from "./utils/createSourceFile";
 import { getPackagePath, PackagePath } from "./utils/getPackagePath";
 import { ImportStrategy } from "./utils/ImportStrategy";
 

@@ -1,12 +1,11 @@
 import { Type } from "@fern-api/api";
-import { getTextOfTsNode, ModelContext } from "@fern-typescript/commons";
+import { getTextOfTsNode, ModelContext, ServiceTypeReference } from "@fern-typescript/commons";
 import { OptionalKind, PropertySignatureStructure, SourceFile, ts } from "ts-morph";
 import { ServiceTypesConstants } from "../../constants";
 import {
     generateServiceTypeReference,
     ServiceTypeFileWriter,
 } from "../service-type-reference/generateServiceTypeReference";
-import { ServiceTypeReference } from "../service-type-reference/types";
 
 /**
  * TODO this is kinda weird. For endpoints wrapper refers to something the consumer passes in (e.g. it includes query
