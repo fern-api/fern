@@ -60,7 +60,7 @@ describe("runGenerator", () => {
                 await rm(configPath);
                 await rm(outputPath, { recursive: true });
             },
-            60_000
+            90_000
         );
     }
 });
