@@ -59,9 +59,7 @@ function getHelperForEncoding({
     return helper;
 }
 
-function doesHelperHandleEncoding(helper: GeneratorHelper, encoding: string): boolean {
-    if (encoding !== "hathora") {
-        return false;
-    }
-    return helper.name === "@fern-typescript/hathora-encoding-helper";
-}
+const doesHelperHandleEncoding: (helper: GeneratorHelper, encoding: string) => boolean = () => {
+    // TODO check manifest
+    return false;
+};
