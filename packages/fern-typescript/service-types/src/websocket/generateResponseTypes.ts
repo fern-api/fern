@@ -1,11 +1,14 @@
 import { TypeName, WebSocketOperation } from "@fern-api/api";
-import { DependencyManager, getTextOfTsKeyword, ModelContext } from "@fern-typescript/commons";
+import {
+    DependencyManager,
+    GeneratedWebSocketOperationTypes,
+    getTextOfTsKeyword,
+    ModelContext,
+} from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 import { generateResponse } from "../commons/generate-response/generateResponse";
-import { getWebSocketServiceTypeReference } from "../commons/service-type-reference/get-service-type-reference/getWebSocketServiceTypeReference";
 import { ServiceTypesConstants } from "../constants";
 import { createWebSocketChannelTypeFileWriter } from "./createWebSocketChannelTypeFileWriter";
-import { GeneratedWebSocketOperationTypes } from "./types";
 
 export declare namespace generateResponseTypes {
     export interface Args {
@@ -33,10 +36,9 @@ export function generateResponseTypes({
         },
         failedResponse: operation.response.failed,
         getTypeReferenceToServiceType: ({ reference, referencedIn }) =>
-            getWebSocketServiceTypeReference({
+            modelContext.getReferenceToWebSocketChannelType({
                 reference,
                 referencedIn,
-                modelContext,
             }),
         additionalProperties: [
             {

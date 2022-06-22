@@ -1,13 +1,21 @@
 import { ErrorDefinition, ErrorName, IntermediateRepresentation, Type, TypeName, TypeReference } from "@fern-api/api";
 import { Directory, SourceFile, ts } from "ts-morph";
 import { ErrorContext } from "./error-context/ErrorContext";
-import { HttpServiceTypeContext, HttpServiceTypeMetadata } from "./service-type-context/HttpServiceTypeContext";
 import {
+    GeneratedHttpEndpointTypes,
+    HttpServiceTypeContext,
+    HttpServiceTypeMetadata,
+    HttpServiceTypeReference,
+} from "./service-type-context/HttpServiceTypeContext";
+import {
+    GeneratedWebSocketOperationTypes,
     WebSocketChannelTypeContext,
     WebSocketChannelTypeMetadata,
+    WebSocketChannelTypeReference,
 } from "./service-type-context/WebSocketChannelTypeContext";
 import { TypeContext } from "./type-context/TypeContext";
 import { ResolvedType } from "./type-context/types";
+import { ImportStrategy } from "./utils/ImportStrategy";
 
 export class ModelContext {
     private typeContext: TypeContext;
@@ -76,10 +84,38 @@ export class ModelContext {
         this.httpServiceTypeContext.addHttpServiceTypeDefinition(metadata, withFile);
     }
 
-    public getReferenceToHttpServiceType(
-        args: HttpServiceTypeContext.getReferenceToServiceType.Args
-    ): ts.TypeReferenceNode {
-        return this.httpServiceTypeContext.getReferenceToHttpServiceType(args);
+    public getReferenceToHttpServiceType({
+        reference,
+        referencedIn,
+        importStrategy,
+    }: {
+        reference: HttpServiceTypeReference;
+        referencedIn: SourceFile;
+        importStrategy?: ImportStrategy;
+    }): ts.TypeNode {
+        if (reference.isInlined) {
+            return this.httpServiceTypeContext.getReferenceToHttpServiceType({
+                metadata: reference.metadata,
+                referencedIn,
+                importStrategy,
+            });
+        } else {
+            return this.getReferenceToType({
+                reference: reference.typeReference,
+                referencedIn,
+                importStrategy,
+            });
+        }
+    }
+
+    public registerGeneratedHttpServiceTypes(args: HttpServiceTypeContext.registerGeneratedTypes.Args): void {
+        this.httpServiceTypeContext.registerGeneratedTypes(args);
+    }
+
+    public getGeneratedHttpServiceTypes(
+        args: HttpServiceTypeContext.getGeneratedTypes.Args
+    ): GeneratedHttpEndpointTypes {
+        return this.httpServiceTypeContext.getGeneratedTypes(args);
     }
 
     /**
@@ -93,9 +129,37 @@ export class ModelContext {
         this.webSocketChannelTypeContext.addWebSocketChannelTypeDefinition(metadata, withFile);
     }
 
-    public getReferenceToWebSocketChannelType(
-        args: WebSocketChannelTypeContext.getReferenceToServiceType.Args
-    ): ts.TypeReferenceNode {
-        return this.webSocketChannelTypeContext.getReferenceToWebSocketChannelType(args);
+    public getReferenceToWebSocketChannelType({
+        reference,
+        referencedIn,
+        importStrategy,
+    }: {
+        reference: WebSocketChannelTypeReference;
+        referencedIn: SourceFile;
+        importStrategy?: ImportStrategy;
+    }): ts.TypeNode {
+        if (reference.isInlined) {
+            return this.webSocketChannelTypeContext.getReferenceToWebSocketChannelType({
+                metadata: reference.metadata,
+                referencedIn,
+                importStrategy,
+            });
+        } else {
+            return this.getReferenceToType({
+                reference: reference.typeReference,
+                referencedIn,
+                importStrategy,
+            });
+        }
+    }
+
+    public registerGeneratedWebSocketChannelTypes(args: WebSocketChannelTypeContext.registerGeneratedTypes.Args): void {
+        this.webSocketChannelTypeContext.registerGeneratedTypes(args);
+    }
+
+    public getGeneratedWebSocketChannelTypes(
+        args: WebSocketChannelTypeContext.getGeneratedTypes.Args
+    ): GeneratedWebSocketOperationTypes {
+        return this.webSocketChannelTypeContext.getGeneratedTypes(args);
     }
 }

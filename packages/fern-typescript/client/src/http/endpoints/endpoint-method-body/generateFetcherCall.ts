@@ -1,7 +1,6 @@
 import { HttpEndpoint, HttpService } from "@fern-api/api";
-import { getTextOfTsNode } from "@fern-typescript/commons";
+import { GeneratedHttpEndpointTypes, getTextOfTsNode } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
-import { GeneratedHttpEndpointTypes } from "@fern-typescript/service-types";
 import { Directory, SourceFile, StatementStructures, StructureKind, ts, VariableDeclarationKind } from "ts-morph";
 import { ClientConstants } from "../../../constants";
 import { generateJoinPathsCall } from "../../../utils/generateJoinPathsCall";

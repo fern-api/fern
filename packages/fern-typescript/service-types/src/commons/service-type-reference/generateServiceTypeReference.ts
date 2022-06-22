@@ -1,9 +1,9 @@
 import { Type } from "@fern-api/api";
 import { assertNever } from "@fern-api/commons";
-import { ModelContext } from "@fern-typescript/commons";
+import { ModelContext, ServiceTypeReference } from "@fern-typescript/commons";
 import { generateType } from "@fern-typescript/types";
 import { SourceFile } from "ts-morph";
-import { ServiceTypeName, ServiceTypeReference } from "./types";
+import { ServiceTypeName } from "./types";
 
 export type ServiceTypeFileWriter<M> = (
     typeName: ServiceTypeName,

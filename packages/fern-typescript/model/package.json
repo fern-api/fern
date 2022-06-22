@@ -30,6 +30,7 @@
     "@fern-api/api": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/errors": "workspace:*",
+    "@fern-typescript/service-types": "workspace:*",
     "@fern-typescript/types": "workspace:*",
     "memfs": "^3.4.1",
     "ts-morph": "^14.0.0"

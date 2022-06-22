@@ -128,7 +128,6 @@ async function generateService({
             modelContext,
             encodersDirectory,
             helperManager,
-            dependencyManager,
         });
     }
 }

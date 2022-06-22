@@ -1,8 +1,7 @@
 import { WebSocketChannel, WebSocketOperation } from "@fern-api/api";
-import { DependencyManager, ModelContext } from "@fern-typescript/commons";
+import { DependencyManager, GeneratedWebSocketOperationTypes, ModelContext } from "@fern-typescript/commons";
 import { generateRequestTypes } from "./generateRequestTypes";
 import { generateResponseTypes } from "./generateResponseTypes";
-import { GeneratedWebSocketOperationTypes } from "./types";
 
 export function generateWebSocketOperationTypes({
     channel,

@@ -57,8 +57,8 @@ describe("runGenerator", () => {
                 const directoryContents = await getDirectoryContents(path.join(outputPath, "src"));
                 expect(directoryContents).toMatchSnapshot();
 
-                await rm(configPath);
-                await rm(outputPath, { recursive: true });
+                // await rm(configPath);
+                // await rm(outputPath, { recursive: true });
             },
             90_000
         );

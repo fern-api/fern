@@ -9,7 +9,6 @@ import {
     ModelContext,
 } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
-import { getWebSocketServiceTypeReference } from "@fern-typescript/service-types";
 import {
     Directory,
     ModuleDeclaration,
@@ -124,10 +123,9 @@ function generateChannel({
             dependencyManager,
         });
         serverMessageTypes.push(
-            getWebSocketServiceTypeReference({
+            modelContext.getReferenceToWebSocketChannelType({
                 reference: generatedOperationTypes.response.reference,
                 referencedIn: channelFile,
-                modelContext,
             })
         );
     }

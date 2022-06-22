@@ -7,7 +7,6 @@ import {
 } from "@fern-typescript/commons";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 import { GeneratedRequest, generateRequest } from "../commons/generate-request/generateRequest";
-import { getWebSocketServiceTypeReference } from "../commons/service-type-reference/get-service-type-reference/getWebSocketServiceTypeReference";
 import { ServiceTypesConstants } from "../constants";
 import { createWebSocketChannelTypeFileWriter } from "./createWebSocketChannelTypeFileWriter";
 
@@ -40,10 +39,9 @@ export function generateRequestTypes({
     return generateRequest({
         modelContext,
         getTypeReferenceToServiceType: ({ reference, referencedIn }) =>
-            getWebSocketServiceTypeReference({
+            modelContext.getReferenceToWebSocketChannelType({
                 reference,
                 referencedIn,
-                modelContext,
             }),
         body: {
             type: operation.request.type,

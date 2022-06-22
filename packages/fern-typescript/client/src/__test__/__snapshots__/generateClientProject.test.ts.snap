@@ -426,8 +426,8 @@ Object {
         \\"build:cjs\\": \\"tsc --project tsconfig.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"commonjs\\\\\\" }' > lib/cjs/package.json\\"
     },
     \\"dependencies\\": {
-        \\"@fern-typescript/service-utils\\": \\"0.0.86\\",
-        \\"uuid\\": \\"^8.3.2\\"
+        \\"uuid\\": \\"^8.3.2\\",
+        \\"@fern-typescript/service-utils\\": \\"0.0.86\\"
     },
     \\"devDependencies\\": {
         \\"@types/uuid\\": \\"^8.3.4\\",
