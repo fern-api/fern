@@ -12,7 +12,7 @@ export function getMetadataForWebSocketOperationType({
     operationId: string;
     type: ServiceTypeName;
 }): ServiceTypeMetadata {
-    const typeName = upperFirst(`${operationId}${type}`);
+    const typeName = `_${upperFirst(`${operationId}${type}`)}`;
     return {
         typeName,
         fernFilepath: channelName.fernFilepath,

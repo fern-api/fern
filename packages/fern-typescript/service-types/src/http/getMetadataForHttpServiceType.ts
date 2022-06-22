@@ -12,7 +12,7 @@ export function getMetadataForHttpServiceType({
     endpointId: EndpointId;
     type: ServiceTypeName;
 }): ServiceTypeMetadata {
-    const typeName = upperFirst(`${endpointId}${type}`);
+    const typeName = `_${upperFirst(`${endpointId}${type}`)}`;
     return {
         typeName,
         fernFilepath: serviceName.fernFilepath,
