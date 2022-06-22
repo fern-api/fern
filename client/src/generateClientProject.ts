@@ -49,8 +49,8 @@ async function generateClientFiles({
     const typeResolver = new TypeResolver(intermediateRepresentation);
     const errorResolver = new ErrorResolver(intermediateRepresentation);
 
-    const modelDirectory = generateModelFiles({
-        directory,
+    const modelContext = generateModelFiles({
+        modelDirectory: directory.createDirectory("model"),
         intermediateRepresentation,
         typeResolver,
     });
@@ -62,7 +62,7 @@ async function generateClientFiles({
         await generateHttpService({
             service,
             servicesDirectory,
-            modelDirectory,
+            modelContext,
             encodersDirectory,
             typeResolver,
             errorResolver,
@@ -75,7 +75,7 @@ async function generateClientFiles({
         generateWebSocketChannel({
             channel,
             servicesDirectory,
-            modelDirectory,
+            modelContext,
             encodersDirectory,
             typeResolver,
             errorResolver,
@@ -87,7 +87,7 @@ async function generateClientFiles({
     await generateEncoderFiles({
         encodersDirectory,
         intermediateRepresentation,
-        modelDirectory,
+        modelContext,
         servicesDirectory,
         helperManager,
         typeResolver,

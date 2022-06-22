@@ -1,17 +1,16 @@
 import { TypeName, WebSocketOperation } from "@fern-api/api";
-import { getTextOfTsKeyword, getTextOfTsNode, TypeResolver } from "@fern-typescript/commons";
-import { Directory, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+import { getTextOfTsKeyword, getTextOfTsNode, ModelContext, TypeResolver } from "@fern-typescript/commons";
+import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 import { GeneratedRequest, generateRequest } from "../commons/generate-request/generateRequest";
 import { getServiceTypeReference } from "../commons/service-type-reference/get-service-type-reference/getServiceTypeReference";
 import { ServiceTypesConstants } from "../constants";
+import { getMetadataForWebSocketOperationType } from "./getMetadataForWebSocketOperationType";
 
 export declare namespace generateRequestTypes {
     export interface Args {
         channelName: TypeName;
         operation: WebSocketOperation;
-        operationDirectory: Directory;
-        modelDirectory: Directory;
-        servicesDirectory: Directory;
+        modelContext: ModelContext;
         typeResolver: TypeResolver;
     }
 }
@@ -19,9 +18,7 @@ export declare namespace generateRequestTypes {
 export function generateRequestTypes({
     channelName,
     operation,
-    operationDirectory,
-    modelDirectory,
-    servicesDirectory,
+    modelContext,
     typeResolver,
 }: generateRequestTypes.Args): GeneratedRequest {
     const additionalProperties: OptionalKind<PropertySignatureStructure>[] = [
@@ -38,16 +35,12 @@ export function generateRequestTypes({
     ];
 
     return generateRequest({
-        directory: operationDirectory,
-        modelDirectory,
+        modelContext,
         getTypeReferenceToServiceType: ({ reference, referencedIn }) =>
             getServiceTypeReference({
-                serviceOrChannelName: channelName,
-                endpointOrOperationId: operation.operationId,
                 reference,
                 referencedIn,
-                servicesDirectory,
-                modelDirectory,
+                modelContext,
             }),
         body: {
             type: operation.request.type,
@@ -55,5 +48,15 @@ export function generateRequestTypes({
         },
         typeResolver,
         additionalProperties,
+        requestMetadata: getMetadataForWebSocketOperationType({
+            channelName,
+            operationId: operation.operationId,
+            type: ServiceTypesConstants.Commons.Request.TYPE_NAME,
+        }),
+        requestBodyMetadata: getMetadataForWebSocketOperationType({
+            channelName,
+            operationId: operation.operationId,
+            type: ServiceTypesConstants.Commons.Request.Properties.Body.TYPE_NAME,
+        }),
     });
 }

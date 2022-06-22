@@ -8,6 +8,7 @@ import {
     getTextOfTsKeyword,
     getTextOfTsNode,
     maybeAddDocs,
+    ModelContext,
     TypeResolver,
 } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
@@ -25,7 +26,7 @@ const SERVICE_INIT_TYPE = ts.factory.createTypeReferenceNode(
 
 export async function generateHttpService({
     servicesDirectory,
-    modelDirectory,
+    modelContext,
     encodersDirectory,
     service,
     typeResolver,
@@ -34,7 +35,7 @@ export async function generateHttpService({
     dependencyManager,
 }: {
     servicesDirectory: Directory;
-    modelDirectory: Directory;
+    modelContext: ModelContext;
     encodersDirectory: Directory;
     service: HttpService;
     typeResolver: TypeResolver;
@@ -42,18 +43,11 @@ export async function generateHttpService({
     helperManager: HelperManager;
     dependencyManager: DependencyManager;
 }): Promise<void> {
-    const serviceDirectory = getOrCreateDirectory(servicesDirectory, service.name.name, {
-        exportOptions: {
-            type: "namespace",
-            namespace: service.name.name,
-        },
-    });
     await generateService({
         service,
-        serviceDirectory,
-        modelDirectory,
-        encodersDirectory,
         servicesDirectory,
+        modelContext,
+        encodersDirectory,
         typeResolver,
         errorResolver,
         helperManager,
@@ -63,9 +57,8 @@ export async function generateHttpService({
 
 async function generateService({
     service,
-    serviceDirectory,
-    modelDirectory,
     servicesDirectory,
+    modelContext,
     encodersDirectory,
     typeResolver,
     errorResolver,
@@ -73,16 +66,18 @@ async function generateService({
     dependencyManager,
 }: {
     service: HttpService;
-    serviceDirectory: Directory;
-    modelDirectory: Directory;
     servicesDirectory: Directory;
+    modelContext: ModelContext;
     encodersDirectory: Directory;
     typeResolver: TypeResolver;
     errorResolver: ErrorResolver;
     helperManager: HelperManager;
     dependencyManager: DependencyManager;
 }): Promise<void> {
-    const serviceFile = getOrCreateSourceFile(serviceDirectory, `${service.name.name}.ts`);
+    const packageDirectory = getOrCreateDirectory(servicesDirectory, service.name.fernFilepath);
+    const serviceFile = getOrCreateSourceFile(packageDirectory, `${service.name.name}.ts`);
+    // TODO add export
+
     serviceFile.addImportDeclaration({
         namedImports: [
             ClientConstants.HttpService.ServiceUtils.Imported.FETCHER_TYPE_NAME,
@@ -96,13 +91,13 @@ async function generateService({
     addFernServiceUtilsDependency(dependencyManager);
 
     const serviceInterface = serviceFile.addInterface({
-        name: ClientConstants.HttpService.CLIENT_NAME,
+        name: service.name.name,
         isExported: true,
     });
 
     const serviceClass = serviceFile.addClass({
-        name: ClientConstants.HttpService.CLIENT_NAME,
-        implements: [ClientConstants.HttpService.CLIENT_NAME],
+        name: service.name.name,
+        implements: [service.name.name],
         isExported: true,
     });
     maybeAddDocs(serviceClass, service.docs);
@@ -136,20 +131,13 @@ async function generateService({
 
     addConstructor({ serviceClass, serviceDefinition: service });
 
-    const endpointsDirectory = getOrCreateDirectory(
-        serviceDirectory,
-        ClientConstants.HttpService.Files.ENDPOINTS_DIRECTORY_NAME
-    );
-
     for (const endpoint of service.endpoints) {
         await addEndpointToService({
             endpoint,
             serviceInterface,
             serviceClass,
             serviceDefinition: service,
-            modelDirectory,
-            endpointsDirectory,
-            servicesDirectory,
+            modelContext,
             encodersDirectory,
             typeResolver,
             errorResolver,

@@ -1,38 +1,28 @@
-import { TypeName } from "@fern-api/api";
-import { getTypeReference } from "@fern-typescript/commons";
-import { Directory, SourceFile, ts } from "ts-morph";
+import { ModelContext } from "@fern-typescript/commons";
+import { SourceFile, ts } from "ts-morph";
 import { ServiceTypeReference } from "../types";
-import { getLocalServiceTypeReference } from "./getLocalServiceTypeReference";
+import { getInlinedServiceTypeReference } from "./getInlinedServiceTypeReference";
 
 // adds an import to the `referencedIn` file and returns a reference to the imported type
 export function getServiceTypeReference({
-    serviceOrChannelName,
-    endpointOrOperationId,
-    servicesDirectory,
     reference,
     referencedIn,
-    modelDirectory,
+    modelContext,
 }: {
-    serviceOrChannelName: TypeName;
-    endpointOrOperationId: string;
     referencedIn: SourceFile;
-    modelDirectory: Directory;
-    servicesDirectory: Directory;
+    modelContext: ModelContext;
     reference: ServiceTypeReference;
 }): ts.TypeNode {
-    if (reference.isLocal) {
-        return getLocalServiceTypeReference({
-            serviceOrChannelName,
-            endpointOrOperationId,
-            typeName: reference.typeName,
+    if (reference.isInlined) {
+        return getInlinedServiceTypeReference({
+            metadata: reference.metadata,
             referencedIn,
-            servicesDirectory,
+            modelContext,
         });
     } else {
-        return getTypeReference({
+        return modelContext.getReferenceToType({
             reference: reference.typeReference,
             referencedIn,
-            modelDirectory,
         });
     }
 }

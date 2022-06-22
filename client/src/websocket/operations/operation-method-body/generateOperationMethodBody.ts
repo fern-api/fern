@@ -1,8 +1,8 @@
 import { WebSocketOperation } from "@fern-api/api";
-import { DependencyManager, generateUuidCall, getTextOfTsNode } from "@fern-typescript/commons";
+import { DependencyManager, generateUuidCall, getTextOfTsNode, ModelContext } from "@fern-typescript/commons";
 import {
     GeneratedWebSocketOperationTypes,
-    ServiceTypeName,
+    getServiceTypeReference,
     ServiceTypesConstants,
 } from "@fern-typescript/service-types";
 import { SourceFile, StatementStructures, ts, WriterFunction } from "ts-morph";
@@ -15,14 +15,14 @@ export function generateOperationMethodBody({
     operation,
     operationTypes,
     channelFile,
-    getReferenceToLocalServiceType,
     dependencyManager,
+    modelContext,
 }: {
     operation: WebSocketOperation;
     operationTypes: GeneratedWebSocketOperationTypes;
     channelFile: SourceFile;
-    getReferenceToLocalServiceType: (typeName: ServiceTypeName) => ts.TypeReferenceNode;
     dependencyManager: DependencyManager;
+    modelContext: ModelContext;
 }): (StatementStructures | WriterFunction | string)[] {
     return [
         (writer) => {
@@ -80,9 +80,9 @@ export function generateOperationMethodBody({
                             generatePromiseBody({
                                 operation,
                                 channelFile,
-                                getReferenceToLocalServiceType,
                                 operationTypes,
                                 dependencyManager,
+                                modelContext,
                             }),
                             true
                         )
@@ -96,15 +96,15 @@ export function generateOperationMethodBody({
 function generatePromiseBody({
     operation,
     channelFile,
-    getReferenceToLocalServiceType,
     operationTypes,
     dependencyManager,
+    modelContext,
 }: {
     operation: WebSocketOperation;
     channelFile: SourceFile;
-    getReferenceToLocalServiceType: (typeName: ServiceTypeName) => ts.TypeReferenceNode;
     operationTypes: GeneratedWebSocketOperationTypes;
     dependencyManager: DependencyManager;
+    modelContext: ModelContext;
 }): ts.Statement[] {
     const messageElements: ts.ObjectLiteralElementLike[] = [
         ts.factory.createPropertyAssignment(
@@ -125,6 +125,11 @@ function generatePromiseBody({
         );
     }
 
+    if (operationTypes.request.wrapper == null) {
+        // TODO change the type of operationTypes so we don't have to throw!
+        throw new Error("Operation request wrapper is not defined. This is a product error");
+    }
+
     return [
         ts.factory.createVariableStatement(
             undefined,
@@ -133,7 +138,11 @@ function generatePromiseBody({
                     ts.factory.createVariableDeclaration(
                         ts.factory.createIdentifier(MESSAGE_LOCAL_VARIABLE_NAME),
                         undefined,
-                        getReferenceToLocalServiceType(ServiceTypesConstants.Commons.Request.TYPE_NAME),
+                        getServiceTypeReference({
+                            reference: operationTypes.request.wrapper.reference,
+                            referencedIn: channelFile,
+                            modelContext,
+                        }),
                         ts.factory.createObjectLiteralExpression(messageElements, true)
                     ),
                 ],

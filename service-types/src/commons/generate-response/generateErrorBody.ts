@@ -1,45 +1,47 @@
-import { FailedResponse, ModelReference, PrimitiveType, ResponseError, TypeReference } from "@fern-api/api";
+import { FailedResponse, PrimitiveType, ResponseError, TypeReference } from "@fern-api/api";
 import {
     DependencyManager,
     ErrorResolver,
     generateUuidCall,
-    getModelTypeReference,
+    ModelContext,
     resolveType,
+    ServiceTypeMetadata,
     TypeResolver,
 } from "@fern-typescript/commons";
 import {
-    FORCE_USE_MODEL_NAMESPACE_IMPORT_FOR_UNION_TYPES,
     generateUnionType,
     isTypeExtendable,
     ResolvedSingleUnionValueType,
+    UNION_TYPE_MODEL_IMPORT_STRATEGY,
 } from "@fern-typescript/types";
-import { Directory, SourceFile } from "ts-morph";
-import { ServiceTypesConstants } from "../../constants";
+import { SourceFile } from "ts-morph";
 
 export function generateErrorBody({
     failedResponse,
     errorBodyFile,
-    modelDirectory,
+    errorBodyMetadata,
+    modelContext,
     typeResolver,
     errorResolver,
     dependencyManager,
 }: {
     failedResponse: FailedResponse;
     errorBodyFile: SourceFile;
-    modelDirectory: Directory;
+    errorBodyMetadata: ServiceTypeMetadata;
+    modelContext: ModelContext;
     typeResolver: TypeResolver;
     errorResolver: ErrorResolver;
     dependencyManager: DependencyManager;
 }): void {
     generateUnionType({
         file: errorBodyFile,
-        typeName: ServiceTypesConstants.Commons.Response.Error.Properties.Body.TYPE_NAME,
+        typeName: errorBodyMetadata.typeName,
         docs: failedResponse.docs,
         discriminant: failedResponse.discriminant,
         resolvedTypes: failedResponse.errors.map((error) => ({
             docs: error.docs,
             discriminantValue: error.discriminantValue,
-            valueType: getValueType({ error, file: errorBodyFile, modelDirectory, typeResolver, errorResolver }),
+            valueType: getValueType({ error, file: errorBodyFile, modelContext, typeResolver, errorResolver }),
         })),
         additionalPropertiesForEveryType: [
             {
@@ -50,20 +52,20 @@ export function generateErrorBody({
                 },
             },
         ],
-        modelDirectory,
+        modelContext,
     });
 }
 
 function getValueType({
     error,
     file,
-    modelDirectory,
+    modelContext,
     typeResolver,
     errorResolver,
 }: {
     error: ResponseError;
     file: SourceFile;
-    modelDirectory: Directory;
+    modelContext: ModelContext;
     typeResolver: TypeResolver;
     errorResolver: ErrorResolver;
 }): ResolvedSingleUnionValueType | undefined {
@@ -77,11 +79,10 @@ function getValueType({
 
     return {
         isExtendable: isTypeExtendable(resolvedType),
-        type: getModelTypeReference({
-            reference: ModelReference.error(error.error),
+        type: modelContext.getReferenceToError({
+            errorName: error.error,
             referencedIn: file,
-            modelDirectory,
-            forceUseNamespaceImport: FORCE_USE_MODEL_NAMESPACE_IMPORT_FOR_UNION_TYPES,
+            importStrategy: UNION_TYPE_MODEL_IMPORT_STRATEGY,
         }),
     };
 }

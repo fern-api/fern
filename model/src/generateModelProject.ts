@@ -1,5 +1,5 @@
 import { IntermediateRepresentation } from "@fern-api/api";
-import { generateTypeScriptProject, getOrCreateDirectory, TypeResolver } from "@fern-typescript/commons";
+import { generateTypeScriptProject, ModelContext, TypeResolver } from "@fern-typescript/commons";
 import { generateErrorFiles } from "@fern-typescript/errors";
 import { generateTypeFiles } from "@fern-typescript/types";
 import { Volume } from "memfs/lib/volume";
@@ -10,35 +10,38 @@ export async function generateModelProject({
     packageVersion,
     volume,
     intermediateRepresentation,
-    typeResolver = new TypeResolver(intermediateRepresentation),
 }: {
     packageName: string;
     packageVersion: string;
     volume: Volume;
     intermediateRepresentation: IntermediateRepresentation;
-    typeResolver?: TypeResolver;
 }): Promise<void> {
+    const typeResolver = new TypeResolver(intermediateRepresentation);
     await generateTypeScriptProject({
         volume,
         packageName,
         packageVersion,
-        generateSrc: (directory) => {
-            generateModelFiles({ intermediateRepresentation, typeResolver, directory });
+        generateSrc: (srcDirectory) => {
+            generateModelFiles({
+                intermediateRepresentation,
+                typeResolver,
+                modelDirectory: srcDirectory,
+            });
         },
     });
 }
 
 export function generateModelFiles({
     intermediateRepresentation,
-    directory,
+    modelDirectory,
     typeResolver,
 }: {
     intermediateRepresentation: IntermediateRepresentation;
-    directory: Directory;
+    modelDirectory: Directory;
     typeResolver: TypeResolver;
-}): Directory {
-    const modelDirectory = getOrCreateDirectory(directory, "model");
-    generateTypeFiles({ intermediateRepresentation, typeResolver, modelDirectory });
-    generateErrorFiles({ intermediateRepresentation, typeResolver, modelDirectory });
-    return modelDirectory;
+}): ModelContext {
+    const modelContext = new ModelContext(modelDirectory);
+    generateTypeFiles({ intermediateRepresentation, typeResolver, modelContext });
+    generateErrorFiles({ intermediateRepresentation, typeResolver, modelContext });
+    return modelContext;
 }

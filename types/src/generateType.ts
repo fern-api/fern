@@ -1,6 +1,6 @@
 import { Type } from "@fern-api/api";
-import { TypeResolver } from "@fern-typescript/commons";
-import { Directory, SourceFile } from "ts-morph";
+import { ModelContext, TypeResolver } from "@fern-typescript/commons";
+import { SourceFile } from "ts-morph";
 import { generateEnumType } from "./enum/generateEnumType";
 import { generateAliasType } from "./generateAliasType";
 import { generateObjectType } from "./generateObjectType";
@@ -12,14 +12,14 @@ export function generateType({
     typeName,
     docs,
     typeResolver,
-    modelDirectory,
+    modelContext,
     file,
 }: {
     type: Type;
     typeName: string;
     docs: string | null | undefined;
     typeResolver: TypeResolver;
-    modelDirectory: Directory;
+    modelContext: ModelContext;
     file: SourceFile;
 }): void {
     Type._visit(type, {
@@ -29,7 +29,7 @@ export function generateType({
                 typeName,
                 docs,
                 shape: object,
-                modelDirectory,
+                modelContext,
             });
         },
         union: (unionTypeDefinition) => {
@@ -43,12 +43,12 @@ export function generateType({
                     discriminantValue: singleUnionType.discriminantValue,
                     valueType: getResolvedValueTypeForSingleUnionType({
                         valueType: singleUnionType.valueType,
-                        modelDirectory,
+                        modelContext,
                         typeResolver,
                         file,
                     }),
                 })),
-                modelDirectory,
+                modelContext,
             });
         },
         alias: (alias) => {
@@ -57,7 +57,7 @@ export function generateType({
                 typeName,
                 docs,
                 shape: alias,
-                modelDirectory,
+                modelContext,
             });
         },
         enum: (_enum) => {

@@ -82,7 +82,7 @@ export class TypeResolver {
         return resolveType(type, (typeName) =>
             this.resolveTypeRecursive({
                 allTypes,
-                typeName: typeName,
+                typeName,
                 seen,
             })
         );

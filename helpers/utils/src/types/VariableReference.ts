@@ -1,4 +1,4 @@
-import { TypeReference } from "@fern-api/api";
+import { EndpointId, TypeReference } from "@fern-api/api";
 import { ts } from "ts-morph";
 
 export type VariableReference = VariableReference.WireMessageBodyReference | VariableReference.ModelReference;
@@ -7,7 +7,7 @@ export declare namespace VariableReference {
     interface WireMessageBodyReference extends BaseReference {
         _type: "wireMessage";
         serviceName: string;
-        endpointId: string;
+        endpointId: EndpointId;
         wireMessageType: "Request" | "Response" | "Error";
     }
 

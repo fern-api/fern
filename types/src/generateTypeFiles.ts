@@ -1,31 +1,26 @@
-import { IntermediateRepresentation, ModelReference } from "@fern-api/api";
-import { getFilePathForModelReference, getOrCreateSourceFile, TypeResolver } from "@fern-typescript/commons";
-import { Directory } from "ts-morph";
+import { IntermediateRepresentation } from "@fern-api/api";
+import { ModelContext, TypeResolver } from "@fern-typescript/commons";
 import { generateType } from "./generateType";
 
 export function generateTypeFiles({
-    modelDirectory,
     intermediateRepresentation,
     typeResolver,
+    modelContext,
 }: {
-    modelDirectory: Directory;
     intermediateRepresentation: IntermediateRepresentation;
     typeResolver: TypeResolver;
+    modelContext: ModelContext;
 }): void {
     for (const typeDefinition of intermediateRepresentation.types) {
-        const filepath = getFilePathForModelReference({
-            modelDirectory,
-            reference: ModelReference.type(typeDefinition.name),
-        });
-
-        const file = getOrCreateSourceFile(modelDirectory, filepath);
-        generateType({
-            type: typeDefinition.shape,
-            typeName: typeDefinition.name.name,
-            docs: typeDefinition.docs,
-            typeResolver,
-            modelDirectory,
-            file,
-        });
+        modelContext.addTypeDefinition(typeDefinition.name, (file) =>
+            generateType({
+                type: typeDefinition.shape,
+                typeName: typeDefinition.name.name,
+                docs: typeDefinition.docs,
+                typeResolver,
+                modelContext,
+                file,
+            })
+        );
     }
 }

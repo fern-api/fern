@@ -2,13 +2,12 @@ import { TypeReference } from "@fern-api/api";
 import {
     FernWriters,
     getTextOfTsNode,
-    getTypeReference,
     getWriterForMultiLineUnionType,
     maybeAddDocs,
+    ModelContext,
     visitorUtils,
 } from "@fern-typescript/commons";
 import {
-    Directory,
     InterfaceDeclaration,
     InterfaceDeclarationStructure,
     OptionalKind,
@@ -17,7 +16,12 @@ import {
     VariableDeclarationKind,
     WriterFunction,
 } from "ts-morph";
-import { getKeyForUnion, ResolvedSingleUnionType, ResolvedSingleUnionValueType } from "./utils";
+import {
+    getKeyForUnion,
+    ResolvedSingleUnionType,
+    ResolvedSingleUnionValueType,
+    UNION_TYPE_MODEL_IMPORT_STRATEGY,
+} from "./utils";
 
 export declare namespace generateUnionType {
     export interface Args {
@@ -27,7 +31,7 @@ export declare namespace generateUnionType {
         discriminant: string;
         resolvedTypes: ResolvedSingleUnionType[];
         additionalPropertiesForEveryType?: ObjectProperty[];
-        modelDirectory: Directory;
+        modelContext: ModelContext;
     }
 
     export interface ObjectProperty {
@@ -44,7 +48,7 @@ export function generateUnionType({
     discriminant,
     resolvedTypes,
     additionalPropertiesForEveryType = [],
-    modelDirectory,
+    modelContext,
 }: generateUnionType.Args): void {
     const typeAlias = file.addTypeAlias({
         name: typeName,
@@ -79,10 +83,10 @@ export function generateUnionType({
             interfaceNode.addProperty({
                 name: additionalProperty.key,
                 type: getTextOfTsNode(
-                    getTypeReference({
+                    modelContext.getReferenceToType({
                         reference: additionalProperty.valueType,
                         referencedIn: file,
-                        modelDirectory,
+                        importStrategy: UNION_TYPE_MODEL_IMPORT_STRATEGY,
                     })
                 ),
             });

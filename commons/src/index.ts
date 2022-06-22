@@ -1,7 +1,3 @@
-export { getFilePathForModelReference } from "./codegen/references/getFilePathForModelReference";
-export { getModelTypeReference } from "./codegen/references/getModelTypeReference";
-export { getTypeReference } from "./codegen/references/getTypeReference";
-export { generateTypeUtilsReference } from "./codegen/type-utils/generateTypeUtilsReference";
 export { addBrandedTypeAlias } from "./codegen/utils/addBrandedTypeAlias";
 export { getRelativePathAsModuleSpecifierTo } from "./codegen/utils/getRelativePathAsModuleSpecifierTo";
 export { getTextOfTsKeyword } from "./codegen/utils/getTextOfTsKeyword";
@@ -15,13 +11,15 @@ export { DependencyManager } from "./dependencies/DependencyManager";
 export { generateUuidCall } from "./dependencies/generateUuidCall";
 export { getOrCreateDirectory } from "./file-system/getOrCreateDirectory";
 export { getOrCreateSourceFile } from "./file-system/getOrCreateSourceFile";
-export { ProjectCreator } from "./file-system/ProjectCreator";
 export { BUILD_PROJECT_SCRIPT_NAME } from "./generate-ts-project/generatePackageJson";
 export {
     generateTypeScriptProject,
     type GeneratedProjectSrcInfo,
 } from "./generate-ts-project/generateTypeScriptProject";
 export { writeVolumeToDisk } from "./generate-ts-project/writeVolumeToDisk";
+export { ModelContext } from "./model-context/ModelContext";
+export { type ServiceTypeMetadata } from "./model-context/ServiceTypeContext";
+export { ImportStrategy } from "./model-context/utils/ImportStrategy";
 export { ErrorResolver } from "./resolvers/ErrorResolver";
 export { resolveType, TypeResolver } from "./resolvers/TypeResolver";
 export { ResolvedType } from "./resolvers/types";
