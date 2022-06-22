@@ -1675,7 +1675,6 @@ __metadata:
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/encoders": "workspace:*"
     "@fern-typescript/errors": "workspace:*"
-    "@fern-typescript/hathora-encoding-helper": "workspace:*"
     "@fern-typescript/helper-manager": "workspace:*"
     "@fern-typescript/helper-utils": "workspace:*"
     "@fern-typescript/json-encoding-helper": "workspace:*"
@@ -2122,36 +2121,6 @@ __metadata:
     prettier: ^2.6.2
     ts-morph: ^14.0.0
     typescript: ^4.6.4
-  languageName: unknown
-  linkType: soft
-
-"@fern-typescript/hathora-encoding-helper@workspace:*, @fern-typescript/hathora-encoding-helper@workspace:packages/fern-typescript/helpers/built-in/hathora-encoding-helper":
-  version: 0.0.0-use.local
-  resolution: "@fern-typescript/hathora-encoding-helper@workspace:packages/fern-typescript/helpers/built-in/hathora-encoding-helper"
-  dependencies:
-    "@babel/core": ^7.18.5
-    "@babel/preset-env": ^7.18.2
-    "@babel/preset-typescript": ^7.17.12
-    "@fern-api/api": "workspace:*"
-    "@fern-typescript/commons": "workspace:*"
-    "@fern-typescript/helper-utils": "workspace:*"
-    "@fern-typescript/service-types": "workspace:*"
-    "@fern-typescript/types": "workspace:*"
-    "@ts-morph/common": ^0.13.0
-    "@types/jest": ^28.1.2
-    "@types/node": ^17.0.33
-    "@types/webpack": ^5.28.0
-    depcheck: ^1.4.3
-    eslint: ^8.12.0
-    jest: ^28.1.1
-    prettier: ^2.6.2
-    simple-progress-webpack-plugin: ^2.0.0
-    ts-loader: ^9.3.0
-    ts-node: ^10.7.0
-    typescript: ^4.6.4
-    umd-compat-loader: ^2.1.2
-    webpack: ^5.72.1
-    webpack-cli: ^4.9.2
   languageName: unknown
   linkType: soft
 
@@ -3201,17 +3170,6 @@ __metadata:
     tapable: ^2.2.0
     webpack: ^5
   checksum: 50afdbd2a40545a8acda4adda09b98772dd646dea894dfa95d9f86d224d3df462405b5d0c04077958e87399cda4c9bac7451bbb7285c99e7220806b439ae7f72
-  languageName: node
-  linkType: hard
-
-"@types/webpack@npm:^5.28.0":
-  version: 5.28.0
-  resolution: "@types/webpack@npm:5.28.0"
-  dependencies:
-    "@types/node": "npm:*"
-    tapable: "npm:^2.2.0"
-    webpack: "npm:^5"
-  checksum: a038d7e12dd109c6a8d2eb744fd32070ef94f1655e730fb1443b370db98864c3a0e408638b02d12ba08269b9c012b3be8b801117ced2d1102e7676203fd663ed
   languageName: node
   linkType: hard
 

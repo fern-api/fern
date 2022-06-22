@@ -19,7 +19,6 @@
     { "path": "../fern-typescript/commons/tsconfig.esm.json" },
     { "path": "../fern-typescript/encoders/tsconfig.esm.json" },
     { "path": "../fern-typescript/errors/tsconfig.esm.json" },
-    { "path": "../fern-typescript/helpers/built-in/hathora-encoding-helper/tsconfig.esm.json" },
     { "path": "../fern-typescript/helpers/built-in/json-encoding-helper/tsconfig.esm.json" },
     { "path": "../fern-typescript/helpers/helper-manager/tsconfig.esm.json" },
     { "path": "../fern-typescript/helpers/utils/tsconfig.esm.json" },
