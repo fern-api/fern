@@ -1,5 +1,5 @@
 import { TypeName, WebSocketOperation } from "@fern-api/api";
-import { getTextOfTsKeyword, getTextOfTsNode, ModelContext, TypeResolver } from "@fern-typescript/commons";
+import { getTextOfTsKeyword, getTextOfTsNode, ModelContext } from "@fern-typescript/commons";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 import { GeneratedRequest, generateRequest } from "../commons/generate-request/generateRequest";
 import { getServiceTypeReference } from "../commons/service-type-reference/get-service-type-reference/getServiceTypeReference";
@@ -11,7 +11,6 @@ export declare namespace generateRequestTypes {
         channelName: TypeName;
         operation: WebSocketOperation;
         modelContext: ModelContext;
-        typeResolver: TypeResolver;
     }
 }
 
@@ -19,7 +18,6 @@ export function generateRequestTypes({
     channelName,
     operation,
     modelContext,
-    typeResolver,
 }: generateRequestTypes.Args): GeneratedRequest {
     const additionalProperties: OptionalKind<PropertySignatureStructure>[] = [
         {
@@ -46,7 +44,6 @@ export function generateRequestTypes({
             type: operation.request.type,
             docs: operation.request.docs,
         },
-        typeResolver,
         additionalProperties,
         requestMetadata: getMetadataForWebSocketOperationType({
             channelName,

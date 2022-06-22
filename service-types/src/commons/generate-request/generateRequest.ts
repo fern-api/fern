@@ -1,5 +1,5 @@
 import { Type } from "@fern-api/api";
-import { getTextOfTsNode, ModelContext, ServiceTypeMetadata, TypeResolver } from "@fern-typescript/commons";
+import { getTextOfTsNode, ModelContext, ServiceTypeMetadata } from "@fern-typescript/commons";
 import { OptionalKind, PropertySignatureStructure, SourceFile, ts } from "ts-morph";
 import { ServiceTypesConstants } from "../../constants";
 import { generateServiceTypeReference } from "../service-type-reference/generateServiceTypeReference";
@@ -37,7 +37,6 @@ export declare namespace generateRequest {
             | OptionalKind<PropertySignatureStructure>
             | ((file: SourceFile) => OptionalKind<PropertySignatureStructure>)
         )[];
-        typeResolver: TypeResolver;
     }
 }
 
@@ -48,7 +47,6 @@ export function generateRequest({
     getTypeReferenceToServiceType,
     body,
     additionalProperties = [],
-    typeResolver,
 }: generateRequest.Args): GeneratedRequest {
     if (additionalProperties.length === 0) {
         const requestBodyReference = generateServiceTypeReference({
@@ -57,7 +55,6 @@ export function generateRequest({
             type: body.type,
             docs: body.docs,
             modelContext,
-            typeResolver,
         });
         if (requestBodyReference == null) {
             return { body: undefined, wrapper: undefined };
@@ -75,7 +72,6 @@ export function generateRequest({
         type: body.type,
         docs: body.docs,
         modelContext,
-        typeResolver,
     });
 
     modelContext.addServiceTypeDefinition(requestMetadata, (requestFile) => {

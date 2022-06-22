@@ -1,13 +1,5 @@
 import { FailedResponse, PrimitiveType, ResponseError, TypeReference } from "@fern-api/api";
-import {
-    DependencyManager,
-    ErrorResolver,
-    generateUuidCall,
-    ModelContext,
-    resolveType,
-    ServiceTypeMetadata,
-    TypeResolver,
-} from "@fern-typescript/commons";
+import { DependencyManager, generateUuidCall, ModelContext, ServiceTypeMetadata } from "@fern-typescript/commons";
 import {
     generateUnionType,
     isTypeExtendable,
@@ -21,16 +13,12 @@ export function generateErrorBody({
     errorBodyFile,
     errorBodyMetadata,
     modelContext,
-    typeResolver,
-    errorResolver,
     dependencyManager,
 }: {
     failedResponse: FailedResponse;
     errorBodyFile: SourceFile;
     errorBodyMetadata: ServiceTypeMetadata;
     modelContext: ModelContext;
-    typeResolver: TypeResolver;
-    errorResolver: ErrorResolver;
     dependencyManager: DependencyManager;
 }): void {
     generateUnionType({
@@ -41,7 +29,7 @@ export function generateErrorBody({
         resolvedTypes: failedResponse.errors.map((error) => ({
             docs: error.docs,
             discriminantValue: error.discriminantValue,
-            valueType: getValueType({ error, file: errorBodyFile, modelContext, typeResolver, errorResolver }),
+            valueType: getValueType({ error, file: errorBodyFile, modelContext }),
         })),
         additionalPropertiesForEveryType: [
             {
@@ -60,18 +48,13 @@ function getValueType({
     error,
     file,
     modelContext,
-    typeResolver,
-    errorResolver,
 }: {
     error: ResponseError;
     file: SourceFile;
     modelContext: ModelContext;
-    typeResolver: TypeResolver;
-    errorResolver: ErrorResolver;
 }): ResolvedSingleUnionValueType | undefined {
-    const errorDefinition = errorResolver.resolveError(error.error);
-
-    const resolvedType = resolveType(errorDefinition.type, (typeName) => typeResolver.resolveTypeName(typeName));
+    const errorDefinition = modelContext.resolveErrorName(error.error);
+    const resolvedType = modelContext.resolveTypeDefinition(errorDefinition.type);
 
     if (resolvedType._type === "void") {
         return undefined;

@@ -1,11 +1,5 @@
 import { WebSocketChannel, WebSocketOperation } from "@fern-api/api";
-import {
-    DependencyManager,
-    ErrorResolver,
-    getTextOfTsNode,
-    ModelContext,
-    TypeResolver,
-} from "@fern-typescript/commons";
+import { DependencyManager, getTextOfTsNode, ModelContext } from "@fern-typescript/commons";
 import {
     GeneratedWebSocketOperationTypes,
     generateWebSocketOperationTypes,
@@ -29,8 +23,6 @@ export declare namespace addClientOperationToChannel {
         channelInterface: InterfaceDeclaration;
         operation: WebSocketOperation;
         modelContext: ModelContext;
-        typeResolver: TypeResolver;
-        errorResolver: ErrorResolver;
         dependencyManager: DependencyManager;
     }
 
@@ -45,8 +37,6 @@ export function addClientOperationToChannel({
     channelClass,
     operation,
     modelContext,
-    typeResolver,
-    errorResolver,
     dependencyManager,
 }: addClientOperationToChannel.Args): addClientOperationToChannel.Return {
     const channelFile = channelClass.getSourceFile();
@@ -55,8 +45,6 @@ export function addClientOperationToChannel({
         channel,
         operation,
         modelContext,
-        typeResolver,
-        errorResolver,
         dependencyManager,
     });
 
