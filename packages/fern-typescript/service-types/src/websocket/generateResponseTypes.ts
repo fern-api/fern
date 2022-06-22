@@ -2,9 +2,9 @@ import { TypeName, WebSocketOperation } from "@fern-api/api";
 import { DependencyManager, getTextOfTsKeyword, ModelContext } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 import { generateResponse } from "../commons/generate-response/generateResponse";
-import { getServiceTypeReference } from "../commons/service-type-reference/get-service-type-reference/getServiceTypeReference";
+import { getWebSocketServiceTypeReference } from "../commons/service-type-reference/get-service-type-reference/getWebSocketServiceTypeReference";
 import { ServiceTypesConstants } from "../constants";
-import { getMetadataForWebSocketOperationType } from "./getMetadataForWebSocketOperationType";
+import { createWebSocketChannelTypeFileWriter } from "./createWebSocketChannelTypeFileWriter";
 import { GeneratedWebSocketOperationTypes } from "./types";
 
 export declare namespace generateResponseTypes {
@@ -33,7 +33,7 @@ export function generateResponseTypes({
         },
         failedResponse: operation.response.failed,
         getTypeReferenceToServiceType: ({ reference, referencedIn }) =>
-            getServiceTypeReference({
+            getWebSocketServiceTypeReference({
                 reference,
                 referencedIn,
                 modelContext,
@@ -48,20 +48,10 @@ export function generateResponseTypes({
                 type: getTextOfTsKeyword(ts.SyntaxKind.StringKeyword),
             },
         ],
-        responseMetadata: getMetadataForWebSocketOperationType({
+        writeServiceTypeFile: createWebSocketChannelTypeFileWriter({
             channelName,
-            operationId: operation.operationId,
-            type: ServiceTypesConstants.Commons.Response.TYPE_NAME,
-        }),
-        successBodyMetadata: getMetadataForWebSocketOperationType({
-            channelName,
-            operationId: operation.operationId,
-            type: ServiceTypesConstants.Commons.Response.Success.Properties.Body.TYPE_NAME,
-        }),
-        errorBodyMetadata: getMetadataForWebSocketOperationType({
-            channelName,
-            operationId: operation.operationId,
-            type: ServiceTypesConstants.Commons.Response.Error.Properties.Body.TYPE_NAME,
+            operation,
+            modelContext,
         }),
     });
 

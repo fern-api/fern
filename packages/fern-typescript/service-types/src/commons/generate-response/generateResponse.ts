@@ -1,17 +1,18 @@
 import { FailedResponse, Type } from "@fern-api/api";
-import { DependencyManager, getTextOfTsNode, ModelContext, ServiceTypeMetadata } from "@fern-typescript/commons";
+import { DependencyManager, getTextOfTsNode, ModelContext } from "@fern-typescript/commons";
 import { ModuleDeclaration, OptionalKind, PropertySignatureStructure, SourceFile, ts, Writers } from "ts-morph";
 import { ServiceTypesConstants } from "../../constants";
-import { generateServiceTypeReference } from "../service-type-reference/generateServiceTypeReference";
+import {
+    generateServiceTypeReference,
+    ServiceTypeFileWriter,
+} from "../service-type-reference/generateServiceTypeReference";
 import { InlinedServiceTypeReference, ServiceTypeReference } from "../service-type-reference/types";
 import { generateErrorBody } from "./generateErrorBody";
 
 export declare namespace generateResponse {
-    export interface Args {
+    export interface Args<M> {
         modelContext: ModelContext;
-        responseMetadata: ServiceTypeMetadata;
-        successBodyMetadata: ServiceTypeMetadata;
-        errorBodyMetadata: ServiceTypeMetadata;
+        writeServiceTypeFile: ServiceTypeFileWriter<M>;
         dependencyManager: DependencyManager;
         successResponse: {
             docs: string | null | undefined;
@@ -19,32 +20,31 @@ export declare namespace generateResponse {
         };
         failedResponse: FailedResponse;
         getTypeReferenceToServiceType: (args: {
-            reference: ServiceTypeReference;
+            reference: ServiceTypeReference<M>;
             referencedIn: SourceFile;
         }) => ts.TypeNode;
         additionalProperties?: OptionalKind<PropertySignatureStructure>[];
     }
 
-    export interface Return {
-        reference: InlinedServiceTypeReference;
-        successBodyReference: ServiceTypeReference | undefined;
-        errorBodyReference: ServiceTypeReference | undefined;
+    export interface Return<M> {
+        reference: InlinedServiceTypeReference<M>;
+        successBodyReference: ServiceTypeReference<M> | undefined;
+        errorBodyReference: ServiceTypeReference<M> | undefined;
     }
 }
 
-export function generateResponse({
+export function generateResponse<M>({
     modelContext,
-    responseMetadata,
-    successBodyMetadata,
-    errorBodyMetadata,
+    writeServiceTypeFile,
     dependencyManager,
     successResponse,
     failedResponse,
     getTypeReferenceToServiceType,
     additionalProperties = [],
-}: generateResponse.Args): generateResponse.Return {
+}: generateResponse.Args<M>): generateResponse.Return<M> {
     const successBodyReference = generateServiceTypeReference({
-        metadata: successBodyMetadata,
+        typeName: ServiceTypesConstants.Commons.Response.Success.Properties.Body.TYPE_NAME,
+        writer: writeServiceTypeFile,
         type: successResponse.type,
         docs: successResponse.docs,
         modelContext,
@@ -52,55 +52,58 @@ export function generateResponse({
 
     const { errorBodyReference } = maybeGenerateErrorBody({
         modelContext,
-        errorBodyMetadata,
         failedResponse,
         dependencyManager,
+        writeServiceTypeFile,
     });
 
-    modelContext.addServiceTypeDefinition(responseMetadata, (responseFile) => {
-        responseFile.addTypeAlias({
-            name: responseMetadata.typeName,
-            type: Writers.unionType(
-                getTextOfTsNode(
-                    ts.factory.createTypeReferenceNode(
-                        ts.factory.createQualifiedName(
-                            ts.factory.createIdentifier(responseMetadata.typeName),
-                            ts.factory.createIdentifier(ServiceTypesConstants.Commons.Response.Success.TYPE_NAME)
-                        ),
-                        undefined
+    const responseMetadata = writeServiceTypeFile(
+        ServiceTypesConstants.Commons.Response.TYPE_NAME,
+        (responseFile, transformedTypeName) => {
+            responseFile.addTypeAlias({
+                name: transformedTypeName,
+                type: Writers.unionType(
+                    getTextOfTsNode(
+                        ts.factory.createTypeReferenceNode(
+                            ts.factory.createQualifiedName(
+                                ts.factory.createIdentifier(transformedTypeName),
+                                ts.factory.createIdentifier(ServiceTypesConstants.Commons.Response.Success.TYPE_NAME)
+                            ),
+                            undefined
+                        )
+                    ),
+                    getTextOfTsNode(
+                        ts.factory.createTypeReferenceNode(
+                            ts.factory.createQualifiedName(
+                                ts.factory.createIdentifier(transformedTypeName),
+                                ts.factory.createIdentifier(ServiceTypesConstants.Commons.Response.Error.TYPE_NAME)
+                            ),
+                            undefined
+                        )
                     )
                 ),
-                getTextOfTsNode(
-                    ts.factory.createTypeReferenceNode(
-                        ts.factory.createQualifiedName(
-                            ts.factory.createIdentifier(responseMetadata.typeName),
-                            ts.factory.createIdentifier(ServiceTypesConstants.Commons.Response.Error.TYPE_NAME)
-                        ),
-                        undefined
-                    )
-                )
-            ),
-            isExported: true,
-        });
+                isExported: true,
+            });
 
-        const responseNamespace = responseFile.addModule({
-            name: responseMetadata.typeName,
-        });
+            const responseNamespace = responseFile.addModule({
+                name: transformedTypeName,
+            });
 
-        addSuccessResponseInterface({
-            responseNamespace,
-            successBodyReference,
-            getTypeReferenceToServiceType,
-            additionalProperties,
-        });
+            addSuccessResponseInterface({
+                responseNamespace,
+                successBodyReference,
+                getTypeReferenceToServiceType,
+                additionalProperties,
+            });
 
-        addErrorResponseInterface({
-            responseNamespace,
-            additionalProperties,
-            getTypeReferenceToServiceType,
-            errorBodyReference,
-        });
-    });
+            addErrorResponseInterface({
+                responseNamespace,
+                additionalProperties,
+                getTypeReferenceToServiceType,
+                errorBodyReference,
+            });
+        }
+    );
 
     return {
         reference: {
@@ -112,14 +115,17 @@ export function generateResponse({
     };
 }
 
-function addSuccessResponseInterface({
+function addSuccessResponseInterface<M>({
     successBodyReference,
     getTypeReferenceToServiceType,
     responseNamespace,
     additionalProperties,
 }: {
-    successBodyReference: ServiceTypeReference | undefined;
-    getTypeReferenceToServiceType: (args: { reference: ServiceTypeReference; referencedIn: SourceFile }) => ts.TypeNode;
+    successBodyReference: ServiceTypeReference<M> | undefined;
+    getTypeReferenceToServiceType: (args: {
+        reference: ServiceTypeReference<M>;
+        referencedIn: SourceFile;
+    }) => ts.TypeNode;
     responseNamespace: ModuleDeclaration;
     additionalProperties: OptionalKind<PropertySignatureStructure>[];
 }): void {
@@ -160,7 +166,7 @@ function generateSuccessResponseProperties({
     return properties;
 }
 
-function addErrorResponseInterface({
+function addErrorResponseInterface<M>({
     responseNamespace,
     additionalProperties,
     getTypeReferenceToServiceType,
@@ -168,8 +174,11 @@ function addErrorResponseInterface({
 }: {
     responseNamespace: ModuleDeclaration;
     additionalProperties: OptionalKind<PropertySignatureStructure>[];
-    getTypeReferenceToServiceType: (args: { reference: ServiceTypeReference; referencedIn: SourceFile }) => ts.TypeNode;
-    errorBodyReference: ServiceTypeReference | undefined;
+    getTypeReferenceToServiceType: (args: {
+        reference: ServiceTypeReference<M>;
+        referencedIn: SourceFile;
+    }) => ts.TypeNode;
+    errorBodyReference: ServiceTypeReference<M> | undefined;
 }) {
     const properties: OptionalKind<PropertySignatureStructure>[] = [
         ...createBaseResponseProperties({ ok: false }),
@@ -206,30 +215,33 @@ function createBaseResponseProperties({ ok }: { ok: boolean }): OptionalKind<Pro
     ];
 }
 
-function maybeGenerateErrorBody({
+function maybeGenerateErrorBody<M>({
     modelContext,
-    errorBodyMetadata,
     failedResponse,
     dependencyManager,
+    writeServiceTypeFile,
 }: {
     modelContext: ModelContext;
-    errorBodyMetadata: ServiceTypeMetadata;
     failedResponse: FailedResponse;
     dependencyManager: DependencyManager;
-}): { errorBodyReference: ServiceTypeReference | undefined } {
+    writeServiceTypeFile: ServiceTypeFileWriter<M>;
+}): { errorBodyReference: ServiceTypeReference<M> | undefined } {
     if (failedResponse.errors.length === 0) {
         return { errorBodyReference: undefined };
     }
 
-    modelContext.addServiceTypeDefinition(errorBodyMetadata, (errorBodyFile) => {
-        generateErrorBody({
-            failedResponse,
-            errorBodyFile,
-            errorBodyMetadata,
-            modelContext,
-            dependencyManager,
-        });
-    });
+    const errorBodyMetadata = writeServiceTypeFile(
+        ServiceTypesConstants.Commons.Response.Error.Properties.Body.TYPE_NAME,
+        (errorBodyFile, transformedTypeName) => {
+            generateErrorBody({
+                failedResponse,
+                errorBodyFile,
+                errorBodyTypeName: transformedTypeName,
+                modelContext,
+                dependencyManager,
+            });
+        }
+    );
 
     return {
         errorBodyReference: {

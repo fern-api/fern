@@ -1,10 +1,15 @@
 import { TypeName, WebSocketOperation } from "@fern-api/api";
-import { getTextOfTsKeyword, getTextOfTsNode, ModelContext } from "@fern-typescript/commons";
+import {
+    getTextOfTsKeyword,
+    getTextOfTsNode,
+    ModelContext,
+    WebSocketChannelTypeMetadata,
+} from "@fern-typescript/commons";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 import { GeneratedRequest, generateRequest } from "../commons/generate-request/generateRequest";
-import { getServiceTypeReference } from "../commons/service-type-reference/get-service-type-reference/getServiceTypeReference";
+import { getWebSocketServiceTypeReference } from "../commons/service-type-reference/get-service-type-reference/getWebSocketServiceTypeReference";
 import { ServiceTypesConstants } from "../constants";
-import { getMetadataForWebSocketOperationType } from "./getMetadataForWebSocketOperationType";
+import { createWebSocketChannelTypeFileWriter } from "./createWebSocketChannelTypeFileWriter";
 
 export declare namespace generateRequestTypes {
     export interface Args {
@@ -18,7 +23,7 @@ export function generateRequestTypes({
     channelName,
     operation,
     modelContext,
-}: generateRequestTypes.Args): GeneratedRequest {
+}: generateRequestTypes.Args): GeneratedRequest<WebSocketChannelTypeMetadata> {
     const additionalProperties: OptionalKind<PropertySignatureStructure>[] = [
         {
             name: ServiceTypesConstants.WebsocketChannel.Request.Properties.ID,
@@ -35,7 +40,7 @@ export function generateRequestTypes({
     return generateRequest({
         modelContext,
         getTypeReferenceToServiceType: ({ reference, referencedIn }) =>
-            getServiceTypeReference({
+            getWebSocketServiceTypeReference({
                 reference,
                 referencedIn,
                 modelContext,
@@ -45,15 +50,10 @@ export function generateRequestTypes({
             docs: operation.request.docs,
         },
         additionalProperties,
-        requestMetadata: getMetadataForWebSocketOperationType({
+        writeServiceTypeFile: createWebSocketChannelTypeFileWriter({
             channelName,
-            operationId: operation.operationId,
-            type: ServiceTypesConstants.Commons.Request.TYPE_NAME,
-        }),
-        requestBodyMetadata: getMetadataForWebSocketOperationType({
-            channelName,
-            operationId: operation.operationId,
-            type: ServiceTypesConstants.Commons.Request.Properties.Body.TYPE_NAME,
+            operation,
+            modelContext,
         }),
     });
 }

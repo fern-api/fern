@@ -1,7 +1,7 @@
 import { FernFilepath } from "@fern-api/api";
 import { Directory, SourceFile, ts } from "ts-morph";
-import { BaseModelContext, ModelItem } from "./BaseModelContext";
-import { ImportStrategy } from "./utils/ImportStrategy";
+import { BaseModelContext, ModelItem } from "../BaseModelContext";
+import { ImportStrategy } from "../utils/ImportStrategy";
 
 export interface ServiceTypeMetadata {
     typeName: string;
@@ -13,7 +13,7 @@ interface ServiceTypeModelItem extends ModelItem {
     metadata: ServiceTypeMetadata;
 }
 
-export declare namespace ServiceTypeContext {
+export declare namespace BaseServiceTypeContext {
     namespace getReferenceToServiceType {
         interface Args {
             metadata: ServiceTypeMetadata;
@@ -23,7 +23,7 @@ export declare namespace ServiceTypeContext {
     }
 }
 
-export class ServiceTypeContext extends BaseModelContext<ServiceTypeModelItem> {
+export class BaseServiceTypeContext extends BaseModelContext<ServiceTypeModelItem> {
     constructor(modelDirectory: Directory) {
         super({
             modelDirectory,
@@ -34,7 +34,7 @@ export class ServiceTypeContext extends BaseModelContext<ServiceTypeModelItem> {
         });
     }
 
-    public addServiceTypeDefinition(metadata: ServiceTypeMetadata, withFile: (file: SourceFile) => void): void {
+    protected addServiceTypeDefinition(metadata: ServiceTypeMetadata, withFile: (file: SourceFile) => void): void {
         this.addFile({
             item: {
                 typeName: metadata.typeName,
@@ -45,11 +45,11 @@ export class ServiceTypeContext extends BaseModelContext<ServiceTypeModelItem> {
         });
     }
 
-    public getReferenceToServiceType({
+    protected getReferenceToServiceType({
         metadata,
         importStrategy,
         referencedIn,
-    }: ServiceTypeContext.getReferenceToServiceType.Args): ts.TypeReferenceNode {
+    }: BaseServiceTypeContext.getReferenceToServiceType.Args): ts.TypeReferenceNode {
         return this.getReferenceToTypeInModel({
             item: {
                 typeName: metadata.typeName,
