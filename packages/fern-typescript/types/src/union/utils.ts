@@ -1,10 +1,10 @@
 import { Type, TypeReference } from "@fern-api/api";
-import { getTypeReference, ResolvedType, resolveType, TypeResolver } from "@fern-typescript/commons";
+import { ImportStrategy, ModelContext, ResolvedType, resolveType, TypeResolver } from "@fern-typescript/commons";
 import { upperFirst } from "lodash";
-import { Directory, SourceFile, ts } from "ts-morph";
+import { SourceFile, ts } from "ts-morph";
 
-// import the entire model as a namespace to prevent clashing with union subtypes
-export const FORCE_USE_MODEL_NAMESPACE_IMPORT_FOR_UNION_TYPES = true;
+// don't used named imports for type reference to prevent clashing with union subtypes
+export const UNION_TYPE_MODEL_IMPORT_STRATEGY = ImportStrategy.TOP_PACKAGE_IMPORT;
 
 export function getKeyForUnion({ discriminantValue }: ResolvedSingleUnionType): string {
     return upperFirst(discriminantValue);
@@ -25,12 +25,12 @@ export function getResolvedValueTypeForSingleUnionType({
     valueType,
     typeResolver,
     file,
-    modelDirectory,
+    modelContext,
 }: {
     valueType: TypeReference;
     typeResolver: TypeResolver;
     file: SourceFile;
-    modelDirectory: Directory;
+    modelContext: ModelContext;
 }): ResolvedSingleUnionValueType | undefined {
     const resolvedType =
         valueType._type === "named"
@@ -48,11 +48,10 @@ export function getResolvedValueTypeForSingleUnionType({
 
     return {
         isExtendable: isTypeExtendable(resolvedType),
-        type: getTypeReference({
+        type: modelContext.getReferenceToType({
             reference: valueType,
             referencedIn: file,
-            modelDirectory,
-            forceUseNamespaceImport: FORCE_USE_MODEL_NAMESPACE_IMPORT_FOR_UNION_TYPES,
+            importStrategy: UNION_TYPE_MODEL_IMPORT_STRATEGY,
         }),
     };
 }

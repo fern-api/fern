@@ -61,5 +61,6 @@ module.exports = {
             },
         ],
         "jest/unbound-method": ["error"],
+        "object-shorthand": ["error"],
     },
 };

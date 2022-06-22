@@ -1,0 +1,63 @@
+imports:
+  commons: commons.yml
+ids:
+  - PlaylistId
+types:
+  Playlist:
+    properties:
+      playlistId: PlaylistId
+      name: string
+      problems: list<commons.ProblemId>
+      ownerId: commons.UserId
+
+services:
+  http:
+    PlaylistCrudService:
+      auth: bearer
+      base-path: /v2/playlist
+      endpoints:
+        createPlaylist:
+          docs: Create a new playlist
+          method: POST
+          path: /create
+          request:
+            type:
+              properties:
+                name: string
+                problems: list<commons.ProblemId>
+          response: Playlist
+
+        getPlaylists:
+          docs: Returns the user's playlists
+          method: GET
+          path: /all
+          response: list<Playlist>
+
+        getPlaylist:
+          docs: Returns a playlist
+          method: GET
+          path: /{playlistId}
+          auth-override: none
+          path-parameters:
+            playlistId: PlaylistId
+          response: Playlist
+
+        updatePlaylist:
+          docs: Updates a playlist
+          method: PUT
+          path: /{playlistId}
+          path-parameters:
+            playlistId: PlaylistId
+          request:
+            type:
+              properties:
+                name: string
+                problems: list<commons.ProblemId>
+          response: Playlist
+
+        deletePlaylist:
+          docs: Deletes a playlist
+          method: DELETE
+          path: /{playlistId}
+          path-parameters:
+            playlistId: PlaylistId

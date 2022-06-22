@@ -36,7 +36,7 @@ Array [
   Object {
     "contents": Array [
       Object {
-        "contents": "export * from \\"./model\\";
+        "contents": "export * as posts from \\"./posts\\";
 ",
         "name": "index.ts",
         "type": "file",
@@ -44,7 +44,7 @@ Array [
       Object {
         "contents": Array [
           Object {
-            "contents": "export * from \\"./posts\\";
+            "contents": "export * from \\"./types\\";
 ",
             "name": "index.ts",
             "type": "file",
@@ -52,15 +52,7 @@ Array [
           Object {
             "contents": Array [
               Object {
-                "contents": "export * from \\"./types\\";
-",
-                "name": "index.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": Array [
-                  Object {
-                    "contents": "/**
+                "contents": "/**
  * A blog post
  */
 export interface Post {
@@ -69,25 +61,21 @@ export interface Post {
     content: string;
 }
 ",
-                    "name": "Post.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "export * from \\"./Post\\";
+                "name": "Post.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "export * from \\"./Post\\";
 ",
-                    "name": "index.ts",
-                    "type": "file",
-                  },
-                ],
-                "name": "types",
-                "type": "directory",
+                "name": "index.ts",
+                "type": "file",
               },
             ],
-            "name": "posts",
+            "name": "types",
             "type": "directory",
           },
         ],
-        "name": "model",
+        "name": "posts",
         "type": "directory",
       },
     ],

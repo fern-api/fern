@@ -1,6 +1,5 @@
 import { WebSocketChannel, WebSocketOperation } from "@fern-api/api";
-import { DependencyManager, ErrorResolver, getOrCreateDirectory, TypeResolver } from "@fern-typescript/commons";
-import { Directory } from "ts-morph";
+import { DependencyManager, ErrorResolver, ModelContext, TypeResolver } from "@fern-typescript/commons";
 import { generateRequestTypes } from "./generateRequestTypes";
 import { generateResponseTypes } from "./generateResponseTypes";
 import { GeneratedWebSocketOperationTypes } from "./types";
@@ -8,45 +7,29 @@ import { GeneratedWebSocketOperationTypes } from "./types";
 export function generateWebSocketOperationTypes({
     channel,
     operation,
-    operationsDirectory,
-    modelDirectory,
-    servicesDirectory,
+    modelContext,
     typeResolver,
     errorResolver,
     dependencyManager,
 }: {
     channel: WebSocketChannel;
     operation: WebSocketOperation;
-    operationsDirectory: Directory;
-    modelDirectory: Directory;
-    servicesDirectory: Directory;
+    modelContext: ModelContext;
     errorResolver: ErrorResolver;
     typeResolver: TypeResolver;
     dependencyManager: DependencyManager;
 }): GeneratedWebSocketOperationTypes {
-    const operationDirectory = getOrCreateDirectory(operationsDirectory, operation.operationId, {
-        exportOptions: {
-            type: "namespace",
-            namespace: operation.operationId,
-        },
-    });
-
     return {
-        methodName: operation.operationId,
         request: generateRequestTypes({
             channelName: channel.name,
             operation,
-            operationDirectory,
-            modelDirectory,
-            servicesDirectory,
+            modelContext,
             typeResolver,
         }),
         response: generateResponseTypes({
             channelName: channel.name,
             operation,
-            operationDirectory,
-            modelDirectory,
-            servicesDirectory,
+            modelContext,
             typeResolver,
             errorResolver,
             dependencyManager,

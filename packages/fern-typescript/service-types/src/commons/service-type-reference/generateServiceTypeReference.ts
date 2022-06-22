@@ -1,28 +1,24 @@
 import { Type } from "@fern-api/api";
 import { assertNever } from "@fern-api/commons";
-import { TypeResolver } from "@fern-typescript/commons";
+import { ModelContext, ServiceTypeMetadata, TypeResolver } from "@fern-typescript/commons";
 import { generateType } from "@fern-typescript/types";
-import { Directory } from "ts-morph";
-import { ServiceTypeName, ServiceTypeReference } from "./types";
-import { getFileNameForServiceType } from "./utils";
+import { ServiceTypeReference } from "./types";
 
 export declare namespace generateServiceTypeReference {
     export interface Args {
-        typeName: ServiceTypeName;
+        metadata: ServiceTypeMetadata;
         type: Type;
         docs: string | null | undefined;
-        typeDirectory: Directory;
-        modelDirectory: Directory;
+        modelContext: ModelContext;
         typeResolver: TypeResolver;
     }
 }
 
 export function generateServiceTypeReference({
-    typeName,
+    metadata,
     type,
     docs,
-    typeDirectory,
-    modelDirectory,
+    modelContext,
     typeResolver,
 }: generateServiceTypeReference.Args): ServiceTypeReference | undefined {
     if (type._type === "alias") {
@@ -32,7 +28,7 @@ export function generateServiceTypeReference({
             case "container":
             case "unknown":
                 return {
-                    isLocal: false,
+                    isInlined: false,
                     typeReference: type.aliasOf,
                 };
             case "void":
@@ -42,19 +38,19 @@ export function generateServiceTypeReference({
         }
     }
 
-    const wireMessageFile = typeDirectory.createSourceFile(getFileNameForServiceType(typeName));
-    generateType({
-        type,
-        docs,
-        typeName,
-        typeResolver,
-        modelDirectory,
-        file: wireMessageFile,
+    modelContext.addServiceTypeDefinition(metadata, (file) => {
+        generateType({
+            type,
+            docs,
+            typeName: metadata.typeName,
+            typeResolver,
+            modelContext,
+            file,
+        });
     });
 
     return {
-        isLocal: true,
-        file: wireMessageFile,
-        typeName,
+        isInlined: true,
+        metadata,
     };
 }

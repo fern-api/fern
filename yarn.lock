@@ -2066,11 +2066,13 @@ __metadata:
     "@fern-api/commons": "workspace:*"
     "@types/esutils": ^2.0.0
     "@types/jest": ^28.1.2
+    "@types/lodash": ^4.14.182
     "@types/node": ^17.0.33
     depcheck: ^1.4.3
     eslint: ^8.12.0
     esutils: ^2.0.3
     jest: ^28.1.1
+    lodash: ^4.17.21
     memfs: ^3.4.1
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
@@ -2119,7 +2121,6 @@ __metadata:
     jest: ^28.1.1
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
-    ts-morph: ^14.0.0
     typescript: ^4.6.4
   languageName: unknown
   linkType: soft
@@ -2247,10 +2248,12 @@ __metadata:
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/types": "workspace:*"
     "@types/jest": ^28.1.2
+    "@types/lodash": ^4.14.182
     "@types/node": ^17.0.33
     depcheck: ^1.4.3
     eslint: ^8.12.0
     jest: ^28.1.1
+    lodash: ^4.17.21
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
     ts-morph: ^14.0.0
@@ -5716,17 +5719,20 @@ __metadata:
     "@babel/preset-typescript": ^7.17.12
     "@fern-api/api": "workspace:*"
     "@fern-api/commons": "workspace:*"
+    "@fern-api/compiler": "workspace:*"
     "@fern-api/generator-runner": "workspace:*"
     "@fern-typescript/client": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/helper-manager": "workspace:*"
     "@fern-typescript/model": "workspace:*"
+    "@fern-typescript/testing-utils": "workspace:*"
     "@ts-morph/common": ^0.13.0
     "@types/jest": ^28.1.2
     "@types/node": ^17.0.33
     "@types/webpack-bundle-analyzer": ^4.4.1
     depcheck: ^1.4.3
     eslint: ^8.12.0
+    fern-api: "workspace:*"
     jest: ^28.1.1
     memfs: ^3.4.1
     npm-run-all: ^4.1.5

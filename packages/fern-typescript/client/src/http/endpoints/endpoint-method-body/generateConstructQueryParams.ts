@@ -128,6 +128,7 @@ function isTypeNameStringLike({
 function isPrimitiveStringLike(primitive: PrimitiveType): boolean {
     return PrimitiveType._visit(primitive, {
         string: () => true,
+        dateTime: () => true,
         integer: () => false,
         long: () => false,
         double: () => false,

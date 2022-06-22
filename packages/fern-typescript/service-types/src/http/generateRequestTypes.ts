@@ -1,16 +1,16 @@
 import { HttpEndpoint, TypeName } from "@fern-api/api";
-import { getTextOfTsNode, getTypeReference, TypeResolver } from "@fern-typescript/commons";
-import { Directory, OptionalKind, PropertySignatureStructure, SourceFile } from "ts-morph";
+import { getTextOfTsNode, ModelContext, TypeResolver } from "@fern-typescript/commons";
+import { OptionalKind, PropertySignatureStructure, SourceFile } from "ts-morph";
 import { GeneratedRequest, generateRequest } from "../commons/generate-request/generateRequest";
 import { getServiceTypeReference } from "../commons/service-type-reference/get-service-type-reference/getServiceTypeReference";
+import { ServiceTypesConstants } from "../constants";
+import { getMetadataForHttpServiceType } from "./getMetadataForHttpServiceType";
 
 export declare namespace generateRequestTypes {
     export interface Args {
         endpoint: HttpEndpoint;
         serviceName: TypeName;
-        endpointDirectory: Directory;
-        modelDirectory: Directory;
-        servicesDirectory: Directory;
+        modelContext: ModelContext;
         typeResolver: TypeResolver;
     }
 }
@@ -18,9 +18,7 @@ export declare namespace generateRequestTypes {
 export function generateRequestTypes({
     endpoint,
     serviceName,
-    endpointDirectory,
-    modelDirectory,
-    servicesDirectory,
+    modelContext,
     typeResolver,
 }: generateRequestTypes.Args): GeneratedRequest {
     const getAdditionalProperties = [
@@ -29,10 +27,9 @@ export function generateRequestTypes({
                 (requestFile: SourceFile): OptionalKind<PropertySignatureStructure> => ({
                     name: parameter.key,
                     type: getTextOfTsNode(
-                        getTypeReference({
+                        modelContext.getReferenceToType({
                             reference: parameter.valueType,
                             referencedIn: requestFile,
-                            modelDirectory,
                         })
                     ),
                 })
@@ -40,16 +37,12 @@ export function generateRequestTypes({
     ];
 
     return generateRequest({
-        directory: endpointDirectory,
-        modelDirectory,
+        modelContext,
         getTypeReferenceToServiceType: ({ reference, referencedIn }) =>
             getServiceTypeReference({
-                serviceOrChannelName: serviceName,
-                endpointOrOperationId: endpoint.endpointId,
                 reference,
                 referencedIn,
-                servicesDirectory,
-                modelDirectory,
+                modelContext,
             }),
         body: {
             type: endpoint.request.type,
@@ -57,5 +50,15 @@ export function generateRequestTypes({
         },
         typeResolver,
         additionalProperties: getAdditionalProperties,
+        requestMetadata: getMetadataForHttpServiceType({
+            serviceName,
+            endpointId: endpoint.endpointId,
+            type: ServiceTypesConstants.Commons.Request.TYPE_NAME,
+        }),
+        requestBodyMetadata: getMetadataForHttpServiceType({
+            serviceName,
+            endpointId: endpoint.endpointId,
+            type: ServiceTypesConstants.Commons.Request.Properties.Body.TYPE_NAME,
+        }),
     });
 }

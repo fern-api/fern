@@ -9,10 +9,10 @@ export declare namespace getOrCreateDirectory {
 
 export function getOrCreateDirectory(
     containingModule: Directory,
-    name: string,
+    path: string,
     { exportOptions }: getOrCreateDirectory.Options = {}
 ): Directory {
-    const directory = containingModule.getDirectory(name) ?? containingModule.createDirectory(name);
+    const directory = containingModule.getDirectory(path) ?? containingModule.createDirectory(path);
     if (exportOptions != null) {
         exportFromModule({
             module: containingModule,

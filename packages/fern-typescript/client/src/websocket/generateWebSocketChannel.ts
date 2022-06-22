@@ -7,10 +7,11 @@ import {
     getTextOfTsKeyword,
     getTextOfTsNode,
     maybeAddDocs,
+    ModelContext,
     TypeResolver,
 } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
-import { getLocalServiceTypeReference } from "@fern-typescript/service-types";
+import { getServiceTypeReference } from "@fern-typescript/service-types";
 import {
     Directory,
     ModuleDeclaration,
@@ -28,14 +29,14 @@ import { addClientOperationToChannel } from "./operations/addClientOperationToCh
 
 export function generateWebSocketChannel({
     servicesDirectory,
-    modelDirectory,
+    modelContext,
     channel,
     typeResolver,
     errorResolver,
     dependencyManager,
 }: {
     servicesDirectory: Directory;
-    modelDirectory: Directory;
+    modelContext: ModelContext;
     encodersDirectory: Directory;
     channel: WebSocketChannel;
     typeResolver: TypeResolver;
@@ -43,17 +44,10 @@ export function generateWebSocketChannel({
     helperManager: HelperManager;
     dependencyManager: DependencyManager;
 }): void {
-    const channelDirectory = getOrCreateDirectory(servicesDirectory, channel.name.name, {
-        exportOptions: {
-            type: "namespace",
-            namespace: channel.name.name,
-        },
-    });
     generateChannel({
         channel,
-        channelDirectory,
-        modelDirectory,
         servicesDirectory,
+        modelContext,
         errorResolver,
         typeResolver,
         dependencyManager,
@@ -62,32 +56,33 @@ export function generateWebSocketChannel({
 
 function generateChannel({
     channel,
-    channelDirectory,
-    modelDirectory,
     servicesDirectory,
+    modelContext,
     typeResolver,
     errorResolver,
     dependencyManager,
 }: {
     channel: WebSocketChannel;
-    channelDirectory: Directory;
-    modelDirectory: Directory;
     servicesDirectory: Directory;
+    modelContext: ModelContext;
     typeResolver: TypeResolver;
     errorResolver: ErrorResolver;
     dependencyManager: DependencyManager;
 }): void {
-    const channelFile = getOrCreateSourceFile(channelDirectory, `${channel.name.name}.ts`);
-    const channelNamespace = addNamespace({ file: channelFile });
+    const packageDirectory = getOrCreateDirectory(servicesDirectory, channel.name.fernFilepath);
+    const channelFile = getOrCreateSourceFile(packageDirectory, `${channel.name.name}.ts`);
+    // TODO add export
+
+    const channelNamespace = addNamespace({ file: channelFile, channel });
 
     const channelInterface = channelFile.addInterface({
-        name: ClientConstants.WebsocketChannel.CLIENT_NAME,
+        name: channel.name.name,
         isExported: true,
     });
 
     const channelClass = channelFile.addClass({
-        name: ClientConstants.WebsocketChannel.CLIENT_NAME,
-        implements: [ClientConstants.WebsocketChannel.CLIENT_NAME],
+        name: channel.name.name,
+        implements: [channel.name.name],
         isExported: true,
     });
     maybeAddDocs(channelClass, channel.docs);
@@ -137,19 +132,16 @@ function generateChannel({
             channelClass,
             channelInterface,
             channel,
-            modelDirectory,
-            servicesDirectory,
+            modelContext,
             typeResolver,
             errorResolver,
             dependencyManager,
         });
         serverMessageTypes.push(
-            getLocalServiceTypeReference({
-                serviceOrChannelName: channel.name,
-                typeName: generatedOperationTypes.response.reference.typeName,
-                endpointOrOperationId: operation.operationId,
-                servicesDirectory,
+            getServiceTypeReference({
+                reference: generatedOperationTypes.response.reference,
                 referencedIn: channelFile,
+                modelContext,
             })
         );
     }
@@ -160,12 +152,12 @@ function generateChannel({
     });
 
     generateDisconnect({ channelClass });
-    generateOnMessage({ channelClass });
+    generateOnMessage({ channelClass, channelDefinition: channel });
 }
 
-function addNamespace({ file }: { file: SourceFile }): ModuleDeclaration {
+function addNamespace({ file, channel }: { file: SourceFile; channel: WebSocketChannel }): ModuleDeclaration {
     const channelNamespace = file.addModule({
-        name: ClientConstants.WebsocketChannel.CLIENT_NAME,
+        name: channel.name.name,
         isExported: true,
         hasDeclareKeyword: true,
     });

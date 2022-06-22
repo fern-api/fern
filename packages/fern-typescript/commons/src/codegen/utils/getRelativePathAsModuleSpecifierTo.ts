@@ -26,6 +26,14 @@ function getFilePathOfDirectory(item: SourceFile | Directory) {
     }
 }
 
+export function getParentDirectory(item: SourceFile | Directory): Directory {
+    if (isSourceFile(item)) {
+        return item.getDirectory();
+    } else {
+        return item.getDirectoryOrThrow("..");
+    }
+}
+
 function getFilePath(item: SourceFile | Directory): string {
     return isSourceFile(item) ? item.getFilePath() : item.getPath();
 }

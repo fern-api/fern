@@ -22,7 +22,7 @@ export function generateChannelConstructor({
                 type: getTextOfTsNode(
                     ts.factory.createTypeReferenceNode(
                         ts.factory.createQualifiedName(
-                            ts.factory.createIdentifier(ClientConstants.WebsocketChannel.CLIENT_NAME),
+                            ts.factory.createIdentifier(channelDefinition.name.name),
                             ts.factory.createIdentifier(ClientConstants.WebsocketChannel.Namespace.Args.TYPE_NAME)
                         )
                     )

@@ -2,20 +2,17 @@ import { WebSocketChannel, WebSocketOperation } from "@fern-api/api";
 import {
     DependencyManager,
     ErrorResolver,
-    getOrCreateDirectory,
     getTextOfTsNode,
-    getTypeReference,
+    ModelContext,
     TypeResolver,
 } from "@fern-typescript/commons";
 import {
     GeneratedWebSocketOperationTypes,
     generateWebSocketOperationTypes,
-    getLocalServiceTypeReference,
-    ServiceTypeName,
+    getServiceTypeReference,
 } from "@fern-typescript/service-types";
 import {
     ClassDeclaration,
-    Directory,
     InterfaceDeclaration,
     OptionalKind,
     ParameterDeclarationStructure,
@@ -31,8 +28,7 @@ export declare namespace addClientOperationToChannel {
         channelClass: ClassDeclaration;
         channelInterface: InterfaceDeclaration;
         operation: WebSocketOperation;
-        modelDirectory: Directory;
-        servicesDirectory: Directory;
+        modelContext: ModelContext;
         typeResolver: TypeResolver;
         errorResolver: ErrorResolver;
         dependencyManager: DependencyManager;
@@ -48,39 +44,21 @@ export function addClientOperationToChannel({
     channelInterface,
     channelClass,
     operation,
-    modelDirectory,
-    servicesDirectory,
+    modelContext,
     typeResolver,
     errorResolver,
     dependencyManager,
 }: addClientOperationToChannel.Args): addClientOperationToChannel.Return {
     const channelFile = channelClass.getSourceFile();
-    const channelDirectory = channelFile.getDirectory();
-    const operationsDirectory = getOrCreateDirectory(
-        channelDirectory,
-        ClientConstants.WebsocketChannel.Files.OPERATIONS_DIRECTORY_NAME
-    );
 
     const generatedOperationTypes = generateWebSocketOperationTypes({
         channel,
         operation,
-        operationsDirectory,
-        modelDirectory,
-        servicesDirectory,
+        modelContext,
         typeResolver,
         errorResolver,
         dependencyManager,
     });
-
-    const getReferenceToLocalServiceType = (typeName: ServiceTypeName): ts.TypeReferenceNode => {
-        return getLocalServiceTypeReference({
-            serviceOrChannelName: channel.name,
-            typeName,
-            endpointOrOperationId: operation.operationId,
-            servicesDirectory,
-            referencedIn: channelFile,
-        });
-    };
 
     const parameters: OptionalKind<ParameterDeclarationStructure>[] =
         generatedOperationTypes.request.body != null
@@ -88,13 +66,11 @@ export function addClientOperationToChannel({
                   {
                       name: ClientConstants.WebsocketChannel.Operation.Signature.REQUEST_PARAMETER,
                       type: getTextOfTsNode(
-                          generatedOperationTypes.request.body.isLocal
-                              ? getReferenceToLocalServiceType(generatedOperationTypes.request.body.typeName)
-                              : getTypeReference({
-                                    reference: generatedOperationTypes.request.body.typeReference,
-                                    referencedIn: channelFile,
-                                    modelDirectory,
-                                })
+                          getServiceTypeReference({
+                              reference: generatedOperationTypes.request.body,
+                              referencedIn: channelFile,
+                              modelContext,
+                          })
                       ),
                   },
               ]
@@ -102,7 +78,11 @@ export function addClientOperationToChannel({
 
     const returnType = getTextOfTsNode(
         ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
-            getReferenceToLocalServiceType(generatedOperationTypes.response.reference.typeName),
+            getServiceTypeReference({
+                reference: generatedOperationTypes.response.reference,
+                referencedIn: channelFile,
+                modelContext,
+            }),
         ])
     );
 
@@ -122,8 +102,8 @@ export function addClientOperationToChannel({
             operation,
             operationTypes: generatedOperationTypes,
             channelFile,
-            getReferenceToLocalServiceType,
             dependencyManager,
+            modelContext,
         }),
     });
 

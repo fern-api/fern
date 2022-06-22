@@ -1,5 +1,5 @@
 import { IntermediateRepresentation } from "@fern-api/api";
-import { TypeResolver } from "@fern-typescript/commons";
+import { ModelContext, TypeResolver } from "@fern-typescript/commons";
 import { Directory, ts } from "ts-morph";
 import { VariableReference } from "./VariableReference";
 
@@ -64,7 +64,7 @@ export declare namespace FileBasedEncoder {
             // export the encoder, which should have the name specified in
             // FileBasedEncoder
             encoderDirectory: Directory;
-            modelDirectory: Directory;
+            modelContext: ModelContext;
             servicesDirectory: Directory;
             intermediateRepresentation: IntermediateRepresentation;
             typeResolver: TypeResolver;
