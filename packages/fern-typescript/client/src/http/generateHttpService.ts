@@ -26,7 +26,6 @@ const SERVICE_INIT_TYPE = ts.factory.createTypeReferenceNode(
 
 export async function generateHttpService({
     servicesDirectory,
-    modelDirectory,
     modelContext,
     encodersDirectory,
     service,
@@ -36,7 +35,6 @@ export async function generateHttpService({
     dependencyManager,
 }: {
     servicesDirectory: Directory;
-    modelDirectory: Directory;
     modelContext: ModelContext;
     encodersDirectory: Directory;
     service: HttpService;
@@ -54,7 +52,6 @@ export async function generateHttpService({
     await generateService({
         service,
         serviceDirectory,
-        modelDirectory,
         modelContext,
         encodersDirectory,
         typeResolver,
@@ -67,7 +64,6 @@ export async function generateHttpService({
 async function generateService({
     service,
     serviceDirectory,
-    modelDirectory,
     modelContext,
     encodersDirectory,
     typeResolver,
@@ -77,7 +73,6 @@ async function generateService({
 }: {
     service: HttpService;
     serviceDirectory: Directory;
-    modelDirectory: Directory;
     modelContext: ModelContext;
     encodersDirectory: Directory;
     typeResolver: TypeResolver;
@@ -145,7 +140,6 @@ async function generateService({
             serviceInterface,
             serviceClass,
             serviceDefinition: service,
-            modelDirectory,
             modelContext,
             encodersDirectory,
             typeResolver,

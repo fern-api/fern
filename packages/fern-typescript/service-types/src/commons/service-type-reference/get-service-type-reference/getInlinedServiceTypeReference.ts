@@ -1,25 +1,23 @@
-import { createQualifiedTypeReference, getQualifiedReferenceToModel } from "@fern-typescript/commons";
-import { Directory, SourceFile, ts } from "ts-morph";
+import { ImportStrategy, ModelContext } from "@fern-typescript/commons";
+import { SourceFile, ts } from "ts-morph";
 import { ServiceTypeMetadata } from "../types";
 
 export declare namespace getInlinedServiceTypeReference {
     export interface Args {
         metadata: ServiceTypeMetadata;
         referencedIn: SourceFile;
-        modelDirectory: Directory;
+        modelContext: ModelContext;
     }
 }
 
 export function getInlinedServiceTypeReference({
     metadata,
     referencedIn,
-    modelDirectory,
+    modelContext,
 }: getInlinedServiceTypeReference.Args): ts.TypeReferenceNode {
-    return getQualifiedReferenceToModel({
-        typeName: metadata.typeName,
+    return modelContext.getReferenceToServiceType({
+        metadata,
         referencedIn,
-        filepathOfReference: metadata.filepath,
-        modelDirectory,
-        constructQualifiedReference: createQualifiedTypeReference,
+        importStrategy: ImportStrategy.MODEL_NAMESPACE_IMPORT,
     });
 }

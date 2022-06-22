@@ -1,6 +1,6 @@
 import { TypeName, WebSocketOperation } from "@fern-api/api";
 import { getTextOfTsKeyword, getTextOfTsNode, ModelContext, TypeResolver } from "@fern-typescript/commons";
-import { Directory, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 import { GeneratedRequest, generateRequest } from "../commons/generate-request/generateRequest";
 import { getServiceTypeReference } from "../commons/service-type-reference/get-service-type-reference/getServiceTypeReference";
 import { ServiceTypesConstants } from "../constants";
@@ -10,7 +10,6 @@ export declare namespace generateRequestTypes {
     export interface Args {
         channelName: TypeName;
         operation: WebSocketOperation;
-        modelDirectory: Directory;
         modelContext: ModelContext;
         typeResolver: TypeResolver;
     }
@@ -19,7 +18,6 @@ export declare namespace generateRequestTypes {
 export function generateRequestTypes({
     channelName,
     operation,
-    modelDirectory,
     modelContext,
     typeResolver,
 }: generateRequestTypes.Args): GeneratedRequest {
@@ -37,13 +35,11 @@ export function generateRequestTypes({
     ];
 
     return generateRequest({
-        modelDirectory,
         modelContext,
         getTypeReferenceToServiceType: ({ reference, referencedIn }) =>
             getServiceTypeReference({
                 reference,
                 referencedIn,
-                modelDirectory,
                 modelContext,
             }),
         body: {
@@ -53,13 +49,11 @@ export function generateRequestTypes({
         typeResolver,
         additionalProperties,
         requestMetadata: getMetadataForWebSocketOperationType({
-            modelDirectory,
             channelName,
             operationId: operation.operationId,
             type: ServiceTypesConstants.Commons.Request.TYPE_NAME,
         }),
         requestBodyMetadata: getMetadataForWebSocketOperationType({
-            modelDirectory,
             channelName,
             operationId: operation.operationId,
             type: ServiceTypesConstants.Commons.Request.Properties.Body.TYPE_NAME,

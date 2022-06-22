@@ -1,5 +1,6 @@
 {
   "name": "@fern-typescript/hathora-encoding-helper",
+  "private": true,
   "version": "0.0.0",
   "main": "dist/bundle.js",
   "files": [
@@ -7,7 +8,7 @@
   ],
   "scripts": {
     "clean": "tsc --build --clean",
-    "compile": "TS_NODE_PROJECT=\"tsconfig.webpack.json\" webpack",
+    "compile": ";",
     "test": "jest --passWithNoTests",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../../../.eslintignore",
     "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../../../../.eslintignore --fix",

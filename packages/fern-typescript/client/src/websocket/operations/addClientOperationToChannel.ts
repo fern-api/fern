@@ -13,7 +13,6 @@ import {
 } from "@fern-typescript/service-types";
 import {
     ClassDeclaration,
-    Directory,
     InterfaceDeclaration,
     OptionalKind,
     ParameterDeclarationStructure,
@@ -29,7 +28,6 @@ export declare namespace addClientOperationToChannel {
         channelClass: ClassDeclaration;
         channelInterface: InterfaceDeclaration;
         operation: WebSocketOperation;
-        modelDirectory: Directory;
         modelContext: ModelContext;
         typeResolver: TypeResolver;
         errorResolver: ErrorResolver;
@@ -46,7 +44,6 @@ export function addClientOperationToChannel({
     channelInterface,
     channelClass,
     operation,
-    modelDirectory,
     modelContext,
     typeResolver,
     errorResolver,
@@ -57,7 +54,6 @@ export function addClientOperationToChannel({
     const generatedOperationTypes = generateWebSocketOperationTypes({
         channel,
         operation,
-        modelDirectory,
         modelContext,
         typeResolver,
         errorResolver,
@@ -73,7 +69,6 @@ export function addClientOperationToChannel({
                           getServiceTypeReference({
                               reference: generatedOperationTypes.request.body,
                               referencedIn: channelFile,
-                              modelDirectory,
                               modelContext,
                           })
                       ),
@@ -86,7 +81,6 @@ export function addClientOperationToChannel({
             getServiceTypeReference({
                 reference: generatedOperationTypes.response.reference,
                 referencedIn: channelFile,
-                modelDirectory,
                 modelContext,
             }),
         ])
@@ -109,7 +103,6 @@ export function addClientOperationToChannel({
             operationTypes: generatedOperationTypes,
             channelFile,
             dependencyManager,
-            modelDirectory,
             modelContext,
         }),
     });

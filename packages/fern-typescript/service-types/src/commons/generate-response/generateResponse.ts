@@ -2,20 +2,11 @@ import { FailedResponse, Type } from "@fern-api/api";
 import {
     DependencyManager,
     ErrorResolver,
-    getOrCreateSourceFile,
     getTextOfTsNode,
     ModelContext,
     TypeResolver,
 } from "@fern-typescript/commons";
-import {
-    Directory,
-    ModuleDeclaration,
-    OptionalKind,
-    PropertySignatureStructure,
-    SourceFile,
-    ts,
-    Writers,
-} from "ts-morph";
+import { ModuleDeclaration, OptionalKind, PropertySignatureStructure, SourceFile, ts, Writers } from "ts-morph";
 import { ServiceTypesConstants } from "../../constants";
 import { generateServiceTypeReference } from "../service-type-reference/generateServiceTypeReference";
 import {
@@ -27,7 +18,6 @@ import { generateErrorBody } from "./generateErrorBody";
 
 export declare namespace generateResponse {
     export interface Args {
-        modelDirectory: Directory;
         modelContext: ModelContext;
         responseMetadata: ServiceTypeMetadata;
         successBodyMetadata: ServiceTypeMetadata;
@@ -55,7 +45,6 @@ export declare namespace generateResponse {
 }
 
 export function generateResponse({
-    modelDirectory,
     modelContext,
     responseMetadata,
     successBodyMetadata,
@@ -68,7 +57,9 @@ export function generateResponse({
     getTypeReferenceToServiceType,
     additionalProperties = [],
 }: generateResponse.Args): generateResponse.Return {
-    const responseFile = getOrCreateSourceFile(modelDirectory, responseMetadata.filepath);
+    const responseFile = modelContext.addServiceTypeDefinition(responseMetadata, () => {
+        /* TODO */
+    });
 
     responseFile.addTypeAlias({
         name: responseMetadata.typeName,
@@ -103,7 +94,6 @@ export function generateResponse({
         metadata: successBodyMetadata,
         type: successResponse.type,
         docs: successResponse.docs,
-        modelDirectory,
         modelContext,
         typeResolver,
     });
@@ -115,7 +105,6 @@ export function generateResponse({
     });
 
     const { errorBodyReference } = maybeGenerateErrorBody({
-        modelDirectory,
         modelContext,
         errorBodyMetadata,
         failedResponse,
@@ -237,7 +226,6 @@ function createBaseResponseProperties({ ok }: { ok: boolean }): OptionalKind<Pro
 }
 
 function maybeGenerateErrorBody({
-    modelDirectory,
     modelContext,
     errorBodyMetadata,
     failedResponse,
@@ -245,7 +233,6 @@ function maybeGenerateErrorBody({
     errorResolver,
     dependencyManager,
 }: {
-    modelDirectory: Directory;
     modelContext: ModelContext;
     errorBodyMetadata: ServiceTypeMetadata;
     failedResponse: FailedResponse;
@@ -257,7 +244,9 @@ function maybeGenerateErrorBody({
         return { errorBodyReference: undefined };
     }
 
-    const errorBodyFile = getOrCreateSourceFile(modelDirectory, errorBodyMetadata.filepath);
+    const errorBodyFile = modelContext.addServiceTypeDefinition(errorBodyMetadata, () => {
+        /* TODO */
+    });
     generateErrorBody({
         failedResponse,
         errorBodyFile,

@@ -1,4 +1,4 @@
-import { TypeReference } from "@fern-api/api";
+import { FernFilepath, TypeReference } from "@fern-api/api";
 import { SourceFile } from "ts-morph";
 import { ServiceTypesConstants } from "../../constants";
 
@@ -27,5 +27,6 @@ export type ServiceTypeName =
 
 export interface ServiceTypeMetadata {
     typeName: string;
-    filepath: string;
+    fernFilepath: FernFilepath;
+    relativeFilepathInServiceTypesDirectory: string[];
 }

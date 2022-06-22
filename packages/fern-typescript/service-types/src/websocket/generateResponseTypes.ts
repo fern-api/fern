@@ -6,7 +6,7 @@ import {
     ModelContext,
     TypeResolver,
 } from "@fern-typescript/commons";
-import { Directory, ts } from "ts-morph";
+import { ts } from "ts-morph";
 import { generateResponse } from "../commons/generate-response/generateResponse";
 import { getServiceTypeReference } from "../commons/service-type-reference/get-service-type-reference/getServiceTypeReference";
 import { ServiceTypesConstants } from "../constants";
@@ -17,7 +17,6 @@ export declare namespace generateResponseTypes {
     export interface Args {
         channelName: TypeName;
         operation: WebSocketOperation;
-        modelDirectory: Directory;
         modelContext: ModelContext;
         typeResolver: TypeResolver;
         errorResolver: ErrorResolver;
@@ -30,14 +29,12 @@ export declare namespace generateResponseTypes {
 export function generateResponseTypes({
     channelName,
     operation,
-    modelDirectory,
     modelContext,
     typeResolver,
     errorResolver,
     dependencyManager,
 }: generateResponseTypes.Args): generateResponseTypes.Return {
     const { reference, successBodyReference, errorBodyReference } = generateResponse({
-        modelDirectory,
         modelContext,
         typeResolver,
         errorResolver,
@@ -51,7 +48,6 @@ export function generateResponseTypes({
             getServiceTypeReference({
                 reference,
                 referencedIn,
-                modelDirectory,
                 modelContext,
             }),
         additionalProperties: [
@@ -65,19 +61,16 @@ export function generateResponseTypes({
             },
         ],
         responseMetadata: getMetadataForWebSocketOperationType({
-            modelDirectory,
             channelName,
             operationId: operation.operationId,
             type: ServiceTypesConstants.Commons.Response.TYPE_NAME,
         }),
         successBodyMetadata: getMetadataForWebSocketOperationType({
-            modelDirectory,
             channelName,
             operationId: operation.operationId,
             type: ServiceTypesConstants.Commons.Response.Success.Properties.Body.TYPE_NAME,
         }),
         errorBodyMetadata: getMetadataForWebSocketOperationType({
-            modelDirectory,
             channelName,
             operationId: operation.operationId,
             type: ServiceTypesConstants.Commons.Response.Error.Properties.Body.TYPE_NAME,

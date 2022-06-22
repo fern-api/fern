@@ -1,10 +1,15 @@
 import { ContainerType, PrimitiveType, TypeName, TypeReference } from "@fern-api/api";
 import { SourceFile, ts } from "ts-morph";
-import { BaseModelContext } from "./base-context/BaseModelContext";
+import { BaseModelContext, ImportStrategy } from "./base-context/BaseModelContext";
 
-export enum ImportStrategy {
-    MODEL_NAMESPACE_IMPORT,
-    NAMED_IMPORT,
+export declare namespace TypeContext {
+    namespace getReferenceToType {
+        interface Args {
+            reference: TypeReference;
+            referencedIn: SourceFile;
+            importStrategy: ImportStrategy;
+        }
+    }
 }
 
 export class TypeContext extends BaseModelContext {
@@ -16,11 +21,7 @@ export class TypeContext extends BaseModelContext {
         reference,
         referencedIn,
         importStrategy,
-    }: {
-        reference: TypeReference;
-        referencedIn: SourceFile;
-        importStrategy: ImportStrategy;
-    }): ts.TypeNode {
+    }: TypeContext.getReferenceToType.Args): ts.TypeNode {
         return TypeReference._visit<ts.TypeNode>(reference, {
             named: (typeName) => {
                 return this.getReferenceToTypeInModel({

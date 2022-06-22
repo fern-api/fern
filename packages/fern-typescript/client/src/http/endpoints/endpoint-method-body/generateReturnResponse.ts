@@ -15,7 +15,6 @@ export async function generateReturnResponse({
     serviceDefinition,
     endpoint,
     endpointTypes,
-    modelDirectory,
     modelContext,
     encodersDirectory,
     helperManager,
@@ -24,7 +23,6 @@ export async function generateReturnResponse({
     serviceDefinition: HttpService;
     endpoint: HttpEndpoint;
     endpointTypes: GeneratedHttpEndpointTypes;
-    modelDirectory: Directory;
     modelContext: ModelContext;
     encodersDirectory: Directory;
     helperManager: HelperManager;
@@ -42,7 +40,6 @@ export async function generateReturnResponse({
                 endpoint,
                 endpointTypes,
                 encodersDirectory,
-                modelDirectory,
                 helperManager,
                 modelContext,
             })
@@ -55,7 +52,6 @@ export async function generateReturnResponse({
                 endpointTypes,
                 helperManager,
                 encodersDirectory,
-                modelDirectory,
                 modelContext,
             })
         )
@@ -67,7 +63,6 @@ async function generateReturnSuccessResponse({
     serviceDefinition,
     endpoint,
     endpointTypes,
-    modelDirectory,
     modelContext,
     encodersDirectory,
     helperManager,
@@ -76,7 +71,6 @@ async function generateReturnSuccessResponse({
     serviceDefinition: HttpService;
     endpoint: HttpEndpoint;
     endpointTypes: GeneratedHttpEndpointTypes;
-    modelDirectory: Directory;
     modelContext: ModelContext;
     encodersDirectory: Directory;
     helperManager: HelperManager;
@@ -107,7 +101,6 @@ async function generateReturnSuccessResponse({
                     getServiceTypeReference({
                         reference: endpointTypes.response.successBodyReference,
                         referencedIn: serviceFile,
-                        modelDirectory,
                         modelContext,
                     })
                 )
@@ -130,7 +123,6 @@ async function generateReturnErrorResponse({
     helperManager,
     serviceFile,
     encodersDirectory,
-    modelDirectory,
     modelContext,
 }: {
     serviceDefinition: HttpService;
@@ -139,7 +131,6 @@ async function generateReturnErrorResponse({
     endpointTypes: GeneratedHttpEndpointTypes;
     helperManager: HelperManager;
     encodersDirectory: Directory;
-    modelDirectory: Directory;
     modelContext: ModelContext;
 }): Promise<ts.Statement[]> {
     const statements: ts.Statement[] = [];
@@ -165,7 +156,6 @@ async function generateReturnErrorResponse({
                     getServiceTypeReference({
                         reference: endpointTypes.response.errorBodyReference,
                         referencedIn: serviceFile,
-                        modelDirectory,
                         modelContext,
                     })
                 )

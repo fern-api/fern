@@ -25,7 +25,6 @@ export async function addEndpointToService({
     serviceInterface,
     serviceClass,
     serviceDefinition,
-    modelDirectory,
     modelContext,
     encodersDirectory,
     typeResolver,
@@ -37,7 +36,6 @@ export async function addEndpointToService({
     serviceInterface: InterfaceDeclaration;
     serviceClass: ClassDeclaration;
     serviceDefinition: HttpService;
-    modelDirectory: Directory;
     modelContext: ModelContext;
     encodersDirectory: Directory;
     typeResolver: TypeResolver;
@@ -50,7 +48,6 @@ export async function addEndpointToService({
     const generatedEndpointTypes = generateHttpEndpointTypes({
         endpoint,
         serviceName: serviceDefinition.name,
-        modelDirectory,
         modelContext,
         typeResolver,
         errorResolver,
@@ -67,7 +64,6 @@ export async function addEndpointToService({
                               getServiceTypeReference({
                                   reference: generatedEndpointTypes.request.wrapper.reference,
                                   referencedIn: serviceFile,
-                                  modelDirectory,
                                   modelContext,
                               })
                           ),
@@ -81,7 +77,6 @@ export async function addEndpointToService({
                               getServiceTypeReference({
                                   reference: generatedEndpointTypes.request.body,
                                   referencedIn: serviceFile,
-                                  modelDirectory,
                                   modelContext,
                               })
                           ),
@@ -95,7 +90,6 @@ export async function addEndpointToService({
             getServiceTypeReference({
                 reference: generatedEndpointTypes.response.reference,
                 referencedIn: serviceFile,
-                modelDirectory,
                 modelContext,
             }),
         ])
@@ -120,7 +114,6 @@ export async function addEndpointToService({
             serviceDefinition,
             typeResolver,
             helperManager,
-            modelDirectory,
             modelContext,
             encodersDirectory,
         }),

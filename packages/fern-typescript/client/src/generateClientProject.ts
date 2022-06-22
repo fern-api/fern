@@ -62,7 +62,6 @@ async function generateClientFiles({
         await generateHttpService({
             service,
             servicesDirectory,
-            modelDirectory: modelContext.modelDirectory,
             modelContext,
             encodersDirectory,
             typeResolver,
@@ -76,7 +75,6 @@ async function generateClientFiles({
         generateWebSocketChannel({
             channel,
             servicesDirectory,
-            modelDirectory: modelContext.modelDirectory,
             modelContext,
             encodersDirectory,
             typeResolver,
@@ -89,7 +87,7 @@ async function generateClientFiles({
     await generateEncoderFiles({
         encodersDirectory,
         intermediateRepresentation,
-        modelDirectory: modelContext.modelDirectory,
+        modelContext,
         servicesDirectory,
         helperManager,
         typeResolver,

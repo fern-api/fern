@@ -1,6 +1,6 @@
 import { Type } from "@fern-api/api";
-import { getOrCreateSourceFile, getTextOfTsNode, ModelContext, TypeResolver } from "@fern-typescript/commons";
-import { Directory, OptionalKind, PropertySignatureStructure, SourceFile, ts } from "ts-morph";
+import { getTextOfTsNode, ModelContext, TypeResolver } from "@fern-typescript/commons";
+import { OptionalKind, PropertySignatureStructure, SourceFile, ts } from "ts-morph";
 import { ServiceTypesConstants } from "../../constants";
 import { generateServiceTypeReference } from "../service-type-reference/generateServiceTypeReference";
 import { ServiceTypeMetadata, ServiceTypeReference } from "../service-type-reference/types";
@@ -22,7 +22,6 @@ export interface GeneratedRequest {
 
 export declare namespace generateRequest {
     export interface Args {
-        modelDirectory: Directory;
         modelContext: ModelContext;
         requestMetadata: ServiceTypeMetadata;
         requestBodyMetadata: ServiceTypeMetadata;
@@ -43,7 +42,6 @@ export declare namespace generateRequest {
 }
 
 export function generateRequest({
-    modelDirectory,
     modelContext,
     requestMetadata,
     requestBodyMetadata,
@@ -58,7 +56,6 @@ export function generateRequest({
             metadata: requestMetadata,
             type: body.type,
             docs: body.docs,
-            modelDirectory,
             modelContext,
             typeResolver,
         });
@@ -72,14 +69,15 @@ export function generateRequest({
         }
     }
 
-    const requestFile = getOrCreateSourceFile(modelDirectory, requestMetadata.filepath);
+    const requestFile = modelContext.addServiceTypeDefinition(requestMetadata, () => {
+        /* TODO */
+    });
 
     const requestBodyReference = generateServiceTypeReference({
         // put the request body in its own RequestBody type/file
         metadata: requestBodyMetadata,
         type: body.type,
         docs: body.docs,
-        modelDirectory,
         modelContext,
         typeResolver,
     });

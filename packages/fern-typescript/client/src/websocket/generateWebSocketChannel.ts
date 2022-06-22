@@ -29,7 +29,6 @@ import { addClientOperationToChannel } from "./operations/addClientOperationToCh
 
 export function generateWebSocketChannel({
     servicesDirectory,
-    modelDirectory,
     modelContext,
     channel,
     typeResolver,
@@ -37,7 +36,6 @@ export function generateWebSocketChannel({
     dependencyManager,
 }: {
     servicesDirectory: Directory;
-    modelDirectory: Directory;
     modelContext: ModelContext;
     encodersDirectory: Directory;
     channel: WebSocketChannel;
@@ -55,7 +53,6 @@ export function generateWebSocketChannel({
     generateChannel({
         channel,
         channelDirectory,
-        modelDirectory,
         modelContext,
         errorResolver,
         typeResolver,
@@ -66,7 +63,6 @@ export function generateWebSocketChannel({
 function generateChannel({
     channel,
     channelDirectory,
-    modelDirectory,
     modelContext,
     typeResolver,
     errorResolver,
@@ -74,7 +70,6 @@ function generateChannel({
 }: {
     channel: WebSocketChannel;
     channelDirectory: Directory;
-    modelDirectory: Directory;
     modelContext: ModelContext;
     typeResolver: TypeResolver;
     errorResolver: ErrorResolver;
@@ -140,7 +135,6 @@ function generateChannel({
             channelClass,
             channelInterface,
             channel,
-            modelDirectory,
             modelContext,
             typeResolver,
             errorResolver,
@@ -150,7 +144,6 @@ function generateChannel({
             getServiceTypeReference({
                 reference: generatedOperationTypes.response.reference,
                 referencedIn: channelFile,
-                modelDirectory,
                 modelContext,
             })
         );

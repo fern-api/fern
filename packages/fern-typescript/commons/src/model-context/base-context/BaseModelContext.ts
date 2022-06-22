@@ -11,6 +11,8 @@ export enum ImportStrategy {
     NAMED_IMPORT,
 }
 
+const MODEL_NAMESPACE_IMPORT = "model";
+
 export abstract class BaseModelContext {
     constructor(private readonly modelDirectory: Directory) {}
 
@@ -19,7 +21,8 @@ export abstract class BaseModelContext {
         fernFilepath: FernFilepath,
         intermediateDirectories: string[],
         withFile: (file: SourceFile) => void
-    ): void {
+    ): // TODO don't return a SourceFile to the consumer
+    SourceFile {
         const packagePath = getPackagePath(fernFilepath);
 
         const directory = createDirectories(this.modelDirectory, [
@@ -37,6 +40,7 @@ export abstract class BaseModelContext {
         const sourceFile = directory.createSourceFile(`${fileNameWithoutExtension}.ts`);
         withFile(sourceFile);
         exportFromModule(sourceFile, { type: "all" });
+        return sourceFile;
     }
 
     protected getReferenceToTypeInModel({
@@ -49,19 +53,19 @@ export abstract class BaseModelContext {
         fernFilepath: FernFilepath;
         importStrategy: ImportStrategy;
         referencedIn: SourceFile;
-    }): ts.TypeNode {
+    }): ts.TypeReferenceNode {
         const packagePath = getPackagePath(fernFilepath);
 
         switch (importStrategy) {
             case ImportStrategy.MODEL_NAMESPACE_IMPORT: {
                 referencedIn.addImportDeclaration({
                     moduleSpecifier: getRelativePathAsModuleSpecifierTo(referencedIn, this.modelDirectory),
-                    namespaceImport: "model",
+                    namespaceImport: MODEL_NAMESPACE_IMPORT,
                 });
 
                 const qualifiedNameToPackage = packagePath.reduce<ts.EntityName>(
                     (qualifiedName, part) => ts.factory.createQualifiedName(qualifiedName, part.namespaceExport),
-                    ts.factory.createIdentifier("model")
+                    ts.factory.createIdentifier(MODEL_NAMESPACE_IMPORT)
                 );
                 return ts.factory.createTypeReferenceNode(
                     ts.factory.createQualifiedName(qualifiedNameToPackage, exportedType)

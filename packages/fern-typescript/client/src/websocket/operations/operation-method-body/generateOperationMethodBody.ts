@@ -5,7 +5,7 @@ import {
     getServiceTypeReference,
     ServiceTypesConstants,
 } from "@fern-typescript/service-types";
-import { Directory, SourceFile, StatementStructures, ts, WriterFunction } from "ts-morph";
+import { SourceFile, StatementStructures, ts, WriterFunction } from "ts-morph";
 import { ClientConstants } from "../../../constants";
 
 const SOCKET_LOCAL_VARIABLE_NAME = "socket";
@@ -16,14 +16,12 @@ export function generateOperationMethodBody({
     operationTypes,
     channelFile,
     dependencyManager,
-    modelDirectory,
     modelContext,
 }: {
     operation: WebSocketOperation;
     operationTypes: GeneratedWebSocketOperationTypes;
     channelFile: SourceFile;
     dependencyManager: DependencyManager;
-    modelDirectory: Directory;
     modelContext: ModelContext;
 }): (StatementStructures | WriterFunction | string)[] {
     return [
@@ -84,7 +82,6 @@ export function generateOperationMethodBody({
                                 channelFile,
                                 operationTypes,
                                 dependencyManager,
-                                modelDirectory,
                                 modelContext,
                             }),
                             true
@@ -101,14 +98,12 @@ function generatePromiseBody({
     channelFile,
     operationTypes,
     dependencyManager,
-    modelDirectory,
     modelContext,
 }: {
     operation: WebSocketOperation;
     channelFile: SourceFile;
     operationTypes: GeneratedWebSocketOperationTypes;
     dependencyManager: DependencyManager;
-    modelDirectory: Directory;
     modelContext: ModelContext;
 }): ts.Statement[] {
     const messageElements: ts.ObjectLiteralElementLike[] = [
@@ -146,7 +141,6 @@ function generatePromiseBody({
                         getServiceTypeReference({
                             reference: operationTypes.request.wrapper.reference,
                             referencedIn: channelFile,
-                            modelDirectory,
                             modelContext,
                         }),
                         ts.factory.createObjectLiteralExpression(messageElements, true)

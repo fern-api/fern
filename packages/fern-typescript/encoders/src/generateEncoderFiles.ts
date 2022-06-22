@@ -1,18 +1,18 @@
 import { IntermediateRepresentation } from "@fern-api/api";
-import { getOrCreateDirectory, TypeResolver } from "@fern-typescript/commons";
+import { getOrCreateDirectory, ModelContext, TypeResolver } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import { Directory } from "ts-morph";
 
 export async function generateEncoderFiles({
     encodersDirectory,
-    modelDirectory,
+    modelContext,
     servicesDirectory,
     intermediateRepresentation,
     helperManager,
     typeResolver,
 }: {
     encodersDirectory: Directory;
-    modelDirectory: Directory;
+    modelContext: ModelContext;
     servicesDirectory: Directory;
     intermediateRepresentation: IntermediateRepresentation;
     helperManager: HelperManager;
@@ -30,8 +30,8 @@ export async function generateEncoderFiles({
                     });
                     encoder.writeEncoder({
                         encoderDirectory,
-                        modelDirectory,
                         servicesDirectory,
+                        modelContext,
                         intermediateRepresentation,
                         typeResolver,
                     });

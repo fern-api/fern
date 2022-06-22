@@ -1,10 +1,15 @@
 import { ErrorName } from "@fern-api/api";
 import { SourceFile, ts } from "ts-morph";
-import { BaseModelContext } from "./base-context/BaseModelContext";
+import { BaseModelContext, ImportStrategy } from "./base-context/BaseModelContext";
 
-export enum ImportStrategy {
-    MODEL_NAMESPACE_IMPORT,
-    NAMED_IMPORT,
+export declare namespace ErrorContext {
+    namespace getReferenceToError {
+        interface Args {
+            errorName: ErrorName;
+            referencedIn: SourceFile;
+            importStrategy: ImportStrategy;
+        }
+    }
 }
 
 export class ErrorContext extends BaseModelContext {
@@ -16,11 +21,7 @@ export class ErrorContext extends BaseModelContext {
         errorName,
         importStrategy,
         referencedIn,
-    }: {
-        errorName: ErrorName;
-        importStrategy: ImportStrategy;
-        referencedIn: SourceFile;
-    }): ts.TypeNode {
+    }: ErrorContext.getReferenceToError.Args): ts.TypeReferenceNode {
         return this.getReferenceToTypeInModel({
             exportedType: errorName.name,
             fernFilepath: errorName.fernFilepath,

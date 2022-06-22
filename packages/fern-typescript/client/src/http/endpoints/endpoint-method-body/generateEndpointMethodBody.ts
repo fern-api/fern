@@ -14,7 +14,6 @@ export async function generateEndpointMethodBody({
     serviceDefinition,
     typeResolver,
     helperManager,
-    modelDirectory,
     modelContext,
     encodersDirectory,
 }: {
@@ -24,7 +23,6 @@ export async function generateEndpointMethodBody({
     serviceDefinition: HttpService;
     typeResolver: TypeResolver;
     helperManager: HelperManager;
-    modelDirectory: Directory;
     modelContext: ModelContext;
     encodersDirectory: Directory;
 }): Promise<(StatementStructures | WriterFunction | string)[]> {
@@ -56,7 +54,6 @@ export async function generateEndpointMethodBody({
             await generateReturnResponse({
                 endpointTypes,
                 serviceFile,
-                modelDirectory,
                 modelContext,
                 serviceDefinition,
                 endpoint,
