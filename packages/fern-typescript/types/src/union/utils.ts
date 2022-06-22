@@ -1,5 +1,5 @@
-import { Type, TypeReference } from "@fern-api/api";
-import { ImportStrategy, ModelContext, ResolvedType, resolveType, TypeResolver } from "@fern-typescript/commons";
+import { TypeReference } from "@fern-api/api";
+import { ImportStrategy, ModelContext, ResolvedType } from "@fern-typescript/commons";
 import { upperFirst } from "lodash";
 import { SourceFile, ts } from "ts-morph";
 
@@ -23,25 +23,14 @@ export interface ResolvedSingleUnionValueType {
 
 export function getResolvedValueTypeForSingleUnionType({
     valueType,
-    typeResolver,
     file,
     modelContext,
 }: {
     valueType: TypeReference;
-    typeResolver: TypeResolver;
     file: SourceFile;
     modelContext: ModelContext;
 }): ResolvedSingleUnionValueType | undefined {
-    const resolvedType =
-        valueType._type === "named"
-            ? typeResolver.resolveTypeName(valueType)
-            : resolveType(
-                  Type.alias({
-                      aliasOf: valueType,
-                  }),
-                  (typeName) => typeResolver.resolveTypeName(typeName)
-              );
-
+    const resolvedType = modelContext.resolveTypeReference(valueType);
     if (resolvedType._type === "void") {
         return undefined;
     }

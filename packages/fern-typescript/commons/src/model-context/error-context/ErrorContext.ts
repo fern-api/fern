@@ -1,7 +1,8 @@
-import { ErrorName } from "@fern-api/api";
+import { ErrorDefinition, ErrorName, IntermediateRepresentation } from "@fern-api/api";
 import { Directory, SourceFile, ts } from "ts-morph";
-import { BaseModelContext } from "./BaseModelContext";
-import { ImportStrategy } from "./utils/ImportStrategy";
+import { BaseModelContext } from "../BaseModelContext";
+import { ImportStrategy } from "../utils/ImportStrategy";
+import { ErrorResolver } from "./ErrorResolver";
 
 export declare namespace ErrorContext {
     namespace getReferenceToError {
@@ -14,13 +15,21 @@ export declare namespace ErrorContext {
 }
 
 export class ErrorContext extends BaseModelContext {
-    constructor(modelDirectory: Directory) {
+    private errorResolver: ErrorResolver;
+
+    constructor({
+        modelDirectory,
+        intermediateRepresentation,
+    }: {
+        modelDirectory: Directory;
+        intermediateRepresentation: IntermediateRepresentation;
+    }) {
         super({
             modelDirectory,
             intermediateDirectories: ["errors"],
         });
+        this.errorResolver = new ErrorResolver(intermediateRepresentation);
     }
-
     public addErrorDefinition(errorName: ErrorName, withFile: (file: SourceFile) => void): void {
         this.addFile({
             item: {
@@ -44,5 +53,9 @@ export class ErrorContext extends BaseModelContext {
             importStrategy,
             referencedIn,
         });
+    }
+
+    public resolveErrorName(errorName: ErrorName): ErrorDefinition {
+        return this.errorResolver.resolveErrorName(errorName);
     }
 }

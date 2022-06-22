@@ -1,12 +1,5 @@
 import { FailedResponse, Type } from "@fern-api/api";
-import {
-    DependencyManager,
-    ErrorResolver,
-    getTextOfTsNode,
-    ModelContext,
-    ServiceTypeMetadata,
-    TypeResolver,
-} from "@fern-typescript/commons";
+import { DependencyManager, getTextOfTsNode, ModelContext, ServiceTypeMetadata } from "@fern-typescript/commons";
 import { ModuleDeclaration, OptionalKind, PropertySignatureStructure, SourceFile, ts, Writers } from "ts-morph";
 import { ServiceTypesConstants } from "../../constants";
 import { generateServiceTypeReference } from "../service-type-reference/generateServiceTypeReference";
@@ -19,8 +12,6 @@ export declare namespace generateResponse {
         responseMetadata: ServiceTypeMetadata;
         successBodyMetadata: ServiceTypeMetadata;
         errorBodyMetadata: ServiceTypeMetadata;
-        typeResolver: TypeResolver;
-        errorResolver: ErrorResolver;
         dependencyManager: DependencyManager;
         successResponse: {
             docs: string | null | undefined;
@@ -46,8 +37,6 @@ export function generateResponse({
     responseMetadata,
     successBodyMetadata,
     errorBodyMetadata,
-    typeResolver,
-    errorResolver,
     dependencyManager,
     successResponse,
     failedResponse,
@@ -59,15 +48,12 @@ export function generateResponse({
         type: successResponse.type,
         docs: successResponse.docs,
         modelContext,
-        typeResolver,
     });
 
     const { errorBodyReference } = maybeGenerateErrorBody({
         modelContext,
         errorBodyMetadata,
         failedResponse,
-        typeResolver,
-        errorResolver,
         dependencyManager,
     });
 
@@ -224,15 +210,11 @@ function maybeGenerateErrorBody({
     modelContext,
     errorBodyMetadata,
     failedResponse,
-    typeResolver,
-    errorResolver,
     dependencyManager,
 }: {
     modelContext: ModelContext;
     errorBodyMetadata: ServiceTypeMetadata;
     failedResponse: FailedResponse;
-    typeResolver: TypeResolver;
-    errorResolver: ErrorResolver;
     dependencyManager: DependencyManager;
 }): { errorBodyReference: ServiceTypeReference | undefined } {
     if (failedResponse.errors.length === 0) {
@@ -244,8 +226,6 @@ function maybeGenerateErrorBody({
             failedResponse,
             errorBodyFile,
             errorBodyMetadata,
-            typeResolver,
-            errorResolver,
             modelContext,
             dependencyManager,
         });

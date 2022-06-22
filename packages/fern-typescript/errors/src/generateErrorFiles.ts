@@ -1,14 +1,12 @@
 import { IntermediateRepresentation } from "@fern-api/api";
-import { ModelContext, TypeResolver } from "@fern-typescript/commons";
+import { ModelContext } from "@fern-typescript/commons";
 import { generateType } from "@fern-typescript/types";
 
 export function generateErrorFiles({
     intermediateRepresentation,
-    typeResolver,
     modelContext,
 }: {
     intermediateRepresentation: IntermediateRepresentation;
-    typeResolver: TypeResolver;
     modelContext: ModelContext;
 }): void {
     for (const error of intermediateRepresentation.errors) {
@@ -17,7 +15,6 @@ export function generateErrorFiles({
                 type: error.type,
                 typeName: error.name.name,
                 docs: error.docs,
-                typeResolver,
                 modelContext,
                 file,
             });

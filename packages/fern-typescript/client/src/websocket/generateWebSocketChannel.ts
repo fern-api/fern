@@ -1,14 +1,12 @@
 import { WebSocketChannel } from "@fern-api/api";
 import {
     DependencyManager,
-    ErrorResolver,
     getOrCreateDirectory,
     getOrCreateSourceFile,
     getTextOfTsKeyword,
     getTextOfTsNode,
     maybeAddDocs,
     ModelContext,
-    TypeResolver,
 } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import { getServiceTypeReference } from "@fern-typescript/service-types";
@@ -31,16 +29,12 @@ export function generateWebSocketChannel({
     servicesDirectory,
     modelContext,
     channel,
-    typeResolver,
-    errorResolver,
     dependencyManager,
 }: {
     servicesDirectory: Directory;
     modelContext: ModelContext;
     encodersDirectory: Directory;
     channel: WebSocketChannel;
-    typeResolver: TypeResolver;
-    errorResolver: ErrorResolver;
     helperManager: HelperManager;
     dependencyManager: DependencyManager;
 }): void {
@@ -48,8 +42,6 @@ export function generateWebSocketChannel({
         channel,
         servicesDirectory,
         modelContext,
-        errorResolver,
-        typeResolver,
         dependencyManager,
     });
 }
@@ -58,15 +50,11 @@ function generateChannel({
     channel,
     servicesDirectory,
     modelContext,
-    typeResolver,
-    errorResolver,
     dependencyManager,
 }: {
     channel: WebSocketChannel;
     servicesDirectory: Directory;
     modelContext: ModelContext;
-    typeResolver: TypeResolver;
-    errorResolver: ErrorResolver;
     dependencyManager: DependencyManager;
 }): void {
     const packageDirectory = getOrCreateDirectory(servicesDirectory, channel.name.fernFilepath);
@@ -133,8 +121,6 @@ function generateChannel({
             channelInterface,
             channel,
             modelContext,
-            typeResolver,
-            errorResolver,
             dependencyManager,
         });
         serverMessageTypes.push(

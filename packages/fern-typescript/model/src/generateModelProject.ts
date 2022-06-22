@@ -1,5 +1,5 @@
 import { IntermediateRepresentation } from "@fern-api/api";
-import { generateTypeScriptProject, ModelContext, TypeResolver } from "@fern-typescript/commons";
+import { generateTypeScriptProject, ModelContext } from "@fern-typescript/commons";
 import { generateErrorFiles } from "@fern-typescript/errors";
 import { generateTypeFiles } from "@fern-typescript/types";
 import { Volume } from "memfs/lib/volume";
@@ -16,7 +16,6 @@ export async function generateModelProject({
     volume: Volume;
     intermediateRepresentation: IntermediateRepresentation;
 }): Promise<void> {
-    const typeResolver = new TypeResolver(intermediateRepresentation);
     await generateTypeScriptProject({
         volume,
         packageName,
@@ -24,7 +23,6 @@ export async function generateModelProject({
         generateSrc: (srcDirectory) => {
             generateModelFiles({
                 intermediateRepresentation,
-                typeResolver,
                 modelDirectory: srcDirectory,
             });
         },
@@ -34,14 +32,12 @@ export async function generateModelProject({
 export function generateModelFiles({
     intermediateRepresentation,
     modelDirectory,
-    typeResolver,
 }: {
     intermediateRepresentation: IntermediateRepresentation;
     modelDirectory: Directory;
-    typeResolver: TypeResolver;
 }): ModelContext {
-    const modelContext = new ModelContext(modelDirectory);
-    generateTypeFiles({ intermediateRepresentation, typeResolver, modelContext });
-    generateErrorFiles({ intermediateRepresentation, typeResolver, modelContext });
+    const modelContext = new ModelContext({ modelDirectory, intermediateRepresentation });
+    generateTypeFiles({ intermediateRepresentation, modelContext });
+    generateErrorFiles({ intermediateRepresentation, modelContext });
     return modelContext;
 }
