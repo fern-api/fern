@@ -1,14 +1,19 @@
 import { ErrorDefinition, ErrorName, IntermediateRepresentation, Type, TypeName, TypeReference } from "@fern-api/api";
 import { Directory, SourceFile, ts } from "ts-morph";
 import { ErrorContext } from "./error-context/ErrorContext";
-import { ServiceTypeContext, ServiceTypeMetadata } from "./ServiceTypeContext";
+import { HttpServiceTypeContext, HttpServiceTypeMetadata } from "./service-type-context/HttpServiceTypeContext";
+import {
+    WebSocketChannelTypeContext,
+    WebSocketChannelTypeMetadata,
+} from "./service-type-context/WebSocketChannelTypeContext";
 import { TypeContext } from "./type-context/TypeContext";
 import { ResolvedType } from "./type-context/types";
 
 export class ModelContext {
     private typeContext: TypeContext;
     private errorContext: ErrorContext;
-    private serviceTypeContext: ServiceTypeContext;
+    private httpServiceTypeContext: HttpServiceTypeContext;
+    private webSocketChannelTypeContext: WebSocketChannelTypeContext;
 
     constructor({
         modelDirectory,
@@ -19,7 +24,8 @@ export class ModelContext {
     }) {
         this.typeContext = new TypeContext({ modelDirectory, intermediateRepresentation });
         this.errorContext = new ErrorContext({ modelDirectory, intermediateRepresentation });
-        this.serviceTypeContext = new ServiceTypeContext(modelDirectory);
+        this.httpServiceTypeContext = new HttpServiceTypeContext(modelDirectory);
+        this.webSocketChannelTypeContext = new WebSocketChannelTypeContext(modelDirectory);
     }
 
     /**
@@ -63,14 +69,33 @@ export class ModelContext {
     }
 
     /**
-     * SERVICE TYPES
+     * HTTP SERVICE TYPES
      */
 
-    public addServiceTypeDefinition(metadata: ServiceTypeMetadata, withFile: (file: SourceFile) => void): void {
-        this.serviceTypeContext.addServiceTypeDefinition(metadata, withFile);
+    public addHttpServiceTypeDefinition(metadata: HttpServiceTypeMetadata, withFile: (file: SourceFile) => void): void {
+        this.httpServiceTypeContext.addHttpServiceTypeDefinition(metadata, withFile);
     }
 
-    public getReferenceToServiceType(args: ServiceTypeContext.getReferenceToServiceType.Args): ts.TypeReferenceNode {
-        return this.serviceTypeContext.getReferenceToServiceType(args);
+    public getReferenceToHttpServiceType(
+        args: HttpServiceTypeContext.getReferenceToServiceType.Args
+    ): ts.TypeReferenceNode {
+        return this.httpServiceTypeContext.getReferenceToHttpServiceType(args);
+    }
+
+    /**
+     * WEBSOCKET CHANNEL TYPES
+     */
+
+    public addWebSocketChannelTypeDefinition(
+        metadata: WebSocketChannelTypeMetadata,
+        withFile: (file: SourceFile) => void
+    ): void {
+        this.webSocketChannelTypeContext.addWebSocketChannelTypeDefinition(metadata, withFile);
+    }
+
+    public getReferenceToWebSocketChannelType(
+        args: WebSocketChannelTypeContext.getReferenceToServiceType.Args
+    ): ts.TypeReferenceNode {
+        return this.webSocketChannelTypeContext.getReferenceToWebSocketChannelType(args);
     }
 }

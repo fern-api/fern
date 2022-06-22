@@ -1,5 +1,5 @@
 import { FailedResponse, PrimitiveType, ResponseError, TypeReference } from "@fern-api/api";
-import { DependencyManager, generateUuidCall, ModelContext, ServiceTypeMetadata } from "@fern-typescript/commons";
+import { DependencyManager, generateUuidCall, ModelContext } from "@fern-typescript/commons";
 import {
     generateUnionType,
     isTypeExtendable,
@@ -10,20 +10,20 @@ import { SourceFile } from "ts-morph";
 
 export function generateErrorBody({
     failedResponse,
+    errorBodyTypeName,
     errorBodyFile,
-    errorBodyMetadata,
     modelContext,
     dependencyManager,
 }: {
     failedResponse: FailedResponse;
+    errorBodyTypeName: string;
     errorBodyFile: SourceFile;
-    errorBodyMetadata: ServiceTypeMetadata;
     modelContext: ModelContext;
     dependencyManager: DependencyManager;
 }): void {
     generateUnionType({
         file: errorBodyFile,
-        typeName: errorBodyMetadata.typeName,
+        typeName: errorBodyTypeName,
         docs: failedResponse.docs,
         discriminant: failedResponse.discriminant,
         resolvedTypes: failedResponse.errors.map((error) => ({

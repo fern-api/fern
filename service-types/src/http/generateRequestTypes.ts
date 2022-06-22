@@ -1,10 +1,9 @@
 import { HttpEndpoint, TypeName } from "@fern-api/api";
-import { getTextOfTsNode, ModelContext } from "@fern-typescript/commons";
+import { getTextOfTsNode, HttpServiceTypeMetadata, ModelContext } from "@fern-typescript/commons";
 import { OptionalKind, PropertySignatureStructure, SourceFile } from "ts-morph";
 import { GeneratedRequest, generateRequest } from "../commons/generate-request/generateRequest";
-import { getServiceTypeReference } from "../commons/service-type-reference/get-service-type-reference/getServiceTypeReference";
-import { ServiceTypesConstants } from "../constants";
-import { getMetadataForHttpServiceType } from "./getMetadataForHttpServiceType";
+import { getHttpServiceTypeReference } from "../commons/service-type-reference/get-service-type-reference/getHttpServiceTypeReference";
+import { createHttpServiceTypeFileWriter } from "./createHttpServiceTypeFileWriter";
 
 export declare namespace generateRequestTypes {
     export interface Args {
@@ -18,7 +17,7 @@ export function generateRequestTypes({
     endpoint,
     serviceName,
     modelContext,
-}: generateRequestTypes.Args): GeneratedRequest {
+}: generateRequestTypes.Args): GeneratedRequest<HttpServiceTypeMetadata> {
     const getAdditionalProperties = [
         ...[...endpoint.pathParameters, ...endpoint.queryParameters].map(
             (parameter) =>
@@ -37,7 +36,7 @@ export function generateRequestTypes({
     return generateRequest({
         modelContext,
         getTypeReferenceToServiceType: ({ reference, referencedIn }) =>
-            getServiceTypeReference({
+            getHttpServiceTypeReference({
                 reference,
                 referencedIn,
                 modelContext,
@@ -47,15 +46,6 @@ export function generateRequestTypes({
             docs: endpoint.request.docs,
         },
         additionalProperties: getAdditionalProperties,
-        requestMetadata: getMetadataForHttpServiceType({
-            serviceName,
-            endpointId: endpoint.endpointId,
-            type: ServiceTypesConstants.Commons.Request.TYPE_NAME,
-        }),
-        requestBodyMetadata: getMetadataForHttpServiceType({
-            serviceName,
-            endpointId: endpoint.endpointId,
-            type: ServiceTypesConstants.Commons.Request.Properties.Body.TYPE_NAME,
-        }),
+        writeServiceTypeFile: createHttpServiceTypeFileWriter({ modelContext, serviceName, endpoint }),
     });
 }

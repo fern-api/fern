@@ -3,7 +3,7 @@ import { DependencyManager, getTextOfTsNode, ModelContext } from "@fern-typescri
 import {
     GeneratedWebSocketOperationTypes,
     generateWebSocketOperationTypes,
-    getServiceTypeReference,
+    getWebSocketServiceTypeReference,
 } from "@fern-typescript/service-types";
 import {
     ClassDeclaration,
@@ -54,7 +54,7 @@ export function addClientOperationToChannel({
                   {
                       name: ClientConstants.WebsocketChannel.Operation.Signature.REQUEST_PARAMETER,
                       type: getTextOfTsNode(
-                          getServiceTypeReference({
+                          getWebSocketServiceTypeReference({
                               reference: generatedOperationTypes.request.body,
                               referencedIn: channelFile,
                               modelContext,
@@ -66,7 +66,7 @@ export function addClientOperationToChannel({
 
     const returnType = getTextOfTsNode(
         ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
-            getServiceTypeReference({
+            getWebSocketServiceTypeReference({
                 reference: generatedOperationTypes.response.reference,
                 referencedIn: channelFile,
                 modelContext,

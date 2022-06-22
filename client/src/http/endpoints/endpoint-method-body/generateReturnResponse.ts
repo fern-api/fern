@@ -3,7 +3,7 @@ import { ModelContext } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import {
     GeneratedHttpEndpointTypes,
-    getServiceTypeReference,
+    getHttpServiceTypeReference,
     ServiceTypesConstants,
 } from "@fern-typescript/service-types";
 import { Directory, SourceFile, ts } from "ts-morph";
@@ -98,7 +98,7 @@ async function generateReturnSuccessResponse({
                 ),
                 ts.factory.createAsExpression(
                     ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.DECODED_RESPONSE),
-                    getServiceTypeReference({
+                    getHttpServiceTypeReference({
                         reference: endpointTypes.response.successBodyReference,
                         referencedIn: serviceFile,
                         modelContext,
@@ -153,7 +153,7 @@ async function generateReturnErrorResponse({
                 ts.factory.createIdentifier(ServiceTypesConstants.Commons.Response.Error.Properties.Body.PROPERTY_NAME),
                 ts.factory.createAsExpression(
                     ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.DECODED_ERROR),
-                    getServiceTypeReference({
+                    getHttpServiceTypeReference({
                         reference: endpointTypes.response.errorBodyReference,
                         referencedIn: serviceFile,
                         modelContext,

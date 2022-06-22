@@ -18,7 +18,9 @@ export {
 } from "./generate-ts-project/generateTypeScriptProject";
 export { writeVolumeToDisk } from "./generate-ts-project/writeVolumeToDisk";
 export { ModelContext } from "./model-context/ModelContext";
-export { type ServiceTypeMetadata } from "./model-context/ServiceTypeContext";
+export { type HttpServiceTypeMetadata } from "./model-context/service-type-context/HttpServiceTypeContext";
+export { type ServiceTypeMetadata } from "./model-context/service-type-context/ServiceTypeContext";
+export { type WebSocketChannelTypeMetadata } from "./model-context/service-type-context/WebSocketChannelTypeContext";
 export { ResolvedType } from "./model-context/type-context/types";
 export { ImportStrategy } from "./model-context/utils/ImportStrategy";
 export { validateSchema } from "./validateSchema";
