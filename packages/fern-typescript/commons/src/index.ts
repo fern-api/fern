@@ -19,8 +19,6 @@ export {
 export { writeVolumeToDisk } from "./generate-ts-project/writeVolumeToDisk";
 export { ModelContext } from "./model-context/ModelContext";
 export { type ServiceTypeMetadata } from "./model-context/ServiceTypeContext";
+export { ResolvedType } from "./model-context/type-context/types";
 export { ImportStrategy } from "./model-context/utils/ImportStrategy";
-export { ErrorResolver } from "./resolvers/ErrorResolver";
-export { resolveType, TypeResolver } from "./resolvers/TypeResolver";
-export { ResolvedType } from "./resolvers/types";
 export { validateSchema } from "./validateSchema";

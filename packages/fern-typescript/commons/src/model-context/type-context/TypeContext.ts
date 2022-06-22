@@ -1,7 +1,9 @@
-import { ContainerType, PrimitiveType, TypeName, TypeReference } from "@fern-api/api";
+import { ContainerType, IntermediateRepresentation, PrimitiveType, Type, TypeName, TypeReference } from "@fern-api/api";
 import { Directory, SourceFile, ts } from "ts-morph";
-import { BaseModelContext } from "./BaseModelContext";
-import { ImportStrategy } from "./utils/ImportStrategy";
+import { BaseModelContext } from "../BaseModelContext";
+import { ImportStrategy } from "../utils/ImportStrategy";
+import { TypeResolver } from "./TypeResolver";
+import { ResolvedType } from "./types";
 
 export declare namespace TypeContext {
     namespace getReferenceToType {
@@ -14,11 +16,20 @@ export declare namespace TypeContext {
 }
 
 export class TypeContext extends BaseModelContext {
-    constructor(modelDirectory: Directory) {
+    private typeResolver: TypeResolver;
+
+    constructor({
+        modelDirectory,
+        intermediateRepresentation,
+    }: {
+        modelDirectory: Directory;
+        intermediateRepresentation: IntermediateRepresentation;
+    }) {
         super({
             modelDirectory,
             intermediateDirectories: ["types"],
         });
+        this.typeResolver = new TypeResolver(intermediateRepresentation);
     }
 
     public addTypeDefinition(typeName: TypeName, withFile: (file: SourceFile) => void): void {
@@ -116,5 +127,17 @@ export class TypeContext extends BaseModelContext {
                 throw new Error("Unexpected type reference: " + reference._type);
             },
         });
+    }
+
+    public resolveTypeName(typeName: TypeName): ResolvedType {
+        return this.typeResolver.resolveTypeName(typeName);
+    }
+
+    public resolveTypeReference(typeReference: TypeReference): ResolvedType {
+        return this.typeResolver.resolveTypeReference(typeReference);
+    }
+
+    public resolveTypeDefinition(type: Type): ResolvedType {
+        return this.typeResolver.resolveTypeDefinition(type);
     }
 }

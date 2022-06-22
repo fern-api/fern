@@ -39,6 +39,14 @@ export class TypeResolver {
         return resolvedType;
     }
 
+    public resolveTypeReference(type: TypeReference): ResolvedType {
+        return this.resolveTypeDefinition(Type.alias({ aliasOf: type }));
+    }
+
+    public resolveTypeDefinition(type: Type): ResolvedType {
+        return this.resolveTypeDefinitionWithContinuation(type, (typeName) => this.resolveTypeName(typeName));
+    }
+
     private resolveTypeRecursive({
         allTypes,
         typeName,
@@ -62,7 +70,13 @@ export class TypeResolver {
             throw new Error("Type not found: " + typeNameToString(typeName));
         }
 
-        const resolvedType = this.resolveType(type, allTypes, seen);
+        const resolvedType = this.resolveTypeDefinitionWithContinuation(type, (typeName) =>
+            this.resolveTypeRecursive({
+                allTypes,
+                typeName,
+                seen,
+            })
+        );
 
         let resolvedTypesAtFilepath = this.resolvedTypes[typeName.fernFilepath];
         if (resolvedTypesAtFilepath == null) {
@@ -74,41 +88,30 @@ export class TypeResolver {
         return resolvedType;
     }
 
-    private resolveType(
+    private resolveTypeDefinitionWithContinuation(
         type: Type,
-        allTypes: Record<Filepath, Record<SimpleTypeName, Type>>,
-        seen: Record<Filepath, Set<SimpleTypeName>>
+        resolveNamedType: (typeName: TypeName) => ResolvedType
     ): ResolvedType {
-        return resolveType(type, (typeName) =>
-            this.resolveTypeRecursive({
-                allTypes,
-                typeName,
-                seen,
-            })
-        );
+        return Type._visit<ResolvedType>(type, {
+            object: ResolvedType.object,
+            union: ResolvedType.union,
+            alias: (alias) =>
+                TypeReference._visit<ResolvedType>(alias.aliasOf, {
+                    named: resolveNamedType,
+                    primitive: ResolvedType.primitive,
+                    container: ResolvedType.container,
+                    void: ResolvedType.void,
+                    unknown: ResolvedType.unknown,
+                    _unknown: () => {
+                        throw new Error("Unkonwn Alias type reference: " + alias.aliasOf._type);
+                    },
+                }),
+            enum: ResolvedType.enum,
+            _unknown: () => {
+                throw new Error("Unkonwn Type: " + type._type);
+            },
+        });
     }
-}
-
-export function resolveType(type: Type, resolveNamedType: (typeName: TypeName) => ResolvedType): ResolvedType {
-    return Type._visit<ResolvedType>(type, {
-        object: ResolvedType.object,
-        union: ResolvedType.union,
-        alias: (alias) =>
-            TypeReference._visit<ResolvedType>(alias.aliasOf, {
-                named: resolveNamedType,
-                primitive: ResolvedType.primitive,
-                container: ResolvedType.container,
-                void: ResolvedType.void,
-                unknown: ResolvedType.unknown,
-                _unknown: () => {
-                    throw new Error("Unkonwn Alias type reference: " + alias.aliasOf._type);
-                },
-            }),
-        enum: ResolvedType.enum,
-        _unknown: () => {
-            throw new Error("Unkonwn Type: " + type._type);
-        },
-    });
 }
 
 function typeNameToString(typeName: TypeName) {

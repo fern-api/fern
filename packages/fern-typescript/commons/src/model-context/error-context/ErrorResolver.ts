@@ -17,7 +17,7 @@ export class ErrorResolver {
         }
     }
 
-    public resolveError(errorName: ErrorName): ErrorDefinition {
+    public resolveErrorName(errorName: ErrorName): ErrorDefinition {
         const resolvedError = this.resolvedErrors[errorName.fernFilepath]?.[errorName.name];
         if (resolvedError == null) {
             throw new Error("Error not found: " + errorNameToString(errorName));

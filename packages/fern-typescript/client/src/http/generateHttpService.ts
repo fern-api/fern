@@ -2,14 +2,12 @@ import { HttpService } from "@fern-api/api";
 import {
     addFernServiceUtilsDependency,
     DependencyManager,
-    ErrorResolver,
     getOrCreateDirectory,
     getOrCreateSourceFile,
     getTextOfTsKeyword,
     getTextOfTsNode,
     maybeAddDocs,
     ModelContext,
-    TypeResolver,
 } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import { ClassDeclaration, Directory, Scope, ts } from "ts-morph";
@@ -29,8 +27,6 @@ export async function generateHttpService({
     modelContext,
     encodersDirectory,
     service,
-    typeResolver,
-    errorResolver,
     helperManager,
     dependencyManager,
 }: {
@@ -38,8 +34,6 @@ export async function generateHttpService({
     modelContext: ModelContext;
     encodersDirectory: Directory;
     service: HttpService;
-    typeResolver: TypeResolver;
-    errorResolver: ErrorResolver;
     helperManager: HelperManager;
     dependencyManager: DependencyManager;
 }): Promise<void> {
@@ -48,8 +42,6 @@ export async function generateHttpService({
         servicesDirectory,
         modelContext,
         encodersDirectory,
-        typeResolver,
-        errorResolver,
         helperManager,
         dependencyManager,
     });
@@ -60,8 +52,6 @@ async function generateService({
     servicesDirectory,
     modelContext,
     encodersDirectory,
-    typeResolver,
-    errorResolver,
     helperManager,
     dependencyManager,
 }: {
@@ -69,8 +59,6 @@ async function generateService({
     servicesDirectory: Directory;
     modelContext: ModelContext;
     encodersDirectory: Directory;
-    typeResolver: TypeResolver;
-    errorResolver: ErrorResolver;
     helperManager: HelperManager;
     dependencyManager: DependencyManager;
 }): Promise<void> {
@@ -139,8 +127,6 @@ async function generateService({
             serviceDefinition: service,
             modelContext,
             encodersDirectory,
-            typeResolver,
-            errorResolver,
             helperManager,
             dependencyManager,
         });

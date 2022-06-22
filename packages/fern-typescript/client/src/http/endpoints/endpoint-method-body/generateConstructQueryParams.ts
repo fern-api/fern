@@ -1,14 +1,14 @@
 import { HttpEndpoint, PrimitiveType, QueryParameter, TypeName, TypeReference } from "@fern-api/api";
-import { ResolvedType, TypeResolver } from "@fern-typescript/commons";
+import { ModelContext, ResolvedType } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 import { ClientConstants } from "../../../constants";
 
 export function generateConstructQueryParams({
     endpoint,
-    typeResolver,
+    modelContext,
 }: {
     endpoint: HttpEndpoint;
-    typeResolver: TypeResolver;
+    modelContext: ModelContext;
 }): ts.Statement[] {
     const statements: ts.Statement[] = [];
     if (endpoint.queryParameters.length === 0) {
@@ -45,7 +45,7 @@ export function generateConstructQueryParams({
                 undefined,
                 [
                     ts.factory.createStringLiteral(queryParameter.key),
-                    getStringVersionOfQueryParameter({ queryParameter, queryParameterReference, typeResolver }),
+                    getStringVersionOfQueryParameter({ queryParameter, queryParameterReference, modelContext }),
                 ]
             )
         );
@@ -72,13 +72,13 @@ export function generateConstructQueryParams({
 function getStringVersionOfQueryParameter({
     queryParameter,
     queryParameterReference,
-    typeResolver,
+    modelContext,
 }: {
     queryParameter: QueryParameter;
     queryParameterReference: ts.PropertyAccessExpression;
-    typeResolver: TypeResolver;
+    modelContext: ModelContext;
 }): ts.Expression {
-    if (isTypeReferenceStringLike({ typeReference: queryParameter.valueType, typeResolver })) {
+    if (isTypeReferenceStringLike({ typeReference: queryParameter.valueType, modelContext })) {
         return queryParameterReference;
     } else {
         return ts.factory.createCallExpression(
@@ -91,13 +91,13 @@ function getStringVersionOfQueryParameter({
 
 function isTypeReferenceStringLike({
     typeReference,
-    typeResolver,
+    modelContext,
 }: {
     typeReference: TypeReference;
-    typeResolver: TypeResolver;
+    modelContext: ModelContext;
 }): boolean {
     return TypeReference._visit(typeReference, {
-        named: (namedType) => isTypeNameStringLike({ namedType, typeResolver }),
+        named: (namedType) => isTypeNameStringLike({ namedType, modelContext }),
         container: () => false,
         primitive: isPrimitiveStringLike,
         void: () => false,
@@ -108,12 +108,12 @@ function isTypeReferenceStringLike({
 
 function isTypeNameStringLike({
     namedType,
-    typeResolver,
+    modelContext,
 }: {
     namedType: TypeName;
-    typeResolver: TypeResolver;
+    modelContext: ModelContext;
 }): boolean {
-    return ResolvedType._visit(typeResolver.resolveTypeName(namedType), {
+    return ResolvedType._visit(modelContext.resolveTypeName(namedType), {
         object: () => false,
         union: () => false,
         enum: () => true,

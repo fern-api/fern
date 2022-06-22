@@ -1,5 +1,5 @@
 import { Type } from "@fern-api/api";
-import { ModelContext, TypeResolver } from "@fern-typescript/commons";
+import { ModelContext } from "@fern-typescript/commons";
 import { SourceFile } from "ts-morph";
 import { generateEnumType } from "./enum/generateEnumType";
 import { generateAliasType } from "./generateAliasType";
@@ -11,14 +11,12 @@ export function generateType({
     type,
     typeName,
     docs,
-    typeResolver,
     modelContext,
     file,
 }: {
     type: Type;
     typeName: string;
     docs: string | null | undefined;
-    typeResolver: TypeResolver;
     modelContext: ModelContext;
     file: SourceFile;
 }): void {
@@ -44,7 +42,6 @@ export function generateType({
                     valueType: getResolvedValueTypeForSingleUnionType({
                         valueType: singleUnionType.valueType,
                         modelContext,
-                        typeResolver,
                         file,
                     }),
                 })),
