@@ -31,6 +31,24 @@ types:
       variableType: commons.VariableType
       name: string
 
+  CreateProblemRequest:
+    properties:
+      problemName: string
+      problemDescription: ProblemDescription
+      files: map<commons.Language, ProblemFiles>
+      inputParams: list<VariableTypeAndName>
+      outputType: commons.VariableType
+      testcases: list<commons.TestCaseWithExpectedResult>
+      methodName: string
+  CreateProblemResponse:
+    union:
+      success: commons.ProblemId
+      error: CreateProblemError
+
+  UpdateProblemResponse:
+    properties:
+      problemVersion: integer
+
   CreateProblemError:
     union:
       generic: GenericCreateProblemError
@@ -88,22 +106,8 @@ services:
           docs: Creates a problem
           method: POST
           path: /create
-          request:
-            type:
-              properties:
-                problemName: string
-                problemDescription: ProblemDescription
-                files: map<commons.Language, ProblemFiles>
-                inputParams: list<VariableTypeAndName>
-                outputType: commons.VariableType
-                testcases: list<commons.TestCaseWithExpectedResult>
-                methodName: string
-          response:
-            ok:
-              type:
-                union:
-                  success: commons.ProblemId
-                  error: CreateProblemError
+          request: CreateProblemRequest
+          response: CreateProblemResponse
 
         updateProblem:
           docs: Updates a problem
@@ -111,12 +115,8 @@ services:
           path: /update/{problemId}
           path-parameters:
             problemId: commons.ProblemId
-            request: CreateProblemRequest
-          response:
-            ok:
-              type:
-                properties:
-                  problemVersion: integer
+          request: CreateProblemRequest
+          response: UpdateProblemResponse
 
         deleteProblem:
           docs: Soft deletes a problem

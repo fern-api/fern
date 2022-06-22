@@ -20,7 +20,7 @@
         "false"
       ],
       "port": 9229,
-      "cwd": "${fileDirname}",
+      "cwd": "${workspaceFolder}",
       "timeout": 10000,
       "console": "integratedTerminal"
     }

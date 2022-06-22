@@ -1,31 +1,47 @@
 import { FernFilepath } from "@fern-api/api";
 import path from "path";
-import { Directory, SourceFile, ts } from "ts-morph";
+import { Directory, ImportSpecifierStructure, OptionalKind, SourceFile, ts } from "ts-morph";
 import { getRelativePathAsModuleSpecifierTo } from "../codegen/utils/getRelativePathAsModuleSpecifierTo";
-import { createDirectories, DirectoryNameWithExportStrategy } from "./utils/createDirectories";
-import { exportFromModule } from "./utils/exportFromModule";
+import { createSourceFile, DirectoryNameWithExportStrategy, PathToSourceFile } from "./utils/createDirectories";
 import { getPackagePath, PackagePath } from "./utils/getPackagePath";
 import { ImportStrategy } from "./utils/ImportStrategy";
 
 const MODEL_NAMESPACE_IMPORT = "model";
 
-export abstract class BaseModelContext {
-    constructor(private readonly modelDirectory: Directory) {}
+export interface ModelItem {
+    typeName: string;
+    fernFilepath: FernFilepath;
+}
 
-    protected addFile({
-        fileNameWithoutExtension,
-        fernFilepath,
+export abstract class BaseModelContext<T extends ModelItem = ModelItem> {
+    private modelDirectory: Directory;
+    private intermediateDirectories: string[] | ((item: T) => string[]);
+
+    constructor({
+        modelDirectory,
         intermediateDirectories,
-        withFile,
     }: {
-        fileNameWithoutExtension: string;
-        fernFilepath: FernFilepath;
-        intermediateDirectories: string[];
-        withFile: (file: SourceFile) => void;
-    }): void {
-        const packagePath = getPackagePath(fernFilepath);
+        modelDirectory: Directory;
+        intermediateDirectories: string[] | ((item: T) => string[]);
+    }) {
+        this.modelDirectory = modelDirectory;
+        this.intermediateDirectories = intermediateDirectories;
+    }
 
-        const directory = createDirectories(this.modelDirectory, [
+    protected addFile({ item, withFile }: { item: T; withFile: (file: SourceFile) => void }): void {
+        const file = createSourceFile(this.modelDirectory, this.getPathToSourceFile(item));
+        withFile(file);
+    }
+
+    private getPathToSourceFile(item: T): PathToSourceFile {
+        const packagePath = getPackagePath(item.fernFilepath);
+
+        const intermediateDirectories =
+            typeof this.intermediateDirectories === "function"
+                ? this.intermediateDirectories(item)
+                : this.intermediateDirectories;
+
+        const directories = [
             ...packagePath.map(
                 (part): DirectoryNameWithExportStrategy => ({
                     directoryName: part.directoryName,
@@ -35,25 +51,51 @@ export abstract class BaseModelContext {
             ...intermediateDirectories.map(
                 (directoryName): DirectoryNameWithExportStrategy => ({ directoryName, exportStrategy: { type: "all" } })
             ),
-        ]);
+        ];
 
-        const sourceFile = directory.createSourceFile(`${fileNameWithoutExtension}.ts`);
-        withFile(sourceFile);
-        exportFromModule(sourceFile, { type: "all" });
+        return {
+            directories,
+            fileName: `${item.typeName}.ts`,
+            exportStrategy: { type: "all" },
+        };
     }
 
     protected getReferenceToTypeInModel({
-        exportedType,
-        fernFilepath,
+        item,
         importStrategy: maybeImportStrategy,
         referencedIn,
     }: {
-        exportedType: string;
-        fernFilepath: FernFilepath;
+        item: T;
         importStrategy?: ImportStrategy;
         referencedIn: SourceFile;
     }): ts.TypeReferenceNode {
-        const packagePathOfImportedType = getPackagePath(fernFilepath);
+        const pathToItem = this.getPathToSourceFile(item);
+        const filepathOfItem = path.join(
+            this.modelDirectory.getPath(),
+            ...pathToItem.directories.map((d) => d.directoryName),
+            pathToItem.fileName
+        );
+        const isReferenceInSameFile = filepathOfItem === referencedIn.getFilePath();
+        function maybeAddImport({
+            importOf,
+            namedImports,
+            namespaceImport,
+        }: {
+            importOf: Directory | SourceFile | string;
+            namedImports?: (OptionalKind<ImportSpecifierStructure> | string)[];
+            namespaceImport?: string;
+        }) {
+            if (isReferenceInSameFile) {
+                return;
+            }
+            referencedIn.addImportDeclaration({
+                moduleSpecifier: getRelativePathAsModuleSpecifierTo(referencedIn, importOf),
+                namedImports,
+                namespaceImport,
+            });
+        }
+
+        const packagePathOfImportedType = getPackagePath(item.fernFilepath);
 
         const importStrategy =
             maybeImportStrategy ??
@@ -65,8 +107,8 @@ export abstract class BaseModelContext {
 
         switch (importStrategy) {
             case ImportStrategy.MODEL_NAMESPACE_IMPORT: {
-                referencedIn.addImportDeclaration({
-                    moduleSpecifier: getRelativePathAsModuleSpecifierTo(referencedIn, this.modelDirectory),
+                maybeAddImport({
+                    importOf: this.modelDirectory,
                     namespaceImport: MODEL_NAMESPACE_IMPORT,
                 });
 
@@ -75,17 +117,17 @@ export abstract class BaseModelContext {
                     ts.factory.createIdentifier(MODEL_NAMESPACE_IMPORT)
                 );
                 return ts.factory.createTypeReferenceNode(
-                    ts.factory.createQualifiedName(qualifiedNameToPackage, exportedType)
+                    ts.factory.createQualifiedName(qualifiedNameToPackage, item.typeName)
                 );
             }
 
             case ImportStrategy.TOP_PACKAGE_IMPORT: {
                 const [topPackagePart, ...remainingPackageParts] = packagePathOfImportedType;
                 if (topPackagePart == null) {
-                    throw new Error("Cannot find package for type " + exportedType);
+                    throw new Error("Cannot find package for type " + item.typeName);
                 }
-                referencedIn.addImportDeclaration({
-                    moduleSpecifier: getRelativePathAsModuleSpecifierTo(referencedIn, this.modelDirectory),
+                maybeAddImport({
+                    importOf: this.modelDirectory,
                     namedImports: [topPackagePart.namespaceExport],
                 });
 
@@ -94,23 +136,20 @@ export abstract class BaseModelContext {
                     ts.factory.createIdentifier(topPackagePart.namespaceExport)
                 );
                 return ts.factory.createTypeReferenceNode(
-                    ts.factory.createQualifiedName(qualifiedNameToPackage, exportedType)
+                    ts.factory.createQualifiedName(qualifiedNameToPackage, item.typeName)
                 );
             }
 
             case ImportStrategy.NAMED_IMPORT: {
-                referencedIn.addImportDeclaration({
-                    moduleSpecifier: getRelativePathAsModuleSpecifierTo(
-                        referencedIn,
-                        path.join(
-                            this.modelDirectory.getPath(),
-                            ...packagePathOfImportedType.map((part) => part.directoryName)
-                        )
+                maybeAddImport({
+                    importOf: path.join(
+                        this.modelDirectory.getPath(),
+                        ...packagePathOfImportedType.map((part) => part.directoryName)
                     ),
-                    namedImports: [{ name: exportedType }],
+                    namedImports: [{ name: item.typeName }],
                 });
 
-                return ts.factory.createTypeReferenceNode(exportedType);
+                return ts.factory.createTypeReferenceNode(item.typeName);
             }
         }
     }
@@ -125,20 +164,18 @@ function getDefaultImportStrategy({
     referencedIn: SourceFile;
     modelDirectory: Directory;
 }): ImportStrategy {
-    const directoryOfType = getDirectoryForPackagePath(modelDirectory, packagePathOfImportedType);
-    if (directoryOfType.isAncestorOf(referencedIn)) {
+    const modelDirectoryPath = modelDirectory.getPath();
+    const referencedInDirectoryPath = referencedIn.getDirectory().getPath();
+    const importedTypeDirectoryPath = path.join(
+        modelDirectoryPath,
+        ...packagePathOfImportedType.map((part) => part.directoryName)
+    );
+
+    if (importedTypeDirectoryPath.startsWith(referencedInDirectoryPath)) {
         return ImportStrategy.NAMED_IMPORT;
-    } else if (modelDirectory.isAncestorOf(referencedIn)) {
+    } else if (modelDirectoryPath.startsWith(referencedInDirectoryPath)) {
         return ImportStrategy.TOP_PACKAGE_IMPORT;
     } else {
         return ImportStrategy.MODEL_NAMESPACE_IMPORT;
     }
-}
-
-function getDirectoryForPackagePath(directory: Directory, packagePath: PackagePath): Directory {
-    const [nextPackage, ...remainingPackagePath] = packagePath;
-    if (nextPackage == null) {
-        return directory;
-    }
-    return getDirectoryForPackagePath(directory.getDirectoryOrThrow(nextPackage.directoryName), remainingPackagePath);
 }

@@ -12,28 +12,28 @@ services:
           path: /store-test-submission-status/{submissionId}
           path-parameters:
             submissionId: submission.SubmissionId
-            request: submission.TestSubmissionStatus
+          request: submission.TestSubmissionStatus
           method: POST
 
         sendTestSubmissionUpdate:
           path: /store-test-submission-status-v2/{submissionId}
           path-parameters:
             submissionId: submission.SubmissionId
-            request: submission.TestSubmissionUpdate
+          request: submission.TestSubmissionUpdate
           method: POST
 
         updateWorkspaceSubmissionStatus:
           path: /store-workspace-submission-status/{submissionId}
           path-parameters:
             submissionId: submission.SubmissionId
-            request: submission.WorkspaceSubmissionStatus
+          request: submission.WorkspaceSubmissionStatus
           method: POST
 
         sendWorkspaceSubmissionUpdate:
           path: /store-workspace-submission-status-v2/{submissionId}
           path-parameters:
             submissionId: submission.SubmissionId
-            request: submission.WorkspaceSubmissionUpdate
+          request: submission.WorkspaceSubmissionUpdate
           method: POST
 
         storeTracedTestCase:
@@ -53,7 +53,7 @@ services:
           path-parameters:
             submissionId: submission.SubmissionId
             testCaseId: problemV2.TestCaseId
-            request: list<submission.TraceResponseV2>
+          request: list<submission.TraceResponseV2>
           method: POST
 
         storeTracedWorkspace:
@@ -71,5 +71,5 @@ services:
           path: /store-workspace-trace-v2/submission/{submissionId}
           path-parameters:
             submissionId: submission.SubmissionId
-            request: list<submission.TraceResponseV2>
+          request: list<submission.TraceResponseV2>
           method: POST

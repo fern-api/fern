@@ -205,8 +205,7 @@ services:
           docs: Creates a problem
           method: POST
           path: /create
-          path-parameters:
-            request: CreateProblemRequestV2
+          request: CreateProblemRequestV2
           response: problem.CreateProblemResponse
 
         updateProblem:
@@ -215,7 +214,7 @@ services:
           path: /update/{problemId}
           path-parameters:
             problemId: commons.ProblemId
-            request: CreateProblemRequestV2
+          request: CreateProblemRequestV2
           response: problem.UpdateProblemResponse
 
         deleteProblem:

@@ -16,7 +16,6 @@ describe("generateModelProject", () => {
                 intermediateRepresentation,
             });
         },
-        outputToDisk: true,
     });
 
     itFernETE("fern IR", {

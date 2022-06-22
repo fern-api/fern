@@ -501,7 +501,7 @@ services:
           path-parameters:
             submissionId: SubmissionId
             testCaseId: string
-            request: GetTraceResponsesPageRequest
+          request: GetTraceResponsesPageRequest
           response: TraceResponsesPage
 
         getTraceResponsesV2Page:
@@ -511,7 +511,7 @@ services:
           path-parameters:
             submissionId: SubmissionId
             testCaseId: problemV2.TestCaseId
-            request: GetTraceResponsesPageRequest
+          request: GetTraceResponsesPageRequest
           response: TraceResponsesPageV2
 
         getTraceResponsesPageForWorkspace:
@@ -520,7 +520,7 @@ services:
           path: /workspace-trace-response/{submissionId}
           path-parameters:
             submissionId: SubmissionId
-            request: GetTraceResponsesPageRequest
+          request: GetTraceResponsesPageRequest
           response: TraceResponsesPage
 
         getTraceResponsesV2PageForWorkspace:
@@ -529,7 +529,7 @@ services:
           path: /workspace-trace-response-v2/{submissionId}
           path-parameters:
             submissionId: SubmissionId
-            request: GetTraceResponsesPageRequest
+          request: GetTraceResponsesPageRequest
           response: TraceResponsesPageV2
 
     WorkspaceInfoService:

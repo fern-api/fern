@@ -1,5 +1,5 @@
 import { ContainerType, PrimitiveType, TypeName, TypeReference } from "@fern-api/api";
-import { SourceFile, ts } from "ts-morph";
+import { Directory, SourceFile, ts } from "ts-morph";
 import { BaseModelContext } from "./BaseModelContext";
 import { ImportStrategy } from "./utils/ImportStrategy";
 
@@ -14,11 +14,19 @@ export declare namespace TypeContext {
 }
 
 export class TypeContext extends BaseModelContext {
+    constructor(modelDirectory: Directory) {
+        super({
+            modelDirectory,
+            intermediateDirectories: ["types"],
+        });
+    }
+
     public addTypeDefinition(typeName: TypeName, withFile: (file: SourceFile) => void): void {
         this.addFile({
-            fileNameWithoutExtension: typeName.name,
-            fernFilepath: typeName.fernFilepath,
-            intermediateDirectories: ["types"],
+            item: {
+                typeName: typeName.name,
+                fernFilepath: typeName.fernFilepath,
+            },
             withFile,
         });
     }
@@ -31,8 +39,10 @@ export class TypeContext extends BaseModelContext {
         return TypeReference._visit<ts.TypeNode>(reference, {
             named: (typeName) => {
                 return this.getReferenceToTypeInModel({
-                    exportedType: typeName.name,
-                    fernFilepath: typeName.fernFilepath,
+                    item: {
+                        typeName: typeName.name,
+                        fernFilepath: typeName.fernFilepath,
+                    },
                     importStrategy,
                     referencedIn,
                 });

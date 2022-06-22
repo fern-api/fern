@@ -4,7 +4,9 @@
   "include": ["./src"],
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
+    { "path": "../../cli/tsconfig.esm.json" },
     { "path": "../../commons/tsconfig.esm.json" },
+    { "path": "../../compiler/compiler/tsconfig.esm.json" },
     { "path": "../../compiler/generators/generator-runner/tsconfig.esm.json" },
     { "path": "../../compiler/ir-types/fern-ir-typescript/tsconfig.esm.json" },
     { "path": "../client/tsconfig.esm.json" },

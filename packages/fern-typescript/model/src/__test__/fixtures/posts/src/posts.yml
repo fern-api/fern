@@ -14,17 +14,6 @@ types:
   BlogPostReference:
     union:
       post: Post
-  Shape:
-    union:
-      circle: Circle
-      square: Square
-
-  Circle:
-    properties:
-      radius: integer
-  Square:
-    properties:
-      sideLength: integer
 
   PostType:
     enum:

@@ -1,5 +1,5 @@
 import { ErrorName } from "@fern-api/api";
-import { SourceFile, ts } from "ts-morph";
+import { Directory, SourceFile, ts } from "ts-morph";
 import { BaseModelContext } from "./BaseModelContext";
 import { ImportStrategy } from "./utils/ImportStrategy";
 
@@ -14,11 +14,19 @@ export declare namespace ErrorContext {
 }
 
 export class ErrorContext extends BaseModelContext {
+    constructor(modelDirectory: Directory) {
+        super({
+            modelDirectory,
+            intermediateDirectories: ["errors"],
+        });
+    }
+
     public addErrorDefinition(errorName: ErrorName, withFile: (file: SourceFile) => void): void {
         this.addFile({
-            fileNameWithoutExtension: errorName.name,
-            fernFilepath: errorName.fernFilepath,
-            intermediateDirectories: ["errors"],
+            item: {
+                typeName: errorName.name,
+                fernFilepath: errorName.fernFilepath,
+            },
             withFile,
         });
     }
@@ -29,8 +37,10 @@ export class ErrorContext extends BaseModelContext {
         referencedIn,
     }: ErrorContext.getReferenceToError.Args): ts.TypeReferenceNode {
         return this.getReferenceToTypeInModel({
-            exportedType: errorName.name,
-            fernFilepath: errorName.fernFilepath,
+            item: {
+                typeName: errorName.name,
+                fernFilepath: errorName.fernFilepath,
+            },
             importStrategy,
             referencedIn,
         });
