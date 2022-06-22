@@ -54,11 +54,11 @@ describe("runGenerator", () => {
 
                 await installAndCompileGeneratedProject(outputPath);
 
-                const directoryContents = await getDirectoryContents(outputPath);
+                const directoryContents = await getDirectoryContents(path.join(outputPath, "src"));
                 expect(directoryContents).toMatchSnapshot();
 
-                // await rm(configPath);
-                // await rm(outputPath, { recursive: true });
+                await rm(configPath);
+                await rm(outputPath, { recursive: true });
             },
             60_000
         );
