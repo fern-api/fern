@@ -33,5 +33,7 @@ export {
     type WebSocketChannelTypeReference,
 } from "./model-context/service-type-context/WebSocketChannelTypeContext";
 export { ResolvedType } from "./model-context/type-context/types";
+export { createDirectoriesForFernFilepath } from "./model-context/utils/createDirectories";
+export { exportFromModule } from "./model-context/utils/exportFromModule";
 export { ImportStrategy } from "./model-context/utils/ImportStrategy";
 export { validateSchema } from "./validateSchema";

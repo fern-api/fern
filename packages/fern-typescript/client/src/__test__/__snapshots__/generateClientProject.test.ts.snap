@@ -216,6 +216,8 @@ export class ChatService implements ChatService {
 ",
   "/src/services/chat/index.ts": "export * from \\"./ChatService\\";
 ",
+  "/src/services/index.ts": "export * as chat from \\"./chat\\";
+",
   "/tsconfig.esm.json": "{
     \\"compilerOptions\\": {
         \\"composite\\": true,
@@ -357,6 +359,8 @@ export class NoErrorsService implements NoErrorsService {
 }
 ",
   "/src/services/api/index.ts": "export * from \\"./NoErrorsService\\";
+",
+  "/src/services/index.ts": "export * as api from \\"./api\\";
 ",
   "/tsconfig.esm.json": "{
     \\"compilerOptions\\": {
@@ -705,6 +709,8 @@ export declare namespace PostType {
   "/src/model/posts/types/index.ts": "export * from \\"./Post\\";
 export * from \\"./PostType\\";
 export * from \\"./Author\\";
+",
+  "/src/services/index.ts": "export * as posts from \\"./posts\\";
 ",
   "/src/services/posts/PostsService.ts": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
