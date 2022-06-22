@@ -1,23 +1,21 @@
 import { ModelContext } from "@fern-typescript/commons";
 import { SourceFile, ts } from "ts-morph";
-import { ServiceTypeReference } from "../types";
-import { getInlinedServiceTypeReference } from "./getInlinedServiceTypeReference";
+import { WebSocketChannelTypeReference } from "../types";
 
 // adds an import to the `referencedIn` file and returns a reference to the imported type
-export function getServiceTypeReference({
+export function getWebSocketServiceTypeReference({
     reference,
     referencedIn,
     modelContext,
 }: {
     referencedIn: SourceFile;
     modelContext: ModelContext;
-    reference: ServiceTypeReference;
+    reference: WebSocketChannelTypeReference;
 }): ts.TypeNode {
     if (reference.isInlined) {
-        return getInlinedServiceTypeReference({
+        return modelContext.getReferenceToWebSocketChannelType({
             metadata: reference.metadata,
             referencedIn,
-            modelContext,
         });
     } else {
         return modelContext.getReferenceToType({

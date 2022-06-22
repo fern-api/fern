@@ -2,9 +2,9 @@ import { HttpEndpoint, TypeName } from "@fern-api/api";
 import { DependencyManager, getTextOfTsKeyword, ModelContext } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 import { generateResponse } from "../commons/generate-response/generateResponse";
-import { getServiceTypeReference } from "../commons/service-type-reference/get-service-type-reference/getServiceTypeReference";
+import { getHttpServiceTypeReference } from "../commons/service-type-reference/get-service-type-reference/getHttpServiceTypeReference";
 import { ServiceTypesConstants } from "../constants";
-import { getMetadataForHttpServiceType } from "./getMetadataForHttpServiceType";
+import { createHttpServiceTypeFileWriter } from "./createHttpServiceTypeFileWriter";
 import { GeneratedHttpEndpointTypes } from "./types";
 
 export declare namespace generateResponseTypes {
@@ -33,7 +33,7 @@ export function generateResponseTypes({
         },
         failedResponse: endpoint.response.failed,
         getTypeReferenceToServiceType: ({ reference, referencedIn }) =>
-            getServiceTypeReference({
+            getHttpServiceTypeReference({
                 reference,
                 referencedIn,
                 modelContext,
@@ -44,21 +44,7 @@ export function generateResponseTypes({
                 type: getTextOfTsKeyword(ts.SyntaxKind.NumberKeyword),
             },
         ],
-        responseMetadata: getMetadataForHttpServiceType({
-            serviceName,
-            endpointId: endpoint.endpointId,
-            type: ServiceTypesConstants.Commons.Response.TYPE_NAME,
-        }),
-        successBodyMetadata: getMetadataForHttpServiceType({
-            serviceName,
-            endpointId: endpoint.endpointId,
-            type: ServiceTypesConstants.Commons.Response.Success.Properties.Body.TYPE_NAME,
-        }),
-        errorBodyMetadata: getMetadataForHttpServiceType({
-            serviceName,
-            endpointId: endpoint.endpointId,
-            type: ServiceTypesConstants.Commons.Response.Error.Properties.Body.TYPE_NAME,
-        }),
+        writeServiceTypeFile: createHttpServiceTypeFileWriter({ modelContext, serviceName, endpoint }),
     });
 
     return { reference, successBodyReference, errorBodyReference };

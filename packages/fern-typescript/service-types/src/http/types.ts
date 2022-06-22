@@ -1,11 +1,12 @@
+import { HttpServiceTypeMetadata } from "@fern-typescript/commons";
 import { GeneratedRequest } from "../commons/generate-request/generateRequest";
 import { InlinedServiceTypeReference, ServiceTypeReference } from "../commons/service-type-reference/types";
 
 export interface GeneratedHttpEndpointTypes {
-    request: GeneratedRequest;
+    request: GeneratedRequest<HttpServiceTypeMetadata>;
     response: {
-        reference: InlinedServiceTypeReference;
-        successBodyReference: ServiceTypeReference | undefined;
-        errorBodyReference: ServiceTypeReference | undefined;
+        reference: InlinedServiceTypeReference<HttpServiceTypeMetadata>;
+        successBodyReference: ServiceTypeReference<HttpServiceTypeMetadata> | undefined;
+        errorBodyReference: ServiceTypeReference<HttpServiceTypeMetadata> | undefined;
     };
 }
