@@ -1,4 +1,0 @@
-{
-  "ignores": ["@types/jest", "@types/node", "ts-loader", "ts-node", "webpack-cli", "umd-compat-loader"],
-  "ignore-patterns": ["lib"]
-}

@@ -44,7 +44,6 @@
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/encoders": "workspace:*",
     "@fern-typescript/errors": "workspace:*",
-    "@fern-typescript/hathora-encoding-helper": "workspace:*",
     "@fern-typescript/helper-manager": "workspace:*",
     "@fern-typescript/helper-utils": "workspace:*",
     "@fern-typescript/json-encoding-helper": "workspace:*",
