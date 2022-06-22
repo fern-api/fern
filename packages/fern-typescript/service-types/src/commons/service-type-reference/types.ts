@@ -1,5 +1,5 @@
-import { FernFilepath, TypeReference } from "@fern-api/api";
-import { SourceFile } from "ts-morph";
+import { TypeReference } from "@fern-api/api";
+import { ServiceTypeMetadata } from "@fern-typescript/commons";
 import { ServiceTypesConstants } from "../../constants";
 
 export type ServiceTypeReference = InlinedServiceTypeReference | ModelServiceTypeReference;
@@ -9,7 +9,6 @@ export interface InlinedServiceTypeReference {
     // service-types directory), not imported from the model
     isInlined: true;
     metadata: ServiceTypeMetadata;
-    file: SourceFile;
 }
 
 export interface ModelServiceTypeReference {
@@ -24,9 +23,3 @@ export type ServiceTypeName =
     | typeof ServiceTypesConstants.Commons.Response.TYPE_NAME
     | typeof ServiceTypesConstants.Commons.Response.Success.Properties.Body.TYPE_NAME
     | typeof ServiceTypesConstants.Commons.Response.Error.Properties.Body.TYPE_NAME;
-
-export interface ServiceTypeMetadata {
-    typeName: string;
-    fernFilepath: FernFilepath;
-    relativeFilepathInServiceTypesDirectory: string[];
-}

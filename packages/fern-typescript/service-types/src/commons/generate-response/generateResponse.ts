@@ -4,16 +4,13 @@ import {
     ErrorResolver,
     getTextOfTsNode,
     ModelContext,
+    ServiceTypeMetadata,
     TypeResolver,
 } from "@fern-typescript/commons";
 import { ModuleDeclaration, OptionalKind, PropertySignatureStructure, SourceFile, ts, Writers } from "ts-morph";
 import { ServiceTypesConstants } from "../../constants";
 import { generateServiceTypeReference } from "../service-type-reference/generateServiceTypeReference";
-import {
-    InlinedServiceTypeReference,
-    ServiceTypeMetadata,
-    ServiceTypeReference,
-} from "../service-type-reference/types";
+import { InlinedServiceTypeReference, ServiceTypeReference } from "../service-type-reference/types";
 import { generateErrorBody } from "./generateErrorBody";
 
 export declare namespace generateResponse {
@@ -57,51 +54,12 @@ export function generateResponse({
     getTypeReferenceToServiceType,
     additionalProperties = [],
 }: generateResponse.Args): generateResponse.Return {
-    const responseFile = modelContext.addServiceTypeDefinition(responseMetadata, () => {
-        /* TODO */
-    });
-
-    responseFile.addTypeAlias({
-        name: responseMetadata.typeName,
-        type: Writers.unionType(
-            getTextOfTsNode(
-                ts.factory.createTypeReferenceNode(
-                    ts.factory.createQualifiedName(
-                        ts.factory.createIdentifier(responseMetadata.typeName),
-                        ts.factory.createIdentifier(ServiceTypesConstants.Commons.Response.Success.TYPE_NAME)
-                    ),
-                    undefined
-                )
-            ),
-            getTextOfTsNode(
-                ts.factory.createTypeReferenceNode(
-                    ts.factory.createQualifiedName(
-                        ts.factory.createIdentifier(responseMetadata.typeName),
-                        ts.factory.createIdentifier(ServiceTypesConstants.Commons.Response.Error.TYPE_NAME)
-                    ),
-                    undefined
-                )
-            )
-        ),
-        isExported: true,
-    });
-
-    const responseNamespace = responseFile.addModule({
-        name: responseMetadata.typeName,
-    });
-
     const successBodyReference = generateServiceTypeReference({
         metadata: successBodyMetadata,
         type: successResponse.type,
         docs: successResponse.docs,
         modelContext,
         typeResolver,
-    });
-    addSuccessResponseInterface({
-        responseNamespace,
-        successBodyReference,
-        getTypeReferenceToServiceType,
-        additionalProperties,
     });
 
     const { errorBodyReference } = maybeGenerateErrorBody({
@@ -113,18 +71,55 @@ export function generateResponse({
         dependencyManager,
     });
 
-    addErrorResponseInterface({
-        responseNamespace,
-        additionalProperties,
-        getTypeReferenceToServiceType,
-        errorBodyReference,
+    modelContext.addServiceTypeDefinition(responseMetadata, (responseFile) => {
+        responseFile.addTypeAlias({
+            name: responseMetadata.typeName,
+            type: Writers.unionType(
+                getTextOfTsNode(
+                    ts.factory.createTypeReferenceNode(
+                        ts.factory.createQualifiedName(
+                            ts.factory.createIdentifier(responseMetadata.typeName),
+                            ts.factory.createIdentifier(ServiceTypesConstants.Commons.Response.Success.TYPE_NAME)
+                        ),
+                        undefined
+                    )
+                ),
+                getTextOfTsNode(
+                    ts.factory.createTypeReferenceNode(
+                        ts.factory.createQualifiedName(
+                            ts.factory.createIdentifier(responseMetadata.typeName),
+                            ts.factory.createIdentifier(ServiceTypesConstants.Commons.Response.Error.TYPE_NAME)
+                        ),
+                        undefined
+                    )
+                )
+            ),
+            isExported: true,
+        });
+
+        const responseNamespace = responseFile.addModule({
+            name: responseMetadata.typeName,
+        });
+
+        addSuccessResponseInterface({
+            responseNamespace,
+            successBodyReference,
+            getTypeReferenceToServiceType,
+            additionalProperties,
+        });
+
+        addErrorResponseInterface({
+            responseNamespace,
+            additionalProperties,
+            getTypeReferenceToServiceType,
+            errorBodyReference,
+        });
     });
 
     return {
         reference: {
             isInlined: true,
             metadata: responseMetadata,
-            file: responseFile,
         },
         successBodyReference,
         errorBodyReference,
@@ -244,24 +239,22 @@ function maybeGenerateErrorBody({
         return { errorBodyReference: undefined };
     }
 
-    const errorBodyFile = modelContext.addServiceTypeDefinition(errorBodyMetadata, () => {
-        /* TODO */
-    });
-    generateErrorBody({
-        failedResponse,
-        errorBodyFile,
-        errorBodyMetadata,
-        typeResolver,
-        errorResolver,
-        modelContext,
-        dependencyManager,
+    modelContext.addServiceTypeDefinition(errorBodyMetadata, (errorBodyFile) => {
+        generateErrorBody({
+            failedResponse,
+            errorBodyFile,
+            errorBodyMetadata,
+            typeResolver,
+            errorResolver,
+            modelContext,
+            dependencyManager,
+        });
     });
 
     return {
         errorBodyReference: {
             isInlined: true,
             metadata: errorBodyMetadata,
-            file: errorBodyFile,
         },
     };
 }

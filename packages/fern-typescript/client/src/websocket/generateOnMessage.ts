@@ -1,3 +1,4 @@
+import { WebSocketChannel } from "@fern-api/api";
 import { getTextOfTsKeyword, getTextOfTsNode } from "@fern-typescript/commons";
 import { ServiceTypesConstants } from "@fern-typescript/service-types";
 import { ClassDeclaration, Scope, ts } from "ts-morph";
@@ -7,7 +8,13 @@ const EVENT_PARAMETER_NAME = "event";
 const MESSAGE_LOCAL_VARIABLE_NAME = "message";
 const CALLBACK_LOCAL_VARIABLE_NAME = "callback";
 
-export function generateOnMessage({ channelClass }: { channelClass: ClassDeclaration }): void {
+export function generateOnMessage({
+    channelClass,
+    channelDefinition,
+}: {
+    channelClass: ClassDeclaration;
+    channelDefinition: WebSocketChannel;
+}): void {
     channelClass.addMethod({
         name: ClientConstants.WebsocketChannel.Methods.ON_MESSAGE,
         parameters: [
@@ -43,7 +50,7 @@ export function generateOnMessage({ channelClass }: { channelClass: ClassDeclara
                                 ),
                                 ts.factory.createTypeReferenceNode(
                                     ts.factory.createQualifiedName(
-                                        ts.factory.createIdentifier(ClientConstants.WebsocketChannel.CLIENT_NAME),
+                                        ts.factory.createIdentifier(channelDefinition.name.name),
                                         ts.factory.createIdentifier(
                                             ClientConstants.WebsocketChannel.Namespace.SERVER_MESSAGE
                                         )

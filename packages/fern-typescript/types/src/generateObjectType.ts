@@ -1,5 +1,5 @@
 import { ObjectTypeDefinition, TypeReference } from "@fern-api/api";
-import { getTextOfTsNode, ImportStrategy, maybeAddDocs, ModelContext } from "@fern-typescript/commons";
+import { getTextOfTsNode, maybeAddDocs, ModelContext } from "@fern-typescript/commons";
 import { SourceFile } from "ts-morph";
 
 export function generateObjectType({
@@ -22,7 +22,6 @@ export function generateObjectType({
                 modelContext.getReferenceToType({
                     reference: TypeReference.named(typeName),
                     referencedIn: file,
-                    importStrategy: ImportStrategy.NAMED_IMPORT,
                 })
             )
             .map(getTextOfTsNode),
@@ -33,7 +32,6 @@ export function generateObjectType({
                     modelContext.getReferenceToType({
                         reference: field.valueType,
                         referencedIn: file,
-                        importStrategy: ImportStrategy.NAMED_IMPORT,
                     })
                 ),
                 docs: field.docs != null ? [{ description: field.docs }] : undefined,

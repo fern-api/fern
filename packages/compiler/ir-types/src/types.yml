@@ -81,5 +81,6 @@ types:
       - DOUBLE
       - STRING
       - BOOLEAN
-      - docs: "Within the range -2^53 to 2^53"
-        value: LONG
+      - value: LONG
+        docs: "Within the range -2^53 to 2^53"
+      - DATE_TIME

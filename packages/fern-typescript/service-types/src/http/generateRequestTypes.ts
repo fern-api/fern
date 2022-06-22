@@ -1,5 +1,5 @@
 import { HttpEndpoint, TypeName } from "@fern-api/api";
-import { getTextOfTsNode, ImportStrategy, ModelContext, TypeResolver } from "@fern-typescript/commons";
+import { getTextOfTsNode, ModelContext, TypeResolver } from "@fern-typescript/commons";
 import { OptionalKind, PropertySignatureStructure, SourceFile } from "ts-morph";
 import { GeneratedRequest, generateRequest } from "../commons/generate-request/generateRequest";
 import { getServiceTypeReference } from "../commons/service-type-reference/get-service-type-reference/getServiceTypeReference";
@@ -30,7 +30,6 @@ export function generateRequestTypes({
                         modelContext.getReferenceToType({
                             reference: parameter.valueType,
                             referencedIn: requestFile,
-                            importStrategy: ImportStrategy.MODEL_NAMESPACE_IMPORT,
                         })
                     ),
                 })

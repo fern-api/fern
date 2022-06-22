@@ -3,9 +3,8 @@ import { ImportStrategy, ModelContext, ResolvedType, resolveType, TypeResolver }
 import { upperFirst } from "lodash";
 import { SourceFile, ts } from "ts-morph";
 
-// import the entire model as a namespace to prevent clashing with union subtypes
-export const FORCE_USE_MODEL_NAMESPACE_IMPORT_FOR_UNION_TYPES = true;
-export const UNION_TYPE_MODEL_IMPORT_STRATEGY = ImportStrategy.MODEL_NAMESPACE_IMPORT;
+// don't used named imports for type reference to prevent clashing with union subtypes
+export const UNION_TYPE_MODEL_IMPORT_STRATEGY = ImportStrategy.TOP_PACKAGE_IMPORT;
 
 export function getKeyForUnion({ discriminantValue }: ResolvedSingleUnionType): string {
     return upperFirst(discriminantValue);

@@ -1,8 +1,8 @@
 import { Type } from "@fern-api/api";
 import { assertNever } from "@fern-api/commons";
-import { ModelContext, TypeResolver } from "@fern-typescript/commons";
+import { ModelContext, ServiceTypeMetadata, TypeResolver } from "@fern-typescript/commons";
 import { generateType } from "@fern-typescript/types";
-import { ServiceTypeMetadata, ServiceTypeReference } from "./types";
+import { ServiceTypeReference } from "./types";
 
 export declare namespace generateServiceTypeReference {
     export interface Args {
@@ -38,7 +38,7 @@ export function generateServiceTypeReference({
         }
     }
 
-    const file = modelContext.addServiceTypeDefinition(metadata, (file) => {
+    modelContext.addServiceTypeDefinition(metadata, (file) => {
         generateType({
             type,
             docs,
@@ -51,7 +51,6 @@ export function generateServiceTypeReference({
 
     return {
         isInlined: true,
-        file,
         metadata,
     };
 }

@@ -43,15 +43,9 @@ export async function generateHttpService({
     helperManager: HelperManager;
     dependencyManager: DependencyManager;
 }): Promise<void> {
-    const serviceDirectory = getOrCreateDirectory(servicesDirectory, service.name.name, {
-        exportOptions: {
-            type: "namespace",
-            namespace: service.name.name,
-        },
-    });
     await generateService({
         service,
-        serviceDirectory,
+        servicesDirectory,
         modelContext,
         encodersDirectory,
         typeResolver,
@@ -63,7 +57,7 @@ export async function generateHttpService({
 
 async function generateService({
     service,
-    serviceDirectory,
+    servicesDirectory,
     modelContext,
     encodersDirectory,
     typeResolver,
@@ -72,7 +66,7 @@ async function generateService({
     dependencyManager,
 }: {
     service: HttpService;
-    serviceDirectory: Directory;
+    servicesDirectory: Directory;
     modelContext: ModelContext;
     encodersDirectory: Directory;
     typeResolver: TypeResolver;
@@ -80,7 +74,10 @@ async function generateService({
     helperManager: HelperManager;
     dependencyManager: DependencyManager;
 }): Promise<void> {
-    const serviceFile = getOrCreateSourceFile(serviceDirectory, `${service.name.name}.ts`);
+    const packageDirectory = getOrCreateDirectory(servicesDirectory, service.name.fernFilepath);
+    const serviceFile = getOrCreateSourceFile(packageDirectory, `${service.name.name}.ts`);
+    // TODO add export
+
     serviceFile.addImportDeclaration({
         namedImports: [
             ClientConstants.HttpService.ServiceUtils.Imported.FETCHER_TYPE_NAME,
@@ -94,13 +91,13 @@ async function generateService({
     addFernServiceUtilsDependency(dependencyManager);
 
     const serviceInterface = serviceFile.addInterface({
-        name: ClientConstants.HttpService.CLIENT_NAME,
+        name: service.name.name,
         isExported: true,
     });
 
     const serviceClass = serviceFile.addClass({
-        name: ClientConstants.HttpService.CLIENT_NAME,
-        implements: [ClientConstants.HttpService.CLIENT_NAME],
+        name: service.name.name,
+        implements: [service.name.name],
         isExported: true,
     });
     maybeAddDocs(serviceClass, service.docs);

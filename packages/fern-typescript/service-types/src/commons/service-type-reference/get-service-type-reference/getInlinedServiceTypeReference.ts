@@ -1,6 +1,5 @@
-import { ImportStrategy, ModelContext } from "@fern-typescript/commons";
+import { ModelContext, ServiceTypeMetadata } from "@fern-typescript/commons";
 import { SourceFile, ts } from "ts-morph";
-import { ServiceTypeMetadata } from "../types";
 
 export declare namespace getInlinedServiceTypeReference {
     export interface Args {
@@ -18,6 +17,5 @@ export function getInlinedServiceTypeReference({
     return modelContext.getReferenceToServiceType({
         metadata,
         referencedIn,
-        importStrategy: ImportStrategy.MODEL_NAMESPACE_IMPORT,
     });
 }

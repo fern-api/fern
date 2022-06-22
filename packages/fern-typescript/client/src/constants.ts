@@ -1,7 +1,5 @@
 export const ClientConstants = {
     WebsocketChannel: {
-        CLIENT_NAME: "Client",
-
         Files: {
             OPERATIONS_DIRECTORY_NAME: "operations",
         },
@@ -33,8 +31,6 @@ export const ClientConstants = {
     },
 
     HttpService: {
-        CLIENT_NAME: "Client",
-
         Files: {
             ENDPOINTS_DIRECTORY_NAME: "endpoints",
         },

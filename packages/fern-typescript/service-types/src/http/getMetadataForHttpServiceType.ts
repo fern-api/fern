@@ -1,6 +1,7 @@
 import { EndpointId, ServiceName } from "@fern-api/api";
+import { ServiceTypeMetadata } from "@fern-typescript/commons";
 import { upperFirst } from "lodash";
-import { ServiceTypeMetadata, ServiceTypeName } from "../commons/service-type-reference/types";
+import { ServiceTypeName } from "../commons/service-type-reference/types";
 
 export function getMetadataForHttpServiceType({
     serviceName,
@@ -15,6 +16,6 @@ export function getMetadataForHttpServiceType({
     return {
         typeName,
         fernFilepath: serviceName.fernFilepath,
-        relativeFilepathInServiceTypesDirectory: ["service-types", serviceName.name],
+        relativeFilepathInServiceTypesDirectory: [serviceName.name],
     };
 }

@@ -783,9 +783,9 @@ Object {
         \\"typescript\\": \\"^4.6.4\\"
     }
 }",
-  "/src/model/commons/index.ts": "export * from \\"./types\\";
+  "/src/commons/index.ts": "export * from \\"./types\\";
 ",
-  "/src/model/commons/types/PostId.ts": "/**
+  "/src/commons/types/PostId.ts": "/**
  * An ID of a blog post
  */
 export type PostId = string & {
@@ -796,12 +796,12 @@ export const PostId = {
     of: (value: string): PostId => value as PostId
 };
 ",
-  "/src/model/commons/types/index.ts": "export * from \\"./PostId\\";
+  "/src/commons/types/index.ts": "export * from \\"./PostId\\";
 ",
-  "/src/model/index.ts": "export * as commons from \\"./commons\\";
+  "/src/index.ts": "export * as commons from \\"./commons\\";
 export * as posts from \\"./posts\\";
 ",
-  "/src/model/posts/errors/PostNotFoundError.ts": "export type PostNotFoundError = string & {
+  "/src/posts/errors/PostNotFoundError.ts": "export type PostNotFoundError = string & {
     __PostNotFoundError: void;
 };
 
@@ -809,12 +809,12 @@ export const PostNotFoundError = {
     of: (value: string): PostNotFoundError => value as PostNotFoundError
 };
 ",
-  "/src/model/posts/errors/index.ts": "export * from \\"./PostNotFoundError\\";
+  "/src/posts/errors/index.ts": "export * from \\"./PostNotFoundError\\";
 ",
-  "/src/model/posts/index.ts": "export * from \\"./types\\";
+  "/src/posts/index.ts": "export * from \\"./types\\";
 export * from \\"./errors\\";
 ",
-  "/src/model/posts/types/Author.ts": "export type Author =
+  "/src/posts/types/Author.ts": "export type Author =
     | Author.Anonymous
     | Author.Named;
 
@@ -856,7 +856,7 @@ export const Author = {
     _types: (): Author[\\"_type\\"][] => [\\"anonymous\\", \\"named\\"],
 } as const;
 ",
-  "/src/model/posts/types/BlogPostReference.ts": "import * as model from \\"../..\\";
+  "/src/posts/types/BlogPostReference.ts": "import * as model from \\"../..\\";
 
 export type BlogPostReference =
     | BlogPostReference.Post;
@@ -888,7 +888,7 @@ export const BlogPostReference = {
     _types: (): BlogPostReference[\\"_type\\"][] => [\\"post\\"],
 } as const;
 ",
-  "/src/model/posts/types/CreatePostRequest.ts": "import { Author } from \\"..\\";
+  "/src/posts/types/CreatePostRequest.ts": "import { Author } from \\"..\\";
 
 export interface CreatePostRequest {
     title: string;
@@ -896,7 +896,7 @@ export interface CreatePostRequest {
     content: string;
 }
 ",
-  "/src/model/posts/types/Post.ts": "import { PostId } from \\"../../commons\\";
+  "/src/posts/types/Post.ts": "import { PostId } from \\"../../commons\\";
 import { Author, PostType } from \\"..\\";
 
 /**
@@ -911,7 +911,7 @@ export interface Post {
     customConfig: unknown;
 }
 ",
-  "/src/model/posts/types/PostType.ts": "export type PostType =
+  "/src/posts/types/PostType.ts": "export type PostType =
     | \\"LONG\\"
     | \\"SHORT\\";
 
@@ -941,7 +941,7 @@ export declare namespace PostType {
     }
 }
 ",
-  "/src/model/posts/types/index.ts": "export * from \\"./Post\\";
+  "/src/posts/types/index.ts": "export * from \\"./Post\\";
 export * from \\"./BlogPostReference\\";
 export * from \\"./PostType\\";
 export * from \\"./Author\\";

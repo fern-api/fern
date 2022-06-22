@@ -1,9 +1,9 @@
 import { Type } from "@fern-api/api";
-import { getTextOfTsNode, ModelContext, TypeResolver } from "@fern-typescript/commons";
+import { getTextOfTsNode, ModelContext, ServiceTypeMetadata, TypeResolver } from "@fern-typescript/commons";
 import { OptionalKind, PropertySignatureStructure, SourceFile, ts } from "ts-morph";
 import { ServiceTypesConstants } from "../../constants";
 import { generateServiceTypeReference } from "../service-type-reference/generateServiceTypeReference";
-import { ServiceTypeMetadata, ServiceTypeReference } from "../service-type-reference/types";
+import { ServiceTypeReference } from "../service-type-reference/types";
 
 /**
  * TODO this is kinda weird. For endpoints wrapper refers to something the consumer passes in (e.g. it includes query
@@ -69,10 +69,6 @@ export function generateRequest({
         }
     }
 
-    const requestFile = modelContext.addServiceTypeDefinition(requestMetadata, () => {
-        /* TODO */
-    });
-
     const requestBodyReference = generateServiceTypeReference({
         // put the request body in its own RequestBody type/file
         metadata: requestBodyMetadata,
@@ -82,26 +78,30 @@ export function generateRequest({
         typeResolver,
     });
 
-    const properties: OptionalKind<PropertySignatureStructure>[] = [
-        ...additionalProperties.map((property) => (typeof property === "function" ? property(requestFile) : property)),
-    ];
-
-    if (requestBodyReference != null) {
-        properties.push({
-            name: ServiceTypesConstants.Commons.Request.Properties.Body.PROPERTY_NAME,
-            type: getTextOfTsNode(
-                getTypeReferenceToServiceType({
-                    reference: requestBodyReference,
-                    referencedIn: requestFile,
-                })
+    modelContext.addServiceTypeDefinition(requestMetadata, (requestFile) => {
+        const properties: OptionalKind<PropertySignatureStructure>[] = [
+            ...additionalProperties.map((property) =>
+                typeof property === "function" ? property(requestFile) : property
             ),
-        });
-    }
+        ];
 
-    requestFile.addInterface({
-        name: requestMetadata.typeName,
-        properties,
-        isExported: true,
+        if (requestBodyReference != null) {
+            properties.push({
+                name: ServiceTypesConstants.Commons.Request.Properties.Body.PROPERTY_NAME,
+                type: getTextOfTsNode(
+                    getTypeReferenceToServiceType({
+                        reference: requestBodyReference,
+                        referencedIn: requestFile,
+                    })
+                ),
+            });
+        }
+
+        requestFile.addInterface({
+            name: requestMetadata.typeName,
+            properties,
+            isExported: true,
+        });
     });
 
     return {
@@ -109,7 +109,6 @@ export function generateRequest({
             reference: {
                 isInlined: true,
                 metadata: requestMetadata,
-                file: requestFile,
             },
             propertyName: ServiceTypesConstants.Commons.Request.Properties.Body.PROPERTY_NAME,
         },

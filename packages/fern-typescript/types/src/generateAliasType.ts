@@ -1,11 +1,5 @@
 import { AliasTypeDefinition, PrimitiveType } from "@fern-api/api";
-import {
-    addBrandedTypeAlias,
-    getTextOfTsNode,
-    ImportStrategy,
-    maybeAddDocs,
-    ModelContext,
-} from "@fern-typescript/commons";
+import { addBrandedTypeAlias, getTextOfTsNode, maybeAddDocs, ModelContext } from "@fern-typescript/commons";
 import { SourceFile, ts, VariableDeclarationKind, Writers } from "ts-morph";
 
 export const ALIAS_UTILS_OF_KEY = "of";
@@ -32,7 +26,6 @@ export function generateAliasType({
                 modelContext.getReferenceToType({
                     reference: shape.aliasOf,
                     referencedIn: file,
-                    importStrategy: ImportStrategy.NAMED_IMPORT,
                 })
             ),
             isExported: true,

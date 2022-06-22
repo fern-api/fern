@@ -3,14 +3,18 @@ import {
     DependencyManager,
     ErrorResolver,
     generateUuidCall,
-    ImportStrategy,
     ModelContext,
     resolveType,
+    ServiceTypeMetadata,
     TypeResolver,
 } from "@fern-typescript/commons";
-import { generateUnionType, isTypeExtendable, ResolvedSingleUnionValueType } from "@fern-typescript/types";
+import {
+    generateUnionType,
+    isTypeExtendable,
+    ResolvedSingleUnionValueType,
+    UNION_TYPE_MODEL_IMPORT_STRATEGY,
+} from "@fern-typescript/types";
 import { SourceFile } from "ts-morph";
-import { ServiceTypeMetadata } from "../service-type-reference/types";
 
 export function generateErrorBody({
     failedResponse,
@@ -77,8 +81,8 @@ function getValueType({
         isExtendable: isTypeExtendable(resolvedType),
         type: modelContext.getReferenceToError({
             errorName: error.error,
-            importStrategy: ImportStrategy.NAMED_IMPORT,
             referencedIn: file,
+            importStrategy: UNION_TYPE_MODEL_IMPORT_STRATEGY,
         }),
     };
 }

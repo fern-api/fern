@@ -3,7 +3,6 @@ import {
     FernWriters,
     getTextOfTsNode,
     getWriterForMultiLineUnionType,
-    ImportStrategy,
     maybeAddDocs,
     ModelContext,
     visitorUtils,
@@ -17,7 +16,12 @@ import {
     VariableDeclarationKind,
     WriterFunction,
 } from "ts-morph";
-import { getKeyForUnion, ResolvedSingleUnionType, ResolvedSingleUnionValueType } from "./utils";
+import {
+    getKeyForUnion,
+    ResolvedSingleUnionType,
+    ResolvedSingleUnionValueType,
+    UNION_TYPE_MODEL_IMPORT_STRATEGY,
+} from "./utils";
 
 export declare namespace generateUnionType {
     export interface Args {
@@ -82,7 +86,7 @@ export function generateUnionType({
                     modelContext.getReferenceToType({
                         reference: additionalProperty.valueType,
                         referencedIn: file,
-                        importStrategy: ImportStrategy.MODEL_NAMESPACE_IMPORT,
+                        importStrategy: UNION_TYPE_MODEL_IMPORT_STRATEGY,
                     })
                 ),
             });

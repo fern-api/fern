@@ -1,0 +1,142 @@
+imports:
+  commons: commons.yml
+
+types:
+  ProblemInfo:
+    properties:
+      problemId: commons.ProblemId
+      problemDescription: ProblemDescription
+      problemName: string
+      problemVersion: integer
+      files: map<commons.Language, ProblemFiles>
+      inputParams: list<VariableTypeAndName>
+      outputType: commons.VariableType
+      testcases: list<commons.TestCaseWithExpectedResult>
+      methodName: string
+      supportsCustomTestCases: boolean
+  ProblemDescription:
+    properties:
+      boards: list<ProblemDescriptionBoard>
+  ProblemDescriptionBoard:
+    union:
+      html: string
+      variable: commons.VariableValue
+      testCaseId: string
+  ProblemFiles:
+    properties:
+      solutionFile: commons.FileInfo
+      readOnlyFiles: list<commons.FileInfo>
+  VariableTypeAndName:
+    properties:
+      variableType: commons.VariableType
+      name: string
+
+  CreateProblemError:
+    union:
+      generic: GenericCreateProblemError
+  GenericCreateProblemError:
+    properties:
+      message: string
+      type: string
+      stacktrace: string
+
+services:
+  http:
+    ProblemInfoService:
+      docs: Information about different problems
+      base-path: /problems
+      auth: none
+      endpoints:
+        getProblems:
+          docs: Returns latest versions of all problems
+          method: GET
+          path: /problem-info
+          path-parameters: {}
+          response: list<ProblemInfo>
+
+        getLatestProblem:
+          docs: Returns latest version of a problem
+          method: GET
+          path: /problem-info/{problemId}
+          path-parameters:
+            problemId: commons.ProblemId
+          response: ProblemInfo
+
+        getProblemVersion:
+          docs: Returns requested version of a problem
+          method: GET
+          path: /problem-info/{problemId}/version/{problemVersion}
+          path-parameters:
+            problemId: commons.ProblemId
+            problemVersion: integer
+          response: ProblemInfo
+
+        getExpectedResult:
+          docs: Returns test case answer
+          method: POST
+          path: /expected-result/{problemId}
+          path-parameters:
+            problemId: commons.ProblemId
+            testCase: commons.TestCase
+          response: commons.TestCaseWithExpectedResult
+
+    ProblemCrudService:
+      base-path: /problem-crud
+      auth: none
+      endpoints:
+        createProblem:
+          docs: Creates a problem
+          method: POST
+          path: /create
+          request:
+            type:
+              properties:
+                problemName: string
+                problemDescription: ProblemDescription
+                files: map<commons.Language, ProblemFiles>
+                inputParams: list<VariableTypeAndName>
+                outputType: commons.VariableType
+                testcases: list<commons.TestCaseWithExpectedResult>
+                methodName: string
+          response:
+            ok:
+              type:
+                union:
+                  success: commons.ProblemId
+                  error: CreateProblemError
+
+        updateProblem:
+          docs: Updates a problem
+          method: POST
+          path: /update/{problemId}
+          path-parameters:
+            problemId: commons.ProblemId
+            request: CreateProblemRequest
+          response:
+            ok:
+              type:
+                properties:
+                  problemVersion: integer
+
+        deleteProblem:
+          docs: Soft deletes a problem
+          method: DELETE
+          path: /delete/{problemId}
+          path-parameters:
+            problemId: commons.ProblemId
+
+        getDefaultStarterFiles:
+          docs: Returns default starter files for problem
+          method: POST
+          path: /default-starter-files
+          request:
+            type:
+              properties:
+                inputParams: list<VariableTypeAndName>
+                outputType: commons.VariableType
+                methodName: string
+          response:
+            ok:
+              type:
+                properties:
+                  files: map<commons.Language, ProblemFiles>

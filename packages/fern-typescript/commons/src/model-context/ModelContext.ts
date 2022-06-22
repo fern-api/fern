@@ -9,8 +9,7 @@ export class ModelContext {
     private errorContext: ErrorContext;
     private serviceTypeContext: ServiceTypeContext;
 
-    // TODO make private
-    constructor(public readonly modelDirectory: Directory) {
+    constructor(modelDirectory: Directory) {
         this.typeContext = new TypeContext(modelDirectory);
         this.errorContext = new ErrorContext(modelDirectory);
         this.serviceTypeContext = new ServiceTypeContext(modelDirectory);
@@ -32,8 +31,8 @@ export class ModelContext {
         return this.errorContext.getReferenceToError(args);
     }
 
-    public addServiceTypeDefinition(metadata: ServiceTypeMetadata, withFile: (file: SourceFile) => void): SourceFile {
-        return this.serviceTypeContext.addServiceTypeDefinition(metadata, withFile);
+    public addServiceTypeDefinition(metadata: ServiceTypeMetadata, withFile: (file: SourceFile) => void): void {
+        this.serviceTypeContext.addServiceTypeDefinition(metadata, withFile);
     }
 
     public getReferenceToServiceType(args: ServiceTypeContext.getReferenceToServiceType.Args): ts.TypeReferenceNode {

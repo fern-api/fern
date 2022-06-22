@@ -1,8 +1,8 @@
 import { FernFilepath } from "@fern-api/api";
 import { SourceFile, ts } from "ts-morph";
-import { BaseModelContext, ImportStrategy } from "./base-context/BaseModelContext";
+import { BaseModelContext } from "./BaseModelContext";
+import { ImportStrategy } from "./utils/ImportStrategy";
 
-// TODO delete duplicate from service-types package
 export interface ServiceTypeMetadata {
     typeName: string;
     fernFilepath: FernFilepath;
@@ -14,19 +14,19 @@ export declare namespace ServiceTypeContext {
         interface Args {
             metadata: ServiceTypeMetadata;
             referencedIn: SourceFile;
-            importStrategy: ImportStrategy;
+            importStrategy?: ImportStrategy;
         }
     }
 }
 
 export class ServiceTypeContext extends BaseModelContext {
-    public addServiceTypeDefinition(metadata: ServiceTypeMetadata, withFile: (file: SourceFile) => void): SourceFile {
-        return this.addFile(
-            metadata.typeName,
-            metadata.fernFilepath,
-            ["service-types", ...metadata.relativeFilepathInServiceTypesDirectory],
-            withFile
-        );
+    public addServiceTypeDefinition(metadata: ServiceTypeMetadata, withFile: (file: SourceFile) => void): void {
+        this.addFile({
+            fileNameWithoutExtension: metadata.typeName,
+            fernFilepath: metadata.fernFilepath,
+            intermediateDirectories: ["service-types", ...metadata.relativeFilepathInServiceTypesDirectory],
+            withFile,
+        });
     }
 
     public getReferenceToServiceType({

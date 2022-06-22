@@ -1,4 +1,4 @@
-import { ImportStrategy, ModelContext } from "@fern-typescript/commons";
+import { ModelContext } from "@fern-typescript/commons";
 import { SourceFile, ts } from "ts-morph";
 import { ServiceTypeReference } from "../types";
 import { getInlinedServiceTypeReference } from "./getInlinedServiceTypeReference";
@@ -23,7 +23,6 @@ export function getServiceTypeReference({
         return modelContext.getReferenceToType({
             reference: reference.typeReference,
             referencedIn,
-            importStrategy: ImportStrategy.NAMED_IMPORT,
         });
     }
 }

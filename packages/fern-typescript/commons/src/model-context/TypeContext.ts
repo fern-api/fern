@@ -1,20 +1,26 @@
 import { ContainerType, PrimitiveType, TypeName, TypeReference } from "@fern-api/api";
 import { SourceFile, ts } from "ts-morph";
-import { BaseModelContext, ImportStrategy } from "./base-context/BaseModelContext";
+import { BaseModelContext } from "./BaseModelContext";
+import { ImportStrategy } from "./utils/ImportStrategy";
 
 export declare namespace TypeContext {
     namespace getReferenceToType {
         interface Args {
             reference: TypeReference;
             referencedIn: SourceFile;
-            importStrategy: ImportStrategy;
+            importStrategy?: ImportStrategy;
         }
     }
 }
 
 export class TypeContext extends BaseModelContext {
     public addTypeDefinition(typeName: TypeName, withFile: (file: SourceFile) => void): void {
-        this.addFile(typeName.name, typeName.fernFilepath, ["types"], withFile);
+        this.addFile({
+            fileNameWithoutExtension: typeName.name,
+            fernFilepath: typeName.fernFilepath,
+            intermediateDirectories: ["types"],
+            withFile,
+        });
     }
 
     public getReferenceToType({
@@ -39,6 +45,7 @@ export class TypeContext extends BaseModelContext {
                     integer: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
                     long: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
                     string: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                    dateTime: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
                     _unknown: () => {
                         throw new Error("Unexpected primitive type: " + primitive);
                     },
