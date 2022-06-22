@@ -1,9 +1,9 @@
 import { HttpService } from "@fern-api/api";
 import {
     addFernServiceUtilsDependency,
+    createDirectoriesForFernFilepath,
     DependencyManager,
-    getOrCreateDirectory,
-    getOrCreateSourceFile,
+    exportFromModule,
     getTextOfTsKeyword,
     getTextOfTsNode,
     maybeAddDocs,
@@ -62,9 +62,9 @@ async function generateService({
     helperManager: HelperManager;
     dependencyManager: DependencyManager;
 }): Promise<void> {
-    const packageDirectory = getOrCreateDirectory(servicesDirectory, service.name.fernFilepath);
-    const serviceFile = getOrCreateSourceFile(packageDirectory, `${service.name.name}.ts`);
-    // TODO add export
+    const packageDirectory = createDirectoriesForFernFilepath(servicesDirectory, service.name.fernFilepath);
+    const serviceFile = packageDirectory.createSourceFile(`${service.name.name}.ts`);
+    exportFromModule(serviceFile);
 
     serviceFile.addImportDeclaration({
         namedImports: [
@@ -128,7 +128,6 @@ async function generateService({
             modelContext,
             encodersDirectory,
             helperManager,
-            dependencyManager,
         });
     }
 }

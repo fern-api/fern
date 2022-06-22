@@ -22,10 +22,7 @@ export async function generateEncoderFiles({
         if (helper.encodings != null) {
             for (const [encoding, encoder] of Object.entries(helper.encodings)) {
                 if (encoder._type === "fileBased") {
-                    const encoderDirectory = getOrCreateDirectory(encodersDirectory, encoding, {
-                        // only export the encoder
-                        exportOptions: { type: "namedExports", exports: [encoder.name] },
-                    });
+                    const encoderDirectory = getOrCreateDirectory(encodersDirectory, encoding);
                     encoder.writeEncoder({
                         encoderDirectory,
                         servicesDirectory,

@@ -1,12 +1,17 @@
 import { FailedResponse, Type } from "@fern-api/api";
-import { DependencyManager, getTextOfTsNode, ModelContext } from "@fern-typescript/commons";
+import {
+    DependencyManager,
+    getTextOfTsNode,
+    InlinedServiceTypeReference,
+    ModelContext,
+    ServiceTypeReference,
+} from "@fern-typescript/commons";
 import { ModuleDeclaration, OptionalKind, PropertySignatureStructure, SourceFile, ts, Writers } from "ts-morph";
 import { ServiceTypesConstants } from "../../constants";
 import {
     generateServiceTypeReference,
     ServiceTypeFileWriter,
 } from "../service-type-reference/generateServiceTypeReference";
-import { InlinedServiceTypeReference, ServiceTypeReference } from "../service-type-reference/types";
 import { generateErrorBody } from "./generateErrorBody";
 
 export declare namespace generateResponse {

@@ -1,7 +1,6 @@
 import { HttpEndpoint, HttpService } from "@fern-api/api";
-import { DependencyManager, getTextOfTsNode, ModelContext } from "@fern-typescript/commons";
+import { getTextOfTsNode, ModelContext } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
-import { generateHttpEndpointTypes, getHttpServiceTypeReference } from "@fern-typescript/service-types";
 import {
     ClassDeclaration,
     Directory,
@@ -22,7 +21,6 @@ export async function addEndpointToService({
     modelContext,
     encodersDirectory,
     helperManager,
-    dependencyManager,
 }: {
     endpoint: HttpEndpoint;
     serviceInterface: InterfaceDeclaration;
@@ -31,15 +29,12 @@ export async function addEndpointToService({
     modelContext: ModelContext;
     encodersDirectory: Directory;
     helperManager: HelperManager;
-    dependencyManager: DependencyManager;
 }): Promise<void> {
     const serviceFile = serviceInterface.getSourceFile();
 
-    const generatedEndpointTypes = generateHttpEndpointTypes({
-        endpoint,
+    const generatedEndpointTypes = modelContext.getGeneratedHttpServiceTypes({
         serviceName: serviceDefinition.name,
-        modelContext,
-        dependencyManager,
+        endpointId: endpoint.endpointId,
     });
 
     const parameters: OptionalKind<ParameterDeclarationStructure>[] =
@@ -49,10 +44,9 @@ export async function addEndpointToService({
                       {
                           name: ClientConstants.HttpService.Endpoint.Signature.REQUEST_PARAMETER,
                           type: getTextOfTsNode(
-                              getHttpServiceTypeReference({
+                              modelContext.getReferenceToHttpServiceType({
                                   reference: generatedEndpointTypes.request.wrapper.reference,
                                   referencedIn: serviceFile,
-                                  modelContext,
                               })
                           ),
                       },
@@ -62,10 +56,9 @@ export async function addEndpointToService({
                       {
                           name: ClientConstants.HttpService.Endpoint.Signature.REQUEST_PARAMETER,
                           type: getTextOfTsNode(
-                              getHttpServiceTypeReference({
+                              modelContext.getReferenceToHttpServiceType({
                                   reference: generatedEndpointTypes.request.body,
                                   referencedIn: serviceFile,
-                                  modelContext,
                               })
                           ),
                       },
@@ -75,10 +68,9 @@ export async function addEndpointToService({
 
     const returnType = getTextOfTsNode(
         ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
-            getHttpServiceTypeReference({
+            modelContext.getReferenceToHttpServiceType({
                 reference: generatedEndpointTypes.response.reference,
                 referencedIn: serviceFile,
-                modelContext,
             }),
         ])
     );

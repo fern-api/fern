@@ -48,6 +48,7 @@ async function generateClientFiles({
     const modelContext = generateModelFiles({
         modelDirectory: directory.createDirectory("model"),
         intermediateRepresentation,
+        dependencyManager,
     });
 
     const encodersDirectory = getOrCreateDirectory(directory, "encoders");

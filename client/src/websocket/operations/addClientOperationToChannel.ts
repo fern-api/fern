@@ -1,10 +1,10 @@
 import { WebSocketChannel, WebSocketOperation } from "@fern-api/api";
-import { DependencyManager, getTextOfTsNode, ModelContext } from "@fern-typescript/commons";
 import {
+    DependencyManager,
     GeneratedWebSocketOperationTypes,
-    generateWebSocketOperationTypes,
-    getWebSocketServiceTypeReference,
-} from "@fern-typescript/service-types";
+    getTextOfTsNode,
+    ModelContext,
+} from "@fern-typescript/commons";
 import {
     ClassDeclaration,
     InterfaceDeclaration,
@@ -41,11 +41,9 @@ export function addClientOperationToChannel({
 }: addClientOperationToChannel.Args): addClientOperationToChannel.Return {
     const channelFile = channelClass.getSourceFile();
 
-    const generatedOperationTypes = generateWebSocketOperationTypes({
-        channel,
-        operation,
-        modelContext,
-        dependencyManager,
+    const generatedOperationTypes = modelContext.getGeneratedWebSocketChannelTypes({
+        channelName: channel.name,
+        operationId: operation.operationId,
     });
 
     const parameters: OptionalKind<ParameterDeclarationStructure>[] =
@@ -54,10 +52,9 @@ export function addClientOperationToChannel({
                   {
                       name: ClientConstants.WebsocketChannel.Operation.Signature.REQUEST_PARAMETER,
                       type: getTextOfTsNode(
-                          getWebSocketServiceTypeReference({
+                          modelContext.getReferenceToWebSocketChannelType({
                               reference: generatedOperationTypes.request.body,
                               referencedIn: channelFile,
-                              modelContext,
                           })
                       ),
                   },
@@ -66,10 +63,9 @@ export function addClientOperationToChannel({
 
     const returnType = getTextOfTsNode(
         ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
-            getWebSocketServiceTypeReference({
+            modelContext.getReferenceToWebSocketChannelType({
                 reference: generatedOperationTypes.response.reference,
                 referencedIn: channelFile,
-                modelContext,
             }),
         ])
     );

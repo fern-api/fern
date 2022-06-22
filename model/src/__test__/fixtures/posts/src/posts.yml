@@ -54,7 +54,7 @@ services:
             ok:
               type:
                 properties:
-                  a: number
+                  a: integer
             failed:
               errors:
                 - PostNotFoundError
