@@ -22,8 +22,8 @@ yarn-error.log*
 lerna-debug.log*
 
 # yarn v2
-.pnp.*
 .yarn/*
+!.yarn/cache
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
