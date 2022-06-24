@@ -1,7 +1,7 @@
 import { HttpEndpoint, HttpService } from "@fern-api/api";
 import { GeneratedHttpEndpointTypes, getTextOfTsNode, ModelContext } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
-import { Directory, SourceFile, StatementStructures, WriterFunction } from "ts-morph";
+import { SourceFile, StatementStructures, WriterFunction } from "ts-morph";
 import { generateConstructQueryParams } from "./generateConstructQueryParams";
 import { generateFetcherCall } from "./generateFetcherCall";
 import { generateReturnResponse } from "./generateReturnResponse";
@@ -13,7 +13,6 @@ export async function generateEndpointMethodBody({
     serviceDefinition,
     helperManager,
     modelContext,
-    encodersDirectory,
 }: {
     endpoint: HttpEndpoint;
     endpointTypes: GeneratedHttpEndpointTypes;
@@ -21,7 +20,6 @@ export async function generateEndpointMethodBody({
     serviceDefinition: HttpService;
     helperManager: HelperManager;
     modelContext: ModelContext;
-    encodersDirectory: Directory;
 }): Promise<(StatementStructures | WriterFunction | string)[]> {
     const queryParameterStatements = generateConstructQueryParams({ endpoint, modelContext });
 
@@ -42,7 +40,6 @@ export async function generateEndpointMethodBody({
             serviceDefinition,
             includeQueryParams: queryParameterStatements.length > 0,
             helperManager,
-            encodersDirectory,
         }),
         (writer) => {
             writer.newLine();
@@ -55,7 +52,6 @@ export async function generateEndpointMethodBody({
                 serviceDefinition,
                 endpoint,
                 helperManager,
-                encodersDirectory,
             })
         ),
     ];

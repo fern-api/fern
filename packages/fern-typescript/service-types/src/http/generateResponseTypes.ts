@@ -1,13 +1,6 @@
 import { HttpEndpoint, TypeName } from "@fern-api/api";
-import {
-    DependencyManager,
-    GeneratedHttpEndpointTypes,
-    getTextOfTsKeyword,
-    ModelContext,
-} from "@fern-typescript/commons";
-import { ts } from "ts-morph";
+import { DependencyManager, GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/commons";
 import { generateResponse } from "../commons/generate-response/generateResponse";
-import { ServiceTypesConstants } from "../constants";
 import { createHttpServiceTypeFileWriter } from "./createHttpServiceTypeFileWriter";
 
 export declare namespace generateResponseTypes {
@@ -40,12 +33,6 @@ export function generateResponseTypes({
                 reference,
                 referencedIn,
             }),
-        additionalProperties: [
-            {
-                name: ServiceTypesConstants.HttpEndpint.Response.Properties.STATUS_CODE,
-                type: getTextOfTsKeyword(ts.SyntaxKind.NumberKeyword),
-            },
-        ],
         writeServiceTypeFile: createHttpServiceTypeFileWriter({ modelContext, serviceName, endpoint }),
     });
 

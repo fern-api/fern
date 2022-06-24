@@ -1,8 +1,8 @@
 import { WebSocketChannel } from "@fern-api/api";
 import {
     createDirectoriesForFernFilepath,
+    createSourceFileAndExportFromModule,
     DependencyManager,
-    exportFromModule,
     getTextOfTsKeyword,
     getTextOfTsNode,
     maybeAddDocs,
@@ -32,7 +32,7 @@ export function generateWebSocketChannel({
 }: {
     servicesDirectory: Directory;
     modelContext: ModelContext;
-    encodersDirectory: Directory;
+
     channel: WebSocketChannel;
     helperManager: HelperManager;
     dependencyManager: DependencyManager;
@@ -57,8 +57,7 @@ function generateChannel({
     dependencyManager: DependencyManager;
 }): void {
     const packageDirectory = createDirectoriesForFernFilepath(servicesDirectory, channel.name.fernFilepath);
-    const channelFile = packageDirectory.createSourceFile(`${channel.name.name}.ts`);
-    exportFromModule(channelFile);
+    const channelFile = createSourceFileAndExportFromModule(packageDirectory, channel.name.name);
 
     const channelNamespace = addNamespace({ file: channelFile, channel });
 

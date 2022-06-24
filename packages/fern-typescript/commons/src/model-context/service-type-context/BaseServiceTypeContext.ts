@@ -1,7 +1,8 @@
 import { FernFilepath } from "@fern-api/api";
 import { Directory, SourceFile, ts } from "ts-morph";
-import { BaseModelContext, ModelItem } from "../BaseModelContext";
-import { ImportStrategy } from "../utils/ImportStrategy";
+import { ImportStrategy } from "../../import-export/ImportStrategy";
+import { BaseModelContext } from "../base-model-context/BaseModelContext";
+import { ModelItem } from "../base-model-context/types";
 
 export interface ServiceTypeMetadata {
     typeName: string;
@@ -15,6 +16,14 @@ interface ServiceTypeModelItem extends ModelItem {
 
 export declare namespace BaseServiceTypeContext {
     namespace getReferenceToServiceType {
+        interface Args {
+            metadata: ServiceTypeMetadata;
+            referencedIn: SourceFile;
+            importStrategy?: ImportStrategy;
+        }
+    }
+
+    namespace getReferenceToServiceTypeUtils {
         interface Args {
             metadata: ServiceTypeMetadata;
             referencedIn: SourceFile;
@@ -36,11 +45,7 @@ export class BaseServiceTypeContext extends BaseModelContext<ServiceTypeModelIte
 
     protected addServiceTypeDefinition(metadata: ServiceTypeMetadata, withFile: (file: SourceFile) => void): void {
         this.addFile({
-            item: {
-                typeName: metadata.typeName,
-                fernFilepath: metadata.fernFilepath,
-                metadata,
-            },
+            item: convertToModelItem(metadata),
             withFile,
         });
     }
@@ -50,14 +55,30 @@ export class BaseServiceTypeContext extends BaseModelContext<ServiceTypeModelIte
         importStrategy,
         referencedIn,
     }: BaseServiceTypeContext.getReferenceToServiceType.Args): ts.TypeReferenceNode {
-        return this.getReferenceToTypeInModel({
-            item: {
-                typeName: metadata.typeName,
-                fernFilepath: metadata.fernFilepath,
-                metadata,
-            },
+        return this.getReferenceToModelItemType({
+            item: convertToModelItem(metadata),
             importStrategy,
             referencedIn,
         });
     }
+
+    protected getReferenceToServiceTypeUtils({
+        metadata,
+        referencedIn,
+        importStrategy,
+    }: BaseServiceTypeContext.getReferenceToServiceTypeUtils.Args): ts.Expression {
+        return this.getReferenceToModelItemValue({
+            item: convertToModelItem(metadata),
+            referencedIn,
+            importStrategy,
+        });
+    }
+}
+
+function convertToModelItem(metadata: ServiceTypeMetadata): ServiceTypeModelItem {
+    return {
+        typeName: metadata.typeName,
+        fernFilepath: metadata.fernFilepath,
+        metadata,
+    };
 }

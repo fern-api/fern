@@ -1,16 +1,8 @@
 import { HttpEndpoint, HttpService } from "@fern-api/api";
 import { getTextOfTsNode, ModelContext } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
-import {
-    ClassDeclaration,
-    Directory,
-    InterfaceDeclaration,
-    OptionalKind,
-    ParameterDeclarationStructure,
-    Scope,
-    ts,
-} from "ts-morph";
-import { ClientConstants } from "../../constants";
+import { getHttpRequestParameters } from "@fern-typescript/service-types";
+import { ClassDeclaration, InterfaceDeclaration, Scope, ts } from "ts-morph";
 import { generateEndpointMethodBody } from "./endpoint-method-body/generateEndpointMethodBody";
 
 export async function addEndpointToService({
@@ -19,7 +11,6 @@ export async function addEndpointToService({
     serviceClass,
     serviceDefinition,
     modelContext,
-    encodersDirectory,
     helperManager,
 }: {
     endpoint: HttpEndpoint;
@@ -27,7 +18,6 @@ export async function addEndpointToService({
     serviceClass: ClassDeclaration;
     serviceDefinition: HttpService;
     modelContext: ModelContext;
-    encodersDirectory: Directory;
     helperManager: HelperManager;
 }): Promise<void> {
     const serviceFile = serviceInterface.getSourceFile();
@@ -37,34 +27,7 @@ export async function addEndpointToService({
         endpointId: endpoint.endpointId,
     });
 
-    const parameters: OptionalKind<ParameterDeclarationStructure>[] =
-        generatedEndpointTypes.request != null
-            ? generatedEndpointTypes.request.wrapper != null
-                ? [
-                      {
-                          name: ClientConstants.HttpService.Endpoint.Signature.REQUEST_PARAMETER,
-                          type: getTextOfTsNode(
-                              modelContext.getReferenceToHttpServiceType({
-                                  reference: generatedEndpointTypes.request.wrapper.reference,
-                                  referencedIn: serviceFile,
-                              })
-                          ),
-                      },
-                  ]
-                : generatedEndpointTypes.request.body != null
-                ? [
-                      {
-                          name: ClientConstants.HttpService.Endpoint.Signature.REQUEST_PARAMETER,
-                          type: getTextOfTsNode(
-                              modelContext.getReferenceToHttpServiceType({
-                                  reference: generatedEndpointTypes.request.body,
-                                  referencedIn: serviceFile,
-                              })
-                          ),
-                      },
-                  ]
-                : []
-            : [];
+    const parameters = getHttpRequestParameters({ generatedEndpointTypes, modelContext, file: serviceFile });
 
     const returnType = getTextOfTsNode(
         ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
@@ -94,7 +57,6 @@ export async function addEndpointToService({
             serviceDefinition,
             helperManager,
             modelContext,
-            encodersDirectory,
         }),
     });
 }

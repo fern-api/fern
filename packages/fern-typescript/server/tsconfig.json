@@ -2,5 +2,17 @@
   "extends": "../../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib/cjs", "rootDir": "src", "module": "CommonJS" },
   "include": ["./src"],
-  "references": [{ "path": "../../compiler/ir-types/fern-ir-typescript/tsconfig.json" }]
+  "exclude": ["./src/**/__test__/**/generated"],
+  "references": [
+    { "path": "../../commons/tsconfig.json" },
+    { "path": "../../compiler/ir-types/fern-ir-typescript/tsconfig.json" },
+    { "path": "../commons/tsconfig.json" },
+    { "path": "../encoders/tsconfig.json" },
+    { "path": "../helpers/helper-manager/tsconfig.json" },
+    { "path": "../helpers/utils/tsconfig.json" },
+    { "path": "../model/tsconfig.json" },
+    { "path": "../service-types/tsconfig.json" },
+    { "path": "../testing-utils/tsconfig.json" },
+    { "path": "../types/tsconfig.json" }
+  ]
 }

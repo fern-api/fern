@@ -20,14 +20,22 @@ types:
     extends: commons.WithDocs
     properties:
       endpointId: EndpointId
-      path: string
       method: HttpMethod
       headers: list<HttpHeader>
+      path: HttpPath
       pathParameters: list<PathParameter>
       queryParameters: list<QueryParameter>
       request: HttpRequest
       response: HttpResponse
       auth: HttpAuth
+  HttpPath:
+    properties:
+      head: string
+      parts: list<HttpPathPart>
+  HttpPathPart:
+    properties:
+      pathParameter: string
+      tail: string
   HttpMethod:
     enum:
       - GET

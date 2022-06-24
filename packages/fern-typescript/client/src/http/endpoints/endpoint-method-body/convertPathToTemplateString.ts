@@ -1,30 +1,23 @@
+import { HttpPath } from "@fern-api/api";
 import { ts } from "ts-morph";
 import { ClientConstants } from "../../../constants";
 
-const TEMPLATE_SPAN_REGEX = /\{(.*?)\}([^{]*)/g;
-
-export function convertPathToTemplateString(path: string): ts.Expression {
-    const head = path.slice(0, path.indexOf("{"));
-    const matches = [...path.matchAll(TEMPLATE_SPAN_REGEX)];
-
-    if (matches.length === 0) {
-        return ts.factory.createStringLiteral(path);
+export function convertPathToTemplateString(path: HttpPath): ts.Expression {
+    if (path.parts.length === 0) {
+        return ts.factory.createStringLiteral(path.head);
     }
 
     return ts.factory.createTemplateExpression(
-        ts.factory.createTemplateHead(head),
-        matches.map(([, expression, literal], index) => {
-            if (expression == null || literal == null) {
-                throw new Error("Failed to generate template string for path: " + path);
-            }
+        ts.factory.createTemplateHead(path.head),
+        path.parts.map((part, index) => {
             return ts.factory.createTemplateSpan(
                 ts.factory.createPropertyAccessExpression(
                     ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Signature.REQUEST_PARAMETER),
-                    ts.factory.createIdentifier(expression)
+                    ts.factory.createIdentifier(part.pathParameter)
                 ),
-                index === matches.length - 1
-                    ? ts.factory.createTemplateTail(literal)
-                    : ts.factory.createTemplateMiddle(literal)
+                index === path.parts.length - 1
+                    ? ts.factory.createTemplateTail(part.tail)
+                    : ts.factory.createTemplateMiddle(part.tail)
             );
         })
     );

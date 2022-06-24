@@ -27,15 +27,23 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/api": "workspace:*",
-    "@types/express": "^4.17.13",
-    "express": "^4.18.1",
+    "@fern-api/commons": "workspace:*",
+    "@fern-typescript/commons": "workspace:*",
+    "@fern-typescript/encoders": "workspace:*",
+    "@fern-typescript/helper-manager": "workspace:*",
+    "@fern-typescript/helper-utils": "workspace:*",
+    "@fern-typescript/model": "workspace:*",
+    "@fern-typescript/service-types": "workspace:*",
+    "@fern-typescript/types": "workspace:*",
+    "memfs": "^3.4.1",
     "ts-morph": "^14.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",
     "@babel/preset-env": "^7.18.2",
     "@babel/preset-typescript": "^7.17.12",
+    "@fern-api/api": "workspace:*",
+    "@fern-typescript/testing-utils": "workspace:*",
     "@types/jest": "^28.1.2",
     "@types/node": "^17.0.33",
     "depcheck": "^1.4.3",

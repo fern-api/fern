@@ -13,6 +13,7 @@
     { "path": "../commons/tsconfig.json" },
     { "path": "../helpers/helper-manager/tsconfig.json" },
     { "path": "../model/tsconfig.json" },
+    { "path": "../server/tsconfig.json" },
     { "path": "../testing-utils/tsconfig.json" }
   ]
 }

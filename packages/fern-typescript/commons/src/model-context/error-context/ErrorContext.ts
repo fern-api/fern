@@ -1,13 +1,21 @@
-import { ErrorDefinition, ErrorName, IntermediateRepresentation } from "@fern-api/api";
+import { ErrorDefinition, ErrorName, IntermediateRepresentation, TypeName } from "@fern-api/api";
 import { Directory, SourceFile, ts } from "ts-morph";
-import { BaseModelContext } from "../BaseModelContext";
-import { ImportStrategy } from "../utils/ImportStrategy";
+import { ImportStrategy } from "../../import-export/ImportStrategy";
+import { BaseModelContext } from "../base-model-context/BaseModelContext";
 import { ErrorResolver } from "./ErrorResolver";
 
 export declare namespace ErrorContext {
     namespace getReferenceToError {
         interface Args {
             errorName: ErrorName;
+            referencedIn: SourceFile;
+            importStrategy?: ImportStrategy;
+        }
+    }
+
+    namespace getReferenceToErrorUtils {
+        interface Args {
+            errorName: TypeName;
             referencedIn: SourceFile;
             importStrategy?: ImportStrategy;
         }
@@ -45,7 +53,7 @@ export class ErrorContext extends BaseModelContext {
         importStrategy,
         referencedIn,
     }: ErrorContext.getReferenceToError.Args): ts.TypeReferenceNode {
-        return this.getReferenceToTypeInModel({
+        return this.getReferenceToModelItemType({
             item: {
                 typeName: errorName.name,
                 fernFilepath: errorName.fernFilepath,
@@ -55,7 +63,22 @@ export class ErrorContext extends BaseModelContext {
         });
     }
 
-    public resolveErrorName(errorName: ErrorName): ErrorDefinition {
-        return this.errorResolver.resolveErrorName(errorName);
+    public getReferenceToErrorUtils({
+        errorName,
+        referencedIn,
+        importStrategy,
+    }: ErrorContext.getReferenceToErrorUtils.Args): ts.Expression {
+        return this.getReferenceToModelItemValue({
+            item: {
+                typeName: errorName.name,
+                fernFilepath: errorName.fernFilepath,
+            },
+            referencedIn,
+            importStrategy,
+        });
+    }
+
+    public getErrorDefinitionFromName(errorName: ErrorName): ErrorDefinition {
+        return this.errorResolver.getErrorDefinitionFromName(errorName);
     }
 }

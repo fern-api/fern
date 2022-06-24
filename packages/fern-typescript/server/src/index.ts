@@ -1,1 +1,1 @@
-export { generateServerFiles } from "./generate";
+export { generateServerProject } from "./generateServerProject";

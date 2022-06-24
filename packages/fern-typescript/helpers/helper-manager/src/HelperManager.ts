@@ -2,7 +2,6 @@ import { Encoding } from "@fern-api/api";
 import { GeneratorHelperReference, GeneratorHelpers } from "@fern-api/generator-runner";
 import { Encoder, FernTypescriptHelper } from "@fern-typescript/helper-utils";
 import { helper as JsonEncodingHelper } from "@fern-typescript/json-encoding-helper";
-import { loadHelperFromDisk } from "./loadHelperFromDisk";
 
 type HelperName = string;
 type HelperVersion = string;
@@ -22,18 +21,8 @@ export class HelperManager {
     }
 
     public async getOrLoadHelper(helperReference: GeneratorHelperReference): Promise<FernTypescriptHelper> {
-        let helpersWithName = this.loadedHelpers[helperReference.name];
-        if (helpersWithName == null) {
-            helpersWithName = {};
-            this.loadedHelpers[helperReference.name] = helpersWithName;
-        }
-
-        let helperAtVersion = helpersWithName[helperReference.version];
-        if (helperAtVersion == null) {
-            helperAtVersion = await loadHelperFromDisk(helperReference.absolutePath);
-            helpersWithName[helperReference.version] = helperAtVersion;
-        }
-
+        const helpersWithName = (this.loadedHelpers[helperReference.name] ??= {});
+        const helperAtVersion = (helpersWithName[helperReference.version] ??= {});
         return helperAtVersion;
     }
 
