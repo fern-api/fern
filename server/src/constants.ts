@@ -3,6 +3,14 @@ export const ServerConstants = {
         DEFAULT_IMPORT: "express",
         EXPRESS_TYPE: "Express",
 
+        StaticMethods: {
+            JSON_MIDDLEWARE: "json",
+        },
+
+        AppMethods: {
+            USE: "use",
+        },
+
         RequestProperties: {
             PARAMS: "params",
             QUERY_PARAMS: "query",

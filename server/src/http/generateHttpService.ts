@@ -135,26 +135,11 @@ function addMiddleware({
                                     getExpressType({ file: serviceFile, dependencyManager }),
                                     undefined,
                                     ts.factory.createBlock(
-                                        [
-                                            ts.factory.createVariableStatement(
-                                                undefined,
-                                                ts.factory.createVariableDeclarationList(
-                                                    [
-                                                        ts.factory.createVariableDeclaration(
-                                                            ts.factory.createIdentifier(
-                                                                ServerConstants.Middleware.APP_VARIABLE_NAME
-                                                            ),
-                                                            undefined,
-                                                            undefined,
-                                                            getExpressCall({ file: serviceFile, dependencyManager })
-                                                        ),
-                                                    ],
-                                                    ts.NodeFlags.Const
-                                                )
-                                            ),
-                                            ...expressRouteStatements,
-                                            ts.factory.createReturnStatement(ts.factory.createIdentifier("app")),
-                                        ],
+                                        generateMiddlewareBody({
+                                            serviceFile,
+                                            dependencyManager,
+                                            expressRouteStatements,
+                                        }),
                                         true
                                     )
                                 )
@@ -167,4 +152,51 @@ function addMiddleware({
         ],
         isExported: true,
     });
+}
+function generateMiddlewareBody({
+    serviceFile,
+    dependencyManager,
+    expressRouteStatements,
+}: {
+    serviceFile: SourceFile;
+    dependencyManager: DependencyManager;
+    expressRouteStatements: ts.Statement[];
+}): ts.Statement[] {
+    return [
+        ts.factory.createVariableStatement(
+            undefined,
+            ts.factory.createVariableDeclarationList(
+                [
+                    ts.factory.createVariableDeclaration(
+                        ts.factory.createIdentifier(ServerConstants.Middleware.APP_VARIABLE_NAME),
+                        undefined,
+                        undefined,
+                        getExpressCall({ file: serviceFile, dependencyManager })
+                    ),
+                ],
+                ts.NodeFlags.Const
+            )
+        ),
+        ts.factory.createExpressionStatement(
+            ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(
+                    ts.factory.createIdentifier(ServerConstants.Middleware.APP_VARIABLE_NAME),
+                    ts.factory.createIdentifier(ServerConstants.Express.AppMethods.USE)
+                ),
+                undefined,
+                [
+                    ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier(ServerConstants.Express.DEFAULT_IMPORT),
+                            ts.factory.createIdentifier(ServerConstants.Express.StaticMethods.JSON_MIDDLEWARE)
+                        ),
+                        undefined,
+                        []
+                    ),
+                ]
+            )
+        ),
+        ...expressRouteStatements,
+        ts.factory.createReturnStatement(ts.factory.createIdentifier("app")),
+    ];
 }

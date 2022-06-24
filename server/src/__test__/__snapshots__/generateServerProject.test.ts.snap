@@ -375,6 +375,7 @@ export interface PostsService {
 export const PostsService = {
     expressMiddleware: (impl: PostsService): Express => {
         const app = express();
+        app.use(express.json());
         app.post(\\"/posts/\\", async (request, response) => {
             const result = await impl.createPost(request.body);
             if (result.ok) {
