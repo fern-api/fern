@@ -168,4 +168,8 @@ export class TypeContext extends BaseModelContext {
     public getTypeDefinitionFromName(typeName: TypeName): Type {
         return this.typeResolver.getTypeDefinitionFromName(typeName);
     }
+
+    public doesTypeExist(typeName: TypeName): boolean {
+        return this.typeResolver.doesTypeExist(typeName);
+    }
 }

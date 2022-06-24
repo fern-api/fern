@@ -2,6 +2,7 @@ import { ServiceName, WebSocketOperation } from "@fern-api/api";
 import { ModelContext, WebSocketChannelTypeMetadata } from "@fern-typescript/model-context";
 import { upperFirst } from "lodash";
 import { ServiceTypeFileWriter } from "../commons/service-type-reference/generateServiceTypeReference";
+import { getServiceTypeName } from "../commons/service-type-reference/getServiceTypeName";
 
 export function createWebSocketChannelTypeFileWriter({
     modelContext,
@@ -13,7 +14,11 @@ export function createWebSocketChannelTypeFileWriter({
     operation: WebSocketOperation;
 }): ServiceTypeFileWriter<WebSocketChannelTypeMetadata> {
     return (typeName, withFile) => {
-        const transformedTypeName = `_${upperFirst(operationId)}${typeName}`;
+        const transformedTypeName = getServiceTypeName({
+            proposedName: `${upperFirst(operationId)}${typeName}`,
+            fernFilepath: channelName.fernFilepath,
+            modelContext,
+        });
         const metadata: WebSocketChannelTypeMetadata = {
             channelName,
             operationId,
