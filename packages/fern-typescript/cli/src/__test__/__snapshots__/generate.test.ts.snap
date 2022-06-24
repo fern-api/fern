@@ -17,6 +17,26 @@ Array [
               Object {
                 "contents": Array [
                   Object {
+                    "contents": "export type _SendTestSubmissionUpdateErrorBody = never;
+
+export declare namespace _SendTestSubmissionUpdateErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _SendTestSubmissionUpdateErrorBody = {
+    _visit: <Result>(_value: _SendTestSubmissionUpdateErrorBody, visitor: _SendTestSubmissionUpdateErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _SendTestSubmissionUpdateErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_SendTestSubmissionUpdateErrorBody.ts",
+                    "type": "file",
+                  },
+                  Object {
                     "contents": "import * as model from \\"../../..\\";
 
 export interface _SendTestSubmissionUpdateRequest {
@@ -28,21 +48,42 @@ export interface _SendTestSubmissionUpdateRequest {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type _SendTestSubmissionUpdateResponse = _SendTestSubmissionUpdateResponse.SuccessResponse | _SendTestSubmissionUpdateResponse.ErrorResponse;
+                    "contents": "import * as model from \\"../../..\\";
+
+export type _SendTestSubmissionUpdateResponse = _SendTestSubmissionUpdateResponse.SuccessResponse | _SendTestSubmissionUpdateResponse.ErrorResponse;
 
 namespace _SendTestSubmissionUpdateResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.admin._SendTestSubmissionUpdateErrorBody;
     }
 }
 ",
                     "name": "_SendTestSubmissionUpdateResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _SendWorkspaceSubmissionUpdateErrorBody = never;
+
+export declare namespace _SendWorkspaceSubmissionUpdateErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _SendWorkspaceSubmissionUpdateErrorBody = {
+    _visit: <Result>(_value: _SendWorkspaceSubmissionUpdateErrorBody, visitor: _SendWorkspaceSubmissionUpdateErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _SendWorkspaceSubmissionUpdateErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_SendWorkspaceSubmissionUpdateErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -57,21 +98,42 @@ export interface _SendWorkspaceSubmissionUpdateRequest {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type _SendWorkspaceSubmissionUpdateResponse = _SendWorkspaceSubmissionUpdateResponse.SuccessResponse | _SendWorkspaceSubmissionUpdateResponse.ErrorResponse;
+                    "contents": "import * as model from \\"../../..\\";
+
+export type _SendWorkspaceSubmissionUpdateResponse = _SendWorkspaceSubmissionUpdateResponse.SuccessResponse | _SendWorkspaceSubmissionUpdateResponse.ErrorResponse;
 
 namespace _SendWorkspaceSubmissionUpdateResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.admin._SendWorkspaceSubmissionUpdateErrorBody;
     }
 }
 ",
                     "name": "_SendWorkspaceSubmissionUpdateResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _StoreTracedTestCaseErrorBody = never;
+
+export declare namespace _StoreTracedTestCaseErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _StoreTracedTestCaseErrorBody = {
+    _visit: <Result>(_value: _StoreTracedTestCaseErrorBody, visitor: _StoreTracedTestCaseErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _StoreTracedTestCaseErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_StoreTracedTestCaseErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -98,21 +160,42 @@ export interface _StoreTracedTestCaseRequestBody {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type _StoreTracedTestCaseResponse = _StoreTracedTestCaseResponse.SuccessResponse | _StoreTracedTestCaseResponse.ErrorResponse;
+                    "contents": "import * as model from \\"../../..\\";
+
+export type _StoreTracedTestCaseResponse = _StoreTracedTestCaseResponse.SuccessResponse | _StoreTracedTestCaseResponse.ErrorResponse;
 
 namespace _StoreTracedTestCaseResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.admin._StoreTracedTestCaseErrorBody;
     }
 }
 ",
                     "name": "_StoreTracedTestCaseResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _StoreTracedTestCaseV2ErrorBody = never;
+
+export declare namespace _StoreTracedTestCaseV2ErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _StoreTracedTestCaseV2ErrorBody = {
+    _visit: <Result>(_value: _StoreTracedTestCaseV2ErrorBody, visitor: _StoreTracedTestCaseV2ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _StoreTracedTestCaseV2ErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_StoreTracedTestCaseV2ErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -128,21 +211,42 @@ export interface _StoreTracedTestCaseV2Request {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type _StoreTracedTestCaseV2Response = _StoreTracedTestCaseV2Response.SuccessResponse | _StoreTracedTestCaseV2Response.ErrorResponse;
+                    "contents": "import * as model from \\"../../..\\";
+
+export type _StoreTracedTestCaseV2Response = _StoreTracedTestCaseV2Response.SuccessResponse | _StoreTracedTestCaseV2Response.ErrorResponse;
 
 namespace _StoreTracedTestCaseV2Response {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.admin._StoreTracedTestCaseV2ErrorBody;
     }
 }
 ",
                     "name": "_StoreTracedTestCaseV2Response.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _StoreTracedWorkspaceErrorBody = never;
+
+export declare namespace _StoreTracedWorkspaceErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _StoreTracedWorkspaceErrorBody = {
+    _visit: <Result>(_value: _StoreTracedWorkspaceErrorBody, visitor: _StoreTracedWorkspaceErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _StoreTracedWorkspaceErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_StoreTracedWorkspaceErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -168,21 +272,42 @@ export interface _StoreTracedWorkspaceRequestBody {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type _StoreTracedWorkspaceResponse = _StoreTracedWorkspaceResponse.SuccessResponse | _StoreTracedWorkspaceResponse.ErrorResponse;
+                    "contents": "import * as model from \\"../../..\\";
+
+export type _StoreTracedWorkspaceResponse = _StoreTracedWorkspaceResponse.SuccessResponse | _StoreTracedWorkspaceResponse.ErrorResponse;
 
 namespace _StoreTracedWorkspaceResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.admin._StoreTracedWorkspaceErrorBody;
     }
 }
 ",
                     "name": "_StoreTracedWorkspaceResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _StoreTracedWorkspaceV2ErrorBody = never;
+
+export declare namespace _StoreTracedWorkspaceV2ErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _StoreTracedWorkspaceV2ErrorBody = {
+    _visit: <Result>(_value: _StoreTracedWorkspaceV2ErrorBody, visitor: _StoreTracedWorkspaceV2ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _StoreTracedWorkspaceV2ErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_StoreTracedWorkspaceV2ErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -197,21 +322,42 @@ export interface _StoreTracedWorkspaceV2Request {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type _StoreTracedWorkspaceV2Response = _StoreTracedWorkspaceV2Response.SuccessResponse | _StoreTracedWorkspaceV2Response.ErrorResponse;
+                    "contents": "import * as model from \\"../../..\\";
+
+export type _StoreTracedWorkspaceV2Response = _StoreTracedWorkspaceV2Response.SuccessResponse | _StoreTracedWorkspaceV2Response.ErrorResponse;
 
 namespace _StoreTracedWorkspaceV2Response {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.admin._StoreTracedWorkspaceV2ErrorBody;
     }
 }
 ",
                     "name": "_StoreTracedWorkspaceV2Response.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _UpdateTestSubmissionStatusErrorBody = never;
+
+export declare namespace _UpdateTestSubmissionStatusErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _UpdateTestSubmissionStatusErrorBody = {
+    _visit: <Result>(_value: _UpdateTestSubmissionStatusErrorBody, visitor: _UpdateTestSubmissionStatusErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _UpdateTestSubmissionStatusErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_UpdateTestSubmissionStatusErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -226,21 +372,42 @@ export interface _UpdateTestSubmissionStatusRequest {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type _UpdateTestSubmissionStatusResponse = _UpdateTestSubmissionStatusResponse.SuccessResponse | _UpdateTestSubmissionStatusResponse.ErrorResponse;
+                    "contents": "import * as model from \\"../../..\\";
+
+export type _UpdateTestSubmissionStatusResponse = _UpdateTestSubmissionStatusResponse.SuccessResponse | _UpdateTestSubmissionStatusResponse.ErrorResponse;
 
 namespace _UpdateTestSubmissionStatusResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.admin._UpdateTestSubmissionStatusErrorBody;
     }
 }
 ",
                     "name": "_UpdateTestSubmissionStatusResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _UpdateWorkspaceSubmissionStatusErrorBody = never;
+
+export declare namespace _UpdateWorkspaceSubmissionStatusErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _UpdateWorkspaceSubmissionStatusErrorBody = {
+    _visit: <Result>(_value: _UpdateWorkspaceSubmissionStatusErrorBody, visitor: _UpdateWorkspaceSubmissionStatusErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _UpdateWorkspaceSubmissionStatusErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_UpdateWorkspaceSubmissionStatusErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -255,17 +422,18 @@ export interface _UpdateWorkspaceSubmissionStatusRequest {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type _UpdateWorkspaceSubmissionStatusResponse = _UpdateWorkspaceSubmissionStatusResponse.SuccessResponse | _UpdateWorkspaceSubmissionStatusResponse.ErrorResponse;
+                    "contents": "import * as model from \\"../../..\\";
+
+export type _UpdateWorkspaceSubmissionStatusResponse = _UpdateWorkspaceSubmissionStatusResponse.SuccessResponse | _UpdateWorkspaceSubmissionStatusResponse.ErrorResponse;
 
 namespace _UpdateWorkspaceSubmissionStatusResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.admin._UpdateWorkspaceSubmissionStatusErrorBody;
     }
 }
 ",
@@ -274,22 +442,30 @@ namespace _UpdateWorkspaceSubmissionStatusResponse {
                   },
                   Object {
                     "contents": "export * from \\"./_UpdateTestSubmissionStatusRequest\\";
+export * from \\"./_UpdateTestSubmissionStatusErrorBody\\";
 export * from \\"./_UpdateTestSubmissionStatusResponse\\";
 export * from \\"./_SendTestSubmissionUpdateRequest\\";
+export * from \\"./_SendTestSubmissionUpdateErrorBody\\";
 export * from \\"./_SendTestSubmissionUpdateResponse\\";
 export * from \\"./_UpdateWorkspaceSubmissionStatusRequest\\";
+export * from \\"./_UpdateWorkspaceSubmissionStatusErrorBody\\";
 export * from \\"./_UpdateWorkspaceSubmissionStatusResponse\\";
 export * from \\"./_SendWorkspaceSubmissionUpdateRequest\\";
+export * from \\"./_SendWorkspaceSubmissionUpdateErrorBody\\";
 export * from \\"./_SendWorkspaceSubmissionUpdateResponse\\";
 export * from \\"./_StoreTracedTestCaseRequestBody\\";
 export * from \\"./_StoreTracedTestCaseRequest\\";
+export * from \\"./_StoreTracedTestCaseErrorBody\\";
 export * from \\"./_StoreTracedTestCaseResponse\\";
 export * from \\"./_StoreTracedTestCaseV2Request\\";
+export * from \\"./_StoreTracedTestCaseV2ErrorBody\\";
 export * from \\"./_StoreTracedTestCaseV2Response\\";
 export * from \\"./_StoreTracedWorkspaceRequestBody\\";
 export * from \\"./_StoreTracedWorkspaceRequest\\";
+export * from \\"./_StoreTracedWorkspaceErrorBody\\";
 export * from \\"./_StoreTracedWorkspaceResponse\\";
 export * from \\"./_StoreTracedWorkspaceV2Request\\";
+export * from \\"./_StoreTracedWorkspaceV2ErrorBody\\";
 export * from \\"./_StoreTracedWorkspaceV2Response\\";
 ",
                     "name": "index.ts",
@@ -1140,6 +1316,26 @@ export * from \\"./Language\\";
               Object {
                 "contents": Array [
                   Object {
+                    "contents": "export type _GetHomepageProblemsErrorBody = never;
+
+export declare namespace _GetHomepageProblemsErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _GetHomepageProblemsErrorBody = {
+    _visit: <Result>(_value: _GetHomepageProblemsErrorBody, visitor: _GetHomepageProblemsErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _GetHomepageProblemsErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_GetHomepageProblemsErrorBody.ts",
+                    "type": "file",
+                  },
+                  Object {
                     "contents": "import * as model from \\"../../..\\";
 
 export type _GetHomepageProblemsResponse = _GetHomepageProblemsResponse.SuccessResponse | _GetHomepageProblemsResponse.ErrorResponse;
@@ -1147,13 +1343,12 @@ export type _GetHomepageProblemsResponse = _GetHomepageProblemsResponse.SuccessR
 namespace _GetHomepageProblemsResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.commons.ProblemId[];
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.homepage._GetHomepageProblemsErrorBody;
     }
 }
 ",
@@ -1161,17 +1356,38 @@ namespace _GetHomepageProblemsResponse {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type _SetHomepageProblemsResponse = _SetHomepageProblemsResponse.SuccessResponse | _SetHomepageProblemsResponse.ErrorResponse;
+                    "contents": "export type _SetHomepageProblemsErrorBody = never;
+
+export declare namespace _SetHomepageProblemsErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _SetHomepageProblemsErrorBody = {
+    _visit: <Result>(_value: _SetHomepageProblemsErrorBody, visitor: _SetHomepageProblemsErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _SetHomepageProblemsErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_SetHomepageProblemsErrorBody.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import * as model from \\"../../..\\";
+
+export type _SetHomepageProblemsResponse = _SetHomepageProblemsResponse.SuccessResponse | _SetHomepageProblemsResponse.ErrorResponse;
 
 namespace _SetHomepageProblemsResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.homepage._SetHomepageProblemsErrorBody;
     }
 }
 ",
@@ -1179,7 +1395,9 @@ namespace _SetHomepageProblemsResponse {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export * from \\"./_GetHomepageProblemsResponse\\";
+                    "contents": "export * from \\"./_GetHomepageProblemsErrorBody\\";
+export * from \\"./_GetHomepageProblemsResponse\\";
+export * from \\"./_SetHomepageProblemsErrorBody\\";
 export * from \\"./_SetHomepageProblemsResponse\\";
 ",
                     "name": "index.ts",
@@ -1273,6 +1491,26 @@ export * from \\"./service-types\\";
               Object {
                 "contents": Array [
                   Object {
+                    "contents": "export type _GetAttemptedMigrationsErrorBody = never;
+
+export declare namespace _GetAttemptedMigrationsErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _GetAttemptedMigrationsErrorBody = {
+    _visit: <Result>(_value: _GetAttemptedMigrationsErrorBody, visitor: _GetAttemptedMigrationsErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _GetAttemptedMigrationsErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_GetAttemptedMigrationsErrorBody.ts",
+                    "type": "file",
+                  },
+                  Object {
                     "contents": "import * as model from \\"../../..\\";
 
 export type _GetAttemptedMigrationsResponse = _GetAttemptedMigrationsResponse.SuccessResponse | _GetAttemptedMigrationsResponse.ErrorResponse;
@@ -1280,13 +1518,12 @@ export type _GetAttemptedMigrationsResponse = _GetAttemptedMigrationsResponse.Su
 namespace _GetAttemptedMigrationsResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.migration.Migration[];
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.migration._GetAttemptedMigrationsErrorBody;
     }
 }
 ",
@@ -1294,7 +1531,8 @@ namespace _GetAttemptedMigrationsResponse {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export * from \\"./_GetAttemptedMigrationsResponse\\";
+                    "contents": "export * from \\"./_GetAttemptedMigrationsErrorBody\\";
+export * from \\"./_GetAttemptedMigrationsResponse\\";
 ",
                     "name": "index.ts",
                     "type": "file",
@@ -1394,6 +1632,26 @@ export * from \\"./service-types\\";
               Object {
                 "contents": Array [
                   Object {
+                    "contents": "export type _CreatePlaylistErrorBody = never;
+
+export declare namespace _CreatePlaylistErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _CreatePlaylistErrorBody = {
+    _visit: <Result>(_value: _CreatePlaylistErrorBody, visitor: _CreatePlaylistErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _CreatePlaylistErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_CreatePlaylistErrorBody.ts",
+                    "type": "file",
+                  },
+                  Object {
                     "contents": "import * as model from \\"../../..\\";
 
 export interface _CreatePlaylistRequest {
@@ -1412,17 +1670,36 @@ export type _CreatePlaylistResponse = _CreatePlaylistResponse.SuccessResponse | 
 namespace _CreatePlaylistResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.playlist.Playlist;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.playlist._CreatePlaylistErrorBody;
     }
 }
 ",
                     "name": "_CreatePlaylistResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _DeletePlaylistErrorBody = never;
+
+export declare namespace _DeletePlaylistErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _DeletePlaylistErrorBody = {
+    _visit: <Result>(_value: _DeletePlaylistErrorBody, visitor: _DeletePlaylistErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _DeletePlaylistErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_DeletePlaylistErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -1436,21 +1713,42 @@ export interface _DeletePlaylistRequest {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type _DeletePlaylistResponse = _DeletePlaylistResponse.SuccessResponse | _DeletePlaylistResponse.ErrorResponse;
+                    "contents": "import * as model from \\"../../..\\";
+
+export type _DeletePlaylistResponse = _DeletePlaylistResponse.SuccessResponse | _DeletePlaylistResponse.ErrorResponse;
 
 namespace _DeletePlaylistResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.playlist._DeletePlaylistErrorBody;
     }
 }
 ",
                     "name": "_DeletePlaylistResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _GetPlaylistErrorBody = never;
+
+export declare namespace _GetPlaylistErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _GetPlaylistErrorBody = {
+    _visit: <Result>(_value: _GetPlaylistErrorBody, visitor: _GetPlaylistErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _GetPlaylistErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_GetPlaylistErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -1471,17 +1769,36 @@ export type _GetPlaylistResponse = _GetPlaylistResponse.SuccessResponse | _GetPl
 namespace _GetPlaylistResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.playlist.Playlist;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.playlist._GetPlaylistErrorBody;
     }
 }
 ",
                     "name": "_GetPlaylistResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _GetPlaylistsErrorBody = never;
+
+export declare namespace _GetPlaylistsErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _GetPlaylistsErrorBody = {
+    _visit: <Result>(_value: _GetPlaylistsErrorBody, visitor: _GetPlaylistsErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _GetPlaylistsErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_GetPlaylistsErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -1492,17 +1809,36 @@ export type _GetPlaylistsResponse = _GetPlaylistsResponse.SuccessResponse | _Get
 namespace _GetPlaylistsResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.playlist.Playlist[];
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.playlist._GetPlaylistsErrorBody;
     }
 }
 ",
                     "name": "_GetPlaylistsResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _UpdatePlaylistErrorBody = never;
+
+export declare namespace _UpdatePlaylistErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _UpdatePlaylistErrorBody = {
+    _visit: <Result>(_value: _UpdatePlaylistErrorBody, visitor: _UpdatePlaylistErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _UpdatePlaylistErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_UpdatePlaylistErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -1535,13 +1871,12 @@ export type _UpdatePlaylistResponse = _UpdatePlaylistResponse.SuccessResponse | 
 namespace _UpdatePlaylistResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.playlist.Playlist;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.playlist._UpdatePlaylistErrorBody;
     }
 }
 ",
@@ -1550,14 +1885,19 @@ namespace _UpdatePlaylistResponse {
                   },
                   Object {
                     "contents": "export * from \\"./_CreatePlaylistRequest\\";
+export * from \\"./_CreatePlaylistErrorBody\\";
 export * from \\"./_CreatePlaylistResponse\\";
+export * from \\"./_GetPlaylistsErrorBody\\";
 export * from \\"./_GetPlaylistsResponse\\";
 export * from \\"./_GetPlaylistRequest\\";
+export * from \\"./_GetPlaylistErrorBody\\";
 export * from \\"./_GetPlaylistResponse\\";
 export * from \\"./_UpdatePlaylistRequestBody\\";
 export * from \\"./_UpdatePlaylistRequest\\";
+export * from \\"./_UpdatePlaylistErrorBody\\";
 export * from \\"./_UpdatePlaylistResponse\\";
 export * from \\"./_DeletePlaylistRequest\\";
+export * from \\"./_DeletePlaylistErrorBody\\";
 export * from \\"./_DeletePlaylistResponse\\";
 ",
                     "name": "index.ts",
@@ -1633,6 +1973,26 @@ export * from \\"./service-types\\";
               Object {
                 "contents": Array [
                   Object {
+                    "contents": "export type _CreateProblemErrorBody = never;
+
+export declare namespace _CreateProblemErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _CreateProblemErrorBody = {
+    _visit: <Result>(_value: _CreateProblemErrorBody, visitor: _CreateProblemErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _CreateProblemErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_CreateProblemErrorBody.ts",
+                    "type": "file",
+                  },
+                  Object {
                     "contents": "import * as model from \\"../../..\\";
 
 export type _CreateProblemResponse = _CreateProblemResponse.SuccessResponse | _CreateProblemResponse.ErrorResponse;
@@ -1640,17 +2000,36 @@ export type _CreateProblemResponse = _CreateProblemResponse.SuccessResponse | _C
 namespace _CreateProblemResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.problem.CreateProblemResponse;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.problem._CreateProblemErrorBody;
     }
 }
 ",
                     "name": "_CreateProblemResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _DeleteProblemErrorBody = never;
+
+export declare namespace _DeleteProblemErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _DeleteProblemErrorBody = {
+    _visit: <Result>(_value: _DeleteProblemErrorBody, visitor: _DeleteProblemErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _DeleteProblemErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_DeleteProblemErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -1664,21 +2043,42 @@ export interface _DeleteProblemRequest {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type _DeleteProblemResponse = _DeleteProblemResponse.SuccessResponse | _DeleteProblemResponse.ErrorResponse;
+                    "contents": "import * as model from \\"../../..\\";
+
+export type _DeleteProblemResponse = _DeleteProblemResponse.SuccessResponse | _DeleteProblemResponse.ErrorResponse;
 
 namespace _DeleteProblemResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.problem._DeleteProblemErrorBody;
     }
 }
 ",
                     "name": "_DeleteProblemResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _GetDefaultStarterFilesErrorBody = never;
+
+export declare namespace _GetDefaultStarterFilesErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _GetDefaultStarterFilesErrorBody = {
+    _visit: <Result>(_value: _GetDefaultStarterFilesErrorBody, visitor: _GetDefaultStarterFilesErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _GetDefaultStarterFilesErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_GetDefaultStarterFilesErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -1701,13 +2101,12 @@ export type _GetDefaultStarterFilesResponse = _GetDefaultStarterFilesResponse.Su
 namespace _GetDefaultStarterFilesResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.problem._GetDefaultStarterFilesResponseBody;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.problem._GetDefaultStarterFilesErrorBody;
     }
 }
 ",
@@ -1722,6 +2121,26 @@ export interface _GetDefaultStarterFilesResponseBody {
 }
 ",
                     "name": "_GetDefaultStarterFilesResponseBody.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _UpdateProblemErrorBody = never;
+
+export declare namespace _UpdateProblemErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _UpdateProblemErrorBody = {
+    _visit: <Result>(_value: _UpdateProblemErrorBody, visitor: _UpdateProblemErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _UpdateProblemErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_UpdateProblemErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -1743,13 +2162,12 @@ export type _UpdateProblemResponse = _UpdateProblemResponse.SuccessResponse | _U
 namespace _UpdateProblemResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.problem.UpdateProblemResponse;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.problem._UpdateProblemErrorBody;
     }
 }
 ",
@@ -1757,13 +2175,17 @@ namespace _UpdateProblemResponse {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export * from \\"./_CreateProblemResponse\\";
+                    "contents": "export * from \\"./_CreateProblemErrorBody\\";
+export * from \\"./_CreateProblemResponse\\";
 export * from \\"./_UpdateProblemRequest\\";
+export * from \\"./_UpdateProblemErrorBody\\";
 export * from \\"./_UpdateProblemResponse\\";
 export * from \\"./_DeleteProblemRequest\\";
+export * from \\"./_DeleteProblemErrorBody\\";
 export * from \\"./_DeleteProblemResponse\\";
 export * from \\"./_GetDefaultStarterFilesRequest\\";
 export * from \\"./_GetDefaultStarterFilesResponseBody\\";
+export * from \\"./_GetDefaultStarterFilesErrorBody\\";
 export * from \\"./_GetDefaultStarterFilesResponse\\";
 ",
                     "name": "index.ts",
@@ -1775,6 +2197,26 @@ export * from \\"./_GetDefaultStarterFilesResponse\\";
               },
               Object {
                 "contents": Array [
+                  Object {
+                    "contents": "export type _GetExpectedResultErrorBody = never;
+
+export declare namespace _GetExpectedResultErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _GetExpectedResultErrorBody = {
+    _visit: <Result>(_value: _GetExpectedResultErrorBody, visitor: _GetExpectedResultErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _GetExpectedResultErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_GetExpectedResultErrorBody.ts",
+                    "type": "file",
+                  },
                   Object {
                     "contents": "import * as model from \\"../../..\\";
 
@@ -1794,17 +2236,36 @@ export type _GetExpectedResultResponse = _GetExpectedResultResponse.SuccessRespo
 namespace _GetExpectedResultResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.commons.TestCaseWithExpectedResult;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.problem._GetExpectedResultErrorBody;
     }
 }
 ",
                     "name": "_GetExpectedResultResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _GetLatestProblemErrorBody = never;
+
+export declare namespace _GetLatestProblemErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _GetLatestProblemErrorBody = {
+    _visit: <Result>(_value: _GetLatestProblemErrorBody, visitor: _GetLatestProblemErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _GetLatestProblemErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_GetLatestProblemErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -1825,17 +2286,36 @@ export type _GetLatestProblemResponse = _GetLatestProblemResponse.SuccessRespons
 namespace _GetLatestProblemResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.problem.ProblemInfo;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.problem._GetLatestProblemErrorBody;
     }
 }
 ",
                     "name": "_GetLatestProblemResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _GetProblemVersionErrorBody = never;
+
+export declare namespace _GetProblemVersionErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _GetProblemVersionErrorBody = {
+    _visit: <Result>(_value: _GetProblemVersionErrorBody, visitor: _GetProblemVersionErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _GetProblemVersionErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_GetProblemVersionErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -1857,17 +2337,36 @@ export type _GetProblemVersionResponse = _GetProblemVersionResponse.SuccessRespo
 namespace _GetProblemVersionResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.problem.ProblemInfo;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.problem._GetProblemVersionErrorBody;
     }
 }
 ",
                     "name": "_GetProblemVersionResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _GetProblemsErrorBody = never;
+
+export declare namespace _GetProblemsErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _GetProblemsErrorBody = {
+    _visit: <Result>(_value: _GetProblemsErrorBody, visitor: _GetProblemsErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _GetProblemsErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_GetProblemsErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -1878,13 +2377,12 @@ export type _GetProblemsResponse = _GetProblemsResponse.SuccessResponse | _GetPr
 namespace _GetProblemsResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.problem.ProblemInfo[];
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.problem._GetProblemsErrorBody;
     }
 }
 ",
@@ -1892,12 +2390,16 @@ namespace _GetProblemsResponse {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export * from \\"./_GetProblemsResponse\\";
+                    "contents": "export * from \\"./_GetProblemsErrorBody\\";
+export * from \\"./_GetProblemsResponse\\";
 export * from \\"./_GetLatestProblemRequest\\";
+export * from \\"./_GetLatestProblemErrorBody\\";
 export * from \\"./_GetLatestProblemResponse\\";
 export * from \\"./_GetProblemVersionRequest\\";
+export * from \\"./_GetProblemVersionErrorBody\\";
 export * from \\"./_GetProblemVersionResponse\\";
 export * from \\"./_GetExpectedResultRequest\\";
+export * from \\"./_GetExpectedResultErrorBody\\";
 export * from \\"./_GetExpectedResultResponse\\";
 ",
                     "name": "index.ts",
@@ -2191,6 +2693,26 @@ export * from \\"./service-types\\";
               Object {
                 "contents": Array [
                   Object {
+                    "contents": "export type _CreateProblemErrorBody = never;
+
+export declare namespace _CreateProblemErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _CreateProblemErrorBody = {
+    _visit: <Result>(_value: _CreateProblemErrorBody, visitor: _CreateProblemErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _CreateProblemErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_CreateProblemErrorBody.ts",
+                    "type": "file",
+                  },
+                  Object {
                     "contents": "import * as model from \\"../../..\\";
 
 export type _CreateProblemResponse = _CreateProblemResponse.SuccessResponse | _CreateProblemResponse.ErrorResponse;
@@ -2198,17 +2720,36 @@ export type _CreateProblemResponse = _CreateProblemResponse.SuccessResponse | _C
 namespace _CreateProblemResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.problem.CreateProblemResponse;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.problemV2._CreateProblemErrorBody;
     }
 }
 ",
                     "name": "_CreateProblemResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _DeleteProblemErrorBody = never;
+
+export declare namespace _DeleteProblemErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _DeleteProblemErrorBody = {
+    _visit: <Result>(_value: _DeleteProblemErrorBody, visitor: _DeleteProblemErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _DeleteProblemErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_DeleteProblemErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -2222,21 +2763,42 @@ export interface _DeleteProblemRequest {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type _DeleteProblemResponse = _DeleteProblemResponse.SuccessResponse | _DeleteProblemResponse.ErrorResponse;
+                    "contents": "import * as model from \\"../../..\\";
+
+export type _DeleteProblemResponse = _DeleteProblemResponse.SuccessResponse | _DeleteProblemResponse.ErrorResponse;
 
 namespace _DeleteProblemResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.problemV2._DeleteProblemErrorBody;
     }
 }
 ",
                     "name": "_DeleteProblemResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _GetBasicSolutionFileErrorBody = never;
+
+export declare namespace _GetBasicSolutionFileErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _GetBasicSolutionFileErrorBody = {
+    _visit: <Result>(_value: _GetBasicSolutionFileErrorBody, visitor: _GetBasicSolutionFileErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _GetBasicSolutionFileErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_GetBasicSolutionFileErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -2258,13 +2820,12 @@ export type _GetBasicSolutionFileResponse = _GetBasicSolutionFileResponse.Succes
 namespace _GetBasicSolutionFileResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.problemV2._GetBasicSolutionFileResponseBody;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.problemV2._GetBasicSolutionFileErrorBody;
     }
 }
 ",
@@ -2282,6 +2843,26 @@ export interface _GetBasicSolutionFileResponseBody {
                     "type": "file",
                   },
                   Object {
+                    "contents": "export type _GetDefaultDirectoryForProblemFilesErrorBody = never;
+
+export declare namespace _GetDefaultDirectoryForProblemFilesErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _GetDefaultDirectoryForProblemFilesErrorBody = {
+    _visit: <Result>(_value: _GetDefaultDirectoryForProblemFilesErrorBody, visitor: _GetDefaultDirectoryForProblemFilesErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _GetDefaultDirectoryForProblemFilesErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_GetDefaultDirectoryForProblemFilesErrorBody.ts",
+                    "type": "file",
+                  },
+                  Object {
                     "contents": "import * as model from \\"../../..\\";
 
 export type _GetDefaultDirectoryForProblemFilesResponse = _GetDefaultDirectoryForProblemFilesResponse.SuccessResponse | _GetDefaultDirectoryForProblemFilesResponse.ErrorResponse;
@@ -2289,17 +2870,36 @@ export type _GetDefaultDirectoryForProblemFilesResponse = _GetDefaultDirectoryFo
 namespace _GetDefaultDirectoryForProblemFilesResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: Record<model.commons.Language, string>;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.problemV2._GetDefaultDirectoryForProblemFilesErrorBody;
     }
 }
 ",
                     "name": "_GetDefaultDirectoryForProblemFilesResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _GetFunctionSignatureErrorBody = never;
+
+export declare namespace _GetFunctionSignatureErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _GetFunctionSignatureErrorBody = {
+    _visit: <Result>(_value: _GetFunctionSignatureErrorBody, visitor: _GetFunctionSignatureErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _GetFunctionSignatureErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_GetFunctionSignatureErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -2320,13 +2920,12 @@ export type _GetFunctionSignatureResponse = _GetFunctionSignatureResponse.Succes
 namespace _GetFunctionSignatureResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.problemV2._GetFunctionSignatureResponseBody;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.problemV2._GetFunctionSignatureErrorBody;
     }
 }
 ",
@@ -2341,6 +2940,26 @@ export interface _GetFunctionSignatureResponseBody {
 }
 ",
                     "name": "_GetFunctionSignatureResponseBody.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _GetGeneratedTestCaseFileErrorBody = never;
+
+export declare namespace _GetGeneratedTestCaseFileErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _GetGeneratedTestCaseFileErrorBody = {
+    _visit: <Result>(_value: _GetGeneratedTestCaseFileErrorBody, visitor: _GetGeneratedTestCaseFileErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _GetGeneratedTestCaseFileErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_GetGeneratedTestCaseFileErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -2365,17 +2984,36 @@ export type _GetGeneratedTestCaseFileResponse = _GetGeneratedTestCaseFileRespons
 namespace _GetGeneratedTestCaseFileResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: Record<model.commons.Language, model.problemV2.FileInfoV2>;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.problemV2._GetGeneratedTestCaseFileErrorBody;
     }
 }
 ",
                     "name": "_GetGeneratedTestCaseFileResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _GetGeneratedTestCaseTemplateFileErrorBody = never;
+
+export declare namespace _GetGeneratedTestCaseTemplateFileErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _GetGeneratedTestCaseTemplateFileErrorBody = {
+    _visit: <Result>(_value: _GetGeneratedTestCaseTemplateFileErrorBody, visitor: _GetGeneratedTestCaseTemplateFileErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _GetGeneratedTestCaseTemplateFileErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_GetGeneratedTestCaseTemplateFileErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -2396,17 +3034,36 @@ export type _GetGeneratedTestCaseTemplateFileResponse = _GetGeneratedTestCaseTem
 namespace _GetGeneratedTestCaseTemplateFileResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: Record<model.commons.Language, model.problemV2.FileInfoV2>;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.problemV2._GetGeneratedTestCaseTemplateFileErrorBody;
     }
 }
 ",
                     "name": "_GetGeneratedTestCaseTemplateFileResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _UpdateProblemErrorBody = never;
+
+export declare namespace _UpdateProblemErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _UpdateProblemErrorBody = {
+    _visit: <Result>(_value: _UpdateProblemErrorBody, visitor: _UpdateProblemErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _UpdateProblemErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_UpdateProblemErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -2428,13 +3085,12 @@ export type _UpdateProblemResponse = _UpdateProblemResponse.SuccessResponse | _U
 namespace _UpdateProblemResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.problem.UpdateProblemResponse;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.problemV2._UpdateProblemErrorBody;
     }
 }
 ",
@@ -2442,21 +3098,29 @@ namespace _UpdateProblemResponse {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export * from \\"./_CreateProblemResponse\\";
+                    "contents": "export * from \\"./_CreateProblemErrorBody\\";
+export * from \\"./_CreateProblemResponse\\";
 export * from \\"./_UpdateProblemRequest\\";
+export * from \\"./_UpdateProblemErrorBody\\";
 export * from \\"./_UpdateProblemResponse\\";
 export * from \\"./_DeleteProblemRequest\\";
+export * from \\"./_DeleteProblemErrorBody\\";
 export * from \\"./_DeleteProblemResponse\\";
 export * from \\"./_GetFunctionSignatureRequest\\";
 export * from \\"./_GetFunctionSignatureResponseBody\\";
+export * from \\"./_GetFunctionSignatureErrorBody\\";
 export * from \\"./_GetFunctionSignatureResponse\\";
 export * from \\"./_GetBasicSolutionFileRequest\\";
 export * from \\"./_GetBasicSolutionFileResponseBody\\";
+export * from \\"./_GetBasicSolutionFileErrorBody\\";
 export * from \\"./_GetBasicSolutionFileResponse\\";
+export * from \\"./_GetDefaultDirectoryForProblemFilesErrorBody\\";
 export * from \\"./_GetDefaultDirectoryForProblemFilesResponse\\";
 export * from \\"./_GetGeneratedTestCaseFileRequest\\";
+export * from \\"./_GetGeneratedTestCaseFileErrorBody\\";
 export * from \\"./_GetGeneratedTestCaseFileResponse\\";
 export * from \\"./_GetGeneratedTestCaseTemplateFileRequest\\";
+export * from \\"./_GetGeneratedTestCaseTemplateFileErrorBody\\";
 export * from \\"./_GetGeneratedTestCaseTemplateFileResponse\\";
 ",
                     "name": "index.ts",
@@ -2468,6 +3132,26 @@ export * from \\"./_GetGeneratedTestCaseTemplateFileResponse\\";
               },
               Object {
                 "contents": Array [
+                  Object {
+                    "contents": "export type _GetLatestProblemErrorBody = never;
+
+export declare namespace _GetLatestProblemErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _GetLatestProblemErrorBody = {
+    _visit: <Result>(_value: _GetLatestProblemErrorBody, visitor: _GetLatestProblemErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _GetLatestProblemErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_GetLatestProblemErrorBody.ts",
+                    "type": "file",
+                  },
                   Object {
                     "contents": "import * as model from \\"../../..\\";
 
@@ -2486,17 +3170,36 @@ export type _GetLatestProblemResponse = _GetLatestProblemResponse.SuccessRespons
 namespace _GetLatestProblemResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.problemV2.ProblemInfoV2;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.problemV2._GetLatestProblemErrorBody;
     }
 }
 ",
                     "name": "_GetLatestProblemResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _GetLightweightProblemsErrorBody = never;
+
+export declare namespace _GetLightweightProblemsErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _GetLightweightProblemsErrorBody = {
+    _visit: <Result>(_value: _GetLightweightProblemsErrorBody, visitor: _GetLightweightProblemsErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _GetLightweightProblemsErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_GetLightweightProblemsErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -2507,17 +3210,36 @@ export type _GetLightweightProblemsResponse = _GetLightweightProblemsResponse.Su
 namespace _GetLightweightProblemsResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.problemV2.LightweightProblemInfoV2[];
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.problemV2._GetLightweightProblemsErrorBody;
     }
 }
 ",
                     "name": "_GetLightweightProblemsResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _GetProblemVersionErrorBody = never;
+
+export declare namespace _GetProblemVersionErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _GetProblemVersionErrorBody = {
+    _visit: <Result>(_value: _GetProblemVersionErrorBody, visitor: _GetProblemVersionErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _GetProblemVersionErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_GetProblemVersionErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -2539,17 +3261,36 @@ export type _GetProblemVersionResponse = _GetProblemVersionResponse.SuccessRespo
 namespace _GetProblemVersionResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.problemV2.ProblemInfoV2;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.problemV2._GetProblemVersionErrorBody;
     }
 }
 ",
                     "name": "_GetProblemVersionResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _GetProblemsErrorBody = never;
+
+export declare namespace _GetProblemsErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _GetProblemsErrorBody = {
+    _visit: <Result>(_value: _GetProblemsErrorBody, visitor: _GetProblemsErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _GetProblemsErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_GetProblemsErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -2560,13 +3301,12 @@ export type _GetProblemsResponse = _GetProblemsResponse.SuccessResponse | _GetPr
 namespace _GetProblemsResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.problemV2.ProblemInfoV2[];
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.problemV2._GetProblemsErrorBody;
     }
 }
 ",
@@ -2574,11 +3314,15 @@ namespace _GetProblemsResponse {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export * from \\"./_GetLightweightProblemsResponse\\";
+                    "contents": "export * from \\"./_GetLightweightProblemsErrorBody\\";
+export * from \\"./_GetLightweightProblemsResponse\\";
+export * from \\"./_GetProblemsErrorBody\\";
 export * from \\"./_GetProblemsResponse\\";
 export * from \\"./_GetLatestProblemRequest\\";
+export * from \\"./_GetLatestProblemErrorBody\\";
 export * from \\"./_GetLatestProblemResponse\\";
 export * from \\"./_GetProblemVersionRequest\\";
+export * from \\"./_GetProblemVersionErrorBody\\";
 export * from \\"./_GetProblemVersionResponse\\";
 ",
                     "name": "index.ts",
@@ -3309,6 +4053,26 @@ export * from \\"./service-types\\";
               Object {
                 "contents": Array [
                   Object {
+                    "contents": "export type _CreateExecutionSessionErrorBody = never;
+
+export declare namespace _CreateExecutionSessionErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _CreateExecutionSessionErrorBody = {
+    _visit: <Result>(_value: _CreateExecutionSessionErrorBody, visitor: _CreateExecutionSessionErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _CreateExecutionSessionErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_CreateExecutionSessionErrorBody.ts",
+                    "type": "file",
+                  },
+                  Object {
                     "contents": "import * as model from \\"../../..\\";
 
 export interface _CreateExecutionSessionRequest {
@@ -3326,17 +4090,36 @@ export type _CreateExecutionSessionResponse = _CreateExecutionSessionResponse.Su
 namespace _CreateExecutionSessionResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.submission.ExecutionSessionResponse;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.submission._CreateExecutionSessionErrorBody;
     }
 }
 ",
                     "name": "_CreateExecutionSessionResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _GetExecutionSessionErrorBody = never;
+
+export declare namespace _GetExecutionSessionErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _GetExecutionSessionErrorBody = {
+    _visit: <Result>(_value: _GetExecutionSessionErrorBody, visitor: _GetExecutionSessionErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _GetExecutionSessionErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_GetExecutionSessionErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -3355,17 +4138,36 @@ export type _GetExecutionSessionResponse = _GetExecutionSessionResponse.SuccessR
 namespace _GetExecutionSessionResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.submission.ExecutionSessionResponse | null | undefined;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.submission._GetExecutionSessionErrorBody;
     }
 }
 ",
                     "name": "_GetExecutionSessionResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _GetExecutionSessionsStateErrorBody = never;
+
+export declare namespace _GetExecutionSessionsStateErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _GetExecutionSessionsStateErrorBody = {
+    _visit: <Result>(_value: _GetExecutionSessionsStateErrorBody, visitor: _GetExecutionSessionsStateErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _GetExecutionSessionsStateErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_GetExecutionSessionsStateErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -3376,13 +4178,12 @@ export type _GetExecutionSessionsStateResponse = _GetExecutionSessionsStateRespo
 namespace _GetExecutionSessionsStateResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.submission._GetExecutionSessionsStateResponseBody;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.submission._GetExecutionSessionsStateErrorBody;
     }
 }
 ",
@@ -3402,6 +4203,26 @@ export interface _GetExecutionSessionsStateResponseBody {
                     "type": "file",
                   },
                   Object {
+                    "contents": "export type _StopExecutionSessionErrorBody = never;
+
+export declare namespace _StopExecutionSessionErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _StopExecutionSessionErrorBody = {
+    _visit: <Result>(_value: _StopExecutionSessionErrorBody, visitor: _StopExecutionSessionErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _StopExecutionSessionErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_StopExecutionSessionErrorBody.ts",
+                    "type": "file",
+                  },
+                  Object {
                     "contents": "export interface _StopExecutionSessionRequest {
     sessionId: string;
 }
@@ -3410,17 +4231,18 @@ export interface _GetExecutionSessionsStateResponseBody {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type _StopExecutionSessionResponse = _StopExecutionSessionResponse.SuccessResponse | _StopExecutionSessionResponse.ErrorResponse;
+                    "contents": "import * as model from \\"../../..\\";
+
+export type _StopExecutionSessionResponse = _StopExecutionSessionResponse.SuccessResponse | _StopExecutionSessionResponse.ErrorResponse;
 
 namespace _StopExecutionSessionResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.submission._StopExecutionSessionErrorBody;
     }
 }
 ",
@@ -3429,12 +4251,16 @@ namespace _StopExecutionSessionResponse {
                   },
                   Object {
                     "contents": "export * from \\"./_CreateExecutionSessionRequest\\";
+export * from \\"./_CreateExecutionSessionErrorBody\\";
 export * from \\"./_CreateExecutionSessionResponse\\";
 export * from \\"./_GetExecutionSessionRequest\\";
+export * from \\"./_GetExecutionSessionErrorBody\\";
 export * from \\"./_GetExecutionSessionResponse\\";
 export * from \\"./_StopExecutionSessionRequest\\";
+export * from \\"./_StopExecutionSessionErrorBody\\";
 export * from \\"./_StopExecutionSessionResponse\\";
 export * from \\"./_GetExecutionSessionsStateResponseBody\\";
+export * from \\"./_GetExecutionSessionsStateErrorBody\\";
 export * from \\"./_GetExecutionSessionsStateResponse\\";
 ",
                     "name": "index.ts",
@@ -3446,6 +4272,26 @@ export * from \\"./_GetExecutionSessionsStateResponse\\";
               },
               Object {
                 "contents": Array [
+                  Object {
+                    "contents": "export type _GetSubmissionStateErrorBody = never;
+
+export declare namespace _GetSubmissionStateErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _GetSubmissionStateErrorBody = {
+    _visit: <Result>(_value: _GetSubmissionStateErrorBody, visitor: _GetSubmissionStateErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _GetSubmissionStateErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_GetSubmissionStateErrorBody.ts",
+                    "type": "file",
+                  },
                   Object {
                     "contents": "import * as model from \\"../../..\\";
 
@@ -3464,13 +4310,12 @@ export type _GetSubmissionStateResponse = _GetSubmissionStateResponse.SuccessRes
 namespace _GetSubmissionStateResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.submission._GetSubmissionStateResponseBody;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.submission._GetSubmissionStateErrorBody;
     }
 }
 ",
@@ -3491,6 +4336,26 @@ export interface _GetSubmissionStateResponseBody {
                     "type": "file",
                   },
                   Object {
+                    "contents": "export type _GetSubmissionStateV2ErrorBody = never;
+
+export declare namespace _GetSubmissionStateV2ErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _GetSubmissionStateV2ErrorBody = {
+    _visit: <Result>(_value: _GetSubmissionStateV2ErrorBody, visitor: _GetSubmissionStateV2ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _GetSubmissionStateV2ErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_GetSubmissionStateV2ErrorBody.ts",
+                    "type": "file",
+                  },
+                  Object {
                     "contents": "import * as model from \\"../../..\\";
 
 export interface _GetSubmissionStateV2Request {
@@ -3508,13 +4373,12 @@ export type _GetSubmissionStateV2Response = _GetSubmissionStateV2Response.Succes
 namespace _GetSubmissionStateV2Response {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.submission._GetSubmissionStateV2ResponseBody;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.submission._GetSubmissionStateV2ErrorBody;
     }
 }
 ",
@@ -3532,6 +4396,46 @@ export interface _GetSubmissionStateV2ResponseBody {
 }
 ",
                     "name": "_GetSubmissionStateV2ResponseBody.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _GetTraceResponsesPageErrorBody = never;
+
+export declare namespace _GetTraceResponsesPageErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _GetTraceResponsesPageErrorBody = {
+    _visit: <Result>(_value: _GetTraceResponsesPageErrorBody, visitor: _GetTraceResponsesPageErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _GetTraceResponsesPageErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_GetTraceResponsesPageErrorBody.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _GetTraceResponsesPageForWorkspaceErrorBody = never;
+
+export declare namespace _GetTraceResponsesPageForWorkspaceErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _GetTraceResponsesPageForWorkspaceErrorBody = {
+    _visit: <Result>(_value: _GetTraceResponsesPageForWorkspaceErrorBody, visitor: _GetTraceResponsesPageForWorkspaceErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _GetTraceResponsesPageForWorkspaceErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_GetTraceResponsesPageForWorkspaceErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -3553,13 +4457,12 @@ export type _GetTraceResponsesPageForWorkspaceResponse = _GetTraceResponsesPageF
 namespace _GetTraceResponsesPageForWorkspaceResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.submission.TraceResponsesPage;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.submission._GetTraceResponsesPageForWorkspaceErrorBody;
     }
 }
 ",
@@ -3586,17 +4489,56 @@ export type _GetTraceResponsesPageResponse = _GetTraceResponsesPageResponse.Succ
 namespace _GetTraceResponsesPageResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.submission.TraceResponsesPage;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.submission._GetTraceResponsesPageErrorBody;
     }
 }
 ",
                     "name": "_GetTraceResponsesPageResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _GetTraceResponsesV2PageErrorBody = never;
+
+export declare namespace _GetTraceResponsesV2PageErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _GetTraceResponsesV2PageErrorBody = {
+    _visit: <Result>(_value: _GetTraceResponsesV2PageErrorBody, visitor: _GetTraceResponsesV2PageErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _GetTraceResponsesV2PageErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_GetTraceResponsesV2PageErrorBody.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _GetTraceResponsesV2PageForWorkspaceErrorBody = never;
+
+export declare namespace _GetTraceResponsesV2PageForWorkspaceErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _GetTraceResponsesV2PageForWorkspaceErrorBody = {
+    _visit: <Result>(_value: _GetTraceResponsesV2PageForWorkspaceErrorBody, visitor: _GetTraceResponsesV2PageForWorkspaceErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _GetTraceResponsesV2PageForWorkspaceErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_GetTraceResponsesV2PageForWorkspaceErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -3618,13 +4560,12 @@ export type _GetTraceResponsesV2PageForWorkspaceResponse = _GetTraceResponsesV2P
 namespace _GetTraceResponsesV2PageForWorkspaceResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.submission.TraceResponsesPageV2;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.submission._GetTraceResponsesV2PageForWorkspaceErrorBody;
     }
 }
 ",
@@ -3651,13 +4592,12 @@ export type _GetTraceResponsesV2PageResponse = _GetTraceResponsesV2PageResponse.
 namespace _GetTraceResponsesV2PageResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.submission.TraceResponsesPageV2;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.submission._GetTraceResponsesV2PageErrorBody;
     }
 }
 ",
@@ -3667,17 +4607,23 @@ namespace _GetTraceResponsesV2PageResponse {
                   Object {
                     "contents": "export * from \\"./_GetSubmissionStateRequest\\";
 export * from \\"./_GetSubmissionStateResponseBody\\";
+export * from \\"./_GetSubmissionStateErrorBody\\";
 export * from \\"./_GetSubmissionStateResponse\\";
 export * from \\"./_GetSubmissionStateV2Request\\";
 export * from \\"./_GetSubmissionStateV2ResponseBody\\";
+export * from \\"./_GetSubmissionStateV2ErrorBody\\";
 export * from \\"./_GetSubmissionStateV2Response\\";
 export * from \\"./_GetTraceResponsesPageRequest\\";
+export * from \\"./_GetTraceResponsesPageErrorBody\\";
 export * from \\"./_GetTraceResponsesPageResponse\\";
 export * from \\"./_GetTraceResponsesV2PageRequest\\";
+export * from \\"./_GetTraceResponsesV2PageErrorBody\\";
 export * from \\"./_GetTraceResponsesV2PageResponse\\";
 export * from \\"./_GetTraceResponsesPageForWorkspaceRequest\\";
+export * from \\"./_GetTraceResponsesPageForWorkspaceErrorBody\\";
 export * from \\"./_GetTraceResponsesPageForWorkspaceResponse\\";
 export * from \\"./_GetTraceResponsesV2PageForWorkspaceRequest\\";
+export * from \\"./_GetTraceResponsesV2PageForWorkspaceErrorBody\\";
 export * from \\"./_GetTraceResponsesV2PageForWorkspaceResponse\\";
 ",
                     "name": "index.ts",
@@ -3690,6 +4636,26 @@ export * from \\"./_GetTraceResponsesV2PageForWorkspaceResponse\\";
               Object {
                 "contents": Array [
                   Object {
+                    "contents": "export type _GetWorkspaceStarterFilesErrorBody = never;
+
+export declare namespace _GetWorkspaceStarterFilesErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _GetWorkspaceStarterFilesErrorBody = {
+    _visit: <Result>(_value: _GetWorkspaceStarterFilesErrorBody, visitor: _GetWorkspaceStarterFilesErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _GetWorkspaceStarterFilesErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_GetWorkspaceStarterFilesErrorBody.ts",
+                    "type": "file",
+                  },
+                  Object {
                     "contents": "import * as model from \\"../../..\\";
 
 export type _GetWorkspaceStarterFilesResponse = _GetWorkspaceStarterFilesResponse.SuccessResponse | _GetWorkspaceStarterFilesResponse.ErrorResponse;
@@ -3697,17 +4663,36 @@ export type _GetWorkspaceStarterFilesResponse = _GetWorkspaceStarterFilesRespons
 namespace _GetWorkspaceStarterFilesResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.submission.WorkspaceStarterFilesResponse;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.submission._GetWorkspaceStarterFilesErrorBody;
     }
 }
 ",
                     "name": "_GetWorkspaceStarterFilesResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _GetWorkspaceStarterFilesV2ErrorBody = never;
+
+export declare namespace _GetWorkspaceStarterFilesV2ErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _GetWorkspaceStarterFilesV2ErrorBody = {
+    _visit: <Result>(_value: _GetWorkspaceStarterFilesV2ErrorBody, visitor: _GetWorkspaceStarterFilesV2ErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _GetWorkspaceStarterFilesV2ErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_GetWorkspaceStarterFilesV2ErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -3718,13 +4703,12 @@ export type _GetWorkspaceStarterFilesV2Response = _GetWorkspaceStarterFilesV2Res
 namespace _GetWorkspaceStarterFilesV2Response {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.submission.WorkspaceStarterFilesResponseV2;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.submission._GetWorkspaceStarterFilesV2ErrorBody;
     }
 }
 ",
@@ -3732,7 +4716,9 @@ namespace _GetWorkspaceStarterFilesV2Response {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export * from \\"./_GetWorkspaceStarterFilesResponse\\";
+                    "contents": "export * from \\"./_GetWorkspaceStarterFilesErrorBody\\";
+export * from \\"./_GetWorkspaceStarterFilesResponse\\";
+export * from \\"./_GetWorkspaceStarterFilesV2ErrorBody\\";
 export * from \\"./_GetWorkspaceStarterFilesV2Response\\";
 ",
                     "name": "index.ts",
@@ -5826,6 +6812,26 @@ export * from \\"./ExecutionSessionState\\";
               Object {
                 "contents": Array [
                   Object {
+                    "contents": "export type _GetNumWarmInstancesErrorBody = never;
+
+export declare namespace _GetNumWarmInstancesErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _GetNumWarmInstancesErrorBody = {
+    _visit: <Result>(_value: _GetNumWarmInstancesErrorBody, visitor: _GetNumWarmInstancesErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _GetNumWarmInstancesErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_GetNumWarmInstancesErrorBody.ts",
+                    "type": "file",
+                  },
+                  Object {
                     "contents": "import * as model from \\"../../..\\";
 
 export type _GetNumWarmInstancesResponse = _GetNumWarmInstancesResponse.SuccessResponse | _GetNumWarmInstancesResponse.ErrorResponse;
@@ -5833,17 +6839,36 @@ export type _GetNumWarmInstancesResponse = _GetNumWarmInstancesResponse.SuccessR
 namespace _GetNumWarmInstancesResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: Record<model.commons.Language, number>;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.sysprop._GetNumWarmInstancesErrorBody;
     }
 }
 ",
                     "name": "_GetNumWarmInstancesResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type _SetNumWarmInstancesErrorBody = never;
+
+export declare namespace _SetNumWarmInstancesErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _SetNumWarmInstancesErrorBody = {
+    _visit: <Result>(_value: _SetNumWarmInstancesErrorBody, visitor: _SetNumWarmInstancesErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _SetNumWarmInstancesErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "_SetNumWarmInstancesErrorBody.ts",
                     "type": "file",
                   },
                   Object {
@@ -5858,17 +6883,18 @@ export interface _SetNumWarmInstancesRequest {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type _SetNumWarmInstancesResponse = _SetNumWarmInstancesResponse.SuccessResponse | _SetNumWarmInstancesResponse.ErrorResponse;
+                    "contents": "import * as model from \\"../../..\\";
+
+export type _SetNumWarmInstancesResponse = _SetNumWarmInstancesResponse.SuccessResponse | _SetNumWarmInstancesResponse.ErrorResponse;
 
 namespace _SetNumWarmInstancesResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.sysprop._SetNumWarmInstancesErrorBody;
     }
 }
 ",
@@ -5877,7 +6903,9 @@ namespace _SetNumWarmInstancesResponse {
                   },
                   Object {
                     "contents": "export * from \\"./_SetNumWarmInstancesRequest\\";
+export * from \\"./_SetNumWarmInstancesErrorBody\\";
 export * from \\"./_SetNumWarmInstancesResponse\\";
+export * from \\"./_GetNumWarmInstancesErrorBody\\";
 export * from \\"./_GetNumWarmInstancesResponse\\";
 ",
                     "name": "index.ts",
@@ -5950,14 +6978,14 @@ export class AdminService implements AdminService {
 
         if (isResponseOk(encodedResponse)) {
             return {
-                ok: true,
-                statusCode: encodedResponse.statusCode
+                ok: true
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.admin._UpdateTestSubmissionStatusErrorBody
             };
         }
     }
@@ -5976,14 +7004,14 @@ export class AdminService implements AdminService {
 
         if (isResponseOk(encodedResponse)) {
             return {
-                ok: true,
-                statusCode: encodedResponse.statusCode
+                ok: true
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.admin._SendTestSubmissionUpdateErrorBody
             };
         }
     }
@@ -6002,14 +7030,14 @@ export class AdminService implements AdminService {
 
         if (isResponseOk(encodedResponse)) {
             return {
-                ok: true,
-                statusCode: encodedResponse.statusCode
+                ok: true
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.admin._UpdateWorkspaceSubmissionStatusErrorBody
             };
         }
     }
@@ -6028,14 +7056,14 @@ export class AdminService implements AdminService {
 
         if (isResponseOk(encodedResponse)) {
             return {
-                ok: true,
-                statusCode: encodedResponse.statusCode
+                ok: true
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.admin._SendWorkspaceSubmissionUpdateErrorBody
             };
         }
     }
@@ -6054,14 +7082,14 @@ export class AdminService implements AdminService {
 
         if (isResponseOk(encodedResponse)) {
             return {
-                ok: true,
-                statusCode: encodedResponse.statusCode
+                ok: true
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.admin._StoreTracedTestCaseErrorBody
             };
         }
     }
@@ -6080,14 +7108,14 @@ export class AdminService implements AdminService {
 
         if (isResponseOk(encodedResponse)) {
             return {
-                ok: true,
-                statusCode: encodedResponse.statusCode
+                ok: true
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.admin._StoreTracedTestCaseV2ErrorBody
             };
         }
     }
@@ -6106,14 +7134,14 @@ export class AdminService implements AdminService {
 
         if (isResponseOk(encodedResponse)) {
             return {
-                ok: true,
-                statusCode: encodedResponse.statusCode
+                ok: true
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.admin._StoreTracedWorkspaceErrorBody
             };
         }
     }
@@ -6132,14 +7160,14 @@ export class AdminService implements AdminService {
 
         if (isResponseOk(encodedResponse)) {
             return {
-                ok: true,
-                statusCode: encodedResponse.statusCode
+                ok: true
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.admin._StoreTracedWorkspaceV2ErrorBody
             };
         }
     }
@@ -6193,14 +7221,14 @@ export class HomepageProblemService implements HomepageProblemService {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.commons.ProblemId[]
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.homepage._GetHomepageProblemsErrorBody
             };
         }
     }
@@ -6219,14 +7247,14 @@ export class HomepageProblemService implements HomepageProblemService {
 
         if (isResponseOk(encodedResponse)) {
             return {
-                ok: true,
-                statusCode: encodedResponse.statusCode
+                ok: true
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.homepage._SetHomepageProblemsErrorBody
             };
         }
     }
@@ -6292,14 +7320,14 @@ export class MigrationInfoService implements MigrationInfoService {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.migration.Migration[]
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.migration._GetAttemptedMigrationsErrorBody
             };
         }
     }
@@ -6360,14 +7388,14 @@ export class PlaylistCrudService implements PlaylistCrudService {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.playlist.Playlist
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.playlist._CreatePlaylistErrorBody
             };
         }
     }
@@ -6384,14 +7412,14 @@ export class PlaylistCrudService implements PlaylistCrudService {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.playlist.Playlist[]
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.playlist._GetPlaylistsErrorBody
             };
         }
     }
@@ -6408,14 +7436,14 @@ export class PlaylistCrudService implements PlaylistCrudService {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.playlist.Playlist
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.playlist._GetPlaylistErrorBody
             };
         }
     }
@@ -6436,14 +7464,14 @@ export class PlaylistCrudService implements PlaylistCrudService {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.playlist.Playlist
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.playlist._UpdatePlaylistErrorBody
             };
         }
     }
@@ -6458,14 +7486,14 @@ export class PlaylistCrudService implements PlaylistCrudService {
 
         if (isResponseOk(encodedResponse)) {
             return {
-                ok: true,
-                statusCode: encodedResponse.statusCode
+                ok: true
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.playlist._DeletePlaylistErrorBody
             };
         }
     }
@@ -6525,14 +7553,14 @@ export class ProblemCrudService implements ProblemCrudService {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.problem.CreateProblemResponse
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.problem._CreateProblemErrorBody
             };
         }
     }
@@ -6553,14 +7581,14 @@ export class ProblemCrudService implements ProblemCrudService {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.problem.UpdateProblemResponse
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.problem._UpdateProblemErrorBody
             };
         }
     }
@@ -6575,14 +7603,14 @@ export class ProblemCrudService implements ProblemCrudService {
 
         if (isResponseOk(encodedResponse)) {
             return {
-                ok: true,
-                statusCode: encodedResponse.statusCode
+                ok: true
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.problem._DeleteProblemErrorBody
             };
         }
     }
@@ -6603,14 +7631,14 @@ export class ProblemCrudService implements ProblemCrudService {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.problem._GetDefaultStarterFilesResponseBody
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.problem._GetDefaultStarterFilesErrorBody
             };
         }
     }
@@ -6657,14 +7685,14 @@ export class ProblemInfoService implements ProblemInfoService {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.problem.ProblemInfo[]
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.problem._GetProblemsErrorBody
             };
         }
     }
@@ -6681,14 +7709,14 @@ export class ProblemInfoService implements ProblemInfoService {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.problem.ProblemInfo
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.problem._GetLatestProblemErrorBody
             };
         }
     }
@@ -6705,14 +7733,14 @@ export class ProblemInfoService implements ProblemInfoService {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.problem.ProblemInfo
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.problem._GetProblemVersionErrorBody
             };
         }
     }
@@ -6729,14 +7757,14 @@ export class ProblemInfoService implements ProblemInfoService {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.commons.TestCaseWithExpectedResult
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.problem._GetExpectedResultErrorBody
             };
         }
     }
@@ -6801,14 +7829,14 @@ export class ProblemCrudServiceV2 implements ProblemCrudServiceV2 {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.problem.CreateProblemResponse
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.problemV2._CreateProblemErrorBody
             };
         }
     }
@@ -6829,14 +7857,14 @@ export class ProblemCrudServiceV2 implements ProblemCrudServiceV2 {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.problem.UpdateProblemResponse
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.problemV2._UpdateProblemErrorBody
             };
         }
     }
@@ -6851,14 +7879,14 @@ export class ProblemCrudServiceV2 implements ProblemCrudServiceV2 {
 
         if (isResponseOk(encodedResponse)) {
             return {
-                ok: true,
-                statusCode: encodedResponse.statusCode
+                ok: true
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.problemV2._DeleteProblemErrorBody
             };
         }
     }
@@ -6879,14 +7907,14 @@ export class ProblemCrudServiceV2 implements ProblemCrudServiceV2 {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.problemV2._GetFunctionSignatureResponseBody
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.problemV2._GetFunctionSignatureErrorBody
             };
         }
     }
@@ -6907,14 +7935,14 @@ export class ProblemCrudServiceV2 implements ProblemCrudServiceV2 {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.problemV2._GetBasicSolutionFileResponseBody
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.problemV2._GetBasicSolutionFileErrorBody
             };
         }
     }
@@ -6931,14 +7959,14 @@ export class ProblemCrudServiceV2 implements ProblemCrudServiceV2 {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as Record<model.commons.Language, string>
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.problemV2._GetDefaultDirectoryForProblemFilesErrorBody
             };
         }
     }
@@ -6959,14 +7987,14 @@ export class ProblemCrudServiceV2 implements ProblemCrudServiceV2 {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as Record<model.commons.Language, model.problemV2.FileInfoV2>
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.problemV2._GetGeneratedTestCaseFileErrorBody
             };
         }
     }
@@ -6987,14 +8015,14 @@ export class ProblemCrudServiceV2 implements ProblemCrudServiceV2 {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as Record<model.commons.Language, model.problemV2.FileInfoV2>
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.problemV2._GetGeneratedTestCaseTemplateFileErrorBody
             };
         }
     }
@@ -7038,14 +8066,14 @@ export class ProblemInfoServicV2 implements ProblemInfoServicV2 {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.problemV2.LightweightProblemInfoV2[]
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.problemV2._GetLightweightProblemsErrorBody
             };
         }
     }
@@ -7062,14 +8090,14 @@ export class ProblemInfoServicV2 implements ProblemInfoServicV2 {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.problemV2.ProblemInfoV2[]
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.problemV2._GetProblemsErrorBody
             };
         }
     }
@@ -7086,14 +8114,14 @@ export class ProblemInfoServicV2 implements ProblemInfoServicV2 {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.problemV2.ProblemInfoV2
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.problemV2._GetLatestProblemErrorBody
             };
         }
     }
@@ -7110,14 +8138,14 @@ export class ProblemInfoServicV2 implements ProblemInfoServicV2 {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.problemV2.ProblemInfoV2
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.problemV2._GetProblemVersionErrorBody
             };
         }
     }
@@ -7177,14 +8205,14 @@ export class ExecutionSesssionManagementService implements ExecutionSesssionMana
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.submission.ExecutionSessionResponse
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.submission._CreateExecutionSessionErrorBody
             };
         }
     }
@@ -7201,14 +8229,14 @@ export class ExecutionSesssionManagementService implements ExecutionSesssionMana
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.submission.ExecutionSessionResponse | null | undefined
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.submission._GetExecutionSessionErrorBody
             };
         }
     }
@@ -7223,14 +8251,14 @@ export class ExecutionSesssionManagementService implements ExecutionSesssionMana
 
         if (isResponseOk(encodedResponse)) {
             return {
-                ok: true,
-                statusCode: encodedResponse.statusCode
+                ok: true
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.submission._StopExecutionSessionErrorBody
             };
         }
     }
@@ -7247,14 +8275,14 @@ export class ExecutionSesssionManagementService implements ExecutionSesssionMana
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.submission._GetExecutionSessionsStateResponseBody
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.submission._GetExecutionSessionsStateErrorBody
             };
         }
     }
@@ -7303,14 +8331,14 @@ export class SubmissionInfoService implements SubmissionInfoService {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.submission._GetSubmissionStateResponseBody
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.submission._GetSubmissionStateErrorBody
             };
         }
     }
@@ -7327,14 +8355,14 @@ export class SubmissionInfoService implements SubmissionInfoService {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.submission._GetSubmissionStateV2ResponseBody
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.submission._GetSubmissionStateV2ErrorBody
             };
         }
     }
@@ -7355,14 +8383,14 @@ export class SubmissionInfoService implements SubmissionInfoService {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.submission.TraceResponsesPage
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.submission._GetTraceResponsesPageErrorBody
             };
         }
     }
@@ -7383,14 +8411,14 @@ export class SubmissionInfoService implements SubmissionInfoService {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.submission.TraceResponsesPageV2
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.submission._GetTraceResponsesV2PageErrorBody
             };
         }
     }
@@ -7411,14 +8439,14 @@ export class SubmissionInfoService implements SubmissionInfoService {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.submission.TraceResponsesPage
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.submission._GetTraceResponsesPageForWorkspaceErrorBody
             };
         }
     }
@@ -7439,14 +8467,14 @@ export class SubmissionInfoService implements SubmissionInfoService {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.submission.TraceResponsesPageV2
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.submission._GetTraceResponsesV2PageForWorkspaceErrorBody
             };
         }
     }
@@ -7488,14 +8516,14 @@ export class WorkspaceInfoService implements WorkspaceInfoService {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.submission.WorkspaceStarterFilesResponse
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.submission._GetWorkspaceStarterFilesErrorBody
             };
         }
     }
@@ -7512,14 +8540,14 @@ export class WorkspaceInfoService implements WorkspaceInfoService {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.submission.WorkspaceStarterFilesResponseV2
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.submission._GetWorkspaceStarterFilesV2ErrorBody
             };
         }
     }
@@ -7573,14 +8601,14 @@ export class SysPropCrudService implements SysPropCrudService {
 
         if (isResponseOk(encodedResponse)) {
             return {
-                ok: true,
-                statusCode: encodedResponse.statusCode
+                ok: true
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.sysprop._SetNumWarmInstancesErrorBody
             };
         }
     }
@@ -7597,14 +8625,14 @@ export class SysPropCrudService implements SysPropCrudService {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as Record<model.commons.Language, number>
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.sysprop._GetNumWarmInstancesErrorBody
             };
         }
     }

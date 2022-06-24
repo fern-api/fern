@@ -37,6 +37,7 @@
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/helper-manager": "workspace:*",
     "@fern-typescript/model": "workspace:*",
+    "@fern-typescript/server": "workspace:*",
     "fern-api": "workspace:*",
     "memfs": "^3.4.1",
     "zod": "^3.14.3"

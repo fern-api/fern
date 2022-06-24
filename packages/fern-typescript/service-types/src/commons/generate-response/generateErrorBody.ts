@@ -53,7 +53,7 @@ function getValueType({
     file: SourceFile;
     modelContext: ModelContext;
 }): ResolvedSingleUnionValueType | undefined {
-    const errorDefinition = modelContext.resolveErrorName(error.error);
+    const errorDefinition = modelContext.getErrorDefinitionFromName(error.error);
     const resolvedType = modelContext.resolveTypeDefinition(errorDefinition.type);
 
     if (resolvedType._type === "void") {

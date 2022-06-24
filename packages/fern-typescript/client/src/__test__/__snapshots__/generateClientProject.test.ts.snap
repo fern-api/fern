@@ -23,10 +23,10 @@ Object {
         \\"build:cjs\\": \\"tsc --project tsconfig.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"commonjs\\\\\\" }' > lib/cjs/package.json\\"
     },
     \\"dependencies\\": {
-        \\"uuid\\": \\"^8.3.2\\"
+        \\"uuid\\": \\"^8.3.2\\",
+        \\"@types/uuid\\": \\"^8.3.4\\"
     },
     \\"devDependencies\\": {
-        \\"@types/uuid\\": \\"^8.3.4\\",
         \\"@types/node\\": \\"^17.0.33\\",
         \\"npm-run-all\\": \\"^4.1.5\\",
         \\"typescript\\": \\"^4.6.4\\"
@@ -296,21 +296,39 @@ Object {
 }",
   "/src/model/api/index.ts": "export * from \\"./service-types\\";
 ",
-  "/src/model/api/service-types/NoErrorsService/_GetResponse.ts": "export type _GetResponse = _GetResponse.SuccessResponse | _GetResponse.ErrorResponse;
+  "/src/model/api/service-types/NoErrorsService/_GetErrorBody.ts": "export type _GetErrorBody = never;
+
+export declare namespace _GetErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _GetErrorBody = {
+    _visit: <Result>(_value: _GetErrorBody, visitor: _GetErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _GetErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+  "/src/model/api/service-types/NoErrorsService/_GetResponse.ts": "import * as model from \\"../../..\\";
+
+export type _GetResponse = _GetResponse.SuccessResponse | _GetResponse.ErrorResponse;
 
 namespace _GetResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.api._GetErrorBody;
     }
 }
 ",
-  "/src/model/api/service-types/NoErrorsService/index.ts": "export * from \\"./_GetResponse\\";
+  "/src/model/api/service-types/NoErrorsService/index.ts": "export * from \\"./_GetErrorBody\\";
+export * from \\"./_GetResponse\\";
 ",
   "/src/model/api/service-types/index.ts": "export * from \\"./NoErrorsService\\";
 ",
@@ -345,14 +363,14 @@ export class NoErrorsService implements NoErrorsService {
 
         if (isResponseOk(encodedResponse)) {
             return {
-                ok: true,
-                statusCode: encodedResponse.statusCode
+                ok: true
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.api._GetErrorBody
             };
         }
     }
@@ -431,10 +449,10 @@ Object {
     },
     \\"dependencies\\": {
         \\"uuid\\": \\"^8.3.2\\",
+        \\"@types/uuid\\": \\"^8.3.4\\",
         \\"@fern-typescript/service-utils\\": \\"0.0.86\\"
     },
     \\"devDependencies\\": {
-        \\"@types/uuid\\": \\"^8.3.4\\",
         \\"@types/node\\": \\"^17.0.33\\",
         \\"npm-run-all\\": \\"^4.1.5\\",
         \\"typescript\\": \\"^4.6.4\\"
@@ -470,6 +488,22 @@ export interface PostNotFoundError {
 export * from \\"./errors\\";
 export * from \\"./service-types\\";
 ",
+  "/src/model/posts/service-types/PostsService/_CreatePostErrorBody.ts": "export type _CreatePostErrorBody = never;
+
+export declare namespace _CreatePostErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _CreatePostErrorBody = {
+    _visit: <Result>(_value: _CreatePostErrorBody, visitor: _CreatePostErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _CreatePostErrorBody[\\"_error\\"][] => [],
+} as const;
+",
   "/src/model/posts/service-types/PostsService/_CreatePostRequest.ts": "import * as model from \\"../../..\\";
 
 export interface _CreatePostRequest {
@@ -486,13 +520,12 @@ export type _CreatePostResponse = _CreatePostResponse.SuccessResponse | _CreateP
 namespace _CreatePostResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.commons.PostId;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
+        error: model.posts._CreatePostErrorBody;
     }
 }
 ",
@@ -546,13 +579,11 @@ export type _GetPostResponse = _GetPostResponse.SuccessResponse | _GetPostRespon
 namespace _GetPostResponse {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.posts.Post;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
         error: model.posts._GetPostErrorBody;
     }
 }
@@ -599,18 +630,17 @@ export type _GetPostV2Response = _GetPostV2Response.SuccessResponse | _GetPostV2
 namespace _GetPostV2Response {
     export interface SuccessResponse {
         ok: true;
-        statusCode: number;
         body: model.posts.Post;
     }
 
     export interface ErrorResponse {
         ok: false;
-        statusCode: number;
         error: model.posts._GetPostV2ErrorBody;
     }
 }
 ",
   "/src/model/posts/service-types/PostsService/index.ts": "export * from \\"./_CreatePostRequest\\";
+export * from \\"./_CreatePostErrorBody\\";
 export * from \\"./_CreatePostResponse\\";
 export * from \\"./_GetPostRequest\\";
 export * from \\"./_GetPostErrorBody\\";
@@ -749,14 +779,14 @@ export class PostsService implements PostsService {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.commons.PostId
             };
         }
         else {
+            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode
+                error: error as model.posts._CreatePostErrorBody
             };
         }
     }
@@ -782,7 +812,6 @@ export class PostsService implements PostsService {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.posts.Post
             };
         }
@@ -790,7 +819,6 @@ export class PostsService implements PostsService {
             const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode,
                 error: error as model.posts._GetPostErrorBody
             };
         }
@@ -812,7 +840,6 @@ export class PostsService implements PostsService {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                statusCode: encodedResponse.statusCode,
                 body: response as model.posts.Post
             };
         }
@@ -820,7 +847,6 @@ export class PostsService implements PostsService {
             const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                statusCode: encodedResponse.statusCode,
                 error: error as model.posts._GetPostV2ErrorBody
             };
         }

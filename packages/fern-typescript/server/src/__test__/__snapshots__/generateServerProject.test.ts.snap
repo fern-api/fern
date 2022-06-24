@@ -1,0 +1,477 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generateServerProject posts 1`] = `
+Object {
+  "/package.json": "{
+    \\"name\\": \\"posts\\",
+    \\"version\\": \\"0.0.0\\",
+    \\"files\\": [
+        \\"lib\\"
+    ],
+    \\"main\\": \\"./lib/cjs/index.js\\",
+    \\"types\\": \\"./lib/cjs/index.d.ts\\",
+    \\"exports\\": {
+        \\".\\": {
+            \\"require\\": \\"./lib/cjs/index.js\\",
+            \\"default\\": \\"./lib/esm/index.js\\"
+        }
+    },
+    \\"sideEffects\\": false,
+    \\"scripts\\": {
+        \\"build\\": \\"run-p build:esm build:cjs\\",
+        \\"build:esm\\": \\"tsc --project tsconfig.esm.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"module\\\\\\" }' > lib/esm/package.json\\",
+        \\"build:cjs\\": \\"tsc --project tsconfig.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"commonjs\\\\\\" }' > lib/cjs/package.json\\"
+    },
+    \\"dependencies\\": {
+        \\"uuid\\": \\"^8.3.2\\",
+        \\"@types/uuid\\": \\"^8.3.4\\",
+        \\"express\\": \\"^4.18.1\\",
+        \\"@types/express\\": \\"^4.17.13\\"
+    },
+    \\"peerDependencies\\": {
+        \\"express\\": \\"*\\",
+        \\"@types/express\\": \\"*\\"
+    },
+    \\"devDependencies\\": {
+        \\"@types/node\\": \\"^17.0.33\\",
+        \\"npm-run-all\\": \\"^4.1.5\\",
+        \\"typescript\\": \\"^4.6.4\\"
+    }
+}",
+  "/src/model/commons/index.ts": "export * from \\"./types\\";
+",
+  "/src/model/commons/types/PostId.ts": "/**
+ * An ID of a blog post
+ */
+export type PostId = string & {
+    __PostId: void;
+};
+
+export const PostId = {
+    of: (value: string): PostId => value as PostId
+};
+",
+  "/src/model/commons/types/index.ts": "export * from \\"./PostId\\";
+",
+  "/src/model/index.ts": "export * as commons from \\"./commons\\";
+export * as posts from \\"./posts\\";
+",
+  "/src/model/posts/errors/PostNotFoundError.ts": "import * as model from \\"../..\\";
+
+export interface PostNotFoundError {
+    id: model.commons.PostId;
+}
+",
+  "/src/model/posts/errors/index.ts": "export * from \\"./PostNotFoundError\\";
+",
+  "/src/model/posts/index.ts": "export * from \\"./types\\";
+export * from \\"./errors\\";
+export * from \\"./service-types\\";
+",
+  "/src/model/posts/service-types/PostsService/_CreatePostErrorBody.ts": "export type _CreatePostErrorBody = never;
+
+export declare namespace _CreatePostErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _CreatePostErrorBody = {
+    _visit: <Result>(_value: _CreatePostErrorBody, visitor: _CreatePostErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _CreatePostErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+  "/src/model/posts/service-types/PostsService/_CreatePostRequest.ts": "import * as model from \\"../../..\\";
+
+export interface _CreatePostRequest {
+    type: model.posts.PostType;
+    title: string;
+    author: model.posts.Author;
+    content: string;
+}
+",
+  "/src/model/posts/service-types/PostsService/_CreatePostResponse.ts": "import * as model from \\"../../..\\";
+
+export type _CreatePostResponse = _CreatePostResponse.SuccessResponse | _CreatePostResponse.ErrorResponse;
+
+namespace _CreatePostResponse {
+    export interface SuccessResponse {
+        ok: true;
+        body: model.commons.PostId;
+    }
+
+    export interface ErrorResponse {
+        ok: false;
+        error: model.posts._CreatePostErrorBody;
+    }
+}
+",
+  "/src/model/posts/service-types/PostsService/_DeletePostErrorBody.ts": "export type _DeletePostErrorBody = never;
+
+export declare namespace _DeletePostErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const _DeletePostErrorBody = {
+    _visit: <Result>(_value: _DeletePostErrorBody, visitor: _DeletePostErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): _DeletePostErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+  "/src/model/posts/service-types/PostsService/_DeletePostRequest.ts": "import * as model from \\"../../..\\";
+
+export interface _DeletePostRequest {
+    postId: model.commons.PostId;
+}
+",
+  "/src/model/posts/service-types/PostsService/_DeletePostResponse.ts": "import * as model from \\"../../..\\";
+
+export type _DeletePostResponse = _DeletePostResponse.SuccessResponse | _DeletePostResponse.ErrorResponse;
+
+namespace _DeletePostResponse {
+    export interface SuccessResponse {
+        ok: true;
+    }
+
+    export interface ErrorResponse {
+        ok: false;
+        error: model.posts._DeletePostErrorBody;
+    }
+}
+",
+  "/src/model/posts/service-types/PostsService/_GetPostErrorBody.ts": "import { posts } from \\"../../..\\";
+import * as uuid from \\"uuid\\";
+
+export type _GetPostErrorBody =
+    | _GetPostErrorBody.PostNotFoundError;
+
+export declare namespace _GetPostErrorBody {
+    interface PostNotFoundError extends posts.PostNotFoundError {
+        _error: \\"PostNotFoundError\\";
+        _errorInstanceId: string;
+    }
+
+    export interface _Visitor<Result> {
+        PostNotFoundError: (value: posts.PostNotFoundError) => Result;
+        _unknown: () => Result;
+    }
+}
+
+export const _GetPostErrorBody = {
+    PostNotFoundError: (value: posts.PostNotFoundError): _GetPostErrorBody.PostNotFoundError => ({
+        ...value,
+        _error: \\"PostNotFoundError\\",
+        _errorInstanceId: uuid.v4()
+    }),
+
+    _visit: <Result>(value: _GetPostErrorBody, visitor: _GetPostErrorBody._Visitor<Result>): Result => {
+        switch (value._error) {
+            case \\"PostNotFoundError\\": return visitor.PostNotFoundError(value);
+            default: return visitor._unknown();
+        }
+    },
+
+    _types: (): _GetPostErrorBody[\\"_error\\"][] => [\\"PostNotFoundError\\"],
+} as const;
+",
+  "/src/model/posts/service-types/PostsService/_GetPostRequest.ts": "import * as model from \\"../../..\\";
+
+export interface _GetPostRequest {
+    postId: model.commons.PostId;
+    page: number | null | undefined;
+    otherParam: number | null | undefined;
+}
+",
+  "/src/model/posts/service-types/PostsService/_GetPostResponse.ts": "import * as model from \\"../../..\\";
+
+export type _GetPostResponse = _GetPostResponse.SuccessResponse | _GetPostResponse.ErrorResponse;
+
+namespace _GetPostResponse {
+    export interface SuccessResponse {
+        ok: true;
+        body: model.posts.Post;
+    }
+
+    export interface ErrorResponse {
+        ok: false;
+        error: model.posts._GetPostErrorBody;
+    }
+}
+",
+  "/src/model/posts/service-types/PostsService/_GetPostV2ErrorBody.ts": "import { posts } from \\"../../..\\";
+import * as uuid from \\"uuid\\";
+
+export type _GetPostV2ErrorBody =
+    | _GetPostV2ErrorBody.PostNotFoundError;
+
+export declare namespace _GetPostV2ErrorBody {
+    interface PostNotFoundError extends posts.PostNotFoundError {
+        _error: \\"PostNotFoundError\\";
+        _errorInstanceId: string;
+    }
+
+    export interface _Visitor<Result> {
+        PostNotFoundError: (value: posts.PostNotFoundError) => Result;
+        _unknown: () => Result;
+    }
+}
+
+export const _GetPostV2ErrorBody = {
+    PostNotFoundError: (value: posts.PostNotFoundError): _GetPostV2ErrorBody.PostNotFoundError => ({
+        ...value,
+        _error: \\"PostNotFoundError\\",
+        _errorInstanceId: uuid.v4()
+    }),
+
+    _visit: <Result>(value: _GetPostV2ErrorBody, visitor: _GetPostV2ErrorBody._Visitor<Result>): Result => {
+        switch (value._error) {
+            case \\"PostNotFoundError\\": return visitor.PostNotFoundError(value);
+            default: return visitor._unknown();
+        }
+    },
+
+    _types: (): _GetPostV2ErrorBody[\\"_error\\"][] => [\\"PostNotFoundError\\"],
+} as const;
+",
+  "/src/model/posts/service-types/PostsService/_GetPostV2Response.ts": "import * as model from \\"../../..\\";
+
+export type _GetPostV2Response = _GetPostV2Response.SuccessResponse | _GetPostV2Response.ErrorResponse;
+
+namespace _GetPostV2Response {
+    export interface SuccessResponse {
+        ok: true;
+        body: model.posts.Post;
+    }
+
+    export interface ErrorResponse {
+        ok: false;
+        error: model.posts._GetPostV2ErrorBody;
+    }
+}
+",
+  "/src/model/posts/service-types/PostsService/index.ts": "export * from \\"./_CreatePostRequest\\";
+export * from \\"./_CreatePostErrorBody\\";
+export * from \\"./_CreatePostResponse\\";
+export * from \\"./_GetPostRequest\\";
+export * from \\"./_GetPostErrorBody\\";
+export * from \\"./_GetPostResponse\\";
+export * from \\"./_GetPostV2ErrorBody\\";
+export * from \\"./_GetPostV2Response\\";
+export * from \\"./_DeletePostRequest\\";
+export * from \\"./_DeletePostErrorBody\\";
+export * from \\"./_DeletePostResponse\\";
+",
+  "/src/model/posts/service-types/index.ts": "export * from \\"./PostsService\\";
+",
+  "/src/model/posts/types/Author.ts": "export type Author =
+    | Author.Anonymous
+    | Author.Named;
+
+export declare namespace Author {
+    interface Anonymous {
+        _type: \\"anonymous\\";
+    }
+
+    interface Named {
+        _type: \\"named\\";
+        named: string;
+    }
+
+    export interface _Visitor<Result> {
+        anonymous: () => Result;
+        named: (value: string) => Result;
+        _unknown: () => Result;
+    }
+}
+
+export const Author = {
+    anonymous: (): Author.Anonymous => ({
+        _type: \\"anonymous\\"
+    }),
+
+    named: (value: string): Author.Named => ({
+        named: value,
+        _type: \\"named\\"
+    }),
+
+    _visit: <Result>(value: Author, visitor: Author._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"anonymous\\": return visitor.anonymous();
+            case \\"named\\": return visitor.named(value.named);
+            default: return visitor._unknown();
+        }
+    },
+
+    _types: (): Author[\\"_type\\"][] => [\\"anonymous\\", \\"named\\"],
+} as const;
+",
+  "/src/model/posts/types/Post.ts": "import * as model from \\"../..\\";
+
+/**
+ * A blog post
+ */
+export interface Post {
+    id: model.commons.PostId;
+    type: model.posts.PostType;
+    title: string;
+    author: model.posts.Author;
+    content: string;
+    relatedPosts: model.posts.Post[];
+}
+",
+  "/src/model/posts/types/PostType.ts": "export type PostType =
+    | \\"LONG\\"
+    | \\"SHORT\\";
+
+export const PostType = {
+    Long: \\"LONG\\",
+    Short: \\"SHORT\\",
+
+    _visit: <Result>(value: PostType, visitor: PostType._Visitor<Result>): Result => {
+        switch (value) {
+            case PostType.Long: return visitor.long();
+            case PostType.Short: return visitor.short();
+            default: return visitor._unknown();
+        }
+    },
+
+    _values: (): PostType[] => [PostType.Long, PostType.Short],
+} as const;
+
+export declare namespace PostType {
+    type Long = \\"LONG\\";
+    type Short = \\"SHORT\\";
+
+    export interface _Visitor<Result> {
+        long: () => Result;
+        short: () => Result;
+        _unknown: () => Result;
+    }
+}
+",
+  "/src/model/posts/types/index.ts": "export * from \\"./Post\\";
+export * from \\"./PostType\\";
+export * from \\"./Author\\";
+",
+  "/src/services/index.ts": "export * as posts from \\"./posts\\";
+",
+  "/src/services/posts/PostsService.ts": "import * as model from \\"../../model\\";
+import express, { Express } from \\"express\\";
+
+export interface PostsService {
+    createPost(request: model.posts._CreatePostRequest): model.posts._CreatePostResponse | Promise<model.posts._CreatePostResponse>;
+    getPost(request: model.posts._GetPostRequest): model.posts._GetPostResponse | Promise<model.posts._GetPostResponse>;
+    getPostV2(request: model.commons.PostId): model.posts._GetPostV2Response | Promise<model.posts._GetPostV2Response>;
+    deletePost(request: model.posts._DeletePostRequest): model.posts._DeletePostResponse | Promise<model.posts._DeletePostResponse>;
+}
+
+export const PostsService = {
+    expressMiddleware: (impl: PostsService): Express => {
+        const app = express();
+        app.post(\\"/posts/\\", async (request, response) => {
+            const result = await impl.createPost(request.body);
+            if (result.ok) {
+                response.send(result.body);
+            }
+            else {
+                response.sendStatus(500);
+            }
+        });
+        app.get(\\"/posts/:postId\\", async (request, response) => {
+            const result = await impl.getPost({
+                postId: model.commons.PostId.of(request.params.postId),
+                page: request.query.page != null ? Number(request.query.page) : undefined,
+                otherParam: request.query.otherParam != null ? Number(request.query.otherParam) : undefined
+            });
+            if (result.ok) {
+                response.send(result.body);
+            }
+            else {
+                const statusCode = model.posts._GetPostErrorBody._visit(result.error, {
+                    PostNotFoundError: () => 404,
+                    _unknown: () => 500
+                });
+                response.status(statusCode).send(result.error);
+            }
+        });
+        app.get(\\"/posts/get\\", async (request, response) => {
+            const result = await impl.getPostV2(request.body);
+            if (result.ok) {
+                response.send(result.body);
+            }
+            else {
+                const statusCode = model.posts._GetPostV2ErrorBody._visit(result.error, {
+                    PostNotFoundError: () => 404,
+                    _unknown: () => 500
+                });
+                response.status(statusCode).send(result.error);
+            }
+        });
+        app.delete(\\"/posts/:postId\\", async (request, response) => {
+            const result = await impl.deletePost({
+                postId: model.commons.PostId.of(request.params.postId)
+            });
+            if (result.ok) {
+                response.end();
+            }
+            else {
+                response.sendStatus(500);
+            }
+        });
+        return app;
+    }
+};
+",
+  "/src/services/posts/index.ts": "export * from \\"./PostsService\\";
+",
+  "/tsconfig.esm.json": "{
+    \\"compilerOptions\\": {
+        \\"composite\\": true,
+        \\"module\\": \\"esnext\\",
+        \\"target\\": \\"esnext\\",
+        \\"outDir\\": \\"lib/esm\\",
+        \\"rootDir\\": \\"src\\",
+        \\"moduleResolution\\": \\"node\\",
+        \\"esModuleInterop\\": true,
+        \\"strict\\": true,
+        \\"declaration\\": true,
+        \\"noFallthroughCasesInSwitch\\": true,
+        \\"forceConsistentCasingInFileNames\\": true,
+        \\"noUncheckedIndexedAccess\\": true,
+        \\"noUnusedLocals\\": true,
+        \\"noUnusedParameters\\": true
+    },
+    \\"include\\": [
+        \\"src\\"
+    ]
+}",
+  "/tsconfig.json": "{
+    \\"compilerOptions\\": {
+        \\"composite\\": true,
+        \\"module\\": \\"commonjs\\",
+        \\"target\\": \\"esnext\\",
+        \\"outDir\\": \\"lib/cjs\\",
+        \\"rootDir\\": \\"src\\",
+        \\"moduleResolution\\": \\"node\\",
+        \\"esModuleInterop\\": true,
+        \\"strict\\": true,
+        \\"declaration\\": true,
+        \\"noFallthroughCasesInSwitch\\": true,
+        \\"forceConsistentCasingInFileNames\\": true,
+        \\"noUncheckedIndexedAccess\\": true,
+        \\"noUnusedLocals\\": true,
+        \\"noUnusedParameters\\": true
+    },
+    \\"include\\": [
+        \\"src\\"
+    ]
+}",
+}
+`;

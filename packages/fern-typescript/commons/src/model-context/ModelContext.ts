@@ -1,11 +1,13 @@
 import { ErrorDefinition, ErrorName, IntermediateRepresentation, Type, TypeName, TypeReference } from "@fern-api/api";
 import { Directory, SourceFile, ts } from "ts-morph";
+import { ImportStrategy } from "../import-export/ImportStrategy";
 import { ErrorContext } from "./error-context/ErrorContext";
 import {
     GeneratedHttpEndpointTypes,
     HttpServiceTypeContext,
     HttpServiceTypeMetadata,
     HttpServiceTypeReference,
+    InlinedHttpServiceTypeReference,
 } from "./service-type-context/HttpServiceTypeContext";
 import {
     GeneratedWebSocketOperationTypes,
@@ -13,9 +15,8 @@ import {
     WebSocketChannelTypeMetadata,
     WebSocketChannelTypeReference,
 } from "./service-type-context/WebSocketChannelTypeContext";
+import { ResolvedType } from "./type-context/ResolvedType";
 import { TypeContext } from "./type-context/TypeContext";
-import { ResolvedType } from "./type-context/types";
-import { ImportStrategy } from "./utils/ImportStrategy";
 
 export class ModelContext {
     private typeContext: TypeContext;
@@ -48,6 +49,10 @@ export class ModelContext {
         return this.typeContext.getReferenceToType(args);
     }
 
+    public getReferenceToTypeUtils(args: TypeContext.getReferenceToTypeUtils.Args): ts.Expression {
+        return this.typeContext.getReferenceToTypeUtils(args);
+    }
+
     public resolveTypeName(typeName: TypeName): ResolvedType {
         return this.typeContext.resolveTypeName(typeName);
     }
@@ -58,6 +63,10 @@ export class ModelContext {
 
     public resolveTypeDefinition(type: Type): ResolvedType {
         return this.typeContext.resolveTypeDefinition(type);
+    }
+
+    public getTypeDefinitionFromName(typeName: TypeName): Type {
+        return this.typeContext.getTypeDefinitionFromName(typeName);
     }
 
     /**
@@ -72,8 +81,12 @@ export class ModelContext {
         return this.errorContext.getReferenceToError(args);
     }
 
-    public resolveErrorName(errorName: ErrorName): ErrorDefinition {
-        return this.errorContext.resolveErrorName(errorName);
+    public getReferenceToErrorUtils(args: ErrorContext.getReferenceToErrorUtils.Args): ts.Expression {
+        return this.errorContext.getReferenceToErrorUtils(args);
+    }
+
+    public getErrorDefinitionFromName(errorName: ErrorName): ErrorDefinition {
+        return this.errorContext.getErrorDefinitionFromName(errorName);
     }
 
     /**
@@ -106,6 +119,22 @@ export class ModelContext {
                 importStrategy,
             });
         }
+    }
+
+    public getReferenceToHttpServiceTypeUtils({
+        reference,
+        referencedIn,
+        importStrategy,
+    }: {
+        reference: InlinedHttpServiceTypeReference;
+        referencedIn: SourceFile;
+        importStrategy?: ImportStrategy;
+    }): ts.Expression {
+        return this.httpServiceTypeContext.getReferenceToHttpServiceTypeUtils({
+            metadata: reference.metadata,
+            referencedIn,
+            importStrategy,
+        });
     }
 
     public registerGeneratedHttpServiceTypes(args: HttpServiceTypeContext.registerGeneratedTypes.Args): void {

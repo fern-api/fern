@@ -7,17 +7,12 @@ export class ErrorResolver {
 
     constructor(intermediateRepresentation: IntermediateRepresentation) {
         for (const error of intermediateRepresentation.errors) {
-            let errorsAtFilepath = this.resolvedErrors[error.name.fernFilepath];
-            if (errorsAtFilepath == null) {
-                errorsAtFilepath = {};
-                this.resolvedErrors[error.name.fernFilepath] = errorsAtFilepath;
-            }
-
+            const errorsAtFilepath = (this.resolvedErrors[error.name.fernFilepath] ??= {});
             errorsAtFilepath[error.name.name] = error;
         }
     }
 
-    public resolveErrorName(errorName: ErrorName): ErrorDefinition {
+    public getErrorDefinitionFromName(errorName: ErrorName): ErrorDefinition {
         const resolvedError = this.resolvedErrors[errorName.fernFilepath]?.[errorName.name];
         if (resolvedError == null) {
             throw new Error("Error not found: " + errorNameToString(errorName));

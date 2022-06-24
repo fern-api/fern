@@ -34,7 +34,7 @@ export declare namespace generateResponse {
     export interface Return<M> {
         reference: InlinedServiceTypeReference<M>;
         successBodyReference: ServiceTypeReference<M> | undefined;
-        errorBodyReference: ServiceTypeReference<M> | undefined;
+        errorBodyReference: InlinedServiceTypeReference<M>;
     }
 }
 
@@ -183,24 +183,22 @@ function addErrorResponseInterface<M>({
         reference: ServiceTypeReference<M>;
         referencedIn: SourceFile;
     }) => ts.TypeNode;
-    errorBodyReference: ServiceTypeReference<M> | undefined;
+    errorBodyReference: ServiceTypeReference<M>;
 }) {
     const properties: OptionalKind<PropertySignatureStructure>[] = [
         ...createBaseResponseProperties({ ok: false }),
         ...additionalProperties,
     ];
 
-    if (errorBodyReference != null) {
-        properties.push({
-            name: ServiceTypesConstants.Commons.Response.Error.Properties.Body.PROPERTY_NAME,
-            type: getTextOfTsNode(
-                getTypeReferenceToServiceType({
-                    reference: errorBodyReference,
-                    referencedIn: responseNamespace.getSourceFile(),
-                })
-            ),
-        });
-    }
+    properties.push({
+        name: ServiceTypesConstants.Commons.Response.Error.Properties.Body.PROPERTY_NAME,
+        type: getTextOfTsNode(
+            getTypeReferenceToServiceType({
+                reference: errorBodyReference,
+                referencedIn: responseNamespace.getSourceFile(),
+            })
+        ),
+    });
 
     responseNamespace.addInterface({
         name: ServiceTypesConstants.Commons.Response.Error.TYPE_NAME,
@@ -230,11 +228,7 @@ function maybeGenerateErrorBody<M>({
     failedResponse: FailedResponse;
     dependencyManager: DependencyManager;
     writeServiceTypeFile: ServiceTypeFileWriter<M>;
-}): { errorBodyReference: ServiceTypeReference<M> | undefined } {
-    if (failedResponse.errors.length === 0) {
-        return { errorBodyReference: undefined };
-    }
-
+}): { errorBodyReference: InlinedServiceTypeReference<M> } {
     const errorBodyMetadata = writeServiceTypeFile(
         ServiceTypesConstants.Commons.Response.Error.Properties.Body.TYPE_NAME,
         (errorBodyFile, transformedTypeName) => {

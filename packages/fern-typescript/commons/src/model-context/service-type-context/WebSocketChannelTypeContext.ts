@@ -1,17 +1,18 @@
 import { FernFilepath, ServiceName } from "@fern-api/api";
 import { Directory, SourceFile, ts } from "ts-morph";
-import { ImportStrategy } from "../utils/ImportStrategy";
+import { ImportStrategy } from "../../import-export/ImportStrategy";
 import { BaseServiceTypeContext, ServiceTypeMetadata } from "./BaseServiceTypeContext";
 import { GeneratedRequest, InlinedServiceTypeReference, ServiceTypeReference } from "./types";
 
 export type WebSocketChannelTypeReference = ServiceTypeReference<WebSocketChannelTypeMetadata>;
+export type InlinedWebSocketChannelTypeReference = InlinedServiceTypeReference<WebSocketChannelTypeMetadata>;
 
 export interface GeneratedWebSocketOperationTypes {
     request: GeneratedRequest<WebSocketChannelTypeMetadata>;
     response: {
-        reference: InlinedServiceTypeReference<WebSocketChannelTypeMetadata>;
-        successBodyReference: ServiceTypeReference<WebSocketChannelTypeMetadata> | undefined;
-        errorBodyReference: ServiceTypeReference<WebSocketChannelTypeMetadata> | undefined;
+        reference: InlinedWebSocketChannelTypeReference;
+        successBodyReference: WebSocketChannelTypeReference | undefined;
+        errorBodyReference: InlinedWebSocketChannelTypeReference;
     };
 }
 
@@ -84,18 +85,8 @@ export class WebSocketChannelTypeContext extends BaseServiceTypeContext {
         operationId,
         generatedTypes,
     }: WebSocketChannelTypeContext.registerGeneratedTypes.Args): void {
-        let generatedTypesForPackage = this.generatedTypes[channelName.fernFilepath];
-        if (generatedTypesForPackage == null) {
-            generatedTypesForPackage = {};
-            this.generatedTypes[channelName.fernFilepath] = generatedTypesForPackage;
-        }
-
-        let generatedTypesForChannel = generatedTypesForPackage[channelName.name];
-        if (generatedTypesForChannel == null) {
-            generatedTypesForChannel = {};
-            generatedTypesForPackage[channelName.name] = generatedTypesForChannel;
-        }
-
+        const generatedTypesForPackage = (this.generatedTypes[channelName.fernFilepath] ??= {});
+        const generatedTypesForChannel = (generatedTypesForPackage[channelName.name] ??= {});
         generatedTypesForChannel[operationId] = generatedTypes;
     }
 
