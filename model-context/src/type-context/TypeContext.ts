@@ -74,6 +74,7 @@ export class TypeContext extends BaseModelContext {
                     integer: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
                     long: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
                     string: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                    uuid: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
                     dateTime: () => ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
                     _unknown: () => {
                         throw new Error("Unexpected primitive type: " + primitive);
