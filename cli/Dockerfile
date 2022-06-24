@@ -1,4 +1,4 @@
-FROM eclipse-temurin:11-jre-alpine
+FROM eclipse-temurin:11-jdk-alpine
 
 ARG BUILD_VERSION
 ENV VERSION=$BUILD_VERSION
