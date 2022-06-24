@@ -4,9 +4,9 @@ import {
     getTextOfTsNode,
     getWriterForMultiLineUnionType,
     maybeAddDocs,
-    ModelContext,
     visitorUtils,
 } from "@fern-typescript/commons";
+import { ModelContext } from "@fern-typescript/model-context";
 import {
     InterfaceDeclaration,
     InterfaceDeclarationStructure,

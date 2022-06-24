@@ -1,5 +1,5 @@
 import { IntermediateRepresentation } from "@fern-api/api";
-import { ModelContext } from "@fern-typescript/commons";
+import { ModelContext } from "@fern-typescript/model-context";
 import { generateType } from "./generateType";
 
 export function generateTypeFiles({

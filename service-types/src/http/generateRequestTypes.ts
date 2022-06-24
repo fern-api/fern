@@ -1,5 +1,6 @@
 import { HttpEndpoint, TypeName } from "@fern-api/api";
-import { getTextOfTsNode, HttpServiceTypeMetadata, ModelContext } from "@fern-typescript/commons";
+import { getTextOfTsNode } from "@fern-typescript/commons";
+import { HttpServiceTypeMetadata, ModelContext } from "@fern-typescript/model-context";
 import { OptionalKind, PropertySignatureStructure, SourceFile } from "ts-morph";
 import { GeneratedRequest, generateRequest } from "../commons/generate-request/generateRequest";
 import { createHttpServiceTypeFileWriter } from "./createHttpServiceTypeFileWriter";

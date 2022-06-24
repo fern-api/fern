@@ -27,8 +27,8 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/helper-manager": "workspace:*",
+    "@fern-typescript/model-context": "workspace:*",
     "ts-morph": "^14.0.0"
   },
   "devDependencies": {

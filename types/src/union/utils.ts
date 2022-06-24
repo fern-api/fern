@@ -1,5 +1,6 @@
 import { TypeReference } from "@fern-api/api";
-import { ImportStrategy, ModelContext, ResolvedType } from "@fern-typescript/commons";
+import { ImportStrategy } from "@fern-typescript/commons";
+import { ModelContext, ResolvedType } from "@fern-typescript/model-context";
 import { upperFirst } from "lodash";
 import { SourceFile, ts } from "ts-morph";
 

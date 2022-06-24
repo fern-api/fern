@@ -1,5 +1,5 @@
 import { Type } from "@fern-api/api";
-import { ModelContext } from "@fern-typescript/commons";
+import { ModelContext } from "@fern-typescript/model-context";
 import { SourceFile } from "ts-morph";
 import { generateEnumType } from "./enum/generateEnumType";
 import { generateAliasType } from "./generateAliasType";

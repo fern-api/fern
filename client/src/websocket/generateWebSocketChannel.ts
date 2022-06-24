@@ -6,9 +6,9 @@ import {
     getTextOfTsKeyword,
     getTextOfTsNode,
     maybeAddDocs,
-    ModelContext,
 } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
+import { ModelContext } from "@fern-typescript/model-context";
 import {
     Directory,
     ModuleDeclaration,

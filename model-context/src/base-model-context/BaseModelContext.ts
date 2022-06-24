@@ -1,8 +1,11 @@
+import {
+    createDirectoriesAndSourceFile,
+    DirectoryNameWithExportStrategy,
+    getPackagePath,
+    ImportStrategy,
+    PathToSourceFile,
+} from "@fern-typescript/commons";
 import { Directory, SourceFile, ts } from "ts-morph";
-import { DirectoryNameWithExportStrategy } from "../../file-system/createDirectories";
-import { createDirectoriesAndSourceFile, PathToSourceFile } from "../../file-system/createDirectoriesAndSourceFile";
-import { getPackagePath } from "../../file-system/getPackagePath";
-import { ImportStrategy } from "../../import-export/ImportStrategy";
 import { getQualifiedReferenceToModelItem } from "./getQualifiedReferenceToModel";
 import { ModelItem } from "./types";
 

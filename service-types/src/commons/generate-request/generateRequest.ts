@@ -1,5 +1,6 @@
 import { Type } from "@fern-api/api";
-import { getTextOfTsNode, ModelContext, ServiceTypeReference } from "@fern-typescript/commons";
+import { getTextOfTsNode } from "@fern-typescript/commons";
+import { ModelContext, ServiceTypeReference } from "@fern-typescript/model-context";
 import { OptionalKind, PropertySignatureStructure, SourceFile, ts } from "ts-morph";
 import { ServiceTypesConstants } from "../../constants";
 import {

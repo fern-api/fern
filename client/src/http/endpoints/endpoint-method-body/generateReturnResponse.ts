@@ -1,6 +1,6 @@
 import { HttpEndpoint, HttpService } from "@fern-api/api";
-import { GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
+import { GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/model-context";
 import { ServiceTypesConstants } from "@fern-typescript/service-types";
 import { SourceFile, ts } from "ts-morph";
 import { ClientConstants } from "../../../constants";

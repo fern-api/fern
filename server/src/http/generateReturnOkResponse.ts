@@ -1,4 +1,4 @@
-import { GeneratedHttpEndpointTypes } from "@fern-typescript/commons";
+import { GeneratedHttpEndpointTypes } from "@fern-typescript/model-context";
 import { ServiceTypesConstants } from "@fern-typescript/service-types";
 import { ts } from "ts-morph";
 import { ServerConstants } from "../constants";

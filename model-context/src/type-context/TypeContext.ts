@@ -1,6 +1,6 @@
 import { ContainerType, IntermediateRepresentation, PrimitiveType, Type, TypeName, TypeReference } from "@fern-api/api";
+import { ImportStrategy } from "@fern-typescript/commons";
 import { Directory, SourceFile, ts } from "ts-morph";
-import { ImportStrategy } from "../../import-export/ImportStrategy";
 import { BaseModelContext } from "../base-model-context/BaseModelContext";
 import { ResolvedType } from "./ResolvedType";
 import { TypeResolver } from "./TypeResolver";

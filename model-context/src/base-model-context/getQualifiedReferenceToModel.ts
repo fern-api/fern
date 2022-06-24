@@ -1,9 +1,12 @@
+import {
+    getPackagePath,
+    getRelativePathAsModuleSpecifierTo,
+    ImportStrategy,
+    PackagePath,
+    PathToSourceFile,
+} from "@fern-typescript/commons";
 import path from "path";
 import { Directory, ImportSpecifierStructure, OptionalKind, SourceFile } from "ts-morph";
-import { PathToSourceFile } from "../../file-system/createDirectoriesAndSourceFile";
-import { getPackagePath, PackagePath } from "../../file-system/getPackagePath";
-import { ImportStrategy } from "../../import-export/ImportStrategy";
-import { getRelativePathAsModuleSpecifierTo } from "../../utils/getRelativePathAsModuleSpecifierTo";
 import { ModelItem } from "./types";
 
 const MODEL_NAMESPACE_IMPORT = "model";

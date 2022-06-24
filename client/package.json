@@ -33,6 +33,7 @@
     "@fern-typescript/helper-manager": "workspace:*",
     "@fern-typescript/helper-utils": "workspace:*",
     "@fern-typescript/model": "workspace:*",
+    "@fern-typescript/model-context": "workspace:*",
     "@fern-typescript/service-types": "workspace:*",
     "memfs": "^3.4.1",
     "ts-morph": "^14.0.0"
