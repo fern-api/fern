@@ -35,6 +35,7 @@ export function convertParamValueForExpectedType({
         primitive: (primitive) =>
             PrimitiveType._visit(primitive, {
                 string: maybeCastAsString,
+                uuid: maybeCastAsString,
                 double: () => convertToNumber(valueReference),
                 integer: () => convertToNumber(valueReference),
                 long: () => convertToNumber(valueReference),

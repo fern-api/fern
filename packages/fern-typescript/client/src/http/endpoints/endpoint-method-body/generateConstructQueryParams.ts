@@ -133,6 +133,7 @@ function isPrimitiveStringLike(primitive: PrimitiveType): boolean {
         long: () => false,
         double: () => false,
         boolean: () => false,
+        uuid: () => true,
         _unknown: () => false,
     });
 }

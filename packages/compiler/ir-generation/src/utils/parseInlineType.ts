@@ -29,6 +29,8 @@ export function parseInlineType({ type, fernFilepath, imports }: parseInlineType
             return TypeReference.primitive(PrimitiveType.Boolean);
         case "datetime":
             return TypeReference.primitive(PrimitiveType.DateTime);
+        case "uuid":
+            return TypeReference.primitive(PrimitiveType.Uuid);
         case "void":
             return TypeReference.void();
         case "unknown":
