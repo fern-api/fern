@@ -139,7 +139,7 @@ public final class ModelGenerator {
                             httpEndpoint,
                             generatedInterfaces,
                             () -> httpEndpoint.response().ok().type(),
-                            true);
+                            false);
                     generatedEndpointModel.generatedHttpResponse(responsePayload);
 
                     if (!httpEndpoint.response().failed().errors().isEmpty()) {
