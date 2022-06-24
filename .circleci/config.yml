@@ -2,16 +2,6 @@ version: 2.1
 orbs:
   node: circleci/node@5.0.1
 jobs:
-  install:
-    machine:
-      image: ubuntu-2004:current
-    steps:
-      - checkout
-      - run:
-          name: Run code-generation
-          command: npm install -g fern-api && fern generate
-      - node/install-packages:
-          pkg-manager: yarn-berry
   lint:
     machine:
       image: ubuntu-2004:current
@@ -121,24 +111,15 @@ workflows:
   version: 2
   build:
     jobs:
-      - install:
-          filters:
-            tags:
-              only: /.*/
-
       - lint:
           filters:
             tags:
               only: /.*/
-          requires:
-            - install
 
       - compile-and-test:
           filters:
             tags:
               only: /.*/
-          requires:
-            - install
 
       - publish:
           filters:
