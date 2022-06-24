@@ -84,3 +84,4 @@ types:
       - value: LONG
         docs: "Within the range -2^53 to 2^53"
       - DATE_TIME
+      - UUID
