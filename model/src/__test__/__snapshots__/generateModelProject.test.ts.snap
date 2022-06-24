@@ -781,13 +781,13 @@ export const PostNotFoundError = {
 export * from \\"./errors\\";
 export * from \\"./service-types\\";
 ",
-  "/src/posts/service-types/PostsService/_GetPostErrorBody.ts": "import { posts } from \\"../../..\\";
+  "/src/posts/service-types/PostsService/GetPostErrorBody.ts": "import { posts } from \\"../../..\\";
 import * as uuid from \\"uuid\\";
 
-export type _GetPostErrorBody =
-    | _GetPostErrorBody.PostNotFoundError;
+export type GetPostErrorBody =
+    | GetPostErrorBody.PostNotFoundError;
 
-export declare namespace _GetPostErrorBody {
+export declare namespace GetPostErrorBody {
     interface PostNotFoundError {
         _error: \\"PostNotFoundError\\";
         _errorInstanceId: string;
@@ -800,54 +800,54 @@ export declare namespace _GetPostErrorBody {
     }
 }
 
-export const _GetPostErrorBody = {
-    PostNotFoundError: (value: posts.PostNotFoundError): _GetPostErrorBody.PostNotFoundError => ({
+export const GetPostErrorBody = {
+    PostNotFoundError: (value: posts.PostNotFoundError): GetPostErrorBody.PostNotFoundError => ({
         PostNotFoundError: value,
         _error: \\"PostNotFoundError\\",
         _errorInstanceId: uuid.v4()
     }),
 
-    _visit: <Result>(value: _GetPostErrorBody, visitor: _GetPostErrorBody._Visitor<Result>): Result => {
+    _visit: <Result>(value: GetPostErrorBody, visitor: GetPostErrorBody._Visitor<Result>): Result => {
         switch (value._error) {
             case \\"PostNotFoundError\\": return visitor.PostNotFoundError(value.PostNotFoundError);
             default: return visitor._unknown();
         }
     },
 
-    _types: (): _GetPostErrorBody[\\"_error\\"][] => [\\"PostNotFoundError\\"],
+    _types: (): GetPostErrorBody[\\"_error\\"][] => [\\"PostNotFoundError\\"],
 } as const;
 ",
-  "/src/posts/service-types/PostsService/_GetPostRequest.ts": "import * as model from \\"../../..\\";
+  "/src/posts/service-types/PostsService/GetPostRequest.ts": "import * as model from \\"../../..\\";
 
-export interface _GetPostRequest {
+export interface GetPostRequest {
     postId: string;
     body: model.posts.CreatePostRequest;
 }
 ",
-  "/src/posts/service-types/PostsService/_GetPostResponse.ts": "import * as model from \\"../../..\\";
+  "/src/posts/service-types/PostsService/GetPostResponse.ts": "import * as model from \\"../../..\\";
 
-export type _GetPostResponse = _GetPostResponse.SuccessResponse | _GetPostResponse.ErrorResponse;
+export type GetPostResponse = GetPostResponse.SuccessResponse | GetPostResponse.ErrorResponse;
 
-namespace _GetPostResponse {
+namespace GetPostResponse {
     export interface SuccessResponse {
         ok: true;
-        body: model.posts._GetPostResponseBody;
+        body: model.posts.GetPostResponseBody;
     }
 
     export interface ErrorResponse {
         ok: false;
-        error: model.posts._GetPostErrorBody;
+        error: model.posts.GetPostErrorBody;
     }
 }
 ",
-  "/src/posts/service-types/PostsService/_GetPostResponseBody.ts": "export interface _GetPostResponseBody {
+  "/src/posts/service-types/PostsService/GetPostResponseBody.ts": "export interface GetPostResponseBody {
     a: number;
 }
 ",
-  "/src/posts/service-types/PostsService/index.ts": "export * from \\"./_GetPostRequest\\";
-export * from \\"./_GetPostResponseBody\\";
-export * from \\"./_GetPostErrorBody\\";
-export * from \\"./_GetPostResponse\\";
+  "/src/posts/service-types/PostsService/index.ts": "export * from \\"./GetPostRequest\\";
+export * from \\"./GetPostResponseBody\\";
+export * from \\"./GetPostErrorBody\\";
+export * from \\"./GetPostResponse\\";
 ",
   "/src/posts/service-types/index.ts": "export * from \\"./PostsService\\";
 ",

@@ -68,36 +68,36 @@ export interface PostNotFoundError {
 export * from \\"./errors\\";
 export * from \\"./service-types\\";
 ",
-  "/src/model/posts/service-types/PostsService/_CreatePostErrorBody.ts": "export type _CreatePostErrorBody = never;
+  "/src/model/posts/service-types/PostsService/CreatePostErrorBody.ts": "export type CreatePostErrorBody = never;
 
-export declare namespace _CreatePostErrorBody {
+export declare namespace CreatePostErrorBody {
     export interface _Visitor<Result> {
         _unknown: () => Result;
     }
 }
 
-export const _CreatePostErrorBody = {
-    _visit: <Result>(_value: _CreatePostErrorBody, visitor: _CreatePostErrorBody._Visitor<Result>): Result => {
+export const CreatePostErrorBody = {
+    _visit: <Result>(_value: CreatePostErrorBody, visitor: CreatePostErrorBody._Visitor<Result>): Result => {
         return visitor._unknown();
     },
 
-    _types: (): _CreatePostErrorBody[\\"_error\\"][] => [],
+    _types: (): CreatePostErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
-  "/src/model/posts/service-types/PostsService/_CreatePostRequest.ts": "import * as model from \\"../../..\\";
+  "/src/model/posts/service-types/PostsService/CreatePostRequest.ts": "import * as model from \\"../../..\\";
 
-export interface _CreatePostRequest {
+export interface CreatePostRequest {
     type: model.posts.PostType;
     title: string;
     author: model.posts.Author;
     content: string;
 }
 ",
-  "/src/model/posts/service-types/PostsService/_CreatePostResponse.ts": "import * as model from \\"../../..\\";
+  "/src/model/posts/service-types/PostsService/CreatePostResponse.ts": "import * as model from \\"../../..\\";
 
-export type _CreatePostResponse = _CreatePostResponse.SuccessResponse | _CreatePostResponse.ErrorResponse;
+export type CreatePostResponse = CreatePostResponse.SuccessResponse | CreatePostResponse.ErrorResponse;
 
-namespace _CreatePostResponse {
+namespace CreatePostResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.commons.PostId;
@@ -105,54 +105,54 @@ namespace _CreatePostResponse {
 
     export interface ErrorResponse {
         ok: false;
-        error: model.posts._CreatePostErrorBody;
+        error: model.posts.CreatePostErrorBody;
     }
 }
 ",
-  "/src/model/posts/service-types/PostsService/_DeletePostErrorBody.ts": "export type _DeletePostErrorBody = never;
+  "/src/model/posts/service-types/PostsService/DeletePostErrorBody.ts": "export type DeletePostErrorBody = never;
 
-export declare namespace _DeletePostErrorBody {
+export declare namespace DeletePostErrorBody {
     export interface _Visitor<Result> {
         _unknown: () => Result;
     }
 }
 
-export const _DeletePostErrorBody = {
-    _visit: <Result>(_value: _DeletePostErrorBody, visitor: _DeletePostErrorBody._Visitor<Result>): Result => {
+export const DeletePostErrorBody = {
+    _visit: <Result>(_value: DeletePostErrorBody, visitor: DeletePostErrorBody._Visitor<Result>): Result => {
         return visitor._unknown();
     },
 
-    _types: (): _DeletePostErrorBody[\\"_error\\"][] => [],
+    _types: (): DeletePostErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
-  "/src/model/posts/service-types/PostsService/_DeletePostRequest.ts": "import * as model from \\"../../..\\";
+  "/src/model/posts/service-types/PostsService/DeletePostRequest.ts": "import * as model from \\"../../..\\";
 
-export interface _DeletePostRequest {
+export interface DeletePostRequest {
     postId: model.commons.PostId;
 }
 ",
-  "/src/model/posts/service-types/PostsService/_DeletePostResponse.ts": "import * as model from \\"../../..\\";
+  "/src/model/posts/service-types/PostsService/DeletePostResponse.ts": "import * as model from \\"../../..\\";
 
-export type _DeletePostResponse = _DeletePostResponse.SuccessResponse | _DeletePostResponse.ErrorResponse;
+export type DeletePostResponse = DeletePostResponse.SuccessResponse | DeletePostResponse.ErrorResponse;
 
-namespace _DeletePostResponse {
+namespace DeletePostResponse {
     export interface SuccessResponse {
         ok: true;
     }
 
     export interface ErrorResponse {
         ok: false;
-        error: model.posts._DeletePostErrorBody;
+        error: model.posts.DeletePostErrorBody;
     }
 }
 ",
-  "/src/model/posts/service-types/PostsService/_GetPostErrorBody.ts": "import { posts } from \\"../../..\\";
+  "/src/model/posts/service-types/PostsService/GetPostErrorBody.ts": "import { posts } from \\"../../..\\";
 import * as uuid from \\"uuid\\";
 
-export type _GetPostErrorBody =
-    | _GetPostErrorBody.PostNotFoundError;
+export type GetPostErrorBody =
+    | GetPostErrorBody.PostNotFoundError;
 
-export declare namespace _GetPostErrorBody {
+export declare namespace GetPostErrorBody {
     interface PostNotFoundError extends posts.PostNotFoundError {
         _error: \\"PostNotFoundError\\";
         _errorInstanceId: string;
@@ -164,36 +164,36 @@ export declare namespace _GetPostErrorBody {
     }
 }
 
-export const _GetPostErrorBody = {
-    PostNotFoundError: (value: posts.PostNotFoundError): _GetPostErrorBody.PostNotFoundError => ({
+export const GetPostErrorBody = {
+    PostNotFoundError: (value: posts.PostNotFoundError): GetPostErrorBody.PostNotFoundError => ({
         ...value,
         _error: \\"PostNotFoundError\\",
         _errorInstanceId: uuid.v4()
     }),
 
-    _visit: <Result>(value: _GetPostErrorBody, visitor: _GetPostErrorBody._Visitor<Result>): Result => {
+    _visit: <Result>(value: GetPostErrorBody, visitor: GetPostErrorBody._Visitor<Result>): Result => {
         switch (value._error) {
             case \\"PostNotFoundError\\": return visitor.PostNotFoundError(value);
             default: return visitor._unknown();
         }
     },
 
-    _types: (): _GetPostErrorBody[\\"_error\\"][] => [\\"PostNotFoundError\\"],
+    _types: (): GetPostErrorBody[\\"_error\\"][] => [\\"PostNotFoundError\\"],
 } as const;
 ",
-  "/src/model/posts/service-types/PostsService/_GetPostRequest.ts": "import * as model from \\"../../..\\";
+  "/src/model/posts/service-types/PostsService/GetPostRequest.ts": "import * as model from \\"../../..\\";
 
-export interface _GetPostRequest {
+export interface GetPostRequest {
     postId: model.commons.PostId;
     page: number | null | undefined;
     otherParam: number | null | undefined;
 }
 ",
-  "/src/model/posts/service-types/PostsService/_GetPostResponse.ts": "import * as model from \\"../../..\\";
+  "/src/model/posts/service-types/PostsService/GetPostResponse.ts": "import * as model from \\"../../..\\";
 
-export type _GetPostResponse = _GetPostResponse.SuccessResponse | _GetPostResponse.ErrorResponse;
+export type GetPostResponse = GetPostResponse.SuccessResponse | GetPostResponse.ErrorResponse;
 
-namespace _GetPostResponse {
+namespace GetPostResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.posts.Post;
@@ -201,17 +201,17 @@ namespace _GetPostResponse {
 
     export interface ErrorResponse {
         ok: false;
-        error: model.posts._GetPostErrorBody;
+        error: model.posts.GetPostErrorBody;
     }
 }
 ",
-  "/src/model/posts/service-types/PostsService/_GetPostV2ErrorBody.ts": "import { posts } from \\"../../..\\";
+  "/src/model/posts/service-types/PostsService/GetPostV2ErrorBody.ts": "import { posts } from \\"../../..\\";
 import * as uuid from \\"uuid\\";
 
-export type _GetPostV2ErrorBody =
-    | _GetPostV2ErrorBody.PostNotFoundError;
+export type GetPostV2ErrorBody =
+    | GetPostV2ErrorBody.PostNotFoundError;
 
-export declare namespace _GetPostV2ErrorBody {
+export declare namespace GetPostV2ErrorBody {
     interface PostNotFoundError extends posts.PostNotFoundError {
         _error: \\"PostNotFoundError\\";
         _errorInstanceId: string;
@@ -223,28 +223,28 @@ export declare namespace _GetPostV2ErrorBody {
     }
 }
 
-export const _GetPostV2ErrorBody = {
-    PostNotFoundError: (value: posts.PostNotFoundError): _GetPostV2ErrorBody.PostNotFoundError => ({
+export const GetPostV2ErrorBody = {
+    PostNotFoundError: (value: posts.PostNotFoundError): GetPostV2ErrorBody.PostNotFoundError => ({
         ...value,
         _error: \\"PostNotFoundError\\",
         _errorInstanceId: uuid.v4()
     }),
 
-    _visit: <Result>(value: _GetPostV2ErrorBody, visitor: _GetPostV2ErrorBody._Visitor<Result>): Result => {
+    _visit: <Result>(value: GetPostV2ErrorBody, visitor: GetPostV2ErrorBody._Visitor<Result>): Result => {
         switch (value._error) {
             case \\"PostNotFoundError\\": return visitor.PostNotFoundError(value);
             default: return visitor._unknown();
         }
     },
 
-    _types: (): _GetPostV2ErrorBody[\\"_error\\"][] => [\\"PostNotFoundError\\"],
+    _types: (): GetPostV2ErrorBody[\\"_error\\"][] => [\\"PostNotFoundError\\"],
 } as const;
 ",
-  "/src/model/posts/service-types/PostsService/_GetPostV2Response.ts": "import * as model from \\"../../..\\";
+  "/src/model/posts/service-types/PostsService/GetPostV2Response.ts": "import * as model from \\"../../..\\";
 
-export type _GetPostV2Response = _GetPostV2Response.SuccessResponse | _GetPostV2Response.ErrorResponse;
+export type GetPostV2Response = GetPostV2Response.SuccessResponse | GetPostV2Response.ErrorResponse;
 
-namespace _GetPostV2Response {
+namespace GetPostV2Response {
     export interface SuccessResponse {
         ok: true;
         body: model.posts.Post;
@@ -252,21 +252,21 @@ namespace _GetPostV2Response {
 
     export interface ErrorResponse {
         ok: false;
-        error: model.posts._GetPostV2ErrorBody;
+        error: model.posts.GetPostV2ErrorBody;
     }
 }
 ",
-  "/src/model/posts/service-types/PostsService/index.ts": "export * from \\"./_CreatePostRequest\\";
-export * from \\"./_CreatePostErrorBody\\";
-export * from \\"./_CreatePostResponse\\";
-export * from \\"./_GetPostRequest\\";
-export * from \\"./_GetPostErrorBody\\";
-export * from \\"./_GetPostResponse\\";
-export * from \\"./_GetPostV2ErrorBody\\";
-export * from \\"./_GetPostV2Response\\";
-export * from \\"./_DeletePostRequest\\";
-export * from \\"./_DeletePostErrorBody\\";
-export * from \\"./_DeletePostResponse\\";
+  "/src/model/posts/service-types/PostsService/index.ts": "export * from \\"./CreatePostRequest\\";
+export * from \\"./CreatePostErrorBody\\";
+export * from \\"./CreatePostResponse\\";
+export * from \\"./GetPostRequest\\";
+export * from \\"./GetPostErrorBody\\";
+export * from \\"./GetPostResponse\\";
+export * from \\"./GetPostV2ErrorBody\\";
+export * from \\"./GetPostV2Response\\";
+export * from \\"./DeletePostRequest\\";
+export * from \\"./DeletePostErrorBody\\";
+export * from \\"./DeletePostResponse\\";
 ",
   "/src/model/posts/service-types/index.ts": "export * from \\"./PostsService\\";
 ",
@@ -366,10 +366,10 @@ export * from \\"./Author\\";
 import express, { Express } from \\"express\\";
 
 export interface PostsService {
-    createPost(request: model.posts._CreatePostRequest): model.posts._CreatePostResponse | Promise<model.posts._CreatePostResponse>;
-    getPost(request: model.posts._GetPostRequest): model.posts._GetPostResponse | Promise<model.posts._GetPostResponse>;
-    getPostV2(request: model.commons.PostId): model.posts._GetPostV2Response | Promise<model.posts._GetPostV2Response>;
-    deletePost(request: model.posts._DeletePostRequest): model.posts._DeletePostResponse | Promise<model.posts._DeletePostResponse>;
+    createPost(request: model.posts.CreatePostRequest): model.posts.CreatePostResponse | Promise<model.posts.CreatePostResponse>;
+    getPost(request: model.posts.GetPostRequest): model.posts.GetPostResponse | Promise<model.posts.GetPostResponse>;
+    getPostV2(request: model.commons.PostId): model.posts.GetPostV2Response | Promise<model.posts.GetPostV2Response>;
+    deletePost(request: model.posts.DeletePostRequest): model.posts.DeletePostResponse | Promise<model.posts.DeletePostResponse>;
 }
 
 export const PostsService = {
@@ -395,7 +395,7 @@ export const PostsService = {
                 response.send(result.body);
             }
             else {
-                const statusCode = model.posts._GetPostErrorBody._visit(result.error, {
+                const statusCode = model.posts.GetPostErrorBody._visit(result.error, {
                     PostNotFoundError: () => 404,
                     _unknown: () => 500
                 });
@@ -408,7 +408,7 @@ export const PostsService = {
                 response.send(result.body);
             }
             else {
-                const statusCode = model.posts._GetPostV2ErrorBody._visit(result.error, {
+                const statusCode = model.posts.GetPostV2ErrorBody._visit(result.error, {
                     PostNotFoundError: () => 404,
                     _unknown: () => 500
                 });

@@ -2,6 +2,7 @@ import { HttpEndpoint, ServiceName } from "@fern-api/api";
 import { HttpServiceTypeMetadata, ModelContext } from "@fern-typescript/model-context";
 import { upperFirst } from "lodash";
 import { ServiceTypeFileWriter } from "../commons/service-type-reference/generateServiceTypeReference";
+import { getServiceTypeName } from "../commons/service-type-reference/getServiceTypeName";
 
 export function createHttpServiceTypeFileWriter({
     modelContext,
@@ -13,7 +14,11 @@ export function createHttpServiceTypeFileWriter({
     endpoint: HttpEndpoint;
 }): ServiceTypeFileWriter<HttpServiceTypeMetadata> {
     return (typeName, withFile) => {
-        const transformedTypeName = `_${upperFirst(endpointId)}${typeName}`;
+        const transformedTypeName = getServiceTypeName({
+            proposedName: `${upperFirst(endpointId)}${typeName}`,
+            fernFilepath: serviceName.fernFilepath,
+            modelContext,
+        });
         const metadata: HttpServiceTypeMetadata = {
             serviceName,
             endpointId,

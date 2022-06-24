@@ -48,6 +48,10 @@ export class TypeResolver {
         return this.resolveTypeDefinitionWithContinuation(type, (typeName) => this.resolveTypeName(typeName));
     }
 
+    public doesTypeExist(typeName: TypeName): boolean {
+        return this.allTypes[typeName.fernFilepath]?.[typeName.name] != null;
+    }
+
     private resolveTypeRecursive({
         typeName,
         seen = {},

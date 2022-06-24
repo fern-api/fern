@@ -69,6 +69,10 @@ export class ModelContext {
         return this.typeContext.getTypeDefinitionFromName(typeName);
     }
 
+    public doesTypeExist(typeName: TypeName): boolean {
+        return this.typeContext.doesTypeExist(typeName);
+    }
+
     /**
      * ERRORS
      */
