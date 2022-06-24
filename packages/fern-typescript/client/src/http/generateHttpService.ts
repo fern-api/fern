@@ -1,9 +1,11 @@
 import { HttpService } from "@fern-api/api";
 import {
-    addFernServiceUtilsDependency,
     createDirectoriesForFernFilepath,
     createSourceFileAndExportFromModule,
     DependencyManager,
+    getReferenceToFernServiceUtilsServiceNamespaceType,
+    getReferenceToFernServiceUtilsType,
+    getReferenceToFernServiceUtilsValue,
     getTextOfTsKeyword,
     getTextOfTsNode,
     maybeAddDocs,
@@ -14,13 +16,6 @@ import { ClassDeclaration, Directory, Scope, ts } from "ts-morph";
 import { ClientConstants } from "../constants";
 import { generateJoinPathsCall } from "../utils/generateJoinPathsCall";
 import { addEndpointToService } from "./endpoints/addEndpointToService";
-
-const SERVICE_INIT_TYPE = ts.factory.createTypeReferenceNode(
-    ts.factory.createQualifiedName(
-        ts.factory.createIdentifier(ClientConstants.HttpService.ServiceUtils.Imported.SERVICE_NAMESPACE),
-        ts.factory.createIdentifier(ClientConstants.HttpService.ServiceUtils.ServiceInit.TYPE_NAME)
-    )
-);
 
 export async function generateHttpService({
     servicesDirectory,
@@ -37,18 +32,6 @@ export async function generateHttpService({
 }): Promise<void> {
     const packageDirectory = createDirectoriesForFernFilepath(servicesDirectory, service.name.fernFilepath);
     const serviceFile = createSourceFileAndExportFromModule(packageDirectory, service.name.name);
-
-    serviceFile.addImportDeclaration({
-        namedImports: [
-            ClientConstants.HttpService.ServiceUtils.Imported.FETCHER_TYPE_NAME,
-            ClientConstants.HttpService.ServiceUtils.Imported.DEFAULT_FETCHER,
-            ClientConstants.HttpService.ServiceUtils.Imported.SERVICE_NAMESPACE,
-            ClientConstants.HttpService.ServiceUtils.Imported.IS_RESPONSE_OK_FUNCTION,
-            ClientConstants.HttpService.ServiceUtils.Imported.TOKEN_TYPE_NAME,
-        ],
-        moduleSpecifier: "@fern-typescript/service-utils",
-    });
-    addFernServiceUtilsDependency(dependencyManager);
 
     const serviceInterface = serviceFile.addInterface({
         name: service.name.name,
@@ -72,7 +55,7 @@ export async function generateHttpService({
         name: ClientConstants.HttpService.PrivateMembers.FETCHER,
         scope: Scope.Private,
         type: getTextOfTsNode(
-            ts.factory.createIdentifier(ClientConstants.HttpService.ServiceUtils.Imported.FETCHER_TYPE_NAME)
+            getReferenceToFernServiceUtilsType({ type: "Fetcher", dependencyManager, referencedIn: serviceFile })
         ),
     });
 
@@ -81,15 +64,13 @@ export async function generateHttpService({
         scope: Scope.Private,
         type: getTextOfTsNode(
             ts.factory.createUnionTypeNode([
-                ts.factory.createTypeReferenceNode(
-                    ts.factory.createIdentifier(ClientConstants.HttpService.ServiceUtils.Imported.TOKEN_TYPE_NAME)
-                ),
+                getReferenceToFernServiceUtilsType({ type: "Token", dependencyManager, referencedIn: serviceFile }),
                 ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
             ])
         ),
     });
 
-    addConstructor({ serviceClass, serviceDefinition: service });
+    addConstructor({ serviceClass, serviceDefinition: service, dependencyManager });
 
     for (const endpoint of service.endpoints) {
         await addEndpointToService({
@@ -99,22 +80,34 @@ export async function generateHttpService({
             serviceDefinition: service,
             modelContext,
             helperManager,
+            dependencyManager,
         });
     }
 }
 function addConstructor({
     serviceClass,
     serviceDefinition,
+    dependencyManager,
 }: {
     serviceClass: ClassDeclaration;
     serviceDefinition: HttpService;
+    dependencyManager: DependencyManager;
 }) {
     const SERVICE_INIT_PARAMETER_NAME = "args";
+
+    const serviceFile = serviceClass.getSourceFile();
+
     serviceClass.addConstructor({
         parameters: [
             {
                 name: SERVICE_INIT_PARAMETER_NAME,
-                type: getTextOfTsNode(SERVICE_INIT_TYPE),
+                type: getTextOfTsNode(
+                    getReferenceToFernServiceUtilsServiceNamespaceType({
+                        type: "Init",
+                        dependencyManager,
+                        referencedIn: serviceFile,
+                    })
+                ),
             },
         ],
         statements: [
@@ -129,7 +122,11 @@ function addConstructor({
                             )
                         ),
                         ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                        ts.factory.createIdentifier(ClientConstants.HttpService.ServiceUtils.Imported.DEFAULT_FETCHER)
+                        getReferenceToFernServiceUtilsValue({
+                            value: "defaultFetcher",
+                            dependencyManager,
+                            referencedIn: serviceFile,
+                        })
                     ),
                 })
             ),

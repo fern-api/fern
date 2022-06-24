@@ -38,16 +38,7 @@ export const ClientConstants = {
             ENCODERS: "encoders",
         },
         ServiceUtils: {
-            Imported: {
-                FETCHER_TYPE_NAME: "Fetcher",
-                DEFAULT_FETCHER: "defaultFetcher",
-                SERVICE_NAMESPACE: "Service",
-                IS_RESPONSE_OK_FUNCTION: "isResponseOk",
-                TOKEN_TYPE_NAME: "Token",
-            },
             ServiceInit: {
-                TYPE_NAME: "Init",
-
                 Properties: {
                     FETCHER: "fetcher",
                     ORIGIN: "origin",
