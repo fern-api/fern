@@ -1,11 +1,6 @@
 import { FailedResponse, Type } from "@fern-api/api";
-import {
-    DependencyManager,
-    getTextOfTsNode,
-    InlinedServiceTypeReference,
-    ModelContext,
-    ServiceTypeReference,
-} from "@fern-typescript/commons";
+import { DependencyManager, getTextOfTsNode } from "@fern-typescript/commons";
+import { InlinedServiceTypeReference, ModelContext, ServiceTypeReference } from "@fern-typescript/model-context";
 import { ModuleDeclaration, OptionalKind, PropertySignatureStructure, SourceFile, ts, Writers } from "ts-morph";
 import { ServiceTypesConstants } from "../../constants";
 import {

@@ -4,9 +4,9 @@ import {
     createSourceFileAndExportFromModule,
     DependencyManager,
     getTextOfTsNode,
-    ModelContext,
 } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
+import { ModelContext } from "@fern-typescript/model-context";
 import { getHttpRequestParameters } from "@fern-typescript/service-types";
 import { Directory, InterfaceDeclaration, SourceFile, ts, VariableDeclarationKind } from "ts-morph";
 import { ServerConstants } from "../constants";

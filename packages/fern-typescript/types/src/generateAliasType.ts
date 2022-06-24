@@ -1,5 +1,6 @@
 import { AliasTypeDefinition, PrimitiveType } from "@fern-api/api";
-import { addBrandedTypeAlias, getTextOfTsNode, maybeAddDocs, ModelContext } from "@fern-typescript/commons";
+import { addBrandedTypeAlias, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
+import { ModelContext } from "@fern-typescript/model-context";
 import { SourceFile, ts, VariableDeclarationKind, Writers } from "ts-morph";
 
 export const ALIAS_UTILS_OF_KEY = "of";

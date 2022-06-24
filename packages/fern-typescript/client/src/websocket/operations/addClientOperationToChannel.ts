@@ -1,10 +1,6 @@
 import { WebSocketChannel, WebSocketOperation } from "@fern-api/api";
-import {
-    DependencyManager,
-    GeneratedWebSocketOperationTypes,
-    getTextOfTsNode,
-    ModelContext,
-} from "@fern-typescript/commons";
+import { DependencyManager, getTextOfTsNode } from "@fern-typescript/commons";
+import { GeneratedWebSocketOperationTypes, ModelContext } from "@fern-typescript/model-context";
 import {
     ClassDeclaration,
     InterfaceDeclaration,

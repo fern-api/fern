@@ -7,9 +7,9 @@ import {
     getTextOfTsKeyword,
     getTextOfTsNode,
     maybeAddDocs,
-    ModelContext,
 } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
+import { ModelContext } from "@fern-typescript/model-context";
 import { ClassDeclaration, Directory, Scope, ts } from "ts-morph";
 import { ClientConstants } from "../constants";
 import { generateJoinPathsCall } from "../utils/generateJoinPathsCall";

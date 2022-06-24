@@ -7,6 +7,7 @@
     { "path": "../../compiler/ir-types/fern-ir-typescript/tsconfig.json" },
     { "path": "../commons/tsconfig.json" },
     { "path": "../errors/tsconfig.json" },
+    { "path": "../model-context/tsconfig.json" },
     { "path": "../service-types/tsconfig.json" },
     { "path": "../testing-utils/tsconfig.json" },
     { "path": "../types/tsconfig.json" }

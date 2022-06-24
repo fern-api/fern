@@ -1,5 +1,5 @@
 import { ContainerType, PrimitiveType, Type, TypeReference } from "@fern-api/api";
-import { ModelContext } from "@fern-typescript/commons";
+import { ModelContext } from "@fern-typescript/model-context";
 import { ALIAS_UTILS_OF_KEY, shouldUseBrandedTypeForAlias } from "@fern-typescript/types";
 import { SourceFile, ts } from "ts-morph";
 

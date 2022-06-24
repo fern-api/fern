@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@fern-api/api": "workspace:*",
-    "@fern-typescript/commons": "workspace:*",
+    "@fern-typescript/model-context": "workspace:*",
     "@fern-typescript/types": "workspace:*"
   },
   "devDependencies": {

@@ -1,6 +1,7 @@
 import { HttpEndpoint, HttpService } from "@fern-api/api";
-import { getTextOfTsNode, ModelContext } from "@fern-typescript/commons";
+import { getTextOfTsNode } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
+import { ModelContext } from "@fern-typescript/model-context";
 import { getHttpRequestParameters } from "@fern-typescript/service-types";
 import { ClassDeclaration, InterfaceDeclaration, Scope, ts } from "ts-morph";
 import { generateEndpointMethodBody } from "./endpoint-method-body/generateEndpointMethodBody";

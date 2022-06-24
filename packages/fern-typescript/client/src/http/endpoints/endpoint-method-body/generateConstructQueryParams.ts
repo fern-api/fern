@@ -1,5 +1,5 @@
 import { HttpEndpoint, PrimitiveType, QueryParameter, TypeName, TypeReference } from "@fern-api/api";
-import { ModelContext, ResolvedType } from "@fern-typescript/commons";
+import { ModelContext, ResolvedType } from "@fern-typescript/model-context";
 import { ts } from "ts-morph";
 import { ClientConstants } from "../../../constants";
 
