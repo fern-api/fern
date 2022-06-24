@@ -2225,11 +2225,9 @@ __metadata:
     "@babel/preset-env": ^7.18.2
     "@babel/preset-typescript": ^7.17.12
     "@fern-api/api": "workspace:*"
-    "@fern-api/commons": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/encoders": "workspace:*"
     "@fern-typescript/helper-manager": "workspace:*"
-    "@fern-typescript/helper-utils": "workspace:*"
     "@fern-typescript/model": "workspace:*"
     "@fern-typescript/service-types": "workspace:*"
     "@fern-typescript/testing-utils": "workspace:*"
