@@ -1,5 +1,6 @@
 import { HttpEndpoint, TypeName } from "@fern-api/api";
-import { DependencyManager, GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/commons";
+import { DependencyManager } from "@fern-typescript/commons";
+import { GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/model-context";
 import { generateResponse } from "../commons/generate-response/generateResponse";
 import { createHttpServiceTypeFileWriter } from "./createHttpServiceTypeFileWriter";
 

@@ -1,11 +1,6 @@
 import { WebSocketOperation } from "@fern-api/api";
-import {
-    DependencyManager,
-    GeneratedWebSocketOperationTypes,
-    generateUuidCall,
-    getTextOfTsNode,
-    ModelContext,
-} from "@fern-typescript/commons";
+import { DependencyManager, generateUuidCall, getTextOfTsNode } from "@fern-typescript/commons";
+import { GeneratedWebSocketOperationTypes, ModelContext } from "@fern-typescript/model-context";
 import { ServiceTypesConstants } from "@fern-typescript/service-types";
 import { SourceFile, StatementStructures, ts, WriterFunction } from "ts-morph";
 import { ClientConstants } from "../../../constants";

@@ -11,6 +11,7 @@
     { "path": "../helpers/helper-manager/tsconfig.esm.json" },
     { "path": "../helpers/utils/tsconfig.esm.json" },
     { "path": "../model/tsconfig.esm.json" },
+    { "path": "../model-context/tsconfig.esm.json" },
     { "path": "../service-types/tsconfig.esm.json" },
     { "path": "../testing-utils/tsconfig.esm.json" }
   ]

@@ -1,6 +1,6 @@
 import { IntermediateRepresentation } from "@fern-api/api";
-import { ModelContext } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
+import { ModelContext } from "@fern-typescript/model-context";
 import { Directory } from "ts-morph";
 
 export async function generateEncoderFiles({

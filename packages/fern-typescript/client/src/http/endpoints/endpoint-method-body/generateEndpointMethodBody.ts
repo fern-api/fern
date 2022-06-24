@@ -1,6 +1,7 @@
 import { HttpEndpoint, HttpService } from "@fern-api/api";
-import { GeneratedHttpEndpointTypes, getTextOfTsNode, ModelContext } from "@fern-typescript/commons";
+import { getTextOfTsNode } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
+import { GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/model-context";
 import { SourceFile, StatementStructures, WriterFunction } from "ts-morph";
 import { generateConstructQueryParams } from "./generateConstructQueryParams";
 import { generateFetcherCall } from "./generateFetcherCall";

@@ -23,6 +23,7 @@
     { "path": "../fern-typescript/helpers/helper-manager/tsconfig.json" },
     { "path": "../fern-typescript/helpers/utils/tsconfig.json" },
     { "path": "../fern-typescript/model/tsconfig.json" },
+    { "path": "../fern-typescript/model-context/tsconfig.json" },
     { "path": "../fern-typescript/server/tsconfig.json" },
     { "path": "../fern-typescript/service-types/tsconfig.json" },
     { "path": "../fern-typescript/service-utils/tsconfig.json" },

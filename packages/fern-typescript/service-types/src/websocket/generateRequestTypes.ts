@@ -1,10 +1,6 @@
 import { TypeName, WebSocketOperation } from "@fern-api/api";
-import {
-    getTextOfTsKeyword,
-    getTextOfTsNode,
-    ModelContext,
-    WebSocketChannelTypeMetadata,
-} from "@fern-typescript/commons";
+import { getTextOfTsKeyword, getTextOfTsNode } from "@fern-typescript/commons";
+import { ModelContext, WebSocketChannelTypeMetadata } from "@fern-typescript/model-context";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 import { GeneratedRequest, generateRequest } from "../commons/generate-request/generateRequest";
 import { ServiceTypesConstants } from "../constants";

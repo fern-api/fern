@@ -1,10 +1,6 @@
 import { TypeName, WebSocketOperation } from "@fern-api/api";
-import {
-    DependencyManager,
-    GeneratedWebSocketOperationTypes,
-    getTextOfTsKeyword,
-    ModelContext,
-} from "@fern-typescript/commons";
+import { DependencyManager, getTextOfTsKeyword } from "@fern-typescript/commons";
+import { GeneratedWebSocketOperationTypes, ModelContext } from "@fern-typescript/model-context";
 import { ts } from "ts-morph";
 import { generateResponse } from "../commons/generate-response/generateResponse";
 import { ServiceTypesConstants } from "../constants";

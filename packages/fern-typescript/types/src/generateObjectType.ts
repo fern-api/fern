@@ -1,5 +1,6 @@
 import { ObjectTypeDefinition, TypeReference } from "@fern-api/api";
-import { getTextOfTsNode, maybeAddDocs, ModelContext } from "@fern-typescript/commons";
+import { getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
+import { ModelContext } from "@fern-typescript/model-context";
 import { SourceFile } from "ts-morph";
 
 export function generateObjectType({

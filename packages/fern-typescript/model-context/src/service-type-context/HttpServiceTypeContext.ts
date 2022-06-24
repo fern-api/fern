@@ -1,6 +1,6 @@
 import { EndpointId, FernFilepath, ServiceName } from "@fern-api/api";
+import { ImportStrategy } from "@fern-typescript/commons";
 import { Directory, SourceFile, ts } from "ts-morph";
-import { ImportStrategy } from "../../import-export/ImportStrategy";
 import { BaseServiceTypeContext, ServiceTypeMetadata } from "./BaseServiceTypeContext";
 import { GeneratedRequest, InlinedServiceTypeReference, ServiceTypeReference } from "./types";
 

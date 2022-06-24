@@ -1,6 +1,7 @@
 import { IntermediateRepresentation } from "@fern-api/api";
-import { DependencyManager, generateTypeScriptProject, ModelContext } from "@fern-typescript/commons";
+import { DependencyManager, generateTypeScriptProject } from "@fern-typescript/commons";
 import { generateErrorFiles } from "@fern-typescript/errors";
+import { ModelContext } from "@fern-typescript/model-context";
 import { generateServiceTypeFiles } from "@fern-typescript/service-types";
 import { generateTypeFiles } from "@fern-typescript/types";
 import { Volume } from "memfs/lib/volume";
