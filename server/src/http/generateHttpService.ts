@@ -45,11 +45,13 @@ export async function generateHttpService({
             serviceInterface,
             serviceFile,
             expressRouteStatements,
+            dependencyManager,
         });
     }
 
     addMiddleware({ serviceFile, serviceInterface, dependencyManager, expressRouteStatements });
 }
+
 function addEndpointToService({
     modelContext,
     service,
@@ -57,6 +59,7 @@ function addEndpointToService({
     serviceInterface,
     serviceFile,
     expressRouteStatements,
+    dependencyManager,
 }: {
     modelContext: ModelContext;
     service: HttpService;
@@ -64,6 +67,7 @@ function addEndpointToService({
     serviceInterface: InterfaceDeclaration;
     serviceFile: SourceFile;
     expressRouteStatements: ts.Statement[];
+    dependencyManager: DependencyManager;
 }) {
     const generatedEndpointTypes = modelContext.getGeneratedHttpServiceTypes({
         serviceName: service.name,
@@ -74,12 +78,14 @@ function addEndpointToService({
         name: endpoint.endpointId,
         parameters: getHttpRequestParameters({ generatedEndpointTypes, modelContext, file: serviceFile }),
         returnType: getTextOfTsNode(
-            generateMaybePromise(
-                modelContext.getReferenceToHttpServiceType({
+            generateMaybePromise({
+                type: modelContext.getReferenceToHttpServiceType({
                     reference: generatedEndpointTypes.response.reference,
                     referencedIn: serviceFile,
-                })
-            )
+                }),
+                dependencyManager,
+                file: serviceFile,
+            })
         ),
     });
 

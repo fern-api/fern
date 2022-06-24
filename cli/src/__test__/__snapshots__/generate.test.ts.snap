@@ -6938,7 +6938,7 @@ export * from \\"./GetNumWarmInstancesResponse\\";
       Object {
         "contents": Array [
           Object {
-            "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
+            "contents": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
 import * as model from \\"../../model\\";
 
@@ -7189,7 +7189,7 @@ export class AdminService implements AdminService {
       Object {
         "contents": Array [
           Object {
-            "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
+            "contents": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
 import * as model from \\"../../model\\";
 
@@ -7289,7 +7289,7 @@ export * as sysprop from \\"./sysprop\\";
       Object {
         "contents": Array [
           Object {
-            "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
+            "contents": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
 import * as model from \\"../../model\\";
 
@@ -7349,7 +7349,7 @@ export class MigrationInfoService implements MigrationInfoService {
       Object {
         "contents": Array [
           Object {
-            "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
+            "contents": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
 import * as model from \\"../../model\\";
 
@@ -7515,7 +7515,7 @@ export class PlaylistCrudService implements PlaylistCrudService {
       Object {
         "contents": Array [
           Object {
-            "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
+            "contents": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
 import * as model from \\"../../model\\";
 
@@ -7648,7 +7648,7 @@ export class ProblemCrudService implements ProblemCrudService {
             "type": "file",
           },
           Object {
-            "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
+            "contents": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
 import * as model from \\"../../model\\";
 
@@ -7787,7 +7787,7 @@ export * from \\"./ProblemCrudService\\";
       Object {
         "contents": Array [
           Object {
-            "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
+            "contents": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
 import * as model from \\"../../model\\";
 
@@ -8032,7 +8032,7 @@ export class ProblemCrudServiceV2 implements ProblemCrudServiceV2 {
             "type": "file",
           },
           Object {
-            "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
+            "contents": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
 import * as model from \\"../../model\\";
 
@@ -8168,7 +8168,7 @@ export * from \\"./ProblemCrudServiceV2\\";
       Object {
         "contents": Array [
           Object {
-            "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
+            "contents": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
 import * as model from \\"../../model\\";
 
@@ -8292,7 +8292,7 @@ export class ExecutionSesssionManagementService implements ExecutionSesssionMana
             "type": "file",
           },
           Object {
-            "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
+            "contents": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
 import * as model from \\"../../model\\";
 
@@ -8484,7 +8484,7 @@ export class SubmissionInfoService implements SubmissionInfoService {
             "type": "file",
           },
           Object {
-            "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
+            "contents": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
 import * as model from \\"../../model\\";
 
@@ -8571,7 +8571,7 @@ export * from \\"./WorkspaceInfoService\\";
       Object {
         "contents": Array [
           Object {
-            "contents": "import { Fetcher, defaultFetcher, Service, isResponseOk, Token } from \\"@fern-typescript/service-utils\\";
+            "contents": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import path from \\"path\\";
 import * as model from \\"../../model\\";
 
