@@ -1,6 +1,10 @@
-export { addFernServiceUtilsDependency } from "./dependencies/addFernServiceUtilsDependency";
 export { DependencyManager, DependencyType } from "./dependencies/DependencyManager";
 export { generateUuidCall } from "./dependencies/generateUuidCall";
+export {
+    getReferenceToFernServiceUtilsServiceNamespaceType,
+    getReferenceToFernServiceUtilsType,
+    getReferenceToFernServiceUtilsValue,
+} from "./dependencies/getReferenceToFernServiceUtils";
 export {
     createDirectories,
     createDirectoriesForFernFilepath,

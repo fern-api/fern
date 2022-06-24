@@ -1,4 +1,5 @@
 import { HttpEndpoint, HttpService } from "@fern-api/api";
+import { DependencyManager, getReferenceToFernServiceUtilsValue } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import { GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/model-context";
 import { ServiceTypesConstants } from "@fern-typescript/service-types";
@@ -13,6 +14,7 @@ export async function generateReturnResponse({
     endpointTypes,
     modelContext,
     helperManager,
+    dependencyManager,
 }: {
     serviceFile: SourceFile;
     serviceDefinition: HttpService;
@@ -20,10 +22,15 @@ export async function generateReturnResponse({
     endpointTypes: GeneratedHttpEndpointTypes;
     modelContext: ModelContext;
     helperManager: HelperManager;
+    dependencyManager: DependencyManager;
 }): Promise<ts.Statement> {
     return ts.factory.createIfStatement(
         ts.factory.createCallExpression(
-            ts.factory.createIdentifier(ClientConstants.HttpService.ServiceUtils.Imported.IS_RESPONSE_OK_FUNCTION),
+            getReferenceToFernServiceUtilsValue({
+                value: "isResponseOk",
+                dependencyManager,
+                referencedIn: serviceFile,
+            }),
             undefined,
             [ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.ENCODED_RESPONSE)]
         ),

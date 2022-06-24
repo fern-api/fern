@@ -1,8 +1,19 @@
-import { ts } from "ts-morph";
+import { DependencyManager, getReferenceToFernServiceUtilsType } from "@fern-typescript/commons";
+import { SourceFile, ts } from "ts-morph";
 
-export function generateMaybePromise(type: ts.TypeNode): ts.TypeNode {
-    return ts.factory.createUnionTypeNode([
-        type,
-        ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [type]),
-    ]);
+export function generateMaybePromise({
+    type,
+    dependencyManager,
+    file,
+}: {
+    type: ts.TypeNode;
+    dependencyManager: DependencyManager;
+    file: SourceFile;
+}): ts.TypeNode {
+    return getReferenceToFernServiceUtilsType({
+        type: "MaybePromise",
+        dependencyManager,
+        referencedIn: file,
+        typeArguments: [type],
+    });
 }
