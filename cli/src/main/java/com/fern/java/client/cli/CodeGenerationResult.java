@@ -101,7 +101,7 @@ public abstract class CodeGenerationResult {
                 + "    id 'maven-publish'\n"
                 + "}\n"
                 + "\n"
-                + "configure(subprojects.findAll {}) {\n"
+                + "subprojects {\n"
                 + "\n"
                 + "    group '" + publishConfig.coordinate() + "'\n"
                 + "    version '" + publishConfig.version() + "'\n"
