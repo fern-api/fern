@@ -1,10 +1,7 @@
 import { assertNever } from "@fern-api/commons";
 import { Directory, SourceFile } from "ts-morph";
-import {
-    getParentDirectory,
-    getRelativePathAsModuleSpecifierTo,
-} from "../../codegen/utils/getRelativePathAsModuleSpecifierTo";
-import { getOrCreateSourceFile } from "../../file-system/getOrCreateSourceFile";
+import { getOrCreateSourceFile } from "../file-system/getOrCreateSourceFile";
+import { getParentDirectory, getRelativePathAsModuleSpecifierTo } from "../utils/getRelativePathAsModuleSpecifierTo";
 
 export type ExportStrategy = { type: "all" } | { type: "namespace"; namespaceExport: string };
 

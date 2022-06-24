@@ -2,5 +2,15 @@
   "extends": "../../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib/esm", "rootDir": "src", "module": "esnext" },
   "include": ["./src"],
-  "references": [{ "path": "../../compiler/ir-types/fern-ir-typescript/tsconfig.esm.json" }]
+  "exclude": ["./src/**/__test__/**/generated"],
+  "references": [
+    { "path": "../../compiler/ir-types/fern-ir-typescript/tsconfig.esm.json" },
+    { "path": "../commons/tsconfig.esm.json" },
+    { "path": "../encoders/tsconfig.esm.json" },
+    { "path": "../helpers/helper-manager/tsconfig.esm.json" },
+    { "path": "../model/tsconfig.esm.json" },
+    { "path": "../service-types/tsconfig.esm.json" },
+    { "path": "../testing-utils/tsconfig.esm.json" },
+    { "path": "../types/tsconfig.esm.json" }
+  ]
 }

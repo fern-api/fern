@@ -1,5 +1,5 @@
 import { FernFilepath, IntermediateRepresentation, Type, TypeName, TypeReference } from "@fern-api/api";
-import { ResolvedType } from "./types";
+import { ResolvedType } from "./ResolvedType";
 
 type Filepath = string;
 type SimpleTypeName = string;
@@ -9,26 +9,27 @@ type SimpleTypeName = string;
  * aliases and unwrapping all containers.
  */
 export class TypeResolver {
+    private allTypes: Record<Filepath, Record<SimpleTypeName, Type>> = {};
     private resolvedTypes: Record<FernFilepath, Record<SimpleTypeName, ResolvedType>> = {};
 
     constructor(intermediateRepresentation: IntermediateRepresentation) {
-        const allTypes: Record<Filepath, Record<SimpleTypeName, Type>> = {};
-
         for (const type of intermediateRepresentation.types) {
-            let typesAtFilepath = allTypes[type.name.fernFilepath];
-            if (typesAtFilepath == null) {
-                typesAtFilepath = {};
-                allTypes[type.name.fernFilepath] = typesAtFilepath;
-            }
-
+            const typesAtFilepath = (this.allTypes[type.name.fernFilepath] ??= {});
             typesAtFilepath[type.name.name] = type.shape;
         }
         for (const type of intermediateRepresentation.types) {
             this.resolveTypeRecursive({
-                allTypes,
                 typeName: type.name,
             });
         }
+    }
+
+    public getTypeDefinitionFromName(typeName: TypeName): Type {
+        const type = this.allTypes[typeName.fernFilepath]?.[typeName.name];
+        if (type == null) {
+            throw new Error("Type not found: " + typeNameToString(typeName));
+        }
+        return type;
     }
 
     public resolveTypeName(typeName: TypeName): ResolvedType {
@@ -48,41 +49,31 @@ export class TypeResolver {
     }
 
     private resolveTypeRecursive({
-        allTypes,
         typeName,
         seen = {},
     }: {
-        allTypes: Record<Filepath, Record<SimpleTypeName, Type>>;
         typeName: TypeName;
         seen?: Record<Filepath, Set<SimpleTypeName>>;
     }): ResolvedType {
-        let seenAtFilepath = seen[typeName.fernFilepath];
-        if (seenAtFilepath == null) {
-            seenAtFilepath = new Set();
-            seen[typeName.fernFilepath] = seenAtFilepath;
-        } else if (seenAtFilepath.has(typeName.name)) {
+        const seenAtFilepath = seen[typeName.fernFilepath] ?? new Set();
+        if (seenAtFilepath.has(typeName.name)) {
             throw new Error("Detected cycle when resolving type: " + typeNameToString(typeName));
         }
         seenAtFilepath.add(typeName.name);
 
-        const type = allTypes[typeName.fernFilepath]?.[typeName.name];
+        const type = this.allTypes[typeName.fernFilepath]?.[typeName.name];
         if (type == null) {
             throw new Error("Type not found: " + typeNameToString(typeName));
         }
 
         const resolvedType = this.resolveTypeDefinitionWithContinuation(type, (typeName) =>
             this.resolveTypeRecursive({
-                allTypes,
                 typeName,
                 seen,
             })
         );
 
-        let resolvedTypesAtFilepath = this.resolvedTypes[typeName.fernFilepath];
-        if (resolvedTypesAtFilepath == null) {
-            resolvedTypesAtFilepath = {};
-            this.resolvedTypes[typeName.fernFilepath] = resolvedTypesAtFilepath;
-        }
+        const resolvedTypesAtFilepath = (this.resolvedTypes[typeName.fernFilepath] ??= {});
         resolvedTypesAtFilepath[typeName.name] = resolvedType;
 
         return resolvedType;

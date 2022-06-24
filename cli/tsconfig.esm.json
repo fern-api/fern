@@ -13,6 +13,7 @@
     { "path": "../commons/tsconfig.esm.json" },
     { "path": "../helpers/helper-manager/tsconfig.esm.json" },
     { "path": "../model/tsconfig.esm.json" },
+    { "path": "../server/tsconfig.esm.json" },
     { "path": "../testing-utils/tsconfig.esm.json" }
   ]
 }

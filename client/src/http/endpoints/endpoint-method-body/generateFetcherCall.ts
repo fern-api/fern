@@ -1,7 +1,7 @@
 import { HttpEndpoint, HttpService } from "@fern-api/api";
 import { GeneratedHttpEndpointTypes, getTextOfTsNode } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
-import { Directory, SourceFile, StatementStructures, StructureKind, ts, VariableDeclarationKind } from "ts-morph";
+import { SourceFile, StatementStructures, StructureKind, ts, VariableDeclarationKind } from "ts-morph";
 import { ClientConstants } from "../../../constants";
 import { generateJoinPathsCall } from "../../../utils/generateJoinPathsCall";
 import { convertPathToTemplateString } from "./convertPathToTemplateString";
@@ -14,7 +14,6 @@ export async function generateFetcherCall({
     endpointTypes,
     includeQueryParams,
     helperManager,
-    encodersDirectory,
 }: {
     serviceFile: SourceFile;
     serviceDefinition: HttpService;
@@ -22,7 +21,6 @@ export async function generateFetcherCall({
     endpointTypes: GeneratedHttpEndpointTypes;
     includeQueryParams: boolean;
     helperManager: HelperManager;
-    encodersDirectory: Directory;
 }): Promise<StatementStructures> {
     const fetcherArgs: ts.ObjectLiteralElementLike[] = [
         ts.factory.createPropertyAssignment(
@@ -98,7 +96,6 @@ export async function generateFetcherCall({
                       variable: requestBodyReference,
                   },
             referencedIn: serviceFile,
-            encodersDirectory,
         });
 
         fetcherArgs.push(

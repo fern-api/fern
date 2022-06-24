@@ -1,17 +1,18 @@
 import { EndpointId, FernFilepath, ServiceName } from "@fern-api/api";
 import { Directory, SourceFile, ts } from "ts-morph";
-import { ImportStrategy } from "../utils/ImportStrategy";
+import { ImportStrategy } from "../../import-export/ImportStrategy";
 import { BaseServiceTypeContext, ServiceTypeMetadata } from "./BaseServiceTypeContext";
 import { GeneratedRequest, InlinedServiceTypeReference, ServiceTypeReference } from "./types";
 
 export type HttpServiceTypeReference = ServiceTypeReference<HttpServiceTypeMetadata>;
+export type InlinedHttpServiceTypeReference = InlinedServiceTypeReference<HttpServiceTypeMetadata>;
 
 export interface GeneratedHttpEndpointTypes {
     request: GeneratedRequest<HttpServiceTypeMetadata>;
     response: {
-        reference: InlinedServiceTypeReference<HttpServiceTypeMetadata>;
-        successBodyReference: ServiceTypeReference<HttpServiceTypeMetadata> | undefined;
-        errorBodyReference: ServiceTypeReference<HttpServiceTypeMetadata> | undefined;
+        reference: InlinedHttpServiceTypeReference;
+        successBodyReference: HttpServiceTypeReference | undefined;
+        errorBodyReference: InlinedHttpServiceTypeReference;
     };
 }
 
@@ -24,7 +25,15 @@ export interface HttpServiceTypeMetadata {
 type NonQualifiedServiceName = string;
 
 export declare namespace HttpServiceTypeContext {
-    namespace getReferenceToServiceType {
+    namespace getReferenceToHttpServiceType {
+        interface Args {
+            metadata: HttpServiceTypeMetadata;
+            referencedIn: SourceFile;
+            importStrategy?: ImportStrategy;
+        }
+    }
+
+    namespace getReferenceToHttpServiceTypeUtils {
         interface Args {
             metadata: HttpServiceTypeMetadata;
             referencedIn: SourceFile;
@@ -66,11 +75,23 @@ export class HttpServiceTypeContext extends BaseServiceTypeContext {
         metadata,
         importStrategy,
         referencedIn,
-    }: HttpServiceTypeContext.getReferenceToServiceType.Args): ts.TypeReferenceNode {
+    }: HttpServiceTypeContext.getReferenceToHttpServiceType.Args): ts.TypeReferenceNode {
         return this.getReferenceToServiceType({
             metadata: convertToServiceTypeMetadata(metadata),
             importStrategy,
             referencedIn,
+        });
+    }
+
+    public getReferenceToHttpServiceTypeUtils({
+        metadata,
+        referencedIn,
+        importStrategy,
+    }: HttpServiceTypeContext.getReferenceToHttpServiceTypeUtils.Args): ts.Expression {
+        return this.getReferenceToServiceTypeUtils({
+            metadata: convertToServiceTypeMetadata(metadata),
+            referencedIn,
+            importStrategy,
         });
     }
 
@@ -79,18 +100,8 @@ export class HttpServiceTypeContext extends BaseServiceTypeContext {
         endpointId,
         generatedTypes,
     }: HttpServiceTypeContext.registerGeneratedTypes.Args): void {
-        let generatedTypesForPackage = this.generatedTypes[serviceName.fernFilepath];
-        if (generatedTypesForPackage == null) {
-            generatedTypesForPackage = {};
-            this.generatedTypes[serviceName.fernFilepath] = generatedTypesForPackage;
-        }
-
-        let generatedTypesForService = generatedTypesForPackage[serviceName.name];
-        if (generatedTypesForService == null) {
-            generatedTypesForService = {};
-            generatedTypesForPackage[serviceName.name] = generatedTypesForService;
-        }
-
+        const generatedTypesForPackage = (this.generatedTypes[serviceName.fernFilepath] ??= {});
+        const generatedTypesForService = (generatedTypesForPackage[serviceName.name] ??= {});
         generatedTypesForService[endpointId] = generatedTypes;
     }
 

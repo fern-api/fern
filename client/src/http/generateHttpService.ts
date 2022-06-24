@@ -2,8 +2,8 @@ import { HttpService } from "@fern-api/api";
 import {
     addFernServiceUtilsDependency,
     createDirectoriesForFernFilepath,
+    createSourceFileAndExportFromModule,
     DependencyManager,
-    exportFromModule,
     getTextOfTsKeyword,
     getTextOfTsNode,
     maybeAddDocs,
@@ -25,46 +25,18 @@ const SERVICE_INIT_TYPE = ts.factory.createTypeReferenceNode(
 export async function generateHttpService({
     servicesDirectory,
     modelContext,
-    encodersDirectory,
     service,
     helperManager,
     dependencyManager,
 }: {
     servicesDirectory: Directory;
     modelContext: ModelContext;
-    encodersDirectory: Directory;
     service: HttpService;
-    helperManager: HelperManager;
-    dependencyManager: DependencyManager;
-}): Promise<void> {
-    await generateService({
-        service,
-        servicesDirectory,
-        modelContext,
-        encodersDirectory,
-        helperManager,
-        dependencyManager,
-    });
-}
-
-async function generateService({
-    service,
-    servicesDirectory,
-    modelContext,
-    encodersDirectory,
-    helperManager,
-    dependencyManager,
-}: {
-    service: HttpService;
-    servicesDirectory: Directory;
-    modelContext: ModelContext;
-    encodersDirectory: Directory;
     helperManager: HelperManager;
     dependencyManager: DependencyManager;
 }): Promise<void> {
     const packageDirectory = createDirectoriesForFernFilepath(servicesDirectory, service.name.fernFilepath);
-    const serviceFile = packageDirectory.createSourceFile(`${service.name.name}.ts`);
-    exportFromModule(serviceFile);
+    const serviceFile = createSourceFileAndExportFromModule(packageDirectory, service.name.name);
 
     serviceFile.addImportDeclaration({
         namedImports: [
@@ -126,7 +98,6 @@ async function generateService({
             serviceClass,
             serviceDefinition: service,
             modelContext,
-            encodersDirectory,
             helperManager,
         });
     }

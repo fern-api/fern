@@ -42,10 +42,8 @@ export const ServiceTypesConstants = {
     },
 
     HttpEndpint: {
-        Response: {
-            Properties: {
-                STATUS_CODE: "statusCode",
-            },
+        Request: {
+            VARIABLE_NAME: "request",
         },
     },
 

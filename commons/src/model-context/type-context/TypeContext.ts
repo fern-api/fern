@@ -1,14 +1,22 @@
 import { ContainerType, IntermediateRepresentation, PrimitiveType, Type, TypeName, TypeReference } from "@fern-api/api";
 import { Directory, SourceFile, ts } from "ts-morph";
-import { BaseModelContext } from "../BaseModelContext";
-import { ImportStrategy } from "../utils/ImportStrategy";
+import { ImportStrategy } from "../../import-export/ImportStrategy";
+import { BaseModelContext } from "../base-model-context/BaseModelContext";
+import { ResolvedType } from "./ResolvedType";
 import { TypeResolver } from "./TypeResolver";
-import { ResolvedType } from "./types";
 
 export declare namespace TypeContext {
     namespace getReferenceToType {
         interface Args {
             reference: TypeReference;
+            referencedIn: SourceFile;
+            importStrategy?: ImportStrategy;
+        }
+    }
+
+    namespace getReferenceToTypeUtils {
+        interface Args {
+            typeName: TypeName;
             referencedIn: SourceFile;
             importStrategy?: ImportStrategy;
         }
@@ -49,7 +57,7 @@ export class TypeContext extends BaseModelContext {
     }: TypeContext.getReferenceToType.Args): ts.TypeNode {
         return TypeReference._visit<ts.TypeNode>(reference, {
             named: (typeName) => {
-                return this.getReferenceToTypeInModel({
+                return this.getReferenceToModelItemType({
                     item: {
                         typeName: typeName.name,
                         fernFilepath: typeName.fernFilepath,
@@ -129,6 +137,21 @@ export class TypeContext extends BaseModelContext {
         });
     }
 
+    public getReferenceToTypeUtils({
+        typeName,
+        referencedIn,
+        importStrategy,
+    }: TypeContext.getReferenceToTypeUtils.Args): ts.Expression {
+        return this.getReferenceToModelItemValue({
+            item: {
+                typeName: typeName.name,
+                fernFilepath: typeName.fernFilepath,
+            },
+            referencedIn,
+            importStrategy,
+        });
+    }
+
     public resolveTypeName(typeName: TypeName): ResolvedType {
         return this.typeResolver.resolveTypeName(typeName);
     }
@@ -139,5 +162,9 @@ export class TypeContext extends BaseModelContext {
 
     public resolveTypeDefinition(type: Type): ResolvedType {
         return this.typeResolver.resolveTypeDefinition(type);
+    }
+
+    public getTypeDefinitionFromName(typeName: TypeName): Type {
+        return this.typeResolver.getTypeDefinitionFromName(typeName);
     }
 }

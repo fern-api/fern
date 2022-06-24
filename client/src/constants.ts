@@ -72,7 +72,6 @@ export const ClientConstants = {
                     },
                 },
                 Response: {
-                    STATUS_CODE: "statusCode",
                     BODY: "body",
                 },
             },

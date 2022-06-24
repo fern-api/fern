@@ -7,20 +7,19 @@ import {
     ts,
     VariableReference,
 } from "@fern-typescript/helper-utils";
-import { Directory, SourceFile } from "ts-morph";
+import { SourceFile } from "ts-morph";
 import { generateEncoderReference } from "../../../utils/generateEncoderReference";
 
 export function generateEncoderCall({
     encoder,
     variableReference,
     method,
-    encodersDirectory,
     referencedIn,
 }: {
     encoder: Encoder;
     variableReference: VariableReference;
     method: EncodeMethod;
-    encodersDirectory: Directory;
+
     referencedIn: SourceFile;
 }): ts.Expression {
     switch (encoder._type) {
@@ -29,7 +28,6 @@ export function generateEncoderCall({
                 encoder,
                 variableReference,
                 method,
-                encodersDirectory,
                 referencedIn,
             });
         case "inline":
@@ -44,17 +42,15 @@ function generateFileBasedEncoderCall({
     variableReference,
     method,
     referencedIn,
-    encodersDirectory,
 }: {
     encoder: FileBasedEncoder;
     variableReference: VariableReference;
     method: EncodeMethod;
-    encodersDirectory: Directory;
+
     referencedIn: SourceFile;
 }) {
     const referenceToEncoder = generateEncoderReference({
         encoder,
-        encodersDirectory,
         referencedIn,
     });
 
