@@ -208,8 +208,7 @@ public final class ClientGeneratorCli {
 
         writeFileContents(
                 Paths.get(outputDirectory, "settings.gradle"),
-                CodeGenerationResult.getSettingsDotGradle(
-                        fernPluginConfig.customPluginConfig().mode()));
+                CodeGenerationResult.getSettingsDotGradle(fernPluginConfig));
         Path gradleResourcesFolder = Paths.get("/gradle-resources");
         try (Stream<Path> gradleResources = Files.walk(gradleResourcesFolder)) {
             gradleResources.forEach(gradleResource -> {
