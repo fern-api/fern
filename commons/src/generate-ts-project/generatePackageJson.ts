@@ -40,7 +40,7 @@ export async function generatePackageJson({
         main: `./${RELATIVE_ENTRYPOINT}`,
         types: `./${RELATIVE_TYPES_ENTRYPOINT}`,
         scripts: {
-            [BUILD_PROJECT_SCRIPT_NAME]: `tsc && esbuild $(find ${RELATIVE_SRC_PATH} -name '*.ts') --outdir=${RELATIVE_OUT_DIR_PATH}`,
+            [BUILD_PROJECT_SCRIPT_NAME]: `tsc && esbuild $(find ${RELATIVE_SRC_PATH} -name '*.ts') --outdir=${RELATIVE_OUT_DIR_PATH} --format=cjs`,
         },
     };
 
