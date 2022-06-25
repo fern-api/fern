@@ -3,17 +3,13 @@ definition: ./src
 generators:
   - name: fernapi/fern-typescript
     version: 0.0.85
-    generate:
-      enabled: true
-      output: ./fern-ir-typescript
+    output: ./fern-ir-typescript
     config:
       mode: model
       packageName: "@fern-api/api"
   - name: fernapi/fern-java
     version: 0.0.31
-    generate:
-      enabled: true
-      output: ./fern-ir-java/ir-api
+    output: ./fern-ir-java/ir-api
     config:
       packagePrefix: "com.fern"
       mode: MODEL
