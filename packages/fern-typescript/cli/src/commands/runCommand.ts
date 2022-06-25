@@ -37,20 +37,26 @@ export async function runCommand({
     await writeVolumeToDisk(volume, outputPath);
 
     async function runNpmCommandInOutputDirectory(...args: string[]): Promise<void> {
-        await execa("npm", args, {
+        const command = execa("npm", args, {
             cwd: outputPath,
         });
+        command.stdout?.pipe(process.stdout);
+        command.stderr?.pipe(process.stderr);
+        await command;
     }
 
     if (config.publish != null) {
+        const { registryUrl, token } = config.publish.registries.npm;
+        await runNpmCommandInOutputDirectory("config", "set", `${scopeWithAtSign}:registry`, registryUrl);
+        const parsedRegistryUrl = new URL(registryUrl);
         await runNpmCommandInOutputDirectory(
             "config",
             "set",
-            `${scopeWithAtSign}:${config.publish.registries.npm.registryUrl}`,
-            config.publish.registries.npm.registryUrl
+            `//${path.join(parsedRegistryUrl.hostname, parsedRegistryUrl.pathname)}:_authToken`,
+            token
         );
         await runNpmCommandInOutputDirectory("install", "--no-save");
-        await runNpmCommandInOutputDirectory(BUILD_PROJECT_SCRIPT_NAME);
+        await runNpmCommandInOutputDirectory("run", BUILD_PROJECT_SCRIPT_NAME);
         await runNpmCommandInOutputDirectory("publish");
     }
 }

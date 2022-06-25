@@ -34,6 +34,5 @@ export async function generateTypeScriptProject({
         packageVersion,
         dependencies: generatedSrcInfo?.dependencies,
     });
-    await generateTsConfig(volume, "esm");
-    await generateTsConfig(volume, "commonjs");
+    await generateTsConfig(volume);
 }

@@ -8,30 +8,24 @@ Object {
     \\"files\\": [
         \\"lib\\"
     ],
-    \\"main\\": \\"./lib/cjs/index.js\\",
-    \\"types\\": \\"./lib/cjs/index.d.ts\\",
-    \\"exports\\": {
-        \\".\\": {
-            \\"require\\": \\"./lib/cjs/index.js\\",
-            \\"default\\": \\"./lib/esm/index.js\\"
-        }
-    },
-    \\"sideEffects\\": false,
+    \\"main\\": \\"./lib/index.js\\",
+    \\"types\\": \\"./lib/index.d.ts\\",
     \\"scripts\\": {
-        \\"build\\": \\"run-p build:esm build:cjs\\",
-        \\"build:esm\\": \\"tsc --project tsconfig.esm.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"module\\\\\\" }' > lib/esm/package.json\\",
-        \\"build:cjs\\": \\"tsc --project tsconfig.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"commonjs\\\\\\" }' > lib/cjs/package.json\\"
+        \\"build\\": \\"tsc && esbuild $(find src -name '*.ts') --outdir=lib\\"
     },
     \\"dependencies\\": {
-        \\"uuid\\": \\"^8.3.2\\",
-        \\"@types/uuid\\": \\"^8.3.4\\"
+        \\"uuid\\": \\"8.3.2\\",
+        \\"@types/uuid\\": \\"8.3.4\\"
     },
     \\"devDependencies\\": {
-        \\"@types/node\\": \\"^17.0.33\\",
-        \\"npm-run-all\\": \\"^4.1.5\\",
-        \\"typescript\\": \\"^4.6.4\\"
+        \\"@types/node\\": \\"17.0.33\\",
+        \\"esbuild\\": \\"0.14.47\\",
+        \\"typescript\\": \\"4.6.4\\"
     }
 }",
+  "/src/index.ts": "export * as model from \\"./model\\";
+export * as services from \\"./services\\";
+",
   "/src/model/chat/errors/GenericMessage.ts": "export type GenericMessage = string & {
     __GenericMessage: void;
 };
@@ -218,43 +212,16 @@ export class ChatService implements ChatService {
 ",
   "/src/services/index.ts": "export * as chat from \\"./chat\\";
 ",
-  "/tsconfig.esm.json": "{
-    \\"compilerOptions\\": {
-        \\"composite\\": true,
-        \\"module\\": \\"esnext\\",
-        \\"target\\": \\"esnext\\",
-        \\"outDir\\": \\"lib/esm\\",
-        \\"rootDir\\": \\"src\\",
-        \\"moduleResolution\\": \\"node\\",
-        \\"esModuleInterop\\": true,
-        \\"strict\\": true,
-        \\"declaration\\": true,
-        \\"noFallthroughCasesInSwitch\\": true,
-        \\"forceConsistentCasingInFileNames\\": true,
-        \\"noUncheckedIndexedAccess\\": true,
-        \\"noUnusedLocals\\": true,
-        \\"noUnusedParameters\\": true
-    },
-    \\"include\\": [
-        \\"src\\"
-    ]
-}",
   "/tsconfig.json": "{
     \\"compilerOptions\\": {
-        \\"composite\\": true,
-        \\"module\\": \\"commonjs\\",
-        \\"target\\": \\"esnext\\",
-        \\"outDir\\": \\"lib/cjs\\",
         \\"rootDir\\": \\"src\\",
-        \\"moduleResolution\\": \\"node\\",
-        \\"esModuleInterop\\": true,
+        \\"outDir\\": \\"lib\\",
+        \\"skipLibCheck\\": true,
         \\"strict\\": true,
         \\"declaration\\": true,
-        \\"noFallthroughCasesInSwitch\\": true,
-        \\"forceConsistentCasingInFileNames\\": true,
-        \\"noUncheckedIndexedAccess\\": true,
-        \\"noUnusedLocals\\": true,
-        \\"noUnusedParameters\\": true
+        \\"emitDeclarationOnly\\": true,
+        \\"isolatedModules\\": true,
+        \\"esModuleInterop\\": true
     },
     \\"include\\": [
         \\"src\\"
@@ -271,29 +238,23 @@ Object {
     \\"files\\": [
         \\"lib\\"
     ],
-    \\"main\\": \\"./lib/cjs/index.js\\",
-    \\"types\\": \\"./lib/cjs/index.d.ts\\",
-    \\"exports\\": {
-        \\".\\": {
-            \\"require\\": \\"./lib/cjs/index.js\\",
-            \\"default\\": \\"./lib/esm/index.js\\"
-        }
-    },
-    \\"sideEffects\\": false,
+    \\"main\\": \\"./lib/index.js\\",
+    \\"types\\": \\"./lib/index.d.ts\\",
     \\"scripts\\": {
-        \\"build\\": \\"run-p build:esm build:cjs\\",
-        \\"build:esm\\": \\"tsc --project tsconfig.esm.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"module\\\\\\" }' > lib/esm/package.json\\",
-        \\"build:cjs\\": \\"tsc --project tsconfig.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"commonjs\\\\\\" }' > lib/cjs/package.json\\"
+        \\"build\\": \\"tsc && esbuild $(find src -name '*.ts') --outdir=lib\\"
     },
     \\"dependencies\\": {
         \\"@fern-typescript/service-utils\\": \\"0.0.88\\"
     },
     \\"devDependencies\\": {
-        \\"@types/node\\": \\"^17.0.33\\",
-        \\"npm-run-all\\": \\"^4.1.5\\",
-        \\"typescript\\": \\"^4.6.4\\"
+        \\"@types/node\\": \\"17.0.33\\",
+        \\"esbuild\\": \\"0.14.47\\",
+        \\"typescript\\": \\"4.6.4\\"
     }
 }",
+  "/src/index.ts": "export * as model from \\"./model\\";
+export * as services from \\"./services\\";
+",
   "/src/model/api/index.ts": "export * from \\"./service-types\\";
 ",
   "/src/model/api/service-types/NoErrorsService/GetErrorBody.ts": "export type GetErrorBody = never;
@@ -380,43 +341,16 @@ export class NoErrorsService implements NoErrorsService {
 ",
   "/src/services/index.ts": "export * as api from \\"./api\\";
 ",
-  "/tsconfig.esm.json": "{
-    \\"compilerOptions\\": {
-        \\"composite\\": true,
-        \\"module\\": \\"esnext\\",
-        \\"target\\": \\"esnext\\",
-        \\"outDir\\": \\"lib/esm\\",
-        \\"rootDir\\": \\"src\\",
-        \\"moduleResolution\\": \\"node\\",
-        \\"esModuleInterop\\": true,
-        \\"strict\\": true,
-        \\"declaration\\": true,
-        \\"noFallthroughCasesInSwitch\\": true,
-        \\"forceConsistentCasingInFileNames\\": true,
-        \\"noUncheckedIndexedAccess\\": true,
-        \\"noUnusedLocals\\": true,
-        \\"noUnusedParameters\\": true
-    },
-    \\"include\\": [
-        \\"src\\"
-    ]
-}",
   "/tsconfig.json": "{
     \\"compilerOptions\\": {
-        \\"composite\\": true,
-        \\"module\\": \\"commonjs\\",
-        \\"target\\": \\"esnext\\",
-        \\"outDir\\": \\"lib/cjs\\",
         \\"rootDir\\": \\"src\\",
-        \\"moduleResolution\\": \\"node\\",
-        \\"esModuleInterop\\": true,
+        \\"outDir\\": \\"lib\\",
+        \\"skipLibCheck\\": true,
         \\"strict\\": true,
         \\"declaration\\": true,
-        \\"noFallthroughCasesInSwitch\\": true,
-        \\"forceConsistentCasingInFileNames\\": true,
-        \\"noUncheckedIndexedAccess\\": true,
-        \\"noUnusedLocals\\": true,
-        \\"noUnusedParameters\\": true
+        \\"emitDeclarationOnly\\": true,
+        \\"isolatedModules\\": true,
+        \\"esModuleInterop\\": true
     },
     \\"include\\": [
         \\"src\\"
@@ -433,31 +367,25 @@ Object {
     \\"files\\": [
         \\"lib\\"
     ],
-    \\"main\\": \\"./lib/cjs/index.js\\",
-    \\"types\\": \\"./lib/cjs/index.d.ts\\",
-    \\"exports\\": {
-        \\".\\": {
-            \\"require\\": \\"./lib/cjs/index.js\\",
-            \\"default\\": \\"./lib/esm/index.js\\"
-        }
-    },
-    \\"sideEffects\\": false,
+    \\"main\\": \\"./lib/index.js\\",
+    \\"types\\": \\"./lib/index.d.ts\\",
     \\"scripts\\": {
-        \\"build\\": \\"run-p build:esm build:cjs\\",
-        \\"build:esm\\": \\"tsc --project tsconfig.esm.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"module\\\\\\" }' > lib/esm/package.json\\",
-        \\"build:cjs\\": \\"tsc --project tsconfig.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"commonjs\\\\\\" }' > lib/cjs/package.json\\"
+        \\"build\\": \\"tsc && esbuild $(find src -name '*.ts') --outdir=lib\\"
     },
     \\"dependencies\\": {
-        \\"uuid\\": \\"^8.3.2\\",
-        \\"@types/uuid\\": \\"^8.3.4\\",
+        \\"uuid\\": \\"8.3.2\\",
+        \\"@types/uuid\\": \\"8.3.4\\",
         \\"@fern-typescript/service-utils\\": \\"0.0.88\\"
     },
     \\"devDependencies\\": {
-        \\"@types/node\\": \\"^17.0.33\\",
-        \\"npm-run-all\\": \\"^4.1.5\\",
-        \\"typescript\\": \\"^4.6.4\\"
+        \\"@types/node\\": \\"17.0.33\\",
+        \\"esbuild\\": \\"0.14.47\\",
+        \\"typescript\\": \\"4.6.4\\"
     }
 }",
+  "/src/index.ts": "export * as model from \\"./model\\";
+export * as services from \\"./services\\";
+",
   "/src/model/commons/index.ts": "export * from \\"./types\\";
 ",
   "/src/model/commons/types/PostId.ts": "/**
@@ -855,43 +783,16 @@ export class PostsService implements PostsService {
 ",
   "/src/services/posts/index.ts": "export * from \\"./PostsService\\";
 ",
-  "/tsconfig.esm.json": "{
-    \\"compilerOptions\\": {
-        \\"composite\\": true,
-        \\"module\\": \\"esnext\\",
-        \\"target\\": \\"esnext\\",
-        \\"outDir\\": \\"lib/esm\\",
-        \\"rootDir\\": \\"src\\",
-        \\"moduleResolution\\": \\"node\\",
-        \\"esModuleInterop\\": true,
-        \\"strict\\": true,
-        \\"declaration\\": true,
-        \\"noFallthroughCasesInSwitch\\": true,
-        \\"forceConsistentCasingInFileNames\\": true,
-        \\"noUncheckedIndexedAccess\\": true,
-        \\"noUnusedLocals\\": true,
-        \\"noUnusedParameters\\": true
-    },
-    \\"include\\": [
-        \\"src\\"
-    ]
-}",
   "/tsconfig.json": "{
     \\"compilerOptions\\": {
-        \\"composite\\": true,
-        \\"module\\": \\"commonjs\\",
-        \\"target\\": \\"esnext\\",
-        \\"outDir\\": \\"lib/cjs\\",
         \\"rootDir\\": \\"src\\",
-        \\"moduleResolution\\": \\"node\\",
-        \\"esModuleInterop\\": true,
+        \\"outDir\\": \\"lib\\",
+        \\"skipLibCheck\\": true,
         \\"strict\\": true,
         \\"declaration\\": true,
-        \\"noFallthroughCasesInSwitch\\": true,
-        \\"forceConsistentCasingInFileNames\\": true,
-        \\"noUncheckedIndexedAccess\\": true,
-        \\"noUnusedLocals\\": true,
-        \\"noUnusedParameters\\": true
+        \\"emitDeclarationOnly\\": true,
+        \\"isolatedModules\\": true,
+        \\"esModuleInterop\\": true
     },
     \\"include\\": [
         \\"src\\"

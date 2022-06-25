@@ -7,7 +7,7 @@ import defaultConfig from "./shared/jest.config.shared";
 export default async (): Promise<Config> => {
     const packages = await getAllPackages({
         // in PRs, only run tests on the changed packages
-        since: IS_CI && process.env.CIRCLE_BRANCH !== "main",
+        since: isBranchInCi(),
     });
 
     return {
@@ -23,3 +23,19 @@ export default async (): Promise<Config> => {
         })),
     };
 };
+
+function isBranchInCi() {
+    if (!IS_CI) {
+        return false;
+    }
+
+    const { CIRCLE_BRANCH, CIRCLE_TAG } = process.env;
+    if (CIRCLE_BRANCH === "main") {
+        return false;
+    }
+    if (CIRCLE_TAG != null && CIRCLE_TAG.length > 0) {
+        return false;
+    }
+
+    return true;
+}
