@@ -1,2 +1,5 @@
+export {
+    installAndCompileGeneratedProject,
+    installAndCompileGeneratedProjects,
+} from "./installAndCompileGeneratedProject";
 export { itFernETE } from "./itFernETE";
-export { installAndCompileGeneratedProject } from "./runEteTest";

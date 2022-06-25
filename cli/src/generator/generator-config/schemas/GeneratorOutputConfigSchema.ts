@@ -4,7 +4,6 @@ import { z } from "zod";
 
 export const GeneratorOutputConfigSchema = z.object({
     path: z.string(),
-    pathRelativeToRootOnHost: z.string().nullable(),
 });
 
 export type GeneratorOutputConfigSchema = z.infer<typeof GeneratorOutputConfigSchema>;

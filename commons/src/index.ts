@@ -29,6 +29,5 @@ export { getTextOfTsKeyword } from "./utils/getTextOfTsKeyword";
 export { getTextOfTsNode } from "./utils/getTextOfTsNode";
 export { maybeAddDocs } from "./utils/maybeAddDocs";
 export * as visitorUtils from "./utils/visitorUtils";
-export { validateSchema } from "./validateSchema";
 export { FernWriters } from "./writers";
 export { getWriterForMultiLineUnionType } from "./writers/getWriterForMultiLineUnionType";

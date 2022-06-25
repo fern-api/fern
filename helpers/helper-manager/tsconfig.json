@@ -3,9 +3,9 @@
   "compilerOptions": { "composite": true, "outDir": "lib/cjs", "rootDir": "src", "module": "CommonJS" },
   "include": ["./src"],
   "references": [
+    { "path": "../../../commons/tsconfig.json" },
     { "path": "../../../compiler/generators/generator-runner/tsconfig.json" },
     { "path": "../../../compiler/ir-types/fern-ir-typescript/tsconfig.json" },
-    { "path": "../../commons/tsconfig.json" },
     { "path": "../built-in/json-encoding-helper/tsconfig.json" },
     { "path": "../utils/tsconfig.json" }
   ]

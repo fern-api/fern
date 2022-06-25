@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { GeneratorOutputConfigSchema } from "./GeneratorOutputConfigSchema";
+import { GeneratorPublishConfigSchema } from "./GeneratorPublishConfigSchema";
 import { HelpersSchema } from "./HelpersSchema";
 import { TypescriptGeneratorConfigSchema } from "./TypescriptGeneratorConfigSchema";
 
@@ -7,8 +8,8 @@ import { TypescriptGeneratorConfigSchema } from "./TypescriptGeneratorConfigSche
 
 export const FernGeneratorConfigSchema = z.object({
     irFilepath: z.string(),
-    workspaceVersion: z.string(),
     output: GeneratorOutputConfigSchema.nullable(),
+    publish: GeneratorPublishConfigSchema.nullable(),
     helpers: HelpersSchema,
     customConfig: TypescriptGeneratorConfigSchema,
 });
