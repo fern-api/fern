@@ -11,7 +11,7 @@ Array [
     \\"main\\": \\"./lib/index.js\\",
     \\"types\\": \\"./lib/index.d.ts\\",
     \\"scripts\\": {
-        \\"build\\": \\"tsc && esbuild $(find src -name '*.ts') --outdir=lib\\"
+        \\"build\\": \\"tsc && esbuild $(find src -name '*.ts') --outdir=lib --format=cjs\\"
     },
     \\"devDependencies\\": {
         \\"@types/node\\": \\"17.0.33\\",
