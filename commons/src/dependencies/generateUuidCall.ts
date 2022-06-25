@@ -8,8 +8,8 @@ export function generateUuidCall({
     file: SourceFile;
     dependencyManager: DependencyManager;
 }): ts.CallExpression {
-    dependencyManager.addDependency("uuid", "^8.3.2");
-    dependencyManager.addDependency("@types/uuid", "^8.3.4");
+    dependencyManager.addDependency("uuid", "8.3.2");
+    dependencyManager.addDependency("@types/uuid", "8.3.4");
 
     file.addImportDeclaration({
         moduleSpecifier: "uuid",
