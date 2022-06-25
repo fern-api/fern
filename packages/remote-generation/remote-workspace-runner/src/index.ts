@@ -1,1 +1,1 @@
-export {};
+export { runRemoteGenerationForWorkspace } from "./runRemoteGenerationForWorkspace";

@@ -10,6 +10,7 @@
     { "path": "../compiler/syntax-analysis/tsconfig.json" },
     { "path": "../init/tsconfig.json" },
     { "path": "../local-generation/local-workspace-runner/tsconfig.json" },
-    { "path": "../openapi-converter/tsconfig.json" }
+    { "path": "../openapi-converter/tsconfig.json" },
+    { "path": "../remote-generation/remote-workspace-runner/tsconfig.json" }
   ]
 }

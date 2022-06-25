@@ -31,8 +31,11 @@
     "@fern-api/commons": "workspace:*",
     "@fern-api/compiler": "workspace:*",
     "@fern-api/docker-utils": "workspace:*",
-    "@fern-fern/fiddle-coordinator-api-client": "^0.0.1",
+    "@fern-fern/fiddle-coordinator-api-client": "^0.0.2",
+    "chalk": "^4.1.2",
     "execa": "^5.1.1",
+    "log-update": "^4.0.0",
+    "ora": "^5.4.1",
     "tar": "^6.1.11",
     "tmp-promise": "^3.0.3"
   },

@@ -1,13 +1,16 @@
 import { loadWorkspaceDefinition } from "@fern-api/commons";
 import { compile } from "@fern-api/compiler";
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
+import { runRemoteGenerationForWorkspace } from "@fern-api/remote-workspace-runner";
 import { handleCompilerFailure } from "./handleCompilerFailure";
 import { parseFernDefinition } from "./parseFernInput";
 
 export async function compileWorkspace({
     absolutePathToWorkspaceDefinition,
+    runLocal,
 }: {
     absolutePathToWorkspaceDefinition: string;
+    runLocal: boolean;
 }): Promise<void> {
     const workspaceDefinition = await loadWorkspaceDefinition(absolutePathToWorkspaceDefinition);
 
@@ -18,8 +21,15 @@ export async function compileWorkspace({
         return;
     }
 
-    await runLocalGenerationForWorkspace({
-        workspaceDefinition,
-        compileResult,
-    });
+    if (runLocal) {
+        await runLocalGenerationForWorkspace({
+            workspaceDefinition,
+            compileResult,
+        });
+    } else {
+        await runRemoteGenerationForWorkspace({
+            workspaceDefinition,
+            compileResult,
+        });
+    }
 }

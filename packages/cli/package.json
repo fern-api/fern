@@ -37,6 +37,7 @@
     "@fern-api/init": "workspace:*",
     "@fern-api/local-workspace-runner": "workspace:*",
     "@fern-api/openapi-converter": "workspace:*",
+    "@fern-api/remote-workspace-runner": "workspace:*",
     "@fern-api/syntax-analysis": "workspace:*",
     "chalk": "^4.1.2",
     "glob": "^7.2.0",
