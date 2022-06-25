@@ -7,7 +7,7 @@ types:
       workspaceName: string
       organization: string
       helpers: GeneratorHelpers
-      customConfig: unknown
+      customConfig: map<string, string>
   GeneratorOutputConfig:
     properties:
       path: string

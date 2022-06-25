@@ -5,7 +5,6 @@
   "references": [
     { "path": "../../../commons/tsconfig.esm.json" },
     { "path": "../../../compiler/ir-types/fern-ir-typescript/tsconfig.esm.json" },
-    { "path": "../../../local-generation/local-workspace-runner/tsconfig.esm.json" },
     { "path": "../built-in/json-encoding-helper/tsconfig.esm.json" },
     { "path": "../utils/tsconfig.esm.json" }
   ]

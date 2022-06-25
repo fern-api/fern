@@ -48,7 +48,8 @@ export function getGeneratorConfig({
             irFilepath: DOCKER_PATH_TO_IR,
             output: absolutePathToOutput != null ? { path: DOCKER_CODEGEN_OUTPUT_DIRECTORY } : null,
             publish: null,
-            customConfig,
+            // TODO delete this cast
+            customConfig: customConfig as Record<string, string>,
             helpers: convertedHelpers,
             workspaceName,
             organization: "fern-api",
