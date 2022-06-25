@@ -243,7 +243,7 @@ Object {
         \\"build\\": \\"tsc && esbuild $(find src -name '*.ts') --outdir=lib --format=cjs\\"
     },
     \\"dependencies\\": {
-        \\"@fern-typescript/service-utils\\": \\"0.0.94\\"
+        \\"@fern-typescript/service-utils\\": \\"0.0.100\\"
     },
     \\"devDependencies\\": {
         \\"@types/node\\": \\"17.0.33\\",
@@ -373,7 +373,7 @@ Object {
     \\"dependencies\\": {
         \\"uuid\\": \\"8.3.2\\",
         \\"@types/uuid\\": \\"8.3.4\\",
-        \\"@fern-typescript/service-utils\\": \\"0.0.94\\"
+        \\"@fern-typescript/service-utils\\": \\"0.0.100\\"
     },
     \\"devDependencies\\": {
         \\"@types/node\\": \\"17.0.33\\",
