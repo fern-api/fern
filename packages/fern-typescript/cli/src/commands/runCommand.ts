@@ -1,10 +1,9 @@
-import { GeneratorConfig } from "@fern-api/generator-runner";
 import { BUILD_PROJECT_SCRIPT_NAME, writeVolumeToDisk } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import execa from "execa";
 import { Volume } from "memfs/lib/volume";
 import path from "path";
-import { TypescriptGeneratorConfigSchema } from "../generator/generator-config/schemas/TypescriptGeneratorConfigSchema";
+import { FernTypescriptGeneratorConfig } from "../generator/FernGeneratorConfig";
 import { loadIntermediateRepresentation } from "../utils/loadIntermediateRepresentation";
 import { Command } from "./Command";
 
@@ -13,7 +12,7 @@ export async function runCommand({
     config,
 }: {
     command: Command<string>;
-    config: GeneratorConfig<TypescriptGeneratorConfigSchema>;
+    config: FernTypescriptGeneratorConfig;
 }): Promise<void> {
     if (config.output == null) {
         throw new Error("Output directory is not specified.");
@@ -25,8 +24,10 @@ export async function runCommand({
 
     const volume = new Volume();
 
+    const scopeWithAtSign = `@${config.organization}`;
+
     await command.generate({
-        packageName: config.customConfig.packageName,
+        packageName: `${scopeWithAtSign}/${config.workspaceName}-${command.key}`,
         packageVersion: config.publish?.version,
         intermediateRepresentation: await loadIntermediateRepresentation(config.irFilepath),
         helperManager: new HelperManager(config.helpers),
@@ -45,7 +46,7 @@ export async function runCommand({
         await runNpmCommandInOutputDirectory(
             "config",
             "set",
-            `@${config.publish.registries.npm.scope}:${config.publish.registries.npm.scope}`,
+            `${scopeWithAtSign}:${config.publish.registries.npm.registryUrl}`,
             config.publish.registries.npm.registryUrl
         );
         await runNpmCommandInOutputDirectory("install", "--no-save");
