@@ -27,21 +27,13 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/api": "workspace:*",
     "@fern-api/commons": "workspace:*",
     "@fern-api/compiler": "workspace:*",
-    "@fern-api/docker-utils": "workspace:*",
     "@fern-fern/fiddle-coordinator-api-client": "^0.0.510",
     "@fern-typescript/service-utils": "workspace:*",
     "axios": "^0.27.2",
     "chalk": "^4.1.2",
-    "execa": "^5.1.1",
-    "form-data": "^4.0.0",
-    "formdata-node": "^4.3.3",
-    "log-update": "^4.0.0",
-    "ora": "^5.4.1",
-    "tar": "^6.1.11",
-    "tmp-promise": "^3.0.3"
+    "form-data": "^4.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",
@@ -49,8 +41,6 @@
     "@babel/preset-typescript": "^7.17.12",
     "@types/jest": "^28.1.2",
     "@types/node": "^17.0.33",
-    "@types/tar": "^6.1.1",
-    "@types/tmp": "^0.2.3",
     "depcheck": "^1.4.3",
     "eslint": "^8.12.0",
     "jest": "^28.1.1",

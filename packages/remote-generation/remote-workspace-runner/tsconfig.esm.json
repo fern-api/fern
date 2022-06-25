@@ -5,8 +5,6 @@
   "references": [
     { "path": "../../commons/tsconfig.esm.json" },
     { "path": "../../compiler/compiler/tsconfig.esm.json" },
-    { "path": "../../compiler/ir-types/fern-ir-typescript/tsconfig.esm.json" },
-    { "path": "../../fern-typescript/service-utils/tsconfig.esm.json" },
-    { "path": "../../local-generation/docker-utils/tsconfig.esm.json" }
+    { "path": "../../fern-typescript/service-utils/tsconfig.esm.json" }
   ]
 }

@@ -5,8 +5,6 @@
   "references": [
     { "path": "../../commons/tsconfig.json" },
     { "path": "../../compiler/compiler/tsconfig.json" },
-    { "path": "../../compiler/ir-types/fern-ir-typescript/tsconfig.json" },
-    { "path": "../../fern-typescript/service-utils/tsconfig.json" },
-    { "path": "../../local-generation/docker-utils/tsconfig.json" }
+    { "path": "../../fern-typescript/service-utils/tsconfig.json" }
   ]
 }
