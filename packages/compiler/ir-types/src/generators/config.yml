@@ -5,6 +5,7 @@ types:
       output: optional<GeneratorOutputConfig>
       publish: optional<GeneratorPublishConfig>
       helpers: GeneratorHelpers
+      customConfig: map<string, string>
   GeneratorOutputConfig:
     properties:
       path: string
