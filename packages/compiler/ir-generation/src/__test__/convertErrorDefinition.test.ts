@@ -1,11 +1,11 @@
-import { ErrorDefinition, FernFilepath, Type, TypeReference } from "@fern-api/api";
-import { convertErrorDefinition } from "../converters/convertErrorDefinition";
+import { ErrorDeclaration, FernFilepath, Type, TypeReference } from "@fern-api/api";
+import { convertErrorDeclaration } from "../converters/convertErrorDeclaration";
 
-describe("convertErrorDefinition", () => {
+describe("convertErrorDeclaration", () => {
     it("reference to a type in another file", () => {
-        const definition = convertErrorDefinition({
+        const definition = convertErrorDeclaration({
             errorName: "UnauthorizedError",
-            errorDefinition: {
+            errorDeclaration: {
                 type: {
                     properties: {
                         postId: "commons.PostId",
@@ -18,7 +18,7 @@ describe("convertErrorDefinition", () => {
             },
         });
 
-        const expectedDefinition: ErrorDefinition = {
+        const expectedDefinition: ErrorDeclaration = {
             docs: undefined,
             name: {
                 name: "UnauthorizedError",

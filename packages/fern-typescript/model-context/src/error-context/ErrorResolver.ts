@@ -1,9 +1,9 @@
-import { ErrorDefinition, ErrorName, FernFilepath, IntermediateRepresentation } from "@fern-api/api";
+import { ErrorDeclaration, ErrorName, FernFilepath, IntermediateRepresentation } from "@fern-api/api";
 
 type SimpleErrorName = string;
 
 export class ErrorResolver {
-    private resolvedErrors: Record<FernFilepath, Record<SimpleErrorName, ErrorDefinition>> = {};
+    private resolvedErrors: Record<FernFilepath, Record<SimpleErrorName, ErrorDeclaration>> = {};
 
     constructor(intermediateRepresentation: IntermediateRepresentation) {
         for (const error of intermediateRepresentation.errors) {
@@ -12,7 +12,7 @@ export class ErrorResolver {
         }
     }
 
-    public getErrorDefinitionFromName(errorName: ErrorName): ErrorDefinition {
+    public getErrorDeclarationFromName(errorName: ErrorName): ErrorDeclaration {
         const resolvedError = this.resolvedErrors[errorName.fernFilepath]?.[errorName.name];
         if (resolvedError == null) {
             throw new Error("Error not found: " + errorNameToString(errorName));

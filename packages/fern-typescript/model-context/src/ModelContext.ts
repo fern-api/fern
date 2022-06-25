@@ -1,6 +1,6 @@
 import {
     DeclaredTypeName,
-    ErrorDefinition,
+    ErrorDeclaration,
     ErrorName,
     IntermediateRepresentation,
     Type,
@@ -84,8 +84,8 @@ export class ModelContext {
      * ERRORS
      */
 
-    public addErrorDefinition(errorName: ErrorName, withFile: (file: SourceFile) => void): void {
-        this.errorContext.addErrorDefinition(errorName, withFile);
+    public addErrorDeclaration(errorName: ErrorName, withFile: (file: SourceFile) => void): void {
+        this.errorContext.addErrorDeclaration(errorName, withFile);
     }
 
     public getReferenceToError(args: ErrorContext.getReferenceToError.Args): ts.TypeNode {
@@ -96,8 +96,8 @@ export class ModelContext {
         return this.errorContext.getReferenceToErrorUtils(args);
     }
 
-    public getErrorDefinitionFromName(errorName: ErrorName): ErrorDefinition {
-        return this.errorContext.getErrorDefinitionFromName(errorName);
+    public getErrorDeclarationFromName(errorName: ErrorName): ErrorDeclaration {
+        return this.errorContext.getErrorDeclarationFromName(errorName);
     }
 
     /**

@@ -3,9 +3,9 @@ import { HttpErrorConfigurationSchema } from "./HttpErrorConfigurationSchema";
 import { TypeDeclarationSchema } from "./TypeDeclarationSchema";
 import { WithDocsSchema } from "./WithDocsSchema";
 
-export const ErrorDefinitionSchema = WithDocsSchema.extend({
+export const ErrorDeclarationSchema = WithDocsSchema.extend({
     http: z.optional(HttpErrorConfigurationSchema),
     type: z.optional(TypeDeclarationSchema),
 });
 
-export type ErrorDefinitionSchema = z.infer<typeof ErrorDefinitionSchema>;
+export type ErrorDeclarationSchema = z.infer<typeof ErrorDeclarationSchema>;

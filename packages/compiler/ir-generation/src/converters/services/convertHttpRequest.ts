@@ -1,6 +1,6 @@
 import { CustomWireMessageEncoding, FernFilepath, HttpRequest } from "@fern-api/api";
 import { RawSchemas } from "@fern-api/syntax-analysis";
-import { convertInlineTypeDeclaration } from "../type-definitions/convertInlineTypeDeclaration";
+import { convertInlineTypeDeclaration } from "../type-declarations/convertInlineTypeDeclaration";
 import { convertEncoding } from "./convertEncoding";
 
 export function convertHttpRequest({

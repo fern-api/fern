@@ -10,11 +10,11 @@ types:
       workspaceName: optional<string>
       types:
         docs: "The types described by this API"
-        type: list<types.TypeDefinition>
+        type: list<types.TypeDeclaration>
       services:
         docs: "The services exposed by this API"
         type: Services
-      errors: list<errors.ErrorDefinition>
+      errors: list<errors.ErrorDeclaration>
   Services:
     properties:
       http: list<http.HttpService>

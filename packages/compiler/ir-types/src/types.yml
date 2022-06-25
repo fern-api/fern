@@ -4,7 +4,7 @@ ids:
   - name: FernFilepath
     docs: "A filepath to a Fern spec file, excluding the file extension"
 types:
-  DeclaredTypeDefinition:
+  TypeDeclaration:
     docs: "A type, which is a name and a shape"
     extends: commons.WithDocs
     properties:
@@ -16,16 +16,16 @@ types:
       name: string
   Type:
     union:
-      alias: AliasTypeDefinition
-      enum: EnumTypeDefinition
-      object: ObjectTypeDefinition
-      union: UnionTypeDefinition
+      alias: AliasTypeDeclaration
+      enum: EnumTypeDeclaration
+      object: ObjectTypeDeclaration
+      union: UnionTypeDeclaration
 
-  AliasTypeDefinition:
+  AliasTypeDeclaration:
     properties:
       aliasOf: TypeReference
 
-  EnumTypeDefinition:
+  EnumTypeDeclaration:
     properties:
       values: list<EnumValue>
   EnumValue:
@@ -36,7 +36,7 @@ types:
         docs: Name must start with an alphabet.
       value: string
 
-  ObjectTypeDefinition:
+  ObjectTypeDeclaration:
     properties:
       extends:
         docs: "A list of other types to inherit from"
@@ -48,7 +48,7 @@ types:
       key: string
       valueType: TypeReference
 
-  UnionTypeDefinition:
+  UnionTypeDeclaration:
     properties:
       discriminant: string
       types: list<SingleUnionType>
