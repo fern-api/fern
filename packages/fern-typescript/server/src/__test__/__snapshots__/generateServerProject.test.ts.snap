@@ -39,6 +39,9 @@ Object {
         \\"typescript\\": \\"^4.6.4\\"
     }
 }",
+  "/src/index.ts": "export * as model from \\"./model\\";
+export * as services from \\"./services\\";
+",
   "/src/model/commons/index.ts": "export * from \\"./types\\";
 ",
   "/src/model/commons/types/PostId.ts": "/**
@@ -442,6 +445,7 @@ export const PostsService = {
         \\"outDir\\": \\"lib/esm\\",
         \\"rootDir\\": \\"src\\",
         \\"moduleResolution\\": \\"node\\",
+        \\"skipLibCheck\\": true,
         \\"esModuleInterop\\": true,
         \\"strict\\": true,
         \\"declaration\\": true,
@@ -463,6 +467,7 @@ export const PostsService = {
         \\"outDir\\": \\"lib/cjs\\",
         \\"rootDir\\": \\"src\\",
         \\"moduleResolution\\": \\"node\\",
+        \\"skipLibCheck\\": true,
         \\"esModuleInterop\\": true,
         \\"strict\\": true,
         \\"declaration\\": true,

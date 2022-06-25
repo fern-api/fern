@@ -32,6 +32,9 @@ Object {
         \\"typescript\\": \\"^4.6.4\\"
     }
 }",
+  "/src/index.ts": "export * as model from \\"./model\\";
+export * as services from \\"./services\\";
+",
   "/src/model/chat/errors/GenericMessage.ts": "export type GenericMessage = string & {
     __GenericMessage: void;
 };
@@ -226,6 +229,7 @@ export class ChatService implements ChatService {
         \\"outDir\\": \\"lib/esm\\",
         \\"rootDir\\": \\"src\\",
         \\"moduleResolution\\": \\"node\\",
+        \\"skipLibCheck\\": true,
         \\"esModuleInterop\\": true,
         \\"strict\\": true,
         \\"declaration\\": true,
@@ -247,6 +251,7 @@ export class ChatService implements ChatService {
         \\"outDir\\": \\"lib/cjs\\",
         \\"rootDir\\": \\"src\\",
         \\"moduleResolution\\": \\"node\\",
+        \\"skipLibCheck\\": true,
         \\"esModuleInterop\\": true,
         \\"strict\\": true,
         \\"declaration\\": true,
@@ -294,6 +299,9 @@ Object {
         \\"typescript\\": \\"^4.6.4\\"
     }
 }",
+  "/src/index.ts": "export * as model from \\"./model\\";
+export * as services from \\"./services\\";
+",
   "/src/model/api/index.ts": "export * from \\"./service-types\\";
 ",
   "/src/model/api/service-types/NoErrorsService/GetErrorBody.ts": "export type GetErrorBody = never;
@@ -388,6 +396,7 @@ export class NoErrorsService implements NoErrorsService {
         \\"outDir\\": \\"lib/esm\\",
         \\"rootDir\\": \\"src\\",
         \\"moduleResolution\\": \\"node\\",
+        \\"skipLibCheck\\": true,
         \\"esModuleInterop\\": true,
         \\"strict\\": true,
         \\"declaration\\": true,
@@ -409,6 +418,7 @@ export class NoErrorsService implements NoErrorsService {
         \\"outDir\\": \\"lib/cjs\\",
         \\"rootDir\\": \\"src\\",
         \\"moduleResolution\\": \\"node\\",
+        \\"skipLibCheck\\": true,
         \\"esModuleInterop\\": true,
         \\"strict\\": true,
         \\"declaration\\": true,
@@ -458,6 +468,9 @@ Object {
         \\"typescript\\": \\"^4.6.4\\"
     }
 }",
+  "/src/index.ts": "export * as model from \\"./model\\";
+export * as services from \\"./services\\";
+",
   "/src/model/commons/index.ts": "export * from \\"./types\\";
 ",
   "/src/model/commons/types/PostId.ts": "/**
@@ -863,6 +876,7 @@ export class PostsService implements PostsService {
         \\"outDir\\": \\"lib/esm\\",
         \\"rootDir\\": \\"src\\",
         \\"moduleResolution\\": \\"node\\",
+        \\"skipLibCheck\\": true,
         \\"esModuleInterop\\": true,
         \\"strict\\": true,
         \\"declaration\\": true,
@@ -884,6 +898,7 @@ export class PostsService implements PostsService {
         \\"outDir\\": \\"lib/cjs\\",
         \\"rootDir\\": \\"src\\",
         \\"moduleResolution\\": \\"node\\",
+        \\"skipLibCheck\\": true,
         \\"esModuleInterop\\": true,
         \\"strict\\": true,
         \\"declaration\\": true,
