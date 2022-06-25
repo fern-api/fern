@@ -44,7 +44,6 @@ describe("runGenerator", () => {
                     },
                     customConfig: {
                         mode: "client",
-                        packageName: "trace",
                     },
                 };
 
