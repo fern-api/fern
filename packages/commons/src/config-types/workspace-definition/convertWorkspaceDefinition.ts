@@ -14,24 +14,32 @@ export function convertWorkspaceDefinition({
         _absolutePath: absolutePathToWorkspaceDir,
         name: workspaceDefinition.name,
         absolutePathToDefinition: path.resolve(absolutePathToWorkspaceDir, workspaceDefinition.definition),
-        generators: workspaceDefinition.generators.map((generator) => ({
-            name: generator.name,
-            version: generator.version,
-            absolutePathToOutput:
-                generator.output != null ? path.resolve(absolutePathToWorkspaceDir, generator.output) : undefined,
-            config: generator.config,
-            helpers:
-                generator.helpers != null
-                    ? generator.helpers.map((helper) => ({
-                          name: helper.name,
-                          version: helper.version,
-                          absoluteLocationOnDisk:
-                              helper.locationOnDisk != null
-                                  ? path.resolve(absolutePathToWorkspaceDir, helper.locationOnDisk)
-                                  : undefined,
-                      }))
-                    : [],
-            publish: generator.publish,
-        })),
+        generators: workspaceDefinition.generators.map((generatorInvocation) => {
+            return {
+                name: generatorInvocation.name,
+                version: generatorInvocation.version,
+                generate:
+                    generatorInvocation.generate != null
+                        ? {
+                              absolutePathToLocalOutput:
+                                  generatorInvocation.generate !== true && generatorInvocation.generate.output != null
+                                      ? path.resolve(absolutePathToWorkspaceDir, generatorInvocation.generate.output)
+                                      : undefined,
+                          }
+                        : undefined,
+                config: generatorInvocation.config,
+                helpers:
+                    generatorInvocation.helpers != null
+                        ? generatorInvocation.helpers.map((helper) => ({
+                              name: helper.name,
+                              version: helper.version,
+                              absoluteLocationOnDisk:
+                                  helper.locationOnDisk != null
+                                      ? path.resolve(absolutePathToWorkspaceDir, helper.locationOnDisk)
+                                      : undefined,
+                          }))
+                        : [],
+            };
+        }),
     };
 }

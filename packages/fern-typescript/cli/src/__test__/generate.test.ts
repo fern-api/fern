@@ -1,7 +1,7 @@
 import { getDirectoryContents } from "@fern-api/commons";
 import { compile } from "@fern-api/compiler";
 import { GeneratorConfig } from "@fern-api/generator-runner";
-import { installAndCompileGeneratedProject } from "@fern-typescript/testing-utils";
+import { installAndCompileGeneratedProjects } from "@fern-typescript/testing-utils";
 import { parseFernInput } from "fern-api";
 import { rm, writeFile } from "fs/promises";
 import path from "path";
@@ -35,11 +35,10 @@ describe("runGenerator", () => {
 
                 const config: GeneratorConfig = {
                     irFilepath: irPath,
-                    workspaceVersion: "0.0.0",
                     output: {
                         path: outputPath,
-                        pathRelativeToRootOnHost: relativeOutputPath,
                     },
+                    publish: null,
                     helpers: {
                         encodings: {},
                     },
@@ -52,9 +51,9 @@ describe("runGenerator", () => {
                 await writeFile(configPath, JSON.stringify(config, undefined, 4));
                 await runGenerator(configPath);
 
-                await installAndCompileGeneratedProject(outputPath);
+                await installAndCompileGeneratedProjects(outputPath);
 
-                const directoryContents = await getDirectoryContents(path.join(outputPath, "src"));
+                const directoryContents = await getDirectoryContents(path.join(outputPath, "client", "src"));
                 expect(directoryContents).toMatchSnapshot();
 
                 await rm(configPath);

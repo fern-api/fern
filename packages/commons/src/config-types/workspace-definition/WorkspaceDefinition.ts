@@ -10,13 +10,14 @@ export interface WorkspaceDefinition {
 export interface GeneratorInvocation {
     name: string;
     version: string;
-    absolutePathToOutput: string | undefined;
+    generate: GenerateConfig | undefined;
     config: unknown;
     helpers: GeneratorHelper[];
-    publish: PublishRegistry | undefined;
 }
 
-export type PublishRegistry = "npm";
+export interface GenerateConfig {
+    absolutePathToLocalOutput: string | undefined;
+}
 
 export interface GeneratorHelper {
     name: string;

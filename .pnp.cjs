@@ -3465,8 +3465,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["package-json-type", "npm:1.0.3"],\
             ["prettier", "npm:2.6.2"],\
             ["ts-morph", "npm:14.0.0"],\
-            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=7ad353"],\
-            ["zod", "npm:3.16.0"]\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=7ad353"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -3527,8 +3526,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.2"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.17.12"],\
             ["@fern-api/api", "workspace:packages/compiler/ir-types/fern-ir-typescript"],\
+            ["@fern-api/commons", "workspace:packages/commons"],\
             ["@fern-api/generator-runner", "workspace:packages/compiler/generators/generator-runner"],\
-            ["@fern-typescript/commons", "workspace:packages/fern-typescript/commons"],\
             ["@fern-typescript/helper-utils", "workspace:packages/fern-typescript/helpers/utils"],\
             ["@fern-typescript/json-encoding-helper", "workspace:packages/fern-typescript/helpers/built-in/json-encoding-helper"],\
             ["@types/jest", "npm:28.1.2"],\
@@ -7735,6 +7734,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/webpack-bundle-analyzer", "npm:4.4.1"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.15.0"],\
+            ["execa", "npm:5.1.1"],\
             ["fern-api", "workspace:packages/cli"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.1"],\
             ["memfs", "npm:3.4.3"],\

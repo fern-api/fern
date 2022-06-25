@@ -1,5 +1,5 @@
 import { getDirectoryContents } from "@fern-api/commons";
-import { installAndCompileGeneratedProject } from "@fern-typescript/testing-utils";
+import { installAndCompileGeneratedProjects } from "@fern-typescript/testing-utils";
 import execa from "execa";
 import { rm } from "fs/promises";
 import path from "path";
@@ -28,10 +28,10 @@ function itFixture(fixtureName: string) {
             cmd.stderr?.pipe(process.stderr);
             await cmd;
 
-            const directoryContents = await getDirectoryContents(outputPath);
+            const directoryContents = await getDirectoryContents(path.join(outputPath, "model"));
             expect(directoryContents).toMatchSnapshot();
 
-            await installAndCompileGeneratedProject(outputPath);
+            await installAndCompileGeneratedProjects(outputPath);
 
             await rm(outputPath, { force: true, recursive: true });
         },

@@ -24,11 +24,21 @@ export async function generatePackageJson({
 }: {
     volume: Volume;
     packageName: string;
-    packageVersion: string;
+    packageVersion: string | undefined;
     dependencies: PackageDependencies | undefined;
 }): Promise<void> {
     let packageJson: IPackageJson = {
         name: packageName,
+    };
+
+    if (packageVersion != null) {
+        packageJson = produce(packageJson, (draft) => {
+            draft.version = packageVersion;
+        });
+    }
+
+    packageJson = {
+        ...packageJson,
         version: packageVersion,
         files: [RELATIVE_OUT_DIR_PATH],
         main: `./${RELATIVE_CJS_ENTRYPOINT}`,

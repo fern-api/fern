@@ -1,11 +1,9 @@
+import { validateSchema } from "@fern-api/commons";
 import { GeneratorConfig } from "@fern-api/generator-runner";
-import { validateSchema } from "@fern-typescript/commons";
 import { readFile } from "fs/promises";
-import { Command } from "../Command";
-import { clientCommand } from "../commands/clientCommand";
-import { modelCommand } from "../commands/modelCommand";
-import { serverCommand } from "../commands/serverCommand";
-import { runCommand } from "../runCommand";
+import { Command } from "../commands/Command";
+import { COMMANDS } from "../commands/commands";
+import { runCommand } from "../commands/runCommand";
 import { FernGeneratorConfigSchema } from "./generator-config/schemas/FernGeneratorConfigSchema";
 import { TypescriptGeneratorConfigSchema } from "./generator-config/schemas/TypescriptGeneratorConfigSchema";
 
@@ -17,17 +15,19 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
         configParsed
     );
 
-    const command = getCommand(config);
-    await runCommand({ command, config });
+    const commands = getCommands(config);
+    await Promise.all(commands.map((command) => runCommand({ command, config })));
 }
 
-function getCommand(config: FernGeneratorConfigSchema): Command {
+function getCommands(config: FernGeneratorConfigSchema): Command<string>[] {
     switch (config.customConfig.mode) {
         case "client":
-            return clientCommand;
+            return [COMMANDS.client];
         case "server":
-            return serverCommand;
+            return [COMMANDS.server];
         case "model":
-            return modelCommand;
+            return [COMMANDS.model];
+        case "client_and_server":
+            return [COMMANDS.client, COMMANDS.server];
     }
 }

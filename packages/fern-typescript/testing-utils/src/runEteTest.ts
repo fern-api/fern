@@ -1,12 +1,13 @@
 import { IntermediateRepresentation } from "@fern-api/api";
 import { compile } from "@fern-api/compiler";
-import { BUILD_PROJECT_SCRIPT_NAME, writeVolumeToDisk } from "@fern-typescript/commons";
+import { writeVolumeToDisk } from "@fern-typescript/commons";
 import execa from "execa";
 import { parseFernInput } from "fern-api";
-import { rm, writeFile } from "fs/promises";
+import { rm } from "fs/promises";
 import IS_CI from "is-ci";
 import { Volume } from "memfs/lib/volume";
 import path from "path";
+import { installAndCompileGeneratedProject } from "./installAndCompileGeneratedProject";
 
 export declare namespace runEteTest {
     export interface Args {
@@ -85,19 +86,6 @@ export async function runEteTest({
 
 function deleteDirectory(pathToDirectory: string): Promise<void> {
     return rm(pathToDirectory, { force: true, recursive: true });
-}
-
-export async function installAndCompileGeneratedProject(dir: string): Promise<void> {
-    // write empty yarn.lock so yarn knows it's a standalone project
-    await writeFile(path.join(dir, "yarn.lock"), "");
-    await execa("yarn", ["install"], {
-        cwd: dir,
-        env: {
-            // set enableImmutableInstalls=false so we can modify yarn.lock, even when in CI
-            YARN_ENABLE_IMMUTABLE_INSTALLS: "false",
-        },
-    });
-    await execa("yarn", [BUILD_PROJECT_SCRIPT_NAME], { cwd: dir });
 }
 
 const BRANCH_ENV_VAR = "CIRCLE_BRANCH";

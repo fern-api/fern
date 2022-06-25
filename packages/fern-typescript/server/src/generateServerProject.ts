@@ -17,7 +17,7 @@ export async function generateServerProject({
     intermediateRepresentation: IntermediateRepresentation;
     helperManager: HelperManager;
     packageName: string;
-    packageVersion: string;
+    packageVersion: string | undefined;
     volume: Volume;
 }): Promise<void> {
     await generateTypeScriptProject({

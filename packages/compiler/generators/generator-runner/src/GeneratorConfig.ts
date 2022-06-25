@@ -4,15 +4,39 @@
 
 export interface GeneratorConfig<CustomConfig = unknown> {
     irFilepath: string;
-    workspaceVersion: string;
     output: GeneratorOutputConfig | null;
+    publish: GeneratorPublishConfig | null;
     helpers: GeneratorHelpers;
     customConfig: CustomConfig;
 }
 
 export interface GeneratorOutputConfig {
     path: string;
-    pathRelativeToRootOnHost: string | null;
+}
+
+export interface GeneratorPublishConfig {
+    registries: GeneratorRegistriesConfig;
+    version: string;
+}
+
+export interface GeneratorRegistriesConfig {
+    maven: MavenRegistryConfig;
+    npm: NpmRegistryConfig;
+}
+
+export interface MavenRegistryConfig {
+    registryUrl: string;
+    username: string;
+    password: string;
+    group: string;
+    artifactPrefix: string;
+}
+
+export interface NpmRegistryConfig {
+    registryUrl: string;
+    token: string;
+    scope: string;
+    packagePrefix: string;
 }
 
 export interface GeneratorHelpers {

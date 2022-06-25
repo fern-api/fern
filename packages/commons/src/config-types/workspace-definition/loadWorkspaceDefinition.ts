@@ -1,5 +1,6 @@
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
+import { validateSchema } from "../../validateSchema";
 import { convertWorkspaceDefinition } from "./convertWorkspaceDefinition";
 import { WorkspaceDefinitionSchema } from "./schemas/WorkspaceDefinitionSchema";
 import { WorkspaceDefinition } from "./WorkspaceDefinition";
@@ -11,7 +12,7 @@ export async function loadWorkspaceDefinitionSchema(
 ): Promise<WorkspaceDefinitionSchema> {
     const contentsStr = await readFile(absolutePathToDefinition);
     const contentsParsed = yaml.load(contentsStr.toString());
-    return await WorkspaceDefinitionSchema.parseAsync(contentsParsed);
+    return await validateSchema<WorkspaceDefinitionSchema>(WorkspaceDefinitionSchema, contentsParsed);
 }
 
 export async function loadWorkspaceDefinition(absolutePathToDefinition: string): Promise<WorkspaceDefinition> {

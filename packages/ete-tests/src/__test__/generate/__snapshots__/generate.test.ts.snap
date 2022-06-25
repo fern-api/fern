@@ -5,7 +5,6 @@ Array [
   Object {
     "contents": "{
     \\"name\\": \\"posts\\",
-    \\"version\\": \\"0.1.2\\",
     \\"files\\": [
         \\"lib\\"
     ],

@@ -20,7 +20,7 @@ export async function generateTypeScriptProject({
 }: {
     volume: Volume;
     packageName: string;
-    packageVersion: string;
+    packageVersion: string | undefined;
     generateSrc: (directory: Directory) => MaybePromise<GeneratedProjectSrcInfo | void>;
 }): Promise<void> {
     const projectCreator = new ProjectCreator();
