@@ -3,28 +3,28 @@ import { lstat, readFile } from "fs/promises";
 import glob from "glob-promise";
 import path from "path";
 
-export async function parseFernInput(absolutePathToInput: string): Promise<FernFile[]> {
+export async function parseFernDefinition(absolutePathToDefinition: string): Promise<FernFile[]> {
     try {
-        const stats = await lstat(absolutePathToInput);
+        const stats = await lstat(absolutePathToDefinition);
         if (stats.isFile()) {
-            const relativeFilepath = path.basename(absolutePathToInput);
+            const relativeFilepath = path.basename(absolutePathToDefinition);
             return [
                 await createFernFile({
                     relativeFilepath,
-                    absoluteFilepath: absolutePathToInput,
+                    absoluteFilepath: absolutePathToDefinition,
                 }),
             ];
         } else if (!stats.isDirectory()) {
-            throw new Error(`${absolutePathToInput} is not a valid input`);
+            throw new Error(`${absolutePathToDefinition} is not a valid input`);
         }
     } catch (e) {
-        throw new Error(`${absolutePathToInput} does not exist`);
+        throw new Error(`${absolutePathToDefinition} does not exist`);
     }
 
     const files: FernFile[] = [];
 
     const filepaths = await glob("**/*.yml", {
-        cwd: absolutePathToInput,
+        cwd: absolutePathToDefinition,
     });
 
     for (const filepath of filepaths) {
@@ -32,7 +32,7 @@ export async function parseFernInput(absolutePathToInput: string): Promise<FernF
             files.push(
                 await createFernFile({
                     relativeFilepath: filepath,
-                    absoluteFilepath: path.join(absolutePathToInput, filepath),
+                    absoluteFilepath: path.join(absolutePathToDefinition, filepath),
                 })
             );
         } catch (e) {

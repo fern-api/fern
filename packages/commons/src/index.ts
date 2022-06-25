@@ -15,7 +15,7 @@ export { type WorkspaceDefinitionSchema } from "./config-types/workspace-definit
 export {
     type GeneratorHelper,
     type GeneratorInvocation,
-    type PublishRegistry,
     type WorkspaceDefinition,
 } from "./config-types/workspace-definition/WorkspaceDefinition";
 export { getDirectoryContents } from "./testing-utils/getDirectoryContents";
+export { validateSchema } from "./validateSchema";

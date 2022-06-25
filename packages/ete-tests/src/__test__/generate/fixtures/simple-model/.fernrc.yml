@@ -3,7 +3,9 @@ definition: ./api
 generators:
   - name: fernapi/fern-typescript
     version: local
-    output: ./generated
+    generate:
+      enabled: true
+      output: ./generated
     config:
       mode: model
       packageName: posts

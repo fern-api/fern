@@ -2137,6 +2137,7 @@ __metadata:
     "@babel/preset-env": ^7.18.2
     "@babel/preset-typescript": ^7.17.12
     "@fern-api/api": "workspace:*"
+    "@fern-api/commons": "workspace:*"
     "@fern-api/generator-runner": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/helper-utils": "workspace:*"
@@ -5583,6 +5584,7 @@ __metadata:
     "@types/webpack-bundle-analyzer": ^4.4.1
     depcheck: ^1.4.3
     eslint: ^8.12.0
+    execa: ^5.1.1
     fern-api: "workspace:*"
     jest: ^28.1.1
     memfs: ^3.4.1

@@ -3,7 +3,9 @@
 exports[`fern generate tests simple-model 1`] = `
 Array [
   Object {
-    "contents": "{
+    "contents": Array [
+      Object {
+        "contents": "{
     \\"name\\": \\"posts\\",
     \\"version\\": \\"0.1.2\\",
     \\"files\\": [
@@ -29,21 +31,13 @@ Array [
         \\"typescript\\": \\"^4.6.4\\"
     }
 }",
-    "name": "package.json",
-    "type": "file",
-  },
-  Object {
-    "contents": Array [
-      Object {
-        "contents": "export * as posts from \\"./posts\\";
-",
-        "name": "index.ts",
+        "name": "package.json",
         "type": "file",
       },
       Object {
         "contents": Array [
           Object {
-            "contents": "export * from \\"./types\\";
+            "contents": "export * as posts from \\"./posts\\";
 ",
             "name": "index.ts",
             "type": "file",
@@ -51,7 +45,15 @@ Array [
           Object {
             "contents": Array [
               Object {
-                "contents": "/**
+                "contents": "export * from \\"./types\\";
+",
+                "name": "index.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": Array [
+                  Object {
+                    "contents": "/**
  * A blog post
  */
 export interface Post {
@@ -60,29 +62,29 @@ export interface Post {
     content: string;
 }
 ",
-                "name": "Post.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "export * from \\"./Post\\";
+                    "name": "Post.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export * from \\"./Post\\";
 ",
-                "name": "index.ts",
-                "type": "file",
+                    "name": "index.ts",
+                    "type": "file",
+                  },
+                ],
+                "name": "types",
+                "type": "directory",
               },
             ],
-            "name": "types",
+            "name": "posts",
             "type": "directory",
           },
         ],
-        "name": "posts",
+        "name": "src",
         "type": "directory",
       },
-    ],
-    "name": "src",
-    "type": "directory",
-  },
-  Object {
-    "contents": "{
+      Object {
+        "contents": "{
     \\"compilerOptions\\": {
         \\"composite\\": true,
         \\"module\\": \\"esnext\\",
@@ -103,11 +105,11 @@ export interface Post {
         \\"src\\"
     ]
 }",
-    "name": "tsconfig.esm.json",
-    "type": "file",
-  },
-  Object {
-    "contents": "{
+        "name": "tsconfig.esm.json",
+        "type": "file",
+      },
+      Object {
+        "contents": "{
     \\"compilerOptions\\": {
         \\"composite\\": true,
         \\"module\\": \\"commonjs\\",
@@ -128,8 +130,12 @@ export interface Post {
         \\"src\\"
     ]
 }",
-    "name": "tsconfig.json",
-    "type": "file",
+        "name": "tsconfig.json",
+        "type": "file",
+      },
+    ],
+    "name": "model",
+    "type": "directory",
   },
 ]
 `;

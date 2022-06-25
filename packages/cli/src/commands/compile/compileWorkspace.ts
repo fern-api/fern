@@ -9,7 +9,7 @@ import tmp, { DirectoryResult } from "tmp-promise";
 import { buildGeneratorHelpers } from "./buildGeneratorHelpers";
 import { downloadHelper } from "./downloadHelper";
 import { handleCompilerFailure } from "./handleCompilerFailure";
-import { parseFernInput } from "./parseFernInput";
+import { parseFernDefinition } from "./parseFernInput";
 
 export async function compileWorkspace({
     absolutePathToWorkspaceDefinition,
@@ -20,7 +20,7 @@ export async function compileWorkspace({
 }): Promise<void> {
     const workspaceDefinition = await loadWorkspaceDefinition(absolutePathToWorkspaceDefinition);
 
-    const files = await parseFernInput(workspaceDefinition.absolutePathToDefinition);
+    const files = await parseFernDefinition(workspaceDefinition.absolutePathToDefinition);
     const compileResult = await compile(files, workspaceDefinition.name);
     if (!compileResult.didSucceed) {
         handleCompilerFailure(compileResult.failure);
@@ -87,9 +87,9 @@ async function loadHelpersAndRunGenerator({
         tmpdir: workspaceTempDir.path,
     });
 
-    if (generatorInvocation.absolutePathToOutput != null) {
-        await rm(generatorInvocation.absolutePathToOutput, { force: true, recursive: true });
-        await mkdir(generatorInvocation.absolutePathToOutput, { recursive: true });
+    if (generatorInvocation.generate?.absolutePathToLocalOutput != null) {
+        await rm(generatorInvocation.generate.absolutePathToLocalOutput, { force: true, recursive: true });
+        await mkdir(generatorInvocation.generate.absolutePathToLocalOutput, { recursive: true });
     }
 
     await Promise.all(
@@ -100,7 +100,7 @@ async function loadHelpersAndRunGenerator({
 
     await runGenerator({
         imageName: `${generatorInvocation.name}:${generatorInvocation.version}`,
-        absolutePathToOutput: generatorInvocation.absolutePathToOutput,
+        absolutePathToOutput: generatorInvocation.generate?.absolutePathToLocalOutput,
         absolutePathToIr,
         pathToWriteConfigJson: configJson.path,
         helpers: buildGeneratorHelpers({

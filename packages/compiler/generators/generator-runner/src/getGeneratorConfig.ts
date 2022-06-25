@@ -1,6 +1,6 @@
 import path from "path";
 import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_GENERATORS_DIRECTORY, DOCKER_PATH_TO_IR } from "./constants";
-import { GeneratorConfig, GeneratorHelpers, GeneratorOutputConfig } from "./GeneratorConfig";
+import { GeneratorConfig, GeneratorHelpers } from "./GeneratorConfig";
 
 export declare namespace getGeneratorConfig {
     export interface Args {
@@ -19,7 +19,6 @@ export declare namespace getGeneratorConfig {
 
 export function getGeneratorConfig({
     helpers,
-    absolutePathToProject,
     absolutePathToOutput,
     customConfig,
     workspaceVersion,
@@ -49,28 +48,10 @@ export function getGeneratorConfig({
         config: {
             irFilepath: DOCKER_PATH_TO_IR,
             workspaceVersion,
-            output: getGeneratorOutputConfig({ absolutePathToProject, absolutePathToOutput }),
+            output: absolutePathToOutput != null ? { path: DOCKER_CODEGEN_OUTPUT_DIRECTORY } : null,
+            publish: null,
             customConfig,
             helpers: convertedHelpers,
         },
-    };
-}
-
-// exported for testing
-export function getGeneratorOutputConfig({
-    absolutePathToProject,
-    absolutePathToOutput,
-}: {
-    absolutePathToProject: string | undefined;
-    absolutePathToOutput: string | undefined;
-}): GeneratorOutputConfig | null {
-    if (absolutePathToOutput == null) {
-        return null;
-    }
-
-    return {
-        path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
-        pathRelativeToRootOnHost:
-            absolutePathToProject != null ? path.relative(absolutePathToProject, absolutePathToOutput) : null,
     };
 }
