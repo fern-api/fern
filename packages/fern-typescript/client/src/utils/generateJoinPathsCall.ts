@@ -1,19 +1,5 @@
-import { SourceFile, ts } from "ts-morph";
+import { ts } from "ts-morph";
 
-export function generateJoinPathsCall({
-    file,
-    paths,
-}: {
-    file: SourceFile;
-    paths: readonly ts.Expression[];
-}): ts.CallExpression {
-    file.addImportDeclaration({
-        defaultImport: "path",
-        moduleSpecifier: "path",
-    });
-    return ts.factory.createCallExpression(
-        ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier("path"), "join"),
-        undefined,
-        paths
-    );
+export function generateJoinPathsCall(a: ts.Expression, b: ts.Expression): ts.Expression {
+    return ts.factory.createBinaryExpression(a, ts.factory.createToken(ts.SyntaxKind.PlusToken), b);
 }

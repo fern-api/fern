@@ -135,18 +135,15 @@ function addConstructor({
                     member: ClientConstants.HttpService.PrivateMembers.BASE_URL,
                     initialValue:
                         serviceDefinition.basePath != null
-                            ? generateJoinPathsCall({
-                                  file: serviceClass.getSourceFile(),
-                                  paths: [
-                                      ts.factory.createPropertyAccessExpression(
-                                          ts.factory.createIdentifier(SERVICE_INIT_PARAMETER_NAME),
-                                          ts.factory.createIdentifier(
-                                              ClientConstants.HttpService.ServiceUtils.ServiceInit.Properties.ORIGIN
-                                          )
-                                      ),
-                                      ts.factory.createStringLiteral(serviceDefinition.basePath),
-                                  ],
-                              })
+                            ? generateJoinPathsCall(
+                                  ts.factory.createPropertyAccessExpression(
+                                      ts.factory.createIdentifier(SERVICE_INIT_PARAMETER_NAME),
+                                      ts.factory.createIdentifier(
+                                          ClientConstants.HttpService.ServiceUtils.ServiceInit.Properties.ORIGIN
+                                      )
+                                  ),
+                                  ts.factory.createStringLiteral(serviceDefinition.basePath)
+                              )
                             : ts.factory.createPropertyAccessExpression(
                                   ts.factory.createIdentifier(SERVICE_INIT_PARAMETER_NAME),
                                   ts.factory.createIdentifier(
