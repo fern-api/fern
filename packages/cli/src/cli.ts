@@ -36,13 +36,24 @@ void yargs(hideBin(process.argv))
         ["generate [workspaces...]", "gen"],
         "Generate typesafe servers and clients",
         (yargs) =>
-            yargs.positional("workspaces", {
-                array: true,
-                type: "string",
-                description:
-                    "If omitted, every workspace specified in the project-level configuration (fern.config.json) will be processed.",
-            }),
-        (argv) => compileWorkspaces(argv.workspaces ?? [])
+            yargs
+                .option("local", {
+                    boolean: true,
+                    default: false,
+                    description: "If true, code is generated using Docker on this machine.",
+                })
+                .positional("workspaces", {
+                    array: true,
+                    type: "string",
+                    description:
+                        "If omitted, every workspace specified in the project-level configuration (fern.config.json) will be processed.",
+                }),
+        async (argv) => {
+            await compileWorkspaces({
+                commandLineWorkspaces: argv.workspaces ?? [],
+                runLocal: argv.local,
+            });
+        }
     )
     .command(
         ["convert <openapiPath> <fernDefinitionDir>"],
@@ -62,5 +73,5 @@ void yargs(hideBin(process.argv))
         (argv) => convertOpenApiToFernApiDefinition(argv.openapiPath, argv.fernDefinitionDir)
     )
     .demandCommand()
-    .showHelpOnFail(true)
+    .showHelpOnFail(false)
     .parse();

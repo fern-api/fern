@@ -1,0 +1,16 @@
+{
+  "item": [],
+  "event": [],
+  "variable": [
+    {
+      "type": "any",
+      "value": "http://localhost:8080",
+      "key": "base_url"
+    }
+  ],
+  "info": {
+    "_postman_id": "fern-ir-types",
+    "name": "fern-ir-types",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  }
+}

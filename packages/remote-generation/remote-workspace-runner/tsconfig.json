@@ -1,0 +1,12 @@
+{
+  "extends": "../../../shared/tsconfig.shared.json",
+  "compilerOptions": { "composite": true, "outDir": "lib/cjs", "rootDir": "src", "module": "CommonJS" },
+  "include": ["./src"],
+  "references": [
+    { "path": "../../commons/tsconfig.json" },
+    { "path": "../../compiler/compiler/tsconfig.json" },
+    { "path": "../../compiler/ir-types/fern-ir-typescript/tsconfig.json" },
+    { "path": "../../fern-typescript/service-utils/tsconfig.json" },
+    { "path": "../../local-generation/docker-utils/tsconfig.json" }
+  ]
+}
