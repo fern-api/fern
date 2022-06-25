@@ -28,7 +28,7 @@ function itFixture(fixtureName: string) {
             cmd.stderr?.pipe(process.stderr);
             await cmd;
 
-            const directoryContents = await getDirectoryContents(outputPath);
+            const directoryContents = await getDirectoryContents(path.join(outputPath, "model"));
             expect(directoryContents).toMatchSnapshot();
 
             await installAndCompileGeneratedProjects(outputPath);
