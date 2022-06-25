@@ -1,6 +1,5 @@
-import { CustomWireMessageEncoding } from "@fern-api/api";
+import { CustomWireMessageEncoding, GeneratorHelpers } from "@fern-api/api";
 import { GeneratorHelper, GeneratorInvocation } from "@fern-api/commons";
-import { GeneratorHelpers } from "@fern-api/generator-runner";
 import { getDownloadPathForHelper } from "./downloadHelper";
 
 export declare namespace buildGeneratorHelpers {

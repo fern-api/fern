@@ -4,6 +4,7 @@ import { addJavaGenerator, addTypescriptGenerator } from "../addGenerator";
 describe("addGenerator", () => {
     it("adds generator if not present", () => {
         const workspaceDefinition: WorkspaceDefinitionSchema = {
+            name: "my-definition",
             definition: "./src",
             generators: [],
         };
@@ -13,6 +14,7 @@ describe("addGenerator", () => {
 
     it("skip if present", () => {
         const workspaceDefinition: WorkspaceDefinitionSchema = {
+            name: "my-definition",
             definition: "./src",
             generators: [
                 {

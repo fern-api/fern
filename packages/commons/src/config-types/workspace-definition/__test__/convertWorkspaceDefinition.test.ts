@@ -4,6 +4,7 @@ describe("convertWorkspaceDefinition", () => {
     it("relative input path", () => {
         const result = convertWorkspaceDefinition({
             workspaceDefinition: {
+                name: "my-definition",
                 definition: "my/definition",
                 generators: [],
             },
@@ -16,6 +17,7 @@ describe("convertWorkspaceDefinition", () => {
     it("absolute input path", () => {
         const result = convertWorkspaceDefinition({
             workspaceDefinition: {
+                name: "my-definition",
                 definition: "/my/definition",
                 generators: [],
             },

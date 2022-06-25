@@ -1666,9 +1666,9 @@ __metadata:
     "@fern-api/compiler-commons": "workspace:*"
     "@fern-api/docker-utils": "workspace:*"
     "@fern-api/ete-tests": "workspace:*"
-    "@fern-api/generator-runner": "workspace:*"
     "@fern-api/init": "workspace:*"
     "@fern-api/ir-generation": "workspace:*"
+    "@fern-api/local-workspace-runner": "workspace:*"
     "@fern-api/openapi-converter": "workspace:*"
     "@fern-api/syntax-analysis": "workspace:*"
     "@fern-typescript/client": "workspace:*"
@@ -1766,9 +1766,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/docker-utils@workspace:*, @fern-api/docker-utils@workspace:packages/compiler/generators/docker-utils":
+"@fern-api/docker-utils@workspace:*, @fern-api/docker-utils@workspace:packages/local-generation/docker-utils":
   version: 0.0.0-use.local
-  resolution: "@fern-api/docker-utils@workspace:packages/compiler/generators/docker-utils"
+  resolution: "@fern-api/docker-utils@workspace:packages/local-generation/docker-utils"
   dependencies:
     "@babel/core": ^7.18.5
     "@babel/preset-env": ^7.18.2
@@ -1815,25 +1815,6 @@ __metadata:
   checksum: c4e9dc4a4f929aa876b55efa061544e0010eaab70c266c2651cd018c8364d804bef087197dc121000125d9b5d7a3a3bb57a6b30ebfc53b2124dd9279c1cc6ce5
   languageName: node
   linkType: hard
-
-"@fern-api/generator-runner@workspace:*, @fern-api/generator-runner@workspace:packages/compiler/generators/generator-runner":
-  version: 0.0.0-use.local
-  resolution: "@fern-api/generator-runner@workspace:packages/compiler/generators/generator-runner"
-  dependencies:
-    "@babel/core": ^7.18.5
-    "@babel/preset-env": ^7.18.2
-    "@babel/preset-typescript": ^7.17.12
-    "@fern-api/docker-utils": "workspace:*"
-    "@types/jest": ^28.1.2
-    "@types/node": ^17.0.33
-    depcheck: ^1.4.3
-    eslint: ^8.12.0
-    jest: ^28.1.1
-    npm-run-all: ^4.1.5
-    prettier: ^2.6.2
-    typescript: ^4.6.4
-  languageName: unknown
-  linkType: soft
 
 "@fern-api/init@npm:0.0.85":
   version: 0.0.85
@@ -1898,6 +1879,33 @@ __metadata:
     jest: ^28.1.1
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
+    typescript: ^4.6.4
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/local-workspace-runner@workspace:*, @fern-api/local-workspace-runner@workspace:packages/local-generation/local-workspace-runner":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/local-workspace-runner@workspace:packages/local-generation/local-workspace-runner"
+  dependencies:
+    "@babel/core": ^7.18.5
+    "@babel/preset-env": ^7.18.2
+    "@babel/preset-typescript": ^7.17.12
+    "@fern-api/api": "workspace:*"
+    "@fern-api/commons": "workspace:*"
+    "@fern-api/compiler": "workspace:*"
+    "@fern-api/docker-utils": "workspace:*"
+    "@types/jest": ^28.1.2
+    "@types/node": ^17.0.33
+    "@types/tar": ^6.1.1
+    "@types/tmp": ^0.2.3
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    execa: ^5.1.1
+    jest: ^28.1.1
+    npm-run-all: ^4.1.5
+    prettier: ^2.6.2
+    tar: ^6.1.11
+    tmp-promise: ^3.0.3
     typescript: ^4.6.4
   languageName: unknown
   linkType: soft
@@ -2137,7 +2145,6 @@ __metadata:
     "@babel/preset-typescript": ^7.17.12
     "@fern-api/api": "workspace:*"
     "@fern-api/commons": "workspace:*"
-    "@fern-api/generator-runner": "workspace:*"
     "@fern-typescript/helper-utils": "workspace:*"
     "@fern-typescript/json-encoding-helper": "workspace:*"
     "@types/jest": ^28.1.2
@@ -5526,31 +5533,25 @@ __metadata:
     "@babel/preset-env": ^7.18.2
     "@babel/preset-typescript": ^7.17.12
     "@fern-api/add-generator": "workspace:*"
-    "@fern-api/api": "workspace:*"
     "@fern-api/commons": "workspace:*"
     "@fern-api/compiler": "workspace:*"
     "@fern-api/compiler-commons": "workspace:*"
-    "@fern-api/generator-runner": "workspace:*"
     "@fern-api/init": "workspace:*"
+    "@fern-api/local-workspace-runner": "workspace:*"
     "@fern-api/openapi-converter": "workspace:*"
     "@fern-api/syntax-analysis": "workspace:*"
     "@types/jest": ^28.1.2
     "@types/node": ^17.0.33
-    "@types/tar": ^6.1.1
-    "@types/tmp": ^0.2.3
     "@types/yargs": ^17.0.10
     chalk: ^4.1.2
     depcheck: ^1.4.3
     eslint: ^8.12.0
-    execa: ^5.1.1
     glob: ^7.2.0
     glob-promise: ^4.2.2
     jest: ^28.1.1
     js-yaml: ^4.1.0
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
-    tar: ^6.1.11
-    tmp-promise: ^3.0.3
     typescript: ^4.6.4
     yargs: ^17.4.1
     zod: ^3.14.3
@@ -5569,7 +5570,6 @@ __metadata:
     "@fern-api/api": "workspace:*"
     "@fern-api/commons": "workspace:*"
     "@fern-api/compiler": "workspace:*"
-    "@fern-api/generator-runner": "workspace:*"
     "@fern-typescript/client": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/helper-manager": "workspace:*"

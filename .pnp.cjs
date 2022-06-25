@@ -45,14 +45,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/compiler/compiler"\
       },\
       {\
-        "name": "@fern-api/docker-utils",\
-        "reference": "workspace:packages/compiler/generators/docker-utils"\
-      },\
-      {\
-        "name": "@fern-api/generator-runner",\
-        "reference": "workspace:packages/compiler/generators/generator-runner"\
-      },\
-      {\
         "name": "@fern-api/ir-generation",\
         "reference": "workspace:packages/compiler/ir-generation"\
       },\
@@ -133,6 +125,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/init"\
       },\
       {\
+        "name": "@fern-api/docker-utils",\
+        "reference": "workspace:packages/local-generation/docker-utils"\
+      },\
+      {\
+        "name": "@fern-api/local-workspace-runner",\
+        "reference": "workspace:packages/local-generation/local-workspace-runner"\
+      },\
+      {\
         "name": "@fern-api/openapi-converter",\
         "reference": "workspace:packages/openapi-converter"\
       }\
@@ -146,11 +146,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-api/compile-root", ["workspace:packages/_root"]],\
       ["@fern-api/compiler", ["workspace:packages/compiler/compiler"]],\
       ["@fern-api/compiler-commons", ["workspace:packages/compiler/commons"]],\
-      ["@fern-api/docker-utils", ["workspace:packages/compiler/generators/docker-utils"]],\
+      ["@fern-api/docker-utils", ["workspace:packages/local-generation/docker-utils"]],\
       ["@fern-api/ete-tests", ["workspace:packages/ete-tests"]],\
-      ["@fern-api/generator-runner", ["workspace:packages/compiler/generators/generator-runner"]],\
       ["@fern-api/init", ["workspace:packages/init"]],\
       ["@fern-api/ir-generation", ["workspace:packages/compiler/ir-generation"]],\
+      ["@fern-api/local-workspace-runner", ["workspace:packages/local-generation/local-workspace-runner"]],\
       ["@fern-api/openapi-converter", ["workspace:packages/openapi-converter"]],\
       ["@fern-api/syntax-analysis", ["workspace:packages/compiler/syntax-analysis"]],\
       ["@fern-typescript/client", ["workspace:packages/fern-typescript/client"]],\
@@ -3027,11 +3027,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/commons", "workspace:packages/commons"],\
             ["@fern-api/compiler", "workspace:packages/compiler/compiler"],\
             ["@fern-api/compiler-commons", "workspace:packages/compiler/commons"],\
-            ["@fern-api/docker-utils", "workspace:packages/compiler/generators/docker-utils"],\
+            ["@fern-api/docker-utils", "workspace:packages/local-generation/docker-utils"],\
             ["@fern-api/ete-tests", "workspace:packages/ete-tests"],\
-            ["@fern-api/generator-runner", "workspace:packages/compiler/generators/generator-runner"],\
             ["@fern-api/init", "workspace:packages/init"],\
             ["@fern-api/ir-generation", "workspace:packages/compiler/ir-generation"],\
+            ["@fern-api/local-workspace-runner", "workspace:packages/local-generation/local-workspace-runner"],\
             ["@fern-api/openapi-converter", "workspace:packages/openapi-converter"],\
             ["@fern-api/syntax-analysis", "workspace:packages/compiler/syntax-analysis"],\
             ["@fern-typescript/client", "workspace:packages/fern-typescript/client"],\
@@ -3133,10 +3133,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["workspace:packages/compiler/generators/docker-utils", {\
-          "packageLocation": "./packages/compiler/generators/docker-utils/",\
+        ["workspace:packages/local-generation/docker-utils", {\
+          "packageLocation": "./packages/local-generation/docker-utils/",\
           "packageDependencies": [\
-            ["@fern-api/docker-utils", "workspace:packages/compiler/generators/docker-utils"],\
+            ["@fern-api/docker-utils", "workspace:packages/local-generation/docker-utils"],\
             ["@babel/core", "npm:7.18.5"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.2"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.17.12"],\
@@ -3185,25 +3185,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/docker-utils", "npm:0.0.85"]\
           ],\
           "linkType": "HARD"\
-        }],\
-        ["workspace:packages/compiler/generators/generator-runner", {\
-          "packageLocation": "./packages/compiler/generators/generator-runner/",\
-          "packageDependencies": [\
-            ["@fern-api/generator-runner", "workspace:packages/compiler/generators/generator-runner"],\
-            ["@babel/core", "npm:7.18.5"],\
-            ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.2"],\
-            ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.17.12"],\
-            ["@fern-api/docker-utils", "workspace:packages/compiler/generators/docker-utils"],\
-            ["@types/jest", "npm:28.1.2"],\
-            ["@types/node", "npm:17.0.34"],\
-            ["depcheck", "npm:1.4.3"],\
-            ["eslint", "npm:8.15.0"],\
-            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.1"],\
-            ["npm-run-all", "npm:4.1.5"],\
-            ["prettier", "npm:2.6.2"],\
-            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=7ad353"]\
-          ],\
-          "linkType": "SOFT"\
         }]\
       ]],\
       ["@fern-api/init", [\
@@ -3270,6 +3251,35 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.1"],\
             ["npm-run-all", "npm:4.1.5"],\
             ["prettier", "npm:2.6.2"],\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=7ad353"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@fern-api/local-workspace-runner", [\
+        ["workspace:packages/local-generation/local-workspace-runner", {\
+          "packageLocation": "./packages/local-generation/local-workspace-runner/",\
+          "packageDependencies": [\
+            ["@fern-api/local-workspace-runner", "workspace:packages/local-generation/local-workspace-runner"],\
+            ["@babel/core", "npm:7.18.5"],\
+            ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.2"],\
+            ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.17.12"],\
+            ["@fern-api/api", "workspace:packages/compiler/ir-types/fern-ir-typescript"],\
+            ["@fern-api/commons", "workspace:packages/commons"],\
+            ["@fern-api/compiler", "workspace:packages/compiler/compiler"],\
+            ["@fern-api/docker-utils", "workspace:packages/local-generation/docker-utils"],\
+            ["@types/jest", "npm:28.1.2"],\
+            ["@types/node", "npm:17.0.34"],\
+            ["@types/tar", "npm:6.1.1"],\
+            ["@types/tmp", "npm:0.2.3"],\
+            ["depcheck", "npm:1.4.3"],\
+            ["eslint", "npm:8.15.0"],\
+            ["execa", "npm:5.1.1"],\
+            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.1"],\
+            ["npm-run-all", "npm:4.1.5"],\
+            ["prettier", "npm:2.6.2"],\
+            ["tar", "npm:6.1.11"],\
+            ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=7ad353"]\
           ],\
           "linkType": "SOFT"\
@@ -3527,7 +3537,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.17.12"],\
             ["@fern-api/api", "workspace:packages/compiler/ir-types/fern-ir-typescript"],\
             ["@fern-api/commons", "workspace:packages/commons"],\
-            ["@fern-api/generator-runner", "workspace:packages/compiler/generators/generator-runner"],\
             ["@fern-typescript/helper-utils", "workspace:packages/fern-typescript/helpers/utils"],\
             ["@fern-typescript/json-encoding-helper", "workspace:packages/fern-typescript/helpers/built-in/json-encoding-helper"],\
             ["@types/jest", "npm:28.1.2"],\
@@ -7678,31 +7687,25 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.2"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.17.12"],\
             ["@fern-api/add-generator", "workspace:packages/add-generator"],\
-            ["@fern-api/api", "workspace:packages/compiler/ir-types/fern-ir-typescript"],\
             ["@fern-api/commons", "workspace:packages/commons"],\
             ["@fern-api/compiler", "workspace:packages/compiler/compiler"],\
             ["@fern-api/compiler-commons", "workspace:packages/compiler/commons"],\
-            ["@fern-api/generator-runner", "workspace:packages/compiler/generators/generator-runner"],\
             ["@fern-api/init", "workspace:packages/init"],\
+            ["@fern-api/local-workspace-runner", "workspace:packages/local-generation/local-workspace-runner"],\
             ["@fern-api/openapi-converter", "workspace:packages/openapi-converter"],\
             ["@fern-api/syntax-analysis", "workspace:packages/compiler/syntax-analysis"],\
             ["@types/jest", "npm:28.1.2"],\
             ["@types/node", "npm:17.0.34"],\
-            ["@types/tar", "npm:6.1.1"],\
-            ["@types/tmp", "npm:0.2.3"],\
             ["@types/yargs", "npm:17.0.10"],\
             ["chalk", "npm:4.1.2"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.15.0"],\
-            ["execa", "npm:5.1.1"],\
             ["glob", "npm:7.2.3"],\
             ["glob-promise", "virtual:c37ace737315e96b32cdb35b4dd91032563c9b590da1c50a6aa7cb655448ebdd2aa0ee00f5787fe4ec889e341105dac9b50fd95bf4f04f71299a0c730fe00139#npm:4.2.2"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.1"],\
             ["js-yaml", "npm:4.1.0"],\
             ["npm-run-all", "npm:4.1.5"],\
             ["prettier", "npm:2.6.2"],\
-            ["tar", "npm:6.1.11"],\
-            ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=7ad353"],\
             ["yargs", "npm:17.5.1"],\
             ["zod", "npm:3.16.0"]\
@@ -7721,7 +7724,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/api", "workspace:packages/compiler/ir-types/fern-ir-typescript"],\
             ["@fern-api/commons", "workspace:packages/commons"],\
             ["@fern-api/compiler", "workspace:packages/compiler/compiler"],\
-            ["@fern-api/generator-runner", "workspace:packages/compiler/generators/generator-runner"],\
             ["@fern-typescript/client", "workspace:packages/fern-typescript/client"],\
             ["@fern-typescript/commons", "workspace:packages/fern-typescript/commons"],\
             ["@fern-typescript/helper-manager", "workspace:packages/fern-typescript/helpers/helper-manager"],\

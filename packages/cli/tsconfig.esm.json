@@ -7,10 +7,9 @@
     { "path": "../commons/tsconfig.esm.json" },
     { "path": "../compiler/commons/tsconfig.esm.json" },
     { "path": "../compiler/compiler/tsconfig.esm.json" },
-    { "path": "../compiler/generators/generator-runner/tsconfig.esm.json" },
-    { "path": "../compiler/ir-types/fern-ir-typescript/tsconfig.esm.json" },
     { "path": "../compiler/syntax-analysis/tsconfig.esm.json" },
     { "path": "../init/tsconfig.esm.json" },
+    { "path": "../local-generation/local-workspace-runner/tsconfig.esm.json" },
     { "path": "../openapi-converter/tsconfig.esm.json" }
   ]
 }

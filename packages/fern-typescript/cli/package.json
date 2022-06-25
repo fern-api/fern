@@ -32,7 +32,6 @@
   "dependencies": {
     "@fern-api/commons": "workspace:*",
     "@fern-api/compiler": "workspace:*",
-    "@fern-api/generator-runner": "workspace:*",
     "@fern-typescript/client": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/helper-manager": "workspace:*",

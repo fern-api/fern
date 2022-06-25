@@ -2,17 +2,10 @@
   "extends": "../../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib/cjs", "rootDir": "src", "module": "CommonJS" },
   "include": ["./src"],
-  "exclude": ["./src/**/__test__/**/generated"],
   "references": [
-    { "path": "../../cli/tsconfig.json" },
     { "path": "../../commons/tsconfig.json" },
     { "path": "../../compiler/compiler/tsconfig.json" },
     { "path": "../../compiler/ir-types/fern-ir-typescript/tsconfig.json" },
-    { "path": "../client/tsconfig.json" },
-    { "path": "../commons/tsconfig.json" },
-    { "path": "../helpers/helper-manager/tsconfig.json" },
-    { "path": "../model/tsconfig.json" },
-    { "path": "../server/tsconfig.json" },
-    { "path": "../testing-utils/tsconfig.json" }
+    { "path": "../docker-utils/tsconfig.json" }
   ]
 }

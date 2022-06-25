@@ -8,8 +8,6 @@
     { "path": "../commons/tsconfig.json" },
     { "path": "../compiler/commons/tsconfig.json" },
     { "path": "../compiler/compiler/tsconfig.json" },
-    { "path": "../compiler/generators/docker-utils/tsconfig.json" },
-    { "path": "../compiler/generators/generator-runner/tsconfig.json" },
     { "path": "../compiler/ir-generation/tsconfig.json" },
     { "path": "../compiler/ir-types/fern-ir-typescript/tsconfig.json" },
     { "path": "../compiler/syntax-analysis/tsconfig.json" },
@@ -30,6 +28,8 @@
     { "path": "../fern-typescript/testing-utils/tsconfig.json" },
     { "path": "../fern-typescript/types/tsconfig.json" },
     { "path": "../init/tsconfig.json" },
+    { "path": "../local-generation/docker-utils/tsconfig.json" },
+    { "path": "../local-generation/local-workspace-runner/tsconfig.json" },
     { "path": "../openapi-converter/tsconfig.json" }
   ]
 }

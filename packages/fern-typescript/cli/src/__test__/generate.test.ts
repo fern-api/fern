@@ -1,6 +1,6 @@
+import { GeneratorConfig } from "@fern-api/api";
 import { getDirectoryContents } from "@fern-api/commons";
 import { compile } from "@fern-api/compiler";
-import { GeneratorConfig } from "@fern-api/generator-runner";
 import { installAndCompileGeneratedProjects } from "@fern-typescript/testing-utils";
 import { parseFernInput } from "fern-api";
 import { rm, writeFile } from "fs/promises";
@@ -44,8 +44,9 @@ describe("runGenerator", () => {
                     },
                     customConfig: {
                         mode: "client",
-                        packageName: "trace",
                     },
+                    workspaceName: "my-api",
+                    organization: "fern-api",
                 };
 
                 await writeFile(configPath, JSON.stringify(config, undefined, 4));
