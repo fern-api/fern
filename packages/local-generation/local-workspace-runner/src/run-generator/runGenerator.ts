@@ -42,7 +42,6 @@ export async function runGenerator({
 
     const { config, binds: bindsForGenerators } = getGeneratorConfig({
         helpers,
-        absolutePathToOutput,
         customConfig,
         workspaceName,
     });

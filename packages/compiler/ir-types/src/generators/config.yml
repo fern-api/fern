@@ -2,7 +2,7 @@ types:
   GeneratorConfig:
     properties:
       irFilepath: string
-      output: optional<GeneratorOutputConfig>
+      output: GeneratorOutputConfig
       publish: optional<GeneratorPublishConfig>
       workspaceName: string
       organization: string
