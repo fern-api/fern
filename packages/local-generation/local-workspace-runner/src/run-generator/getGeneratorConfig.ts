@@ -5,7 +5,6 @@ import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_GENERATORS_DIRECTORY, DOCKER_PA
 export declare namespace getGeneratorConfig {
     export interface Args {
         helpers: GeneratorHelpers;
-        absolutePathToOutput: string | undefined;
         workspaceName: string;
         customConfig: unknown;
     }
@@ -18,7 +17,6 @@ export declare namespace getGeneratorConfig {
 
 export function getGeneratorConfig({
     helpers,
-    absolutePathToOutput,
     customConfig,
     workspaceName,
 }: getGeneratorConfig.Args): getGeneratorConfig.Return {
@@ -46,7 +44,7 @@ export function getGeneratorConfig({
         binds,
         config: {
             irFilepath: DOCKER_PATH_TO_IR,
-            output: absolutePathToOutput != null ? { path: DOCKER_CODEGEN_OUTPUT_DIRECTORY } : null,
+            output: { path: DOCKER_CODEGEN_OUTPUT_DIRECTORY },
             publish: null,
             // TODO delete this cast
             customConfig: customConfig as Record<string, string>,
