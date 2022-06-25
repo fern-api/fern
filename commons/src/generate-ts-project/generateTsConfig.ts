@@ -20,6 +20,7 @@ export async function generateTsConfig(volume: Volume, moduleType: ModuleType): 
                     outDir: getOutDir(moduleType),
                     rootDir: SRC_DIRECTORY,
                     moduleResolution: "node",
+                    skipLibCheck: true,
                     esModuleInterop: true,
                     strict: true,
                     declaration: true,
