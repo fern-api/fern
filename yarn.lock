@@ -2014,15 +2014,19 @@ __metadata:
     "@fern-api/commons": "workspace:*"
     "@fern-api/compiler": "workspace:*"
     "@fern-api/docker-utils": "workspace:*"
-    "@fern-fern/fiddle-coordinator-api-client": ^0.0.774
+    "@fern-fern/fiddle-coordinator-api-client": ^0.0.510
+    "@fern-typescript/service-utils": "workspace:*"
     "@types/jest": ^28.1.2
     "@types/node": ^17.0.33
     "@types/tar": ^6.1.1
     "@types/tmp": ^0.2.3
+    axios: ^0.27.2
     chalk: ^4.1.2
     depcheck: ^1.4.3
     eslint: ^8.12.0
     execa: ^5.1.1
+    form-data: ^4.0.0
+    formdata-node: ^4.3.3
     jest: ^28.1.1
     log-update: ^4.0.0
     npm-run-all: ^4.1.5
@@ -2067,12 +2071,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-fern/fiddle-coordinator-api-client@npm:^0.0.774":
-  version: 0.0.774
-  resolution: "@fern-fern/fiddle-coordinator-api-client@npm:0.0.774::__archiveUrl=https%3A%2F%2Ffern-dev-985111089818.d.codeartifact.us-east-1.amazonaws.com%3A443%2Fnpm%2Ffern-dev%2F%40fern-fern%2Ffiddle-coordinator-api-client%2F-%2Ffiddle-coordinator-api-client-0.0.774.tgz"
+"@fern-fern/fiddle-coordinator-api-client@npm:^0.0.510":
+  version: 0.0.510
+  resolution: "@fern-fern/fiddle-coordinator-api-client@npm:0.0.510::__archiveUrl=https%3A%2F%2Ffern-dev-985111089818.d.codeartifact.us-east-1.amazonaws.com%3A443%2Fnpm%2Ffern-dev%2F%40fern-fern%2Ffiddle-coordinator-api-client%2F-%2Ffiddle-coordinator-api-client-0.0.510.tgz"
   dependencies:
     "@fern-typescript/service-utils": 0.0.94
-  checksum: bbd69bbff3442698faa3615c008d50af66425ed92a87106671b62a5f34b0745aa37ff4cdf9e02097927186ee6ca736ef865270624f81ce9d1bd73d7d901fc180
+  checksum: af33f0f8f50bd5c44be995990eadf50a4de4a960548c7645033acce8aaed9f2ad4f737248f17770b14525ed6f4bb5d4d27a990a04fb94df8fa5cc5a9673dd6ff
   languageName: node
   linkType: hard
 
@@ -2359,6 +2363,7 @@ __metadata:
     "@babel/preset-typescript": ^7.17.12
     "@types/jest": ^28.1.2
     "@types/node": ^17.0.33
+    axios: ^0.27.2
     depcheck: ^1.4.3
     eslint: ^8.12.0
     jest: ^28.1.1
@@ -3896,6 +3901,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"asynckit@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "asynckit@npm:0.4.0"
+  checksum: 7b78c451df768adba04e2d02e63e2d0bf3b07adcd6e42b4cf665cb7ce899bedd344c69a1dcbce355b5f972d597b25aaa1c1742b52cffd9caccb22f348114f6be
+  languageName: node
+  linkType: hard
+
+"axios@npm:^0.27.2":
+  version: 0.27.2
+  resolution: "axios@npm:0.27.2"
+  dependencies:
+    follow-redirects: ^1.14.9
+    form-data: ^4.0.0
+  checksum: 38cb7540465fe8c4102850c4368053c21683af85c5fdf0ea619f9628abbcb59415d1e22ebc8a6390d2bbc9b58a9806c874f139767389c862ec9b772235f06854
+  languageName: node
+  linkType: hard
+
 "babel-jest@npm:^28.1.1":
   version: 28.1.1
   resolution: "babel-jest@npm:28.1.1"
@@ -4532,6 +4554,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"combined-stream@npm:^1.0.8":
+  version: 1.0.8
+  resolution: "combined-stream@npm:1.0.8"
+  dependencies:
+    delayed-stream: ~1.0.0
+  checksum: 49fa4aeb4916567e33ea81d088f6584749fc90c7abec76fd516bf1c5aa5c79f3584b5ba3de6b86d26ddd64bae5329c4c7479343250cfe71c75bb366eae53bb7c
+  languageName: node
+  linkType: hard
+
 "commander@npm:^2.20.0":
   version: 2.20.3
   resolution: "commander@npm:2.20.3"
@@ -4788,6 +4819,13 @@ __metadata:
     has-property-descriptors: "npm:^1.0.0"
     object-keys: "npm:^1.1.1"
   checksum: ce0aef3f9eb193562b5cfb79b2d2c86b6a109dfc9fdcb5f45d680631a1a908c06824ddcdb72b7573b54e26ace07f0a23420aaba0d5c627b34d2c1de8ef527e2b
+  languageName: node
+  linkType: hard
+
+"delayed-stream@npm:~1.0.0":
+  version: 1.0.0
+  resolution: "delayed-stream@npm:1.0.0"
+  checksum: 46fe6e83e2cb1d85ba50bd52803c68be9bd953282fa7096f51fc29edd5d67ff84ff753c51966061e5ba7cb5e47ef6d36a91924eddb7f3f3483b1c560f77a0020
   languageName: node
   linkType: hard
 
@@ -5790,6 +5828,37 @@ __metadata:
   version: 3.2.5
   resolution: "flatted@npm:3.2.5"
   checksum: 3c436e9695ccca29620b4be5671dd72e5dd0a7500e0856611b7ca9bd8169f177f408c3b9abfa78dfe1493ee2d873e2c119080a8a9bee4e1a186a9e60ca6c89f1
+  languageName: node
+  linkType: hard
+
+"follow-redirects@npm:^1.14.9":
+  version: 1.15.1
+  resolution: "follow-redirects@npm:1.15.1"
+  peerDependenciesMeta:
+    debug:
+      optional: true
+  checksum: 6aa4e3e3cdfa3b9314801a1cd192ba756a53479d9d8cca65bf4db3a3e8834e62139245cd2f9566147c8dfe2efff1700d3e6aefd103de4004a7b99985e71dd533
+  languageName: node
+  linkType: hard
+
+"form-data@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "form-data@npm:4.0.0"
+  dependencies:
+    asynckit: ^0.4.0
+    combined-stream: ^1.0.8
+    mime-types: ^2.1.12
+  checksum: 01135bf8675f9d5c61ff18e2e2932f719ca4de964e3be90ef4c36aacfc7b9cb2fceb5eca0b7e0190e3383fe51c5b37f4cb80b62ca06a99aaabfcfd6ac7c9328c
+  languageName: node
+  linkType: hard
+
+"formdata-node@npm:^4.3.3":
+  version: 4.3.3
+  resolution: "formdata-node@npm:4.3.3"
+  dependencies:
+    node-domexception: 1.0.0
+    web-streams-polyfill: 4.0.0-beta.1
+  checksum: ad5f627e694a977edb1986c4b351c863196ee409e460c644adcb242bfc78ca9faa4877cba8113a71cecc0f0e21320d3c3d0acac95445817e014001ce147ba362
   languageName: node
   linkType: hard
 
@@ -7770,7 +7839,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mime-types@npm:^2.1.27":
+"mime-types@npm:^2.1.12, mime-types@npm:^2.1.27":
   version: 2.1.35
   resolution: "mime-types@npm:2.1.35"
   dependencies:
@@ -8027,6 +8096,13 @@ __metadata:
   version: 1.0.5
   resolution: "nice-try@npm:1.0.5"
   checksum: 0b4af3b5bb5d86c289f7a026303d192a7eb4417231fe47245c460baeabae7277bcd8fd9c728fb6bd62c30b3e15cd6620373e2cf33353b095d8b403d3e8a15aff
+  languageName: node
+  linkType: hard
+
+"node-domexception@npm:1.0.0":
+  version: 1.0.0
+  resolution: "node-domexception@npm:1.0.0"
+  checksum: ee1d37dd2a4eb26a8a92cd6b64dfc29caec72bff5e1ed9aba80c294f57a31ba4895a60fd48347cf17dd6e766da0ae87d75657dfd1f384ebfa60462c2283f5c7f
   languageName: node
   linkType: hard
 
@@ -10375,6 +10451,13 @@ __metadata:
   dependencies:
     defaults: ^1.0.3
   checksum: 814e9d1ddcc9798f7377ffa448a5a3892232b9275ebb30a41b529607691c0491de47cba426e917a4d08ded3ee7e9ba2f3fe32e62ee3cd9c7d3bafb7754bd553c
+  languageName: node
+  linkType: hard
+
+"web-streams-polyfill@npm:4.0.0-beta.1":
+  version: 4.0.0-beta.1
+  resolution: "web-streams-polyfill@npm:4.0.0-beta.1"
+  checksum: 94c21d3aba1c26e5942bb210ffd60c6990cbc750d34bdf548ed93ed845f0a6eac89cdae1dd0195afaba15fbcf4aaca9e397ee40fa4d1f2c191d04d43717bd065
   languageName: node
   linkType: hard
 

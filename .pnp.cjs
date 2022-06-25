@@ -3402,15 +3402,19 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/commons", "workspace:packages/commons"],\
             ["@fern-api/compiler", "workspace:packages/compiler/compiler"],\
             ["@fern-api/docker-utils", "workspace:packages/local-generation/docker-utils"],\
-            ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.774::__archiveUrl=https%3A%2F%2Ffern-dev-985111089818.d.codeartifact.us-east-1.amazonaws.com%3A443%2Fnpm%2Ffern-dev%2F%40fern-fern%2Ffiddle-coordinator-api-client%2F-%2Ffiddle-coordinator-api-client-0.0.774.tgz"],\
+            ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.510::__archiveUrl=https%3A%2F%2Ffern-dev-985111089818.d.codeartifact.us-east-1.amazonaws.com%3A443%2Fnpm%2Ffern-dev%2F%40fern-fern%2Ffiddle-coordinator-api-client%2F-%2Ffiddle-coordinator-api-client-0.0.510.tgz"],\
+            ["@fern-typescript/service-utils", "workspace:packages/fern-typescript/service-utils"],\
             ["@types/jest", "npm:28.1.2"],\
             ["@types/node", "npm:17.0.34"],\
             ["@types/tar", "npm:6.1.1"],\
             ["@types/tmp", "npm:0.2.3"],\
+            ["axios", "npm:0.27.2"],\
             ["chalk", "npm:4.1.2"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.15.0"],\
             ["execa", "npm:5.1.1"],\
+            ["form-data", "npm:4.0.0"],\
+            ["formdata-node", "npm:4.3.3"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.1"],\
             ["log-update", "npm:4.0.0"],\
             ["npm-run-all", "npm:4.1.5"],\
@@ -3458,10 +3462,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/fiddle-coordinator-api-client", [\
-        ["npm:0.0.774::__archiveUrl=https%3A%2F%2Ffern-dev-985111089818.d.codeartifact.us-east-1.amazonaws.com%3A443%2Fnpm%2Ffern-dev%2F%40fern-fern%2Ffiddle-coordinator-api-client%2F-%2Ffiddle-coordinator-api-client-0.0.774.tgz", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-fiddle-coordinator-api-client-npm-0.0.774-8b85f4a703-bbd69bbff3.zip/node_modules/@fern-fern/fiddle-coordinator-api-client/",\
+        ["npm:0.0.510::__archiveUrl=https%3A%2F%2Ffern-dev-985111089818.d.codeartifact.us-east-1.amazonaws.com%3A443%2Fnpm%2Ffern-dev%2F%40fern-fern%2Ffiddle-coordinator-api-client%2F-%2Ffiddle-coordinator-api-client-0.0.510.tgz", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-fiddle-coordinator-api-client-npm-0.0.510-762f76b2b7-af33f0f8f5.zip/node_modules/@fern-fern/fiddle-coordinator-api-client/",\
           "packageDependencies": [\
-            ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.774::__archiveUrl=https%3A%2F%2Ffern-dev-985111089818.d.codeartifact.us-east-1.amazonaws.com%3A443%2Fnpm%2Ffern-dev%2F%40fern-fern%2Ffiddle-coordinator-api-client%2F-%2Ffiddle-coordinator-api-client-0.0.774.tgz"],\
+            ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.510::__archiveUrl=https%3A%2F%2Ffern-dev-985111089818.d.codeartifact.us-east-1.amazonaws.com%3A443%2Fnpm%2Ffern-dev%2F%40fern-fern%2Ffiddle-coordinator-api-client%2F-%2Ffiddle-coordinator-api-client-0.0.510.tgz"],\
             ["@fern-typescript/service-utils", "npm:0.0.94"]\
           ],\
           "linkType": "HARD"\
@@ -3773,6 +3777,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.17.12"],\
             ["@types/jest", "npm:28.1.2"],\
             ["@types/node", "npm:17.0.34"],\
+            ["axios", "npm:0.27.2"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.15.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.1"],\
@@ -5677,6 +5682,26 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["asynckit", [\
+        ["npm:0.4.0", {\
+          "packageLocation": "./.yarn/cache/asynckit-npm-0.4.0-c718858525-7b78c451df.zip/node_modules/asynckit/",\
+          "packageDependencies": [\
+            ["asynckit", "npm:0.4.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["axios", [\
+        ["npm:0.27.2", {\
+          "packageLocation": "./.yarn/cache/axios-npm-0.27.2-dbe3a48aea-38cb754046.zip/node_modules/axios/",\
+          "packageDependencies": [\
+            ["axios", "npm:0.27.2"],\
+            ["follow-redirects", "virtual:dbe3a48aea1dd5649e16abaf23d4ae05582d2149e16141955113766a0f84f681baf358c77ddccfc82eb23e4ccc66c6c912df62a9c01f2a83f1842bf86cc297b1#npm:1.15.1"],\
+            ["form-data", "npm:4.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["babel-jest", [\
         ["npm:28.1.1", {\
           "packageLocation": "./.yarn/cache/babel-jest-npm-28.1.1-a0706ab037-9c7c7f6006.zip/node_modules/babel-jest/",\
@@ -6465,6 +6490,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["combined-stream", [\
+        ["npm:1.0.8", {\
+          "packageLocation": "./.yarn/cache/combined-stream-npm-1.0.8-dc14d4a63a-49fa4aeb49.zip/node_modules/combined-stream/",\
+          "packageDependencies": [\
+            ["combined-stream", "npm:1.0.8"],\
+            ["delayed-stream", "npm:1.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["commander", [\
         ["npm:2.20.3", {\
           "packageLocation": "./.yarn/cache/commander-npm-2.20.3-d8dcbaa39b-ab8c07884e.zip/node_modules/commander/",\
@@ -6793,6 +6828,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["define-properties", "npm:1.1.4"],\
             ["has-property-descriptors", "npm:1.0.0"],\
             ["object-keys", "npm:1.1.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["delayed-stream", [\
+        ["npm:1.0.0", {\
+          "packageLocation": "./.yarn/cache/delayed-stream-npm-1.0.0-c5a4c4cc02-46fe6e83e2.zip/node_modules/delayed-stream/",\
+          "packageDependencies": [\
+            ["delayed-stream", "npm:1.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -7930,6 +7974,51 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/flatted-npm-3.2.5-0ee5a8875f-3c436e9695.zip/node_modules/flatted/",\
           "packageDependencies": [\
             ["flatted", "npm:3.2.5"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["follow-redirects", [\
+        ["npm:1.15.1", {\
+          "packageLocation": "./.yarn/cache/follow-redirects-npm-1.15.1-6b191885cd-6aa4e3e3cd.zip/node_modules/follow-redirects/",\
+          "packageDependencies": [\
+            ["follow-redirects", "npm:1.15.1"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:dbe3a48aea1dd5649e16abaf23d4ae05582d2149e16141955113766a0f84f681baf358c77ddccfc82eb23e4ccc66c6c912df62a9c01f2a83f1842bf86cc297b1#npm:1.15.1", {\
+          "packageLocation": "./.yarn/__virtual__/follow-redirects-virtual-659894389a/0/cache/follow-redirects-npm-1.15.1-6b191885cd-6aa4e3e3cd.zip/node_modules/follow-redirects/",\
+          "packageDependencies": [\
+            ["follow-redirects", "virtual:dbe3a48aea1dd5649e16abaf23d4ae05582d2149e16141955113766a0f84f681baf358c77ddccfc82eb23e4ccc66c6c912df62a9c01f2a83f1842bf86cc297b1#npm:1.15.1"],\
+            ["@types/debug", null],\
+            ["debug", null]\
+          ],\
+          "packagePeers": [\
+            "@types/debug",\
+            "debug"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["form-data", [\
+        ["npm:4.0.0", {\
+          "packageLocation": "./.yarn/cache/form-data-npm-4.0.0-916facec2d-01135bf867.zip/node_modules/form-data/",\
+          "packageDependencies": [\
+            ["form-data", "npm:4.0.0"],\
+            ["asynckit", "npm:0.4.0"],\
+            ["combined-stream", "npm:1.0.8"],\
+            ["mime-types", "npm:2.1.35"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["formdata-node", [\
+        ["npm:4.3.3", {\
+          "packageLocation": "./.yarn/cache/formdata-node-npm-4.3.3-4fa04f33ef-ad5f627e69.zip/node_modules/formdata-node/",\
+          "packageDependencies": [\
+            ["formdata-node", "npm:4.3.3"],\
+            ["node-domexception", "npm:1.0.0"],\
+            ["web-streams-polyfill", "npm:4.0.0-beta.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -10487,6 +10576,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/nice-try-npm-1.0.5-963856b16f-0b4af3b5bb.zip/node_modules/nice-try/",\
           "packageDependencies": [\
             ["nice-try", "npm:1.0.5"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["node-domexception", [\
+        ["npm:1.0.0", {\
+          "packageLocation": "./.yarn/cache/node-domexception-npm-1.0.0-e1e813b76f-ee1d37dd2a.zip/node_modules/node-domexception/",\
+          "packageDependencies": [\
+            ["node-domexception", "npm:1.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -13198,6 +13296,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["wcwidth", "npm:1.0.1"],\
             ["defaults", "npm:1.0.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["web-streams-polyfill", [\
+        ["npm:4.0.0-beta.1", {\
+          "packageLocation": "./.yarn/cache/web-streams-polyfill-npm-4.0.0-beta.1-8d0d89239b-94c21d3aba.zip/node_modules/web-streams-polyfill/",\
+          "packageDependencies": [\
+            ["web-streams-polyfill", "npm:4.0.0-beta.1"]\
           ],\
           "linkType": "HARD"\
         }]\

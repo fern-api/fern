@@ -49,7 +49,6 @@ void yargs(hideBin(process.argv))
                         "If omitted, every workspace specified in the project-level configuration (fern.config.json) will be processed.",
                 }),
         async (argv) => {
-            console.log(argv);
             await compileWorkspaces({
                 commandLineWorkspaces: argv.workspaces ?? [],
                 runLocal: argv.local,
@@ -74,5 +73,5 @@ void yargs(hideBin(process.argv))
         (argv) => convertOpenApiToFernApiDefinition(argv.openapiPath, argv.fernDefinitionDir)
     )
     .demandCommand()
-    .showHelpOnFail(true)
+    .showHelpOnFail(false)
     .parse();

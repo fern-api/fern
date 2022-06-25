@@ -2,7 +2,12 @@ name: fern-ir-types
 definition: ./src
 generators:
   - name: fernapi/fern-typescript
-    version: local
+    version: 0.0.97
     generate: true
     config:
       mode: model
+  - name: fernapi/fern-postman
+    version: 0.0.6
+    generate:
+      enabled: true
+      output: ./generated-postman.json
