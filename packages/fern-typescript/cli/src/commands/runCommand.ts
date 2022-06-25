@@ -51,7 +51,7 @@ export async function runCommand({
             "config",
             "set",
             `${scopeWithAtSign}:registry`,
-            config.publish.registries.npm.registryUrl
+            registryUrl
         );
         const parsedRegistryUrl = new URL(registryUrl);
         await runNpmCommandInOutputDirectory(
