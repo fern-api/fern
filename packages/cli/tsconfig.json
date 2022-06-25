@@ -7,7 +7,6 @@
     { "path": "../commons/tsconfig.json" },
     { "path": "../compiler/commons/tsconfig.json" },
     { "path": "../compiler/compiler/tsconfig.json" },
-    { "path": "../compiler/ir-types/fern-ir-typescript/tsconfig.json" },
     { "path": "../compiler/syntax-analysis/tsconfig.json" },
     { "path": "../init/tsconfig.json" },
     { "path": "../local-generation/local-workspace-runner/tsconfig.json" },
