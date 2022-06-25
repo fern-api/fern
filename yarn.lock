@@ -2082,7 +2082,6 @@ __metadata:
     prettier: ^2.6.2
     ts-morph: ^14.0.0
     typescript: ^4.6.4
-    zod: ^3.14.3
   languageName: unknown
   linkType: soft
 
@@ -2139,7 +2138,6 @@ __metadata:
     "@fern-api/api": "workspace:*"
     "@fern-api/commons": "workspace:*"
     "@fern-api/generator-runner": "workspace:*"
-    "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/helper-utils": "workspace:*"
     "@fern-typescript/json-encoding-helper": "workspace:*"
     "@types/jest": ^28.1.2

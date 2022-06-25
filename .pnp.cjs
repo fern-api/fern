@@ -3465,8 +3465,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["package-json-type", "npm:1.0.3"],\
             ["prettier", "npm:2.6.2"],\
             ["ts-morph", "npm:14.0.0"],\
-            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=7ad353"],\
-            ["zod", "npm:3.16.0"]\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=7ad353"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -3529,7 +3528,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/api", "workspace:packages/compiler/ir-types/fern-ir-typescript"],\
             ["@fern-api/commons", "workspace:packages/commons"],\
             ["@fern-api/generator-runner", "workspace:packages/compiler/generators/generator-runner"],\
-            ["@fern-typescript/commons", "workspace:packages/fern-typescript/commons"],\
             ["@fern-typescript/helper-utils", "workspace:packages/fern-typescript/helpers/utils"],\
             ["@fern-typescript/json-encoding-helper", "workspace:packages/fern-typescript/helpers/built-in/json-encoding-helper"],\
             ["@types/jest", "npm:28.1.2"],\
