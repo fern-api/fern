@@ -1,31 +1,28 @@
+import axios from "axios";
 import { Fetcher } from "./Fetcher";
 
 export const defaultFetcher: Fetcher = async (args) => {
     const headers = {
         ...args.headers,
+        "Content-Type": args.body != null ? args.body.contentType : "application/json",
     };
-    if (args.body != null) {
-        headers["Content-Type"] = args.body.contentType;
-    }
 
     const token = typeof args.token === "function" ? await args.token() : args.token;
     if (token != null) {
         headers["Authorization"] = `Bearer ${token}`;
     }
 
-    const url = new URL(args.url);
-    if (args.queryParameters != null) {
-        url.search = args.queryParameters.toString();
-    }
-
-    const fetchResponse = await fetch(url.toString(), {
+    const response = await axios({
+        url: args.url,
+        params: args.queryParameters,
         method: args.method,
         headers,
-        body: args.body?.content,
+        data: args.body?.content,
+        responseType: "arraybuffer",
     });
 
     return {
-        statusCode: fetchResponse.status,
-        body: new Uint8Array(await fetchResponse.arrayBuffer()),
+        statusCode: response.status,
+        body: new Uint8Array(response.data),
     };
 };

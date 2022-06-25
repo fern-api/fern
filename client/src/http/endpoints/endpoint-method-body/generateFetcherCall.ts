@@ -26,16 +26,13 @@ export async function generateFetcherCall({
     const fetcherArgs: ts.ObjectLiteralElementLike[] = [
         ts.factory.createPropertyAssignment(
             ts.factory.createIdentifier(ClientConstants.HttpService.ServiceUtils.Fetcher.Parameters.URL),
-            generateJoinPathsCall({
-                file: serviceFile,
-                paths: [
-                    ts.factory.createPropertyAccessExpression(
-                        ts.factory.createThis(),
-                        ts.factory.createIdentifier(ClientConstants.HttpService.PrivateMembers.BASE_URL)
-                    ),
-                    convertPathToTemplateString(endpoint.path),
-                ],
-            })
+            generateJoinPathsCall(
+                ts.factory.createPropertyAccessExpression(
+                    ts.factory.createThis(),
+                    ts.factory.createIdentifier(ClientConstants.HttpService.PrivateMembers.BASE_URL)
+                ),
+                convertPathToTemplateString(endpoint.path)
+            )
         ),
         ts.factory.createPropertyAssignment(
             ts.factory.createIdentifier(ClientConstants.HttpService.ServiceUtils.Fetcher.Parameters.METHOD),
