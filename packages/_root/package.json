@@ -39,6 +39,7 @@
     "@fern-api/ir-generation": "workspace:*",
     "@fern-api/local-workspace-runner": "workspace:*",
     "@fern-api/openapi-converter": "workspace:*",
+    "@fern-api/remote-workspace-runner": "workspace:*",
     "@fern-api/syntax-analysis": "workspace:*",
     "@fern-typescript/client": "workspace:*",
     "@fern-typescript/commons": "workspace:*",

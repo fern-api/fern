@@ -135,6 +135,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       {\
         "name": "@fern-api/openapi-converter",\
         "reference": "workspace:packages/openapi-converter"\
+      },\
+      {\
+        "name": "@fern-api/remote-workspace-runner",\
+        "reference": "workspace:packages/remote-generation/remote-workspace-runner"\
       }\
     ],\
     "enableTopLevelFallback": true,\
@@ -152,6 +156,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-api/ir-generation", ["workspace:packages/compiler/ir-generation"]],\
       ["@fern-api/local-workspace-runner", ["workspace:packages/local-generation/local-workspace-runner"]],\
       ["@fern-api/openapi-converter", ["workspace:packages/openapi-converter"]],\
+      ["@fern-api/remote-workspace-runner", ["workspace:packages/remote-generation/remote-workspace-runner"]],\
       ["@fern-api/syntax-analysis", ["workspace:packages/compiler/syntax-analysis"]],\
       ["@fern-typescript/client", ["workspace:packages/fern-typescript/client"]],\
       ["@fern-typescript/commons", ["workspace:packages/fern-typescript/commons"]],\
@@ -3033,6 +3038,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/ir-generation", "workspace:packages/compiler/ir-generation"],\
             ["@fern-api/local-workspace-runner", "workspace:packages/local-generation/local-workspace-runner"],\
             ["@fern-api/openapi-converter", "workspace:packages/openapi-converter"],\
+            ["@fern-api/remote-workspace-runner", "workspace:packages/remote-generation/remote-workspace-runner"],\
             ["@fern-api/syntax-analysis", "workspace:packages/compiler/syntax-analysis"],\
             ["@fern-typescript/client", "workspace:packages/fern-typescript/client"],\
             ["@fern-typescript/commons", "workspace:packages/fern-typescript/commons"],\
@@ -3384,6 +3390,36 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
+      ["@fern-api/remote-workspace-runner", [\
+        ["workspace:packages/remote-generation/remote-workspace-runner", {\
+          "packageLocation": "./packages/remote-generation/remote-workspace-runner/",\
+          "packageDependencies": [\
+            ["@fern-api/remote-workspace-runner", "workspace:packages/remote-generation/remote-workspace-runner"],\
+            ["@babel/core", "npm:7.18.5"],\
+            ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.2"],\
+            ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.17.12"],\
+            ["@fern-api/api", "workspace:packages/compiler/ir-types/fern-ir-typescript"],\
+            ["@fern-api/commons", "workspace:packages/commons"],\
+            ["@fern-api/compiler", "workspace:packages/compiler/compiler"],\
+            ["@fern-api/docker-utils", "workspace:packages/local-generation/docker-utils"],\
+            ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.1::__archiveUrl=https%3A%2F%2Ffern-dev-985111089818.d.codeartifact.us-east-1.amazonaws.com%3A443%2Fnpm%2Ffern-dev%2F%40fern-fern%2Ffiddle-coordinator-api-client%2F-%2Ffiddle-coordinator-api-client-0.0.1.tgz"],\
+            ["@types/jest", "npm:28.1.2"],\
+            ["@types/node", "npm:17.0.34"],\
+            ["@types/tar", "npm:6.1.1"],\
+            ["@types/tmp", "npm:0.2.3"],\
+            ["depcheck", "npm:1.4.3"],\
+            ["eslint", "npm:8.15.0"],\
+            ["execa", "npm:5.1.1"],\
+            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.1"],\
+            ["npm-run-all", "npm:4.1.5"],\
+            ["prettier", "npm:2.6.2"],\
+            ["tar", "npm:6.1.11"],\
+            ["tmp-promise", "npm:3.0.3"],\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=7ad353"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
       ["@fern-api/syntax-analysis", [\
         ["npm:0.0.85", {\
           "packageLocation": "./.yarn/cache/@fern-api-syntax-analysis-npm-0.0.85-b5a08caa13-8b26c4e2da.zip/node_modules/@fern-api/syntax-analysis/",\
@@ -3416,6 +3452,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["zod", "npm:3.16.0"]\
           ],\
           "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@fern-fern/fiddle-coordinator-api-client", [\
+        ["npm:0.0.1::__archiveUrl=https%3A%2F%2Ffern-dev-985111089818.d.codeartifact.us-east-1.amazonaws.com%3A443%2Fnpm%2Ffern-dev%2F%40fern-fern%2Ffiddle-coordinator-api-client%2F-%2Ffiddle-coordinator-api-client-0.0.1.tgz", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-fiddle-coordinator-api-client-npm-0.0.1-4ebaf07aee-6ee7a27ae3.zip/node_modules/@fern-fern/fiddle-coordinator-api-client/",\
+          "packageDependencies": [\
+            ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.1::__archiveUrl=https%3A%2F%2Ffern-dev-985111089818.d.codeartifact.us-east-1.amazonaws.com%3A443%2Fnpm%2Ffern-dev%2F%40fern-fern%2Ffiddle-coordinator-api-client%2F-%2Ffiddle-coordinator-api-client-0.0.1.tgz"],\
+            ["@fern-typescript/service-utils", "npm:0.0.88"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["@fern-typescript/client", [\
@@ -3708,6 +3754,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-typescript/service-utils", [\
+        ["npm:0.0.88", {\
+          "packageLocation": "./.yarn/cache/@fern-typescript-service-utils-npm-0.0.88-5c861326a2-7d88aff0b0.zip/node_modules/@fern-typescript/service-utils/",\
+          "packageDependencies": [\
+            ["@fern-typescript/service-utils", "npm:0.0.88"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
         ["workspace:packages/fern-typescript/service-utils", {\
           "packageLocation": "./packages/fern-typescript/service-utils/",\
           "packageDependencies": [\
