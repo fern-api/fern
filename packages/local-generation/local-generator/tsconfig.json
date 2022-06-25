@@ -1,0 +1,11 @@
+{
+  "extends": "../../../shared/tsconfig.shared.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "../workspace-generator/lib/cjs",
+    "rootDir": "../workspace-generator/src",
+    "module": "CommonJS"
+  },
+  "include": ["../workspace-generator/src"],
+  "references": [{ "path": "../docker-utils/tsconfig.json" }]
+}

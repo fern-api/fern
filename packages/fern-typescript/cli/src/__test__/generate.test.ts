@@ -1,6 +1,6 @@
 import { getDirectoryContents } from "@fern-api/commons";
 import { compile } from "@fern-api/compiler";
-import { GeneratorConfig } from "@fern-api/generator-runner";
+import { GeneratorConfig } from "@fern-api/local-workspace-runner";
 import { installAndCompileGeneratedProjects } from "@fern-typescript/testing-utils";
 import { parseFernInput } from "fern-api";
 import { rm, writeFile } from "fs/promises";

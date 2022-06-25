@@ -1,5 +1,5 @@
 import { validateSchema } from "@fern-api/commons";
-import { GeneratorConfig } from "@fern-api/generator-runner";
+import { GeneratorConfig } from "@fern-api/local-workspace-runner";
 import { readFile } from "fs/promises";
 import { Command } from "../commands/Command";
 import { COMMANDS } from "../commands/commands";

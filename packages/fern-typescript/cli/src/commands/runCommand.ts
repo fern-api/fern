@@ -1,4 +1,4 @@
-import { GeneratorConfig } from "@fern-api/generator-runner";
+import { GeneratorConfig } from "@fern-api/local-workspace-runner";
 import { BUILD_PROJECT_SCRIPT_NAME, writeVolumeToDisk } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import execa from "execa";
@@ -26,7 +26,7 @@ export async function runCommand({
     const volume = new Volume();
 
     await command.generate({
-        packageName: config.customConfig.packageName,
+        packageName: "TODO",
         packageVersion: config.publish?.version,
         intermediateRepresentation: await loadIntermediateRepresentation(config.irFilepath),
         helperManager: new HelperManager(config.helpers),

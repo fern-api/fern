@@ -1,5 +1,5 @@
 import { Encoding } from "@fern-api/api";
-import { GeneratorHelperReference, GeneratorHelpers } from "@fern-api/generator-runner";
+import { GeneratorHelperReference, GeneratorHelpers } from "@fern-api/local-workspace-runner";
 import { Encoder, FernTypescriptHelper } from "@fern-typescript/helper-utils";
 import { helper as JsonEncodingHelper } from "@fern-typescript/json-encoding-helper";
 
