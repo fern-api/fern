@@ -1,4 +1,4 @@
-import { HttpEndpoint, TypeName } from "@fern-api/api";
+import { HttpEndpoint, ServiceName } from "@fern-api/api";
 import { DependencyManager } from "@fern-typescript/commons";
 import { GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/model-context";
 import { generateRequestTypes } from "./generateRequestTypes";
@@ -10,7 +10,7 @@ export function generateHttpEndpointTypes({
     modelContext,
     dependencyManager,
 }: {
-    serviceName: TypeName;
+    serviceName: ServiceName;
     endpoint: HttpEndpoint;
     modelContext: ModelContext;
     dependencyManager: DependencyManager;

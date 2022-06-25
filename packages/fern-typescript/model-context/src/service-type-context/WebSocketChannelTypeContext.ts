@@ -22,7 +22,6 @@ type OperationId = string;
 export interface WebSocketChannelTypeMetadata {
     channelName: ServiceName;
     operationId: OperationId;
-    // TODO change to ServiceTypeName
     typeName: string;
 }
 
@@ -61,11 +60,11 @@ export class WebSocketChannelTypeContext extends BaseServiceTypeContext {
         super(modelDirectory);
     }
 
-    public addWebSocketChannelTypeDefinition(
+    public addWebSocketChannelTypeDeclaration(
         metadata: WebSocketChannelTypeMetadata,
         withFile: (file: SourceFile) => void
     ): void {
-        this.addServiceTypeDefinition(convertToServiceTypeMetadata(metadata), withFile);
+        this.addServiceTypeDeclaration(convertToServiceTypeMetadata(metadata), withFile);
     }
 
     public getReferenceToWebSocketChannelType({

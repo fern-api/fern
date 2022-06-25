@@ -1,4 +1,4 @@
-import { AliasTypeDefinition, PrimitiveType } from "@fern-api/api";
+import { AliasTypeDeclaration, PrimitiveType } from "@fern-api/api";
 import { addBrandedTypeAlias, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { ModelContext } from "@fern-typescript/model-context";
 import { SourceFile, ts, VariableDeclarationKind, Writers } from "ts-morph";
@@ -15,7 +15,7 @@ export function generateAliasType({
     file: SourceFile;
     typeName: string;
     docs: string | null | undefined;
-    shape: AliasTypeDefinition;
+    shape: AliasTypeDeclaration;
     modelContext: ModelContext;
 }): void {
     if (shouldUseBrandedTypeForAlias(shape)) {
@@ -35,7 +35,7 @@ export function generateAliasType({
     }
 }
 
-export function shouldUseBrandedTypeForAlias(shape: AliasTypeDefinition): boolean {
+export function shouldUseBrandedTypeForAlias(shape: AliasTypeDeclaration): boolean {
     return shape.aliasOf._type === "primitive" && shape.aliasOf.primitive === PrimitiveType.String;
 }
 

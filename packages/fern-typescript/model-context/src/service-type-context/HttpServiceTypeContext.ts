@@ -67,8 +67,11 @@ export class HttpServiceTypeContext extends BaseServiceTypeContext {
         super(modelDirectory);
     }
 
-    public addHttpServiceTypeDefinition(metadata: HttpServiceTypeMetadata, withFile: (file: SourceFile) => void): void {
-        this.addServiceTypeDefinition(convertToServiceTypeMetadata(metadata), withFile);
+    public addHttpServiceTypeDeclaration(
+        metadata: HttpServiceTypeMetadata,
+        withFile: (file: SourceFile) => void
+    ): void {
+        this.addServiceTypeDeclaration(convertToServiceTypeMetadata(metadata), withFile);
     }
 
     public getReferenceToHttpServiceType({

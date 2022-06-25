@@ -9,12 +9,12 @@ export function generateTypeFiles({
     intermediateRepresentation: IntermediateRepresentation;
     modelContext: ModelContext;
 }): void {
-    for (const typeDefinition of intermediateRepresentation.types) {
-        modelContext.addTypeDefinition(typeDefinition.name, (file) =>
+    for (const typeDeclaration of intermediateRepresentation.types) {
+        modelContext.addTypeDeclaration(typeDeclaration.name, (file) =>
             generateType({
-                type: typeDefinition.shape,
-                typeName: typeDefinition.name.name,
-                docs: typeDefinition.docs,
+                type: typeDeclaration.shape,
+                typeName: typeDeclaration.name.name,
+                docs: typeDeclaration.docs,
                 modelContext,
                 file,
             })

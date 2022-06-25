@@ -1,12 +1,12 @@
 import { z } from "zod";
-import { TypeDefinitionSchema } from "./TypeDefinitionSchema";
+import { TypeDeclarationSchema } from "./TypeDeclarationSchema";
 import { WithDocsSchema } from "./WithDocsSchema";
 
 export const HttpRequestSchema = z.union([
     z.string(),
     WithDocsSchema.extend({
         encoding: z.optional(z.string()),
-        type: z.optional(TypeDefinitionSchema),
+        type: z.optional(TypeDeclarationSchema),
     }),
 ]);
 

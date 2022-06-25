@@ -1,4 +1,4 @@
-import { ErrorDefinition, ErrorName, IntermediateRepresentation, TypeName } from "@fern-api/api";
+import { ErrorDefinition, ErrorName, IntermediateRepresentation } from "@fern-api/api";
 import { ImportStrategy } from "@fern-typescript/commons";
 import { Directory, SourceFile, ts } from "ts-morph";
 import { BaseModelContext } from "../base-model-context/BaseModelContext";
@@ -15,7 +15,7 @@ export declare namespace ErrorContext {
 
     namespace getReferenceToErrorUtils {
         interface Args {
-            errorName: TypeName;
+            errorName: ErrorName;
             referencedIn: SourceFile;
             importStrategy?: ImportStrategy;
         }

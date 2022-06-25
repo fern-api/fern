@@ -24,7 +24,7 @@ export function createHttpServiceTypeFileWriter({
             endpointId,
             typeName: transformedTypeName,
         };
-        modelContext.addHttpServiceTypeDefinition(metadata, (file) => withFile(file, transformedTypeName));
+        modelContext.addHttpServiceTypeDeclaration(metadata, (file) => withFile(file, transformedTypeName));
         return metadata;
     };
 }

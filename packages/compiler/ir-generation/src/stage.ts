@@ -5,7 +5,7 @@ import { convertErrorDefinition } from "./converters/convertErrorDefinition";
 import { convertId } from "./converters/convertId";
 import { convertHttpService } from "./converters/services/convertHttpService";
 import { convertWebsocketChannel } from "./converters/services/convertWebsocketChannel";
-import { convertTypeDefinition } from "./converters/type-definitions/convertTypeDefinition";
+import { convertTypeDeclaration } from "./converters/type-definitions/convertTypeDeclaration";
 import { convertToFernFilepath } from "./utils/convertToFernFilepath";
 import { noop } from "./utils/noop";
 import { visit } from "./utils/visit";
@@ -61,11 +61,11 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                         return;
                     }
 
-                    for (const [typeName, typeDefinition] of Object.entries(types)) {
+                    for (const [typeName, typeDeclaration] of Object.entries(types)) {
                         intermediateRepresentation.types.push(
-                            convertTypeDefinition({
+                            convertTypeDeclaration({
                                 typeName,
-                                typeDefinition,
+                                typeDeclaration,
                                 fernFilepath,
                                 imports,
                             })

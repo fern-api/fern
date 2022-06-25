@@ -1,28 +1,28 @@
 import { FernFilepath, Type, TypeReference } from "@fern-api/api";
 import { RawSchemas } from "@fern-api/syntax-analysis";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
-import { convertType } from "./convertTypeDefinition";
+import { convertType } from "./convertTypeDeclaration";
 
-export function convertInlineTypeDefinition<T>({
-    typeDefinitionOrShorthand,
-    getTypeDefinition,
+export function convertInlineTypeDeclaration<T>({
+    typeDeclarationOrShorthand,
+    getTypeDeclaration,
     fernFilepath,
     imports,
 }: {
-    typeDefinitionOrShorthand: T | string | null | undefined;
-    getTypeDefinition: (value: T) => RawSchemas.TypeDefinitionSchema | string | null | undefined;
+    typeDeclarationOrShorthand: T | string | null | undefined;
+    getTypeDeclaration: (value: T) => RawSchemas.TypeDeclarationSchema | string | null | undefined;
     fernFilepath: FernFilepath;
     imports: Record<string, string>;
 }): Type {
-    if (typeDefinitionOrShorthand == null) {
+    if (typeDeclarationOrShorthand == null) {
         return Type.alias({ aliasOf: TypeReference.void() });
     }
 
-    if (typeof typeDefinitionOrShorthand === "string") {
+    if (typeof typeDeclarationOrShorthand === "string") {
         const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
-        return Type.alias({ aliasOf: parseTypeReference(typeDefinitionOrShorthand) });
+        return Type.alias({ aliasOf: parseTypeReference(typeDeclarationOrShorthand) });
     }
 
-    const typeDefinition = getTypeDefinition(typeDefinitionOrShorthand);
-    return convertType({ typeDefinition, fernFilepath, imports });
+    const typeDeclaration = getTypeDeclaration(typeDeclarationOrShorthand);
+    return convertType({ typeDeclaration, fernFilepath, imports });
 }

@@ -20,7 +20,7 @@ export { ObjectPropertySchema } from "./ObjectPropertySchema";
 export { ObjectSchema } from "./ObjectSchema";
 export { ServicesSchema } from "./ServicesSchema";
 export { SingleUnionTypeSchema } from "./SingleUnionTypeSchema";
-export { TypeDefinitionSchema } from "./TypeDefinitionSchema";
+export { TypeDeclarationSchema } from "./TypeDeclarationSchema";
 export { TypeReferenceSchema } from "./TypeReferenceSchema";
 export { UnionSchema } from "./UnionSchema";
 export { WebSocketChannelSchema } from "./WebSocketChannelSchema";

@@ -1,4 +1,4 @@
-import { HttpEndpoint, TypeName } from "@fern-api/api";
+import { HttpEndpoint, ServiceName } from "@fern-api/api";
 import { DependencyManager } from "@fern-typescript/commons";
 import { GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/model-context";
 import { generateResponse } from "../commons/generate-response/generateResponse";
@@ -6,7 +6,7 @@ import { createHttpServiceTypeFileWriter } from "./createHttpServiceTypeFileWrit
 
 export declare namespace generateResponseTypes {
     export interface Args {
-        serviceName: TypeName;
+        serviceName: ServiceName;
         endpoint: HttpEndpoint;
         modelContext: ModelContext;
         dependencyManager: DependencyManager;

@@ -1,4 +1,11 @@
-import { ErrorDefinition, ErrorName, IntermediateRepresentation, Type, TypeName, TypeReference } from "@fern-api/api";
+import {
+    DeclaredTypeName,
+    ErrorDefinition,
+    ErrorName,
+    IntermediateRepresentation,
+    Type,
+    TypeReference,
+} from "@fern-api/api";
 import { ImportStrategy } from "@fern-typescript/commons";
 import { Directory, SourceFile, ts } from "ts-morph";
 import { ErrorContext } from "./error-context/ErrorContext";
@@ -41,8 +48,8 @@ export class ModelContext {
      * TYPES
      */
 
-    public addTypeDefinition(typeName: TypeName, withFile: (file: SourceFile) => void): void {
-        this.typeContext.addTypeDefinition(typeName, withFile);
+    public addTypeDeclaration(typeName: DeclaredTypeName, withFile: (file: SourceFile) => void): void {
+        this.typeContext.addTypeDeclaration(typeName, withFile);
     }
 
     public getReferenceToType(args: TypeContext.getReferenceToType.Args): ts.TypeNode {
@@ -53,7 +60,7 @@ export class ModelContext {
         return this.typeContext.getReferenceToTypeUtils(args);
     }
 
-    public resolveTypeName(typeName: TypeName): ResolvedType {
+    public resolveTypeName(typeName: DeclaredTypeName): ResolvedType {
         return this.typeContext.resolveTypeName(typeName);
     }
 
@@ -61,15 +68,15 @@ export class ModelContext {
         return this.typeContext.resolveTypeReference(typeReference);
     }
 
-    public resolveTypeDefinition(type: Type): ResolvedType {
-        return this.typeContext.resolveTypeDefinition(type);
+    public resolveTypeDeclaration(type: Type): ResolvedType {
+        return this.typeContext.resolveTypeDeclaration(type);
     }
 
-    public getTypeDefinitionFromName(typeName: TypeName): Type {
-        return this.typeContext.getTypeDefinitionFromName(typeName);
+    public getTypeDeclarationFromName(typeName: DeclaredTypeName): Type {
+        return this.typeContext.getTypeDeclarationFromName(typeName);
     }
 
-    public doesTypeExist(typeName: TypeName): boolean {
+    public doesTypeExist(typeName: DeclaredTypeName): boolean {
         return this.typeContext.doesTypeExist(typeName);
     }
 
@@ -97,8 +104,11 @@ export class ModelContext {
      * HTTP SERVICE TYPES
      */
 
-    public addHttpServiceTypeDefinition(metadata: HttpServiceTypeMetadata, withFile: (file: SourceFile) => void): void {
-        this.httpServiceTypeContext.addHttpServiceTypeDefinition(metadata, withFile);
+    public addHttpServiceTypeDeclaration(
+        metadata: HttpServiceTypeMetadata,
+        withFile: (file: SourceFile) => void
+    ): void {
+        this.httpServiceTypeContext.addHttpServiceTypeDeclaration(metadata, withFile);
     }
 
     public getReferenceToHttpServiceType({
@@ -155,11 +165,11 @@ export class ModelContext {
      * WEBSOCKET CHANNEL TYPES
      */
 
-    public addWebSocketChannelTypeDefinition(
+    public addWebSocketChannelTypeDeclaration(
         metadata: WebSocketChannelTypeMetadata,
         withFile: (file: SourceFile) => void
     ): void {
-        this.webSocketChannelTypeContext.addWebSocketChannelTypeDefinition(metadata, withFile);
+        this.webSocketChannelTypeContext.addWebSocketChannelTypeDeclaration(metadata, withFile);
     }
 
     public getReferenceToWebSocketChannelType({

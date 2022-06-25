@@ -1,4 +1,11 @@
-import { ContainerType, IntermediateRepresentation, PrimitiveType, Type, TypeName, TypeReference } from "@fern-api/api";
+import {
+    ContainerType,
+    DeclaredTypeName,
+    IntermediateRepresentation,
+    PrimitiveType,
+    Type,
+    TypeReference,
+} from "@fern-api/api";
 import { ImportStrategy } from "@fern-typescript/commons";
 import { Directory, SourceFile, ts } from "ts-morph";
 import { BaseModelContext } from "../base-model-context/BaseModelContext";
@@ -16,7 +23,7 @@ export declare namespace TypeContext {
 
     namespace getReferenceToTypeUtils {
         interface Args {
-            typeName: TypeName;
+            typeName: DeclaredTypeName;
             referencedIn: SourceFile;
             importStrategy?: ImportStrategy;
         }
@@ -40,7 +47,7 @@ export class TypeContext extends BaseModelContext {
         this.typeResolver = new TypeResolver(intermediateRepresentation);
     }
 
-    public addTypeDefinition(typeName: TypeName, withFile: (file: SourceFile) => void): void {
+    public addTypeDeclaration(typeName: DeclaredTypeName, withFile: (file: SourceFile) => void): void {
         this.addFile({
             item: {
                 typeName: typeName.name,
@@ -153,7 +160,7 @@ export class TypeContext extends BaseModelContext {
         });
     }
 
-    public resolveTypeName(typeName: TypeName): ResolvedType {
+    public resolveTypeName(typeName: DeclaredTypeName): ResolvedType {
         return this.typeResolver.resolveTypeName(typeName);
     }
 
@@ -161,15 +168,15 @@ export class TypeContext extends BaseModelContext {
         return this.typeResolver.resolveTypeReference(typeReference);
     }
 
-    public resolveTypeDefinition(type: Type): ResolvedType {
-        return this.typeResolver.resolveTypeDefinition(type);
+    public resolveTypeDeclaration(type: Type): ResolvedType {
+        return this.typeResolver.resolveTypeDeclaration(type);
     }
 
-    public getTypeDefinitionFromName(typeName: TypeName): Type {
-        return this.typeResolver.getTypeDefinitionFromName(typeName);
+    public getTypeDeclarationFromName(typeName: DeclaredTypeName): Type {
+        return this.typeResolver.getTypeDeclarationFromName(typeName);
     }
 
-    public doesTypeExist(typeName: TypeName): boolean {
+    public doesTypeExist(typeName: DeclaredTypeName): boolean {
         return this.typeResolver.doesTypeExist(typeName);
     }
 }

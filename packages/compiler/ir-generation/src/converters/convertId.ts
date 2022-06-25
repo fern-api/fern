@@ -1,4 +1,4 @@
-import { FernFilepath, PrimitiveType, Type, TypeDefinition, TypeReference } from "@fern-api/api";
+import { FernFilepath, PrimitiveType, Type, TypeDeclaration, TypeReference } from "@fern-api/api";
 import { RawSchemas } from "@fern-api/syntax-analysis";
 import { getDocs } from "../utils/getDocs";
 import { createTypeReferenceParser } from "../utils/parseInlineType";
@@ -11,7 +11,7 @@ export function convertId({
     id: RawSchemas.IdSchema;
     fernFilepath: FernFilepath;
     imports: Record<string, string>;
-}): TypeDefinition {
+}): TypeDeclaration {
     const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
 
     return {

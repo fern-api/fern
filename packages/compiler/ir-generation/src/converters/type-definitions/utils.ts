@@ -1,25 +1,25 @@
 import { RawSchemas } from "@fern-api/syntax-analysis";
 
 export function isRawAliasDefinition(
-    rawTypeDefinition: RawSchemas.TypeDefinitionSchema
-): rawTypeDefinition is RawSchemas.AliasSchema {
-    return (rawTypeDefinition as RawSchemas.AliasSchema)?.alias != null;
+    rawTypeDeclaration: RawSchemas.TypeDeclarationSchema
+): rawTypeDeclaration is RawSchemas.AliasSchema {
+    return (rawTypeDeclaration as RawSchemas.AliasSchema)?.alias != null;
 }
 
 export function isRawObjectDefinition(
-    rawTypeDefinition: RawSchemas.TypeDefinitionSchema
-): rawTypeDefinition is RawSchemas.ObjectSchema {
-    return (rawTypeDefinition as RawSchemas.ObjectSchema)?.properties != null;
+    rawTypeDeclaration: RawSchemas.TypeDeclarationSchema
+): rawTypeDeclaration is RawSchemas.ObjectSchema {
+    return (rawTypeDeclaration as RawSchemas.ObjectSchema)?.properties != null;
 }
 
 export function isRawUnionDefinition(
-    rawTypeDefinition: RawSchemas.TypeDefinitionSchema
-): rawTypeDefinition is RawSchemas.UnionSchema {
-    return (rawTypeDefinition as RawSchemas.UnionSchema)?.union != null;
+    rawTypeDeclaration: RawSchemas.TypeDeclarationSchema
+): rawTypeDeclaration is RawSchemas.UnionSchema {
+    return (rawTypeDeclaration as RawSchemas.UnionSchema)?.union != null;
 }
 
 export function isRawEnumDefinition(
-    rawTypeDefinition: RawSchemas.TypeDefinitionSchema
-): rawTypeDefinition is RawSchemas.EnumSchema {
-    return (rawTypeDefinition as RawSchemas.EnumSchema)?.enum != null;
+    rawTypeDeclaration: RawSchemas.TypeDeclarationSchema
+): rawTypeDeclaration is RawSchemas.EnumSchema {
+    return (rawTypeDeclaration as RawSchemas.EnumSchema)?.enum != null;
 }

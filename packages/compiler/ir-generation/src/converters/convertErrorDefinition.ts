@@ -1,7 +1,7 @@
 import { ErrorDefinition, FernFilepath, Type } from "@fern-api/api";
 import { RawSchemas } from "@fern-api/syntax-analysis";
 import { createTypeReferenceParser } from "../utils/parseInlineType";
-import { convertType } from "./type-definitions/convertTypeDefinition";
+import { convertType } from "./type-definitions/convertTypeDeclaration";
 
 export function convertErrorDefinition({
     errorName,
@@ -33,6 +33,6 @@ export function convertErrorDefinition({
                 ? Type.alias({
                       aliasOf: parseTypeReference(errorDefinition),
                   })
-                : convertType({ typeDefinition: errorDefinition.type, fernFilepath, imports }),
+                : convertType({ typeDeclaration: errorDefinition.type, fernFilepath, imports }),
     };
 }

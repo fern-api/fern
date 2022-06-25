@@ -43,7 +43,7 @@ export class BaseServiceTypeContext extends BaseModelContext<ServiceTypeModelIte
         });
     }
 
-    protected addServiceTypeDefinition(metadata: ServiceTypeMetadata, withFile: (file: SourceFile) => void): void {
+    protected addServiceTypeDeclaration(metadata: ServiceTypeMetadata, withFile: (file: SourceFile) => void): void {
         this.addFile({
             item: convertToModelItem(metadata),
             withFile,
