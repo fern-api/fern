@@ -40,8 +40,7 @@
     "@fern-typescript/server": "workspace:*",
     "execa": "^5.1.1",
     "fern-api": "workspace:*",
-    "memfs": "^3.4.1",
-    "zod": "^3.14.3"
+    "memfs": "^3.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",
