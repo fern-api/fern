@@ -8,5 +8,5 @@ imports:
 types:
   ModelReference:
     union:
-      type: types.TypeName
+      type: types.DeclaredTypeName
       error: errors.ErrorName

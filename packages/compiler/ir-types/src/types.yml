@@ -4,13 +4,13 @@ ids:
   - name: FernFilepath
     docs: "A filepath to a Fern spec file, excluding the file extension"
 types:
-  TypeDefinition:
+  DeclaredTypeDefinition:
     docs: "A type, which is a name and a shape"
     extends: commons.WithDocs
     properties:
-      name: TypeName
+      name: DeclaredTypeName
       shape: Type
-  TypeName:
+  DeclaredTypeName:
     properties:
       fernFilepath: FernFilepath
       name: string
@@ -40,7 +40,7 @@ types:
     properties:
       extends:
         docs: "A list of other types to inherit from"
-        type: list<TypeName>
+        type: list<DeclaredTypeName>
       properties: list<ObjectProperty>
   ObjectProperty:
     extends: commons.WithDocs
@@ -61,7 +61,7 @@ types:
   TypeReference:
     union:
       container: ContainerType
-      named: TypeName
+      named: DeclaredTypeName
       primitive: PrimitiveType
       unknown: {}
       void: {}
