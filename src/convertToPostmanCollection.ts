@@ -2,9 +2,10 @@ import {
     HttpAuth,
     HttpEndpoint,
     HttpMethod,
+    HttpPath,
     HttpService,
     IntermediateRepresentation,
-    TypeDefinition,
+    TypeDeclaration,
 } from "@fern-api/api";
 import {
     CollectionDefinition,
@@ -62,7 +63,7 @@ function getCollectionItems(ir: IntermediateRepresentation): ItemGroupDefinition
 function convertEndpoint(
     httpEndpoint: HttpEndpoint,
     httpService: HttpService,
-    allTypes: TypeDefinition[]
+    allTypes: TypeDeclaration[]
 ): ItemDefinition {
     let convertedEndpoint: ItemDefinition = {};
     convertedEndpoint.name = httpEndpoint.endpointId;
@@ -76,7 +77,7 @@ function convertEndpoint(
 
 function convertResponse(
     httpEndpoint: HttpEndpoint,
-    allTypes: TypeDefinition[],
+    allTypes: TypeDeclaration[],
     convertedRequest: RequestDefinition
 ): ResponseDefinition {
     let convertedResponse: ResponseDefinition = {
@@ -100,7 +101,7 @@ function convertResponse(
 function convertRequest(
     httpService: HttpService,
     httpEndpoint: HttpEndpoint,
-    allTypes: TypeDefinition[]
+    allTypes: TypeDeclaration[]
 ): RequestDefinition {
     let convertedRequest: RequestDefinition = {
         url: {
@@ -121,25 +122,22 @@ function convertRequest(
     return convertedRequest;
 }
 
-function getPathArray(basePath: string | undefined | null, endpointPath: string) {
+function getPathArray(basePath: string | undefined | null, endpointPath: HttpPath) {
     const path: string[] = [];
     if (basePath != null) {
-        convertPathToPostmanPathArray(basePath).forEach((part) => path.push(part));
+        path.push(basePath);
     }
-    convertPathToPostmanPathArray(endpointPath).forEach((part) => path.push(part));
-    return path;
-}
+    if (endpointPath.head.length > 0) {
+        path.push(endpointPath.head);
+    }
+    for (const part of endpointPath.parts) {
+        path.push(`:${part.pathParameter}`);
+        if (part.tail.length > 0) {
+            path.push(part.tail);
+        }
+    }
 
-function convertPathToPostmanPathArray(path: string): string[] {
-    return path
-        .split("/")
-        .map((path) => {
-            if (path.startsWith("{") && path.endsWith("}")) {
-                return ":" + path.substring(1, path.length - 1);
-            }
-            return path;
-        })
-        .filter((path) => path.length !== 0);
+    return path;
 }
 
 function convertHttpMethod(httpMethod: HttpMethod): string {

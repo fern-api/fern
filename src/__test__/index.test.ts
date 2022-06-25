@@ -12,14 +12,6 @@ describe("Postman Conversion", () => {
             throw new Error(JSON.stringify(compilerResult.failure));
         }
         const postmanCollection = convertToPostmanCollection(compilerResult.intermediateRepresentation);
-        expect(postmanCollection).toHaveProperty("item");
-        expect(postmanCollection.item?.length).toEqual(1);
-        expect(postmanCollection.item?.[0]).toMatchObject({
-            name: expect.stringMatching("PostsService"),
-            item: expect.arrayContaining([
-                expect.objectContaining({ name: "createPost" }),
-                expect.objectContaining({ name: "getPost" }),
-            ]),
-        });
+        expect(postmanCollection).toMatchSnapshot();
     });
 });

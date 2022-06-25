@@ -1,0 +1,181 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Postman Conversion Blog Post API 1`] = `
+Object {
+  "info": Object {
+    "id": "Blog API",
+    "name": "Blog API",
+  },
+  "item": Array [
+    Object {
+      "item": Array [
+        Object {
+          "description": "Creates a blog post and returns blog post id.",
+          "name": "createPost",
+          "request": Object {
+            "auth": undefined,
+            "body": Object {
+              "mode": "raw",
+              "raw": "{
+    \\"title\\": \\"example\\",
+    \\"author\\": {
+        \\"_type\\": \\"anonymous\\"
+    },
+    \\"content\\": \\"example\\",
+    \\"postType\\": \\"LONG\\"
+}",
+            },
+            "description": "Creates a blog post and returns blog post id.",
+            "header": Array [
+              Object {
+                "key": "Content-Type",
+                "value": "application/json",
+              },
+            ],
+            "method": "POST",
+            "url": Object {
+              "host": Array [
+                "{{base_url}}",
+              ],
+              "path": Array [
+                "/posts",
+                "/create",
+              ],
+            },
+          },
+          "response": Array [
+            Object {
+              "body": "\\"example\\"",
+              "code": 200,
+              "description": undefined,
+              "header": Array [
+                Object {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                },
+              ],
+              "name": "Successful createPost",
+              "originalRequest": Object {
+                "auth": undefined,
+                "body": Object {
+                  "mode": "raw",
+                  "raw": "{
+    \\"title\\": \\"example\\",
+    \\"author\\": {
+        \\"_type\\": \\"anonymous\\"
+    },
+    \\"content\\": \\"example\\",
+    \\"postType\\": \\"LONG\\"
+}",
+                },
+                "description": "Creates a blog post and returns blog post id.",
+                "header": Array [
+                  Object {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                  },
+                ],
+                "method": "POST",
+                "url": Object {
+                  "host": Array [
+                    "{{base_url}}",
+                  ],
+                  "path": Array [
+                    "/posts",
+                    "/create",
+                  ],
+                },
+              },
+              "responseTime": 0,
+            },
+          ],
+        },
+        Object {
+          "description": "Gets a blog post.",
+          "name": "getPost",
+          "request": Object {
+            "auth": undefined,
+            "body": Object {
+              "mode": "raw",
+              "raw": undefined,
+            },
+            "description": "Gets a blog post.",
+            "header": Array [
+              Object {
+                "key": "Content-Type",
+                "value": "application/json",
+              },
+            ],
+            "method": "GET",
+            "url": Object {
+              "host": Array [
+                "{{base_url}}",
+              ],
+              "path": Array [
+                "/posts",
+                "/",
+                ":postId",
+              ],
+            },
+          },
+          "response": Array [
+            Object {
+              "body": "{
+    \\"id\\": \\"example\\",
+    \\"type\\": \\"LONG\\",
+    \\"title\\": \\"example\\",
+    \\"author\\": {
+        \\"_type\\": \\"anonymous\\"
+    },
+    \\"content\\": \\"example\\"
+}",
+              "code": 200,
+              "description": undefined,
+              "header": Array [
+                Object {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                },
+              ],
+              "name": "Successful getPost",
+              "originalRequest": Object {
+                "auth": undefined,
+                "body": Object {
+                  "mode": "raw",
+                  "raw": undefined,
+                },
+                "description": "Gets a blog post.",
+                "header": Array [
+                  Object {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                  },
+                ],
+                "method": "GET",
+                "url": Object {
+                  "host": Array [
+                    "{{base_url}}",
+                  ],
+                  "path": Array [
+                    "/posts",
+                    "/",
+                    ":postId",
+                  ],
+                },
+              },
+              "responseTime": 0,
+            },
+          ],
+        },
+      ],
+      "name": "PostsService",
+    },
+  ],
+  "variable": Array [
+    Object {
+      "key": "base_url",
+      "value": "http://localhost:8080",
+    },
+  ],
+}
+`;

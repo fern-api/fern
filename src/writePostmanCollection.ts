@@ -1,16 +1,14 @@
-import { IntermediateRepresentation } from "@fern-api/api";
+import { GeneratorConfig, IntermediateRepresentation } from "@fern-api/api";
 import { readFile, writeFile } from "fs/promises";
-import { convertToPostmanCollection } from "./convertToPostmanCollection";
-import { FernPluginConfigSchema } from "./pluginConfigSchema";
 import path from "path";
 import { Collection } from "postman-collection";
+import { convertToPostmanCollection } from "./convertToPostmanCollection";
 
 const COLLECTION_OUTPUT_FILENAME = "collection.json";
 
 export async function writePostmanCollection(pathToConfig: string): Promise<void> {
     const configStr = await readFile(pathToConfig);
-    const configParsed = JSON.parse(configStr.toString()) as unknown;
-    const config = await FernPluginConfigSchema.parseAsync(configParsed);
+    const config = JSON.parse(configStr.toString()) as GeneratorConfig;
 
     if (config.output == null) {
         throw new Error("Output directory is not specified.");

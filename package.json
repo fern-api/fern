@@ -26,9 +26,10 @@
     "@babel/preset-typescript": "^7.16.7",
     "@types/jest": "^27.5.0",
     "@types/postman-collection": "^3.5.7",
+    "@types/uuid": "^8.3.4",
     "depcheck": "^1.4.3",
     "eslint": "^8.15.0",
-    "fern-api": "^0.0.62",
+    "fern-api": "^0.0.90",
     "husky": "^8.0.1",
     "jest": "^28.1.0",
     "lint-staged": "^12.4.1",
@@ -39,10 +40,10 @@
     "webpack-cli": "^4.9.2"
   },
   "dependencies": {
-    "@fern-api/api": "^0.0.86",
-    "@fern-api/compiler": "^0.0.86",
+    "@fern-api/api": "^0.0.90",
+    "@fern-api/compiler": "^0.0.90",
     "postman-collection": "^4.1.2",
-    "zod": "^3.16.0"
+    "uuid": "^8.3.2"
   },
   "packageManager": "yarn@3.2.0"
 }
