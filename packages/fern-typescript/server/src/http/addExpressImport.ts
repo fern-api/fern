@@ -44,6 +44,6 @@ function addExpressImport({
         namedImports,
         moduleSpecifier: "express",
     });
-    dependencyManager.addDependency("express", "^4.18.1", { preferPeer: true });
-    dependencyManager.addDependency("@types/express", "^4.17.13", { preferPeer: true });
+    dependencyManager.addDependency("express", "4.18.1", { preferPeer: true });
+    dependencyManager.addDependency("@types/express", "4.17.13", { preferPeer: true });
 }
