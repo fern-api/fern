@@ -137,8 +137,7 @@ export * from \\"./ChatMessage\\";
 ",
   "/src/model/index.ts": "export * as chat from \\"./chat\\";
 ",
-  "/src/services/chat/ChatService.ts": "import path from \\"path\\";
-import * as model from \\"../../model\\";
+  "/src/services/chat/ChatService.ts": "import * as model from \\"../../model\\";
 import * as uuid from \\"uuid\\";
 
 export declare namespace ChatService {
@@ -159,7 +158,7 @@ export class ChatService implements ChatService {
 
     constructor(args: ChatService.Args) {
         this.socket = new Promise(resolve => {
-            const socket = new WebSocket(path.join(args.origin, \\"/chat\\"));
+            const socket = new WebSocket(args.origin + \\"/chat\\");
             socket.onopen = () => {
                 resolve(socket);
             };
@@ -297,7 +296,6 @@ export * from \\"./GetResponse\\";
 ",
   "/src/services/api/NoErrorsService.ts": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import * as model from \\"../../model\\";
-import path from \\"path\\";
 
 export interface NoErrorsService {
     get(): Promise<model.api.GetResponse>;
@@ -316,7 +314,7 @@ export class NoErrorsService implements NoErrorsService {
 
     public async get(): Promise<model.api.GetResponse> {
         const encodedResponse = await this.fetcher({
-            url: path.join(this.baseUrl, \\"/\\"),
+            url: this.baseUrl + \\"/\\",
             method: \\"GET\\",
             headers: {},
             token: this.token
@@ -671,7 +669,6 @@ export * from \\"./Author\\";
   "/src/services/index.ts": "export * as posts from \\"./posts\\";
 ",
   "/src/services/posts/PostsService.ts": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
-import path from \\"path\\";
 import * as model from \\"../../model\\";
 
 export interface PostsService {
@@ -687,13 +684,13 @@ export class PostsService implements PostsService {
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
-        this.baseUrl = path.join(args.origin, \\"/posts\\");
+        this.baseUrl = args.origin + \\"/posts\\";
         this.token = args.token;
     }
 
     public async createPost(request: model.posts.CreatePostRequest): Promise<model.posts.CreatePostResponse> {
         const encodedResponse = await this.fetcher({
-            url: path.join(this.baseUrl, \\"/\\"),
+            url: this.baseUrl + \\"/\\",
             method: \\"POST\\",
             headers: {},
             token: this.token,
@@ -729,7 +726,7 @@ export class PostsService implements PostsService {
         }
 
         const encodedResponse = await this.fetcher({
-            url: path.join(this.baseUrl, \`/\${request.postId}\`),
+            url: this.baseUrl + \`/\${request.postId}\`,
             method: \\"GET\\",
             headers: {},
             token: this.token,
@@ -754,7 +751,7 @@ export class PostsService implements PostsService {
 
     public async getPostV2(request: model.commons.PostId): Promise<model.posts.GetPostV2Response> {
         const encodedResponse = await this.fetcher({
-            url: path.join(this.baseUrl, \\"/get\\"),
+            url: this.baseUrl + \\"/get\\",
             method: \\"GET\\",
             headers: {},
             token: this.token,

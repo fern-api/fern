@@ -11,12 +11,14 @@ generators:
       packagePrefix: com
       mode: client_and_server
   - name: fernapi/fern-typescript
-    version: 0.0.86
+    version: 0.0.101
     generate: true
     config:
       mode: client
   - name: fernapi/fern-postman
-    version: 0.0.5
-    generate: true
+    version: 0.0.6
+    generate:
+      enabled: true
+      output: ./generated-postman.json
 "
 `;

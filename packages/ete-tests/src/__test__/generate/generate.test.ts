@@ -19,11 +19,15 @@ function itFixture(fixtureName: string) {
             const outputPath = path.join(fixturePath, "generated");
             await rm(outputPath, { force: true, recursive: true });
 
-            const cmd = execa("node", [path.join(__dirname, "../../../../cli/cli"), "generate", fixturePath], {
-                env: {
-                    NODE_ENV: "development",
-                },
-            });
+            const cmd = execa(
+                "node",
+                [path.join(__dirname, "../../../../cli/cli"), "generate", "--local", fixturePath],
+                {
+                    env: {
+                        NODE_ENV: "development",
+                    },
+                }
+            );
             cmd.stdout?.pipe(process.stdout);
             cmd.stderr?.pipe(process.stderr);
             await cmd;

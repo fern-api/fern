@@ -2012,7 +2012,7 @@ __metadata:
     "@babel/preset-typescript": ^7.17.12
     "@fern-api/commons": "workspace:*"
     "@fern-api/compiler": "workspace:*"
-    "@fern-fern/fiddle-coordinator-api-client": ^0.0.510
+    "@fern-fern/fiddle-coordinator-api-client": ^0.0.606
     "@fern-typescript/service-utils": "workspace:*"
     "@types/jest": ^28.1.2
     "@types/node": ^17.0.33
@@ -2061,12 +2061,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-fern/fiddle-coordinator-api-client@npm:^0.0.510":
-  version: 0.0.510
-  resolution: "@fern-fern/fiddle-coordinator-api-client@npm:0.0.510::__archiveUrl=https%3A%2F%2Ffern-dev-985111089818.d.codeartifact.us-east-1.amazonaws.com%3A443%2Fnpm%2Ffern-dev%2F%40fern-fern%2Ffiddle-coordinator-api-client%2F-%2Ffiddle-coordinator-api-client-0.0.510.tgz"
+"@fern-fern/fiddle-coordinator-api-client@npm:^0.0.606":
+  version: 0.0.606
+  resolution: "@fern-fern/fiddle-coordinator-api-client@npm:0.0.606::__archiveUrl=https%3A%2F%2Ffern-dev-985111089818.d.codeartifact.us-east-1.amazonaws.com%3A443%2Fnpm%2Ffern-dev%2F%40fern-fern%2Ffiddle-coordinator-api-client%2F-%2Ffiddle-coordinator-api-client-0.0.606.tgz"
   dependencies:
     "@fern-typescript/service-utils": 0.0.94
-  checksum: af33f0f8f50bd5c44be995990eadf50a4de4a960548c7645033acce8aaed9f2ad4f737248f17770b14525ed6f4bb5d4d27a990a04fb94df8fa5cc5a9673dd6ff
+  checksum: 92ab9a44c4acea50480bceed912917558d90b511b4632b6b60c1e79bdf06f3c506ed9e05c5ca3f2a389975ede8722f4fb289b5d67b1d613ec5b2fe66d7de399e
   languageName: node
   linkType: hard
 
