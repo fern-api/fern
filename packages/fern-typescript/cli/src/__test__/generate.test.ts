@@ -35,7 +35,6 @@ describe("runGenerator", () => {
 
                 const config: GeneratorConfig = {
                     irFilepath: irPath,
-                    workspaceVersion: "0.0.0",
                     output: {
                         path: outputPath,
                     },
@@ -54,7 +53,7 @@ describe("runGenerator", () => {
 
                 await installAndCompileGeneratedProjects(outputPath);
 
-                const directoryContents = await getDirectoryContents(path.join(outputPath, "src"));
+                const directoryContents = await getDirectoryContents(path.join(outputPath, "client", "src"));
                 expect(directoryContents).toMatchSnapshot();
 
                 await rm(configPath);

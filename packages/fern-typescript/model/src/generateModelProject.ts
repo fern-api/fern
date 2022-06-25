@@ -14,7 +14,7 @@ export async function generateModelProject({
     intermediateRepresentation,
 }: {
     packageName: string;
-    packageVersion: string;
+    packageVersion: string | undefined;
     volume: Volume;
     intermediateRepresentation: IntermediateRepresentation;
 }): Promise<void> {

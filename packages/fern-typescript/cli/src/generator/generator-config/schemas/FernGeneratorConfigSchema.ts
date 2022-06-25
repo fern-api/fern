@@ -8,7 +8,6 @@ import { TypescriptGeneratorConfigSchema } from "./TypescriptGeneratorConfigSche
 
 export const FernGeneratorConfigSchema = z.object({
     irFilepath: z.string(),
-    workspaceVersion: z.string(),
     output: GeneratorOutputConfigSchema.nullable(),
     publish: GeneratorPublishConfigSchema.nullable(),
     helpers: HelpersSchema,

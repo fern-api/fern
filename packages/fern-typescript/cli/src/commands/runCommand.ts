@@ -27,7 +27,7 @@ export async function runCommand({
 
     await command.generate({
         packageName: config.customConfig.packageName,
-        packageVersion: config.workspaceVersion,
+        packageVersion: config.publish?.version,
         intermediateRepresentation: await loadIntermediateRepresentation(config.irFilepath),
         helperManager: new HelperManager(config.helpers),
         volume,
@@ -46,7 +46,7 @@ export async function runCommand({
             "config",
             "set",
             `@${config.publish.registries.npm.scope}:${config.publish.registries.npm.scope}`,
-            config.publish.registryUrl
+            config.publish.registries.npm.registryUrl
         );
         await runNpmCommandInOutputDirectory("install", "--no-save");
         await runNpmCommandInOutputDirectory(BUILD_PROJECT_SCRIPT_NAME);

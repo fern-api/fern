@@ -4,7 +4,6 @@
 
 export interface GeneratorConfig<CustomConfig = unknown> {
     irFilepath: string;
-    workspaceVersion: string;
     output: GeneratorOutputConfig | null;
     publish: GeneratorPublishConfig | null;
     helpers: GeneratorHelpers;
@@ -16,8 +15,8 @@ export interface GeneratorOutputConfig {
 }
 
 export interface GeneratorPublishConfig {
-    registryUrl: string;
     registries: GeneratorRegistriesConfig;
+    version: string;
 }
 
 export interface GeneratorRegistriesConfig {
@@ -26,6 +25,7 @@ export interface GeneratorRegistriesConfig {
 }
 
 export interface MavenRegistryConfig {
+    registryUrl: string;
     username: string;
     password: string;
     group: string;
@@ -33,6 +33,7 @@ export interface MavenRegistryConfig {
 }
 
 export interface NpmRegistryConfig {
+    registryUrl: string;
     token: string;
     scope: string;
     packagePrefix: string;

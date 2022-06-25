@@ -21,7 +21,6 @@ export function getGeneratorConfig({
     helpers,
     absolutePathToOutput,
     customConfig,
-    workspaceVersion,
 }: getGeneratorConfig.Args): getGeneratorConfig.Return {
     const binds: string[] = [];
 
@@ -47,7 +46,6 @@ export function getGeneratorConfig({
         binds,
         config: {
             irFilepath: DOCKER_PATH_TO_IR,
-            workspaceVersion,
             output: absolutePathToOutput != null ? { path: DOCKER_CODEGEN_OUTPUT_DIRECTORY } : null,
             publish: null,
             customConfig,
