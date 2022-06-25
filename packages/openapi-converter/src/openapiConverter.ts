@@ -41,13 +41,13 @@ export async function convertOpenApi(openapiFilepath: string): Promise<OpenApiCo
     try {
         if (openApi.components !== undefined && openApi.components.schemas !== undefined) {
             for (const typeName of Object.keys(openApi.components.schemas)) {
-                const typeDefinition = openApi.components.schemas[typeName];
-                if (typeDefinition !== undefined && isSchemaObject(typeDefinition)) {
-                    const fernConversionResult = convertToFernType(typeName, typeDefinition);
-                    for (const [convertedTypeName, convertedTypeDefinition] of Object.entries(
-                        fernConversionResult.typeDefinitions
+                const typeDeclaration = openApi.components.schemas[typeName];
+                if (typeDeclaration !== undefined && isSchemaObject(typeDeclaration)) {
+                    const fernConversionResult = convertToFernType(typeName, typeDeclaration);
+                    for (const [convertedTypeName, convertedTypeDeclaration] of Object.entries(
+                        fernConversionResult.typeDeclarations
                     )) {
-                        convertedFernConfiguration.types[convertedTypeName] = convertedTypeDefinition;
+                        convertedFernConfiguration.types[convertedTypeName] = convertedTypeDeclaration;
                     }
                 }
             }
@@ -69,9 +69,9 @@ export async function convertOpenApi(openapiFilepath: string): Promise<OpenApiCo
 }
 
 function isSchemaObject(
-    typeDefinition: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject
-): typeDefinition is OpenAPIV3.SchemaObject {
-    return !(typeDefinition as OpenAPIV3.ReferenceObject).$ref !== undefined;
+    typeDeclaration: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject
+): typeDeclaration is OpenAPIV3.SchemaObject {
+    return !(typeDeclaration as OpenAPIV3.ReferenceObject).$ref !== undefined;
 }
 
 function isOpenApiV3(openApi: OpenAPI.Document): openApi is OpenAPIV3.Document {

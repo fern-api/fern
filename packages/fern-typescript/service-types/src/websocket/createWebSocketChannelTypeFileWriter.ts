@@ -24,7 +24,7 @@ export function createWebSocketChannelTypeFileWriter({
             operationId,
             typeName: transformedTypeName,
         };
-        modelContext.addWebSocketChannelTypeDefinition(metadata, (file) => withFile(file, transformedTypeName));
+        modelContext.addWebSocketChannelTypeDeclaration(metadata, (file) => withFile(file, transformedTypeName));
         return metadata;
     };
 }

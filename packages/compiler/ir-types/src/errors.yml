@@ -2,7 +2,7 @@ imports:
   commons: commons.yml
   types: types.yml
 types:
-  ErrorDefinition:
+  ErrorDeclaration:
     extends: commons.WithDocs
     properties:
       name: ErrorName

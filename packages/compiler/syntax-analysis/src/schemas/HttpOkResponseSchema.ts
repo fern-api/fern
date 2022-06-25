@@ -1,11 +1,11 @@
 import { z } from "zod";
-import { TypeDefinitionSchema } from "./TypeDefinitionSchema";
+import { TypeDeclarationSchema } from "./TypeDeclarationSchema";
 import { WithDocsSchema } from "./WithDocsSchema";
 
 export const HttpOkResponseSchema = z.union([
     z.string(),
     WithDocsSchema.extend({
-        type: z.optional(TypeDefinitionSchema),
+        type: z.optional(TypeDeclarationSchema),
     }),
 ]);
 

@@ -1,4 +1,4 @@
-import { FernFilepath, Type, TypeDefinition, TypeReference } from "@fern-api/api";
+import { FernFilepath, Type, TypeDeclaration, TypeReference } from "@fern-api/api";
 import { assertNever } from "@fern-api/commons";
 import { RawSchemas } from "@fern-api/syntax-analysis";
 import { getDocs } from "../../utils/getDocs";
@@ -6,65 +6,65 @@ import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { parseTypeName } from "../../utils/parseTypeName";
 import { isRawAliasDefinition, isRawEnumDefinition, isRawObjectDefinition, isRawUnionDefinition } from "./utils";
 
-export function convertTypeDefinition({
+export function convertTypeDeclaration({
     typeName,
-    typeDefinition,
+    typeDeclaration,
     fernFilepath,
     imports,
 }: {
     typeName: string;
-    typeDefinition: RawSchemas.TypeDefinitionSchema | string;
+    typeDeclaration: RawSchemas.TypeDeclarationSchema | string;
     fernFilepath: FernFilepath;
     imports: Record<string, string>;
-}): TypeDefinition {
+}): TypeDeclaration {
     return {
-        docs: getDocs(typeDefinition),
+        docs: getDocs(typeDeclaration),
         name: {
             fernFilepath,
             name: typeName,
         },
-        shape: convertType({ typeDefinition, fernFilepath, imports }),
+        shape: convertType({ typeDeclaration, fernFilepath, imports }),
     };
 }
 
 export function convertType({
-    typeDefinition,
+    typeDeclaration,
     fernFilepath,
     imports,
 }: {
-    typeDefinition: RawSchemas.TypeDefinitionSchema | string | null | undefined;
+    typeDeclaration: RawSchemas.TypeDeclarationSchema | string | null | undefined;
     fernFilepath: FernFilepath;
     imports: Record<string, string>;
 }): Type {
-    if (typeDefinition == null) {
+    if (typeDeclaration == null) {
         return Type.alias({ aliasOf: TypeReference.void() });
     }
     const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
 
-    if (typeof typeDefinition === "string" || isRawAliasDefinition(typeDefinition)) {
+    if (typeof typeDeclaration === "string" || isRawAliasDefinition(typeDeclaration)) {
         return Type.alias({
-            aliasOf: parseTypeReference(typeof typeDefinition === "string" ? typeDefinition : typeDefinition.alias),
+            aliasOf: parseTypeReference(typeof typeDeclaration === "string" ? typeDeclaration : typeDeclaration.alias),
         });
     }
 
-    if (isRawObjectDefinition(typeDefinition)) {
+    if (isRawObjectDefinition(typeDeclaration)) {
         return Type.object({
             extends:
-                typeDefinition.extends != null
-                    ? typeof typeDefinition.extends === "string"
+                typeDeclaration.extends != null
+                    ? typeof typeDeclaration.extends === "string"
                         ? [
                               parseTypeName({
-                                  typeName: typeDefinition.extends,
+                                  typeName: typeDeclaration.extends,
                                   fernFilepath,
                                   imports,
                               }),
                           ]
-                        : typeDefinition.extends.map((extended) =>
+                        : typeDeclaration.extends.map((extended) =>
                               parseTypeName({ typeName: extended, fernFilepath, imports })
                           )
                     : [],
             properties: [
-                ...Object.entries(typeDefinition.properties).map(([propertyName, propertyDefinition]) => ({
+                ...Object.entries(typeDeclaration.properties).map(([propertyName, propertyDefinition]) => ({
                     key: propertyName,
                     valueType: parseTypeReference(propertyDefinition),
                     docs: getDocs(propertyDefinition),
@@ -73,10 +73,10 @@ export function convertType({
         });
     }
 
-    if (isRawUnionDefinition(typeDefinition)) {
+    if (isRawUnionDefinition(typeDeclaration)) {
         return Type.union({
-            discriminant: typeDefinition.discriminant ?? "_type",
-            types: Object.entries(typeDefinition.union).map(([discriminantValue, unionedType]) => ({
+            discriminant: typeDeclaration.discriminant ?? "_type",
+            types: Object.entries(typeDeclaration.union).map(([discriminantValue, unionedType]) => ({
                 discriminantValue,
                 valueType: parseTypeReference(unionedType),
                 docs: getDocs(unionedType),
@@ -84,9 +84,9 @@ export function convertType({
         });
     }
 
-    if (isRawEnumDefinition(typeDefinition)) {
+    if (isRawEnumDefinition(typeDeclaration)) {
         return Type.enum({
-            values: typeDefinition.enum.map((value) =>
+            values: typeDeclaration.enum.map((value) =>
                 typeof value === "string"
                     ? { value, name: value, docs: undefined }
                     : { value: value.value, name: value.name != null ? value.name : value.value, docs: value.docs }
@@ -94,5 +94,5 @@ export function convertType({
         });
     }
 
-    assertNever(typeDefinition);
+    assertNever(typeDeclaration);
 }

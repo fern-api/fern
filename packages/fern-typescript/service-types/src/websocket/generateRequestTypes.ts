@@ -1,4 +1,4 @@
-import { TypeName, WebSocketOperation } from "@fern-api/api";
+import { ServiceName, WebSocketOperation } from "@fern-api/api";
 import { getTextOfTsKeyword, getTextOfTsNode } from "@fern-typescript/commons";
 import { ModelContext, WebSocketChannelTypeMetadata } from "@fern-typescript/model-context";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
@@ -8,7 +8,7 @@ import { createWebSocketChannelTypeFileWriter } from "./createWebSocketChannelTy
 
 export declare namespace generateRequestTypes {
     export interface Args {
-        channelName: TypeName;
+        channelName: ServiceName;
         operation: WebSocketOperation;
         modelContext: ModelContext;
     }
