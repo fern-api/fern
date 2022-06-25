@@ -1,9 +1,9 @@
 import {
     ContainerType,
-    EnumTypeDefinition,
-    ObjectTypeDefinition,
+    EnumTypeDeclaration,
+    ObjectTypeDeclaration,
     PrimitiveType,
-    UnionTypeDefinition,
+    UnionTypeDeclaration,
 } from "@fern-api/api";
 
 export type ResolvedType =
@@ -16,15 +16,15 @@ export type ResolvedType =
     | ResolvedType.Void;
 
 export declare namespace ResolvedType {
-    interface Object extends ObjectTypeDefinition {
+    interface Object extends ObjectTypeDeclaration {
         _type: "object";
     }
 
-    interface Union extends UnionTypeDefinition {
+    interface Union extends UnionTypeDeclaration {
         _type: "union";
     }
 
-    interface Enum extends EnumTypeDefinition {
+    interface Enum extends EnumTypeDeclaration {
         _type: "enum";
     }
 
@@ -47,9 +47,9 @@ export declare namespace ResolvedType {
     }
 
     interface _Visitor<Result> {
-        object: (value: ObjectTypeDefinition) => Result;
-        union: (value: UnionTypeDefinition) => Result;
-        enum: (value: EnumTypeDefinition) => Result;
+        object: (value: ObjectTypeDeclaration) => Result;
+        union: (value: UnionTypeDeclaration) => Result;
+        enum: (value: EnumTypeDeclaration) => Result;
         container: (value: ContainerType) => Result;
         primitive: (value: PrimitiveType) => Result;
         unknown: () => Result;
@@ -59,17 +59,17 @@ export declare namespace ResolvedType {
 }
 
 export const ResolvedType = {
-    object: (value: ObjectTypeDefinition): ResolvedType.Object => ({
+    object: (value: ObjectTypeDeclaration): ResolvedType.Object => ({
         ...value,
         _type: "object",
     }),
 
-    union: (value: UnionTypeDefinition): ResolvedType.Union => ({
+    union: (value: UnionTypeDeclaration): ResolvedType.Union => ({
         ...value,
         _type: "union",
     }),
 
-    enum: (value: EnumTypeDefinition): ResolvedType.Enum => ({
+    enum: (value: EnumTypeDeclaration): ResolvedType.Enum => ({
         ...value,
         _type: "enum",
     }),

@@ -1,10 +1,10 @@
 import { RawSchemas } from "@fern-api/syntax-analysis";
-import { OpenAPIV3 } from "openapi-types";
-import { isSchemaObject, isReferenceObject } from "./utils";
 import _ from "lodash";
+import { OpenAPIV3 } from "openapi-types";
+import { isReferenceObject, isSchemaObject } from "./utils";
 
 export interface FernTypeConversionResult {
-    typeDefinitions: Record<string, RawSchemas.TypeDefinitionSchema | string>;
+    typeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema | string>;
 }
 
 const EMPTY_OBJECT_TYPE_DEFINITION: RawSchemas.ObjectSchema = {
@@ -13,39 +13,39 @@ const EMPTY_OBJECT_TYPE_DEFINITION: RawSchemas.ObjectSchema = {
 
 export function convertToFernType(typeName: string, schemaObject: OpenAPIV3.SchemaObject): FernTypeConversionResult {
     const conversionResult: FernTypeConversionResult = {
-        typeDefinitions: {},
+        typeDeclarations: {},
     };
     if (_.isEmpty(schemaObject)) {
-        conversionResult.typeDefinitions[typeName] = EMPTY_OBJECT_TYPE_DEFINITION;
+        conversionResult.typeDeclarations[typeName] = EMPTY_OBJECT_TYPE_DEFINITION;
     } else if (schemaObject.oneOf !== undefined) {
-        const unionTypeDefinition: RawSchemas.UnionSchema = { union: {} };
+        const unionTypeDeclaration: RawSchemas.UnionSchema = { union: {} };
         schemaObject.oneOf.forEach((nestedUnionType) => {
             if (isSchemaObject(nestedUnionType)) {
                 throw new Error("Don't support converting inlined oneOf types:" + typeName);
             } else {
                 const nestedUnionFernType = getTypeNameFromReferenceObject(nestedUnionType);
-                unionTypeDefinition.union[nestedUnionFernType] = nestedUnionFernType;
+                unionTypeDeclaration.union[nestedUnionFernType] = nestedUnionFernType;
             }
         });
-        conversionResult.typeDefinitions[typeName] = unionTypeDefinition;
+        conversionResult.typeDeclarations[typeName] = unionTypeDeclaration;
     } else if (schemaObject.enum !== undefined) {
-        conversionResult.typeDefinitions[typeName] = {
+        conversionResult.typeDeclarations[typeName] = {
             enum: schemaObject.enum.filter((value) => typeof value === "string"),
         };
     } else if (schemaObject.type == "boolean") {
-        conversionResult.typeDefinitions[typeName] = "boolean";
+        conversionResult.typeDeclarations[typeName] = "boolean";
     } else if (schemaObject.type == "integer") {
-        conversionResult.typeDefinitions[typeName] = "integer";
+        conversionResult.typeDeclarations[typeName] = "integer";
     } else if (schemaObject.type == "number") {
-        conversionResult.typeDefinitions[typeName] = "double";
+        conversionResult.typeDeclarations[typeName] = "double";
     } else if (schemaObject.type == "string") {
-        conversionResult.typeDefinitions[typeName] = "string";
+        conversionResult.typeDeclarations[typeName] = "string";
     } else if (schemaObject.type == "object" || schemaObject.properties != null) {
         const requiredProperties = new Set();
         if (schemaObject.required !== undefined) {
             schemaObject.required.forEach((requiredProperty) => requiredProperties.add(requiredProperty));
         }
-        const objectTypeDefinition: RawSchemas.TypeDefinitionSchema = EMPTY_OBJECT_TYPE_DEFINITION;
+        const objectTypeDeclaration: RawSchemas.TypeDeclarationSchema = EMPTY_OBJECT_TYPE_DEFINITION;
         if (schemaObject.properties != null) {
             for (const propertyName of Object.keys(schemaObject.properties)) {
                 const propertyType = schemaObject.properties[propertyName];
@@ -57,29 +57,29 @@ export function convertToFernType(typeName: string, schemaObject: OpenAPIV3.Sche
                 } else {
                     const nestedConversionResult = convertToFernTypeNested([typeName], propertyName, propertyType);
                     fernPropertyType = nestedConversionResult.convertedTypeName;
-                    if (nestedConversionResult.newTypeDefinitions !== undefined) {
-                        for (const [newTypeName, newTypeDefinition] of Object.entries(
-                            nestedConversionResult.newTypeDefinitions
+                    if (nestedConversionResult.newTypeDeclarations !== undefined) {
+                        for (const [newTypeName, newTypeDeclaration] of Object.entries(
+                            nestedConversionResult.newTypeDeclarations
                         )) {
-                            conversionResult.typeDefinitions[newTypeName] = newTypeDefinition;
+                            conversionResult.typeDeclarations[newTypeName] = newTypeDeclaration;
                         }
                     }
                 }
                 if (requiredProperties.has(propertyName)) {
-                    objectTypeDefinition.properties[propertyName] = fernPropertyType;
+                    objectTypeDeclaration.properties[propertyName] = fernPropertyType;
                 } else {
-                    objectTypeDefinition.properties[propertyName] = "optional<" + fernPropertyType + ">";
+                    objectTypeDeclaration.properties[propertyName] = "optional<" + fernPropertyType + ">";
                 }
             }
         }
-        conversionResult.typeDefinitions[typeName] = objectTypeDefinition;
+        conversionResult.typeDeclarations[typeName] = objectTypeDeclaration;
     }
     return conversionResult;
 }
 
 interface NestedFernTypeConversionResult {
     convertedTypeName: string;
-    newTypeDefinitions?: Record<string, RawSchemas.TypeDefinitionSchema>;
+    newTypeDeclarations?: Record<string, RawSchemas.TypeDeclarationSchema>;
 }
 
 function convertToFernTypeNested(
@@ -91,7 +91,7 @@ function convertToFernTypeNested(
         const enumTypeName = getTypeName([...typeNameHierarchy, schemaObjectTypeName]);
         return {
             convertedTypeName: enumTypeName,
-            newTypeDefinitions: {
+            newTypeDeclarations: {
                 [enumTypeName]: {
                     enum: schemaObject.enum.filter((value) => typeof value === "string"),
                 },
@@ -112,8 +112,8 @@ function convertToFernTypeNested(
                     );
                     return {
                         convertedTypeName: "list<" + nestedConversionResult.convertedTypeName + ">",
-                        newTypeDefinitions: {
-                            ...nestedConversionResult.newTypeDefinitions,
+                        newTypeDeclarations: {
+                            ...nestedConversionResult.newTypeDeclarations,
                         },
                     };
                 }

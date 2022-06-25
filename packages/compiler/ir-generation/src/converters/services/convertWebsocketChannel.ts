@@ -1,6 +1,6 @@
 import { CustomWireMessageEncoding, FernFilepath, WebSocketChannel, WebSocketMessenger } from "@fern-api/api";
 import { RawSchemas } from "@fern-api/syntax-analysis";
-import { convertInlineTypeDefinition } from "../type-definitions/convertInlineTypeDefinition";
+import { convertInlineTypeDeclaration } from "../type-declarations/convertInlineTypeDeclaration";
 import { convertEncoding } from "./convertEncoding";
 import { convertFailedResponse } from "./convertFailedResponse";
 
@@ -63,9 +63,9 @@ function convertWebSocketMessenger({
                       operationId,
                       request: {
                           docs: typeof operation.request !== "string" ? operation.request?.docs : undefined,
-                          type: convertInlineTypeDefinition({
-                              typeDefinitionOrShorthand: operation.request,
-                              getTypeDefinition: (request) => request.type,
+                          type: convertInlineTypeDeclaration({
+                              typeDeclarationOrShorthand: operation.request,
+                              getTypeDeclaration: (request) => request.type,
                               fernFilepath,
                               imports,
                           }),
@@ -84,9 +84,9 @@ function convertWebSocketMessenger({
                           }),
                           ok: {
                               docs: typeof operation.response !== "string" ? operation.response?.docs : undefined,
-                              type: convertInlineTypeDefinition({
-                                  typeDefinitionOrShorthand: operation.response,
-                                  getTypeDefinition: (response) =>
+                              type: convertInlineTypeDeclaration({
+                                  typeDeclarationOrShorthand: operation.response,
+                                  getTypeDeclaration: (response) =>
                                       typeof response.ok == "string" ? response.ok : response.ok?.type,
                                   fernFilepath,
                                   imports,

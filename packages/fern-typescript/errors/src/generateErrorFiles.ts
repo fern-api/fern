@@ -10,7 +10,7 @@ export function generateErrorFiles({
     modelContext: ModelContext;
 }): void {
     for (const error of intermediateRepresentation.errors) {
-        modelContext.addErrorDefinition(error.name, (file) => {
+        modelContext.addErrorDeclaration(error.name, (file) => {
             generateType({
                 type: error.type,
                 typeName: error.name.name,

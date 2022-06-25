@@ -1,11 +1,11 @@
 import { CustomWireMessageEncoding, IntermediateRepresentation } from "@fern-api/api";
 import { CompilerStage, RelativeFilePath } from "@fern-api/compiler-commons";
 import { RawSchemas } from "@fern-api/syntax-analysis";
-import { convertErrorDefinition } from "./converters/convertErrorDefinition";
+import { convertErrorDeclaration } from "./converters/convertErrorDeclaration";
 import { convertId } from "./converters/convertId";
 import { convertHttpService } from "./converters/services/convertHttpService";
 import { convertWebsocketChannel } from "./converters/services/convertWebsocketChannel";
-import { convertTypeDefinition } from "./converters/type-definitions/convertTypeDefinition";
+import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
 import { convertToFernFilepath } from "./utils/convertToFernFilepath";
 import { noop } from "./utils/noop";
 import { visit } from "./utils/visit";
@@ -61,11 +61,11 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                         return;
                     }
 
-                    for (const [typeName, typeDefinition] of Object.entries(types)) {
+                    for (const [typeName, typeDeclaration] of Object.entries(types)) {
                         intermediateRepresentation.types.push(
-                            convertTypeDefinition({
+                            convertTypeDeclaration({
                                 typeName,
-                                typeDefinition,
+                                typeDeclaration,
                                 fernFilepath,
                                 imports,
                             })
@@ -78,9 +78,9 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                         return;
                     }
 
-                    for (const [errorName, errorDefinition] of Object.entries(errors)) {
+                    for (const [errorName, errorDeclaration] of Object.entries(errors)) {
                         intermediateRepresentation.errors.push(
-                            convertErrorDefinition({ errorName, fernFilepath, errorDefinition, imports })
+                            convertErrorDeclaration({ errorName, fernFilepath, errorDeclaration, imports })
                         );
                     }
                 },

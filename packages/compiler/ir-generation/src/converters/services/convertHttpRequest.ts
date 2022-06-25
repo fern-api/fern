@@ -1,6 +1,6 @@
 import { CustomWireMessageEncoding, FernFilepath, HttpRequest } from "@fern-api/api";
 import { RawSchemas } from "@fern-api/syntax-analysis";
-import { convertInlineTypeDefinition } from "../type-definitions/convertInlineTypeDefinition";
+import { convertInlineTypeDeclaration } from "../type-declarations/convertInlineTypeDeclaration";
 import { convertEncoding } from "./convertEncoding";
 
 export function convertHttpRequest({
@@ -20,9 +20,9 @@ export function convertHttpRequest({
             rawEncoding: typeof request !== "string" ? request?.encoding : undefined,
             nonStandardEncodings,
         }),
-        type: convertInlineTypeDefinition({
-            typeDefinitionOrShorthand: request,
-            getTypeDefinition: (request) => request.type,
+        type: convertInlineTypeDeclaration({
+            typeDeclarationOrShorthand: request,
+            getTypeDeclaration: (request) => request.type,
             fernFilepath,
             imports,
         }),

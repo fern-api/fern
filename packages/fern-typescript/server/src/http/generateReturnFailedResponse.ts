@@ -66,7 +66,7 @@ export function generateReturnFailedResponse({
                                 ts.factory.createObjectLiteralExpression(
                                     [
                                         ...endpoint.response.failed.errors.map((error) => {
-                                            const errorDefinition = modelContext.getErrorDefinitionFromName(
+                                            const errorDeclaration = modelContext.getErrorDeclarationFromName(
                                                 error.error
                                             );
                                             return ts.factory.createPropertyAssignment(
@@ -78,8 +78,8 @@ export function generateReturnFailedResponse({
                                                     undefined,
                                                     undefined,
                                                     ts.factory.createNumericLiteral(
-                                                        errorDefinition.http != null
-                                                            ? errorDefinition.http.statusCode
+                                                        errorDeclaration.http != null
+                                                            ? errorDeclaration.http.statusCode
                                                             : DEFAULT_STATUS_CODE
                                                     )
                                                 )

@@ -1,6 +1,6 @@
 import { CustomWireMessageEncoding, FernFilepath, HttpResponse } from "@fern-api/api";
 import { RawSchemas } from "@fern-api/syntax-analysis";
-import { convertInlineTypeDefinition } from "../type-definitions/convertInlineTypeDefinition";
+import { convertInlineTypeDeclaration } from "../type-declarations/convertInlineTypeDeclaration";
 import { convertEncoding } from "./convertEncoding";
 import { convertFailedResponse } from "./convertFailedResponse";
 
@@ -23,9 +23,9 @@ export function convertHttpResponse({
         }),
         ok: {
             docs: typeof response !== "string" && typeof response?.ok !== "string" ? response?.ok?.docs : undefined,
-            type: convertInlineTypeDefinition({
-                typeDefinitionOrShorthand: response,
-                getTypeDefinition: (response) => (typeof response.ok == "string" ? response.ok : response.ok?.type),
+            type: convertInlineTypeDeclaration({
+                typeDeclarationOrShorthand: response,
+                getTypeDeclaration: (response) => (typeof response.ok == "string" ? response.ok : response.ok?.type),
                 fernFilepath,
                 imports,
             }),
