@@ -2014,7 +2014,7 @@ __metadata:
     "@fern-api/commons": "workspace:*"
     "@fern-api/compiler": "workspace:*"
     "@fern-api/docker-utils": "workspace:*"
-    "@fern-fern/fiddle-coordinator-api-client": ^0.0.2
+    "@fern-fern/fiddle-coordinator-api-client": ^0.0.774
     "@types/jest": ^28.1.2
     "@types/node": ^17.0.33
     "@types/tar": ^6.1.1
@@ -2067,12 +2067,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-fern/fiddle-coordinator-api-client@npm:^0.0.2":
-  version: 0.0.2
-  resolution: "@fern-fern/fiddle-coordinator-api-client@npm:0.0.2::__archiveUrl=https%3A%2F%2Ffern-dev-985111089818.d.codeartifact.us-east-1.amazonaws.com%3A443%2Fnpm%2Ffern-dev%2F%40fern-fern%2Ffiddle-coordinator-api-client%2F-%2Ffiddle-coordinator-api-client-0.0.2.tgz"
+"@fern-fern/fiddle-coordinator-api-client@npm:^0.0.774":
+  version: 0.0.774
+  resolution: "@fern-fern/fiddle-coordinator-api-client@npm:0.0.774::__archiveUrl=https%3A%2F%2Ffern-dev-985111089818.d.codeartifact.us-east-1.amazonaws.com%3A443%2Fnpm%2Ffern-dev%2F%40fern-fern%2Ffiddle-coordinator-api-client%2F-%2Ffiddle-coordinator-api-client-0.0.774.tgz"
   dependencies:
-    "@fern-typescript/service-utils": 0.0.88
-  checksum: 0fc058eea14d1fef54c51c198ed2a292d2429e6ef44ab33af6a1d54f15fac3777269cff7ce985e1710fd694f5e81251daff207c463f200da4892f165f0796112
+    "@fern-typescript/service-utils": 0.0.94
+  checksum: bbd69bbff3442698faa3615c008d50af66425ed92a87106671b62a5f34b0745aa37ff4cdf9e02097927186ee6ca736ef865270624f81ce9d1bd73d7d901fc180
   languageName: node
   linkType: hard
 
@@ -2343,10 +2343,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/service-utils@npm:0.0.88":
-  version: 0.0.88
-  resolution: "@fern-typescript/service-utils@npm:0.0.88"
-  checksum: 7d88aff0b0d4dd21dd95c3c323622e1b1540a69db1b0d0c7afedc3f474937f1266254a31d0999303fd41e075f4903e64a3e443bd33454fd5efcd5e270dfa2539
+"@fern-typescript/service-utils@npm:0.0.94":
+  version: 0.0.94
+  resolution: "@fern-typescript/service-utils@npm:0.0.94"
+  checksum: 853449e038b92875b13ce8137879749219c1c032c25709ad0cd3cd2e3787e42a3da0ef480977f30e0e9812fe028b8aac56a12ddd002c53033c4adc783748729e
   languageName: node
   linkType: hard
 

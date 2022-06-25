@@ -31,7 +31,7 @@
     "@fern-api/commons": "workspace:*",
     "@fern-api/compiler": "workspace:*",
     "@fern-api/docker-utils": "workspace:*",
-    "@fern-fern/fiddle-coordinator-api-client": "^0.0.2",
+    "@fern-fern/fiddle-coordinator-api-client": "^0.0.774",
     "chalk": "^4.1.2",
     "execa": "^5.1.1",
     "log-update": "^4.0.0",

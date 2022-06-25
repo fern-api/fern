@@ -26,7 +26,7 @@ export async function runRemoteGenerationForWorkspace({
         generators: workspaceDefinition.generators.map((generator) => ({
             id: generator.name,
             version: generator.version,
-            // TODO delete this case
+            // TODO delete this cast
             customConfig: generator.config as Record<string, string>,
         })),
     });

@@ -3402,7 +3402,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/commons", "workspace:packages/commons"],\
             ["@fern-api/compiler", "workspace:packages/compiler/compiler"],\
             ["@fern-api/docker-utils", "workspace:packages/local-generation/docker-utils"],\
-            ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.2::__archiveUrl=https%3A%2F%2Ffern-dev-985111089818.d.codeartifact.us-east-1.amazonaws.com%3A443%2Fnpm%2Ffern-dev%2F%40fern-fern%2Ffiddle-coordinator-api-client%2F-%2Ffiddle-coordinator-api-client-0.0.2.tgz"],\
+            ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.774::__archiveUrl=https%3A%2F%2Ffern-dev-985111089818.d.codeartifact.us-east-1.amazonaws.com%3A443%2Fnpm%2Ffern-dev%2F%40fern-fern%2Ffiddle-coordinator-api-client%2F-%2Ffiddle-coordinator-api-client-0.0.774.tgz"],\
             ["@types/jest", "npm:28.1.2"],\
             ["@types/node", "npm:17.0.34"],\
             ["@types/tar", "npm:6.1.1"],\
@@ -3458,11 +3458,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/fiddle-coordinator-api-client", [\
-        ["npm:0.0.2::__archiveUrl=https%3A%2F%2Ffern-dev-985111089818.d.codeartifact.us-east-1.amazonaws.com%3A443%2Fnpm%2Ffern-dev%2F%40fern-fern%2Ffiddle-coordinator-api-client%2F-%2Ffiddle-coordinator-api-client-0.0.2.tgz", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-fiddle-coordinator-api-client-npm-0.0.2-0c7410cabd-0fc058eea1.zip/node_modules/@fern-fern/fiddle-coordinator-api-client/",\
+        ["npm:0.0.774::__archiveUrl=https%3A%2F%2Ffern-dev-985111089818.d.codeartifact.us-east-1.amazonaws.com%3A443%2Fnpm%2Ffern-dev%2F%40fern-fern%2Ffiddle-coordinator-api-client%2F-%2Ffiddle-coordinator-api-client-0.0.774.tgz", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-fiddle-coordinator-api-client-npm-0.0.774-8b85f4a703-bbd69bbff3.zip/node_modules/@fern-fern/fiddle-coordinator-api-client/",\
           "packageDependencies": [\
-            ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.2::__archiveUrl=https%3A%2F%2Ffern-dev-985111089818.d.codeartifact.us-east-1.amazonaws.com%3A443%2Fnpm%2Ffern-dev%2F%40fern-fern%2Ffiddle-coordinator-api-client%2F-%2Ffiddle-coordinator-api-client-0.0.2.tgz"],\
-            ["@fern-typescript/service-utils", "npm:0.0.88"]\
+            ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.774::__archiveUrl=https%3A%2F%2Ffern-dev-985111089818.d.codeartifact.us-east-1.amazonaws.com%3A443%2Fnpm%2Ffern-dev%2F%40fern-fern%2Ffiddle-coordinator-api-client%2F-%2Ffiddle-coordinator-api-client-0.0.774.tgz"],\
+            ["@fern-typescript/service-utils", "npm:0.0.94"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -3757,10 +3757,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-typescript/service-utils", [\
-        ["npm:0.0.88", {\
-          "packageLocation": "./.yarn/cache/@fern-typescript-service-utils-npm-0.0.88-5c861326a2-7d88aff0b0.zip/node_modules/@fern-typescript/service-utils/",\
+        ["npm:0.0.94", {\
+          "packageLocation": "./.yarn/cache/@fern-typescript-service-utils-npm-0.0.94-51236fc5c2-853449e038.zip/node_modules/@fern-typescript/service-utils/",\
           "packageDependencies": [\
-            ["@fern-typescript/service-utils", "npm:0.0.88"]\
+            ["@fern-typescript/service-utils", "npm:0.0.94"]\
           ],\
           "linkType": "HARD"\
         }],\
