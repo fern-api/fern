@@ -1,7 +1,7 @@
+import { GeneratorHelpers } from "@fern-api/api";
 import { runDocker } from "@fern-api/docker-utils";
 import { writeFile } from "fs/promises";
 import path from "path";
-import { GeneratorHelpers } from "./GeneratorConfig";
 import { getGeneratorConfig } from "./getGeneratorConfig";
 
 const DOCKER_FERN_DIRECTORY = "/fern";
@@ -14,22 +14,20 @@ export declare namespace runGenerator {
         imageName: string;
         helpers: GeneratorHelpers;
         customConfig: unknown;
-        workspaceVersion: string;
+        workspaceName: string;
 
         absolutePathToIr: string;
         absolutePathToOutput: string | undefined;
-        absolutePathToProject: string | undefined;
         pathToWriteConfigJson: string;
     }
 }
 
 export async function runGenerator({
     imageName,
-    workspaceVersion,
+    workspaceName,
     absolutePathToOutput,
     absolutePathToIr,
     pathToWriteConfigJson,
-    absolutePathToProject,
     helpers,
     customConfig,
 }: runGenerator.Args): Promise<void> {
@@ -45,9 +43,8 @@ export async function runGenerator({
     const { config, binds: bindsForGenerators } = getGeneratorConfig({
         helpers,
         absolutePathToOutput,
-        absolutePathToProject,
         customConfig,
-        workspaceVersion,
+        workspaceName,
     });
     binds.push(...bindsForGenerators);
 

@@ -11,11 +11,9 @@ import { runGenerator } from "./run-generator/runGenerator";
 
 export async function runLocalGenerationForWorkspace({
     workspaceDefinition,
-    absolutePathToProjectConfig,
     compileResult,
 }: {
     workspaceDefinition: WorkspaceDefinition;
-    absolutePathToProjectConfig: string | undefined;
     compileResult: Compiler.SuccessfulResult;
 }): Promise<void> {
     if (workspaceDefinition.generators.length === 0) {
@@ -35,10 +33,10 @@ export async function runLocalGenerationForWorkspace({
     await Promise.all(
         workspaceDefinition.generators.map(async (generatorInvocation) =>
             loadHelpersAndRunGenerator({
+                workspaceDefinition,
                 generatorInvocation,
                 workspaceTempDir,
                 absolutePathToIr,
-                absolutePathToProjectConfig,
                 nonStandardEncodings: compileResult.nonStandardEncodings,
             })
         )
@@ -46,16 +44,16 @@ export async function runLocalGenerationForWorkspace({
 }
 
 async function loadHelpersAndRunGenerator({
+    workspaceDefinition,
     generatorInvocation,
     workspaceTempDir,
     absolutePathToIr,
-    absolutePathToProjectConfig,
     nonStandardEncodings,
 }: {
+    workspaceDefinition: WorkspaceDefinition;
     generatorInvocation: GeneratorInvocation;
     workspaceTempDir: DirectoryResult;
     absolutePathToIr: string;
-    absolutePathToProjectConfig: string | undefined;
     nonStandardEncodings: CustomWireMessageEncoding[];
 }): Promise<void> {
     const configJson = await tmp.file({
@@ -83,9 +81,7 @@ async function loadHelpersAndRunGenerator({
             nonStandardEncodings,
             absolutePathToWorkspaceTempDir: workspaceTempDir.path,
         }),
-        absolutePathToProject:
-            absolutePathToProjectConfig != null ? path.dirname(absolutePathToProjectConfig) : undefined,
         customConfig: generatorInvocation.config,
-        workspaceVersion: "0.1.2",
+        workspaceName: workspaceDefinition.name,
     });
 }

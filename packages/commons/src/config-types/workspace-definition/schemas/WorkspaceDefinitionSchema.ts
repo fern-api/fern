@@ -2,7 +2,7 @@ import { z } from "zod";
 import { GeneratorInvocationSchema } from "./GeneratorInvocationSchema";
 
 export const WorkspaceDefinitionSchema = z.strictObject({
-    name: z.optional(z.string()),
+    name: z.string(),
     definition: z.string(),
     generators: z.array(GeneratorInvocationSchema),
 });

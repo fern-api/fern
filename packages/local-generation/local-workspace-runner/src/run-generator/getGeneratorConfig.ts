@@ -1,14 +1,13 @@
+import { GeneratorConfig, GeneratorHelpers } from "@fern-api/api";
 import path from "path";
 import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_GENERATORS_DIRECTORY, DOCKER_PATH_TO_IR } from "./constants";
-import { GeneratorConfig, GeneratorHelpers } from "./GeneratorConfig";
 
 export declare namespace getGeneratorConfig {
     export interface Args {
         helpers: GeneratorHelpers;
-        absolutePathToProject: string | undefined;
         absolutePathToOutput: string | undefined;
+        workspaceName: string;
         customConfig: unknown;
-        workspaceVersion: string;
     }
 
     export interface Return {
@@ -21,6 +20,7 @@ export function getGeneratorConfig({
     helpers,
     absolutePathToOutput,
     customConfig,
+    workspaceName,
 }: getGeneratorConfig.Args): getGeneratorConfig.Return {
     const binds: string[] = [];
 
@@ -50,6 +50,8 @@ export function getGeneratorConfig({
             publish: null,
             customConfig,
             helpers: convertedHelpers,
+            workspaceName,
+            organization: "fern-api",
         },
     };
 }
