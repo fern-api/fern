@@ -23,6 +23,6 @@ export const defaultFetcher: Fetcher = async (args) => {
 
     return {
         statusCode: response.status,
-        body: new Uint8Array(await response.data),
+        body: new Uint8Array(response.data),
     };
 };
