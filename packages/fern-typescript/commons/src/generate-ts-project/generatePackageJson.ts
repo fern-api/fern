@@ -1,17 +1,13 @@
 import produce from "immer";
 import { Volume } from "memfs/lib/volume";
 import { IPackageJson } from "package-json-type";
-import path from "path";
 import { DependencyType, PackageDependencies } from "../dependencies/DependencyManager";
-import { CJS_TSCONFIG_PATH, ESM_TSCONFIG_PATH } from "./generateTsConfig";
 import {
     getPathToProjectFile,
-    RELATIVE_CJS_ENTRYPOINT,
-    RELATIVE_CJS_OUT_DIR_PATH,
-    RELATIVE_CJS_TYPES_ENTRYPOINT,
-    RELATIVE_ESM_ENTRYPOINT,
-    RELATIVE_ESM_OUT_DIR_PATH,
+    RELATIVE_ENTRYPOINT,
     RELATIVE_OUT_DIR_PATH,
+    RELATIVE_SRC_PATH,
+    RELATIVE_TYPES_ENTRYPOINT,
 } from "./utils";
 
 export const BUILD_PROJECT_SCRIPT_NAME = "build";
@@ -41,26 +37,10 @@ export async function generatePackageJson({
         ...packageJson,
         version: packageVersion,
         files: [RELATIVE_OUT_DIR_PATH],
-        main: `./${RELATIVE_CJS_ENTRYPOINT}`,
-        types: `./${RELATIVE_CJS_TYPES_ENTRYPOINT}`,
-        exports: {
-            ".": {
-                require: `./${RELATIVE_CJS_ENTRYPOINT}`,
-                default: `./${RELATIVE_ESM_ENTRYPOINT}`,
-            },
-        },
-        sideEffects: false,
+        main: `./${RELATIVE_ENTRYPOINT}`,
+        types: `./${RELATIVE_TYPES_ENTRYPOINT}`,
         scripts: {
-            // TODO make these scripts more DRY
-            [BUILD_PROJECT_SCRIPT_NAME]: `run-p ${BUILD_PROJECT_SCRIPT_NAME}:esm ${BUILD_PROJECT_SCRIPT_NAME}:cjs`,
-            [`${BUILD_PROJECT_SCRIPT_NAME}:esm`]: [
-                `tsc --project ${ESM_TSCONFIG_PATH}`,
-                `echo '{ "type": "module" }' > ${path.join(RELATIVE_ESM_OUT_DIR_PATH, "package.json")}`,
-            ].join(" && "),
-            [`${BUILD_PROJECT_SCRIPT_NAME}:cjs`]: [
-                `tsc --project ${CJS_TSCONFIG_PATH}`,
-                `echo '{ "type": "commonjs" }' > ${path.join(RELATIVE_CJS_OUT_DIR_PATH, "package.json")}`,
-            ].join(" && "),
+            [BUILD_PROJECT_SCRIPT_NAME]: `tsc && esbuild $(find ${RELATIVE_SRC_PATH} -name '*.ts') --outdir=${RELATIVE_OUT_DIR_PATH}`,
         },
     };
 
@@ -75,9 +55,9 @@ export async function generatePackageJson({
         }
         draft.devDependencies = {
             ...dependencies?.[DependencyType.DEV],
-            "@types/node": "^17.0.33",
-            "npm-run-all": "^4.1.5",
-            typescript: "^4.6.4",
+            "@types/node": "17.0.33",
+            esbuild: "0.14.47",
+            typescript: "4.6.4",
         };
     });
 

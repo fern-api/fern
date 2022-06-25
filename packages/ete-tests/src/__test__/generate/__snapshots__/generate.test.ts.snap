@@ -8,24 +8,15 @@ Array [
     \\"files\\": [
         \\"lib\\"
     ],
-    \\"main\\": \\"./lib/cjs/index.js\\",
-    \\"types\\": \\"./lib/cjs/index.d.ts\\",
-    \\"exports\\": {
-        \\".\\": {
-            \\"require\\": \\"./lib/cjs/index.js\\",
-            \\"default\\": \\"./lib/esm/index.js\\"
-        }
-    },
-    \\"sideEffects\\": false,
+    \\"main\\": \\"./lib/index.js\\",
+    \\"types\\": \\"./lib/index.d.ts\\",
     \\"scripts\\": {
-        \\"build\\": \\"run-p build:esm build:cjs\\",
-        \\"build:esm\\": \\"tsc --project tsconfig.esm.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"module\\\\\\" }' > lib/esm/package.json\\",
-        \\"build:cjs\\": \\"tsc --project tsconfig.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"commonjs\\\\\\" }' > lib/cjs/package.json\\"
+        \\"build\\": \\"tsc && esbuild $(find src -name '*.ts') --outdir=lib\\"
     },
     \\"devDependencies\\": {
-        \\"@types/node\\": \\"^17.0.33\\",
-        \\"npm-run-all\\": \\"^4.1.5\\",
-        \\"typescript\\": \\"^4.6.4\\"
+        \\"@types/node\\": \\"17.0.33\\",
+        \\"esbuild\\": \\"0.14.47\\",
+        \\"typescript\\": \\"4.6.4\\"
     }
 }",
     "name": "package.json",
@@ -83,45 +74,14 @@ export interface Post {
   Object {
     "contents": "{
     \\"compilerOptions\\": {
-        \\"composite\\": true,
-        \\"module\\": \\"esnext\\",
-        \\"target\\": \\"esnext\\",
-        \\"outDir\\": \\"lib/esm\\",
         \\"rootDir\\": \\"src\\",
-        \\"moduleResolution\\": \\"node\\",
-        \\"esModuleInterop\\": true,
+        \\"outDir\\": \\"lib\\",
+        \\"skipLibCheck\\": true,
         \\"strict\\": true,
         \\"declaration\\": true,
-        \\"noFallthroughCasesInSwitch\\": true,
-        \\"forceConsistentCasingInFileNames\\": true,
-        \\"noUncheckedIndexedAccess\\": true,
-        \\"noUnusedLocals\\": true,
-        \\"noUnusedParameters\\": true
-    },
-    \\"include\\": [
-        \\"src\\"
-    ]
-}",
-    "name": "tsconfig.esm.json",
-    "type": "file",
-  },
-  Object {
-    "contents": "{
-    \\"compilerOptions\\": {
-        \\"composite\\": true,
-        \\"module\\": \\"commonjs\\",
-        \\"target\\": \\"esnext\\",
-        \\"outDir\\": \\"lib/cjs\\",
-        \\"rootDir\\": \\"src\\",
-        \\"moduleResolution\\": \\"node\\",
-        \\"esModuleInterop\\": true,
-        \\"strict\\": true,
-        \\"declaration\\": true,
-        \\"noFallthroughCasesInSwitch\\": true,
-        \\"forceConsistentCasingInFileNames\\": true,
-        \\"noUncheckedIndexedAccess\\": true,
-        \\"noUnusedLocals\\": true,
-        \\"noUnusedParameters\\": true
+        \\"emitDeclarationOnly\\": true,
+        \\"isolatedModules\\": true,
+        \\"esModuleInterop\\": true
     },
     \\"include\\": [
         \\"src\\"
