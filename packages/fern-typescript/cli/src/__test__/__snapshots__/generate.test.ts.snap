@@ -3,6 +3,13 @@
 exports[`runGenerator trace 1`] = `
 Array [
   Object {
+    "contents": "export * as model from \\"./model\\";
+export * as services from \\"./services\\";
+",
+    "name": "index.ts",
+    "type": "file",
+  },
+  Object {
     "contents": Array [
       Object {
         "contents": Array [
