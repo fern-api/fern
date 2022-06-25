@@ -47,12 +47,7 @@ export async function runCommand({
 
     if (config.publish != null) {
         const { registryUrl, token } = config.publish.registries.npm;
-        await runNpmCommandInOutputDirectory(
-            "config",
-            "set",
-            `${scopeWithAtSign}:registry`,
-            registryUrl
-        );
+        await runNpmCommandInOutputDirectory("config", "set", `${scopeWithAtSign}:registry`, registryUrl);
         const parsedRegistryUrl = new URL(registryUrl);
         await runNpmCommandInOutputDirectory(
             "config",
