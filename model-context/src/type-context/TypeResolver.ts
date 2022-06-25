@@ -1,4 +1,4 @@
-import { FernFilepath, IntermediateRepresentation, Type, TypeName, TypeReference } from "@fern-api/api";
+import { DeclaredTypeName, FernFilepath, IntermediateRepresentation, Type, TypeReference } from "@fern-api/api";
 import { ResolvedType } from "./ResolvedType";
 
 type Filepath = string;
@@ -24,7 +24,7 @@ export class TypeResolver {
         }
     }
 
-    public getTypeDefinitionFromName(typeName: TypeName): Type {
+    public getTypeDeclarationFromName(typeName: DeclaredTypeName): Type {
         const type = this.allTypes[typeName.fernFilepath]?.[typeName.name];
         if (type == null) {
             throw new Error("Type not found: " + typeNameToString(typeName));
@@ -32,7 +32,7 @@ export class TypeResolver {
         return type;
     }
 
-    public resolveTypeName(typeName: TypeName): ResolvedType {
+    public resolveTypeName(typeName: DeclaredTypeName): ResolvedType {
         const resolvedType = this.resolvedTypes[typeName.fernFilepath]?.[typeName.name];
         if (resolvedType == null) {
             throw new Error("Type not found: " + typeNameToString(typeName));
@@ -41,14 +41,14 @@ export class TypeResolver {
     }
 
     public resolveTypeReference(type: TypeReference): ResolvedType {
-        return this.resolveTypeDefinition(Type.alias({ aliasOf: type }));
+        return this.resolveTypeDeclaration(Type.alias({ aliasOf: type }));
     }
 
-    public resolveTypeDefinition(type: Type): ResolvedType {
-        return this.resolveTypeDefinitionWithContinuation(type, (typeName) => this.resolveTypeName(typeName));
+    public resolveTypeDeclaration(type: Type): ResolvedType {
+        return this.resolveTypeDeclarationWithContinuation(type, (typeName) => this.resolveTypeName(typeName));
     }
 
-    public doesTypeExist(typeName: TypeName): boolean {
+    public doesTypeExist(typeName: DeclaredTypeName): boolean {
         return this.allTypes[typeName.fernFilepath]?.[typeName.name] != null;
     }
 
@@ -56,7 +56,7 @@ export class TypeResolver {
         typeName,
         seen = {},
     }: {
-        typeName: TypeName;
+        typeName: DeclaredTypeName;
         seen?: Record<Filepath, Set<SimpleTypeName>>;
     }): ResolvedType {
         const seenAtFilepath = seen[typeName.fernFilepath] ?? new Set();
@@ -70,7 +70,7 @@ export class TypeResolver {
             throw new Error("Type not found: " + typeNameToString(typeName));
         }
 
-        const resolvedType = this.resolveTypeDefinitionWithContinuation(type, (typeName) =>
+        const resolvedType = this.resolveTypeDeclarationWithContinuation(type, (typeName) =>
             this.resolveTypeRecursive({
                 typeName,
                 seen,
@@ -83,9 +83,9 @@ export class TypeResolver {
         return resolvedType;
     }
 
-    private resolveTypeDefinitionWithContinuation(
+    private resolveTypeDeclarationWithContinuation(
         type: Type,
-        resolveNamedType: (typeName: TypeName) => ResolvedType
+        resolveNamedType: (typeName: DeclaredTypeName) => ResolvedType
     ): ResolvedType {
         return Type._visit<ResolvedType>(type, {
             object: ResolvedType.object,
@@ -109,6 +109,6 @@ export class TypeResolver {
     }
 }
 
-function typeNameToString(typeName: TypeName) {
+function typeNameToString(typeName: DeclaredTypeName) {
     return `${typeName.fernFilepath}.${typeName.name}`;
 }

@@ -74,17 +74,17 @@ export function convertParamValueForExpectedType({
                 _unknown: handleInvalidParamType,
             }),
         named: (typeName) => {
-            const typeDefinition = modelContext.getTypeDefinitionFromName(typeName);
-            return Type._visit(typeDefinition, {
-                alias: (aliasTypeDefinition) => {
+            const typeDeclaration = modelContext.getTypeDeclarationFromName(typeName);
+            return Type._visit(typeDeclaration, {
+                alias: (aliasTypeDeclaration) => {
                     const valueForAliasedType = convertParamValueForExpectedType({
                         valueReference,
-                        expectedType: aliasTypeDefinition.aliasOf,
+                        expectedType: aliasTypeDeclaration.aliasOf,
                         modelContext,
                         file,
                         isValueReferenceTypedAsString,
                     });
-                    if (shouldUseBrandedTypeForAlias(aliasTypeDefinition)) {
+                    if (shouldUseBrandedTypeForAlias(aliasTypeDeclaration)) {
                         return ts.factory.createCallExpression(
                             ts.factory.createPropertyAccessExpression(
                                 modelContext.getReferenceToTypeUtils({

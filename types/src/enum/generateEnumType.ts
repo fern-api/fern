@@ -1,4 +1,4 @@
-import { EnumTypeDefinition, EnumValue } from "@fern-api/api";
+import { EnumTypeDeclaration, EnumValue } from "@fern-api/api";
 import {
     FernWriters,
     getTextOfTsNode,
@@ -21,7 +21,7 @@ export function generateEnumType({
     file: SourceFile;
     typeName: string;
     docs: string | null | undefined;
-    shape: EnumTypeDefinition;
+    shape: EnumTypeDeclaration;
 }): void {
     const typeAlias = file.addTypeAlias({
         name: typeName,
@@ -73,7 +73,7 @@ function createUtils({
     typeName,
     visitorItems,
 }: {
-    shape: EnumTypeDefinition;
+    shape: EnumTypeDeclaration;
     typeName: string;
     visitorItems: readonly visitorUtils.VisitableItem[];
 }): WriterFunction {
