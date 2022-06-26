@@ -23,8 +23,8 @@ public final class ApiExceptionGenerator {
     private ApiExceptionGenerator() {}
 
     public static GeneratedFile generateApiExceptionInterface(ClassNameUtils classNameUtils) {
-        ClassName apiExceptionInterfaceClassname =
-                classNameUtils.getClassName(API_EXCEPTION_INTERFACE_CLASS_NAME, Optional.empty(), Optional.empty());
+        ClassName apiExceptionInterfaceClassname = classNameUtils.getClassName(
+                API_EXCEPTION_INTERFACE_CLASS_NAME, Optional.empty(), Optional.empty(), Optional.empty());
         TypeSpec apiExceptionTypeSpec = TypeSpec.interfaceBuilder(API_EXCEPTION_INTERFACE_CLASS_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                 // TODO(dsinghvi): Support generating error instance ids
@@ -42,8 +42,8 @@ public final class ApiExceptionGenerator {
     }
 
     public static GeneratedFile generateHttpApiExceptionInterface(ClassNameUtils classNameUtils) {
-        ClassName httpApiExceptionInterfaceClassname =
-                classNameUtils.getClassName(HTTP_API_EXCEPTION_CLASS_NAME, Optional.empty(), Optional.empty());
+        ClassName httpApiExceptionInterfaceClassname = classNameUtils.getClassName(
+                HTTP_API_EXCEPTION_CLASS_NAME, Optional.empty(), Optional.empty(), Optional.empty());
         TypeSpec httpApiExceptionTypeSpec = TypeSpec.interfaceBuilder(httpApiExceptionInterfaceClassname)
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                 .addMethod(MethodSpec.methodBuilder(GET_STATUS_CODE_METHOD_NAME)
@@ -62,7 +62,7 @@ public final class ApiExceptionGenerator {
 
     public static GeneratedFile generateUnknownRemoteException(ClassNameUtils classNameUtils) {
         ClassName unknownRemoteExceptionClassName = classNameUtils.getClassName(
-                UNKNOWN_REMOTE_EXCEPTION_INTERFACE_CLASS_NAME, Optional.empty(), Optional.empty());
+                UNKNOWN_REMOTE_EXCEPTION_INTERFACE_CLASS_NAME, Optional.empty(), Optional.empty(), Optional.empty());
         TypeSpec unknownRemoteExceptionTypeSpec = TypeSpec.classBuilder(UNKNOWN_REMOTE_EXCEPTION_INTERFACE_CLASS_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .superclass(ClassName.get(RemoteException.class))

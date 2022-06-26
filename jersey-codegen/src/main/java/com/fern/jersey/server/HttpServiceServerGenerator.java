@@ -8,11 +8,12 @@ import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.jersey.HttpAuthToParameterSpec;
 import com.fern.jersey.HttpMethodAnnotationVisitor;
+import com.fern.jersey.HttpPathUtils;
 import com.fern.jersey.JerseyServiceGeneratorUtils;
 import com.fern.model.codegen.Generator;
+import com.fern.types.errors.ErrorName;
 import com.fern.types.services.http.HttpEndpoint;
 import com.fern.types.services.http.HttpService;
-import com.fern.types.types.NamedType;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
@@ -39,18 +40,18 @@ public final class HttpServiceServerGenerator extends Generator {
     private final ClassName generatedServiceClassName;
     private final JerseyServiceGeneratorUtils jerseyServiceGeneratorUtils;
     private final Map<HttpEndpoint, GeneratedEndpointModel> generatedEndpointModels;
-    private final Map<NamedType, GeneratedError> generatedErrors;
+    private final Map<ErrorName, GeneratedError> generatedErrors;
 
     public HttpServiceServerGenerator(
             GeneratorContext generatorContext,
-            Map<NamedType, GeneratedError> generatedErrors,
+            Map<ErrorName, GeneratedError> generatedErrors,
             List<GeneratedEndpointModel> generatedEndpointModels,
             HttpService httpService) {
         super(generatorContext, PackageType.SERVER);
         this.httpService = httpService;
         this.generatedErrors = generatedErrors;
         this.generatedServiceClassName =
-                generatorContext.getClassNameUtils().getClassNameForNamedType(httpService.name(), packageType);
+                generatorContext.getClassNameUtils().getClassNameFromServiceName(httpService.name(), packageType);
         this.jerseyServiceGeneratorUtils = new JerseyServiceGeneratorUtils(generatorContext);
         this.generatedEndpointModels = generatedEndpointModels.stream()
                 .collect(Collectors.toMap(GeneratedEndpointModel::httpEndpoint, Function.identity()));
@@ -87,10 +88,11 @@ public final class HttpServiceServerGenerator extends Generator {
     }
 
     private HttpEndpointServerMethods getHttpEndpointMethodSpec(HttpEndpoint httpEndpoint) {
-        MethodSpec.Builder endpointMethodBuilder = MethodSpec.methodBuilder(httpEndpoint.endpointId())
+        MethodSpec.Builder endpointMethodBuilder = MethodSpec.methodBuilder(
+                        httpEndpoint.endpointId().value())
                 .addAnnotation(httpEndpoint.method().visit(HttpMethodAnnotationVisitor.INSTANCE))
                 .addAnnotation(AnnotationSpec.builder(Path.class)
-                        .addMember("value", "$S", httpEndpoint.path())
+                        .addMember("value", "$S", HttpPathUtils.getJerseyCompatiblePath(httpEndpoint.path()))
                         .build())
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL);
         httpEndpoint
@@ -119,7 +121,7 @@ public final class HttpServiceServerGenerator extends Generator {
 
         boolean errorsPresent = httpEndpoint.response().failed().errors().size() > 0;
 
-        String endpointImplMethodName = httpEndpoint.endpointId() + "Impl";
+        String endpointImplMethodName = httpEndpoint.endpointId().value() + "Impl";
         MethodSpec.Builder endpointImplMethodBuilder =
                 MethodSpec.methodBuilder(endpointImplMethodName).addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT);
 

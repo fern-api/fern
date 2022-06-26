@@ -10,9 +10,9 @@ import com.fern.codegen.stateless.generator.ApiExceptionGenerator;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.model.codegen.Generator;
 import com.fern.model.codegen.TypeDefinitionGenerator;
-import com.fern.types.errors.ErrorDefinition;
-import com.fern.types.types.NamedType;
-import com.fern.types.types.TypeDefinition;
+import com.fern.types.errors.ErrorDeclaration;
+import com.fern.types.types.DeclaredTypeName;
+import com.fern.types.types.TypeDeclaration;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -22,7 +22,6 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
@@ -35,52 +34,46 @@ public final class ErrorGenerator extends Generator {
     private static final Set<String> JSON_IGNORE_EXCEPTION_PROPERTIES =
             Set.of("stackTrace", "cause", "detailMessage", "localizedMessage", "statusCode", "message", "suppressed");
 
-    private final ErrorDefinition errorDefinition;
+    private final ErrorDeclaration errorDeclaration;
     private final GeneratorContext generatorContext;
-    private final Map<NamedType, GeneratedInterface> generatedInterfaces;
+    private final Map<DeclaredTypeName, GeneratedInterface> generatedInterfaces;
 
     public ErrorGenerator(
-            ErrorDefinition errorDefinition,
+            ErrorDeclaration errorDeclaration,
             GeneratorContext generatorContext,
-            Map<NamedType, GeneratedInterface> generatedInterfaces) {
+            Map<DeclaredTypeName, GeneratedInterface> generatedInterfaces) {
         super(generatorContext, PackageType.ERRORS);
-        this.errorDefinition = errorDefinition;
+        this.errorDeclaration = errorDeclaration;
         this.generatorContext = generatorContext;
         this.generatedInterfaces = generatedInterfaces;
     }
 
     @Override
     public GeneratedError generate() {
-        ClassName errorClassName = generatorContext
-                .getClassNameUtils()
-                .getClassNameForNamedType(
-                        errorDefinition.name(),
-                        packageType,
-                        errorDefinition.name().name().toLowerCase().endsWith("error")
-                                ? Optional.empty()
-                                : Optional.of(ERROR_SUFFIX));
-        IGeneratedFile generatedTypeFile = errorDefinition
+        ClassName errorClassName =
+                generatorContext.getClassNameUtils().getClassNameFromErrorName(errorDeclaration.name(), packageType);
+        IGeneratedFile generatedTypeFile = errorDeclaration
                 .type()
                 .visit(new TypeDefinitionGenerator(
-                        TypeDefinition.builder()
-                                .name(NamedType.builder()
-                                        .fernFilepath(errorDefinition.name().fernFilepath())
+                        TypeDeclaration.builder()
+                                .name(DeclaredTypeName.builder()
+                                        .fernFilepath(errorDeclaration.name().fernFilepath())
                                         .name(errorClassName.simpleName())
                                         .build())
-                                .shape(errorDefinition.type())
+                                .shape(errorDeclaration.type())
                                 .build(),
                         generatorContext,
                         generatedInterfaces,
                         PackageType.ERRORS));
         TypeSpec.Builder errorTypeSpecBuilder = getErrorTypeSpecBuilder(generatedTypeFile);
         errorTypeSpecBuilder.superclass(ClassName.get(Exception.class));
-        if (errorDefinition.http().isPresent()) {
+        if (errorDeclaration.http().isPresent()) {
             errorTypeSpecBuilder
                     .addSuperinterface(
                             generatorContext.getHttpApiExceptionFile().className())
                     .addField(FieldSpec.builder(TypeName.INT, STATUS_CODE_FIELD_NAME)
                             .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
-                            .initializer("$L", errorDefinition.http().get().statusCode())
+                            .initializer("$L", errorDeclaration.http().get().statusCode())
                             .build())
                     .addMethod(MethodSpec.methodBuilder(ApiExceptionGenerator.GET_STATUS_CODE_METHOD_NAME)
                             .addModifiers(Modifier.PUBLIC)
@@ -94,7 +87,7 @@ public final class ErrorGenerator extends Generator {
         return GeneratedError.builder()
                 .file(errorFile)
                 .className(errorClassName)
-                .errorDefinition(errorDefinition)
+                .errorDeclaration(errorDeclaration)
                 .build();
     }
 

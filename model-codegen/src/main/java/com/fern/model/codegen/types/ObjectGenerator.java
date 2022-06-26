@@ -8,9 +8,9 @@ import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.IGeneratedFile;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.model.codegen.Generator;
-import com.fern.types.types.NamedType;
+import com.fern.types.types.DeclaredTypeName;
 import com.fern.types.types.ObjectProperty;
-import com.fern.types.types.ObjectTypeDefinition;
+import com.fern.types.types.ObjectTypeDeclaration;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -34,27 +34,27 @@ public final class ObjectGenerator extends Generator {
     private static final String STATIC_BUILDER_METHOD_NAME = "builder";
     private static final String BUILD_STAGE_SUFFIX = "BuildStage";
 
-    private final NamedType namedType;
-    private final ObjectTypeDefinition objectTypeDefinition;
+    private final DeclaredTypeName declaredTypeName;
+    private final ObjectTypeDeclaration objectTypeDeclaration;
     private final List<GeneratedInterface> extendedInterfaces;
     private final Optional<GeneratedInterface> selfInterface;
     private final ClassName generatedObjectClassName;
     private final ClassName generatedObjectImmutablesClassName;
 
     public ObjectGenerator(
-            NamedType namedType,
+            DeclaredTypeName declaredTypeName,
             PackageType packageType,
-            ObjectTypeDefinition objectTypeDefinition,
+            ObjectTypeDeclaration objectTypeDeclaration,
             List<GeneratedInterface> extendedInterfaces,
             Optional<GeneratedInterface> selfInterface,
             GeneratorContext generatorContext) {
         super(generatorContext, packageType);
-        this.namedType = namedType;
-        this.objectTypeDefinition = objectTypeDefinition;
+        this.declaredTypeName = declaredTypeName;
+        this.objectTypeDeclaration = objectTypeDeclaration;
         this.extendedInterfaces = extendedInterfaces;
         this.selfInterface = selfInterface;
         this.generatedObjectClassName =
-                generatorContext.getClassNameUtils().getClassNameForNamedType(namedType, packageType);
+                generatorContext.getClassNameUtils().getClassNameFromDeclaredTypeName(declaredTypeName, packageType);
         this.generatedObjectImmutablesClassName =
                 generatorContext.getImmutablesUtils().getImmutablesClassName(generatedObjectClassName);
     }
@@ -68,7 +68,7 @@ public final class ObjectGenerator extends Generator {
         Map<ObjectProperty, MethodSpec> methodSpecsByProperty = Collections.emptyMap();
         if (selfInterface.isEmpty()) {
             methodSpecsByProperty =
-                    generatorContext.getImmutablesUtils().getOrderedImmutablesPropertyMethods(objectTypeDefinition);
+                    generatorContext.getImmutablesUtils().getOrderedImmutablesPropertyMethods(objectTypeDeclaration);
         }
         objectTypeSpecBuilder
                 .addMethods(methodSpecsByProperty.values())
@@ -79,7 +79,7 @@ public final class ObjectGenerator extends Generator {
         return GeneratedObject.builder()
                 .file(objectFile)
                 .className(generatedObjectClassName)
-                .objectTypeDefinition(objectTypeDefinition)
+                .objectTypeDeclaration(objectTypeDeclaration)
                 .build();
     }
 

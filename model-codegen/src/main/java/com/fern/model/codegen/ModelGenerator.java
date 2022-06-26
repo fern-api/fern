@@ -21,13 +21,14 @@ import com.fern.model.codegen.services.payloads.FailedResponseGenerator;
 import com.fern.model.codegen.services.payloads.RequestResponseGenerator;
 import com.fern.model.codegen.services.payloads.RequestResponseGeneratorResult;
 import com.fern.model.codegen.types.InterfaceGenerator;
-import com.fern.types.errors.ErrorDefinition;
+import com.fern.types.errors.ErrorDeclaration;
+import com.fern.types.errors.ErrorName;
 import com.fern.types.services.http.HttpEndpoint;
 import com.fern.types.services.http.HttpService;
-import com.fern.types.types.NamedType;
-import com.fern.types.types.ObjectTypeDefinition;
+import com.fern.types.types.DeclaredTypeName;
+import com.fern.types.types.ObjectTypeDeclaration;
 import com.fern.types.types.Type;
-import com.fern.types.types.TypeDefinition;
+import com.fern.types.types.TypeDeclaration;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -39,28 +40,28 @@ import java.util.stream.Collectors;
 public final class ModelGenerator {
 
     private final List<HttpService> httpServices;
-    private final List<TypeDefinition> typeDefinitions;
-    private final List<ErrorDefinition> errorDefinitions;
-    private final Map<NamedType, TypeDefinition> typeDefinitionsByName;
+    private final List<TypeDeclaration> typeDeclarations;
+    private final List<ErrorDeclaration> errroDeclarations;
+    private final Map<DeclaredTypeName, TypeDeclaration> typeDeclarationsByName;
     private final GeneratorContext generatorContext;
 
     public ModelGenerator(
             List<HttpService> httpServices,
-            List<TypeDefinition> typeDefinitions,
-            List<ErrorDefinition> errorDefinitions,
+            List<TypeDeclaration> typeDeclarations,
+            List<ErrorDeclaration> errroDeclarations,
             GeneratorContext generatorContext) {
         this.httpServices = httpServices;
-        this.typeDefinitions = typeDefinitions;
-        this.errorDefinitions = errorDefinitions;
-        this.typeDefinitionsByName = generatorContext.getTypeDefinitionsByName();
+        this.typeDeclarations = typeDeclarations;
+        this.errroDeclarations = errroDeclarations;
+        this.typeDeclarationsByName = generatorContext.getTypeDefinitionsByName();
         this.generatorContext = generatorContext;
     }
 
     public ModelGeneratorResult generate() {
         ModelGeneratorResult.Builder modelGeneratorResultBuilder = ModelGeneratorResult.builder();
-        Map<NamedType, GeneratedInterface> generatedInterfaces = getGeneratedInterfaces();
+        Map<DeclaredTypeName, GeneratedInterface> generatedInterfaces = getGeneratedInterfaces();
         modelGeneratorResultBuilder.putAllInterfaces(generatedInterfaces);
-        typeDefinitions.forEach(typeDefinition -> {
+        typeDeclarations.forEach(typeDefinition -> {
             IGeneratedFile generatedFile = typeDefinition
                     .shape()
                     .visit(new TypeDefinitionGenerator(
@@ -78,8 +79,8 @@ public final class ModelGenerator {
                         "Encountered unknown model generator result type: " + generatedFile.className());
             }
         });
-        Map<NamedType, GeneratedError> generatedErrors = errorDefinitions.stream()
-                .collect(Collectors.toMap(ErrorDefinition::name, errorDefinition -> {
+        Map<ErrorName, GeneratedError> generatedErrors = errroDeclarations.stream()
+                .collect(Collectors.toMap(ErrorDeclaration::name, errorDefinition -> {
                     ErrorGenerator errorGenerator =
                             new ErrorGenerator(errorDefinition, generatorContext, generatedInterfaces);
                     return errorGenerator.generate();
@@ -95,32 +96,32 @@ public final class ModelGenerator {
         return modelGeneratorResultBuilder.build();
     }
 
-    private Map<NamedType, GeneratedInterface> getGeneratedInterfaces() {
-        Set<NamedType> interfaceCandidates = typeDefinitions.stream()
-                .map(TypeDefinition::shape)
+    private Map<DeclaredTypeName, GeneratedInterface> getGeneratedInterfaces() {
+        Set<DeclaredTypeName> interfaceCandidates = typeDeclarations.stream()
+                .map(TypeDeclaration::shape)
                 .map(Type::getObject)
                 .flatMap(Optional::stream)
-                .map(ObjectTypeDefinition::_extends)
+                .map(ObjectTypeDeclaration::_extends)
                 .flatMap(List::stream)
                 .collect(Collectors.toSet());
         return interfaceCandidates.stream().collect(Collectors.toMap(Function.identity(), namedType -> {
-            TypeDefinition typeDefinition = typeDefinitionsByName.get(namedType);
-            ObjectTypeDefinition objectTypeDefinition = typeDefinition
+            TypeDeclaration typeDeclaration = typeDeclarationsByName.get(namedType);
+            ObjectTypeDeclaration objectTypeDeclaration = typeDeclaration
                     .shape()
                     .getObject()
                     .orElseThrow(() -> new IllegalStateException("Non-objects cannot be extended. Fix type "
-                            + typeDefinition.name().name() + " located in file"
-                            + typeDefinition.name().fernFilepath()));
+                            + typeDeclaration.name().name() + " located in file"
+                            + typeDeclaration.name().fernFilepath()));
             InterfaceGenerator interfaceGenerator =
-                    new InterfaceGenerator(objectTypeDefinition, namedType, generatorContext);
+                    new InterfaceGenerator(objectTypeDeclaration, namedType, generatorContext);
             return interfaceGenerator.generate();
         }));
     }
 
     private List<GeneratedEndpointModel> getGeneratedEndpointModels(
             HttpService httpService,
-            Map<NamedType, GeneratedInterface> generatedInterfaces,
-            Map<NamedType, GeneratedError> generatedErrors) {
+            Map<DeclaredTypeName, GeneratedInterface> generatedInterfaces,
+            Map<ErrorName, GeneratedError> generatedErrors) {
         return httpService.endpoints().stream()
                 .map(httpEndpoint -> {
                     ImmutableGeneratedEndpointModel.Builder generatedEndpointModel =
@@ -159,7 +160,7 @@ public final class ModelGenerator {
     private Payload generatePayload(
             HttpService httpService,
             HttpEndpoint httpEndpoint,
-            Map<NamedType, GeneratedInterface> generatedInterfaces,
+            Map<DeclaredTypeName, GeneratedInterface> generatedInterfaces,
             Supplier<Type> typeSupplier,
             boolean isRequest) {
         if (isVoid(typeSupplier.get())) {

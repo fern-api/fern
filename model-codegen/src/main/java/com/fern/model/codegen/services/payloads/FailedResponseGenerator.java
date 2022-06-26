@@ -15,11 +15,12 @@ import com.fern.codegen.utils.ClassNameUtils;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.codegen.utils.MethodNameUtils;
 import com.fern.model.codegen.Generator;
+import com.fern.types.errors.ErrorName;
 import com.fern.types.services.commons.FailedResponse;
 import com.fern.types.services.commons.ResponseError;
+import com.fern.types.services.commons.ServiceName;
 import com.fern.types.services.http.HttpEndpoint;
 import com.fern.types.services.http.HttpService;
-import com.fern.types.types.NamedType;
 import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
@@ -28,7 +29,6 @@ import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
@@ -52,7 +52,7 @@ public final class FailedResponseGenerator extends Generator {
     private static final String VALUE_FIELD_NAME = "value";
 
     private final FailedResponse failedResponse;
-    private final Map<NamedType, GeneratedError> generatedErrors;
+    private final Map<ErrorName, GeneratedError> generatedErrors;
     private final ClassName generatedEndpointErrorClassName;
     private final Map<ResponseError, ClassName> internalValueClassNames;
     private final ClassName internalValueInterfaceClassName;
@@ -62,19 +62,19 @@ public final class FailedResponseGenerator extends Generator {
             HttpEndpoint httpEndpoint,
             FailedResponse failedResponse,
             GeneratorContext generatorContext,
-            Map<NamedType, GeneratedError> generatedErrors) {
+            Map<ErrorName, GeneratedError> generatedErrors) {
         super(generatorContext, PackageType.SERVICES);
         this.failedResponse = failedResponse;
         this.generatedErrors = generatedErrors;
         this.generatedEndpointErrorClassName = generatorContext
                 .getClassNameUtils()
-                .getClassNameForNamedType(
-                        NamedType.builder()
+                .getClassNameFromServiceName(
+                        ServiceName.builder()
                                 .fernFilepath(httpService.name().fernFilepath())
-                                .name(httpEndpoint.endpointId())
+                                .name(httpEndpoint.endpointId().value())
                                 .build(),
                         PackageType.SERVICES,
-                        Optional.of(CLASSNAME_ERROR_SUFFIX));
+                        CLASSNAME_ERROR_SUFFIX);
         this.internalValueClassNames = failedResponse.errors().stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
@@ -287,7 +287,7 @@ public final class FailedResponseGenerator extends Generator {
                 .getKeyWordCompatibleImmutablesPropertyMethod(
                         responseError.discriminantValue(), generatedError.className());
         // Add @JsonValue annotation on object type reference because properties are collapsed one level
-        if (generatedError.errorDefinition().type().isObject()) {
+        if (generatedError.errorDeclaration().type().isObject()) {
             return MethodSpec.methodBuilder(internalValueImmutablesProperty.name)
                     .addModifiers(internalValueImmutablesProperty.modifiers)
                     .addAnnotations(internalValueImmutablesProperty.annotations)

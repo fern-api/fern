@@ -1,14 +1,14 @@
 package com.fern.codegen;
 
 import com.fern.immutables.StagedBuilderStyle;
-import com.fern.types.types.ObjectTypeDefinition;
+import com.fern.types.types.ObjectTypeDeclaration;
 import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderStyle
 public interface GeneratedObject extends IGeneratedFile {
 
-    ObjectTypeDefinition objectTypeDefinition();
+    ObjectTypeDeclaration objectTypeDeclaration();
 
     static ImmutableGeneratedObject.FileBuildStage builder() {
         return ImmutableGeneratedObject.builder();

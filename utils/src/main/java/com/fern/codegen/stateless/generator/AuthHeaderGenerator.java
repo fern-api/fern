@@ -21,8 +21,8 @@ public final class AuthHeaderGenerator {
 
     public static GeneratedFile generateAuthHeaderClass(
             ClassNameUtils classNameUtils, ImmutablesUtils immutablesUtils, ClassName packagePrivateImmutablesStyle) {
-        ClassName authHeaderClassName =
-                classNameUtils.getClassName(AUTH_HEADER_CLASS_NAME, Optional.empty(), Optional.empty());
+        ClassName authHeaderClassName = classNameUtils.getClassName(
+                AUTH_HEADER_CLASS_NAME, Optional.empty(), Optional.empty(), Optional.empty());
         TypeSpec authHeaderTypeSpec = TypeSpec.classBuilder(authHeaderClassName)
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                 .addAnnotation(AnnotationSpec.builder(Value.Immutable.class).build())

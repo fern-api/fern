@@ -9,9 +9,9 @@ import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.codegen.utils.VisitorUtils;
 import com.fern.codegen.utils.VisitorUtils.GeneratedVisitor;
 import com.fern.model.codegen.Generator;
-import com.fern.types.types.EnumTypeDefinition;
+import com.fern.types.types.DeclaredTypeName;
+import com.fern.types.types.EnumTypeDeclaration;
 import com.fern.types.types.EnumValue;
-import com.fern.types.types.NamedType;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
@@ -47,21 +47,21 @@ public final class EnumGenerator extends Generator {
     private static final String VISIT_METHOD_NAME = "visit";
     private static final String VALUE_OF_METHOD_NAME = "valueOf";
 
-    private final NamedType namedType;
-    private final EnumTypeDefinition enumTypeDefinition;
+    private final DeclaredTypeName declaredTypeName;
+    private final EnumTypeDeclaration enumTypeDeclaration;
     private final ClassName generatedEnumClassName;
     private final ClassName valueFieldClassName;
 
     public EnumGenerator(
-            NamedType namedType,
+            DeclaredTypeName declaredTypeName,
             PackageType packageType,
-            EnumTypeDefinition enumTypeDefinition,
+            EnumTypeDeclaration enumTypeDeclaration,
             GeneratorContext generatorContext) {
         super(generatorContext, packageType);
-        this.namedType = namedType;
-        this.enumTypeDefinition = enumTypeDefinition;
+        this.declaredTypeName = declaredTypeName;
+        this.enumTypeDeclaration = enumTypeDeclaration;
         this.generatedEnumClassName =
-                generatorContext.getClassNameUtils().getClassNameForNamedType(namedType, packageType);
+                generatorContext.getClassNameUtils().getClassNameFromDeclaredTypeName(declaredTypeName, packageType);
         this.valueFieldClassName = generatedEnumClassName.nestedClass(VALUE_TYPE_NAME);
     }
 
@@ -69,7 +69,7 @@ public final class EnumGenerator extends Generator {
     public GeneratedEnum generate() {
         Map<EnumValue, FieldSpec> enumConstants = getConstants();
         VisitorUtils.GeneratedVisitor<EnumValue> generatedVisitor = getVisitor();
-        TypeSpec enumTypeSpec = TypeSpec.classBuilder(namedType.name())
+        TypeSpec enumTypeSpec = TypeSpec.classBuilder(declaredTypeName.name())
                 .addModifiers(ENUM_CLASS_MODIFIERS)
                 .addFields(enumConstants.values())
                 .addFields(getPrivateMembers())
@@ -88,13 +88,13 @@ public final class EnumGenerator extends Generator {
         return GeneratedEnum.builder()
                 .file(enumFile)
                 .className(generatedEnumClassName)
-                .enumTypeDefinition(enumTypeDefinition)
+                .enumTypeDeclaration(enumTypeDeclaration)
                 .build();
     }
 
     private Map<EnumValue, FieldSpec> getConstants() {
         // Generate public static final constant for each enum value
-        return enumTypeDefinition.values().stream()
+        return enumTypeDeclaration.values().stream()
                 .collect(Collectors.toMap(Function.identity(), enumValue -> FieldSpec.builder(
                                 generatedEnumClassName,
                                 enumValue.value(),
@@ -280,7 +280,7 @@ public final class EnumGenerator extends Generator {
     private TypeSpec getNestedValueEnum() {
         TypeSpec.Builder nestedValueEnumBuilder =
                 TypeSpec.enumBuilder(VALUE_TYPE_NAME).addModifiers(Modifier.PUBLIC);
-        enumTypeDefinition.values().forEach(enumValue -> nestedValueEnumBuilder.addEnumConstant(enumValue.value()));
+        enumTypeDeclaration.values().forEach(enumValue -> nestedValueEnumBuilder.addEnumConstant(enumValue.value()));
         nestedValueEnumBuilder.addEnumConstant(UNKNOWN_ENUM_CONSTANT);
         return nestedValueEnumBuilder.build();
     }
@@ -294,7 +294,7 @@ public final class EnumGenerator extends Generator {
      * }
      */
     private GeneratedVisitor<EnumValue> getVisitor() {
-        List<VisitorUtils.VisitMethodArgs<EnumValue>> visitMethodArgs = enumTypeDefinition.values().stream()
+        List<VisitorUtils.VisitMethodArgs<EnumValue>> visitMethodArgs = enumTypeDeclaration.values().stream()
                 .map(enumValue -> VisitorUtils.VisitMethodArgs.<EnumValue>builder()
                         .key(enumValue)
                         .keyName(enumValue.value())

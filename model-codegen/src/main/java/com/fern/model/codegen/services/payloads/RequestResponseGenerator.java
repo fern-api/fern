@@ -11,12 +11,12 @@ import com.fern.model.codegen.types.ObjectGenerator;
 import com.fern.model.codegen.types.UnionGenerator;
 import com.fern.types.services.http.HttpEndpoint;
 import com.fern.types.services.http.HttpService;
-import com.fern.types.types.AliasTypeDefinition;
-import com.fern.types.types.EnumTypeDefinition;
-import com.fern.types.types.NamedType;
-import com.fern.types.types.ObjectTypeDefinition;
+import com.fern.types.types.AliasTypeDeclaration;
+import com.fern.types.types.DeclaredTypeName;
+import com.fern.types.types.EnumTypeDeclaration;
+import com.fern.types.types.ObjectTypeDeclaration;
 import com.fern.types.types.Type;
-import com.fern.types.types.UnionTypeDefinition;
+import com.fern.types.types.UnionTypeDeclaration;
 import com.squareup.javapoet.TypeName;
 import java.util.Comparator;
 import java.util.List;
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 public final class RequestResponseGenerator {
 
     private final GeneratorContext generatorContext;
-    private final Map<NamedType, GeneratedInterface> generatedInterfaces;
+    private final Map<DeclaredTypeName, GeneratedInterface> generatedInterfaces;
     private final HttpService httpService;
     private final HttpEndpoint httpEndpoint;
     private final Type type;
@@ -35,7 +35,7 @@ public final class RequestResponseGenerator {
 
     public RequestResponseGenerator(
             GeneratorContext generatorContext,
-            Map<NamedType, GeneratedInterface> generatedInterfaces,
+            Map<DeclaredTypeName, GeneratedInterface> generatedInterfaces,
             HttpService httpService,
             HttpEndpoint httpEndpoint,
             Type type,
@@ -52,9 +52,9 @@ public final class RequestResponseGenerator {
         return type.visit(new RequestResponseTypeVisitor());
     }
 
-    private NamedType getNamedType() {
+    private DeclaredTypeName getDeclaredTypeName() {
         String wireMessageSuffix = isRequest ? "Request" : "Response";
-        return NamedType.builder()
+        return DeclaredTypeName.builder()
                 .fernFilepath(httpService.name().fernFilepath())
                 .name(httpEndpoint.endpointId() + wireMessageSuffix)
                 .build();
@@ -63,19 +63,19 @@ public final class RequestResponseGenerator {
     public final class RequestResponseTypeVisitor implements Type.Visitor<RequestResponseGeneratorResult> {
 
         @Override
-        public RequestResponseGeneratorResult visitAlias(AliasTypeDefinition aliasTypeDefinition) {
+        public RequestResponseGeneratorResult visitAlias(AliasTypeDeclaration aliasTypeDeclaration) {
             TypeName aliasTypeName = generatorContext
                     .getClassNameUtils()
-                    .getTypeNameFromTypeReference(true, aliasTypeDefinition.aliasOf());
+                    .getTypeNameFromTypeReference(true, aliasTypeDeclaration.aliasOf());
             return RequestResponseGeneratorResult.builder()
                     .typeName(aliasTypeName)
                     .build();
         }
 
         @Override
-        public RequestResponseGeneratorResult visitEnum(EnumTypeDefinition enumTypeDefinition) {
-            EnumGenerator enumGenerator =
-                    new EnumGenerator(getNamedType(), PackageType.SERVICES, enumTypeDefinition, generatorContext);
+        public RequestResponseGeneratorResult visitEnum(EnumTypeDeclaration enumTypeDeclaration) {
+            EnumGenerator enumGenerator = new EnumGenerator(
+                    getDeclaredTypeName(), PackageType.SERVICES, enumTypeDeclaration, generatorContext);
             GeneratedEnum generatedEnum = enumGenerator.generate();
             return RequestResponseGeneratorResult.builder()
                     .typeName(generatedEnum.className())
@@ -84,16 +84,16 @@ public final class RequestResponseGenerator {
         }
 
         @Override
-        public RequestResponseGeneratorResult visitObject(ObjectTypeDefinition objectTypeDefinition) {
-            List<GeneratedInterface> extendedInterfaces = objectTypeDefinition._extends().stream()
+        public RequestResponseGeneratorResult visitObject(ObjectTypeDeclaration objectTypeDeclaration) {
+            List<GeneratedInterface> extendedInterfaces = objectTypeDeclaration._extends().stream()
                     .map(generatedInterfaces::get)
                     .sorted(Comparator.comparing(
                             generatedInterface -> generatedInterface.className().simpleName()))
                     .collect(Collectors.toList());
             ObjectGenerator objectGenerator = new ObjectGenerator(
-                    getNamedType(),
+                    getDeclaredTypeName(),
                     PackageType.SERVICES,
-                    objectTypeDefinition,
+                    objectTypeDeclaration,
                     extendedInterfaces,
                     Optional.empty(),
                     generatorContext);
@@ -105,9 +105,9 @@ public final class RequestResponseGenerator {
         }
 
         @Override
-        public RequestResponseGeneratorResult visitUnion(UnionTypeDefinition unionTypeDefinition) {
-            UnionGenerator unionGenerator =
-                    new UnionGenerator(getNamedType(), PackageType.SERVICES, unionTypeDefinition, generatorContext);
+        public RequestResponseGeneratorResult visitUnion(UnionTypeDeclaration unionTypeDeclaration) {
+            UnionGenerator unionGenerator = new UnionGenerator(
+                    getDeclaredTypeName(), PackageType.SERVICES, unionTypeDeclaration, generatorContext);
             GeneratedUnion generatedUnion = unionGenerator.generate();
             return RequestResponseGeneratorResult.builder()
                     .typeName(generatedUnion.className())

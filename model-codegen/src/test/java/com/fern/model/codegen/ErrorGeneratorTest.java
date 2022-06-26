@@ -3,11 +3,11 @@ package com.fern.model.codegen;
 import com.fern.codegen.GeneratedError;
 import com.fern.java.test.TestConstants;
 import com.fern.model.codegen.errors.ErrorGenerator;
-import com.fern.types.errors.ErrorDefinition;
+import com.fern.types.errors.ErrorDeclaration;
+import com.fern.types.errors.ErrorName;
 import com.fern.types.types.FernFilepath;
-import com.fern.types.types.NamedType;
 import com.fern.types.types.ObjectProperty;
-import com.fern.types.types.ObjectTypeDefinition;
+import com.fern.types.types.ObjectTypeDeclaration;
 import com.fern.types.types.PrimitiveType;
 import com.fern.types.types.Type;
 import com.fern.types.types.TypeReference;
@@ -19,12 +19,12 @@ public class ErrorGeneratorTest {
     @Test
     public void test_basic() {
         ErrorGenerator errorGenerator = new ErrorGenerator(
-                ErrorDefinition.builder()
-                        .name(NamedType.builder()
+                ErrorDeclaration.builder()
+                        .name(ErrorName.builder()
                                 .fernFilepath(FernFilepath.valueOf("/fern"))
                                 .name("NotFoundError")
                                 .build())
-                        .type(Type._object(ObjectTypeDefinition.builder()
+                        .type(Type._object(ObjectTypeDeclaration.builder()
                                 .addProperties(ObjectProperty.builder()
                                         .key("a")
                                         .valueType(TypeReference.primitive(PrimitiveType.STRING))

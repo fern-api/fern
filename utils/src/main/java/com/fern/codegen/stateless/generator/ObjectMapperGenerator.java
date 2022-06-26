@@ -24,8 +24,8 @@ public final class ObjectMapperGenerator {
     private ObjectMapperGenerator() {}
 
     public static GeneratedFile generateClientObjectMappersClass(ClassNameUtils classNameUtils) {
-        ClassName clientObjectMappersClassName =
-                classNameUtils.getClassName(CLIENT_OBJECT_MAPPERS_CLASS_NAME, Optional.empty(), Optional.empty());
+        ClassName clientObjectMappersClassName = classNameUtils.getClassName(
+                CLIENT_OBJECT_MAPPERS_CLASS_NAME, Optional.empty(), Optional.empty(), Optional.empty());
         TypeSpec serverObjectMappersTypeSpec = getObjectMappersTypeSpec(clientObjectMappersClassName, false);
         JavaFile objectMappersFile = JavaFile.builder(
                         clientObjectMappersClassName.packageName(), serverObjectMappersTypeSpec)
@@ -37,8 +37,8 @@ public final class ObjectMapperGenerator {
     }
 
     public static GeneratedFile generateServerObjectMappersClass(ClassNameUtils classNameUtils) {
-        ClassName serverObjectMappersClassName =
-                classNameUtils.getClassName(SERVER_OBJECT_MAPPERS_CLASS_NAME, Optional.empty(), Optional.empty());
+        ClassName serverObjectMappersClassName = classNameUtils.getClassName(
+                SERVER_OBJECT_MAPPERS_CLASS_NAME, Optional.empty(), Optional.empty(), Optional.empty());
         TypeSpec clientObjectMappersTypeSpec = getObjectMappersTypeSpec(serverObjectMappersClassName, false);
         JavaFile objectMappersFile = JavaFile.builder(
                         serverObjectMappersClassName.packageName(), clientObjectMappersTypeSpec)

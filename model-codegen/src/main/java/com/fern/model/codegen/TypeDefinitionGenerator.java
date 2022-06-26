@@ -8,13 +8,13 @@ import com.fern.model.codegen.types.AliasGenerator;
 import com.fern.model.codegen.types.EnumGenerator;
 import com.fern.model.codegen.types.ObjectGenerator;
 import com.fern.model.codegen.types.UnionGenerator;
-import com.fern.types.types.AliasTypeDefinition;
-import com.fern.types.types.EnumTypeDefinition;
-import com.fern.types.types.NamedType;
-import com.fern.types.types.ObjectTypeDefinition;
+import com.fern.types.types.AliasTypeDeclaration;
+import com.fern.types.types.DeclaredTypeName;
+import com.fern.types.types.EnumTypeDeclaration;
+import com.fern.types.types.ObjectTypeDeclaration;
 import com.fern.types.types.Type;
-import com.fern.types.types.TypeDefinition;
-import com.fern.types.types.UnionTypeDefinition;
+import com.fern.types.types.TypeDeclaration;
+import com.fern.types.types.UnionTypeDeclaration;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -23,33 +23,33 @@ import java.util.stream.Collectors;
 
 public final class TypeDefinitionGenerator implements Type.Visitor<IGeneratedFile> {
 
-    private final TypeDefinition typeDefinition;
+    private final TypeDeclaration typeDeclaration;
     private final GeneratorContext generatorContext;
-    private final Map<NamedType, GeneratedInterface> generatedInterfaces;
+    private final Map<DeclaredTypeName, GeneratedInterface> generatedInterfaces;
     private final PackageType packageType;
 
     public TypeDefinitionGenerator(
-            TypeDefinition typeDefinition,
+            TypeDeclaration typeDeclaration,
             GeneratorContext generatorContext,
-            Map<NamedType, GeneratedInterface> generatedInterfaces,
+            Map<DeclaredTypeName, GeneratedInterface> generatedInterfaces,
             PackageType packageType) {
-        this.typeDefinition = typeDefinition;
+        this.typeDeclaration = typeDeclaration;
         this.generatorContext = generatorContext;
         this.generatedInterfaces = generatedInterfaces;
         this.packageType = packageType;
     }
 
     @Override
-    public IGeneratedFile visitObject(ObjectTypeDefinition objectTypeDefinition) {
+    public IGeneratedFile visitObject(ObjectTypeDeclaration objectTypeDefinition) {
         Optional<GeneratedInterface> selfInterface =
-                Optional.ofNullable(generatedInterfaces.get(typeDefinition.name()));
+                Optional.ofNullable(generatedInterfaces.get(typeDeclaration.name()));
         List<GeneratedInterface> extendedInterfaces = objectTypeDefinition._extends().stream()
                 .map(generatedInterfaces::get)
                 .sorted(Comparator.comparing(
                         generatedInterface -> generatedInterface.className().simpleName()))
                 .collect(Collectors.toList());
         ObjectGenerator objectGenerator = new ObjectGenerator(
-                typeDefinition.name(),
+                typeDeclaration.name(),
                 packageType,
                 objectTypeDefinition,
                 extendedInterfaces,
@@ -59,23 +59,23 @@ public final class TypeDefinitionGenerator implements Type.Visitor<IGeneratedFil
     }
 
     @Override
-    public IGeneratedFile visitUnion(UnionTypeDefinition unionTypeDefinition) {
+    public IGeneratedFile visitUnion(UnionTypeDeclaration unionTypeDeclaration) {
         UnionGenerator unionGenerator =
-                new UnionGenerator(typeDefinition.name(), packageType, unionTypeDefinition, generatorContext);
+                new UnionGenerator(typeDeclaration.name(), packageType, unionTypeDeclaration, generatorContext);
         return unionGenerator.generate();
     }
 
     @Override
-    public IGeneratedFile visitAlias(AliasTypeDefinition aliasTypeDefinition) {
+    public IGeneratedFile visitAlias(AliasTypeDeclaration aliasTypeDeclaration) {
         AliasGenerator aliasGenerator =
-                new AliasGenerator(aliasTypeDefinition, packageType, typeDefinition.name(), generatorContext);
+                new AliasGenerator(aliasTypeDeclaration, packageType, typeDeclaration.name(), generatorContext);
         return aliasGenerator.generate();
     }
 
     @Override
-    public IGeneratedFile visitEnum(EnumTypeDefinition enumTypeDefinition) {
+    public IGeneratedFile visitEnum(EnumTypeDeclaration enumTypeDeclaration) {
         EnumGenerator enumGenerator =
-                new EnumGenerator(typeDefinition.name(), packageType, enumTypeDefinition, generatorContext);
+                new EnumGenerator(typeDeclaration.name(), packageType, enumTypeDeclaration, generatorContext);
         return enumGenerator.generate();
     }
 

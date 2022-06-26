@@ -8,17 +8,20 @@ import com.fern.codegen.GeneratorContext;
 import com.fern.java.test.TestConstants;
 import com.fern.model.codegen.errors.ErrorGenerator;
 import com.fern.model.codegen.services.payloads.FailedResponseGenerator;
-import com.fern.types.errors.ErrorDefinition;
+import com.fern.types.errors.ErrorDeclaration;
+import com.fern.types.errors.ErrorName;
 import com.fern.types.errors.HttpErrorConfiguration;
 import com.fern.types.services.commons.FailedResponse;
 import com.fern.types.services.commons.ResponseError;
+import com.fern.types.services.commons.ResponseErrorProperties;
+import com.fern.types.services.commons.ServiceName;
+import com.fern.types.services.http.EndpointId;
 import com.fern.types.services.http.HttpEndpoint;
 import com.fern.types.services.http.HttpService;
-import com.fern.types.types.AliasTypeDefinition;
+import com.fern.types.types.AliasTypeDeclaration;
 import com.fern.types.types.FernFilepath;
-import com.fern.types.types.NamedType;
 import com.fern.types.types.ObjectProperty;
-import com.fern.types.types.ObjectTypeDefinition;
+import com.fern.types.types.ObjectTypeDeclaration;
 import com.fern.types.types.PrimitiveType;
 import com.fern.types.types.Type;
 import com.fern.types.types.TypeReference;
@@ -40,23 +43,26 @@ public class FailedResponseGeneratorTest {
 
     @Test
     public void test_basic() {
-        when(httpService.name()).thenReturn(NamedType.builder()
+        when(httpService.name()).thenReturn(ServiceName.builder()
                 .fernFilepath(FernFilepath.valueOf("fern"))
                 .name("UntitiledService")
                 .build());
-        when(httpEndpoint.endpointId()).thenReturn("getPlaylist");
-        NamedType noViewPermissionsErrorNamedType = NamedType.builder()
+        when(httpEndpoint.endpointId()).thenReturn(EndpointId.valueOf("getPlaylist"));
+        ErrorName noViewPermissionsErrorNamedType = ErrorName.builder()
                 .fernFilepath(FernFilepath.valueOf("fern"))
                 .name("NoViewPermissionsError")
                 .build();
-        ErrorDefinition noViewPermissionsErrorDef = ErrorDefinition.builder()
+        ErrorDeclaration noViewPermissionsErrorDef = ErrorDeclaration.builder()
                 .name(noViewPermissionsErrorNamedType)
-                .type(Type.alias(AliasTypeDefinition.builder()
+                .type(Type.alias(AliasTypeDeclaration.builder()
                         .aliasOf(TypeReference.primitive(PrimitiveType.STRING))
                         .build()))
                 .build();
         FailedResponse failedResponse = FailedResponse.builder()
                 .discriminant("_type")
+                .errorProperties(ResponseErrorProperties.builder()
+                    .errorInstanceId("_errorInstanceId")
+                    .build())
                 .addErrors(ResponseError.builder()
                         .discriminantValue("noViewPermissions")
                         .error(noViewPermissionsErrorNamedType)
@@ -67,9 +73,9 @@ public class FailedResponseGeneratorTest {
                 Collections.emptyMap(),
                 Collections.singletonMap(
                         noViewPermissionsErrorNamedType,
-                        ErrorDefinition.builder()
+                        ErrorDeclaration.builder()
                                 .name(noViewPermissionsErrorNamedType)
-                                .type(Type._object(ObjectTypeDefinition.builder()
+                                .type(Type._object(ObjectTypeDeclaration.builder()
                                         .addProperties(ObjectProperty.builder()
                                                 .key("msg")
                                                 .valueType(TypeReference.primitive(PrimitiveType.STRING))

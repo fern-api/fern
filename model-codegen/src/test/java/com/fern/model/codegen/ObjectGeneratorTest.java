@@ -7,13 +7,13 @@ import com.fern.java.test.TestConstants;
 import com.fern.model.codegen.types.InterfaceGenerator;
 import com.fern.model.codegen.types.ObjectGenerator;
 import com.fern.types.types.ContainerType;
+import com.fern.types.types.DeclaredTypeName;
 import com.fern.types.types.FernFilepath;
-import com.fern.types.types.NamedType;
 import com.fern.types.types.ObjectProperty;
-import com.fern.types.types.ObjectTypeDefinition;
+import com.fern.types.types.ObjectTypeDeclaration;
 import com.fern.types.types.PrimitiveType;
 import com.fern.types.types.Type;
-import com.fern.types.types.TypeDefinition;
+import com.fern.types.types.TypeDeclaration;
 import com.fern.types.types.TypeReference;
 import java.util.Collections;
 import java.util.Optional;
@@ -23,7 +23,7 @@ public class ObjectGeneratorTest {
 
     @Test
     public void test_basic() {
-        ObjectTypeDefinition objectTypeDefinition = ObjectTypeDefinition.builder()
+        ObjectTypeDeclaration objectTypeDeclaration = ObjectTypeDeclaration.builder()
                 .addProperties(ObjectProperty.builder()
                         .key("docs")
                         .valueType(TypeReference.container(
@@ -39,12 +39,12 @@ public class ObjectGeneratorTest {
                         .build())
                 .build();
         ObjectGenerator objectGenerator = new ObjectGenerator(
-                NamedType.builder()
+                DeclaredTypeName.builder()
                         .fernFilepath(FernFilepath.valueOf("com/fern"))
                         .name("WithDocs")
                         .build(),
                 PackageType.TYPES,
-                objectTypeDefinition,
+                objectTypeDeclaration,
                 Collections.emptyList(),
                 Optional.empty(),
                 TestConstants.GENERATOR_CONTEXT);
@@ -54,15 +54,15 @@ public class ObjectGeneratorTest {
 
     @Test
     public void test_skipOwnFields() {
-        ObjectTypeDefinition withDocsObjectTypeDefinition = ObjectTypeDefinition.builder()
+        ObjectTypeDeclaration withDocsObjectTypeDefinition = ObjectTypeDeclaration.builder()
                 .addProperties(ObjectProperty.builder()
                         .key("docs")
                         .valueType(TypeReference.container(
                                 ContainerType.optional(TypeReference.primitive(PrimitiveType.STRING))))
                         .build())
                 .build();
-        TypeDefinition withDocsTypeDefinition = TypeDefinition.builder()
-                .name(NamedType.builder()
+        TypeDeclaration withDocsTypeDefinition = TypeDeclaration.builder()
+                .name(DeclaredTypeName.builder()
                         .fernFilepath(FernFilepath.valueOf("com/fern"))
                         .name("WithDocs")
                         .build())
@@ -84,15 +84,15 @@ public class ObjectGeneratorTest {
 
     @Test
     public void test_lowerCasedClassName() {
-        ObjectTypeDefinition objectTypeDefinition = ObjectTypeDefinition.builder()
+        ObjectTypeDeclaration objectTypeDefinition = ObjectTypeDeclaration.builder()
                 .addProperties(ObjectProperty.builder()
                         .key("prop")
                         .valueType(TypeReference.container(
                                 ContainerType.optional(TypeReference.primitive(PrimitiveType.STRING))))
                         .build())
                 .build();
-        TypeDefinition typeDefinition = TypeDefinition.builder()
-                .name(NamedType.builder()
+        TypeDeclaration typeDefinition = TypeDeclaration.builder()
+                .name(DeclaredTypeName.builder()
                         .fernFilepath(FernFilepath.valueOf("com/fern"))
                         .name("lowercase")
                         .build())
@@ -111,7 +111,7 @@ public class ObjectGeneratorTest {
 
     @Test
     public void test_underscoredProperty() {
-        ObjectTypeDefinition objectTypeDefinition = ObjectTypeDefinition.builder()
+        ObjectTypeDeclaration objectTypeDefinition = ObjectTypeDeclaration.builder()
                 .addProperties(ObjectProperty.builder()
                         .key("_class")
                         .valueType(TypeReference.container(
@@ -122,8 +122,8 @@ public class ObjectGeneratorTest {
                         .valueType(TypeReference.primitive(PrimitiveType.STRING))
                         .build())
                 .build();
-        TypeDefinition typeDefinition = TypeDefinition.builder()
-                .name(NamedType.builder()
+        TypeDeclaration typeDefinition = TypeDeclaration.builder()
+                .name(DeclaredTypeName.builder()
                         .fernFilepath(FernFilepath.valueOf("com/fern"))
                         .name("Test")
                         .build())

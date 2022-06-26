@@ -16,11 +16,11 @@ import com.fern.codegen.utils.VisitorUtils;
 import com.fern.codegen.utils.VisitorUtils.GeneratedVisitor;
 import com.fern.immutables.StagedBuilderStyle;
 import com.fern.model.codegen.Generator;
-import com.fern.types.types.NamedType;
+import com.fern.types.types.DeclaredTypeName;
 import com.fern.types.types.SingleUnionType;
-import com.fern.types.types.TypeDefinition;
+import com.fern.types.types.TypeDeclaration;
 import com.fern.types.types.TypeReference;
-import com.fern.types.types.UnionTypeDefinition;
+import com.fern.types.types.UnionTypeDeclaration;
 import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
@@ -56,9 +56,9 @@ public final class UnionGenerator extends Generator {
     private static final String GET_INTERNAL_VALUE_METHOD_NAME = "getInternalValue";
     private static final String VISIT_METHOD_NAME = "visit";
 
-    private final NamedType namedType;
-    private final UnionTypeDefinition unionTypeDefinition;
-    private final Map<NamedType, TypeDefinition> typeDefinitionsByName;
+    private final DeclaredTypeName declaredTypeName;
+    private final UnionTypeDeclaration unionTypeDeclaration;
+    private final Map<DeclaredTypeName, TypeDeclaration> typeDefinitionsByName;
     private final ClassName generatedUnionClassName;
     private final ClassName generatedUnionImmutablesClassName;
     private final Map<SingleUnionType, ClassName> internalValueClassNames;
@@ -66,19 +66,19 @@ public final class UnionGenerator extends Generator {
     private final ClassName internalValueInterfaceClassName;
 
     public UnionGenerator(
-            NamedType namedType,
+            DeclaredTypeName declaredTypeName,
             PackageType packageType,
-            UnionTypeDefinition unionTypeDefinition,
+            UnionTypeDeclaration unionTypeDeclaration,
             GeneratorContext generatorContext) {
         super(generatorContext, packageType);
-        this.namedType = namedType;
-        this.unionTypeDefinition = unionTypeDefinition;
+        this.declaredTypeName = declaredTypeName;
+        this.unionTypeDeclaration = unionTypeDeclaration;
         this.typeDefinitionsByName = generatorContext.getTypeDefinitionsByName();
         this.generatedUnionClassName =
-                generatorContext.getClassNameUtils().getClassNameForNamedType(namedType, packageType);
+                generatorContext.getClassNameUtils().getClassNameFromDeclaredTypeName(declaredTypeName, packageType);
         this.generatedUnionImmutablesClassName =
                 generatorContext.getImmutablesUtils().getImmutablesClassName(generatedUnionClassName);
-        this.internalValueClassNames = unionTypeDefinition.types().stream()
+        this.internalValueClassNames = unionTypeDeclaration.types().stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
                         singleUnionType -> generatedUnionClassName.nestedClass(INTERNAL_CLASS_NAME_PREFIX
@@ -116,7 +116,7 @@ public final class UnionGenerator extends Generator {
         return GeneratedUnion.builder()
                 .file(unionFile)
                 .className(generatedUnionClassName)
-                .unionTypeDefinition(unionTypeDefinition)
+                .unionTypeDeclaration(unionTypeDeclaration)
                 .build();
     }
 
@@ -155,7 +155,7 @@ public final class UnionGenerator extends Generator {
     }
 
     private List<MethodSpec> getStaticBuilderMethods() {
-        return unionTypeDefinition.types().stream()
+        return unionTypeDeclaration.types().stream()
                 .map(singleUnionType -> {
                     String keyWordCompatibleName =
                             KeyWordUtils.getKeyWordCompatibleName(singleUnionType.discriminantValue());
@@ -188,7 +188,7 @@ public final class UnionGenerator extends Generator {
     }
 
     private Map<SingleUnionType, MethodSpec> getIsTypeMethods() {
-        return unionTypeDefinition.types().stream()
+        return unionTypeDeclaration.types().stream()
                 .collect(Collectors.toMap(Function.identity(), singleUnionType -> MethodSpec.methodBuilder(
                                 IS_METHOD_NAME_PREFIX + StringUtils.capitalize(singleUnionType.discriminantValue()))
                         .addModifiers(Modifier.PUBLIC)
@@ -200,7 +200,7 @@ public final class UnionGenerator extends Generator {
     private List<MethodSpec> getSingleUnionTypeGetterMethods(
             Map<SingleUnionType, MethodSpec> isTypeMethods,
             Map<SingleUnionType, GeneratedInternalValueTypeSpec> internalValueTypeSpecs) {
-        return unionTypeDefinition.types().stream()
+        return unionTypeDeclaration.types().stream()
                 // Only non void single union types have getter methods
                 .filter(singleUnionType -> internalValueTypeSpecs
                         .get(singleUnionType)
@@ -242,7 +242,7 @@ public final class UnionGenerator extends Generator {
     }
 
     private GeneratedVisitor<SingleUnionType> getVisitor() {
-        List<VisitorUtils.VisitMethodArgs<SingleUnionType>> visitMethodArgsList = unionTypeDefinition.types().stream()
+        List<VisitorUtils.VisitMethodArgs<SingleUnionType>> visitMethodArgsList = unionTypeDeclaration.types().stream()
                 .map(this::getVisitMethodArgs)
                 .collect(Collectors.toList());
         return generatorContext.getVisitorUtils().buildVisitorInterface(visitMethodArgsList);
@@ -301,7 +301,7 @@ public final class UnionGenerator extends Generator {
                                 "$T.$L",
                                 ClassName.get(JsonTypeInfo.As.class),
                                 JsonTypeInfo.As.PROPERTY.name())
-                        .addMember("property", "$S", unionTypeDefinition.discriminant())
+                        .addMember("property", "$S", unionTypeDeclaration.discriminant())
                         .addMember("visible", "true")
                         .addMember("defaultImpl", "$T.class", unknownInternalValueClassName)
                         .build());
@@ -323,7 +323,7 @@ public final class UnionGenerator extends Generator {
 
     private Map<SingleUnionType, GeneratedInternalValueTypeSpec> getInternalValueTypeSpecs(
             GeneratedVisitor<SingleUnionType> generatedVisitor) {
-        return unionTypeDefinition.types().stream().collect(Collectors.toMap(Function.identity(), singleUnionType -> {
+        return unionTypeDeclaration.types().stream().collect(Collectors.toMap(Function.identity(), singleUnionType -> {
             String capitalizedDiscriminantValue = StringUtils.capitalize(singleUnionType.discriminantValue());
             ClassName internalValueClassName = internalValueClassNames.get(singleUnionType);
             MethodSpec visitorMethodName =
@@ -462,9 +462,9 @@ public final class UnionGenerator extends Generator {
     }
 
     private boolean isTypeReferenceAnObject(TypeReference typeReference) {
-        Optional<NamedType> maybeNamedType = typeReference.getNamed();
+        Optional<DeclaredTypeName> maybeNamedType = typeReference.getNamed();
         if (maybeNamedType.isPresent()) {
-            TypeDefinition typeDefinition = typeDefinitionsByName.get(maybeNamedType.get());
+            TypeDeclaration typeDefinition = typeDefinitionsByName.get(maybeNamedType.get());
             if (typeDefinition.shape().isObject()) {
                 return true;
             } else if (typeDefinition.shape().isAlias()) {

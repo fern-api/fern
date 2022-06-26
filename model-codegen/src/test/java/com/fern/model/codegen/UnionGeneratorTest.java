@@ -6,14 +6,14 @@ import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.java.test.TestConstants;
 import com.fern.model.codegen.types.UnionGenerator;
 import com.fern.types.types.ContainerType;
+import com.fern.types.types.DeclaredTypeName;
 import com.fern.types.types.FernFilepath;
-import com.fern.types.types.NamedType;
 import com.fern.types.types.PrimitiveType;
 import com.fern.types.types.SingleUnionType;
 import com.fern.types.types.Type;
-import com.fern.types.types.TypeDefinition;
+import com.fern.types.types.TypeDeclaration;
 import com.fern.types.types.TypeReference;
-import com.fern.types.types.UnionTypeDefinition;
+import com.fern.types.types.UnionTypeDeclaration;
 import java.util.Collections;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ public class UnionGeneratorTest {
 
     @Test
     public void test_basic() {
-        UnionTypeDefinition unionTypeDefinition = UnionTypeDefinition.builder()
+        UnionTypeDeclaration unionTypeDefinition = UnionTypeDeclaration.builder()
                 .discriminant("_type")
                 .addTypes(SingleUnionType.builder()
                         .discriminantValue("integerValue")
@@ -46,14 +46,15 @@ public class UnionGeneratorTest {
                         .build())
                 .addTypes(SingleUnionType.builder()
                         .discriminantValue("mapValue")
-                        .valueType(TypeReference.container(ContainerType.list(TypeReference.named(NamedType.builder()
-                                .fernFilepath(FernFilepath.valueOf("com/birch/trace/commons"))
-                                .name("VariableValue")
-                                .build()))))
+                        .valueType(TypeReference.container(ContainerType.list(TypeReference.named(
+                                DeclaredTypeName.builder()
+                                        .fernFilepath(FernFilepath.valueOf("com/birch/trace/commons"))
+                                        .name("VariableValue")
+                                        .build()))))
                         .build())
                 .build();
-        TypeDefinition variableValueTypeDefinition = TypeDefinition.builder()
-                .name(NamedType.builder()
+        TypeDeclaration variableValueTypeDefinition = TypeDeclaration.builder()
+                .name(DeclaredTypeName.builder()
                         .fernFilepath(FernFilepath.valueOf("com/birch/trace/commons"))
                         .name("VariableValue")
                         .build())
@@ -74,7 +75,7 @@ public class UnionGeneratorTest {
 
     @Test
     public void test_nonCamelCaseDiscriminants() {
-        UnionTypeDefinition unionTypeDefinition = UnionTypeDefinition.builder()
+        UnionTypeDeclaration unionTypeDefinition = UnionTypeDeclaration.builder()
                 .discriminant("_type")
                 .addTypes(SingleUnionType.builder()
                         .discriminantValue("integervalue")
@@ -89,8 +90,8 @@ public class UnionGeneratorTest {
                         .valueType(TypeReference.primitive(PrimitiveType.DOUBLE))
                         .build())
                 .build();
-        TypeDefinition variableValueTypeDefinition = TypeDefinition.builder()
-                .name(NamedType.builder()
+        TypeDeclaration variableValueTypeDefinition = TypeDeclaration.builder()
+                .name(DeclaredTypeName.builder()
                         .fernFilepath(FernFilepath.valueOf("com/birch/trace/commons"))
                         .name("VariableValue")
                         .build())

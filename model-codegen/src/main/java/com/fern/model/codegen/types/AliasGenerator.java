@@ -6,8 +6,8 @@ import com.fern.codegen.GeneratedAlias;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.model.codegen.Generator;
-import com.fern.types.types.AliasTypeDefinition;
-import com.fern.types.types.NamedType;
+import com.fern.types.types.AliasTypeDeclaration;
+import com.fern.types.types.DeclaredTypeName;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -26,21 +26,21 @@ public final class AliasGenerator extends Generator {
 
     private static final String VALUE_OF_METHOD_NAME = "valueOf";
 
-    private final AliasTypeDefinition aliasTypeDefinition;
-    private final NamedType namedType;
+    private final AliasTypeDeclaration aliasTypeDeclaration;
+    private final DeclaredTypeName declaredTypeName;
     private final ClassName generatedAliasClassName;
     private final ClassName generatedAliasImmutablesClassName;
 
     public AliasGenerator(
-            AliasTypeDefinition aliasTypeDefinition,
+            AliasTypeDeclaration aliasTypeDeclaration,
             PackageType packageType,
-            NamedType namedType,
+            DeclaredTypeName declaredTypeName,
             GeneratorContext generatorContext) {
         super(generatorContext, packageType);
-        this.aliasTypeDefinition = aliasTypeDefinition;
-        this.namedType = namedType;
+        this.aliasTypeDeclaration = aliasTypeDeclaration;
+        this.declaredTypeName = declaredTypeName;
         this.generatedAliasClassName =
-                generatorContext.getClassNameUtils().getClassNameForNamedType(namedType, packageType);
+                generatorContext.getClassNameUtils().getClassNameFromDeclaredTypeName(declaredTypeName, packageType);
         this.generatedAliasImmutablesClassName =
                 generatorContext.getImmutablesUtils().getImmutablesClassName(generatedAliasClassName);
     }
@@ -51,12 +51,12 @@ public final class AliasGenerator extends Generator {
                 .addModifiers(ALIAS_CLASS_MODIFIERS)
                 .addAnnotations(getAnnotationSpecs());
         TypeSpec aliasTypeSpec;
-        if (aliasTypeDefinition.aliasOf().isVoid()) {
+        if (aliasTypeDeclaration.aliasOf().isVoid()) {
             aliasTypeSpec = aliasTypeSpecBuilder.addMethod(getValueOfMethod()).build();
         } else {
             TypeName aliasTypeName = generatorContext
                     .getClassNameUtils()
-                    .getTypeNameFromTypeReference(true, aliasTypeDefinition.aliasOf());
+                    .getTypeNameFromTypeReference(true, aliasTypeDeclaration.aliasOf());
             aliasTypeSpec = aliasTypeSpecBuilder
                     .addMethod(getImmutablesValueProperty(aliasTypeName))
                     .addMethod(getValueOfMethod(aliasTypeName))
@@ -67,7 +67,7 @@ public final class AliasGenerator extends Generator {
         return GeneratedAlias.builder()
                 .file(aliasFile)
                 .className(generatedAliasClassName)
-                .aliasTypeDefinition(aliasTypeDefinition)
+                .aliasTypeDeclaration(aliasTypeDeclaration)
                 .build();
     }
 

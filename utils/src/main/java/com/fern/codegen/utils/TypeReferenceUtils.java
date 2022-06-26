@@ -2,8 +2,8 @@ package com.fern.codegen.utils;
 
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.types.types.ContainerType;
+import com.fern.types.types.DeclaredTypeName;
 import com.fern.types.types.MapType;
-import com.fern.types.types.NamedType;
 import com.fern.types.types.PrimitiveType;
 import com.fern.types.types.TypeReference;
 import com.squareup.javapoet.ClassName;
@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 class TypeReferenceUtils {
 
@@ -38,8 +39,8 @@ class TypeReferenceUtils {
         }
 
         @Override
-        public TypeName visitNamed(NamedType namedType) {
-            return classNameUtils.getClassNameForNamedType(namedType, PackageType.TYPES);
+        public TypeName visitNamed(DeclaredTypeName declaredTypeName) {
+            return classNameUtils.getClassNameFromDeclaredTypeName(declaredTypeName, PackageType.TYPES);
         }
 
         @Override
@@ -58,6 +59,11 @@ class TypeReferenceUtils {
         @Override
         public TypeName visitVoid() {
             throw new RuntimeException("Void types should be handled separately!");
+        }
+
+        @Override
+        public TypeName visitUnknown() {
+            return ClassName.get(Object.class);
         }
 
         @Override
@@ -101,6 +107,16 @@ class TypeReferenceUtils {
                 return TypeName.LONG;
             }
             return ClassName.get(Long.class);
+        }
+
+        @Override
+        public TypeName visitDATE_TIME() {
+            return ClassName.get(String.class);
+        }
+
+        @Override
+        public TypeName visitUUID() {
+            return ClassName.get(UUID.class);
         }
 
         @Override

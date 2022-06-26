@@ -9,8 +9,9 @@ import com.fern.codegen.GeneratedObject;
 import com.fern.codegen.GeneratedUnion;
 import com.fern.codegen.IGeneratedFile;
 import com.fern.codegen.payload.GeneratedFilePayload;
+import com.fern.types.errors.ErrorName;
 import com.fern.types.services.http.HttpService;
-import com.fern.types.types.NamedType;
+import com.fern.types.types.DeclaredTypeName;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -25,13 +26,13 @@ public interface ModelGeneratorResult {
 
     List<GeneratedEnum> enums();
 
-    Map<NamedType, GeneratedInterface> interfaces();
+    Map<DeclaredTypeName, GeneratedInterface> interfaces();
 
     List<GeneratedObject> objects();
 
     List<GeneratedUnion> unions();
 
-    Map<NamedType, GeneratedError> errors();
+    Map<ErrorName, GeneratedError> errors();
 
     Map<HttpService, List<GeneratedEndpointModel>> endpointModels();
 

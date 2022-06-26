@@ -1,7 +1,9 @@
 package com.fern.codegen.utils;
 
+import com.fern.types.errors.ErrorName;
+import com.fern.types.services.commons.ServiceName;
+import com.fern.types.types.DeclaredTypeName;
 import com.fern.types.types.FernFilepath;
-import com.fern.types.types.NamedType;
 import com.fern.types.types.TypeReference;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeName;
@@ -28,16 +30,33 @@ public final class ClassNameUtils {
         this.typeReferenceUtils = new TypeReferenceUtils(this);
     }
 
-    public ClassName getClassNameForNamedType(NamedType namedType, PackageType packageType) {
-        return getClassName(namedType.name(), Optional.of(packageType), Optional.of(namedType.fernFilepath()));
+    public ClassName getClassNameFromServiceName(ServiceName serviceName, PackageType packageType, String suffix) {
+        return getClassName(
+                serviceName.name(),
+                Optional.of(suffix),
+                Optional.of(packageType),
+                Optional.of(serviceName.fernFilepath()));
     }
 
-    public ClassName getClassNameForNamedType(
-            NamedType namedType, PackageType packageType, Optional<String> maybeSuffix) {
-        String fullName = maybeSuffix
-                .map(suffix -> namedType.name() + StringUtils.capitalize(suffix))
-                .orElse(namedType.name());
-        return getClassName(fullName, Optional.of(packageType), Optional.of(namedType.fernFilepath()));
+    public ClassName getClassNameFromServiceName(ServiceName serviceName, PackageType packageType) {
+        return getClassName(
+                serviceName.name(),
+                Optional.empty(),
+                Optional.of(packageType),
+                Optional.of(serviceName.fernFilepath()));
+    }
+
+    public ClassName getClassNameFromDeclaredTypeName(DeclaredTypeName declaredTypeName, PackageType packageType) {
+        return getClassName(
+                declaredTypeName.name(),
+                Optional.empty(),
+                Optional.of(packageType),
+                Optional.of(declaredTypeName.fernFilepath()));
+    }
+
+    public ClassName getClassNameFromErrorName(ErrorName errorName, PackageType packageType) {
+        return getClassName(
+                errorName.name(), Optional.empty(), Optional.of(packageType), Optional.of(errorName.fernFilepath()));
     }
 
     public ClassName getNestedClassName(ClassName outerClassName, String nestedClassName) {
@@ -46,8 +65,14 @@ public final class ClassNameUtils {
     }
 
     public ClassName getClassName(
-            String className, Optional<PackageType> generatedClassType, Optional<FernFilepath> fernFilepath) {
-        String compatibleClassname = getCompatibleClassName(className);
+            String className,
+            Optional<String> maybeSuffix,
+            Optional<PackageType> generatedClassType,
+            Optional<FernFilepath> fernFilepath) {
+        String fullClassName = maybeSuffix
+                .map(suffix -> className + StringUtils.capitalize(suffix))
+                .orElse(className);
+        String compatibleClassname = getCompatibleClassName(fullClassName);
         String packageName = getPackage(generatedClassType, fernFilepath);
         return ClassName.get(packageName, compatibleClassname);
     }

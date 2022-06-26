@@ -8,10 +8,11 @@ import com.fern.jersey.client.HttpServiceClientGenerator;
 import com.fern.jersey.server.HttpServiceServerGenerator;
 import com.fern.model.codegen.ModelGenerator;
 import com.fern.model.codegen.ModelGeneratorResult;
-import com.fern.types.errors.ErrorDefinition;
+import com.fern.types.errors.ErrorDeclaration;
+import com.fern.types.errors.ErrorName;
 import com.fern.types.ir.IntermediateRepresentation;
-import com.fern.types.types.NamedType;
-import com.fern.types.types.TypeDefinition;
+import com.fern.types.types.DeclaredTypeName;
+import com.fern.types.types.TypeDeclaration;
 import com.squareup.javapoet.JavaFile;
 import java.io.File;
 import java.io.IOException;
@@ -69,10 +70,10 @@ public final class ClientGeneratorCli {
 
     private static void generate(IntermediateRepresentation ir, FernPluginConfig fernPluginConfig) {
         ImmutableCodeGenerationResult.Builder resultBuilder = CodeGenerationResult.builder();
-        Map<NamedType, TypeDefinition> typeDefinitionsByName =
-                ir.types().stream().collect(Collectors.toUnmodifiableMap(TypeDefinition::name, Function.identity()));
-        Map<NamedType, ErrorDefinition> errorDefinitionsByName =
-                ir.errors().stream().collect(Collectors.toUnmodifiableMap(ErrorDefinition::name, Function.identity()));
+        Map<DeclaredTypeName, TypeDeclaration> typeDefinitionsByName =
+                ir.types().stream().collect(Collectors.toUnmodifiableMap(TypeDeclaration::name, Function.identity()));
+        Map<ErrorName, ErrorDeclaration> errorDefinitionsByName =
+                ir.errors().stream().collect(Collectors.toUnmodifiableMap(ErrorDeclaration::name, Function.identity()));
         GeneratorContext generatorContext = new GeneratorContext(
                 fernPluginConfig.customPluginConfig().packagePrefix(), typeDefinitionsByName, errorDefinitionsByName);
 

@@ -22,8 +22,8 @@ public final class ImmutablesStyleGenerator {
     private ImmutablesStyleGenerator() {}
 
     public static GeneratedFile generateStagedBuilderImmutablesStyle(ClassNameUtils classNameUtils) {
-        ClassName stagedBuilderClassName =
-                classNameUtils.getClassName(STAGED_BUILDER_ANNOTATION_CLASS_NAME, Optional.empty(), Optional.empty());
+        ClassName stagedBuilderClassName = classNameUtils.getClassName(
+                STAGED_BUILDER_ANNOTATION_CLASS_NAME, Optional.empty(), Optional.empty(), Optional.empty());
         TypeSpec stagedBuilderTypeSpec = TypeSpec.annotationBuilder(stagedBuilderClassName)
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(AnnotationSpec.builder(Target.class)
@@ -60,7 +60,7 @@ public final class ImmutablesStyleGenerator {
 
     public static GeneratedFile generatePackagePrivateImmutablesStyle(ClassNameUtils classNameUtils) {
         ClassName packagePrivateStyleClassName = classNameUtils.getClassName(
-                PACKAGE_PRIVATE_STYLE_ANNOTATION_CLASS_NAME, Optional.empty(), Optional.empty());
+                PACKAGE_PRIVATE_STYLE_ANNOTATION_CLASS_NAME, Optional.empty(), Optional.empty(), Optional.empty());
         TypeSpec packagePrivateStyleTypeSpec = TypeSpec.annotationBuilder(packagePrivateStyleClassName)
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(AnnotationSpec.builder(Target.class)

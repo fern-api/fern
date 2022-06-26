@@ -52,10 +52,7 @@ public final class ServiceErrorDecoderGenerator extends Generator {
         this.httpService = httpService;
         this.errorDecoderClassName = generatorContext
                 .getClassNameUtils()
-                .getClassName(
-                        httpService.name().name() + ERROR_DECODER_CLASSNAME_SUFFIX,
-                        Optional.of(PackageType.CLIENT),
-                        Optional.of(httpService.name().fernFilepath()));
+                .getClassNameFromServiceName(httpService.name(), PackageType.CLIENT, ERROR_DECODER_CLASSNAME_SUFFIX);
         this.generatedEndpointErrorFiles = generatedEndpointErrorFiles;
     }
 
