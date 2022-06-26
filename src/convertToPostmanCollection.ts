@@ -106,7 +106,7 @@ function convertRequest(
     let convertedRequest: RequestDefinition = {
         url: {
             host: [BASE_URL_VARIABLE],
-            path: getPathArray(httpService.basePath, httpEndpoint.path),
+            path: [getPathString(httpService.basePath, httpEndpoint.path)],
         },
         header: [APPLICATION_JSON_HEADER_DEFINITION],
         method: convertHttpMethod(httpEndpoint.method),
@@ -122,21 +122,16 @@ function convertRequest(
     return convertedRequest;
 }
 
-function getPathArray(basePath: string | undefined | null, endpointPath: HttpPath) {
-    const path: string[] = [];
+function getPathString(basePath: string | undefined | null, endpointPath: HttpPath) {
+    let path = "";
     if (basePath != null) {
-        path.push(basePath);
+        path += basePath;
     }
-    if (endpointPath.head.length > 0) {
-        path.push(endpointPath.head);
-    }
+    let joinedEndpointPath = endpointPath.head;
     for (const part of endpointPath.parts) {
-        path.push(`:${part.pathParameter}`);
-        if (part.tail.length > 0) {
-            path.push(part.tail);
-        }
+        joinedEndpointPath += `:${part.pathParameter}` + part.tail;
     }
-
+    path += joinedEndpointPath;
     return path;
 }
 

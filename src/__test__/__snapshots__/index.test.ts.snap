@@ -38,8 +38,7 @@ Object {
                 "{{base_url}}",
               ],
               "path": Array [
-                "/posts",
-                "/create",
+                "/posts/create",
               ],
             },
           },
@@ -81,8 +80,7 @@ Object {
                     "{{base_url}}",
                   ],
                   "path": Array [
-                    "/posts",
-                    "/create",
+                    "/posts/create",
                   ],
                 },
               },
@@ -112,9 +110,7 @@ Object {
                 "{{base_url}}",
               ],
               "path": Array [
-                "/posts",
-                "/",
-                ":postId",
+                "/posts/:postId",
               ],
             },
           },
@@ -157,9 +153,7 @@ Object {
                     "{{base_url}}",
                   ],
                   "path": Array [
-                    "/posts",
-                    "/",
-                    ":postId",
+                    "/posts/:postId",
                   ],
                 },
               },
