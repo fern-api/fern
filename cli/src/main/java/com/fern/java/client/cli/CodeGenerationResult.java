@@ -2,7 +2,8 @@ package com.fern.java.client.cli;
 
 import com.fern.codegen.IGeneratedFile;
 import com.fern.java.client.cli.CustomPluginConfig.Mode;
-import com.fern.java.client.cli.FernPluginConfig.PublishConfig;
+import com.fern.types.generators.config.GeneratorPublishConfig;
+import com.fern.types.generators.config.MavenRegistryConfig;
 import java.util.List;
 import org.immutables.value.Value;
 import org.immutables.value.Value.Style.ImplementationVisibility;
@@ -99,14 +100,16 @@ public abstract class CodeGenerationResult {
         return settingsGradle;
     }
 
-    public static String getBuildDotGradle(PublishConfig publishConfig) {
+    public static String getBuildDotGradle(String orgName, GeneratorPublishConfig publishConfig) {
+        MavenRegistryConfig mavenRegistryConfig = publishConfig.registries().maven();
+        String coordinate = "com." + orgName + ".fern";
         return "plugins {\n"
                 + "    id 'maven-publish'\n"
                 + "}\n"
                 + "\n"
                 + "subprojects {\n"
                 + "\n"
-                + "    group '" + publishConfig.coordinate() + "'\n"
+                + "    group '" + coordinate + "'\n"
                 + "    version '" + publishConfig.version() + "'\n"
                 + "\n"
                 + "    apply plugin: \"maven-publish\"\n"
@@ -120,10 +123,10 @@ public abstract class CodeGenerationResult {
                 + "        }\n"
                 + "        repositories {\n"
                 + "            maven {\n"
-                + "                url '" + publishConfig.url() + "'\n"
+                + "                url '" + mavenRegistryConfig.registryUrl() + "'\n"
                 + "                credentials {\n"
-                + "                    username '" + publishConfig.username() + "'\n"
-                + "                    password '" + publishConfig.password() + "'\n"
+                + "                    username '" + mavenRegistryConfig.username() + "'\n"
+                + "                    password '" + mavenRegistryConfig.password() + "'\n"
                 + "                }\n"
                 + "            }\n"
                 + "        }\n"

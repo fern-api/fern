@@ -10,6 +10,8 @@ import com.fern.model.codegen.ModelGenerator;
 import com.fern.model.codegen.ModelGeneratorResult;
 import com.fern.types.errors.ErrorDeclaration;
 import com.fern.types.errors.ErrorName;
+import com.fern.types.generators.config.GeneratorConfig;
+import com.fern.types.generators.config.GeneratorOutputConfig;
 import com.fern.types.ir.IntermediateRepresentation;
 import com.fern.types.types.DeclaredTypeName;
 import com.fern.types.types.TypeDeclaration;
@@ -34,22 +36,24 @@ public final class ClientGeneratorCli {
 
     public static void main(String... args) {
         String pluginPath = args[0];
-        FernPluginConfig fernPluginConfig = getPluginConfig(pluginPath);
-        createOutputDirectory(fernPluginConfig);
-        IntermediateRepresentation ir = getIr(fernPluginConfig);
+        GeneratorConfig generatorConfig = getGeneratorConfig(pluginPath);
+
+        FernPluginConfig fernPluginConfig = FernPluginConfig.create(generatorConfig);
+        createOutputDirectory(fernPluginConfig.generatorConfig().output());
+        IntermediateRepresentation ir = getIr(fernPluginConfig.generatorConfig());
         generate(ir, fernPluginConfig);
     }
 
-    private static FernPluginConfig getPluginConfig(String pluginPath) {
+    private static GeneratorConfig getGeneratorConfig(String pluginPath) {
         try {
-            return ObjectMappers.CLIENT_OBJECT_MAPPER.readValue(new File(pluginPath), FernPluginConfig.class);
+            return ObjectMappers.CLIENT_OBJECT_MAPPER.readValue(new File(pluginPath), GeneratorConfig.class);
         } catch (IOException e) {
             throw new RuntimeException("Failed to read plugin configuration", e);
         }
     }
 
-    private static void createOutputDirectory(FernPluginConfig fernPluginConfig) {
-        Path path = Paths.get(fernPluginConfig.output().path());
+    private static void createOutputDirectory(GeneratorOutputConfig generatorOutputConfig) {
+        Path path = Paths.get(generatorOutputConfig.path());
         if (!Files.exists(path)) {
             try {
                 Files.createDirectories(path);
@@ -59,10 +63,10 @@ public final class ClientGeneratorCli {
         }
     }
 
-    private static IntermediateRepresentation getIr(FernPluginConfig fernPluginConfig) {
+    private static IntermediateRepresentation getIr(GeneratorConfig generatorConfig) {
         try {
             return ObjectMappers.CLIENT_OBJECT_MAPPER.readValue(
-                    new File(fernPluginConfig.irFilepath()), IntermediateRepresentation.class);
+                    new File(generatorConfig.irFilepath()), IntermediateRepresentation.class);
         } catch (IOException e) {
             throw new RuntimeException("Failed to read ir", e);
         }
@@ -172,7 +176,7 @@ public final class ClientGeneratorCli {
 
     private static synchronized void writeToFiles(
             CodeGenerationResult codeGenerationResult, FernPluginConfig fernPluginConfig) {
-        String outputDirectory = fernPluginConfig.output().path();
+        String outputDirectory = fernPluginConfig.generatorConfig().output().path();
 
         if (!codeGenerationResult.modelFiles().isEmpty()) {
             String modelDirectory = fernPluginConfig.getModelProjectName();
@@ -229,11 +233,12 @@ public final class ClientGeneratorCli {
             throw new RuntimeException("Failed to output gradle files", e);
         }
 
-        if (fernPluginConfig.publish().isPresent()) {
+        if (fernPluginConfig.generatorConfig().publish().isPresent()) {
             writeFileContents(
                     Paths.get(outputDirectory, "build.gradle"),
                     CodeGenerationResult.getBuildDotGradle(
-                            fernPluginConfig.publish().get()));
+                            fernPluginConfig.generatorConfig().organization(),
+                            fernPluginConfig.generatorConfig().publish().get()));
             runPublish(Paths.get(outputDirectory));
         }
     }

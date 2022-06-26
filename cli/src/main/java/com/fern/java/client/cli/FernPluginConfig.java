@@ -3,6 +3,8 @@ package com.fern.java.client.cli;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.immutables.StagedBuilderStyle;
+import com.fern.java.client.cli.CustomPluginConfig.Mode;
+import com.fern.types.generators.config.GeneratorConfig;
 import java.util.Optional;
 import org.immutables.value.Value;
 
@@ -11,67 +13,35 @@ import org.immutables.value.Value;
 @JsonDeserialize(as = ImmutableFernPluginConfig.class)
 public interface FernPluginConfig {
 
-    Optional<String> name();
-
-    String irFilepath();
-
-    OutputConfig output();
-
-    Optional<PublishConfig> publish();
+    GeneratorConfig generatorConfig();
 
     @JsonProperty("customConfig")
     CustomPluginConfig customPluginConfig();
 
-    @Value.Immutable
-    @StagedBuilderStyle
-    @JsonDeserialize(as = ImmutablePublishConfig.class)
-    interface PublishConfig {
-        String username();
-
-        String password();
-
-        String url();
-
-        String version();
-
-        String coordinate();
-
-        static ImmutablePublishConfig.UsernameBuildStage builder() {
-            return ImmutablePublishConfig.builder();
-        }
-    }
-
-    @Value.Immutable
-    @StagedBuilderStyle
-    @JsonDeserialize(as = ImmutableOutputConfig.class)
-    interface OutputConfig {
-        String path();
-
-        static ImmutableOutputConfig.PathBuildStage builder() {
-            return ImmutableOutputConfig.builder();
-        }
-    }
-
     default String getModelProjectName() {
-        return getProjectName("model");
+        return getSubProjectName("model");
     }
 
     default String getClientProjectName() {
-        return getProjectName("client");
+        return getSubProjectName("client");
     }
 
     default String getServerProjectName() {
-        return getProjectName("server");
+        return getSubProjectName("server");
     }
 
-    default String getProjectName(String projectSuffix) {
-        if (name().isPresent()) {
-            return name().get() + "-" + projectSuffix;
-        }
-        return projectSuffix;
+    default String getSubProjectName(String projectSuffix) {
+        return generatorConfig().workspaceName() + "-" + projectSuffix;
     }
 
-    static ImmutableFernPluginConfig.IrFilepathBuildStage builder() {
-        return ImmutableFernPluginConfig.builder();
+    static FernPluginConfig create(GeneratorConfig generatorConfig) {
+        return ImmutableFernPluginConfig.builder()
+                .generatorConfig(generatorConfig)
+                .customPluginConfig(CustomPluginConfig.builder()
+                        .mode(Mode.valueOf(generatorConfig.customConfig().get("mode")))
+                        .packagePrefix(Optional.ofNullable(
+                                generatorConfig.customConfig().get("packagePrefix")))
+                        .build())
+                .build();
     }
 }
