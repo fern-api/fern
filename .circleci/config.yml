@@ -12,7 +12,7 @@ jobs:
           profile-name: default
       - run:
           name: Export Code Artifacts token
-          command: export CODEARTIFACT_AUTH_TOKEN="$(aws codeartifact get-authorization-token --domain fern-dev --domain-owner 985111089818 --query authorizationToken --output text)"
+          command: echo 'export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain fern-dev --domain-owner 985111089818 --query authorizationToken --output text`' >> $BASH_ENV
       - run:
           name: Run code-generation
           command: npm install -g fern-api@0.0.85 && fern generate
@@ -42,7 +42,7 @@ jobs:
           profile-name: default
       - run:
           name: Export Code Artifacts token
-          command: export CODEARTIFACT_AUTH_TOKEN="$(aws codeartifact get-authorization-token --domain fern-dev --domain-owner 985111089818 --query authorizationToken --output text)"
+          command: echo 'export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain fern-dev --domain-owner 985111089818 --query authorizationToken --output text`' >> $BASH_ENV
       - run:
           name: Run code-generation
           command: npm install -g fern-api@0.0.85 && fern generate
@@ -73,7 +73,7 @@ jobs:
           profile-name: default
       - run:
           name: Export Code Artifacts token
-          command: export CODEARTIFACT_AUTH_TOKEN="$(aws codeartifact get-authorization-token --domain fern-dev --domain-owner 985111089818 --query authorizationToken --output text)"
+          command: echo 'export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain fern-dev --domain-owner 985111089818 --query authorizationToken --output text`' >> $BASH_ENV
       - run:
           name: Run code-generation
           command: npm install -g fern-api@0.0.85 && fern generate
