@@ -1,7 +1,6 @@
 import { IntermediateRepresentation } from "@fern-api/api";
 import { compile } from "@fern-api/compiler";
 import { writeVolumeToDisk } from "@fern-typescript/commons";
-import execa from "execa";
 import { parseFernInput } from "fern-api";
 import { rm } from "fs/promises";
 import IS_CI from "is-ci";
@@ -43,13 +42,7 @@ export async function runEteTest({
 }: runEteTest.Args): Promise<void> {
     const testDirectory = path.dirname(testFile);
 
-    let checkCompilation = true;
-    if (IS_CI) {
-        outputToDisk = false;
-        checkCompilation = await hasFileChangedOnBranchInCI(
-            path.join(testDirectory, "__snapshots__", `${path.basename(testFile)}.snap`)
-        );
-    }
+    outputToDisk &&= !IS_CI;
 
     const absolutePathToFixture = path.resolve(testDirectory, pathToFixture);
 
@@ -69,16 +62,11 @@ export async function runEteTest({
         intermediateRepresentation: compilerResult.intermediateRepresentation,
     });
 
-    if (outputToDisk || checkCompilation) {
-        await writeVolumeToDisk(volume, pathToGenerated);
+    await writeVolumeToDisk(volume, pathToGenerated);
+    await installAndCompileGeneratedProject(pathToGenerated);
 
-        if (checkCompilation) {
-            await installAndCompileGeneratedProject(pathToGenerated);
-        }
-
-        if (!outputToDisk) {
-            await deleteDirectory(pathToGenerated);
-        }
+    if (!outputToDisk) {
+        await deleteDirectory(pathToGenerated);
     }
 
     expect(volume.toJSON()).toMatchSnapshot();
@@ -86,20 +74,4 @@ export async function runEteTest({
 
 function deleteDirectory(pathToDirectory: string): Promise<void> {
     return rm(pathToDirectory, { force: true, recursive: true });
-}
-
-const BRANCH_ENV_VAR = "CIRCLE_BRANCH";
-async function hasFileChangedOnBranchInCI(filepath: string): Promise<boolean> {
-    const branch = process.env[BRANCH_ENV_VAR] ?? "zk/root-level-jest";
-    if (branch == null) {
-        throw new Error(`Cannot check if file has changed because ${BRANCH_ENV_VAR} is not defined`);
-    }
-
-    try {
-        const mergeBaseResult = await execa("git", ["merge-base", branch, "main"]);
-        await execa("git", ["diff", "--exit-code", "--quiet", branch, mergeBaseResult.stdout, filepath]);
-        return false;
-    } catch (e) {
-        return true;
-    }
 }
