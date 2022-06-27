@@ -1,6 +1,11 @@
 {
-  "name": "fern-api",
+  "name": "@fern-api/cli",
   "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:fern-api/fern.git",
+    "directory": "packages/cli"
+  },
   "files": [
     "lib"
   ],
@@ -56,8 +61,13 @@
     "depcheck": "^1.4.3",
     "eslint": "^8.12.0",
     "jest": "^28.1.1",
+    "node-loader": "^2.0.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.6.2",
-    "typescript": "^4.6.4"
+    "ts-loader": "^9.3.1",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.6.4",
+    "webpack": "^5.73.0",
+    "webpack-cli": "^4.10.0"
   }
 }

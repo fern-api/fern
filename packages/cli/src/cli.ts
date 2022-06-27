@@ -1,19 +1,39 @@
 import { initialize } from "@fern-api/init";
+import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { compileWorkspaces } from "./commands/compile/compileWorkspaces";
 import { convertOpenApiToFernApiDefinition } from "./commands/convert-openapi/convertOpenApi";
 
-void yargs(hideBin(process.argv))
-    .scriptName("fern")
-    .strict()
-    .command({
+void runCli();
+
+async function runCli() {
+    const cli = yargs(hideBin(process.argv)).scriptName("fern").strict().alias("v", "version").demandCommand();
+
+    const packageVersion = process.env.PACKAGE_VERSION;
+    if (packageVersion != null) {
+        cli.version(packageVersion);
+    }
+
+    addInitCommand(cli);
+    addAddCommand(cli);
+    addConvertCommand(cli);
+    addGenerateCommand(cli);
+
+    await cli.parse();
+}
+
+function addInitCommand(cli: Argv) {
+    cli.command({
         command: "init",
         describe: "Initializes an example Fern API",
         handler: initialize,
-    })
-    .command(
+    });
+}
+
+function addAddCommand(cli: Argv) {
+    cli.command(
         ["add <generator> [workspaces...]"],
         "Add a generator to .fernrc.yml",
         (yargs) =>
@@ -31,8 +51,11 @@ void yargs(hideBin(process.argv))
         async (argv) => {
             await addGeneratorToWorkspaces(argv.workspaces ?? [], argv.generator);
         }
-    )
-    .command(
+    );
+}
+
+function addGenerateCommand(cli: Argv) {
+    cli.command(
         ["generate [workspaces...]", "gen"],
         "Generate typesafe servers and clients",
         (yargs) =>
@@ -54,8 +77,11 @@ void yargs(hideBin(process.argv))
                 runLocal: argv.local,
             });
         }
-    )
-    .command(
+    );
+}
+
+function addConvertCommand(cli: Argv) {
+    cli.command(
         ["convert <openapiPath> <fernDefinitionDir>"],
         "Converts Open API to Fern definition.",
         (yargs) =>
@@ -71,7 +97,5 @@ void yargs(hideBin(process.argv))
                     description: "Output directory for your Fern API definition",
                 }),
         (argv) => convertOpenApiToFernApiDefinition(argv.openapiPath, argv.fernDefinitionDir)
-    )
-    .demandCommand()
-    .showHelpOnFail(false)
-    .parse();
+    );
+}

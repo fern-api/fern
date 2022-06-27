@@ -1,6 +1,11 @@
 {
   "name": "fern-typescript",
   "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:fern-api/fern.git",
+    "directory": "packages/fern-typescript/cli"
+  },
   "files": [
     "lib"
   ],
@@ -30,6 +35,7 @@
     "dockerTagVersion": "./docker/create_docker.sh $(yarn info fern-typescript --all --json | jq -r .children.Version)"
   },
   "dependencies": {
+    "@fern-api/cli": "workspace:*",
     "@fern-api/commons": "workspace:*",
     "@fern-api/compiler": "workspace:*",
     "@fern-typescript/client": "workspace:*",
@@ -38,7 +44,6 @@
     "@fern-typescript/model": "workspace:*",
     "@fern-typescript/server": "workspace:*",
     "execa": "^5.1.1",
-    "fern-api": "workspace:*",
     "memfs": "^3.4.1"
   },
   "devDependencies": {
@@ -57,12 +62,12 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^2.6.2",
     "simple-progress-webpack-plugin": "^2.0.0",
-    "ts-loader": "^9.3.0",
-    "ts-node": "^10.7.0",
+    "ts-loader": "^9.3.1",
+    "ts-node": "^10.8.1",
     "typescript": "^4.6.4",
     "umd-compat-loader": "^2.1.2",
-    "webpack": "^5.72.1",
+    "webpack": "^5.73.0",
     "webpack-bundle-analyzer": "^4.5.0",
-    "webpack-cli": "^4.9.2"
+    "webpack-cli": "^4.10.0"
   }
 }

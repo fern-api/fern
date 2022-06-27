@@ -1,12 +1,18 @@
 version: 2.1
 orbs:
   node: circleci/node@5.0.1
+  aws-cli: circleci/aws-cli@3.1.1
 jobs:
   lint:
     machine:
       image: ubuntu-2004:current
     steps:
       - checkout
+      - aws-cli/setup:
+          profile-name: default
+      - run:
+          name: Export Code Artifacts token
+          command: echo 'export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain fern-dev --domain-owner 985111089818 --query authorizationToken --output text`' >> $BASH_ENV
       - run:
           name: Run code-generation
           command: npm install -g fern-api@0.0.85 && fern generate
@@ -32,6 +38,11 @@ jobs:
       image: ubuntu-2004:current
     steps:
       - checkout
+      - aws-cli/setup:
+          profile-name: default
+      - run:
+          name: Export Code Artifacts token
+          command: echo 'export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain fern-dev --domain-owner 985111089818 --query authorizationToken --output text`' >> $BASH_ENV
       - run:
           name: Run code-generation
           command: npm install -g fern-api@0.0.85 && fern generate
@@ -40,6 +51,11 @@ jobs:
       - run:
           name: Compile
           command: yarn compile
+      - run:
+          name: Bundle fern-api
+          command: |
+            cd $(yarn workspace @fern-api/cli exec pwd)/webpack
+            ./bundle.sh test
       - run:
           name: Build fern-typescript docker (for ETE tests)
           command: yarn workspace fern-typescript dockerTagLocal
@@ -55,6 +71,11 @@ jobs:
       image: ubuntu-2004:current
     steps:
       - checkout
+      - aws-cli/setup:
+          profile-name: default
+      - run:
+          name: Export Code Artifacts token
+          command: echo 'export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain fern-dev --domain-owner 985111089818 --query authorizationToken --output text`' >> $BASH_ENV
       - run:
           name: Run code-generation
           command: npm install -g fern-api@0.0.85 && fern generate
@@ -72,6 +93,13 @@ jobs:
       - run:
           name: Publish all packages
           command: yarn run publish
+      - run:
+          name: Publish fern-api
+          command: |
+            cd $(yarn workspace @fern-api/cli exec pwd)/webpack
+            ./bundle.sh $(git tag --points-at HEAD)
+            cd dist
+            npm publish
       - run:
           name: Publish fern-typescript docker
           command: |
@@ -115,11 +143,13 @@ workflows:
           filters:
             tags:
               only: /.*/
+          context: aws
 
       - compile-and-test:
           filters:
             tags:
               only: /.*/
+          context: aws
 
       - publish:
           filters:
@@ -133,6 +163,7 @@ workflows:
           context:
             - npm
             - docker-hub
+            - aws
 
       - publish-java-snapshot:
           filters:

@@ -1507,22 +1507,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cspotcode/source-map-consumer@npm:0.8.0":
-  version: 0.8.0
-  resolution: "@cspotcode/source-map-consumer@npm:0.8.0"
-  checksum: c0c16ca3d2f58898f1bd74c4f41a189dbcc202e642e60e489cbcc2e52419c4e89bdead02c886a12fb13ea37798ede9e562b2321df997ebc210ae9bd881561b4e
-  languageName: node
-  linkType: hard
-
-"@cspotcode/source-map-support@npm:0.7.0":
-  version: 0.7.0
-  resolution: "@cspotcode/source-map-support@npm:0.7.0"
-  dependencies:
-    "@cspotcode/source-map-consumer": "npm:0.8.0"
-  checksum: 9faddda7757cd778b5fd6812137b2cc265810043680d6399acc20441668fafcdc874053be9dccd0d9110087287bfad27eb3bf342f72bceca9aa9059f5d0c4be8
-  languageName: node
-  linkType: hard
-
 "@cspotcode/source-map-support@npm:^0.8.0":
   version: 0.8.1
   resolution: "@cspotcode/source-map-support@npm:0.8.1"
@@ -1618,6 +1602,47 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-api/cli@workspace:*, @fern-api/cli@workspace:packages/cli":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/cli@workspace:packages/cli"
+  dependencies:
+    "@babel/core": ^7.18.5
+    "@babel/preset-env": ^7.18.2
+    "@babel/preset-typescript": ^7.17.12
+    "@fern-api/add-generator": "workspace:*"
+    "@fern-api/commons": "workspace:*"
+    "@fern-api/compiler": "workspace:*"
+    "@fern-api/compiler-commons": "workspace:*"
+    "@fern-api/init": "workspace:*"
+    "@fern-api/local-workspace-runner": "workspace:*"
+    "@fern-api/openapi-converter": "workspace:*"
+    "@fern-api/remote-workspace-runner": "workspace:*"
+    "@fern-api/syntax-analysis": "workspace:*"
+    "@types/jest": ^28.1.2
+    "@types/node": ^17.0.33
+    "@types/yargs": ^17.0.10
+    chalk: ^4.1.2
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    glob: ^7.2.0
+    glob-promise: ^4.2.2
+    jest: ^28.1.1
+    js-yaml: ^4.1.0
+    node-loader: ^2.0.0
+    npm-run-all: ^4.1.5
+    prettier: ^2.6.2
+    ts-loader: ^9.3.1
+    ts-node: ^10.8.1
+    typescript: ^4.6.4
+    webpack: ^5.73.0
+    webpack-cli: ^4.10.0
+    yargs: ^17.4.1
+    zod: ^3.14.3
+  bin:
+    fern: ./cli
+  languageName: unknown
+  linkType: soft
+
 "@fern-api/commons@npm:0.0.85":
   version: 0.0.85
   resolution: "@fern-api/commons@npm:0.0.85"
@@ -1661,6 +1686,7 @@ __metadata:
     "@babel/preset-typescript": ^7.17.12
     "@fern-api/add-generator": "workspace:*"
     "@fern-api/api": "workspace:*"
+    "@fern-api/cli": "workspace:*"
     "@fern-api/commons": "workspace:*"
     "@fern-api/compiler": "workspace:*"
     "@fern-api/compiler-commons": "workspace:*"
@@ -1690,7 +1716,6 @@ __metadata:
     "@types/node": ^17.0.33
     depcheck: ^1.4.3
     eslint: ^8.12.0
-    fern-api: "workspace:*"
     fern-typescript: "workspace:*"
     jest: ^28.1.1
     npm-run-all: ^4.1.5
@@ -1911,57 +1936,57 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/mrlint-commons@npm:0.0.33":
-  version: 0.0.33
-  resolution: "@fern-api/mrlint-commons@npm:0.0.33"
+"@fern-api/mrlint-commons@npm:0.0.34":
+  version: 0.0.34
+  resolution: "@fern-api/mrlint-commons@npm:0.0.34"
   dependencies:
-    "@fern-api/mrlint-virtual-file-system": 0.0.33
-  checksum: d68319f93c4af00bba70a7f5bb028f399a4a9a95abc3049ab0ae411d36f52226f545485a44f8fe5a816ce98fb184074747c74a4b0faa5aac78d7ad1b376ae5bc
+    "@fern-api/mrlint-virtual-file-system": 0.0.34
+  checksum: cb05696357877549e7cb069d055f5df6a0e7d7da24ee187c0683a421e473dee54843a752e10bffcd8cbf2087d22037be279f8baa47325d59790980f1059648e7
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-lint@npm:0.0.33":
-  version: 0.0.33
-  resolution: "@fern-api/mrlint-lint@npm:0.0.33"
+"@fern-api/mrlint-lint@npm:0.0.34":
+  version: 0.0.34
+  resolution: "@fern-api/mrlint-lint@npm:0.0.34"
   dependencies:
-    "@fern-api/mrlint-commons": 0.0.33
-    "@fern-api/mrlint-virtual-file-system": 0.0.33
+    "@fern-api/mrlint-commons": 0.0.34
+    "@fern-api/mrlint-virtual-file-system": 0.0.34
     chalk: ^4.1.2
     diff: ^5.0.0
     prettier: ^2.6.2
-  checksum: 118930aa50a6c83cd009f0d5097669f67f9e7b6de322e28bb80cf4480c512d483c7132f6ede3cceae2077bdd5a6e799b949c77b555dc5814ac198d115b2f5da7
+  checksum: 0f90895c53f14d2788bf825900de33448e6c7e4595dec335a4159df80d4ea6e51d3dfa2678cd9ca2e2a8564357bd28648c71529072ac0b1e7226cb1d53fa5c59
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-parser@npm:0.0.33":
-  version: 0.0.33
-  resolution: "@fern-api/mrlint-parser@npm:0.0.33"
+"@fern-api/mrlint-parser@npm:0.0.34":
+  version: 0.0.34
+  resolution: "@fern-api/mrlint-parser@npm:0.0.34"
   dependencies:
-    "@fern-api/mrlint-commons": 0.0.33
-    "@fern-api/mrlint-rules": 0.0.33
+    "@fern-api/mrlint-commons": 0.0.34
+    "@fern-api/mrlint-rules": 0.0.34
     execa: ^5.1.1
     find-up: ^5.0.0
     js-yaml: ^4.1.0
     zod: ^3.14.3
-  checksum: df8abcf748ddfe609a5e8d2d20fc82fb6f5e59a96c9314191228c62b632f9adda46dbd6444ffa03e5176a63936bb7ea4e2341f425c3324abb1ae6040a44f72d8
+  checksum: ad8c8d7b57e182ce3a4e83a75050a581cbd23640e576ea795f1559b9c76bc1f3e06df3cccc603b7e9df724f6a3a2ebac920c372ad8c77f471ce3647aa423e33a
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-rules@npm:0.0.33":
-  version: 0.0.33
-  resolution: "@fern-api/mrlint-rules@npm:0.0.33"
+"@fern-api/mrlint-rules@npm:0.0.34":
+  version: 0.0.34
+  resolution: "@fern-api/mrlint-rules@npm:0.0.34"
   dependencies:
-    "@fern-api/mrlint-commons": 0.0.33
-    "@fern-api/mrlint-virtual-file-system": 0.0.33
+    "@fern-api/mrlint-commons": 0.0.34
+    "@fern-api/mrlint-virtual-file-system": 0.0.34
     immer: ^9.0.12
-  checksum: edb2ded6912e95c7f3264219c5844233a097be864881e4aa8b28cc0b55dada9f7ebfac0e83a304638cec4b8d778f9261f826fb304a8a9fc77b6f6028e4337fcc
+  checksum: 35573735355cbb05741060227bd9b5559ea2ea0dd1b181dd4e8e2fd35a1a9c9107b7d15d6ea690f888bc8f3b9a3b8f04263644cdee9477e9b9b905ba1e4974ef
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-virtual-file-system@npm:0.0.33":
-  version: 0.0.33
-  resolution: "@fern-api/mrlint-virtual-file-system@npm:0.0.33"
-  checksum: c4327df31f8d0867230bf3e0ba9af6cbee46048ce0c40b5c7ebe40abef2a27f2b352e608df2c1e039496171e863d1710c019eae058366c25f500934738e3feeb
+"@fern-api/mrlint-virtual-file-system@npm:0.0.34":
+  version: 0.0.34
+  resolution: "@fern-api/mrlint-virtual-file-system@npm:0.0.34"
+  checksum: 7b9fd89762967ed93c0add90d5d98ee51c227a898c490b49203973570441a7bf3a466240f0ca7132e7a82f3cef5f1ff68845390da93e5538c842ac6079118dac
   languageName: node
   linkType: hard
 
@@ -2371,6 +2396,7 @@ __metadata:
     "@babel/preset-env": ^7.18.2
     "@babel/preset-typescript": ^7.17.12
     "@fern-api/api": "workspace:*"
+    "@fern-api/cli": "workspace:*"
     "@fern-api/compiler": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@types/is-ci": ^3.0.0
@@ -2379,7 +2405,6 @@ __metadata:
     depcheck: ^1.4.3
     eslint: ^8.12.0
     execa: ^5.1.1
-    fern-api: "workspace:*"
     is-ci: ^3.0.1
     jest: ^28.1.1
     memfs: ^3.4.1
@@ -3542,36 +3567,36 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@webpack-cli/configtest@npm:^1.1.1":
-  version: 1.1.1
-  resolution: "@webpack-cli/configtest@npm:1.1.1"
+"@webpack-cli/configtest@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "@webpack-cli/configtest@npm:1.2.0"
   peerDependencies:
     webpack: 4.x.x || 5.x.x
     webpack-cli: 4.x.x
-  checksum: c4e7fca21315e487655fbdc7d079092c3f88b274a720d245ca2e13dce7553009fb3f9d82218c33f5c9b208832d72bb4114a9cca97d53b66212eff5da1d3ad44b
+  checksum: a2726cd9ec601d2b57e5fc15e0ebf5200a8892065e735911269ac2038e62be4bfc176ea1f88c2c46ff09b4d05d4c10ae045e87b3679372483d47da625a327e28
   languageName: node
   linkType: hard
 
-"@webpack-cli/info@npm:^1.4.1":
-  version: 1.4.1
-  resolution: "@webpack-cli/info@npm:1.4.1"
+"@webpack-cli/info@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "@webpack-cli/info@npm:1.5.0"
   dependencies:
-    envinfo: "npm:^7.7.3"
+    envinfo: ^7.7.3
   peerDependencies:
     webpack-cli: 4.x.x
-  checksum: 7a7cac2ba4f2528caa329311599da1685b1bc099bfc5b7210932b7c86024c1277fd7857b08557902b187ea01247a8e8f72f7f5719af72b0c8d97f22087aa0c14
+  checksum: 7f56fe037cd7d1fd5c7428588519fbf04a0cad33925ee4202ffbafd00f8ec1f2f67d991245e687d50e0f3e23f7b7814273d56cb9f7da4b05eed47c8d815c6296
   languageName: node
   linkType: hard
 
-"@webpack-cli/serve@npm:^1.6.1":
-  version: 1.6.1
-  resolution: "@webpack-cli/serve@npm:1.6.1"
+"@webpack-cli/serve@npm:^1.7.0":
+  version: 1.7.0
+  resolution: "@webpack-cli/serve@npm:1.7.0"
   peerDependencies:
     webpack-cli: 4.x.x
   peerDependenciesMeta:
     webpack-dev-server:
       optional: true
-  checksum: 8b273f906aeffa60c7d5700ae25f98d4b66b7e922cad38acb9575d55ff83872cd20b9894aacfa81c4d54e5b51b16253ae0e70c5e9e0608dc8768276e15c74536
+  checksum: d475e8effa23eb7ff9a48b14d4de425989fd82f906ce71c210921cc3852327c22873be00c35e181a25a6bd03d424ae2b83e7f3b3f410ac7ee31b128ab4ac7713
   languageName: node
   linkType: hard
 
@@ -5601,42 +5626,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fern-api@workspace:*, fern-api@workspace:packages/cli":
-  version: 0.0.0-use.local
-  resolution: "fern-api@workspace:packages/cli"
-  dependencies:
-    "@babel/core": ^7.18.5
-    "@babel/preset-env": ^7.18.2
-    "@babel/preset-typescript": ^7.17.12
-    "@fern-api/add-generator": "workspace:*"
-    "@fern-api/commons": "workspace:*"
-    "@fern-api/compiler": "workspace:*"
-    "@fern-api/compiler-commons": "workspace:*"
-    "@fern-api/init": "workspace:*"
-    "@fern-api/local-workspace-runner": "workspace:*"
-    "@fern-api/openapi-converter": "workspace:*"
-    "@fern-api/remote-workspace-runner": "workspace:*"
-    "@fern-api/syntax-analysis": "workspace:*"
-    "@types/jest": ^28.1.2
-    "@types/node": ^17.0.33
-    "@types/yargs": ^17.0.10
-    chalk: ^4.1.2
-    depcheck: ^1.4.3
-    eslint: ^8.12.0
-    glob: ^7.2.0
-    glob-promise: ^4.2.2
-    jest: ^28.1.1
-    js-yaml: ^4.1.0
-    npm-run-all: ^4.1.5
-    prettier: ^2.6.2
-    typescript: ^4.6.4
-    yargs: ^17.4.1
-    zod: ^3.14.3
-  bin:
-    fern: ./cli
-  languageName: unknown
-  linkType: soft
-
 "fern-typescript@workspace:*, fern-typescript@workspace:packages/fern-typescript/cli":
   version: 0.0.0-use.local
   resolution: "fern-typescript@workspace:packages/fern-typescript/cli"
@@ -5645,6 +5634,7 @@ __metadata:
     "@babel/preset-env": ^7.18.2
     "@babel/preset-typescript": ^7.17.12
     "@fern-api/api": "workspace:*"
+    "@fern-api/cli": "workspace:*"
     "@fern-api/commons": "workspace:*"
     "@fern-api/compiler": "workspace:*"
     "@fern-typescript/client": "workspace:*"
@@ -5660,19 +5650,18 @@ __metadata:
     depcheck: ^1.4.3
     eslint: ^8.12.0
     execa: ^5.1.1
-    fern-api: "workspace:*"
     jest: ^28.1.1
     memfs: ^3.4.1
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
     simple-progress-webpack-plugin: ^2.0.0
-    ts-loader: ^9.3.0
-    ts-node: ^10.7.0
+    ts-loader: ^9.3.1
+    ts-node: ^10.8.1
     typescript: ^4.6.4
     umd-compat-loader: ^2.1.2
-    webpack: ^5.72.1
+    webpack: ^5.73.0
     webpack-bundle-analyzer: ^4.5.0
-    webpack-cli: ^4.9.2
+    webpack-cli: ^4.10.0
   bin:
     fern-typescript: ./cli
   languageName: unknown
@@ -5704,7 +5693,7 @@ __metadata:
     jest: ^28.1.1
     lint-staged: ^12.3.7
     lodash: ^4.17.21
-    mrlint: ^0.0.33
+    mrlint: ^0.0.34
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
     ts-node: ^10.8.0
@@ -7354,7 +7343,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"json5@npm:^2.1.3, json5@npm:^2.2.1":
+"json5@npm:^2.1.2, json5@npm:^2.1.3, json5@npm:^2.2.1":
   version: 2.2.1
   resolution: "json5@npm:2.2.1"
   bin:
@@ -7531,6 +7520,17 @@ __metadata:
     emojis-list: "npm:^3.0.0"
     json5: "npm:^1.0.1"
   checksum: d150b15e7a42ac47d935c8b484b79e44ff6ab4c75df7cc4cb9093350cf014ec0b17bdb60c5d6f91a37b8b218bd63b973e263c65944f58ca2573e402b9a27e717
+  languageName: node
+  linkType: hard
+
+"loader-utils@npm:^2.0.0":
+  version: 2.0.2
+  resolution: "loader-utils@npm:2.0.2"
+  dependencies:
+    big.js: ^5.2.2
+    emojis-list: ^3.0.0
+    json5: ^2.1.2
+  checksum: 9078d1ed47cadc57f4c6ddbdb2add324ee7da544cea41de3b7f1128e8108fcd41cd3443a85b7ee8d7d8ac439148aa221922774efe4cf87506d4fb054d5889303
   languageName: node
   linkType: hard
 
@@ -7922,19 +7922,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mrlint@npm:^0.0.33":
-  version: 0.0.33
-  resolution: "mrlint@npm:0.0.33"
+"mrlint@npm:^0.0.34":
+  version: 0.0.34
+  resolution: "mrlint@npm:0.0.34"
   dependencies:
-    "@fern-api/mrlint-commons": 0.0.33
-    "@fern-api/mrlint-lint": 0.0.33
-    "@fern-api/mrlint-parser": 0.0.33
-    "@fern-api/mrlint-rules": 0.0.33
+    "@fern-api/mrlint-commons": 0.0.34
+    "@fern-api/mrlint-lint": 0.0.34
+    "@fern-api/mrlint-parser": 0.0.34
+    "@fern-api/mrlint-rules": 0.0.34
     chalk: ^4.1.2
     yargs: ^17.3.1
   bin:
     mrlint: ./cli
-  checksum: 3c2d051a730c518d58be210940856de0862548f027d7cc1d691ecbaa507a61cf12b10cb7c32eae8b8811e34ff0e169f0cae165168feccd38d4240590a4a5d679
+  checksum: c56125bc5ac342fdd20b7987b146687b74638debe63fd2d52611650fb554441470344e07047603452dbab4b638dfd846b09e352101446dd63b4d7d6be1b3dfb9
   languageName: node
   linkType: hard
 
@@ -8070,6 +8070,17 @@ __metadata:
   version: 0.4.0
   resolution: "node-int64@npm:0.4.0"
   checksum: d0b30b1ee6d961851c60d5eaa745d30b5c95d94bc0e74b81e5292f7c42a49e3af87f1eb9e89f59456f80645d679202537de751b7d72e9e40ceea40c5e449057e
+  languageName: node
+  linkType: hard
+
+"node-loader@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "node-loader@npm:2.0.0"
+  dependencies:
+    loader-utils: ^2.0.0
+  peerDependencies:
+    webpack: ^5.0.0
+  checksum: 9252a92b226c0e6fdd29fef92d9853d6c389a4c65119a32306dc12cee7886f2ab4dde333dda5e37df92283c34bd0267e98c384be6d548dbe69676e3343f549ea
   languageName: node
   linkType: hard
 
@@ -9939,18 +9950,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-loader@npm:^9.3.0":
-  version: 9.3.0
-  resolution: "ts-loader@npm:9.3.0"
+"ts-loader@npm:^9.3.1":
+  version: 9.3.1
+  resolution: "ts-loader@npm:9.3.1"
   dependencies:
-    chalk: "npm:^4.1.0"
-    enhanced-resolve: "npm:^5.0.0"
-    micromatch: "npm:^4.0.0"
-    semver: "npm:^7.3.4"
+    chalk: ^4.1.0
+    enhanced-resolve: ^5.0.0
+    micromatch: ^4.0.0
+    semver: ^7.3.4
   peerDependencies:
     typescript: "*"
     webpack: ^5.0.0
-  checksum: 90755ac5850890ff433f2f8c7186d57ae4e172d389342d874b50ab233675f06c47c69043c517e2a2eeaf2251637ecfac607ac6190c89340f246ceff8c7f4af7a
+  checksum: 462a8ac315017cf4961dafd2be29d5abe7c3af63c4515e325269f79b9d0212b35c59184d7fd01fc378749c88454752e1599301d2190eb6844ea5fe332de5f695
   languageName: node
   linkType: hard
 
@@ -9961,44 +9972,6 @@ __metadata:
     "@ts-morph/common": "npm:~0.13.0"
     code-block-writer: "npm:^11.0.0"
   checksum: e975fb245ae558c638e94014dcbbad828b904dee5a7309bfb4ef2b2922d0d7ad902ec00874a959be58991043ce655f78ae78df0d0e0d6fb3800b991b95be08ce
-  languageName: node
-  linkType: hard
-
-"ts-node@npm:^10.7.0":
-  version: 10.7.0
-  resolution: "ts-node@npm:10.7.0"
-  dependencies:
-    "@cspotcode/source-map-support": "npm:0.7.0"
-    "@tsconfig/node10": "npm:^1.0.7"
-    "@tsconfig/node12": "npm:^1.0.7"
-    "@tsconfig/node14": "npm:^1.0.0"
-    "@tsconfig/node16": "npm:^1.0.2"
-    acorn: "npm:^8.4.1"
-    acorn-walk: "npm:^8.1.1"
-    arg: "npm:^4.1.0"
-    create-require: "npm:^1.1.0"
-    diff: "npm:^4.0.1"
-    make-error: "npm:^1.1.1"
-    v8-compile-cache-lib: "npm:^3.0.0"
-    yn: "npm:3.1.1"
-  peerDependencies:
-    "@swc/core": ">=1.2.50"
-    "@swc/wasm": ">=1.2.50"
-    "@types/node": "*"
-    typescript: ">=2.7"
-  peerDependenciesMeta:
-    "@swc/core":
-      optional: true
-    "@swc/wasm":
-      optional: true
-  bin:
-    ts-node: dist/bin.js
-    ts-node-cwd: dist/bin-cwd.js
-    ts-node-esm: dist/bin-esm.js
-    ts-node-script: dist/bin-script.js
-    ts-node-transpile-only: dist/bin-transpile.js
-    ts-script: dist/bin-script-deprecated.js
-  checksum: 2a379e43f7478d0b79e1e63af91fe222d83857727957df4bd3bdf3c0a884de5097b12feb9bbf530074526b8874c0338b0e6328cf334f3a5e2c49c71e837273f7
   languageName: node
   linkType: hard
 
@@ -10037,6 +10010,44 @@ __metadata:
     ts-node-transpile-only: dist/bin-transpile.js
     ts-script: dist/bin-script-deprecated.js
   checksum: 1c22dc8dd80d0ba4dd4250b82cc032b63f6fbe8c87f8197cef43e7f9e2d43f5b333b445ed712e3006e24119257b4bff2c46605f7da61ab6f5e9514885d296f0c
+  languageName: node
+  linkType: hard
+
+"ts-node@npm:^10.8.1":
+  version: 10.8.1
+  resolution: "ts-node@npm:10.8.1"
+  dependencies:
+    "@cspotcode/source-map-support": ^0.8.0
+    "@tsconfig/node10": ^1.0.7
+    "@tsconfig/node12": ^1.0.7
+    "@tsconfig/node14": ^1.0.0
+    "@tsconfig/node16": ^1.0.2
+    acorn: ^8.4.1
+    acorn-walk: ^8.1.1
+    arg: ^4.1.0
+    create-require: ^1.1.0
+    diff: ^4.0.1
+    make-error: ^1.1.1
+    v8-compile-cache-lib: ^3.0.1
+    yn: 3.1.1
+  peerDependencies:
+    "@swc/core": ">=1.2.50"
+    "@swc/wasm": ">=1.2.50"
+    "@types/node": "*"
+    typescript: ">=2.7"
+  peerDependenciesMeta:
+    "@swc/core":
+      optional: true
+    "@swc/wasm":
+      optional: true
+  bin:
+    ts-node: dist/bin.js
+    ts-node-cwd: dist/bin-cwd.js
+    ts-node-esm: dist/bin-esm.js
+    ts-node-script: dist/bin-script.js
+    ts-node-transpile-only: dist/bin-transpile.js
+    ts-script: dist/bin-script-deprecated.js
+  checksum: 7d1aa7aa3ae1c0459c4922ed0dbfbade442cfe0c25aebaf620cdf1774f112c8d7a9b14934cb6719274917f35b2c503ba87bcaf5e16a0d39ba0f68ce3e7728363
   languageName: node
   linkType: hard
 
@@ -10300,7 +10311,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"v8-compile-cache-lib@npm:^3.0.0, v8-compile-cache-lib@npm:^3.0.1":
+"v8-compile-cache-lib@npm:^3.0.1":
   version: 3.0.1
   resolution: "v8-compile-cache-lib@npm:3.0.1"
   checksum: 78089ad549e21bcdbfca10c08850022b22024cdcc2da9b168bcf5a73a6ed7bf01a9cebb9eac28e03cd23a684d81e0502797e88f3ccd27a32aeab1cfc44c39da0
@@ -10387,22 +10398,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack-cli@npm:^4.9.2":
-  version: 4.9.2
-  resolution: "webpack-cli@npm:4.9.2"
+"webpack-cli@npm:^4.10.0":
+  version: 4.10.0
+  resolution: "webpack-cli@npm:4.10.0"
   dependencies:
-    "@discoveryjs/json-ext": "npm:^0.5.0"
-    "@webpack-cli/configtest": "npm:^1.1.1"
-    "@webpack-cli/info": "npm:^1.4.1"
-    "@webpack-cli/serve": "npm:^1.6.1"
-    colorette: "npm:^2.0.14"
-    commander: "npm:^7.0.0"
-    execa: "npm:^5.0.0"
-    fastest-levenshtein: "npm:^1.0.12"
-    import-local: "npm:^3.0.2"
-    interpret: "npm:^2.2.0"
-    rechoir: "npm:^0.7.0"
-    webpack-merge: "npm:^5.7.3"
+    "@discoveryjs/json-ext": ^0.5.0
+    "@webpack-cli/configtest": ^1.2.0
+    "@webpack-cli/info": ^1.5.0
+    "@webpack-cli/serve": ^1.7.0
+    colorette: ^2.0.14
+    commander: ^7.0.0
+    cross-spawn: ^7.0.3
+    fastest-levenshtein: ^1.0.12
+    import-local: ^3.0.2
+    interpret: ^2.2.0
+    rechoir: ^0.7.0
+    webpack-merge: ^5.7.3
   peerDependencies:
     webpack: 4.x.x || 5.x.x
   peerDependenciesMeta:
@@ -10416,7 +10427,7 @@ __metadata:
       optional: true
   bin:
     webpack-cli: bin/cli.js
-  checksum: ffb4c5d53ab65ce9f1e8efd34fca4cb858ec6afc91ece0d9375094edff2e7615708c8a586991057fd9cc8d37aab0eb0511913b178daac534e51bcf7d3583e61c
+  checksum: 2ff5355ac348e6b40f2630a203b981728834dca96d6d621be96249764b2d0fc01dd54edfcc37f02214d02935de2cf0eefd6ce689d970d154ef493f01ba922390
   languageName: node
   linkType: hard
 
@@ -10437,7 +10448,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5, webpack@npm:^5.72.1":
+"webpack@npm:^5":
   version: 5.72.1
   resolution: "webpack@npm:5.72.1"
   dependencies:
@@ -10471,6 +10482,43 @@ __metadata:
   bin:
     webpack: bin/webpack.js
   checksum: d1eff085eee1c67a68f7bf1d077ea202c1e68a0de0e0866274984769838c3f224fbc64e847e1a1bbc6eba9fb6a9965098809cc0be9292b573767bb5d8d2df96e
+  languageName: node
+  linkType: hard
+
+"webpack@npm:^5.73.0":
+  version: 5.73.0
+  resolution: "webpack@npm:5.73.0"
+  dependencies:
+    "@types/eslint-scope": ^3.7.3
+    "@types/estree": ^0.0.51
+    "@webassemblyjs/ast": 1.11.1
+    "@webassemblyjs/wasm-edit": 1.11.1
+    "@webassemblyjs/wasm-parser": 1.11.1
+    acorn: ^8.4.1
+    acorn-import-assertions: ^1.7.6
+    browserslist: ^4.14.5
+    chrome-trace-event: ^1.0.2
+    enhanced-resolve: ^5.9.3
+    es-module-lexer: ^0.9.0
+    eslint-scope: 5.1.1
+    events: ^3.2.0
+    glob-to-regexp: ^0.4.1
+    graceful-fs: ^4.2.9
+    json-parse-even-better-errors: ^2.3.1
+    loader-runner: ^4.2.0
+    mime-types: ^2.1.27
+    neo-async: ^2.6.2
+    schema-utils: ^3.1.0
+    tapable: ^2.1.1
+    terser-webpack-plugin: ^5.1.3
+    watchpack: ^2.3.1
+    webpack-sources: ^3.2.3
+  peerDependenciesMeta:
+    webpack-cli:
+      optional: true
+  bin:
+    webpack: bin/webpack.js
+  checksum: aa434a241bad6176b68e1bf0feb1972da4dcbf27cb3d94ae24f6eb31acc37dceb9c4aae55e068edca75817bfe91f13cd20b023ac55d9b1b2f8b66a4037c9468f
   languageName: node
   linkType: hard
 
