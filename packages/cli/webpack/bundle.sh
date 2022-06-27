@@ -11,9 +11,12 @@ bundle=bundle.js
 # cd to script directory
 cd $(cd -P -- "$(dirname -- "$0")" && pwd -P)
 
+# remove existing dist
+/bin/rm -rf dist
+
 # webpack
 package_version=$(yarn info @fern-api/cli --all --json | jq -r .children.Version)
-TS_NODE_PROJECT=tsconfig.webpack.json PACKAGE_VERSION="$package_version" webpack --progress
+TS_NODE_PROJECT=tsconfig.webpack.json PACKAGE_VERSION="$package_version" yarn webpack --progress
 
 # write package.json
 cat >dist/package.json <<EOL
