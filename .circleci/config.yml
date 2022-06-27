@@ -1,12 +1,16 @@
 version: 2.1
 orbs:
   node: circleci/node@5.0.1
+  aws-cli: circleci/aws-cli@3.1.1
 jobs:
   lint:
     machine:
       image: ubuntu-2004:current
     steps:
       - checkout
+      - run:
+          name: Export Code Artifacts token
+          command: export CODEARTIFACT_AUTH_TOKEN="$(aws codeartifact get-authorization-token --domain fern-dev --domain-owner 985111089818 --query authorizationToken --output text)"
       - run:
           name: Run code-generation
           command: npm install -g fern-api@0.0.85 && fern generate
@@ -33,6 +37,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Export Code Artifacts token
+          command: export CODEARTIFACT_AUTH_TOKEN="$(aws codeartifact get-authorization-token --domain fern-dev --domain-owner 985111089818 --query authorizationToken --output text)"
+      - run:
           name: Run code-generation
           command: npm install -g fern-api@0.0.85 && fern generate
       - node/install-packages:
@@ -58,6 +65,9 @@ jobs:
       image: ubuntu-2004:current
     steps:
       - checkout
+      - run:
+          name: Export Code Artifacts token
+          command: export CODEARTIFACT_AUTH_TOKEN="$(aws codeartifact get-authorization-token --domain fern-dev --domain-owner 985111089818 --query authorizationToken --output text)"
       - run:
           name: Run code-generation
           command: npm install -g fern-api@0.0.85 && fern generate
