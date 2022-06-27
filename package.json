@@ -7,6 +7,7 @@
   "workspaces": [
     "packages/**",
     "!packages/**/lib",
+    "!packages/**/dist",
     "!packages/**/__test__"
   ],
   "scripts": {

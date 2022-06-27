@@ -30,6 +30,7 @@
     "dockerTagVersion": "./docker/create_docker.sh $(yarn info fern-typescript --all --json | jq -r .children.Version)"
   },
   "dependencies": {
+    "@fern-api/cli": "workspace:*",
     "@fern-api/commons": "workspace:*",
     "@fern-api/compiler": "workspace:*",
     "@fern-typescript/client": "workspace:*",
@@ -38,7 +39,6 @@
     "@fern-typescript/model": "workspace:*",
     "@fern-typescript/server": "workspace:*",
     "execa": "^5.1.1",
-    "fern-api": "workspace:*",
     "memfs": "^3.4.1"
   },
   "devDependencies": {
