@@ -8,6 +8,8 @@ jobs:
       image: ubuntu-2004:current
     steps:
       - checkout
+      - aws-cli/setup:
+          profile-name: default
       - run:
           name: Export Code Artifacts token
           command: export CODEARTIFACT_AUTH_TOKEN="$(aws codeartifact get-authorization-token --domain fern-dev --domain-owner 985111089818 --query authorizationToken --output text)"
@@ -36,6 +38,8 @@ jobs:
       image: ubuntu-2004:current
     steps:
       - checkout
+      - aws-cli/setup:
+          profile-name: default
       - run:
           name: Export Code Artifacts token
           command: export CODEARTIFACT_AUTH_TOKEN="$(aws codeartifact get-authorization-token --domain fern-dev --domain-owner 985111089818 --query authorizationToken --output text)"
@@ -65,6 +69,8 @@ jobs:
       image: ubuntu-2004:current
     steps:
       - checkout
+      - aws-cli/setup:
+          profile-name: default
       - run:
           name: Export Code Artifacts token
           command: export CODEARTIFACT_AUTH_TOKEN="$(aws codeartifact get-authorization-token --domain fern-dev --domain-owner 985111089818 --query authorizationToken --output text)"
