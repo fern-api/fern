@@ -1,6 +1,11 @@
 {
   "name": "@fern-typescript/model-context",
   "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:fern-api/fern.git",
+    "directory": "packages/fern-typescript/model-context"
+  },
   "files": [
     "lib"
   ],
