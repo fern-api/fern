@@ -1507,22 +1507,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cspotcode/source-map-consumer@npm:0.8.0":
-  version: 0.8.0
-  resolution: "@cspotcode/source-map-consumer@npm:0.8.0"
-  checksum: c0c16ca3d2f58898f1bd74c4f41a189dbcc202e642e60e489cbcc2e52419c4e89bdead02c886a12fb13ea37798ede9e562b2321df997ebc210ae9bd881561b4e
-  languageName: node
-  linkType: hard
-
-"@cspotcode/source-map-support@npm:0.7.0":
-  version: 0.7.0
-  resolution: "@cspotcode/source-map-support@npm:0.7.0"
-  dependencies:
-    "@cspotcode/source-map-consumer": "npm:0.8.0"
-  checksum: 9faddda7757cd778b5fd6812137b2cc265810043680d6399acc20441668fafcdc874053be9dccd0d9110087287bfad27eb3bf342f72bceca9aa9059f5d0c4be8
-  languageName: node
-  linkType: hard
-
 "@cspotcode/source-map-support@npm:^0.8.0":
   version: 0.8.1
   resolution: "@cspotcode/source-map-support@npm:0.8.1"
@@ -3583,16 +3567,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@webpack-cli/configtest@npm:^1.1.1":
-  version: 1.1.1
-  resolution: "@webpack-cli/configtest@npm:1.1.1"
-  peerDependencies:
-    webpack: 4.x.x || 5.x.x
-    webpack-cli: 4.x.x
-  checksum: c4e7fca21315e487655fbdc7d079092c3f88b274a720d245ca2e13dce7553009fb3f9d82218c33f5c9b208832d72bb4114a9cca97d53b66212eff5da1d3ad44b
-  languageName: node
-  linkType: hard
-
 "@webpack-cli/configtest@npm:^1.2.0":
   version: 1.2.0
   resolution: "@webpack-cli/configtest@npm:1.2.0"
@@ -3600,17 +3574,6 @@ __metadata:
     webpack: 4.x.x || 5.x.x
     webpack-cli: 4.x.x
   checksum: a2726cd9ec601d2b57e5fc15e0ebf5200a8892065e735911269ac2038e62be4bfc176ea1f88c2c46ff09b4d05d4c10ae045e87b3679372483d47da625a327e28
-  languageName: node
-  linkType: hard
-
-"@webpack-cli/info@npm:^1.4.1":
-  version: 1.4.1
-  resolution: "@webpack-cli/info@npm:1.4.1"
-  dependencies:
-    envinfo: "npm:^7.7.3"
-  peerDependencies:
-    webpack-cli: 4.x.x
-  checksum: 7a7cac2ba4f2528caa329311599da1685b1bc099bfc5b7210932b7c86024c1277fd7857b08557902b187ea01247a8e8f72f7f5719af72b0c8d97f22087aa0c14
   languageName: node
   linkType: hard
 
@@ -3622,18 +3585,6 @@ __metadata:
   peerDependencies:
     webpack-cli: 4.x.x
   checksum: 7f56fe037cd7d1fd5c7428588519fbf04a0cad33925ee4202ffbafd00f8ec1f2f67d991245e687d50e0f3e23f7b7814273d56cb9f7da4b05eed47c8d815c6296
-  languageName: node
-  linkType: hard
-
-"@webpack-cli/serve@npm:^1.6.1":
-  version: 1.6.1
-  resolution: "@webpack-cli/serve@npm:1.6.1"
-  peerDependencies:
-    webpack-cli: 4.x.x
-  peerDependenciesMeta:
-    webpack-dev-server:
-      optional: true
-  checksum: 8b273f906aeffa60c7d5700ae25f98d4b66b7e922cad38acb9575d55ff83872cd20b9894aacfa81c4d54e5b51b16253ae0e70c5e9e0608dc8768276e15c74536
   languageName: node
   linkType: hard
 
@@ -5704,13 +5655,13 @@ __metadata:
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
     simple-progress-webpack-plugin: ^2.0.0
-    ts-loader: ^9.3.0
-    ts-node: ^10.7.0
+    ts-loader: ^9.3.1
+    ts-node: ^10.8.1
     typescript: ^4.6.4
     umd-compat-loader: ^2.1.2
-    webpack: ^5.72.1
+    webpack: ^5.73.0
     webpack-bundle-analyzer: ^4.5.0
-    webpack-cli: ^4.9.2
+    webpack-cli: ^4.10.0
   bin:
     fern-typescript: ./cli
   languageName: unknown
@@ -9999,21 +9950,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-loader@npm:^9.3.0":
-  version: 9.3.0
-  resolution: "ts-loader@npm:9.3.0"
-  dependencies:
-    chalk: "npm:^4.1.0"
-    enhanced-resolve: "npm:^5.0.0"
-    micromatch: "npm:^4.0.0"
-    semver: "npm:^7.3.4"
-  peerDependencies:
-    typescript: "*"
-    webpack: ^5.0.0
-  checksum: 90755ac5850890ff433f2f8c7186d57ae4e172d389342d874b50ab233675f06c47c69043c517e2a2eeaf2251637ecfac607ac6190c89340f246ceff8c7f4af7a
-  languageName: node
-  linkType: hard
-
 "ts-loader@npm:^9.3.1":
   version: 9.3.1
   resolution: "ts-loader@npm:9.3.1"
@@ -10036,44 +9972,6 @@ __metadata:
     "@ts-morph/common": "npm:~0.13.0"
     code-block-writer: "npm:^11.0.0"
   checksum: e975fb245ae558c638e94014dcbbad828b904dee5a7309bfb4ef2b2922d0d7ad902ec00874a959be58991043ce655f78ae78df0d0e0d6fb3800b991b95be08ce
-  languageName: node
-  linkType: hard
-
-"ts-node@npm:^10.7.0":
-  version: 10.7.0
-  resolution: "ts-node@npm:10.7.0"
-  dependencies:
-    "@cspotcode/source-map-support": "npm:0.7.0"
-    "@tsconfig/node10": "npm:^1.0.7"
-    "@tsconfig/node12": "npm:^1.0.7"
-    "@tsconfig/node14": "npm:^1.0.0"
-    "@tsconfig/node16": "npm:^1.0.2"
-    acorn: "npm:^8.4.1"
-    acorn-walk: "npm:^8.1.1"
-    arg: "npm:^4.1.0"
-    create-require: "npm:^1.1.0"
-    diff: "npm:^4.0.1"
-    make-error: "npm:^1.1.1"
-    v8-compile-cache-lib: "npm:^3.0.0"
-    yn: "npm:3.1.1"
-  peerDependencies:
-    "@swc/core": ">=1.2.50"
-    "@swc/wasm": ">=1.2.50"
-    "@types/node": "*"
-    typescript: ">=2.7"
-  peerDependenciesMeta:
-    "@swc/core":
-      optional: true
-    "@swc/wasm":
-      optional: true
-  bin:
-    ts-node: dist/bin.js
-    ts-node-cwd: dist/bin-cwd.js
-    ts-node-esm: dist/bin-esm.js
-    ts-node-script: dist/bin-script.js
-    ts-node-transpile-only: dist/bin-transpile.js
-    ts-script: dist/bin-script-deprecated.js
-  checksum: 2a379e43f7478d0b79e1e63af91fe222d83857727957df4bd3bdf3c0a884de5097b12feb9bbf530074526b8874c0338b0e6328cf334f3a5e2c49c71e837273f7
   languageName: node
   linkType: hard
 
@@ -10413,7 +10311,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"v8-compile-cache-lib@npm:^3.0.0, v8-compile-cache-lib@npm:^3.0.1":
+"v8-compile-cache-lib@npm:^3.0.1":
   version: 3.0.1
   resolution: "v8-compile-cache-lib@npm:3.0.1"
   checksum: 78089ad549e21bcdbfca10c08850022b22024cdcc2da9b168bcf5a73a6ed7bf01a9cebb9eac28e03cd23a684d81e0502797e88f3ccd27a32aeab1cfc44c39da0
@@ -10533,39 +10431,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack-cli@npm:^4.9.2":
-  version: 4.9.2
-  resolution: "webpack-cli@npm:4.9.2"
-  dependencies:
-    "@discoveryjs/json-ext": "npm:^0.5.0"
-    "@webpack-cli/configtest": "npm:^1.1.1"
-    "@webpack-cli/info": "npm:^1.4.1"
-    "@webpack-cli/serve": "npm:^1.6.1"
-    colorette: "npm:^2.0.14"
-    commander: "npm:^7.0.0"
-    execa: "npm:^5.0.0"
-    fastest-levenshtein: "npm:^1.0.12"
-    import-local: "npm:^3.0.2"
-    interpret: "npm:^2.2.0"
-    rechoir: "npm:^0.7.0"
-    webpack-merge: "npm:^5.7.3"
-  peerDependencies:
-    webpack: 4.x.x || 5.x.x
-  peerDependenciesMeta:
-    "@webpack-cli/generators":
-      optional: true
-    "@webpack-cli/migrate":
-      optional: true
-    webpack-bundle-analyzer:
-      optional: true
-    webpack-dev-server:
-      optional: true
-  bin:
-    webpack-cli: bin/cli.js
-  checksum: ffb4c5d53ab65ce9f1e8efd34fca4cb858ec6afc91ece0d9375094edff2e7615708c8a586991057fd9cc8d37aab0eb0511913b178daac534e51bcf7d3583e61c
-  languageName: node
-  linkType: hard
-
 "webpack-merge@npm:^5.7.3":
   version: 5.8.0
   resolution: "webpack-merge@npm:5.8.0"
@@ -10583,7 +10448,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5, webpack@npm:^5.72.1":
+"webpack@npm:^5":
   version: 5.72.1
   resolution: "webpack@npm:5.72.1"
   dependencies:
