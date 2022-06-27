@@ -1,6 +1,11 @@
 {
   "name": "@fern-api/compiler-commons",
   "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:fern-api/fern.git",
+    "directory": "packages/compiler/commons"
+  },
   "files": [
     "lib"
   ],

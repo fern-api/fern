@@ -1,6 +1,11 @@
 {
   "name": "@fern-api/ete-tests",
   "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:fern-api/fern.git",
+    "directory": "packages/ete-tests"
+  },
   "private": true,
   "files": [
     "lib"
