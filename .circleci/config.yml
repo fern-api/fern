@@ -4,7 +4,8 @@ orbs:
   aws-cli: circleci/aws-cli@3.1.1
 jobs:
   lint:
-    executor: aws-cli/default
+    machine:
+      image: ubuntu-2004:current
     steps:
       - checkout
       - aws-cli/setup:
@@ -33,7 +34,8 @@ jobs:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff
   compile-and-test:
-    executor: aws-cli/default
+    machine:
+      image: ubuntu-2004:current
     steps:
       - checkout
       - aws-cli/setup:
@@ -63,7 +65,8 @@ jobs:
           command: git --no-pager diff
 
   publish:
-    executor: aws-cli/default
+    machine:
+      image: ubuntu-2004:current
     steps:
       - checkout
       - aws-cli/setup:
@@ -138,11 +141,13 @@ workflows:
           filters:
             tags:
               only: /.*/
+          context: aws
 
       - compile-and-test:
           filters:
             tags:
               only: /.*/
+          context: aws
 
       - publish:
           filters:
@@ -156,6 +161,7 @@ workflows:
           context:
             - npm
             - docker-hub
+            - aws
 
       - publish-java-snapshot:
           filters:
