@@ -14,6 +14,10 @@ cd $(cd -P -- "$(dirname -- "$0")" && pwd -P)
 # remove existing dist
 /bin/rm -rf dist
 
+# compile ESM so we can tree-shaking
+# compile CJS so we have the most up-to-date .d.ts declarations
+yarn run --top-level compile:all
+
 # webpack
 package_version=$(yarn info @fern-api/cli --all --json | jq -r .children.Version)
 TS_NODE_PROJECT=tsconfig.webpack.json PACKAGE_VERSION="$package_version" yarn webpack --progress

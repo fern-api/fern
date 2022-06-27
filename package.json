@@ -13,7 +13,7 @@
   "scripts": {
     "clean": "yarn workspace @fern-api/compile-root run clean",
     "compile": "yarn compile:cjs",
-    "compile:all": "run-s compile:cjs compile:esm",
+    "compile:all": "yarn compile:prepare && yarn workspace @fern-api/compile-root run compile:all",
     "compile:cjs": "yarn compile:prepare && yarn workspace @fern-api/compile-root run compile:cjs",
     "compile:esm": "yarn compile:prepare && yarn workspace @fern-api/compile-root run compile:esm",
     "compile:prepare": "ts-node scripts/checkRootPackage.ts --fix",
