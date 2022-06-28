@@ -32,10 +32,10 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/api": "0.0.106",
     "@fern-api/compiler-commons": "workspace:*",
     "@fern-api/ir-generation": "workspace:*",
-    "@fern-api/syntax-analysis": "workspace:*"
+    "@fern-api/syntax-analysis": "workspace:*",
+    "@fern-fern/ir-model": "*"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",

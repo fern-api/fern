@@ -1,4 +1,4 @@
-import { FernFilepath } from "@fern-api/api";
+import { FernFilepath } from "@fern-fern/ir-model/types";
 import { Directory } from "ts-morph";
 import { exportFromModule, ExportStrategy } from "../import-export/exportFromModule";
 import { getPackagePath } from "./getPackagePath";

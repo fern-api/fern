@@ -4,8 +4,6 @@ orbs:
   aws-cli: circleci/aws-cli@3.1.1
 jobs:
   lint:
-    machine:
-      image: ubuntu-2004:current
     steps:
       - checkout
       - aws-cli/setup:
@@ -31,8 +29,6 @@ jobs:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff
   compile-and-test:
-    machine:
-      image: ubuntu-2004:current
     steps:
       - checkout
       - aws-cli/setup:

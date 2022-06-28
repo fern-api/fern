@@ -1,4 +1,4 @@
-import { GeneratorConfig } from "@fern-api/api";
+import { GeneratorConfig } from "@fern-fern/ir-model/generators/config";
 
 export type FernTypescriptGeneratorConfig = Omit<GeneratorConfig, "customConfig"> & {
     customConfig: FernTypescriptGeneratorCustomConfig;
