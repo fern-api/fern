@@ -1974,10 +1974,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/ir-model@npm:0.0.527":
-  version: 0.0.527
-  resolution: "@fern-fern/ir-model@npm:0.0.527::__archiveUrl=https%3A%2F%2Ffern-dev-985111089818.d.codeartifact.us-east-1.amazonaws.com%3A443%2Fnpm%2Ffern-dev%2F%40fern-fern%2Fir-model%2F-%2Fir-model-0.0.527.tgz"
-  checksum: d1ba273dde00a32f84e4381e300f4215760f50d44009b64feeb555b6c11735f6974371ccb67612812c47b704571b185364f288339191edc91a4aa14162b4f14d
+"@fern-fern/ir-model@npm:0.0.622":
+  version: 0.0.622
+  resolution: "@fern-fern/ir-model@npm:0.0.622"
+  checksum: 4738db003063aca8c3a10fe14626397e7fafc17b5c004707b6aba16356025fada6ec1462055d5fcc23f0f9680c5c6bd39f379cd98fc521e7a9983098b13956f0
   languageName: node
   linkType: hard
 
