@@ -2,9 +2,5 @@
   "extends": "../../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib/cjs", "rootDir": "src", "module": "CommonJS" },
   "include": ["./src"],
-  "references": [
-    { "path": "../../compiler/ir-types/fern-ir-typescript/tsconfig.json" },
-    { "path": "../helpers/helper-manager/tsconfig.json" },
-    { "path": "../model-context/tsconfig.json" }
-  ]
+  "references": [{ "path": "../helpers/helper-manager/tsconfig.json" }, { "path": "../model-context/tsconfig.json" }]
 }

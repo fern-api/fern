@@ -4,7 +4,6 @@
   "include": ["./src"],
   "references": [
     { "path": "../../commons/tsconfig.esm.json" },
-    { "path": "../../compiler/ir-types/fern-ir-typescript/tsconfig.esm.json" },
     { "path": "../commons/tsconfig.esm.json" },
     { "path": "../model-context/tsconfig.esm.json" },
     { "path": "../types/tsconfig.esm.json" }

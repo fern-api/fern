@@ -5,7 +5,6 @@
   "references": [
     { "path": "../commons/tsconfig.json" },
     { "path": "../ir-generation/tsconfig.json" },
-    { "path": "../ir-types/fern-ir-typescript/tsconfig.json" },
     { "path": "../syntax-analysis/tsconfig.json" }
   ]
 }

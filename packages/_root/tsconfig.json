@@ -9,7 +9,6 @@
     { "path": "../compiler/commons/tsconfig.json" },
     { "path": "../compiler/compiler/tsconfig.json" },
     { "path": "../compiler/ir-generation/tsconfig.json" },
-    { "path": "../compiler/ir-types/fern-ir-typescript/tsconfig.json" },
     { "path": "../compiler/syntax-analysis/tsconfig.json" },
     { "path": "../ete-tests/tsconfig.json" },
     { "path": "../fern-typescript/cli/tsconfig.json" },

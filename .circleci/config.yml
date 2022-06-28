@@ -13,9 +13,6 @@ jobs:
       - run:
           name: Export Code Artifacts token
           command: echo 'export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain fern-dev --domain-owner 985111089818 --query authorizationToken --output text`' >> $BASH_ENV
-      - run:
-          name: Run code-generation
-          command: npm install -g fern-api@0.0.85 && fern generate
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
@@ -43,9 +40,6 @@ jobs:
       - run:
           name: Export Code Artifacts token
           command: echo 'export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain fern-dev --domain-owner 985111089818 --query authorizationToken --output text`' >> $BASH_ENV
-      - run:
-          name: Run code-generation
-          command: npm install -g fern-api@0.0.85 && fern generate
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
@@ -76,9 +70,6 @@ jobs:
       - run:
           name: Export Code Artifacts token
           command: echo 'export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain fern-dev --domain-owner 985111089818 --query authorizationToken --output text`' >> $BASH_ENV
-      - run:
-          name: Run code-generation
-          command: npm install -g fern-api@0.0.85 && fern generate
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
@@ -107,33 +98,6 @@ jobs:
             yarn workspace fern-typescript dockerTagVersion
             echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
             docker push fernapi/fern-typescript:"$projectVersion"
-
-  publish-java-snapshot:
-    machine:
-      image: ubuntu-2004:current
-    environment:
-      CIRCLE_TEST_REPORTS: /home/circleci/junit
-      CIRCLE_ARTIFACTS: /home/circleci/artifacts
-      _JAVA_OPTIONS: -Dorg.gradle.internal.launcher.welcomeMessageEnabled=false -Xmx8192m
-      JAVA_HOME: /opt/java11
-    steps:
-      - checkout
-      - run:
-          name: Install Java
-          command: |
-            sudo mkdir -p /opt/java && cd /opt/java && sudo chown -R circleci:circleci .
-            curl https://cdn.azul.com/zulu/bin/zulu11.41.23-ca-jdk11.0.8-linux_x64.tar.gz | tar -xzf - -C /opt/java
-            sudo ln -s /opt/java/zulu*/ /opt/java11
-      - run:
-          name: Run code-generation
-          command: npm install -g fern-api@0.0.85 && fern generate
-      - run:
-          name: Publish
-          command: |
-            export PATH="$PATH:$JAVA_HOME/bin"
-            sudo chmod -R 777 packages/compiler/ir-types/fern-ir-java/ir-api/model
-            cd packages/compiler/ir-types/fern-ir-java
-            ./gradlew artifactoryPublish
 
 workflows:
   version: 2
@@ -164,11 +128,3 @@ workflows:
             - npm
             - docker-hub
             - aws
-
-      - publish-java-snapshot:
-          filters:
-            branches:
-              only: main
-            tags:
-              ignore: /.*/
-          context: jfrog
