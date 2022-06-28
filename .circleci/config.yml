@@ -4,7 +4,7 @@ orbs:
 jobs:
   lint:
     docker:
-      - image: cimg/node:stable
+      - image: cimg/node:current
     steps:
       - checkout
       - node/install-packages:
@@ -51,7 +51,7 @@ jobs:
 
   publish:
     docker:
-      - image: cimg/node:stable
+      - image: cimg/node:current
     steps:
       - checkout
       - node/install-packages:
