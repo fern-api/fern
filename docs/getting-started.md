@@ -29,17 +29,17 @@ api/
 └── .fernrc.yml
 ```
 
-`.fernrc.yml` is \_\_. It contains three fields:
+`.fernrc.yml` is where you'll configure Fern. It contains three fields:
 
 - **name**: the name of your API
-- **definition**: the path to your [Fern API Definition]()
-- **generators**: a list of [supported generators]() that convert your definition to TODO
+- **definition**: the path to your Fern API Definition
+- **generators**: a list of [supported generators](https://docs.buildwithfern.com/#/generators) that convert your definition to clients libraries (SDKs), servers stubs, and documentation automatically.
 
 ## Fern API Definition
 
-By default `fern init` sets you up with an `api.yml` that has an example `imdb-api`. (We like movies!)
+By default `fern init` sets you up with an `api.yml` that has an example IMDb API. (We like movies!)
 
-This defines your API including services, endpoints, types, and errors. Read more about how to configure your definition [here]().`
+This defines your API including the [data model](https://docs.buildwithfern.com/#/defining-the-data-model), [services](https://docs.buildwithfern.com/#/defining-a-service), and [errors](https://docs.buildwithfern.com/#/defining-errors).
 
 ## Add generators
 
@@ -69,39 +69,18 @@ fern add postman
 +      output: ./generated-postman.json
 ```
 
-A generator contains thr `name`, `version`, a location where it will `output` generated files, and a `config`. We'll keep the defaults provided.
+## Generate
 
-Now let's add the Typescript generator by running:
-
-```bash
-fern add typescript
-```
-
-Our `.fernrc.yml` now looks like:
-
-```yml
-name: imdb-api
-definition: src
-generators:
-  - name: fernapi/fern-java
-    version: 0.0.32
-    output: generated-java
-    config:
-      packagePrefix: com
-      mode: client_and_server
-  - name: fernapi/fern-typescript
-    version: 0.0.71
-    output: generated-typescript
-    config:
-      mode: client_and_server
-```
-
-## Generate servers and clients
-
-Now that we've got Java and TypeScript generators, let's codegen our `imdb-api` example into both languages.
+Now that we've got the TypeScript and Postman generators set up, let's generate.
 
 ```bash
 fern generate
 ```
 
-We'll see two new directories created `generated-java` and `generated-typescript`. We can look inside to find our server stubs, model, and clients generated.
+In terminal you'll see a npm package for the TypeScripe server that you can depend on in your `package.json`.
+
+In your file tree, you'll see a `generated-postman.json` that you can import to Postman to use your Collection.
+
+## Build your API
+
+Change `api.yml` to reflect your API and start building!

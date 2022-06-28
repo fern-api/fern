@@ -14,7 +14,7 @@ generators:
     version: 0.0.101
     generate: true
     config:
-      mode: client
+      mode: server
   - name: fernapi/fern-postman
     version: 0.0.6
     generate:
