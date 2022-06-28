@@ -37,7 +37,12 @@ export default (): webpack.Configuration => {
             ],
         },
         resolve: {
-            extensions: [".ts", ".js"],
+            extensions: [
+                // js is first so that if we encounter equivalent TS and JS source files side-by-side
+                // (e.g. in node_modules), prefer the js
+                ".js",
+                ".ts",
+            ],
         },
         plugins: [
             new webpack.EnvironmentPlugin([PACKAGE_VERSION_ENV_VAR]),

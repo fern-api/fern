@@ -1,4 +1,5 @@
-import { FailedResponse, FernFilepath } from "@fern-api/api";
+import { FailedResponse } from "@fern-fern/ir-model/services/commons";
+import { FernFilepath } from "@fern-fern/ir-model/types";
 import { convertFailedResponse } from "../converters/services/convertFailedResponse";
 
 describe("convertResponseErrors", () => {

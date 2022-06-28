@@ -1,4 +1,5 @@
-import { ErrorDeclaration, ErrorName, IntermediateRepresentation } from "@fern-api/api";
+import { ErrorDeclaration, ErrorName } from "@fern-fern/ir-model/errors";
+import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { ImportStrategy } from "@fern-typescript/commons";
 import { Directory, SourceFile, ts } from "ts-morph";
 import { BaseModelContext } from "../base-model-context/BaseModelContext";

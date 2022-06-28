@@ -1,6 +1,6 @@
-import { FernFilepath, Type, TypeDeclaration, TypeReference } from "@fern-api/api";
 import { assertNever } from "@fern-api/commons";
 import { RawSchemas } from "@fern-api/syntax-analysis";
+import { FernFilepath, Type, TypeDeclaration, TypeReference } from "@fern-fern/ir-model/types";
 import { getDocs } from "../../utils/getDocs";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { parseTypeName } from "../../utils/parseTypeName";

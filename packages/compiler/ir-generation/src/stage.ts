@@ -1,6 +1,7 @@
-import { CustomWireMessageEncoding, IntermediateRepresentation } from "@fern-api/api";
 import { CompilerStage, RelativeFilePath } from "@fern-api/compiler-commons";
 import { RawSchemas } from "@fern-api/syntax-analysis";
+import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { CustomWireMessageEncoding } from "@fern-fern/ir-model/services/commons";
 import { convertErrorDeclaration } from "./converters/convertErrorDeclaration";
 import { convertId } from "./converters/convertId";
 import { convertHttpService } from "./converters/services/convertHttpService";

@@ -1,4 +1,4 @@
-import { DeclaredTypeName, FernFilepath } from "@fern-api/api";
+import { DeclaredTypeName, FernFilepath } from "@fern-fern/ir-model/types";
 import { parseReference } from "./parseReference";
 
 export function parseTypeName({

@@ -1,5 +1,6 @@
-import { ErrorDeclaration, FernFilepath, Type } from "@fern-api/api";
 import { RawSchemas } from "@fern-api/syntax-analysis";
+import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
+import { FernFilepath, Type } from "@fern-fern/ir-model/types";
 import { createTypeReferenceParser } from "../utils/parseInlineType";
 import { convertType } from "./type-declarations/convertTypeDeclaration";
 

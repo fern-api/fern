@@ -1,4 +1,5 @@
-import { IntermediateRepresentation, WebSocketChannel, WebSocketOperation } from "@fern-api/api";
+import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { WebSocketChannel, WebSocketOperation } from "@fern-fern/ir-model/services/websocket";
 import { DependencyManager } from "@fern-typescript/commons";
 import { ModelContext } from "@fern-typescript/model-context";
 import { generateHttpEndpointTypes } from "./http/generateHttpEndpointTypes";

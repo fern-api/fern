@@ -1,4 +1,5 @@
-import { ErrorDeclaration, FernFilepath, Type, TypeReference } from "@fern-api/api";
+import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
+import { FernFilepath, Type, TypeReference } from "@fern-fern/ir-model/types";
 import { convertErrorDeclaration } from "../converters/convertErrorDeclaration";
 
 describe("convertErrorDeclaration", () => {
