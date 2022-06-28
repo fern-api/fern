@@ -34,7 +34,12 @@ export default (_env: unknown, { mode = "production" }: webpack.WebpackOptionsNo
             noParse: [require.resolve("@ts-morph/common/dist/typescript.js")],
         },
         resolve: {
-            extensions: [".ts", ".js"],
+            extensions: [
+                // js is first so that if we encounter equivalent TS and JS source files side-by-side
+                // (e.g. in node_modules), prefer the js
+                ".js",
+                ".ts",
+            ],
         },
         output: {
             path: path.join(__dirname, "dist"),
