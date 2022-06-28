@@ -40,3 +40,4 @@ EOL
 
 # write empty yarn.lock so yarn doesn't try to associate this package with the monorepo
 touch "$dist_dir"/yarn.lock
+yarn
