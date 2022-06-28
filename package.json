@@ -48,7 +48,7 @@
     "eslint": "^8.17.0",
     "eslint-plugin-jest": "^26.5.3",
     "execa": "^5.1.1",
-    "fern-api": "0.0.85",
+    "fern-api": "0.0.104",
     "husky": "^7.0.4",
     "immer": "^9.0.15",
     "is-ci": "^3.0.1",
