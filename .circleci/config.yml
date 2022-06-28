@@ -33,8 +33,8 @@ jobs:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff
   compile-and-test:
-    docker:
-      - image: cimg/base:stable
+    machine:
+      image: ubuntu-2004:current
     steps:
       - checkout
       - aws-cli/setup:
@@ -65,8 +65,8 @@ jobs:
           command: git --no-pager diff
 
   publish:
-    machine:
-      image: ubuntu-2004:current
+    docker:
+      - image: cimg/base:stable
     steps:
       - checkout
       - aws-cli/setup:
