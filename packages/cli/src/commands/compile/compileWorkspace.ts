@@ -37,11 +37,8 @@ export async function compileWorkspace({
     }
 }
 function validateWorkspaceName(workspaceName: string) {
-    const { errors = [], warnings = [] } = validatePackageName(workspaceName);
-    const errorsAndWarnings = [...errors, ...warnings];
-    if (errorsAndWarnings.length > 0) {
-        throw new Error(
-            `Invalid workspace name: ${workspaceName}:\n` + errorsAndWarnings.map((s) => `\t${s}`).join("\n")
-        );
+    const { validForNewPackages } = validatePackageName(workspaceName);
+    if (!validForNewPackages) {
+        throw new Error(`Invalid workspace name: ${workspaceName}`);
     }
 }
