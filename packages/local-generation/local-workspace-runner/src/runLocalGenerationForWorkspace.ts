@@ -1,6 +1,6 @@
-import { CustomWireMessageEncoding } from "@fern-api/api";
 import { GeneratorInvocation, WorkspaceDefinition } from "@fern-api/commons";
 import { Compiler } from "@fern-api/compiler";
+import { CustomWireMessageEncoding } from "@fern-fern/ir-model/services/commons";
 import { mkdir, rm, writeFile } from "fs/promises";
 import os from "os";
 import path from "path";

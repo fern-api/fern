@@ -1,16 +1,8 @@
-import {
-    ContainerType,
-    CustomWireMessageEncoding,
-    EndpointId,
-    FernFilepath,
-    HttpAuth,
-    HttpEndpoint,
-    HttpMethod,
-    HttpService,
-    TypeReference,
-} from "@fern-api/api";
 import { assertNever } from "@fern-api/commons";
 import { RawSchemas } from "@fern-api/syntax-analysis";
+import { CustomWireMessageEncoding } from "@fern-fern/ir-model/services/commons";
+import { EndpointId, HttpAuth, HttpEndpoint, HttpMethod, HttpService } from "@fern-fern/ir-model/services/http";
+import { ContainerType, FernFilepath, TypeReference } from "@fern-fern/ir-model/types";
 import { getDocs } from "../../utils/getDocs";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { constructHttpPath } from "./constructHttpPath";

@@ -1,4 +1,4 @@
-import { CustomWireMessageEncoding, Encoding } from "@fern-api/api";
+import { CustomWireMessageEncoding, Encoding } from "@fern-fern/ir-model/services/commons";
 
 const DEFAULT_ENCODING = Encoding.json();
 

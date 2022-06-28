@@ -1,4 +1,4 @@
-import { HttpEndpoint } from "@fern-api/api";
+import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
 import { GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/model-context";
 import { SourceFile, ts } from "ts-morph";
 import { ServerConstants } from "../constants";

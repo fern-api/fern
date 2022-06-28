@@ -1,4 +1,4 @@
-import { IntermediateRepresentation } from "@fern-api/api";
+import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { readFile } from "fs/promises";
 
 export async function loadIntermediateRepresentation(pathToFile: string): Promise<IntermediateRepresentation> {

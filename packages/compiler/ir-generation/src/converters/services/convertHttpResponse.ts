@@ -1,5 +1,7 @@
-import { CustomWireMessageEncoding, FernFilepath, HttpResponse } from "@fern-api/api";
 import { RawSchemas } from "@fern-api/syntax-analysis";
+import { CustomWireMessageEncoding } from "@fern-fern/ir-model/services/commons";
+import { HttpResponse } from "@fern-fern/ir-model/services/http";
+import { FernFilepath } from "@fern-fern/ir-model/types";
 import { convertInlineTypeDeclaration } from "../type-declarations/convertInlineTypeDeclaration";
 import { convertEncoding } from "./convertEncoding";
 import { convertFailedResponse } from "./convertFailedResponse";

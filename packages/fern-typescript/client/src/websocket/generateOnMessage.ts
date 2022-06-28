@@ -1,4 +1,4 @@
-import { WebSocketChannel } from "@fern-api/api";
+import { WebSocketChannel } from "@fern-fern/ir-model/services/websocket";
 import { getTextOfTsKeyword, getTextOfTsNode } from "@fern-typescript/commons";
 import { ServiceTypesConstants } from "@fern-typescript/service-types";
 import { ClassDeclaration, Scope, ts } from "ts-morph";

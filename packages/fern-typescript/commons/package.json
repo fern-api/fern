@@ -32,8 +32,8 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/api": "0.0.106",
     "@fern-api/commons": "workspace:*",
+    "@fern-fern/ir-model": "*",
     "esutils": "^2.0.3",
     "immer": "^9.0.15",
     "lodash": "^4.17.21",
