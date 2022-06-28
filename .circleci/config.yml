@@ -96,6 +96,8 @@ workflows:
           filters:
             tags:
               only: /.*/
+          context:
+            - auth0-dev
 
       - publish:
           filters:
@@ -109,3 +111,4 @@ workflows:
           context:
             - npm
             - docker-hub
+            - auth0-dev

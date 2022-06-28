@@ -10,6 +10,7 @@
     { "path": "../compiler/syntax-analysis/tsconfig.esm.json" },
     { "path": "../init/tsconfig.esm.json" },
     { "path": "../local-generation/local-workspace-runner/tsconfig.esm.json" },
+    { "path": "../login/tsconfig.esm.json" },
     { "path": "../openapi-converter/tsconfig.esm.json" },
     { "path": "../remote-generation/remote-workspace-runner/tsconfig.esm.json" }
   ]

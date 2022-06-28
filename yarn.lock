@@ -1589,6 +1589,7 @@ __metadata:
     "@fern-api/compiler-commons": "workspace:*"
     "@fern-api/init": "workspace:*"
     "@fern-api/local-workspace-runner": "workspace:*"
+    "@fern-api/login": "workspace:*"
     "@fern-api/openapi-converter": "workspace:*"
     "@fern-api/remote-workspace-runner": "workspace:*"
     "@fern-api/syntax-analysis": "workspace:*"
@@ -1658,6 +1659,7 @@ __metadata:
     "@fern-api/init": "workspace:*"
     "@fern-api/ir-generation": "workspace:*"
     "@fern-api/local-workspace-runner": "workspace:*"
+    "@fern-api/login": "workspace:*"
     "@fern-api/openapi-converter": "workspace:*"
     "@fern-api/remote-workspace-runner": "workspace:*"
     "@fern-api/syntax-analysis": "workspace:*"
@@ -1839,6 +1841,26 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-api/login@workspace:*, @fern-api/login@workspace:packages/login":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/login@workspace:packages/login"
+  dependencies:
+    "@babel/core": ^7.18.5
+    "@babel/preset-env": ^7.18.2
+    "@babel/preset-typescript": ^7.17.12
+    "@types/jest": ^28.1.2
+    "@types/node": ^17.0.33
+    axios: ^0.27.2
+    depcheck: ^1.4.3
+    eslint: ^8.12.0
+    jest: ^28.1.1
+    npm-run-all: ^4.1.5
+    open: ^8.4.0
+    prettier: ^2.6.2
+    typescript: ^4.6.4
+  languageName: unknown
+  linkType: soft
+
 "@fern-api/mrlint-commons@npm:0.0.36":
   version: 0.0.36
   resolution: "@fern-api/mrlint-commons@npm:0.0.36"
@@ -1927,7 +1949,7 @@ __metadata:
     "@babel/preset-typescript": ^7.17.12
     "@fern-api/commons": "workspace:*"
     "@fern-api/compiler": "workspace:*"
-    "@fern-fern/fiddle-coordinator-api-client": ^0.0.606
+    "@fern-fern/fiddle-coordinator-api-client": ^0.0.4
     "@fern-typescript/service-utils": "workspace:*"
     "@types/jest": ^28.1.2
     "@types/node": ^17.0.33
@@ -1965,12 +1987,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-fern/fiddle-coordinator-api-client@npm:^0.0.606":
-  version: 0.0.606
-  resolution: "@fern-fern/fiddle-coordinator-api-client@npm:0.0.606::__archiveUrl=https%3A%2F%2Ffern-dev-985111089818.d.codeartifact.us-east-1.amazonaws.com%3A443%2Fnpm%2Ffern-dev%2F%40fern-fern%2Ffiddle-coordinator-api-client%2F-%2Ffiddle-coordinator-api-client-0.0.606.tgz"
+"@fern-fern/fiddle-coordinator-api-client@npm:^0.0.4":
+  version: 0.0.4
+  resolution: "@fern-fern/fiddle-coordinator-api-client@npm:0.0.4"
   dependencies:
-    "@fern-typescript/service-utils": 0.0.94
-  checksum: 92ab9a44c4acea50480bceed912917558d90b511b4632b6b60c1e79bdf06f3c506ed9e05c5ca3f2a389975ede8722f4fb289b5d67b1d613ec5b2fe66d7de399e
+    "@fern-typescript/service-utils": 0.0.100
+  checksum: 81e54bfa32a06cae510ba9f08cfbba0a8cb9700997a9c3ba2cfd4edc25b6e17ff971365064150a77c4d8241d50f45cf54e12bf771c5d21e7e8c71243a0bd673a
   languageName: node
   linkType: hard
 
@@ -2248,10 +2270,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/service-utils@npm:0.0.94":
-  version: 0.0.94
-  resolution: "@fern-typescript/service-utils@npm:0.0.94"
-  checksum: 853449e038b92875b13ce8137879749219c1c032c25709ad0cd3cd2e3787e42a3da0ef480977f30e0e9812fe028b8aac56a12ddd002c53033c4adc783748729e
+"@fern-typescript/service-utils@npm:0.0.100":
+  version: 0.0.100
+  resolution: "@fern-typescript/service-utils@npm:0.0.100"
+  dependencies:
+    axios: ^0.27.2
+  checksum: 48fb2ab1e53ab993e14a47717f96baa17f58cc5b4e19f2c84b2790cf1fcf326d5f6b20f9d58abfbbedb5d4ac5d06c81e7458947de6086165ec9590aa8704db59
   languageName: node
   linkType: hard
 
@@ -4706,6 +4730,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"define-lazy-prop@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "define-lazy-prop@npm:2.0.0"
+  checksum: 0115fdb065e0490918ba271d7339c42453d209d4cb619dfe635870d906731eff3e1ade8028bb461ea27ce8264ec5e22c6980612d332895977e89c1bbc80fcee2
+  languageName: node
+  linkType: hard
+
 "define-properties@npm:^1.1.3, define-properties@npm:^1.1.4":
   version: 1.1.4
   resolution: "define-properties@npm:1.1.4"
@@ -6428,6 +6459,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"is-docker@npm:^2.0.0, is-docker@npm:^2.1.1":
+  version: 2.2.1
+  resolution: "is-docker@npm:2.2.1"
+  bin:
+    is-docker: cli.js
+  checksum: 3fef7ddbf0be25958e8991ad941901bf5922ab2753c46980b60b05c1bf9c9c2402d35e6dc32e4380b980ef5e1970a5d9d5e5aa2e02d77727c3b6b5e918474c56
+  languageName: node
+  linkType: hard
+
 "is-extglob@npm:^2.1.1":
   version: 2.1.1
   resolution: "is-extglob@npm:2.1.1"
@@ -6599,6 +6639,15 @@ __metadata:
   version: 1.1.0
   resolution: "is-wsl@npm:1.1.0"
   checksum: ea157d232351e68c92bd62fc541771096942fe72f69dff452dd26dcc31466258c570a3b04b8cda2e01cd2968255b02951b8670d08ea4ed76d6b1a646061ac4fe
+  languageName: node
+  linkType: hard
+
+"is-wsl@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "is-wsl@npm:2.2.0"
+  dependencies:
+    is-docker: ^2.0.0
+  checksum: 20849846ae414997d290b75e16868e5261e86ff5047f104027026fd61d8b5a9b0b3ade16239f35e1a067b3c7cc02f70183cb661010ed16f4b6c7c93dad1b19d8
   languageName: node
   linkType: hard
 
@@ -8128,6 +8177,17 @@ __metadata:
   dependencies:
     is-wsl: "npm:^1.1.0"
   checksum: e5037facf3e03ed777537db3e2511ada37f351c4394e1dadccf9cac11d63b28447ae8b495b7b138659910fd78d918bafed546e47163673c4a4e43dbb5ac53c5d
+  languageName: node
+  linkType: hard
+
+"open@npm:^8.4.0":
+  version: 8.4.0
+  resolution: "open@npm:8.4.0"
+  dependencies:
+    define-lazy-prop: ^2.0.0
+    is-docker: ^2.1.1
+    is-wsl: ^2.2.0
+  checksum: e9545bec64cdbf30a0c35c1bdc310344adf8428a117f7d8df3c0af0a0a24c513b304916a6d9b11db0190ff7225c2d578885080b761ed46a3d5f6f1eebb98b63c
   languageName: node
   linkType: hard
 

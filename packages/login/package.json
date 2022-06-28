@@ -1,11 +1,12 @@
 {
-  "name": "@fern-api/remote-workspace-runner",
+  "name": "@fern-api/login",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "git@github.com:fern-api/fern.git",
-    "directory": "packages/remote-generation/remote-workspace-runner"
+    "directory": "packages/login"
   },
+  "private": true,
   "files": [
     "lib"
   ],
@@ -25,20 +26,15 @@
     "compile:cjs": "tsc --build tsconfig.json && echo '{ \"type\": \"commonjs\" }' > lib/cjs/package.json",
     "compile:esm": "tsc --build tsconfig.esm.json && echo '{ \"type\": \"module\" }' > lib/esm/package.json",
     "test": "yarn run compile && jest --passWithNoTests",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
-    "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore --fix",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
+    "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore --fix",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/commons": "workspace:*",
-    "@fern-api/compiler": "workspace:*",
-    "@fern-fern/fiddle-coordinator-api-client": "^0.0.4",
-    "@fern-typescript/service-utils": "workspace:*",
     "axios": "^0.27.2",
-    "chalk": "^4.1.2",
-    "form-data": "^4.0.0"
+    "open": "^8.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",

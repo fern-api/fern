@@ -1,14 +1,12 @@
 import path from "path";
 import * as webpack from "webpack";
 
+// TODO store these in a central package so we don't harcode them twice
 const PACKAGE_VERSION_ENV_VAR = "PACKAGE_VERSION";
+const AUTH0_DOMAIN_ENV_VAR = "AUTH0_DOMAIN";
+const AUTH0_CLIENT_ID_ENV_VAR = "AUTH0_CLIENT_ID";
 
 export default (): webpack.Configuration => {
-    const PACKAGE_VERSION = process.env[PACKAGE_VERSION_ENV_VAR];
-    if (PACKAGE_VERSION == null) {
-        throw new Error("Cannot bundle because PACKAGE_VERSION is not defined.");
-    }
-
     return {
         mode: "production",
         target: "node",
@@ -45,7 +43,7 @@ export default (): webpack.Configuration => {
             ],
         },
         plugins: [
-            new webpack.EnvironmentPlugin([PACKAGE_VERSION_ENV_VAR]),
+            new webpack.EnvironmentPlugin(PACKAGE_VERSION_ENV_VAR, AUTH0_DOMAIN_ENV_VAR, AUTH0_CLIENT_ID_ENV_VAR),
             new webpack.BannerPlugin({ banner: "#!/usr/bin/env node", raw: true }),
         ],
         output: {
