@@ -32,7 +32,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/api": "workspace:*",
+    "@fern-api/api": "0.0.106",
     "@fern-api/cli": "workspace:*",
     "@fern-api/compiler": "workspace:*",
     "@fern-typescript/commons": "workspace:*",

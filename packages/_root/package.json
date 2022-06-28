@@ -34,7 +34,6 @@
   },
   "dependencies": {
     "@fern-api/add-generator": "workspace:*",
-    "@fern-api/api": "workspace:*",
     "@fern-api/cli": "workspace:*",
     "@fern-api/commons": "workspace:*",
     "@fern-api/compiler": "workspace:*",
