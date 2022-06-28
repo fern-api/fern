@@ -1,6 +1,6 @@
 # Fern
 
-Fern is a framework for building APIs. You can think of it as an alternative to Swagger/OpenAPI.
+Fern is a framework for building APIs. You can think of it as an alternative to OpenAPI (f.k.a Swagger).
 
 [View our docs ➚](https://docs.buildwithfern.com/#/)
 
@@ -54,6 +54,6 @@ Fern reads in the Definition, validates it, and invokes generators. Some example
 | ----------------- | ------------------------------------------------------------------------- |
 | `fern-typescript` | converts a Fern Definition to a TypeScript server and a TypeScript client |
 | `fern-java`       | converts a Fern Definition to a Java server and a Java client             |
-| `fern-postman`    | converts a Fern Definition to a Postman collection                        |
-| `fern-openapi`    | converts a Fern Definition to a OpenAPI spec                              |
+| `fern-postman`    | converts a Fern Definition to a Postman Collection                        |
+| `fern-openapi`    | converts a Fern Definition to a OpenAPI Spec                              |
 | `fern-docs`       | converts a Fern Definition to an interactive documentation site           |
