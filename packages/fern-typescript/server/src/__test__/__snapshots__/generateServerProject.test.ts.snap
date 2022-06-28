@@ -334,7 +334,7 @@ export * from \\"./Author\\";
     \\"main\\": \\"./index.js\\",
     \\"types\\": \\"./index.d.ts\\",
     \\"scripts\\": {
-        \\"build\\": \\"esbuild $(find . -name '*.ts') --format=cjs --outdir=. && tsc\\"
+        \\"build\\": \\"esbuild $(find . -name '*.ts') --format=cjs --sourcemap --outdir=. && tsc\\"
     },
     \\"dependencies\\": {
         \\"uuid\\": \\"8.3.2\\",

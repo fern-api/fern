@@ -123,7 +123,7 @@ export * from \\"./ChatMessage\\";
     \\"main\\": \\"./index.js\\",
     \\"types\\": \\"./index.d.ts\\",
     \\"scripts\\": {
-        \\"build\\": \\"esbuild $(find . -name '*.ts') --format=cjs --outdir=. && tsc\\"
+        \\"build\\": \\"esbuild $(find . -name '*.ts') --format=cjs --sourcemap --outdir=. && tsc\\"
     },
     \\"dependencies\\": {
         \\"uuid\\": \\"8.3.2\\",
@@ -274,7 +274,7 @@ export * from \\"./GetResponse\\";
     \\"main\\": \\"./index.js\\",
     \\"types\\": \\"./index.d.ts\\",
     \\"scripts\\": {
-        \\"build\\": \\"esbuild $(find . -name '*.ts') --format=cjs --outdir=. && tsc\\"
+        \\"build\\": \\"esbuild $(find . -name '*.ts') --format=cjs --sourcemap --outdir=. && tsc\\"
     },
     \\"dependencies\\": {
         \\"@fern-typescript/service-utils\\": \\"0.0.100\\"
@@ -637,7 +637,7 @@ export * from \\"./Author\\";
     \\"main\\": \\"./index.js\\",
     \\"types\\": \\"./index.d.ts\\",
     \\"scripts\\": {
-        \\"build\\": \\"esbuild $(find . -name '*.ts') --format=cjs --outdir=. && tsc\\"
+        \\"build\\": \\"esbuild $(find . -name '*.ts') --format=cjs --sourcemap --outdir=. && tsc\\"
     },
     \\"dependencies\\": {
         \\"uuid\\": \\"8.3.2\\",

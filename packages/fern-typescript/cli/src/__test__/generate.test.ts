@@ -52,10 +52,10 @@ describe("runGenerator", () => {
                 await writeFile(configPath, JSON.stringify(config, undefined, 4));
                 await runGenerator(configPath);
 
-                await installAndCompileGeneratedProjects(outputPath);
-
                 const directoryContents = await getDirectoryContents(path.join(outputPath, "client"));
                 expect(directoryContents).toMatchSnapshot();
+
+                await installAndCompileGeneratedProjects(outputPath);
 
                 await rm(configPath);
                 await rm(outputPath, { recursive: true });
