@@ -7,8 +7,6 @@ jobs:
       - image: cimg/node:stable
     steps:
       - checkout
-      - node/install:
-          install-yarn: true
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
@@ -56,8 +54,6 @@ jobs:
       - image: cimg/node:stable
     steps:
       - checkout
-      - node/install:
-          install-yarn: true
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
