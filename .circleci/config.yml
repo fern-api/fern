@@ -4,7 +4,7 @@ orbs:
 jobs:
   lint:
     docker:
-      - image: cimg/base:stable
+      - image: cimg/node:stable
     steps:
       - checkout
       - node/install:
@@ -31,8 +31,6 @@ jobs:
       image: ubuntu-2004:current
     steps:
       - checkout
-      - node/install:
-          install-yarn: true
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
@@ -55,7 +53,7 @@ jobs:
 
   publish:
     docker:
-      - image: cimg/base:stable
+      - image: cimg/node:stable
     steps:
       - checkout
       - node/install:
