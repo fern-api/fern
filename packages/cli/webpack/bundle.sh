@@ -2,6 +2,7 @@
 
 set -e
 
+dist_dir=dist
 dist_name=fern-api
 version="$1"
 cli_name=fern
@@ -12,7 +13,7 @@ bundle=bundle.js
 cd $(cd -P -- "$(dirname -- "$0")" && pwd -P)
 
 # remove existing dist
-/bin/rm -rf dist
+/bin/rm -rf "$dist_dir"
 
 # compile ESM so we can tree-shaking
 # compile CJS so we have the most up-to-date .d.ts declarations
@@ -23,7 +24,7 @@ package_version=$(yarn info @fern-api/cli --all --json | jq -r .children.Version
 TS_NODE_PROJECT=tsconfig.webpack.json PACKAGE_VERSION="$package_version" yarn webpack --progress
 
 # write package.json
-cat >dist/package.json <<EOL
+cat >"$dist_dir"/package.json <<EOL
 {
   "name": "${dist_name}",
   "version": "${version}",
@@ -36,3 +37,6 @@ cat >dist/package.json <<EOL
   }
 }
 EOL
+
+# write empty yarn.lock so yarn doesn't try to associate this package with the monorepo
+touch "$dist_dir"/yarn.lock
