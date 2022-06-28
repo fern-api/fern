@@ -50,7 +50,7 @@ export function getGeneratorConfig({
             customConfig: customConfig as Record<string, string>,
             helpers: convertedHelpers,
             workspaceName,
-            organization: "dashworks",
+            organization: "fern",
         },
     };
 }
