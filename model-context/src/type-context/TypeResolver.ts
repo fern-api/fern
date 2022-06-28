@@ -1,4 +1,5 @@
-import { DeclaredTypeName, FernFilepath, IntermediateRepresentation, Type, TypeReference } from "@fern-api/api";
+import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { DeclaredTypeName, FernFilepath, Type, TypeReference } from "@fern-fern/ir-model/types";
 import { ResolvedType } from "./ResolvedType";
 
 type Filepath = string;

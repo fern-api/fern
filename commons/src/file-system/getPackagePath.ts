@@ -1,4 +1,4 @@
-import { FernFilepath } from "@fern-api/api";
+import { FernFilepath } from "@fern-fern/ir-model/types";
 import { camelCase } from "lodash";
 
 export type PackagePath = PackagePathPart[];
