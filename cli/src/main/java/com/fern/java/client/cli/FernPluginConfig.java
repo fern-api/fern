@@ -38,7 +38,8 @@ public interface FernPluginConfig {
         return ImmutableFernPluginConfig.builder()
                 .generatorConfig(generatorConfig)
                 .customPluginConfig(CustomPluginConfig.builder()
-                        .mode(Mode.valueOf(generatorConfig.customConfig().get("mode")))
+                        .mode(Mode.valueOf(
+                                generatorConfig.customConfig().get("mode").toUpperCase()))
                         .packagePrefix(Optional.ofNullable(
                                 generatorConfig.customConfig().get("packagePrefix")))
                         .build())

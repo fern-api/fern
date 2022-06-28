@@ -56,7 +56,7 @@ public final class RequestResponseGenerator {
         String wireMessageSuffix = isRequest ? "Request" : "Response";
         return DeclaredTypeName.builder()
                 .fernFilepath(httpService.name().fernFilepath())
-                .name(httpEndpoint.endpointId() + wireMessageSuffix)
+                .name(httpEndpoint.endpointId().value() + wireMessageSuffix)
                 .build();
     }
 
