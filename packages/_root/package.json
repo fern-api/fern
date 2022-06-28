@@ -22,7 +22,7 @@
   "scripts": {
     "clean": "tsc --build --clean tsconfig.esm.json && tsc --build --clean tsconfig.json",
     "compile": "yarn run compile:cjs",
-    "compile:all": "run-p compile:esm compile:cjs",
+    "compile:all": "run-s compile:cjs compile:esm",
     "compile:esm": "tsc --build tsconfig.esm.json && echo '{ \"type\": \"module\" }' > lib/esm/package.json",
     "compile:cjs": "tsc --build tsconfig.json && echo '{ \"type\": \"commonjs\" }' > lib/cjs/package.json",
     "test": "yarn run compile && jest --passWithNoTests",
