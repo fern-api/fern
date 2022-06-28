@@ -5,11 +5,13 @@ orbs:
 jobs:
   lint:
     docker:
-      - image: cimg/base:current
+      - image: cimg/base:stable
     steps:
       - checkout
       - aws-cli/setup:
           profile-name: default
+      - node/install:
+          install-yarn: true
       - run:
           name: Export Code Artifacts token
           command: echo 'export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain fern-dev --domain-owner 985111089818 --query authorizationToken --output text`' >> $BASH_ENV
@@ -32,11 +34,13 @@ jobs:
           command: git --no-pager diff
   compile-and-test:
     docker:
-      - image: cimg/base:current
+      - image: cimg/base:stable
     steps:
       - checkout
       - aws-cli/setup:
           profile-name: default
+      - node/install:
+          install-yarn: true
       - run:
           name: Export Code Artifacts token
           command: echo 'export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain fern-dev --domain-owner 985111089818 --query authorizationToken --output text`' >> $BASH_ENV
@@ -67,6 +71,8 @@ jobs:
       - checkout
       - aws-cli/setup:
           profile-name: default
+      - node/install:
+          install-yarn: true
       - run:
           name: Export Code Artifacts token
           command: echo 'export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain fern-dev --domain-owner 985111089818 --query authorizationToken --output text`' >> $BASH_ENV
