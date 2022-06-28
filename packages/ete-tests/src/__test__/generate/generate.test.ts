@@ -37,7 +37,7 @@ function itFixture(fixtureName: string) {
 
             await installAndCompileGeneratedProjects(outputPath);
 
-            await rm(outputPath, { force: true, recursive: true });
+            // await rm(outputPath, { force: true, recursive: true });
         },
         90_000
     );

@@ -15,7 +15,7 @@ cd $(cd -P -- "$(dirname -- "$0")" && pwd -P)
 # remove existing dist
 /bin/rm -rf "$dist_dir"
 
-# compile ESM so we can tree-shaking
+# compile ESM so we can tree-shake
 # compile CJS so we have the most up-to-date .d.ts declarations
 yarn run --top-level compile:all
 
@@ -23,8 +23,10 @@ yarn run --top-level compile:all
 package_version=$(yarn info @fern-api/cli --all --json | jq -r .children.Version)
 TS_NODE_PROJECT=tsconfig.webpack.json PACKAGE_VERSION="$package_version" yarn webpack --progress
 
+cd "$dist_dir"
+
 # write package.json
-cat >"$dist_dir"/package.json <<EOL
+cat > package.json <<EOL
 {
   "name": "${dist_name}",
   "version": "${version}",
@@ -39,5 +41,7 @@ cat >"$dist_dir"/package.json <<EOL
 EOL
 
 # write empty yarn.lock so yarn doesn't try to associate this package with the monorepo
-touch "$dist_dir"/yarn.lock
+touch yarn.lock
+
+# install package into yarn.lock
 yarn

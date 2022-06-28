@@ -5,7 +5,7 @@ import path from "path";
 
 export async function installAndCompileGeneratedProject(pathToDirectory: string): Promise<void> {
     const runYarnCommand = async (args: string[], env?: Record<string, string>) => {
-        await execa("yarn", args, {
+        await execa("npm", args, {
             cwd: pathToDirectory,
             env,
         });

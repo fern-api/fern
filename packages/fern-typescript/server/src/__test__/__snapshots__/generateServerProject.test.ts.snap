@@ -2,40 +2,13 @@
 
 exports[`generateServerProject posts 1`] = `
 Object {
-  "/package.json": "{
-    \\"name\\": \\"posts\\",
-    \\"version\\": \\"0.0.0\\",
-    \\"files\\": [
-        \\"lib\\"
-    ],
-    \\"main\\": \\"./lib/index.js\\",
-    \\"types\\": \\"./lib/index.d.ts\\",
-    \\"scripts\\": {
-        \\"build\\": \\"tsc && esbuild $(find src -name '*.ts') --outdir=lib --format=cjs\\"
-    },
-    \\"dependencies\\": {
-        \\"uuid\\": \\"8.3.2\\",
-        \\"@types/uuid\\": \\"8.3.4\\",
-        \\"@fern-typescript/service-utils\\": \\"0.0.100\\",
-        \\"express\\": \\"4.18.1\\",
-        \\"@types/express\\": \\"4.17.13\\"
-    },
-    \\"peerDependencies\\": {
-        \\"express\\": \\"*\\",
-        \\"@types/express\\": \\"*\\"
-    },
-    \\"devDependencies\\": {
-        \\"@types/node\\": \\"17.0.33\\",
-        \\"esbuild\\": \\"0.14.47\\",
-        \\"typescript\\": \\"4.6.4\\"
-    }
-}",
-  "/src/index.ts": "export * as model from \\"./model\\";
+  "/.npmignore": "tsconfig.json",
+  "/index.ts": "export * as model from \\"./model\\";
 export * as services from \\"./services\\";
 ",
-  "/src/model/commons/index.ts": "export * from \\"./types\\";
+  "/model/commons/index.ts": "export * from \\"./types\\";
 ",
-  "/src/model/commons/types/PostId.ts": "/**
+  "/model/commons/types/PostId.ts": "/**
  * An ID of a blog post
  */
 export type PostId = string & {
@@ -46,24 +19,24 @@ export const PostId = {
     of: (value: string): PostId => value as PostId
 };
 ",
-  "/src/model/commons/types/index.ts": "export * from \\"./PostId\\";
+  "/model/commons/types/index.ts": "export * from \\"./PostId\\";
 ",
-  "/src/model/index.ts": "export * as commons from \\"./commons\\";
+  "/model/index.ts": "export * as commons from \\"./commons\\";
 export * as posts from \\"./posts\\";
 ",
-  "/src/model/posts/errors/PostNotFoundError.ts": "import * as model from \\"../..\\";
+  "/model/posts/errors/PostNotFoundError.ts": "import * as model from \\"../..\\";
 
 export interface PostNotFoundError {
     id: model.commons.PostId;
 }
 ",
-  "/src/model/posts/errors/index.ts": "export * from \\"./PostNotFoundError\\";
+  "/model/posts/errors/index.ts": "export * from \\"./PostNotFoundError\\";
 ",
-  "/src/model/posts/index.ts": "export * from \\"./types\\";
+  "/model/posts/index.ts": "export * from \\"./types\\";
 export * from \\"./errors\\";
 export * from \\"./service-types\\";
 ",
-  "/src/model/posts/service-types/PostsService/CreatePostErrorBody.ts": "export type CreatePostErrorBody = never;
+  "/model/posts/service-types/PostsService/CreatePostErrorBody.ts": "export type CreatePostErrorBody = never;
 
 export declare namespace CreatePostErrorBody {
     export interface _Visitor<Result> {
@@ -79,7 +52,7 @@ export const CreatePostErrorBody = {
     _types: (): CreatePostErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
-  "/src/model/posts/service-types/PostsService/CreatePostRequest.ts": "import * as model from \\"../../..\\";
+  "/model/posts/service-types/PostsService/CreatePostRequest.ts": "import * as model from \\"../../..\\";
 
 export interface CreatePostRequest {
     type: model.posts.PostType;
@@ -88,7 +61,7 @@ export interface CreatePostRequest {
     content: string;
 }
 ",
-  "/src/model/posts/service-types/PostsService/CreatePostResponse.ts": "import * as model from \\"../../..\\";
+  "/model/posts/service-types/PostsService/CreatePostResponse.ts": "import * as model from \\"../../..\\";
 
 export type CreatePostResponse = CreatePostResponse.SuccessResponse | CreatePostResponse.ErrorResponse;
 
@@ -104,7 +77,7 @@ namespace CreatePostResponse {
     }
 }
 ",
-  "/src/model/posts/service-types/PostsService/DeletePostErrorBody.ts": "export type DeletePostErrorBody = never;
+  "/model/posts/service-types/PostsService/DeletePostErrorBody.ts": "export type DeletePostErrorBody = never;
 
 export declare namespace DeletePostErrorBody {
     export interface _Visitor<Result> {
@@ -120,13 +93,13 @@ export const DeletePostErrorBody = {
     _types: (): DeletePostErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
-  "/src/model/posts/service-types/PostsService/DeletePostRequest.ts": "import * as model from \\"../../..\\";
+  "/model/posts/service-types/PostsService/DeletePostRequest.ts": "import * as model from \\"../../..\\";
 
 export interface DeletePostRequest {
     postId: model.commons.PostId;
 }
 ",
-  "/src/model/posts/service-types/PostsService/DeletePostResponse.ts": "import * as model from \\"../../..\\";
+  "/model/posts/service-types/PostsService/DeletePostResponse.ts": "import * as model from \\"../../..\\";
 
 export type DeletePostResponse = DeletePostResponse.SuccessResponse | DeletePostResponse.ErrorResponse;
 
@@ -141,7 +114,7 @@ namespace DeletePostResponse {
     }
 }
 ",
-  "/src/model/posts/service-types/PostsService/GetPostErrorBody.ts": "import { posts } from \\"../../..\\";
+  "/model/posts/service-types/PostsService/GetPostErrorBody.ts": "import { posts } from \\"../../..\\";
 import * as uuid from \\"uuid\\";
 
 export type GetPostErrorBody =
@@ -176,7 +149,7 @@ export const GetPostErrorBody = {
     _types: (): GetPostErrorBody[\\"_error\\"][] => [\\"PostNotFoundError\\"],
 } as const;
 ",
-  "/src/model/posts/service-types/PostsService/GetPostRequest.ts": "import * as model from \\"../../..\\";
+  "/model/posts/service-types/PostsService/GetPostRequest.ts": "import * as model from \\"../../..\\";
 
 export interface GetPostRequest {
     postId: model.commons.PostId;
@@ -184,7 +157,7 @@ export interface GetPostRequest {
     otherParam: number | null | undefined;
 }
 ",
-  "/src/model/posts/service-types/PostsService/GetPostResponse.ts": "import * as model from \\"../../..\\";
+  "/model/posts/service-types/PostsService/GetPostResponse.ts": "import * as model from \\"../../..\\";
 
 export type GetPostResponse = GetPostResponse.SuccessResponse | GetPostResponse.ErrorResponse;
 
@@ -200,7 +173,7 @@ namespace GetPostResponse {
     }
 }
 ",
-  "/src/model/posts/service-types/PostsService/GetPostV2ErrorBody.ts": "import { posts } from \\"../../..\\";
+  "/model/posts/service-types/PostsService/GetPostV2ErrorBody.ts": "import { posts } from \\"../../..\\";
 import * as uuid from \\"uuid\\";
 
 export type GetPostV2ErrorBody =
@@ -235,7 +208,7 @@ export const GetPostV2ErrorBody = {
     _types: (): GetPostV2ErrorBody[\\"_error\\"][] => [\\"PostNotFoundError\\"],
 } as const;
 ",
-  "/src/model/posts/service-types/PostsService/GetPostV2Response.ts": "import * as model from \\"../../..\\";
+  "/model/posts/service-types/PostsService/GetPostV2Response.ts": "import * as model from \\"../../..\\";
 
 export type GetPostV2Response = GetPostV2Response.SuccessResponse | GetPostV2Response.ErrorResponse;
 
@@ -251,7 +224,7 @@ namespace GetPostV2Response {
     }
 }
 ",
-  "/src/model/posts/service-types/PostsService/index.ts": "export * from \\"./CreatePostRequest\\";
+  "/model/posts/service-types/PostsService/index.ts": "export * from \\"./CreatePostRequest\\";
 export * from \\"./CreatePostErrorBody\\";
 export * from \\"./CreatePostResponse\\";
 export * from \\"./GetPostRequest\\";
@@ -263,9 +236,9 @@ export * from \\"./DeletePostRequest\\";
 export * from \\"./DeletePostErrorBody\\";
 export * from \\"./DeletePostResponse\\";
 ",
-  "/src/model/posts/service-types/index.ts": "export * from \\"./PostsService\\";
+  "/model/posts/service-types/index.ts": "export * from \\"./PostsService\\";
 ",
-  "/src/model/posts/types/Author.ts": "export type Author =
+  "/model/posts/types/Author.ts": "export type Author =
     | Author.Anonymous
     | Author.Named;
 
@@ -307,7 +280,7 @@ export const Author = {
     _types: (): Author[\\"_type\\"][] => [\\"anonymous\\", \\"named\\"],
 } as const;
 ",
-  "/src/model/posts/types/Post.ts": "import * as model from \\"../..\\";
+  "/model/posts/types/Post.ts": "import * as model from \\"../..\\";
 
 /**
  * A blog post
@@ -321,7 +294,7 @@ export interface Post {
     relatedPosts: model.posts.Post[];
 }
 ",
-  "/src/model/posts/types/PostType.ts": "export type PostType =
+  "/model/posts/types/PostType.ts": "export type PostType =
     | \\"LONG\\"
     | \\"SHORT\\";
 
@@ -351,13 +324,38 @@ export declare namespace PostType {
     }
 }
 ",
-  "/src/model/posts/types/index.ts": "export * from \\"./Post\\";
+  "/model/posts/types/index.ts": "export * from \\"./Post\\";
 export * from \\"./PostType\\";
 export * from \\"./Author\\";
 ",
-  "/src/services/index.ts": "export * as posts from \\"./posts\\";
+  "/package.json": "{
+    \\"name\\": \\"posts\\",
+    \\"version\\": \\"0.0.0\\",
+    \\"main\\": \\"./index.js\\",
+    \\"types\\": \\"./index.d.ts\\",
+    \\"scripts\\": {
+        \\"build\\": \\"esbuild $(find . -name '*.ts') --format=cjs --outdir=. && tsc\\"
+    },
+    \\"dependencies\\": {
+        \\"uuid\\": \\"8.3.2\\",
+        \\"@types/uuid\\": \\"8.3.4\\",
+        \\"@fern-typescript/service-utils\\": \\"0.0.100\\",
+        \\"express\\": \\"4.18.1\\",
+        \\"@types/express\\": \\"4.17.13\\"
+    },
+    \\"peerDependencies\\": {
+        \\"express\\": \\"*\\",
+        \\"@types/express\\": \\"*\\"
+    },
+    \\"devDependencies\\": {
+        \\"@types/node\\": \\"17.0.33\\",
+        \\"esbuild\\": \\"0.14.47\\",
+        \\"typescript\\": \\"4.6.4\\"
+    }
+}",
+  "/services/index.ts": "export * as posts from \\"./posts\\";
 ",
-  "/src/services/posts/PostsService.ts": "import * as model from \\"../../model\\";
+  "/services/posts/PostsService.ts": "import * as model from \\"../../model\\";
 import { MaybePromise } from \\"@fern-typescript/service-utils\\";
 import express, { Express } from \\"express\\";
 
@@ -426,22 +424,17 @@ export const PostsService = {
     }
 };
 ",
-  "/src/services/posts/index.ts": "export * from \\"./PostsService\\";
+  "/services/posts/index.ts": "export * from \\"./PostsService\\";
 ",
   "/tsconfig.json": "{
     \\"compilerOptions\\": {
-        \\"rootDir\\": \\"src\\",
-        \\"outDir\\": \\"lib\\",
-        \\"skipLibCheck\\": true,
         \\"strict\\": true,
+        \\"skipLibCheck\\": true,
         \\"declaration\\": true,
+        \\"sourceMap\\": true,
         \\"emitDeclarationOnly\\": true,
-        \\"isolatedModules\\": true,
         \\"esModuleInterop\\": true
-    },
-    \\"include\\": [
-        \\"src\\"
-    ]
+    }
 }",
 }
 `;

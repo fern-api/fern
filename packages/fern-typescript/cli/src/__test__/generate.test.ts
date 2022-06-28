@@ -54,7 +54,7 @@ describe("runGenerator", () => {
 
                 await installAndCompileGeneratedProjects(outputPath);
 
-                const directoryContents = await getDirectoryContents(path.join(outputPath, "client", "src"));
+                const directoryContents = await getDirectoryContents(path.join(outputPath, "client"));
                 expect(directoryContents).toMatchSnapshot();
 
                 await rm(configPath);
