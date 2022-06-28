@@ -1,8 +1,10 @@
 import path from "path";
 import * as webpack from "webpack";
 
+const PACKAGE_VERSION_ENV_VAR = "PACKAGE_VERSION";
+
 export default (): webpack.Configuration => {
-    const { PACKAGE_VERSION } = process.env;
+    const PACKAGE_VERSION = process.env[PACKAGE_VERSION_ENV_VAR];
     if (PACKAGE_VERSION == null) {
         throw new Error("Cannot bundle because PACKAGE_VERSION is not defined.");
     }
@@ -37,7 +39,10 @@ export default (): webpack.Configuration => {
         resolve: {
             extensions: [".ts", ".js"],
         },
-        plugins: [new webpack.EnvironmentPlugin(["PACKAGE_VERSION"])],
+        plugins: [
+            new webpack.EnvironmentPlugin([PACKAGE_VERSION_ENV_VAR]),
+            new webpack.BannerPlugin({ banner: "#!/usr/bin/env node", raw: true }),
+        ],
         output: {
             path: path.join(__dirname, "dist"),
             filename: "bundle.js",
