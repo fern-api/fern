@@ -2,8 +2,5 @@
   "extends": "../../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib/esm", "rootDir": "src", "module": "esnext" },
   "include": ["./src"],
-  "references": [
-    { "path": "../../compiler/ir-types/fern-ir-typescript/tsconfig.esm.json" },
-    { "path": "../commons/tsconfig.esm.json" }
-  ]
+  "references": [{ "path": "../commons/tsconfig.esm.json" }]
 }

@@ -3,9 +3,5 @@
   "compilerOptions": { "composite": true, "outDir": "lib/esm", "rootDir": "src", "module": "esnext" },
   "include": ["./src"],
   "exclude": ["./src/**/__test__/**/generated"],
-  "references": [
-    { "path": "../../compiler/ir-types/fern-ir-typescript/tsconfig.esm.json" },
-    { "path": "../model-context/tsconfig.esm.json" },
-    { "path": "../types/tsconfig.esm.json" }
-  ]
+  "references": [{ "path": "../model-context/tsconfig.esm.json" }, { "path": "../types/tsconfig.esm.json" }]
 }

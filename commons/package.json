@@ -32,7 +32,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/api": "workspace:*",
+    "@fern-api/api": "0.0.106",
     "@fern-api/commons": "workspace:*",
     "esutils": "^2.0.3",
     "immer": "^9.0.15",

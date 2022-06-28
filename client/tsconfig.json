@@ -5,7 +5,6 @@
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
     { "path": "../../commons/tsconfig.json" },
-    { "path": "../../compiler/ir-types/fern-ir-typescript/tsconfig.json" },
     { "path": "../commons/tsconfig.json" },
     { "path": "../encoders/tsconfig.json" },
     { "path": "../helpers/helper-manager/tsconfig.json" },
