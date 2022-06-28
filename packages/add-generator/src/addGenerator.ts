@@ -15,7 +15,7 @@ const TYPESCRIPT_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
     version: "0.0.101",
     generate: true,
     config: {
-        mode: "client",
+        mode: "server",
     },
 };
 
