@@ -1,5 +1,5 @@
 import { initialize } from "@fern-api/init";
-import { Argv } from "yargs";
+import { Argv, showHelp } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
@@ -9,13 +9,20 @@ import { convertOpenApiToFernApiDefinition } from "./commands/convert-openapi/co
 void runCli();
 
 async function runCli() {
+    const passedInArgs = hideBin(process.argv);
     const cli = yargs(hideBin(process.argv))
         .scriptName("fern")
         .strict()
         .alias("v", "version")
         .demandCommand()
         .recommendCommands()
-        .showHelpOnFail(false);
+        .showHelpOnFail(false)
+        .fail(() => {
+            if (passedInArgs.length === 0) {
+                showHelp();
+                process.exit(1);
+            }
+        });
 
     const packageVersion = process.env.PACKAGE_VERSION;
     if (packageVersion != null) {
