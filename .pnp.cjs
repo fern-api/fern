@@ -2954,6 +2954,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/syntax-analysis", "workspace:packages/compiler/syntax-analysis"],\
             ["@types/jest", "npm:28.1.2"],\
             ["@types/node", "npm:17.0.34"],\
+            ["@types/validate-npm-package-name", "npm:4.0.0"],\
             ["@types/yargs", "npm:17.0.10"],\
             ["chalk", "npm:4.1.2"],\
             ["depcheck", "npm:1.4.3"],\
@@ -2968,6 +2969,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["ts-loader", "virtual:909a3ad0503c6a40b1eda456c4db8b2a60b9422bba9121b95eef4169ee16677e7144d66526740c016c87dd3dc339185e62726b17a4bb073916f17da3fb3c2c2f#npm:9.3.1"],\
             ["ts-node", "virtual:909a3ad0503c6a40b1eda456c4db8b2a60b9422bba9121b95eef4169ee16677e7144d66526740c016c87dd3dc339185e62726b17a4bb073916f17da3fb3c2c2f#npm:10.8.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=7ad353"],\
+            ["validate-npm-package-name", "npm:4.0.0"],\
             ["webpack", "virtual:909a3ad0503c6a40b1eda456c4db8b2a60b9422bba9121b95eef4169ee16677e7144d66526740c016c87dd3dc339185e62726b17a4bb073916f17da3fb3c2c2f#npm:5.73.0"],\
             ["webpack-cli", "virtual:909a3ad0503c6a40b1eda456c4db8b2a60b9422bba9121b95eef4169ee16677e7144d66526740c016c87dd3dc339185e62726b17a4bb073916f17da3fb3c2c2f#npm:4.10.0"],\
             ["yargs", "npm:17.5.1"],\
@@ -4622,6 +4624,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@types/validate-npm-package-name", [\
+        ["npm:4.0.0", {\
+          "packageLocation": "./.yarn/cache/@types-validate-npm-package-name-npm-4.0.0-0a37928601-09efd659f4.zip/node_modules/@types/validate-npm-package-name/",\
+          "packageDependencies": [\
+            ["@types/validate-npm-package-name", "npm:4.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@types/webpack-bundle-analyzer", [\
         ["npm:4.4.1", {\
           "packageLocation": "./.yarn/cache/@types-webpack-bundle-analyzer-npm-4.4.1-03dcaa33e7-50afdbd2a4.zip/node_modules/@types/webpack-bundle-analyzer/",\
@@ -6022,6 +6033,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/buildcheck-npm-0.0.3-ac31c4ae43-baf30605c5.zip/node_modules/buildcheck/",\
           "packageDependencies": [\
             ["buildcheck", "npm:0.0.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["builtins", [\
+        ["npm:5.0.1", {\
+          "packageLocation": "./.yarn/cache/builtins-npm-5.0.1-6d4820dd76-66d204657f.zip/node_modules/builtins/",\
+          "packageDependencies": [\
+            ["builtins", "npm:5.0.1"],\
+            ["semver", "npm:7.3.7"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -13150,6 +13171,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["validate-npm-package-license", "npm:3.0.4"],\
             ["spdx-correct", "npm:3.1.1"],\
             ["spdx-expression-parse", "npm:3.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["validate-npm-package-name", [\
+        ["npm:4.0.0", {\
+          "packageLocation": "./.yarn/cache/validate-npm-package-name-npm-4.0.0-3f82c77ef8-a32fd537ba.zip/node_modules/validate-npm-package-name/",\
+          "packageDependencies": [\
+            ["validate-npm-package-name", "npm:4.0.0"],\
+            ["builtins", "npm:5.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\
