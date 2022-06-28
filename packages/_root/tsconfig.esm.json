@@ -29,6 +29,7 @@
     { "path": "../init/tsconfig.esm.json" },
     { "path": "../local-generation/docker-utils/tsconfig.esm.json" },
     { "path": "../local-generation/local-workspace-runner/tsconfig.esm.json" },
+    { "path": "../login/tsconfig.esm.json" },
     { "path": "../openapi-converter/tsconfig.esm.json" },
     { "path": "../remote-generation/remote-workspace-runner/tsconfig.esm.json" }
   ]

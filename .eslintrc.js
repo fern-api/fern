@@ -33,6 +33,12 @@ module.exports = {
         ],
         semi: ["error", "always"],
         indent: "off",
+        "no-empty": [
+            "error",
+            {
+                allowEmptyCatch: true,
+            },
+        ],
         "@typescript-eslint/no-unused-vars": [
             "warn",
             {
@@ -52,8 +58,6 @@ module.exports = {
             },
         ],
         "@typescript-eslint/no-floating-promises": ["error"],
-
-        "no-empty-function": "off",
         "@typescript-eslint/no-empty-function": [
             "error",
             {

@@ -1,4 +1,5 @@
 import { initialize } from "@fern-api/init";
+import { initiateLogin } from "@fern-api/login";
 import { Argv, showHelp } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
@@ -33,6 +34,7 @@ async function runCli() {
     addAddCommand(cli);
     addConvertCommand(cli);
     addGenerateCommand(cli);
+    addLoginCommand(cli);
 
     await cli.parse();
 }
@@ -47,7 +49,7 @@ function addInitCommand(cli: Argv) {
 
 function addAddCommand(cli: Argv) {
     cli.command(
-        ["add <generator> [workspaces...]"],
+        "add <generator> [workspaces...]",
         "Add a generator to .fernrc.yml",
         (yargs) =>
             yargs
@@ -95,7 +97,7 @@ function addGenerateCommand(cli: Argv) {
 
 function addConvertCommand(cli: Argv) {
     cli.command(
-        ["convert <openapiPath> <fernDefinitionDir>"],
+        "convert <openapiPath> <fernDefinitionDir>",
         "Converts Open API to Fern definition.",
         (yargs) =>
             yargs
@@ -111,4 +113,14 @@ function addConvertCommand(cli: Argv) {
                 }),
         (argv) => convertOpenApiToFernApiDefinition(argv.openapiPath, argv.fernDefinitionDir)
     );
+}
+
+function addLoginCommand(cli: Argv) {
+    cli.command({
+        command: "login",
+        describe: "Authenticate with Fern",
+        handler: async () => {
+            await initiateLogin();
+        },
+    });
 }
