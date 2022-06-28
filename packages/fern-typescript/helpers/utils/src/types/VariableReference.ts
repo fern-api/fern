@@ -1,4 +1,4 @@
-import { EndpointId, TypeReference } from "@fern-api/api";
+import { EndpointId, TypeReference } from "@fern-fern/ir-model";
 import { ts } from "ts-morph";
 
 export type VariableReference = VariableReference.WireMessageBodyReference | VariableReference.ModelReference;

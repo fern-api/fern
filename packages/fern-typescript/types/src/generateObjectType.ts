@@ -1,4 +1,4 @@
-import { ObjectTypeDeclaration, TypeReference } from "@fern-api/api";
+import { ObjectTypeDeclaration, TypeReference } from "@fern-fern/ir-model";
 import { getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { ModelContext } from "@fern-typescript/model-context";
 import { SourceFile } from "ts-morph";

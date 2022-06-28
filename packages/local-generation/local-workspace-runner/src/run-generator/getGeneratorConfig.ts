@@ -1,4 +1,4 @@
-import { GeneratorConfig, GeneratorHelpers } from "@fern-api/api";
+import { GeneratorConfig, GeneratorHelpers } from "@fern-fern/ir-model";
 import path from "path";
 import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_GENERATORS_DIRECTORY, DOCKER_PATH_TO_IR } from "./constants";
 

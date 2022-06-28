@@ -1,5 +1,5 @@
-import { ContainerType, FernFilepath, PrimitiveType, TypeReference } from "@fern-api/api";
 import { RawSchemas } from "@fern-api/syntax-analysis";
+import { ContainerType, FernFilepath, PrimitiveType, TypeReference } from "@fern-fern/ir-model";
 import { parseTypeName } from "./parseTypeName";
 
 const MAP_REGEX = /^map<\s*(.*)\s*,\s*(.*)\s*>$/;

@@ -1,5 +1,5 @@
-import { CustomWireMessageEncoding, FernFilepath, HttpRequest } from "@fern-api/api";
 import { RawSchemas } from "@fern-api/syntax-analysis";
+import { CustomWireMessageEncoding, FernFilepath, HttpRequest } from "@fern-fern/ir-model";
 import { convertInlineTypeDeclaration } from "../type-declarations/convertInlineTypeDeclaration";
 import { convertEncoding } from "./convertEncoding";
 

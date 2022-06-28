@@ -1,4 +1,4 @@
-import { IntermediateRepresentation } from "@fern-api/api";
+import { IntermediateRepresentation } from "@fern-fern/ir-model";
 import { DependencyManager, generateTypeScriptProject } from "@fern-typescript/commons";
 import { generateErrorFiles } from "@fern-typescript/errors";
 import { ModelContext } from "@fern-typescript/model-context";

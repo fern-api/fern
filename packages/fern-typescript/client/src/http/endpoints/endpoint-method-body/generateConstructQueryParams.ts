@@ -1,4 +1,4 @@
-import { DeclaredTypeName, HttpEndpoint, PrimitiveType, QueryParameter, TypeReference } from "@fern-api/api";
+import { DeclaredTypeName, HttpEndpoint, PrimitiveType, QueryParameter, TypeReference } from "@fern-fern/ir-model";
 import { ModelContext, ResolvedType } from "@fern-typescript/model-context";
 import { ts } from "ts-morph";
 import { ClientConstants } from "../../../constants";

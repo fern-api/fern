@@ -1,8 +1,8 @@
-name: fern-ir-types
+name: ir
 definition: ./src
 generators:
   - name: fernapi/fern-typescript
-    version: 0.0.104
+    version: 0.0.105
     generate: true
     config:
       mode: model

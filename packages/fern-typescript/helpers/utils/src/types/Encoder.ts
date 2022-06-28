@@ -1,4 +1,4 @@
-import { IntermediateRepresentation } from "@fern-api/api";
+import { IntermediateRepresentation } from "@fern-fern/ir-model";
 import { ModelContext } from "@fern-typescript/model-context";
 import { Directory, ts } from "ts-morph";
 import { VariableReference } from "./VariableReference";

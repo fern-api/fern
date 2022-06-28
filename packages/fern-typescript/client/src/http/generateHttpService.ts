@@ -1,4 +1,4 @@
-import { HttpService } from "@fern-api/api";
+import { HttpService } from "@fern-fern/ir-model";
 import {
     createDirectoriesForFernFilepath,
     createSourceFileAndExportFromModule,

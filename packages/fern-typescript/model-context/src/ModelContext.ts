@@ -5,7 +5,7 @@ import {
     IntermediateRepresentation,
     Type,
     TypeReference,
-} from "@fern-api/api";
+} from "@fern-fern/ir-model";
 import { ImportStrategy } from "@fern-typescript/commons";
 import { Directory, SourceFile, ts } from "ts-morph";
 import { ErrorContext } from "./error-context/ErrorContext";

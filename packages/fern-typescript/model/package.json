@@ -32,7 +32,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/api": "workspace:*",
+    "@fern-fern/ir-model": "*",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/errors": "workspace:*",
     "@fern-typescript/model-context": "workspace:*",

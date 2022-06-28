@@ -1,4 +1,4 @@
-import { HttpEndpoint, ServiceName } from "@fern-api/api";
+import { HttpEndpoint, ServiceName } from "@fern-fern/ir-model";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { HttpServiceTypeMetadata, ModelContext } from "@fern-typescript/model-context";
 import { OptionalKind, PropertySignatureStructure, SourceFile } from "ts-morph";

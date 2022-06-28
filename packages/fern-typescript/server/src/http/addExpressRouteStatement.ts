@@ -1,4 +1,4 @@
-import { HttpEndpoint, HttpMethod, HttpPath, HttpService } from "@fern-api/api";
+import { HttpEndpoint, HttpMethod, HttpPath, HttpService } from "@fern-fern/ir-model";
 import { GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/model-context";
 import { ServiceTypesConstants } from "@fern-typescript/service-types";
 import path from "path";

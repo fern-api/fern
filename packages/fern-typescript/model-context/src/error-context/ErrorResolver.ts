@@ -1,4 +1,4 @@
-import { ErrorDeclaration, ErrorName, FernFilepath, IntermediateRepresentation } from "@fern-api/api";
+import { ErrorDeclaration, ErrorName, FernFilepath, IntermediateRepresentation } from "@fern-fern/ir-model";
 
 type SimpleErrorName = string;
 

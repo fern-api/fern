@@ -1,3 +1,5 @@
+import { assertNever } from "@fern-api/commons";
+import { RawSchemas } from "@fern-api/syntax-analysis";
 import {
     ContainerType,
     CustomWireMessageEncoding,
@@ -8,9 +10,7 @@ import {
     HttpMethod,
     HttpService,
     TypeReference,
-} from "@fern-api/api";
-import { assertNever } from "@fern-api/commons";
-import { RawSchemas } from "@fern-api/syntax-analysis";
+} from "@fern-fern/ir-model";
 import { getDocs } from "../../utils/getDocs";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { constructHttpPath } from "./constructHttpPath";

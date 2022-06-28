@@ -1,4 +1,4 @@
-import { FailedResponse, PrimitiveType, ResponseError, TypeReference } from "@fern-api/api";
+import { FailedResponse, PrimitiveType, ResponseError, TypeReference } from "@fern-fern/ir-model";
 import { DependencyManager, generateUuidCall } from "@fern-typescript/commons";
 import { ModelContext } from "@fern-typescript/model-context";
 import {

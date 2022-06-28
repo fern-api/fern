@@ -1,4 +1,4 @@
-import { EnumValue } from "@fern-api/api";
+import { EnumValue } from "@fern-fern/ir-model";
 import { snakeCase, upperFirst } from "lodash";
 
 export function getKeyForEnum({ name }: EnumValue): string {

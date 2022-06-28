@@ -1,4 +1,4 @@
-import { FernFilepath } from "@fern-api/api";
+import { FernFilepath } from "@fern-fern/ir-model";
 
 export interface ModelItem {
     typeName: string;

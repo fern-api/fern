@@ -1,4 +1,4 @@
-import { ContainerType, FernFilepath, TypeReference } from "@fern-api/api";
+import { ContainerType, FernFilepath, TypeReference } from "@fern-fern/ir-model";
 import { parseInlineType } from "../utils/parseInlineType";
 
 describe("parse inline types", () => {

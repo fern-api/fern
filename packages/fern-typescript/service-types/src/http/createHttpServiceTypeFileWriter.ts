@@ -1,4 +1,4 @@
-import { HttpEndpoint, ServiceName } from "@fern-api/api";
+import { HttpEndpoint, ServiceName } from "@fern-fern/ir-model";
 import { HttpServiceTypeMetadata, ModelContext } from "@fern-typescript/model-context";
 import { upperFirst } from "lodash";
 import { ServiceTypeFileWriter } from "../commons/service-type-reference/generateServiceTypeReference";

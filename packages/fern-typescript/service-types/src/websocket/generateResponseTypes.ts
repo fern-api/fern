@@ -1,4 +1,4 @@
-import { ServiceName, WebSocketOperation } from "@fern-api/api";
+import { ServiceName, WebSocketOperation } from "@fern-fern/ir-model";
 import { DependencyManager, getTextOfTsKeyword } from "@fern-typescript/commons";
 import { GeneratedWebSocketOperationTypes, ModelContext } from "@fern-typescript/model-context";
 import { ts } from "ts-morph";
