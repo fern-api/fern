@@ -1,4 +1,4 @@
-name: Posts
+name: posts
 definition: ./api
 generators:
   - name: fernapi/fern-typescript
