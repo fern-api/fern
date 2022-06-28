@@ -2,31 +2,11 @@
 
 exports[`generateClientProject chat app 1`] = `
 Object {
-  "/package.json": "{
-    \\"name\\": \\"chat\\",
-    \\"version\\": \\"0.0.0\\",
-    \\"files\\": [
-        \\"lib\\"
-    ],
-    \\"main\\": \\"./lib/index.js\\",
-    \\"types\\": \\"./lib/index.d.ts\\",
-    \\"scripts\\": {
-        \\"build\\": \\"tsc && esbuild $(find src -name '*.ts') --outdir=lib --format=cjs\\"
-    },
-    \\"dependencies\\": {
-        \\"uuid\\": \\"8.3.2\\",
-        \\"@types/uuid\\": \\"8.3.4\\"
-    },
-    \\"devDependencies\\": {
-        \\"@types/node\\": \\"17.0.33\\",
-        \\"esbuild\\": \\"0.14.47\\",
-        \\"typescript\\": \\"4.6.4\\"
-    }
-}",
-  "/src/index.ts": "export * as model from \\"./model\\";
+  "/.npmignore": "tsconfig.json",
+  "/index.ts": "export * as model from \\"./model\\";
 export * as services from \\"./services\\";
 ",
-  "/src/model/chat/errors/GenericMessage.ts": "export type GenericMessage = string & {
+  "/model/chat/errors/GenericMessage.ts": "export type GenericMessage = string & {
     __GenericMessage: void;
 };
 
@@ -34,13 +14,13 @@ export const GenericMessage = {
     of: (value: string): GenericMessage => value as GenericMessage
 };
 ",
-  "/src/model/chat/errors/index.ts": "export * from \\"./GenericMessage\\";
+  "/model/chat/errors/index.ts": "export * from \\"./GenericMessage\\";
 ",
-  "/src/model/chat/index.ts": "export * from \\"./types\\";
+  "/model/chat/index.ts": "export * from \\"./types\\";
 export * from \\"./errors\\";
 export * from \\"./service-types\\";
 ",
-  "/src/model/chat/service-types/ChatService/SendChatErrorBody.ts": "import { chat } from \\"../../..\\";
+  "/model/chat/service-types/ChatService/SendChatErrorBody.ts": "import { chat } from \\"../../..\\";
 import * as uuid from \\"uuid\\";
 
 export type SendChatErrorBody =
@@ -76,7 +56,7 @@ export const SendChatErrorBody = {
     _types: (): SendChatErrorBody[\\"_error\\"][] => [\\"GenericMessage\\"],
 } as const;
 ",
-  "/src/model/chat/service-types/ChatService/SendChatRequest.ts": "import * as model from \\"../../..\\";
+  "/model/chat/service-types/ChatService/SendChatRequest.ts": "import * as model from \\"../../..\\";
 
 export interface SendChatRequest {
     id: string;
@@ -84,12 +64,12 @@ export interface SendChatRequest {
     body: model.chat.SendChatRequestBody;
 }
 ",
-  "/src/model/chat/service-types/ChatService/SendChatRequestBody.ts": "export interface SendChatRequestBody {
+  "/model/chat/service-types/ChatService/SendChatRequestBody.ts": "export interface SendChatRequestBody {
     title: string;
     content: string;
 }
 ",
-  "/src/model/chat/service-types/ChatService/SendChatResponse.ts": "import * as model from \\"../../..\\";
+  "/model/chat/service-types/ChatService/SendChatResponse.ts": "import * as model from \\"../../..\\";
 
 export type SendChatResponse = SendChatResponse.SuccessResponse | SendChatResponse.ErrorResponse;
 
@@ -109,14 +89,14 @@ namespace SendChatResponse {
     }
 }
 ",
-  "/src/model/chat/service-types/ChatService/index.ts": "export * from \\"./SendChatRequestBody\\";
+  "/model/chat/service-types/ChatService/index.ts": "export * from \\"./SendChatRequestBody\\";
 export * from \\"./SendChatRequest\\";
 export * from \\"./SendChatErrorBody\\";
 export * from \\"./SendChatResponse\\";
 ",
-  "/src/model/chat/service-types/index.ts": "export * from \\"./ChatService\\";
+  "/model/chat/service-types/index.ts": "export * from \\"./ChatService\\";
 ",
-  "/src/model/chat/types/ChatMessage.ts": "import * as model from \\"../..\\";
+  "/model/chat/types/ChatMessage.ts": "import * as model from \\"../..\\";
 
 export interface ChatMessage {
     id: model.chat.ChatMessageId;
@@ -124,7 +104,7 @@ export interface ChatMessage {
     content: string;
 }
 ",
-  "/src/model/chat/types/ChatMessageId.ts": "export type ChatMessageId = string & {
+  "/model/chat/types/ChatMessageId.ts": "export type ChatMessageId = string & {
     __ChatMessageId: void;
 };
 
@@ -132,12 +112,30 @@ export const ChatMessageId = {
     of: (value: string): ChatMessageId => value as ChatMessageId
 };
 ",
-  "/src/model/chat/types/index.ts": "export * from \\"./ChatMessageId\\";
+  "/model/chat/types/index.ts": "export * from \\"./ChatMessageId\\";
 export * from \\"./ChatMessage\\";
 ",
-  "/src/model/index.ts": "export * as chat from \\"./chat\\";
+  "/model/index.ts": "export * as chat from \\"./chat\\";
 ",
-  "/src/services/chat/ChatService.ts": "import * as model from \\"../../model\\";
+  "/package.json": "{
+    \\"name\\": \\"chat\\",
+    \\"version\\": \\"0.0.0\\",
+    \\"main\\": \\"./index.js\\",
+    \\"types\\": \\"./index.d.ts\\",
+    \\"scripts\\": {
+        \\"build\\": \\"esbuild $(find . -name '*.ts') --format=cjs --sourcemap --outdir=. && tsc\\"
+    },
+    \\"dependencies\\": {
+        \\"uuid\\": \\"8.3.2\\",
+        \\"@types/uuid\\": \\"8.3.4\\"
+    },
+    \\"devDependencies\\": {
+        \\"@types/node\\": \\"17.0.33\\",
+        \\"esbuild\\": \\"0.14.47\\",
+        \\"typescript\\": \\"4.6.4\\"
+    }
+}",
+  "/services/chat/ChatService.ts": "import * as model from \\"../../model\\";
 import * as uuid from \\"uuid\\";
 
 export declare namespace ChatService {
@@ -207,56 +205,32 @@ export class ChatService implements ChatService {
     }
 }
 ",
-  "/src/services/chat/index.ts": "export * from \\"./ChatService\\";
+  "/services/chat/index.ts": "export * from \\"./ChatService\\";
 ",
-  "/src/services/index.ts": "export * as chat from \\"./chat\\";
+  "/services/index.ts": "export * as chat from \\"./chat\\";
 ",
   "/tsconfig.json": "{
     \\"compilerOptions\\": {
-        \\"rootDir\\": \\"src\\",
-        \\"outDir\\": \\"lib\\",
-        \\"skipLibCheck\\": true,
         \\"strict\\": true,
+        \\"skipLibCheck\\": true,
         \\"declaration\\": true,
+        \\"sourceMap\\": true,
         \\"emitDeclarationOnly\\": true,
-        \\"isolatedModules\\": true,
         \\"esModuleInterop\\": true
-    },
-    \\"include\\": [
-        \\"src\\"
-    ]
+    }
 }",
 }
 `;
 
 exports[`generateClientProject no errors 1`] = `
 Object {
-  "/package.json": "{
-    \\"name\\": \\"no-errors\\",
-    \\"version\\": \\"0.0.0\\",
-    \\"files\\": [
-        \\"lib\\"
-    ],
-    \\"main\\": \\"./lib/index.js\\",
-    \\"types\\": \\"./lib/index.d.ts\\",
-    \\"scripts\\": {
-        \\"build\\": \\"tsc && esbuild $(find src -name '*.ts') --outdir=lib --format=cjs\\"
-    },
-    \\"dependencies\\": {
-        \\"@fern-typescript/service-utils\\": \\"0.0.100\\"
-    },
-    \\"devDependencies\\": {
-        \\"@types/node\\": \\"17.0.33\\",
-        \\"esbuild\\": \\"0.14.47\\",
-        \\"typescript\\": \\"4.6.4\\"
-    }
-}",
-  "/src/index.ts": "export * as model from \\"./model\\";
+  "/.npmignore": "tsconfig.json",
+  "/index.ts": "export * as model from \\"./model\\";
 export * as services from \\"./services\\";
 ",
-  "/src/model/api/index.ts": "export * from \\"./service-types\\";
+  "/model/api/index.ts": "export * from \\"./service-types\\";
 ",
-  "/src/model/api/service-types/NoErrorsService/GetErrorBody.ts": "export type GetErrorBody = never;
+  "/model/api/service-types/NoErrorsService/GetErrorBody.ts": "export type GetErrorBody = never;
 
 export declare namespace GetErrorBody {
     export interface _Visitor<Result> {
@@ -272,7 +246,7 @@ export const GetErrorBody = {
     _types: (): GetErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
-  "/src/model/api/service-types/NoErrorsService/GetResponse.ts": "import * as model from \\"../../..\\";
+  "/model/api/service-types/NoErrorsService/GetResponse.ts": "import * as model from \\"../../..\\";
 
 export type GetResponse = GetResponse.SuccessResponse | GetResponse.ErrorResponse;
 
@@ -287,14 +261,31 @@ namespace GetResponse {
     }
 }
 ",
-  "/src/model/api/service-types/NoErrorsService/index.ts": "export * from \\"./GetErrorBody\\";
+  "/model/api/service-types/NoErrorsService/index.ts": "export * from \\"./GetErrorBody\\";
 export * from \\"./GetResponse\\";
 ",
-  "/src/model/api/service-types/index.ts": "export * from \\"./NoErrorsService\\";
+  "/model/api/service-types/index.ts": "export * from \\"./NoErrorsService\\";
 ",
-  "/src/model/index.ts": "export * as api from \\"./api\\";
+  "/model/index.ts": "export * as api from \\"./api\\";
 ",
-  "/src/services/api/NoErrorsService.ts": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+  "/package.json": "{
+    \\"name\\": \\"no-errors\\",
+    \\"version\\": \\"0.0.0\\",
+    \\"main\\": \\"./index.js\\",
+    \\"types\\": \\"./index.d.ts\\",
+    \\"scripts\\": {
+        \\"build\\": \\"esbuild $(find . -name '*.ts') --format=cjs --sourcemap --outdir=. && tsc\\"
+    },
+    \\"dependencies\\": {
+        \\"@fern-typescript/service-utils\\": \\"0.0.100\\"
+    },
+    \\"devDependencies\\": {
+        \\"@types/node\\": \\"17.0.33\\",
+        \\"esbuild\\": \\"0.14.47\\",
+        \\"typescript\\": \\"4.6.4\\"
+    }
+}",
+  "/services/api/NoErrorsService.ts": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import * as model from \\"../../model\\";
 
 export interface NoErrorsService {
@@ -335,58 +326,32 @@ export class NoErrorsService implements NoErrorsService {
     }
 }
 ",
-  "/src/services/api/index.ts": "export * from \\"./NoErrorsService\\";
+  "/services/api/index.ts": "export * from \\"./NoErrorsService\\";
 ",
-  "/src/services/index.ts": "export * as api from \\"./api\\";
+  "/services/index.ts": "export * as api from \\"./api\\";
 ",
   "/tsconfig.json": "{
     \\"compilerOptions\\": {
-        \\"rootDir\\": \\"src\\",
-        \\"outDir\\": \\"lib\\",
-        \\"skipLibCheck\\": true,
         \\"strict\\": true,
+        \\"skipLibCheck\\": true,
         \\"declaration\\": true,
+        \\"sourceMap\\": true,
         \\"emitDeclarationOnly\\": true,
-        \\"isolatedModules\\": true,
         \\"esModuleInterop\\": true
-    },
-    \\"include\\": [
-        \\"src\\"
-    ]
+    }
 }",
 }
 `;
 
 exports[`generateClientProject posts 1`] = `
 Object {
-  "/package.json": "{
-    \\"name\\": \\"posts\\",
-    \\"version\\": \\"0.0.0\\",
-    \\"files\\": [
-        \\"lib\\"
-    ],
-    \\"main\\": \\"./lib/index.js\\",
-    \\"types\\": \\"./lib/index.d.ts\\",
-    \\"scripts\\": {
-        \\"build\\": \\"tsc && esbuild $(find src -name '*.ts') --outdir=lib --format=cjs\\"
-    },
-    \\"dependencies\\": {
-        \\"uuid\\": \\"8.3.2\\",
-        \\"@types/uuid\\": \\"8.3.4\\",
-        \\"@fern-typescript/service-utils\\": \\"0.0.100\\"
-    },
-    \\"devDependencies\\": {
-        \\"@types/node\\": \\"17.0.33\\",
-        \\"esbuild\\": \\"0.14.47\\",
-        \\"typescript\\": \\"4.6.4\\"
-    }
-}",
-  "/src/index.ts": "export * as model from \\"./model\\";
+  "/.npmignore": "tsconfig.json",
+  "/index.ts": "export * as model from \\"./model\\";
 export * as services from \\"./services\\";
 ",
-  "/src/model/commons/index.ts": "export * from \\"./types\\";
+  "/model/commons/index.ts": "export * from \\"./types\\";
 ",
-  "/src/model/commons/types/PostId.ts": "/**
+  "/model/commons/types/PostId.ts": "/**
  * An ID of a blog post
  */
 export type PostId = string & {
@@ -397,24 +362,24 @@ export const PostId = {
     of: (value: string): PostId => value as PostId
 };
 ",
-  "/src/model/commons/types/index.ts": "export * from \\"./PostId\\";
+  "/model/commons/types/index.ts": "export * from \\"./PostId\\";
 ",
-  "/src/model/index.ts": "export * as commons from \\"./commons\\";
+  "/model/index.ts": "export * as commons from \\"./commons\\";
 export * as posts from \\"./posts\\";
 ",
-  "/src/model/posts/errors/PostNotFoundError.ts": "import * as model from \\"../..\\";
+  "/model/posts/errors/PostNotFoundError.ts": "import * as model from \\"../..\\";
 
 export interface PostNotFoundError {
     id: model.commons.PostId;
 }
 ",
-  "/src/model/posts/errors/index.ts": "export * from \\"./PostNotFoundError\\";
+  "/model/posts/errors/index.ts": "export * from \\"./PostNotFoundError\\";
 ",
-  "/src/model/posts/index.ts": "export * from \\"./types\\";
+  "/model/posts/index.ts": "export * from \\"./types\\";
 export * from \\"./errors\\";
 export * from \\"./service-types\\";
 ",
-  "/src/model/posts/service-types/PostsService/CreatePostErrorBody.ts": "export type CreatePostErrorBody = never;
+  "/model/posts/service-types/PostsService/CreatePostErrorBody.ts": "export type CreatePostErrorBody = never;
 
 export declare namespace CreatePostErrorBody {
     export interface _Visitor<Result> {
@@ -430,7 +395,7 @@ export const CreatePostErrorBody = {
     _types: (): CreatePostErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
-  "/src/model/posts/service-types/PostsService/CreatePostRequest.ts": "import * as model from \\"../../..\\";
+  "/model/posts/service-types/PostsService/CreatePostRequest.ts": "import * as model from \\"../../..\\";
 
 export interface CreatePostRequest {
     type: model.posts.PostType;
@@ -439,7 +404,7 @@ export interface CreatePostRequest {
     content: string;
 }
 ",
-  "/src/model/posts/service-types/PostsService/CreatePostResponse.ts": "import * as model from \\"../../..\\";
+  "/model/posts/service-types/PostsService/CreatePostResponse.ts": "import * as model from \\"../../..\\";
 
 export type CreatePostResponse = CreatePostResponse.SuccessResponse | CreatePostResponse.ErrorResponse;
 
@@ -455,7 +420,7 @@ namespace CreatePostResponse {
     }
 }
 ",
-  "/src/model/posts/service-types/PostsService/GetPostErrorBody.ts": "import { posts } from \\"../../..\\";
+  "/model/posts/service-types/PostsService/GetPostErrorBody.ts": "import { posts } from \\"../../..\\";
 import * as uuid from \\"uuid\\";
 
 export type GetPostErrorBody =
@@ -490,7 +455,7 @@ export const GetPostErrorBody = {
     _types: (): GetPostErrorBody[\\"_error\\"][] => [\\"PostNotFoundError\\"],
 } as const;
 ",
-  "/src/model/posts/service-types/PostsService/GetPostRequest.ts": "import * as model from \\"../../..\\";
+  "/model/posts/service-types/PostsService/GetPostRequest.ts": "import * as model from \\"../../..\\";
 
 export interface GetPostRequest {
     postId: model.commons.PostId;
@@ -498,7 +463,7 @@ export interface GetPostRequest {
     otherParam: number | null | undefined;
 }
 ",
-  "/src/model/posts/service-types/PostsService/GetPostResponse.ts": "import * as model from \\"../../..\\";
+  "/model/posts/service-types/PostsService/GetPostResponse.ts": "import * as model from \\"../../..\\";
 
 export type GetPostResponse = GetPostResponse.SuccessResponse | GetPostResponse.ErrorResponse;
 
@@ -514,7 +479,7 @@ namespace GetPostResponse {
     }
 }
 ",
-  "/src/model/posts/service-types/PostsService/GetPostV2ErrorBody.ts": "import { posts } from \\"../../..\\";
+  "/model/posts/service-types/PostsService/GetPostV2ErrorBody.ts": "import { posts } from \\"../../..\\";
 import * as uuid from \\"uuid\\";
 
 export type GetPostV2ErrorBody =
@@ -549,7 +514,7 @@ export const GetPostV2ErrorBody = {
     _types: (): GetPostV2ErrorBody[\\"_error\\"][] => [\\"PostNotFoundError\\"],
 } as const;
 ",
-  "/src/model/posts/service-types/PostsService/GetPostV2Response.ts": "import * as model from \\"../../..\\";
+  "/model/posts/service-types/PostsService/GetPostV2Response.ts": "import * as model from \\"../../..\\";
 
 export type GetPostV2Response = GetPostV2Response.SuccessResponse | GetPostV2Response.ErrorResponse;
 
@@ -565,7 +530,7 @@ namespace GetPostV2Response {
     }
 }
 ",
-  "/src/model/posts/service-types/PostsService/index.ts": "export * from \\"./CreatePostRequest\\";
+  "/model/posts/service-types/PostsService/index.ts": "export * from \\"./CreatePostRequest\\";
 export * from \\"./CreatePostErrorBody\\";
 export * from \\"./CreatePostResponse\\";
 export * from \\"./GetPostRequest\\";
@@ -574,9 +539,9 @@ export * from \\"./GetPostResponse\\";
 export * from \\"./GetPostV2ErrorBody\\";
 export * from \\"./GetPostV2Response\\";
 ",
-  "/src/model/posts/service-types/index.ts": "export * from \\"./PostsService\\";
+  "/model/posts/service-types/index.ts": "export * from \\"./PostsService\\";
 ",
-  "/src/model/posts/types/Author.ts": "export type Author =
+  "/model/posts/types/Author.ts": "export type Author =
     | Author.Anonymous
     | Author.Named;
 
@@ -618,7 +583,7 @@ export const Author = {
     _types: (): Author[\\"_type\\"][] => [\\"anonymous\\", \\"named\\"],
 } as const;
 ",
-  "/src/model/posts/types/Post.ts": "import * as model from \\"../..\\";
+  "/model/posts/types/Post.ts": "import * as model from \\"../..\\";
 
 /**
  * A blog post
@@ -632,7 +597,7 @@ export interface Post {
     relatedPosts: model.posts.Post[];
 }
 ",
-  "/src/model/posts/types/PostType.ts": "export type PostType =
+  "/model/posts/types/PostType.ts": "export type PostType =
     | \\"LONG\\"
     | \\"SHORT\\";
 
@@ -662,13 +627,32 @@ export declare namespace PostType {
     }
 }
 ",
-  "/src/model/posts/types/index.ts": "export * from \\"./Post\\";
+  "/model/posts/types/index.ts": "export * from \\"./Post\\";
 export * from \\"./PostType\\";
 export * from \\"./Author\\";
 ",
-  "/src/services/index.ts": "export * as posts from \\"./posts\\";
+  "/package.json": "{
+    \\"name\\": \\"posts\\",
+    \\"version\\": \\"0.0.0\\",
+    \\"main\\": \\"./index.js\\",
+    \\"types\\": \\"./index.d.ts\\",
+    \\"scripts\\": {
+        \\"build\\": \\"esbuild $(find . -name '*.ts') --format=cjs --sourcemap --outdir=. && tsc\\"
+    },
+    \\"dependencies\\": {
+        \\"uuid\\": \\"8.3.2\\",
+        \\"@types/uuid\\": \\"8.3.4\\",
+        \\"@fern-typescript/service-utils\\": \\"0.0.100\\"
+    },
+    \\"devDependencies\\": {
+        \\"@types/node\\": \\"17.0.33\\",
+        \\"esbuild\\": \\"0.14.47\\",
+        \\"typescript\\": \\"4.6.4\\"
+    }
+}",
+  "/services/index.ts": "export * as posts from \\"./posts\\";
 ",
-  "/src/services/posts/PostsService.ts": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+  "/services/posts/PostsService.ts": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import * as model from \\"../../model\\";
 
 export interface PostsService {
@@ -778,22 +762,17 @@ export class PostsService implements PostsService {
     }
 }
 ",
-  "/src/services/posts/index.ts": "export * from \\"./PostsService\\";
+  "/services/posts/index.ts": "export * from \\"./PostsService\\";
 ",
   "/tsconfig.json": "{
     \\"compilerOptions\\": {
-        \\"rootDir\\": \\"src\\",
-        \\"outDir\\": \\"lib\\",
-        \\"skipLibCheck\\": true,
         \\"strict\\": true,
+        \\"skipLibCheck\\": true,
         \\"declaration\\": true,
+        \\"sourceMap\\": true,
         \\"emitDeclarationOnly\\": true,
-        \\"isolatedModules\\": true,
         \\"esModuleInterop\\": true
-    },
-    \\"include\\": [
-        \\"src\\"
-    ]
+    }
 }",
 }
 `;

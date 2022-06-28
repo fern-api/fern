@@ -1,15 +1,13 @@
 import { Volume } from "memfs/lib/volume";
 import { CompilerOptions } from "typescript";
-import { getPathToProjectFile, RELATIVE_OUT_DIR_PATH, RELATIVE_SRC_PATH } from "./utils";
+import { getPathToProjectFile } from "./utils";
 
 const COMPILER_OPTIONS: CompilerOptions = {
-    rootDir: RELATIVE_SRC_PATH,
-    outDir: RELATIVE_OUT_DIR_PATH,
-    skipLibCheck: true,
     strict: true,
+    skipLibCheck: true,
     declaration: true,
+    sourceMap: true,
     emitDeclarationOnly: true,
-    isolatedModules: true,
     esModuleInterop: true,
 };
 
@@ -19,7 +17,6 @@ export async function generateTsConfig(volume: Volume): Promise<void> {
         JSON.stringify(
             {
                 compilerOptions: COMPILER_OPTIONS,
-                include: [RELATIVE_SRC_PATH],
             },
             undefined,
             4

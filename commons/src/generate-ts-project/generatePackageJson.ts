@@ -2,13 +2,7 @@ import produce from "immer";
 import { Volume } from "memfs/lib/volume";
 import { IPackageJson } from "package-json-type";
 import { DependencyType, PackageDependencies } from "../dependencies/DependencyManager";
-import {
-    getPathToProjectFile,
-    RELATIVE_ENTRYPOINT,
-    RELATIVE_OUT_DIR_PATH,
-    RELATIVE_SRC_PATH,
-    RELATIVE_TYPES_ENTRYPOINT,
-} from "./utils";
+import { getPathToProjectFile } from "./utils";
 
 export const BUILD_PROJECT_SCRIPT_NAME = "build";
 
@@ -36,11 +30,14 @@ export async function generatePackageJson({
     packageJson = {
         ...packageJson,
         version: packageVersion,
-        files: [RELATIVE_OUT_DIR_PATH],
-        main: `./${RELATIVE_ENTRYPOINT}`,
-        types: `./${RELATIVE_TYPES_ENTRYPOINT}`,
+        main: "./index.js",
+        types: "./index.d.ts",
         scripts: {
-            [BUILD_PROJECT_SCRIPT_NAME]: `tsc && esbuild $(find ${RELATIVE_SRC_PATH} -name '*.ts') --outdir=${RELATIVE_OUT_DIR_PATH} --format=cjs`,
+            [BUILD_PROJECT_SCRIPT_NAME]: [
+                // esbuild first so we don't transpile the .d.ts files
+                "esbuild $(find . -name '*.ts') --format=cjs --sourcemap --outdir=.",
+                "tsc",
+            ].join(" && "),
         },
     };
 

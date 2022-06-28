@@ -2,6 +2,7 @@ import { Volume } from "memfs/lib/volume";
 import { Directory } from "ts-morph";
 import { PackageDependencies } from "../dependencies/DependencyManager";
 import { ProjectCreator } from "../file-system/ProjectCreator";
+import { generateNpmIgnore } from "./generateNpmIgnore";
 import { generatePackageJson } from "./generatePackageJson";
 import { generateTsConfig } from "./generateTsConfig";
 import { writeProjectToVolume } from "./writeProjectToVolume";
@@ -24,7 +25,7 @@ export async function generateTypeScriptProject({
     generateSrc: (directory: Directory) => MaybePromise<GeneratedProjectSrcInfo | void>;
 }): Promise<void> {
     const projectCreator = new ProjectCreator();
-    const generatedSrcInfo = await projectCreator.withProject((p) => generateSrc(p.createDirectory("src")));
+    const generatedSrcInfo = await projectCreator.withProject((p) => generateSrc(p.createDirectory(".")));
     const project = await projectCreator.finalize();
     await writeProjectToVolume(project, volume);
 
@@ -35,4 +36,5 @@ export async function generateTypeScriptProject({
         dependencies: generatedSrcInfo?.dependencies,
     });
     await generateTsConfig(volume);
+    await generateNpmIgnore(volume);
 }

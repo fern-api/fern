@@ -2,34 +2,18 @@
 
 exports[`generateModelProject fern IR 1`] = `
 Object {
-  "/package.json": "{
-    \\"name\\": \\"posts\\",
-    \\"version\\": \\"0.0.0\\",
-    \\"files\\": [
-        \\"lib\\"
-    ],
-    \\"main\\": \\"./lib/index.js\\",
-    \\"types\\": \\"./lib/index.d.ts\\",
-    \\"scripts\\": {
-        \\"build\\": \\"tsc && esbuild $(find src -name '*.ts') --outdir=lib --format=cjs\\"
-    },
-    \\"devDependencies\\": {
-        \\"@types/node\\": \\"17.0.33\\",
-        \\"esbuild\\": \\"0.14.47\\",
-        \\"typescript\\": \\"4.6.4\\"
-    }
-}",
-  "/src/commons/index.ts": "export * from \\"./types\\";
+  "/.npmignore": "tsconfig.json",
+  "/commons/index.ts": "export * from \\"./types\\";
 ",
-  "/src/commons/types/WithDocs.ts": "export interface WithDocs {
+  "/commons/types/WithDocs.ts": "export interface WithDocs {
     docs: string | null | undefined;
 }
 ",
-  "/src/commons/types/index.ts": "export * from \\"./WithDocs\\";
+  "/commons/types/index.ts": "export * from \\"./WithDocs\\";
 ",
-  "/src/errors/index.ts": "export * from \\"./types\\";
+  "/errors/index.ts": "export * from \\"./types\\";
 ",
-  "/src/errors/types/ErrorDefinition.ts": "import * as model from \\"../..\\";
+  "/errors/types/ErrorDefinition.ts": "import * as model from \\"../..\\";
 
 export interface ErrorDefinition extends model.commons.WithDocs {
     name: model.types.NamedType;
@@ -37,24 +21,24 @@ export interface ErrorDefinition extends model.commons.WithDocs {
     http: model.errors.HttpErrorConfiguration | null | undefined;
 }
 ",
-  "/src/errors/types/ErrorProperty.ts": "import * as model from \\"../..\\";
+  "/errors/types/ErrorProperty.ts": "import * as model from \\"../..\\";
 
 export interface ErrorProperty extends model.commons.WithDocs {
     name: string;
     type: model.types.TypeReference;
 }
 ",
-  "/src/errors/types/HttpErrorConfiguration.ts": "export interface HttpErrorConfiguration {
+  "/errors/types/HttpErrorConfiguration.ts": "export interface HttpErrorConfiguration {
     statusCode: number;
 }
 ",
-  "/src/errors/types/index.ts": "export * from \\"./ErrorDefinition\\";
+  "/errors/types/index.ts": "export * from \\"./ErrorDefinition\\";
 export * from \\"./ErrorProperty\\";
 export * from \\"./HttpErrorConfiguration\\";
 ",
-  "/src/fern/index.ts": "export * from \\"./types\\";
+  "/fern/index.ts": "export * from \\"./types\\";
 ",
-  "/src/fern/types/IntermediateRepresentation.ts": "import * as model from \\"../..\\";
+  "/fern/types/IntermediateRepresentation.ts": "import * as model from \\"../..\\";
 
 /**
  * Complete representation of the API schema
@@ -67,59 +51,73 @@ export interface IntermediateRepresentation {
     errors: model.errors.ErrorDefinition[];
 }
 ",
-  "/src/fern/types/Services.ts": "import * as model from \\"../..\\";
+  "/fern/types/Services.ts": "import * as model from \\"../..\\";
 
 export interface Services {
     http: model.services.http.HttpService[];
     websocket: model.services.websocket.WebSocketService[];
 }
 ",
-  "/src/fern/types/index.ts": "export * from \\"./IntermediateRepresentation\\";
+  "/fern/types/index.ts": "export * from \\"./IntermediateRepresentation\\";
 export * from \\"./Services\\";
 ",
-  "/src/index.ts": "export * as commons from \\"./commons\\";
+  "/index.ts": "export * as commons from \\"./commons\\";
 export * as errors from \\"./errors\\";
 export * as fern from \\"./fern\\";
 export * as services from \\"./services\\";
 export * as types from \\"./types\\";
 ",
-  "/src/services/commons/index.ts": "export * from \\"./types\\";
+  "/package.json": "{
+    \\"name\\": \\"posts\\",
+    \\"version\\": \\"0.0.0\\",
+    \\"main\\": \\"./index.js\\",
+    \\"types\\": \\"./index.d.ts\\",
+    \\"scripts\\": {
+        \\"build\\": \\"esbuild $(find . -name '*.ts') --format=cjs --sourcemap --outdir=. && tsc\\"
+    },
+    \\"devDependencies\\": {
+        \\"@types/node\\": \\"17.0.33\\",
+        \\"esbuild\\": \\"0.14.47\\",
+        \\"typescript\\": \\"4.6.4\\"
+    }
+}",
+  "/services/commons/index.ts": "export * from \\"./types\\";
 ",
-  "/src/services/commons/types/BaseService.ts": "import * as model from \\"../../..\\";
+  "/services/commons/types/BaseService.ts": "import * as model from \\"../../..\\";
 
 export interface BaseService extends model.commons.WithDocs {
     basePath: string;
     name: model.types.NamedType;
 }
 ",
-  "/src/services/commons/types/ResponseError.ts": "import * as model from \\"../../..\\";
+  "/services/commons/types/ResponseError.ts": "import * as model from \\"../../..\\";
 
 export interface ResponseError extends model.commons.WithDocs {
     discriminantValue: string;
     error: model.types.NamedType;
 }
 ",
-  "/src/services/commons/types/ResponseErrors.ts": "import * as model from \\"../../..\\";
+  "/services/commons/types/ResponseErrors.ts": "import * as model from \\"../../..\\";
 
 export interface ResponseErrors extends model.commons.WithDocs {
     discriminant: string;
     possibleErrors: model.services.commons.ResponseError[];
 }
 ",
-  "/src/services/commons/types/WireMessage.ts": "import * as model from \\"../../..\\";
+  "/services/commons/types/WireMessage.ts": "import * as model from \\"../../..\\";
 
 export interface WireMessage extends model.commons.WithDocs {
     type: model.types.Type;
 }
 ",
-  "/src/services/commons/types/index.ts": "export * from \\"./BaseService\\";
+  "/services/commons/types/index.ts": "export * from \\"./BaseService\\";
 export * from \\"./WireMessage\\";
 export * from \\"./ResponseErrors\\";
 export * from \\"./ResponseError\\";
 ",
-  "/src/services/http/index.ts": "export * from \\"./types\\";
+  "/services/http/index.ts": "export * from \\"./types\\";
 ",
-  "/src/services/http/types/HttpEndpoint.ts": "import * as model from \\"../../..\\";
+  "/services/http/types/HttpEndpoint.ts": "import * as model from \\"../../..\\";
 
 export interface HttpEndpoint extends model.commons.WithDocs {
     endpointId: string;
@@ -133,14 +131,14 @@ export interface HttpEndpoint extends model.commons.WithDocs {
     errors: model.services.commons.ResponseErrors;
 }
 ",
-  "/src/services/http/types/HttpHeader.ts": "import * as model from \\"../../..\\";
+  "/services/http/types/HttpHeader.ts": "import * as model from \\"../../..\\";
 
 export interface HttpHeader extends model.commons.WithDocs {
     header: string;
     valueType: model.types.TypeReference;
 }
 ",
-  "/src/services/http/types/HttpMethod.ts": "export type HttpMethod =
+  "/services/http/types/HttpMethod.ts": "export type HttpMethod =
     | \\"GET\\"
     | \\"POST\\"
     | \\"PUT\\"
@@ -185,41 +183,41 @@ export declare namespace HttpMethod {
     }
 }
 ",
-  "/src/services/http/types/HttpService.ts": "import * as model from \\"../../..\\";
+  "/services/http/types/HttpService.ts": "import * as model from \\"../../..\\";
 
 export interface HttpService extends model.services.commons.BaseService {
     endpoints: model.services.http.HttpEndpoint[];
     headers: model.services.http.HttpHeader[];
 }
 ",
-  "/src/services/http/types/PathParameter.ts": "import * as model from \\"../../..\\";
+  "/services/http/types/PathParameter.ts": "import * as model from \\"../../..\\";
 
 export interface PathParameter extends model.commons.WithDocs {
     key: string;
     valueType: model.types.TypeReference;
 }
 ",
-  "/src/services/http/types/QueryParameter.ts": "import * as model from \\"../../..\\";
+  "/services/http/types/QueryParameter.ts": "import * as model from \\"../../..\\";
 
 export interface QueryParameter extends model.commons.WithDocs {
     key: string;
     valueType: model.types.TypeReference;
 }
 ",
-  "/src/services/http/types/index.ts": "export * from \\"./HttpService\\";
+  "/services/http/types/index.ts": "export * from \\"./HttpService\\";
 export * from \\"./HttpEndpoint\\";
 export * from \\"./HttpMethod\\";
 export * from \\"./HttpHeader\\";
 export * from \\"./PathParameter\\";
 export * from \\"./QueryParameter\\";
 ",
-  "/src/services/index.ts": "export * as commons from \\"./commons\\";
+  "/services/index.ts": "export * as commons from \\"./commons\\";
 export * as http from \\"./http\\";
 export * as websocket from \\"./websocket\\";
 ",
-  "/src/services/websocket/index.ts": "export * from \\"./types\\";
+  "/services/websocket/index.ts": "export * from \\"./types\\";
 ",
-  "/src/services/websocket/types/WebSocketMessage.ts": "import * as model from \\"../../..\\";
+  "/services/websocket/types/WebSocketMessage.ts": "import * as model from \\"../../..\\";
 
 export interface WebSocketMessage extends model.commons.WithDocs {
     origin: model.services.websocket.WebSocketMessageOrigin;
@@ -228,7 +226,7 @@ export interface WebSocketMessage extends model.commons.WithDocs {
     errors: model.services.commons.ResponseErrors;
 }
 ",
-  "/src/services/websocket/types/WebSocketMessageOrigin.ts": "export type WebSocketMessageOrigin =
+  "/services/websocket/types/WebSocketMessageOrigin.ts": "export type WebSocketMessageOrigin =
     | \\"CLIENT\\"
     | \\"SERVER\\";
 
@@ -258,7 +256,7 @@ export declare namespace WebSocketMessageOrigin {
     }
 }
 ",
-  "/src/services/websocket/types/WebSocketMessageResponse.ts": "import * as model from \\"../../..\\";
+  "/services/websocket/types/WebSocketMessageResponse.ts": "import * as model from \\"../../..\\";
 
 export interface WebSocketMessageResponse extends model.services.commons.WireMessage {
     /** Defaults to WebSocketMessageResponseBehavior.ONGOING */
@@ -266,7 +264,7 @@ export interface WebSocketMessageResponse extends model.services.commons.WireMes
     type: model.types.Type;
 }
 ",
-  "/src/services/websocket/types/WebSocketMessageResponseBehavior.ts": "export type WebSocketMessageResponseBehavior =
+  "/services/websocket/types/WebSocketMessageResponseBehavior.ts": "export type WebSocketMessageResponseBehavior =
     | \\"ONGOING\\"
     | \\"REQUEST_RESPONSE\\";
 
@@ -296,27 +294,37 @@ export declare namespace WebSocketMessageResponseBehavior {
     }
 }
 ",
-  "/src/services/websocket/types/WebSocketService.ts": "import * as model from \\"../../..\\";
+  "/services/websocket/types/WebSocketService.ts": "import * as model from \\"../../..\\";
 
 export interface WebSocketService extends model.services.commons.BaseService {
     messages: model.services.websocket.WebSocketMessage[];
 }
 ",
-  "/src/services/websocket/types/index.ts": "export * from \\"./WebSocketService\\";
+  "/services/websocket/types/index.ts": "export * from \\"./WebSocketService\\";
 export * from \\"./WebSocketMessage\\";
 export * from \\"./WebSocketMessageOrigin\\";
 export * from \\"./WebSocketMessageResponse\\";
 export * from \\"./WebSocketMessageResponseBehavior\\";
 ",
-  "/src/types/index.ts": "export * from \\"./types\\";
+  "/tsconfig.json": "{
+    \\"compilerOptions\\": {
+        \\"strict\\": true,
+        \\"skipLibCheck\\": true,
+        \\"declaration\\": true,
+        \\"sourceMap\\": true,
+        \\"emitDeclarationOnly\\": true,
+        \\"esModuleInterop\\": true
+    }
+}",
+  "/types/index.ts": "export * from \\"./types\\";
 ",
-  "/src/types/types/AliasTypeDefinition.ts": "import * as model from \\"../..\\";
+  "/types/types/AliasTypeDefinition.ts": "import * as model from \\"../..\\";
 
 export interface AliasTypeDefinition {
     aliasOf: model.types.TypeReference;
 }
 ",
-  "/src/types/types/ContainerType.ts": "import { types } from \\"../..\\";
+  "/types/types/ContainerType.ts": "import { types } from \\"../..\\";
 
 export type ContainerType =
     | ContainerType.List
@@ -387,19 +395,19 @@ export const ContainerType = {
     _types: (): ContainerType[\\"_type\\"][] => [\\"list\\", \\"map\\", \\"optional\\", \\"set\\"],
 } as const;
 ",
-  "/src/types/types/EnumTypeDefinition.ts": "import * as model from \\"../..\\";
+  "/types/types/EnumTypeDefinition.ts": "import * as model from \\"../..\\";
 
 export interface EnumTypeDefinition {
     values: model.types.EnumValue[];
 }
 ",
-  "/src/types/types/EnumValue.ts": "import * as model from \\"../..\\";
+  "/types/types/EnumValue.ts": "import * as model from \\"../..\\";
 
 export interface EnumValue extends model.commons.WithDocs {
     value: string;
 }
 ",
-  "/src/types/types/FernFilepath.ts": "/**
+  "/types/types/FernFilepath.ts": "/**
  * A filepath to a Fern spec file, excluding the file extension
  */
 export type FernFilepath = string & {
@@ -410,28 +418,28 @@ export const FernFilepath = {
     of: (value: string): FernFilepath => value as FernFilepath
 };
 ",
-  "/src/types/types/MapType.ts": "import * as model from \\"../..\\";
+  "/types/types/MapType.ts": "import * as model from \\"../..\\";
 
 export interface MapType {
     keyType: model.types.TypeReference;
     valueType: model.types.TypeReference;
 }
 ",
-  "/src/types/types/NamedType.ts": "import * as model from \\"../..\\";
+  "/types/types/NamedType.ts": "import * as model from \\"../..\\";
 
 export interface NamedType {
     fernFilepath: model.types.FernFilepath;
     name: string;
 }
 ",
-  "/src/types/types/ObjectProperty.ts": "import * as model from \\"../..\\";
+  "/types/types/ObjectProperty.ts": "import * as model from \\"../..\\";
 
 export interface ObjectProperty extends model.commons.WithDocs {
     key: string;
     valueType: model.types.TypeReference;
 }
 ",
-  "/src/types/types/ObjectTypeDefinition.ts": "import * as model from \\"../..\\";
+  "/types/types/ObjectTypeDefinition.ts": "import * as model from \\"../..\\";
 
 export interface ObjectTypeDefinition {
     /** A list of other types to inherit from */
@@ -439,7 +447,7 @@ export interface ObjectTypeDefinition {
     properties: model.types.ObjectProperty[];
 }
 ",
-  "/src/types/types/PrimitiveType.ts": "export type PrimitiveType =
+  "/types/types/PrimitiveType.ts": "export type PrimitiveType =
     | \\"INTEGER\\"
     | \\"DOUBLE\\"
     | \\"STRING\\"
@@ -486,14 +494,14 @@ export declare namespace PrimitiveType {
     }
 }
 ",
-  "/src/types/types/SingleUnionType.ts": "import * as model from \\"../..\\";
+  "/types/types/SingleUnionType.ts": "import * as model from \\"../..\\";
 
 export interface SingleUnionType extends model.commons.WithDocs {
     discriminantValue: string;
     valueType: model.types.TypeReference;
 }
 ",
-  "/src/types/types/Type.ts": "import { types } from \\"../..\\";
+  "/types/types/Type.ts": "import { types } from \\"../..\\";
 
 export type Type =
     | Type.Alias
@@ -561,7 +569,7 @@ export const Type = {
     _types: (): Type[\\"_type\\"][] => [\\"alias\\", \\"enum\\", \\"object\\", \\"union\\"],
 } as const;
 ",
-  "/src/types/types/TypeDefinition.ts": "import * as model from \\"../..\\";
+  "/types/types/TypeDefinition.ts": "import * as model from \\"../..\\";
 
 /**
  * A type, which is a name and a shape
@@ -571,7 +579,7 @@ export interface TypeDefinition extends model.commons.WithDocs {
     shape: model.types.Type;
 }
 ",
-  "/src/types/types/TypeReference.ts": "import { types } from \\"../..\\";
+  "/types/types/TypeReference.ts": "import { types } from \\"../..\\";
 
 export type TypeReference =
     | TypeReference.Container
@@ -640,14 +648,14 @@ export const TypeReference = {
     _types: (): TypeReference[\\"_type\\"][] => [\\"container\\", \\"named\\", \\"primitive\\", \\"void\\"],
 } as const;
 ",
-  "/src/types/types/UnionTypeDefinition.ts": "import * as model from \\"../..\\";
+  "/types/types/UnionTypeDefinition.ts": "import * as model from \\"../..\\";
 
 export interface UnionTypeDefinition {
     discriminant: string;
     types: model.types.SingleUnionType[];
 }
 ",
-  "/src/types/types/index.ts": "export * from \\"./FernFilepath\\";
+  "/types/types/index.ts": "export * from \\"./FernFilepath\\";
 export * from \\"./TypeDefinition\\";
 export * from \\"./NamedType\\";
 export * from \\"./Type\\";
@@ -663,36 +671,37 @@ export * from \\"./ContainerType\\";
 export * from \\"./MapType\\";
 export * from \\"./PrimitiveType\\";
 ",
-  "/tsconfig.json": "{
-    \\"compilerOptions\\": {
-        \\"rootDir\\": \\"src\\",
-        \\"outDir\\": \\"lib\\",
-        \\"skipLibCheck\\": true,
-        \\"strict\\": true,
-        \\"declaration\\": true,
-        \\"emitDeclarationOnly\\": true,
-        \\"isolatedModules\\": true,
-        \\"esModuleInterop\\": true
-    },
-    \\"include\\": [
-        \\"src\\"
-    ]
-}",
 }
 `;
 
 exports[`generateModelProject posts 1`] = `
 Object {
+  "/.npmignore": "tsconfig.json",
+  "/commons/index.ts": "export * from \\"./types\\";
+",
+  "/commons/types/PostId.ts": "/**
+ * An ID of a blog post
+ */
+export type PostId = string & {
+    __PostId: void;
+};
+
+export const PostId = {
+    of: (value: string): PostId => value as PostId
+};
+",
+  "/commons/types/index.ts": "export * from \\"./PostId\\";
+",
+  "/index.ts": "export * as commons from \\"./commons\\";
+export * as posts from \\"./posts\\";
+",
   "/package.json": "{
     \\"name\\": \\"posts\\",
     \\"version\\": \\"0.0.0\\",
-    \\"files\\": [
-        \\"lib\\"
-    ],
-    \\"main\\": \\"./lib/index.js\\",
-    \\"types\\": \\"./lib/index.d.ts\\",
+    \\"main\\": \\"./index.js\\",
+    \\"types\\": \\"./index.d.ts\\",
     \\"scripts\\": {
-        \\"build\\": \\"tsc && esbuild $(find src -name '*.ts') --outdir=lib --format=cjs\\"
+        \\"build\\": \\"esbuild $(find . -name '*.ts') --format=cjs --sourcemap --outdir=. && tsc\\"
     },
     \\"dependencies\\": {
         \\"uuid\\": \\"8.3.2\\",
@@ -704,25 +713,7 @@ Object {
         \\"typescript\\": \\"4.6.4\\"
     }
 }",
-  "/src/commons/index.ts": "export * from \\"./types\\";
-",
-  "/src/commons/types/PostId.ts": "/**
- * An ID of a blog post
- */
-export type PostId = string & {
-    __PostId: void;
-};
-
-export const PostId = {
-    of: (value: string): PostId => value as PostId
-};
-",
-  "/src/commons/types/index.ts": "export * from \\"./PostId\\";
-",
-  "/src/index.ts": "export * as commons from \\"./commons\\";
-export * as posts from \\"./posts\\";
-",
-  "/src/posts/errors/PostNotFoundError.ts": "export type PostNotFoundError = string & {
+  "/posts/errors/PostNotFoundError.ts": "export type PostNotFoundError = string & {
     __PostNotFoundError: void;
 };
 
@@ -730,13 +721,13 @@ export const PostNotFoundError = {
     of: (value: string): PostNotFoundError => value as PostNotFoundError
 };
 ",
-  "/src/posts/errors/index.ts": "export * from \\"./PostNotFoundError\\";
+  "/posts/errors/index.ts": "export * from \\"./PostNotFoundError\\";
 ",
-  "/src/posts/index.ts": "export * from \\"./types\\";
+  "/posts/index.ts": "export * from \\"./types\\";
 export * from \\"./errors\\";
 export * from \\"./service-types\\";
 ",
-  "/src/posts/service-types/PostsService/GetPostErrorBody.ts": "import { posts } from \\"../../..\\";
+  "/posts/service-types/PostsService/GetPostErrorBody.ts": "import { posts } from \\"../../..\\";
 import * as uuid from \\"uuid\\";
 
 export type GetPostErrorBody =
@@ -772,14 +763,14 @@ export const GetPostErrorBody = {
     _types: (): GetPostErrorBody[\\"_error\\"][] => [\\"PostNotFoundError\\"],
 } as const;
 ",
-  "/src/posts/service-types/PostsService/GetPostRequest.ts": "import * as model from \\"../../..\\";
+  "/posts/service-types/PostsService/GetPostRequest.ts": "import * as model from \\"../../..\\";
 
 export interface GetPostRequest {
     postId: string;
     body: model.posts.CreatePostRequest;
 }
 ",
-  "/src/posts/service-types/PostsService/GetPostResponse.ts": "import * as model from \\"../../..\\";
+  "/posts/service-types/PostsService/GetPostResponse.ts": "import * as model from \\"../../..\\";
 
 export type GetPostResponse = GetPostResponse.SuccessResponse | GetPostResponse.ErrorResponse;
 
@@ -795,18 +786,18 @@ namespace GetPostResponse {
     }
 }
 ",
-  "/src/posts/service-types/PostsService/GetPostResponseBody.ts": "export interface GetPostResponseBody {
+  "/posts/service-types/PostsService/GetPostResponseBody.ts": "export interface GetPostResponseBody {
     a: number;
 }
 ",
-  "/src/posts/service-types/PostsService/index.ts": "export * from \\"./GetPostRequest\\";
+  "/posts/service-types/PostsService/index.ts": "export * from \\"./GetPostRequest\\";
 export * from \\"./GetPostResponseBody\\";
 export * from \\"./GetPostErrorBody\\";
 export * from \\"./GetPostResponse\\";
 ",
-  "/src/posts/service-types/index.ts": "export * from \\"./PostsService\\";
+  "/posts/service-types/index.ts": "export * from \\"./PostsService\\";
 ",
-  "/src/posts/types/Author.ts": "export type Author =
+  "/posts/types/Author.ts": "export type Author =
     | Author.Anonymous
     | Author.Named;
 
@@ -848,7 +839,7 @@ export const Author = {
     _types: (): Author[\\"_type\\"][] => [\\"anonymous\\", \\"named\\"],
 } as const;
 ",
-  "/src/posts/types/BlogPostReference.ts": "import { posts } from \\"../..\\";
+  "/posts/types/BlogPostReference.ts": "import { posts } from \\"../..\\";
 
 export type BlogPostReference =
     | BlogPostReference.Post;
@@ -880,7 +871,7 @@ export const BlogPostReference = {
     _types: (): BlogPostReference[\\"_type\\"][] => [\\"post\\"],
 } as const;
 ",
-  "/src/posts/types/CreatePostRequest.ts": "import * as model from \\"../..\\";
+  "/posts/types/CreatePostRequest.ts": "import * as model from \\"../..\\";
 
 export interface CreatePostRequest {
     title: string;
@@ -888,7 +879,7 @@ export interface CreatePostRequest {
     content: string;
 }
 ",
-  "/src/posts/types/Post.ts": "import * as model from \\"../..\\";
+  "/posts/types/Post.ts": "import * as model from \\"../..\\";
 
 /**
  * A blog post
@@ -902,7 +893,7 @@ export interface Post {
     customConfig: unknown;
 }
 ",
-  "/src/posts/types/PostType.ts": "export type PostType =
+  "/posts/types/PostType.ts": "export type PostType =
     | \\"LONG\\"
     | \\"SHORT\\";
 
@@ -932,7 +923,7 @@ export declare namespace PostType {
     }
 }
 ",
-  "/src/posts/types/index.ts": "export * from \\"./Post\\";
+  "/posts/types/index.ts": "export * from \\"./Post\\";
 export * from \\"./BlogPostReference\\";
 export * from \\"./PostType\\";
 export * from \\"./Author\\";
@@ -940,18 +931,13 @@ export * from \\"./CreatePostRequest\\";
 ",
   "/tsconfig.json": "{
     \\"compilerOptions\\": {
-        \\"rootDir\\": \\"src\\",
-        \\"outDir\\": \\"lib\\",
-        \\"skipLibCheck\\": true,
         \\"strict\\": true,
+        \\"skipLibCheck\\": true,
         \\"declaration\\": true,
+        \\"sourceMap\\": true,
         \\"emitDeclarationOnly\\": true,
-        \\"isolatedModules\\": true,
         \\"esModuleInterop\\": true
-    },
-    \\"include\\": [
-        \\"src\\"
-    ]
+    }
 }",
 }
 `;
