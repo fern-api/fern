@@ -25,7 +25,7 @@ export async function runRemoteGenerationForWorkspace({
 
     const createResponse = await REMOTE_GENERATION_SERVICE.createJob({
         apiName: workspaceDefinition.name,
-        orgName: "dashworks",
+        orgName: "fern",
         generators: workspaceDefinition.generators.map((generator) => ({
             id: generator.name,
             version: generator.version,

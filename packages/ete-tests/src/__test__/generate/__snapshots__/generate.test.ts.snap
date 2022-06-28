@@ -4,7 +4,7 @@ exports[`fern generate tests simple-model 1`] = `
 Array [
   Object {
     "contents": "{
-    \\"name\\": \\"@dashworks/Posts-model\\",
+    \\"name\\": \\"@fern/Posts-model\\",
     \\"files\\": [
         \\"lib\\"
     ],
