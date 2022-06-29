@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.codegen.GeneratedAlias;
 import com.fern.codegen.GeneratorContext;
+import com.fern.codegen.utils.ClassNameUtils;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.model.codegen.Generator;
 import com.fern.types.types.AliasTypeDeclaration;
@@ -19,8 +20,6 @@ import javax.lang.model.element.Modifier;
 import org.immutables.value.Value;
 
 public final class AliasGenerator extends Generator {
-
-    private static final Modifier[] ALIAS_CLASS_MODIFIERS = new Modifier[] {Modifier.PUBLIC};
 
     private static final String IMMUTABLES_VALUE_PROPERTY_NAME = "value";
 
@@ -47,8 +46,8 @@ public final class AliasGenerator extends Generator {
 
     @Override
     public GeneratedAlias generate() {
-        TypeSpec.Builder aliasTypeSpecBuilder = TypeSpec.interfaceBuilder(generatedAliasClassName)
-                .addModifiers(ALIAS_CLASS_MODIFIERS)
+        TypeSpec.Builder aliasTypeSpecBuilder = TypeSpec.classBuilder(generatedAliasClassName)
+                .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                 .addAnnotations(getAnnotationSpecs());
         TypeSpec aliasTypeSpec;
         if (aliasTypeDeclaration.aliasOf().isVoid()) {
@@ -60,6 +59,7 @@ public final class AliasGenerator extends Generator {
             aliasTypeSpec = aliasTypeSpecBuilder
                     .addMethod(getImmutablesValueProperty(aliasTypeName))
                     .addMethod(getValueOfMethod(aliasTypeName))
+                    .addMethod(getToStringMethod())
                     .build();
         }
         JavaFile aliasFile = JavaFile.builder(generatedAliasClassName.packageName(), aliasTypeSpec)
@@ -101,9 +101,18 @@ public final class AliasGenerator extends Generator {
 
     private MethodSpec getValueOfMethod() {
         return MethodSpec.methodBuilder(VALUE_OF_METHOD_NAME)
-                .addModifiers(Modifier.PUBLIC, Modifier.DEFAULT)
-                .addStatement("return $T.builder().build()", generatedAliasImmutablesClassName, "value")
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                .addStatement("return $T.builder().build()", generatedAliasImmutablesClassName)
                 .returns(generatedAliasClassName)
+                .build();
+    }
+
+    private MethodSpec getToStringMethod() {
+        return MethodSpec.methodBuilder("toString")
+                .addModifiers(Modifier.PUBLIC)
+                .addAnnotation(Override.class)
+                .addStatement("return $L().toString()", IMMUTABLES_VALUE_PROPERTY_NAME)
+                .returns(ClassNameUtils.STRING_CLASS_NAME)
                 .build();
     }
 }
