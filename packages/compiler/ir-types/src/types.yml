@@ -1,8 +1,5 @@
 imports:
   commons: commons.yml
-ids:
-  - name: FernFilepath
-    docs: "A filepath to a Fern spec file, excluding the file extension"
 types:
   TypeDeclaration:
     docs: "A type, which is a name and a shape"
@@ -14,6 +11,7 @@ types:
     properties:
       fernFilepath: FernFilepath
       name: string
+  FernFilepath: list<string>
   Type:
     union:
       alias: AliasTypeDeclaration

@@ -1,5 +1,4 @@
 import { FailedResponse } from "@fern-fern/ir-model/services/commons";
-import { FernFilepath } from "@fern-fern/ir-model/types";
 import { convertFailedResponse } from "../converters/services/convertFailedResponse";
 
 describe("convertResponseErrors", () => {
@@ -9,7 +8,7 @@ describe("convertResponseErrors", () => {
                 discriminant: "_some_other_discriminant",
                 errors: ["commons.UnauthorizedError"],
             },
-            fernFilepath: FernFilepath.of("path/to/service"),
+            fernFilepath: ["path", "to"],
             imports: {
                 commons: "./commons",
             },
@@ -26,7 +25,7 @@ describe("convertResponseErrors", () => {
                     discriminantValue: "UnauthorizedError",
                     docs: undefined,
                     error: {
-                        fernFilepath: FernFilepath.of("path/to/commons"),
+                        fernFilepath: ["path", "to"],
                         name: "UnauthorizedError",
                     },
                 },

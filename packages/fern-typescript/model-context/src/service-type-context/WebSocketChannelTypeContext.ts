@@ -1,7 +1,7 @@
 import { ServiceName } from "@fern-fern/ir-model/services/commons";
-import { FernFilepath } from "@fern-fern/ir-model/types";
 import { ImportStrategy } from "@fern-typescript/commons";
 import { Directory, SourceFile, ts } from "ts-morph";
+import { StringifiedFernFilepath, stringifyFernFilepath } from "../stringifyFernFilepath";
 import { BaseServiceTypeContext, ServiceTypeMetadata } from "./BaseServiceTypeContext";
 import { GeneratedRequest, InlinedServiceTypeReference, ServiceTypeReference } from "./types";
 
@@ -53,7 +53,7 @@ export declare namespace WebSocketChannelTypeContext {
 
 export class WebSocketChannelTypeContext extends BaseServiceTypeContext {
     private generatedTypes: Record<
-        FernFilepath,
+        StringifiedFernFilepath,
         Record<NonQualifiedChannelName, Record<OperationId, GeneratedWebSocketOperationTypes>>
     > = {};
 
@@ -85,7 +85,7 @@ export class WebSocketChannelTypeContext extends BaseServiceTypeContext {
         operationId,
         generatedTypes,
     }: WebSocketChannelTypeContext.registerGeneratedTypes.Args): void {
-        const generatedTypesForPackage = (this.generatedTypes[channelName.fernFilepath] ??= {});
+        const generatedTypesForPackage = (this.generatedTypes[stringifyFernFilepath(channelName.fernFilepath)] ??= {});
         const generatedTypesForChannel = (generatedTypesForPackage[channelName.name] ??= {});
         generatedTypesForChannel[operationId] = generatedTypes;
     }
@@ -94,7 +94,8 @@ export class WebSocketChannelTypeContext extends BaseServiceTypeContext {
         channelName,
         operationId,
     }: WebSocketChannelTypeContext.getGeneratedTypes.Args): GeneratedWebSocketOperationTypes {
-        const generatedTypes = this.generatedTypes[channelName.fernFilepath]?.[channelName.name]?.[operationId];
+        const generatedTypes =
+            this.generatedTypes[stringifyFernFilepath(channelName.fernFilepath)]?.[channelName.name]?.[operationId];
         if (generatedTypes == null) {
             throw new Error(
                 "Cannot find generated types for " + `${channelName.fernFilepath}:${channelName.name}:${operationId}`

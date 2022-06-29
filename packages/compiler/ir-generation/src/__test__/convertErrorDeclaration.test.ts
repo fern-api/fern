@@ -1,5 +1,5 @@
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
-import { FernFilepath, Type, TypeReference } from "@fern-fern/ir-model/types";
+import { Type, TypeReference } from "@fern-fern/ir-model/types";
 import { convertErrorDeclaration } from "../converters/convertErrorDeclaration";
 
 describe("convertErrorDeclaration", () => {
@@ -13,7 +13,7 @@ describe("convertErrorDeclaration", () => {
                     },
                 },
             },
-            fernFilepath: FernFilepath.of("path/to/service"),
+            fernFilepath: ["path", "to"],
             imports: {
                 commons: "./commons",
             },
@@ -23,7 +23,7 @@ describe("convertErrorDeclaration", () => {
             docs: undefined,
             name: {
                 name: "UnauthorizedError",
-                fernFilepath: FernFilepath.of("path/to/service"),
+                fernFilepath: ["path", "to"],
             },
             http: undefined,
             type: Type.object({
@@ -33,7 +33,7 @@ describe("convertErrorDeclaration", () => {
                         docs: undefined,
                         key: "postId",
                         valueType: TypeReference.named({
-                            fernFilepath: FernFilepath.of("path/to/commons"),
+                            fernFilepath: ["path", "to"],
                             name: "PostId",
                         }),
                     },

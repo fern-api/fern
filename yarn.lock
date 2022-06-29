@@ -1998,10 +1998,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/ir-model@npm:0.0.622":
-  version: 0.0.622
-  resolution: "@fern-fern/ir-model@npm:0.0.622"
-  checksum: 4738db003063aca8c3a10fe14626397e7fafc17b5c004707b6aba16356025fada6ec1462055d5fcc23f0f9680c5c6bd39f379cd98fc521e7a9983098b13956f0
+"@fern-fern/ir-model@npm:0.0.2":
+  version: 0.0.2
+  resolution: "@fern-fern/ir-model@npm:0.0.2"
+  checksum: 45e051da4d731ca7a9b8ea662f50533989d50510e508de77f5f46c96f904af84292e6aceda1f838e2706abd69407b3c07a7e354243c04d6d86a7c9a96cc3442d
   languageName: node
   linkType: hard
 
@@ -2176,6 +2176,7 @@ __metadata:
     "@babel/core": ^7.18.5
     "@babel/preset-env": ^7.18.2
     "@babel/preset-typescript": ^7.17.12
+    "@fern-api/commons": "workspace:*"
     "@fern-fern/ir-model": "*"
     "@fern-typescript/commons": "workspace:*"
     "@types/jest": ^28.1.2

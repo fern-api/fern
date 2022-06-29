@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/commons";
 import {
     getPackagePath,
     getRelativePathAsModuleSpecifierTo,
@@ -67,47 +68,45 @@ export function getQualifiedReferenceToModelItem<T>({
             modelDirectory,
         });
 
-    switch (importStrategy) {
-        case ImportStrategy.MODEL_NAMESPACE_IMPORT: {
-            maybeAddImport({
-                importOf: modelDirectory,
-                namespaceImport: MODEL_NAMESPACE_IMPORT,
-            });
+    if (importStrategy === ImportStrategy.NAMED_IMPORT) {
+        maybeAddImport({
+            importOf: path.join(
+                modelDirectory.getPath(),
+                ...packagePathOfImportedType.map((part) => part.directoryName)
+            ),
+            namedImports: [{ name: item.typeName }],
+        });
 
-            return getQualifiedReference({
-                basePath: MODEL_NAMESPACE_IMPORT,
-                packagePath: packagePathOfImportedType,
-            });
-        }
-
-        case ImportStrategy.TOP_PACKAGE_IMPORT: {
-            const [topPackagePart, ...remainingPackageParts] = packagePathOfImportedType;
-            if (topPackagePart == null) {
-                throw new Error("Cannot find package for type " + item.typeName);
-            }
-            maybeAddImport({
-                importOf: modelDirectory,
-                namedImports: [topPackagePart.namespaceExport],
-            });
-
-            return getQualifiedReference({
-                basePath: topPackagePart.namespaceExport,
-                packagePath: remainingPackageParts,
-            });
-        }
-
-        case ImportStrategy.NAMED_IMPORT: {
-            maybeAddImport({
-                importOf: path.join(
-                    modelDirectory.getPath(),
-                    ...packagePathOfImportedType.map((part) => part.directoryName)
-                ),
-                namedImports: [{ name: item.typeName }],
-            });
-
-            return getNonQualifiedReference();
-        }
+        return getNonQualifiedReference();
     }
+
+    const [topPackagePart, ...remainingPackageParts] = packagePathOfImportedType;
+
+    if (importStrategy === ImportStrategy.MODEL_NAMESPACE_IMPORT || topPackagePart == null) {
+        maybeAddImport({
+            importOf: modelDirectory,
+            namespaceImport: MODEL_NAMESPACE_IMPORT,
+        });
+
+        return getQualifiedReference({
+            basePath: MODEL_NAMESPACE_IMPORT,
+            packagePath: packagePathOfImportedType,
+        });
+    }
+
+    if (importStrategy === ImportStrategy.TOP_PACKAGE_IMPORT) {
+        maybeAddImport({
+            importOf: modelDirectory,
+            namedImports: [topPackagePart.namespaceExport],
+        });
+
+        return getQualifiedReference({
+            basePath: topPackagePart.namespaceExport,
+            packagePath: remainingPackageParts,
+        });
+    }
+
+    assertNever(importStrategy);
 }
 
 function getDefaultImportStrategy({

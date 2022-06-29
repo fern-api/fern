@@ -6,7 +6,7 @@ Object {
   "/index.ts": "export * as model from \\"./model\\";
 export * as services from \\"./services\\";
 ",
-  "/model/chat/errors/GenericMessage.ts": "export type GenericMessage = string & {
+  "/model/errors/GenericMessage.ts": "export type GenericMessage = string & {
     __GenericMessage: void;
 };
 
@@ -14,13 +14,13 @@ export const GenericMessage = {
     of: (value: string): GenericMessage => value as GenericMessage
 };
 ",
-  "/model/chat/errors/index.ts": "export * from \\"./GenericMessage\\";
+  "/model/errors/index.ts": "export * from \\"./GenericMessage\\";
 ",
-  "/model/chat/index.ts": "export * from \\"./types\\";
+  "/model/index.ts": "export * from \\"./types\\";
 export * from \\"./errors\\";
 export * from \\"./service-types\\";
 ",
-  "/model/chat/service-types/ChatService/SendChatErrorBody.ts": "import { chat } from \\"../../..\\";
+  "/model/service-types/ChatService/SendChatErrorBody.ts": "import * as model from \\"../..\\";
 import * as uuid from \\"uuid\\";
 
 export type SendChatErrorBody =
@@ -30,17 +30,17 @@ export declare namespace SendChatErrorBody {
     interface GenericMessage {
         _error: \\"GenericMessage\\";
         _errorInstanceId: string;
-        GenericMessage: chat.GenericMessage;
+        GenericMessage: model.GenericMessage;
     }
 
     export interface _Visitor<Result> {
-        GenericMessage: (value: chat.GenericMessage) => Result;
+        GenericMessage: (value: model.GenericMessage) => Result;
         _unknown: () => Result;
     }
 }
 
 export const SendChatErrorBody = {
-    GenericMessage: (value: chat.GenericMessage): SendChatErrorBody.GenericMessage => ({
+    GenericMessage: (value: model.GenericMessage): SendChatErrorBody.GenericMessage => ({
         GenericMessage: value,
         _error: \\"GenericMessage\\",
         _errorInstanceId: uuid.v4()
@@ -56,20 +56,20 @@ export const SendChatErrorBody = {
     _types: (): SendChatErrorBody[\\"_error\\"][] => [\\"GenericMessage\\"],
 } as const;
 ",
-  "/model/chat/service-types/ChatService/SendChatRequest.ts": "import * as model from \\"../../..\\";
+  "/model/service-types/ChatService/SendChatRequest.ts": "import * as model from \\"../..\\";
 
 export interface SendChatRequest {
     id: string;
     operation: \\"sendChat\\";
-    body: model.chat.SendChatRequestBody;
+    body: model.SendChatRequestBody;
 }
 ",
-  "/model/chat/service-types/ChatService/SendChatRequestBody.ts": "export interface SendChatRequestBody {
+  "/model/service-types/ChatService/SendChatRequestBody.ts": "export interface SendChatRequestBody {
     title: string;
     content: string;
 }
 ",
-  "/model/chat/service-types/ChatService/SendChatResponse.ts": "import * as model from \\"../../..\\";
+  "/model/service-types/ChatService/SendChatResponse.ts": "import * as model from \\"../..\\";
 
 export type SendChatResponse = SendChatResponse.SuccessResponse | SendChatResponse.ErrorResponse;
 
@@ -78,33 +78,33 @@ namespace SendChatResponse {
         ok: true;
         id: string;
         replyTo: string;
-        body: model.chat.ChatMessage;
+        body: model.ChatMessage;
     }
 
     export interface ErrorResponse {
         ok: false;
         id: string;
         replyTo: string;
-        error: model.chat.SendChatErrorBody;
+        error: model.SendChatErrorBody;
     }
 }
 ",
-  "/model/chat/service-types/ChatService/index.ts": "export * from \\"./SendChatRequestBody\\";
+  "/model/service-types/ChatService/index.ts": "export * from \\"./SendChatRequestBody\\";
 export * from \\"./SendChatRequest\\";
 export * from \\"./SendChatErrorBody\\";
 export * from \\"./SendChatResponse\\";
 ",
-  "/model/chat/service-types/index.ts": "export * from \\"./ChatService\\";
+  "/model/service-types/index.ts": "export * from \\"./ChatService\\";
 ",
-  "/model/chat/types/ChatMessage.ts": "import * as model from \\"../..\\";
+  "/model/types/ChatMessage.ts": "import * as model from \\"..\\";
 
 export interface ChatMessage {
-    id: model.chat.ChatMessageId;
+    id: model.ChatMessageId;
     title: string;
     content: string;
 }
 ",
-  "/model/chat/types/ChatMessageId.ts": "export type ChatMessageId = string & {
+  "/model/types/ChatMessageId.ts": "export type ChatMessageId = string & {
     __ChatMessageId: void;
 };
 
@@ -112,10 +112,8 @@ export const ChatMessageId = {
     of: (value: string): ChatMessageId => value as ChatMessageId
 };
 ",
-  "/model/chat/types/index.ts": "export * from \\"./ChatMessageId\\";
+  "/model/types/index.ts": "export * from \\"./ChatMessageId\\";
 export * from \\"./ChatMessage\\";
-",
-  "/model/index.ts": "export * as chat from \\"./chat\\";
 ",
   "/package.json": "{
     \\"name\\": \\"chat\\",
@@ -135,7 +133,7 @@ export * from \\"./ChatMessage\\";
         \\"typescript\\": \\"4.6.4\\"
     }
 }",
-  "/services/chat/ChatService.ts": "import * as model from \\"../../model\\";
+  "/services/ChatService.ts": "import * as model from \\"../model\\";
 import * as uuid from \\"uuid\\";
 
 export declare namespace ChatService {
@@ -143,11 +141,11 @@ export declare namespace ChatService {
         origin: string;
     }
 
-    type ServerMessage = model.chat.SendChatResponse;
+    type ServerMessage = model.SendChatResponse;
 }
 
 export interface ChatService {
-    sendChat(request: model.chat.SendChatRequestBody): Promise<model.chat.SendChatResponse>;
+    sendChat(request: model.SendChatRequestBody): Promise<model.SendChatResponse>;
 }
 
 export class ChatService implements ChatService {
@@ -164,11 +162,11 @@ export class ChatService implements ChatService {
         });
     }
 
-    public async sendChat(request: model.chat.SendChatRequestBody): Promise<model.chat.SendChatResponse> {
+    public async sendChat(request: model.SendChatRequestBody): Promise<model.SendChatResponse> {
         const socket = await this.socket;
 
         return new Promise(resolve => {
-            const message: model.chat.SendChatRequest = {
+            const message: model.SendChatRequest = {
                 id: uuid.v4(),
                 operation: \\"sendChat\\",
                 body: request
@@ -205,9 +203,7 @@ export class ChatService implements ChatService {
     }
 }
 ",
-  "/services/chat/index.ts": "export * from \\"./ChatService\\";
-",
-  "/services/index.ts": "export * as chat from \\"./chat\\";
+  "/services/index.ts": "export * from \\"./ChatService\\";
 ",
   "/tsconfig.json": "{
     \\"compilerOptions\\": {
@@ -228,9 +224,9 @@ Object {
   "/index.ts": "export * as model from \\"./model\\";
 export * as services from \\"./services\\";
 ",
-  "/model/api/index.ts": "export * from \\"./service-types\\";
+  "/model/index.ts": "export * from \\"./service-types\\";
 ",
-  "/model/api/service-types/NoErrorsService/GetErrorBody.ts": "export type GetErrorBody = never;
+  "/model/service-types/NoErrorsService/GetErrorBody.ts": "export type GetErrorBody = never;
 
 export declare namespace GetErrorBody {
     export interface _Visitor<Result> {
@@ -246,7 +242,7 @@ export const GetErrorBody = {
     _types: (): GetErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
-  "/model/api/service-types/NoErrorsService/GetResponse.ts": "import * as model from \\"../../..\\";
+  "/model/service-types/NoErrorsService/GetResponse.ts": "import * as model from \\"../..\\";
 
 export type GetResponse = GetResponse.SuccessResponse | GetResponse.ErrorResponse;
 
@@ -257,16 +253,14 @@ namespace GetResponse {
 
     export interface ErrorResponse {
         ok: false;
-        error: model.api.GetErrorBody;
+        error: model.GetErrorBody;
     }
 }
 ",
-  "/model/api/service-types/NoErrorsService/index.ts": "export * from \\"./GetErrorBody\\";
+  "/model/service-types/NoErrorsService/index.ts": "export * from \\"./GetErrorBody\\";
 export * from \\"./GetResponse\\";
 ",
-  "/model/api/service-types/index.ts": "export * from \\"./NoErrorsService\\";
-",
-  "/model/index.ts": "export * as api from \\"./api\\";
+  "/model/service-types/index.ts": "export * from \\"./NoErrorsService\\";
 ",
   "/package.json": "{
     \\"name\\": \\"no-errors\\",
@@ -285,11 +279,11 @@ export * from \\"./GetResponse\\";
         \\"typescript\\": \\"4.6.4\\"
     }
 }",
-  "/services/api/NoErrorsService.ts": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
-import * as model from \\"../../model\\";
+  "/services/NoErrorsService.ts": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+import * as model from \\"../model\\";
 
 export interface NoErrorsService {
-    get(): Promise<model.api.GetResponse>;
+    get(): Promise<model.GetResponse>;
 }
 
 export class NoErrorsService implements NoErrorsService {
@@ -303,7 +297,7 @@ export class NoErrorsService implements NoErrorsService {
         this.token = args.token;
     }
 
-    public async get(): Promise<model.api.GetResponse> {
+    public async get(): Promise<model.GetResponse> {
         const encodedResponse = await this.fetcher({
             url: this.baseUrl + \\"/\\",
             method: \\"GET\\",
@@ -320,15 +314,13 @@ export class NoErrorsService implements NoErrorsService {
             const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.api.GetErrorBody
+                error: error as model.GetErrorBody
             };
         }
     }
 }
 ",
-  "/services/api/index.ts": "export * from \\"./NoErrorsService\\";
-",
-  "/services/index.ts": "export * as api from \\"./api\\";
+  "/services/index.ts": "export * from \\"./NoErrorsService\\";
 ",
   "/tsconfig.json": "{
     \\"compilerOptions\\": {
@@ -349,37 +341,19 @@ Object {
   "/index.ts": "export * as model from \\"./model\\";
 export * as services from \\"./services\\";
 ",
-  "/model/commons/index.ts": "export * from \\"./types\\";
-",
-  "/model/commons/types/PostId.ts": "/**
- * An ID of a blog post
- */
-export type PostId = string & {
-    __PostId: void;
-};
-
-export const PostId = {
-    of: (value: string): PostId => value as PostId
-};
-",
-  "/model/commons/types/index.ts": "export * from \\"./PostId\\";
-",
-  "/model/index.ts": "export * as commons from \\"./commons\\";
-export * as posts from \\"./posts\\";
-",
-  "/model/posts/errors/PostNotFoundError.ts": "import * as model from \\"../..\\";
+  "/model/errors/PostNotFoundError.ts": "import * as model from \\"..\\";
 
 export interface PostNotFoundError {
-    id: model.commons.PostId;
+    id: model.PostId;
 }
 ",
-  "/model/posts/errors/index.ts": "export * from \\"./PostNotFoundError\\";
+  "/model/errors/index.ts": "export * from \\"./PostNotFoundError\\";
 ",
-  "/model/posts/index.ts": "export * from \\"./types\\";
+  "/model/index.ts": "export * from \\"./types\\";
 export * from \\"./errors\\";
 export * from \\"./service-types\\";
 ",
-  "/model/posts/service-types/PostsService/CreatePostErrorBody.ts": "export type CreatePostErrorBody = never;
+  "/model/service-types/PostsService/CreatePostErrorBody.ts": "export type CreatePostErrorBody = never;
 
 export declare namespace CreatePostErrorBody {
     export interface _Visitor<Result> {
@@ -395,51 +369,51 @@ export const CreatePostErrorBody = {
     _types: (): CreatePostErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
-  "/model/posts/service-types/PostsService/CreatePostRequest.ts": "import * as model from \\"../../..\\";
+  "/model/service-types/PostsService/CreatePostRequest.ts": "import * as model from \\"../..\\";
 
 export interface CreatePostRequest {
-    type: model.posts.PostType;
+    type: model.PostType;
     title: string;
-    author: model.posts.Author;
+    author: model.Author;
     content: string;
 }
 ",
-  "/model/posts/service-types/PostsService/CreatePostResponse.ts": "import * as model from \\"../../..\\";
+  "/model/service-types/PostsService/CreatePostResponse.ts": "import * as model from \\"../..\\";
 
 export type CreatePostResponse = CreatePostResponse.SuccessResponse | CreatePostResponse.ErrorResponse;
 
 namespace CreatePostResponse {
     export interface SuccessResponse {
         ok: true;
-        body: model.commons.PostId;
+        body: model.PostId;
     }
 
     export interface ErrorResponse {
         ok: false;
-        error: model.posts.CreatePostErrorBody;
+        error: model.CreatePostErrorBody;
     }
 }
 ",
-  "/model/posts/service-types/PostsService/GetPostErrorBody.ts": "import { posts } from \\"../../..\\";
+  "/model/service-types/PostsService/GetPostErrorBody.ts": "import * as model from \\"../..\\";
 import * as uuid from \\"uuid\\";
 
 export type GetPostErrorBody =
     | GetPostErrorBody.PostNotFoundError;
 
 export declare namespace GetPostErrorBody {
-    interface PostNotFoundError extends posts.PostNotFoundError {
+    interface PostNotFoundError extends model.PostNotFoundError {
         _error: \\"PostNotFoundError\\";
         _errorInstanceId: string;
     }
 
     export interface _Visitor<Result> {
-        PostNotFoundError: (value: posts.PostNotFoundError) => Result;
+        PostNotFoundError: (value: model.PostNotFoundError) => Result;
         _unknown: () => Result;
     }
 }
 
 export const GetPostErrorBody = {
-    PostNotFoundError: (value: posts.PostNotFoundError): GetPostErrorBody.PostNotFoundError => ({
+    PostNotFoundError: (value: model.PostNotFoundError): GetPostErrorBody.PostNotFoundError => ({
         ...value,
         _error: \\"PostNotFoundError\\",
         _errorInstanceId: uuid.v4()
@@ -455,50 +429,50 @@ export const GetPostErrorBody = {
     _types: (): GetPostErrorBody[\\"_error\\"][] => [\\"PostNotFoundError\\"],
 } as const;
 ",
-  "/model/posts/service-types/PostsService/GetPostRequest.ts": "import * as model from \\"../../..\\";
+  "/model/service-types/PostsService/GetPostRequest.ts": "import * as model from \\"../..\\";
 
 export interface GetPostRequest {
-    postId: model.commons.PostId;
+    postId: model.PostId;
     page: number | null | undefined;
     otherParam: number;
 }
 ",
-  "/model/posts/service-types/PostsService/GetPostResponse.ts": "import * as model from \\"../../..\\";
+  "/model/service-types/PostsService/GetPostResponse.ts": "import * as model from \\"../..\\";
 
 export type GetPostResponse = GetPostResponse.SuccessResponse | GetPostResponse.ErrorResponse;
 
 namespace GetPostResponse {
     export interface SuccessResponse {
         ok: true;
-        body: model.posts.Post;
+        body: model.Post;
     }
 
     export interface ErrorResponse {
         ok: false;
-        error: model.posts.GetPostErrorBody;
+        error: model.GetPostErrorBody;
     }
 }
 ",
-  "/model/posts/service-types/PostsService/GetPostV2ErrorBody.ts": "import { posts } from \\"../../..\\";
+  "/model/service-types/PostsService/GetPostV2ErrorBody.ts": "import * as model from \\"../..\\";
 import * as uuid from \\"uuid\\";
 
 export type GetPostV2ErrorBody =
     | GetPostV2ErrorBody.PostNotFoundError;
 
 export declare namespace GetPostV2ErrorBody {
-    interface PostNotFoundError extends posts.PostNotFoundError {
+    interface PostNotFoundError extends model.PostNotFoundError {
         _error: \\"PostNotFoundError\\";
         _errorInstanceId: string;
     }
 
     export interface _Visitor<Result> {
-        PostNotFoundError: (value: posts.PostNotFoundError) => Result;
+        PostNotFoundError: (value: model.PostNotFoundError) => Result;
         _unknown: () => Result;
     }
 }
 
 export const GetPostV2ErrorBody = {
-    PostNotFoundError: (value: posts.PostNotFoundError): GetPostV2ErrorBody.PostNotFoundError => ({
+    PostNotFoundError: (value: model.PostNotFoundError): GetPostV2ErrorBody.PostNotFoundError => ({
         ...value,
         _error: \\"PostNotFoundError\\",
         _errorInstanceId: uuid.v4()
@@ -514,23 +488,23 @@ export const GetPostV2ErrorBody = {
     _types: (): GetPostV2ErrorBody[\\"_error\\"][] => [\\"PostNotFoundError\\"],
 } as const;
 ",
-  "/model/posts/service-types/PostsService/GetPostV2Response.ts": "import * as model from \\"../../..\\";
+  "/model/service-types/PostsService/GetPostV2Response.ts": "import * as model from \\"../..\\";
 
 export type GetPostV2Response = GetPostV2Response.SuccessResponse | GetPostV2Response.ErrorResponse;
 
 namespace GetPostV2Response {
     export interface SuccessResponse {
         ok: true;
-        body: model.posts.Post;
+        body: model.Post;
     }
 
     export interface ErrorResponse {
         ok: false;
-        error: model.posts.GetPostV2ErrorBody;
+        error: model.GetPostV2ErrorBody;
     }
 }
 ",
-  "/model/posts/service-types/PostsService/index.ts": "export * from \\"./CreatePostRequest\\";
+  "/model/service-types/PostsService/index.ts": "export * from \\"./CreatePostRequest\\";
 export * from \\"./CreatePostErrorBody\\";
 export * from \\"./CreatePostResponse\\";
 export * from \\"./GetPostRequest\\";
@@ -539,9 +513,9 @@ export * from \\"./GetPostResponse\\";
 export * from \\"./GetPostV2ErrorBody\\";
 export * from \\"./GetPostV2Response\\";
 ",
-  "/model/posts/service-types/index.ts": "export * from \\"./PostsService\\";
+  "/model/service-types/index.ts": "export * from \\"./PostsService\\";
 ",
-  "/model/posts/types/Author.ts": "export type Author =
+  "/model/types/Author.ts": "export type Author =
     | Author.Anonymous
     | Author.Named;
 
@@ -583,21 +557,32 @@ export const Author = {
     _types: (): Author[\\"_type\\"][] => [\\"anonymous\\", \\"named\\"],
 } as const;
 ",
-  "/model/posts/types/Post.ts": "import * as model from \\"../..\\";
+  "/model/types/Post.ts": "import * as model from \\"..\\";
 
 /**
  * A blog post
  */
 export interface Post {
-    id: model.commons.PostId;
-    type: model.posts.PostType;
+    id: model.PostId;
+    type: model.PostType;
     title: string;
-    author: model.posts.Author;
+    author: model.Author;
     content: string;
-    relatedPosts: model.posts.Post[];
+    relatedPosts: model.Post[];
 }
 ",
-  "/model/posts/types/PostType.ts": "export type PostType =
+  "/model/types/PostId.ts": "/**
+ * An ID of a blog post
+ */
+export type PostId = string & {
+    __PostId: void;
+};
+
+export const PostId = {
+    of: (value: string): PostId => value as PostId
+};
+",
+  "/model/types/PostType.ts": "export type PostType =
     | \\"LONG\\"
     | \\"SHORT\\";
 
@@ -627,7 +612,8 @@ export declare namespace PostType {
     }
 }
 ",
-  "/model/posts/types/index.ts": "export * from \\"./Post\\";
+  "/model/types/index.ts": "export * from \\"./PostId\\";
+export * from \\"./Post\\";
 export * from \\"./PostType\\";
 export * from \\"./Author\\";
 ",
@@ -650,15 +636,13 @@ export * from \\"./Author\\";
         \\"typescript\\": \\"4.6.4\\"
     }
 }",
-  "/services/index.ts": "export * as posts from \\"./posts\\";
-",
-  "/services/posts/PostsService.ts": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
-import * as model from \\"../../model\\";
+  "/services/PostsService.ts": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+import * as model from \\"../model\\";
 
 export interface PostsService {
-    createPost(request: model.posts.CreatePostRequest): Promise<model.posts.CreatePostResponse>;
-    getPost(request: model.posts.GetPostRequest): Promise<model.posts.GetPostResponse>;
-    getPostV2(request: model.commons.PostId): Promise<model.posts.GetPostV2Response>;
+    createPost(request: model.CreatePostRequest): Promise<model.CreatePostResponse>;
+    getPost(request: model.GetPostRequest): Promise<model.GetPostResponse>;
+    getPostV2(request: model.PostId): Promise<model.GetPostV2Response>;
 }
 
 export class PostsService implements PostsService {
@@ -672,7 +656,7 @@ export class PostsService implements PostsService {
         this.token = args.token;
     }
 
-    public async createPost(request: model.posts.CreatePostRequest): Promise<model.posts.CreatePostResponse> {
+    public async createPost(request: model.CreatePostRequest): Promise<model.CreatePostResponse> {
         const encodedResponse = await this.fetcher({
             url: this.baseUrl + \\"/\\",
             method: \\"POST\\",
@@ -688,19 +672,19 @@ export class PostsService implements PostsService {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.commons.PostId
+                body: response as model.PostId
             };
         }
         else {
             const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.posts.CreatePostErrorBody
+                error: error as model.CreatePostErrorBody
             };
         }
     }
 
-    public async getPost(request: model.posts.GetPostRequest): Promise<model.posts.GetPostResponse> {
+    public async getPost(request: model.GetPostRequest): Promise<model.GetPostResponse> {
         const queryParameters = new URLSearchParams();
         if (request.page != null) {
             queryParameters.append(\\"page\\", request.page.toString());
@@ -719,19 +703,19 @@ export class PostsService implements PostsService {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.posts.Post
+                body: response as model.Post
             };
         }
         else {
             const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.posts.GetPostErrorBody
+                error: error as model.GetPostErrorBody
             };
         }
     }
 
-    public async getPostV2(request: model.commons.PostId): Promise<model.posts.GetPostV2Response> {
+    public async getPostV2(request: model.PostId): Promise<model.GetPostV2Response> {
         const encodedResponse = await this.fetcher({
             url: this.baseUrl + \\"/get\\",
             method: \\"GET\\",
@@ -747,20 +731,20 @@ export class PostsService implements PostsService {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.posts.Post
+                body: response as model.Post
             };
         }
         else {
             const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.posts.GetPostV2ErrorBody
+                error: error as model.GetPostV2ErrorBody
             };
         }
     }
 }
 ",
-  "/services/posts/index.ts": "export * from \\"./PostsService\\";
+  "/services/index.ts": "export * from \\"./PostsService\\";
 ",
   "/tsconfig.json": "{
     \\"compilerOptions\\": {

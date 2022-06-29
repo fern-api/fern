@@ -3,69 +3,8 @@
 exports[`generateModelProject fern IR 1`] = `
 Object {
   "/.npmignore": "tsconfig.json",
-  "/commons/index.ts": "export * from \\"./types\\";
-",
-  "/commons/types/WithDocs.ts": "export interface WithDocs {
-    docs: string | null | undefined;
-}
-",
-  "/commons/types/index.ts": "export * from \\"./WithDocs\\";
-",
-  "/errors/index.ts": "export * from \\"./types\\";
-",
-  "/errors/types/ErrorDefinition.ts": "import * as model from \\"../..\\";
-
-export interface ErrorDefinition extends model.commons.WithDocs {
-    name: model.types.NamedType;
-    properties: model.errors.ErrorProperty[];
-    http: model.errors.HttpErrorConfiguration | null | undefined;
-}
-",
-  "/errors/types/ErrorProperty.ts": "import * as model from \\"../..\\";
-
-export interface ErrorProperty extends model.commons.WithDocs {
-    name: string;
-    type: model.types.TypeReference;
-}
-",
-  "/errors/types/HttpErrorConfiguration.ts": "export interface HttpErrorConfiguration {
-    statusCode: number;
-}
-",
-  "/errors/types/index.ts": "export * from \\"./ErrorDefinition\\";
-export * from \\"./ErrorProperty\\";
-export * from \\"./HttpErrorConfiguration\\";
-",
-  "/fern/index.ts": "export * from \\"./types\\";
-",
-  "/fern/types/IntermediateRepresentation.ts": "import * as model from \\"../..\\";
-
-/**
- * Complete representation of the API schema
- */
-export interface IntermediateRepresentation {
-    /** The types described by this API */
-    types: model.types.TypeDefinition[];
-    /** The services exposed by this API */
-    services: model.fern.Services;
-    errors: model.errors.ErrorDefinition[];
-}
-",
-  "/fern/types/Services.ts": "import * as model from \\"../..\\";
-
-export interface Services {
-    http: model.services.http.HttpService[];
-    websocket: model.services.websocket.WebSocketService[];
-}
-",
-  "/fern/types/index.ts": "export * from \\"./IntermediateRepresentation\\";
-export * from \\"./Services\\";
-",
-  "/index.ts": "export * as commons from \\"./commons\\";
-export * as errors from \\"./errors\\";
-export * as fern from \\"./fern\\";
+  "/index.ts": "export * from \\"./types\\";
 export * as services from \\"./services\\";
-export * as types from \\"./types\\";
 ",
   "/package.json": "{
     \\"name\\": \\"posts\\",
@@ -81,64 +20,37 @@ export * as types from \\"./types\\";
         \\"typescript\\": \\"4.6.4\\"
     }
 }",
-  "/services/commons/index.ts": "export * from \\"./types\\";
+  "/services/index.ts": "export * from \\"./types\\";
 ",
-  "/services/commons/types/BaseService.ts": "import * as model from \\"../../..\\";
+  "/services/types/BaseService.ts": "import * as model from \\"../..\\";
 
-export interface BaseService extends model.commons.WithDocs {
+export interface BaseService extends model.WithDocs {
     basePath: string;
-    name: model.types.NamedType;
+    name: model.NamedType;
 }
 ",
-  "/services/commons/types/ResponseError.ts": "import * as model from \\"../../..\\";
+  "/services/types/HttpEndpoint.ts": "import * as model from \\"../..\\";
 
-export interface ResponseError extends model.commons.WithDocs {
-    discriminantValue: string;
-    error: model.types.NamedType;
-}
-",
-  "/services/commons/types/ResponseErrors.ts": "import * as model from \\"../../..\\";
-
-export interface ResponseErrors extends model.commons.WithDocs {
-    discriminant: string;
-    possibleErrors: model.services.commons.ResponseError[];
-}
-",
-  "/services/commons/types/WireMessage.ts": "import * as model from \\"../../..\\";
-
-export interface WireMessage extends model.commons.WithDocs {
-    type: model.types.Type;
-}
-",
-  "/services/commons/types/index.ts": "export * from \\"./BaseService\\";
-export * from \\"./WireMessage\\";
-export * from \\"./ResponseErrors\\";
-export * from \\"./ResponseError\\";
-",
-  "/services/http/index.ts": "export * from \\"./types\\";
-",
-  "/services/http/types/HttpEndpoint.ts": "import * as model from \\"../../..\\";
-
-export interface HttpEndpoint extends model.commons.WithDocs {
+export interface HttpEndpoint extends model.WithDocs {
     endpointId: string;
     path: string;
-    method: model.services.http.HttpMethod;
-    headers: model.services.http.HttpHeader[];
-    parameters: model.services.http.PathParameter[];
-    queryParameters: model.services.http.QueryParameter[];
-    request: model.services.commons.WireMessage | null | undefined;
-    response: model.services.commons.WireMessage | null | undefined;
-    errors: model.services.commons.ResponseErrors;
+    method: model.services.HttpMethod;
+    headers: model.services.HttpHeader[];
+    parameters: model.services.PathParameter[];
+    queryParameters: model.services.QueryParameter[];
+    request: model.services.WireMessage | null | undefined;
+    response: model.services.WireMessage | null | undefined;
+    errors: model.services.ResponseErrors;
 }
 ",
-  "/services/http/types/HttpHeader.ts": "import * as model from \\"../../..\\";
+  "/services/types/HttpHeader.ts": "import * as model from \\"../..\\";
 
-export interface HttpHeader extends model.commons.WithDocs {
+export interface HttpHeader extends model.WithDocs {
     header: string;
-    valueType: model.types.TypeReference;
+    valueType: model.TypeReference;
 }
 ",
-  "/services/http/types/HttpMethod.ts": "export type HttpMethod =
+  "/services/types/HttpMethod.ts": "export type HttpMethod =
     | \\"GET\\"
     | \\"POST\\"
     | \\"PUT\\"
@@ -183,50 +95,51 @@ export declare namespace HttpMethod {
     }
 }
 ",
-  "/services/http/types/HttpService.ts": "import * as model from \\"../../..\\";
+  "/services/types/HttpService.ts": "import * as model from \\"../..\\";
 
-export interface HttpService extends model.services.commons.BaseService {
-    endpoints: model.services.http.HttpEndpoint[];
-    headers: model.services.http.HttpHeader[];
+export interface HttpService extends model.services.BaseService {
+    endpoints: model.services.HttpEndpoint[];
+    headers: model.services.HttpHeader[];
 }
 ",
-  "/services/http/types/PathParameter.ts": "import * as model from \\"../../..\\";
+  "/services/types/PathParameter.ts": "import * as model from \\"../..\\";
 
-export interface PathParameter extends model.commons.WithDocs {
+export interface PathParameter extends model.WithDocs {
     key: string;
-    valueType: model.types.TypeReference;
+    valueType: model.TypeReference;
 }
 ",
-  "/services/http/types/QueryParameter.ts": "import * as model from \\"../../..\\";
+  "/services/types/QueryParameter.ts": "import * as model from \\"../..\\";
 
-export interface QueryParameter extends model.commons.WithDocs {
+export interface QueryParameter extends model.WithDocs {
     key: string;
-    valueType: model.types.TypeReference;
+    valueType: model.TypeReference;
 }
 ",
-  "/services/http/types/index.ts": "export * from \\"./HttpService\\";
-export * from \\"./HttpEndpoint\\";
-export * from \\"./HttpMethod\\";
-export * from \\"./HttpHeader\\";
-export * from \\"./PathParameter\\";
-export * from \\"./QueryParameter\\";
-",
-  "/services/index.ts": "export * as commons from \\"./commons\\";
-export * as http from \\"./http\\";
-export * as websocket from \\"./websocket\\";
-",
-  "/services/websocket/index.ts": "export * from \\"./types\\";
-",
-  "/services/websocket/types/WebSocketMessage.ts": "import * as model from \\"../../..\\";
+  "/services/types/ResponseError.ts": "import * as model from \\"../..\\";
 
-export interface WebSocketMessage extends model.commons.WithDocs {
-    origin: model.services.websocket.WebSocketMessageOrigin;
-    body: model.services.commons.WireMessage | null | undefined;
-    response: model.services.websocket.WebSocketMessageResponse | null | undefined;
-    errors: model.services.commons.ResponseErrors;
+export interface ResponseError extends model.WithDocs {
+    discriminantValue: string;
+    error: model.NamedType;
 }
 ",
-  "/services/websocket/types/WebSocketMessageOrigin.ts": "export type WebSocketMessageOrigin =
+  "/services/types/ResponseErrors.ts": "import * as model from \\"../..\\";
+
+export interface ResponseErrors extends model.WithDocs {
+    discriminant: string;
+    possibleErrors: model.services.ResponseError[];
+}
+",
+  "/services/types/WebSocketMessage.ts": "import * as model from \\"../..\\";
+
+export interface WebSocketMessage extends model.WithDocs {
+    origin: model.services.WebSocketMessageOrigin;
+    body: model.services.WireMessage | null | undefined;
+    response: model.services.WebSocketMessageResponse | null | undefined;
+    errors: model.services.ResponseErrors;
+}
+",
+  "/services/types/WebSocketMessageOrigin.ts": "export type WebSocketMessageOrigin =
     | \\"CLIENT\\"
     | \\"SERVER\\";
 
@@ -256,15 +169,15 @@ export declare namespace WebSocketMessageOrigin {
     }
 }
 ",
-  "/services/websocket/types/WebSocketMessageResponse.ts": "import * as model from \\"../../..\\";
+  "/services/types/WebSocketMessageResponse.ts": "import * as model from \\"../..\\";
 
-export interface WebSocketMessageResponse extends model.services.commons.WireMessage {
+export interface WebSocketMessageResponse extends model.services.WireMessage {
     /** Defaults to WebSocketMessageResponseBehavior.ONGOING */
-    behavior: model.services.websocket.WebSocketMessageResponseBehavior;
-    type: model.types.Type;
+    behavior: model.services.WebSocketMessageResponseBehavior;
+    type: model.Type;
 }
 ",
-  "/services/websocket/types/WebSocketMessageResponseBehavior.ts": "export type WebSocketMessageResponseBehavior =
+  "/services/types/WebSocketMessageResponseBehavior.ts": "export type WebSocketMessageResponseBehavior =
     | \\"ONGOING\\"
     | \\"REQUEST_RESPONSE\\";
 
@@ -294,13 +207,29 @@ export declare namespace WebSocketMessageResponseBehavior {
     }
 }
 ",
-  "/services/websocket/types/WebSocketService.ts": "import * as model from \\"../../..\\";
+  "/services/types/WebSocketService.ts": "import * as model from \\"../..\\";
 
-export interface WebSocketService extends model.services.commons.BaseService {
-    messages: model.services.websocket.WebSocketMessage[];
+export interface WebSocketService extends model.services.BaseService {
+    messages: model.services.WebSocketMessage[];
 }
 ",
-  "/services/websocket/types/index.ts": "export * from \\"./WebSocketService\\";
+  "/services/types/WireMessage.ts": "import * as model from \\"../..\\";
+
+export interface WireMessage extends model.WithDocs {
+    type: model.Type;
+}
+",
+  "/services/types/index.ts": "export * from \\"./BaseService\\";
+export * from \\"./WireMessage\\";
+export * from \\"./ResponseErrors\\";
+export * from \\"./ResponseError\\";
+export * from \\"./HttpService\\";
+export * from \\"./HttpEndpoint\\";
+export * from \\"./HttpMethod\\";
+export * from \\"./HttpHeader\\";
+export * from \\"./PathParameter\\";
+export * from \\"./QueryParameter\\";
+export * from \\"./WebSocketService\\";
 export * from \\"./WebSocketMessage\\";
 export * from \\"./WebSocketMessageOrigin\\";
 export * from \\"./WebSocketMessageResponse\\";
@@ -316,15 +245,13 @@ export * from \\"./WebSocketMessageResponseBehavior\\";
         \\"esModuleInterop\\": true
     }
 }",
-  "/types/index.ts": "export * from \\"./types\\";
-",
-  "/types/types/AliasTypeDefinition.ts": "import * as model from \\"../..\\";
+  "/types/AliasTypeDefinition.ts": "import * as model from \\"..\\";
 
 export interface AliasTypeDefinition {
-    aliasOf: model.types.TypeReference;
+    aliasOf: model.TypeReference;
 }
 ",
-  "/types/types/ContainerType.ts": "import { types } from \\"../..\\";
+  "/types/ContainerType.ts": "import * as model from \\"..\\";
 
 export type ContainerType =
     | ContainerType.List
@@ -335,49 +262,49 @@ export type ContainerType =
 export declare namespace ContainerType {
     interface List {
         _type: \\"list\\";
-        list: types.TypeReference;
+        list: model.TypeReference;
     }
 
-    interface Map extends types.MapType {
+    interface Map extends model.MapType {
         _type: \\"map\\";
     }
 
     interface Optional {
         _type: \\"optional\\";
-        optional: types.TypeReference;
+        optional: model.TypeReference;
     }
 
     interface Set {
         _type: \\"set\\";
-        set: types.TypeReference;
+        set: model.TypeReference;
     }
 
     export interface _Visitor<Result> {
-        list: (value: types.TypeReference) => Result;
-        map: (value: types.MapType) => Result;
-        optional: (value: types.TypeReference) => Result;
-        set: (value: types.TypeReference) => Result;
+        list: (value: model.TypeReference) => Result;
+        map: (value: model.MapType) => Result;
+        optional: (value: model.TypeReference) => Result;
+        set: (value: model.TypeReference) => Result;
         _unknown: () => Result;
     }
 }
 
 export const ContainerType = {
-    list: (value: types.TypeReference): ContainerType.List => ({
+    list: (value: model.TypeReference): ContainerType.List => ({
         list: value,
         _type: \\"list\\"
     }),
 
-    map: (value: types.MapType): ContainerType.Map => ({
+    map: (value: model.MapType): ContainerType.Map => ({
         ...value,
         _type: \\"map\\"
     }),
 
-    optional: (value: types.TypeReference): ContainerType.Optional => ({
+    optional: (value: model.TypeReference): ContainerType.Optional => ({
         optional: value,
         _type: \\"optional\\"
     }),
 
-    set: (value: types.TypeReference): ContainerType.Set => ({
+    set: (value: model.TypeReference): ContainerType.Set => ({
         set: value,
         _type: \\"set\\"
     }),
@@ -395,19 +322,34 @@ export const ContainerType = {
     _types: (): ContainerType[\\"_type\\"][] => [\\"list\\", \\"map\\", \\"optional\\", \\"set\\"],
 } as const;
 ",
-  "/types/types/EnumTypeDefinition.ts": "import * as model from \\"../..\\";
+  "/types/EnumTypeDefinition.ts": "import * as model from \\"..\\";
 
 export interface EnumTypeDefinition {
-    values: model.types.EnumValue[];
+    values: model.EnumValue[];
 }
 ",
-  "/types/types/EnumValue.ts": "import * as model from \\"../..\\";
+  "/types/EnumValue.ts": "import * as model from \\"..\\";
 
-export interface EnumValue extends model.commons.WithDocs {
+export interface EnumValue extends model.WithDocs {
     value: string;
 }
 ",
-  "/types/types/FernFilepath.ts": "/**
+  "/types/ErrorDefinition.ts": "import * as model from \\"..\\";
+
+export interface ErrorDefinition extends model.WithDocs {
+    name: model.NamedType;
+    properties: model.ErrorProperty[];
+    http: model.HttpErrorConfiguration | null | undefined;
+}
+",
+  "/types/ErrorProperty.ts": "import * as model from \\"..\\";
+
+export interface ErrorProperty extends model.WithDocs {
+    name: string;
+    type: model.TypeReference;
+}
+",
+  "/types/FernFilepath.ts": "/**
  * A filepath to a Fern spec file, excluding the file extension
  */
 export type FernFilepath = string & {
@@ -418,36 +360,53 @@ export const FernFilepath = {
     of: (value: string): FernFilepath => value as FernFilepath
 };
 ",
-  "/types/types/MapType.ts": "import * as model from \\"../..\\";
-
-export interface MapType {
-    keyType: model.types.TypeReference;
-    valueType: model.types.TypeReference;
+  "/types/HttpErrorConfiguration.ts": "export interface HttpErrorConfiguration {
+    statusCode: number;
 }
 ",
-  "/types/types/NamedType.ts": "import * as model from \\"../..\\";
+  "/types/IntermediateRepresentation.ts": "import * as model from \\"..\\";
+
+/**
+ * Complete representation of the API schema
+ */
+export interface IntermediateRepresentation {
+    /** The types described by this API */
+    types: model.TypeDefinition[];
+    /** The services exposed by this API */
+    services: model.Services;
+    errors: model.ErrorDefinition[];
+}
+",
+  "/types/MapType.ts": "import * as model from \\"..\\";
+
+export interface MapType {
+    keyType: model.TypeReference;
+    valueType: model.TypeReference;
+}
+",
+  "/types/NamedType.ts": "import * as model from \\"..\\";
 
 export interface NamedType {
-    fernFilepath: model.types.FernFilepath;
+    fernFilepath: model.FernFilepath;
     name: string;
 }
 ",
-  "/types/types/ObjectProperty.ts": "import * as model from \\"../..\\";
+  "/types/ObjectProperty.ts": "import * as model from \\"..\\";
 
-export interface ObjectProperty extends model.commons.WithDocs {
+export interface ObjectProperty extends model.WithDocs {
     key: string;
-    valueType: model.types.TypeReference;
+    valueType: model.TypeReference;
 }
 ",
-  "/types/types/ObjectTypeDefinition.ts": "import * as model from \\"../..\\";
+  "/types/ObjectTypeDefinition.ts": "import * as model from \\"..\\";
 
 export interface ObjectTypeDefinition {
     /** A list of other types to inherit from */
-    extends: model.types.NamedType[];
-    properties: model.types.ObjectProperty[];
+    extends: model.NamedType[];
+    properties: model.ObjectProperty[];
 }
 ",
-  "/types/types/PrimitiveType.ts": "export type PrimitiveType =
+  "/types/PrimitiveType.ts": "export type PrimitiveType =
     | \\"INTEGER\\"
     | \\"DOUBLE\\"
     | \\"STRING\\"
@@ -494,14 +453,21 @@ export declare namespace PrimitiveType {
     }
 }
 ",
-  "/types/types/SingleUnionType.ts": "import * as model from \\"../..\\";
+  "/types/Services.ts": "import * as model from \\"..\\";
 
-export interface SingleUnionType extends model.commons.WithDocs {
-    discriminantValue: string;
-    valueType: model.types.TypeReference;
+export interface Services {
+    http: model.services.HttpService[];
+    websocket: model.services.WebSocketService[];
 }
 ",
-  "/types/types/Type.ts": "import { types } from \\"../..\\";
+  "/types/SingleUnionType.ts": "import * as model from \\"..\\";
+
+export interface SingleUnionType extends model.WithDocs {
+    discriminantValue: string;
+    valueType: model.TypeReference;
+}
+",
+  "/types/Type.ts": "import * as model from \\"..\\";
 
 export type Type =
     | Type.Alias
@@ -510,48 +476,48 @@ export type Type =
     | Type.Union;
 
 export declare namespace Type {
-    interface Alias extends types.AliasTypeDefinition {
+    interface Alias extends model.AliasTypeDefinition {
         _type: \\"alias\\";
     }
 
-    interface Enum extends types.EnumTypeDefinition {
+    interface Enum extends model.EnumTypeDefinition {
         _type: \\"enum\\";
     }
 
-    interface Object extends types.ObjectTypeDefinition {
+    interface Object extends model.ObjectTypeDefinition {
         _type: \\"object\\";
     }
 
-    interface Union extends types.UnionTypeDefinition {
+    interface Union extends model.UnionTypeDefinition {
         _type: \\"union\\";
     }
 
     export interface _Visitor<Result> {
-        alias: (value: types.AliasTypeDefinition) => Result;
-        enum: (value: types.EnumTypeDefinition) => Result;
-        object: (value: types.ObjectTypeDefinition) => Result;
-        union: (value: types.UnionTypeDefinition) => Result;
+        alias: (value: model.AliasTypeDefinition) => Result;
+        enum: (value: model.EnumTypeDefinition) => Result;
+        object: (value: model.ObjectTypeDefinition) => Result;
+        union: (value: model.UnionTypeDefinition) => Result;
         _unknown: () => Result;
     }
 }
 
 export const Type = {
-    alias: (value: types.AliasTypeDefinition): Type.Alias => ({
+    alias: (value: model.AliasTypeDefinition): Type.Alias => ({
         ...value,
         _type: \\"alias\\"
     }),
 
-    enum: (value: types.EnumTypeDefinition): Type.Enum => ({
+    enum: (value: model.EnumTypeDefinition): Type.Enum => ({
         ...value,
         _type: \\"enum\\"
     }),
 
-    object: (value: types.ObjectTypeDefinition): Type.Object => ({
+    object: (value: model.ObjectTypeDefinition): Type.Object => ({
         ...value,
         _type: \\"object\\"
     }),
 
-    union: (value: types.UnionTypeDefinition): Type.Union => ({
+    union: (value: model.UnionTypeDefinition): Type.Union => ({
         ...value,
         _type: \\"union\\"
     }),
@@ -569,17 +535,17 @@ export const Type = {
     _types: (): Type[\\"_type\\"][] => [\\"alias\\", \\"enum\\", \\"object\\", \\"union\\"],
 } as const;
 ",
-  "/types/types/TypeDefinition.ts": "import * as model from \\"../..\\";
+  "/types/TypeDefinition.ts": "import * as model from \\"..\\";
 
 /**
  * A type, which is a name and a shape
  */
-export interface TypeDefinition extends model.commons.WithDocs {
-    name: model.types.NamedType;
-    shape: model.types.Type;
+export interface TypeDefinition extends model.WithDocs {
+    name: model.NamedType;
+    shape: model.Type;
 }
 ",
-  "/types/types/TypeReference.ts": "import { types } from \\"../..\\";
+  "/types/TypeReference.ts": "import * as model from \\"..\\";
 
 export type TypeReference =
     | TypeReference.Container
@@ -590,16 +556,16 @@ export type TypeReference =
 export declare namespace TypeReference {
     interface Container {
         _type: \\"container\\";
-        container: types.ContainerType;
+        container: model.ContainerType;
     }
 
-    interface Named extends types.NamedType {
+    interface Named extends model.NamedType {
         _type: \\"named\\";
     }
 
     interface Primitive {
         _type: \\"primitive\\";
-        primitive: types.PrimitiveType;
+        primitive: model.PrimitiveType;
     }
 
     interface Void {
@@ -607,26 +573,26 @@ export declare namespace TypeReference {
     }
 
     export interface _Visitor<Result> {
-        container: (value: types.ContainerType) => Result;
-        named: (value: types.NamedType) => Result;
-        primitive: (value: types.PrimitiveType) => Result;
+        container: (value: model.ContainerType) => Result;
+        named: (value: model.NamedType) => Result;
+        primitive: (value: model.PrimitiveType) => Result;
         void: () => Result;
         _unknown: () => Result;
     }
 }
 
 export const TypeReference = {
-    container: (value: types.ContainerType): TypeReference.Container => ({
+    container: (value: model.ContainerType): TypeReference.Container => ({
         container: value,
         _type: \\"container\\"
     }),
 
-    named: (value: types.NamedType): TypeReference.Named => ({
+    named: (value: model.NamedType): TypeReference.Named => ({
         ...value,
         _type: \\"named\\"
     }),
 
-    primitive: (value: types.PrimitiveType): TypeReference.Primitive => ({
+    primitive: (value: model.PrimitiveType): TypeReference.Primitive => ({
         primitive: value,
         _type: \\"primitive\\"
     }),
@@ -648,14 +614,24 @@ export const TypeReference = {
     _types: (): TypeReference[\\"_type\\"][] => [\\"container\\", \\"named\\", \\"primitive\\", \\"void\\"],
 } as const;
 ",
-  "/types/types/UnionTypeDefinition.ts": "import * as model from \\"../..\\";
+  "/types/UnionTypeDefinition.ts": "import * as model from \\"..\\";
 
 export interface UnionTypeDefinition {
     discriminant: string;
-    types: model.types.SingleUnionType[];
+    types: model.SingleUnionType[];
 }
 ",
-  "/types/types/index.ts": "export * from \\"./FernFilepath\\";
+  "/types/WithDocs.ts": "export interface WithDocs {
+    docs: string | null | undefined;
+}
+",
+  "/types/index.ts": "export * from \\"./WithDocs\\";
+export * from \\"./ErrorDefinition\\";
+export * from \\"./ErrorProperty\\";
+export * from \\"./HttpErrorConfiguration\\";
+export * from \\"./IntermediateRepresentation\\";
+export * from \\"./Services\\";
+export * from \\"./FernFilepath\\";
 export * from \\"./TypeDefinition\\";
 export * from \\"./NamedType\\";
 export * from \\"./Type\\";
@@ -677,23 +653,19 @@ export * from \\"./PrimitiveType\\";
 exports[`generateModelProject posts 1`] = `
 Object {
   "/.npmignore": "tsconfig.json",
-  "/commons/index.ts": "export * from \\"./types\\";
-",
-  "/commons/types/PostId.ts": "/**
- * An ID of a blog post
- */
-export type PostId = string & {
-    __PostId: void;
+  "/errors/PostNotFoundError.ts": "export type PostNotFoundError = string & {
+    __PostNotFoundError: void;
 };
 
-export const PostId = {
-    of: (value: string): PostId => value as PostId
+export const PostNotFoundError = {
+    of: (value: string): PostNotFoundError => value as PostNotFoundError
 };
 ",
-  "/commons/types/index.ts": "export * from \\"./PostId\\";
+  "/errors/index.ts": "export * from \\"./PostNotFoundError\\";
 ",
-  "/index.ts": "export * as commons from \\"./commons\\";
-export * as posts from \\"./posts\\";
+  "/index.ts": "export * from \\"./types\\";
+export * from \\"./errors\\";
+export * from \\"./service-types\\";
 ",
   "/package.json": "{
     \\"name\\": \\"posts\\",
@@ -713,21 +685,7 @@ export * as posts from \\"./posts\\";
         \\"typescript\\": \\"4.6.4\\"
     }
 }",
-  "/posts/errors/PostNotFoundError.ts": "export type PostNotFoundError = string & {
-    __PostNotFoundError: void;
-};
-
-export const PostNotFoundError = {
-    of: (value: string): PostNotFoundError => value as PostNotFoundError
-};
-",
-  "/posts/errors/index.ts": "export * from \\"./PostNotFoundError\\";
-",
-  "/posts/index.ts": "export * from \\"./types\\";
-export * from \\"./errors\\";
-export * from \\"./service-types\\";
-",
-  "/posts/service-types/PostsService/GetPostErrorBody.ts": "import { posts } from \\"../../..\\";
+  "/service-types/PostsService/GetPostErrorBody.ts": "import * as model from \\"../..\\";
 import * as uuid from \\"uuid\\";
 
 export type GetPostErrorBody =
@@ -737,17 +695,17 @@ export declare namespace GetPostErrorBody {
     interface PostNotFoundError {
         _error: \\"PostNotFoundError\\";
         _errorInstanceId: string;
-        PostNotFoundError: posts.PostNotFoundError;
+        PostNotFoundError: model.PostNotFoundError;
     }
 
     export interface _Visitor<Result> {
-        PostNotFoundError: (value: posts.PostNotFoundError) => Result;
+        PostNotFoundError: (value: model.PostNotFoundError) => Result;
         _unknown: () => Result;
     }
 }
 
 export const GetPostErrorBody = {
-    PostNotFoundError: (value: posts.PostNotFoundError): GetPostErrorBody.PostNotFoundError => ({
+    PostNotFoundError: (value: model.PostNotFoundError): GetPostErrorBody.PostNotFoundError => ({
         PostNotFoundError: value,
         _error: \\"PostNotFoundError\\",
         _errorInstanceId: uuid.v4()
@@ -763,41 +721,51 @@ export const GetPostErrorBody = {
     _types: (): GetPostErrorBody[\\"_error\\"][] => [\\"PostNotFoundError\\"],
 } as const;
 ",
-  "/posts/service-types/PostsService/GetPostRequest.ts": "import * as model from \\"../../..\\";
+  "/service-types/PostsService/GetPostRequest.ts": "import * as model from \\"../..\\";
 
 export interface GetPostRequest {
     postId: string;
-    body: model.posts.CreatePostRequest;
+    body: model.CreatePostRequest;
 }
 ",
-  "/posts/service-types/PostsService/GetPostResponse.ts": "import * as model from \\"../../..\\";
+  "/service-types/PostsService/GetPostResponse.ts": "import * as model from \\"../..\\";
 
 export type GetPostResponse = GetPostResponse.SuccessResponse | GetPostResponse.ErrorResponse;
 
 namespace GetPostResponse {
     export interface SuccessResponse {
         ok: true;
-        body: model.posts.GetPostResponseBody;
+        body: model.GetPostResponseBody;
     }
 
     export interface ErrorResponse {
         ok: false;
-        error: model.posts.GetPostErrorBody;
+        error: model.GetPostErrorBody;
     }
 }
 ",
-  "/posts/service-types/PostsService/GetPostResponseBody.ts": "export interface GetPostResponseBody {
+  "/service-types/PostsService/GetPostResponseBody.ts": "export interface GetPostResponseBody {
     a: number;
 }
 ",
-  "/posts/service-types/PostsService/index.ts": "export * from \\"./GetPostRequest\\";
+  "/service-types/PostsService/index.ts": "export * from \\"./GetPostRequest\\";
 export * from \\"./GetPostResponseBody\\";
 export * from \\"./GetPostErrorBody\\";
 export * from \\"./GetPostResponse\\";
 ",
-  "/posts/service-types/index.ts": "export * from \\"./PostsService\\";
+  "/service-types/index.ts": "export * from \\"./PostsService\\";
 ",
-  "/posts/types/Author.ts": "export type Author =
+  "/tsconfig.json": "{
+    \\"compilerOptions\\": {
+        \\"strict\\": true,
+        \\"skipLibCheck\\": true,
+        \\"declaration\\": true,
+        \\"sourceMap\\": true,
+        \\"emitDeclarationOnly\\": true,
+        \\"esModuleInterop\\": true
+    }
+}",
+  "/types/Author.ts": "export type Author =
     | Author.Anonymous
     | Author.Named;
 
@@ -839,24 +807,24 @@ export const Author = {
     _types: (): Author[\\"_type\\"][] => [\\"anonymous\\", \\"named\\"],
 } as const;
 ",
-  "/posts/types/BlogPostReference.ts": "import { posts } from \\"../..\\";
+  "/types/BlogPostReference.ts": "import * as model from \\"..\\";
 
 export type BlogPostReference =
     | BlogPostReference.Post;
 
 export declare namespace BlogPostReference {
-    interface Post extends posts.Post {
+    interface Post extends model.Post {
         _type: \\"post\\";
     }
 
     export interface _Visitor<Result> {
-        post: (value: posts.Post) => Result;
+        post: (value: model.Post) => Result;
         _unknown: () => Result;
     }
 }
 
 export const BlogPostReference = {
-    post: (value: posts.Post): BlogPostReference.Post => ({
+    post: (value: model.Post): BlogPostReference.Post => ({
         ...value,
         _type: \\"post\\"
     }),
@@ -871,29 +839,40 @@ export const BlogPostReference = {
     _types: (): BlogPostReference[\\"_type\\"][] => [\\"post\\"],
 } as const;
 ",
-  "/posts/types/CreatePostRequest.ts": "import * as model from \\"../..\\";
+  "/types/CreatePostRequest.ts": "import * as model from \\"..\\";
 
 export interface CreatePostRequest {
     title: string;
-    author: model.posts.Author;
+    author: model.Author;
     content: string;
 }
 ",
-  "/posts/types/Post.ts": "import * as model from \\"../..\\";
+  "/types/Post.ts": "import * as model from \\"..\\";
 
 /**
  * A blog post
  */
 export interface Post {
-    id: model.commons.PostId;
-    type: model.posts.PostType;
+    id: model.PostId;
+    type: model.PostType;
     title: string;
-    author: model.posts.Author;
+    author: model.Author;
     content: string;
     customConfig: unknown;
 }
 ",
-  "/posts/types/PostType.ts": "export type PostType =
+  "/types/PostId.ts": "/**
+ * An ID of a blog post
+ */
+export type PostId = string & {
+    __PostId: void;
+};
+
+export const PostId = {
+    of: (value: string): PostId => value as PostId
+};
+",
+  "/types/PostType.ts": "export type PostType =
     | \\"LONG\\"
     | \\"SHORT\\";
 
@@ -923,21 +902,12 @@ export declare namespace PostType {
     }
 }
 ",
-  "/posts/types/index.ts": "export * from \\"./Post\\";
+  "/types/index.ts": "export * from \\"./PostId\\";
+export * from \\"./Post\\";
 export * from \\"./BlogPostReference\\";
 export * from \\"./PostType\\";
 export * from \\"./Author\\";
 export * from \\"./CreatePostRequest\\";
 ",
-  "/tsconfig.json": "{
-    \\"compilerOptions\\": {
-        \\"strict\\": true,
-        \\"skipLibCheck\\": true,
-        \\"declaration\\": true,
-        \\"sourceMap\\": true,
-        \\"emitDeclarationOnly\\": true,
-        \\"esModuleInterop\\": true
-    }
-}",
 }
 `;
