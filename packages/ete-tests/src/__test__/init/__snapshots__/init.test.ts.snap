@@ -17,59 +17,41 @@ generators: []
 
 exports[`fern init tests fern init 3`] = `
 "ids:
-  - PostId
+  - MovieId
 types:
-  BlogPost:
-    docs: A blog post
+  Movie:
     properties:
-      id: PostId
+      id: MovieId
       title: string
-      author: Author
-      content: string
-      postType: PostType
-  Author:
-    union:
-      anonymous: {}
-      name: string
-  PostType:
-    enum:
-      - LONG
-      - SHORT
+      rating: double
 errors:
-  PostNotFoundError:
+  NotFoundError:
     http:
-      statusCode: 400
-    type:
-      properties:
-        id: PostId
+      statusCode: 404
 services:
   http:
-    PostsService:
+    MoviesService:
       auth: none
-      base-path: /posts
+      base-path: /movies
       endpoints:
-        createPost:
-          docs: Create a new blog post
+        createMovie:
           method: POST
-          path: /create
+          path: /
           request:
             type:
               properties:
                 title: string
-                author: Author
-                content: string
-                postType: PostType
-          response:
-            ok: PostId
-        getPost:
+                rating: double
+          response: MovieId
+        getMovie:
           method: GET
-          path: /{postId}
+          path: /{movieId}
           path-parameters:
-            postId: PostId
+            postId: MovieId
           response:
-            ok: BlogPost
+            ok: Movie
             failed:
               errors:
-                - PostNotFoundError
+                - NotFoundError
 "
 `;

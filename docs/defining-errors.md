@@ -1,3 +1,3 @@
 # Defining errors
 
-![TODO](/assets/todo.png)
+This page is about defining an service, which communciates over HTTP.
