@@ -37,7 +37,7 @@ export class BaseServiceTypeContext extends BaseModelContext<ServiceTypeModelIte
         super({
             modelDirectory,
             intermediateDirectories: (item) => [
-                "service-types",
+                "_service-types",
                 ...item.metadata.relativeFilepathInServiceTypesDirectory,
             ],
         });

@@ -17,1375 +17,6 @@ export * as services from \\"./services\\";
   Object {
     "contents": Array [
       Object {
-        "contents": "export * from \\"./types\\";
-export * as problemV2 from \\"./problem-v2\\";
-export * from \\"./service-types\\";
-",
-        "name": "index.ts",
-        "type": "file",
-      },
-      Object {
-        "contents": Array [
-          Object {
-            "contents": "export * from \\"./types\\";
-export * from \\"./service-types\\";
-",
-            "name": "index.ts",
-            "type": "file",
-          },
-          Object {
-            "contents": Array [
-              Object {
-                "contents": Array [
-                  Object {
-                    "contents": "export type CreateProblemErrorBody = never;
-
-export declare namespace CreateProblemErrorBody {
-    export interface _Visitor<Result> {
-        _unknown: () => Result;
-    }
-}
-
-export const CreateProblemErrorBody = {
-    _visit: <Result>(_value: CreateProblemErrorBody, visitor: CreateProblemErrorBody._Visitor<Result>): Result => {
-        return visitor._unknown();
-    },
-
-    _types: (): CreateProblemErrorBody[\\"_error\\"][] => [],
-} as const;
-",
-                    "name": "CreateProblemErrorBody.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import * as model from \\"../../..\\";
-
-export type CreateProblemResponse = CreateProblemResponse.SuccessResponse | CreateProblemResponse.ErrorResponse;
-
-namespace CreateProblemResponse {
-    export interface SuccessResponse {
-        ok: true;
-        body: model.CreateProblemResponse;
-    }
-
-    export interface ErrorResponse {
-        ok: false;
-        error: model.problemV2.CreateProblemErrorBody;
-    }
-}
-",
-                    "name": "CreateProblemResponse.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "export type DeleteProblemErrorBody = never;
-
-export declare namespace DeleteProblemErrorBody {
-    export interface _Visitor<Result> {
-        _unknown: () => Result;
-    }
-}
-
-export const DeleteProblemErrorBody = {
-    _visit: <Result>(_value: DeleteProblemErrorBody, visitor: DeleteProblemErrorBody._Visitor<Result>): Result => {
-        return visitor._unknown();
-    },
-
-    _types: (): DeleteProblemErrorBody[\\"_error\\"][] => [],
-} as const;
-",
-                    "name": "DeleteProblemErrorBody.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import * as model from \\"../../..\\";
-
-export interface DeleteProblemRequest {
-    problemId: model.ProblemId;
-}
-",
-                    "name": "DeleteProblemRequest.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import * as model from \\"../../..\\";
-
-export type DeleteProblemResponse = DeleteProblemResponse.SuccessResponse | DeleteProblemResponse.ErrorResponse;
-
-namespace DeleteProblemResponse {
-    export interface SuccessResponse {
-        ok: true;
-    }
-
-    export interface ErrorResponse {
-        ok: false;
-        error: model.problemV2.DeleteProblemErrorBody;
-    }
-}
-",
-                    "name": "DeleteProblemResponse.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "export type GetBasicSolutionFileErrorBody = never;
-
-export declare namespace GetBasicSolutionFileErrorBody {
-    export interface _Visitor<Result> {
-        _unknown: () => Result;
-    }
-}
-
-export const GetBasicSolutionFileErrorBody = {
-    _visit: <Result>(_value: GetBasicSolutionFileErrorBody, visitor: GetBasicSolutionFileErrorBody._Visitor<Result>): Result => {
-        return visitor._unknown();
-    },
-
-    _types: (): GetBasicSolutionFileErrorBody[\\"_error\\"][] => [],
-} as const;
-",
-                    "name": "GetBasicSolutionFileErrorBody.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import * as model from \\"../../..\\";
-
-export interface GetBasicSolutionFileRequest {
-    methodName: string;
-    signature: model.problemV2.NonVoidFunctionSignature;
-}
-",
-                    "name": "GetBasicSolutionFileRequest.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import * as model from \\"../../..\\";
-
-export type GetBasicSolutionFileResponse = GetBasicSolutionFileResponse.SuccessResponse | GetBasicSolutionFileResponse.ErrorResponse;
-
-namespace GetBasicSolutionFileResponse {
-    export interface SuccessResponse {
-        ok: true;
-        body: model.problemV2.GetBasicSolutionFileResponseBody;
-    }
-
-    export interface ErrorResponse {
-        ok: false;
-        error: model.problemV2.GetBasicSolutionFileErrorBody;
-    }
-}
-",
-                    "name": "GetBasicSolutionFileResponse.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import * as model from \\"../../..\\";
-
-export interface GetBasicSolutionFileResponseBody {
-    solutionFileByLanguage: Record<model.Language, model.problemV2.FileInfoV2>;
-}
-",
-                    "name": "GetBasicSolutionFileResponseBody.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "export type GetDefaultDirectoryForProblemFilesErrorBody = never;
-
-export declare namespace GetDefaultDirectoryForProblemFilesErrorBody {
-    export interface _Visitor<Result> {
-        _unknown: () => Result;
-    }
-}
-
-export const GetDefaultDirectoryForProblemFilesErrorBody = {
-    _visit: <Result>(_value: GetDefaultDirectoryForProblemFilesErrorBody, visitor: GetDefaultDirectoryForProblemFilesErrorBody._Visitor<Result>): Result => {
-        return visitor._unknown();
-    },
-
-    _types: (): GetDefaultDirectoryForProblemFilesErrorBody[\\"_error\\"][] => [],
-} as const;
-",
-                    "name": "GetDefaultDirectoryForProblemFilesErrorBody.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import * as model from \\"../../..\\";
-
-export type GetDefaultDirectoryForProblemFilesResponse = GetDefaultDirectoryForProblemFilesResponse.SuccessResponse | GetDefaultDirectoryForProblemFilesResponse.ErrorResponse;
-
-namespace GetDefaultDirectoryForProblemFilesResponse {
-    export interface SuccessResponse {
-        ok: true;
-        body: Record<model.Language, string>;
-    }
-
-    export interface ErrorResponse {
-        ok: false;
-        error: model.problemV2.GetDefaultDirectoryForProblemFilesErrorBody;
-    }
-}
-",
-                    "name": "GetDefaultDirectoryForProblemFilesResponse.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "export type GetFunctionSignatureErrorBody = never;
-
-export declare namespace GetFunctionSignatureErrorBody {
-    export interface _Visitor<Result> {
-        _unknown: () => Result;
-    }
-}
-
-export const GetFunctionSignatureErrorBody = {
-    _visit: <Result>(_value: GetFunctionSignatureErrorBody, visitor: GetFunctionSignatureErrorBody._Visitor<Result>): Result => {
-        return visitor._unknown();
-    },
-
-    _types: (): GetFunctionSignatureErrorBody[\\"_error\\"][] => [],
-} as const;
-",
-                    "name": "GetFunctionSignatureErrorBody.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import * as model from \\"../../..\\";
-
-export interface GetFunctionSignatureRequest {
-    functionSignature: model.problemV2.FunctionSignature;
-}
-",
-                    "name": "GetFunctionSignatureRequest.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import * as model from \\"../../..\\";
-
-export type GetFunctionSignatureResponse = GetFunctionSignatureResponse.SuccessResponse | GetFunctionSignatureResponse.ErrorResponse;
-
-namespace GetFunctionSignatureResponse {
-    export interface SuccessResponse {
-        ok: true;
-        body: model.problemV2.GetFunctionSignatureResponseBody;
-    }
-
-    export interface ErrorResponse {
-        ok: false;
-        error: model.problemV2.GetFunctionSignatureErrorBody;
-    }
-}
-",
-                    "name": "GetFunctionSignatureResponse.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import * as model from \\"../../..\\";
-
-export interface GetFunctionSignatureResponseBody {
-    functionByLanguage: Record<model.Language, string>;
-}
-",
-                    "name": "GetFunctionSignatureResponseBody.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "export type GetGeneratedTestCaseFileErrorBody = never;
-
-export declare namespace GetGeneratedTestCaseFileErrorBody {
-    export interface _Visitor<Result> {
-        _unknown: () => Result;
-    }
-}
-
-export const GetGeneratedTestCaseFileErrorBody = {
-    _visit: <Result>(_value: GetGeneratedTestCaseFileErrorBody, visitor: GetGeneratedTestCaseFileErrorBody._Visitor<Result>): Result => {
-        return visitor._unknown();
-    },
-
-    _types: (): GetGeneratedTestCaseFileErrorBody[\\"_error\\"][] => [],
-} as const;
-",
-                    "name": "GetGeneratedTestCaseFileErrorBody.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import * as model from \\"../../..\\";
-
-/**
- * Supply template if the test case relies on it
- */
-export interface GetGeneratedTestCaseFileRequest {
-    template: model.problemV2.TestCaseTemplate | null | undefined;
-    testCase: model.problemV2.TestCaseV2;
-}
-",
-                    "name": "GetGeneratedTestCaseFileRequest.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import * as model from \\"../../..\\";
-
-export type GetGeneratedTestCaseFileResponse = GetGeneratedTestCaseFileResponse.SuccessResponse | GetGeneratedTestCaseFileResponse.ErrorResponse;
-
-namespace GetGeneratedTestCaseFileResponse {
-    export interface SuccessResponse {
-        ok: true;
-        body: Record<model.Language, model.problemV2.FileInfoV2>;
-    }
-
-    export interface ErrorResponse {
-        ok: false;
-        error: model.problemV2.GetGeneratedTestCaseFileErrorBody;
-    }
-}
-",
-                    "name": "GetGeneratedTestCaseFileResponse.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "export type GetGeneratedTestCaseTemplateFileErrorBody = never;
-
-export declare namespace GetGeneratedTestCaseTemplateFileErrorBody {
-    export interface _Visitor<Result> {
-        _unknown: () => Result;
-    }
-}
-
-export const GetGeneratedTestCaseTemplateFileErrorBody = {
-    _visit: <Result>(_value: GetGeneratedTestCaseTemplateFileErrorBody, visitor: GetGeneratedTestCaseTemplateFileErrorBody._Visitor<Result>): Result => {
-        return visitor._unknown();
-    },
-
-    _types: (): GetGeneratedTestCaseTemplateFileErrorBody[\\"_error\\"][] => [],
-} as const;
-",
-                    "name": "GetGeneratedTestCaseTemplateFileErrorBody.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import * as model from \\"../../..\\";
-
-export interface GetGeneratedTestCaseTemplateFileRequest {
-    template: model.problemV2.TestCaseTemplate;
-}
-",
-                    "name": "GetGeneratedTestCaseTemplateFileRequest.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import * as model from \\"../../..\\";
-
-export type GetGeneratedTestCaseTemplateFileResponse = GetGeneratedTestCaseTemplateFileResponse.SuccessResponse | GetGeneratedTestCaseTemplateFileResponse.ErrorResponse;
-
-namespace GetGeneratedTestCaseTemplateFileResponse {
-    export interface SuccessResponse {
-        ok: true;
-        body: Record<model.Language, model.problemV2.FileInfoV2>;
-    }
-
-    export interface ErrorResponse {
-        ok: false;
-        error: model.problemV2.GetGeneratedTestCaseTemplateFileErrorBody;
-    }
-}
-",
-                    "name": "GetGeneratedTestCaseTemplateFileResponse.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "export type UpdateProblemErrorBody = never;
-
-export declare namespace UpdateProblemErrorBody {
-    export interface _Visitor<Result> {
-        _unknown: () => Result;
-    }
-}
-
-export const UpdateProblemErrorBody = {
-    _visit: <Result>(_value: UpdateProblemErrorBody, visitor: UpdateProblemErrorBody._Visitor<Result>): Result => {
-        return visitor._unknown();
-    },
-
-    _types: (): UpdateProblemErrorBody[\\"_error\\"][] => [],
-} as const;
-",
-                    "name": "UpdateProblemErrorBody.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import * as model from \\"../../..\\";
-
-export interface UpdateProblemRequest {
-    problemId: model.ProblemId;
-    body: model.problemV2.CreateProblemRequestV2;
-}
-",
-                    "name": "UpdateProblemRequest.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import * as model from \\"../../..\\";
-
-export type UpdateProblemResponse = UpdateProblemResponse.SuccessResponse | UpdateProblemResponse.ErrorResponse;
-
-namespace UpdateProblemResponse {
-    export interface SuccessResponse {
-        ok: true;
-        body: model.UpdateProblemResponse;
-    }
-
-    export interface ErrorResponse {
-        ok: false;
-        error: model.problemV2.UpdateProblemErrorBody;
-    }
-}
-",
-                    "name": "UpdateProblemResponse.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "export * from \\"./CreateProblemErrorBody\\";
-export * from \\"./CreateProblemResponse\\";
-export * from \\"./UpdateProblemRequest\\";
-export * from \\"./UpdateProblemErrorBody\\";
-export * from \\"./UpdateProblemResponse\\";
-export * from \\"./DeleteProblemRequest\\";
-export * from \\"./DeleteProblemErrorBody\\";
-export * from \\"./DeleteProblemResponse\\";
-export * from \\"./GetFunctionSignatureRequest\\";
-export * from \\"./GetFunctionSignatureResponseBody\\";
-export * from \\"./GetFunctionSignatureErrorBody\\";
-export * from \\"./GetFunctionSignatureResponse\\";
-export * from \\"./GetBasicSolutionFileRequest\\";
-export * from \\"./GetBasicSolutionFileResponseBody\\";
-export * from \\"./GetBasicSolutionFileErrorBody\\";
-export * from \\"./GetBasicSolutionFileResponse\\";
-export * from \\"./GetDefaultDirectoryForProblemFilesErrorBody\\";
-export * from \\"./GetDefaultDirectoryForProblemFilesResponse\\";
-export * from \\"./GetGeneratedTestCaseFileRequest\\";
-export * from \\"./GetGeneratedTestCaseFileErrorBody\\";
-export * from \\"./GetGeneratedTestCaseFileResponse\\";
-export * from \\"./GetGeneratedTestCaseTemplateFileRequest\\";
-export * from \\"./GetGeneratedTestCaseTemplateFileErrorBody\\";
-export * from \\"./GetGeneratedTestCaseTemplateFileResponse\\";
-",
-                    "name": "index.ts",
-                    "type": "file",
-                  },
-                ],
-                "name": "ProblemCrudServiceV2",
-                "type": "directory",
-              },
-              Object {
-                "contents": Array [
-                  Object {
-                    "contents": "export type GetLatestProblemErrorBody = never;
-
-export declare namespace GetLatestProblemErrorBody {
-    export interface _Visitor<Result> {
-        _unknown: () => Result;
-    }
-}
-
-export const GetLatestProblemErrorBody = {
-    _visit: <Result>(_value: GetLatestProblemErrorBody, visitor: GetLatestProblemErrorBody._Visitor<Result>): Result => {
-        return visitor._unknown();
-    },
-
-    _types: (): GetLatestProblemErrorBody[\\"_error\\"][] => [],
-} as const;
-",
-                    "name": "GetLatestProblemErrorBody.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import * as model from \\"../../..\\";
-
-export interface GetLatestProblemRequest {
-    problemId: model.ProblemId;
-}
-",
-                    "name": "GetLatestProblemRequest.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import * as model from \\"../../..\\";
-
-export type GetLatestProblemResponse = GetLatestProblemResponse.SuccessResponse | GetLatestProblemResponse.ErrorResponse;
-
-namespace GetLatestProblemResponse {
-    export interface SuccessResponse {
-        ok: true;
-        body: model.problemV2.ProblemInfoV2;
-    }
-
-    export interface ErrorResponse {
-        ok: false;
-        error: model.problemV2.GetLatestProblemErrorBody;
-    }
-}
-",
-                    "name": "GetLatestProblemResponse.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "export type GetLightweightProblemsErrorBody = never;
-
-export declare namespace GetLightweightProblemsErrorBody {
-    export interface _Visitor<Result> {
-        _unknown: () => Result;
-    }
-}
-
-export const GetLightweightProblemsErrorBody = {
-    _visit: <Result>(_value: GetLightweightProblemsErrorBody, visitor: GetLightweightProblemsErrorBody._Visitor<Result>): Result => {
-        return visitor._unknown();
-    },
-
-    _types: (): GetLightweightProblemsErrorBody[\\"_error\\"][] => [],
-} as const;
-",
-                    "name": "GetLightweightProblemsErrorBody.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import * as model from \\"../../..\\";
-
-export type GetLightweightProblemsResponse = GetLightweightProblemsResponse.SuccessResponse | GetLightweightProblemsResponse.ErrorResponse;
-
-namespace GetLightweightProblemsResponse {
-    export interface SuccessResponse {
-        ok: true;
-        body: model.problemV2.LightweightProblemInfoV2[];
-    }
-
-    export interface ErrorResponse {
-        ok: false;
-        error: model.problemV2.GetLightweightProblemsErrorBody;
-    }
-}
-",
-                    "name": "GetLightweightProblemsResponse.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "export type GetProblemVersionErrorBody = never;
-
-export declare namespace GetProblemVersionErrorBody {
-    export interface _Visitor<Result> {
-        _unknown: () => Result;
-    }
-}
-
-export const GetProblemVersionErrorBody = {
-    _visit: <Result>(_value: GetProblemVersionErrorBody, visitor: GetProblemVersionErrorBody._Visitor<Result>): Result => {
-        return visitor._unknown();
-    },
-
-    _types: (): GetProblemVersionErrorBody[\\"_error\\"][] => [],
-} as const;
-",
-                    "name": "GetProblemVersionErrorBody.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import * as model from \\"../../..\\";
-
-export interface GetProblemVersionRequest {
-    problemId: model.ProblemId;
-    problemVersion: number;
-}
-",
-                    "name": "GetProblemVersionRequest.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import * as model from \\"../../..\\";
-
-export type GetProblemVersionResponse = GetProblemVersionResponse.SuccessResponse | GetProblemVersionResponse.ErrorResponse;
-
-namespace GetProblemVersionResponse {
-    export interface SuccessResponse {
-        ok: true;
-        body: model.problemV2.ProblemInfoV2;
-    }
-
-    export interface ErrorResponse {
-        ok: false;
-        error: model.problemV2.GetProblemVersionErrorBody;
-    }
-}
-",
-                    "name": "GetProblemVersionResponse.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "export type GetProblemsErrorBody = never;
-
-export declare namespace GetProblemsErrorBody {
-    export interface _Visitor<Result> {
-        _unknown: () => Result;
-    }
-}
-
-export const GetProblemsErrorBody = {
-    _visit: <Result>(_value: GetProblemsErrorBody, visitor: GetProblemsErrorBody._Visitor<Result>): Result => {
-        return visitor._unknown();
-    },
-
-    _types: (): GetProblemsErrorBody[\\"_error\\"][] => [],
-} as const;
-",
-                    "name": "GetProblemsErrorBody.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import * as model from \\"../../..\\";
-
-export type GetProblemsResponse = GetProblemsResponse.SuccessResponse | GetProblemsResponse.ErrorResponse;
-
-namespace GetProblemsResponse {
-    export interface SuccessResponse {
-        ok: true;
-        body: model.problemV2.ProblemInfoV2[];
-    }
-
-    export interface ErrorResponse {
-        ok: false;
-        error: model.problemV2.GetProblemsErrorBody;
-    }
-}
-",
-                    "name": "GetProblemsResponse.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "export * from \\"./GetLightweightProblemsErrorBody\\";
-export * from \\"./GetLightweightProblemsResponse\\";
-export * from \\"./GetProblemsErrorBody\\";
-export * from \\"./GetProblemsResponse\\";
-export * from \\"./GetLatestProblemRequest\\";
-export * from \\"./GetLatestProblemErrorBody\\";
-export * from \\"./GetLatestProblemResponse\\";
-export * from \\"./GetProblemVersionRequest\\";
-export * from \\"./GetProblemVersionErrorBody\\";
-export * from \\"./GetProblemVersionResponse\\";
-",
-                    "name": "index.ts",
-                    "type": "file",
-                  },
-                ],
-                "name": "ProblemInfoServicV2",
-                "type": "directory",
-              },
-              Object {
-                "contents": "export * from \\"./ProblemInfoServicV2\\";
-export * from \\"./ProblemCrudServiceV2\\";
-",
-                "name": "index.ts",
-                "type": "file",
-              },
-            ],
-            "name": "service-types",
-            "type": "directory",
-          },
-          Object {
-            "contents": Array [
-              Object {
-                "contents": "import { problemV2 } from \\"../..\\";
-
-export type AssertCorrectnessCheck =
-    | AssertCorrectnessCheck.DeepEquality
-    | AssertCorrectnessCheck.Custom;
-
-export declare namespace AssertCorrectnessCheck {
-    interface DeepEquality extends problemV2.DeepEqualityCorrectnessCheck {
-        _type: \\"deepEquality\\";
-    }
-
-    interface Custom extends problemV2.VoidFunctionDefinitionThatTakesActualResult {
-        _type: \\"custom\\";
-    }
-
-    export interface _Visitor<Result> {
-        deepEquality: (value: problemV2.DeepEqualityCorrectnessCheck) => Result;
-        custom: (value: problemV2.VoidFunctionDefinitionThatTakesActualResult) => Result;
-        _unknown: () => Result;
-    }
-}
-
-export const AssertCorrectnessCheck = {
-    deepEquality: (value: problemV2.DeepEqualityCorrectnessCheck): AssertCorrectnessCheck.DeepEquality => ({
-        ...value,
-        _type: \\"deepEquality\\"
-    }),
-
-    custom: (value: problemV2.VoidFunctionDefinitionThatTakesActualResult): AssertCorrectnessCheck.Custom => ({
-        ...value,
-        _type: \\"custom\\"
-    }),
-
-    _visit: <Result>(value: AssertCorrectnessCheck, visitor: AssertCorrectnessCheck._Visitor<Result>): Result => {
-        switch (value._type) {
-            case \\"deepEquality\\": return visitor.deepEquality(value);
-            case \\"custom\\": return visitor.custom(value);
-            default: return visitor._unknown();
-        }
-    },
-
-    _types: (): AssertCorrectnessCheck[\\"_type\\"][] => [\\"deepEquality\\", \\"custom\\"],
-} as const;
-",
-                "name": "AssertCorrectnessCheck.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface BasicCustomFiles {
-    methodName: string;
-    signature: model.problemV2.NonVoidFunctionSignature;
-    additionalFiles: Record<model.Language, model.problemV2.Files>;
-    basicTestCaseTemplate: model.problemV2.BasicTestCaseTemplate;
-}
-",
-                "name": "BasicCustomFiles.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface BasicTestCaseTemplate {
-    templateId: model.problemV2.TestCaseTemplateId;
-    name: string;
-    description: model.problemV2.TestCaseImplementationDescription;
-    expectedValueParameterId: model.problemV2.ParameterId;
-}
-",
-                "name": "BasicTestCaseTemplate.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface CreateProblemRequestV2 {
-    problemName: string;
-    problemDescription: model.ProblemDescription;
-    customFiles: model.problemV2.CustomFiles;
-    customTestCaseTemplates: model.problemV2.TestCaseTemplate[];
-    testcases: model.problemV2.TestCaseV2[];
-    supportedLanguages: model.Language[];
-    isPublic: boolean;
-}
-",
-                "name": "CreateProblemRequestV2.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-import { problemV2 } from \\"../..\\";
-
-export type CustomFiles =
-    | CustomFiles.Basic
-    | CustomFiles.Custom;
-
-export declare namespace CustomFiles {
-    interface Basic extends problemV2.BasicCustomFiles {
-        _type: \\"basic\\";
-    }
-
-    interface Custom {
-        _type: \\"custom\\";
-        custom: Record<model.Language, problemV2.Files>;
-    }
-
-    export interface _Visitor<Result> {
-        basic: (value: problemV2.BasicCustomFiles) => Result;
-        custom: (value: Record<model.Language, problemV2.Files>) => Result;
-        _unknown: () => Result;
-    }
-}
-
-export const CustomFiles = {
-    basic: (value: problemV2.BasicCustomFiles): CustomFiles.Basic => ({
-        ...value,
-        _type: \\"basic\\"
-    }),
-
-    custom: (value: Record<model.Language, problemV2.Files>): CustomFiles.Custom => ({
-        custom: value,
-        _type: \\"custom\\"
-    }),
-
-    _visit: <Result>(value: CustomFiles, visitor: CustomFiles._Visitor<Result>): Result => {
-        switch (value._type) {
-            case \\"basic\\": return visitor.basic(value);
-            case \\"custom\\": return visitor.custom(value.custom);
-            default: return visitor._unknown();
-        }
-    },
-
-    _types: (): CustomFiles[\\"_type\\"][] => [\\"basic\\", \\"custom\\"],
-} as const;
-",
-                "name": "CustomFiles.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface DeepEqualityCorrectnessCheck {
-    expectedValueParameterId: model.problemV2.ParameterId;
-}
-",
-                "name": "DeepEqualityCorrectnessCheck.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface DefaultProvidedFile {
-    file: model.problemV2.FileInfoV2;
-    relatedTypes: model.VariableType[];
-}
-",
-                "name": "DefaultProvidedFile.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "export interface FileInfoV2 {
-    filename: string;
-    directory: string;
-    contents: string;
-    editable: boolean;
-}
-",
-                "name": "FileInfoV2.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface Files {
-    files: model.problemV2.FileInfoV2[];
-}
-",
-                "name": "Files.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "export interface FunctionImplementation {
-    impl: string;
-    imports: string | null | undefined;
-}
-",
-                "name": "FunctionImplementation.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface FunctionImplementationForMultipleLanguages {
-    codeByLanguage: Record<model.Language, model.problemV2.FunctionImplementation>;
-}
-",
-                "name": "FunctionImplementationForMultipleLanguages.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import { problemV2 } from \\"../..\\";
-
-export type FunctionSignature =
-    | FunctionSignature.Void
-    | FunctionSignature.NonVoid
-    /**
-     * Useful when specifying custom grading for a testcase where actualResult is defined. */
-    | FunctionSignature.VoidThatTakesActualResult;
-
-export declare namespace FunctionSignature {
-    interface Void extends problemV2.VoidFunctionSignature {
-        _type: \\"void\\";
-    }
-
-    interface NonVoid extends problemV2.NonVoidFunctionSignature {
-        _type: \\"nonVoid\\";
-    }
-
-    interface VoidThatTakesActualResult extends problemV2.VoidFunctionSignatureThatTakesActualResult {
-        _type: \\"voidThatTakesActualResult\\";
-    }
-
-    export interface _Visitor<Result> {
-        void: (value: problemV2.VoidFunctionSignature) => Result;
-        nonVoid: (value: problemV2.NonVoidFunctionSignature) => Result;
-        voidThatTakesActualResult: (value: problemV2.VoidFunctionSignatureThatTakesActualResult) => Result;
-        _unknown: () => Result;
-    }
-}
-
-export const FunctionSignature = {
-    void: (value: problemV2.VoidFunctionSignature): FunctionSignature.Void => ({
-        ...value,
-        _type: \\"void\\"
-    }),
-
-    nonVoid: (value: problemV2.NonVoidFunctionSignature): FunctionSignature.NonVoid => ({
-        ...value,
-        _type: \\"nonVoid\\"
-    }),
-
-    voidThatTakesActualResult: (value: problemV2.VoidFunctionSignatureThatTakesActualResult): FunctionSignature.VoidThatTakesActualResult => ({
-        ...value,
-        _type: \\"voidThatTakesActualResult\\"
-    }),
-
-    _visit: <Result>(value: FunctionSignature, visitor: FunctionSignature._Visitor<Result>): Result => {
-        switch (value._type) {
-            case \\"void\\": return visitor.void(value);
-            case \\"nonVoid\\": return visitor.nonVoid(value);
-            case \\"voidThatTakesActualResult\\": return visitor.voidThatTakesActualResult(value);
-            default: return visitor._unknown();
-        }
-    },
-
-    _types: (): FunctionSignature[\\"_type\\"][] => [\\"void\\", \\"nonVoid\\", \\"voidThatTakesActualResult\\"],
-} as const;
-",
-                "name": "FunctionSignature.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface GeneratedFiles {
-    generatedTestCaseFiles: Record<model.Language, model.problemV2.Files>;
-    generatedTemplateFiles: Record<model.Language, model.problemV2.Files>;
-    other: Record<model.Language, model.problemV2.Files>;
-}
-",
-                "name": "GeneratedFiles.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface LightweightProblemInfoV2 {
-    problemId: model.ProblemId;
-    problemName: string;
-    problemVersion: number;
-    variableTypes: model.VariableType[];
-}
-",
-                "name": "LightweightProblemInfoV2.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface NonVoidFunctionDefinition {
-    signature: model.problemV2.NonVoidFunctionSignature;
-    code: model.problemV2.FunctionImplementationForMultipleLanguages;
-}
-",
-                "name": "NonVoidFunctionDefinition.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface NonVoidFunctionSignature {
-    parameters: model.problemV2.Parameter[];
-    returnType: model.VariableType;
-}
-",
-                "name": "NonVoidFunctionSignature.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface Parameter {
-    parameterId: model.problemV2.ParameterId;
-    name: string;
-    variableType: model.VariableType;
-}
-",
-                "name": "Parameter.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "export type ParameterId = string & {
-    __ParameterId: void;
-};
-
-export const ParameterId = {
-    of: (value: string): ParameterId => value as ParameterId
-};
-",
-                "name": "ParameterId.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface ProblemInfoV2 {
-    problemId: model.ProblemId;
-    problemDescription: model.ProblemDescription;
-    problemName: string;
-    problemVersion: number;
-    supportedLanguages: model.Language[];
-    customFiles: model.problemV2.CustomFiles;
-    generatedFiles: model.problemV2.GeneratedFiles;
-    customTestCaseTemplates: model.problemV2.TestCaseTemplate[];
-    testcases: model.problemV2.TestCaseV2[];
-    isPublic: boolean;
-}
-",
-                "name": "ProblemInfoV2.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "export interface TestCaseExpects {
-    expectedStdout: string | null | undefined;
-}
-",
-                "name": "TestCaseExpects.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import { problemV2 } from \\"../..\\";
-
-export type TestCaseFunction =
-    | TestCaseFunction.WithActualResult
-    | TestCaseFunction.Custom;
-
-export declare namespace TestCaseFunction {
-    interface WithActualResult extends problemV2.TestCaseWithActualResultImplementation {
-        _type: \\"withActualResult\\";
-    }
-
-    interface Custom extends problemV2.VoidFunctionDefinition {
-        _type: \\"custom\\";
-    }
-
-    export interface _Visitor<Result> {
-        withActualResult: (value: problemV2.TestCaseWithActualResultImplementation) => Result;
-        custom: (value: problemV2.VoidFunctionDefinition) => Result;
-        _unknown: () => Result;
-    }
-}
-
-export const TestCaseFunction = {
-    withActualResult: (value: problemV2.TestCaseWithActualResultImplementation): TestCaseFunction.WithActualResult => ({
-        ...value,
-        _type: \\"withActualResult\\"
-    }),
-
-    custom: (value: problemV2.VoidFunctionDefinition): TestCaseFunction.Custom => ({
-        ...value,
-        _type: \\"custom\\"
-    }),
-
-    _visit: <Result>(value: TestCaseFunction, visitor: TestCaseFunction._Visitor<Result>): Result => {
-        switch (value._type) {
-            case \\"withActualResult\\": return visitor.withActualResult(value);
-            case \\"custom\\": return visitor.custom(value);
-            default: return visitor._unknown();
-        }
-    },
-
-    _types: (): TestCaseFunction[\\"_type\\"][] => [\\"withActualResult\\", \\"custom\\"],
-} as const;
-",
-                "name": "TestCaseFunction.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "export type TestCaseId = string & {
-    __TestCaseId: void;
-};
-
-export const TestCaseId = {
-    of: (value: string): TestCaseId => value as TestCaseId
-};
-",
-                "name": "TestCaseId.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface TestCaseImplementation {
-    description: model.problemV2.TestCaseImplementationDescription;
-    function: model.problemV2.TestCaseFunction;
-}
-",
-                "name": "TestCaseImplementation.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface TestCaseImplementationDescription {
-    boards: model.problemV2.TestCaseImplementationDescriptionBoard[];
-}
-",
-                "name": "TestCaseImplementationDescription.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import { problemV2 } from \\"../..\\";
-
-export type TestCaseImplementationDescriptionBoard =
-    | TestCaseImplementationDescriptionBoard.Html
-    | TestCaseImplementationDescriptionBoard.ParamId;
-
-export declare namespace TestCaseImplementationDescriptionBoard {
-    interface Html {
-        _type: \\"html\\";
-        html: string;
-    }
-
-    interface ParamId {
-        _type: \\"paramId\\";
-        paramId: problemV2.ParameterId;
-    }
-
-    export interface _Visitor<Result> {
-        html: (value: string) => Result;
-        paramId: (value: problemV2.ParameterId) => Result;
-        _unknown: () => Result;
-    }
-}
-
-export const TestCaseImplementationDescriptionBoard = {
-    html: (value: string): TestCaseImplementationDescriptionBoard.Html => ({
-        html: value,
-        _type: \\"html\\"
-    }),
-
-    paramId: (value: problemV2.ParameterId): TestCaseImplementationDescriptionBoard.ParamId => ({
-        paramId: value,
-        _type: \\"paramId\\"
-    }),
-
-    _visit: <Result>(value: TestCaseImplementationDescriptionBoard, visitor: TestCaseImplementationDescriptionBoard._Visitor<Result>): Result => {
-        switch (value._type) {
-            case \\"html\\": return visitor.html(value.html);
-            case \\"paramId\\": return visitor.paramId(value.paramId);
-            default: return visitor._unknown();
-        }
-    },
-
-    _types: (): TestCaseImplementationDescriptionBoard[\\"_type\\"][] => [\\"html\\", \\"paramId\\"],
-} as const;
-",
-                "name": "TestCaseImplementationDescriptionBoard.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import { problemV2 } from \\"../..\\";
-
-export type TestCaseImplementationReference =
-    | TestCaseImplementationReference.TemplateId
-    | TestCaseImplementationReference.Implementation;
-
-export declare namespace TestCaseImplementationReference {
-    interface TemplateId {
-        _type: \\"templateId\\";
-        templateId: problemV2.TestCaseTemplateId;
-    }
-
-    interface Implementation extends problemV2.TestCaseImplementation {
-        _type: \\"implementation\\";
-    }
-
-    export interface _Visitor<Result> {
-        templateId: (value: problemV2.TestCaseTemplateId) => Result;
-        implementation: (value: problemV2.TestCaseImplementation) => Result;
-        _unknown: () => Result;
-    }
-}
-
-export const TestCaseImplementationReference = {
-    templateId: (value: problemV2.TestCaseTemplateId): TestCaseImplementationReference.TemplateId => ({
-        templateId: value,
-        _type: \\"templateId\\"
-    }),
-
-    implementation: (value: problemV2.TestCaseImplementation): TestCaseImplementationReference.Implementation => ({
-        ...value,
-        _type: \\"implementation\\"
-    }),
-
-    _visit: <Result>(value: TestCaseImplementationReference, visitor: TestCaseImplementationReference._Visitor<Result>): Result => {
-        switch (value._type) {
-            case \\"templateId\\": return visitor.templateId(value.templateId);
-            case \\"implementation\\": return visitor.implementation(value);
-            default: return visitor._unknown();
-        }
-    },
-
-    _types: (): TestCaseImplementationReference[\\"_type\\"][] => [\\"templateId\\", \\"implementation\\"],
-} as const;
-",
-                "name": "TestCaseImplementationReference.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface TestCaseMetadata {
-    id: model.problemV2.TestCaseId;
-    name: string;
-    hidden: boolean;
-}
-",
-                "name": "TestCaseMetadata.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface TestCaseTemplate {
-    templateId: model.problemV2.TestCaseTemplateId;
-    name: string;
-    implementation: model.problemV2.TestCaseImplementation;
-}
-",
-                "name": "TestCaseTemplate.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "export type TestCaseTemplateId = string & {
-    __TestCaseTemplateId: void;
-};
-
-export const TestCaseTemplateId = {
-    of: (value: string): TestCaseTemplateId => value as TestCaseTemplateId
-};
-",
-                "name": "TestCaseTemplateId.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface TestCaseV2 {
-    metadata: model.problemV2.TestCaseMetadata;
-    implementation: model.problemV2.TestCaseImplementationReference;
-    arguments: Record<model.problemV2.ParameterId, model.VariableValue>;
-    expects: model.problemV2.TestCaseExpects | null | undefined;
-}
-",
-                "name": "TestCaseV2.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface TestCaseWithActualResultImplementation {
-    getActualResult: model.problemV2.NonVoidFunctionDefinition;
-    assertCorrectnessCheck: model.problemV2.AssertCorrectnessCheck;
-}
-",
-                "name": "TestCaseWithActualResultImplementation.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface VoidFunctionDefinition {
-    parameters: model.problemV2.Parameter[];
-    code: model.problemV2.FunctionImplementationForMultipleLanguages;
-}
-",
-                "name": "VoidFunctionDefinition.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-/**
- * The generated signature will include an additional param, actualResult
- */
-export interface VoidFunctionDefinitionThatTakesActualResult {
-    additionalParameters: model.problemV2.Parameter[];
-    code: model.problemV2.FunctionImplementationForMultipleLanguages;
-}
-",
-                "name": "VoidFunctionDefinitionThatTakesActualResult.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface VoidFunctionSignature {
-    parameters: model.problemV2.Parameter[];
-}
-",
-                "name": "VoidFunctionSignature.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface VoidFunctionSignatureThatTakesActualResult {
-    parameters: model.problemV2.Parameter[];
-    actualResultType: model.VariableType;
-}
-",
-                "name": "VoidFunctionSignatureThatTakesActualResult.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "export * from \\"./TestCaseTemplateId\\";
-export * from \\"./TestCaseId\\";
-export * from \\"./ParameterId\\";
-export * from \\"./ProblemInfoV2\\";
-export * from \\"./LightweightProblemInfoV2\\";
-export * from \\"./CreateProblemRequestV2\\";
-export * from \\"./TestCaseV2\\";
-export * from \\"./TestCaseExpects\\";
-export * from \\"./TestCaseImplementationReference\\";
-export * from \\"./BasicTestCaseTemplate\\";
-export * from \\"./TestCaseTemplate\\";
-export * from \\"./TestCaseImplementation\\";
-export * from \\"./TestCaseFunction\\";
-export * from \\"./TestCaseWithActualResultImplementation\\";
-export * from \\"./VoidFunctionDefinition\\";
-export * from \\"./Parameter\\";
-export * from \\"./NonVoidFunctionDefinition\\";
-export * from \\"./VoidFunctionSignature\\";
-export * from \\"./NonVoidFunctionSignature\\";
-export * from \\"./VoidFunctionSignatureThatTakesActualResult\\";
-export * from \\"./AssertCorrectnessCheck\\";
-export * from \\"./DeepEqualityCorrectnessCheck\\";
-export * from \\"./VoidFunctionDefinitionThatTakesActualResult\\";
-export * from \\"./TestCaseImplementationDescription\\";
-export * from \\"./TestCaseImplementationDescriptionBoard\\";
-export * from \\"./TestCaseMetadata\\";
-export * from \\"./FunctionImplementationForMultipleLanguages\\";
-export * from \\"./FunctionImplementation\\";
-export * from \\"./GeneratedFiles\\";
-export * from \\"./CustomFiles\\";
-export * from \\"./BasicCustomFiles\\";
-export * from \\"./Files\\";
-export * from \\"./FileInfoV2\\";
-export * from \\"./DefaultProvidedFile\\";
-export * from \\"./FunctionSignature\\";
-",
-                "name": "index.ts",
-                "type": "file",
-              },
-            ],
-            "name": "types",
-            "type": "directory",
-          },
-        ],
-        "name": "problem-v2",
-        "type": "directory",
-      },
-      Object {
         "contents": Array [
           Object {
             "contents": Array [
@@ -3512,7 +2143,7 @@ export * from \\"./SysPropCrudService\\";
             "type": "file",
           },
         ],
-        "name": "service-types",
+        "name": "_service-types",
         "type": "directory",
       },
       Object {
@@ -6699,7 +5330,1376 @@ export * from \\"./ExecutionSessionState\\";
             "type": "file",
           },
         ],
-        "name": "types",
+        "name": "_types",
+        "type": "directory",
+      },
+      Object {
+        "contents": "export * from \\"./_types\\";
+export * as problemV2 from \\"./problem-v2\\";
+export * from \\"./_service-types\\";
+",
+        "name": "index.ts",
+        "type": "file",
+      },
+      Object {
+        "contents": Array [
+          Object {
+            "contents": Array [
+              Object {
+                "contents": Array [
+                  Object {
+                    "contents": "export type CreateProblemErrorBody = never;
+
+export declare namespace CreateProblemErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const CreateProblemErrorBody = {
+    _visit: <Result>(_value: CreateProblemErrorBody, visitor: CreateProblemErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): CreateProblemErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "CreateProblemErrorBody.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import * as model from \\"../../..\\";
+
+export type CreateProblemResponse = CreateProblemResponse.SuccessResponse | CreateProblemResponse.ErrorResponse;
+
+namespace CreateProblemResponse {
+    export interface SuccessResponse {
+        ok: true;
+        body: model.CreateProblemResponse;
+    }
+
+    export interface ErrorResponse {
+        ok: false;
+        error: model.problemV2.CreateProblemErrorBody;
+    }
+}
+",
+                    "name": "CreateProblemResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type DeleteProblemErrorBody = never;
+
+export declare namespace DeleteProblemErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const DeleteProblemErrorBody = {
+    _visit: <Result>(_value: DeleteProblemErrorBody, visitor: DeleteProblemErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): DeleteProblemErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "DeleteProblemErrorBody.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import * as model from \\"../../..\\";
+
+export interface DeleteProblemRequest {
+    problemId: model.ProblemId;
+}
+",
+                    "name": "DeleteProblemRequest.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import * as model from \\"../../..\\";
+
+export type DeleteProblemResponse = DeleteProblemResponse.SuccessResponse | DeleteProblemResponse.ErrorResponse;
+
+namespace DeleteProblemResponse {
+    export interface SuccessResponse {
+        ok: true;
+    }
+
+    export interface ErrorResponse {
+        ok: false;
+        error: model.problemV2.DeleteProblemErrorBody;
+    }
+}
+",
+                    "name": "DeleteProblemResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type GetBasicSolutionFileErrorBody = never;
+
+export declare namespace GetBasicSolutionFileErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const GetBasicSolutionFileErrorBody = {
+    _visit: <Result>(_value: GetBasicSolutionFileErrorBody, visitor: GetBasicSolutionFileErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): GetBasicSolutionFileErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "GetBasicSolutionFileErrorBody.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import * as model from \\"../../..\\";
+
+export interface GetBasicSolutionFileRequest {
+    methodName: string;
+    signature: model.problemV2.NonVoidFunctionSignature;
+}
+",
+                    "name": "GetBasicSolutionFileRequest.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import * as model from \\"../../..\\";
+
+export type GetBasicSolutionFileResponse = GetBasicSolutionFileResponse.SuccessResponse | GetBasicSolutionFileResponse.ErrorResponse;
+
+namespace GetBasicSolutionFileResponse {
+    export interface SuccessResponse {
+        ok: true;
+        body: model.problemV2.GetBasicSolutionFileResponseBody;
+    }
+
+    export interface ErrorResponse {
+        ok: false;
+        error: model.problemV2.GetBasicSolutionFileErrorBody;
+    }
+}
+",
+                    "name": "GetBasicSolutionFileResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import * as model from \\"../../..\\";
+
+export interface GetBasicSolutionFileResponseBody {
+    solutionFileByLanguage: Record<model.Language, model.problemV2.FileInfoV2>;
+}
+",
+                    "name": "GetBasicSolutionFileResponseBody.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type GetDefaultDirectoryForProblemFilesErrorBody = never;
+
+export declare namespace GetDefaultDirectoryForProblemFilesErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const GetDefaultDirectoryForProblemFilesErrorBody = {
+    _visit: <Result>(_value: GetDefaultDirectoryForProblemFilesErrorBody, visitor: GetDefaultDirectoryForProblemFilesErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): GetDefaultDirectoryForProblemFilesErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "GetDefaultDirectoryForProblemFilesErrorBody.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import * as model from \\"../../..\\";
+
+export type GetDefaultDirectoryForProblemFilesResponse = GetDefaultDirectoryForProblemFilesResponse.SuccessResponse | GetDefaultDirectoryForProblemFilesResponse.ErrorResponse;
+
+namespace GetDefaultDirectoryForProblemFilesResponse {
+    export interface SuccessResponse {
+        ok: true;
+        body: Record<model.Language, string>;
+    }
+
+    export interface ErrorResponse {
+        ok: false;
+        error: model.problemV2.GetDefaultDirectoryForProblemFilesErrorBody;
+    }
+}
+",
+                    "name": "GetDefaultDirectoryForProblemFilesResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type GetFunctionSignatureErrorBody = never;
+
+export declare namespace GetFunctionSignatureErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const GetFunctionSignatureErrorBody = {
+    _visit: <Result>(_value: GetFunctionSignatureErrorBody, visitor: GetFunctionSignatureErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): GetFunctionSignatureErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "GetFunctionSignatureErrorBody.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import * as model from \\"../../..\\";
+
+export interface GetFunctionSignatureRequest {
+    functionSignature: model.problemV2.FunctionSignature;
+}
+",
+                    "name": "GetFunctionSignatureRequest.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import * as model from \\"../../..\\";
+
+export type GetFunctionSignatureResponse = GetFunctionSignatureResponse.SuccessResponse | GetFunctionSignatureResponse.ErrorResponse;
+
+namespace GetFunctionSignatureResponse {
+    export interface SuccessResponse {
+        ok: true;
+        body: model.problemV2.GetFunctionSignatureResponseBody;
+    }
+
+    export interface ErrorResponse {
+        ok: false;
+        error: model.problemV2.GetFunctionSignatureErrorBody;
+    }
+}
+",
+                    "name": "GetFunctionSignatureResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import * as model from \\"../../..\\";
+
+export interface GetFunctionSignatureResponseBody {
+    functionByLanguage: Record<model.Language, string>;
+}
+",
+                    "name": "GetFunctionSignatureResponseBody.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type GetGeneratedTestCaseFileErrorBody = never;
+
+export declare namespace GetGeneratedTestCaseFileErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const GetGeneratedTestCaseFileErrorBody = {
+    _visit: <Result>(_value: GetGeneratedTestCaseFileErrorBody, visitor: GetGeneratedTestCaseFileErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): GetGeneratedTestCaseFileErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "GetGeneratedTestCaseFileErrorBody.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import * as model from \\"../../..\\";
+
+/**
+ * Supply template if the test case relies on it
+ */
+export interface GetGeneratedTestCaseFileRequest {
+    template: model.problemV2.TestCaseTemplate | null | undefined;
+    testCase: model.problemV2.TestCaseV2;
+}
+",
+                    "name": "GetGeneratedTestCaseFileRequest.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import * as model from \\"../../..\\";
+
+export type GetGeneratedTestCaseFileResponse = GetGeneratedTestCaseFileResponse.SuccessResponse | GetGeneratedTestCaseFileResponse.ErrorResponse;
+
+namespace GetGeneratedTestCaseFileResponse {
+    export interface SuccessResponse {
+        ok: true;
+        body: Record<model.Language, model.problemV2.FileInfoV2>;
+    }
+
+    export interface ErrorResponse {
+        ok: false;
+        error: model.problemV2.GetGeneratedTestCaseFileErrorBody;
+    }
+}
+",
+                    "name": "GetGeneratedTestCaseFileResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type GetGeneratedTestCaseTemplateFileErrorBody = never;
+
+export declare namespace GetGeneratedTestCaseTemplateFileErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const GetGeneratedTestCaseTemplateFileErrorBody = {
+    _visit: <Result>(_value: GetGeneratedTestCaseTemplateFileErrorBody, visitor: GetGeneratedTestCaseTemplateFileErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): GetGeneratedTestCaseTemplateFileErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "GetGeneratedTestCaseTemplateFileErrorBody.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import * as model from \\"../../..\\";
+
+export interface GetGeneratedTestCaseTemplateFileRequest {
+    template: model.problemV2.TestCaseTemplate;
+}
+",
+                    "name": "GetGeneratedTestCaseTemplateFileRequest.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import * as model from \\"../../..\\";
+
+export type GetGeneratedTestCaseTemplateFileResponse = GetGeneratedTestCaseTemplateFileResponse.SuccessResponse | GetGeneratedTestCaseTemplateFileResponse.ErrorResponse;
+
+namespace GetGeneratedTestCaseTemplateFileResponse {
+    export interface SuccessResponse {
+        ok: true;
+        body: Record<model.Language, model.problemV2.FileInfoV2>;
+    }
+
+    export interface ErrorResponse {
+        ok: false;
+        error: model.problemV2.GetGeneratedTestCaseTemplateFileErrorBody;
+    }
+}
+",
+                    "name": "GetGeneratedTestCaseTemplateFileResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type UpdateProblemErrorBody = never;
+
+export declare namespace UpdateProblemErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const UpdateProblemErrorBody = {
+    _visit: <Result>(_value: UpdateProblemErrorBody, visitor: UpdateProblemErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): UpdateProblemErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "UpdateProblemErrorBody.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import * as model from \\"../../..\\";
+
+export interface UpdateProblemRequest {
+    problemId: model.ProblemId;
+    body: model.problemV2.CreateProblemRequestV2;
+}
+",
+                    "name": "UpdateProblemRequest.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import * as model from \\"../../..\\";
+
+export type UpdateProblemResponse = UpdateProblemResponse.SuccessResponse | UpdateProblemResponse.ErrorResponse;
+
+namespace UpdateProblemResponse {
+    export interface SuccessResponse {
+        ok: true;
+        body: model.UpdateProblemResponse;
+    }
+
+    export interface ErrorResponse {
+        ok: false;
+        error: model.problemV2.UpdateProblemErrorBody;
+    }
+}
+",
+                    "name": "UpdateProblemResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export * from \\"./CreateProblemErrorBody\\";
+export * from \\"./CreateProblemResponse\\";
+export * from \\"./UpdateProblemRequest\\";
+export * from \\"./UpdateProblemErrorBody\\";
+export * from \\"./UpdateProblemResponse\\";
+export * from \\"./DeleteProblemRequest\\";
+export * from \\"./DeleteProblemErrorBody\\";
+export * from \\"./DeleteProblemResponse\\";
+export * from \\"./GetFunctionSignatureRequest\\";
+export * from \\"./GetFunctionSignatureResponseBody\\";
+export * from \\"./GetFunctionSignatureErrorBody\\";
+export * from \\"./GetFunctionSignatureResponse\\";
+export * from \\"./GetBasicSolutionFileRequest\\";
+export * from \\"./GetBasicSolutionFileResponseBody\\";
+export * from \\"./GetBasicSolutionFileErrorBody\\";
+export * from \\"./GetBasicSolutionFileResponse\\";
+export * from \\"./GetDefaultDirectoryForProblemFilesErrorBody\\";
+export * from \\"./GetDefaultDirectoryForProblemFilesResponse\\";
+export * from \\"./GetGeneratedTestCaseFileRequest\\";
+export * from \\"./GetGeneratedTestCaseFileErrorBody\\";
+export * from \\"./GetGeneratedTestCaseFileResponse\\";
+export * from \\"./GetGeneratedTestCaseTemplateFileRequest\\";
+export * from \\"./GetGeneratedTestCaseTemplateFileErrorBody\\";
+export * from \\"./GetGeneratedTestCaseTemplateFileResponse\\";
+",
+                    "name": "index.ts",
+                    "type": "file",
+                  },
+                ],
+                "name": "ProblemCrudServiceV2",
+                "type": "directory",
+              },
+              Object {
+                "contents": Array [
+                  Object {
+                    "contents": "export type GetLatestProblemErrorBody = never;
+
+export declare namespace GetLatestProblemErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const GetLatestProblemErrorBody = {
+    _visit: <Result>(_value: GetLatestProblemErrorBody, visitor: GetLatestProblemErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): GetLatestProblemErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "GetLatestProblemErrorBody.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import * as model from \\"../../..\\";
+
+export interface GetLatestProblemRequest {
+    problemId: model.ProblemId;
+}
+",
+                    "name": "GetLatestProblemRequest.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import * as model from \\"../../..\\";
+
+export type GetLatestProblemResponse = GetLatestProblemResponse.SuccessResponse | GetLatestProblemResponse.ErrorResponse;
+
+namespace GetLatestProblemResponse {
+    export interface SuccessResponse {
+        ok: true;
+        body: model.problemV2.ProblemInfoV2;
+    }
+
+    export interface ErrorResponse {
+        ok: false;
+        error: model.problemV2.GetLatestProblemErrorBody;
+    }
+}
+",
+                    "name": "GetLatestProblemResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type GetLightweightProblemsErrorBody = never;
+
+export declare namespace GetLightweightProblemsErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const GetLightweightProblemsErrorBody = {
+    _visit: <Result>(_value: GetLightweightProblemsErrorBody, visitor: GetLightweightProblemsErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): GetLightweightProblemsErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "GetLightweightProblemsErrorBody.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import * as model from \\"../../..\\";
+
+export type GetLightweightProblemsResponse = GetLightweightProblemsResponse.SuccessResponse | GetLightweightProblemsResponse.ErrorResponse;
+
+namespace GetLightweightProblemsResponse {
+    export interface SuccessResponse {
+        ok: true;
+        body: model.problemV2.LightweightProblemInfoV2[];
+    }
+
+    export interface ErrorResponse {
+        ok: false;
+        error: model.problemV2.GetLightweightProblemsErrorBody;
+    }
+}
+",
+                    "name": "GetLightweightProblemsResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type GetProblemVersionErrorBody = never;
+
+export declare namespace GetProblemVersionErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const GetProblemVersionErrorBody = {
+    _visit: <Result>(_value: GetProblemVersionErrorBody, visitor: GetProblemVersionErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): GetProblemVersionErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "GetProblemVersionErrorBody.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import * as model from \\"../../..\\";
+
+export interface GetProblemVersionRequest {
+    problemId: model.ProblemId;
+    problemVersion: number;
+}
+",
+                    "name": "GetProblemVersionRequest.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import * as model from \\"../../..\\";
+
+export type GetProblemVersionResponse = GetProblemVersionResponse.SuccessResponse | GetProblemVersionResponse.ErrorResponse;
+
+namespace GetProblemVersionResponse {
+    export interface SuccessResponse {
+        ok: true;
+        body: model.problemV2.ProblemInfoV2;
+    }
+
+    export interface ErrorResponse {
+        ok: false;
+        error: model.problemV2.GetProblemVersionErrorBody;
+    }
+}
+",
+                    "name": "GetProblemVersionResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export type GetProblemsErrorBody = never;
+
+export declare namespace GetProblemsErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const GetProblemsErrorBody = {
+    _visit: <Result>(_value: GetProblemsErrorBody, visitor: GetProblemsErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): GetProblemsErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+                    "name": "GetProblemsErrorBody.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import * as model from \\"../../..\\";
+
+export type GetProblemsResponse = GetProblemsResponse.SuccessResponse | GetProblemsResponse.ErrorResponse;
+
+namespace GetProblemsResponse {
+    export interface SuccessResponse {
+        ok: true;
+        body: model.problemV2.ProblemInfoV2[];
+    }
+
+    export interface ErrorResponse {
+        ok: false;
+        error: model.problemV2.GetProblemsErrorBody;
+    }
+}
+",
+                    "name": "GetProblemsResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export * from \\"./GetLightweightProblemsErrorBody\\";
+export * from \\"./GetLightweightProblemsResponse\\";
+export * from \\"./GetProblemsErrorBody\\";
+export * from \\"./GetProblemsResponse\\";
+export * from \\"./GetLatestProblemRequest\\";
+export * from \\"./GetLatestProblemErrorBody\\";
+export * from \\"./GetLatestProblemResponse\\";
+export * from \\"./GetProblemVersionRequest\\";
+export * from \\"./GetProblemVersionErrorBody\\";
+export * from \\"./GetProblemVersionResponse\\";
+",
+                    "name": "index.ts",
+                    "type": "file",
+                  },
+                ],
+                "name": "ProblemInfoServicV2",
+                "type": "directory",
+              },
+              Object {
+                "contents": "export * from \\"./ProblemInfoServicV2\\";
+export * from \\"./ProblemCrudServiceV2\\";
+",
+                "name": "index.ts",
+                "type": "file",
+              },
+            ],
+            "name": "_service-types",
+            "type": "directory",
+          },
+          Object {
+            "contents": Array [
+              Object {
+                "contents": "import { problemV2 } from \\"../..\\";
+
+export type AssertCorrectnessCheck =
+    | AssertCorrectnessCheck.DeepEquality
+    | AssertCorrectnessCheck.Custom;
+
+export declare namespace AssertCorrectnessCheck {
+    interface DeepEquality extends problemV2.DeepEqualityCorrectnessCheck {
+        _type: \\"deepEquality\\";
+    }
+
+    interface Custom extends problemV2.VoidFunctionDefinitionThatTakesActualResult {
+        _type: \\"custom\\";
+    }
+
+    export interface _Visitor<Result> {
+        deepEquality: (value: problemV2.DeepEqualityCorrectnessCheck) => Result;
+        custom: (value: problemV2.VoidFunctionDefinitionThatTakesActualResult) => Result;
+        _unknown: () => Result;
+    }
+}
+
+export const AssertCorrectnessCheck = {
+    deepEquality: (value: problemV2.DeepEqualityCorrectnessCheck): AssertCorrectnessCheck.DeepEquality => ({
+        ...value,
+        _type: \\"deepEquality\\"
+    }),
+
+    custom: (value: problemV2.VoidFunctionDefinitionThatTakesActualResult): AssertCorrectnessCheck.Custom => ({
+        ...value,
+        _type: \\"custom\\"
+    }),
+
+    _visit: <Result>(value: AssertCorrectnessCheck, visitor: AssertCorrectnessCheck._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"deepEquality\\": return visitor.deepEquality(value);
+            case \\"custom\\": return visitor.custom(value);
+            default: return visitor._unknown();
+        }
+    },
+
+    _types: (): AssertCorrectnessCheck[\\"_type\\"][] => [\\"deepEquality\\", \\"custom\\"],
+} as const;
+",
+                "name": "AssertCorrectnessCheck.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
+export interface BasicCustomFiles {
+    methodName: string;
+    signature: model.problemV2.NonVoidFunctionSignature;
+    additionalFiles: Record<model.Language, model.problemV2.Files>;
+    basicTestCaseTemplate: model.problemV2.BasicTestCaseTemplate;
+}
+",
+                "name": "BasicCustomFiles.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
+export interface BasicTestCaseTemplate {
+    templateId: model.problemV2.TestCaseTemplateId;
+    name: string;
+    description: model.problemV2.TestCaseImplementationDescription;
+    expectedValueParameterId: model.problemV2.ParameterId;
+}
+",
+                "name": "BasicTestCaseTemplate.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
+export interface CreateProblemRequestV2 {
+    problemName: string;
+    problemDescription: model.ProblemDescription;
+    customFiles: model.problemV2.CustomFiles;
+    customTestCaseTemplates: model.problemV2.TestCaseTemplate[];
+    testcases: model.problemV2.TestCaseV2[];
+    supportedLanguages: model.Language[];
+    isPublic: boolean;
+}
+",
+                "name": "CreateProblemRequestV2.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+import { problemV2 } from \\"../..\\";
+
+export type CustomFiles =
+    | CustomFiles.Basic
+    | CustomFiles.Custom;
+
+export declare namespace CustomFiles {
+    interface Basic extends problemV2.BasicCustomFiles {
+        _type: \\"basic\\";
+    }
+
+    interface Custom {
+        _type: \\"custom\\";
+        custom: Record<model.Language, problemV2.Files>;
+    }
+
+    export interface _Visitor<Result> {
+        basic: (value: problemV2.BasicCustomFiles) => Result;
+        custom: (value: Record<model.Language, problemV2.Files>) => Result;
+        _unknown: () => Result;
+    }
+}
+
+export const CustomFiles = {
+    basic: (value: problemV2.BasicCustomFiles): CustomFiles.Basic => ({
+        ...value,
+        _type: \\"basic\\"
+    }),
+
+    custom: (value: Record<model.Language, problemV2.Files>): CustomFiles.Custom => ({
+        custom: value,
+        _type: \\"custom\\"
+    }),
+
+    _visit: <Result>(value: CustomFiles, visitor: CustomFiles._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"basic\\": return visitor.basic(value);
+            case \\"custom\\": return visitor.custom(value.custom);
+            default: return visitor._unknown();
+        }
+    },
+
+    _types: (): CustomFiles[\\"_type\\"][] => [\\"basic\\", \\"custom\\"],
+} as const;
+",
+                "name": "CustomFiles.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
+export interface DeepEqualityCorrectnessCheck {
+    expectedValueParameterId: model.problemV2.ParameterId;
+}
+",
+                "name": "DeepEqualityCorrectnessCheck.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
+export interface DefaultProvidedFile {
+    file: model.problemV2.FileInfoV2;
+    relatedTypes: model.VariableType[];
+}
+",
+                "name": "DefaultProvidedFile.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "export interface FileInfoV2 {
+    filename: string;
+    directory: string;
+    contents: string;
+    editable: boolean;
+}
+",
+                "name": "FileInfoV2.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
+export interface Files {
+    files: model.problemV2.FileInfoV2[];
+}
+",
+                "name": "Files.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "export interface FunctionImplementation {
+    impl: string;
+    imports: string | null | undefined;
+}
+",
+                "name": "FunctionImplementation.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
+export interface FunctionImplementationForMultipleLanguages {
+    codeByLanguage: Record<model.Language, model.problemV2.FunctionImplementation>;
+}
+",
+                "name": "FunctionImplementationForMultipleLanguages.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import { problemV2 } from \\"../..\\";
+
+export type FunctionSignature =
+    | FunctionSignature.Void
+    | FunctionSignature.NonVoid
+    /**
+     * Useful when specifying custom grading for a testcase where actualResult is defined. */
+    | FunctionSignature.VoidThatTakesActualResult;
+
+export declare namespace FunctionSignature {
+    interface Void extends problemV2.VoidFunctionSignature {
+        _type: \\"void\\";
+    }
+
+    interface NonVoid extends problemV2.NonVoidFunctionSignature {
+        _type: \\"nonVoid\\";
+    }
+
+    interface VoidThatTakesActualResult extends problemV2.VoidFunctionSignatureThatTakesActualResult {
+        _type: \\"voidThatTakesActualResult\\";
+    }
+
+    export interface _Visitor<Result> {
+        void: (value: problemV2.VoidFunctionSignature) => Result;
+        nonVoid: (value: problemV2.NonVoidFunctionSignature) => Result;
+        voidThatTakesActualResult: (value: problemV2.VoidFunctionSignatureThatTakesActualResult) => Result;
+        _unknown: () => Result;
+    }
+}
+
+export const FunctionSignature = {
+    void: (value: problemV2.VoidFunctionSignature): FunctionSignature.Void => ({
+        ...value,
+        _type: \\"void\\"
+    }),
+
+    nonVoid: (value: problemV2.NonVoidFunctionSignature): FunctionSignature.NonVoid => ({
+        ...value,
+        _type: \\"nonVoid\\"
+    }),
+
+    voidThatTakesActualResult: (value: problemV2.VoidFunctionSignatureThatTakesActualResult): FunctionSignature.VoidThatTakesActualResult => ({
+        ...value,
+        _type: \\"voidThatTakesActualResult\\"
+    }),
+
+    _visit: <Result>(value: FunctionSignature, visitor: FunctionSignature._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"void\\": return visitor.void(value);
+            case \\"nonVoid\\": return visitor.nonVoid(value);
+            case \\"voidThatTakesActualResult\\": return visitor.voidThatTakesActualResult(value);
+            default: return visitor._unknown();
+        }
+    },
+
+    _types: (): FunctionSignature[\\"_type\\"][] => [\\"void\\", \\"nonVoid\\", \\"voidThatTakesActualResult\\"],
+} as const;
+",
+                "name": "FunctionSignature.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
+export interface GeneratedFiles {
+    generatedTestCaseFiles: Record<model.Language, model.problemV2.Files>;
+    generatedTemplateFiles: Record<model.Language, model.problemV2.Files>;
+    other: Record<model.Language, model.problemV2.Files>;
+}
+",
+                "name": "GeneratedFiles.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
+export interface LightweightProblemInfoV2 {
+    problemId: model.ProblemId;
+    problemName: string;
+    problemVersion: number;
+    variableTypes: model.VariableType[];
+}
+",
+                "name": "LightweightProblemInfoV2.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
+export interface NonVoidFunctionDefinition {
+    signature: model.problemV2.NonVoidFunctionSignature;
+    code: model.problemV2.FunctionImplementationForMultipleLanguages;
+}
+",
+                "name": "NonVoidFunctionDefinition.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
+export interface NonVoidFunctionSignature {
+    parameters: model.problemV2.Parameter[];
+    returnType: model.VariableType;
+}
+",
+                "name": "NonVoidFunctionSignature.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
+export interface Parameter {
+    parameterId: model.problemV2.ParameterId;
+    name: string;
+    variableType: model.VariableType;
+}
+",
+                "name": "Parameter.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "export type ParameterId = string & {
+    __ParameterId: void;
+};
+
+export const ParameterId = {
+    of: (value: string): ParameterId => value as ParameterId
+};
+",
+                "name": "ParameterId.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
+export interface ProblemInfoV2 {
+    problemId: model.ProblemId;
+    problemDescription: model.ProblemDescription;
+    problemName: string;
+    problemVersion: number;
+    supportedLanguages: model.Language[];
+    customFiles: model.problemV2.CustomFiles;
+    generatedFiles: model.problemV2.GeneratedFiles;
+    customTestCaseTemplates: model.problemV2.TestCaseTemplate[];
+    testcases: model.problemV2.TestCaseV2[];
+    isPublic: boolean;
+}
+",
+                "name": "ProblemInfoV2.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "export interface TestCaseExpects {
+    expectedStdout: string | null | undefined;
+}
+",
+                "name": "TestCaseExpects.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import { problemV2 } from \\"../..\\";
+
+export type TestCaseFunction =
+    | TestCaseFunction.WithActualResult
+    | TestCaseFunction.Custom;
+
+export declare namespace TestCaseFunction {
+    interface WithActualResult extends problemV2.TestCaseWithActualResultImplementation {
+        _type: \\"withActualResult\\";
+    }
+
+    interface Custom extends problemV2.VoidFunctionDefinition {
+        _type: \\"custom\\";
+    }
+
+    export interface _Visitor<Result> {
+        withActualResult: (value: problemV2.TestCaseWithActualResultImplementation) => Result;
+        custom: (value: problemV2.VoidFunctionDefinition) => Result;
+        _unknown: () => Result;
+    }
+}
+
+export const TestCaseFunction = {
+    withActualResult: (value: problemV2.TestCaseWithActualResultImplementation): TestCaseFunction.WithActualResult => ({
+        ...value,
+        _type: \\"withActualResult\\"
+    }),
+
+    custom: (value: problemV2.VoidFunctionDefinition): TestCaseFunction.Custom => ({
+        ...value,
+        _type: \\"custom\\"
+    }),
+
+    _visit: <Result>(value: TestCaseFunction, visitor: TestCaseFunction._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"withActualResult\\": return visitor.withActualResult(value);
+            case \\"custom\\": return visitor.custom(value);
+            default: return visitor._unknown();
+        }
+    },
+
+    _types: (): TestCaseFunction[\\"_type\\"][] => [\\"withActualResult\\", \\"custom\\"],
+} as const;
+",
+                "name": "TestCaseFunction.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "export type TestCaseId = string & {
+    __TestCaseId: void;
+};
+
+export const TestCaseId = {
+    of: (value: string): TestCaseId => value as TestCaseId
+};
+",
+                "name": "TestCaseId.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
+export interface TestCaseImplementation {
+    description: model.problemV2.TestCaseImplementationDescription;
+    function: model.problemV2.TestCaseFunction;
+}
+",
+                "name": "TestCaseImplementation.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
+export interface TestCaseImplementationDescription {
+    boards: model.problemV2.TestCaseImplementationDescriptionBoard[];
+}
+",
+                "name": "TestCaseImplementationDescription.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import { problemV2 } from \\"../..\\";
+
+export type TestCaseImplementationDescriptionBoard =
+    | TestCaseImplementationDescriptionBoard.Html
+    | TestCaseImplementationDescriptionBoard.ParamId;
+
+export declare namespace TestCaseImplementationDescriptionBoard {
+    interface Html {
+        _type: \\"html\\";
+        html: string;
+    }
+
+    interface ParamId {
+        _type: \\"paramId\\";
+        paramId: problemV2.ParameterId;
+    }
+
+    export interface _Visitor<Result> {
+        html: (value: string) => Result;
+        paramId: (value: problemV2.ParameterId) => Result;
+        _unknown: () => Result;
+    }
+}
+
+export const TestCaseImplementationDescriptionBoard = {
+    html: (value: string): TestCaseImplementationDescriptionBoard.Html => ({
+        html: value,
+        _type: \\"html\\"
+    }),
+
+    paramId: (value: problemV2.ParameterId): TestCaseImplementationDescriptionBoard.ParamId => ({
+        paramId: value,
+        _type: \\"paramId\\"
+    }),
+
+    _visit: <Result>(value: TestCaseImplementationDescriptionBoard, visitor: TestCaseImplementationDescriptionBoard._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"html\\": return visitor.html(value.html);
+            case \\"paramId\\": return visitor.paramId(value.paramId);
+            default: return visitor._unknown();
+        }
+    },
+
+    _types: (): TestCaseImplementationDescriptionBoard[\\"_type\\"][] => [\\"html\\", \\"paramId\\"],
+} as const;
+",
+                "name": "TestCaseImplementationDescriptionBoard.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import { problemV2 } from \\"../..\\";
+
+export type TestCaseImplementationReference =
+    | TestCaseImplementationReference.TemplateId
+    | TestCaseImplementationReference.Implementation;
+
+export declare namespace TestCaseImplementationReference {
+    interface TemplateId {
+        _type: \\"templateId\\";
+        templateId: problemV2.TestCaseTemplateId;
+    }
+
+    interface Implementation extends problemV2.TestCaseImplementation {
+        _type: \\"implementation\\";
+    }
+
+    export interface _Visitor<Result> {
+        templateId: (value: problemV2.TestCaseTemplateId) => Result;
+        implementation: (value: problemV2.TestCaseImplementation) => Result;
+        _unknown: () => Result;
+    }
+}
+
+export const TestCaseImplementationReference = {
+    templateId: (value: problemV2.TestCaseTemplateId): TestCaseImplementationReference.TemplateId => ({
+        templateId: value,
+        _type: \\"templateId\\"
+    }),
+
+    implementation: (value: problemV2.TestCaseImplementation): TestCaseImplementationReference.Implementation => ({
+        ...value,
+        _type: \\"implementation\\"
+    }),
+
+    _visit: <Result>(value: TestCaseImplementationReference, visitor: TestCaseImplementationReference._Visitor<Result>): Result => {
+        switch (value._type) {
+            case \\"templateId\\": return visitor.templateId(value.templateId);
+            case \\"implementation\\": return visitor.implementation(value);
+            default: return visitor._unknown();
+        }
+    },
+
+    _types: (): TestCaseImplementationReference[\\"_type\\"][] => [\\"templateId\\", \\"implementation\\"],
+} as const;
+",
+                "name": "TestCaseImplementationReference.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
+export interface TestCaseMetadata {
+    id: model.problemV2.TestCaseId;
+    name: string;
+    hidden: boolean;
+}
+",
+                "name": "TestCaseMetadata.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
+export interface TestCaseTemplate {
+    templateId: model.problemV2.TestCaseTemplateId;
+    name: string;
+    implementation: model.problemV2.TestCaseImplementation;
+}
+",
+                "name": "TestCaseTemplate.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "export type TestCaseTemplateId = string & {
+    __TestCaseTemplateId: void;
+};
+
+export const TestCaseTemplateId = {
+    of: (value: string): TestCaseTemplateId => value as TestCaseTemplateId
+};
+",
+                "name": "TestCaseTemplateId.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
+export interface TestCaseV2 {
+    metadata: model.problemV2.TestCaseMetadata;
+    implementation: model.problemV2.TestCaseImplementationReference;
+    arguments: Record<model.problemV2.ParameterId, model.VariableValue>;
+    expects: model.problemV2.TestCaseExpects | null | undefined;
+}
+",
+                "name": "TestCaseV2.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
+export interface TestCaseWithActualResultImplementation {
+    getActualResult: model.problemV2.NonVoidFunctionDefinition;
+    assertCorrectnessCheck: model.problemV2.AssertCorrectnessCheck;
+}
+",
+                "name": "TestCaseWithActualResultImplementation.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
+export interface VoidFunctionDefinition {
+    parameters: model.problemV2.Parameter[];
+    code: model.problemV2.FunctionImplementationForMultipleLanguages;
+}
+",
+                "name": "VoidFunctionDefinition.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
+/**
+ * The generated signature will include an additional param, actualResult
+ */
+export interface VoidFunctionDefinitionThatTakesActualResult {
+    additionalParameters: model.problemV2.Parameter[];
+    code: model.problemV2.FunctionImplementationForMultipleLanguages;
+}
+",
+                "name": "VoidFunctionDefinitionThatTakesActualResult.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
+export interface VoidFunctionSignature {
+    parameters: model.problemV2.Parameter[];
+}
+",
+                "name": "VoidFunctionSignature.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
+export interface VoidFunctionSignatureThatTakesActualResult {
+    parameters: model.problemV2.Parameter[];
+    actualResultType: model.VariableType;
+}
+",
+                "name": "VoidFunctionSignatureThatTakesActualResult.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "export * from \\"./TestCaseTemplateId\\";
+export * from \\"./TestCaseId\\";
+export * from \\"./ParameterId\\";
+export * from \\"./ProblemInfoV2\\";
+export * from \\"./LightweightProblemInfoV2\\";
+export * from \\"./CreateProblemRequestV2\\";
+export * from \\"./TestCaseV2\\";
+export * from \\"./TestCaseExpects\\";
+export * from \\"./TestCaseImplementationReference\\";
+export * from \\"./BasicTestCaseTemplate\\";
+export * from \\"./TestCaseTemplate\\";
+export * from \\"./TestCaseImplementation\\";
+export * from \\"./TestCaseFunction\\";
+export * from \\"./TestCaseWithActualResultImplementation\\";
+export * from \\"./VoidFunctionDefinition\\";
+export * from \\"./Parameter\\";
+export * from \\"./NonVoidFunctionDefinition\\";
+export * from \\"./VoidFunctionSignature\\";
+export * from \\"./NonVoidFunctionSignature\\";
+export * from \\"./VoidFunctionSignatureThatTakesActualResult\\";
+export * from \\"./AssertCorrectnessCheck\\";
+export * from \\"./DeepEqualityCorrectnessCheck\\";
+export * from \\"./VoidFunctionDefinitionThatTakesActualResult\\";
+export * from \\"./TestCaseImplementationDescription\\";
+export * from \\"./TestCaseImplementationDescriptionBoard\\";
+export * from \\"./TestCaseMetadata\\";
+export * from \\"./FunctionImplementationForMultipleLanguages\\";
+export * from \\"./FunctionImplementation\\";
+export * from \\"./GeneratedFiles\\";
+export * from \\"./CustomFiles\\";
+export * from \\"./BasicCustomFiles\\";
+export * from \\"./Files\\";
+export * from \\"./FileInfoV2\\";
+export * from \\"./DefaultProvidedFile\\";
+export * from \\"./FunctionSignature\\";
+",
+                "name": "index.ts",
+                "type": "file",
+              },
+            ],
+            "name": "_types",
+            "type": "directory",
+          },
+          Object {
+            "contents": "export * from \\"./_types\\";
+export * from \\"./_service-types\\";
+",
+            "name": "index.ts",
+            "type": "file",
+          },
+        ],
+        "name": "problem-v2",
         "type": "directory",
       },
     ],

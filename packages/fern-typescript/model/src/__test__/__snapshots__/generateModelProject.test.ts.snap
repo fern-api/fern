@@ -3,255 +3,13 @@
 exports[`generateModelProject fern IR 1`] = `
 Object {
   "/.npmignore": "tsconfig.json",
-  "/index.ts": "export * from \\"./types\\";
-export * as services from \\"./services\\";
-",
-  "/package.json": "{
-    \\"name\\": \\"posts\\",
-    \\"version\\": \\"0.0.0\\",
-    \\"main\\": \\"./index.js\\",
-    \\"types\\": \\"./index.d.ts\\",
-    \\"scripts\\": {
-        \\"build\\": \\"esbuild $(find . -name '*.ts') --format=cjs --sourcemap --outdir=. && tsc\\"
-    },
-    \\"devDependencies\\": {
-        \\"@types/node\\": \\"17.0.33\\",
-        \\"esbuild\\": \\"0.14.47\\",
-        \\"typescript\\": \\"4.6.4\\"
-    }
-}",
-  "/services/index.ts": "export * from \\"./types\\";
-",
-  "/services/types/BaseService.ts": "import * as model from \\"../..\\";
-
-export interface BaseService extends model.WithDocs {
-    basePath: string;
-    name: model.NamedType;
-}
-",
-  "/services/types/HttpEndpoint.ts": "import * as model from \\"../..\\";
-
-export interface HttpEndpoint extends model.WithDocs {
-    endpointId: string;
-    path: string;
-    method: model.services.HttpMethod;
-    headers: model.services.HttpHeader[];
-    parameters: model.services.PathParameter[];
-    queryParameters: model.services.QueryParameter[];
-    request: model.services.WireMessage | null | undefined;
-    response: model.services.WireMessage | null | undefined;
-    errors: model.services.ResponseErrors;
-}
-",
-  "/services/types/HttpHeader.ts": "import * as model from \\"../..\\";
-
-export interface HttpHeader extends model.WithDocs {
-    header: string;
-    valueType: model.TypeReference;
-}
-",
-  "/services/types/HttpMethod.ts": "export type HttpMethod =
-    | \\"GET\\"
-    | \\"POST\\"
-    | \\"PUT\\"
-    | \\"PATCH\\"
-    | \\"DELETE\\";
-
-export const HttpMethod = {
-    Get: \\"GET\\",
-    Post: \\"POST\\",
-    Put: \\"PUT\\",
-    Patch: \\"PATCH\\",
-    Delete: \\"DELETE\\",
-
-    _visit: <Result>(value: HttpMethod, visitor: HttpMethod._Visitor<Result>): Result => {
-        switch (value) {
-            case HttpMethod.Get: return visitor.get();
-            case HttpMethod.Post: return visitor.post();
-            case HttpMethod.Put: return visitor.put();
-            case HttpMethod.Patch: return visitor.patch();
-            case HttpMethod.Delete: return visitor.delete();
-            default: return visitor._unknown();
-        }
-    },
-
-    _values: (): HttpMethod[] => [HttpMethod.Get, HttpMethod.Post, HttpMethod.Put, HttpMethod.Patch, HttpMethod.Delete],
-} as const;
-
-export declare namespace HttpMethod {
-    type Get = \\"GET\\";
-    type Post = \\"POST\\";
-    type Put = \\"PUT\\";
-    type Patch = \\"PATCH\\";
-    type Delete = \\"DELETE\\";
-
-    export interface _Visitor<Result> {
-        get: () => Result;
-        post: () => Result;
-        put: () => Result;
-        patch: () => Result;
-        delete: () => Result;
-        _unknown: () => Result;
-    }
-}
-",
-  "/services/types/HttpService.ts": "import * as model from \\"../..\\";
-
-export interface HttpService extends model.services.BaseService {
-    endpoints: model.services.HttpEndpoint[];
-    headers: model.services.HttpHeader[];
-}
-",
-  "/services/types/PathParameter.ts": "import * as model from \\"../..\\";
-
-export interface PathParameter extends model.WithDocs {
-    key: string;
-    valueType: model.TypeReference;
-}
-",
-  "/services/types/QueryParameter.ts": "import * as model from \\"../..\\";
-
-export interface QueryParameter extends model.WithDocs {
-    key: string;
-    valueType: model.TypeReference;
-}
-",
-  "/services/types/ResponseError.ts": "import * as model from \\"../..\\";
-
-export interface ResponseError extends model.WithDocs {
-    discriminantValue: string;
-    error: model.NamedType;
-}
-",
-  "/services/types/ResponseErrors.ts": "import * as model from \\"../..\\";
-
-export interface ResponseErrors extends model.WithDocs {
-    discriminant: string;
-    possibleErrors: model.services.ResponseError[];
-}
-",
-  "/services/types/WebSocketMessage.ts": "import * as model from \\"../..\\";
-
-export interface WebSocketMessage extends model.WithDocs {
-    origin: model.services.WebSocketMessageOrigin;
-    body: model.services.WireMessage | null | undefined;
-    response: model.services.WebSocketMessageResponse | null | undefined;
-    errors: model.services.ResponseErrors;
-}
-",
-  "/services/types/WebSocketMessageOrigin.ts": "export type WebSocketMessageOrigin =
-    | \\"CLIENT\\"
-    | \\"SERVER\\";
-
-export const WebSocketMessageOrigin = {
-    Client: \\"CLIENT\\",
-    Server: \\"SERVER\\",
-
-    _visit: <Result>(value: WebSocketMessageOrigin, visitor: WebSocketMessageOrigin._Visitor<Result>): Result => {
-        switch (value) {
-            case WebSocketMessageOrigin.Client: return visitor.client();
-            case WebSocketMessageOrigin.Server: return visitor.server();
-            default: return visitor._unknown();
-        }
-    },
-
-    _values: (): WebSocketMessageOrigin[] => [WebSocketMessageOrigin.Client, WebSocketMessageOrigin.Server],
-} as const;
-
-export declare namespace WebSocketMessageOrigin {
-    type Client = \\"CLIENT\\";
-    type Server = \\"SERVER\\";
-
-    export interface _Visitor<Result> {
-        client: () => Result;
-        server: () => Result;
-        _unknown: () => Result;
-    }
-}
-",
-  "/services/types/WebSocketMessageResponse.ts": "import * as model from \\"../..\\";
-
-export interface WebSocketMessageResponse extends model.services.WireMessage {
-    /** Defaults to WebSocketMessageResponseBehavior.ONGOING */
-    behavior: model.services.WebSocketMessageResponseBehavior;
-    type: model.Type;
-}
-",
-  "/services/types/WebSocketMessageResponseBehavior.ts": "export type WebSocketMessageResponseBehavior =
-    | \\"ONGOING\\"
-    | \\"REQUEST_RESPONSE\\";
-
-export const WebSocketMessageResponseBehavior = {
-    Ongoing: \\"ONGOING\\",
-    RequestResponse: \\"REQUEST_RESPONSE\\",
-
-    _visit: <Result>(value: WebSocketMessageResponseBehavior, visitor: WebSocketMessageResponseBehavior._Visitor<Result>): Result => {
-        switch (value) {
-            case WebSocketMessageResponseBehavior.Ongoing: return visitor.ongoing();
-            case WebSocketMessageResponseBehavior.RequestResponse: return visitor.requestResponse();
-            default: return visitor._unknown();
-        }
-    },
-
-    _values: (): WebSocketMessageResponseBehavior[] => [WebSocketMessageResponseBehavior.Ongoing, WebSocketMessageResponseBehavior.RequestResponse],
-} as const;
-
-export declare namespace WebSocketMessageResponseBehavior {
-    type Ongoing = \\"ONGOING\\";
-    type RequestResponse = \\"REQUEST_RESPONSE\\";
-
-    export interface _Visitor<Result> {
-        ongoing: () => Result;
-        requestResponse: () => Result;
-        _unknown: () => Result;
-    }
-}
-",
-  "/services/types/WebSocketService.ts": "import * as model from \\"../..\\";
-
-export interface WebSocketService extends model.services.BaseService {
-    messages: model.services.WebSocketMessage[];
-}
-",
-  "/services/types/WireMessage.ts": "import * as model from \\"../..\\";
-
-export interface WireMessage extends model.WithDocs {
-    type: model.Type;
-}
-",
-  "/services/types/index.ts": "export * from \\"./BaseService\\";
-export * from \\"./WireMessage\\";
-export * from \\"./ResponseErrors\\";
-export * from \\"./ResponseError\\";
-export * from \\"./HttpService\\";
-export * from \\"./HttpEndpoint\\";
-export * from \\"./HttpMethod\\";
-export * from \\"./HttpHeader\\";
-export * from \\"./PathParameter\\";
-export * from \\"./QueryParameter\\";
-export * from \\"./WebSocketService\\";
-export * from \\"./WebSocketMessage\\";
-export * from \\"./WebSocketMessageOrigin\\";
-export * from \\"./WebSocketMessageResponse\\";
-export * from \\"./WebSocketMessageResponseBehavior\\";
-",
-  "/tsconfig.json": "{
-    \\"compilerOptions\\": {
-        \\"strict\\": true,
-        \\"skipLibCheck\\": true,
-        \\"declaration\\": true,
-        \\"sourceMap\\": true,
-        \\"emitDeclarationOnly\\": true,
-        \\"esModuleInterop\\": true
-    }
-}",
-  "/types/AliasTypeDefinition.ts": "import * as model from \\"..\\";
+  "/_types/AliasTypeDefinition.ts": "import * as model from \\"..\\";
 
 export interface AliasTypeDefinition {
     aliasOf: model.TypeReference;
 }
 ",
-  "/types/ContainerType.ts": "import * as model from \\"..\\";
+  "/_types/ContainerType.ts": "import * as model from \\"..\\";
 
 export type ContainerType =
     | ContainerType.List
@@ -322,19 +80,19 @@ export const ContainerType = {
     _types: (): ContainerType[\\"_type\\"][] => [\\"list\\", \\"map\\", \\"optional\\", \\"set\\"],
 } as const;
 ",
-  "/types/EnumTypeDefinition.ts": "import * as model from \\"..\\";
+  "/_types/EnumTypeDefinition.ts": "import * as model from \\"..\\";
 
 export interface EnumTypeDefinition {
     values: model.EnumValue[];
 }
 ",
-  "/types/EnumValue.ts": "import * as model from \\"..\\";
+  "/_types/EnumValue.ts": "import * as model from \\"..\\";
 
 export interface EnumValue extends model.WithDocs {
     value: string;
 }
 ",
-  "/types/ErrorDefinition.ts": "import * as model from \\"..\\";
+  "/_types/ErrorDefinition.ts": "import * as model from \\"..\\";
 
 export interface ErrorDefinition extends model.WithDocs {
     name: model.NamedType;
@@ -342,14 +100,14 @@ export interface ErrorDefinition extends model.WithDocs {
     http: model.HttpErrorConfiguration | null | undefined;
 }
 ",
-  "/types/ErrorProperty.ts": "import * as model from \\"..\\";
+  "/_types/ErrorProperty.ts": "import * as model from \\"..\\";
 
 export interface ErrorProperty extends model.WithDocs {
     name: string;
     type: model.TypeReference;
 }
 ",
-  "/types/FernFilepath.ts": "/**
+  "/_types/FernFilepath.ts": "/**
  * A filepath to a Fern spec file, excluding the file extension
  */
 export type FernFilepath = string & {
@@ -360,11 +118,11 @@ export const FernFilepath = {
     of: (value: string): FernFilepath => value as FernFilepath
 };
 ",
-  "/types/HttpErrorConfiguration.ts": "export interface HttpErrorConfiguration {
+  "/_types/HttpErrorConfiguration.ts": "export interface HttpErrorConfiguration {
     statusCode: number;
 }
 ",
-  "/types/IntermediateRepresentation.ts": "import * as model from \\"..\\";
+  "/_types/IntermediateRepresentation.ts": "import * as model from \\"..\\";
 
 /**
  * Complete representation of the API schema
@@ -377,28 +135,28 @@ export interface IntermediateRepresentation {
     errors: model.ErrorDefinition[];
 }
 ",
-  "/types/MapType.ts": "import * as model from \\"..\\";
+  "/_types/MapType.ts": "import * as model from \\"..\\";
 
 export interface MapType {
     keyType: model.TypeReference;
     valueType: model.TypeReference;
 }
 ",
-  "/types/NamedType.ts": "import * as model from \\"..\\";
+  "/_types/NamedType.ts": "import * as model from \\"..\\";
 
 export interface NamedType {
     fernFilepath: model.FernFilepath;
     name: string;
 }
 ",
-  "/types/ObjectProperty.ts": "import * as model from \\"..\\";
+  "/_types/ObjectProperty.ts": "import * as model from \\"..\\";
 
 export interface ObjectProperty extends model.WithDocs {
     key: string;
     valueType: model.TypeReference;
 }
 ",
-  "/types/ObjectTypeDefinition.ts": "import * as model from \\"..\\";
+  "/_types/ObjectTypeDefinition.ts": "import * as model from \\"..\\";
 
 export interface ObjectTypeDefinition {
     /** A list of other types to inherit from */
@@ -406,7 +164,7 @@ export interface ObjectTypeDefinition {
     properties: model.ObjectProperty[];
 }
 ",
-  "/types/PrimitiveType.ts": "export type PrimitiveType =
+  "/_types/PrimitiveType.ts": "export type PrimitiveType =
     | \\"INTEGER\\"
     | \\"DOUBLE\\"
     | \\"STRING\\"
@@ -453,21 +211,21 @@ export declare namespace PrimitiveType {
     }
 }
 ",
-  "/types/Services.ts": "import * as model from \\"..\\";
+  "/_types/Services.ts": "import * as model from \\"..\\";
 
 export interface Services {
     http: model.services.HttpService[];
     websocket: model.services.WebSocketService[];
 }
 ",
-  "/types/SingleUnionType.ts": "import * as model from \\"..\\";
+  "/_types/SingleUnionType.ts": "import * as model from \\"..\\";
 
 export interface SingleUnionType extends model.WithDocs {
     discriminantValue: string;
     valueType: model.TypeReference;
 }
 ",
-  "/types/Type.ts": "import * as model from \\"..\\";
+  "/_types/Type.ts": "import * as model from \\"..\\";
 
 export type Type =
     | Type.Alias
@@ -535,7 +293,7 @@ export const Type = {
     _types: (): Type[\\"_type\\"][] => [\\"alias\\", \\"enum\\", \\"object\\", \\"union\\"],
 } as const;
 ",
-  "/types/TypeDefinition.ts": "import * as model from \\"..\\";
+  "/_types/TypeDefinition.ts": "import * as model from \\"..\\";
 
 /**
  * A type, which is a name and a shape
@@ -545,7 +303,7 @@ export interface TypeDefinition extends model.WithDocs {
     shape: model.Type;
 }
 ",
-  "/types/TypeReference.ts": "import * as model from \\"..\\";
+  "/_types/TypeReference.ts": "import * as model from \\"..\\";
 
 export type TypeReference =
     | TypeReference.Container
@@ -614,18 +372,18 @@ export const TypeReference = {
     _types: (): TypeReference[\\"_type\\"][] => [\\"container\\", \\"named\\", \\"primitive\\", \\"void\\"],
 } as const;
 ",
-  "/types/UnionTypeDefinition.ts": "import * as model from \\"..\\";
+  "/_types/UnionTypeDefinition.ts": "import * as model from \\"..\\";
 
 export interface UnionTypeDefinition {
     discriminant: string;
     types: model.SingleUnionType[];
 }
 ",
-  "/types/WithDocs.ts": "export interface WithDocs {
+  "/_types/WithDocs.ts": "export interface WithDocs {
     docs: string | null | undefined;
 }
 ",
-  "/types/index.ts": "export * from \\"./WithDocs\\";
+  "/_types/index.ts": "export * from \\"./WithDocs\\";
 export * from \\"./ErrorDefinition\\";
 export * from \\"./ErrorProperty\\";
 export * from \\"./HttpErrorConfiguration\\";
@@ -647,25 +405,8 @@ export * from \\"./ContainerType\\";
 export * from \\"./MapType\\";
 export * from \\"./PrimitiveType\\";
 ",
-}
-`;
-
-exports[`generateModelProject posts 1`] = `
-Object {
-  "/.npmignore": "tsconfig.json",
-  "/errors/PostNotFoundError.ts": "export type PostNotFoundError = string & {
-    __PostNotFoundError: void;
-};
-
-export const PostNotFoundError = {
-    of: (value: string): PostNotFoundError => value as PostNotFoundError
-};
-",
-  "/errors/index.ts": "export * from \\"./PostNotFoundError\\";
-",
-  "/index.ts": "export * from \\"./types\\";
-export * from \\"./errors\\";
-export * from \\"./service-types\\";
+  "/index.ts": "export * from \\"./_types\\";
+export * as services from \\"./services\\";
 ",
   "/package.json": "{
     \\"name\\": \\"posts\\",
@@ -675,17 +416,254 @@ export * from \\"./service-types\\";
     \\"scripts\\": {
         \\"build\\": \\"esbuild $(find . -name '*.ts') --format=cjs --sourcemap --outdir=. && tsc\\"
     },
-    \\"dependencies\\": {
-        \\"uuid\\": \\"8.3.2\\",
-        \\"@types/uuid\\": \\"8.3.4\\"
-    },
     \\"devDependencies\\": {
         \\"@types/node\\": \\"17.0.33\\",
         \\"esbuild\\": \\"0.14.47\\",
         \\"typescript\\": \\"4.6.4\\"
     }
 }",
-  "/service-types/PostsService/GetPostErrorBody.ts": "import * as model from \\"../..\\";
+  "/services/_types/BaseService.ts": "import * as model from \\"../..\\";
+
+export interface BaseService extends model.WithDocs {
+    basePath: string;
+    name: model.NamedType;
+}
+",
+  "/services/_types/HttpEndpoint.ts": "import * as model from \\"../..\\";
+
+export interface HttpEndpoint extends model.WithDocs {
+    endpointId: string;
+    path: string;
+    method: model.services.HttpMethod;
+    headers: model.services.HttpHeader[];
+    parameters: model.services.PathParameter[];
+    queryParameters: model.services.QueryParameter[];
+    request: model.services.WireMessage | null | undefined;
+    response: model.services.WireMessage | null | undefined;
+    errors: model.services.ResponseErrors;
+}
+",
+  "/services/_types/HttpHeader.ts": "import * as model from \\"../..\\";
+
+export interface HttpHeader extends model.WithDocs {
+    header: string;
+    valueType: model.TypeReference;
+}
+",
+  "/services/_types/HttpMethod.ts": "export type HttpMethod =
+    | \\"GET\\"
+    | \\"POST\\"
+    | \\"PUT\\"
+    | \\"PATCH\\"
+    | \\"DELETE\\";
+
+export const HttpMethod = {
+    Get: \\"GET\\",
+    Post: \\"POST\\",
+    Put: \\"PUT\\",
+    Patch: \\"PATCH\\",
+    Delete: \\"DELETE\\",
+
+    _visit: <Result>(value: HttpMethod, visitor: HttpMethod._Visitor<Result>): Result => {
+        switch (value) {
+            case HttpMethod.Get: return visitor.get();
+            case HttpMethod.Post: return visitor.post();
+            case HttpMethod.Put: return visitor.put();
+            case HttpMethod.Patch: return visitor.patch();
+            case HttpMethod.Delete: return visitor.delete();
+            default: return visitor._unknown();
+        }
+    },
+
+    _values: (): HttpMethod[] => [HttpMethod.Get, HttpMethod.Post, HttpMethod.Put, HttpMethod.Patch, HttpMethod.Delete],
+} as const;
+
+export declare namespace HttpMethod {
+    type Get = \\"GET\\";
+    type Post = \\"POST\\";
+    type Put = \\"PUT\\";
+    type Patch = \\"PATCH\\";
+    type Delete = \\"DELETE\\";
+
+    export interface _Visitor<Result> {
+        get: () => Result;
+        post: () => Result;
+        put: () => Result;
+        patch: () => Result;
+        delete: () => Result;
+        _unknown: () => Result;
+    }
+}
+",
+  "/services/_types/HttpService.ts": "import * as model from \\"../..\\";
+
+export interface HttpService extends model.services.BaseService {
+    endpoints: model.services.HttpEndpoint[];
+    headers: model.services.HttpHeader[];
+}
+",
+  "/services/_types/PathParameter.ts": "import * as model from \\"../..\\";
+
+export interface PathParameter extends model.WithDocs {
+    key: string;
+    valueType: model.TypeReference;
+}
+",
+  "/services/_types/QueryParameter.ts": "import * as model from \\"../..\\";
+
+export interface QueryParameter extends model.WithDocs {
+    key: string;
+    valueType: model.TypeReference;
+}
+",
+  "/services/_types/ResponseError.ts": "import * as model from \\"../..\\";
+
+export interface ResponseError extends model.WithDocs {
+    discriminantValue: string;
+    error: model.NamedType;
+}
+",
+  "/services/_types/ResponseErrors.ts": "import * as model from \\"../..\\";
+
+export interface ResponseErrors extends model.WithDocs {
+    discriminant: string;
+    possibleErrors: model.services.ResponseError[];
+}
+",
+  "/services/_types/WebSocketMessage.ts": "import * as model from \\"../..\\";
+
+export interface WebSocketMessage extends model.WithDocs {
+    origin: model.services.WebSocketMessageOrigin;
+    body: model.services.WireMessage | null | undefined;
+    response: model.services.WebSocketMessageResponse | null | undefined;
+    errors: model.services.ResponseErrors;
+}
+",
+  "/services/_types/WebSocketMessageOrigin.ts": "export type WebSocketMessageOrigin =
+    | \\"CLIENT\\"
+    | \\"SERVER\\";
+
+export const WebSocketMessageOrigin = {
+    Client: \\"CLIENT\\",
+    Server: \\"SERVER\\",
+
+    _visit: <Result>(value: WebSocketMessageOrigin, visitor: WebSocketMessageOrigin._Visitor<Result>): Result => {
+        switch (value) {
+            case WebSocketMessageOrigin.Client: return visitor.client();
+            case WebSocketMessageOrigin.Server: return visitor.server();
+            default: return visitor._unknown();
+        }
+    },
+
+    _values: (): WebSocketMessageOrigin[] => [WebSocketMessageOrigin.Client, WebSocketMessageOrigin.Server],
+} as const;
+
+export declare namespace WebSocketMessageOrigin {
+    type Client = \\"CLIENT\\";
+    type Server = \\"SERVER\\";
+
+    export interface _Visitor<Result> {
+        client: () => Result;
+        server: () => Result;
+        _unknown: () => Result;
+    }
+}
+",
+  "/services/_types/WebSocketMessageResponse.ts": "import * as model from \\"../..\\";
+
+export interface WebSocketMessageResponse extends model.services.WireMessage {
+    /** Defaults to WebSocketMessageResponseBehavior.ONGOING */
+    behavior: model.services.WebSocketMessageResponseBehavior;
+    type: model.Type;
+}
+",
+  "/services/_types/WebSocketMessageResponseBehavior.ts": "export type WebSocketMessageResponseBehavior =
+    | \\"ONGOING\\"
+    | \\"REQUEST_RESPONSE\\";
+
+export const WebSocketMessageResponseBehavior = {
+    Ongoing: \\"ONGOING\\",
+    RequestResponse: \\"REQUEST_RESPONSE\\",
+
+    _visit: <Result>(value: WebSocketMessageResponseBehavior, visitor: WebSocketMessageResponseBehavior._Visitor<Result>): Result => {
+        switch (value) {
+            case WebSocketMessageResponseBehavior.Ongoing: return visitor.ongoing();
+            case WebSocketMessageResponseBehavior.RequestResponse: return visitor.requestResponse();
+            default: return visitor._unknown();
+        }
+    },
+
+    _values: (): WebSocketMessageResponseBehavior[] => [WebSocketMessageResponseBehavior.Ongoing, WebSocketMessageResponseBehavior.RequestResponse],
+} as const;
+
+export declare namespace WebSocketMessageResponseBehavior {
+    type Ongoing = \\"ONGOING\\";
+    type RequestResponse = \\"REQUEST_RESPONSE\\";
+
+    export interface _Visitor<Result> {
+        ongoing: () => Result;
+        requestResponse: () => Result;
+        _unknown: () => Result;
+    }
+}
+",
+  "/services/_types/WebSocketService.ts": "import * as model from \\"../..\\";
+
+export interface WebSocketService extends model.services.BaseService {
+    messages: model.services.WebSocketMessage[];
+}
+",
+  "/services/_types/WireMessage.ts": "import * as model from \\"../..\\";
+
+export interface WireMessage extends model.WithDocs {
+    type: model.Type;
+}
+",
+  "/services/_types/index.ts": "export * from \\"./BaseService\\";
+export * from \\"./WireMessage\\";
+export * from \\"./ResponseErrors\\";
+export * from \\"./ResponseError\\";
+export * from \\"./HttpService\\";
+export * from \\"./HttpEndpoint\\";
+export * from \\"./HttpMethod\\";
+export * from \\"./HttpHeader\\";
+export * from \\"./PathParameter\\";
+export * from \\"./QueryParameter\\";
+export * from \\"./WebSocketService\\";
+export * from \\"./WebSocketMessage\\";
+export * from \\"./WebSocketMessageOrigin\\";
+export * from \\"./WebSocketMessageResponse\\";
+export * from \\"./WebSocketMessageResponseBehavior\\";
+",
+  "/services/index.ts": "export * from \\"./_types\\";
+",
+  "/tsconfig.json": "{
+    \\"compilerOptions\\": {
+        \\"strict\\": true,
+        \\"skipLibCheck\\": true,
+        \\"declaration\\": true,
+        \\"sourceMap\\": true,
+        \\"emitDeclarationOnly\\": true,
+        \\"esModuleInterop\\": true
+    }
+}",
+}
+`;
+
+exports[`generateModelProject posts 1`] = `
+Object {
+  "/.npmignore": "tsconfig.json",
+  "/_errors/PostNotFoundError.ts": "export type PostNotFoundError = string & {
+    __PostNotFoundError: void;
+};
+
+export const PostNotFoundError = {
+    of: (value: string): PostNotFoundError => value as PostNotFoundError
+};
+",
+  "/_errors/index.ts": "export * from \\"./PostNotFoundError\\";
+",
+  "/_service-types/PostsService/GetPostErrorBody.ts": "import * as model from \\"../..\\";
 import * as uuid from \\"uuid\\";
 
 export type GetPostErrorBody =
@@ -721,14 +699,14 @@ export const GetPostErrorBody = {
     _types: (): GetPostErrorBody[\\"_error\\"][] => [\\"PostNotFoundError\\"],
 } as const;
 ",
-  "/service-types/PostsService/GetPostRequest.ts": "import * as model from \\"../..\\";
+  "/_service-types/PostsService/GetPostRequest.ts": "import * as model from \\"../..\\";
 
 export interface GetPostRequest {
     postId: string;
     body: model.CreatePostRequest;
 }
 ",
-  "/service-types/PostsService/GetPostResponse.ts": "import * as model from \\"../..\\";
+  "/_service-types/PostsService/GetPostResponse.ts": "import * as model from \\"../..\\";
 
 export type GetPostResponse = GetPostResponse.SuccessResponse | GetPostResponse.ErrorResponse;
 
@@ -744,28 +722,18 @@ namespace GetPostResponse {
     }
 }
 ",
-  "/service-types/PostsService/GetPostResponseBody.ts": "export interface GetPostResponseBody {
+  "/_service-types/PostsService/GetPostResponseBody.ts": "export interface GetPostResponseBody {
     a: number;
 }
 ",
-  "/service-types/PostsService/index.ts": "export * from \\"./GetPostRequest\\";
+  "/_service-types/PostsService/index.ts": "export * from \\"./GetPostRequest\\";
 export * from \\"./GetPostResponseBody\\";
 export * from \\"./GetPostErrorBody\\";
 export * from \\"./GetPostResponse\\";
 ",
-  "/service-types/index.ts": "export * from \\"./PostsService\\";
+  "/_service-types/index.ts": "export * from \\"./PostsService\\";
 ",
-  "/tsconfig.json": "{
-    \\"compilerOptions\\": {
-        \\"strict\\": true,
-        \\"skipLibCheck\\": true,
-        \\"declaration\\": true,
-        \\"sourceMap\\": true,
-        \\"emitDeclarationOnly\\": true,
-        \\"esModuleInterop\\": true
-    }
-}",
-  "/types/Author.ts": "export type Author =
+  "/_types/Author.ts": "export type Author =
     | Author.Anonymous
     | Author.Named;
 
@@ -807,7 +775,7 @@ export const Author = {
     _types: (): Author[\\"_type\\"][] => [\\"anonymous\\", \\"named\\"],
 } as const;
 ",
-  "/types/BlogPostReference.ts": "import * as model from \\"..\\";
+  "/_types/BlogPostReference.ts": "import * as model from \\"..\\";
 
 export type BlogPostReference =
     | BlogPostReference.Post;
@@ -839,7 +807,7 @@ export const BlogPostReference = {
     _types: (): BlogPostReference[\\"_type\\"][] => [\\"post\\"],
 } as const;
 ",
-  "/types/CreatePostRequest.ts": "import * as model from \\"..\\";
+  "/_types/CreatePostRequest.ts": "import * as model from \\"..\\";
 
 export interface CreatePostRequest {
     title: string;
@@ -847,7 +815,7 @@ export interface CreatePostRequest {
     content: string;
 }
 ",
-  "/types/Post.ts": "import * as model from \\"..\\";
+  "/_types/Post.ts": "import * as model from \\"..\\";
 
 /**
  * A blog post
@@ -861,7 +829,7 @@ export interface Post {
     customConfig: unknown;
 }
 ",
-  "/types/PostId.ts": "/**
+  "/_types/PostId.ts": "/**
  * An ID of a blog post
  */
 export type PostId = string & {
@@ -872,7 +840,7 @@ export const PostId = {
     of: (value: string): PostId => value as PostId
 };
 ",
-  "/types/PostType.ts": "export type PostType =
+  "/_types/PostType.ts": "export type PostType =
     | \\"LONG\\"
     | \\"SHORT\\";
 
@@ -902,12 +870,44 @@ export declare namespace PostType {
     }
 }
 ",
-  "/types/index.ts": "export * from \\"./PostId\\";
+  "/_types/index.ts": "export * from \\"./PostId\\";
 export * from \\"./Post\\";
 export * from \\"./BlogPostReference\\";
 export * from \\"./PostType\\";
 export * from \\"./Author\\";
 export * from \\"./CreatePostRequest\\";
 ",
+  "/index.ts": "export * from \\"./_types\\";
+export * from \\"./_errors\\";
+export * from \\"./_service-types\\";
+",
+  "/package.json": "{
+    \\"name\\": \\"posts\\",
+    \\"version\\": \\"0.0.0\\",
+    \\"main\\": \\"./index.js\\",
+    \\"types\\": \\"./index.d.ts\\",
+    \\"scripts\\": {
+        \\"build\\": \\"esbuild $(find . -name '*.ts') --format=cjs --sourcemap --outdir=. && tsc\\"
+    },
+    \\"dependencies\\": {
+        \\"uuid\\": \\"8.3.2\\",
+        \\"@types/uuid\\": \\"8.3.4\\"
+    },
+    \\"devDependencies\\": {
+        \\"@types/node\\": \\"17.0.33\\",
+        \\"esbuild\\": \\"0.14.47\\",
+        \\"typescript\\": \\"4.6.4\\"
+    }
+}",
+  "/tsconfig.json": "{
+    \\"compilerOptions\\": {
+        \\"strict\\": true,
+        \\"skipLibCheck\\": true,
+        \\"declaration\\": true,
+        \\"sourceMap\\": true,
+        \\"emitDeclarationOnly\\": true,
+        \\"esModuleInterop\\": true
+    }
+}",
 }
 `;
