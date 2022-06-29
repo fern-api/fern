@@ -20,7 +20,7 @@ describe("fern add tests", () => {
 });
 
 async function init() {
-    const init = execa("node", [path.join(__dirname, "../../../../cli/cli"), "init"], {
+    const init = execa("node", [path.join(__dirname, "../../../../cli/cli"), "init", "fern"], {
         env: {
             NODE_ENV: "development",
         },

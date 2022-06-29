@@ -13,9 +13,11 @@ const REMOTE_GENERATION_SERVICE = new services.remoteGen.RemoteGenerationService
 });
 
 export async function runRemoteGenerationForWorkspace({
+    org,
     workspaceDefinition,
     compileResult,
 }: {
+    org: string;
     workspaceDefinition: WorkspaceDefinition;
     compileResult: Compiler.SuccessfulResult;
 }): Promise<void> {
@@ -25,7 +27,7 @@ export async function runRemoteGenerationForWorkspace({
 
     const createResponse = await REMOTE_GENERATION_SERVICE.createJob({
         apiName: workspaceDefinition.name,
-        orgName: "fern",
+        orgName: org,
         generators: workspaceDefinition.generators.map((generator) => ({
             id: generator.name,
             version: generator.version,

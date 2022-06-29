@@ -9,9 +9,11 @@ import { parseFernDefinition } from "./parseFernInput";
 export async function compileWorkspace({
     absolutePathToWorkspaceDefinition,
     runLocal,
+    org,
 }: {
     absolutePathToWorkspaceDefinition: string;
     runLocal: boolean;
+    org: string;
 }): Promise<void> {
     const workspaceDefinition = await loadWorkspaceDefinition(absolutePathToWorkspaceDefinition);
 
@@ -33,6 +35,7 @@ export async function compileWorkspace({
         await runRemoteGenerationForWorkspace({
             workspaceDefinition,
             compileResult,
+            org,
         });
     }
 }

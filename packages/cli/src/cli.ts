@@ -1,5 +1,6 @@
 import { initialize } from "@fern-api/init";
 import { initiateLogin } from "@fern-api/login";
+import inquirer from "inquirer";
 import { Argv, showHelp } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
@@ -40,11 +41,31 @@ async function runCli() {
 }
 
 function addInitCommand(cli: Argv) {
-    cli.command({
-        command: "init",
-        describe: "Initializes an example Fern API",
-        handler: initialize,
-    });
+    cli.command(
+        "init <orgName>",
+        "Initializes an example Fern API",
+        (yargs) =>
+            yargs.positional("orgName", {
+                type: "string",
+                description: "Organization Name",
+            }),
+        async (argv) => {
+            if (argv.orgName != null) {
+                await initialize(argv.orgName);
+            } else {
+                const questions = [
+                    {
+                        type: "input",
+                        name: "org",
+                        message: "What's your org name",
+                    },
+                ];
+                await inquirer.prompt(questions).then(async (answers) => {
+                    await initialize(answers["org"]);
+                });
+            }
+        }
+    );
 }
 
 function addAddCommand(cli: Argv) {
