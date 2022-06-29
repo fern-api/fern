@@ -9,12 +9,16 @@ const GENERATED_API_DIR = path.join(GENERATED_DIR, "api");
 it("fern init", async () => {
     await rm(GENERATED_DIR, { force: true, recursive: true });
     await mkdir(GENERATED_DIR);
-    const cmd = execa("node", [path.join(__dirname, "../../../../cli/webpack/dist/bundle.js"), "init", "fern"], {
-        env: {
-            NODE_ENV: "development",
-        },
-        cwd: GENERATED_DIR,
-    });
+    const cmd = execa(
+        "node",
+        [path.join(__dirname, "../../../../cli/webpack/dist/bundle.js"), "init", "--organization", "fern"],
+        {
+            env: {
+                NODE_ENV: "development",
+            },
+            cwd: GENERATED_DIR,
+        }
+    );
     cmd.stdout?.pipe(process.stdout);
     cmd.stderr?.pipe(process.stderr);
     await cmd;

@@ -18,12 +18,16 @@ it("fern add", async () => {
 }, 60_000);
 
 async function init() {
-    const init = execa("node", [path.join(__dirname, "../../../../cli/webpack/dist/bundle.js"), "init", "fern"], {
-        env: {
-            NODE_ENV: "development",
-        },
-        cwd: GENERATED_DIR,
-    });
+    const init = execa(
+        "node",
+        [path.join(__dirname, "../../../../cli/webpack/dist/bundle.js"), "init", "--organization", "fern"],
+        {
+            env: {
+                NODE_ENV: "development",
+            },
+            cwd: GENERATED_DIR,
+        }
+    );
     init.stdout?.pipe(process.stdout);
     init.stderr?.pipe(process.stderr);
     await init;

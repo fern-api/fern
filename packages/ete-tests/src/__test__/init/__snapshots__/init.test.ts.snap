@@ -1,22 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`fern init tests fern init 1`] = `
+exports[`fern init 1`] = `
 "{
     \\"workspaces\\": [
         \\"**\\"
     ],
-    \\"org\\": \\"fern\\"
+    \\"organization\\": \\"fern\\"
 }"
 `;
 
-exports[`fern init tests fern init 2`] = `
+exports[`fern init 2`] = `
 "name: Blog Post API
 definition: src
 generators: []
 "
 `;
 
-exports[`fern init tests fern init 3`] = `
+exports[`fern init 3`] = `
 "ids:
   - MovieId
 types:

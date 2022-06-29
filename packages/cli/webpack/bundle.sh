@@ -43,8 +43,6 @@ EOL
 # write empty yarn.lock so yarn doesn't try to associate this package with the monorepo
 touch yarn.lock
 
-# set enableImmutableInstalls=false so we can modify yarn.lock, even when in CI
-export YARN_ENABLE_IMMUTABLE_INSTALLS=false
-
 # install package into yarn.lock
-yarn
+# (set enableImmutableInstalls=false so we can modify yarn.lock, even when in CI)
+YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install

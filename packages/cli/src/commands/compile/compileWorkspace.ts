@@ -40,6 +40,7 @@ export async function compileWorkspace({
         });
     }
 }
+
 function validateWorkspaceName(workspaceName: string) {
     const { validForNewPackages } = validatePackageName(workspaceName);
     if (!validForNewPackages) {
