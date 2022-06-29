@@ -5601,12 +5601,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fern-api@npm:0.0.112":
-  version: 0.0.112
-  resolution: "fern-api@npm:0.0.112"
+"fern-api@npm:0.0.111":
+  version: 0.0.111
+  resolution: "fern-api@npm:0.0.111"
   bin:
     fern: bundle.js
-  checksum: d40533fd9045ef7df2218ab11cba44c1a40772a9e79108aa0954b0be6bf100dcb411a26f32a464a2f67f2eefc7e656327ae453f228a68959446232992b3d157d
+  checksum: f0446e7a9814683253f41524024c00dc08daf6457b85e578832140f5003259742762260e47a8a93cccd58f16ac2be56b64467fbb8d9d5e31fa2258d43c401dc8
   languageName: node
   linkType: hard
 
@@ -5670,7 +5670,7 @@ __metadata:
     eslint: ^8.17.0
     eslint-plugin-jest: ^26.5.3
     execa: ^5.1.1
-    fern-api: 0.0.112
+    fern-api: 0.0.111
     husky: ^7.0.4
     immer: ^9.0.15
     is-ci: ^3.0.1
