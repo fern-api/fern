@@ -6,26 +6,24 @@ import path from "path";
 const GENERATED_DIR = path.join(__dirname, "generated");
 const GENERATED_API_DIR = path.join(GENERATED_DIR, "api");
 
-describe("fern init tests", () => {
-    it("fern init", async () => {
-        await rm(GENERATED_DIR, { force: true, recursive: true });
-        await mkdir(GENERATED_DIR);
-        const cmd = execa("node", [path.join(__dirname, "../../../../cli/webpack/dist/bundle.js"), "init", "fern"], {
-            env: {
-                NODE_ENV: "development",
-            },
-            cwd: GENERATED_DIR,
-        });
-        cmd.stdout?.pipe(process.stdout);
-        cmd.stderr?.pipe(process.stderr);
-        await cmd;
-        expect(await getFileContentsAsString(path.join(GENERATED_DIR, PROJECT_CONFIG_FILENAME))).toMatchSnapshot();
-        expect(
-            await getFileContentsAsString(path.join(GENERATED_API_DIR, WORKSPACE_DEFINITION_FILENAME))
-        ).toMatchSnapshot();
-        expect(await getFileContentsAsString(path.join(GENERATED_API_DIR, "src", "api.yml"))).toMatchSnapshot();
-    }, 10_000);
-});
+it("fern init", async () => {
+    await rm(GENERATED_DIR, { force: true, recursive: true });
+    await mkdir(GENERATED_DIR);
+    const cmd = execa("node", [path.join(__dirname, "../../../../cli/webpack/dist/bundle.js"), "init", "fern"], {
+        env: {
+            NODE_ENV: "development",
+        },
+        cwd: GENERATED_DIR,
+    });
+    cmd.stdout?.pipe(process.stdout);
+    cmd.stderr?.pipe(process.stderr);
+    await cmd;
+    expect(await getFileContentsAsString(path.join(GENERATED_DIR, PROJECT_CONFIG_FILENAME))).toMatchSnapshot();
+    expect(
+        await getFileContentsAsString(path.join(GENERATED_API_DIR, WORKSPACE_DEFINITION_FILENAME))
+    ).toMatchSnapshot();
+    expect(await getFileContentsAsString(path.join(GENERATED_API_DIR, "src", "api.yml"))).toMatchSnapshot();
+}, 60_000);
 
 async function getFileContentsAsString(filepath: string) {
     const fileContents = await readFile(filepath);

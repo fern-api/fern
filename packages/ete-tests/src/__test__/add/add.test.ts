@@ -6,18 +6,16 @@ import path from "path";
 const GENERATED_DIR = path.join(__dirname, "generated");
 const GENERATED_API_DIR = path.join(GENERATED_DIR, "api");
 
-describe("fern add tests", () => {
-    it("fern add", async () => {
-        await rm(GENERATED_DIR, { force: true, recursive: true });
-        await mkdir(GENERATED_DIR);
-        await init();
-        await add("java");
-        await add("typescript");
-        await add("postman");
-        const fileContents = await readFile(path.join(GENERATED_API_DIR, WORKSPACE_DEFINITION_FILENAME));
-        expect(fileContents.toString()).toMatchSnapshot();
-    }, 30_000);
-});
+it("fern add", async () => {
+    await rm(GENERATED_DIR, { force: true, recursive: true });
+    await mkdir(GENERATED_DIR);
+    await init();
+    await add("java");
+    await add("typescript");
+    await add("postman");
+    const fileContents = await readFile(path.join(GENERATED_API_DIR, WORKSPACE_DEFINITION_FILENAME));
+    expect(fileContents.toString()).toMatchSnapshot();
+}, 60_000);
 
 async function init() {
     const init = execa("node", [path.join(__dirname, "../../../../cli/webpack/dist/bundle.js"), "init", "fern"], {
