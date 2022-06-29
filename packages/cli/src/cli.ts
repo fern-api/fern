@@ -12,10 +12,9 @@ void runCli();
 
 async function runCli() {
     const passedInArgs = hideBin(process.argv);
-    const builder = yargs(passedInArgs);
+    const cli = yargs(passedInArgs);
 
-    const cli = builder
-        .scriptName("fern")
+    cli.scriptName("fern")
         .strict()
         .alias("v", "version")
         .demandCommand()
@@ -23,7 +22,7 @@ async function runCli() {
         .showHelpOnFail(false)
         .fail(() => {
             if (passedInArgs.length === 0) {
-                builder.showHelp();
+                cli.showHelp();
                 process.exit(1);
             }
         });
