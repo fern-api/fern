@@ -63,9 +63,8 @@ jobs:
       - run:
           name: Publish fern-api
           command: |
-            cd $(yarn workspace @fern-api/cli exec pwd)/webpack
-            ./bundle.sh $(git tag --points-at HEAD)
-            cd dist
+            yarn workspace @fern-api/cli dist
+            cd $(yarn workspace @fern-api/cli exec pwd)/webpack/dist
             yarn npm publish
       - run:
           name: Publish fern-typescript docker
