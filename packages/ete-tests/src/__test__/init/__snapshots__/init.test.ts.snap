@@ -4,7 +4,8 @@ exports[`fern init tests fern init 1`] = `
 "{
     \\"workspaces\\": [
         \\"**\\"
-    ]
+    ],
+    \\"org\\": \\"fern\\"
 }"
 `;
 

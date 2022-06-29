@@ -26,6 +26,7 @@ function itFixture(fixtureName: string) {
                     env: {
                         NODE_ENV: "development",
                     },
+                    cwd: FIXTURES_DIR,
                 }
             );
             cmd.stdout?.pipe(process.stdout);
