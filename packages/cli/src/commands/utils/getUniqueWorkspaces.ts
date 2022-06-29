@@ -1,25 +1,16 @@
-import { loadProjectConfig, ProjectConfig, WORKSPACE_DEFINITION_FILENAME } from "@fern-api/commons";
+import { ProjectConfig, WORKSPACE_DEFINITION_FILENAME } from "@fern-api/commons";
 import { lstat } from "fs/promises";
 import glob from "glob-promise";
 
-export async function getWorkspaces(commandLineWorkspaces: readonly string[]): Promise<string[]> {
-    const projectConfig = await loadProjectConfig();
-    const workspaceDefinitionPaths = await collectWorkspaceDefinitions({
-        commandLineWorkspaces,
-        projectConfig,
-    });
-    return uniq(workspaceDefinitionPaths);
-}
-
-async function collectWorkspaceDefinitions({
+export async function getUniqueWorkspaces({
     commandLineWorkspaces,
     projectConfig,
 }: {
     commandLineWorkspaces: readonly string[];
-    projectConfig: ProjectConfig | undefined;
+    projectConfig: ProjectConfig;
 }): Promise<string[]> {
     if (commandLineWorkspaces.length > 0) {
-        return getWorkspaceDefinitionsFromCommandLineArgs(commandLineWorkspaces);
+        return uniq(await getWorkspaceDefinitionsFromCommandLineArgs(commandLineWorkspaces));
     }
 
     if (projectConfig == null) {
@@ -33,7 +24,7 @@ async function collectWorkspaceDefinitions({
         const workspacesInGlob = await findWorkspaceDefinitionsFromGlob(workspacesGlob);
         allWorkspaces.push(...workspacesInGlob);
     }
-    return allWorkspaces;
+    return uniq(allWorkspaces);
 }
 
 async function getWorkspaceDefinitionsFromCommandLineArgs(commandLineWorkspaces: readonly string[]) {

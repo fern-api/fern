@@ -2,13 +2,13 @@ import { addJavaGenerator, addPostmanGenerator, addTypescriptGenerator } from "@
 import { loadWorkspaceDefinitionSchema, WorkspaceDefinitionSchema } from "@fern-api/commons";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
-import { getWorkspaces } from "../utils/getWorkspaces";
+import { getUniqueWorkspaces } from "../utils/getUniqueWorkspaces";
 
 export async function addGeneratorToWorkspaces(
     commandLineWorkspaces: readonly string[],
     generatorName: "java" | "typescript" | "postman"
 ): Promise<void> {
-    const uniqueWorkspaceDefinitionPaths = await getWorkspaces(commandLineWorkspaces);
+    const uniqueWorkspaceDefinitionPaths = await getUniqueWorkspaces(commandLineWorkspaces);
     for (const workspaceDefinitionPath of uniqueWorkspaceDefinitionPaths) {
         const workspaceDefinition = await loadWorkspaceDefinitionSchema(workspaceDefinitionPath);
         const updatedWorkspaceDefinition = getUpdatedWorkspaceDefinition(generatorName, workspaceDefinition);
