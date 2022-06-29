@@ -9,7 +9,7 @@ export interface PackagePathPart {
 }
 
 export function getPackagePath(fernFilepath: FernFilepath): PackagePath {
-    return fernFilepath.split("/").map((part) => ({
+    return fernFilepath.map((part) => ({
         directoryName: part,
         namespaceExport: camelCase(part),
     }));

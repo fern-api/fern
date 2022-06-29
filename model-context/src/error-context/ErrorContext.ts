@@ -35,7 +35,7 @@ export class ErrorContext extends BaseModelContext {
     }) {
         super({
             modelDirectory,
-            intermediateDirectories: ["errors"],
+            intermediateDirectories: ["_errors"],
         });
         this.errorResolver = new ErrorResolver(intermediateRepresentation);
     }

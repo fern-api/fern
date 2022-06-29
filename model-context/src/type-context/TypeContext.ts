@@ -36,7 +36,7 @@ export class TypeContext extends BaseModelContext {
     }) {
         super({
             modelDirectory,
-            intermediateDirectories: ["types"],
+            intermediateDirectories: ["_types"],
         });
         this.typeResolver = new TypeResolver(intermediateRepresentation);
     }
