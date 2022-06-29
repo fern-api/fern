@@ -3,29 +3,28 @@
 exports[`fern generate tests simple-model 1`] = `
 Array [
   Object {
+    "contents": "tsconfig.json",
+    "name": ".npmignore",
+    "type": "file",
+  },
+  Object {
+    "contents": "export * as posts from \\"./posts\\";
+",
+    "name": "index.ts",
+    "type": "file",
+  },
+  Object {
     "contents": "{
     \\"name\\": \\"@fern/posts-model\\",
-    \\"files\\": [
-        \\"lib\\"
-    ],
-    \\"main\\": \\"./lib/cjs/index.js\\",
-    \\"types\\": \\"./lib/cjs/index.d.ts\\",
-    \\"exports\\": {
-        \\".\\": {
-            \\"require\\": \\"./lib/cjs/index.js\\",
-            \\"default\\": \\"./lib/esm/index.js\\"
-        }
-    },
-    \\"sideEffects\\": false,
+    \\"main\\": \\"./index.js\\",
+    \\"types\\": \\"./index.d.ts\\",
     \\"scripts\\": {
-        \\"build\\": \\"run-p build:esm build:cjs\\",
-        \\"build:esm\\": \\"tsc --project tsconfig.esm.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"module\\\\\\" }' > lib/esm/package.json\\",
-        \\"build:cjs\\": \\"tsc --project tsconfig.json && echo '{ \\\\\\"type\\\\\\": \\\\\\"commonjs\\\\\\" }' > lib/cjs/package.json\\"
+        \\"build\\": \\"esbuild $(find . -name '*.ts') --format=cjs --sourcemap --outdir=. && tsc\\"
     },
     \\"devDependencies\\": {
-        \\"@types/node\\": \\"^17.0.33\\",
-        \\"npm-run-all\\": \\"^4.1.5\\",
-        \\"typescript\\": \\"^4.6.4\\"
+        \\"@types/node\\": \\"17.0.33\\",
+        \\"esbuild\\": \\"0.14.47\\",
+        \\"typescript\\": \\"4.6.4\\"
     }
 }",
     "name": "package.json",
@@ -34,7 +33,7 @@ Array [
   Object {
     "contents": Array [
       Object {
-        "contents": "export * as posts from \\"./posts\\";
+        "contents": "export * from \\"./types\\";
 ",
         "name": "index.ts",
         "type": "file",
@@ -42,15 +41,7 @@ Array [
       Object {
         "contents": Array [
           Object {
-            "contents": "export * from \\"./types\\";
-",
-            "name": "index.ts",
-            "type": "file",
-          },
-          Object {
-            "contents": Array [
-              Object {
-                "contents": "/**
+            "contents": "/**
  * A blog post
  */
 export interface Post {
@@ -59,73 +50,33 @@ export interface Post {
     content: string;
 }
 ",
-                "name": "Post.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "export * from \\"./Post\\";
+            "name": "Post.ts",
+            "type": "file",
+          },
+          Object {
+            "contents": "export * from \\"./Post\\";
 ",
-                "name": "index.ts",
-                "type": "file",
-              },
-            ],
-            "name": "types",
-            "type": "directory",
+            "name": "index.ts",
+            "type": "file",
           },
         ],
-        "name": "posts",
+        "name": "types",
         "type": "directory",
       },
     ],
-    "name": "src",
+    "name": "posts",
     "type": "directory",
   },
   Object {
     "contents": "{
     \\"compilerOptions\\": {
-        \\"composite\\": true,
-        \\"module\\": \\"esnext\\",
-        \\"target\\": \\"esnext\\",
-        \\"outDir\\": \\"lib/esm\\",
-        \\"rootDir\\": \\"src\\",
-        \\"moduleResolution\\": \\"node\\",
-        \\"esModuleInterop\\": true,
         \\"strict\\": true,
+        \\"skipLibCheck\\": true,
         \\"declaration\\": true,
-        \\"noFallthroughCasesInSwitch\\": true,
-        \\"forceConsistentCasingInFileNames\\": true,
-        \\"noUncheckedIndexedAccess\\": true,
-        \\"noUnusedLocals\\": true,
-        \\"noUnusedParameters\\": true
-    },
-    \\"include\\": [
-        \\"src\\"
-    ]
-}",
-    "name": "tsconfig.esm.json",
-    "type": "file",
-  },
-  Object {
-    "contents": "{
-    \\"compilerOptions\\": {
-        \\"composite\\": true,
-        \\"module\\": \\"commonjs\\",
-        \\"target\\": \\"esnext\\",
-        \\"outDir\\": \\"lib/cjs\\",
-        \\"rootDir\\": \\"src\\",
-        \\"moduleResolution\\": \\"node\\",
-        \\"esModuleInterop\\": true,
-        \\"strict\\": true,
-        \\"declaration\\": true,
-        \\"noFallthroughCasesInSwitch\\": true,
-        \\"forceConsistentCasingInFileNames\\": true,
-        \\"noUncheckedIndexedAccess\\": true,
-        \\"noUnusedLocals\\": true,
-        \\"noUnusedParameters\\": true
-    },
-    \\"include\\": [
-        \\"src\\"
-    ]
+        \\"sourceMap\\": true,
+        \\"emitDeclarationOnly\\": true,
+        \\"esModuleInterop\\": true
+    }
 }",
     "name": "tsconfig.json",
     "type": "file",
