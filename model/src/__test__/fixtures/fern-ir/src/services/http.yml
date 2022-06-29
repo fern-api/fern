@@ -2,24 +2,40 @@ imports:
   serviceCommons: ./commons.yml
   commons: ../commons.yml
   types: ../types.yml
+ids:
+  - EndpointId
 types:
   HttpService:
-    extends: serviceCommons.BaseService
+    extends: commons.WithDocs
     properties:
+      name: serviceCommons.ServiceName
+      basePath: optional<string>
       endpoints: list<HttpEndpoint>
       headers: list<HttpHeader>
+  HttpAuth:
+    enum:
+      - BEARER
+      - NONE
   HttpEndpoint:
     extends: commons.WithDocs
     properties:
-      endpointId: string
-      path: string
+      endpointId: EndpointId
       method: HttpMethod
       headers: list<HttpHeader>
-      parameters: list<PathParameter>
+      path: HttpPath
+      pathParameters: list<PathParameter>
       queryParameters: list<QueryParameter>
-      request: optional<serviceCommons.WireMessage>
-      response: optional<serviceCommons.WireMessage>
-      errors: serviceCommons.ResponseErrors
+      request: HttpRequest
+      response: HttpResponse
+      auth: HttpAuth
+  HttpPath:
+    properties:
+      head: string
+      parts: list<HttpPathPart>
+  HttpPathPart:
+    properties:
+      pathParameter: string
+      tail: string
   HttpMethod:
     enum:
       - GET
@@ -42,3 +58,18 @@ types:
     properties:
       key: string
       valueType: types.TypeReference
+  HttpRequest:
+    extends: commons.WithDocs
+    properties:
+      encoding: serviceCommons.Encoding
+      type: types.Type
+  HttpResponse:
+    extends: commons.WithDocs
+    properties:
+      encoding: serviceCommons.Encoding
+      ok: HttpOkResponse
+      failed: serviceCommons.FailedResponse
+  HttpOkResponse:
+    extends: commons.WithDocs
+    properties:
+      type: types.Type

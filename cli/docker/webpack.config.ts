@@ -46,5 +46,8 @@ export default (_env: unknown, { mode = "production" }: webpack.WebpackOptionsNo
             filename: "bundle.js",
         },
         plugins: [new SimpleProgressWebpackPlugin({})],
+        optimization: {
+            minimize: false,
+        },
     };
 };

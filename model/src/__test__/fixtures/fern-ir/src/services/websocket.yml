@@ -3,29 +3,40 @@ imports:
   commons: ../commons.yml
   types: ../types.yml
 types:
-  WebSocketService:
-    extends: serviceCommons.BaseService
-    properties:
-      messages: list<WebSocketMessage>
-  WebSocketMessage:
+  WebSocketChannel:
     extends: commons.WithDocs
     properties:
-      origin: WebSocketMessageOrigin
-      body: optional<serviceCommons.WireMessage>
-      response: optional<WebSocketMessageResponse>
-      errors: serviceCommons.ResponseErrors
-  WebSocketMessageOrigin:
-    enum:
-      - CLIENT
-      - SERVER
-  WebSocketMessageResponse:
-    extends: serviceCommons.WireMessage
+      name: serviceCommons.ServiceName
+      path: string
+      client: WebSocketMessenger
+      server: WebSocketMessenger
+      operationProperties: WebSocketOperationProperties
+  WebSocketMessenger:
     properties:
-      behavior:
-        docs: Defaults to WebSocketMessageResponseBehavior.ONGOING
-        type: WebSocketMessageResponseBehavior
+      operations: list<WebSocketOperation>
+  WebSocketOperation:
+    extends: commons.WithDocs
+    properties:
+      operationId: string
+      request: WebSocketRequest
+      response: WebSocketResponse
+  WebSocketRequest:
+    extends: commons.WithDocs
+    properties:
+      encoding: serviceCommons.Encoding
       type: types.Type
-  WebSocketMessageResponseBehavior:
-    enum:
-      - ONGOING
-      - REQUEST_RESPONSE
+  WebSocketResponse:
+    extends: commons.WithDocs
+    properties:
+      encoding: serviceCommons.Encoding
+      ok: WebSocketOkResponse
+      failed: serviceCommons.FailedResponse
+  WebSocketOkResponse:
+    extends: commons.WithDocs
+    properties:
+      type: types.Type
+  WebSocketOperationProperties:
+    properties:
+      id: string
+      operation: string
+      body: string

@@ -1,0 +1,38 @@
+types:
+  GeneratorConfig:
+    properties:
+      irFilepath: string
+      output: GeneratorOutputConfig
+      publish: optional<GeneratorPublishConfig>
+      workspaceName: string
+      organization: string
+      helpers: GeneratorHelpers
+      customConfig: map<string, string>
+  GeneratorOutputConfig:
+    properties:
+      path: string
+  GeneratorPublishConfig:
+    properties:
+      registries: GeneratorRegistriesConfig
+      version: string
+  GeneratorRegistriesConfig:
+    properties:
+      maven: MavenRegistryConfig
+      npm: NpmRegistryConfig
+  MavenRegistryConfig:
+    properties:
+      registryUrl: string
+      username: string
+      password: string
+  NpmRegistryConfig:
+    properties:
+      registryUrl: string
+      token: string
+  GeneratorHelpers:
+    properties:
+      encodings: map<string, GeneratorHelperReference>
+  GeneratorHelperReference:
+    properties:
+      name: string
+      version: string
+      absolutePath: string
