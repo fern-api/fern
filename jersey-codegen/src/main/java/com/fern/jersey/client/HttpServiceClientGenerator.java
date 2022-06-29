@@ -77,10 +77,10 @@ public final class HttpServiceClientGenerator extends Generator {
                         .build())
                 .addAnnotation(AnnotationSpec.builder(Produces.class)
                         .addMember("value", "$T.APPLICATION_JSON", MediaType.class)
-                        .build())
-                .addAnnotation(AnnotationSpec.builder(Path.class)
-                        .addMember("value", "$S", httpService.basePath())
                         .build());
+        jerseyServiceBuilder.addAnnotation(AnnotationSpec.builder(Path.class)
+                .addMember("value", "$S", httpService.basePath().orElse("/"))
+                .build());
         List<MethodSpec> httpEndpointMethods = httpService.endpoints().stream()
                 .map(this::getHttpEndpointMethodSpec)
                 .collect(Collectors.toList());
