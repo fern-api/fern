@@ -2,17 +2,16 @@ imports:
   commons: commons.yml
   types: types.yml
 types:
-  ErrorDefinition:
+  ErrorDeclaration:
     extends: commons.WithDocs
     properties:
-      name: types.NamedType
-      properties: list<ErrorProperty>
+      name: ErrorName
+      type: types.Type
       http: optional<HttpErrorConfiguration>
-  ErrorProperty:
-    extends: commons.WithDocs
+  ErrorName:
     properties:
+      fernFilepath: types.FernFilepath
       name: string
-      type: types.TypeReference
   HttpErrorConfiguration:
     properties:
       statusCode: integer

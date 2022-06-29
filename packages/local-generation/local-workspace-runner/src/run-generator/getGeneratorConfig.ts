@@ -6,6 +6,7 @@ export declare namespace getGeneratorConfig {
     export interface Args {
         helpers: GeneratorHelpers;
         workspaceName: string;
+        organization: string;
         customConfig: unknown;
     }
 
@@ -19,6 +20,7 @@ export function getGeneratorConfig({
     helpers,
     customConfig,
     workspaceName,
+    organization,
 }: getGeneratorConfig.Args): getGeneratorConfig.Return {
     const binds: string[] = [];
 
@@ -50,7 +52,7 @@ export function getGeneratorConfig({
             customConfig: customConfig as Record<string, string>,
             helpers: convertedHelpers,
             workspaceName,
-            organization: "fern",
+            organization,
         },
     };
 }

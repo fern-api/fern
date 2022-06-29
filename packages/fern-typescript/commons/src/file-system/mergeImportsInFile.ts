@@ -1,13 +1,7 @@
 import { ImportDeclaration, ImportDeclarationStructure, OptionalKind, SourceFile } from "ts-morph";
 
-export function getSourceFileAsText(file: SourceFile): string {
-    mergeImportsInFile(file);
-    file.formatText();
-    return file.getFullText();
-}
-
 type ModuleSpecifier = string;
-function mergeImportsInFile(file: SourceFile) {
+export function mergeImportsInFile(file: SourceFile): void {
     const imports: Record<ModuleSpecifier, OptionalKind<ImportDeclarationStructure>> = {};
 
     const importDeclarations = file.getImportDeclarations();

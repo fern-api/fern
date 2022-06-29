@@ -28,14 +28,15 @@ export async function compileWorkspace({
 
     if (runLocal) {
         await runLocalGenerationForWorkspace({
+            organization: org,
             workspaceDefinition,
             compileResult,
         });
     } else {
         await runRemoteGenerationForWorkspace({
+            org,
             workspaceDefinition,
             compileResult,
-            org,
         });
     }
 }
