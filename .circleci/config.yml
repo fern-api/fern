@@ -50,8 +50,8 @@ jobs:
           command: git --no-pager diff
 
   publish:
-    docker:
-      - image: cimg/node:current
+    machine:
+      image: ubuntu-2004:current
     steps:
       - checkout
       - node/install-packages:
