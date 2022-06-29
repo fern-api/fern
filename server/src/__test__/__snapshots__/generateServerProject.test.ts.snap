@@ -154,7 +154,7 @@ export const GetPostErrorBody = {
 export interface GetPostRequest {
     postId: model.commons.PostId;
     page: number | null | undefined;
-    otherParam: number | null | undefined;
+    otherParam: number;
 }
 ",
   "/model/posts/service-types/PostsService/GetPostResponse.ts": "import * as model from \\"../../..\\";
@@ -383,7 +383,7 @@ export const PostsService = {
             const result = await impl.getPost({
                 postId: model.commons.PostId.of(request.params.postId),
                 page: request.query.page != null ? Number(request.query.page) : undefined,
-                otherParam: request.query.otherParam != null ? Number(request.query.otherParam) : undefined
+                otherParam: Number(request.query.otherParam)
             });
             if (result.ok) {
                 response.send(result.body);
