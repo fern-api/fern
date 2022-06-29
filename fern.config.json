@@ -1,3 +1,4 @@
 {
+  "org": "fern",
   "workspaces": ["packages/compiler/ir-types"]
 }

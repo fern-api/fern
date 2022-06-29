@@ -28,6 +28,7 @@ export async function compileWorkspace({
 
     if (runLocal) {
         await runLocalGenerationForWorkspace({
+            organization,
             workspaceDefinition,
             compileResult,
         });

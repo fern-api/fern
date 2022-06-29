@@ -50,5 +50,8 @@ export default (): webpack.Configuration => {
             path: path.join(__dirname, "dist"),
             filename: "bundle.js",
         },
+        optimization: {
+            minimize: false,
+        },
     };
 };
