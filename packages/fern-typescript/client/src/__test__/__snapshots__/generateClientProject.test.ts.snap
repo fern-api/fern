@@ -460,7 +460,7 @@ export const GetPostErrorBody = {
 export interface GetPostRequest {
     postId: model.commons.PostId;
     page: number | null | undefined;
-    otherParam: number | null | undefined;
+    otherParam: number;
 }
 ",
   "/model/posts/service-types/PostsService/GetPostResponse.ts": "import * as model from \\"../../..\\";
@@ -705,9 +705,7 @@ export class PostsService implements PostsService {
         if (request.page != null) {
             queryParameters.append(\\"page\\", request.page.toString());
         }
-        if (request.otherParam != null) {
-            queryParameters.append(\\"otherParam\\", request.otherParam.toString());
-        }
+        queryParameters.append(\\"otherParam\\", request.otherParam.toString());
 
         const encodedResponse = await this.fetcher({
             url: this.baseUrl + \`/\${request.postId}\`,
