@@ -1,3 +1,4 @@
+import { MaybeGetter } from "./MaybeGetter";
 import { Token } from "./Token";
 
 export type Fetcher = (args: Fetcher.Args) => Promise<Fetcher.Response>;
@@ -6,7 +7,7 @@ export declare namespace Fetcher {
         url: string;
         method: string;
         headers?: Record<string, string>;
-        token?: Token;
+        token?: MaybeGetter<Token | undefined>;
         queryParameters?: URLSearchParams;
         body?: {
             content: string | ArrayBuffer;
