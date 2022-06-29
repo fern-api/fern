@@ -35,14 +35,6 @@ jobs:
           name: Compile
           command: yarn compile
       - run:
-          name: Bundle fern-api
-          command: |
-            cd $(yarn workspace @fern-api/cli exec pwd)/webpack
-            ./bundle.sh test
-      - run:
-          name: Build fern-typescript docker (for ETE tests)
-          command: yarn workspace fern-typescript dockerTagLocal
-      - run:
           name: Run tests
           command: yarn test --ci
       - run:
