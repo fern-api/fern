@@ -20,7 +20,7 @@ describe("fern add tests", () => {
 });
 
 async function init() {
-    const init = execa("node", [path.join(__dirname, "../../../../cli/cli"), "init", "fern"], {
+    const init = execa("node", [path.join(__dirname, "../../../../cli/webpack/dist/bundle.js"), "init", "fern"], {
         env: {
             NODE_ENV: "development",
         },
