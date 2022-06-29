@@ -4,80 +4,58 @@ import yaml from "js-yaml";
 import path from "path";
 
 export async function writeSampleApiToDirectory(dir: string): Promise<void> {
-    await writeFile(path.join(dir, BLOG_POST_API_FILENAME), yaml.dump(BLOG_POST_API));
+    await writeFile(path.join(dir, API_FILENAME), yaml.dump(API));
 }
 
-const BLOG_POST_API_FILENAME = "blog.yml";
+const API_FILENAME = "api.yml";
 
-const BLOG_POST_API: RawSchemas.FernConfigurationSchema = {
-    ids: ["PostId"],
+const API: RawSchemas.FernConfigurationSchema = {
+    ids: ["MovieId"],
     types: {
-        BlogPost: {
-            docs: "A blog post",
+        Movie: {
             properties: {
-                id: "PostId",
+                id: "MovieId",
                 title: "string",
-                author: "Author",
-                content: "string",
-                postType: "PostType",
+                rating: "double",
             },
-        },
-        Author: {
-            union: {
-                anonymous: {},
-                name: "string",
-            },
-        },
-        PostType: {
-            enum: ["LONG", "SHORT"],
         },
     },
     errors: {
-        PostNotFoundError: {
+        NotFoundError: {
             http: {
-                statusCode: 400,
-            },
-            type: {
-                properties: {
-                    id: "PostId",
-                },
+                statusCode: 404,
             },
         },
     },
     services: {
         http: {
-            PostsService: {
+            MoviesService: {
                 auth: "none",
-                "base-path": "/posts",
+                "base-path": "/movies",
                 endpoints: {
-                    createPost: {
-                        docs: "Create a new blog post",
+                    createMovie: {
                         method: "POST",
-                        path: "/create",
+                        path: "/",
                         request: {
                             type: {
                                 properties: {
                                     title: "string",
-                                    author: "Author",
-                                    content: "string",
-                                    postType: "PostType",
+                                    rating: "double",
                                 },
                             },
                         },
-                        response: {
-                            ok: "PostId",
-                        },
+                        response: "MovieId",
                     },
-                    getPost: {
+                    getMovie: {
                         method: "GET",
-                        path: "/{postId}",
+                        path: "/{movieId}",
                         "path-parameters": {
-                            postId: "PostId",
+                            postId: "MovieId",
                         },
                         response: {
-                            ok: "BlogPost",
+                            ok: "Movie",
                             failed: {
-                                errors: ["PostNotFoundError"],
+                                errors: ["NotFoundError"],
                             },
                         },
                     },

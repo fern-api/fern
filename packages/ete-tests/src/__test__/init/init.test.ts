@@ -23,7 +23,7 @@ describe("fern init tests", () => {
         expect(
             await getFileContentsAsString(path.join(GENERATED_API_DIR, WORKSPACE_DEFINITION_FILENAME))
         ).toMatchSnapshot();
-        expect(await getFileContentsAsString(path.join(GENERATED_API_DIR, "src", "blog.yml"))).toMatchSnapshot();
+        expect(await getFileContentsAsString(path.join(GENERATED_API_DIR, "src", "api.yml"))).toMatchSnapshot();
     }, 10_000);
 });
 
