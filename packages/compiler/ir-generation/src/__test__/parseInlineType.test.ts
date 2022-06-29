@@ -1,10 +1,10 @@
-import { ContainerType, FernFilepath, TypeReference } from "@fern-fern/ir-model/types";
+import { ContainerType, TypeReference } from "@fern-fern/ir-model/types";
 import { parseInlineType } from "../utils/parseInlineType";
 
 describe("parse inline types", () => {
     it("nested containers", () => {
         const dummyTypeName = "Dummy";
-        const dummyFernFilepath = FernFilepath.of("dummy");
+        const dummyFernFilepath = [];
         const parsedTypeReference = parseInlineType({
             type: "optional<list<" + dummyTypeName + ">>",
             fernFilepath: dummyFernFilepath,
