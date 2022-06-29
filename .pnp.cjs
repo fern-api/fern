@@ -198,7 +198,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.17.0"],\
             ["eslint-plugin-jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:26.5.3"],\
             ["execa", "npm:5.1.1"],\
-            ["fern-api", "npm:0.0.112"],\
+            ["fern-api", "npm:0.0.111"],\
             ["husky", "npm:7.0.4"],\
             ["immer", "npm:9.0.15"],\
             ["is-ci", "npm:3.0.1"],\
@@ -7827,7 +7827,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.17.0"],\
             ["eslint-plugin-jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:26.5.3"],\
             ["execa", "npm:5.1.1"],\
-            ["fern-api", "npm:0.0.112"],\
+            ["fern-api", "npm:0.0.111"],\
             ["husky", "npm:7.0.4"],\
             ["immer", "npm:9.0.15"],\
             ["is-ci", "npm:3.0.1"],\
@@ -7844,10 +7844,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["fern-api", [\
-        ["npm:0.0.112", {\
-          "packageLocation": "./.yarn/cache/fern-api-npm-0.0.112-be314f8b0b-d40533fd90.zip/node_modules/fern-api/",\
+        ["npm:0.0.111", {\
+          "packageLocation": "./.yarn/cache/fern-api-npm-0.0.111-032d5d2b25-f0446e7a98.zip/node_modules/fern-api/",\
           "packageDependencies": [\
-            ["fern-api", "npm:0.0.112"]\
+            ["fern-api", "npm:0.0.111"]\
           ],\
           "linkType": "HARD"\
         }]\
