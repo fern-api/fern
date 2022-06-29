@@ -21,7 +21,7 @@ export async function compileWorkspaces({
             compileWorkspace({
                 absolutePathToWorkspaceDefinition: uniqueWorkspaceDefinitionPath,
                 runLocal,
-                org: projectConfig.org,
+                organization: projectConfig.organization,
             })
         )
     );

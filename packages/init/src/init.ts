@@ -9,8 +9,8 @@ import yaml from "js-yaml";
 import path from "path";
 import { writeSampleApiToDirectory } from "./sampleApi";
 
-export async function initialize(orgName: string): Promise<void> {
-    await writeProjectConfigIfNotExists(orgName);
+export async function initialize({ organization }: { organization: string }): Promise<void> {
+    await writeProjectConfigIfNotExists({ organization });
     await writeApiSubDirectoryIfNotExists();
 }
 
@@ -38,12 +38,12 @@ async function writeWorkspaceDefinitionFile(dir: string): Promise<void> {
     await writeFile(path.join(dir, WORKSPACE_DEFINITION_FILENAME), yaml.dump(BLOG_POST_API_WORKSPACE_DEFINITION));
 }
 
-async function writeProjectConfigIfNotExists(orgName: string): Promise<void> {
+async function writeProjectConfigIfNotExists({ organization }: { organization: string }): Promise<void> {
     const projectConfigExists = await doesPathExist(PROJECT_CONFIG_FILENAME);
     if (!projectConfigExists) {
         const projectConfig: ProjectConfigSchema = {
             workspaces: ["**"],
-            org: orgName,
+            organization,
         };
         await writeFile(PROJECT_CONFIG_FILENAME, JSON.stringify(projectConfig, undefined, 4));
     }

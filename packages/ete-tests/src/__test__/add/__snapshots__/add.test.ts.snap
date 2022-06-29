@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`fern add tests fern add 1`] = `
+exports[`fern add 1`] = `
 "name: Blog Post API
 definition: src
 generators:
