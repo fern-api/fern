@@ -1,6 +1,7 @@
 <!-- markdownlint-disable MD041 MD033 -->
 
 - [Introduction](README.md)
+- [Getting started](getting-started.md)
 - [Defining the data model](defining-the-data-model.md)
 - [Defining a service](defining-a-service.md)
 - [Defining a channel](defining-a-channel.md)
