@@ -85,6 +85,12 @@ export async function runRemoteGenerationForWorkspace({
                                 console.log(
                                     `Published ${chalk.bold(`${publishedPackage.name}@${publishedPackage.version}`)}`
                                 );
+                            } else if (publishedPackage._type === "maven") {
+                                console.log(
+                                    `Published ${chalk.bold(
+                                        `${publishedPackage.group}:${publishedPackage.artifact}:${publishedPackage.version}`
+                                    )}`
+                                );
                             }
                         }
                         if (status.hasFilesToDownload && generator.generate?.absolutePathToLocalOutput != null) {
