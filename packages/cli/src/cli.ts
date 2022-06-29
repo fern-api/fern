@@ -1,7 +1,7 @@
 import { initialize } from "@fern-api/init";
 import { initiateLogin } from "@fern-api/login";
 import inquirer from "inquirer";
-import { Argv, showHelp } from "yargs";
+import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
@@ -12,8 +12,9 @@ void runCli();
 
 async function runCli() {
     const passedInArgs = hideBin(process.argv);
-    const cli = yargs(hideBin(process.argv))
-        .scriptName("fern")
+    const cli = yargs(passedInArgs);
+
+    cli.scriptName("fern")
         .strict()
         .alias("v", "version")
         .demandCommand()
@@ -21,7 +22,7 @@ async function runCli() {
         .showHelpOnFail(false)
         .fail(() => {
             if (passedInArgs.length === 0) {
-                showHelp();
+                cli.showHelp();
                 process.exit(1);
             }
         });
