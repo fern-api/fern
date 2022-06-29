@@ -43,27 +43,29 @@ async function runCli() {
 
 function addInitCommand(cli: Argv) {
     cli.command(
-        "init <organization>",
-        "Initializes an example Fern API",
+        "init",
+        "Initialize a Fern API",
         (yargs) =>
-            yargs.positional("organization", {
+            yargs.option("organization", {
+                alias: "org",
                 type: "string",
-                description: "Organization Name",
+                description: "Organization name",
             }),
         async (argv) => {
-            if (argv.organization != null) {
-                await initialize(argv.organization);
-            } else {
-                const organizationQuestion: InputQuestion<{ organization: string }> = {
-                    type: "input",
-                    name: "organization",
-                    message: "What's the name of your organization?",
-                };
-                const answers = await inquirer.prompt(organizationQuestion);
-                await initialize(answers.organization);
-            }
+            const organization = argv.organization ?? (await askForOrganization());
+            await initialize({ organization });
         }
     );
+}
+
+async function askForOrganization() {
+    const organizationQuestion: InputQuestion<{ organization: string }> = {
+        type: "input",
+        name: "organization",
+        message: "What's the name of your organization?",
+    };
+    const answers = await inquirer.prompt(organizationQuestion);
+    return answers.organization;
 }
 
 function addAddCommand(cli: Argv) {

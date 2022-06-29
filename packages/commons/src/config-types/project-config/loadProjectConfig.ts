@@ -7,7 +7,7 @@ export interface ProjectConfig {
     _absolutePath: string;
 
     workspaces: string[];
-    org: string;
+    organization: string;
 }
 
 export const PROJECT_CONFIG_FILENAME = "fern.config.json";
@@ -22,7 +22,7 @@ export async function loadProjectConfig(): Promise<ProjectConfig> {
     const projectConfig = await ProjectConfigSchema.parseAsync(projectConfigParsed);
     return {
         workspaces: projectConfig.workspaces ?? [],
-        org: projectConfig.org,
+        organization: projectConfig.organization,
         _absolutePath: path.resolve(pathToProjectConfig),
     };
 }
