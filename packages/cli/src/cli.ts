@@ -1,6 +1,6 @@
 import { initialize } from "@fern-api/init";
 import { initiateLogin } from "@fern-api/login";
-import inquirer from "inquirer";
+import inquirer, { InputQuestion } from "inquirer";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
@@ -43,27 +43,24 @@ async function runCli() {
 
 function addInitCommand(cli: Argv) {
     cli.command(
-        "init <orgName>",
+        "init <organization>",
         "Initializes an example Fern API",
         (yargs) =>
-            yargs.positional("orgName", {
+            yargs.positional("organization", {
                 type: "string",
                 description: "Organization Name",
             }),
         async (argv) => {
-            if (argv.orgName != null) {
-                await initialize(argv.orgName);
+            if (argv.organization != null) {
+                await initialize(argv.organization);
             } else {
-                const questions = [
-                    {
-                        type: "input",
-                        name: "org",
-                        message: "What's your org name",
-                    },
-                ];
-                await inquirer.prompt(questions).then(async (answers) => {
-                    await initialize(answers["org"]);
-                });
+                const organizationQuestion: InputQuestion<{ organization: string }> = {
+                    type: "input",
+                    name: "organization",
+                    message: "What's the name of your organization?",
+                };
+                const answers = await inquirer.prompt(organizationQuestion);
+                await initialize(answers.organization);
             }
         }
     );
