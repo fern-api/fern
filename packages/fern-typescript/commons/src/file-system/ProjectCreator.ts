@@ -1,4 +1,5 @@
 import { Project } from "ts-morph";
+import { mergeImportsInFile } from "./mergeImportsInFile";
 
 export class ProjectCreator {
     private project: Project;
@@ -14,6 +15,10 @@ export class ProjectCreator {
     }
 
     public async finalize(): Promise<Project> {
+        for (const file of this.project.getSourceFiles()) {
+            mergeImportsInFile(file);
+            file.formatText();
+        }
         await this.project.save();
         return this.project;
     }
