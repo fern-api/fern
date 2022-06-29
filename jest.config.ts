@@ -4,18 +4,26 @@ import { Config } from "jest";
 import { getAllPackages } from "./scripts/getAllPackages";
 import defaultConfig from "./shared/jest.config.shared";
 
+const ETE_TESTS_PACKAGE_NAME = "@fern-api/ete-tests";
+
 export default async (): Promise<Config> => {
     const packages = await getAllPackages({
         // in PRs, only run tests on the changed packages
         since: isBranchInCi(),
     });
 
+    // force include ete tests
+    if (!packages.some((p) => p.name === ETE_TESTS_PACKAGE_NAME)) {
+        const allPackages = await getAllPackages();
+        const eteTestsPacakge = allPackages.find((p) => p.name === ETE_TESTS_PACKAGE_NAME);
+        if (eteTestsPacakge == null) {
+            throw new Error(`Could not find package ${ETE_TESTS_PACKAGE_NAME}`);
+        }
+        packages.push(eteTestsPacakge);
+    }
+
     return {
         ...defaultConfig,
-        // if there are no packages, then jest will run all tests by default.
-        // so in that case, change the test match to a dummy path that doesn't
-        // match anything.
-        testMatch: packages.length > 0 ? defaultConfig.testMatch : ["__path_that_does_not_exist"],
         projects: packages.map((p) => ({
             ...defaultConfig,
             displayName: p.name,

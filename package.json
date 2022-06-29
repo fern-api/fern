@@ -17,7 +17,7 @@
     "compile:cjs": "yarn compile:prepare && yarn workspace @fern-api/compile-root run compile:cjs",
     "compile:esm": "yarn compile:prepare && yarn workspace @fern-api/compile-root run compile:esm",
     "compile:prepare": "ts-node scripts/checkRootPackage.ts --fix",
-    "test": "yarn compile && jest --passWithNoTests",
+    "test": "yarn compile && yarn workspace @fern-api/cli dist && yarn workspace fern-typescript dockerTagLocal && jest --passWithNoTests",
     "lint:eslint": "eslint --max-warnings 0 .",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "lint:monorepo": "mrlint lint",
