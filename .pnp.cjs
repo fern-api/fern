@@ -3345,7 +3345,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/commons", "workspace:packages/commons"],\
             ["@fern-api/compiler", "workspace:packages/compiler/compiler"],\
             ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.4"],\
-            ["@fern-typescript/service-utils", "workspace:packages/fern-typescript/service-utils"],\
             ["@types/jest", "npm:28.1.2"],\
             ["@types/node", "npm:17.0.34"],\
             ["axios", "npm:0.27.2"],\
