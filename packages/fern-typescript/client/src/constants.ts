@@ -37,6 +37,8 @@ export const ClientConstants = {
         NamespaceImports: {
             ENCODERS: "encoders",
         },
+        // TODO this should probably live with the fern service-utils
+        // helpers in fern-typescript commons
         ServiceUtils: {
             ServiceInit: {
                 Properties: {

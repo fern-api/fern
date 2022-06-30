@@ -6715,7 +6715,7 @@ export * from \\"./_service-types\\";
         \\"build\\": \\"esbuild $(find . -name '*.ts') --format=cjs --sourcemap --outdir=. && tsc\\"
     },
     \\"dependencies\\": {
-        \\"@fern-typescript/service-utils\\": \\"0.0.100\\"
+        \\"@fern-typescript/service-utils\\": \\"0.0.114\\"
     },
     \\"devDependencies\\": {
         \\"@types/node\\": \\"17.0.33\\",
@@ -6729,7 +6729,7 @@ export * from \\"./_service-types\\";
   Object {
     "contents": Array [
       Object {
-        "contents": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+        "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import * as model from \\"../model\\";
 
 export interface AdminService {
@@ -6746,7 +6746,7 @@ export interface AdminService {
 export class AdminService implements AdminService {
     private baseUrl: string;
     private fetcher: Fetcher;
-    private token: Token | undefined;
+    private token: MaybeGetter<Token | undefined>;
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
@@ -6967,7 +6967,7 @@ export class AdminService implements AdminService {
         "type": "file",
       },
       Object {
-        "contents": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+        "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import * as model from \\"../model\\";
 
 export interface ExecutionSesssionManagementService {
@@ -6983,7 +6983,7 @@ export interface ExecutionSesssionManagementService {
 export class ExecutionSesssionManagementService implements ExecutionSesssionManagementService {
     private baseUrl: string;
     private fetcher: Fetcher;
-    private token: Token | undefined;
+    private token: MaybeGetter<Token | undefined>;
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
@@ -7090,7 +7090,7 @@ export class ExecutionSesssionManagementService implements ExecutionSesssionMana
         "type": "file",
       },
       Object {
-        "contents": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+        "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import * as model from \\"../model\\";
 
 export interface HomepageProblemService {
@@ -7101,7 +7101,7 @@ export interface HomepageProblemService {
 export class HomepageProblemService implements HomepageProblemService {
     private baseUrl: string;
     private fetcher: Fetcher;
-    private token: Token | undefined;
+    private token: MaybeGetter<Token | undefined>;
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
@@ -7164,7 +7164,7 @@ export class HomepageProblemService implements HomepageProblemService {
         "type": "file",
       },
       Object {
-        "contents": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+        "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import * as model from \\"../model\\";
 
 export interface MigrationInfoService {
@@ -7174,7 +7174,7 @@ export interface MigrationInfoService {
 export class MigrationInfoService implements MigrationInfoService {
     private baseUrl: string;
     private fetcher: Fetcher;
-    private token: Token | undefined;
+    private token: MaybeGetter<Token | undefined>;
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
@@ -7211,7 +7211,7 @@ export class MigrationInfoService implements MigrationInfoService {
         "type": "file",
       },
       Object {
-        "contents": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+        "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import * as model from \\"../model\\";
 
 export interface PlaylistCrudService {
@@ -7225,7 +7225,7 @@ export interface PlaylistCrudService {
 export class PlaylistCrudService implements PlaylistCrudService {
     private baseUrl: string;
     private fetcher: Fetcher;
-    private token: Token | undefined;
+    private token: MaybeGetter<Token | undefined>;
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
@@ -7364,7 +7364,7 @@ export class PlaylistCrudService implements PlaylistCrudService {
         "type": "file",
       },
       Object {
-        "contents": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+        "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import * as model from \\"../model\\";
 
 export interface ProblemCrudService {
@@ -7377,7 +7377,7 @@ export interface ProblemCrudService {
 export class ProblemCrudService implements ProblemCrudService {
     private baseUrl: string;
     private fetcher: Fetcher;
-    private token: Token | undefined;
+    private token: MaybeGetter<Token | undefined>;
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
@@ -7496,7 +7496,7 @@ export class ProblemCrudService implements ProblemCrudService {
         "type": "file",
       },
       Object {
-        "contents": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+        "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import * as model from \\"../model\\";
 
 export interface ProblemInfoService {
@@ -7512,7 +7512,7 @@ export interface ProblemInfoService {
 export class ProblemInfoService implements ProblemInfoService {
     private baseUrl: string;
     private fetcher: Fetcher;
-    private token: Token | undefined;
+    private token: MaybeGetter<Token | undefined>;
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
@@ -7621,7 +7621,7 @@ export class ProblemInfoService implements ProblemInfoService {
         "type": "file",
       },
       Object {
-        "contents": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+        "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import * as model from \\"../model\\";
 
 export interface SubmissionInfoService {
@@ -7639,7 +7639,7 @@ export interface SubmissionInfoService {
 export class SubmissionInfoService implements SubmissionInfoService {
     private baseUrl: string;
     private fetcher: Fetcher;
-    private token: Token | undefined;
+    private token: MaybeGetter<Token | undefined>;
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
@@ -7812,7 +7812,7 @@ export class SubmissionInfoService implements SubmissionInfoService {
         "type": "file",
       },
       Object {
-        "contents": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+        "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import * as model from \\"../model\\";
 
 export interface SysPropCrudService {
@@ -7823,7 +7823,7 @@ export interface SysPropCrudService {
 export class SysPropCrudService implements SysPropCrudService {
     private baseUrl: string;
     private fetcher: Fetcher;
-    private token: Token | undefined;
+    private token: MaybeGetter<Token | undefined>;
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
@@ -7882,7 +7882,7 @@ export class SysPropCrudService implements SysPropCrudService {
         "type": "file",
       },
       Object {
-        "contents": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+        "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import * as model from \\"../model\\";
 
 export interface WorkspaceInfoService {
@@ -7893,7 +7893,7 @@ export interface WorkspaceInfoService {
 export class WorkspaceInfoService implements WorkspaceInfoService {
     private baseUrl: string;
     private fetcher: Fetcher;
-    private token: Token | undefined;
+    private token: MaybeGetter<Token | undefined>;
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
@@ -7972,7 +7972,7 @@ export * from \\"./SysPropCrudService\\";
       Object {
         "contents": Array [
           Object {
-            "contents": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+            "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import * as model from \\"../../model\\";
 
 export interface ProblemCrudServiceV2 {
@@ -7989,7 +7989,7 @@ export interface ProblemCrudServiceV2 {
 export class ProblemCrudServiceV2 implements ProblemCrudServiceV2 {
     private baseUrl: string;
     private fetcher: Fetcher;
-    private token: Token | undefined;
+    private token: MaybeGetter<Token | undefined>;
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
@@ -8216,7 +8216,7 @@ export class ProblemCrudServiceV2 implements ProblemCrudServiceV2 {
             "type": "file",
           },
           Object {
-            "contents": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+            "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import * as model from \\"../../model\\";
 
 export interface ProblemInfoServicV2 {
@@ -8229,7 +8229,7 @@ export interface ProblemInfoServicV2 {
 export class ProblemInfoServicV2 implements ProblemInfoServicV2 {
     private baseUrl: string;
     private fetcher: Fetcher;
-    private token: Token | undefined;
+    private token: MaybeGetter<Token | undefined>;
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;

@@ -1,4 +1,5 @@
-import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
+import { HttpAuth, HttpEndpoint } from "@fern-fern/ir-model/services/http";
+import { DependencyManager, getReferenceToFernServiceUtilsTokenMethod } from "@fern-typescript/commons";
 import { GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/model-context";
 import { SourceFile, ts } from "ts-morph";
 import { ServerConstants } from "../constants";
@@ -9,13 +10,15 @@ export function generateImplCall({
     generatedEndpointTypes,
     modelContext,
     file,
+    dependencyManager,
 }: {
     endpoint: HttpEndpoint;
     generatedEndpointTypes: GeneratedHttpEndpointTypes;
     modelContext: ModelContext;
     file: SourceFile;
+    dependencyManager: DependencyManager;
 }): ts.Expression {
-    const argument = generateImplCallArgument({ endpoint, generatedEndpointTypes, modelContext, file });
+    const args = generateImplCallArguments({ endpoint, generatedEndpointTypes, modelContext, dependencyManager, file });
     return ts.factory.createAwaitExpression(
         ts.factory.createCallExpression(
             ts.factory.createPropertyAccessExpression(
@@ -23,12 +26,74 @@ export function generateImplCall({
                 ts.factory.createIdentifier(endpoint.endpointId)
             ),
             undefined,
-            argument != null ? [argument] : []
+            args
         )
     );
 }
 
-function generateImplCallArgument({
+function generateImplCallArguments({
+    endpoint,
+    generatedEndpointTypes,
+    modelContext,
+    file,
+    dependencyManager,
+}: {
+    endpoint: HttpEndpoint;
+    generatedEndpointTypes: GeneratedHttpEndpointTypes;
+    modelContext: ModelContext;
+    file: SourceFile;
+    dependencyManager: DependencyManager;
+}): ts.Expression[] {
+    return [
+        ...generateImplAuthArguments({ endpoint, dependencyManager, file }),
+        ...generateImplRequestArguments({ endpoint, generatedEndpointTypes, modelContext, file }),
+    ];
+}
+
+function generateImplAuthArguments({
+    endpoint,
+    dependencyManager,
+    file,
+}: {
+    endpoint: HttpEndpoint;
+    dependencyManager: DependencyManager;
+    file: SourceFile;
+}): ts.Expression[] {
+    return HttpAuth._visit<ts.Expression[]>(endpoint.auth, {
+        bearer: () => {
+            return [
+                ts.factory.createCallExpression(
+                    getReferenceToFernServiceUtilsTokenMethod({
+                        util: "fromAuthorizationHeader",
+                        dependencyManager,
+                        referencedIn: file,
+                    }),
+                    undefined,
+                    [
+                        ts.factory.createAsExpression(
+                            ts.factory.createElementAccessExpression(
+                                ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createIdentifier(
+                                        ServerConstants.Middleware.EndpointImplementation.Request.PARAMETER_NAME
+                                    ),
+                                    ts.factory.createIdentifier(ServerConstants.Express.RequestProperties.HEADERS)
+                                ),
+                                ts.factory.createStringLiteral("Authorization")
+                            ),
+                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                        ),
+                    ]
+                ),
+            ];
+        },
+        none: () => [],
+        _unknown: () => {
+            throw new Error("Unknown auth: " + endpoint.auth);
+        },
+    });
+}
+
+function generateImplRequestArguments({
     endpoint,
     generatedEndpointTypes,
     modelContext,
@@ -38,7 +103,7 @@ function generateImplCallArgument({
     generatedEndpointTypes: GeneratedHttpEndpointTypes;
     modelContext: ModelContext;
     file: SourceFile;
-}): ts.Expression | undefined {
+}): ts.Expression[] {
     if (generatedEndpointTypes.request.wrapper != null) {
         const properties: ts.ObjectLiteralElementLike[] = [
             ...endpoint.pathParameters.map((pathParameter) =>
@@ -99,15 +164,17 @@ function generateImplCallArgument({
             );
         }
 
-        return ts.factory.createObjectLiteralExpression(properties, true);
+        return [ts.factory.createObjectLiteralExpression(properties, true)];
     }
 
     if (generatedEndpointTypes.request.body != null) {
-        return ts.factory.createPropertyAccessExpression(
-            ts.factory.createIdentifier(ServerConstants.Middleware.EndpointImplementation.Request.PARAMETER_NAME),
-            ts.factory.createIdentifier(ServerConstants.Express.RequestProperties.BODY)
-        );
+        return [
+            ts.factory.createPropertyAccessExpression(
+                ts.factory.createIdentifier(ServerConstants.Middleware.EndpointImplementation.Request.PARAMETER_NAME),
+                ts.factory.createIdentifier(ServerConstants.Express.RequestProperties.BODY)
+            ),
+        ];
     }
 
-    return undefined;
+    return [];
 }

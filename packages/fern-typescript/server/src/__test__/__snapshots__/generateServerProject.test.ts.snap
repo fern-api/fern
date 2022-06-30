@@ -333,7 +333,7 @@ export * from \\"./_service-types\\";
     \\"dependencies\\": {
         \\"uuid\\": \\"8.3.2\\",
         \\"@types/uuid\\": \\"8.3.4\\",
-        \\"@fern-typescript/service-utils\\": \\"0.0.100\\",
+        \\"@fern-typescript/service-utils\\": \\"0.0.114\\",
         \\"express\\": \\"4.18.1\\",
         \\"@types/express\\": \\"4.17.13\\"
     },
@@ -347,15 +347,15 @@ export * from \\"./_service-types\\";
         \\"typescript\\": \\"4.6.4\\"
     }
 }",
-  "/services/PostsService.ts": "import * as model from \\"../model\\";
-import { MaybePromise } from \\"@fern-typescript/service-utils\\";
+  "/services/PostsService.ts": "import { Token, MaybePromise } from \\"@fern-typescript/service-utils\\";
+import * as model from \\"../model\\";
 import express, { Express } from \\"express\\";
 
 export interface PostsService {
-    createPost(request: model.CreatePostRequest): MaybePromise<model.CreatePostResponse>;
-    getPost(request: model.GetPostRequest): MaybePromise<model.GetPostResponse>;
-    getPostV2(request: model.PostId): MaybePromise<model.GetPostV2Response>;
-    deletePost(request: model.DeletePostRequest): MaybePromise<model.DeletePostResponse>;
+    createPost(token: Token, request: model.CreatePostRequest): MaybePromise<model.CreatePostResponse>;
+    getPost(token: Token, request: model.GetPostRequest): MaybePromise<model.GetPostResponse>;
+    getPostV2(token: Token, request: model.PostId): MaybePromise<model.GetPostV2Response>;
+    deletePost(token: Token, request: model.DeletePostRequest): MaybePromise<model.DeletePostResponse>;
 }
 
 export const PostsService = {
@@ -363,7 +363,7 @@ export const PostsService = {
         const app = express();
         app.use(express.json());
         app.post(\\"/posts/\\", async (request, response) => {
-            const result = await impl.createPost(request.body);
+            const result = await impl.createPost(Token.fromAuthorizationHeader(request.headers[\\"Authorization\\"] as string), request.body);
             if (result.ok) {
                 response.send(result.body);
             }
@@ -372,7 +372,7 @@ export const PostsService = {
             }
         });
         app.get(\\"/posts/:postId\\", async (request, response) => {
-            const result = await impl.getPost({
+            const result = await impl.getPost(Token.fromAuthorizationHeader(request.headers[\\"Authorization\\"] as string), {
                 postId: model.PostId.of(request.params.postId),
                 page: request.query.page != null ? Number(request.query.page) : undefined,
                 otherParam: Number(request.query.otherParam)
@@ -389,7 +389,7 @@ export const PostsService = {
             }
         });
         app.get(\\"/posts/get\\", async (request, response) => {
-            const result = await impl.getPostV2(request.body);
+            const result = await impl.getPostV2(Token.fromAuthorizationHeader(request.headers[\\"Authorization\\"] as string), request.body);
             if (result.ok) {
                 response.send(result.body);
             }
@@ -402,7 +402,7 @@ export const PostsService = {
             }
         });
         app.delete(\\"/posts/:postId\\", async (request, response) => {
-            const result = await impl.deletePost({
+            const result = await impl.deletePost(Token.fromAuthorizationHeader(request.headers[\\"Authorization\\"] as string), {
                 postId: model.PostId.of(request.params.postId)
             });
             if (result.ok) {

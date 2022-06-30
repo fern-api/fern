@@ -271,7 +271,7 @@ export * from \\"./GetResponse\\";
         \\"build\\": \\"esbuild $(find . -name '*.ts') --format=cjs --sourcemap --outdir=. && tsc\\"
     },
     \\"dependencies\\": {
-        \\"@fern-typescript/service-utils\\": \\"0.0.100\\"
+        \\"@fern-typescript/service-utils\\": \\"0.0.114\\"
     },
     \\"devDependencies\\": {
         \\"@types/node\\": \\"17.0.33\\",
@@ -279,7 +279,7 @@ export * from \\"./GetResponse\\";
         \\"typescript\\": \\"4.6.4\\"
     }
 }",
-  "/services/NoErrorsService.ts": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+  "/services/NoErrorsService.ts": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import * as model from \\"../model\\";
 
 export interface NoErrorsService {
@@ -289,7 +289,7 @@ export interface NoErrorsService {
 export class NoErrorsService implements NoErrorsService {
     private baseUrl: string;
     private fetcher: Fetcher;
-    private token: Token | undefined;
+    private token: MaybeGetter<Token | undefined>;
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
@@ -628,7 +628,7 @@ export * from \\"./_service-types\\";
     \\"dependencies\\": {
         \\"uuid\\": \\"8.3.2\\",
         \\"@types/uuid\\": \\"8.3.4\\",
-        \\"@fern-typescript/service-utils\\": \\"0.0.100\\"
+        \\"@fern-typescript/service-utils\\": \\"0.0.114\\"
     },
     \\"devDependencies\\": {
         \\"@types/node\\": \\"17.0.33\\",
@@ -636,7 +636,7 @@ export * from \\"./_service-types\\";
         \\"typescript\\": \\"4.6.4\\"
     }
 }",
-  "/services/PostsService.ts": "import { isResponseOk, defaultFetcher, Service, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+  "/services/PostsService.ts": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import * as model from \\"../model\\";
 
 export interface PostsService {
@@ -648,7 +648,7 @@ export interface PostsService {
 export class PostsService implements PostsService {
     private baseUrl: string;
     private fetcher: Fetcher;
-    private token: Token | undefined;
+    private token: MaybeGetter<Token | undefined>;
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
