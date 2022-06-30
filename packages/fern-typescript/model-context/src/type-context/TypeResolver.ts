@@ -1,5 +1,4 @@
-import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { DeclaredTypeName, Type, TypeReference } from "@fern-fern/ir-model/types";
+import { DeclaredTypeName, IntermediateRepresentation, Type, TypeReference } from "@fern-fern/ir-model";
 import { StringifiedFernFilepath, stringifyFernFilepath } from "../stringifyFernFilepath";
 import { ResolvedType } from "./ResolvedType";
 

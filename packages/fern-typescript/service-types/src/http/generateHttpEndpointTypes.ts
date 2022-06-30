@@ -1,5 +1,4 @@
-import { ServiceName } from "@fern-fern/ir-model/services/commons";
-import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
+import { HttpEndpoint, ServiceName } from "@fern-fern/ir-model/services";
 import { DependencyManager } from "@fern-typescript/commons";
 import { GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/model-context";
 import { generateRequestTypes } from "./generateRequestTypes";

@@ -1997,10 +1997,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/ir-model@npm:0.0.2":
-  version: 0.0.2
-  resolution: "@fern-fern/ir-model@npm:0.0.2"
-  checksum: 45e051da4d731ca7a9b8ea662f50533989d50510e508de77f5f46c96f904af84292e6aceda1f838e2706abd69407b3c07a7e354243c04d6d86a7c9a96cc3442d
+"@fern-fern/ir-model@npm:0.0.13":
+  version: 0.0.13
+  resolution: "@fern-fern/ir-model@npm:0.0.13"
+  checksum: e8a3ac24bc3bed2e6fb16dd3837b2819a3ed4358ded3a2c8ef6e387b65279cbc2a09b63401fca082f1dc807b048a76f0a4df2b4bd9a16e8786b8481390ef64de
   languageName: node
   linkType: hard
 
@@ -5600,12 +5600,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fern-api@npm:0.0.111":
-  version: 0.0.111
-  resolution: "fern-api@npm:0.0.111"
+"fern-api@npm:0.0.115":
+  version: 0.0.115
+  resolution: "fern-api@npm:0.0.115"
   bin:
     fern: bundle.js
-  checksum: f0446e7a9814683253f41524024c00dc08daf6457b85e578832140f5003259742762260e47a8a93cccd58f16ac2be56b64467fbb8d9d5e31fa2258d43c401dc8
+  checksum: 7e6fdb64630ae37c5f4f77d33ce51814de04a5e6ec3fced086ff300dc42e5a0ae8c0a7029f7fe1fd375cedfd70c4d4f6beca70e74300eff16ecf6bccb480e5f1
   languageName: node
   linkType: hard
 
@@ -5669,7 +5669,7 @@ __metadata:
     eslint: ^8.17.0
     eslint-plugin-jest: ^26.5.3
     execa: ^5.1.1
-    fern-api: 0.0.111
+    fern-api: 0.0.115
     husky: ^7.0.4
     immer: ^9.0.15
     is-ci: ^3.0.1

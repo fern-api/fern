@@ -1,4 +1,4 @@
-import { ContainerType, TypeReference } from "@fern-fern/ir-model/types";
+import { ContainerType, TypeReference } from "@fern-fern/ir-model";
 import { parseInlineType } from "../utils/parseInlineType";
 
 describe("parse inline types", () => {

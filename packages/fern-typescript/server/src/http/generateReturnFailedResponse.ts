@@ -1,4 +1,4 @@
-import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
+import { HttpEndpoint } from "@fern-fern/ir-model/services";
 import { visitorUtils } from "@fern-typescript/commons";
 import { GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/model-context";
 import { ServiceTypesConstants } from "@fern-typescript/service-types";

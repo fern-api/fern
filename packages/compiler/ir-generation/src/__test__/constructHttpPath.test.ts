@@ -1,4 +1,4 @@
-import { HttpPath } from "@fern-fern/ir-model/services/http";
+import { HttpPath } from "@fern-fern/ir-model/services";
 import { constructHttpPath } from "../converters/services/constructHttpPath";
 
 describe("constructHttpPath", () => {

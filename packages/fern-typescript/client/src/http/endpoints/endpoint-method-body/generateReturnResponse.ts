@@ -1,4 +1,4 @@
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services";
 import { DependencyManager, getReferenceToFernServiceUtilsValue } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import { GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/model-context";

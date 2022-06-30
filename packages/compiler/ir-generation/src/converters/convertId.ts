@@ -1,5 +1,5 @@
 import { RawSchemas } from "@fern-api/syntax-analysis";
-import { FernFilepath, PrimitiveType, Type, TypeDeclaration, TypeReference } from "@fern-fern/ir-model/types";
+import { FernFilepath, PrimitiveType, Type, TypeDeclaration, TypeReference } from "@fern-fern/ir-model";
 import { getDocs } from "../utils/getDocs";
 import { createTypeReferenceParser } from "../utils/parseInlineType";
 

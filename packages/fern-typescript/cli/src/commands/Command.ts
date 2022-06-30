@@ -1,4 +1,4 @@
-import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { IntermediateRepresentation } from "@fern-fern/ir-model";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import { Volume } from "memfs/lib/volume";
 
