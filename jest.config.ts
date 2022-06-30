@@ -7,20 +7,14 @@ import defaultConfig from "./shared/jest.config.shared";
 const ETE_TESTS_PACKAGE_NAME = "@fern-api/ete-tests";
 
 export default async (): Promise<Config> => {
-    const packages = await getAllPackages({
-        // in PRs, only run tests on the changed packages
-        since: isBranchInCi(),
-    });
-
-    // force include ete tests
-    if (!packages.some((p) => p.name === ETE_TESTS_PACKAGE_NAME)) {
-        const allPackages = await getAllPackages();
-        const eteTestsPacakge = allPackages.find((p) => p.name === ETE_TESTS_PACKAGE_NAME);
-        if (eteTestsPacakge == null) {
-            throw new Error(`Could not find package ${ETE_TESTS_PACKAGE_NAME}`);
-        }
-        packages.push(eteTestsPacakge);
-    }
+    const packages = (
+        await getAllPackages({
+            // in PRs, only run tests on the changed packages
+            since: isBranchInCi(),
+        })
+    )
+        // ETE tests are run separately
+        .filter((p) => p.name !== ETE_TESTS_PACKAGE_NAME);
 
     return {
         ...defaultConfig,
