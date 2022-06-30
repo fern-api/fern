@@ -347,12 +347,12 @@ export * from \\"./_service-types\\";
         \\"typescript\\": \\"4.6.4\\"
     }
 }",
-  "/services/PostsService.ts": "import { Token, MaybePromise } from \\"@fern-typescript/service-utils\\";
-import * as model from \\"../model\\";
+  "/services/PostsService.ts": "import * as model from \\"../model\\";
+import { Token, MaybePromise } from \\"@fern-typescript/service-utils\\";
 import express, { Express } from \\"express\\";
 
 export interface PostsService {
-    createPost(token: Token, request: model.CreatePostRequest): MaybePromise<model.CreatePostResponse>;
+    createPost(request: model.CreatePostRequest): MaybePromise<model.CreatePostResponse>;
     getPost(token: Token, request: model.GetPostRequest): MaybePromise<model.GetPostResponse>;
     getPostV2(token: Token, request: model.PostId): MaybePromise<model.GetPostV2Response>;
     deletePost(token: Token, request: model.DeletePostRequest): MaybePromise<model.DeletePostResponse>;
@@ -363,7 +363,7 @@ export const PostsService = {
         const app = express();
         app.use(express.json());
         app.post(\\"/posts/\\", async (request, response) => {
-            const result = await impl.createPost(Token.fromAuthorizationHeader(request.headers[\\"Authorization\\"] as string), request.body);
+            const result = await impl.createPost(request.body);
             if (result.ok) {
                 response.send(result.body);
             }
