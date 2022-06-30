@@ -2,7 +2,6 @@ import { WorkspaceDefinition } from "@fern-api/commons";
 import { Compiler } from "@fern-api/compiler";
 import { model, services } from "@fern-fern/fiddle-coordinator-api-client";
 import { GetJobStatusResponse } from "@fern-fern/fiddle-coordinator-api-client/model/remoteGen";
-import { defaultFetcher } from "@fern-typescript/service-utils";
 import axios, { AxiosError } from "axios";
 import chalk from "chalk";
 import FormData from "form-data";
@@ -10,7 +9,6 @@ import { createWriteStream } from "fs";
 
 const REMOTE_GENERATION_SERVICE = new services.remoteGen.RemoteGenerationService({
     origin: "https://fiddle-coordinator-dev.buildwithfern.com/api",
-    fetcher: defaultFetcher,
 });
 
 export async function runRemoteGenerationForWorkspace({
