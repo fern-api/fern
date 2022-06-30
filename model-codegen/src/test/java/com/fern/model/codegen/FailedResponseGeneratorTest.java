@@ -26,6 +26,7 @@ import com.fern.types.types.PrimitiveType;
 import com.fern.types.types.Type;
 import com.fern.types.types.TypeReference;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -44,12 +45,12 @@ public class FailedResponseGeneratorTest {
     @Test
     public void test_basic() {
         when(httpService.name()).thenReturn(ServiceName.builder()
-                .fernFilepath(FernFilepath.valueOf("fern"))
+                .fernFilepath(FernFilepath.valueOf(List.of("fern")))
                 .name("UntitiledService")
                 .build());
         when(httpEndpoint.endpointId()).thenReturn(EndpointId.valueOf("getPlaylist"));
         ErrorName noViewPermissionsErrorNamedType = ErrorName.builder()
-                .fernFilepath(FernFilepath.valueOf("fern"))
+                .fernFilepath(FernFilepath.valueOf(List.of("fern")))
                 .name("NoViewPermissionsError")
                 .build();
         ErrorDeclaration noViewPermissionsErrorDef = ErrorDeclaration.builder()

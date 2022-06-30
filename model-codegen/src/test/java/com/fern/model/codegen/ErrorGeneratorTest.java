@@ -12,6 +12,7 @@ import com.fern.types.types.PrimitiveType;
 import com.fern.types.types.Type;
 import com.fern.types.types.TypeReference;
 import java.util.Collections;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class ErrorGeneratorTest {
@@ -21,7 +22,7 @@ public class ErrorGeneratorTest {
         ErrorGenerator errorGenerator = new ErrorGenerator(
                 ErrorDeclaration.builder()
                         .name(ErrorName.builder()
-                                .fernFilepath(FernFilepath.valueOf("/fern"))
+                                .fernFilepath(FernFilepath.valueOf(List.of("fern")))
                                 .name("NotFoundError")
                                 .build())
                         .type(Type._object(ObjectTypeDeclaration.builder()

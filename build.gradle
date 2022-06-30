@@ -52,6 +52,9 @@ allprojects {
                 password = "$System.env.JFROG_API_KEY"
             }
         }
+        maven {
+            url "https://maven-dev.buildwithfern.com"
+        }
     }
 
     dependencies {

@@ -16,6 +16,7 @@ import com.fern.types.types.Type;
 import com.fern.types.types.TypeDeclaration;
 import com.fern.types.types.TypeReference;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
@@ -40,7 +41,7 @@ public class ObjectGeneratorTest {
                 .build();
         ObjectGenerator objectGenerator = new ObjectGenerator(
                 DeclaredTypeName.builder()
-                        .fernFilepath(FernFilepath.valueOf("com/fern"))
+                        .fernFilepath(FernFilepath.valueOf(List.of("com", "fern")))
                         .name("WithDocs")
                         .build(),
                 PackageType.TYPES,
@@ -63,7 +64,7 @@ public class ObjectGeneratorTest {
                 .build();
         TypeDeclaration withDocsTypeDefinition = TypeDeclaration.builder()
                 .name(DeclaredTypeName.builder()
-                        .fernFilepath(FernFilepath.valueOf("com/fern"))
+                        .fernFilepath(FernFilepath.valueOf(List.of("com", "fern")))
                         .name("WithDocs")
                         .build())
                 .shape(Type._object(withDocsObjectTypeDefinition))
@@ -93,7 +94,7 @@ public class ObjectGeneratorTest {
                 .build();
         TypeDeclaration typeDefinition = TypeDeclaration.builder()
                 .name(DeclaredTypeName.builder()
-                        .fernFilepath(FernFilepath.valueOf("com/fern"))
+                        .fernFilepath(FernFilepath.valueOf(List.of("com", "fern")))
                         .name("lowercase")
                         .build())
                 .shape(Type._object(objectTypeDefinition))
@@ -124,7 +125,7 @@ public class ObjectGeneratorTest {
                 .build();
         TypeDeclaration typeDefinition = TypeDeclaration.builder()
                 .name(DeclaredTypeName.builder()
-                        .fernFilepath(FernFilepath.valueOf("com/fern"))
+                        .fernFilepath(FernFilepath.valueOf(List.of("com", "fern")))
                         .name("Test")
                         .build())
                 .shape(Type._object(objectTypeDefinition))

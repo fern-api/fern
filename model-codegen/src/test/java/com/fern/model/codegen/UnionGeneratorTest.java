@@ -15,6 +15,7 @@ import com.fern.types.types.TypeDeclaration;
 import com.fern.types.types.TypeReference;
 import com.fern.types.types.UnionTypeDeclaration;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
@@ -48,14 +49,14 @@ public class UnionGeneratorTest {
                         .discriminantValue("mapValue")
                         .valueType(TypeReference.container(ContainerType.list(TypeReference.named(
                                 DeclaredTypeName.builder()
-                                        .fernFilepath(FernFilepath.valueOf("com/birch/trace/commons"))
+                                        .fernFilepath(FernFilepath.valueOf(List.of("com", "birch", "trace", "commons")))
                                         .name("VariableValue")
                                         .build()))))
                         .build())
                 .build();
         TypeDeclaration variableValueTypeDefinition = TypeDeclaration.builder()
                 .name(DeclaredTypeName.builder()
-                        .fernFilepath(FernFilepath.valueOf("com/birch/trace/commons"))
+                        .fernFilepath(FernFilepath.valueOf(List.of("com", "birch", "trace", "commons")))
                         .name("VariableValue")
                         .build())
                 .shape(Type.union(unionTypeDefinition))
@@ -92,7 +93,7 @@ public class UnionGeneratorTest {
                 .build();
         TypeDeclaration variableValueTypeDefinition = TypeDeclaration.builder()
                 .name(DeclaredTypeName.builder()
-                        .fernFilepath(FernFilepath.valueOf("com/birch/trace/commons"))
+                        .fernFilepath(FernFilepath.valueOf(List.of("com", "birch", "trace", "commons")))
                         .name("VariableValue")
                         .build())
                 .shape(Type.union(unionTypeDefinition))

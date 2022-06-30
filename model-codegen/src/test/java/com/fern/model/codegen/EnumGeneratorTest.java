@@ -10,6 +10,7 @@ import com.fern.types.types.EnumValue;
 import com.fern.types.types.FernFilepath;
 import com.fern.types.types.Type;
 import com.fern.types.types.TypeDeclaration;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class EnumGeneratorTest {
@@ -23,7 +24,7 @@ public class EnumGeneratorTest {
                 .build();
         TypeDeclaration migrationStatusTypeDef = TypeDeclaration.builder()
                 .name(DeclaredTypeName.builder()
-                        .fernFilepath(FernFilepath.valueOf("com/trace/migration"))
+                        .fernFilepath(FernFilepath.valueOf(List.of("com", "trace", "migration")))
                         .name("MigrationStatus")
                         .build())
                 .shape(Type._enum(migrationStatusEnumDef))

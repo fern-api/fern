@@ -12,6 +12,7 @@ import com.fern.types.types.PrimitiveType;
 import com.fern.types.types.Type;
 import com.fern.types.types.TypeDeclaration;
 import com.fern.types.types.TypeReference;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class InterfaceGeneratorTest {
@@ -27,7 +28,7 @@ public class InterfaceGeneratorTest {
                 .build();
         TypeDeclaration withDocsTypeDefinition = TypeDeclaration.builder()
                 .name(DeclaredTypeName.builder()
-                        .fernFilepath(FernFilepath.valueOf("com/fern"))
+                        .fernFilepath(FernFilepath.valueOf(List.of("com", "fern")))
                         .name("WithDocs")
                         .build())
                 .shape(Type._object(objectTypeDeclaration))

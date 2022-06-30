@@ -32,6 +32,7 @@ import com.fern.types.types.PrimitiveType;
 import com.fern.types.types.Type;
 import com.fern.types.types.TypeReference;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
@@ -47,7 +48,7 @@ public final class HttpServiceServerGeneratorTest {
     public void test_basic() {
         HttpService testHttpService = HttpService.builder()
                 .name(ServiceName.builder()
-                        .fernFilepath(FernFilepath.valueOf("fern"))
+                        .fernFilepath(FernFilepath.valueOf(List.of("fern")))
                         .name("PersonCrudService")
                         .build())
                 .basePath("/person")
@@ -70,7 +71,7 @@ public final class HttpServiceServerGeneratorTest {
                                 .ok(HttpOkResponse.builder()
                                         .type(Type.alias(AliasTypeDeclaration.builder()
                                                 .aliasOf(TypeReference.named(DeclaredTypeName.builder()
-                                                        .fernFilepath(FernFilepath.valueOf("fern"))
+                                                        .fernFilepath(FernFilepath.valueOf(List.of("fern")))
                                                         .name("Person")
                                                         .build()))
                                                 .build()))
@@ -98,7 +99,7 @@ public final class HttpServiceServerGeneratorTest {
                                 .encoding(Encoding.json())
                                 .type(Type.alias(AliasTypeDeclaration.builder()
                                         .aliasOf(TypeReference.named(DeclaredTypeName.builder()
-                                                .fernFilepath(FernFilepath.valueOf("fern"))
+                                                .fernFilepath(FernFilepath.valueOf(List.of("fern")))
                                                 .name("CreatePersonRequest")
                                                 .build()))
                                         .build()))
@@ -139,7 +140,7 @@ public final class HttpServiceServerGeneratorTest {
     public void test_withErrors() {
         ErrorDeclaration personIdNotFound = ErrorDeclaration.builder()
                 .name(ErrorName.builder()
-                        .fernFilepath(FernFilepath.valueOf("fern"))
+                        .fernFilepath(FernFilepath.valueOf(List.of("fern")))
                         .name("PersonIdNotFound")
                         .build())
                 .type(Type._object(ObjectTypeDeclaration.builder()
@@ -154,7 +155,7 @@ public final class HttpServiceServerGeneratorTest {
                 .build();
         HttpService testHttpService = HttpService.builder()
                 .name(ServiceName.builder()
-                        .fernFilepath(FernFilepath.valueOf("fern"))
+                        .fernFilepath(FernFilepath.valueOf(List.of("fern")))
                         .name("PersonCrudService")
                         .build())
                 .basePath("/person")
@@ -177,7 +178,7 @@ public final class HttpServiceServerGeneratorTest {
                                 .ok(HttpOkResponse.builder()
                                         .type(Type.alias(AliasTypeDeclaration.builder()
                                                 .aliasOf(TypeReference.named(DeclaredTypeName.builder()
-                                                        .fernFilepath(FernFilepath.valueOf("fern"))
+                                                        .fernFilepath(FernFilepath.valueOf(List.of("fern")))
                                                         .name("Person")
                                                         .build()))
                                                 .build()))
@@ -209,7 +210,7 @@ public final class HttpServiceServerGeneratorTest {
                                 .encoding(Encoding.json())
                                 .type(Type.alias(AliasTypeDeclaration.builder()
                                         .aliasOf(TypeReference.named(DeclaredTypeName.builder()
-                                                .fernFilepath(FernFilepath.valueOf("fern"))
+                                                .fernFilepath(FernFilepath.valueOf(List.of("fern")))
                                                 .name("CreatePersonRequest")
                                                 .build()))
                                         .build()))
