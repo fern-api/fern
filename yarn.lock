@@ -1952,7 +1952,6 @@ __metadata:
     "@fern-api/commons": "workspace:*"
     "@fern-api/compiler": "workspace:*"
     "@fern-fern/fiddle-coordinator-api-client": ^0.0.4
-    "@fern-typescript/service-utils": "workspace:*"
     "@types/jest": ^28.1.2
     "@types/node": ^17.0.33
     axios: ^0.27.2
