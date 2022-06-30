@@ -2,14 +2,14 @@ import { SourceFile, ts } from "ts-morph";
 import { DependencyManager } from "./DependencyManager";
 
 const PACKAGE_NAME = "@fern-typescript/service-utils";
-const VERSION = "0.0.100";
+const VERSION = "0.0.114";
 
 type FernServiceUtilsExport =
     | ExportedFernServiceUtilsType
     | ExportedFernServiceUtilsValue
     | typeof SERVICE_NAMESPACE_NAME;
 
-export type ExportedFernServiceUtilsType = "Fetcher" | "Token" | "MaybePromise";
+export type ExportedFernServiceUtilsType = "Fetcher" | "Token" | "MaybePromise" | "MaybeGetter";
 
 export function getReferenceToFernServiceUtilsType({
     type,
@@ -59,6 +59,25 @@ export function getReferenceToFernServiceUtilsServiceNamespaceType({
             ts.factory.createIdentifier(SERVICE_NAMESPACE_NAME),
             ts.factory.createIdentifier(type)
         )
+    );
+}
+
+const TOKEN_UTILS_NAME = "Token";
+type TokenUtil = "of" | "fromAuthorizationHeader";
+
+export function getReferenceToFernServiceUtilsTokenMethod({
+    util,
+    dependencyManager,
+    referencedIn,
+}: {
+    util: TokenUtil;
+    dependencyManager: DependencyManager;
+    referencedIn: SourceFile;
+}): ts.PropertyAccessExpression {
+    addFernServiceUtilsImport({ imports: [TOKEN_UTILS_NAME], file: referencedIn, dependencyManager });
+    return ts.factory.createPropertyAccessExpression(
+        ts.factory.createIdentifier(TOKEN_UTILS_NAME),
+        ts.factory.createIdentifier(util)
     );
 }
 

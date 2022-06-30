@@ -39,6 +39,7 @@ services:
         createPost:
           method: POST
           path: /
+          auth-override: none
           request:
             type:
               properties:
