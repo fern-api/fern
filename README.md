@@ -3,6 +3,7 @@
 Fern is a framework for building APIs. You can think of it as an alternative to OpenAPI (f.k.a Swagger).
 
 [View our docs ➚](https://docs.buildwithfern.com/#/)
+
 [Join the discord ➚](https://discord.com/invite/JkkXumPzcG)
 
 ### Goals
