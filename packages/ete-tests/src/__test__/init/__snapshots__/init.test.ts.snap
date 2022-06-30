@@ -10,7 +10,7 @@ exports[`fern init 1`] = `
 `;
 
 exports[`fern init 2`] = `
-"name: Blog Post API
+"name: api
 definition: src
 generators: []
 "

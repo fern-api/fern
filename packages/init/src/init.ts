@@ -28,14 +28,14 @@ async function writeApiSubDirectoryIfNotExists(): Promise<void> {
     }
 }
 
-const BLOG_POST_API_WORKSPACE_DEFINITION: WorkspaceDefinitionSchema = {
-    name: "Blog Post API",
+const API_WORKSPACE_DEFINITION: WorkspaceDefinitionSchema = {
+    name: "api",
     definition: SRC_DIRECTORY,
     generators: [],
 };
 
 async function writeWorkspaceDefinitionFile(dir: string): Promise<void> {
-    await writeFile(path.join(dir, WORKSPACE_DEFINITION_FILENAME), yaml.dump(BLOG_POST_API_WORKSPACE_DEFINITION));
+    await writeFile(path.join(dir, WORKSPACE_DEFINITION_FILENAME), yaml.dump(API_WORKSPACE_DEFINITION));
 }
 
 async function writeProjectConfigIfNotExists({ organization }: { organization: string }): Promise<void> {
