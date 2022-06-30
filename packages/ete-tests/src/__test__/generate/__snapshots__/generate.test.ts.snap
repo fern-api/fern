@@ -63,7 +63,10 @@ export interface Post {
         \\"declaration\\": true,
         \\"sourceMap\\": true,
         \\"emitDeclarationOnly\\": true,
-        \\"esModuleInterop\\": true
+        \\"esModuleInterop\\": true,
+        \\"noUncheckedIndexedAccess\\": true,
+        \\"noUnusedLocals\\": true,
+        \\"noUnusedParameters\\": true
     }
 }",
     "name": "tsconfig.json",
