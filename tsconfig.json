@@ -1,20 +1,13 @@
 {
   "compilerOptions": {
     "module": "CommonJS",
-    "outDir": "./lib",
-    "rootDir": "src",
     "target": "esnext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "jsx": "preserve",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "noImplicitAny": false,
-    "removeComments": true,
-    "noLib": false,
     "skipLibCheck": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "sourceMap": true,
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
@@ -22,9 +15,12 @@
     "strict": true,
     "isolatedModules": true,
     "baseUrl": ".",
+    "declaration": true,
     "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+    "outDir": "lib",
+    "rootDir": "src"
   },
   "include": ["./src"],
   "references": []

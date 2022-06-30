@@ -20,18 +20,18 @@
     "dockerTagVersion": "./docker/create_docker.sh"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.10",
+    "@babel/core": "^7.18.5",
     "@babel/eslint-parser": "^7.17.0",
-    "@babel/preset-env": "^7.17.10",
-    "@babel/preset-typescript": "^7.16.7",
+    "@babel/preset-env": "^7.18.2",
+    "@babel/preset-typescript": "^7.17.12",
+    "@fern-api/cli": "^0.0.117",
     "@types/jest": "^27.5.0",
     "@types/postman-collection": "^3.5.7",
     "@types/uuid": "^8.3.4",
     "depcheck": "^1.4.3",
     "eslint": "^8.15.0",
-    "fern-api": "^0.0.90",
     "husky": "^8.0.1",
-    "jest": "^28.1.0",
+    "jest": "^28.1.1",
     "lint-staged": "^12.4.1",
     "prettier": "^2.6.2",
     "simple-progress-webpack-plugin": "^2.0.0",
@@ -40,8 +40,8 @@
     "webpack-cli": "^4.9.2"
   },
   "dependencies": {
-    "@fern-api/api": "^0.0.90",
-    "@fern-api/compiler": "^0.0.90",
+    "@fern-api/compiler": "^0.0.117",
+    "@fern-fern/ir-model": "0.0.13",
     "postman-collection": "^4.1.2",
     "uuid": "^8.3.2"
   },

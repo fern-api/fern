@@ -1,5 +1,5 @@
+import { parseFernInput } from "@fern-api/cli";
 import { compile } from "@fern-api/compiler";
-import { parseFernInput } from "fern-api";
 import path from "path";
 import { convertToPostmanCollection } from "../convertToPostmanCollection";
 

@@ -1,4 +1,4 @@
-import { ContainerType, PrimitiveType, Type, TypeDeclaration, TypeReference } from "@fern-api/api";
+import { ContainerType, PrimitiveType, Type, TypeDeclaration, TypeReference } from "@fern-fern/ir-model";
 import uuid from "uuid";
 
 export function getMockBodyFromType(type: Type, allTypes: TypeDeclaration[]): unknown {

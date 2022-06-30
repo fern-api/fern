@@ -1,4 +1,5 @@
-import { GeneratorConfig, IntermediateRepresentation } from "@fern-api/api";
+import { IntermediateRepresentation } from "@fern-fern/ir-model";
+import { GeneratorConfig } from "@fern-fern/ir-model/generators";
 import { readFile, writeFile } from "fs/promises";
 import path from "path";
 import { Collection } from "postman-collection";

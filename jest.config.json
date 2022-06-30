@@ -1,4 +1,6 @@
 {
-  "testMatch": ["**/__test__/*.test.ts{,x}"],
-  "transformIgnorePatterns": ["/node_modules/(?!lodash-es|url-join)"]
+  "testMatch": ["**/__test__/**/*.test.ts{,x}"],
+  "transform": {
+    ".*\\.ts$": ["babel-jest", { "rootMode": "upward" }]
+  }
 }

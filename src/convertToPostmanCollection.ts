@@ -1,12 +1,5 @@
-import {
-    HttpAuth,
-    HttpEndpoint,
-    HttpMethod,
-    HttpPath,
-    HttpService,
-    IntermediateRepresentation,
-    TypeDeclaration,
-} from "@fern-api/api";
+import { IntermediateRepresentation, TypeDeclaration } from "@fern-fern/ir-model";
+import { HttpAuth, HttpEndpoint, HttpMethod, HttpPath, HttpService } from "@fern-fern/ir-model/services";
 import {
     CollectionDefinition,
     HeaderDefinition,
