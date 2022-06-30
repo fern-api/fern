@@ -61,8 +61,5 @@
     "ts-node": "^10.8.0",
     "typescript": "^4.6.4"
   },
-  "resolutions": {
-    "@fern-fern/ir-model": "0.0.13"
-  },
   "packageManager": "yarn@3.2.1"
 }
