@@ -40,6 +40,25 @@ jobs:
       - run:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff
+  ete-tests:
+    machine:
+      image: ubuntu-2004:current
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn-berry
+      - run:
+          name: Bundle fern-api
+          command: yarn workspace @fern-api/cli dist
+      - run:
+          name: Build fern-typescript docker
+          command: yarn workspace fern-typescript dockerTagLocal
+      - run:
+          name: Run ETE tests
+          command: yarn workspace @fern-api/ete-tests test --ci
+      - run:
+          name: Ensure no changes to git-tracked files
+          command: git --no-pager diff
 
   publish:
     machine:
@@ -87,6 +106,11 @@ workflows:
           filters:
             tags:
               only: /.*/
+
+      - ete-tests:
+          filters:
+            tags:
+              only: /.*/
           context:
             - auth0-dev
 
@@ -99,6 +123,7 @@ workflows:
           requires:
             - lint
             - compile-and-test
+            - ete-tests
           context:
             - npm
             - docker-hub
