@@ -25,8 +25,8 @@ jobs:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff
   compile-and-test:
-    machine:
-      image: ubuntu-2004:current
+    docker:
+      - image: cimg/node:current
     steps:
       - checkout
       - node/install-packages:
