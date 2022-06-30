@@ -116,6 +116,7 @@ public final class ClientGeneratorCli {
         resultBuilder.addAllModelFiles(modelGeneratorResult.endpointModelFiles());
         resultBuilder.addModelFiles(generatorContext.getStagedImmutablesFile());
         resultBuilder.addModelFiles(generatorContext.getPackagePrivateImmutablesFile());
+        resultBuilder.addModelFiles(generatorContext.getAliasImmutablesStyle());
         resultBuilder.addModelFiles(generatorContext.getAuthHeaderFile());
         resultBuilder.addModelFiles(generatorContext.getApiExceptionFile());
         resultBuilder.addModelFiles(generatorContext.getHttpApiExceptionFile());
