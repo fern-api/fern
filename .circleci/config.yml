@@ -48,14 +48,8 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
-          name: Bundle fern-api
-          command: yarn workspace @fern-api/cli dist
-      - run:
-          name: Build fern-typescript docker
-          command: yarn workspace fern-typescript dockerTagLocal
-      - run:
           name: Run ETE tests
-          command: yarn workspace @fern-api/ete-tests test --ci
+          command: yarn test:ete
       - run:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff

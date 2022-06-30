@@ -5,18 +5,18 @@ exports[`fern add 1`] = `
 definition: src
 generators:
   - name: fernapi/fern-java
-    version: 0.0.32
+    version: 0.0.45
     generate: true
     config:
       packagePrefix: com
       mode: client_and_server
   - name: fernapi/fern-typescript
-    version: 0.0.101
+    version: 0.0.117
     generate: true
     config:
       mode: server
   - name: fernapi/fern-postman
-    version: 0.0.6
+    version: 0.0.8
     generate:
       enabled: true
       output: ./generated-postman.json
