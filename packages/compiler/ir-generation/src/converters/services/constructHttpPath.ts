@@ -1,4 +1,4 @@
-import { HttpPath, HttpPathPart } from "@fern-fern/ir-model/services/http";
+import { HttpPath, HttpPathPart } from "@fern-fern/ir-model/services";
 
 export function constructHttpPath(rawPath: string): HttpPath {
     const rawPathGenerator = createStringGenerator(rawPath);

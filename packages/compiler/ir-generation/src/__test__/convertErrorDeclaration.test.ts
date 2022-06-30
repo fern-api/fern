@@ -1,5 +1,4 @@
-import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
-import { Type, TypeReference } from "@fern-fern/ir-model/types";
+import { ErrorDeclaration, Type, TypeReference } from "@fern-fern/ir-model";
 import { convertErrorDeclaration } from "../converters/convertErrorDeclaration";
 
 describe("convertErrorDeclaration", () => {

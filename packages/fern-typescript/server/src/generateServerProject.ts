@@ -1,4 +1,4 @@
-import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { IntermediateRepresentation } from "@fern-fern/ir-model";
 import {
     createDirectoryAndExportFromModule,
     DependencyManager,

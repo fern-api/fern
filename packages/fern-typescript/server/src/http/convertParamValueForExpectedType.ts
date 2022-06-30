@@ -1,4 +1,4 @@
-import { ContainerType, PrimitiveType, Type, TypeReference } from "@fern-fern/ir-model/types";
+import { ContainerType, PrimitiveType, Type, TypeReference } from "@fern-fern/ir-model";
 import { ModelContext } from "@fern-typescript/model-context";
 import { ALIAS_UTILS_OF_KEY, shouldUseBrandedTypeForAlias } from "@fern-typescript/types";
 import { SourceFile, ts } from "ts-morph";

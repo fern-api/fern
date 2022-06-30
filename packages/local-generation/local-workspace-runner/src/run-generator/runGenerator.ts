@@ -1,5 +1,5 @@
 import { runDocker } from "@fern-api/docker-utils";
-import { GeneratorHelpers } from "@fern-fern/ir-model/generators/config";
+import { GeneratorHelpers } from "@fern-fern/ir-model/generators";
 import { writeFile } from "fs/promises";
 import path from "path";
 import { getGeneratorConfig } from "./getGeneratorConfig";

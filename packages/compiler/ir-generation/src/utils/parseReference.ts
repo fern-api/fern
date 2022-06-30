@@ -1,4 +1,4 @@
-import { FernFilepath } from "@fern-fern/ir-model/types";
+import { FernFilepath } from "@fern-fern/ir-model";
 import path from "path";
 import { convertToFernFilepath } from "./convertToFernFilepath";
 

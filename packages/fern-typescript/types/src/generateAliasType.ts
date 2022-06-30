@@ -1,4 +1,4 @@
-import { AliasTypeDeclaration, PrimitiveType } from "@fern-fern/ir-model/types";
+import { AliasTypeDeclaration, PrimitiveType } from "@fern-fern/ir-model";
 import { addBrandedTypeAlias, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { ModelContext } from "@fern-typescript/model-context";
 import { SourceFile, ts, VariableDeclarationKind, Writers } from "ts-morph";

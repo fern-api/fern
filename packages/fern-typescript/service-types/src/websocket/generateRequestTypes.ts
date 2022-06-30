@@ -1,5 +1,4 @@
-import { ServiceName } from "@fern-fern/ir-model/services/commons";
-import { WebSocketOperation } from "@fern-fern/ir-model/services/websocket";
+import { ServiceName, WebSocketOperation } from "@fern-fern/ir-model/services";
 import { getTextOfTsKeyword, getTextOfTsNode } from "@fern-typescript/commons";
 import { ModelContext, WebSocketChannelTypeMetadata } from "@fern-typescript/model-context";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
