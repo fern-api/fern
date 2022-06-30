@@ -42,6 +42,9 @@ export const ServiceTypesConstants = {
     },
 
     HttpEndpint: {
+        Token: {
+            VARIABLE_NAME: "token",
+        },
         Request: {
             VARIABLE_NAME: "request",
         },

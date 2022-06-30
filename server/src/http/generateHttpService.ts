@@ -1,14 +1,23 @@
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
+import { HttpAuth, HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
 import {
     createDirectoriesForFernFilepath,
     createSourceFileAndExportFromModule,
     DependencyManager,
+    getReferenceToFernServiceUtilsType,
     getTextOfTsNode,
 } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import { ModelContext } from "@fern-typescript/model-context";
-import { getHttpRequestParameters } from "@fern-typescript/service-types";
-import { Directory, InterfaceDeclaration, SourceFile, ts, VariableDeclarationKind } from "ts-morph";
+import { getHttpRequestParameters, ServiceTypesConstants } from "@fern-typescript/service-types";
+import {
+    Directory,
+    InterfaceDeclaration,
+    OptionalKind,
+    ParameterDeclarationStructure,
+    SourceFile,
+    ts,
+    VariableDeclarationKind,
+} from "ts-morph";
 import { ServerConstants } from "../constants";
 import { generateMaybePromise } from "../utils.ts/generateMaybePromise";
 import { getExpressCall, getExpressType } from "./addExpressImport";
@@ -76,7 +85,14 @@ function addEndpointToService({
 
     serviceInterface.addMethod({
         name: endpoint.endpointId,
-        parameters: getHttpRequestParameters({ generatedEndpointTypes, modelContext, file: serviceFile }),
+        parameters: [
+            ...getAuthParameters({ endpoint, dependencyManager, file: serviceFile }),
+            ...getHttpRequestParameters({
+                generatedEndpointTypes,
+                modelContext,
+                file: serviceFile,
+            }),
+        ],
         returnType: getTextOfTsNode(
             generateMaybePromise({
                 type: modelContext.getReferenceToHttpServiceType({
@@ -95,6 +111,7 @@ function addEndpointToService({
             endpoint,
             generatedEndpointTypes,
             modelContext,
+            dependencyManager,
             file: serviceFile,
         })
     );
@@ -159,6 +176,7 @@ function addMiddleware({
         isExported: true,
     });
 }
+
 function generateMiddlewareBody({
     serviceFile,
     dependencyManager,
@@ -205,4 +223,35 @@ function generateMiddlewareBody({
         ...expressRouteStatements,
         ts.factory.createReturnStatement(ts.factory.createIdentifier("app")),
     ];
+}
+
+function getAuthParameters({
+    endpoint,
+    dependencyManager,
+    file,
+}: {
+    endpoint: HttpEndpoint;
+    dependencyManager: DependencyManager;
+    file: SourceFile;
+}) {
+    return HttpAuth._visit<OptionalKind<ParameterDeclarationStructure>[]>(endpoint.auth, {
+        bearer: () => {
+            return [
+                {
+                    name: ServiceTypesConstants.HttpEndpint.Token.VARIABLE_NAME,
+                    type: getTextOfTsNode(
+                        getReferenceToFernServiceUtilsType({
+                            type: "Token",
+                            dependencyManager,
+                            referencedIn: file,
+                        })
+                    ),
+                },
+            ];
+        },
+        none: () => [],
+        _unknown: () => {
+            throw new Error("Unknown auth: " + endpoint.auth);
+        },
+    });
 }

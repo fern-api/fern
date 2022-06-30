@@ -63,10 +63,21 @@ export async function generateHttpService({
         name: ClientConstants.HttpService.PrivateMembers.TOKEN,
         scope: Scope.Private,
         type: getTextOfTsNode(
-            ts.factory.createUnionTypeNode([
-                getReferenceToFernServiceUtilsType({ type: "Token", dependencyManager, referencedIn: serviceFile }),
-                ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
-            ])
+            getReferenceToFernServiceUtilsType({
+                type: "MaybeGetter",
+                dependencyManager,
+                referencedIn: serviceFile,
+                typeArguments: [
+                    ts.factory.createUnionTypeNode([
+                        getReferenceToFernServiceUtilsType({
+                            type: "Token",
+                            dependencyManager,
+                            referencedIn: serviceFile,
+                        }),
+                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
+                    ]),
+                ],
+            })
         ),
     });
 
