@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`fern add 1`] = `
-"name: Blog Post API
+"name: api
 definition: src
 generators:
   - name: fernapi/fern-java
