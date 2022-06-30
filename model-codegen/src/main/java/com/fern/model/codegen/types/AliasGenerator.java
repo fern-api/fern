@@ -75,7 +75,7 @@ public final class AliasGenerator extends Generator {
         return List.of(
                 AnnotationSpec.builder(Value.Immutable.class).build(),
                 AnnotationSpec.builder(
-                                generatorContext.getStagedImmutablesFile().className())
+                                generatorContext.getAliasImmutablesStyle().className())
                         .build(),
                 AnnotationSpec.builder(JsonDeserialize.class)
                         .addMember("as", "$T.class", generatedAliasImmutablesClassName)
@@ -94,7 +94,7 @@ public final class AliasGenerator extends Generator {
         return MethodSpec.methodBuilder(VALUE_OF_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .addParameter(aliasTypeName, "value")
-                .addStatement("return $T.builder().value($L).build()", generatedAliasImmutablesClassName, "value")
+                .addStatement("return $T.of($L)", generatedAliasImmutablesClassName, "value")
                 .returns(generatedAliasClassName)
                 .build();
     }
@@ -102,7 +102,7 @@ public final class AliasGenerator extends Generator {
     private MethodSpec getValueOfMethod() {
         return MethodSpec.methodBuilder(VALUE_OF_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                .addStatement("return $T.builder().build()", generatedAliasImmutablesClassName)
+                .addStatement("return $T.of()", generatedAliasImmutablesClassName)
                 .returns(generatedAliasClassName)
                 .build();
     }

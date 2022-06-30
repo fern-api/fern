@@ -29,6 +29,7 @@ public final class GeneratorContext {
     private final GeneratedFile apiExceptionFile;
     private final GeneratedFile httpApiExceptionFile;
     private final GeneratedFile unknownRemoteExceptionFile;
+    private final GeneratedFile aliasImmutablesStyle;
 
     public GeneratorContext(
             Optional<String> packagePrefix,
@@ -42,6 +43,7 @@ public final class GeneratorContext {
         this.stagedImmutablesFile = ImmutablesStyleGenerator.generateStagedBuilderImmutablesStyle(classNameUtils);
         this.packagePrivateImmutablesFile =
                 ImmutablesStyleGenerator.generatePackagePrivateImmutablesStyle(classNameUtils);
+        this.aliasImmutablesStyle = ImmutablesStyleGenerator.generateAliasImmutablesStyle(classNameUtils);
         this.clientObjectMappersFile = ObjectMapperGenerator.generateClientObjectMappersClass(classNameUtils);
         this.serverObjectMappersFile = ObjectMapperGenerator.generateServerObjectMappersClass(classNameUtils);
         this.authHeaderFile = AuthHeaderGenerator.generateAuthHeaderClass(
@@ -85,6 +87,10 @@ public final class GeneratorContext {
 
     public GeneratedFile getPackagePrivateImmutablesFile() {
         return packagePrivateImmutablesFile;
+    }
+
+    public GeneratedFile getAliasImmutablesStyle() {
+        return aliasImmutablesStyle;
     }
 
     public GeneratedFile getAuthHeaderFile() {

@@ -5,6 +5,7 @@ import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.java.test.TestConstants;
 import com.fern.model.codegen.types.AliasGenerator;
 import com.fern.types.types.AliasTypeDeclaration;
+import com.fern.types.types.ContainerType;
 import com.fern.types.types.DeclaredTypeName;
 import com.fern.types.types.FernFilepath;
 import com.fern.types.types.PrimitiveType;
@@ -24,6 +25,26 @@ public final class AliasGeneratorTest {
                 .name(DeclaredTypeName.builder()
                         .fernFilepath(FernFilepath.valueOf("com/trace/problem"))
                         .name("ProblemId")
+                        .build())
+                .shape(Type.alias(aliasTypeDefinition))
+                .build();
+        AliasGenerator aliasGenerator = new AliasGenerator(
+                aliasTypeDefinition, PackageType.TYPES, problemIdTypeDefinition.name(),
+                TestConstants.GENERATOR_CONTEXT);
+        GeneratedAlias generatedAlias = aliasGenerator.generate();
+        System.out.println(generatedAlias.file().toString());
+    }
+
+    @Test
+    public void test_container() {
+        AliasTypeDeclaration aliasTypeDefinition = AliasTypeDeclaration.builder()
+                .aliasOf(TypeReference.container(ContainerType.list(
+                        TypeReference.primitive(PrimitiveType.STRING))))
+                .build();
+        TypeDeclaration problemIdTypeDefinition = TypeDeclaration.builder()
+                .name(DeclaredTypeName.builder()
+                        .fernFilepath(FernFilepath.valueOf("com/trace/problem"))
+                        .name("AliasTest")
                         .build())
                 .shape(Type.alias(aliasTypeDefinition))
                 .build();

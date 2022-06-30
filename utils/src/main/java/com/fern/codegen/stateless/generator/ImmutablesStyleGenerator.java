@@ -18,6 +18,7 @@ public final class ImmutablesStyleGenerator {
 
     private static final String STAGED_BUILDER_ANNOTATION_CLASS_NAME = "StagedBuilderStyle";
     private static final String PACKAGE_PRIVATE_STYLE_ANNOTATION_CLASS_NAME = "PackagePrivateStyle";
+    private static final String ALIAS_STYLE_ANNOTATION_CLASS_NAME = "AliasStyle";
 
     private ImmutablesStyleGenerator() {}
 
@@ -92,6 +93,49 @@ public final class ImmutablesStyleGenerator {
         return GeneratedFile.builder()
                 .file(packagePrivateStyleFile)
                 .className(packagePrivateStyleClassName)
+                .build();
+    }
+
+    public static GeneratedFile generateAliasImmutablesStyle(ClassNameUtils classNameUtils) {
+        ClassName aliasImmutablesStyleClassName = classNameUtils.getClassName(
+                ALIAS_STYLE_ANNOTATION_CLASS_NAME, Optional.empty(), Optional.empty(), Optional.empty());
+        TypeSpec aliasImmutablesTypeSpec = TypeSpec.annotationBuilder(aliasImmutablesStyleClassName)
+                .addModifiers(Modifier.PUBLIC)
+                .addAnnotation(AnnotationSpec.builder(Target.class)
+                        .addMember(
+                                "value",
+                                "{$T.$L, $T.$L}",
+                                ElementType.class,
+                                ElementType.PACKAGE.name(),
+                                ElementType.class,
+                                ElementType.TYPE.name())
+                        .build())
+                .addAnnotation(AnnotationSpec.builder(Retention.class)
+                        .addMember("value", "$T.$L", RetentionPolicy.class, RetentionPolicy.SOURCE.name())
+                        .build())
+                .addAnnotation(AnnotationSpec.builder(Value.Style.class)
+                        .addMember("allParameters", "$L", Boolean.TRUE.toString())
+                        .addMember(
+                                "visibility",
+                                "$T.$L.$L",
+                                Value.Style.class,
+                                "ImplementationVisibility",
+                                Value.Style.ImplementationVisibility.PACKAGE.name())
+                        .addMember(
+                                "defaults",
+                                "$L",
+                                AnnotationSpec.builder(Value.Immutable.class)
+                                        .addMember("builder", "$L", Boolean.FALSE.toString())
+                                        .build())
+                        .addMember("overshadowImplementation", "$L", Boolean.TRUE.toString())
+                        .build())
+                .build();
+        JavaFile aliasImmutablesFile = JavaFile.builder(
+                        aliasImmutablesStyleClassName.packageName(), aliasImmutablesTypeSpec)
+                .build();
+        return GeneratedFile.builder()
+                .file(aliasImmutablesFile)
+                .className(aliasImmutablesStyleClassName)
                 .build();
     }
 }
