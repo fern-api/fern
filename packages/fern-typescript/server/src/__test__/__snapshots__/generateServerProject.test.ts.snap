@@ -202,6 +202,68 @@ namespace GetPostV2Response {
     }
 }
 ",
+  "/model/_service-types/PostsService/NoopWithAuthErrorBody.ts": "export type NoopWithAuthErrorBody = never;
+
+export declare namespace NoopWithAuthErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const NoopWithAuthErrorBody = {
+    _visit: <Result>(_value: NoopWithAuthErrorBody, visitor: NoopWithAuthErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): NoopWithAuthErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+  "/model/_service-types/PostsService/NoopWithAuthResponse.ts": "import * as model from \\"../..\\";
+
+export type NoopWithAuthResponse = NoopWithAuthResponse.SuccessResponse | NoopWithAuthResponse.ErrorResponse;
+
+namespace NoopWithAuthResponse {
+    export interface SuccessResponse {
+        ok: true;
+    }
+
+    export interface ErrorResponse {
+        ok: false;
+        error: model.NoopWithAuthErrorBody;
+    }
+}
+",
+  "/model/_service-types/PostsService/NoopWithoutAuthErrorBody.ts": "export type NoopWithoutAuthErrorBody = never;
+
+export declare namespace NoopWithoutAuthErrorBody {
+    export interface _Visitor<Result> {
+        _unknown: () => Result;
+    }
+}
+
+export const NoopWithoutAuthErrorBody = {
+    _visit: <Result>(_value: NoopWithoutAuthErrorBody, visitor: NoopWithoutAuthErrorBody._Visitor<Result>): Result => {
+        return visitor._unknown();
+    },
+
+    _types: (): NoopWithoutAuthErrorBody[\\"_error\\"][] => [],
+} as const;
+",
+  "/model/_service-types/PostsService/NoopWithoutAuthResponse.ts": "import * as model from \\"../..\\";
+
+export type NoopWithoutAuthResponse = NoopWithoutAuthResponse.SuccessResponse | NoopWithoutAuthResponse.ErrorResponse;
+
+namespace NoopWithoutAuthResponse {
+    export interface SuccessResponse {
+        ok: true;
+    }
+
+    export interface ErrorResponse {
+        ok: false;
+        error: model.NoopWithoutAuthErrorBody;
+    }
+}
+",
   "/model/_service-types/PostsService/index.ts": "export * from \\"./CreatePostRequest\\";
 export * from \\"./CreatePostErrorBody\\";
 export * from \\"./CreatePostResponse\\";
@@ -213,6 +275,10 @@ export * from \\"./GetPostV2Response\\";
 export * from \\"./DeletePostRequest\\";
 export * from \\"./DeletePostErrorBody\\";
 export * from \\"./DeletePostResponse\\";
+export * from \\"./NoopWithAuthErrorBody\\";
+export * from \\"./NoopWithAuthResponse\\";
+export * from \\"./NoopWithoutAuthErrorBody\\";
+export * from \\"./NoopWithoutAuthResponse\\";
 ",
   "/model/_service-types/index.ts": "export * from \\"./PostsService\\";
 ",
@@ -348,7 +414,7 @@ export * from \\"./_service-types\\";
     }
 }",
   "/services/PostsService.ts": "import * as model from \\"../model\\";
-import { Token, MaybePromise } from \\"@fern-typescript/service-utils\\";
+import { MaybePromise, Token } from \\"@fern-typescript/service-utils\\";
 import express, { Express } from \\"express\\";
 
 export interface PostsService {
@@ -356,6 +422,8 @@ export interface PostsService {
     getPost(token: Token, request: model.GetPostRequest): MaybePromise<model.GetPostResponse>;
     getPostV2(token: Token, request: model.PostId): MaybePromise<model.GetPostV2Response>;
     deletePost(token: Token, request: model.DeletePostRequest): MaybePromise<model.DeletePostResponse>;
+    noopWithAuth(token: Token): MaybePromise<model.NoopWithAuthResponse>;
+    noopWithoutAuth(): MaybePromise<model.NoopWithoutAuthResponse>;
 }
 
 export const PostsService = {
@@ -412,6 +480,24 @@ export const PostsService = {
                 response.sendStatus(500);
             }
         });
+        app.get(\\"/posts/\\", async (request, response) => {
+            const result = await impl.noopWithAuth(Token.fromAuthorizationHeader(request.headers[\\"Authorization\\"] as string));
+            if (result.ok) {
+                response.end();
+            }
+            else {
+                response.sendStatus(500);
+            }
+        });
+        app.get(\\"/posts/\\", async (_request, response) => {
+            const result = await impl.noopWithoutAuth();
+            if (result.ok) {
+                response.end();
+            }
+            else {
+                response.sendStatus(500);
+            }
+        });
         return app;
     }
 };
@@ -425,7 +511,10 @@ export const PostsService = {
         \\"declaration\\": true,
         \\"sourceMap\\": true,
         \\"emitDeclarationOnly\\": true,
-        \\"esModuleInterop\\": true
+        \\"esModuleInterop\\": true,
+        \\"noUncheckedIndexedAccess\\": true,
+        \\"noUnusedLocals\\": true,
+        \\"noUnusedParameters\\": true
     }
 }",
 }
