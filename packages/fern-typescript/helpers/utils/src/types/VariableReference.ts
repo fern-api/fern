@@ -1,5 +1,5 @@
-import { EndpointId } from "@fern-fern/ir-model/services/http";
-import { TypeReference } from "@fern-fern/ir-model/types";
+import { TypeReference } from "@fern-fern/ir-model";
+import { EndpointId } from "@fern-fern/ir-model/services";
 import { ts } from "ts-morph";
 
 export type VariableReference = VariableReference.WireMessageBodyReference | VariableReference.ModelReference;

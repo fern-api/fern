@@ -35,7 +35,7 @@ export async function generatePackageJson({
         scripts: {
             [BUILD_PROJECT_SCRIPT_NAME]: [
                 // esbuild first so we don't transpile the .d.ts files
-                "esbuild $(find . -name '*.ts') --format=cjs --sourcemap --outdir=.",
+                "esbuild $(find . -name '*.ts' -not -path './node_modules/*') --format=cjs --sourcemap --outdir=.",
                 "tsc",
             ].join(" && "),
         },

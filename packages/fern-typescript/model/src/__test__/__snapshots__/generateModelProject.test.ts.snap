@@ -494,7 +494,7 @@ export * as services from \\"./services\\";
     \\"main\\": \\"./index.js\\",
     \\"types\\": \\"./index.d.ts\\",
     \\"scripts\\": {
-        \\"build\\": \\"esbuild $(find . -name '*.ts') --format=cjs --sourcemap --outdir=. && tsc\\"
+        \\"build\\": \\"esbuild $(find . -name '*.ts' -not -path './node_modules/*') --format=cjs --sourcemap --outdir=. && tsc\\"
     },
     \\"devDependencies\\": {
         \\"@types/node\\": \\"17.0.33\\",
@@ -1065,7 +1065,7 @@ export * from \\"./_service-types\\";
     \\"main\\": \\"./index.js\\",
     \\"types\\": \\"./index.d.ts\\",
     \\"scripts\\": {
-        \\"build\\": \\"esbuild $(find . -name '*.ts') --format=cjs --sourcemap --outdir=. && tsc\\"
+        \\"build\\": \\"esbuild $(find . -name '*.ts' -not -path './node_modules/*') --format=cjs --sourcemap --outdir=. && tsc\\"
     },
     \\"dependencies\\": {
         \\"uuid\\": \\"8.3.2\\",

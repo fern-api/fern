@@ -1,4 +1,4 @@
-import { FailedResponse } from "@fern-fern/ir-model/services/commons";
+import { FailedResponse } from "@fern-fern/ir-model/services";
 import { convertFailedResponse } from "../converters/services/convertFailedResponse";
 
 describe("convertResponseErrors", () => {

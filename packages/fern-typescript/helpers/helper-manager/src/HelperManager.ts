@@ -1,5 +1,5 @@
-import { GeneratorHelperReference, GeneratorHelpers } from "@fern-fern/ir-model/generators/config";
-import { Encoding } from "@fern-fern/ir-model/services/commons";
+import { GeneratorHelperReference, GeneratorHelpers } from "@fern-fern/ir-model/generators";
+import { Encoding } from "@fern-fern/ir-model/services";
 import { Encoder, FernTypescriptHelper } from "@fern-typescript/helper-utils";
 import { helper as JsonEncodingHelper } from "@fern-typescript/json-encoding-helper";
 

@@ -1,8 +1,14 @@
 import { assertNever } from "@fern-api/commons";
 import { RawSchemas } from "@fern-api/syntax-analysis";
-import { CustomWireMessageEncoding } from "@fern-fern/ir-model/services/commons";
-import { EndpointId, HttpAuth, HttpEndpoint, HttpMethod, HttpService } from "@fern-fern/ir-model/services/http";
-import { FernFilepath } from "@fern-fern/ir-model/types";
+import { FernFilepath } from "@fern-fern/ir-model";
+import {
+    CustomWireMessageEncoding,
+    EndpointId,
+    HttpAuth,
+    HttpEndpoint,
+    HttpMethod,
+    HttpService,
+} from "@fern-fern/ir-model/services";
 import { getDocs } from "../../utils/getDocs";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { constructHttpPath } from "./constructHttpPath";

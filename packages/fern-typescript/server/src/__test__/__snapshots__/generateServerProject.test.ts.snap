@@ -328,7 +328,7 @@ export * from \\"./_service-types\\";
     \\"main\\": \\"./index.js\\",
     \\"types\\": \\"./index.d.ts\\",
     \\"scripts\\": {
-        \\"build\\": \\"esbuild $(find . -name '*.ts') --format=cjs --sourcemap --outdir=. && tsc\\"
+        \\"build\\": \\"esbuild $(find . -name '*.ts' -not -path './node_modules/*') --format=cjs --sourcemap --outdir=. && tsc\\"
     },
     \\"dependencies\\": {
         \\"uuid\\": \\"8.3.2\\",
