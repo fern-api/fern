@@ -1,4 +1,4 @@
-import { ServiceName } from "@fern-fern/ir-model/services/commons";
+import { ServiceName } from "@fern-fern/ir-model/services";
 import { ImportStrategy } from "@fern-typescript/commons";
 import { Directory, SourceFile, ts } from "ts-morph";
 import { StringifiedFernFilepath, stringifyFernFilepath } from "../stringifyFernFilepath";

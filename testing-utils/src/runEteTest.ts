@@ -1,6 +1,6 @@
 import { parseFernInput } from "@fern-api/cli";
 import { compile } from "@fern-api/compiler";
-import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { IntermediateRepresentation } from "@fern-fern/ir-model";
 import { writeVolumeToDisk } from "@fern-typescript/commons";
 import { rm } from "fs/promises";
 import IS_CI from "is-ci";

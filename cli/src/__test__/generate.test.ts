@@ -1,7 +1,7 @@
 import { parseFernInput } from "@fern-api/cli";
 import { getDirectoryContents } from "@fern-api/commons";
 import { compile } from "@fern-api/compiler";
-import { GeneratorConfig } from "@fern-fern/ir-model/generators/config";
+import { GeneratorConfig } from "@fern-fern/ir-model/generators";
 import { installAndCompileGeneratedProjects } from "@fern-typescript/testing-utils";
 import { rm, writeFile } from "fs/promises";
 import path from "path";

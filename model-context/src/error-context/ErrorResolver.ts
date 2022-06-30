@@ -1,5 +1,4 @@
-import { ErrorDeclaration, ErrorName } from "@fern-fern/ir-model/errors";
-import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { ErrorDeclaration, ErrorName, IntermediateRepresentation } from "@fern-fern/ir-model";
 import { StringifiedFernFilepath, stringifyFernFilepath } from "../stringifyFernFilepath";
 
 type SimpleErrorName = string;

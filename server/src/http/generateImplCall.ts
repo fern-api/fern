@@ -1,4 +1,4 @@
-import { HttpAuth, HttpEndpoint } from "@fern-fern/ir-model/services/http";
+import { HttpAuth, HttpEndpoint } from "@fern-fern/ir-model/services";
 import { DependencyManager, getReferenceToFernServiceUtilsTokenMethod } from "@fern-typescript/commons";
 import { GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/model-context";
 import { SourceFile, ts } from "ts-morph";
