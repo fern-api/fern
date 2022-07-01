@@ -212,7 +212,10 @@ export class ChatService implements ChatService {
         \\"declaration\\": true,
         \\"sourceMap\\": true,
         \\"emitDeclarationOnly\\": true,
-        \\"esModuleInterop\\": true
+        \\"esModuleInterop\\": true,
+        \\"noUncheckedIndexedAccess\\": true,
+        \\"noUnusedLocals\\": true,
+        \\"noUnusedParameters\\": true
     }
 }",
 }
@@ -329,7 +332,10 @@ export class NoErrorsService implements NoErrorsService {
         \\"declaration\\": true,
         \\"sourceMap\\": true,
         \\"emitDeclarationOnly\\": true,
-        \\"esModuleInterop\\": true
+        \\"esModuleInterop\\": true,
+        \\"noUncheckedIndexedAccess\\": true,
+        \\"noUnusedLocals\\": true,
+        \\"noUnusedParameters\\": true
     }
 }",
 }
@@ -753,7 +759,10 @@ export class PostsService implements PostsService {
         \\"declaration\\": true,
         \\"sourceMap\\": true,
         \\"emitDeclarationOnly\\": true,
-        \\"esModuleInterop\\": true
+        \\"esModuleInterop\\": true,
+        \\"noUncheckedIndexedAccess\\": true,
+        \\"noUnusedLocals\\": true,
+        \\"noUnusedParameters\\": true
     }
 }",
 }

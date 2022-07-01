@@ -822,7 +822,10 @@ export * from \\"./WebSocketOperationProperties\\";
         \\"declaration\\": true,
         \\"sourceMap\\": true,
         \\"emitDeclarationOnly\\": true,
-        \\"esModuleInterop\\": true
+        \\"esModuleInterop\\": true,
+        \\"noUncheckedIndexedAccess\\": true,
+        \\"noUnusedLocals\\": true,
+        \\"noUnusedParameters\\": true
     }
 }",
 }
@@ -1084,7 +1087,10 @@ export * from \\"./_service-types\\";
         \\"declaration\\": true,
         \\"sourceMap\\": true,
         \\"emitDeclarationOnly\\": true,
-        \\"esModuleInterop\\": true
+        \\"esModuleInterop\\": true,
+        \\"noUncheckedIndexedAccess\\": true,
+        \\"noUnusedLocals\\": true,
+        \\"noUnusedParameters\\": true
     }
 }",
 }
