@@ -49,7 +49,7 @@ Let's say that a client hits the `getMovie` endpoint looking for _Iron Man 5_. T
 }
 ```
 
-My providing the `MovieId` the frontend can now display a string to the user: _"No results found for "Iron Man 5"_.
+By providing the `MovieId` the frontend can now display a string to the user: _"No results found for "Iron Man 5"_.
 
 ## Forward compatiblility
 
