@@ -1,4 +1,4 @@
-import { FernFilepath } from "@fern-fern/ir-model/types";
+import { FernFilepath } from "@fern-fern/ir-model";
 import path from "path";
 import { convertToFernFilepath } from "./convertToFernFilepath";
 
@@ -31,7 +31,7 @@ export function parseReference({
     }
 
     return {
-        fernFilepath: convertToFernFilepath(path.join(path.dirname(fernFilepath.toString()), importPath)),
+        fernFilepath: convertToFernFilepath(path.join(fernFilepath.join(path.sep), importPath)),
         referenceName: secondPart,
     };
 }

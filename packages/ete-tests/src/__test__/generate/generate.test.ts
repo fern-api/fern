@@ -21,11 +21,12 @@ function itFixture(fixtureName: string) {
 
             const cmd = execa(
                 "node",
-                [path.join(__dirname, "../../../../cli/cli"), "generate", "--local", fixturePath],
+                [path.join(__dirname, "../../../../cli/webpack/dist/bundle.js"), "generate", "--local", fixturePath],
                 {
                     env: {
                         NODE_ENV: "development",
                     },
+                    cwd: FIXTURES_DIR,
                 }
             );
             cmd.stdout?.pipe(process.stdout);

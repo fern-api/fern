@@ -1,4 +1,4 @@
-import { GeneratorConfig, GeneratorHelpers } from "@fern-fern/ir-model/generators/config";
+import { GeneratorConfig, GeneratorHelpers } from "@fern-fern/ir-model/generators";
 import path from "path";
 import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_GENERATORS_DIRECTORY, DOCKER_PATH_TO_IR } from "./constants";
 
@@ -6,6 +6,7 @@ export declare namespace getGeneratorConfig {
     export interface Args {
         helpers: GeneratorHelpers;
         workspaceName: string;
+        organization: string;
         customConfig: unknown;
     }
 
@@ -19,6 +20,7 @@ export function getGeneratorConfig({
     helpers,
     customConfig,
     workspaceName,
+    organization,
 }: getGeneratorConfig.Args): getGeneratorConfig.Return {
     const binds: string[] = [];
 
@@ -50,7 +52,7 @@ export function getGeneratorConfig({
             customConfig: customConfig as Record<string, string>,
             helpers: convertedHelpers,
             workspaceName,
-            organization: "fern",
+            organization,
         },
     };
 }

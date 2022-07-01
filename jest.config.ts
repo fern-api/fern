@@ -4,11 +4,17 @@ import { Config } from "jest";
 import { getAllPackages } from "./scripts/getAllPackages";
 import defaultConfig from "./shared/jest.config.shared";
 
+const ETE_TESTS_PACKAGE_NAME = "@fern-api/ete-tests";
+
 export default async (): Promise<Config> => {
-    const packages = await getAllPackages({
-        // in PRs, only run tests on the changed packages
-        since: isBranchInCi(),
-    });
+    const packages = (
+        await getAllPackages({
+            // in PRs, only run tests on the changed packages
+            since: isBranchInCi(),
+        })
+    )
+        // ETE tests are run separately
+        .filter((p) => p.name !== ETE_TESTS_PACKAGE_NAME);
 
     return {
         ...defaultConfig,
@@ -16,11 +22,13 @@ export default async (): Promise<Config> => {
         // so in that case, change the test match to a dummy path that doesn't
         // match anything.
         testMatch: packages.length > 0 ? defaultConfig.testMatch : ["__path_that_does_not_exist"],
-        projects: packages.map((p) => ({
-            ...defaultConfig,
-            displayName: p.name,
-            rootDir: `${p.location}/src`,
-        })),
+        projects: packages.map((p) => {
+            return {
+                ...defaultConfig,
+                displayName: p.name,
+                rootDir: `${p.location}/src`,
+            };
+        }),
     };
 };
 

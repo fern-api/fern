@@ -1,5 +1,4 @@
-import { ServiceName } from "@fern-fern/ir-model/services/commons";
-import { WebSocketOperation } from "@fern-fern/ir-model/services/websocket";
+import { ServiceName, WebSocketOperation } from "@fern-fern/ir-model/services";
 import { ModelContext, WebSocketChannelTypeMetadata } from "@fern-typescript/model-context";
 import { upperFirst } from "lodash";
 import { ServiceTypeFileWriter } from "../commons/service-type-reference/generateServiceTypeReference";

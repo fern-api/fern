@@ -1,6 +1,6 @@
 import { SyntaxAnalysis } from "@fern-api/syntax-analysis";
-import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { CustomWireMessageEncoding } from "@fern-fern/ir-model/services/commons";
+import { IntermediateRepresentation } from "@fern-fern/ir-model";
+import { CustomWireMessageEncoding } from "@fern-fern/ir-model/services";
 
 export declare namespace Compiler {
     export type Result = SuccessfulResult | FailedResult;

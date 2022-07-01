@@ -4,6 +4,8 @@ Fern is a framework for building APIs. You can think of it as an alternative to 
 
 [View our docs ➚](https://docs.buildwithfern.com/#/)
 
+[Join the discord ➚](https://discord.com/invite/JkkXumPzcG)
+
 ### Goals
 
 **1. High quality code generation.**

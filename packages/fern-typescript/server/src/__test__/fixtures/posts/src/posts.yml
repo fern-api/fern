@@ -39,6 +39,7 @@ services:
         createPost:
           method: POST
           path: /
+          auth-override: none
           request:
             type:
               properties:
@@ -74,3 +75,10 @@ services:
           path: /{postId}
           path-parameters:
             postId: commons.PostId
+        noopWithAuth:
+          method: GET
+          path: /
+        noopWithoutAuth:
+          method: GET
+          auth-override: none
+          path: /

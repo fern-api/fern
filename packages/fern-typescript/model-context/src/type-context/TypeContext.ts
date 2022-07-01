@@ -1,5 +1,11 @@
-import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { ContainerType, DeclaredTypeName, PrimitiveType, Type, TypeReference } from "@fern-fern/ir-model/types";
+import {
+    ContainerType,
+    DeclaredTypeName,
+    IntermediateRepresentation,
+    PrimitiveType,
+    Type,
+    TypeReference,
+} from "@fern-fern/ir-model";
 import { ImportStrategy } from "@fern-typescript/commons";
 import { Directory, SourceFile, ts } from "ts-morph";
 import { BaseModelContext } from "../base-model-context/BaseModelContext";
@@ -36,7 +42,7 @@ export class TypeContext extends BaseModelContext {
     }) {
         super({
             modelDirectory,
-            intermediateDirectories: ["types"],
+            intermediateDirectories: ["_types"],
         });
         this.typeResolver = new TypeResolver(intermediateRepresentation);
     }

@@ -1,6 +1,7 @@
 import { initialize } from "@fern-api/init";
 import { initiateLogin } from "@fern-api/login";
-import { Argv, showHelp } from "yargs";
+import inquirer, { InputQuestion } from "inquirer";
+import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
@@ -11,8 +12,9 @@ void runCli();
 
 async function runCli() {
     const passedInArgs = hideBin(process.argv);
-    const cli = yargs(hideBin(process.argv))
-        .scriptName("fern")
+    const cli = yargs(passedInArgs);
+
+    cli.scriptName("fern")
         .strict()
         .alias("v", "version")
         .demandCommand()
@@ -20,7 +22,7 @@ async function runCli() {
         .showHelpOnFail(false)
         .fail(() => {
             if (passedInArgs.length === 0) {
-                showHelp();
+                cli.showHelp();
                 process.exit(1);
             }
         });
@@ -40,11 +42,30 @@ async function runCli() {
 }
 
 function addInitCommand(cli: Argv) {
-    cli.command({
-        command: "init",
-        describe: "Initializes an example Fern API",
-        handler: initialize,
-    });
+    cli.command(
+        "init",
+        "Initialize a Fern API",
+        (yargs) =>
+            yargs.option("organization", {
+                alias: "org",
+                type: "string",
+                description: "Organization name",
+            }),
+        async (argv) => {
+            const organization = argv.organization ?? (await askForOrganization());
+            await initialize({ organization });
+        }
+    );
+}
+
+async function askForOrganization() {
+    const organizationQuestion: InputQuestion<{ organization: string }> = {
+        type: "input",
+        name: "organization",
+        message: "What's the name of your organization?",
+    };
+    const answers = await inquirer.prompt(organizationQuestion);
+    return answers.organization;
 }
 
 function addAddCommand(cli: Argv) {

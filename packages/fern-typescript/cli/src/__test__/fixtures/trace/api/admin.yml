@@ -1,6 +1,6 @@
 imports:
   submission: submission.yml
-  problemV2: problemV2.yml
+  problemV2: problem-v2/problemV2.yml
 
 services:
   http:

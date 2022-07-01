@@ -1,23 +1,30 @@
 imports:
   commons: ../commons.yml
   types: ../types.yml
+  errors: ../errors.yml
 types:
-  BaseService:
-    extends: commons.WithDocs
+  ServiceName:
     properties:
-      basePath: string
-      name: types.NamedType
-  WireMessage:
-    extends: commons.WithDocs
+      fernFilepath: types.FernFilepath
+      name: string
+  Encoding:
+    union:
+      json: {}
+      custom: CustomWireMessageEncoding
+  CustomWireMessageEncoding:
     properties:
-      type: types.Type
-  ResponseErrors:
+      encoding: string
+  FailedResponse:
     extends: commons.WithDocs
     properties:
       discriminant: string
-      possibleErrors: list<ResponseError>
+      errorProperties: ResponseErrorProperties
+      errors: list<ResponseError>
+  ResponseErrorProperties:
+    properties:
+      errorInstanceId: string
   ResponseError:
     extends: commons.WithDocs
     properties:
       discriminantValue: string
-      error: types.NamedType
+      error: errors.ErrorName

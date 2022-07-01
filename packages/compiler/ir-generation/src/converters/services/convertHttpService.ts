@@ -1,8 +1,14 @@
 import { assertNever } from "@fern-api/commons";
 import { RawSchemas } from "@fern-api/syntax-analysis";
-import { CustomWireMessageEncoding } from "@fern-fern/ir-model/services/commons";
-import { EndpointId, HttpAuth, HttpEndpoint, HttpMethod, HttpService } from "@fern-fern/ir-model/services/http";
-import { ContainerType, FernFilepath, TypeReference } from "@fern-fern/ir-model/types";
+import { FernFilepath } from "@fern-fern/ir-model";
+import {
+    CustomWireMessageEncoding,
+    EndpointId,
+    HttpAuth,
+    HttpEndpoint,
+    HttpMethod,
+    HttpService,
+} from "@fern-fern/ir-model/services";
 import { getDocs } from "../../utils/getDocs";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { constructHttpPath } from "./constructHttpPath";
@@ -64,12 +70,7 @@ export function convertHttpService({
                               return {
                                   docs: typeof parameterType !== "string" ? parameterType.docs : undefined,
                                   key: parameterName,
-                                  // query parameters are always optional, so wrap the valueType in an optional
-                                  // container if it's not already optional
-                                  valueType:
-                                      valueType._type === "container" && valueType.container._type === "optional"
-                                          ? valueType
-                                          : TypeReference.container(ContainerType.optional(valueType)),
+                                  valueType,
                               };
                           })
                         : [],

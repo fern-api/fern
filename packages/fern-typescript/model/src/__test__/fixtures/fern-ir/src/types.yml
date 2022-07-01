@@ -1,43 +1,44 @@
 imports:
   commons: commons.yml
-ids:
-  - name: FernFilepath
-    docs: "A filepath to a Fern spec file, excluding the file extension"
 types:
-  TypeDefinition:
+  TypeDeclaration:
     docs: "A type, which is a name and a shape"
     extends: commons.WithDocs
     properties:
-      name: NamedType
+      name: DeclaredTypeName
       shape: Type
-  NamedType:
+  DeclaredTypeName:
     properties:
       fernFilepath: FernFilepath
       name: string
+  FernFilepath: list<string>
   Type:
     union:
-      alias: AliasTypeDefinition
-      enum: EnumTypeDefinition
-      object: ObjectTypeDefinition
-      union: UnionTypeDefinition
+      alias: AliasTypeDeclaration
+      enum: EnumTypeDeclaration
+      object: ObjectTypeDeclaration
+      union: UnionTypeDeclaration
 
-  AliasTypeDefinition:
+  AliasTypeDeclaration:
     properties:
       aliasOf: TypeReference
 
-  EnumTypeDefinition:
+  EnumTypeDeclaration:
     properties:
       values: list<EnumValue>
   EnumValue:
     extends: commons.WithDocs
     properties:
+      name:
+        type: string
+        docs: Name must start with an alphabet.
       value: string
 
-  ObjectTypeDefinition:
+  ObjectTypeDeclaration:
     properties:
       extends:
         docs: "A list of other types to inherit from"
-        type: list<NamedType>
+        type: list<DeclaredTypeName>
       properties: list<ObjectProperty>
   ObjectProperty:
     extends: commons.WithDocs
@@ -45,7 +46,7 @@ types:
       key: string
       valueType: TypeReference
 
-  UnionTypeDefinition:
+  UnionTypeDeclaration:
     properties:
       discriminant: string
       types: list<SingleUnionType>
@@ -58,8 +59,9 @@ types:
   TypeReference:
     union:
       container: ContainerType
-      named: NamedType
+      named: DeclaredTypeName
       primitive: PrimitiveType
+      unknown: {}
       void: {}
   ContainerType:
     union:
@@ -77,5 +79,7 @@ types:
       - DOUBLE
       - STRING
       - BOOLEAN
-      - docs: "Within the range -2^53 to 2^53"
-        value: LONG
+      - value: LONG
+        docs: "Within the range -2^53 to 2^53"
+      - DATE_TIME
+      - UUID

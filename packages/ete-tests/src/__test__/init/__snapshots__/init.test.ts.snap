@@ -1,21 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`fern init tests fern init 1`] = `
+exports[`fern init 1`] = `
 "{
     \\"workspaces\\": [
         \\"**\\"
-    ]
+    ],
+    \\"organization\\": \\"fern\\"
 }"
 `;
 
-exports[`fern init tests fern init 2`] = `
-"name: Blog Post API
+exports[`fern init 2`] = `
+"name: api
 definition: src
 generators: []
 "
 `;
 
-exports[`fern init tests fern init 3`] = `
+exports[`fern init 3`] = `
 "ids:
   - MovieId
 types:
@@ -47,7 +48,7 @@ services:
           method: GET
           path: /{movieId}
           path-parameters:
-            postId: MovieId
+            movieId: MovieId
           response:
             ok: Movie
             failed:

@@ -1,6 +1,6 @@
 import { GeneratorInvocation, WorkspaceDefinition } from "@fern-api/commons";
 import { Compiler } from "@fern-api/compiler";
-import { CustomWireMessageEncoding } from "@fern-fern/ir-model/services/commons";
+import { CustomWireMessageEncoding } from "@fern-fern/ir-model/services";
 import { mkdir, rm, writeFile } from "fs/promises";
 import os from "os";
 import path from "path";
@@ -10,9 +10,11 @@ import { downloadHelper } from "./downloadHelper";
 import { runGenerator } from "./run-generator/runGenerator";
 
 export async function runLocalGenerationForWorkspace({
+    organization,
     workspaceDefinition,
     compileResult,
 }: {
+    organization: string;
     workspaceDefinition: WorkspaceDefinition;
     compileResult: Compiler.SuccessfulResult;
 }): Promise<void> {
@@ -33,6 +35,7 @@ export async function runLocalGenerationForWorkspace({
     await Promise.all(
         workspaceDefinition.generators.map(async (generatorInvocation) =>
             loadHelpersAndRunGenerator({
+                organization,
                 workspaceDefinition,
                 generatorInvocation,
                 workspaceTempDir,
@@ -44,12 +47,14 @@ export async function runLocalGenerationForWorkspace({
 }
 
 async function loadHelpersAndRunGenerator({
+    organization,
     workspaceDefinition,
     generatorInvocation,
     workspaceTempDir,
     absolutePathToIr,
     nonStandardEncodings,
 }: {
+    organization: string;
     workspaceDefinition: WorkspaceDefinition;
     generatorInvocation: GeneratorInvocation;
     workspaceTempDir: DirectoryResult;
@@ -83,5 +88,6 @@ async function loadHelpersAndRunGenerator({
         }),
         customConfig: generatorInvocation.config,
         workspaceName: workspaceDefinition.name,
+        organization,
     });
 }

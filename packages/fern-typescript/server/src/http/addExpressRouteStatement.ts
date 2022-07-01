@@ -1,4 +1,5 @@
-import { HttpEndpoint, HttpMethod, HttpPath, HttpService } from "@fern-fern/ir-model/services/http";
+import { HttpAuth, HttpEndpoint, HttpMethod, HttpPath, HttpService } from "@fern-fern/ir-model/services";
+import { DependencyManager } from "@fern-typescript/commons";
 import { GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/model-context";
 import { ServiceTypesConstants } from "@fern-typescript/service-types";
 import path from "path";
@@ -14,12 +15,14 @@ export function getExpressRouteStatement({
     generatedEndpointTypes,
     modelContext,
     file,
+    dependencyManager,
 }: {
     service: HttpService;
     endpoint: HttpEndpoint;
     generatedEndpointTypes: GeneratedHttpEndpointTypes;
     modelContext: ModelContext;
     file: SourceFile;
+    dependencyManager: DependencyManager;
 }): ts.Statement {
     return ts.factory.createExpressionStatement(
         ts.factory.createCallExpression(
@@ -49,9 +52,7 @@ export function getExpressRouteStatement({
                             undefined,
                             undefined,
                             undefined,
-                            ts.factory.createIdentifier(
-                                ServerConstants.Middleware.EndpointImplementation.Request.PARAMETER_NAME
-                            )
+                            getRequestParameterName({ generatedEndpointTypes, endpoint })
                         ),
                         ts.factory.createParameterDeclaration(
                             undefined,
@@ -65,13 +66,35 @@ export function getExpressRouteStatement({
                     undefined,
                     ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
                     ts.factory.createBlock(
-                        generateEndpointBody({ endpoint, generatedEndpointTypes, modelContext, file }),
+                        generateEndpointBody({
+                            endpoint,
+                            generatedEndpointTypes,
+                            modelContext,
+                            dependencyManager,
+                            file,
+                        }),
                         true
                     )
                 ),
             ]
         )
     );
+}
+
+function getRequestParameterName({
+    generatedEndpointTypes,
+    endpoint,
+}: {
+    generatedEndpointTypes: GeneratedHttpEndpointTypes;
+    endpoint: HttpEndpoint;
+}): ts.Identifier {
+    const isUnused =
+        generatedEndpointTypes.request.wrapper == null &&
+        generatedEndpointTypes.request.body == null &&
+        endpoint.auth === HttpAuth.None;
+    const prefix = isUnused ? "_" : "";
+    const name = `${prefix}${ServerConstants.Middleware.EndpointImplementation.Request.PARAMETER_NAME}`;
+    return ts.factory.createIdentifier(name);
 }
 
 function generateExpressRoutePath({
@@ -99,11 +122,13 @@ function generateEndpointBody({
     generatedEndpointTypes,
     modelContext,
     file,
+    dependencyManager,
 }: {
     endpoint: HttpEndpoint;
     generatedEndpointTypes: GeneratedHttpEndpointTypes;
     modelContext: ModelContext;
     file: SourceFile;
+    dependencyManager: DependencyManager;
 }): ts.Statement[] {
     return [
         ts.factory.createVariableStatement(
@@ -116,7 +141,7 @@ function generateEndpointBody({
                         ),
                         undefined,
                         undefined,
-                        generateImplCall({ endpoint, generatedEndpointTypes, modelContext, file })
+                        generateImplCall({ endpoint, generatedEndpointTypes, modelContext, dependencyManager, file })
                     ),
                 ],
                 ts.NodeFlags.Const

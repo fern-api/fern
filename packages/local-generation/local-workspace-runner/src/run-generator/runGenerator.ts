@@ -1,5 +1,5 @@
 import { runDocker } from "@fern-api/docker-utils";
-import { GeneratorHelpers } from "@fern-fern/ir-model/generators/config";
+import { GeneratorHelpers } from "@fern-fern/ir-model/generators";
 import { writeFile } from "fs/promises";
 import path from "path";
 import { getGeneratorConfig } from "./getGeneratorConfig";
@@ -15,6 +15,7 @@ export declare namespace runGenerator {
         helpers: GeneratorHelpers;
         customConfig: unknown;
         workspaceName: string;
+        organization: string;
 
         absolutePathToIr: string;
         absolutePathToOutput: string | undefined;
@@ -25,6 +26,7 @@ export declare namespace runGenerator {
 export async function runGenerator({
     imageName,
     workspaceName,
+    organization,
     absolutePathToOutput,
     absolutePathToIr,
     pathToWriteConfigJson,
@@ -44,6 +46,7 @@ export async function runGenerator({
         helpers,
         customConfig,
         workspaceName,
+        organization,
     });
     binds.push(...bindsForGenerators);
 

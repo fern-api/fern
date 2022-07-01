@@ -1,6 +1,6 @@
 import { RawSchemas } from "@fern-api/syntax-analysis";
-import { FailedResponse } from "@fern-fern/ir-model/services/commons";
-import { FernFilepath } from "@fern-fern/ir-model/types";
+import { FernFilepath } from "@fern-fern/ir-model";
+import { FailedResponse } from "@fern-fern/ir-model/services";
 import { parseTypeName } from "../../utils/parseTypeName";
 
 export function convertFailedResponse({

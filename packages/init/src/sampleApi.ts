@@ -50,7 +50,7 @@ const API: RawSchemas.FernConfigurationSchema = {
                         method: "GET",
                         path: "/{movieId}",
                         "path-parameters": {
-                            postId: "MovieId",
+                            movieId: "MovieId",
                         },
                         response: {
                             ok: "Movie",

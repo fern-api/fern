@@ -1,21 +1,22 @@
 import { WorkspaceDefinition } from "@fern-api/commons";
 import { Compiler } from "@fern-api/compiler";
 import { model, services } from "@fern-fern/fiddle-coordinator-api-client";
-import { defaultFetcher } from "@fern-typescript/service-utils";
-import axios from "axios";
+import { GetJobStatusResponse } from "@fern-fern/fiddle-coordinator-api-client/model/remoteGen";
+import axios, { AxiosError } from "axios";
 import chalk from "chalk";
 import FormData from "form-data";
 import { createWriteStream } from "fs";
 
 const REMOTE_GENERATION_SERVICE = new services.remoteGen.RemoteGenerationService({
     origin: "https://fiddle-coordinator-dev.buildwithfern.com/api",
-    fetcher: defaultFetcher,
 });
 
 export async function runRemoteGenerationForWorkspace({
+    organization,
     workspaceDefinition,
     compileResult,
 }: {
+    organization: string;
     workspaceDefinition: WorkspaceDefinition;
     compileResult: Compiler.SuccessfulResult;
 }): Promise<void> {
@@ -25,7 +26,7 @@ export async function runRemoteGenerationForWorkspace({
 
     const createResponse = await REMOTE_GENERATION_SERVICE.createJob({
         apiName: workspaceDefinition.name,
-        orgName: "fern",
+        orgName: organization,
         generators: workspaceDefinition.generators.map((generator) => ({
             id: generator.name,
             version: generator.version,
@@ -60,12 +61,15 @@ export async function runRemoteGenerationForWorkspace({
 
         setTimeout(getStatus, 2_000);
         async function getStatus() {
-            const response = await REMOTE_GENERATION_SERVICE.getJobStatus({
-                jobId: job.jobId,
-            }).catch((e) => {
-                console.error("Failed to get job status", e);
-                throw e;
-            });
+            let response: GetJobStatusResponse;
+            try {
+                response = await REMOTE_GENERATION_SERVICE.getJobStatus({
+                    jobId: job.jobId,
+                });
+            } catch (error) {
+                console.error("Failed to get job status.", (error as AxiosError)?.message ?? "<unknown error>");
+                return;
+            }
 
             if (response.ok) {
                 statuses = response.body;
@@ -85,6 +89,12 @@ export async function runRemoteGenerationForWorkspace({
                                 console.log(
                                     `Published ${chalk.bold(`${publishedPackage.name}@${publishedPackage.version}`)}`
                                 );
+                            } else if (publishedPackage._type === "maven") {
+                                console.log(
+                                    `Published ${chalk.bold(
+                                        `${publishedPackage.group}:${publishedPackage.artifact}:${publishedPackage.version}`
+                                    )}`
+                                );
                             }
                         }
                         if (status.hasFilesToDownload && generator.generate?.absolutePathToLocalOutput != null) {
@@ -102,10 +112,14 @@ export async function runRemoteGenerationForWorkspace({
                                     );
                                 })
                                 .catch((error) => {
-                                    console.error("Failed to download Postman collection.", error);
+                                    console.error(
+                                        "Failed to download.",
+                                        (error as AxiosError)?.message ?? "<unknown error>"
+                                    );
                                 });
                         }
                     } else if (status._type === "failed") {
+                        handledTaskIds.add(taskId);
                         console.log("Failed to generate :(");
                     }
                 });

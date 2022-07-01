@@ -1,8 +1,7 @@
-import { ServiceName } from "@fern-fern/ir-model/services/commons";
-import { EndpointId } from "@fern-fern/ir-model/services/http";
-import { FernFilepath } from "@fern-fern/ir-model/types";
+import { EndpointId, ServiceName } from "@fern-fern/ir-model/services";
 import { ImportStrategy } from "@fern-typescript/commons";
 import { Directory, SourceFile, ts } from "ts-morph";
+import { StringifiedFernFilepath, stringifyFernFilepath } from "../stringifyFernFilepath";
 import { BaseServiceTypeContext, ServiceTypeMetadata } from "./BaseServiceTypeContext";
 import { GeneratedRequest, InlinedServiceTypeReference, ServiceTypeReference } from "./types";
 
@@ -61,7 +60,7 @@ export declare namespace HttpServiceTypeContext {
 
 export class HttpServiceTypeContext extends BaseServiceTypeContext {
     private generatedTypes: Record<
-        FernFilepath,
+        StringifiedFernFilepath,
         Record<NonQualifiedServiceName, Record<EndpointId, GeneratedHttpEndpointTypes>>
     > = {};
 
@@ -105,7 +104,7 @@ export class HttpServiceTypeContext extends BaseServiceTypeContext {
         endpointId,
         generatedTypes,
     }: HttpServiceTypeContext.registerGeneratedTypes.Args): void {
-        const generatedTypesForPackage = (this.generatedTypes[serviceName.fernFilepath] ??= {});
+        const generatedTypesForPackage = (this.generatedTypes[stringifyFernFilepath(serviceName.fernFilepath)] ??= {});
         const generatedTypesForService = (generatedTypesForPackage[serviceName.name] ??= {});
         generatedTypesForService[endpointId] = generatedTypes;
     }
@@ -114,7 +113,8 @@ export class HttpServiceTypeContext extends BaseServiceTypeContext {
         serviceName,
         endpointId,
     }: HttpServiceTypeContext.getGeneratedTypes.Args): GeneratedHttpEndpointTypes {
-        const generatedTypes = this.generatedTypes[serviceName.fernFilepath]?.[serviceName.name]?.[endpointId];
+        const generatedTypes =
+            this.generatedTypes[stringifyFernFilepath(serviceName.fernFilepath)]?.[serviceName.name]?.[endpointId];
         if (generatedTypes == null) {
             throw new Error(
                 "Cannot find generated types for " + `${serviceName.fernFilepath}:${serviceName.name}:${endpointId}`

@@ -1,4 +1,4 @@
-import { CustomWireMessageEncoding, Encoding } from "@fern-fern/ir-model/services/commons";
+import { CustomWireMessageEncoding, Encoding } from "@fern-fern/ir-model/services";
 
 const DEFAULT_ENCODING = Encoding.json();
 

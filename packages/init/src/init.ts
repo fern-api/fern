@@ -9,8 +9,8 @@ import yaml from "js-yaml";
 import path from "path";
 import { writeSampleApiToDirectory } from "./sampleApi";
 
-export async function initialize(): Promise<void> {
-    await writeProjectConfigIfNotExists();
+export async function initialize({ organization }: { organization: string }): Promise<void> {
+    await writeProjectConfigIfNotExists({ organization });
     await writeApiSubDirectoryIfNotExists();
 }
 
@@ -28,24 +28,24 @@ async function writeApiSubDirectoryIfNotExists(): Promise<void> {
     }
 }
 
-const BLOG_POST_API_WORKSPACE_DEFINITION: WorkspaceDefinitionSchema = {
-    name: "Blog Post API",
+const API_WORKSPACE_DEFINITION: WorkspaceDefinitionSchema = {
+    name: "api",
     definition: SRC_DIRECTORY,
     generators: [],
 };
 
 async function writeWorkspaceDefinitionFile(dir: string): Promise<void> {
-    await writeFile(path.join(dir, WORKSPACE_DEFINITION_FILENAME), yaml.dump(BLOG_POST_API_WORKSPACE_DEFINITION));
+    await writeFile(path.join(dir, WORKSPACE_DEFINITION_FILENAME), yaml.dump(API_WORKSPACE_DEFINITION));
 }
 
-const DEFAULT_PROJECT_CONFIG: ProjectConfigSchema = {
-    workspaces: ["**"],
-};
-
-async function writeProjectConfigIfNotExists(): Promise<void> {
+async function writeProjectConfigIfNotExists({ organization }: { organization: string }): Promise<void> {
     const projectConfigExists = await doesPathExist(PROJECT_CONFIG_FILENAME);
     if (!projectConfigExists) {
-        await writeFile(PROJECT_CONFIG_FILENAME, JSON.stringify(DEFAULT_PROJECT_CONFIG, undefined, 4));
+        const projectConfig: ProjectConfigSchema = {
+            workspaces: ["**"],
+            organization,
+        };
+        await writeFile(PROJECT_CONFIG_FILENAME, JSON.stringify(projectConfig, undefined, 4));
     }
 }
 

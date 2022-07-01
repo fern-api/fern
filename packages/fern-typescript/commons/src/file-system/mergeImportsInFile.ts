@@ -1,13 +1,7 @@
 import { ImportDeclaration, ImportDeclarationStructure, OptionalKind, SourceFile } from "ts-morph";
 
-export function getSourceFileAsText(file: SourceFile): string {
-    mergeImportsInFile(file);
-    file.formatText();
-    return file.getFullText();
-}
-
 type ModuleSpecifier = string;
-function mergeImportsInFile(file: SourceFile) {
+export function mergeImportsInFile(file: SourceFile): void {
     const imports: Record<ModuleSpecifier, OptionalKind<ImportDeclarationStructure>> = {};
 
     const importDeclarations = file.getImportDeclarations();
@@ -18,7 +12,23 @@ function mergeImportsInFile(file: SourceFile) {
     }
 
     for (const importDeclaration of Object.values(imports)) {
-        file.addImportDeclaration(importDeclaration);
+        // add namespace import separately, since you can't combine a namespace imports with other imports
+
+        if (importDeclaration.namespaceImport != null) {
+            file.addImportDeclaration({
+                ...importDeclaration,
+                defaultImport: undefined,
+                namedImports: undefined,
+            });
+        }
+
+        const hasNamedImports = importDeclaration.namedImports != null && importDeclaration.namedImports.length > 0;
+        if (importDeclaration.defaultImport != null || hasNamedImports) {
+            file.addImportDeclaration({
+                ...importDeclaration,
+                namespaceImport: undefined,
+            });
+        }
     }
 }
 

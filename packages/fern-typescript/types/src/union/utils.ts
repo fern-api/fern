@@ -1,4 +1,4 @@
-import { TypeReference } from "@fern-fern/ir-model/types";
+import { TypeReference } from "@fern-fern/ir-model";
 import { ImportStrategy } from "@fern-typescript/commons";
 import { ModelContext, ResolvedType } from "@fern-typescript/model-context";
 import { upperFirst } from "lodash";

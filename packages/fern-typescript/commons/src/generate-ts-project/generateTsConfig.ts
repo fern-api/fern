@@ -9,6 +9,9 @@ const COMPILER_OPTIONS: CompilerOptions = {
     sourceMap: true,
     emitDeclarationOnly: true,
     esModuleInterop: true,
+    noUncheckedIndexedAccess: true,
+    noUnusedLocals: true,
+    noUnusedParameters: true,
 };
 
 export async function generateTsConfig(volume: Volume): Promise<void> {
