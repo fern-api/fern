@@ -6,7 +6,6 @@ import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameUtils;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.java.exception.UnknownRemoteException;
-import com.fern.java.jackson.ClientObjectMappers;
 import com.fern.model.codegen.Generator;
 import com.fern.model.codegen.services.payloads.FailedResponseGenerator;
 import com.fern.types.services.http.HttpEndpoint;
@@ -129,8 +128,8 @@ public final class ServiceErrorDecoderGenerator extends Generator {
                 .addStatement(
                         "$T value = $T.$L.readValue($L.body().asInputStream(), $L)",
                         genericReturnType,
-                        ClassName.get(ClientObjectMappers.class),
-                        "", // ClientObjectMappers.class.getField(ClientObjectMappers.JSON_MAPPER),
+                        ClassNameUtils.CLIENT_OBJECT_MAPPERS_CLASS_NAME,
+                        ClassNameUtils.CLIENT_OBJECT_MAPPERS_JSON_MAPPER_FIELD_NAME,
                         DECODE_EXCEPTION_RESPONSE_PARAMETER_NAME,
                         DECODE_EXCEPTION_CLAZZ_PARAMETER_NAME)
                 .addStatement("return $L.apply(value)", DECODE_EXCEPTION_RETRIEVER_PARAMETER_NAME)
