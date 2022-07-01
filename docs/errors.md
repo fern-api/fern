@@ -1,0 +1,60 @@
+# Errors
+
+Endpoints can throw errors. Errors have bodies that contain a name, status code, and optionally have a type. An endpoint can have multiple errors.
+
+## Example of using errors
+
+The `getMovie` endpoint below has two errors that can throw: `NotFoundError` and `UnauthorizedError`.
+
+```yml
+services:
+  http:
+    MoviesService:
+      auth: none
+      base-path: /movies
+      endpoints:
+        getMovie:
+          method: GET
+          path: /{movieId}
+          path-parameters:
+            movieId: MovieId
+          response:
+            ok: Movie
+            failed:
+              errors:
+                - NotFoundError
+                - UnauthorizedError
+errors:
+  NotFoundError:
+    http:
+      statusCode: 404
+    type:
+      properties:
+        id: MovieId
+  UnauthorizedError:
+    http:
+      statusCode: 401
+    type:
+      properties:
+        message: string
+```
+
+Let's say that a client hits the `getMovie` endpoint looking for _Iron Man 5_. That movie doesn't exist in IMDb, so the server would throw a `NotFoundError`. The response would be:
+
+```json
+{
+  "_error": "NotFoundError",
+  "_errorInstanceId": "67d92c10-b094-49b2-8ea4-0b84013ad1bc",
+  "MovieId": "Iron Man 5"
+}
+```
+
+My providing the `MovieId` the frontend can now display a string to the user: _"No results found for "Iron Man 5"_.
+
+## Forward compatiblility
+
+Errors are forward compatibile; you can add errors as you go without breaking clients.
+
+## Error instance ids
+
+When an error is encountered, an `errorInstanceId` is generated automatically and can be logged, making debugging easier.

@@ -7,7 +7,13 @@
     <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/410f13c725ab4403aac77b237f9fe1f1-1654645327734-with-play.gif">
   </a>
 
-### Goals
+## How does it work?
+
+![Overview](assets/diagrams/overview-experience.png)
+
+Fern reads in your [Fern API Definition](#what-is-a-fern-api-definition), invokes remote [generators](#fern-generators), and creates clients, server stubs, and documentation for your API.
+
+## Goals
 
 **1. High-quality code generation.**
 
@@ -25,38 +31,72 @@ Use HTTP when you want RESTful calls. Use WebSockets when you want subscriptions
 
 Every request can result in success or failure. Errors are strongly typed so it's easy for consumers to handle them.
 
-### How does it work?
+## What is a Fern API Definition?
 
-An API begins as a **Fern Definition**, a set of YAML files that describe your API. For example, here's a Fern Definition for a simple API to get the current day of the week:
+A **Fern API Definition** is a set of YAML files that describe your API. Each file may define:
 
-```yaml
+- **[Types](types.md)**: data model
+- **[Services](services.md)**: endpoints
+- **[Errors](errors.md)**: error handling
+- **[IDs](ids.md)**: unique identifiers
+- **[Imports](imports.md)**: share types, errors, and ids across YAML files
+
+### An example of a Fern API Definition
+
+```yml
+# This is a sample IMDb API to get you more familiar with defining APIs in Fern.
+
+ids:
+  - MovieId
 types:
-  DayOfWeek:
-    enum:
-      - SUNDAY
-      - MONDAY
-      - TUESDAY
-      - WEDNESDAY
-      - THURSDAY
-      - FRIDAY
-      - SATURDAY
+  Movie:
+    properties:
+      id: MovieId
+      title: string
+      rating: double
 services:
   http:
-    DayOfWeekService:
+    MoviesService:
       auth: none
+      base-path: /movies
       endpoints:
-        getCurrentDayOfWeek:
+        createMovie:
+          method: POST
+          path: /
+          request:
+            type:
+              properties:
+                title: string
+                rating: double
+          response: MovieId
+        getMovie:
           method: GET
-          path: /day-of-week
-          response: DayOfWeek
+          path: /{movieId}
+          path-parameters:
+            movieId: MovieId
+          response:
+            ok: Movie
+            failed:
+              errors:
+                - NotFoundError
+errors:
+  NotFoundError:
+    http:
+      statusCode: 404
 ```
 
-Fern reads in the Definition, validates it, and invokes generators. Some examples of generators are:
+## Fern Generators
 
-| Generator         | Description                                                                              |
-| ----------------- | ---------------------------------------------------------------------------------------- |
-| `fern-typescript` | converts a Fern Definition to a TypeScript server and a TypeScript client                |
-| `fern-java`       | converts a Fern Definition to a Java server and a Java client                            |
-| `fern-postman`    | converts a Fern Definition to a [Postman Collection](https://www.postman.com/collection) |
-| `fern-openapi`    | converts a Fern Definition to an [OpenAPI Spec](https://swagger.io/resources/open-api/)  |
-| `fern-docs`       | converts a Fern Definition to an interactive documentation site                          |
+| **Generator** |                                       **Description**                                        |   **CLI Command**   |                                      **Library**                                       |
+| :-----------: | :------------------------------------------------------------------------------------------: | :-----------------: | :------------------------------------------------------------------------------------: |
+|               |                                                                                              |
+|  TypeScript   |               converts a Fern API Definition to a TypeScript client and server               | fern add typescript | [fern-typescript](https://github.com/fern-api/fern/tree/main/packages/fern-typescript) |
+|               |                                                                                              |
+|     Java      |                  converts a Fern API Definition to a Java client and server                  |    fern add java    |                   [fern-java](https://github.com/fern-api/fern-java)                   |
+|               |                                                                                              |
+|    Python     |                 converts a Fern API Definition to a Python client and server                 |   fern add python   |                                         _WIP_                                          |
+|               |                                                                                              |
+|    Postman    | converts a Fern API Definition to a [Postman Collection](https://www.postman.com/collection) |  fern add postman   |                [fern-postman](https://github.com/fern-api/fern-postman)                |
+|               |                                                                                              |
+|    OpenAPI    |   converts a Fern Definition to an [OpenAPI Spec](https://swagger.io/resources/open-api/)    |  fern add openapi   |                [fern-openapi](https://github.com/fern-api/fern-openapi)                |
+|               |                                                                                              |
