@@ -35,7 +35,7 @@
     "@fern-api/commons": "workspace:*",
     "@fern-api/compiler": "workspace:*",
     "@fern-api/docker-utils": "workspace:*",
-    "@fern-fern/ir-model": "0.0.13",
+    "@fern-fern/ir-model": "0.0.15",
     "execa": "^5.1.1",
     "tar": "^6.1.11",
     "tmp-promise": "^3.0.3"

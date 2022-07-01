@@ -5,7 +5,6 @@ describe("convertResponseErrors", () => {
     it("reference to an error in another file", () => {
         const actualResponseErrors = convertFailedResponse({
             rawFailedResponse: {
-                discriminant: "_some_other_discriminant",
                 errors: ["commons.UnauthorizedError"],
             },
             fernFilepath: ["path", "to"],
@@ -16,10 +15,6 @@ describe("convertResponseErrors", () => {
 
         const expectedResponseErrors: FailedResponse = {
             docs: undefined,
-            discriminant: "_some_other_discriminant",
-            errorProperties: {
-                errorInstanceId: "_errorInstanceId",
-            },
             errors: [
                 {
                     discriminantValue: "UnauthorizedError",

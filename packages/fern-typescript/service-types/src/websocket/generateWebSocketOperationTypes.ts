@@ -1,3 +1,4 @@
+import { FernConstants } from "@fern-fern/ir-model";
 import { WebSocketChannel, WebSocketOperation } from "@fern-fern/ir-model/services";
 import { DependencyManager } from "@fern-typescript/commons";
 import { GeneratedWebSocketOperationTypes, ModelContext } from "@fern-typescript/model-context";
@@ -9,11 +10,13 @@ export function generateWebSocketOperationTypes({
     operation,
     modelContext,
     dependencyManager,
+    fernConstants,
 }: {
     channel: WebSocketChannel;
     operation: WebSocketOperation;
     modelContext: ModelContext;
     dependencyManager: DependencyManager;
+    fernConstants: FernConstants;
 }): GeneratedWebSocketOperationTypes {
     return {
         request: generateRequestTypes({
@@ -26,6 +29,7 @@ export function generateWebSocketOperationTypes({
             operation,
             modelContext,
             dependencyManager,
+            fernConstants,
         }),
     };
 }

@@ -37,6 +37,11 @@ export const IntermediateRepresentationGenerationStage: CompilerStage<
                 http: [],
                 websocket: [],
             },
+            constants: {
+                errorDiscriminant: "_error",
+                errorInstanceIdKey: "_errorInstanceId",
+                unknownErrorDiscriminantValue: "_unknown",
+            },
         };
 
         const nonStandardEncodings: CustomWireMessageEncoding[] = [];
