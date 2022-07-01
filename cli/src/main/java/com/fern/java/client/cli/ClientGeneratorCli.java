@@ -32,13 +32,20 @@ public final class ClientGeneratorCli {
     private static final String SRC_MAIN_JAVA = "src/main/java";
     private static final String BUILD_GRADLE = "build.gradle";
 
+    public static final String VERSION_ENV_NAME = "VERSION";
+
     private ClientGeneratorCli() {}
 
     public static void main(String... args) {
         String pluginPath = args[0];
         GeneratorConfig generatorConfig = getGeneratorConfig(pluginPath);
 
-        FernPluginConfig fernPluginConfig = FernPluginConfig.create(generatorConfig);
+        String version = System.getenv(ClientGeneratorCli.VERSION_ENV_NAME);
+        if (version == null) {
+            throw new RuntimeException("Failed to find VERSION environment variable!");
+        }
+
+        FernPluginConfig fernPluginConfig = FernPluginConfig.create(generatorConfig, version);
         createOutputDirectory(fernPluginConfig.generatorConfig().output());
         IntermediateRepresentation ir = getIr(fernPluginConfig.generatorConfig());
         generate(ir, fernPluginConfig);
@@ -114,12 +121,6 @@ public final class ClientGeneratorCli {
         resultBuilder.addAllModelFiles(modelGeneratorResult.unions());
         resultBuilder.addAllModelFiles(modelGeneratorResult.errors().values());
         resultBuilder.addAllModelFiles(modelGeneratorResult.endpointModelFiles());
-        resultBuilder.addModelFiles(generatorContext.getStagedImmutablesFile());
-        resultBuilder.addModelFiles(generatorContext.getPackagePrivateImmutablesFile());
-        resultBuilder.addModelFiles(generatorContext.getAliasImmutablesStyle());
-        resultBuilder.addModelFiles(generatorContext.getAuthHeaderFile());
-        resultBuilder.addModelFiles(generatorContext.getApiExceptionFile());
-        resultBuilder.addModelFiles(generatorContext.getHttpApiExceptionFile());
         return modelGeneratorResult;
     }
 
@@ -138,15 +139,9 @@ public final class ClientGeneratorCli {
                     return httpServiceClientGenerator.generate();
                 })
                 .collect(Collectors.toList());
-        boolean serviceClientPresent = false;
         for (GeneratedHttpServiceClient generatedHttpServiceClient : generatedHttpServiceClients) {
             resultBuilder.addClientFiles(generatedHttpServiceClient);
             generatedHttpServiceClient.generatedErrorDecoder().ifPresent(resultBuilder::addClientFiles);
-            serviceClientPresent = true;
-        }
-        if (serviceClientPresent) {
-            resultBuilder.addClientFiles(generatorContext.getClientObjectMappersFile());
-            resultBuilder.addClientFiles(generatorContext.getUnknownRemoteExceptionFile());
         }
     }
 
@@ -165,13 +160,8 @@ public final class ClientGeneratorCli {
                     return httpServiceServerGenerator.generate();
                 })
                 .collect(Collectors.toList());
-        boolean serviceServerPresent = false;
         for (GeneratedHttpServiceServer generatedHttpServiceServer : generatedHttpServiceServers) {
             resultBuilder.addServerFiles(generatedHttpServiceServer);
-            serviceServerPresent = true;
-        }
-        if (serviceServerPresent) {
-            resultBuilder.addServerFiles(generatorContext.getServerObjectMappersFile());
         }
     }
 

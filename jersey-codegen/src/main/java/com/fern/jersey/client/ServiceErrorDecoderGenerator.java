@@ -3,9 +3,10 @@ package com.fern.jersey.client;
 import com.fern.codegen.GeneratedEndpointError;
 import com.fern.codegen.GeneratedErrorDecoder;
 import com.fern.codegen.GeneratorContext;
-import com.fern.codegen.stateless.generator.ObjectMapperGenerator;
 import com.fern.codegen.utils.ClassNameUtils;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
+import com.fern.java.exception.UnknownRemoteException;
+import com.fern.java.jackson.ClientObjectMappers;
 import com.fern.model.codegen.Generator;
 import com.fern.model.codegen.services.payloads.FailedResponseGenerator;
 import com.fern.types.services.http.HttpEndpoint;
@@ -104,7 +105,7 @@ public final class ServiceErrorDecoderGenerator extends Generator {
         }
         codeBlockBuilder.addStatement(
                 "return new $T($S + $L)",
-                generatorContext.getUnknownRemoteExceptionFile().className(),
+                ClassName.get(UnknownRemoteException.class),
                 "Encountered exception for unknown method: ",
                 DECODE_METHOD_KEY_PARAMETER_NAME);
         return decodeMethodSpecBuilder.addCode(codeBlockBuilder.build()).build();
@@ -128,17 +129,15 @@ public final class ServiceErrorDecoderGenerator extends Generator {
                 .addStatement(
                         "$T value = $T.$L.readValue($L.body().asInputStream(), $L)",
                         genericReturnType,
-                        generatorContext.getClientObjectMappersFile().className(),
-                        ObjectMapperGenerator.JSON_MAPPER_FIELD_NAME,
+                        ClassName.get(ClientObjectMappers.class),
+                        "", // ClientObjectMappers.class.getField(ClientObjectMappers.JSON_MAPPER),
                         DECODE_EXCEPTION_RESPONSE_PARAMETER_NAME,
                         DECODE_EXCEPTION_CLAZZ_PARAMETER_NAME)
                 .addStatement("return $L.apply(value)", DECODE_EXCEPTION_RETRIEVER_PARAMETER_NAME)
                 .endControlFlow()
                 .beginControlFlow("catch ($T e)", ClassName.get(IOException.class))
                 .addStatement(
-                        "return new $T($S)",
-                        generatorContext.getUnknownRemoteExceptionFile().className(),
-                        "Failed to read error body")
+                        "return new $T($S)", ClassName.get(UnknownRemoteException.class), "Failed to read error body")
                 .endControlFlow()
                 .build();
     }

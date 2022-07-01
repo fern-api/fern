@@ -1,0 +1,4 @@
+dependencies {
+    compileOnly 'org.immutables:value::annotations'
+    annotationProcessor 'org.immutables:value'
+}

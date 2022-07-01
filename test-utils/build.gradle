@@ -1,4 +1,4 @@
 dependencies {
-    implementation project(":utils")
+    implementation project(":codegen-utils")
     implementation 'com.fern-fern.fern:ir-model'
 }

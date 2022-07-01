@@ -5,9 +5,9 @@ import com.fern.codegen.GeneratedError;
 import com.fern.codegen.GeneratedErrorDecoder;
 import com.fern.codegen.GeneratedHttpServiceClient;
 import com.fern.codegen.GeneratorContext;
-import com.fern.codegen.stateless.generator.ObjectMapperGenerator;
 import com.fern.codegen.utils.ClassNameUtils;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
+import com.fern.java.exception.UnknownRemoteException;
 import com.fern.jersey.HttpAuthToParameterSpec;
 import com.fern.jersey.HttpMethodAnnotationVisitor;
 import com.fern.jersey.HttpPathUtils;
@@ -108,10 +108,7 @@ public final class HttpServiceClientGenerator extends Generator {
         endpointMethodBuilder.addAnnotation(AnnotationSpec.builder(Path.class)
                 .addMember("value", "$S", HttpPathUtils.getJerseyCompatiblePath(httpEndpoint.path()))
                 .build());
-        httpEndpoint
-                .auth()
-                .visit(new HttpAuthToParameterSpec(generatorContext))
-                .ifPresent(endpointMethodBuilder::addParameter);
+        httpEndpoint.auth().visit(new HttpAuthToParameterSpec()).ifPresent(endpointMethodBuilder::addParameter);
         httpEndpoint.headers().stream()
                 .map(jerseyServiceGeneratorUtils::getHeaderParameterSpec)
                 .forEach(endpointMethodBuilder::addParameter);
@@ -137,8 +134,7 @@ public final class HttpServiceClientGenerator extends Generator {
                 .collect(Collectors.toList());
         endpointMethodBuilder.addExceptions(errorClassNames);
         if (!errorClassNames.isEmpty()) {
-            endpointMethodBuilder.addException(
-                    generatorContext.getUnknownRemoteExceptionFile().className());
+            endpointMethodBuilder.addException(ClassName.get(UnknownRemoteException.class));
         }
         return endpointMethodBuilder.build();
     }
@@ -164,8 +160,6 @@ public final class HttpServiceClientGenerator extends Generator {
     }
 
     private MethodSpec getStaticClientBuilderMethod(Optional<GeneratedErrorDecoder> generatedErrorDecoder) {
-        ClassName objectMapperClassName =
-                generatorContext.getClientObjectMappersFile().className();
         CodeBlock.Builder codeBlockBuilder = CodeBlock.builder()
                 .add("return $T.builder()\n", Feign.class)
                 .indent()
@@ -174,13 +168,13 @@ public final class HttpServiceClientGenerator extends Generator {
                 .add(
                         ".decoder(new $T($T.$L))\n",
                         JacksonDecoder.class,
-                        objectMapperClassName,
-                        ObjectMapperGenerator.JSON_MAPPER_FIELD_NAME)
+                        ClassNameUtils.CLIENT_OBJECT_MAPPERS_CLASS_NAME,
+                        ClassNameUtils.CLIENT_OBJECT_MAPPERS_JSON_MAPPER_FIELD_NAME)
                 .add(
                         ".encoder(new $T($T.$L))\n",
                         JacksonEncoder.class,
-                        objectMapperClassName,
-                        ObjectMapperGenerator.JSON_MAPPER_FIELD_NAME);
+                        ClassNameUtils.CLIENT_OBJECT_MAPPERS_CLASS_NAME,
+                        ClassNameUtils.CLIENT_OBJECT_MAPPERS_JSON_MAPPER_FIELD_NAME);
         if (generatedErrorDecoder.isPresent()) {
             codeBlockBuilder.add(
                     ".errorDecoder(new $T())", generatedErrorDecoder.get().className());

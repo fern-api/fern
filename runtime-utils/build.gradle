@@ -1,0 +1,29 @@
+plugins {
+    id 'maven-publish'
+    id 'java-library-distribution'
+}
+
+subprojects {
+    group 'io.github.fern-api'
+
+    apply plugin: 'maven-publish'
+    apply plugin: 'java-library'
+    apply plugin: 'java-library-distribution'
+
+    publishing {
+        publications {
+            myDistribution(MavenPublication) {
+                artifact distZip
+            }
+        }
+        repositories {
+            maven {
+                url "https://s01.oss.sonatype.org/content/repositories/releases/"
+                credentials {
+                    username "$System.env.FERN_MAVEN_PUBLISH_USERNAME"
+                    password "$System.env.FERN_MAVEN_PUBLISH_PASSWORD"
+                }
+            }
+        }
+    }
+}

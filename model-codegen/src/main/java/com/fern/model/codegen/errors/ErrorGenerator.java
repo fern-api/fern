@@ -6,8 +6,8 @@ import com.fern.codegen.GeneratedInterface;
 import com.fern.codegen.GeneratedObject;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.IGeneratedFile;
-import com.fern.codegen.stateless.generator.ApiExceptionGenerator;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
+import com.fern.java.exception.HttpException;
 import com.fern.model.codegen.Generator;
 import com.fern.model.codegen.TypeDefinitionGenerator;
 import com.fern.types.errors.ErrorDeclaration;
@@ -30,6 +30,7 @@ public final class ErrorGenerator extends Generator {
 
     private static final String ERROR_SUFFIX = "Error";
     private static final String STATUS_CODE_FIELD_NAME = "STATUS_CODE";
+    private static final String GET_STATUS_CODE_METHOD_NAME = HttpException.class.getMethods()[0].getName();
 
     private static final Set<String> JSON_IGNORE_EXCEPTION_PROPERTIES =
             Set.of("stackTrace", "cause", "detailMessage", "localizedMessage", "statusCode", "message", "suppressed");
@@ -69,13 +70,12 @@ public final class ErrorGenerator extends Generator {
         errorTypeSpecBuilder.superclass(ClassName.get(Exception.class));
         if (errorDeclaration.http().isPresent()) {
             errorTypeSpecBuilder
-                    .addSuperinterface(
-                            generatorContext.getHttpApiExceptionFile().className())
+                    .addSuperinterface(ClassName.get(HttpException.class))
                     .addField(FieldSpec.builder(TypeName.INT, STATUS_CODE_FIELD_NAME)
                             .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
                             .initializer("$L", errorDeclaration.http().get().statusCode())
                             .build())
-                    .addMethod(MethodSpec.methodBuilder(ApiExceptionGenerator.GET_STATUS_CODE_METHOD_NAME)
+                    .addMethod(MethodSpec.methodBuilder(GET_STATUS_CODE_METHOD_NAME)
                             .addModifiers(Modifier.PUBLIC)
                             .addStatement("return $L", STATUS_CODE_FIELD_NAME)
                             .returns(ClassName.INT)

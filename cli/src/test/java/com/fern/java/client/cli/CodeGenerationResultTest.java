@@ -18,7 +18,7 @@ public class CodeGenerationResultTest {
             .putAllCustomConfig(Map.of(
                     "mode", Mode.CLIENT_AND_SERVER.toString()
             ))
-            .build());
+            .build(), "0.0.0");
 
     @Test
     public void test_serverBuildGradle() {

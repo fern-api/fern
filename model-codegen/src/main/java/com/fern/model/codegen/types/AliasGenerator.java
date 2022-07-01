@@ -6,6 +6,7 @@ import com.fern.codegen.GeneratedAlias;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameUtils;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
+import com.fern.java.immutables.AliasImmutablesStyle;
 import com.fern.model.codegen.Generator;
 import com.fern.types.types.AliasTypeDeclaration;
 import com.fern.types.types.DeclaredTypeName;
@@ -74,8 +75,7 @@ public final class AliasGenerator extends Generator {
     private List<AnnotationSpec> getAnnotationSpecs() {
         return List.of(
                 AnnotationSpec.builder(Value.Immutable.class).build(),
-                AnnotationSpec.builder(
-                                generatorContext.getAliasImmutablesStyle().className())
+                AnnotationSpec.builder(ClassName.get(AliasImmutablesStyle.class))
                         .build(),
                 AnnotationSpec.builder(JsonDeserialize.class)
                         .addMember("as", "$T.class", generatedAliasImmutablesClassName)

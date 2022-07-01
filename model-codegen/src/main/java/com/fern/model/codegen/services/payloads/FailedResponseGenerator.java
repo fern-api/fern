@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.codegen.GeneratedEndpointError;
 import com.fern.codegen.GeneratedError;
 import com.fern.codegen.GeneratorContext;
-import com.fern.codegen.stateless.generator.ApiExceptionGenerator;
 import com.fern.codegen.utils.ClassNameUtils;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.codegen.utils.MethodNameUtils;
@@ -264,10 +263,7 @@ public final class FailedResponseGenerator extends Generator {
                     .addMethod(MethodSpec.methodBuilder(GET_STATUS_CODE_METHOD_NAME)
                             .returns(ClassName.INT)
                             .addAnnotation(Override.class)
-                            .addStatement(
-                                    "return $L().$L()",
-                                    capitalizedDiscriminantValue,
-                                    ApiExceptionGenerator.GET_STATUS_CODE_METHOD_NAME)
+                            .addStatement("return $L().$L()", capitalizedDiscriminantValue, GET_STATUS_CODE_METHOD_NAME)
                             .addModifiers(Modifier.DEFAULT, Modifier.PUBLIC)
                             .build())
                     .addMethod(MethodSpec.methodBuilder(GET_NESTED_ERROR_METHOD_NAME)

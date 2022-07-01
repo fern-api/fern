@@ -6,7 +6,7 @@ plugins {
 }
 
 dependencies {
-    implementation project(':utils')
+    implementation project(':codegen-utils')
     implementation project(':model-codegen')
     implementation project(':jersey-codegen')
     implementation 'com.fasterxml.jackson.core:jackson-databind'
@@ -38,27 +38,6 @@ docker {
     tags 'latest', "${project.version}"
     files tasks.distTar.outputs, './init.sh', './build/zip/gradle-resources.zip'
     buildArgs([BUILD_VERSION: "${project.version}"])
-}
-
-publishing {
-    publications {
-        myDistribution(MavenPublication) {
-            artifact distZip
-        }
-    }
-    repositories {
-        maven {
-            url "https://s01.oss.sonatype.org/content/repositories/releases/"
-            credentials {
-                username "$System.env.FERN_MAVEN_PUBLISH_USERNAME"
-                password "$System.env.FERN_MAVEN_PUBLISH_PASSWORD"
-            }
-        }
-    }
-}
-
-artifactoryPublish {
-    publications('myDistribution')
 }
 
 task dockerTagVersion {

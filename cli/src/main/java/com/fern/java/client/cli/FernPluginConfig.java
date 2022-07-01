@@ -18,6 +18,8 @@ public interface FernPluginConfig {
     @JsonProperty("customConfig")
     CustomPluginConfig customPluginConfig();
 
+    String version();
+
     default String getModelProjectName() {
         return getSubProjectName("model");
     }
@@ -34,7 +36,7 @@ public interface FernPluginConfig {
         return generatorConfig().workspaceName() + "-" + projectSuffix;
     }
 
-    static FernPluginConfig create(GeneratorConfig generatorConfig) {
+    static FernPluginConfig create(GeneratorConfig generatorConfig, String version) {
         return ImmutableFernPluginConfig.builder()
                 .generatorConfig(generatorConfig)
                 .customPluginConfig(CustomPluginConfig.builder()
@@ -43,6 +45,7 @@ public interface FernPluginConfig {
                         .packagePrefix(Optional.ofNullable(
                                 generatorConfig.customConfig().get("packagePrefix")))
                         .build())
+                .version(version)
                 .build();
     }
 }
