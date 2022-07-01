@@ -93,7 +93,7 @@ fern generate
 In terminal, you'll see `Published @imdb-fern/api-server@x.x.x` which we'll add as a dependency.
 
 ```bash
-npm config set @imdb-fern:registry https://npm-dev.buildwithfern.com/
+npm config set --location project @imdb-fern:registry https://npm-dev.buildwithfern.com/
 npm install @imdb-fern/api-server@x.x.x
 ```
 
