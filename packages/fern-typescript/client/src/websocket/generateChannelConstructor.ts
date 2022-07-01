@@ -1,17 +1,19 @@
 import { WebSocketChannel } from "@fern-fern/ir-model/services";
-import { getTextOfTsNode } from "@fern-typescript/commons";
-import { ClassDeclaration, ts } from "ts-morph";
+import { DependencyManager, getTextOfTsNode } from "@fern-typescript/commons";
+import { ClassDeclaration, SourceFile, ts } from "ts-morph";
 import { ClientConstants } from "../constants";
-import { generateJoinPathsCall } from "../utils/generateJoinPathsCall";
+import { generateJoinUrlPathsCall } from "../utils/generateJoinPathsCall";
 
 const SOCKET_LOCAL_VARIABLE_NAME = "socket";
 
 export function generateChannelConstructor({
     channelClass,
     channelDefinition,
+    dependencyManager,
 }: {
     channelClass: ClassDeclaration;
     channelDefinition: WebSocketChannel;
+    dependencyManager: DependencyManager;
 }): void {
     channelClass.addConstructor({
         parameters: [
@@ -51,7 +53,9 @@ export function generateChannelConstructor({
                             undefined,
                             ts.factory.createBlock(
                                 generateCreateAndResolveSocket({
+                                    channelFile: channelClass.getSourceFile(),
                                     channelDefinition,
+                                    dependencyManager,
                                 }),
                                 true
                             )
@@ -64,9 +68,13 @@ export function generateChannelConstructor({
 }
 
 function generateCreateAndResolveSocket({
+    channelFile,
     channelDefinition,
+    dependencyManager,
 }: {
+    channelFile: SourceFile;
     channelDefinition: WebSocketChannel;
+    dependencyManager: DependencyManager;
 }): ts.Statement[] {
     return [
         ts.factory.createVariableStatement(
@@ -78,17 +86,21 @@ function generateCreateAndResolveSocket({
                         undefined,
                         undefined,
                         ts.factory.createNewExpression(ts.factory.createIdentifier("WebSocket"), undefined, [
-                            generateJoinPathsCall(
-                                ts.factory.createPropertyAccessExpression(
-                                    ts.factory.createIdentifier(
-                                        ClientConstants.WebsocketChannel.Constructor.PARAMETER_NAME
+                            generateJoinUrlPathsCall({
+                                file: channelFile,
+                                dependencyManager,
+                                paths: [
+                                    ts.factory.createPropertyAccessExpression(
+                                        ts.factory.createIdentifier(
+                                            ClientConstants.WebsocketChannel.Constructor.PARAMETER_NAME
+                                        ),
+                                        ts.factory.createIdentifier(
+                                            ClientConstants.WebsocketChannel.Namespace.Args.Properties.ORIGIN
+                                        )
                                     ),
-                                    ts.factory.createIdentifier(
-                                        ClientConstants.WebsocketChannel.Namespace.Args.Properties.ORIGIN
-                                    )
-                                ),
-                                ts.factory.createStringLiteral(channelDefinition.path)
-                            ),
+                                    ts.factory.createStringLiteral(channelDefinition.path),
+                                ],
+                            }),
                         ])
                     ),
                 ],

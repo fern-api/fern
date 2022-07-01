@@ -108,7 +108,7 @@ function generateChannel({
         initializer: getTextOfTsNode(ts.factory.createObjectLiteralExpression([])),
     });
 
-    generateChannelConstructor({ channelClass, channelDefinition: channel });
+    generateChannelConstructor({ channelClass, channelDefinition: channel, dependencyManager });
 
     const serverMessageTypes: ts.TypeNode[] = [];
 

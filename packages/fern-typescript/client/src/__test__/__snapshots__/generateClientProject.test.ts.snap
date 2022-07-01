@@ -125,7 +125,8 @@ export * from \\"./_service-types\\";
     },
     \\"dependencies\\": {
         \\"uuid\\": \\"8.3.2\\",
-        \\"@types/uuid\\": \\"8.3.4\\"
+        \\"@types/uuid\\": \\"8.3.4\\",
+        \\"url-join\\": \\"5.0.0\\"
     },
     \\"devDependencies\\": {
         \\"@types/node\\": \\"17.0.33\\",
@@ -133,7 +134,8 @@ export * from \\"./_service-types\\";
         \\"typescript\\": \\"4.6.4\\"
     }
 }",
-  "/services/ChatService.ts": "import * as model from \\"../model\\";
+  "/services/ChatService.ts": "import urlJoin from \\"url-join\\";
+import * as model from \\"../model\\";
 import * as uuid from \\"uuid\\";
 
 export declare namespace ChatService {
@@ -154,7 +156,7 @@ export class ChatService implements ChatService {
 
     constructor(args: ChatService.Args) {
         this.socket = new Promise(resolve => {
-            const socket = new WebSocket(args.origin + \\"/chat\\");
+            const socket = new WebSocket(urlJoin(args.origin, \\"/chat\\"));
             socket.onopen = () => {
                 resolve(socket);
             };
@@ -274,7 +276,8 @@ export * from \\"./GetResponse\\";
         \\"build\\": \\"esbuild $(find . -name '*.ts' -not -path './node_modules/*') --format=cjs --sourcemap --outdir=. && tsc\\"
     },
     \\"dependencies\\": {
-        \\"@fern-typescript/service-utils\\": \\"0.0.114\\"
+        \\"@fern-typescript/service-utils\\": \\"0.0.114\\",
+        \\"url-join\\": \\"5.0.0\\"
     },
     \\"devDependencies\\": {
         \\"@types/node\\": \\"17.0.33\\",
@@ -284,6 +287,7 @@ export * from \\"./GetResponse\\";
 }",
   "/services/NoErrorsService.ts": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import * as model from \\"../model\\";
+import urlJoin from \\"url-join\\";
 
 export interface NoErrorsService {
     get(): Promise<model.GetResponse>;
@@ -302,7 +306,7 @@ export class NoErrorsService implements NoErrorsService {
 
     public async get(): Promise<model.GetResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \\"/\\",
+            url: urlJoin(this.baseUrl, \\"/\\"),
             method: \\"GET\\",
             headers: {},
             token: this.token
@@ -634,7 +638,8 @@ export * from \\"./_service-types\\";
     \\"dependencies\\": {
         \\"uuid\\": \\"8.3.2\\",
         \\"@types/uuid\\": \\"8.3.4\\",
-        \\"@fern-typescript/service-utils\\": \\"0.0.114\\"
+        \\"@fern-typescript/service-utils\\": \\"0.0.114\\",
+        \\"url-join\\": \\"5.0.0\\"
     },
     \\"devDependencies\\": {
         \\"@types/node\\": \\"17.0.33\\",
@@ -643,6 +648,7 @@ export * from \\"./_service-types\\";
     }
 }",
   "/services/PostsService.ts": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
 export interface PostsService {
@@ -658,13 +664,13 @@ export class PostsService implements PostsService {
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
-        this.baseUrl = args.origin + \\"/posts\\";
+        this.baseUrl = urlJoin(args.origin, \\"/posts\\");
         this.token = args.token;
     }
 
     public async createPost(request: model.CreatePostRequest): Promise<model.CreatePostResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \\"/\\",
+            url: urlJoin(this.baseUrl, \\"/\\"),
             method: \\"POST\\",
             headers: {},
             token: this.token,
@@ -698,7 +704,7 @@ export class PostsService implements PostsService {
         queryParameters.append(\\"otherParam\\", request.otherParam.toString());
 
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \`/\${request.postId}\`,
+            url: urlJoin(this.baseUrl, \`/\${request.postId}\`),
             method: \\"GET\\",
             headers: {},
             token: this.token,
@@ -723,7 +729,7 @@ export class PostsService implements PostsService {
 
     public async getPostV2(request: model.PostId): Promise<model.GetPostV2Response> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \\"/get\\",
+            url: urlJoin(this.baseUrl, \\"/get\\"),
             method: \\"GET\\",
             headers: {},
             token: this.token,

@@ -1,10 +1,10 @@
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services";
-import { getTextOfTsNode } from "@fern-typescript/commons";
+import { DependencyManager, getTextOfTsNode } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import { GeneratedHttpEndpointTypes } from "@fern-typescript/model-context";
 import { SourceFile, StatementStructures, StructureKind, ts, VariableDeclarationKind } from "ts-morph";
 import { ClientConstants } from "../../../constants";
-import { generateJoinPathsCall } from "../../../utils/generateJoinPathsCall";
+import { generateJoinUrlPathsCall } from "../../../utils/generateJoinPathsCall";
 import { convertPathToTemplateString } from "./convertPathToTemplateString";
 import { generateEncoderCall } from "./generateEncoderCall";
 
@@ -15,6 +15,7 @@ export async function generateFetcherCall({
     endpointTypes,
     includeQueryParams,
     helperManager,
+    dependencyManager,
 }: {
     serviceFile: SourceFile;
     serviceDefinition: HttpService;
@@ -22,17 +23,22 @@ export async function generateFetcherCall({
     endpointTypes: GeneratedHttpEndpointTypes;
     includeQueryParams: boolean;
     helperManager: HelperManager;
+    dependencyManager: DependencyManager;
 }): Promise<StatementStructures> {
     const fetcherArgs: ts.ObjectLiteralElementLike[] = [
         ts.factory.createPropertyAssignment(
             ts.factory.createIdentifier(ClientConstants.HttpService.ServiceUtils.Fetcher.Parameters.URL),
-            generateJoinPathsCall(
-                ts.factory.createPropertyAccessExpression(
-                    ts.factory.createThis(),
-                    ts.factory.createIdentifier(ClientConstants.HttpService.PrivateMembers.BASE_URL)
-                ),
-                convertPathToTemplateString(endpoint.path)
-            )
+            generateJoinUrlPathsCall({
+                file: serviceFile,
+                dependencyManager,
+                paths: [
+                    ts.factory.createPropertyAccessExpression(
+                        ts.factory.createThis(),
+                        ts.factory.createIdentifier(ClientConstants.HttpService.PrivateMembers.BASE_URL)
+                    ),
+                    convertPathToTemplateString(endpoint.path),
+                ],
+            })
         ),
         ts.factory.createPropertyAssignment(
             ts.factory.createIdentifier(ClientConstants.HttpService.ServiceUtils.Fetcher.Parameters.METHOD),
