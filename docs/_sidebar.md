@@ -1,9 +1,19 @@
 <!-- markdownlint-disable MD041 MD033 -->
 
-- [Introduction](README.md)
-- [Getting started](getting-started.md)
-- [Defining the data model](defining-the-data-model.md)
-- [Defining a service](defining-a-service.md)
-- [Defining a channel](defining-a-channel.md)
-- [Defining errors](defining-errors.md)
-- [Generators](generators.md)
+- Getting started
+
+  - [Tutorial: IMDb](imdb.md)
+
+- Concepts
+
+  - [Fern API Definition](fern-api-definition.md)
+  - [Types](types.md)
+  - [Services](services.md)
+  - [Errors](errors.md)
+  - [IDs](ids.md)
+  - [Imports](imports.md)
+
+- Reference
+
+  - [Generators](README.md#fern-generators)
+  - [Join the Discord](https://discord.gg/JkkXumPzcG)

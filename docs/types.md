@@ -1,4 +1,4 @@
-# Defining the data model
+# Types
 
 With Fern, you can make your own types! There are four ways to define a type:
 
@@ -177,11 +177,13 @@ Fern includes two kinds of built-in types: **primitives** and **containers**.
 
 The includes primitives are:
 
-- `string`
-- `boolean`
 - `integer`
 - `double`
-- `long`
+- `long` _(range -2^53 to 2^53)_
+- `string`
+- `boolean`
+- `date_time`
+- `UUID`
 
 ### Containers
 
@@ -219,7 +221,7 @@ interface KitchenSink {
 
 ## IDs
 
-IDs are a common pattern in API development and are given a special place in a Fern Definition.
+IDs are a common pattern in API development and are given a special place in a Fern API Definition.
 
 ```yaml
 ids:
