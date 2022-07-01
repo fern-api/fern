@@ -6715,7 +6715,8 @@ export * from \\"./_service-types\\";
         \\"build\\": \\"esbuild $(find . -name '*.ts' -not -path './node_modules/*') --format=cjs --sourcemap --outdir=. && tsc\\"
     },
     \\"dependencies\\": {
-        \\"@fern-typescript/service-utils\\": \\"0.0.114\\"
+        \\"@fern-typescript/service-utils\\": \\"0.0.114\\",
+        \\"url-join\\": \\"5.0.0\\"
     },
     \\"devDependencies\\": {
         \\"@types/node\\": \\"17.0.33\\",
@@ -6730,6 +6731,7 @@ export * from \\"./_service-types\\";
     "contents": Array [
       Object {
         "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
 export interface AdminService {
@@ -6750,13 +6752,13 @@ export class AdminService implements AdminService {
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
-        this.baseUrl = args.origin + \\"/admin\\";
+        this.baseUrl = urlJoin(args.origin, \\"/admin\\");
         this.token = args.token;
     }
 
     public async updateTestSubmissionStatus(request: model.UpdateTestSubmissionStatusRequest): Promise<model.UpdateTestSubmissionStatusResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \`/store-test-submission-status/\${request.submissionId}\`,
+            url: urlJoin(this.baseUrl, \`/store-test-submission-status/\${request.submissionId}\`),
             method: \\"POST\\",
             headers: {},
             token: this.token,
@@ -6782,7 +6784,7 @@ export class AdminService implements AdminService {
 
     public async sendTestSubmissionUpdate(request: model.SendTestSubmissionUpdateRequest): Promise<model.SendTestSubmissionUpdateResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \`/store-test-submission-status-v2/\${request.submissionId}\`,
+            url: urlJoin(this.baseUrl, \`/store-test-submission-status-v2/\${request.submissionId}\`),
             method: \\"POST\\",
             headers: {},
             token: this.token,
@@ -6808,7 +6810,7 @@ export class AdminService implements AdminService {
 
     public async updateWorkspaceSubmissionStatus(request: model.UpdateWorkspaceSubmissionStatusRequest): Promise<model.UpdateWorkspaceSubmissionStatusResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \`/store-workspace-submission-status/\${request.submissionId}\`,
+            url: urlJoin(this.baseUrl, \`/store-workspace-submission-status/\${request.submissionId}\`),
             method: \\"POST\\",
             headers: {},
             token: this.token,
@@ -6834,7 +6836,7 @@ export class AdminService implements AdminService {
 
     public async sendWorkspaceSubmissionUpdate(request: model.SendWorkspaceSubmissionUpdateRequest): Promise<model.SendWorkspaceSubmissionUpdateResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \`/store-workspace-submission-status-v2/\${request.submissionId}\`,
+            url: urlJoin(this.baseUrl, \`/store-workspace-submission-status-v2/\${request.submissionId}\`),
             method: \\"POST\\",
             headers: {},
             token: this.token,
@@ -6860,7 +6862,7 @@ export class AdminService implements AdminService {
 
     public async storeTracedTestCase(request: model.StoreTracedTestCaseRequest): Promise<model.StoreTracedTestCaseResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \`/store-test-trace/submission/\${request.submissionId}/testCase/\${request.testCaseId}\`,
+            url: urlJoin(this.baseUrl, \`/store-test-trace/submission/\${request.submissionId}/testCase/\${request.testCaseId}\`),
             method: \\"POST\\",
             headers: {},
             token: this.token,
@@ -6886,7 +6888,7 @@ export class AdminService implements AdminService {
 
     public async storeTracedTestCaseV2(request: model.StoreTracedTestCaseV2Request): Promise<model.StoreTracedTestCaseV2Response> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \`/store-test-trace-v2/submission/\${request.submissionId}/testCase/\${request.testCaseId}\`,
+            url: urlJoin(this.baseUrl, \`/store-test-trace-v2/submission/\${request.submissionId}/testCase/\${request.testCaseId}\`),
             method: \\"POST\\",
             headers: {},
             token: this.token,
@@ -6912,7 +6914,7 @@ export class AdminService implements AdminService {
 
     public async storeTracedWorkspace(request: model.StoreTracedWorkspaceRequest): Promise<model.StoreTracedWorkspaceResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \`/store-workspace-trace/submission/\${request.submissionId}\`,
+            url: urlJoin(this.baseUrl, \`/store-workspace-trace/submission/\${request.submissionId}\`),
             method: \\"POST\\",
             headers: {},
             token: this.token,
@@ -6938,7 +6940,7 @@ export class AdminService implements AdminService {
 
     public async storeTracedWorkspaceV2(request: model.StoreTracedWorkspaceV2Request): Promise<model.StoreTracedWorkspaceV2Response> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \`/store-workspace-trace-v2/submission/\${request.submissionId}\`,
+            url: urlJoin(this.baseUrl, \`/store-workspace-trace-v2/submission/\${request.submissionId}\`),
             method: \\"POST\\",
             headers: {},
             token: this.token,
@@ -6968,6 +6970,7 @@ export class AdminService implements AdminService {
       },
       Object {
         "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
 export interface ExecutionSesssionManagementService {
@@ -6987,13 +6990,13 @@ export class ExecutionSesssionManagementService implements ExecutionSesssionMana
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
-        this.baseUrl = args.origin + \\"/sessions\\";
+        this.baseUrl = urlJoin(args.origin, \\"/sessions\\");
         this.token = args.token;
     }
 
     public async createExecutionSession(request: model.CreateExecutionSessionRequest): Promise<model.CreateExecutionSessionResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \`/create-session/\${request.language}\`,
+            url: urlJoin(this.baseUrl, \`/create-session/\${request.language}\`),
             method: \\"POST\\",
             headers: {},
             token: this.token
@@ -7017,7 +7020,7 @@ export class ExecutionSesssionManagementService implements ExecutionSesssionMana
 
     public async getExecutionSession(request: model.GetExecutionSessionRequest): Promise<model.GetExecutionSessionResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \`/\${request.sessionId}\`,
+            url: urlJoin(this.baseUrl, \`/\${request.sessionId}\`),
             method: \\"GET\\",
             headers: {},
             token: this.token
@@ -7041,7 +7044,7 @@ export class ExecutionSesssionManagementService implements ExecutionSesssionMana
 
     public async stopExecutionSession(request: model.StopExecutionSessionRequest): Promise<model.StopExecutionSessionResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \`/stop/\${request.sessionId}\`,
+            url: urlJoin(this.baseUrl, \`/stop/\${request.sessionId}\`),
             method: \\"DELETE\\",
             headers: {},
             token: this.token
@@ -7063,7 +7066,7 @@ export class ExecutionSesssionManagementService implements ExecutionSesssionMana
 
     public async getExecutionSessionsState(): Promise<model.GetExecutionSessionsStateResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \\"/execution-sessions-state\\",
+            url: urlJoin(this.baseUrl, \\"/execution-sessions-state\\"),
             method: \\"GET\\",
             headers: {},
             token: this.token
@@ -7091,6 +7094,7 @@ export class ExecutionSesssionManagementService implements ExecutionSesssionMana
       },
       Object {
         "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
 export interface HomepageProblemService {
@@ -7105,13 +7109,13 @@ export class HomepageProblemService implements HomepageProblemService {
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
-        this.baseUrl = args.origin + \\"/homepage-problems\\";
+        this.baseUrl = urlJoin(args.origin, \\"/homepage-problems\\");
         this.token = args.token;
     }
 
     public async getHomepageProblems(): Promise<model.GetHomepageProblemsResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \\"/\\",
+            url: urlJoin(this.baseUrl, \\"/\\"),
             method: \\"GET\\",
             headers: {},
             token: this.token
@@ -7135,7 +7139,7 @@ export class HomepageProblemService implements HomepageProblemService {
 
     public async setHomepageProblems(request: model.ProblemId[]): Promise<model.SetHomepageProblemsResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \\"/\\",
+            url: urlJoin(this.baseUrl, \\"/\\"),
             method: \\"POST\\",
             headers: {},
             token: this.token,
@@ -7165,6 +7169,7 @@ export class HomepageProblemService implements HomepageProblemService {
       },
       Object {
         "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
 export interface MigrationInfoService {
@@ -7178,13 +7183,13 @@ export class MigrationInfoService implements MigrationInfoService {
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
-        this.baseUrl = args.origin + \\"/migration-info\\";
+        this.baseUrl = urlJoin(args.origin, \\"/migration-info\\");
         this.token = args.token;
     }
 
     public async getAttemptedMigrations(): Promise<model.GetAttemptedMigrationsResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \\"/all\\",
+            url: urlJoin(this.baseUrl, \\"/all\\"),
             method: \\"GET\\",
             headers: {},
             token: this.token
@@ -7212,6 +7217,7 @@ export class MigrationInfoService implements MigrationInfoService {
       },
       Object {
         "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
 export interface PlaylistCrudService {
@@ -7229,13 +7235,13 @@ export class PlaylistCrudService implements PlaylistCrudService {
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
-        this.baseUrl = args.origin + \\"/v2/playlist\\";
+        this.baseUrl = urlJoin(args.origin, \\"/v2/playlist\\");
         this.token = args.token;
     }
 
     public async createPlaylist(request: model.CreatePlaylistRequest): Promise<model.CreatePlaylistResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \\"/create\\",
+            url: urlJoin(this.baseUrl, \\"/create\\"),
             method: \\"POST\\",
             headers: {},
             token: this.token,
@@ -7263,7 +7269,7 @@ export class PlaylistCrudService implements PlaylistCrudService {
 
     public async getPlaylists(): Promise<model.GetPlaylistsResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \\"/all\\",
+            url: urlJoin(this.baseUrl, \\"/all\\"),
             method: \\"GET\\",
             headers: {},
             token: this.token
@@ -7287,7 +7293,7 @@ export class PlaylistCrudService implements PlaylistCrudService {
 
     public async getPlaylist(request: model.GetPlaylistRequest): Promise<model.GetPlaylistResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \`/\${request.playlistId}\`,
+            url: urlJoin(this.baseUrl, \`/\${request.playlistId}\`),
             method: \\"GET\\",
             headers: {},
             token: this.token
@@ -7311,7 +7317,7 @@ export class PlaylistCrudService implements PlaylistCrudService {
 
     public async updatePlaylist(request: model.UpdatePlaylistRequest): Promise<model.UpdatePlaylistResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \`/\${request.playlistId}\`,
+            url: urlJoin(this.baseUrl, \`/\${request.playlistId}\`),
             method: \\"PUT\\",
             headers: {},
             token: this.token,
@@ -7339,7 +7345,7 @@ export class PlaylistCrudService implements PlaylistCrudService {
 
     public async deletePlaylist(request: model.DeletePlaylistRequest): Promise<model.DeletePlaylistResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \`/\${request.playlistId}\`,
+            url: urlJoin(this.baseUrl, \`/\${request.playlistId}\`),
             method: \\"DELETE\\",
             headers: {},
             token: this.token
@@ -7365,6 +7371,7 @@ export class PlaylistCrudService implements PlaylistCrudService {
       },
       Object {
         "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
 export interface ProblemCrudService {
@@ -7381,13 +7388,13 @@ export class ProblemCrudService implements ProblemCrudService {
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
-        this.baseUrl = args.origin + \\"/problem-crud\\";
+        this.baseUrl = urlJoin(args.origin, \\"/problem-crud\\");
         this.token = args.token;
     }
 
     public async createProblem(request: model.CreateProblemRequest): Promise<model._CreateProblemResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \\"/create\\",
+            url: urlJoin(this.baseUrl, \\"/create\\"),
             method: \\"POST\\",
             headers: {},
             token: this.token,
@@ -7415,7 +7422,7 @@ export class ProblemCrudService implements ProblemCrudService {
 
     public async updateProblem(request: model.UpdateProblemRequest): Promise<model._UpdateProblemResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \`/update/\${request.problemId}\`,
+            url: urlJoin(this.baseUrl, \`/update/\${request.problemId}\`),
             method: \\"POST\\",
             headers: {},
             token: this.token,
@@ -7443,7 +7450,7 @@ export class ProblemCrudService implements ProblemCrudService {
 
     public async deleteProblem(request: model.DeleteProblemRequest): Promise<model.DeleteProblemResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \`/delete/\${request.problemId}\`,
+            url: urlJoin(this.baseUrl, \`/delete/\${request.problemId}\`),
             method: \\"DELETE\\",
             headers: {},
             token: this.token
@@ -7465,7 +7472,7 @@ export class ProblemCrudService implements ProblemCrudService {
 
     public async getDefaultStarterFiles(request: model.GetDefaultStarterFilesRequest): Promise<model.GetDefaultStarterFilesResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \\"/default-starter-files\\",
+            url: urlJoin(this.baseUrl, \\"/default-starter-files\\"),
             method: \\"POST\\",
             headers: {},
             token: this.token,
@@ -7497,6 +7504,7 @@ export class ProblemCrudService implements ProblemCrudService {
       },
       Object {
         "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
 export interface ProblemInfoService {
@@ -7516,13 +7524,13 @@ export class ProblemInfoService implements ProblemInfoService {
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
-        this.baseUrl = args.origin + \\"/problems\\";
+        this.baseUrl = urlJoin(args.origin, \\"/problems\\");
         this.token = args.token;
     }
 
     public async getProblems(): Promise<model.GetProblemsResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \\"/problem-info\\",
+            url: urlJoin(this.baseUrl, \\"/problem-info\\"),
             method: \\"GET\\",
             headers: {},
             token: this.token
@@ -7546,7 +7554,7 @@ export class ProblemInfoService implements ProblemInfoService {
 
     public async getLatestProblem(request: model.GetLatestProblemRequest): Promise<model.GetLatestProblemResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \`/problem-info/\${request.problemId}\`,
+            url: urlJoin(this.baseUrl, \`/problem-info/\${request.problemId}\`),
             method: \\"GET\\",
             headers: {},
             token: this.token
@@ -7570,7 +7578,7 @@ export class ProblemInfoService implements ProblemInfoService {
 
     public async getProblemVersion(request: model.GetProblemVersionRequest): Promise<model.GetProblemVersionResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \`/problem-info/\${request.problemId}/version/\${request.problemVersion}\`,
+            url: urlJoin(this.baseUrl, \`/problem-info/\${request.problemId}/version/\${request.problemVersion}\`),
             method: \\"GET\\",
             headers: {},
             token: this.token
@@ -7594,7 +7602,7 @@ export class ProblemInfoService implements ProblemInfoService {
 
     public async getExpectedResult(request: model.GetExpectedResultRequest): Promise<model.GetExpectedResultResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \`/expected-result/\${request.problemId}\`,
+            url: urlJoin(this.baseUrl, \`/expected-result/\${request.problemId}\`),
             method: \\"POST\\",
             headers: {},
             token: this.token
@@ -7622,6 +7630,7 @@ export class ProblemInfoService implements ProblemInfoService {
       },
       Object {
         "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
 export interface SubmissionInfoService {
@@ -7643,13 +7652,13 @@ export class SubmissionInfoService implements SubmissionInfoService {
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
-        this.baseUrl = args.origin + \\"/submissions\\";
+        this.baseUrl = urlJoin(args.origin, \\"/submissions\\");
         this.token = args.token;
     }
 
     public async getSubmissionState(request: model.GetSubmissionStateRequest): Promise<model.GetSubmissionStateResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \`/\${request.submissionId}\`,
+            url: urlJoin(this.baseUrl, \`/\${request.submissionId}\`),
             method: \\"GET\\",
             headers: {},
             token: this.token
@@ -7673,7 +7682,7 @@ export class SubmissionInfoService implements SubmissionInfoService {
 
     public async getSubmissionStateV2(request: model.GetSubmissionStateV2Request): Promise<model.GetSubmissionStateV2Response> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \`/v2/\${request.submissionId}\`,
+            url: urlJoin(this.baseUrl, \`/v2/\${request.submissionId}\`),
             method: \\"GET\\",
             headers: {},
             token: this.token
@@ -7697,7 +7706,7 @@ export class SubmissionInfoService implements SubmissionInfoService {
 
     public async getTraceResponsesPage(request: model._GetTraceResponsesPageRequest): Promise<model.GetTraceResponsesPageResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \`/trace-respose/\${request.submissionId}/testCase/\${request.testCaseId}\`,
+            url: urlJoin(this.baseUrl, \`/trace-respose/\${request.submissionId}/testCase/\${request.testCaseId}\`),
             method: \\"POST\\",
             headers: {},
             token: this.token,
@@ -7725,7 +7734,7 @@ export class SubmissionInfoService implements SubmissionInfoService {
 
     public async getTraceResponsesV2Page(request: model.GetTraceResponsesV2PageRequest): Promise<model.GetTraceResponsesV2PageResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \`/trace-response-v2/\${request.submissionId}/testCase/\${request.testCaseId}\`,
+            url: urlJoin(this.baseUrl, \`/trace-response-v2/\${request.submissionId}/testCase/\${request.testCaseId}\`),
             method: \\"POST\\",
             headers: {},
             token: this.token,
@@ -7753,7 +7762,7 @@ export class SubmissionInfoService implements SubmissionInfoService {
 
     public async getTraceResponsesPageForWorkspace(request: model.GetTraceResponsesPageForWorkspaceRequest): Promise<model.GetTraceResponsesPageForWorkspaceResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \`/workspace-trace-response/\${request.submissionId}\`,
+            url: urlJoin(this.baseUrl, \`/workspace-trace-response/\${request.submissionId}\`),
             method: \\"POST\\",
             headers: {},
             token: this.token,
@@ -7781,7 +7790,7 @@ export class SubmissionInfoService implements SubmissionInfoService {
 
     public async getTraceResponsesV2PageForWorkspace(request: model.GetTraceResponsesV2PageForWorkspaceRequest): Promise<model.GetTraceResponsesV2PageForWorkspaceResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \`/workspace-trace-response-v2/\${request.submissionId}\`,
+            url: urlJoin(this.baseUrl, \`/workspace-trace-response-v2/\${request.submissionId}\`),
             method: \\"POST\\",
             headers: {},
             token: this.token,
@@ -7813,6 +7822,7 @@ export class SubmissionInfoService implements SubmissionInfoService {
       },
       Object {
         "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
 export interface SysPropCrudService {
@@ -7827,13 +7837,13 @@ export class SysPropCrudService implements SysPropCrudService {
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
-        this.baseUrl = args.origin + \\"/sysprop\\";
+        this.baseUrl = urlJoin(args.origin, \\"/sysprop\\");
         this.token = args.token;
     }
 
     public async setNumWarmInstances(request: model.SetNumWarmInstancesRequest): Promise<model.SetNumWarmInstancesResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \`/num-warm-instances/\${request.language}/\${request.numWarmInstances}\`,
+            url: urlJoin(this.baseUrl, \`/num-warm-instances/\${request.language}/\${request.numWarmInstances}\`),
             method: \\"PUT\\",
             headers: {},
             token: this.token
@@ -7855,7 +7865,7 @@ export class SysPropCrudService implements SysPropCrudService {
 
     public async getNumWarmInstances(): Promise<model.GetNumWarmInstancesResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \\"/num-warm-instances\\",
+            url: urlJoin(this.baseUrl, \\"/num-warm-instances\\"),
             method: \\"GET\\",
             headers: {},
             token: this.token
@@ -7883,6 +7893,7 @@ export class SysPropCrudService implements SysPropCrudService {
       },
       Object {
         "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
 export interface WorkspaceInfoService {
@@ -7897,13 +7908,13 @@ export class WorkspaceInfoService implements WorkspaceInfoService {
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
-        this.baseUrl = args.origin + \\"/workspace\\";
+        this.baseUrl = urlJoin(args.origin, \\"/workspace\\");
         this.token = args.token;
     }
 
     public async getWorkspaceStarterFiles(): Promise<model.GetWorkspaceStarterFilesResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \\"/get-workspace-starter-files\\",
+            url: urlJoin(this.baseUrl, \\"/get-workspace-starter-files\\"),
             method: \\"GET\\",
             headers: {},
             token: this.token
@@ -7927,7 +7938,7 @@ export class WorkspaceInfoService implements WorkspaceInfoService {
 
     public async getWorkspaceStarterFilesV2(): Promise<model.GetWorkspaceStarterFilesV2Response> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \\"/get-workspace-starter-files-v2\\",
+            url: urlJoin(this.baseUrl, \\"/get-workspace-starter-files-v2\\"),
             method: \\"GET\\",
             headers: {},
             token: this.token
@@ -7973,6 +7984,7 @@ export * from \\"./SysPropCrudService\\";
         "contents": Array [
           Object {
             "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+import urlJoin from \\"url-join\\";
 import * as model from \\"../../model\\";
 
 export interface ProblemCrudServiceV2 {
@@ -7993,13 +8005,13 @@ export class ProblemCrudServiceV2 implements ProblemCrudServiceV2 {
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
-        this.baseUrl = args.origin + \\"/problem-crud-v2\\";
+        this.baseUrl = urlJoin(args.origin, \\"/problem-crud-v2\\");
         this.token = args.token;
     }
 
     public async createProblem(request: model.problemV2.CreateProblemRequestV2): Promise<model.problemV2.CreateProblemResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \\"/create\\",
+            url: urlJoin(this.baseUrl, \\"/create\\"),
             method: \\"POST\\",
             headers: {},
             token: this.token,
@@ -8027,7 +8039,7 @@ export class ProblemCrudServiceV2 implements ProblemCrudServiceV2 {
 
     public async updateProblem(request: model.problemV2.UpdateProblemRequest): Promise<model.problemV2.UpdateProblemResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \`/update/\${request.problemId}\`,
+            url: urlJoin(this.baseUrl, \`/update/\${request.problemId}\`),
             method: \\"POST\\",
             headers: {},
             token: this.token,
@@ -8055,7 +8067,7 @@ export class ProblemCrudServiceV2 implements ProblemCrudServiceV2 {
 
     public async deleteProblem(request: model.problemV2.DeleteProblemRequest): Promise<model.problemV2.DeleteProblemResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \`/delete/\${request.problemId}\`,
+            url: urlJoin(this.baseUrl, \`/delete/\${request.problemId}\`),
             method: \\"DELETE\\",
             headers: {},
             token: this.token
@@ -8077,7 +8089,7 @@ export class ProblemCrudServiceV2 implements ProblemCrudServiceV2 {
 
     public async getFunctionSignature(request: model.problemV2.GetFunctionSignatureRequest): Promise<model.problemV2.GetFunctionSignatureResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \\"/function-signature\\",
+            url: urlJoin(this.baseUrl, \\"/function-signature\\"),
             method: \\"POST\\",
             headers: {},
             token: this.token,
@@ -8105,7 +8117,7 @@ export class ProblemCrudServiceV2 implements ProblemCrudServiceV2 {
 
     public async getBasicSolutionFile(request: model.problemV2.GetBasicSolutionFileRequest): Promise<model.problemV2.GetBasicSolutionFileResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \\"/basic-solution-file\\",
+            url: urlJoin(this.baseUrl, \\"/basic-solution-file\\"),
             method: \\"POST\\",
             headers: {},
             token: this.token,
@@ -8133,7 +8145,7 @@ export class ProblemCrudServiceV2 implements ProblemCrudServiceV2 {
 
     public async getDefaultDirectoryForProblemFiles(): Promise<model.problemV2.GetDefaultDirectoryForProblemFilesResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \\"/default-problem-files-directory\\",
+            url: urlJoin(this.baseUrl, \\"/default-problem-files-directory\\"),
             method: \\"GET\\",
             headers: {},
             token: this.token
@@ -8157,7 +8169,7 @@ export class ProblemCrudServiceV2 implements ProblemCrudServiceV2 {
 
     public async getGeneratedTestCaseFile(request: model.problemV2.GetGeneratedTestCaseFileRequest): Promise<model.problemV2.GetGeneratedTestCaseFileResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \\"/generated-test-case-file\\",
+            url: urlJoin(this.baseUrl, \\"/generated-test-case-file\\"),
             method: \\"POST\\",
             headers: {},
             token: this.token,
@@ -8185,7 +8197,7 @@ export class ProblemCrudServiceV2 implements ProblemCrudServiceV2 {
 
     public async getGeneratedTestCaseTemplateFile(request: model.problemV2.GetGeneratedTestCaseTemplateFileRequest): Promise<model.problemV2.GetGeneratedTestCaseTemplateFileResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \\"/generated-test-case-template-file\\",
+            url: urlJoin(this.baseUrl, \\"/generated-test-case-template-file\\"),
             method: \\"POST\\",
             headers: {},
             token: this.token,
@@ -8217,6 +8229,7 @@ export class ProblemCrudServiceV2 implements ProblemCrudServiceV2 {
           },
           Object {
             "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+import urlJoin from \\"url-join\\";
 import * as model from \\"../../model\\";
 
 export interface ProblemInfoServicV2 {
@@ -8233,13 +8246,13 @@ export class ProblemInfoServicV2 implements ProblemInfoServicV2 {
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
-        this.baseUrl = args.origin + \\"/problems-v2\\";
+        this.baseUrl = urlJoin(args.origin, \\"/problems-v2\\");
         this.token = args.token;
     }
 
     public async getLightweightProblems(): Promise<model.problemV2.GetLightweightProblemsResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \\"/lightweight-problem-info\\",
+            url: urlJoin(this.baseUrl, \\"/lightweight-problem-info\\"),
             method: \\"GET\\",
             headers: {},
             token: this.token
@@ -8263,7 +8276,7 @@ export class ProblemInfoServicV2 implements ProblemInfoServicV2 {
 
     public async getProblems(): Promise<model.problemV2.GetProblemsResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \\"/problem-info\\",
+            url: urlJoin(this.baseUrl, \\"/problem-info\\"),
             method: \\"GET\\",
             headers: {},
             token: this.token
@@ -8287,7 +8300,7 @@ export class ProblemInfoServicV2 implements ProblemInfoServicV2 {
 
     public async getLatestProblem(request: model.problemV2.GetLatestProblemRequest): Promise<model.problemV2.GetLatestProblemResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \`/problem-info/\${request.problemId}\`,
+            url: urlJoin(this.baseUrl, \`/problem-info/\${request.problemId}\`),
             method: \\"GET\\",
             headers: {},
             token: this.token
@@ -8311,7 +8324,7 @@ export class ProblemInfoServicV2 implements ProblemInfoServicV2 {
 
     public async getProblemVersion(request: model.problemV2.GetProblemVersionRequest): Promise<model.problemV2.GetProblemVersionResponse> {
         const encodedResponse = await this.fetcher({
-            url: this.baseUrl + \`/problem-info/\${request.problemId}/version/\${request.problemVersion}\`,
+            url: urlJoin(this.baseUrl, \`/problem-info/\${request.problemId}/version/\${request.problemVersion}\`),
             method: \\"GET\\",
             headers: {},
             token: this.token

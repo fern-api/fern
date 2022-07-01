@@ -43,6 +43,7 @@ export async function generateEndpointMethodBody({
             serviceDefinition,
             includeQueryParams: queryParameterStatements.length > 0,
             helperManager,
+            dependencyManager,
         }),
         (writer) => {
             writer.newLine();

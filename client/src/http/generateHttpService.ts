@@ -14,7 +14,7 @@ import { HelperManager } from "@fern-typescript/helper-manager";
 import { ModelContext } from "@fern-typescript/model-context";
 import { ClassDeclaration, Directory, Scope, ts } from "ts-morph";
 import { ClientConstants } from "../constants";
-import { generateJoinPathsCall } from "../utils/generateJoinPathsCall";
+import { generateJoinUrlPathsCall } from "../utils/generateJoinPathsCall";
 import { addEndpointToService } from "./endpoints/addEndpointToService";
 
 export async function generateHttpService({
@@ -146,15 +146,19 @@ function addConstructor({
                     member: ClientConstants.HttpService.PrivateMembers.BASE_URL,
                     initialValue:
                         serviceDefinition.basePath != null
-                            ? generateJoinPathsCall(
-                                  ts.factory.createPropertyAccessExpression(
-                                      ts.factory.createIdentifier(SERVICE_INIT_PARAMETER_NAME),
-                                      ts.factory.createIdentifier(
-                                          ClientConstants.HttpService.ServiceUtils.ServiceInit.Properties.ORIGIN
-                                      )
-                                  ),
-                                  ts.factory.createStringLiteral(serviceDefinition.basePath)
-                              )
+                            ? generateJoinUrlPathsCall({
+                                  file: serviceClass.getSourceFile(),
+                                  dependencyManager,
+                                  paths: [
+                                      ts.factory.createPropertyAccessExpression(
+                                          ts.factory.createIdentifier(SERVICE_INIT_PARAMETER_NAME),
+                                          ts.factory.createIdentifier(
+                                              ClientConstants.HttpService.ServiceUtils.ServiceInit.Properties.ORIGIN
+                                          )
+                                      ),
+                                      ts.factory.createStringLiteral(serviceDefinition.basePath),
+                                  ],
+                              })
                             : ts.factory.createPropertyAccessExpression(
                                   ts.factory.createIdentifier(SERVICE_INIT_PARAMETER_NAME),
                                   ts.factory.createIdentifier(
