@@ -21,7 +21,7 @@ beforeAll(async () => {
     // delete and remake host's output dir
     await rm(HOST_OUTPUT_DIR, { recursive: true, force: true });
     await mkdir(HOST_OUTPUT_DIR);
-}, 30_000);
+}, 60_000);
 
 describe("runDocker", () => {
     it("basic-writer", async () => {
