@@ -1,4 +1,4 @@
-import { Type } from "@fern-fern/ir-model";
+import { FernConstants, Type } from "@fern-fern/ir-model";
 import { FailedResponse } from "@fern-fern/ir-model/services";
 import { DependencyManager, getTextOfTsNode } from "@fern-typescript/commons";
 import { InlinedServiceTypeReference, ModelContext, ServiceTypeReference } from "@fern-typescript/model-context";
@@ -25,6 +25,7 @@ export declare namespace generateResponse {
             referencedIn: SourceFile;
         }) => ts.TypeNode;
         additionalProperties?: OptionalKind<PropertySignatureStructure>[];
+        fernConstants: FernConstants;
     }
 
     export interface Return<M> {
@@ -42,6 +43,7 @@ export function generateResponse<M>({
     failedResponse,
     getTypeReferenceToServiceType,
     additionalProperties = [],
+    fernConstants,
 }: generateResponse.Args<M>): generateResponse.Return<M> {
     const successBodyReference = generateServiceTypeReference({
         typeName: ServiceTypesConstants.Commons.Response.Success.Properties.Body.TYPE_NAME,
@@ -56,6 +58,7 @@ export function generateResponse<M>({
         failedResponse,
         dependencyManager,
         writeServiceTypeFile,
+        fernConstants,
     });
 
     const responseMetadata = writeServiceTypeFile(
@@ -219,11 +222,13 @@ function maybeGenerateErrorBody<M>({
     failedResponse,
     dependencyManager,
     writeServiceTypeFile,
+    fernConstants,
 }: {
     modelContext: ModelContext;
     failedResponse: FailedResponse;
     dependencyManager: DependencyManager;
     writeServiceTypeFile: ServiceTypeFileWriter<M>;
+    fernConstants: FernConstants;
 }): { errorBodyReference: InlinedServiceTypeReference<M> } {
     const errorBodyMetadata = writeServiceTypeFile(
         ServiceTypesConstants.Commons.Response.Error.Properties.Body.TYPE_NAME,
@@ -234,6 +239,7 @@ function maybeGenerateErrorBody<M>({
                 errorBodyTypeName: transformedTypeName,
                 modelContext,
                 dependencyManager,
+                fernConstants,
             });
         }
     );

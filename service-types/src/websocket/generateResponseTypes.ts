@@ -1,3 +1,4 @@
+import { FernConstants } from "@fern-fern/ir-model";
 import { ServiceName, WebSocketOperation } from "@fern-fern/ir-model/services";
 import { DependencyManager, getTextOfTsKeyword } from "@fern-typescript/commons";
 import { GeneratedWebSocketOperationTypes, ModelContext } from "@fern-typescript/model-context";
@@ -12,6 +13,7 @@ export declare namespace generateResponseTypes {
         operation: WebSocketOperation;
         modelContext: ModelContext;
         dependencyManager: DependencyManager;
+        fernConstants: FernConstants;
     }
 
     export type Return = GeneratedWebSocketOperationTypes["response"];
@@ -22,6 +24,7 @@ export function generateResponseTypes({
     operation,
     modelContext,
     dependencyManager,
+    fernConstants,
 }: generateResponseTypes.Args): generateResponseTypes.Return {
     const { reference, successBodyReference, errorBodyReference } = generateResponse({
         modelContext,
@@ -51,6 +54,7 @@ export function generateResponseTypes({
             operation,
             modelContext,
         }),
+        fernConstants,
     });
 
     return { reference, successBodyReference, errorBodyReference };
