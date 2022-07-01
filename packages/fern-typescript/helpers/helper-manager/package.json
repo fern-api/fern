@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@fern-api/commons": "workspace:*",
-    "@fern-fern/ir-model": "0.0.13",
+    "@fern-fern/ir-model": "0.0.15",
     "@fern-typescript/helper-utils": "workspace:*",
     "@fern-typescript/json-encoding-helper": "workspace:*",
     "zod": "^3.14.3"

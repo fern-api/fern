@@ -1,4 +1,4 @@
-import { IntermediateRepresentation } from "@fern-fern/ir-model";
+import { FernConstants, IntermediateRepresentation } from "@fern-fern/ir-model";
 import { WebSocketChannel, WebSocketOperation } from "@fern-fern/ir-model/services";
 import { DependencyManager } from "@fern-typescript/commons";
 import { ModelContext } from "@fern-typescript/model-context";
@@ -9,10 +9,12 @@ export function generateServiceTypeFiles({
     intermediateRepresentation,
     modelContext,
     dependencyManager,
+    fernConstants,
 }: {
     intermediateRepresentation: IntermediateRepresentation;
     modelContext: ModelContext;
     dependencyManager: DependencyManager;
+    fernConstants: FernConstants;
 }): void {
     for (const service of intermediateRepresentation.services.http) {
         for (const endpoint of service.endpoints) {
@@ -21,6 +23,7 @@ export function generateServiceTypeFiles({
                 endpoint,
                 modelContext,
                 dependencyManager,
+                fernConstants,
             });
             modelContext.registerGeneratedHttpServiceTypes({
                 serviceName: service.name,
@@ -36,12 +39,14 @@ export function generateServiceTypeFiles({
             operations: channel.client.operations,
             modelContext,
             dependencyManager,
+            fernConstants,
         });
         registerOperations({
             channel,
             operations: channel.server.operations,
             modelContext,
             dependencyManager,
+            fernConstants,
         });
     }
 }
@@ -51,11 +56,13 @@ function registerOperations({
     operations,
     modelContext,
     dependencyManager,
+    fernConstants,
 }: {
     channel: WebSocketChannel;
     operations: WebSocketOperation[];
     modelContext: ModelContext;
     dependencyManager: DependencyManager;
+    fernConstants: FernConstants;
 }) {
     for (const operation of operations) {
         const generatedTypes = generateWebSocketOperationTypes({
@@ -63,6 +70,7 @@ function registerOperations({
             operation,
             modelContext,
             dependencyManager,
+            fernConstants,
         });
         modelContext.registerGeneratedWebSocketChannelTypes({
             channelName: channel.name,

@@ -1,4 +1,4 @@
-import { PrimitiveType, TypeReference } from "@fern-fern/ir-model";
+import { FernConstants, PrimitiveType, TypeReference } from "@fern-fern/ir-model";
 import { FailedResponse, ResponseError } from "@fern-fern/ir-model/services";
 import { DependencyManager, generateUuidCall } from "@fern-typescript/commons";
 import { ModelContext } from "@fern-typescript/model-context";
@@ -16,26 +16,30 @@ export function generateErrorBody({
     errorBodyFile,
     modelContext,
     dependencyManager,
+    fernConstants,
 }: {
     failedResponse: FailedResponse;
     errorBodyTypeName: string;
     errorBodyFile: SourceFile;
     modelContext: ModelContext;
     dependencyManager: DependencyManager;
+    fernConstants: FernConstants;
 }): void {
     generateUnionType({
         file: errorBodyFile,
         typeName: errorBodyTypeName,
         docs: failedResponse.docs,
-        discriminant: failedResponse.discriminant,
-        resolvedTypes: failedResponse.errors.map((error) => ({
-            docs: error.docs,
-            discriminantValue: error.discriminantValue,
-            valueType: getValueType({ error, file: errorBodyFile, modelContext }),
-        })),
+        discriminant: fernConstants.errorDiscriminant,
+        resolvedTypes: [
+            ...failedResponse.errors.map((error) => ({
+                docs: error.docs,
+                discriminantValue: error.discriminantValue,
+                valueType: getValueType({ error, file: errorBodyFile, modelContext }),
+            })),
+        ],
         additionalPropertiesForEveryType: [
             {
-                key: failedResponse.errorProperties.errorInstanceId,
+                key: fernConstants.errorInstanceIdKey,
                 valueType: TypeReference.primitive(PrimitiveType.String),
                 generateValueCreator: ({ file }) => {
                     return generateUuidCall({ file, dependencyManager });
