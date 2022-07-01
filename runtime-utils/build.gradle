@@ -8,12 +8,11 @@ subprojects {
 
     apply plugin: 'maven-publish'
     apply plugin: 'java-library'
-    apply plugin: 'java-library-distribution'
 
     publishing {
         publications {
-            myDistribution(MavenPublication) {
-                artifact distZip
+            mavenJava(MavenPublication) {
+                from components.java
             }
         }
         repositories {

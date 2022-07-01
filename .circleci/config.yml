@@ -105,7 +105,8 @@ jobs:
       - restore_cache: { key: 'gradle-wrapper-v2-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}' }
       - restore_cache: { key: 'unit-test-gradle-cache-v2-{{ checksum "versions.props" }}-{{ checksum "build.gradle" }}' }
       - run:
-          command: ./gradlew  publishMyDistributionPublicationToMavenRepository
+          command: ./gradlew  publish
+          name: Publish utils jars
       - run:
           command: |
             projectVersion=$(./gradlew printVersion --quiet)
