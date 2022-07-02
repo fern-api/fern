@@ -22,7 +22,6 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 
@@ -30,10 +29,19 @@ public final class ErrorGenerator extends Generator {
 
     private static final String ERROR_SUFFIX = "Error";
     private static final String STATUS_CODE_FIELD_NAME = "STATUS_CODE";
-    private static final String GET_STATUS_CODE_METHOD_NAME = HttpException.class.getMethods()[0].getName();
+    private static final String GET_STATUS_CODE_METHOD_NAME;
 
-    private static final Set<String> JSON_IGNORE_EXCEPTION_PROPERTIES =
-            Set.of("stackTrace", "cause", "detailMessage", "localizedMessage", "statusCode", "message", "suppressed");
+    static {
+        try {
+            GET_STATUS_CODE_METHOD_NAME =
+                    HttpException.class.getMethod("getStatusCode").getName();
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException("Failed to find getStatusCode method name", e);
+        }
+    }
+
+    private static final List<String> JSON_IGNORE_EXCEPTION_PROPERTIES =
+            List.of("stackTrace", "cause", "detailMessage", "localizedMessage", "statusCode", "message", "suppressed");
 
     private final ErrorDeclaration errorDeclaration;
     private final GeneratorContext generatorContext;

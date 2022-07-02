@@ -1,5 +1,6 @@
 {
     "workspaces": [
         "**"
-    ]
+    ],
+    "organization": "fern"
 }

@@ -3,45 +3,65 @@ package com.fern.java.client.cli;
 import au.com.origin.snapshots.Expect;
 import au.com.origin.snapshots.annotations.SnapshotName;
 import au.com.origin.snapshots.junit5.SnapshotExtension;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @ExtendWith(SnapshotExtension.class)
 public class CliEteTest {
 
+    private static final Logger log = LoggerFactory.getLogger(CliEteTest.class);
+
     private Expect expect;
 
+    @SuppressWarnings("StreamResourceLeak")
     @SnapshotName("basic")
     @Test
     public void test_basic() throws IOException {
-        fernGenerate("src/eteTest/basic");
-        try (Stream<Path> paths = Files.walk(Paths.get( "src/eteTest/basic/api/generated-java"))) {
-            paths.forEach(path -> {
-                if (path.toFile().isDirectory()) {
-                    return;
-                }
-                try {
+        Path currentPath = Paths.get("").toAbsolutePath();
+        Path basicFernProjectPath = currentPath.endsWith("cli")
+                ? currentPath.resolve(Paths.get("src/eteTest/basic"))
+                : currentPath.resolve(Paths.get("cli/src/eteTest/basic"));
+        fernLocalGenerate(basicFernProjectPath);
+        List<Path> paths = Files.walk(basicFernProjectPath.resolve(Paths.get("api/generated-java")))
+                .collect(Collectors.toList());
+        boolean filesGenerated = false;
+        for (Path path : paths) {
+            if (path.toFile().isDirectory()) {
+                continue;
+            }
+            try {
+                Path relativizedPath = basicFernProjectPath.relativize(path);
+                filesGenerated = true;
+                if (relativizedPath.getFileName().toString().endsWith("jar")) {
+                    expect.scenario(relativizedPath.toString()).toMatchSnapshot(relativizedPath.toString());
+                } else {
                     String fileContents = Files.readString(path);
-                    expect.scenario(path.toString()).toMatchSnapshot(fileContents);
-                } catch (IOException e) {
-                    throw new RuntimeException("Failed to read file: " + path);
+
+                    expect.scenario(relativizedPath.toString()).toMatchSnapshot(fileContents);
                 }
-            });
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to read file: " + path);
+            }
+        }
+        if (!filesGenerated) {
+            throw new RuntimeException("Failed to generate any files!");
         }
     }
 
-    private static void fernGenerate(String workingDirectory) {
+    private static void fernLocalGenerate(Path projectPath) {
         int exitCode;
         try {
-            ProcessBuilder pb = new ProcessBuilder(new String[]{"fern", "generate", "./api"})
-                    .directory(new File(workingDirectory));
+            ProcessBuilder pb = new ProcessBuilder("fern", "generate", "--local")
+                    .directory(projectPath.toFile());
 
             Map<String, String> env = pb.environment();
             env.put("NODE_ENV", "development");
@@ -58,5 +78,10 @@ public class CliEteTest {
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException("Failed to run fern generate!", e);
         }
+    }
+
+    public static void main() {
+        Path pathOne = Paths.get("cli/src/eteTest/java");
+        Path pathTwo = Paths.get("src/eteTest/java");
     }
 }

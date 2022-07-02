@@ -74,13 +74,14 @@ jobs:
       CIRCLE_ARTIFACTS: /home/circleci/artifacts
       _JAVA_OPTIONS: -Dorg.gradle.internal.launcher.welcomeMessageEnabled=false -Xmx8192m
       JAVA_HOME: /opt/java11
+      CI: true
     steps:
       - attach_workspace: { at: /home/circleci }
       - restore_cache: { key: 'gradle-wrapper-v2-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}' }
       - restore_cache: { key: 'unit-test-gradle-cache-v2-{{ checksum "versions.props" }}-{{ checksum "build.gradle" }}' }
       - run:
           name: Install Fern
-          command: npm install -g fern-api@0.0.81
+          command: npm install -g fern-api@0.0.121
       - run:
           name: Install Java
           command: |

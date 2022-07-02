@@ -1,9 +1,11 @@
-name: Blog Post API
+name: blog-api
 definition: src
 generators:
   - name: fern-java
     version: latest
-    output: ./generated-java
+    generate:
+      enabled: true
+      output: ./generated-java
     config:
       packagePrefix: com.blog
       mode: CLIENT_AND_SERVER
