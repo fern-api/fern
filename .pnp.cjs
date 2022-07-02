@@ -3185,10 +3185,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/syntax-analysis", "workspace:packages/compiler/syntax-analysis"],\
             ["@fern-fern/ir-model", "npm:0.0.15"],\
             ["@types/jest", "npm:28.1.2"],\
+            ["@types/lodash", "npm:4.14.182"],\
             ["@types/node", "npm:17.0.34"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.15.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.1"],\
+            ["lodash", "npm:4.17.21"],\
             ["npm-run-all", "npm:4.1.5"],\
             ["prettier", "npm:2.6.2"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=7ad353"]\

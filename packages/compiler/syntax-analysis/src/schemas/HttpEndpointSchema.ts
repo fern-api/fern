@@ -8,8 +8,8 @@ import { HttpResponseSchema } from "./HttpResponseSchema";
 import { WithDocsSchema } from "./WithDocsSchema";
 
 export const HttpEndpointSchema = WithDocsSchema.extend({
-    method: z.enum(["GET", "POST", "PUT", "PATCH", "DELETE"]),
-    path: z.string(),
+    method: z.optional(z.enum(["GET", "POST", "PUT", "PATCH", "DELETE"])),
+    path: z.optional(z.string()),
     ["path-parameters"]: z.optional(z.record(HttpParameterSchema)),
     ["query-parameters"]: z.optional(z.record(HttpQueryParameterSchema)),
     headers: z.optional(z.record(HttpHeaderSchema)),

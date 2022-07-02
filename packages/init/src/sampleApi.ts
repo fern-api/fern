@@ -31,11 +31,8 @@ const API: RawSchemas.FernConfigurationSchema = {
         http: {
             MoviesService: {
                 auth: "none",
-                "base-path": "/movies",
                 endpoints: {
                     createMovie: {
-                        method: "POST",
-                        path: "/",
                         request: {
                             type: {
                                 properties: {
@@ -47,10 +44,12 @@ const API: RawSchemas.FernConfigurationSchema = {
                         response: "MovieId",
                     },
                     getMovie: {
-                        method: "GET",
-                        path: "/{movieId}",
-                        "path-parameters": {
-                            movieId: "MovieId",
+                        request: {
+                            type: {
+                                properties: {
+                                    movieId: "MovieId",
+                                },
+                            },
                         },
                         response: {
                             ok: "Movie",

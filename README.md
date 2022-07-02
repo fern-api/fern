@@ -45,8 +45,6 @@ services:
       auth: none
       endpoints:
         getCurrentDayOfWeek:
-          method: GET
-          path: /day-of-week
           response: DayOfWeek
 ```
 

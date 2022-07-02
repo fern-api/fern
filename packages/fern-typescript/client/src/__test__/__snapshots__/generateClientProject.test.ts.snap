@@ -286,8 +286,8 @@ export * from \\"./GetResponse\\";
     }
 }",
   "/services/NoErrorsService.ts": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
-import * as model from \\"../model\\";
 import urlJoin from \\"url-join\\";
+import * as model from \\"../model\\";
 
 export interface NoErrorsService {
     get(): Promise<model.GetResponse>;
@@ -300,7 +300,7 @@ export class NoErrorsService implements NoErrorsService {
 
     constructor(args: Service.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
-        this.baseUrl = args.origin;
+        this.baseUrl = urlJoin(args.origin, \\"no-errors-service\\");
         this.token = args.token;
     }
 

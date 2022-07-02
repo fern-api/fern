@@ -35,13 +35,15 @@
     "@fern-api/commons": "workspace:*",
     "@fern-api/compiler-commons": "workspace:*",
     "@fern-api/syntax-analysis": "workspace:*",
-    "@fern-fern/ir-model": "0.0.15"
+    "@fern-fern/ir-model": "0.0.15",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",
     "@babel/preset-env": "^7.18.2",
     "@babel/preset-typescript": "^7.17.12",
     "@types/jest": "^28.1.2",
+    "@types/lodash": "^4.14.182",
     "@types/node": "^17.0.33",
     "depcheck": "^1.4.3",
     "eslint": "^8.12.0",
