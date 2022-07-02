@@ -1,7 +1,7 @@
 package com.fern.codegen;
 
 import com.fern.immutables.StagedBuilderStyle;
-import com.fern.types.types.EnumTypeDeclaration;
+import com.fern.types.EnumTypeDeclaration;
 import org.immutables.value.Value;
 
 @Value.Immutable

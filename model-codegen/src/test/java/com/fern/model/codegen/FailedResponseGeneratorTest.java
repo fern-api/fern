@@ -8,23 +8,22 @@ import com.fern.codegen.GeneratorContext;
 import com.fern.java.test.TestConstants;
 import com.fern.model.codegen.errors.ErrorGenerator;
 import com.fern.model.codegen.services.payloads.FailedResponseGenerator;
-import com.fern.types.errors.ErrorDeclaration;
-import com.fern.types.errors.ErrorName;
-import com.fern.types.errors.HttpErrorConfiguration;
-import com.fern.types.services.commons.FailedResponse;
-import com.fern.types.services.commons.ResponseError;
-import com.fern.types.services.commons.ResponseErrorProperties;
-import com.fern.types.services.commons.ServiceName;
-import com.fern.types.services.http.EndpointId;
-import com.fern.types.services.http.HttpEndpoint;
-import com.fern.types.services.http.HttpService;
-import com.fern.types.types.AliasTypeDeclaration;
-import com.fern.types.types.FernFilepath;
-import com.fern.types.types.ObjectProperty;
-import com.fern.types.types.ObjectTypeDeclaration;
-import com.fern.types.types.PrimitiveType;
-import com.fern.types.types.Type;
-import com.fern.types.types.TypeReference;
+import com.fern.types.AliasTypeDeclaration;
+import com.fern.types.ErrorDeclaration;
+import com.fern.types.ErrorName;
+import com.fern.types.FernFilepath;
+import com.fern.types.HttpErrorConfiguration;
+import com.fern.types.ObjectProperty;
+import com.fern.types.ObjectTypeDeclaration;
+import com.fern.types.PrimitiveType;
+import com.fern.types.Type;
+import com.fern.types.TypeReference;
+import com.fern.types.services.EndpointId;
+import com.fern.types.services.FailedResponse;
+import com.fern.types.services.HttpEndpoint;
+import com.fern.types.services.HttpService;
+import com.fern.types.services.ResponseError;
+import com.fern.types.services.ServiceName;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -60,10 +59,6 @@ public class FailedResponseGeneratorTest {
                         .build()))
                 .build();
         FailedResponse failedResponse = FailedResponse.builder()
-                .discriminant("_type")
-                .errorProperties(ResponseErrorProperties.builder()
-                    .errorInstanceId("_errorInstanceId")
-                    .build())
                 .addErrors(ResponseError.builder()
                         .discriminantValue("noViewPermissions")
                         .error(noViewPermissionsErrorNamedType)
@@ -83,7 +78,8 @@ public class FailedResponseGeneratorTest {
                                                 .build())
                                         .build()))
                                 .http(HttpErrorConfiguration.builder().statusCode(500).build())
-                                .build()));
+                                .build()),
+                TestConstants.FERN_CONSTANTS);
         ErrorGenerator errorGenerator = new ErrorGenerator(
                 noViewPermissionsErrorDef, generatorContext, Collections.emptyMap());
         GeneratedError generatedNoViewPermissionsError = errorGenerator.generate();

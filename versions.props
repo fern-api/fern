@@ -12,7 +12,7 @@ org.slf4j:slf4j-api = 1.7.36
 
 # fern
 com.fern:fern-immutables-style = 0.0.15-2-g2ec8163
-com.fern-fern.fern:ir-model = 0.0.12
+com.fern-fern.fern:ir-model = 0.0.15
 
 # testing
 org.junit.jupiter:* = 5.5.0

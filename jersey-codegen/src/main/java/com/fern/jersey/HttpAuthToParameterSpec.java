@@ -1,7 +1,7 @@
 package com.fern.jersey;
 
 import com.fern.java.auth.AuthHeader;
-import com.fern.types.services.http.HttpAuth;
+import com.fern.types.services.HttpAuth;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterSpec;

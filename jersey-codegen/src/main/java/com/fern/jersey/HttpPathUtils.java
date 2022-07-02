@@ -1,7 +1,7 @@
 package com.fern.jersey;
 
-import com.fern.types.services.http.HttpPath;
-import com.fern.types.services.http.HttpPathPart;
+import com.fern.types.services.HttpPath;
+import com.fern.types.services.HttpPathPart;
 
 public class HttpPathUtils {
 

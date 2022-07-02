@@ -1,11 +1,11 @@
 package com.fern.codegen.utils;
 
 import com.fern.java.jackson.ClientObjectMappers;
-import com.fern.types.errors.ErrorName;
-import com.fern.types.services.commons.ServiceName;
-import com.fern.types.types.DeclaredTypeName;
-import com.fern.types.types.FernFilepath;
-import com.fern.types.types.TypeReference;
+import com.fern.types.DeclaredTypeName;
+import com.fern.types.ErrorName;
+import com.fern.types.FernFilepath;
+import com.fern.types.TypeReference;
+import com.fern.types.services.ServiceName;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeName;
 import java.util.ArrayList;

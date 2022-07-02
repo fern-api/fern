@@ -1,9 +1,9 @@
 package com.fern.java.client.cli;
 
 import com.fern.java.client.cli.CustomPluginConfig.Mode;
-import com.fern.types.generators.config.GeneratorConfig;
-import com.fern.types.generators.config.GeneratorHelpers;
-import com.fern.types.generators.config.GeneratorOutputConfig;
+import com.fern.types.generators.GeneratorConfig;
+import com.fern.types.generators.GeneratorHelpers;
+import com.fern.types.generators.GeneratorOutputConfig;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 

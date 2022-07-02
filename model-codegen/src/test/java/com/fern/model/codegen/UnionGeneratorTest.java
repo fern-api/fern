@@ -5,15 +5,15 @@ import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.java.test.TestConstants;
 import com.fern.model.codegen.types.UnionGenerator;
-import com.fern.types.types.ContainerType;
-import com.fern.types.types.DeclaredTypeName;
-import com.fern.types.types.FernFilepath;
-import com.fern.types.types.PrimitiveType;
-import com.fern.types.types.SingleUnionType;
-import com.fern.types.types.Type;
-import com.fern.types.types.TypeDeclaration;
-import com.fern.types.types.TypeReference;
-import com.fern.types.types.UnionTypeDeclaration;
+import com.fern.types.ContainerType;
+import com.fern.types.DeclaredTypeName;
+import com.fern.types.FernFilepath;
+import com.fern.types.PrimitiveType;
+import com.fern.types.SingleUnionType;
+import com.fern.types.Type;
+import com.fern.types.TypeDeclaration;
+import com.fern.types.TypeReference;
+import com.fern.types.UnionTypeDeclaration;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -64,7 +64,8 @@ public class UnionGeneratorTest {
         GeneratorContext generatorContext = new GeneratorContext(
                 Optional.of(TestConstants.PACKAGE_PREFIX),
                 Collections.singletonMap(variableValueTypeDefinition.name(), variableValueTypeDefinition),
-                Collections.emptyMap());
+                Collections.emptyMap(),
+                TestConstants.FERN_CONSTANTS);
         UnionGenerator unionGenerator = new UnionGenerator(
                 variableValueTypeDefinition.name(),
                 PackageType.TYPES,
@@ -100,7 +101,8 @@ public class UnionGeneratorTest {
                 .build();
         GeneratorContext generatorContext = new GeneratorContext(Optional.of(TestConstants.PACKAGE_PREFIX),
                 Collections.singletonMap(variableValueTypeDefinition.name(), variableValueTypeDefinition),
-                Collections.emptyMap());
+                Collections.emptyMap(),
+                TestConstants.FERN_CONSTANTS);
         UnionGenerator unionGenerator = new UnionGenerator(
                 variableValueTypeDefinition.name(),
                 PackageType.TYPES,

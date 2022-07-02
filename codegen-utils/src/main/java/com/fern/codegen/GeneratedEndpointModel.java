@@ -1,7 +1,7 @@
 package com.fern.codegen;
 
 import com.fern.codegen.payload.Payload;
-import com.fern.types.services.http.HttpEndpoint;
+import com.fern.types.services.HttpEndpoint;
 import java.util.Optional;
 import org.immutables.value.Value;
 

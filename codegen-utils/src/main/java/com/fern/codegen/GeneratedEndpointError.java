@@ -1,7 +1,7 @@
 package com.fern.codegen;
 
 import com.fern.immutables.StagedBuilderStyle;
-import com.fern.types.services.commons.ResponseError;
+import com.fern.types.services.ResponseError;
 import com.squareup.javapoet.MethodSpec;
 import java.util.Map;
 import org.immutables.value.Value;

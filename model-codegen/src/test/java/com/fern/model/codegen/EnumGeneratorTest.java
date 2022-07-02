@@ -4,12 +4,12 @@ import com.fern.codegen.GeneratedEnum;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.java.test.TestConstants;
 import com.fern.model.codegen.types.EnumGenerator;
-import com.fern.types.types.DeclaredTypeName;
-import com.fern.types.types.EnumTypeDeclaration;
-import com.fern.types.types.EnumValue;
-import com.fern.types.types.FernFilepath;
-import com.fern.types.types.Type;
-import com.fern.types.types.TypeDeclaration;
+import com.fern.types.DeclaredTypeName;
+import com.fern.types.EnumTypeDeclaration;
+import com.fern.types.EnumValue;
+import com.fern.types.FernFilepath;
+import com.fern.types.Type;
+import com.fern.types.TypeDeclaration;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 

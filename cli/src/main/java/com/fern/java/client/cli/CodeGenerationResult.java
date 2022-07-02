@@ -2,8 +2,8 @@ package com.fern.java.client.cli;
 
 import com.fern.codegen.IGeneratedFile;
 import com.fern.java.client.cli.CustomPluginConfig.Mode;
-import com.fern.types.generators.config.GeneratorPublishConfig;
-import com.fern.types.generators.config.MavenRegistryConfig;
+import com.fern.types.generators.GeneratorPublishConfig;
+import com.fern.types.generators.MavenRegistryConfig;
 import java.util.List;
 import org.immutables.value.Value;
 import org.immutables.value.Value.Style.ImplementationVisibility;

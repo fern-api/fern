@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.immutables.StagedBuilderStyle;
 import com.fern.java.client.cli.CustomPluginConfig.Mode;
-import com.fern.types.generators.config.GeneratorConfig;
+import com.fern.types.generators.GeneratorConfig;
 import java.util.Optional;
 import org.immutables.value.Value;
 

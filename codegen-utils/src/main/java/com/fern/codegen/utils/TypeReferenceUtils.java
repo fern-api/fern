@@ -1,11 +1,11 @@
 package com.fern.codegen.utils;
 
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
-import com.fern.types.types.ContainerType;
-import com.fern.types.types.DeclaredTypeName;
-import com.fern.types.types.MapType;
-import com.fern.types.types.PrimitiveType;
-import com.fern.types.types.TypeReference;
+import com.fern.types.ContainerType;
+import com.fern.types.DeclaredTypeName;
+import com.fern.types.MapType;
+import com.fern.types.PrimitiveType;
+import com.fern.types.TypeReference;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;

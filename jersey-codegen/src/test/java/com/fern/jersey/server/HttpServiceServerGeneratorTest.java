@@ -2,35 +2,35 @@ package com.fern.jersey.server;
 
 import com.fern.codegen.GeneratedHttpServiceServer;
 import com.fern.codegen.GeneratorContext;
+import com.fern.java.test.TestConstants;
 import com.fern.model.codegen.ModelGenerator;
 import com.fern.model.codegen.ModelGeneratorResult;
-import com.fern.types.errors.ErrorDeclaration;
-import com.fern.types.errors.ErrorName;
-import com.fern.types.errors.HttpErrorConfiguration;
-import com.fern.types.services.commons.Encoding;
-import com.fern.types.services.commons.FailedResponse;
-import com.fern.types.services.commons.ResponseError;
-import com.fern.types.services.commons.ResponseErrorProperties;
-import com.fern.types.services.commons.ServiceName;
-import com.fern.types.services.http.EndpointId;
-import com.fern.types.services.http.HttpAuth;
-import com.fern.types.services.http.HttpEndpoint;
-import com.fern.types.services.http.HttpMethod;
-import com.fern.types.services.http.HttpOkResponse;
-import com.fern.types.services.http.HttpPath;
-import com.fern.types.services.http.HttpPathPart;
-import com.fern.types.services.http.HttpRequest;
-import com.fern.types.services.http.HttpResponse;
-import com.fern.types.services.http.HttpService;
-import com.fern.types.services.http.PathParameter;
-import com.fern.types.types.AliasTypeDeclaration;
-import com.fern.types.types.DeclaredTypeName;
-import com.fern.types.types.FernFilepath;
-import com.fern.types.types.ObjectProperty;
-import com.fern.types.types.ObjectTypeDeclaration;
-import com.fern.types.types.PrimitiveType;
-import com.fern.types.types.Type;
-import com.fern.types.types.TypeReference;
+import com.fern.types.AliasTypeDeclaration;
+import com.fern.types.DeclaredTypeName;
+import com.fern.types.ErrorDeclaration;
+import com.fern.types.ErrorName;
+import com.fern.types.FernFilepath;
+import com.fern.types.HttpErrorConfiguration;
+import com.fern.types.ObjectProperty;
+import com.fern.types.ObjectTypeDeclaration;
+import com.fern.types.PrimitiveType;
+import com.fern.types.Type;
+import com.fern.types.TypeReference;
+import com.fern.types.services.Encoding;
+import com.fern.types.services.EndpointId;
+import com.fern.types.services.FailedResponse;
+import com.fern.types.services.HttpAuth;
+import com.fern.types.services.HttpEndpoint;
+import com.fern.types.services.HttpMethod;
+import com.fern.types.services.HttpOkResponse;
+import com.fern.types.services.HttpPath;
+import com.fern.types.services.HttpPathPart;
+import com.fern.types.services.HttpRequest;
+import com.fern.types.services.HttpResponse;
+import com.fern.types.services.HttpService;
+import com.fern.types.services.PathParameter;
+import com.fern.types.services.ResponseError;
+import com.fern.types.services.ServiceName;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +42,8 @@ public final class HttpServiceServerGeneratorTest {
     private static final GeneratorContext GENERATOR_CONTEXT = new GeneratorContext(
             Optional.of(PACKAGE_PREFIX),
             Collections.emptyMap(),
-            Collections.emptyMap());
+            Collections.emptyMap(),
+            TestConstants.FERN_CONSTANTS);
 
     @Test
     public void test_basic() {
@@ -77,10 +78,6 @@ public final class HttpServiceServerGeneratorTest {
                                                 .build()))
                                         .build())
                                 .failed(FailedResponse.builder()
-                                        .discriminant("_type")
-                                        .errorProperties(ResponseErrorProperties.builder()
-                                                .errorInstanceId("_errorInstanceId")
-                                                .build())
                                         .build())
                                 .build())
                         .auth(HttpAuth.NONE)
@@ -112,10 +109,6 @@ public final class HttpServiceServerGeneratorTest {
                                                 .build()))
                                         .build())
                                 .failed(FailedResponse.builder()
-                                        .discriminant("_type")
-                                        .errorProperties(ResponseErrorProperties.builder()
-                                                .errorInstanceId("_errorInstanceId")
-                                                .build())
                                         .build())
                                 .build())
                         .auth(HttpAuth.NONE)
@@ -184,10 +177,6 @@ public final class HttpServiceServerGeneratorTest {
                                                 .build()))
                                         .build())
                                 .failed(FailedResponse.builder()
-                                        .discriminant("_type")
-                                        .errorProperties(ResponseErrorProperties.builder()
-                                                .errorInstanceId("_errorInstanceId")
-                                                .build())
                                         .addErrors(ResponseError.builder()
                                                 .discriminantValue("notFound")
                                                 .error(personIdNotFound.name())
@@ -223,10 +212,6 @@ public final class HttpServiceServerGeneratorTest {
                                                 .build()))
                                         .build())
                                 .failed(FailedResponse.builder()
-                                        .discriminant("_type")
-                                        .errorProperties(ResponseErrorProperties.builder()
-                                                .errorInstanceId("_errorInstanceId")
-                                                .build())
                                         .build())
                                 .build())
                         .auth(HttpAuth.NONE)

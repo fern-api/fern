@@ -14,12 +14,12 @@ import com.fern.codegen.utils.ClassNameUtils;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.codegen.utils.MethodNameUtils;
 import com.fern.model.codegen.Generator;
-import com.fern.types.errors.ErrorName;
-import com.fern.types.services.commons.FailedResponse;
-import com.fern.types.services.commons.ResponseError;
-import com.fern.types.services.commons.ServiceName;
-import com.fern.types.services.http.HttpEndpoint;
-import com.fern.types.services.http.HttpService;
+import com.fern.types.ErrorName;
+import com.fern.types.services.FailedResponse;
+import com.fern.types.services.HttpEndpoint;
+import com.fern.types.services.HttpService;
+import com.fern.types.services.ResponseError;
+import com.fern.types.services.ServiceName;
 import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
@@ -209,7 +209,10 @@ public final class FailedResponseGenerator extends Generator {
                                 "$T.$L",
                                 ClassName.get(JsonTypeInfo.As.class),
                                 JsonTypeInfo.As.PROPERTY.name())
-                        .addMember("property", "$S", failedResponse.discriminant())
+                        .addMember(
+                                "property",
+                                "$S",
+                                generatorContext.getFernConstants().errorDiscriminant())
                         .addMember("visible", "true")
                         .build());
         AnnotationSpec.Builder jsonSubTypeAnnotationBuilder = AnnotationSpec.builder(JsonSubTypes.class);
