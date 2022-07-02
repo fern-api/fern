@@ -1,0 +1,37 @@
+ids:
+  - MovieId
+types:
+  Movie:
+    properties:
+      id: MovieId
+      title: string
+      rating: double
+errors:
+  NotFoundError:
+    http:
+      statusCode: 404
+services:
+  http:
+    MoviesService:
+      auth: none
+      base-path: /movies
+      endpoints:
+        createMovie:
+          method: POST
+          path: /
+          request:
+            type:
+              properties:
+                title: string
+                rating: double
+          response: MovieId
+        getMovie:
+          method: GET
+          path: /{movieId}
+          path-parameters:
+            postId: MovieId
+          response:
+            ok: Movie
+            failed:
+              errors:
+                - NotFoundError

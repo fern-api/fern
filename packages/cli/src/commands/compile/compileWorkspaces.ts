@@ -1,11 +1,10 @@
 import { loadProjectConfig, ProjectConfig } from "@fern-api/commons";
 import { writeFile } from "fs/promises";
-import yaml from "js-yaml";
 import path from "path";
 import { getUniqueWorkspaces } from "../utils/getUniqueWorkspaces";
 import { compileAndGenerateWorkspace, compileWorkspace } from "./compileWorkspace";
 
-const IR_FILENAME = "ir.json";
+export const IR_FILENAME = "ir.json";
 
 export async function compileWorkspaces({
     commandLineWorkspaces,
@@ -15,21 +14,25 @@ export async function compileWorkspaces({
     writeIr: boolean;
 }): Promise<void> {
     const { uniqueWorkspaceDefinitionPaths } = await loadProjectAndUniqueWorkspaces(commandLineWorkspaces);
-    uniqueWorkspaceDefinitionPaths.map(async (uniqueWorkspaceDefinitionPath) => {
-        const { compileResult, workspaceDefinition } = await compileWorkspace({
-            absolutePathToWorkspaceDefinition: uniqueWorkspaceDefinitionPath,
-        });
-        if (!compileResult.didSucceed) {
-            console.log("%s: Failed to compile API Definition", workspaceDefinition.name);
-        } else if (writeIr) {
-            await writeFile(
-                path.join(uniqueWorkspaceDefinitionPath, IR_FILENAME),
-                yaml.dump(compileResult.intermediateRepresentation)
-            );
-            const relativeWorkspaceDefinitionPath = path.relative(uniqueWorkspaceDefinitionPath, __dirname);
-            console.log("%s: Wrote IR to %s", workspaceDefinition.name, relativeWorkspaceDefinitionPath);
-        }
-    });
+    await Promise.all(
+        uniqueWorkspaceDefinitionPaths.map(async (uniqueWorkspaceDefinitionPath) => {
+            const { compileResult, workspaceDefinition } = await compileWorkspace({
+                absolutePathToWorkspaceDefinition: uniqueWorkspaceDefinitionPath,
+            });
+            if (!compileResult.didSucceed) {
+                console.log("%s: failed to compile API Definition", workspaceDefinition.name);
+            } else if (writeIr) {
+                const workspaceDirectory = path.dirname(uniqueWorkspaceDefinitionPath);
+                const irOutputFilePath = path.join(workspaceDirectory, IR_FILENAME);
+                console.log(irOutputFilePath);
+                await writeFile(
+                    irOutputFilePath,
+                    JSON.stringify(compileResult.intermediateRepresentation, undefined, 4)
+                );
+                console.log("%s: wrote IR", workspaceDefinition.name);
+            }
+        })
+    );
 }
 
 export async function compileAndGenerateWorkspaces({
