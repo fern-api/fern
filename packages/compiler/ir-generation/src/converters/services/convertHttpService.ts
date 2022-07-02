@@ -9,6 +9,7 @@ import {
     HttpMethod,
     HttpService,
 } from "@fern-fern/ir-model/services";
+import { kebabCase } from "lodash";
 import { getDocs } from "../../utils/getDocs";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { constructHttpPath } from "./constructHttpPath";
@@ -36,7 +37,7 @@ export function convertHttpService({
             name: serviceId,
             fernFilepath,
         },
-        basePath: serviceDefinition["base-path"],
+        basePath: convertBasePath({ serviceDefinition, serviceId }),
         headers:
             serviceDefinition.headers != null
                 ? Object.entries(serviceDefinition.headers).map(([header, headerType]) => ({
@@ -53,8 +54,8 @@ export function convertHttpService({
                         ? convertHttpAuth(endpoint["auth-override"])
                         : convertHttpAuth(serviceDefinition.auth),
                 docs: endpoint.docs,
-                method: convertHttpMethod(endpoint.method),
-                path: constructHttpPath(endpoint.path),
+                method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
+                path: constructHttpPath(endpoint.path ?? endpointId),
                 pathParameters:
                     endpoint["path-parameters"] != null
                         ? Object.entries(endpoint["path-parameters"]).map(([parameterName, parameterType]) => ({
@@ -99,7 +100,26 @@ export function convertHttpService({
     };
 }
 
-function convertHttpMethod(method: RawSchemas.HttpEndpointSchema["method"]): HttpMethod {
+function convertBasePath({
+    serviceDefinition,
+    serviceId,
+}: {
+    serviceDefinition: RawSchemas.HttpServiceSchema;
+    serviceId: string;
+}): string | undefined {
+    const specifiedBasePath = serviceDefinition["base-path"];
+    // If base path is unspecified, default to kebab-case of serviceId
+    // If base path is "/" or empty, return undefined
+    // Otherwise return base path
+    if (specifiedBasePath == null) {
+        return kebabCase(serviceId);
+    } else if (specifiedBasePath === "/") {
+        return undefined;
+    }
+    return specifiedBasePath;
+}
+
+function convertHttpMethod(method: Exclude<RawSchemas.HttpEndpointSchema["method"], null | undefined>): HttpMethod {
     switch (method) {
         case "GET":
             return HttpMethod.Get;
