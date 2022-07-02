@@ -5,7 +5,7 @@ import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
-import { compileWorkspaces } from "./commands/compile/compileWorkspaces";
+import { compileAndGenerateWorkspaces, compileWorkspaces } from "./commands/compile/compileWorkspaces";
 import { convertOpenApiToFernApiDefinition } from "./commands/convert-openapi/convertOpenApi";
 
 void runCli();
@@ -37,6 +37,7 @@ async function runCli() {
     addConvertCommand(cli);
     addGenerateCommand(cli);
     addLoginCommand(cli);
+    addCompileCommand(cli);
 
     await cli.parse();
 }
@@ -108,7 +109,7 @@ function addGenerateCommand(cli: Argv) {
                         "If omitted, every workspace specified in the project-level configuration (fern.config.json) will be processed.",
                 }),
         async (argv) => {
-            await compileWorkspaces({
+            await compileAndGenerateWorkspaces({
                 commandLineWorkspaces: argv.workspaces ?? [],
                 runLocal: argv.local,
             });
@@ -119,7 +120,7 @@ function addGenerateCommand(cli: Argv) {
 function addConvertCommand(cli: Argv) {
     cli.command(
         "convert <openapiPath> <fernDefinitionDir>",
-        "Converts Open API to Fern definition.",
+        "Converts Open API to Fern API Definition.",
         (yargs) =>
             yargs
                 .positional("openapiPath", {
@@ -144,4 +145,28 @@ function addLoginCommand(cli: Argv) {
             await initiateLogin();
         },
     });
+}
+
+function addCompileCommand(cli: Argv) {
+    cli.command(
+        "compile [workspaces...]",
+        "Compiles your Fern API Definition",
+        (yargs) =>
+            yargs
+                .option("writeIr", {
+                    type: "boolean",
+                    description: "Should output compiled intermediate representation (IR)",
+                })
+                .positional("workspaces", {
+                    array: true,
+                    type: "string",
+                    description:
+                        "If omitted, every workspace specified in the project-level configuration (fern.config.json) will be processed.",
+                }),
+        (argv) =>
+            compileWorkspaces({
+                commandLineWorkspaces: argv.workspaces ?? [],
+                writeIr: argv.writeIr ?? false,
+            })
+    );
 }
