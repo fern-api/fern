@@ -55,7 +55,7 @@ export function convertHttpService({
                         : convertHttpAuth(serviceDefinition.auth),
                 docs: endpoint.docs,
                 method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
-                path: constructHttpPath(endpoint.path ?? endpointId),
+                path: constructHttpPath(endpoint.path ?? kebabCase(endpointId)),
                 pathParameters:
                     endpoint["path-parameters"] != null
                         ? Object.entries(endpoint["path-parameters"]).map(([parameterName, parameterType]) => ({
