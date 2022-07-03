@@ -643,9 +643,26 @@ dependencies {
     implementation 'io.github.openfeign:feign-jackson:11.8'
     implementation 'io.github.openfeign:feign-core:11.8'
     implementation 'io.github.openfeign:feign-jaxrs2:11.8'
+    implementation 'org.glassfish.jersey.ext:jersey-spring5:2.35'
 
     annotationProcessor 'org.immutables:value:2.8.8'
     compileOnly 'org.immutables:value-annotations:2.8.8'
+}
+
+]
+
+
+basic[api/generated-java/blog-api-server/src/main/java/com/blog/server/AbstractServiceRegistry.java]=[
+package com.blog.server;
+
+import org.glassfish.jersey.server.ResourceConfig;
+
+public abstract class AbstractServiceRegistry extends ResourceConfig {
+  AbstractServiceRegistry() {
+    register(registerPostsService());
+  }
+
+  public abstract PostsService registerPostsService();
 }
 
 ]

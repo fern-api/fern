@@ -17,9 +17,10 @@ dependencies {
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
     implementation 'org.immutables:value::annotations'
     implementation 'jakarta.ws.rs:jakarta.ws.rs-api'
-    implementation 'io.github.openfeign:feign-jackson:11.8'
-    implementation 'io.github.openfeign:feign-core:11.8'
-    implementation 'io.github.openfeign:feign-jaxrs:11.8'
+    implementation 'io.github.openfeign:feign-jackson'
+    implementation 'io.github.openfeign:feign-core'
+    implementation 'io.github.openfeign:feign-jaxrs'
+    implementation 'org.glassfish.jersey.ext:jersey-spring5'
 
     annotationProcessor 'org.immutables:value'
 

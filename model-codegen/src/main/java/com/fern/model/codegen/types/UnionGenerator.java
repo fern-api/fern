@@ -32,6 +32,7 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -83,7 +84,11 @@ public final class UnionGenerator extends Generator {
                         Function.identity(),
                         singleUnionType -> generatedUnionClassName.nestedClass(INTERNAL_CLASS_NAME_PREFIX
                                 + StringUtils.capitalize(singleUnionType.discriminantValue())
-                                + INTERNAL_CLASS_NAME_SUFFIX)));
+                                + INTERNAL_CLASS_NAME_SUFFIX),
+                        (u, v) -> {
+                            throw new IllegalStateException(String.format("Duplicate key %s", u));
+                        },
+                        LinkedHashMap::new));
         this.unknownInternalValueClassName = generatedUnionClassName.nestedClass(UNKNOWN_INTERNAL_VALUE_INTERFACE_NAME);
         this.internalValueInterfaceClassName = generatedUnionClassName.nestedClass(INTERNAL_VALUE_INTERFACE_NAME);
     }
@@ -189,12 +194,19 @@ public final class UnionGenerator extends Generator {
 
     private Map<SingleUnionType, MethodSpec> getIsTypeMethods() {
         return unionTypeDeclaration.types().stream()
-                .collect(Collectors.toMap(Function.identity(), singleUnionType -> MethodSpec.methodBuilder(
-                                IS_METHOD_NAME_PREFIX + StringUtils.capitalize(singleUnionType.discriminantValue()))
-                        .addModifiers(Modifier.PUBLIC)
-                        .returns(boolean.class)
-                        .addStatement("return value instanceof $T", internalValueClassNames.get(singleUnionType))
-                        .build()));
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        singleUnionType -> MethodSpec.methodBuilder(IS_METHOD_NAME_PREFIX
+                                        + StringUtils.capitalize(singleUnionType.discriminantValue()))
+                                .addModifiers(Modifier.PUBLIC)
+                                .returns(boolean.class)
+                                .addStatement(
+                                        "return value instanceof $T", internalValueClassNames.get(singleUnionType))
+                                .build(),
+                        (u, v) -> {
+                            throw new IllegalStateException(String.format("Duplicate key %s", u));
+                        },
+                        LinkedHashMap::new));
     }
 
     private List<MethodSpec> getSingleUnionTypeGetterMethods(
@@ -323,7 +335,8 @@ public final class UnionGenerator extends Generator {
 
     private Map<SingleUnionType, GeneratedInternalValueTypeSpec> getInternalValueTypeSpecs(
             GeneratedVisitor<SingleUnionType> generatedVisitor) {
-        return unionTypeDeclaration.types().stream().collect(Collectors.toMap(Function.identity(), singleUnionType -> {
+        Map<SingleUnionType, GeneratedInternalValueTypeSpec> result = new LinkedHashMap<>();
+        unionTypeDeclaration.types().forEach(singleUnionType -> {
             String capitalizedDiscriminantValue = StringUtils.capitalize(singleUnionType.discriminantValue());
             ClassName internalValueClassName = internalValueClassNames.get(singleUnionType);
             MethodSpec visitorMethodName =
@@ -376,10 +389,12 @@ public final class UnionGenerator extends Generator {
                                         internalValueImmutablesProperty.name)
                                 .build())
                         .build();
-                return GeneratedInternalValueTypeSpec.builder()
-                        .typeSpec(typeSpec)
-                        .internalValueImmutablesProperty(internalValueImmutablesProperty)
-                        .build();
+                result.put(
+                        singleUnionType,
+                        GeneratedInternalValueTypeSpec.builder()
+                                .typeSpec(typeSpec)
+                                .internalValueImmutablesProperty(internalValueImmutablesProperty)
+                                .build());
             } else {
                 TypeSpec typeSpec = typeSpecBuilder
                         .addMethod(MethodSpec.methodBuilder(VISIT_METHOD_NAME)
@@ -401,11 +416,14 @@ public final class UnionGenerator extends Generator {
                                         internalValueClassName.simpleName())
                                 .build())
                         .build();
-                return GeneratedInternalValueTypeSpec.builder()
-                        .typeSpec(typeSpec)
-                        .build();
+                result.put(
+                        singleUnionType,
+                        GeneratedInternalValueTypeSpec.builder()
+                                .typeSpec(typeSpec)
+                                .build());
             }
-        }));
+        });
+        return result;
     }
 
     private TypeSpec getUnknownInternalValueTypeSpec() {

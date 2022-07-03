@@ -98,6 +98,7 @@ public abstract class CodeGenerationResult {
                 + "    implementation 'io.github.openfeign:feign-jackson:11.8'\n"
                 + "    implementation 'io.github.openfeign:feign-core:11.8'\n"
                 + "    implementation 'io.github.openfeign:feign-jaxrs2:11.8'\n"
+                + "    implementation 'org.glassfish.jersey.ext:jersey-spring5:2.35'\n"
                 + "\n"
                 + "    annotationProcessor 'org.immutables:value:2.8.8'\n"
                 + "    compileOnly 'org.immutables:value-annotations:2.8.8'\n"
