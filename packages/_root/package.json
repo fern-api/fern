@@ -61,6 +61,7 @@
     "@fern-typescript/service-utils": "workspace:*",
     "@fern-typescript/testing-utils": "workspace:*",
     "@fern-typescript/types": "workspace:*",
+    "fern-fe-bundle": "workspace:*",
     "fern-typescript": "workspace:*"
   },
   "devDependencies": {
