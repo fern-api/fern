@@ -46,7 +46,7 @@ api/
 fern.config.json
 ```
 
-- [`api.yml`](README.md#an-example-of-a-fern-api-definition) is an example Fern API Definition for IMDb.
+- [`api.yml`](definition.md#an-example-of-a-fern-api-definition) is an example Fern API Definition for IMDb.
 - [`.fernrc.yml`](docs/fernrc.md) is a configuration file local to a single API in your repo.
 - [`fern.config.json`](docs/fern-config-json.md) is a configuration file that applies to all APIs in your repo.
 
@@ -123,7 +123,7 @@ app.listen(8080);
 
 Our IDE will give us red lines indicating that we need to add missing properties.
 
-![server.ts error message](assets/server.ts%20error%20message.png)
+![server.ts error message](assets/tutorial/server.ts%20error%20message.png)
 
 You can implement the missing methods, for example:
 
@@ -165,7 +165,7 @@ Open Postman and File -> Import `api/generated-postman.json` that we generated i
 
 Select the `createMovie` endpoint and hit `Send`. You should get a response back from your server **`iron-man-3`**.
 
-![postman-testing](assets/postman-testing.png)
+![postman-testing](assets/tutorial/postman-testing.png)
 
 ## Step 8: Celebrate
 

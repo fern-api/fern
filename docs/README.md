@@ -1,35 +1,12 @@
 # Fern
 
-> **Fern is a framework for building APIs.** You can think of it as an alternative to OpenAPI/Swagger.
-
-<a href="https://www.loom.com/share/410f13c725ab4403aac77b237f9fe1f1" target="_blank">
-    <p>Demo: building an API with Fern</p>
-    <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/410f13c725ab4403aac77b237f9fe1f1-1654645327734-with-play.gif">
-  </a>
+> **Fern is a framework for building APIs.** You can think of it as an alternative to OpenAPI (f.k.a Swagger).
 
 ## How does it work?
 
-![Overview](assets/diagrams/overview-experience.png)
+![Overview diagram](assets/diagrams/overview-diagram.png)
 
 Fern reads in your [Fern API Definition](#what-is-a-fern-api-definition), invokes remote [generators](#fern-generators), and creates clients, server stubs, and documentation for your API.
-
-## Goals
-
-**1. High-quality code generation.**
-
-Generators can be written in any language, for any language. Generated servers and clients are idiomatic and easy to use.
-
-**2. Plugin support.**
-
-Generators can define plugin points to expand their functionality. For example, a plugin may add support for gRPC or could add Auth0 authorization checks for each endpoint.
-
-**3. Protocol flexibility.**
-
-Use HTTP when you want RESTful calls. Use WebSockets when you want subscriptions. Use TCP when you care about performance. Fern manages the transport layer and provides similar interfaces so you can use the best protocol for the job.
-
-**4. Errors as a first-class concept.**
-
-Every request can result in success or failure. Errors are strongly typed so it's easy for consumers to handle them.
 
 ## What is a Fern API Definition?
 
@@ -85,18 +62,18 @@ errors:
       statusCode: 404
 ```
 
-## Fern Generators
+## Generators
 
-| **Generator** |                                       **Description**                                        |   **CLI Command**   |                                      **Library**                                       |
-| :-----------: | :------------------------------------------------------------------------------------------: | :-----------------: | :------------------------------------------------------------------------------------: |
-|               |                                                                                              |
-|  TypeScript   |               converts a Fern API Definition to a TypeScript client and server               | fern add typescript | [fern-typescript](https://github.com/fern-api/fern/tree/main/packages/fern-typescript) |
-|               |                                                                                              |
-|     Java      |                  converts a Fern API Definition to a Java client and server                  |    fern add java    |                   [fern-java](https://github.com/fern-api/fern-java)                   |
-|               |                                                                                              |
-|    Python     |                 converts a Fern API Definition to a Python client and server                 |   fern add python   |                                         _WIP_                                          |
-|               |                                                                                              |
-|    Postman    | converts a Fern API Definition to a [Postman Collection](https://www.postman.com/collection) |  fern add postman   |                [fern-postman](https://github.com/fern-api/fern-postman)                |
-|               |                                                                                              |
-|    OpenAPI    |   converts a Fern Definition to an [OpenAPI Spec](https://swagger.io/resources/open-api/)    |  fern add openapi   |                [fern-openapi](https://github.com/fern-api/fern-openapi)                |
-|               |                                                                                              |
+|  **Name**  |                                       **Description**                                        |   **CLI Command**   |                                      **Library**                                       |
+| :--------: | :------------------------------------------------------------------------------------------: | :-----------------: | :------------------------------------------------------------------------------------: |
+|            |                                                                                              |
+| TypeScript |               converts a Fern API Definition to a TypeScript client and server               | fern add typescript | [fern-typescript](https://github.com/fern-api/fern/tree/main/packages/fern-typescript) |
+|            |                                                                                              |
+|    Java    |                  converts a Fern API Definition to a Java client and server                  |    fern add java    |                   [fern-java](https://github.com/fern-api/fern-java)                   |
+|            |                                                                                              |
+|   Python   |                 converts a Fern API Definition to a Python client and server                 |   fern add python   |                 [fern-python](https://github.com/fern-api/fern-python)                 |
+|            |                                                                                              |
+|  Postman   | converts a Fern API Definition to a [Postman Collection](https://www.postman.com/collection) |  fern add postman   |                [fern-postman](https://github.com/fern-api/fern-postman)                |
+|            |                                                                                              |
+|  OpenAPI   |   converts a Fern Definition to an [OpenAPI Spec](https://swagger.io/resources/open-api/)    |  fern add openapi   |                [fern-openapi](https://github.com/fern-api/fern-openapi)                |
+|            |                                                                                              |

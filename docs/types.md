@@ -1,34 +1,92 @@
 # Types
 
-With Fern, you can make your own types! There are four ways to define a type:
+Types describe the data model of your API. You can use built-in types or create your own.
 
-- [Objects](#objects)
-- [Unions](#objects)
-- [Aliases](#aliases)
-- [Enums](#enums)
+- Built-in types
+  - [Primitives](#primitives)
+  - [Containers](#containers)
+- Create your own types
+  - [Objects](#objects)
+  - [Unions](#objects)
+    - [Enums](#enums)
+  - [Aliases](#aliases)
 
-### Objects
+## Built-in types
 
-Objects have named properties.
+Fern includes two kinds of built-in types: **primitives** and **containers**.
 
-```yaml
+### Primitives
+
+The includes primitives are:
+
+- `integer`
+- `double`
+- `long` _(range -2^53 to 2^53)_
+- `string`
+- `boolean`
+- `date_time`
+- `UUID`
+
+### Containers
+
+Containers wrap existing types. The included containers are
+
+- `map<K, V>` - values of type `V` each indexed by a unique key of type `K` (keys are unordered).
+- `list<V>` - an ordered sequence of items of type `T`.
+- `set<V>`- a collection of distinct values of type `T`.
+- `optional<V>` - represents a value of type `T` which is either present or not present.
+
+```yml
 types:
-  Dog:
+  KitchenSink:
+    docs: Quite the kitchen sink!
     properties:
-      name: string
-      likesToBark: boolean
+      someMap: map<string, boolean>
+      myList: list<integer>
+      maybeASet: optional<set<string>>
 ```
-
-Each property can reference an existing type, or a built-in [primitive](#primitives).
 
 **Equivalent code**
 
 In TypeScript, this might look something like:
 
 ```ts
-interface Dog {
-  name: string;
-  likesToBark: boolean;
+/**
+ * Quite the kitchen sink!
+ */
+interface KitchenSink {
+  someMap: Record<string, boolean>;
+  myList: number[];
+  maybeASet?: Set<string>;
+}
+```
+
+## Create your own types
+
+### Objects
+
+_Objects are a collection of named properties. A property can reference a built-in [primitive](#primitives) or a type you've defined._
+
+```yaml
+types:
+  Movie:
+    properties:
+      id: MovieId
+      title: string
+      rating: double
+      inTheaters: optional<boolean>
+```
+
+**Equivalent code**
+
+In TypeScript, this might look something like:
+
+```ts
+interface Movie {
+  id: MovieId;
+  title: string;
+  rating: double;
+  inTheaters?: boolean;
 }
 ```
 
@@ -133,7 +191,7 @@ enum Suit {
 
 ### Aliases
 
-An alias type renames an existing type. Use aliases to remove ambiguity. For example, without aliases:
+An alias type renames an existing type. Use aliases to remove ambiguity and make types more self-documenting. For example, without aliases:
 
 ```yaml
 types:
@@ -167,70 +225,4 @@ interface Employee {
   name: string;
   manager: EmployeeId;
 }
-```
-
-## Built-in types
-
-Fern includes two kinds of built-in types: **primitives** and **containers**.
-
-### Primitives
-
-The includes primitives are:
-
-- `integer`
-- `double`
-- `long` _(range -2^53 to 2^53)_
-- `string`
-- `boolean`
-- `date_time`
-- `UUID`
-
-### Containers
-
-Containers wrap existing types. The included containers are
-
-- `map<K, V>`
-- `list<V>`
-- `set<V>`
-- `optional<V>`
-
-```yml
-types:
-  KitchenSink:
-    docs: Quite the kitchen sink!
-    properties:
-      someMap: map<string, boolean>
-      myList: list<integer>
-      maybeASet: optional<set<string>>
-```
-
-**Equivalent code**
-
-In TypeScript, this might look something like:
-
-```ts
-/**
- * Quite the kitchen sink!
- */
-interface KitchenSink {
-  someMap: Record<string, boolean>;
-  myList: number[];
-  maybeASet?: Set<string>;
-}
-```
-
-## IDs
-
-IDs are a common pattern in API development and are given a special place in a Fern API Definition.
-
-```yaml
-ids:
-  - RepoId
-types:
-  Url: string
-  GithubRepo:
-    properties:
-      id: RepoId
-      name: string
-      url: Url
 ```
