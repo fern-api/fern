@@ -47,8 +47,8 @@ fern.config.json
 ```
 
 - [`api.yml`](definition.md#an-example-of-a-fern-api-definition) is an example Fern API Definition for IMDb.
-- [`.fernrc.yml`](docs/fernrc.md) is a configuration file local to a single API in your repo.
-- [`fern.config.json`](docs/fern-config-json.md) is a configuration file that applies to all APIs in your repo.
+- [`.fernrc.yml`](fernrc.md) is a configuration file local to a single API in your repo.
+- [`fern.config.json`](fern-config-json.md) is a configuration file that applies to all APIs in your repo.
 
 </details>
 
