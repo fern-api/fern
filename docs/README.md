@@ -6,7 +6,7 @@
 
 ![Overview diagram](assets/diagrams/overview-diagram.png)
 
-Fern reads in your [Fern API Definition](#what-is-a-fern-api-definition), invokes remote [generators](#fern-generators), and creates clients, server stubs, and interactive documentation for your API.
+Fern reads in your [Fern API Definition](#what-is-a-fern-api-definition), invokes remote [generators](#what-are-fern-generators), and creates clients, server stubs, and interactive documentation for your API.
 
 - **Client libraries**: one generated SDK for each supported platform and language that's automatically published to a registry (e.g., npm, maven, pypi)!
 
@@ -16,17 +16,17 @@ Fern reads in your [Fern API Definition](#what-is-a-fern-api-definition), invoke
 
 ## Why use Fern?
 
-### 1. Schema-first API design
+### 1. Practice schema-first API design
 
 Write your [Fern API Definition](#what-is-a-fern-api-definition) before writing any code. This single source of truth keeps your client libraries (SDKs), server implementation, and documentation in sync. Companies like _Amazon, Palantir, and Stripe_ practice this method of API development.
 
-### 2. The best API code generation available (seriously)
+### 2. Best-in-class code generation
 
-Fern is designed to optimize for high quality code generation. Generated code is **idiomatic** (i.e., it follows the convention of the language) and **strongly typed** (i.e., the types of variables and objects are explicitly specified).
+Ferrari makes luxury sports cars. Fern generates kick-ass code. It is designed to optimize for high quality code generation. Generated code is **idiomatic** (i.e., it follows the convention of the language) and **strongly typed** (i.e., the types of variables and objects are explicitly specified).
 
-### 3. Iterate faster across teams
+### 3. Iterate faster
 
-With an API definition, development projects that involve multiple teams (e.g., backend, web, mobile) can proceed much faster. Frontend teams can immediately start building components regardless of whether or not the backend is ready.
+With an API definition, development projects that involve multiple engineers/teams (e.g., backend, web, mobile) can proceed much faster. Frontend teams can immediately start building components regardless of whether or not the backend is ready.
 
 ## What is a Fern API Definition?
 

@@ -6,7 +6,7 @@
 
 - Concepts
 
-  - [Fern API Definition](fern-api-definition.md)
+  - [Fern API Definition](definition.md)
   - [Types](types.md)
   - [Services](services.md)
   - [Errors](errors.md)
@@ -15,6 +15,6 @@
 
 - Reference
 
-  - [Generators](README.md#fern-generators)
+  - [Generators](generators.md)
   - [Differences from OpenAPI](comparison.md)
   - [Join the Discord](https://discord.gg/JkkXumPzcG)
