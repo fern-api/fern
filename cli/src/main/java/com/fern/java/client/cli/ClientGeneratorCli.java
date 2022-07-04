@@ -15,7 +15,7 @@
  */
 package com.fern.java.client.cli;
 
-import com.fern.codegen.GeneratedFile;
+import com.fern.codegen.GeneratedAbstractHttpServiceRegistry;
 import com.fern.codegen.GeneratedHttpServiceClient;
 import com.fern.codegen.GeneratedHttpServiceServer;
 import com.fern.codegen.GeneratorContext;
@@ -176,9 +176,10 @@ public final class ClientGeneratorCli {
         for (GeneratedHttpServiceServer generatedHttpServiceServer : generatedHttpServiceServers) {
             resultBuilder.addServerFiles(generatedHttpServiceServer);
         }
-        GeneratedFile abstractServiceRegistry =
+        GeneratedAbstractHttpServiceRegistry abstractServiceRegistry =
                 new AbstractHttpServiceRegistryGenerator(generatorContext, generatedHttpServiceServers).generate();
         resultBuilder.addServerFiles(abstractServiceRegistry);
+        resultBuilder.addServerFiles(abstractServiceRegistry.defaultExceptionMapper());
     }
 
     private static synchronized void writeToFiles(

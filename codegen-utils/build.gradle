@@ -1,5 +1,6 @@
 dependencies {
     implementation project(':runtime-utils:jackson-utils')
+    implementation project(':runtime-utils:immutables-utils')
     implementation 'com.fern-fern.fern:ir-model'
     implementation 'com.squareup:javapoet'
     implementation 'com.fasterxml.jackson.core:jackson-databind'

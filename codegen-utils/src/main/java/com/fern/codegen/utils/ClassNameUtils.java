@@ -15,6 +15,7 @@
  */
 package com.fern.codegen.utils;
 
+import com.fern.java.immutables.AliasImmutablesStyle;
 import com.fern.java.jackson.ClientObjectMappers;
 import com.fern.types.DeclaredTypeName;
 import com.fern.types.ErrorName;
@@ -34,6 +35,7 @@ public final class ClassNameUtils {
     public static final ClassName STRING_CLASS_NAME = ClassName.get(String.class);
     public static final ClassName OPTIONAL_CLASS_NAME = ClassName.get(Optional.class);
     public static final ClassName EXCEPTION_CLASS_NAME = ClassName.get(Exception.class);
+    public static final ClassName ALIAS_IMMUTABLES_STYLE_CLASSNAME = ClassName.get(AliasImmutablesStyle.class);
 
     public static final ClassName CLIENT_OBJECT_MAPPERS_CLASS_NAME = ClassName.get(ClientObjectMappers.class);
     public static final String CLIENT_OBJECT_MAPPERS_JSON_MAPPER_FIELD_NAME;

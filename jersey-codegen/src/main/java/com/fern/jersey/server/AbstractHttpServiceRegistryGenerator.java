@@ -15,6 +15,7 @@
  */
 package com.fern.jersey.server;
 
+import com.fern.codegen.GeneratedAbstractHttpServiceRegistry;
 import com.fern.codegen.GeneratedFile;
 import com.fern.codegen.GeneratedHttpServiceServer;
 import com.fern.codegen.GeneratorContext;
@@ -37,6 +38,7 @@ public final class AbstractHttpServiceRegistryGenerator extends Generator {
 
     private final ClassName abstractServiceRegistryClassName;
     private final List<GeneratedHttpServiceServer> generatedHttpServiceServers;
+    private final DefaultExceptionMapperGenerator defaultExceptionMapperGenerator;
 
     public AbstractHttpServiceRegistryGenerator(
             GeneratorContext generatorContext, List<GeneratedHttpServiceServer> generatedHttpServiceServers) {
@@ -49,11 +51,17 @@ public final class AbstractHttpServiceRegistryGenerator extends Generator {
                         Optional.of(packageType),
                         Optional.empty());
         this.generatedHttpServiceServers = generatedHttpServiceServers;
+        this.defaultExceptionMapperGenerator = new DefaultExceptionMapperGenerator(generatorContext);
     }
 
     @Override
-    public GeneratedFile generate() {
+    public GeneratedAbstractHttpServiceRegistry generate() {
         MethodSpec.Builder serviceRegistryConstructor = MethodSpec.constructorBuilder();
+
+        GeneratedFile defaultExceptionMapper = defaultExceptionMapperGenerator.generate();
+        serviceRegistryConstructor.addStatement(
+                "$L($T.class)", JERSEY_REGISTER_METHOD_NAME, defaultExceptionMapper.className());
+
         List<MethodSpec> serviceRegisterMethods = generatedHttpServiceServers.stream()
                 .map(generatedHttpServiceServer -> {
                     ClassName httpServiceClassName = generatedHttpServiceServer.className();
@@ -76,9 +84,10 @@ public final class AbstractHttpServiceRegistryGenerator extends Generator {
         JavaFile abstractServiceRegistryFile = JavaFile.builder(
                         abstractServiceRegistryClassName.packageName(), abstractServiceRegistryTypespec)
                 .build();
-        return GeneratedFile.builder()
+        return GeneratedAbstractHttpServiceRegistry.builder()
                 .file(abstractServiceRegistryFile)
                 .className(abstractServiceRegistryClassName)
+                .defaultExceptionMapper(defaultExceptionMapper)
                 .build();
     }
 }

@@ -1,4 +1,9 @@
 
 dependencies {
     implementation 'org.glassfish.jersey.core:jersey-common'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation project(':runtime-utils:immutables-utils')
+
+    compileOnly 'org.immutables:value::annotations'
+    annotationProcessor 'org.immutables:value'
 }

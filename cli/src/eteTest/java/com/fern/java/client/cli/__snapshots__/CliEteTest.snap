@@ -667,10 +667,56 @@ import org.glassfish.jersey.server.ResourceConfig;
 
 public abstract class AbstractServiceRegistry extends ResourceConfig {
   AbstractServiceRegistry() {
+    register(DefaultExceptionMapper.class);
     register(registerPostsService());
   }
 
   public abstract PostsService registerPostsService();
+}
+
+]
+
+
+basic[api/generated-java/blog-api-server/src/main/java/com/blog/server/DefaultExceptionMapper.java]=[
+package com.blog.server;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fern.java.immutables.AliasImmutablesStyle;
+import java.lang.Exception;
+import java.lang.Override;
+import java.lang.String;
+import java.util.UUID;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ExceptionMapper;
+import org.immutables.value.Value;
+
+public final class DefaultExceptionMapper implements ExceptionMapper<Exception> {
+  @Override
+  public Response toResponse(Exception e) {
+    return Response.status(500).entity(DefaultExceptionBody.create()).build();
+  }
+
+  @Value.Immutable
+  @AliasImmutablesStyle
+  @JsonDeserialize(
+      as = ImmutableDefaultExceptionBody.class
+  )
+  interface DefaultExceptionBody {
+    @JsonProperty("_error")
+    default String errorType() {
+      return "_unknown";
+    }
+
+    @JsonProperty("_errorInstanceId")
+    default String errorInstanceId() {
+      return UUID.randomUUID().toString();
+    }
+
+    static DefaultExceptionBody create() {
+      return ImmutableDefaultExceptionBody.of();
+    }
+  }
 }
 
 ]
