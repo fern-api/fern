@@ -32,10 +32,13 @@ com.google.guava:guava = 31.1-jre
 # feign
 io.github.openfeign:* = 11.8
 
+# jersey
+org.glassfish.jersey.core:jersey-common = 2.35
+org.glassfish.jersey.ext:jersey-spring5 = 2.35
+
 # misc
 com.google.code.findbugs:annotations = 3.0.1
 com.palantir.common:streams = 2.0.0
 net.sourceforge.argparse4j:argparse4j = 0.9.0
 jakarta.ws.rs:jakarta.ws.rs-api = 2.1.6
 ch.qos.logback:logback-classic = 1.2.6
-org.glassfish.jersey.ext:jersey-spring5 = 2.35

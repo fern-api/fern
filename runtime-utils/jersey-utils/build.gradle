@@ -1,0 +1,4 @@
+
+dependencies {
+    implementation 'org.glassfish.jersey.core:jersey-common'
+}
