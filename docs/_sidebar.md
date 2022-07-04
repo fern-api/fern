@@ -16,4 +16,5 @@
 - Reference
 
   - [Generators](README.md#fern-generators)
+  - [Differences from OpenAPI](comparison.md)
   - [Join the Discord](https://discord.gg/JkkXumPzcG)
