@@ -6,74 +6,36 @@
 
 ![Overview diagram](assets/diagrams/overview-diagram.png)
 
-Fern reads in your [Fern API Definition](#what-is-a-fern-api-definition), invokes remote [generators](#fern-generators), and creates clients, server stubs, and documentation for your API.
+Fern reads in your [Fern API Definition](#what-is-a-fern-api-definition), invokes remote [generators](#fern-generators), and creates clients, server stubs, and interactive documentation for your API.
+
+- **Client libraries**: one generated SDK for each supported platform and language that's automatically published to a registry (e.g., npm, maven, pypi)!
+
+- **Servers**: get server stubs for your API so all you need to do is implement the server logic.
+
+- **Documentation**: let consumers quickly learn how the API is supposed to behave and try out API calls directly in the browser.
+
+## Why use Fern?
+
+### 1. Schema-first API design
+
+Write your [Fern API Definition](#what-is-a-fern-api-definition) before writing any code. This single source of truth keeps your client libraries (SDKs), server implementation, and documentation in sync. Companies like _Amazon, Palantir, and Stripe_ practice this method of API development.
+
+### 2. The best API code generation available (seriously)
+
+Fern is designed to optimize for high quality code generation. Generated code is **idiomatic** (i.e., it follows the convention of the language) and **strongly typed** (i.e., the types of variables and objects are explicitly specified).
+
+### 3. Iterate faster across teams
+
+With an API definition, development projects that involve multiple teams (e.g., backend, web, mobile) can proceed much faster. Frontend teams can immediately start building components regardless of whether or not the backend is ready.
 
 ## What is a Fern API Definition?
 
-A **Fern API Definition** is a set of YAML files that describe your API. Each file may define:
+A [**Fern API Definition**](definition.md) is a set of YAML files that describe your API.
 
-- **[Types](types.md)**: data model
-- **[Services](services.md)**: endpoints
-- **[Errors](errors.md)**: error handling
-- **[IDs](ids.md)**: unique identifiers
-- **[Imports](imports.md)**: share types, errors, and ids across YAML files
+## What are Fern Generators?
 
-### An example of a Fern API Definition
+[**Generators**](generators.md) convert a Fern API Definition into clients, servers, and documentation.
 
-```yml
-# This is a sample IMDb API to get you more familiar with defining APIs in Fern.
+## How is this different than OpenAPI?
 
-ids:
-  - MovieId
-types:
-  Movie:
-    properties:
-      id: MovieId
-      title: string
-      rating: double
-services:
-  http:
-    MoviesService:
-      auth: none
-      base-path: /movies
-      endpoints:
-        createMovie:
-          method: POST
-          path: /
-          request:
-            type:
-              properties:
-                title: string
-                rating: double
-          response: MovieId
-        getMovie:
-          method: GET
-          path: /{movieId}
-          path-parameters:
-            movieId: MovieId
-          response:
-            ok: Movie
-            failed:
-              errors:
-                - NotFoundError
-errors:
-  NotFoundError:
-    http:
-      statusCode: 404
-```
-
-## Generators
-
-|  **Name**  |                                       **Description**                                        |   **CLI Command**   |                                      **Library**                                       |
-| :--------: | :------------------------------------------------------------------------------------------: | :-----------------: | :------------------------------------------------------------------------------------: |
-|            |                                                                                              |
-| TypeScript |               converts a Fern API Definition to a TypeScript client and server               | fern add typescript | [fern-typescript](https://github.com/fern-api/fern/tree/main/packages/fern-typescript) |
-|            |                                                                                              |
-|    Java    |                  converts a Fern API Definition to a Java client and server                  |    fern add java    |                   [fern-java](https://github.com/fern-api/fern-java)                   |
-|            |                                                                                              |
-|   Python   |                 converts a Fern API Definition to a Python client and server                 |   fern add python   |                 [fern-python](https://github.com/fern-api/fern-python)                 |
-|            |                                                                                              |
-|  Postman   | converts a Fern API Definition to a [Postman Collection](https://www.postman.com/collection) |  fern add postman   |                [fern-postman](https://github.com/fern-api/fern-postman)                |
-|            |                                                                                              |
-|  OpenAPI   |   converts a Fern Definition to an [OpenAPI Spec](https://swagger.io/resources/open-api/)    |  fern add openapi   |                [fern-openapi](https://github.com/fern-api/fern-openapi)                |
-|            |                                                                                              |
+Fern is optimized for [kick-ass codegen](comparison.md).

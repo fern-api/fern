@@ -1,4 +1,4 @@
-# How is Fern different than OpenAPI (formerly Swagger)?
+# How is Fern different than OpenAPI (f.k.a Swagger)?
 
 1. Higher quality code generation: Fern is more restrictive in what you can model, enabling idiomatic, easy to use code generation.
 
