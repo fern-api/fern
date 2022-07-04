@@ -25,7 +25,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.codegen.GeneratedEndpointError;
 import com.fern.codegen.GeneratedError;
 import com.fern.codegen.GeneratorContext;
-import com.fern.codegen.utils.ClassNameUtils;
+import com.fern.codegen.utils.ClassNameConstants;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.codegen.utils.MethodNameUtils;
 import com.fern.model.codegen.Generator;
@@ -62,6 +62,7 @@ public final class FailedResponseGenerator extends Generator {
     private static final String GET_INTERNAL_VALUE_METHOD_NAME = "getInternalValue";
     private static final String GET_STATUS_CODE_METHOD_NAME = "getStatusCode";
     public static final String GET_NESTED_ERROR_METHOD_NAME = "getNestedError";
+    public static final String GET_RESPONSE_METHOD_NAME = "getResponse";
 
     private static final String VALUE_FIELD_NAME = "value";
 
@@ -101,7 +102,7 @@ public final class FailedResponseGenerator extends Generator {
 
     @Override
     public GeneratedEndpointError generate() {
-        Map<ResponseError, MethodSpec> responseErrorToMethodSpec = getStaticBuilderMethods();
+        Map<ErrorName, MethodSpec> errorNameToMethodSpec = getStaticBuilderMethods();
         TypeSpec endpointErrorTypeSpec = TypeSpec.classBuilder(generatedEndpointErrorClassName)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .superclass(WebApplicationException.class)
@@ -113,7 +114,7 @@ public final class FailedResponseGenerator extends Generator {
                 .addMethod(getInternalValueMethod())
                 .addMethod(getResponseMethodSpec())
                 .addMethod(getNestedErrorMethodSpec())
-                .addMethods(responseErrorToMethodSpec.values())
+                .addMethods(errorNameToMethodSpec.values())
                 .addType(getInternalValueInterface())
                 .addTypes(getInternalValueTypeSpecs().values())
                 .build();
@@ -122,7 +123,7 @@ public final class FailedResponseGenerator extends Generator {
         return GeneratedEndpointError.builder()
                 .file(aliasFile)
                 .className(generatedEndpointErrorClassName)
-                .putAllConstructorsByResponseError(responseErrorToMethodSpec)
+                .putAllConstructorsByResponseError(errorNameToMethodSpec)
                 .build();
     }
 
@@ -150,7 +151,7 @@ public final class FailedResponseGenerator extends Generator {
     }
 
     private MethodSpec getResponseMethodSpec() {
-        return MethodSpec.methodBuilder("getResponse")
+        return MethodSpec.methodBuilder(GET_RESPONSE_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .returns(Response.class)
                 .addAnnotation(Override.class)
@@ -166,13 +167,13 @@ public final class FailedResponseGenerator extends Generator {
     private MethodSpec getNestedErrorMethodSpec() {
         return MethodSpec.methodBuilder("getNestedError")
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                .returns(ClassNameUtils.EXCEPTION_CLASS_NAME)
+                .returns(ClassNameConstants.EXCEPTION_CLASS_NAME)
                 .addStatement("return $L.$L()", VALUE_FIELD_NAME, GET_NESTED_ERROR_METHOD_NAME)
                 .build();
     }
 
-    private Map<ResponseError, MethodSpec> getStaticBuilderMethods() {
-        return failedResponse.errors().stream().collect(Collectors.toMap(Function.identity(), errorResponse -> {
+    private Map<ErrorName, MethodSpec> getStaticBuilderMethods() {
+        return failedResponse.errors().stream().collect(Collectors.toMap(ResponseError::error, errorResponse -> {
             String methodName = MethodNameUtils.getCompatibleMethodName(errorResponse.discriminantValue());
             MethodSpec.Builder staticBuilder = MethodSpec.methodBuilder(methodName)
                     .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
@@ -214,7 +215,7 @@ public final class FailedResponseGenerator extends Generator {
                         .addModifiers(Modifier.ABSTRACT, Modifier.PUBLIC)
                         .build())
                 .addMethod(MethodSpec.methodBuilder(GET_NESTED_ERROR_METHOD_NAME)
-                        .returns(ClassNameUtils.EXCEPTION_CLASS_NAME)
+                        .returns(ClassNameConstants.EXCEPTION_CLASS_NAME)
                         .addModifiers(Modifier.ABSTRACT, Modifier.PUBLIC)
                         .build())
                 .addAnnotation(AnnotationSpec.builder(JsonTypeInfo.class)
@@ -285,7 +286,7 @@ public final class FailedResponseGenerator extends Generator {
                             .addModifiers(Modifier.DEFAULT, Modifier.PUBLIC)
                             .build())
                     .addMethod(MethodSpec.methodBuilder(GET_NESTED_ERROR_METHOD_NAME)
-                            .returns(ClassNameUtils.EXCEPTION_CLASS_NAME)
+                            .returns(ClassNameConstants.EXCEPTION_CLASS_NAME)
                             .addAnnotation(Override.class)
                             .addStatement("return $L()", capitalizedDiscriminantValue)
                             .addModifiers(Modifier.DEFAULT, Modifier.PUBLIC)

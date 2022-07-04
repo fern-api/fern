@@ -16,7 +16,10 @@
 package com.fern.codegen;
 
 import com.fern.immutables.StagedBuilderStyle;
+import com.fern.types.services.EndpointId;
 import com.fern.types.services.HttpService;
+import com.squareup.javapoet.MethodSpec;
+import java.util.Map;
 import org.immutables.value.Value;
 
 @Value.Immutable
@@ -24,6 +27,8 @@ import org.immutables.value.Value;
 public interface GeneratedHttpServiceServer extends IGeneratedFile {
 
     HttpService httpService();
+
+    Map<EndpointId, MethodSpec> methodsByEndpointId();
 
     static ImmutableGeneratedHttpServiceServer.FileBuildStage builder() {
         return ImmutableGeneratedHttpServiceServer.builder();

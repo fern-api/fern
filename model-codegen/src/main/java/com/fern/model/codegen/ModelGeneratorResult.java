@@ -26,8 +26,8 @@ import com.fern.codegen.IGeneratedFile;
 import com.fern.codegen.payload.GeneratedFilePayload;
 import com.fern.types.DeclaredTypeName;
 import com.fern.types.ErrorName;
+import com.fern.types.services.EndpointId;
 import com.fern.types.services.HttpService;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -49,11 +49,11 @@ public interface ModelGeneratorResult {
 
     Map<ErrorName, GeneratedError> errors();
 
-    Map<HttpService, List<GeneratedEndpointModel>> endpointModels();
+    Map<HttpService, Map<EndpointId, GeneratedEndpointModel>> endpointModels();
 
     default List<IGeneratedFile> endpointModelFiles() {
         return endpointModels().values().stream()
-                .flatMap(Collection::stream)
+                .flatMap(endpointIdToModel -> endpointIdToModel.values().stream())
                 .flatMap(generatedEndpointModel -> {
                     Stream.Builder<IGeneratedFile> generatedFileStream = Stream.builder();
                     if (generatedEndpointModel.errorFile().isPresent()) {

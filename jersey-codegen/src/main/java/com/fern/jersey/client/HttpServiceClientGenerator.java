@@ -20,7 +20,7 @@ import com.fern.codegen.GeneratedError;
 import com.fern.codegen.GeneratedErrorDecoder;
 import com.fern.codegen.GeneratedHttpServiceClient;
 import com.fern.codegen.GeneratorContext;
-import com.fern.codegen.utils.ClassNameUtils;
+import com.fern.codegen.utils.ClassNameConstants;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.java.exception.UnknownRemoteException;
 import com.fern.jersey.HttpAuthToParameterSpec;
@@ -29,6 +29,7 @@ import com.fern.jersey.HttpPathUtils;
 import com.fern.jersey.JerseyServiceGeneratorUtils;
 import com.fern.model.codegen.Generator;
 import com.fern.types.ErrorName;
+import com.fern.types.services.EndpointId;
 import com.fern.types.services.HttpEndpoint;
 import com.fern.types.services.HttpResponse;
 import com.fern.types.services.HttpService;
@@ -47,7 +48,6 @@ import feign.jaxrs.JAXRSContract;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 import javax.ws.rs.Consumes;
@@ -65,11 +65,11 @@ public final class HttpServiceClientGenerator extends Generator {
     private final ClassName generatedServiceClassName;
     private final Map<ErrorName, GeneratedError> generatedErrors;
     private final JerseyServiceGeneratorUtils jerseyServiceGeneratorUtils;
-    private final Map<HttpEndpoint, GeneratedEndpointModel> generatedEndpointModels;
+    private final Map<EndpointId, GeneratedEndpointModel> generatedEndpointModels;
 
     public HttpServiceClientGenerator(
             GeneratorContext generatorContext,
-            List<GeneratedEndpointModel> generatedEndpointModels,
+            Map<EndpointId, GeneratedEndpointModel> generatedEndpointModels,
             Map<ErrorName, GeneratedError> generatedErrors,
             HttpService httpService) {
         super(generatorContext, PackageType.CLIENT);
@@ -78,8 +78,7 @@ public final class HttpServiceClientGenerator extends Generator {
                 .getClassNameUtils()
                 .getClassNameFromServiceName(httpService.name(), packageType, CLIENT_CLASS_NAME_SUFFIX);
         this.jerseyServiceGeneratorUtils = new JerseyServiceGeneratorUtils(generatorContext);
-        this.generatedEndpointModels = generatedEndpointModels.stream()
-                .collect(Collectors.toMap(GeneratedEndpointModel::httpEndpoint, Function.identity()));
+        this.generatedEndpointModels = generatedEndpointModels;
         this.generatedErrors = generatedErrors;
     }
 
@@ -133,7 +132,7 @@ public final class HttpServiceClientGenerator extends Generator {
         httpEndpoint.queryParameters().stream()
                 .map(jerseyServiceGeneratorUtils::getQueryParameterSpec)
                 .forEach(endpointMethodBuilder::addParameter);
-        GeneratedEndpointModel generatedEndpointModel = generatedEndpointModels.get(httpEndpoint);
+        GeneratedEndpointModel generatedEndpointModel = generatedEndpointModels.get(httpEndpoint.endpointId());
         jerseyServiceGeneratorUtils
                 .getPayloadTypeName(generatedEndpointModel.generatedHttpRequest())
                 .ifPresent(typeName -> {
@@ -183,13 +182,13 @@ public final class HttpServiceClientGenerator extends Generator {
                 .add(
                         ".decoder(new $T($T.$L))\n",
                         JacksonDecoder.class,
-                        ClassNameUtils.CLIENT_OBJECT_MAPPERS_CLASS_NAME,
-                        ClassNameUtils.CLIENT_OBJECT_MAPPERS_JSON_MAPPER_FIELD_NAME)
+                        ClassNameConstants.CLIENT_OBJECT_MAPPERS_CLASS_NAME,
+                        ClassNameConstants.CLIENT_OBJECT_MAPPERS_JSON_MAPPER_FIELD_NAME)
                 .add(
                         ".encoder(new $T($T.$L))\n",
                         JacksonEncoder.class,
-                        ClassNameUtils.CLIENT_OBJECT_MAPPERS_CLASS_NAME,
-                        ClassNameUtils.CLIENT_OBJECT_MAPPERS_JSON_MAPPER_FIELD_NAME);
+                        ClassNameConstants.CLIENT_OBJECT_MAPPERS_CLASS_NAME,
+                        ClassNameConstants.CLIENT_OBJECT_MAPPERS_JSON_MAPPER_FIELD_NAME);
         if (generatedErrorDecoder.isPresent()) {
             codeBlockBuilder.add(
                     ".errorDecoder(new $T())", generatedErrorDecoder.get().className());
@@ -198,7 +197,7 @@ public final class HttpServiceClientGenerator extends Generator {
         CodeBlock codeBlock = codeBlockBuilder.unindent().unindent().build();
         return MethodSpec.methodBuilder(GET_CLIENT_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                .addParameter(ClassNameUtils.STRING_CLASS_NAME, "url")
+                .addParameter(ClassNameConstants.STRING_CLASS_NAME, "url")
                 .returns(generatedServiceClassName)
                 .addCode(codeBlock)
                 .build();

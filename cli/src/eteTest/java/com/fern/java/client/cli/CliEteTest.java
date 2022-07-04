@@ -93,9 +93,4 @@ public class CliEteTest {
             throw new RuntimeException("Failed to run fern generate!", e);
         }
     }
-
-    public static void main() {
-        Path pathOne = Paths.get("cli/src/eteTest/java");
-        Path pathTwo = Paths.get("src/eteTest/java");
-    }
 }

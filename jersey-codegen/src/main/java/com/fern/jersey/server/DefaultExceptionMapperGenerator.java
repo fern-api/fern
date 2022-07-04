@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.codegen.GeneratedFile;
 import com.fern.codegen.GeneratorContext;
-import com.fern.codegen.utils.ClassNameUtils;
+import com.fern.codegen.utils.ClassNameConstants;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.model.codegen.Generator;
 import com.squareup.javapoet.AnnotationSpec;
@@ -106,7 +106,7 @@ public final class DefaultExceptionMapperGenerator extends Generator {
                 generatorContext.getImmutablesUtils().getImmutablesClassName(defaultExceptionBodyClassname);
         return TypeSpec.interfaceBuilder(defaultExceptionBodyClassname)
                 .addAnnotation(Immutable.class)
-                .addAnnotation(ClassNameUtils.ALIAS_IMMUTABLES_STYLE_CLASSNAME)
+                .addAnnotation(ClassNameConstants.ALIAS_IMMUTABLES_STYLE_CLASSNAME)
                 .addAnnotation(AnnotationSpec.builder(JsonDeserialize.class)
                         .addMember("as", "$T.class", defaultExceptionBodyImmutablesClassName)
                         .build())

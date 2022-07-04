@@ -18,11 +18,12 @@ package com.fern.jersey.client;
 import com.fern.codegen.GeneratedEndpointError;
 import com.fern.codegen.GeneratedErrorDecoder;
 import com.fern.codegen.GeneratorContext;
-import com.fern.codegen.utils.ClassNameUtils;
+import com.fern.codegen.utils.ClassNameConstants;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.java.exception.UnknownRemoteException;
 import com.fern.model.codegen.Generator;
 import com.fern.model.codegen.services.payloads.FailedResponseGenerator;
+import com.fern.types.services.EndpointId;
 import com.fern.types.services.HttpEndpoint;
 import com.fern.types.services.HttpService;
 import com.squareup.javapoet.ClassName;
@@ -57,12 +58,12 @@ public final class ServiceErrorDecoderGenerator extends Generator {
 
     private final HttpService httpService;
     private final ClassName errorDecoderClassName;
-    private final Map<HttpEndpoint, Optional<GeneratedEndpointError>> generatedEndpointErrorFiles;
+    private final Map<EndpointId, Optional<GeneratedEndpointError>> generatedEndpointErrorFiles;
 
     public ServiceErrorDecoderGenerator(
             GeneratorContext generatorContext,
             HttpService httpService,
-            Map<HttpEndpoint, Optional<GeneratedEndpointError>> generatedEndpointErrorFiles) {
+            Map<EndpointId, Optional<GeneratedEndpointError>> generatedEndpointErrorFiles) {
         super(generatorContext, PackageType.CLIENT);
         this.httpService = httpService;
         this.errorDecoderClassName = generatorContext
@@ -92,13 +93,13 @@ public final class ServiceErrorDecoderGenerator extends Generator {
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(Override.class)
                 .returns(Exception.class)
-                .addParameter(ClassNameUtils.STRING_CLASS_NAME, DECODE_METHOD_KEY_PARAMETER_NAME)
+                .addParameter(ClassNameConstants.STRING_CLASS_NAME, DECODE_METHOD_KEY_PARAMETER_NAME)
                 .addParameter(FEIGN_RESPONSE_PARAMETER_TYPE, DECODE_METHOD_RESPONSE_PARAMETER_NAME);
         CodeBlock.Builder codeBlockBuilder = CodeBlock.builder();
         boolean ifStatementStarted = false;
         for (HttpEndpoint httpEndpoint : httpService.endpoints()) {
             Optional<GeneratedEndpointError> maybeGeneratedEndpointErrorFile =
-                    generatedEndpointErrorFiles.get(httpEndpoint);
+                    generatedEndpointErrorFiles.get(httpEndpoint.endpointId());
             if (maybeGeneratedEndpointErrorFile == null || maybeGeneratedEndpointErrorFile.isEmpty()) {
                 continue;
             }
@@ -130,21 +131,23 @@ public final class ServiceErrorDecoderGenerator extends Generator {
         return MethodSpec.methodBuilder(DECODE_EXCEPTION_METHOD_NAME)
                 .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
                 .addTypeVariable(genericReturnType)
-                .returns(ClassNameUtils.EXCEPTION_CLASS_NAME)
+                .returns(ClassNameConstants.EXCEPTION_CLASS_NAME)
                 .addParameter(FEIGN_RESPONSE_PARAMETER_TYPE, DECODE_EXCEPTION_RESPONSE_PARAMETER_NAME)
                 .addParameter(
                         ParameterizedTypeName.get(ClassName.get(Class.class), genericReturnType),
                         DECODE_EXCEPTION_CLAZZ_PARAMETER_NAME)
                 .addParameter(
                         ParameterizedTypeName.get(
-                                ClassName.get(Function.class), genericReturnType, ClassNameUtils.EXCEPTION_CLASS_NAME),
+                                ClassName.get(Function.class),
+                                genericReturnType,
+                                ClassNameConstants.EXCEPTION_CLASS_NAME),
                         DECODE_EXCEPTION_RETRIEVER_PARAMETER_NAME)
                 .beginControlFlow("try")
                 .addStatement(
                         "$T value = $T.$L.readValue($L.body().asInputStream(), $L)",
                         genericReturnType,
-                        ClassNameUtils.CLIENT_OBJECT_MAPPERS_CLASS_NAME,
-                        ClassNameUtils.CLIENT_OBJECT_MAPPERS_JSON_MAPPER_FIELD_NAME,
+                        ClassNameConstants.CLIENT_OBJECT_MAPPERS_CLASS_NAME,
+                        ClassNameConstants.CLIENT_OBJECT_MAPPERS_JSON_MAPPER_FIELD_NAME,
                         DECODE_EXCEPTION_RESPONSE_PARAMETER_NAME,
                         DECODE_EXCEPTION_CLAZZ_PARAMETER_NAME)
                 .addStatement("return $L.apply(value)", DECODE_EXCEPTION_RETRIEVER_PARAMETER_NAME)

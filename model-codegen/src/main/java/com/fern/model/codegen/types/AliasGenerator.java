@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.codegen.GeneratedAlias;
 import com.fern.codegen.GeneratorContext;
-import com.fern.codegen.utils.ClassNameUtils;
+import com.fern.codegen.utils.ClassNameConstants;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.java.immutables.AliasImmutablesStyle;
 import com.fern.model.codegen.Generator;
@@ -127,7 +127,7 @@ public final class AliasGenerator extends Generator {
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(Override.class)
                 .addStatement("return $L().toString()", IMMUTABLES_VALUE_PROPERTY_NAME)
-                .returns(ClassNameUtils.STRING_CLASS_NAME)
+                .returns(ClassNameConstants.STRING_CLASS_NAME)
                 .build();
     }
 }

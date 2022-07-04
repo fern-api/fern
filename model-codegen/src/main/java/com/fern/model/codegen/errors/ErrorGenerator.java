@@ -22,7 +22,7 @@ import com.fern.codegen.GeneratedInterface;
 import com.fern.codegen.GeneratedObject;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.IGeneratedFile;
-import com.fern.codegen.utils.ClassNameUtils;
+import com.fern.codegen.utils.ClassNameConstants;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.java.exception.HttpException;
 import com.fern.model.codegen.Generator;
@@ -123,7 +123,7 @@ public final class ErrorGenerator extends Generator {
                     .addMethod(MethodSpec.methodBuilder("errorInstanceId")
                             .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                             .addStatement("return $N()", GET_ERROR_INSTANCE_ID_METHOD_NAME)
-                            .returns(ClassNameUtils.STRING_CLASS_NAME)
+                            .returns(ClassNameConstants.STRING_CLASS_NAME)
                             .addAnnotation(AnnotationSpec.builder(JsonProperty.class)
                                     .addMember(
                                             "value",

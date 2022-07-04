@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fern.codegen.GeneratedEnum;
 import com.fern.codegen.GeneratorContext;
-import com.fern.codegen.utils.ClassNameUtils;
+import com.fern.codegen.utils.ClassNameConstants;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.codegen.utils.VisitorUtils;
 import com.fern.codegen.utils.VisitorUtils.GeneratedVisitor;
@@ -134,7 +134,7 @@ public final class EnumGenerator extends Generator {
         privateMembers.add(valueField);
         // Add private String Field
         FieldSpec stringField = FieldSpec.builder(
-                        ClassNameUtils.STRING_CLASS_NAME, STRING_FIELD_NAME, Modifier.PRIVATE, Modifier.FINAL)
+                        ClassNameConstants.STRING_CLASS_NAME, STRING_FIELD_NAME, Modifier.PRIVATE, Modifier.FINAL)
                 .build();
         privateMembers.add(stringField);
         return privateMembers;
@@ -143,7 +143,7 @@ public final class EnumGenerator extends Generator {
     private MethodSpec getConstructor() {
         return MethodSpec.constructorBuilder()
                 .addParameter(valueFieldClassName, VALUE_FIELD_NAME)
-                .addParameter(ClassNameUtils.STRING_CLASS_NAME, STRING_FIELD_NAME)
+                .addParameter(ClassNameConstants.STRING_CLASS_NAME, STRING_FIELD_NAME)
                 .addStatement("this.value = value")
                 .addStatement("this.string = string")
                 .build();

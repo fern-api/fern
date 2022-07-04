@@ -15,7 +15,6 @@
  */
 package com.fern.jersey.server;
 
-import com.fern.codegen.GeneratedEndpointError;
 import com.fern.codegen.GeneratedEndpointModel;
 import com.fern.codegen.GeneratedError;
 import com.fern.codegen.GeneratedHttpServiceServer;
@@ -27,22 +26,21 @@ import com.fern.jersey.HttpPathUtils;
 import com.fern.jersey.JerseyServiceGeneratorUtils;
 import com.fern.model.codegen.Generator;
 import com.fern.types.ErrorName;
+import com.fern.types.services.EndpointId;
 import com.fern.types.services.HttpEndpoint;
 import com.fern.types.services.HttpService;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
-import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import javax.lang.model.element.Modifier;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Path;
@@ -54,13 +52,13 @@ public final class HttpServiceServerGenerator extends Generator {
     private final HttpService httpService;
     private final ClassName generatedServiceClassName;
     private final JerseyServiceGeneratorUtils jerseyServiceGeneratorUtils;
-    private final Map<HttpEndpoint, GeneratedEndpointModel> generatedEndpointModels;
+    private final Map<EndpointId, GeneratedEndpointModel> generatedEndpointModels;
     private final Map<ErrorName, GeneratedError> generatedErrors;
 
     public HttpServiceServerGenerator(
             GeneratorContext generatorContext,
             Map<ErrorName, GeneratedError> generatedErrors,
-            List<GeneratedEndpointModel> generatedEndpointModels,
+            Map<EndpointId, GeneratedEndpointModel> generatedEndpointModels,
             HttpService httpService) {
         super(generatorContext, PackageType.SERVER);
         this.httpService = httpService;
@@ -68,14 +66,13 @@ public final class HttpServiceServerGenerator extends Generator {
         this.generatedServiceClassName =
                 generatorContext.getClassNameUtils().getClassNameFromServiceName(httpService.name(), packageType);
         this.jerseyServiceGeneratorUtils = new JerseyServiceGeneratorUtils(generatorContext);
-        this.generatedEndpointModels = generatedEndpointModels.stream()
-                .collect(Collectors.toMap(GeneratedEndpointModel::httpEndpoint, Function.identity()));
+        this.generatedEndpointModels = generatedEndpointModels;
     }
 
     @Override
     public GeneratedHttpServiceServer generate() {
-        TypeSpec.Builder jerseyServiceBuilder = TypeSpec.classBuilder(generatedServiceClassName)
-                .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+        TypeSpec.Builder jerseyServiceBuilder = TypeSpec.interfaceBuilder(generatedServiceClassName)
+                .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(AnnotationSpec.builder(Consumes.class)
                         .addMember("value", "$T.APPLICATION_JSON", MediaType.class)
                         .build())
@@ -85,13 +82,12 @@ public final class HttpServiceServerGenerator extends Generator {
         jerseyServiceBuilder.addAnnotation(AnnotationSpec.builder(Path.class)
                 .addMember("value", "$S", httpService.basePath().orElse("/"))
                 .build());
-        List<MethodSpec> httpEndpointMethods = httpService.endpoints().stream()
-                .map(this::getHttpEndpointMethodSpec)
-                .flatMap(httpEndpointServerMethods ->
-                        Stream.of(httpEndpointServerMethods.endpointMethod, httpEndpointServerMethods.implMethod))
-                .collect(Collectors.toList());
+        Map<EndpointId, MethodSpec> endpointToMethodSpec = new LinkedHashMap<>();
+        httpService.endpoints().forEach(httpEndpoint -> {
+            endpointToMethodSpec.put(httpEndpoint.endpointId(), getHttpEndpointMethodSpec(httpEndpoint));
+        });
         TypeSpec jerseyServiceTypeSpec =
-                jerseyServiceBuilder.addMethods(httpEndpointMethods).build();
+                jerseyServiceBuilder.addMethods(endpointToMethodSpec.values()).build();
         JavaFile jerseyServiceJavaFile = JavaFile.builder(
                         generatedServiceClassName.packageName(), jerseyServiceTypeSpec)
                 .build();
@@ -99,17 +95,18 @@ public final class HttpServiceServerGenerator extends Generator {
                 .file(jerseyServiceJavaFile)
                 .className(generatedServiceClassName)
                 .httpService(httpService)
+                .putAllMethodsByEndpointId(endpointToMethodSpec)
                 .build();
     }
 
-    private HttpEndpointServerMethods getHttpEndpointMethodSpec(HttpEndpoint httpEndpoint) {
+    private MethodSpec getHttpEndpointMethodSpec(HttpEndpoint httpEndpoint) {
         MethodSpec.Builder endpointMethodBuilder = MethodSpec.methodBuilder(
                         httpEndpoint.endpointId().value())
                 .addAnnotation(httpEndpoint.method().visit(HttpMethodAnnotationVisitor.INSTANCE))
                 .addAnnotation(AnnotationSpec.builder(Path.class)
                         .addMember("value", "$S", HttpPathUtils.getJerseyCompatiblePath(httpEndpoint.path()))
                         .build())
-                .addModifiers(Modifier.PUBLIC, Modifier.FINAL);
+                .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT);
         httpEndpoint.auth().visit(new HttpAuthToParameterSpec()).ifPresent(endpointMethodBuilder::addParameter);
         httpEndpoint.headers().stream()
                 .map(jerseyServiceGeneratorUtils::getHeaderParameterSpec)
@@ -120,7 +117,7 @@ public final class HttpServiceServerGenerator extends Generator {
         httpEndpoint.queryParameters().stream()
                 .map(jerseyServiceGeneratorUtils::getQueryParameterSpec)
                 .forEach(endpointMethodBuilder::addParameter);
-        GeneratedEndpointModel generatedEndpointModel = generatedEndpointModels.get(httpEndpoint);
+        GeneratedEndpointModel generatedEndpointModel = generatedEndpointModels.get(httpEndpoint.endpointId());
         jerseyServiceGeneratorUtils
                 .getPayloadTypeName(generatedEndpointModel.generatedHttpRequest())
                 .ifPresent(typeName -> {
@@ -131,83 +128,10 @@ public final class HttpServiceServerGenerator extends Generator {
                 jerseyServiceGeneratorUtils.getPayloadTypeName(generatedEndpointModel.generatedHttpResponse());
         returnPayload.ifPresent(endpointMethodBuilder::returns);
 
-        boolean errorsPresent = httpEndpoint.response().failed().errors().size() > 0;
-
-        String endpointImplMethodName = httpEndpoint.endpointId().value() + "Impl";
-        MethodSpec.Builder endpointImplMethodBuilder =
-                MethodSpec.methodBuilder(endpointImplMethodName).addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT);
-
-        CodeBlock.Builder endpointMethodCodeBlock = CodeBlock.builder();
-
-        if (errorsPresent && generatedEndpointModel.errorFile().isPresent()) {
-            GeneratedEndpointError generatedEndpointError =
-                    generatedEndpointModel.errorFile().get();
-            endpointMethodCodeBlock
-                    .beginControlFlow("try")
-                    .add(getImplCall(endpointImplMethodName, returnPayload, endpointMethodBuilder))
-                    .endControlFlow();
-            httpEndpoint.response().failed().errors().forEach(responseError -> {
-                GeneratedError generatedError = generatedErrors.get(responseError.error());
-                endpointMethodCodeBlock
-                        .beginControlFlow("catch ($T e)", generatedError.className())
-                        .addStatement(
-                                "throw $T.$L(e)",
-                                generatedEndpointError.className(),
-                                generatedEndpointError
-                                        .constructorsByResponseError()
-                                        .get(responseError)
-                                        .name)
-                        .endControlFlow();
-                endpointImplMethodBuilder.addException(generatedError.className());
-            });
-        } else {
-            endpointMethodCodeBlock.add(getImplCall(endpointImplMethodName, returnPayload, endpointMethodBuilder));
-        }
-
-        MethodSpec endpointMethod =
-                endpointMethodBuilder.addCode(endpointMethodCodeBlock.build()).build();
-        MethodSpec implMethod = endpointImplMethodBuilder
-                .addParameters(endpointMethod.parameters.stream()
-                        .map(parameterSpec -> ParameterSpec.builder(parameterSpec.type, parameterSpec.name)
-                                .build())
-                        .collect(Collectors.toList()))
-                .returns(endpointMethod.returnType)
-                .build();
-        return new HttpEndpointServerMethods(endpointMethod, implMethod);
-    }
-
-    private CodeBlock getImplCall(
-            String endpointImplMethodName, Optional<TypeName> returnPayload, MethodSpec.Builder endpointMethodBuilder) {
-        CodeBlock.Builder implCallBuilder = CodeBlock.builder();
-        String args =
-                endpointMethodBuilder.parameters.stream().map(_unused -> "$L").collect(Collectors.joining(", "));
-        List<String> argNames = endpointMethodBuilder.parameters.stream()
-                .map(parameterSpec -> parameterSpec.name)
+        List<ClassName> errorClassNames = httpEndpoint.response().failed().errors().stream()
+                .map(responseError -> generatedErrors.get(responseError.error()).className())
                 .collect(Collectors.toList());
-        if (returnPayload.isPresent()) {
-            implCallBuilder.addStatement("return " + endpointImplMethodName + "(" + args + ")", argNames.toArray());
-        } else {
-            implCallBuilder.addStatement(endpointImplMethodName + "(" + args + ")", argNames.toArray());
-        }
-        return implCallBuilder.build();
-    }
-
-    private static final class HttpEndpointServerMethods {
-
-        private final MethodSpec endpointMethod;
-        private final MethodSpec implMethod;
-
-        HttpEndpointServerMethods(MethodSpec endpointMethod, MethodSpec implMethod) {
-            this.endpointMethod = endpointMethod;
-            this.implMethod = implMethod;
-        }
-
-        public MethodSpec getEndpointMethod() {
-            return endpointMethod;
-        }
-
-        public MethodSpec getImplMethod() {
-            return implMethod;
-        }
+        endpointMethodBuilder.addExceptions(errorClassNames);
+        return endpointMethodBuilder.build();
     }
 }

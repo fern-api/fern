@@ -13,10 +13,10 @@ repositories {
 
 dependencies {
     api project(':blog-api-model')
-    api 'io.github.fern-api:auth-utils:0.0.49'
-    api 'io.github.fern-api:exception-utils:0.0.49'
-    api 'io.github.fern-api:immutables-utils:0.0.49'
-    api 'io.github.fern-api:jackson-utils:0.0.49'
+    api 'io.github.fern-api:auth-utils:0.0.50'
+    api 'io.github.fern-api:exception-utils:0.0.50'
+    api 'io.github.fern-api:immutables-utils:0.0.50'
+    api 'io.github.fern-api:jackson-utils:0.0.50'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.3'
     implementation 'io.github.openfeign:feign-jackson:11.8'
@@ -133,8 +133,8 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
     implementation 'com.google.code.findbugs:annotations:3.0.1'
     implementation 'javax.ws.rs:javax.ws.rs-api:2.1.1'
-    api 'io.github.fern-api:exception-utils:0.0.49'
-    api 'io.github.fern-api:immutables-utils:0.0.49'
+    api 'io.github.fern-api:exception-utils:0.0.50'
+    api 'io.github.fern-api:immutables-utils:0.0.50'
 
     annotationProcessor 'org.immutables:value:2.8.8'
     compileOnly 'org.immutables:value-annotations:2.8.8'
@@ -642,10 +642,11 @@ repositories {
 
 dependencies {
     api project(':blog-api-model')
-    api 'io.github.fern-api:auth-utils:0.0.49'
-    api 'io.github.fern-api:exception-utils:0.0.49'
-    api 'io.github.fern-api:immutables-utils:0.0.49'
-    api 'io.github.fern-api:jackson-utils:0.0.49'
+    api 'io.github.fern-api:auth-utils:0.0.50'
+    api 'io.github.fern-api:exception-utils:0.0.50'
+    api 'io.github.fern-api:immutables-utils:0.0.50'
+    api 'io.github.fern-api:jackson-utils:0.0.50'
+    api 'io.github.fern-api:jersey-utils:0.0.50'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.3'
     implementation 'io.github.openfeign:feign-jackson:11.8'
@@ -660,14 +661,45 @@ dependencies {
 ]
 
 
+basic[api/generated-java/blog-api-server/src/main/java/com/blog/errors/PostNotFoundErrorExceptionMapper.java]=[
+package com.blog.errors;
+
+import com.blog.services.GetPostError;
+import com.fern.java.jersey.ResourceInfoUtils;
+import java.lang.Override;
+import javax.ws.rs.container.ResourceInfo;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ExceptionMapper;
+
+public final class PostNotFoundErrorExceptionMapper implements ExceptionMapper<PostNotFoundError> {
+  @Context
+  ResourceInfo resourceInfo;
+
+  @Override
+  public Response toResponse(PostNotFoundError e) {
+    if (ResourceInfoUtils.getInterfaceNames(resourceInfo).contains("PostsService")) {
+      if (ResourceInfoUtils.getMethodName(resourceInfo).contains("getPost")) {
+        return GetPostError.postNotFoundError(e).getResponse();
+      }
+    }
+    return null;
+  }
+}
+
+]
+
+
 basic[api/generated-java/blog-api-server/src/main/java/com/blog/server/AbstractServiceRegistry.java]=[
 package com.blog.server;
 
+import com.blog.errors.PostNotFoundErrorExceptionMapper;
 import org.glassfish.jersey.server.ResourceConfig;
 
 public abstract class AbstractServiceRegistry extends ResourceConfig {
   AbstractServiceRegistry() {
     register(DefaultExceptionMapper.class);
+    register(PostNotFoundErrorExceptionMapper.class);
     register(registerPostsService());
   }
 
@@ -727,7 +759,6 @@ package com.blog.server;
 
 import com.blog.errors.PostNotFoundError;
 import com.blog.services.CreatePostRequest;
-import com.blog.services.GetPostError;
 import com.blog.types.BlogPost;
 import com.blog.types.PostId;
 import javax.ws.rs.Consumes;
@@ -741,27 +772,14 @@ import javax.ws.rs.core.MediaType;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/posts")
-public abstract class PostsService {
+public interface PostsService {
   @POST
   @Path("/create")
-  public final void createPost(CreatePostRequest request) {
-    createPostImpl(request);
-  }
-
-  public abstract void createPostImpl(CreatePostRequest request);
+  void createPost(CreatePostRequest request);
 
   @GET
   @Path("/{postId}")
-  public final BlogPost getPost(@PathParam("postId") PostId postId) {
-    try {
-      return getPostImpl(postId);
-    }
-    catch (PostNotFoundError e) {
-      throw GetPostError.postNotFoundError(e);
-    }
-  }
-
-  public abstract BlogPost getPostImpl(PostId postId) throws PostNotFoundError;
+  BlogPost getPost(@PathParam("postId") PostId postId) throws PostNotFoundError;
 }
 
 ]

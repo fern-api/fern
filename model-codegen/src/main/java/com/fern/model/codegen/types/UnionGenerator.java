@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.codegen.GeneratedUnion;
 import com.fern.codegen.GeneratorContext;
-import com.fern.codegen.utils.ClassNameUtils;
+import com.fern.codegen.utils.ClassNameConstants;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.codegen.utils.KeyWordUtils;
 import com.fern.codegen.utils.VisitorUtils;
@@ -240,11 +240,12 @@ public final class UnionGenerator extends Generator {
                     String capitalizedDiscriminantValue = StringUtils.capitalize(singleUnionType.discriminantValue());
                     return MethodSpec.methodBuilder("get" + capitalizedDiscriminantValue)
                             .addModifiers(Modifier.PUBLIC)
-                            .returns(ParameterizedTypeName.get(ClassNameUtils.OPTIONAL_CLASS_NAME, singleUnionTypeName))
+                            .returns(ParameterizedTypeName.get(
+                                    ClassNameConstants.OPTIONAL_CLASS_NAME, singleUnionTypeName))
                             .beginControlFlow("if ($L())", isTypeMethods.get(singleUnionType).name)
                             .addStatement(
                                     "return $T.of((($T) value).$L())",
-                                    ClassNameUtils.OPTIONAL_CLASS_NAME,
+                                    ClassNameConstants.OPTIONAL_CLASS_NAME,
                                     internalValueClassNames.get(singleUnionType),
                                     internalValueTypeSpecs
                                             .get(singleUnionType)
@@ -252,7 +253,7 @@ public final class UnionGenerator extends Generator {
                                             .get()
                                             .name)
                             .endControlFlow()
-                            .addStatement("return $T.empty()", ClassNameUtils.OPTIONAL_CLASS_NAME)
+                            .addStatement("return $T.empty()", ClassNameConstants.OPTIONAL_CLASS_NAME)
                             .build();
                 })
                 .collect(Collectors.toList());

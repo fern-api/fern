@@ -63,7 +63,7 @@ public final class VisitorUtils {
                 .addMethods(visitMethods)
                 .addMethod(MethodSpec.methodBuilder(VISITOR_VISIT_UNKNOWN_METHOD_NAME)
                         .addModifiers(Modifier.ABSTRACT, Modifier.PUBLIC)
-                        .addParameter(ClassNameUtils.STRING_CLASS_NAME, VISITOR_UNKNOWN_TYPE_PARAMETER_NAME)
+                        .addParameter(ClassNameConstants.STRING_CLASS_NAME, VISITOR_UNKNOWN_TYPE_PARAMETER_NAME)
                         .returns(VISITOR_RETURN_TYPE)
                         .build())
                 .build();

@@ -38,10 +38,13 @@ public final class AbstractHttpServiceRegistryGenerator extends Generator {
 
     private final ClassName abstractServiceRegistryClassName;
     private final List<GeneratedHttpServiceServer> generatedHttpServiceServers;
+    private final List<GeneratedFile> generatedExceptionMappers;
     private final DefaultExceptionMapperGenerator defaultExceptionMapperGenerator;
 
     public AbstractHttpServiceRegistryGenerator(
-            GeneratorContext generatorContext, List<GeneratedHttpServiceServer> generatedHttpServiceServers) {
+            GeneratorContext generatorContext,
+            List<GeneratedHttpServiceServer> generatedHttpServiceServers,
+            List<GeneratedFile> generatedExceptionMappers) {
         super(generatorContext, PackageType.SERVER);
         this.abstractServiceRegistryClassName = generatorContext
                 .getClassNameUtils()
@@ -51,6 +54,7 @@ public final class AbstractHttpServiceRegistryGenerator extends Generator {
                         Optional.of(packageType),
                         Optional.empty());
         this.generatedHttpServiceServers = generatedHttpServiceServers;
+        this.generatedExceptionMappers = generatedExceptionMappers;
         this.defaultExceptionMapperGenerator = new DefaultExceptionMapperGenerator(generatorContext);
     }
 
@@ -61,6 +65,10 @@ public final class AbstractHttpServiceRegistryGenerator extends Generator {
         GeneratedFile defaultExceptionMapper = defaultExceptionMapperGenerator.generate();
         serviceRegistryConstructor.addStatement(
                 "$L($T.class)", JERSEY_REGISTER_METHOD_NAME, defaultExceptionMapper.className());
+        generatedExceptionMappers.forEach(exceptionMapper -> {
+            serviceRegistryConstructor.addStatement(
+                    "$L($T.class)", JERSEY_REGISTER_METHOD_NAME, exceptionMapper.className());
+        });
 
         List<MethodSpec> serviceRegisterMethods = generatedHttpServiceServers.stream()
                 .map(generatedHttpServiceServer -> {

@@ -42,6 +42,7 @@ import com.fern.types.ErrorName;
 import com.fern.types.ObjectTypeDeclaration;
 import com.fern.types.Type;
 import com.fern.types.TypeDeclaration;
+import com.fern.types.services.EndpointId;
 import com.fern.types.services.HttpEndpoint;
 import com.fern.types.services.HttpService;
 import java.util.List;
@@ -103,7 +104,7 @@ public final class ModelGenerator {
         modelGeneratorResultBuilder.putAllErrors(generatedErrors);
 
         httpServices.forEach(httpService -> {
-            List<GeneratedEndpointModel> generatedEndpointModels =
+            Map<EndpointId, GeneratedEndpointModel> generatedEndpointModels =
                     getGeneratedEndpointModels(httpService, generatedInterfaces, generatedErrors);
             modelGeneratorResultBuilder.putEndpointModels(httpService, generatedEndpointModels);
         });
@@ -133,7 +134,7 @@ public final class ModelGenerator {
         }));
     }
 
-    private List<GeneratedEndpointModel> getGeneratedEndpointModels(
+    private Map<EndpointId, GeneratedEndpointModel> getGeneratedEndpointModels(
             HttpService httpService,
             Map<DeclaredTypeName, GeneratedInterface> generatedInterfaces,
             Map<ErrorName, GeneratedError> generatedErrors) {
@@ -169,7 +170,10 @@ public final class ModelGenerator {
                     }
                     return generatedEndpointModel.build();
                 })
-                .collect(Collectors.toList());
+                .collect(Collectors.toMap(
+                        generatedEndpointModel ->
+                                generatedEndpointModel.httpEndpoint().endpointId(),
+                        Function.identity()));
     }
 
     private Payload generatePayload(

@@ -1,6 +1,6 @@
 
 dependencies {
-    implementation 'org.glassfish.jersey.core:jersey-common'
+    api 'org.glassfish.jersey.core:jersey-common'
     implementation 'com.fasterxml.jackson.core:jackson-databind'
     implementation project(':runtime-utils:immutables-utils')
 
