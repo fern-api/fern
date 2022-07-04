@@ -15284,6 +15284,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.1"],\
             ["npm-run-all", "npm:4.1.5"],\
             ["prettier", "npm:2.6.2"],\
+            ["react", "npm:18.2.0"],\
             ["react-scripts", "virtual:355a20f8159f9c4fa6cdbfc502e39a16789a16f6a8a50d601196d68608fd1a3eb1911fc361a1842ab828b1dcb5becc88734090b476f3966d145cf41ef2ce9a5f#npm:5.0.1"],\
             ["stylelint", "npm:14.9.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=7ad353"]\
@@ -22598,6 +22599,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["react", [\
+        ["npm:18.2.0", {\
+          "packageLocation": "./.yarn/cache/react-npm-18.2.0-1eae08fee2-88e38092da.zip/node_modules/react/",\
+          "packageDependencies": [\
+            ["react", "npm:18.2.0"],\
+            ["loose-envify", "npm:1.4.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["react-app-polyfill", [\
         ["npm:3.0.0", {\
           "packageLocation": "./.yarn/cache/react-app-polyfill-npm-3.0.0-e607e071bd-1bb031080a.zip/node_modules/react-app-polyfill/",\
@@ -22734,7 +22745,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["postcss-normalize", "virtual:e57e28c1edc149f5b5b022a8c31c19d780b41abd052102083c8bad80b612d9bdd4c7d32705851c427087f66019b46bff9d4b81d0cb1067eb7957ff4a17ac4f20#npm:10.0.1"],\
             ["postcss-preset-env", "virtual:e57e28c1edc149f5b5b022a8c31c19d780b41abd052102083c8bad80b612d9bdd4c7d32705851c427087f66019b46bff9d4b81d0cb1067eb7957ff4a17ac4f20#npm:7.7.2"],\
             ["prompts", "npm:2.4.2"],\
-            ["react", null],\
+            ["react", "npm:18.2.0"],\
             ["react-app-polyfill", "npm:3.0.0"],\
             ["react-dev-utils", "npm:12.0.1"],\
             ["react-refresh", "npm:0.11.0"],\
