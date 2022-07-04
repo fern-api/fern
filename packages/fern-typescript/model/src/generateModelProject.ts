@@ -47,7 +47,12 @@ export function generateModelFiles({
 
     generateTypeFiles({ intermediateRepresentation, modelContext });
     generateErrorFiles({ intermediateRepresentation, modelContext });
-    generateServiceTypeFiles({ intermediateRepresentation, modelContext, dependencyManager });
+    generateServiceTypeFiles({
+        intermediateRepresentation,
+        modelContext,
+        dependencyManager,
+        fernConstants: intermediateRepresentation.constants,
+    });
 
     return modelContext;
 }

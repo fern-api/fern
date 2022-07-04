@@ -1,3 +1,4 @@
+import { FernConstants } from "@fern-fern/ir-model";
 import { HttpEndpoint, ServiceName } from "@fern-fern/ir-model/services";
 import { DependencyManager } from "@fern-typescript/commons";
 import { GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/model-context";
@@ -10,6 +11,7 @@ export declare namespace generateResponseTypes {
         endpoint: HttpEndpoint;
         modelContext: ModelContext;
         dependencyManager: DependencyManager;
+        fernConstants: FernConstants;
     }
 
     export type Return = GeneratedHttpEndpointTypes["response"];
@@ -20,6 +22,7 @@ export function generateResponseTypes({
     endpoint,
     modelContext,
     dependencyManager,
+    fernConstants,
 }: generateResponseTypes.Args): generateResponseTypes.Return {
     const { reference, successBodyReference, errorBodyReference } = generateResponse({
         modelContext,
@@ -35,6 +38,7 @@ export function generateResponseTypes({
                 referencedIn,
             }),
         writeServiceTypeFile: createHttpServiceTypeFileWriter({ modelContext, serviceName, endpoint }),
+        fernConstants,
     });
 
     return { reference, successBodyReference, errorBodyReference };

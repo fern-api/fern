@@ -31,7 +31,8 @@
     "codegen:local": "yarn fern:local generate",
     "fern:local": "yarn workspace @fern-api/cli compile && node packages/cli/cli",
     "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public",
-    "docs:preview": "yarn docsify serve docs"
+    "docs:preview": "yarn docsify serve docs",
+    "webpack:cli": "packages/cli/webpack/bundle.sh local"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",

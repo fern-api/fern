@@ -14,10 +14,6 @@ export function convertFailedResponse({
 }): FailedResponse {
     return {
         docs: rawFailedResponse?.docs,
-        discriminant: rawFailedResponse?.discriminant ?? "_error",
-        errorProperties: {
-            errorInstanceId: "_errorInstanceId",
-        },
         errors:
             rawFailedResponse?.errors == null
                 ? []

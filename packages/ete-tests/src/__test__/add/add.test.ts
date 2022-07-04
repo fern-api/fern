@@ -22,9 +22,6 @@ async function init() {
         "node",
         [path.join(__dirname, "../../../../cli/webpack/dist/bundle.js"), "init", "--organization", "fern"],
         {
-            env: {
-                NODE_ENV: "development",
-            },
             cwd: GENERATED_DIR,
         }
     );
@@ -35,9 +32,6 @@ async function init() {
 
 async function add(generator: string) {
     await execa("node", [path.join(__dirname, "../../../../cli/cli"), "add", generator], {
-        env: {
-            NODE_ENV: "development",
-        },
         cwd: GENERATED_DIR,
     });
 }

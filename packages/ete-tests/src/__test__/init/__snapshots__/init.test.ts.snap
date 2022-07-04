@@ -33,11 +33,8 @@ services:
   http:
     MoviesService:
       auth: none
-      base-path: /movies
       endpoints:
         createMovie:
-          method: POST
-          path: /
           request:
             type:
               properties:
@@ -45,10 +42,10 @@ services:
                 rating: double
           response: MovieId
         getMovie:
-          method: GET
-          path: /{movieId}
-          path-parameters:
-            movieId: MovieId
+          request:
+            type:
+              properties:
+                movieId: MovieId
           response:
             ok: Movie
             failed:
