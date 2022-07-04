@@ -2,6 +2,7 @@ dependencies {
     implementation project(':runtime-utils:jackson-utils')
     implementation project(':runtime-utils:immutables-utils')
     implementation project(':runtime-utils:jersey-utils')
+    implementation project(':runtime-utils:exception-utils')
     implementation 'com.fern-fern.fern:ir-model'
     implementation 'com.squareup:javapoet'
     implementation 'com.fasterxml.jackson.core:jackson-databind'
@@ -9,6 +10,7 @@ dependencies {
     implementation 'com.google.code.findbugs:annotations'
     implementation 'com.fern:fern-immutables-style'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
+    implementation 'org.slf4j:slf4j-api'
 
     compileOnly 'org.immutables:value::annotations'
     annotationProcessor 'org.immutables:value'

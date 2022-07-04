@@ -109,6 +109,7 @@ public abstract class CodeGenerationResult {
                 + "    api 'io.github.fern-api:immutables-utils:" + pluginConfig.version() + "'\n"
                 + "    api 'io.github.fern-api:jackson-utils:" + pluginConfig.version() + "'\n"
                 + "    api 'io.github.fern-api:jersey-utils:" + pluginConfig.version() + "'\n"
+                + "    implementation 'org.slf4j:slf4j-api:1.7.36'\n"
                 + "    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'\n"
                 + "    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.3'\n"
                 + "    implementation 'io.github.openfeign:feign-jackson:11.8'\n"

@@ -16,14 +16,23 @@
 
 package com.fern.codegen.utils;
 
+import com.fern.java.exception.HttpException;
 import com.fern.java.immutables.AliasImmutablesStyle;
 import com.fern.java.jackson.ClientObjectMappers;
 import com.fern.java.jersey.ResourceInfoUtils;
 import com.squareup.javapoet.ClassName;
 import java.util.Optional;
 import javax.ws.rs.container.ResourceInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class ClassNameConstants {
+
+    // Loggers
+    public static final ClassName LOGGER_CLASS_NAME = ClassName.get(Logger.class);
+    public static final ClassName LOGGER_FACTORY_CLASS_NAME = ClassName.get(LoggerFactory.class);
+    public static final String LOGGER_FIELD_NAME = "log";
+    public static final String GET_LOGGER_METHOD_NAME = getMethodName(LoggerFactory.class, "getLogger", Class.class);
 
     // Common Java Classes
     public static final ClassName STRING_CLASS_NAME = ClassName.get(String.class);
@@ -35,6 +44,10 @@ public final class ClassNameConstants {
             getMethodName(ResourceInfoUtils.class, "getInterfaceNames", ResourceInfo.class);
     public static final String RESOURCE_INFO_GET_METHOD_NAME_METHOD_NAME =
             getMethodName(ResourceInfoUtils.class, "getMethodName", ResourceInfo.class);
+
+    public static final ClassName HTTP_EXCEPTION_CLASSNAME = ClassName.get(HttpException.class);
+    public static final String HTTP_EXCEPTION_ERROR_INSTANCE_ID_METHOD_NAME =
+            getMethodName(HttpException.class, "getErrorInstanceId");
 
     public static final ClassName ALIAS_IMMUTABLES_STYLE_CLASSNAME = ClassName.get(AliasImmutablesStyle.class);
 

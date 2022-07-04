@@ -21,6 +21,8 @@ dependencies {
     implementation 'io.github.openfeign:feign-core'
     implementation 'io.github.openfeign:feign-jaxrs'
     implementation 'org.glassfish.jersey.ext:jersey-spring5'
+    implementation 'org.slf4j:slf4j-api'
+
 
     annotationProcessor 'org.immutables:value'
 

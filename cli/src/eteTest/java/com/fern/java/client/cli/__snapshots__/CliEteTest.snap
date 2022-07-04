@@ -647,6 +647,7 @@ dependencies {
     api 'io.github.fern-api:immutables-utils:0.0.50'
     api 'io.github.fern-api:jackson-utils:0.0.50'
     api 'io.github.fern-api:jersey-utils:0.0.50'
+    implementation 'org.slf4j:slf4j-api:1.7.36'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.3'
     implementation 'io.github.openfeign:feign-jackson:11.8'
@@ -671,13 +672,18 @@ import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class PostNotFoundErrorExceptionMapper implements ExceptionMapper<PostNotFoundError> {
+  private static final Logger log = LoggerFactory.getLogger(PostNotFoundErrorExceptionMapper.class);
+
   @Context
   ResourceInfo resourceInfo;
 
   @Override
   public Response toResponse(PostNotFoundError e) {
+    log.info("Error handling request. ErrorInstanceId= {}", e.getErrorInstanceId(), e);
     if (ResourceInfoUtils.getInterfaceNames(resourceInfo).contains("PostsService")) {
       if (ResourceInfoUtils.getMethodName(resourceInfo).contains("getPost")) {
         return GetPostError.postNotFoundError(e).getResponse();
@@ -722,11 +728,17 @@ import java.util.UUID;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import org.immutables.value.Value;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class DefaultExceptionMapper implements ExceptionMapper<Exception> {
+  private static final Logger log = LoggerFactory.getLogger(DefaultExceptionMapper.class);
+
   @Override
   public Response toResponse(Exception e) {
-    return Response.status(500).entity(DefaultExceptionBody.create()).build();
+    DefaultExceptionBody body = DefaultExceptionBody.create();
+    log.error("Error handling request. ErrorInstanceId= {}", body.errorInstanceId(), e);
+    return Response.status(500).entity(body).build();
   }
 
   @Value.Immutable

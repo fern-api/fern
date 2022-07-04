@@ -93,6 +93,18 @@ public final class ErrorExceptionMapperGenerator extends Generator {
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addSuperinterface(
                         ParameterizedTypeName.get(ClassName.get(ExceptionMapper.class), generatedError.className()))
+                .addField(FieldSpec.builder(
+                                ClassNameConstants.LOGGER_CLASS_NAME,
+                                ClassNameConstants.LOGGER_FIELD_NAME,
+                                Modifier.PRIVATE,
+                                Modifier.STATIC,
+                                Modifier.FINAL)
+                        .initializer(
+                                "$T.$L($T.class)",
+                                ClassNameConstants.LOGGER_FACTORY_CLASS_NAME,
+                                ClassNameConstants.GET_LOGGER_METHOD_NAME,
+                                generatedExceptionMapperClassname)
+                        .build())
                 .addField(FieldSpec.builder(ClassName.get(ResourceInfo.class), RESOURCE_INFO_FIELD_NAME)
                         .addAnnotation(Context.class)
                         .build())
@@ -113,6 +125,15 @@ public final class ErrorExceptionMapperGenerator extends Generator {
                 .addAnnotation(Override.class)
                 .addParameter(generatedError.className(), EXCEPTION_PARAMETER_NAME)
                 .returns(Response.class);
+
+        toResponseMethodBuilder.addStatement(
+                "$L.info($S, $L.$L(), $L)",
+                ClassNameConstants.LOGGER_FIELD_NAME,
+                "Error handling request. ErrorInstanceId= {}",
+                EXCEPTION_PARAMETER_NAME,
+                ClassNameConstants.HTTP_EXCEPTION_ERROR_INSTANCE_ID_METHOD_NAME,
+                EXCEPTION_PARAMETER_NAME);
+
         boolean firstServiceCondition = true;
         for (Map.Entry<HttpService, List<HttpEndpoint>> entry : endpointsThrowingError.entrySet()) {
             HttpService httpService = entry.getKey();

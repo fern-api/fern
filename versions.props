@@ -7,9 +7,6 @@ org.immutables:* = 2.8.8
 # apache commons
 org.apache.commons:commons-lang3 = 3.12.0
 
-# logging
-org.slf4j:slf4j-api = 1.7.36
-
 # fern
 com.fern:fern-immutables-style = 0.0.15-2-g2ec8163
 com.fern-fern.fern:ir-model = 0.0.15
@@ -35,6 +32,9 @@ io.github.openfeign:* = 11.8
 # jersey
 org.glassfish.jersey.core:jersey-common = 2.35
 org.glassfish.jersey.ext:jersey-spring5 = 2.35
+
+# slf4j
+org.slf4j:slf4j-api = 1.7.36
 
 # misc
 com.google.code.findbugs:annotations = 3.0.1
