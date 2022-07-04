@@ -148,11 +148,13 @@ package com.blog.errors;
 
 import com.blog.types.PostId;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.java.exception.HttpException;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import java.lang.Exception;
 import java.lang.Override;
+import java.lang.String;
 import org.immutables.value.Value;
 
 @Value.Immutable
@@ -169,7 +171,8 @@ import org.immutables.value.Value;
         "localizedMessage",
         "statusCode",
         "message",
-        "suppressed"
+        "suppressed",
+        "errorInstanceId"
     }
 )
 public abstract class PostNotFoundError extends Exception implements HttpException {
@@ -184,6 +187,11 @@ public abstract class PostNotFoundError extends Exception implements HttpExcepti
   @Override
   public int getStatusCode() {
     return STATUS_CODE;
+  }
+
+  @JsonProperty("_errorInstanceId")
+  public final String errorInstanceId() {
+    return getErrorInstanceId();
   }
 }
 

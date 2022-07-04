@@ -16,11 +16,13 @@
 package com.fern.model.codegen.errors;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fern.codegen.GeneratedError;
 import com.fern.codegen.GeneratedInterface;
 import com.fern.codegen.GeneratedObject;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.IGeneratedFile;
+import com.fern.codegen.utils.ClassNameUtils;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.java.exception.HttpException;
 import com.fern.model.codegen.Generator;
@@ -44,6 +46,7 @@ public final class ErrorGenerator extends Generator {
 
     private static final String STATUS_CODE_FIELD_NAME = "STATUS_CODE";
     private static final String GET_STATUS_CODE_METHOD_NAME;
+    private static final String GET_ERROR_INSTANCE_ID_METHOD_NAME;
 
     static {
         try {
@@ -52,10 +55,24 @@ public final class ErrorGenerator extends Generator {
         } catch (NoSuchMethodException e) {
             throw new RuntimeException("Failed to find getStatusCode method name", e);
         }
+
+        try {
+            GET_ERROR_INSTANCE_ID_METHOD_NAME =
+                    HttpException.class.getMethod("getErrorInstanceId").getName();
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException("Failed to find getErrorInstanceId method name", e);
+        }
     }
 
-    private static final List<String> JSON_IGNORE_EXCEPTION_PROPERTIES =
-            List.of("stackTrace", "cause", "detailMessage", "localizedMessage", "statusCode", "message", "suppressed");
+    private static final List<String> JSON_IGNORE_EXCEPTION_PROPERTIES = List.of(
+            "stackTrace",
+            "cause",
+            "detailMessage",
+            "localizedMessage",
+            "statusCode",
+            "message",
+            "suppressed",
+            "errorInstanceId");
 
     private final ErrorDeclaration errorDeclaration;
     private final GeneratorContext generatorContext;
@@ -102,6 +119,17 @@ public final class ErrorGenerator extends Generator {
                             .addStatement("return $L", STATUS_CODE_FIELD_NAME)
                             .returns(ClassName.INT)
                             .addAnnotation(Override.class)
+                            .build())
+                    .addMethod(MethodSpec.methodBuilder("errorInstanceId")
+                            .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+                            .addStatement("return $N()", GET_ERROR_INSTANCE_ID_METHOD_NAME)
+                            .returns(ClassNameUtils.STRING_CLASS_NAME)
+                            .addAnnotation(AnnotationSpec.builder(JsonProperty.class)
+                                    .addMember(
+                                            "value",
+                                            "$S",
+                                            generatorContext.getFernConstants().errorInstanceIdKey())
+                                    .build())
                             .build());
         }
         JavaFile errorFile = JavaFile.builder(errorClassName.packageName(), errorTypeSpecBuilder.build())
