@@ -1,3 +1,18 @@
+/*
+ * (c) Copyright 2022 Birch Solutions Inc. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.fern.jersey.server;
 
 import com.fern.codegen.GeneratedHttpServiceServer;
@@ -40,10 +55,7 @@ public final class HttpServiceServerGeneratorTest {
 
     private static final String PACKAGE_PREFIX = "com";
     private static final GeneratorContext GENERATOR_CONTEXT = new GeneratorContext(
-            Optional.of(PACKAGE_PREFIX),
-            Collections.emptyMap(),
-            Collections.emptyMap(),
-            TestConstants.FERN_CONSTANTS);
+            Optional.of(PACKAGE_PREFIX), Collections.emptyMap(), Collections.emptyMap(), TestConstants.FERN_CONSTANTS);
 
     @Test
     public void test_basic() {
@@ -65,7 +77,9 @@ public final class HttpServiceServerGeneratorTest {
                                 .build())
                         .request(HttpRequest.builder()
                                 .encoding(Encoding.json())
-                                .type(Type.alias(AliasTypeDeclaration.builder().aliasOf(TypeReference._void()).build()))
+                                .type(Type.alias(AliasTypeDeclaration.builder()
+                                        .aliasOf(TypeReference._void())
+                                        .build()))
                                 .build())
                         .response(HttpResponse.builder()
                                 .encoding(Encoding.json())
@@ -77,8 +91,7 @@ public final class HttpServiceServerGeneratorTest {
                                                         .build()))
                                                 .build()))
                                         .build())
-                                .failed(FailedResponse.builder()
-                                        .build())
+                                .failed(FailedResponse.builder().build())
                                 .build())
                         .auth(HttpAuth.NONE)
                         .addPathParameters(PathParameter.builder()
@@ -89,9 +102,7 @@ public final class HttpServiceServerGeneratorTest {
                 .addEndpoints(HttpEndpoint.builder()
                         .endpointId(EndpointId.valueOf("createPerson"))
                         .method(HttpMethod.POST)
-                        .path(HttpPath.builder()
-                                .head("/create")
-                                .build())
+                        .path(HttpPath.builder().head("/create").build())
                         .request(HttpRequest.builder()
                                 .encoding(Encoding.json())
                                 .type(Type.alias(AliasTypeDeclaration.builder()
@@ -108,8 +119,7 @@ public final class HttpServiceServerGeneratorTest {
                                                 .aliasOf(TypeReference.primitive(PrimitiveType.STRING))
                                                 .build()))
                                         .build())
-                                .failed(FailedResponse.builder()
-                                        .build())
+                                .failed(FailedResponse.builder().build())
                                 .build())
                         .auth(HttpAuth.NONE)
                         .build())
@@ -142,9 +152,7 @@ public final class HttpServiceServerGeneratorTest {
                                 .valueType(TypeReference.primitive(PrimitiveType.STRING))
                                 .build())
                         .build()))
-                .http(HttpErrorConfiguration.builder()
-                        .statusCode(400)
-                        .build())
+                .http(HttpErrorConfiguration.builder().statusCode(400).build())
                 .build();
         HttpService testHttpService = HttpService.builder()
                 .name(ServiceName.builder()
@@ -164,7 +172,9 @@ public final class HttpServiceServerGeneratorTest {
                                 .build())
                         .request(HttpRequest.builder()
                                 .encoding(Encoding.json())
-                                .type(Type.alias(AliasTypeDeclaration.builder().aliasOf(TypeReference._void()).build()))
+                                .type(Type.alias(AliasTypeDeclaration.builder()
+                                        .aliasOf(TypeReference._void())
+                                        .build()))
                                 .build())
                         .response(HttpResponse.builder()
                                 .encoding(Encoding.json())
@@ -192,9 +202,7 @@ public final class HttpServiceServerGeneratorTest {
                 .addEndpoints(HttpEndpoint.builder()
                         .endpointId(EndpointId.valueOf("createPerson"))
                         .method(HttpMethod.POST)
-                        .path(HttpPath.builder()
-                                .head("/create")
-                                .build())
+                        .path(HttpPath.builder().head("/create").build())
                         .request(HttpRequest.builder()
                                 .encoding(Encoding.json())
                                 .type(Type.alias(AliasTypeDeclaration.builder()
@@ -211,8 +219,7 @@ public final class HttpServiceServerGeneratorTest {
                                                 .aliasOf(TypeReference.primitive(PrimitiveType.STRING))
                                                 .build()))
                                         .build())
-                                .failed(FailedResponse.builder()
-                                        .build())
+                                .failed(FailedResponse.builder().build())
                                 .build())
                         .auth(HttpAuth.NONE)
                         .build())

@@ -1,3 +1,18 @@
+/*
+ * (c) Copyright 2022 Birch Solutions Inc. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.fern.model.codegen;
 
 import static org.mockito.Mockito.when;
@@ -43,10 +58,11 @@ public class FailedResponseGeneratorTest {
 
     @Test
     public void test_basic() {
-        when(httpService.name()).thenReturn(ServiceName.builder()
-                .fernFilepath(FernFilepath.valueOf(List.of("fern")))
-                .name("UntitiledService")
-                .build());
+        when(httpService.name())
+                .thenReturn(ServiceName.builder()
+                        .fernFilepath(FernFilepath.valueOf(List.of("fern")))
+                        .name("UntitiledService")
+                        .build());
         when(httpEndpoint.endpointId()).thenReturn(EndpointId.valueOf("getPlaylist"));
         ErrorName noViewPermissionsErrorNamedType = ErrorName.builder()
                 .fernFilepath(FernFilepath.valueOf(List.of("fern")))
@@ -77,19 +93,20 @@ public class FailedResponseGeneratorTest {
                                                 .valueType(TypeReference.primitive(PrimitiveType.STRING))
                                                 .build())
                                         .build()))
-                                .http(HttpErrorConfiguration.builder().statusCode(500).build())
+                                .http(HttpErrorConfiguration.builder()
+                                        .statusCode(500)
+                                        .build())
                                 .build()),
                 TestConstants.FERN_CONSTANTS);
-        ErrorGenerator errorGenerator = new ErrorGenerator(
-                noViewPermissionsErrorDef, generatorContext, Collections.emptyMap());
+        ErrorGenerator errorGenerator =
+                new ErrorGenerator(noViewPermissionsErrorDef, generatorContext, Collections.emptyMap());
         GeneratedError generatedNoViewPermissionsError = errorGenerator.generate();
-        FailedResponseGenerator failedResponseGenerator =
-                new FailedResponseGenerator(
-                        httpService,
-                        httpEndpoint,
-                        failedResponse,
-                        generatorContext,
-                        Collections.singletonMap(noViewPermissionsErrorNamedType, generatedNoViewPermissionsError));
+        FailedResponseGenerator failedResponseGenerator = new FailedResponseGenerator(
+                httpService,
+                httpEndpoint,
+                failedResponse,
+                generatorContext,
+                Collections.singletonMap(noViewPermissionsErrorNamedType, generatedNoViewPermissionsError));
         GeneratedEndpointError generatedError = failedResponseGenerator.generate();
         System.out.println(generatedError.file().toString());
     }

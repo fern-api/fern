@@ -1,0 +1,10 @@
+# Danger! Multiple jars contain identically named classes. This may cause different behaviour depending on classpath ordering.
+# Run ./gradlew checkClassUniqueness --write-locks to update this file
+
+## runtimeClasspath
+[com.google.code.findbugs:annotations, com.google.code.findbugs:jsr305]
+  - javax.annotation.MatchesPattern$Checker
+  - javax.annotation.Nonnegative$Checker
+  - javax.annotation.Nonnull$Checker
+  - javax.annotation.RegEx$Checker
+  - javax.annotation.meta.When

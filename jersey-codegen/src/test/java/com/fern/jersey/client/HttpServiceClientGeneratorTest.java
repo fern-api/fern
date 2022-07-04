@@ -1,3 +1,18 @@
+/*
+ * (c) Copyright 2022 Birch Solutions Inc. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.fern.jersey.client;
 
 import com.fern.codegen.GeneratedHttpServiceClient;
@@ -41,10 +56,7 @@ public final class HttpServiceClientGeneratorTest {
 
     private static final String PACKAGE_PREFIX = "com";
     private static final GeneratorContext GENERATOR_CONTEXT = new GeneratorContext(
-            Optional.of(PACKAGE_PREFIX),
-            Collections.emptyMap(),
-            Collections.emptyMap(),
-            TestConstants.FERN_CONSTANTS);
+            Optional.of(PACKAGE_PREFIX), Collections.emptyMap(), Collections.emptyMap(), TestConstants.FERN_CONSTANTS);
 
     @Test
     public void test_basic() {
@@ -58,15 +70,17 @@ public final class HttpServiceClientGeneratorTest {
                         .endpointId(EndpointId.valueOf("getPerson"))
                         .method(HttpMethod.GET)
                         .path(HttpPath.builder()
-                            .head("/")
-                            .addParts(HttpPathPart.builder()
-                                .pathParameter("personId")
-                                .tail("")
+                                .head("/")
+                                .addParts(HttpPathPart.builder()
+                                        .pathParameter("personId")
+                                        .tail("")
+                                        .build())
                                 .build())
-                            .build())
                         .request(HttpRequest.builder()
                                 .encoding(Encoding.json())
-                                .type(Type.alias(AliasTypeDeclaration.builder().aliasOf(TypeReference._void()).build()))
+                                .type(Type.alias(AliasTypeDeclaration.builder()
+                                        .aliasOf(TypeReference._void())
+                                        .build()))
                                 .build())
                         .response(HttpResponse.builder()
                                 .encoding(Encoding.json())
@@ -78,8 +92,7 @@ public final class HttpServiceClientGeneratorTest {
                                                         .build()))
                                                 .build()))
                                         .build())
-                                .failed(FailedResponse.builder()
-                                        .build())
+                                .failed(FailedResponse.builder().build())
                                 .build())
                         .auth(HttpAuth.NONE)
                         .addPathParameters(PathParameter.builder()
@@ -90,9 +103,7 @@ public final class HttpServiceClientGeneratorTest {
                 .addEndpoints(HttpEndpoint.builder()
                         .endpointId(EndpointId.valueOf("createPerson"))
                         .method(HttpMethod.POST)
-                        .path(HttpPath.builder()
-                            .head("/create")
-                            .build())
+                        .path(HttpPath.builder().head("/create").build())
                         .request(HttpRequest.builder()
                                 .encoding(Encoding.json())
                                 .type(Type.alias(AliasTypeDeclaration.builder()
@@ -109,8 +120,7 @@ public final class HttpServiceClientGeneratorTest {
                                                 .aliasOf(TypeReference.primitive(PrimitiveType.STRING))
                                                 .build()))
                                         .build())
-                                .failed(FailedResponse.builder()
-                                        .build())
+                                .failed(FailedResponse.builder().build())
                                 .build())
                         .auth(HttpAuth.NONE)
                         .build())
@@ -128,7 +138,8 @@ public final class HttpServiceClientGeneratorTest {
                 testHttpService);
         GeneratedHttpServiceClient generatedHttpServiceClient = httpServiceClientGenerator.generate();
         System.out.println(generatedHttpServiceClient.file().toString());
-        Assertions.assertThat(generatedHttpServiceClient.generatedErrorDecoder()).isEmpty();
+        Assertions.assertThat(generatedHttpServiceClient.generatedErrorDecoder())
+                .isEmpty();
     }
 
     @Test
@@ -144,9 +155,7 @@ public final class HttpServiceClientGeneratorTest {
                                 .valueType(TypeReference.primitive(PrimitiveType.STRING))
                                 .build())
                         .build()))
-                .http(HttpErrorConfiguration.builder()
-                        .statusCode(400)
-                        .build())
+                .http(HttpErrorConfiguration.builder().statusCode(400).build())
                 .build();
         HttpService testHttpService = HttpService.builder()
                 .name(ServiceName.builder()
@@ -166,7 +175,9 @@ public final class HttpServiceClientGeneratorTest {
                                 .build())
                         .request(HttpRequest.builder()
                                 .encoding(Encoding.json())
-                                .type(Type.alias(AliasTypeDeclaration.builder().aliasOf(TypeReference._void()).build()))
+                                .type(Type.alias(AliasTypeDeclaration.builder()
+                                        .aliasOf(TypeReference._void())
+                                        .build()))
                                 .build())
                         .response(HttpResponse.builder()
                                 .encoding(Encoding.json())
@@ -194,9 +205,7 @@ public final class HttpServiceClientGeneratorTest {
                 .addEndpoints(HttpEndpoint.builder()
                         .endpointId(EndpointId.valueOf("createPerson"))
                         .method(HttpMethod.POST)
-                        .path(HttpPath.builder()
-                                .head("/create")
-                                .build())
+                        .path(HttpPath.builder().head("/create").build())
                         .request(HttpRequest.builder()
                                 .encoding(Encoding.json())
                                 .type(Type.alias(AliasTypeDeclaration.builder()
@@ -213,8 +222,7 @@ public final class HttpServiceClientGeneratorTest {
                                                 .aliasOf(TypeReference.primitive(PrimitiveType.STRING))
                                                 .build()))
                                         .build())
-                                .failed(FailedResponse.builder()
-                                        .build())
+                                .failed(FailedResponse.builder().build())
                                 .build())
                         .auth(HttpAuth.NONE)
                         .build())
@@ -232,7 +240,9 @@ public final class HttpServiceClientGeneratorTest {
                 testHttpService);
         GeneratedHttpServiceClient generatedHttpServiceClient = httpServiceClientGenerator.generate();
         System.out.println(generatedHttpServiceClient.file().toString());
-        Assertions.assertThat(generatedHttpServiceClient.generatedErrorDecoder()).isPresent();
-        System.out.println(generatedHttpServiceClient.generatedErrorDecoder().get().file().toString());
+        Assertions.assertThat(generatedHttpServiceClient.generatedErrorDecoder())
+                .isPresent();
+        System.out.println(
+                generatedHttpServiceClient.generatedErrorDecoder().get().file().toString());
     }
 }

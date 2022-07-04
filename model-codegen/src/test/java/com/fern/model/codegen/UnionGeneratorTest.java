@@ -1,3 +1,18 @@
+/*
+ * (c) Copyright 2022 Birch Solutions Inc. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.fern.model.codegen;
 
 import com.fern.codegen.GeneratedUnion;
@@ -47,8 +62,8 @@ public class UnionGeneratorTest {
                         .build())
                 .addTypes(SingleUnionType.builder()
                         .discriminantValue("mapValue")
-                        .valueType(TypeReference.container(ContainerType.list(TypeReference.named(
-                                DeclaredTypeName.builder()
+                        .valueType(TypeReference.container(
+                                ContainerType.list(TypeReference.named(DeclaredTypeName.builder()
                                         .fernFilepath(FernFilepath.valueOf(List.of("com", "birch", "trace", "commons")))
                                         .name("VariableValue")
                                         .build()))))
@@ -67,10 +82,7 @@ public class UnionGeneratorTest {
                 Collections.emptyMap(),
                 TestConstants.FERN_CONSTANTS);
         UnionGenerator unionGenerator = new UnionGenerator(
-                variableValueTypeDefinition.name(),
-                PackageType.TYPES,
-                unionTypeDefinition,
-                generatorContext);
+                variableValueTypeDefinition.name(), PackageType.TYPES, unionTypeDefinition, generatorContext);
         GeneratedUnion generatedUnion = unionGenerator.generate();
         System.out.println(generatedUnion.file().toString());
     }
@@ -99,15 +111,13 @@ public class UnionGeneratorTest {
                         .build())
                 .shape(Type.union(unionTypeDefinition))
                 .build();
-        GeneratorContext generatorContext = new GeneratorContext(Optional.of(TestConstants.PACKAGE_PREFIX),
+        GeneratorContext generatorContext = new GeneratorContext(
+                Optional.of(TestConstants.PACKAGE_PREFIX),
                 Collections.singletonMap(variableValueTypeDefinition.name(), variableValueTypeDefinition),
                 Collections.emptyMap(),
                 TestConstants.FERN_CONSTANTS);
         UnionGenerator unionGenerator = new UnionGenerator(
-                variableValueTypeDefinition.name(),
-                PackageType.TYPES,
-                unionTypeDefinition,
-                generatorContext);
+                variableValueTypeDefinition.name(), PackageType.TYPES, unionTypeDefinition, generatorContext);
         GeneratedUnion generatedUnion = unionGenerator.generate();
         System.out.println(generatedUnion.file().toString());
     }

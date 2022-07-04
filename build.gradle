@@ -12,37 +12,32 @@ buildscript {
 plugins {
     id "com.palantir.consistent-versions" version "2.9.0"
     id "com.palantir.git-version" version "0.14.0"
-    id "idea"
     id "org.inferred.processors" version "3.6.0"
-    id 'maven-publish'
     id "com.jfrog.artifactory" version "4.28.1"
-    id "com.palantir.baseline-class-uniqueness" version "4.100.0"
-    id "net.ltgt.errorprone" version "2.0.2"
-    id 'checkstyle'
-    id "com.diffplug.spotless" version "6.4.2"
-    id 'com.palantir.baseline-circleci' version "4.100.0"
+    id "com.palantir.baseline" version "4.145.0"
+    id "com.palantir.java-format" version "2.24.0"
+    id 'maven-publish'
 }
 
 group 'io.github.fern-api'
 version gitVersion()
 
+apply plugin: 'com.palantir.baseline'
+apply plugin: 'com.palantir.consistent-versions'
+apply plugin: 'com.palantir.git-version'
+
 allprojects {
 
-    apply plugin: "idea"
     apply plugin: "org.inferred.processors"
     apply plugin: "maven-publish"
     apply plugin: "com.jfrog.artifactory"
-    apply plugin: "net.ltgt.errorprone"
-    apply plugin: "checkstyle"
-    apply plugin: "com.diffplug.spotless"
-    apply plugin: 'com.palantir.java-format'
     apply plugin: "java-library"
+    apply plugin: 'com.palantir.java-format'
 
     version rootProject.version
     group rootProject.group
 
     repositories {
-        gradlePluginPortal()
         mavenCentral()
         maven {
             url "https://usebirch.jfrog.io/artifactory/default-maven-local"
@@ -57,61 +52,20 @@ allprojects {
         }
     }
 
-    dependencies {
-        errorprone("com.google.errorprone:error_prone_core")
-    }
-
-    checkstyle {
-        toolVersion '8.41'
-    }
-
-    spotless {
-        java {
-            target 'src/main/java/**/*.java', 'src/main/test/**/*.java'
-            importOrder("")
-            removeUnusedImports()
-            trimTrailingWhitespace()
-            indentWithSpaces(4)
-        }
-    }
-
-    tasks.withType(JavaCompile).configureEach {
-        options.errorprone.disableWarningsInGeneratedCode = true
-    }
-
     test {
         useJUnitPlatform()
         testLogging {
             events "passed", "skipped", "failed"
         }
     }
-}
 
-idea {
-    project {
-        ipr {
-            withXml {provider -> addCodeStyle(provider)}
-        }
+    tasks.withType(JavaCompile).configureEach {
+        options.errorprone.disable 'StrictUnusedVariable'
+        options.errorprone.disable 'PreferSafeLoggableExceptions'
     }
-}
 
-def addCodeStyle(provider) {
-    def ideaStyleFile = project.file("config/idea/intellij-java-style.xml")
-    provider.asNode().append(new XmlParser().parse(ideaStyleFile).component)
+    sourceCompatibility = 11
 
-    // import into intellij
-    def ideaDirectory = new File(".idea");
-    ideaDirectory.mkdir()
-    def codeStyleDirectory = new File(".idea/codeStyles");
-    codeStyleDirectory.mkdir()
-
-    def codeStyleConfig = new File(".idea/codeStyles/codeStyleConfig.xml");
-    codeStyleConfig.createNewFile();
-    codeStyleConfig.text = project.file("config/idea/codeStyles/codeStyleConfig.xml").text
-
-    def projectConfig = new File(".idea/codeStyles/Project.xml")
-    projectConfig.createNewFile();
-    projectConfig.text = project.file("config/idea/codeStyles/Project.xml").text
 }
 
 artifactory {
