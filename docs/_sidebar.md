@@ -3,10 +3,12 @@
 - Getting started
 
   - [Tutorial: IMDb](imdb.md)
+  - [CLI](cli.md)
 
 - Concepts
 
   - [Fern API Definition](definition.md)
+  - [Generators](generators.md)
   - [Types](types.md)
   - [Services](services.md)
   - [Errors](errors.md)
@@ -15,6 +17,5 @@
 
 - Reference
 
-  - [Generators](generators.md)
-  - [Differences from OpenAPI](comparison.md)
+  - [FAQs](faq.md)
   - [Join the Discord](https://discord.gg/JkkXumPzcG)
