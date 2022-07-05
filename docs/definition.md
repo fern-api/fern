@@ -13,39 +13,37 @@ A **Fern API Definition** is a set of YAML files that describe your API. Each fi
 ```yml
 # This is a sample IMDb API to get you more familiar with defining APIs in Fern.
 
-ids:
-  - MovieId
 types:
+  MovieId: string
   Movie:
     properties:
       id: MovieId
       title: string
       rating: double
+
 services:
   http:
     MoviesService:
       auth: none
       base-path: /movies
       endpoints:
+        # Here's an HTTP endpoint. Fern uses sane defaults for endpoint path and HTTP method.
         createMovie:
-          method: POST
-          path: /
           request:
             type:
               properties:
                 title: string
                 rating: double
           response: MovieId
+
         getMovie:
-          method: GET
-          path: /{movieId}
-          path-parameters:
-            movieId: MovieId
+          request: MovieId
           response:
             ok: Movie
             failed:
               errors:
                 - NotFoundError
+
 errors:
   NotFoundError:
     http:
