@@ -36,7 +36,7 @@ distributions {
 docker {
     name "fern-java:${project.version}"
     tags 'latest', "${project.version}"
-    files tasks.distTar.outputs, './init.sh', './build/zip/gradle-resources.zip'
+    files tasks.distTar.outputs, './init.sh', './gradle-cache-project/build.gradle'
     buildArgs([BUILD_VERSION: "${project.version}"])
 }
 
@@ -55,13 +55,5 @@ eteTest {
     }
 }
 
-task zipGradle(type: Zip) {
-    from 'gradle-resources/'
-    include '**/'
-    archiveName 'gradle-resources.zip'
-    destinationDirectory = layout.buildDirectory.dir("zip")
-}
-
 rootProject.tasks.build.dependsOn eteTest
 tasks.eteTest.dependsOn ':cli:dockerTagLatest'
-tasks.dockerPrepare.dependsOn tasks.zipGradle
