@@ -108,6 +108,9 @@ public final class HttpServiceServerGenerator extends Generator {
                         .build())
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT);
         httpEndpoint.auth().visit(new HttpAuthToParameterSpec()).ifPresent(endpointMethodBuilder::addParameter);
+        httpService.headers().stream()
+                .map(jerseyServiceGeneratorUtils::getHeaderParameterSpec)
+                .forEach(endpointMethodBuilder::addParameter);
         httpEndpoint.headers().stream()
                 .map(jerseyServiceGeneratorUtils::getHeaderParameterSpec)
                 .forEach(endpointMethodBuilder::addParameter);
