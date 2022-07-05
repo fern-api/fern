@@ -6,7 +6,7 @@
 
 - **Protocol agnostic**: Fern let's you define RESTful services alongside WebSocket subscriptions.
 
-- **Managed code generation**: Fern runs code generators remotely and manages publishing packages to registries (e.g., npm, maven, pypi). You get a dependency that you can start using right away.
+- **Ease of use**: Fern runs code generators remotely and manages publishing packages to registries (e.g., npm, maven, pypi). You get a dependency that you can start using right away.
 
 ## 2. How does remote code generation work?
 

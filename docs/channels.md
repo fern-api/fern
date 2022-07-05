@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD036 -->
+
 # Defining a channel
 
 Channels are used to send messages bidirectionally between a server and its clients. Currently, channels are implemented using WebSockets.
