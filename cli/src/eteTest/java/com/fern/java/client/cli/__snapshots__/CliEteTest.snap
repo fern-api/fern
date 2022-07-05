@@ -703,9 +703,13 @@ import com.blog.errors.PostNotFoundErrorExceptionMapper;
 import org.glassfish.jersey.server.ResourceConfig;
 
 public abstract class AbstractServiceRegistry extends ResourceConfig {
-  public AbstractServiceRegistry(PostsService postsService) {
+  public AbstractServiceRegistry() {
     register(DefaultExceptionMapper.class);
     register(PostNotFoundErrorExceptionMapper.class);
+  }
+
+  public AbstractServiceRegistry(PostsService postsService) {
+    this();
     register(postsService);
   }
 }

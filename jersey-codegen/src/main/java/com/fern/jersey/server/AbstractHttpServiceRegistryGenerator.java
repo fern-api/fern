@@ -60,27 +60,32 @@ public final class AbstractHttpServiceRegistryGenerator extends Generator {
 
     @Override
     public GeneratedAbstractHttpServiceRegistry generate() {
-        MethodSpec.Builder serviceRegistryConstructor =
+        MethodSpec.Builder defaultServiceRegistryConstructor =
                 MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC);
 
+        MethodSpec.Builder argServiceRegistryConstructor =
+                MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC).addStatement("this()");
+
         GeneratedFile defaultExceptionMapper = defaultExceptionMapperGenerator.generate();
-        serviceRegistryConstructor.addStatement(
+        defaultServiceRegistryConstructor.addStatement(
                 "$L($T.class)", JERSEY_REGISTER_METHOD_NAME, defaultExceptionMapper.className());
         generatedExceptionMappers.forEach(exceptionMapper -> {
-            serviceRegistryConstructor.addStatement(
+            defaultServiceRegistryConstructor.addStatement(
                     "$L($T.class)", JERSEY_REGISTER_METHOD_NAME, exceptionMapper.className());
         });
 
         generatedHttpServiceServers.forEach(generatedHttpServiceServer -> {
             ClassName httpServiceClassName = generatedHttpServiceServer.className();
             String parameterName = StringUtils.uncapitalize(httpServiceClassName.simpleName());
-            serviceRegistryConstructor.addParameter(httpServiceClassName, parameterName);
-            serviceRegistryConstructor.addStatement("$L($L)", JERSEY_REGISTER_METHOD_NAME, parameterName);
+            argServiceRegistryConstructor.addParameter(httpServiceClassName, parameterName);
+            argServiceRegistryConstructor.addStatement("$L($L)", JERSEY_REGISTER_METHOD_NAME, parameterName);
         });
+
         TypeSpec abstractServiceRegistryTypespec = TypeSpec.classBuilder(abstractServiceRegistryClassName)
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                 .superclass(ClassName.get(ResourceConfig.class))
-                .addMethod(serviceRegistryConstructor.build())
+                .addMethod(defaultServiceRegistryConstructor.build())
+                .addMethod(argServiceRegistryConstructor.build())
                 .build();
         JavaFile abstractServiceRegistryFile = JavaFile.builder(
                         abstractServiceRegistryClassName.packageName(), abstractServiceRegistryTypespec)
