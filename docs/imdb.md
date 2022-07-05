@@ -36,7 +36,7 @@ fern init
 <details>
 <summary>What happens:</summary>
 
-This adds an `api` directory with the following content:
+This adds the following content:
 
 ```yml
 api/
