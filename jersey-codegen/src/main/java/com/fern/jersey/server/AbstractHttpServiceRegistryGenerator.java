@@ -27,8 +27,8 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
+import org.apache.commons.lang3.StringUtils;
 import org.glassfish.jersey.server.ResourceConfig;
 
 public final class AbstractHttpServiceRegistryGenerator extends Generator {
@@ -71,24 +71,16 @@ public final class AbstractHttpServiceRegistryGenerator extends Generator {
                     "$L($T.class)", JERSEY_REGISTER_METHOD_NAME, exceptionMapper.className());
         });
 
-        List<MethodSpec> serviceRegisterMethods = generatedHttpServiceServers.stream()
-                .map(generatedHttpServiceServer -> {
-                    ClassName httpServiceClassName = generatedHttpServiceServer.className();
-                    String methodName = "register" + httpServiceClassName.simpleName();
-                    MethodSpec registerServiceMethod = MethodSpec.methodBuilder(methodName)
-                            .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
-                            .returns(httpServiceClassName)
-                            .build();
-                    serviceRegistryConstructor.addStatement(
-                            "$L($N())", JERSEY_REGISTER_METHOD_NAME, registerServiceMethod);
-                    return registerServiceMethod;
-                })
-                .collect(Collectors.toList());
+        generatedHttpServiceServers.forEach(generatedHttpServiceServer -> {
+            ClassName httpServiceClassName = generatedHttpServiceServer.className();
+            String parameterName = StringUtils.uncapitalize(httpServiceClassName.simpleName());
+            serviceRegistryConstructor.addParameter(httpServiceClassName, parameterName);
+            serviceRegistryConstructor.addStatement("$L($L)", JERSEY_REGISTER_METHOD_NAME, parameterName);
+        });
         TypeSpec abstractServiceRegistryTypespec = TypeSpec.classBuilder(abstractServiceRegistryClassName)
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                 .superclass(ClassName.get(ResourceConfig.class))
                 .addMethod(serviceRegistryConstructor.build())
-                .addMethods(serviceRegisterMethods)
                 .build();
         JavaFile abstractServiceRegistryFile = JavaFile.builder(
                         abstractServiceRegistryClassName.packageName(), abstractServiceRegistryTypespec)
