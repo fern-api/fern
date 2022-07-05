@@ -60,7 +60,8 @@ public final class AbstractHttpServiceRegistryGenerator extends Generator {
 
     @Override
     public GeneratedAbstractHttpServiceRegistry generate() {
-        MethodSpec.Builder serviceRegistryConstructor = MethodSpec.constructorBuilder();
+        MethodSpec.Builder serviceRegistryConstructor =
+                MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC);
 
         GeneratedFile defaultExceptionMapper = defaultExceptionMapperGenerator.generate();
         serviceRegistryConstructor.addStatement(

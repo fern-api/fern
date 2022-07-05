@@ -252,7 +252,6 @@ public final class ClientGeneratorCli {
                     CodeGenerationResult.getBuildDotGradle(
                             fernPluginConfig.generatorConfig().organization(),
                             fernPluginConfig.generatorConfig().publish().get()));
-            runCommandAsync(new String[] {"gradle", "--daemon"}, Paths.get(outputDirectory));
         }
     }
 
@@ -294,7 +293,8 @@ public final class ClientGeneratorCli {
         }
 
         if (fernPluginConfig.generatorConfig().publish().isPresent()) {
-            runCommandBlocking(new String[] {"gradle", "--parallel", "publish"}, Paths.get(outputDirectory));
+            runCommandBlocking(
+                    new String[] {"gradle", "--parallel", "--no-daemon", "publish"}, Paths.get(outputDirectory));
         }
     }
 
