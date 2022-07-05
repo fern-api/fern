@@ -1,12 +1,13 @@
-FROM eclipse-temurin:11-jdk-alpine
+FROM gradle:7.4.2-jdk11-alpine
 
 ARG BUILD_VERSION
 ENV VERSION=$BUILD_VERSION
-COPY cli-$BUILD_VERSION.tar init.sh gradle-resources.zip /
-RUN mkdir -m777 cli
-RUN mv cli-$BUILD_VERSION.tar cli/cli.tar \
-    && unzip gradle-resources.zip -d /gradle-resources \
-    && rm -rf gradle-resources.zip \
-    && chmod -R 777 /gradle-resources
+COPY cli-$BUILD_VERSION.tar init.sh /
+RUN cd / \
+    && mkdir -m777 /cli  \
+    && mv /cli-$BUILD_VERSION.tar /cli/cli.tar \
+    && cd cli \
+    && tar -xvf cli.tar \
+    && rm -rf cli.tar
 
-ENTRYPOINT ["bin/sh", "init.sh"]
+ENTRYPOINT ["sh", "/init.sh"]

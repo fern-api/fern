@@ -43,13 +43,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public final class ClientGeneratorCli {
 
@@ -64,6 +64,8 @@ public final class ClientGeneratorCli {
 
         FernPluginConfig fernPluginConfig = FernPluginConfig.create(generatorConfig, "0.0.50");
         createOutputDirectory(fernPluginConfig.generatorConfig().output());
+        startGradleDaemon(fernPluginConfig);
+
         IntermediateRepresentation ir = getIr(fernPluginConfig.generatorConfig());
         generate(ir, fernPluginConfig);
     }
@@ -238,6 +240,22 @@ public final class ClientGeneratorCli {
         });
     }
 
+    private static synchronized void startGradleDaemon(FernPluginConfig fernPluginConfig) {
+        String outputDirectory = fernPluginConfig.generatorConfig().output().path();
+
+        writeFileContents(
+                Paths.get(outputDirectory, "settings.gradle"),
+                CodeGenerationResult.getSettingsDotGradle(fernPluginConfig));
+        if (fernPluginConfig.generatorConfig().publish().isPresent()) {
+            writeFileContents(
+                    Paths.get(outputDirectory, "build.gradle"),
+                    CodeGenerationResult.getBuildDotGradle(
+                            fernPluginConfig.generatorConfig().organization(),
+                            fernPluginConfig.generatorConfig().publish().get()));
+            runCommandAsync(new String[] {"gradle", "--daemon"}, Paths.get(outputDirectory));
+        }
+    }
+
     private static synchronized void writeToFiles(
             CodeGenerationResult codeGenerationResult, FernPluginConfig fernPluginConfig) {
         String outputDirectory = fernPluginConfig.generatorConfig().output().path();
@@ -275,53 +293,35 @@ public final class ClientGeneratorCli {
                     CodeGenerationResult.getServerBuildGradle(fernPluginConfig));
         }
 
-        writeFileContents(
-                Paths.get(outputDirectory, "settings.gradle"),
-                CodeGenerationResult.getSettingsDotGradle(fernPluginConfig));
-        Path gradleResourcesFolder = Paths.get("/gradle-resources");
-        try (Stream<Path> gradleResources = Files.walk(gradleResourcesFolder)) {
-            gradleResources.forEach(gradleResource -> {
-                Path pathToCreate =
-                        Paths.get(outputDirectory).resolve(gradleResourcesFolder.relativize(gradleResource));
-                try {
-                    if (Files.isRegularFile(gradleResource)) {
-                        Files.move(gradleResource, pathToCreate);
-                    } else if (Files.isDirectory(gradleResource) && !Files.exists(pathToCreate)) {
-                        Files.createDirectory(pathToCreate);
-                    }
-                } catch (IOException e) {
-                    throw new RuntimeException("Failed to output gradle file: " + gradleResource.toAbsolutePath(), e);
-                }
-            });
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to output gradle files", e);
-        }
-
         if (fernPluginConfig.generatorConfig().publish().isPresent()) {
-            writeFileContents(
-                    Paths.get(outputDirectory, "build.gradle"),
-                    CodeGenerationResult.getBuildDotGradle(
-                            fernPluginConfig.generatorConfig().organization(),
-                            fernPluginConfig.generatorConfig().publish().get()));
-            runPublish(Paths.get(outputDirectory));
+            runCommandBlocking(new String[] {"gradle", "--parallel", "publish"}, Paths.get(outputDirectory));
         }
     }
 
-    private static void runPublish(Path outputDirectory) {
+    private static Process runCommandAsync(String[] command, Path workingDirectory) {
         try {
-            ProcessBuilder pb = new ProcessBuilder("./gradlew", "publish").directory(outputDirectory.toFile());
+            ProcessBuilder pb = new ProcessBuilder(command).directory(workingDirectory.toFile());
             Process process = pb.start();
             StreamGobbler errorGobbler = new StreamGobbler(process.getErrorStream());
             StreamGobbler outputGobbler = new StreamGobbler(process.getInputStream());
             errorGobbler.start();
             outputGobbler.start();
+            return process;
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to run command: " + Arrays.toString(command), e);
+        }
+    }
+
+    private static void runCommandBlocking(String[] command, Path workingDirectory) {
+        try {
+            Process process = runCommandAsync(command, workingDirectory);
             int exitCode = process.waitFor();
             if (exitCode != 0) {
-                throw new RuntimeException("Failed to run fern generate!");
+                throw new RuntimeException("Command failed with non-zero exit code: " + Arrays.toString(command));
             }
             process.waitFor();
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException("Failed to publish", e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException("Failed to run command", e);
         }
     }
 

@@ -75,10 +75,10 @@ public class CliEteTest {
     private static void fernLocalGenerate(Path projectPath) {
         int exitCode;
         try {
-            ProcessBuilder pb = new ProcessBuilder("fern", "generate", "--local").directory(projectPath.toFile());
+            ProcessBuilder pb =
+                    new ProcessBuilder("fern", "generate", "--local", "--keepDocker").directory(projectPath.toFile());
 
             Map<String, String> env = pb.environment();
-            env.put("NODE_ENV", "development");
 
             Process process = pb.start();
             StreamGobbler errorGobbler = new StreamGobbler(process.getErrorStream());

@@ -1,3 +1,15 @@
+basic[api/generated-java/?/.gradle/undefined-build/buildOutputCleanup/cache.properties]=[
+#Mon Jul 04 21:53:02 GMT 2022
+gradle.version=7.4.2
+
+]
+
+
+basic[api/generated-java/?/.gradle/undefined-build/vcs-1/gc.properties]=[
+
+]
+
+
 basic[api/generated-java/blog-api-client/build.gradle]=[
 plugins {
     id 'java-library'
