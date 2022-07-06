@@ -1,0 +1,7 @@
+{
+  "extends": "../../../shared/tsconfig.shared.json",
+  "compilerOptions": { "composite": true, "outDir": "lib/cjs", "rootDir": "src", "module": "CommonJS" },
+  "include": ["./src"],
+  "exclude": ["./src/**/__test__/**/generated"],
+  "references": [{ "path": "../commons/tsconfig.cjs.json" }, { "path": "../model-context/tsconfig.cjs.json" }]
+}
