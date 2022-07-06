@@ -43,18 +43,24 @@ public final class SpringServiceGeneratorUtils {
 
     public ParameterSpec getHeaderParameterSpec(HttpHeader header) {
         return getParameterSpec(
-                RequestHeader.class, VariableNameUtils.getVariableNameFromHeader(header), header.valueType());
+                RequestHeader.class,
+                header.header(),
+                VariableNameUtils.getVariableNameFromHeader(header),
+                header.valueType());
     }
 
     public ParameterSpec getPathParameterSpec(PathParameter pathParameter) {
-        return getParameterSpec(PathVariable.class, pathParameter.key(), pathParameter.valueType());
+        return getParameterSpec(
+                PathVariable.class, pathParameter.key(), pathParameter.key(), pathParameter.valueType());
     }
 
     public ParameterSpec getQueryParameterSpec(QueryParameter queryParameter) {
-        return getParameterSpec(RequestParam.class, queryParameter.key(), queryParameter.valueType());
+        return getParameterSpec(
+                RequestParam.class, queryParameter.key(), queryParameter.key(), queryParameter.valueType());
     }
 
-    private <T> ParameterSpec getParameterSpec(Class<T> paramClass, String paramName, TypeReference paramType) {
+    private <T> ParameterSpec getParameterSpec(
+            Class<T> paramClass, String annotationValue, String paramName, TypeReference paramType) {
         TypeName typeName = generatorContext.getClassNameUtils().getTypeNameFromTypeReference(false, paramType);
         return ParameterSpec.builder(typeName, paramName)
                 .addAnnotation(AnnotationSpec.builder(paramClass)
