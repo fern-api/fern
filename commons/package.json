@@ -9,6 +9,8 @@
   "files": [
     "lib"
   ],
+  "source": "src/index.ts",
+  "module": "src/index.ts",
   "main": "./lib/cjs/index.js",
   "types": "./lib/cjs/index.d.ts",
   "exports": {
