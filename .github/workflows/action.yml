@@ -1,5 +1,3 @@
-# Danny trying this out! July 4, 2022
-
 name: Check Markdown links
 
 on: push
@@ -12,4 +10,3 @@ jobs:
       - uses: gaurav-nelson/github-action-markdown-link-check@v1
         with:
           folder-path: "docs"
-          use-quiet-mode: "yes"
