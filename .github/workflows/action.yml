@@ -11,6 +11,6 @@ jobs:
         # prettier-ignore
         with:
         # prettier-ignore
-        folder-path: 'docs'
+        folder-path: 'docs/'
         # prettier-ignore
         use-quiet-mode: 'yes'
