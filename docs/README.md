@@ -22,7 +22,7 @@ Write your [Fern API Definition](#what-is-a-fern-api-definition) before writing 
 
 ### 2. Best-in-class code generation
 
-Ferrari makes luxury sports cars. Fern generates kick-ass code. It is designed to optimize for high quality code generation. Generated code is **idiomatic** (i.e., it follows the convention of the language) and **strongly typed** (i.e., the types of variables and objects are explicitly specified).
+Ferrari makes luxury sports cars. Fern generates kick-ass code. It is designed to optimize for high-quality code generation. Generated code is **idiomatic** (i.e., it follows the convention of the language) and **strongly typed** (i.e., the types of variables and objects are explicitly specified).
 
 ### 3. Iterate faster
 

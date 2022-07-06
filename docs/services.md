@@ -2,13 +2,13 @@
 
 This page is about defining a REST service, which communciates over HTTP.
 
-_If you're interested in defining a realtime API (e.g. over WebSocket), you'll likely want to [define a channel](channels.md) instead._
+_If you're interested in \_defining a \_real-time_ API (_e.g. over WebSocket), you'll likely want to [define a channel](channels.md) instead._
 
 A service consists of **endpoints**. Each endpoint has a path and an associated HTTP method (e.g. `GET`, `POST`).
 
 ## Requests and responses
 
-Endpoints can optionally provided requests and responses, which are used as the HTTP message body.
+Endpoints can optionally provide requests and responses, which are used as the HTTP message body.
 
 ```diff-yaml diff-highlight
 types:
@@ -124,7 +124,7 @@ Every endpoint can specify [errors](errors.md) - i.e. responses that indicate th
 
 ## Authentication
 
-Services require authentication. Currently, Fern only supports bearer tokens using the via the `Authorization` header.
+Services require authentication. Currently, Fern only supports bearer tokens using the `Authorization` header.
 
 ```diff-yaml diff-highlight
 types:

@@ -9,7 +9,7 @@
 
 ## 2. How does remote code generation work?
 
-Code generators run remotely in the cloud. They take a set of Fern API Definition YAML files, run the generators listed in `.fernrc.yml, and produces generated files as an output. Files can output locally (i.e., seen in the file system of your IDE) or remotely (i.e., in a package manager like npm, maven, or pypi).
+Code generators run remotely in the cloud. They take a set of Fern API Definition YAML files, run the generators listed in `.fernrc.yml, and produce generated files as an output. Files can output locally (i.e., seen in the file system of your IDE) or remotely (i.e., in a package manager like npm, maven, or pypi).
 
 ### Generating clients
 
