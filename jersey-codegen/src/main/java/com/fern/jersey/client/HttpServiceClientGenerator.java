@@ -22,10 +22,10 @@ import com.fern.codegen.GeneratedHttpServiceClient;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameConstants;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
+import com.fern.codegen.utils.server.HttpAuthParameterSpecVisitor;
+import com.fern.codegen.utils.server.HttpPathUtils;
 import com.fern.java.exception.UnknownRemoteException;
-import com.fern.jersey.HttpAuthToParameterSpec;
-import com.fern.jersey.HttpMethodAnnotationVisitor;
-import com.fern.jersey.HttpPathUtils;
+import com.fern.jersey.JerseyHttpMethodAnnotationVisitor;
 import com.fern.jersey.JerseyServiceGeneratorUtils;
 import com.fern.model.codegen.Generator;
 import com.fern.types.ErrorName;
@@ -117,12 +117,12 @@ public final class HttpServiceClientGenerator extends Generator {
     private MethodSpec getHttpEndpointMethodSpec(HttpEndpoint httpEndpoint) {
         MethodSpec.Builder endpointMethodBuilder = MethodSpec.methodBuilder(
                         httpEndpoint.endpointId().value())
-                .addAnnotation(httpEndpoint.method().visit(HttpMethodAnnotationVisitor.INSTANCE))
+                .addAnnotation(httpEndpoint.method().visit(JerseyHttpMethodAnnotationVisitor.INSTANCE))
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT);
         endpointMethodBuilder.addAnnotation(AnnotationSpec.builder(Path.class)
-                .addMember("value", "$S", HttpPathUtils.getJerseyCompatiblePath(httpEndpoint.path()))
+                .addMember("value", "$S", HttpPathUtils.getPathWithCurlyBracedPathParams(httpEndpoint.path()))
                 .build());
-        httpEndpoint.auth().visit(new HttpAuthToParameterSpec()).ifPresent(endpointMethodBuilder::addParameter);
+        httpEndpoint.auth().visit(new HttpAuthParameterSpecVisitor()).ifPresent(endpointMethodBuilder::addParameter);
         httpService.headers().stream()
                 .map(jerseyServiceGeneratorUtils::getHeaderParameterSpec)
                 .forEach(endpointMethodBuilder::addParameter);

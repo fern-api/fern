@@ -706,7 +706,7 @@ public final class PostType {
 ]
 
 
-basic[api/generated-java/blog-api-server/build.gradle]=[
+basic[api/generated-java/blog-api-server-jersey/build.gradle]=[
 plugins {
     id 'java-library'
     id "org.inferred.processors" version "3.6.0"
@@ -741,7 +741,7 @@ dependencies {
 ]
 
 
-basic[api/generated-java/blog-api-server/src/main/java/com/blog/errors/PostNotFoundErrorExceptionMapper.java]=[
+basic[api/generated-java/blog-api-server-jersey/src/main/java/com/blog/errors/PostNotFoundErrorExceptionMapper.java]=[
 package com.blog.errors;
 
 import com.fern.java.jersey.ResourceInfoUtils;
@@ -774,7 +774,7 @@ public final class PostNotFoundErrorExceptionMapper implements ExceptionMapper<P
 ]
 
 
-basic[api/generated-java/blog-api-server/src/main/java/com/blog/server/AbstractServiceRegistry.java]=[
+basic[api/generated-java/blog-api-server-jersey/src/main/java/com/blog/server/AbstractServiceRegistry.java]=[
 package com.blog.server;
 
 import com.blog.errors.PostNotFoundErrorExceptionMapper;
@@ -795,7 +795,7 @@ public abstract class AbstractServiceRegistry extends ResourceConfig {
 ]
 
 
-basic[api/generated-java/blog-api-server/src/main/java/com/blog/server/DefaultExceptionMapper.java]=[
+basic[api/generated-java/blog-api-server-jersey/src/main/java/com/blog/server/DefaultExceptionMapper.java]=[
 package com.blog.server;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -846,7 +846,7 @@ public final class DefaultExceptionMapper implements ExceptionMapper<Exception> 
 ]
 
 
-basic[api/generated-java/blog-api-server/src/main/java/com/blog/server/PostsService.java]=[
+basic[api/generated-java/blog-api-server-jersey/src/main/java/com/blog/server/PostsService.java]=[
 package com.blog.server;
 
 import com.blog.errors.PostNotFoundError;
@@ -877,11 +877,162 @@ public interface PostsService {
 ]
 
 
+basic[api/generated-java/blog-api-server-spring/build.gradle]=[
+plugins {
+    id 'java-library'
+    id "org.inferred.processors" version "3.6.0"
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://s01.oss.sonatype.org/content/repositories/releases/"
+    }
+}
+
+dependencies {
+    api project(':blog-api-model')
+    api 'io.github.fern-api:auth-utils:0.0.50'
+    api 'io.github.fern-api:exception-utils:0.0.50'
+    api 'io.github.fern-api:immutables-utils:0.0.50'
+    api 'io.github.fern-api:jackson-utils:0.0.50'
+    api 'io.github.fern-api:spring-utils:0.0.50'
+    implementation 'org.slf4j:slf4j-api:1.7.36'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.3'
+    implementation 'org.springframework:spring-web:5.3.19'
+    implementation 'org.springframework:spring-webmvc:5.3.19'
+
+    annotationProcessor 'org.immutables:value:2.8.8'
+    compileOnly 'org.immutables:value-annotations:2.8.8'
+}
+
+]
+
+
+basic[api/generated-java/blog-api-server-spring/src/main/java/com/blog/errors/PostNotFoundErrorExceptionMapper.java]=[
+package com.blog.errors;
+
+import com.blog.services.GetPostError;
+import com.fern.java.spring.HandlerMethodUtils;
+import java.lang.Object;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+@ControllerAdvice
+public final class PostNotFoundErrorExceptionMapper extends ResponseEntityExceptionHandler {
+  private static final Logger log = LoggerFactory.getLogger(PostNotFoundErrorExceptionMapper.class);
+
+  @ExceptionHandler(PostNotFoundError.class)
+  public ResponseEntity<Object> handle(PostNotFoundError e, HandlerMethod handlerMethod) {
+    log.info("Error handling request. ErrorInstanceId= {}", e.getErrorInstanceId(), e);
+    if (HandlerMethodUtils.getInterfaceNames(handlerMethod).contains("PostsService")) {
+      if (HandlerMethodUtils.getMethodName(handlerMethod).contains("getPost")) {
+        return new ResponseEntity<>(GetPostError.postNotFoundError(e), HttpStatus.valueOf(e.getStatusCode()));
+      }
+    }
+    return null;
+  }
+}
+
+]
+
+
+basic[api/generated-java/blog-api-server-spring/src/main/java/com/blog/server/DefaultExceptionMapper.java]=[
+package com.blog.server;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fern.java.immutables.AliasImmutablesStyle;
+import java.lang.Exception;
+import java.lang.Object;
+import java.lang.String;
+import java.util.UUID;
+import org.immutables.value.Value;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+@ControllerAdvice
+public final class DefaultExceptionMapper extends ResponseEntityExceptionHandler {
+  private static final Logger log = LoggerFactory.getLogger(DefaultExceptionMapper.class);
+
+  @ExceptionHandler(Exception.class)
+  public ResponseEntity<Object> handleException(Exception e) {
+    DefaultExceptionBody body = DefaultExceptionBody.create();
+    log.error("Error handling request. ErrorInstanceId= {}", body.errorInstanceId(), e);
+    return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+
+  @Value.Immutable
+  @AliasImmutablesStyle
+  @JsonDeserialize(
+      as = ImmutableDefaultExceptionBody.class
+  )
+  interface DefaultExceptionBody {
+    @JsonProperty("_error")
+    default String errorType() {
+      return "_unknown";
+    }
+
+    @JsonProperty("_errorInstanceId")
+    default String errorInstanceId() {
+      return UUID.randomUUID().toString();
+    }
+
+    static DefaultExceptionBody create() {
+      return ImmutableDefaultExceptionBody.of();
+    }
+  }
+}
+
+]
+
+
+basic[api/generated-java/blog-api-server-spring/src/main/java/com/blog/server/PostsService.java]=[
+package com.blog.server;
+
+import com.blog.errors.PostNotFoundError;
+import com.blog.services.CreatePostRequest;
+import com.blog.types.BlogPost;
+import com.blog.types.PostId;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@RequestMapping(
+    path = "/posts",
+    consumes = "application/json",
+    produces = "application/json"
+)
+public interface PostsService {
+  @PostMapping("/create")
+  void createPost(CreatePostRequest request);
+
+  @GetMapping("/{postId}")
+  BlogPost getPost(@PathVariable("postId") PostId postId) throws PostNotFoundError;
+}
+
+]
+
+
 basic[api/generated-java/settings.gradle]=[
 rootProject.name = 'fern-generated-java'
 
 include 'blog-api-model'
 include 'blog-api-client'
-include 'blog-api-server'
+include 'blog-api-server-spring'
+include 'blog-api-server-jersey'
 
 ]

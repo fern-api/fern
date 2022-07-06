@@ -9,6 +9,7 @@ dependencies {
     implementation project(':codegen-utils')
     implementation project(':model-codegen')
     implementation project(':jersey-codegen')
+    implementation project(':spring-codegen')
     implementation 'com.fasterxml.jackson.core:jackson-databind'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
     implementation 'com.fern-fern.fern:ir-model'

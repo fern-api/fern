@@ -13,20 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fern.jersey;
 
-import com.fern.types.services.HttpPath;
-import com.fern.types.services.HttpPathPart;
+package com.fern.java.spring;
 
-public class HttpPathUtils {
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import org.springframework.web.method.HandlerMethod;
 
-    private HttpPathUtils() {}
+public final class HandlerMethodUtils {
 
-    public static String getJerseyCompatiblePath(HttpPath httpPath) {
-        String result = httpPath.head();
-        for (HttpPathPart httpPathPart : httpPath.parts()) {
-            result += "{" + httpPathPart.pathParameter() + "}" + httpPathPart.tail();
-        }
-        return result;
+    private HandlerMethodUtils() {}
+
+    public static List<String> getInterfaceNames(HandlerMethod handlerMethod) {
+        return Arrays.stream(handlerMethod.getMethod().getDeclaringClass().getInterfaces())
+                .map(Class::getSimpleName)
+                .collect(Collectors.toList());
+    }
+
+    public static String getMethodName(HandlerMethod handlerMethod) {
+        return handlerMethod.getMethod().getName();
     }
 }

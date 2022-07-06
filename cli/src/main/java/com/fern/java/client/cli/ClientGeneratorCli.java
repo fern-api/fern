@@ -21,12 +21,16 @@ import com.fern.codegen.GeneratedHttpServiceClient;
 import com.fern.codegen.GeneratedHttpServiceServer;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ObjectMappers;
+import com.fern.java.client.cli.CustomPluginConfig.ServerFramework;
 import com.fern.jersey.client.HttpServiceClientGenerator;
 import com.fern.jersey.server.AbstractHttpServiceRegistryGenerator;
 import com.fern.jersey.server.ErrorExceptionMapperGenerator;
-import com.fern.jersey.server.HttpServiceServerGenerator;
+import com.fern.jersey.server.HttpServiceJerseyServerGenerator;
 import com.fern.model.codegen.ModelGenerator;
 import com.fern.model.codegen.ModelGeneratorResult;
+import com.fern.spring.server.DefaultExceptionHandlerGenerator;
+import com.fern.spring.server.ErrorExceptionHandlerGenerator;
+import com.fern.spring.server.HttpServiceSpringServerGenerator;
 import com.fern.types.DeclaredTypeName;
 import com.fern.types.ErrorDeclaration;
 import com.fern.types.ErrorName;
@@ -118,11 +122,11 @@ public final class ClientGeneratorCli {
                 addClientFiles(ir, generatorContext, modelGeneratorResult, resultBuilder);
                 break;
             case SERVER:
-                addServerFiles(ir, generatorContext, modelGeneratorResult, resultBuilder);
+                addServerFiles(fernPluginConfig, ir, generatorContext, modelGeneratorResult, resultBuilder);
                 break;
             case CLIENT_AND_SERVER:
                 addClientFiles(ir, generatorContext, modelGeneratorResult, resultBuilder);
-                addServerFiles(ir, generatorContext, modelGeneratorResult, resultBuilder);
+                addServerFiles(fernPluginConfig, ir, generatorContext, modelGeneratorResult, resultBuilder);
                 break;
         }
         CodeGenerationResult codeGenerationResult = resultBuilder.build();
@@ -168,6 +172,20 @@ public final class ClientGeneratorCli {
     }
 
     private static void addServerFiles(
+            FernPluginConfig fernPluginConfig,
+            IntermediateRepresentation ir,
+            GeneratorContext generatorContext,
+            ModelGeneratorResult modelGeneratorResult,
+            ImmutableCodeGenerationResult.Builder resultBuilder) {
+        if (fernPluginConfig.customPluginConfig().getServerFrameworkEnums().contains(ServerFramework.JERSEY)) {
+            addJerseyServerFiles(ir, generatorContext, modelGeneratorResult, resultBuilder);
+        }
+        if (fernPluginConfig.customPluginConfig().getServerFrameworkEnums().contains(ServerFramework.SPRING)) {
+            addSpringServerFiles(ir, generatorContext, modelGeneratorResult, resultBuilder);
+        }
+    }
+
+    private static void addJerseyServerFiles(
             IntermediateRepresentation ir,
             GeneratorContext generatorContext,
             ModelGeneratorResult modelGeneratorResult,
@@ -179,10 +197,10 @@ public final class ClientGeneratorCli {
                 buildErrorMap(httpService, httpEndpoint, errorMap);
             });
             GeneratedHttpServiceServer generatedHttpServiceServer =
-                    generateHttpServiceServer(httpService, generatorContext, modelGeneratorResult);
+                    generateJerseyHttpServiceServer(httpService, generatorContext, modelGeneratorResult);
             generatedHttpServiceServers.put(httpService, generatedHttpServiceServer);
         });
-        resultBuilder.addAllServerFiles(generatedHttpServiceServers.values());
+        resultBuilder.addAllJerseyServerFiles(generatedHttpServiceServers.values());
 
         List<GeneratedFile> generatedExceptionMappers = errorMap.keySet().stream()
                 .map(errorName -> {
@@ -195,25 +213,68 @@ public final class ClientGeneratorCli {
                     return errorExceptionMapperGenerator.generate();
                 })
                 .collect(Collectors.toList());
-        resultBuilder.addAllServerFiles(generatedExceptionMappers);
+        resultBuilder.addAllJerseyServerFiles(generatedExceptionMappers);
 
         GeneratedAbstractHttpServiceRegistry abstractServiceRegistry = new AbstractHttpServiceRegistryGenerator(
                         generatorContext,
                         new ArrayList<>(generatedHttpServiceServers.values()),
                         generatedExceptionMappers)
                 .generate();
-        resultBuilder.addServerFiles(abstractServiceRegistry);
-        resultBuilder.addServerFiles(abstractServiceRegistry.defaultExceptionMapper());
+        resultBuilder.addJerseyServerFiles(abstractServiceRegistry);
+        resultBuilder.addJerseyServerFiles(abstractServiceRegistry.defaultExceptionMapper());
     }
 
-    private static GeneratedHttpServiceServer generateHttpServiceServer(
+    private static void addSpringServerFiles(
+            IntermediateRepresentation ir,
+            GeneratorContext generatorContext,
+            ModelGeneratorResult modelGeneratorResult,
+            ImmutableCodeGenerationResult.Builder resultBuilder) {
+        Map<HttpService, GeneratedHttpServiceServer> generatedHttpServiceServers = new LinkedHashMap<>();
+        Map<ErrorName, Map<HttpService, List<HttpEndpoint>>> errorMap = new LinkedHashMap<>();
+        ir.services().http().forEach(httpService -> {
+            httpService.endpoints().forEach(httpEndpoint -> {
+                buildErrorMap(httpService, httpEndpoint, errorMap);
+            });
+            GeneratedHttpServiceServer generatedHttpServiceServer =
+                    generateSpringHttpServiceServer(httpService, generatorContext, modelGeneratorResult);
+            generatedHttpServiceServers.put(httpService, generatedHttpServiceServer);
+        });
+        resultBuilder.addAllSpringServerFiles(generatedHttpServiceServers.values());
+
+        List<GeneratedFile> generatedExceptionHandlers = errorMap.keySet().stream()
+                .map(errorName -> {
+                    ErrorExceptionHandlerGenerator errorExceptionHandlerGenerator = new ErrorExceptionHandlerGenerator(
+                            generatorContext,
+                            modelGeneratorResult.errors().get(errorName),
+                            errorMap.get(errorName),
+                            generatedHttpServiceServers,
+                            modelGeneratorResult.endpointModels());
+                    return errorExceptionHandlerGenerator.generate();
+                })
+                .collect(Collectors.toList());
+        resultBuilder.addAllSpringServerFiles(generatedExceptionHandlers);
+
+        resultBuilder.addSpringServerFiles(new DefaultExceptionHandlerGenerator(generatorContext).generate());
+    }
+
+    private static GeneratedHttpServiceServer generateSpringHttpServiceServer(
             HttpService httpService, GeneratorContext generatorContext, ModelGeneratorResult modelGeneratorResult) {
-        HttpServiceServerGenerator httpServiceServerGenerator = new HttpServiceServerGenerator(
+        HttpServiceSpringServerGenerator httpServiceSpringServerGenerator = new HttpServiceSpringServerGenerator(
                 generatorContext,
                 modelGeneratorResult.errors(),
                 modelGeneratorResult.endpointModels().get(httpService),
                 httpService);
-        return httpServiceServerGenerator.generate();
+        return httpServiceSpringServerGenerator.generate();
+    }
+
+    private static GeneratedHttpServiceServer generateJerseyHttpServiceServer(
+            HttpService httpService, GeneratorContext generatorContext, ModelGeneratorResult modelGeneratorResult) {
+        HttpServiceJerseyServerGenerator httpServiceJerseyServerGenerator = new HttpServiceJerseyServerGenerator(
+                generatorContext,
+                modelGeneratorResult.errors(),
+                modelGeneratorResult.endpointModels().get(httpService),
+                httpService);
+        return httpServiceJerseyServerGenerator.generate();
     }
 
     private static void buildErrorMap(
@@ -281,15 +342,26 @@ public final class ClientGeneratorCli {
                     CodeGenerationResult.getClientBuildGradle(fernPluginConfig));
         }
 
-        if (!codeGenerationResult.serverFiles().isEmpty()) {
-            String serverDirectory = fernPluginConfig.getServerProjectName();
+        if (!codeGenerationResult.jerseyServerFiles().isEmpty()) {
+            String serverDirectory = fernPluginConfig.getServerProjectName(ServerFramework.JERSEY);
             codeGenerationResult
-                    .serverFiles()
+                    .jerseyServerFiles()
                     .forEach(serverFiles ->
                             writeFile(Paths.get(outputDirectory, serverDirectory, SRC_MAIN_JAVA), serverFiles.file()));
             writeFileContents(
                     Paths.get(outputDirectory, serverDirectory, BUILD_GRADLE),
-                    CodeGenerationResult.getServerBuildGradle(fernPluginConfig));
+                    CodeGenerationResult.getServerBuildGradle(fernPluginConfig, ServerFramework.JERSEY));
+        }
+
+        if (!codeGenerationResult.springServerFiles().isEmpty()) {
+            String serverDirectory = fernPluginConfig.getServerProjectName(ServerFramework.SPRING);
+            codeGenerationResult
+                    .springServerFiles()
+                    .forEach(serverFiles ->
+                            writeFile(Paths.get(outputDirectory, serverDirectory, SRC_MAIN_JAVA), serverFiles.file()));
+            writeFileContents(
+                    Paths.get(outputDirectory, serverDirectory, BUILD_GRADLE),
+                    CodeGenerationResult.getServerBuildGradle(fernPluginConfig, ServerFramework.SPRING));
         }
 
         if (fernPluginConfig.generatorConfig().publish().isPresent()) {

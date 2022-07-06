@@ -43,8 +43,8 @@ public interface FernPluginConfig {
         return getSubProjectName("client");
     }
 
-    default String getServerProjectName() {
-        return getSubProjectName("server");
+    default String getServerProjectName(CustomPluginConfig.ServerFramework serverFramework) {
+        return getSubProjectName("server-" + serverFramework.name().toLowerCase());
     }
 
     default String getSubProjectName(String projectSuffix) {
@@ -59,6 +59,8 @@ public interface FernPluginConfig {
                                 generatorConfig.customConfig().get("mode").toUpperCase()))
                         .packagePrefix(Optional.ofNullable(
                                 generatorConfig.customConfig().get("packagePrefix")))
+                        .serverFrameworks(Optional.ofNullable(
+                                generatorConfig.customConfig().get("serverFrameworks")))
                         .build())
                 .version(version)
                 .build();

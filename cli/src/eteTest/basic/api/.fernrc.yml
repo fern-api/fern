@@ -8,4 +8,5 @@ generators:
       output: ./generated-java
     config:
       packagePrefix: com.blog
-      mode: CLIENT_AND_SERVER
+      mode: client_and_server
+      serverFrameworks: spring,jersey

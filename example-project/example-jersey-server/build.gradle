@@ -1,4 +1,15 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://maven-dev.buildwithfern.com"
+    }
+}
+
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-jersey'
+    implementation 'org.springframework.boot:spring-boot-starter-jersey:2.6.7'
     implementation 'com.fern-fern.fern:example-api-server:0.0.4'
 }

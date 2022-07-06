@@ -17,7 +17,10 @@ package com.fern.java.client.cli;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.immutables.StagedBuilderStyle;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.immutables.value.Value;
 
 @Value.Immutable
@@ -27,6 +30,15 @@ public interface CustomPluginConfig {
 
     Optional<String> packagePrefix();
 
+    Optional<String> serverFrameworks();
+
+    default List<ServerFramework> getServerFrameworkEnums() {
+        return Arrays.stream(serverFrameworks().orElse("spring").split(","))
+                .map(String::toUpperCase)
+                .map(ServerFramework::valueOf)
+                .collect(Collectors.toList());
+    }
+
     Mode mode();
 
     enum Mode {
@@ -34,6 +46,11 @@ public interface CustomPluginConfig {
         CLIENT,
         SERVER,
         CLIENT_AND_SERVER;
+    }
+
+    enum ServerFramework {
+        JERSEY,
+        SPRING
     }
 
     static ImmutableCustomPluginConfig.ModeBuildStage builder() {

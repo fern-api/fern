@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fern.jersey;
+package com.fern.codegen.utils.server;
 
-import com.fern.java.auth.AuthHeader;
+import com.fern.AuthHeader;
 import com.fern.types.services.HttpAuth;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
@@ -23,9 +23,9 @@ import com.squareup.javapoet.ParameterSpec;
 import java.util.Optional;
 import javax.ws.rs.HeaderParam;
 
-public final class HttpAuthToParameterSpec implements HttpAuth.Visitor<Optional<ParameterSpec>> {
+public final class HttpAuthParameterSpecVisitor implements HttpAuth.Visitor<Optional<ParameterSpec>> {
 
-    public static final HttpAuthToParameterSpec INSTANCE = new HttpAuthToParameterSpec();
+    public static final HttpAuthParameterSpecVisitor INSTANCE = new HttpAuthParameterSpecVisitor();
 
     private static final String AUTHORIZATION_HEADER_NAME = "Authorization";
 

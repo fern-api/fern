@@ -20,9 +20,9 @@ import com.fern.codegen.GeneratedError;
 import com.fern.codegen.GeneratedHttpServiceServer;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
-import com.fern.jersey.HttpAuthToParameterSpec;
-import com.fern.jersey.HttpMethodAnnotationVisitor;
-import com.fern.jersey.HttpPathUtils;
+import com.fern.codegen.utils.server.HttpAuthParameterSpecVisitor;
+import com.fern.codegen.utils.server.HttpPathUtils;
+import com.fern.jersey.JerseyHttpMethodAnnotationVisitor;
 import com.fern.jersey.JerseyServiceGeneratorUtils;
 import com.fern.model.codegen.Generator;
 import com.fern.types.ErrorName;
@@ -47,7 +47,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-public final class HttpServiceServerGenerator extends Generator {
+public final class HttpServiceJerseyServerGenerator extends Generator {
 
     private final HttpService httpService;
     private final ClassName generatedServiceClassName;
@@ -55,7 +55,7 @@ public final class HttpServiceServerGenerator extends Generator {
     private final Map<EndpointId, GeneratedEndpointModel> generatedEndpointModels;
     private final Map<ErrorName, GeneratedError> generatedErrors;
 
-    public HttpServiceServerGenerator(
+    public HttpServiceJerseyServerGenerator(
             GeneratorContext generatorContext,
             Map<ErrorName, GeneratedError> generatedErrors,
             Map<EndpointId, GeneratedEndpointModel> generatedEndpointModels,
@@ -102,12 +102,12 @@ public final class HttpServiceServerGenerator extends Generator {
     private MethodSpec getHttpEndpointMethodSpec(HttpEndpoint httpEndpoint) {
         MethodSpec.Builder endpointMethodBuilder = MethodSpec.methodBuilder(
                         httpEndpoint.endpointId().value())
-                .addAnnotation(httpEndpoint.method().visit(HttpMethodAnnotationVisitor.INSTANCE))
+                .addAnnotation(httpEndpoint.method().visit(JerseyHttpMethodAnnotationVisitor.INSTANCE))
                 .addAnnotation(AnnotationSpec.builder(Path.class)
-                        .addMember("value", "$S", HttpPathUtils.getJerseyCompatiblePath(httpEndpoint.path()))
+                        .addMember("value", "$S", HttpPathUtils.getPathWithCurlyBracedPathParams(httpEndpoint.path()))
                         .build())
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT);
-        httpEndpoint.auth().visit(new HttpAuthToParameterSpec()).ifPresent(endpointMethodBuilder::addParameter);
+        httpEndpoint.auth().visit(new HttpAuthParameterSpecVisitor()).ifPresent(endpointMethodBuilder::addParameter);
         httpService.headers().stream()
                 .map(jerseyServiceGeneratorUtils::getHeaderParameterSpec)
                 .forEach(endpointMethodBuilder::addParameter);

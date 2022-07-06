@@ -23,9 +23,9 @@ import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 
-public final class HttpMethodAnnotationVisitor implements HttpMethod.Visitor<AnnotationSpec> {
+public final class JerseyHttpMethodAnnotationVisitor implements HttpMethod.Visitor<AnnotationSpec> {
 
-    public static final HttpMethodAnnotationVisitor INSTANCE = new HttpMethodAnnotationVisitor();
+    public static final JerseyHttpMethodAnnotationVisitor INSTANCE = new JerseyHttpMethodAnnotationVisitor();
 
     @Override
     public AnnotationSpec visitGET() {

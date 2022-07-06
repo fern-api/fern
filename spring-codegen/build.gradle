@@ -1,0 +1,16 @@
+dependencies {
+    implementation project(':model-codegen')
+    implementation project(':codegen-utils')
+    implementation project(':runtime-utils:spring-utils')
+    implementation project(':runtime-utils:auth-utils')
+    implementation project(':runtime-utils:jackson-utils')
+    implementation project(':runtime-utils:exception-utils')
+    implementation 'com.fern-fern.fern:ir-model'
+    implementation 'com.fern:fern-immutables-style'
+    implementation 'com.squareup:javapoet'
+    implementation 'org.slf4j:slf4j-api'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'org.springframework:spring-web'
+    implementation 'org.springframework:spring-webmvc'
+    implementation 'org.immutables:value::annotations'
+}

@@ -40,6 +40,8 @@ dependencies {
     implementation 'org.glassfish.jersey.ext:jersey-spring5:2.35'
     implementation 'com.google.code.findbugs:annotations:3.0.1'
     implementation 'javax.ws.rs:javax.ws.rs-api:2.1.1'
+    implementation 'org.springframework:spring-web:5.3.19'
+    implementation 'org.springframework:spring-webmvc:5.3.19'
 
     annotationProcessor 'org.immutables:value:2.8.8'
     compileOnly 'org.immutables:value-annotations:2.8.8'

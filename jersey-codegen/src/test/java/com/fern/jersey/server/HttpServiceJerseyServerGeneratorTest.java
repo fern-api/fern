@@ -51,7 +51,7 @@ import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
-public final class HttpServiceServerGeneratorTest {
+public final class HttpServiceJerseyServerGeneratorTest {
 
     private static final String PACKAGE_PREFIX = "com";
     private static final GeneratorContext GENERATOR_CONTEXT = new GeneratorContext(
@@ -130,12 +130,12 @@ public final class HttpServiceServerGeneratorTest {
                 Collections.emptyList(),
                 GENERATOR_CONTEXT);
         ModelGeneratorResult modelGeneratorResult = modelGenerator.generate();
-        HttpServiceServerGenerator httpServiceServerGenerator = new HttpServiceServerGenerator(
+        HttpServiceJerseyServerGenerator httpServiceJerseyServerGenerator = new HttpServiceJerseyServerGenerator(
                 GENERATOR_CONTEXT,
                 modelGeneratorResult.errors(),
                 modelGeneratorResult.endpointModels().get(testHttpService),
                 testHttpService);
-        GeneratedHttpServiceServer generatedHttpServiceClient = httpServiceServerGenerator.generate();
+        GeneratedHttpServiceServer generatedHttpServiceClient = httpServiceJerseyServerGenerator.generate();
         System.out.println(generatedHttpServiceClient.file().toString());
     }
 
@@ -230,12 +230,12 @@ public final class HttpServiceServerGeneratorTest {
                 Collections.singletonList(personIdNotFound),
                 GENERATOR_CONTEXT);
         ModelGeneratorResult modelGeneratorResult = modelGenerator.generate();
-        HttpServiceServerGenerator httpServiceServerGenerator = new HttpServiceServerGenerator(
+        HttpServiceJerseyServerGenerator httpServiceJerseyServerGenerator = new HttpServiceJerseyServerGenerator(
                 GENERATOR_CONTEXT,
                 modelGeneratorResult.errors(),
                 modelGeneratorResult.endpointModels().get(testHttpService),
                 testHttpService);
-        GeneratedHttpServiceServer generatedHttpServiceServer = httpServiceServerGenerator.generate();
+        GeneratedHttpServiceServer generatedHttpServiceServer = httpServiceJerseyServerGenerator.generate();
         System.out.println(generatedHttpServiceServer.file().toString());
     }
 }

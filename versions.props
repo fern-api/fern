@@ -34,7 +34,8 @@ org.glassfish.jersey.core:jersey-common = 2.35
 org.glassfish.jersey.ext:jersey-spring5 = 2.35
 
 # spring
-org.springframework.boot:spring-boot-starter-jersey = 2.6.7
+org.springframework:spring-web = 5.3.19
+org.springframework:spring-webmvc = 5.3.19
 
 # slf4j
 org.slf4j:slf4j-api = 1.7.36

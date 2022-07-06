@@ -23,7 +23,6 @@ dependencies {
     implementation 'org.glassfish.jersey.ext:jersey-spring5'
     implementation 'org.slf4j:slf4j-api'
 
-
     annotationProcessor 'org.immutables:value'
 
     testImplementation project(':test-utils')
