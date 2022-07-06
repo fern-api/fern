@@ -30,11 +30,11 @@ With an API definition, development projects that involve multiple engineers/tea
 
 ## What is a Fern API Definition?
 
-A [**Fern API Definition**](definition.md) is a set of YAML files that describe your API.
+A [**Fern API Definition**](../markdown_files/definition.md#what-is-a-fern-api-definition) is a set of YAML files that describe your API.
 
 ## What are Fern Generators?
 
-[**Generators**](generators.md) convert a Fern API Definition into clients, servers, and documentation.
+[**Generators**](../markdown_files/generators.md) convert a Fern API Definition into clients, servers, and documentation.
 
 ## How is this different than OpenAPI?
 
