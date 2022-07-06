@@ -1,0 +1,9 @@
+name: example-api
+definition: src
+generators:
+  - name: fernapi/fern-java
+    version: 0.0.55
+    generate: true
+    config:
+      packagePrefix: com
+      mode: server

@@ -71,5 +71,9 @@
   - javax.ws.rs.sse.SseEventSource$Builder
 [org.glassfish.hk2.external:aopalliance-repackaged, org.springframework:spring-aop]
   - org.aopalliance.aop.AspectException
+  - org.aopalliance.intercept.ConstructorInterceptor
   - org.aopalliance.intercept.ConstructorInvocation
+  - org.aopalliance.intercept.Invocation
+  - org.aopalliance.intercept.Joinpoint
   - org.aopalliance.intercept.MethodInterceptor
+  - org.aopalliance.intercept.MethodInvocation
