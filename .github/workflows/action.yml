@@ -3,14 +3,10 @@ name: Check Markdown links
 on: push
 
 jobs:
-  markdown-link-check:
+  check-docs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
       - uses: gaurav-nelson/github-action-markdown-link-check@v1
-        # prettier-ignore
         with:
-        # prettier-ignore
-        folder-path: 'docs/markdown_files'
-        # prettier-ignore
-        use-quiet-mode: 'yes'
+          folder-path: "docs/markdown_files"
