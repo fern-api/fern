@@ -38,4 +38,4 @@ A [**Fern API Definition**](definition.md) is a set of YAML files that describe 
 
 ## How is this different than OpenAPI?
 
-Fern is optimized for [kick-ass codegen](faq.md#1-how-is-fern-different-than-openapi-fka-swagger).
+Fern is optimized for [kick-ass codegen](../markdown_files/faq.md#_1-how-is-fern-different-than-openapi-fka-swagger).
