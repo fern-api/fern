@@ -1,9 +1,6 @@
 {
   "plugins": ["@blueprintjs/stylelint-plugin"],
-  "extends": [
-    "stylelint-config-standard-scss",
-    "stylelint-config-prettier-scss"
-  ],
+  "extends": ["stylelint-config-standard-scss", "stylelint-config-prettier-scss"],
   "rules": {
     "@blueprintjs/no-prefix-literal": true,
     "selector-class-pattern": [

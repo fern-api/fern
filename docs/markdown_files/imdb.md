@@ -15,7 +15,7 @@ Create a new folder for this tutorial and `cd` into it. Let's create a new npm p
 
 ```bash
 npm init -y
-npm install typescript ts-node express @types/express
+npm install typescript express @types/express ts-node
 ```
 
 This will set us up for a new TypeScript backend repo. We'll also install fern:
@@ -36,7 +36,7 @@ fern init
 <details>
 <summary>What happens:</summary>
 
-This adds an `api` directory with the following content:
+This adds the following content:
 
 ```yml
 api/
@@ -46,17 +46,16 @@ api/
 fern.config.json
 ```
 
-- [`api.yml`](README.md#an-example-of-a-fern-api-definition) is an example Fern API Definition for IMDb.
-- [`.fernrc.yml`](docs/fernrc.md) is a configuration file local to a single API in your repo.
-- [`fern.config.json`](docs/fern-config-json.md) is a configuration file that applies to all APIs in your repo.
+- [`api.yml`](definition.md#an-example-of-a-fern-api-definition) is an example Fern API Definition for IMDb.
+- [`.fernrc.yml`](fernrc.md) is a configuration file local to a single API in your repo.
+- [`fern.config.json`](fern-config-json.md) is a configuration file that applies to all APIs in your repo.
 
 </details>
 
-## Step 3: Add generators
+## Step 3: Add TypeScript generator
 
 ```bash
 fern add typescript
-fern add postman
 ```
 
 <br>
@@ -71,37 +70,28 @@ fern add postman
 -generators: []
 +generators:
 +  - name: fernapi/fern-typescript
-+    version: 0.0.101
++    version: x.x.xxx
 +    generate: true
 +    config:
 +      mode: server
-+  - name: fernapi/fern-postman
-+    version: 0.0.6
-+    generate:
-+      enabled: true
-+      output: ./generated-postman.json
 ```
 
 </details>
 
-## Step 4: Run generators
+## Step 4: Run the generator
+
+In the terminal, you'll see `Published @imdb-fern/imdb-api-server@x.x.x` which we'll add as a dependency. By default, Fern publishes dependencies to a private registry.
 
 ```bash
-fern generate
-```
-
-In terminal, you'll see `Published @imdb-fern/api-server@x.x.x` which we'll add as a dependency.
-
-```bash
+# Teach npm about the Fern private registry
 npm config set --location project @imdb-fern:registry https://npm-dev.buildwithfern.com/
+
 npm install @imdb-fern/api-server@x.x.x
 ```
 
-In your files, you'll also see a `generated-postman.json` that we'll import to Postman later.
-
 ## Step 5: Implement the server
 
-We'll create a new file `server.ts` in the root of our project. This will be a simple express server that servers our IMDb API.
+We'll create a new file `server.ts` at the root of our project. This will be a simple express server that serves our IMDb API.
 
 ```ts
 // server.ts
@@ -117,13 +107,13 @@ app.use(
   })
 );
 
-console.log("Listening on port 8080!");
+console.log("Listening for requests...");
 app.listen(8080);
 ```
 
 Our IDE will give us red lines indicating that we need to add missing properties.
 
-![server.ts error message](assets/server.ts%20error%20message.png)
+![server.ts error message](../assets/tutorial/server.ts%20error%20message.png)
 
 You can implement the missing methods, for example:
 
@@ -149,23 +139,34 @@ You can implement the missing methods, for example:
 +  }
  }))
 
- console.log("Listening on port 8080!");
+ console.log("Listening for requests...");
  app.listen(8080);
 ```
 
 ## Step 6: Run the server
 
 ```bash
-./node_modules/.bin/ts-node server.ts
+npx ts-node server.ts
 ```
+
+In the terminal, you should see `Listening for requests...`
+
+## Step 6: Add the Postman generator
+
+```bash
+fern add postman
+fern generate
+```
+
+In the `api/` folder you'll see `collection.json` that we'll import to Postman.
 
 ## Step 7: Hit the server from Postman
 
-Open Postman and File -> Import `api/generated-postman.json` that we generated in Step 4.
+Open Postman and File -> Import `api/generated-postman/collection.json`.
 
 Select the `createMovie` endpoint and hit `Send`. You should get a response back from your server **`iron-man-3`**.
 
-![postman-testing](assets/postman-testing.png)
+![postman-testing](../assets/tutorial/postman-testing.png)
 
 ## Step 8: Celebrate
 

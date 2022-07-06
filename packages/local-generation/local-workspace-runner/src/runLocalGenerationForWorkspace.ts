@@ -13,10 +13,12 @@ export async function runLocalGenerationForWorkspace({
     organization,
     workspaceDefinition,
     compileResult,
+    keepDocker,
 }: {
     organization: string;
     workspaceDefinition: WorkspaceDefinition;
     compileResult: Compiler.SuccessfulResult;
+    keepDocker: boolean;
 }): Promise<void> {
     if (workspaceDefinition.generators.length === 0) {
         return;
@@ -41,6 +43,7 @@ export async function runLocalGenerationForWorkspace({
                 workspaceTempDir,
                 absolutePathToIr,
                 nonStandardEncodings: compileResult.nonStandardEncodings,
+                keepDocker,
             })
         )
     );
@@ -53,6 +56,7 @@ async function loadHelpersAndRunGenerator({
     workspaceTempDir,
     absolutePathToIr,
     nonStandardEncodings,
+    keepDocker,
 }: {
     organization: string;
     workspaceDefinition: WorkspaceDefinition;
@@ -60,6 +64,7 @@ async function loadHelpersAndRunGenerator({
     workspaceTempDir: DirectoryResult;
     absolutePathToIr: string;
     nonStandardEncodings: CustomWireMessageEncoding[];
+    keepDocker: boolean;
 }): Promise<void> {
     const configJson = await tmp.file({
         tmpdir: workspaceTempDir.path,
@@ -89,5 +94,6 @@ async function loadHelpersAndRunGenerator({
         customConfig: generatorInvocation.config,
         workspaceName: workspaceDefinition.name,
         organization,
+        keepDocker,
     });
 }

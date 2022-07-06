@@ -2,18 +2,15 @@
 
 - Getting started
 
-  - [Tutorial: IMDb](imdb.md)
+  - [Tutorial: IMDb](markdown_files/imdb.md)
+  - [CLI](markdown_files/cli.md)
 
 - Concepts
 
-  - [Fern API Definition](fern-api-definition.md)
-  - [Types](types.md)
-  - [Services](services.md)
-  - [Errors](errors.md)
-  - [IDs](ids.md)
-  - [Imports](imports.md)
+  - [Fern API Definition](markdown_files/definition.md)
+  - [Generators](markdown_files/generators.md)
 
 - Reference
-
-  - [Generators](README.md#fern-generators)
+  p
+  - [FAQs](markdown_files/faq.md)
   - [Join the Discord](https://discord.gg/JkkXumPzcG)

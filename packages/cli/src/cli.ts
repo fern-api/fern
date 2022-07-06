@@ -97,6 +97,12 @@ function addGenerateCommand(cli: Argv) {
         "Generate typesafe servers and clients",
         (yargs) =>
             yargs
+                .option("keepDocker", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "If true, Docker containers are not removed after generation. This is ignored for remote generation.",
+                })
                 .option("local", {
                     boolean: true,
                     default: false,
@@ -112,6 +118,7 @@ function addGenerateCommand(cli: Argv) {
             await compileAndGenerateWorkspaces({
                 commandLineWorkspaces: argv.workspaces ?? [],
                 runLocal: argv.local,
+                keepDocker: argv.keepDocker,
             });
         }
     );

@@ -17,23 +17,24 @@ generators: []
 `;
 
 exports[`fern init 3`] = `
-"ids:
-  - MovieId
+"# This is a sample IMDb API to get you more familiar with defining APIs in Fern.
+
 types:
+  MovieId: string
   Movie:
     properties:
       id: MovieId
       title: string
       rating: double
-errors:
-  NotFoundError:
-    http:
-      statusCode: 404
+
 services:
   http:
     MoviesService:
       auth: none
+      base-path: /movies
       endpoints:
+
+        # Here's an HTTP endpoint. Fern uses sane defaults for endpoint path and HTTP method.
         createMovie:
           request:
             type:
@@ -41,15 +42,17 @@ services:
                 title: string
                 rating: double
           response: MovieId
+
         getMovie:
-          request:
-            type:
-              properties:
-                movieId: MovieId
+          request: MovieId
           response:
             ok: Movie
             failed:
               errors:
                 - NotFoundError
-"
+
+errors:
+  NotFoundError:
+    http:
+      statusCode: 404"
 `;

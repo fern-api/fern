@@ -7,7 +7,7 @@ import {
 import { lstat, mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
-import { writeSampleApiToDirectory } from "./sampleApi";
+import { writeSampleApiToDirectory } from "./writeSampleApiToDirectory";
 
 export async function initialize({ organization }: { organization: string }): Promise<void> {
     await writeProjectConfigIfNotExists({ organization });

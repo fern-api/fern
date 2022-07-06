@@ -38,9 +38,11 @@ export async function compileWorkspaces({
 export async function compileAndGenerateWorkspaces({
     commandLineWorkspaces,
     runLocal,
+    keepDocker,
 }: {
     commandLineWorkspaces: readonly string[];
     runLocal: boolean;
+    keepDocker: boolean;
 }): Promise<void> {
     const { projectConfig, uniqueWorkspaceDefinitionPaths } = await loadProjectAndUniqueWorkspaces(
         commandLineWorkspaces
@@ -51,6 +53,7 @@ export async function compileAndGenerateWorkspaces({
             compileAndGenerateWorkspace({
                 absolutePathToWorkspaceDefinition: uniqueWorkspaceDefinitionPath,
                 runLocal,
+                keepDocker,
                 organization: projectConfig.organization,
             })
         )

@@ -21,9 +21,6 @@ function itFixture(fixtureName: string) {
                 "node",
                 [path.join(__dirname, "../../../../cli/webpack/dist/bundle.js"), "compile", "--writeIr"],
                 {
-                    env: {
-                        NODE_ENV: "development",
-                    },
                     cwd: fixturePath,
                 }
             );

@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD036 -->
+
 # Defining a channel
 
 Channels are used to send messages bidirectionally between a server and its clients. Currently, channels are implemented using WebSockets.
@@ -63,7 +65,7 @@ chatsChannel.subscribeToNewChats({
 
 ## Errors
 
-Every message can specify [errors](defining-errors.md) - i.e. responses that indicate that something went wrong. The message's `errors` field must be a union.
+Every message can specify [errors](errors.md) - i.e. responses that indicate that something went wrong. The message's `errors` field must be a union.
 
 ```diff-yaml diff-highlight
  ids:

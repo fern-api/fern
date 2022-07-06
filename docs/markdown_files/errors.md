@@ -1,6 +1,10 @@
 # Errors
 
-Endpoints can throw errors. Errors have bodies that contain a name, status code, and optionally have a type. An endpoint can have multiple errors.
+Endpoints can throw errors on failure. An endpoint can have multiple errors. Errors have the following properties:
+
+- **body**: a name
+- **status code**: a server response to a browser’s request (optional)
+- **type(s)**: information about the error that the client can expect (optional)
 
 ## Example of using errors
 

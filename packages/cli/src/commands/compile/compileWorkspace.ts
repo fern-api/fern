@@ -27,10 +27,12 @@ export async function compileWorkspace({
 export async function compileAndGenerateWorkspace({
     absolutePathToWorkspaceDefinition,
     runLocal,
+    keepDocker,
     organization,
 }: {
     absolutePathToWorkspaceDefinition: string;
     runLocal: boolean;
+    keepDocker: boolean;
     organization: string;
 }): Promise<void> {
     const { compileResult, workspaceDefinition } = await compileWorkspace({ absolutePathToWorkspaceDefinition });
@@ -44,6 +46,7 @@ export async function compileAndGenerateWorkspace({
             organization,
             workspaceDefinition,
             compileResult,
+            keepDocker,
         });
     } else {
         await runRemoteGenerationForWorkspace({
