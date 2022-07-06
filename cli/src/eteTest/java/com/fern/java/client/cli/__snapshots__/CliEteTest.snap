@@ -13,10 +13,10 @@ repositories {
 
 dependencies {
     api project(':blog-api-model')
-    api 'io.github.fern-api:auth-utils:0.0.50'
-    api 'io.github.fern-api:exception-utils:0.0.50'
-    api 'io.github.fern-api:immutables-utils:0.0.50'
-    api 'io.github.fern-api:jackson-utils:0.0.50'
+    api 'io.github.fern-api:auth-utils:0.0.60'
+    api 'io.github.fern-api:exception-utils:0.0.60'
+    api 'io.github.fern-api:immutables-utils:0.0.60'
+    api 'io.github.fern-api:jackson-utils:0.0.60'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.3'
     implementation 'io.github.openfeign:feign-jackson:11.8'
@@ -132,8 +132,8 @@ repositories {
 dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
     implementation 'com.google.code.findbugs:annotations:3.0.1'
-    api 'io.github.fern-api:exception-utils:0.0.50'
-    api 'io.github.fern-api:immutables-utils:0.0.50'
+    api 'io.github.fern-api:exception-utils:0.0.60'
+    api 'io.github.fern-api:immutables-utils:0.0.60'
 
     annotationProcessor 'org.immutables:value:2.8.8'
     compileOnly 'org.immutables:value-annotations:2.8.8'
@@ -721,11 +721,11 @@ repositories {
 
 dependencies {
     api project(':blog-api-model')
-    api 'io.github.fern-api:auth-utils:0.0.50'
-    api 'io.github.fern-api:exception-utils:0.0.50'
-    api 'io.github.fern-api:immutables-utils:0.0.50'
-    api 'io.github.fern-api:jackson-utils:0.0.50'
-    api 'io.github.fern-api:jersey-utils:0.0.50'
+    api 'io.github.fern-api:auth-utils:0.0.60'
+    api 'io.github.fern-api:exception-utils:0.0.60'
+    api 'io.github.fern-api:immutables-utils:0.0.60'
+    api 'io.github.fern-api:jackson-utils:0.0.60'
+    api 'io.github.fern-api:jersey-utils:0.0.60'
     implementation 'org.slf4j:slf4j-api:1.7.36'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.3'
@@ -892,11 +892,11 @@ repositories {
 
 dependencies {
     api project(':blog-api-model')
-    api 'io.github.fern-api:auth-utils:0.0.50'
-    api 'io.github.fern-api:exception-utils:0.0.50'
-    api 'io.github.fern-api:immutables-utils:0.0.50'
-    api 'io.github.fern-api:jackson-utils:0.0.50'
-    api 'io.github.fern-api:spring-utils:0.0.50'
+    api 'io.github.fern-api:auth-utils:0.0.60'
+    api 'io.github.fern-api:exception-utils:0.0.60'
+    api 'io.github.fern-api:immutables-utils:0.0.60'
+    api 'io.github.fern-api:jackson-utils:0.0.60'
+    api 'io.github.fern-api:spring-utils:0.0.60'
     implementation 'org.slf4j:slf4j-api:1.7.36'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.3'

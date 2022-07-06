@@ -66,7 +66,7 @@ public final class ClientGeneratorCli {
         String pluginPath = args[0];
         GeneratorConfig generatorConfig = getGeneratorConfig(pluginPath);
 
-        FernPluginConfig fernPluginConfig = FernPluginConfig.create(generatorConfig, "0.0.50");
+        FernPluginConfig fernPluginConfig = FernPluginConfig.create(generatorConfig, "0.0.60");
         createOutputDirectory(fernPluginConfig.generatorConfig().output());
         startGradleDaemon(fernPluginConfig);
 
