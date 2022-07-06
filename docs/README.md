@@ -2,6 +2,11 @@
 
 > **Fern is a framework for building APIs.** You can think of it as an alternative to OpenAPI (f.k.a Swagger).
 
+<a href="https://www.loom.com/share/c892f4a9fc674c4bb42fb31d395d9ebf">
+    <p>Fern TypeScript Server Tutorial</p>
+    <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/c892f4a9fc674c4bb42fb31d395d9ebf-1657127975624-with-play.gif">
+  </a>
+
 ## How does it work?
 
 ![Overview diagram](assets/diagrams/overview-diagram.png)
