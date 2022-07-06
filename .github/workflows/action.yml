@@ -8,5 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - uses: gaurav-nelson/github-action-markdown-link-check@v1
+        # prettier-ignore
         with:
-          folder-path: "docs/markdown_files"
+          # prettier-ignore
+          folder-path: 'docs/markdown_files'
