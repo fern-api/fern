@@ -12,8 +12,8 @@
   ],
   "source": "src/index.ts",
   "module": "src/index.ts",
-  "main": "./lib/cjs/index.js",
-  "types": "./lib/cjs/index.d.ts",
+  "main": "./lib/esm/index.js",
+  "types": "./lib/esm/index.d.ts",
   "exports": {
     ".": {
       "require": "./lib/cjs/index.js",
@@ -22,11 +22,11 @@
   },
   "sideEffects": false,
   "scripts": {
-    "clean": "tsc --build --clean tsconfig.json && tsc --build --clean tsconfig.esm.json",
-    "compile": "yarn run compile:cjs",
-    "compile:all": "run-s compile:cjs compile:esm",
-    "compile:cjs": "tsc --build tsconfig.json && echo '{ \"type\": \"commonjs\" }' > lib/cjs/package.json",
-    "compile:esm": "tsc --build tsconfig.esm.json && echo '{ \"type\": \"module\" }' > lib/esm/package.json",
+    "clean": "tsc --build --clean tsconfig.json && tsc --build --clean tsconfig.cjs.json",
+    "compile": "yarn run compile:esm",
+    "compile:all": "run-s compile:esm compile:cjs",
+    "compile:esm": "tsc --build tsconfig.json && echo '{ \"type\": \"module\" }' > lib/esm/package.json",
+    "compile:cjs": "tsc --build tsconfig.cjs.json && echo '{ \"type\": \"commonjs\" }' > lib/cjs/package.json",
     "test": "yarn run compile && jest --passWithNoTests",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore --fix",
@@ -36,8 +36,7 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck",
     "start": "env-cmd -e development env-cmd -f .env.local --silent craco start",
-    "build:staging": "REACT_APP_PRODUCTION_ENVIRONMENT=STAGING env-cmd -e development craco --max_old_space_size=4096 build",
-    "build:production": "REACT_APP_PRODUCTION_ENVIRONMENT=PRODUCTION env-cmd -e production craco --max_old_space_size=4096 build",
+    "build": "craco build",
     "eject": "react-scripts eject"
   },
   "browserslist": {

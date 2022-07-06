@@ -32,7 +32,7 @@ module.exports = async function (): Promise<CracoConfig> {
                     // add --build flag to tsc for building project references
                     options.typescript.build = true;
                     // compile ESM, not CJS
-                    options.typescript.configFile = "tsconfig.esm.json";
+                    options.typescript.configFile = "tsconfig.json";
                 } else {
                     throw new Error("Could not find ForkTsCheckerWebpackPlugin");
                 }
