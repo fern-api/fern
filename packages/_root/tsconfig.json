@@ -31,6 +31,8 @@
     { "path": "../local-generation/local-workspace-runner/tsconfig.json" },
     { "path": "../login/tsconfig.json" },
     { "path": "../openapi-converter/tsconfig.json" },
-    { "path": "../remote-generation/remote-workspace-runner/tsconfig.json" }
+    { "path": "../remote-generation/remote-workspace-runner/tsconfig.json" },
+    { "path": "../ui/app/tsconfig.json" },
+    { "path": "../ui/fe-bundle/tsconfig.json" }
   ]
 }

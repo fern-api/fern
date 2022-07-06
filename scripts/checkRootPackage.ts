@@ -23,7 +23,7 @@ async function main() {
         throw new Error("Could not find package " + COMPILE_ROOT_PACKAGE);
     }
 
-    const pathToRootPackageJson = path.join(__dirname, "..", rootPackage.location, "package.json");
+    const pathToRootPackageJson = path.join(rootPackage.location, "package.json");
     const rootPackageJsonStr = await readFile(pathToRootPackageJson);
     const rootPackageJson: Record<string, unknown> = JSON.parse(rootPackageJsonStr.toString());
     const oldDependencies = rootPackageJson.dependencies as Record<string, string>;

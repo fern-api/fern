@@ -22,6 +22,9 @@ jobs:
           name: lint:eslint
           command: yarn lint:eslint
       - run:
+          name: lint:style
+          command: yarn lint:style
+      - run:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff
   compile-and-test:
