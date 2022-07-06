@@ -3465,57 +3465,57 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/mrlint-commons@npm:0.0.44":
-  version: 0.0.44
-  resolution: "@fern-api/mrlint-commons@npm:0.0.44"
+"@fern-api/mrlint-commons@npm:0.0.46":
+  version: 0.0.46
+  resolution: "@fern-api/mrlint-commons@npm:0.0.46"
   dependencies:
-    "@fern-api/mrlint-virtual-file-system": 0.0.44
-  checksum: cb7e2b02b3a9b3193e70feac4de3e69328c6f51ddcdf309f2a90d4bc1a21f47e927112390446d0d426958f19712c9c800b84baf6baadfb24c0a719fbf77c82b3
+    "@fern-api/mrlint-virtual-file-system": 0.0.46
+  checksum: 88254c30b861f699c9b52f886d29bc47cc012447132f0d6b983adacc595c2c15ca193cb6ee6619ef06d4fb929a4f4ab1b6c10fc774fba0eae88197f4b112815d
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-lint@npm:0.0.44":
-  version: 0.0.44
-  resolution: "@fern-api/mrlint-lint@npm:0.0.44"
+"@fern-api/mrlint-lint@npm:0.0.46":
+  version: 0.0.46
+  resolution: "@fern-api/mrlint-lint@npm:0.0.46"
   dependencies:
-    "@fern-api/mrlint-commons": 0.0.44
-    "@fern-api/mrlint-virtual-file-system": 0.0.44
+    "@fern-api/mrlint-commons": 0.0.46
+    "@fern-api/mrlint-virtual-file-system": 0.0.46
     chalk: ^4.1.2
     diff: ^5.0.0
     prettier: ^2.6.2
-  checksum: d8bd5af62e6d01e1568da53229f319063800f02314174e2043575688561aa0fca78fbef04cfc9474a865aa4c3a1fe0229429fa3e090c026c70e5b53a6d86754d
+  checksum: 0e49f17a5bdc9f2f7bf4631306ec327de351fbc1178c0498eb2e9c98e6af3ab66b299a2aca7d157fa4e1414bfe206ff5badc26582acfbb686c443abf16b3f74c
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-parser@npm:0.0.44":
-  version: 0.0.44
-  resolution: "@fern-api/mrlint-parser@npm:0.0.44"
+"@fern-api/mrlint-parser@npm:0.0.46":
+  version: 0.0.46
+  resolution: "@fern-api/mrlint-parser@npm:0.0.46"
   dependencies:
-    "@fern-api/mrlint-commons": 0.0.44
-    "@fern-api/mrlint-rules": 0.0.44
+    "@fern-api/mrlint-commons": 0.0.46
+    "@fern-api/mrlint-rules": 0.0.46
     execa: ^5.1.1
     find-up: ^5.0.0
     js-yaml: ^4.1.0
     zod: ^3.14.3
-  checksum: 7ecaaa49ebc192af7b2456249ec30f8d9839e820bbc48ca642424cedb78160889696733ed929062952370da3a9acf1fdd58af94dbdd9ad902b523b02bc43620e
+  checksum: 19615fd5efc411f6be91a6db5c9848d1be55bc8101ec7c10b7f2ab476c2f99d0635b2920cd2f371cb0549acbb8a4c1cb187f5434596fad9ed2ce2290415aabac
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-rules@npm:0.0.44":
-  version: 0.0.44
-  resolution: "@fern-api/mrlint-rules@npm:0.0.44"
+"@fern-api/mrlint-rules@npm:0.0.46":
+  version: 0.0.46
+  resolution: "@fern-api/mrlint-rules@npm:0.0.46"
   dependencies:
-    "@fern-api/mrlint-commons": 0.0.44
-    "@fern-api/mrlint-virtual-file-system": 0.0.44
+    "@fern-api/mrlint-commons": 0.0.46
+    "@fern-api/mrlint-virtual-file-system": 0.0.46
     immer: ^9.0.12
-  checksum: f0ba45b0397c900e697a5838e7b034ffe1f5cddecf5c2149260eb75609807f8344b4f75f3ba1477e6e9cf635375111a0a7d342f655c0958325596032bc1e0fa1
+  checksum: 47f43854467a5e5f163f1d9d42be59d3820cab01a139ec6978f8a7a4947065ceaadc681c106d93a87b0971d62bdf16e426c8e4c120382504eab6dd539c0f611a
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-virtual-file-system@npm:0.0.44":
-  version: 0.0.44
-  resolution: "@fern-api/mrlint-virtual-file-system@npm:0.0.44"
-  checksum: 49227177f50ef5af2243337ca370792bf098d8638a473b1e38b7d4fc9d9f162684eb5fa10b709e366a76f140fd1e39e8ddf70a5837ab392c33cd32b8b121cf53
+"@fern-api/mrlint-virtual-file-system@npm:0.0.46":
+  version: 0.0.46
+  resolution: "@fern-api/mrlint-virtual-file-system@npm:0.0.46"
+  checksum: 1f7d194acc9d6319c60d07c85495b590829222cd30af35ed762123585b2fbb88d428ad4a676238de809529c567eaf1d7775a16e4132b816a5f3e81169ffe27e4
   languageName: node
   linkType: hard
 
@@ -10568,9 +10568,12 @@ __metadata:
     jest: ^28.1.2
     lint-staged: ^12.3.7
     lodash: ^4.17.21
-    mrlint: ^0.0.44
+    mrlint: ^0.0.46
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
+    stylelint: ^14.9.1
+    stylelint-config-prettier-scss: ^0.0.1
+    stylelint-config-standard-scss: ^4.0.0
     ts-node: ^10.8.0
     typescript: ^4.6.4
   languageName: unknown
@@ -14608,19 +14611,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mrlint@npm:^0.0.44":
-  version: 0.0.44
-  resolution: "mrlint@npm:0.0.44"
+"mrlint@npm:^0.0.46":
+  version: 0.0.46
+  resolution: "mrlint@npm:0.0.46"
   dependencies:
-    "@fern-api/mrlint-commons": 0.0.44
-    "@fern-api/mrlint-lint": 0.0.44
-    "@fern-api/mrlint-parser": 0.0.44
-    "@fern-api/mrlint-rules": 0.0.44
+    "@fern-api/mrlint-commons": 0.0.46
+    "@fern-api/mrlint-lint": 0.0.46
+    "@fern-api/mrlint-parser": 0.0.46
+    "@fern-api/mrlint-rules": 0.0.46
     chalk: ^4.1.2
     yargs: ^17.3.1
   bin:
     mrlint: ./cli
-  checksum: 57d542926f089db851b99af1b89d153bd2fb3205de5ce637af58a9697ad402d1ffb2eae787bc2b5ecd1d4357e59ab0bede9702358c98691d429bb7b81a586e98
+  checksum: fe7c57dc0926bb317a351678a5d3e8d82bfa1a37d206d5ad2afb708b4441d87fdf797a7534275d5d320e5735c4598b18ad847f99d28036fbd224154ccd4d06f6
   languageName: node
   linkType: hard
 
@@ -16483,6 +16486,15 @@ __metadata:
   peerDependencies:
     postcss: ^8.3.3
   checksum: 06c733eaad83a3954367e7ee02ddfe3796e7a44d4299ccf9239f40964a4daac153c7d77613f32964b5a86c0c6c2f6167738f31d578b73b17cb69d0c4446f0ebe
+  languageName: node
+  linkType: hard
+
+"postcss-scss@npm:^4.0.2":
+  version: 4.0.4
+  resolution: "postcss-scss@npm:4.0.4"
+  peerDependencies:
+    postcss: ^8.3.3
+  checksum: b4f240dd5eeb0c21738b673d9caf9a06b9a6db665a5b1c815ee4ca10c4c74a67c54f11cd5a4970dea98475cbb9e6d846e05dd3e48924189c2ecbf1f50cd44aa4
   languageName: node
   linkType: hard
 
@@ -18699,6 +18711,92 @@ __metadata:
   peerDependencies:
     postcss: ^8.2.15
   checksum: 310b3452c11fd443b0d327aa2d5b43ae7479407339204b7ad11cf2e16d33b690c1cbf47a21b737ef112411e53563f0f996c5fa3642d135c896329950a008277f
+  languageName: node
+  linkType: hard
+
+"stylelint-config-prettier-scss@npm:^0.0.1":
+  version: 0.0.1
+  resolution: "stylelint-config-prettier-scss@npm:0.0.1"
+  dependencies:
+    stylelint-config-prettier: ">=9.0.3"
+  peerDependencies:
+    stylelint: ">=11.0.0"
+  bin:
+    stylelint-config-prettier-scss: bin/check.js
+    stylelint-config-prettier-scss-check: bin/check.js
+  checksum: b6ca7cfdf4548dc917d4d5b2394b276cc9f4999e45cbc69340d92808273abc4be489744384c13f53430b9fcd3355e242be6e5c7e493e577c42715e0b635297c6
+  languageName: node
+  linkType: hard
+
+"stylelint-config-prettier@npm:>=9.0.3":
+  version: 9.0.3
+  resolution: "stylelint-config-prettier@npm:9.0.3"
+  peerDependencies:
+    stylelint: ">=11.0.0"
+  bin:
+    stylelint-config-prettier: bin/check.js
+    stylelint-config-prettier-check: bin/check.js
+  checksum: 9ff3f719daf3865878615ba52c31de6ef0a0d25d41cb58c41afe2f1c459a838997ff912cc4a5b4d401f92e2193667ff4d140b6d303cf8192e894b5cb454c41b9
+  languageName: node
+  linkType: hard
+
+"stylelint-config-recommended-scss@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "stylelint-config-recommended-scss@npm:6.0.0"
+  dependencies:
+    postcss-scss: ^4.0.2
+    stylelint-config-recommended: ^7.0.0
+    stylelint-scss: ^4.0.0
+  peerDependencies:
+    stylelint: ^14.4.0
+  checksum: a7254f4e8fc8c25990ad0fade6c3a7e663e867d4f4f92175919de26315a7283e7dd7dc10ef5f7f3a2f7fb76b3aeb5b428c4f3417b2d526868bb9db40c85270b3
+  languageName: node
+  linkType: hard
+
+"stylelint-config-recommended@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "stylelint-config-recommended@npm:7.0.0"
+  peerDependencies:
+    stylelint: ^14.4.0
+  checksum: 9a60a59effb7565314d6001779a31228d5713b4d13e05e991e6da5f9d0784aacf55bc0fe217010e257a79136753a22ae61e309fb982367ebd4de3316f37eb821
+  languageName: node
+  linkType: hard
+
+"stylelint-config-standard-scss@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "stylelint-config-standard-scss@npm:4.0.0"
+  dependencies:
+    stylelint-config-recommended-scss: ^6.0.0
+    stylelint-config-standard: ^25.0.0
+  peerDependencies:
+    stylelint: ^14.4.0
+  checksum: 1f65f8f3c8e5a7706f41d27f5983a88bc4b2cf0d31bd10cc2ef4250eb4a55d46fa4ccac4411c5be57b681a7ddc5c7d0c4c57dfda01769a7b2b41499a16873a12
+  languageName: node
+  linkType: hard
+
+"stylelint-config-standard@npm:^25.0.0":
+  version: 25.0.0
+  resolution: "stylelint-config-standard@npm:25.0.0"
+  dependencies:
+    stylelint-config-recommended: ^7.0.0
+  peerDependencies:
+    stylelint: ^14.4.0
+  checksum: bfd5773f47ea7fcddba972037d6dd32d1fb900c2ca592a313fe1a28df054ef465b11e6e53fe6e87bbf0c356ab33a7a4eecc447cf7a1bd39c9b50c7b4bfb48d81
+  languageName: node
+  linkType: hard
+
+"stylelint-scss@npm:^4.0.0":
+  version: 4.2.0
+  resolution: "stylelint-scss@npm:4.2.0"
+  dependencies:
+    lodash: ^4.17.21
+    postcss-media-query-parser: ^0.2.3
+    postcss-resolve-nested-selector: ^0.1.1
+    postcss-selector-parser: ^6.0.6
+    postcss-value-parser: ^4.1.0
+  peerDependencies:
+    stylelint: ^14.5.1
+  checksum: 1fb9e850fc7301c3481f7df193d9dda520a0d54a56284ffda2de5766432aebd4205daa5c3002e784548ba26d5d1dee402c162bbb46beb6377a40d75abc409a3d
   languageName: node
   linkType: hard
 
