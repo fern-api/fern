@@ -1,4 +1,5 @@
 import execa from "execa";
+import path from "path";
 
 export interface YarnPackage {
     name: string;
@@ -18,10 +19,14 @@ export async function getAllPackages({ since = false }: { since?: boolean } = {}
         return [];
     }
 
-    return trimmedStdout
-        .split("\n")
-        .map((line): YarnPackage => {
-            return JSON.parse(line);
-        })
-        .filter((p) => p.location !== ".");
+    return trimmedStdout.split("\n").reduce<YarnPackage[]>((packages, line) => {
+        const parsed = JSON.parse(line) as YarnPackage;
+        if (parsed.location !== ".") {
+            packages.push({
+                name: parsed.name,
+                location: path.resolve(__dirname, "..", parsed.location),
+            });
+        }
+        return packages;
+    }, []);
 }

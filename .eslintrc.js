@@ -1,17 +1,27 @@
 module.exports = {
+    root: true,
     env: {
         browser: true,
         es2021: true,
     },
-    plugins: ["@typescript-eslint", "jest"],
+    plugins: ["@typescript-eslint", "jest", "@blueprintjs"],
     extends: [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:jest/recommended",
+        "plugin:@blueprintjs/recommended",
     ],
+    settings: {
+        react: {
+            version: "detect",
+        },
+    },
     parser: "@typescript-eslint/parser",
     parserOptions: {
+        ecmaFeatures: {
+            jsx: true,
+        },
         ecmaVersion: 12,
         sourceType: "module",
         project: ["./tsconfig.eslint.json", "./packages/**/tsconfig.json"],

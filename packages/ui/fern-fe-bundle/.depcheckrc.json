@@ -1,1 +1,1 @@
-{ "ignores": ["@types/jest", "@types/node", "sass"], "ignore-patterns": ["lib"] }
+{ "ignores": ["@types/jest", "@types/node", "react-scripts", "sass"], "ignore-patterns": ["lib"] }
