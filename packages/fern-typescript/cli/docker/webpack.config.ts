@@ -20,7 +20,8 @@ export default (_env: unknown, { mode = "production" }: webpack.WebpackOptionsNo
                     loader: "ts-loader",
                     options: {
                         projectReferences: true,
-                        configFile: "tsconfig.esm.json",
+                        // esm config
+                        configFile: "tsconfig.json",
                     },
                     exclude: /node_modules/,
                 },

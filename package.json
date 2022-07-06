@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "clean": "yarn workspace @fern-api/compile-root run clean",
-    "compile": "yarn compile:cjs",
+    "compile": "yarn compile:esm",
     "compile:all": "yarn compile:prepare && yarn workspace @fern-api/compile-root run compile:all",
     "compile:cjs": "yarn compile:prepare && yarn workspace @fern-api/compile-root run compile:cjs",
     "compile:esm": "yarn compile:prepare && yarn workspace @fern-api/compile-root run compile:esm",
