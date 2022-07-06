@@ -25,8 +25,10 @@ import com.fern.java.immutables.AliasImmutablesStyle;
 import com.fern.model.codegen.Generator;
 import com.fern.types.AliasTypeDeclaration;
 import com.fern.types.DeclaredTypeName;
+import com.fern.types.PrimitiveType;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
@@ -123,11 +125,63 @@ public final class AliasGenerator extends Generator {
     }
 
     private MethodSpec getToStringMethod() {
+        CodeBlock toStringMethodCodeBlock;
+        if (aliasTypeDeclaration.aliasOf().isPrimitive()) {
+            toStringMethodCodeBlock =
+                    aliasTypeDeclaration.aliasOf().getPrimitive().get().visit(ToStringMethodSpecVisitor.INSTANCE);
+        } else {
+            toStringMethodCodeBlock = CodeBlock.of("return $L().$L()", IMMUTABLES_VALUE_PROPERTY_NAME, "toString");
+        }
         return MethodSpec.methodBuilder("toString")
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(Override.class)
-                .addStatement("return $L().toString()", IMMUTABLES_VALUE_PROPERTY_NAME)
+                .addStatement(toStringMethodCodeBlock)
                 .returns(ClassNameConstants.STRING_CLASS_NAME)
                 .build();
+    }
+
+    private static final class ToStringMethodSpecVisitor implements PrimitiveType.Visitor<CodeBlock> {
+
+        private static final ToStringMethodSpecVisitor INSTANCE = new ToStringMethodSpecVisitor();
+
+        @Override
+        public CodeBlock visitINTEGER() {
+            return CodeBlock.of("return $T.$L($L())", Integer.class, "toString", IMMUTABLES_VALUE_PROPERTY_NAME);
+        }
+
+        @Override
+        public CodeBlock visitDOUBLE() {
+            return CodeBlock.of("return $T.$L($L())", Double.class, "toString", IMMUTABLES_VALUE_PROPERTY_NAME);
+        }
+
+        @Override
+        public CodeBlock visitSTRING() {
+            return CodeBlock.of("return $L()", IMMUTABLES_VALUE_PROPERTY_NAME);
+        }
+
+        @Override
+        public CodeBlock visitBOOLEAN() {
+            return CodeBlock.of("return $T.$L($L())", Boolean.class, "toString", IMMUTABLES_VALUE_PROPERTY_NAME);
+        }
+
+        @Override
+        public CodeBlock visitLONG() {
+            return CodeBlock.of("return $T.$L($L())", Long.class, "toString", IMMUTABLES_VALUE_PROPERTY_NAME);
+        }
+
+        @Override
+        public CodeBlock visitDATE_TIME() {
+            return CodeBlock.of("return $L()", IMMUTABLES_VALUE_PROPERTY_NAME);
+        }
+
+        @Override
+        public CodeBlock visitUUID() {
+            return CodeBlock.of("return $L().$L()", IMMUTABLES_VALUE_PROPERTY_NAME, "toString");
+        }
+
+        @Override
+        public CodeBlock visitUnknown(String unknown) {
+            throw new RuntimeException("Encountered unknown primitive type: " + unknown);
+        }
     }
 }

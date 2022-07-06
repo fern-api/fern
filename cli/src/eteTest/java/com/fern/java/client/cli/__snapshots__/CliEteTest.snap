@@ -324,6 +324,39 @@ public final class GetPostError extends WebApplicationException {
 ]
 
 
+basic[api/generated-java/blog-api-model/src/main/java/com/blog/types/Age.java]=[
+package com.blog.types;
+
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fern.java.immutables.AliasImmutablesStyle;
+import java.lang.Integer;
+import java.lang.Override;
+import java.lang.String;
+import org.immutables.value.Value;
+
+@Value.Immutable
+@AliasImmutablesStyle
+@JsonDeserialize(
+    as = ImmutableAge.class
+)
+public abstract class Age {
+  @JsonValue
+  public abstract int value();
+
+  public static Age valueOf(int value) {
+    return ImmutableAge.of(value);
+  }
+
+  @Override
+  public String toString() {
+    return Integer.toString(value());
+  }
+}
+
+]
+
+
 basic[api/generated-java/blog-api-model/src/main/java/com/blog/types/Author.java]=[
 package com.blog.types;
 
@@ -527,7 +560,7 @@ public abstract class PostId {
 
   @Override
   public String toString() {
-    return value().toString();
+    return value();
   }
 }
 

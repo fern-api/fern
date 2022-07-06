@@ -3,6 +3,7 @@ imports:
 ids:
   - PostId
 types:
+  Age: integer
   BlogPost:
     docs: A blog post
     properties:
