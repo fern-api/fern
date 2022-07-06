@@ -4,7 +4,7 @@
 
 ## How does it work?
 
-![Overview diagram](/docs/assets/diagrams/overview-diagram.png)
+![Overview diagram](assets/diagrams/overview-diagram.png)
 
 Fern reads in your [Fern API Definition](#what-is-a-fern-api-definition), invokes remote [generators](#what-are-fern-generators), and creates clients, server stubs, and interactive documentation for your API.
 
