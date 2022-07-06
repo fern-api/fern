@@ -64,7 +64,7 @@ public final class SpringServiceGeneratorUtils {
         TypeName typeName = generatorContext.getClassNameUtils().getTypeNameFromTypeReference(false, paramType);
         return ParameterSpec.builder(typeName, paramName)
                 .addAnnotation(AnnotationSpec.builder(paramClass)
-                        .addMember("value", "$S", paramName)
+                        .addMember("value", "$S", annotationValue)
                         .build())
                 .build();
     }
