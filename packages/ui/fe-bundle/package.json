@@ -36,7 +36,7 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck",
     "start": "env-cmd -e development env-cmd -f .env.local --silent craco start",
-    "build": "craco build",
+    "build": "yarn run compile && craco build",
     "eject": "react-scripts eject"
   },
   "browserslist": {

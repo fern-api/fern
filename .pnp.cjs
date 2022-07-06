@@ -217,7 +217,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.2"],\
             ["lint-staged", "npm:12.4.1"],\
             ["lodash", "npm:4.17.21"],\
-            ["mrlint", "npm:0.0.48"],\
+            ["mrlint", "npm:0.0.49"],\
             ["npm-run-all", "npm:4.1.5"],\
             ["prettier", "npm:2.6.2"],\
             ["stylelint", "npm:14.9.1"],\
@@ -7647,22 +7647,22 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-api/mrlint-commons", [\
-        ["npm:0.0.48", {\
-          "packageLocation": "./.yarn/cache/@fern-api-mrlint-commons-npm-0.0.48-bb9503528f-b10898562f.zip/node_modules/@fern-api/mrlint-commons/",\
+        ["npm:0.0.49", {\
+          "packageLocation": "./.yarn/cache/@fern-api-mrlint-commons-npm-0.0.49-56a1d373b1-335c21f1d2.zip/node_modules/@fern-api/mrlint-commons/",\
           "packageDependencies": [\
-            ["@fern-api/mrlint-commons", "npm:0.0.48"],\
-            ["@fern-api/mrlint-virtual-file-system", "npm:0.0.48"]\
+            ["@fern-api/mrlint-commons", "npm:0.0.49"],\
+            ["@fern-api/mrlint-virtual-file-system", "npm:0.0.49"]\
           ],\
           "linkType": "HARD"\
         }]\
       ]],\
       ["@fern-api/mrlint-lint", [\
-        ["npm:0.0.48", {\
-          "packageLocation": "./.yarn/cache/@fern-api-mrlint-lint-npm-0.0.48-b254079f79-ad4a871cf1.zip/node_modules/@fern-api/mrlint-lint/",\
+        ["npm:0.0.49", {\
+          "packageLocation": "./.yarn/cache/@fern-api-mrlint-lint-npm-0.0.49-d0a10ffb57-a695ed05e5.zip/node_modules/@fern-api/mrlint-lint/",\
           "packageDependencies": [\
-            ["@fern-api/mrlint-lint", "npm:0.0.48"],\
-            ["@fern-api/mrlint-commons", "npm:0.0.48"],\
-            ["@fern-api/mrlint-virtual-file-system", "npm:0.0.48"],\
+            ["@fern-api/mrlint-lint", "npm:0.0.49"],\
+            ["@fern-api/mrlint-commons", "npm:0.0.49"],\
+            ["@fern-api/mrlint-virtual-file-system", "npm:0.0.49"],\
             ["chalk", "npm:4.1.2"],\
             ["diff", "npm:5.0.0"],\
             ["prettier", "npm:2.6.2"]\
@@ -7671,12 +7671,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-api/mrlint-parser", [\
-        ["npm:0.0.48", {\
-          "packageLocation": "./.yarn/cache/@fern-api-mrlint-parser-npm-0.0.48-771cec6e8e-d76b95c01d.zip/node_modules/@fern-api/mrlint-parser/",\
+        ["npm:0.0.49", {\
+          "packageLocation": "./.yarn/cache/@fern-api-mrlint-parser-npm-0.0.49-5b3d339603-326078cb7d.zip/node_modules/@fern-api/mrlint-parser/",\
           "packageDependencies": [\
-            ["@fern-api/mrlint-parser", "npm:0.0.48"],\
-            ["@fern-api/mrlint-commons", "npm:0.0.48"],\
-            ["@fern-api/mrlint-rules", "npm:0.0.48"],\
+            ["@fern-api/mrlint-parser", "npm:0.0.49"],\
+            ["@fern-api/mrlint-commons", "npm:0.0.49"],\
+            ["@fern-api/mrlint-rules", "npm:0.0.49"],\
             ["execa", "npm:5.1.1"],\
             ["find-up", "npm:5.0.0"],\
             ["js-yaml", "npm:4.1.0"],\
@@ -7686,22 +7686,22 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-api/mrlint-rules", [\
-        ["npm:0.0.48", {\
-          "packageLocation": "./.yarn/cache/@fern-api-mrlint-rules-npm-0.0.48-6621765b98-287bce43c8.zip/node_modules/@fern-api/mrlint-rules/",\
+        ["npm:0.0.49", {\
+          "packageLocation": "./.yarn/cache/@fern-api-mrlint-rules-npm-0.0.49-87a9321a94-3bdf986dba.zip/node_modules/@fern-api/mrlint-rules/",\
           "packageDependencies": [\
-            ["@fern-api/mrlint-rules", "npm:0.0.48"],\
-            ["@fern-api/mrlint-commons", "npm:0.0.48"],\
-            ["@fern-api/mrlint-virtual-file-system", "npm:0.0.48"],\
+            ["@fern-api/mrlint-rules", "npm:0.0.49"],\
+            ["@fern-api/mrlint-commons", "npm:0.0.49"],\
+            ["@fern-api/mrlint-virtual-file-system", "npm:0.0.49"],\
             ["immer", "npm:9.0.14"]\
           ],\
           "linkType": "HARD"\
         }]\
       ]],\
       ["@fern-api/mrlint-virtual-file-system", [\
-        ["npm:0.0.48", {\
-          "packageLocation": "./.yarn/cache/@fern-api-mrlint-virtual-file-system-npm-0.0.48-5756352e03-b91d80b69e.zip/node_modules/@fern-api/mrlint-virtual-file-system/",\
+        ["npm:0.0.49", {\
+          "packageLocation": "./.yarn/cache/@fern-api-mrlint-virtual-file-system-npm-0.0.49-1a638c199a-d2d88d44a4.zip/node_modules/@fern-api/mrlint-virtual-file-system/",\
           "packageDependencies": [\
-            ["@fern-api/mrlint-virtual-file-system", "npm:0.0.48"]\
+            ["@fern-api/mrlint-virtual-file-system", "npm:0.0.49"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -16473,7 +16473,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.2"],\
             ["lint-staged", "npm:12.4.1"],\
             ["lodash", "npm:4.17.21"],\
-            ["mrlint", "npm:0.0.48"],\
+            ["mrlint", "npm:0.0.49"],\
             ["npm-run-all", "npm:4.1.5"],\
             ["prettier", "npm:2.6.2"],\
             ["stylelint", "npm:14.9.1"],\
@@ -21137,14 +21137,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["mrlint", [\
-        ["npm:0.0.48", {\
-          "packageLocation": "./.yarn/cache/mrlint-npm-0.0.48-ab62198a39-db21d570a4.zip/node_modules/mrlint/",\
+        ["npm:0.0.49", {\
+          "packageLocation": "./.yarn/cache/mrlint-npm-0.0.49-15790d924c-c4bf958258.zip/node_modules/mrlint/",\
           "packageDependencies": [\
-            ["mrlint", "npm:0.0.48"],\
-            ["@fern-api/mrlint-commons", "npm:0.0.48"],\
-            ["@fern-api/mrlint-lint", "npm:0.0.48"],\
-            ["@fern-api/mrlint-parser", "npm:0.0.48"],\
-            ["@fern-api/mrlint-rules", "npm:0.0.48"],\
+            ["mrlint", "npm:0.0.49"],\
+            ["@fern-api/mrlint-commons", "npm:0.0.49"],\
+            ["@fern-api/mrlint-lint", "npm:0.0.49"],\
+            ["@fern-api/mrlint-parser", "npm:0.0.49"],\
+            ["@fern-api/mrlint-rules", "npm:0.0.49"],\
             ["chalk", "npm:4.1.2"],\
             ["yargs", "npm:17.5.1"]\
           ],\
