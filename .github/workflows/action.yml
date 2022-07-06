@@ -12,5 +12,4 @@ jobs:
       - uses: gaurav-nelson/github-action-markdown-link-check@v1
         with:
           folder-path: "docs"
-          use-quiet-mode: "no"
-          # config-file: "mlc_config.json"
+          use-quiet-mode: "yes"
