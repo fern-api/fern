@@ -1,19 +1,6 @@
 {
   "extends": "../../../shared/tsconfig.shared.json",
-  "compilerOptions": {
-    "composite": true,
-    "outDir": "lib/cjs",
-    "rootDir": "src",
-    "module": "esnext",
-    "allowJs": true,
-    "noEmit": true
-  },
-  "include": [
-    "./src"
-  ],
-  "references": [
-    {
-      "path": "../fern-app/tsconfig.json"
-    }
-  ]
+  "compilerOptions": { "composite": true, "outDir": "lib/cjs", "rootDir": "src", "module": "CommonJS" },
+  "include": ["./src"],
+  "references": [{ "path": "../fern-app/tsconfig.json" }]
 }

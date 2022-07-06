@@ -15,6 +15,7 @@ module.exports = async function (): Promise<CracoConfig> {
                 // load/watch src/ files in other packages
                 const { isFound, match } = getLoader(webpackConfig, loaderByName("babel-loader"));
                 if (isFound) {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     const loader = (match as any).loader;
                     const include = Array.isArray(loader.include) ? loader.include : [loader.include];
                     loader.include = include.concat(packages.map((p) => `${p.location}/src`));
@@ -26,6 +27,7 @@ module.exports = async function (): Promise<CracoConfig> {
                     (p) => p.constructor.name === "ForkTsCheckerWebpackPlugin"
                 );
                 if (forkTsCheckerWebpackPlugin != null) {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     const options = (forkTsCheckerWebpackPlugin as any).options as ForkTsCheckerWebpackPluginConfig;
                     // add --build flag to tsc for building project references
                     options.typescript.build = true;

@@ -10,6 +10,8 @@
   "files": [
     "lib"
   ],
+  "source": "src/index.ts",
+  "module": "src/index.ts",
   "main": "./lib/cjs/index.js",
   "types": "./lib/cjs/index.d.ts",
   "exports": {
@@ -34,8 +36,8 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck",
     "start": "env-cmd -e development env-cmd -f .env.local --silent craco start",
-    "build:staging": "REACT_APP_PRODUCTION_ENVIRONMENT=STAGING env-cmd -e development craco build",
-    "build:production": "REACT_APP_PRODUCTION_ENVIRONMENT=PRODUCTION env-cmd -e production craco build",
+    "build:staging": "REACT_APP_PRODUCTION_ENVIRONMENT=STAGING env-cmd -e development craco --max_old_space_size=4096 build",
+    "build:production": "REACT_APP_PRODUCTION_ENVIRONMENT=PRODUCTION env-cmd -e production craco --max_old_space_size=4096 build",
     "eject": "react-scripts eject"
   },
   "browserslist": {
