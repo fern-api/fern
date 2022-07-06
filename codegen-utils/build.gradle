@@ -11,6 +11,7 @@ dependencies {
     implementation 'com.fern:fern-immutables-style'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
     implementation 'org.slf4j:slf4j-api'
+    implementation 'org.apache.commons:commons-text:1.9'
 
     compileOnly 'org.immutables:value::annotations'
     annotationProcessor 'org.immutables:value'

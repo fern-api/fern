@@ -20,6 +20,7 @@ import com.fern.codegen.payload.GeneratedFilePayload;
 import com.fern.codegen.payload.Payload;
 import com.fern.codegen.payload.TypeNamePayload;
 import com.fern.codegen.payload.VoidPayload;
+import com.fern.codegen.utils.VariableNameUtils;
 import com.fern.types.TypeReference;
 import com.fern.types.services.HttpHeader;
 import com.fern.types.services.PathParameter;
@@ -41,7 +42,8 @@ public final class JerseyServiceGeneratorUtils {
     }
 
     public ParameterSpec getHeaderParameterSpec(HttpHeader header) {
-        return getParameterSpec(HeaderParam.class, header.header(), header.valueType());
+        return getParameterSpec(
+                HeaderParam.class, VariableNameUtils.getVariableNameFromHeader(header), header.valueType());
     }
 
     public ParameterSpec getPathParameterSpec(PathParameter pathParameter) {

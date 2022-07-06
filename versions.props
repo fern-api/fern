@@ -36,6 +36,9 @@ org.glassfish.jersey.ext:jersey-spring5 = 2.35
 # slf4j
 org.slf4j:slf4j-api = 1.7.36
 
+# apache commons text
+org.apache.commons:commons-text = 1.9
+
 # misc
 com.google.code.findbugs:annotations = 3.0.1
 com.palantir.common:streams = 2.0.0
