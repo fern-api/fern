@@ -41,6 +41,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 public final class HttpServiceSpringServerGenerator extends Generator {
@@ -113,8 +114,9 @@ public final class HttpServiceSpringServerGenerator extends Generator {
         springServiceGeneratorUtils
                 .getPayloadTypeName(generatedEndpointModel.generatedHttpRequest())
                 .ifPresent(typeName -> {
-                    endpointMethodBuilder.addParameter(
-                            ParameterSpec.builder(typeName, "request").build());
+                    endpointMethodBuilder.addParameter(ParameterSpec.builder(typeName, "request")
+                            .addAnnotation(RequestBody.class)
+                            .build());
                 });
         Optional<TypeName> returnPayload =
                 springServiceGeneratorUtils.getPayloadTypeName(generatedEndpointModel.generatedHttpResponse());
