@@ -8,7 +8,7 @@
 
 Fern reads in your [Fern API Definition](#what-is-a-fern-api-definition), invokes remote [generators](#what-are-fern-generators), and creates clients, server stubs, and interactive documentation for your API.
 
-- **Client libraries**: one generated SDK for each supported platform and language that's automatically published to a registry (e.g., npm, maven, pypi)!
+- **Client libraries**: one generated SDK for each supported platform and language that's automatically published to a registry (e.g., NPM, Maven, PyPI)!
 
 - **Servers**: get server stubs for your API so all you need to do is implement the server logic.
 
@@ -22,7 +22,7 @@ Write your [Fern API Definition](#what-is-a-fern-api-definition) before writing 
 
 ### 2. Best-in-class code generation
 
-Ferrari makes luxury sports cars. Fern generates kick-ass code. It is designed to optimize for high quality code generation. Generated code is **idiomatic** (i.e., it follows the convention of the language) and **strongly typed** (i.e., the types of variables and objects are explicitly specified).
+Ferrari makes luxury sports cars. Fern generates kick-ass code. It is designed to optimize for high-quality code generation. Generated code is **idiomatic** (i.e., it follows the convention of the language) and **strongly typed** (i.e., the types of variables and objects are explicitly specified).
 
 ### 3. Iterate faster
 
@@ -30,12 +30,12 @@ With an API definition, development projects that involve multiple engineers/tea
 
 ## What is a Fern API Definition?
 
-A [**Fern API Definition**](definition.md) is a set of YAML files that describe your API.
+A [**Fern API Definition**](markdown_files/definition.md#what-is-a-fern-api-definition) is a set of YAML files that describe your API.
 
 ## What are Fern Generators?
 
-[**Generators**](generators.md) convert a Fern API Definition into clients, servers, and documentation.
+[**Generators**](markdown_files/generators.md) convert a Fern API Definition into clients, servers, and documentation.
 
 ## How is this different than OpenAPI?
 
-Fern is optimized for [kick-ass codegen](faq.md#1-how-is-fern-different-than-openapi-fka-swagger).
+Fern is optimized for [kick-ass codegen](markdown_files/faq.md#_1-how-is-fern-different-than-openapi-fka-swagger).

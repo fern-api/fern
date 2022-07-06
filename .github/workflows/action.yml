@@ -1,16 +1,11 @@
-# Danny trying this out! July 4, 2022
-
 name: Check Markdown links
 
 on: push
 
+# prettier-ignore
 jobs:
   markdown-link-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - uses: gaurav-nelson/github-action-markdown-link-check@v1
-        with:
-          folder-path: "docs"
-          use-quiet-mode: "yes"
-          # config-file: "mlc_config.json"
+    - uses: actions/checkout@master
+    - uses: gaurav-nelson/github-action-markdown-link-check@v1
