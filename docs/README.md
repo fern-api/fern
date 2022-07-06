@@ -2,6 +2,11 @@
 
 > **Fern is a framework for building APIs.** You can think of it as an alternative to OpenAPI (f.k.a Swagger).
 
+<a href="https://www.loom.com/share/c892f4a9fc674c4bb42fb31d395d9ebf">
+    <p>Fern TypeScript Server Tutorial</p>
+    <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/c892f4a9fc674c4bb42fb31d395d9ebf-1657127975624-with-play.gif">
+  </a>
+
 ## How does it work?
 
 ![Overview diagram](assets/diagrams/overview-diagram.png)
@@ -30,12 +35,12 @@ With an API definition, development projects that involve multiple engineers/tea
 
 ## What is a Fern API Definition?
 
-A [**Fern API Definition**](markdown_files/definition.md#what-is-a-fern-api-definition) is a set of YAML files that describe your API.
+A [**Fern API Definition**](_/definition.md#what-is-a-fern-api-definition) is a set of YAML files that describe your API.
 
 ## What are Fern Generators?
 
-[**Generators**](markdown_files/generators.md) convert a Fern API Definition into clients, servers, and documentation.
+[**Generators**](_/generators.md) convert a Fern API Definition into clients, servers, and documentation.
 
 ## How is this different than OpenAPI?
 
-Fern is optimized for [kick-ass codegen](markdown_files/faq.md#_1-how-is-fern-different-than-openapi-fka-swagger).
+Fern is optimized for [kick-ass codegen](_/comparison.md#_1-how-is-fern-different-than-openapi-fka-swagger).

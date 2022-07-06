@@ -1,8 +1,13 @@
 <!-- markdownlint-disable MD033 -->
 
-# Tutorial: IMDb
+# TypeScript Server Tutorial: IMDb
 
 This guide uses an example API for IMDb (the International Movie Database) that introduces you to using Fern. We'll generate a TypeScript server and a Postman Collection to implement and test our API.
+
+<a href="https://www.loom.com/share/c892f4a9fc674c4bb42fb31d395d9ebf">
+    <p>Video walkthrough</p>
+    <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/c892f4a9fc674c4bb42fb31d395d9ebf-1657127975624-with-play.gif">
+  </a>
 
 ## Step 0: Prerequisites
 
@@ -31,6 +36,10 @@ In the root of your backend repo, run:
 ```bash
 fern init
 ```
+
+When it asks you for your `organization`, just write `imdb`.
+
+In the `.fernrc.yml`, let's change the name of our api from `api` to `imdb-api`.
 
 <br>
 <details>
@@ -62,7 +71,7 @@ fern add typescript
 <details>
 <summary>What happens:</summary>
 
-`.fernrc.yml` will now list two generators:
+`.fernrc.yml` will now list a generator:
 
 ```diff
  name: api
@@ -80,13 +89,18 @@ fern add typescript
 
 ## Step 4: Run the generator
 
+```bash
+fern generate
+```
+
 In the terminal, you'll see `Published @imdb-fern/imdb-api-server@x.x.x` which we'll add as a dependency. By default, Fern publishes dependencies to a private registry.
 
 ```bash
 # Teach npm about the Fern private registry
 npm config set --location project @imdb-fern:registry https://npm-dev.buildwithfern.com/
 
-npm install @imdb-fern/api-server@x.x.x
+# Your version may be different, but this version will also work
+npm install @imdb-fern/imdb-api-server@0.0.19
 ```
 
 ## Step 5: Implement the server
@@ -95,52 +109,32 @@ We'll create a new file `server.ts` at the root of our project. This will be a s
 
 ```ts
 // server.ts
-import { GetMovieErrorBody, MovieId } from "@imdb-fern/api-server/model";
-import { MoviesService } from "@imdb-fern/api-server/services";
+import { GetMovieErrorBody, MovieId } from "@imdb-fern/imdb-api-server/model";
+import { MoviesService } from "@imdb-fern/imdb-api-server/services";
 import express from "express";
 
 const app = express();
 
 app.use(
   MoviesService.expressMiddleware({
-    // TODO
+    createMovie: () => {
+      return {
+        ok: true,
+        body: MovieId.of("iron-man-3"),
+      };
+    },
+
+    getMovie: () => {
+      return {
+        ok: false,
+        error: GetMovieErrorBody.NotFoundError(),
+      };
+    },
   })
 );
 
 console.log("Listening for requests...");
 app.listen(8080);
-```
-
-Our IDE will give us red lines indicating that we need to add missing properties.
-
-![server.ts error message](../assets/tutorial/server.ts%20error%20message.png)
-
-You can implement the missing methods, for example:
-
-```diff
- // server.ts
- import express from "express";
- const app = express();
-
- app.use(MoviesService.expressMiddleware({
-+  createMovie: (request) => {
-+    console.log(request);
-+    return {
-+      ok: true,
-+      body: MovieId.of("iron-man-3")
-+    }
-+  },
-
-+  getMovie: () => {
-+    return {
-+      ok: false,
-+      error: GetMovieErrorBody.NotFoundError()
-+    }
-+  }
- }))
-
- console.log("Listening for requests...");
- app.listen(8080);
 ```
 
 ## Step 6: Run the server
@@ -151,23 +145,29 @@ npx ts-node server.ts
 
 In the terminal, you should see `Listening for requests...`
 
-## Step 6: Add the Postman generator
+## Step 7: Add the Postman generator
+
+In another terminal, let's run:
 
 ```bash
 fern add postman
 fern generate
 ```
 
-In the `api/` folder you'll see `collection.json` that we'll import to Postman.
+In the `api/` folder you'll see `generated-postman.json` that we'll import to Postman.
 
-## Step 7: Hit the server from Postman
+## Step 8: Hit the server from Postman
 
-Open Postman and File -> Import `api/generated-postman/collection.json`.
+Open Postman and File -> Import `api/generated-postman.json`.
 
-Select the `createMovie` endpoint and hit `Send`. You should get a response back from your server **`iron-man-3`**.
+Select the `createMovie` endpoint and hit `Send`. You should get **`iron-man-3`** back from your server.
 
-![postman-testing](../assets/tutorial/postman-testing.png)
+![createMovie-postman](../assets/tutorial/createMovie-postman.png)
 
-## Step 8: Celebrate
+Select the `getMovie` endpoint and hit `Send`. As expected, we get a 404 response back.
+
+![getMovie-postman](../assets/tutorial/getMovie-postman.png)
+
+## Step 9: Celebrate 🎉
 
 You've successfully implemented a simple IMDb server using Fern. You're invited to join our [Discord](https://discord.gg/JkkXumPzcG).
