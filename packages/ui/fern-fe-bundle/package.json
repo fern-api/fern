@@ -33,9 +33,9 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck",
-    "start": "env-cmd -e development env-cmd -f .env.local --silent craco start",
-    "build:staging": "REACT_APP_PRODUCTION_ENVIRONMENT=STAGING env-cmd -e development craco --max_old_space_size=4096 build",
-    "build:production": "REACT_APP_PRODUCTION_ENVIRONMENT=PRODUCTION env-cmd -e production craco --max_old_space_size=4096 build",
+    "start": "env-cmd -e development env-cmd -f .env.local --silent react-scripts start",
+    "build:staging": "REACT_APP_PRODUCTION_ENVIRONMENT=STAGING env-cmd -e development react-scripts build",
+    "build:production": "REACT_APP_PRODUCTION_ENVIRONMENT=PRODUCTION env-cmd -e production react-scripts build",
     "eject": "react-scripts eject"
   },
   "browserslist": {
@@ -64,8 +64,8 @@
     "@babel/core": "^7.18.5",
     "@babel/preset-env": "^7.18.2",
     "@babel/preset-typescript": "^7.17.12",
-    "@craco/craco": "^6.4.4",
-    "@types/craco__craco": "^6.4.0",
+    "@react-workspaces/react-scripts": "^3.4.0-alpha-01",
+    "@tsed/yarn-workspaces": "^1.21.0",
     "@types/jest": "^28.1.2",
     "@types/node": "^17.0.33",
     "@types/react": "^18.0.15",
@@ -77,7 +77,6 @@
     "node-polyfill-webpack-plugin": "^2.0.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.6.2",
-    "react-scripts": "^5.0.1",
     "sass": "^1.53.0",
     "stylelint": "^14.9.1",
     "typescript": "^4.6.4"

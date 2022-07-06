@@ -3,7 +3,7 @@
     "module": "esnext",
     "target": "esnext",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "jsx": "preserve",
+    "jsx": "react",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "noImplicitAny": true,

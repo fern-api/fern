@@ -34,12 +34,14 @@
   },
   "dependencies": {
     "@fern-api/add-generator": "workspace:*",
+    "@fern-api/app": "workspace:*",
     "@fern-api/cli": "workspace:*",
     "@fern-api/commons": "workspace:*",
     "@fern-api/compiler": "workspace:*",
     "@fern-api/compiler-commons": "workspace:*",
     "@fern-api/docker-utils": "workspace:*",
     "@fern-api/ete-tests": "workspace:*",
+    "@fern-api/fe-bundle": "workspace:*",
     "@fern-api/init": "workspace:*",
     "@fern-api/ir-generation": "workspace:*",
     "@fern-api/local-workspace-runner": "workspace:*",
@@ -60,7 +62,8 @@
     "@fern-typescript/service-types": "workspace:*",
     "@fern-typescript/service-utils": "workspace:*",
     "@fern-typescript/testing-utils": "workspace:*",
-    "@fern-typescript/types": "workspace:*"
+    "@fern-typescript/types": "workspace:*",
+    "fern-typescript": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",

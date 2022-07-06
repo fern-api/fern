@@ -11,6 +11,7 @@
     { "path": "../compiler/ir-generation/tsconfig.json" },
     { "path": "../compiler/syntax-analysis/tsconfig.json" },
     { "path": "../ete-tests/tsconfig.json" },
+    { "path": "../fern-typescript/cli/tsconfig.json" },
     { "path": "../fern-typescript/client/tsconfig.json" },
     { "path": "../fern-typescript/commons/tsconfig.json" },
     { "path": "../fern-typescript/encoders/tsconfig.json" },
@@ -30,6 +31,8 @@
     { "path": "../local-generation/local-workspace-runner/tsconfig.json" },
     { "path": "../login/tsconfig.json" },
     { "path": "../openapi-converter/tsconfig.json" },
-    { "path": "../remote-generation/remote-workspace-runner/tsconfig.json" }
+    { "path": "../remote-generation/remote-workspace-runner/tsconfig.json" },
+    { "path": "../ui/fern-app/tsconfig.json" },
+    { "path": "../ui/fern-fe-bundle/tsconfig.json" }
   ]
 }
