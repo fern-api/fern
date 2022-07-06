@@ -1,4 +1,4 @@
 {
-  "ignores": ["@types/jest", "@types/node", "webpack-cli", "ts-loader", "node-loader", "ts-node"],
+  "ignores": ["@types/jest", "@types/node", "ts-jest", "webpack-cli", "ts-loader", "node-loader", "ts-node"],
   "ignore-patterns": ["lib", "webpack/dist/bundle.js"]
 }

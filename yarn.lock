@@ -3112,6 +3112,7 @@ __metadata:
     jest: ^28.1.1
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
+    ts-jest: ^28.0.5
     typescript: ^4.6.4
   languageName: unknown
   linkType: soft
@@ -3133,6 +3134,7 @@ __metadata:
     prettier: ^2.6.2
     react: ^18.2.0
     stylelint: ^14.9.1
+    ts-jest: ^28.0.5
     typescript: ^4.6.4
   languageName: unknown
   linkType: soft
@@ -3171,6 +3173,7 @@ __metadata:
     node-loader: ^2.0.0
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
+    ts-jest: ^28.0.5
     ts-loader: ^9.3.1
     ts-node: ^10.8.1
     typescript: ^4.6.4
@@ -3201,6 +3204,7 @@ __metadata:
     js-yaml: ^4.1.0
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
+    ts-jest: ^28.0.5
     typescript: ^4.6.4
     zod: ^3.14.3
   languageName: unknown
@@ -3251,6 +3255,7 @@ __metadata:
     jest: ^28.1.1
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
+    ts-jest: ^28.0.5
     typescript: ^4.6.4
   languageName: unknown
   linkType: soft
@@ -3269,6 +3274,7 @@ __metadata:
     jest: ^28.1.1
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
+    ts-jest: ^28.0.5
     typescript: ^4.6.4
   languageName: unknown
   linkType: soft
@@ -3291,6 +3297,7 @@ __metadata:
     jest: ^28.1.1
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
+    ts-jest: ^28.0.5
     typescript: ^4.6.4
   languageName: unknown
   linkType: soft
@@ -3311,6 +3318,7 @@ __metadata:
     jest: ^28.1.1
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
+    ts-jest: ^28.0.5
     typescript: ^4.6.4
   languageName: unknown
   linkType: soft
@@ -3332,6 +3340,7 @@ __metadata:
     jest: ^28.1.1
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
+    ts-jest: ^28.0.5
     typescript: ^4.6.4
   languageName: unknown
   linkType: soft
@@ -3368,6 +3377,7 @@ __metadata:
     react-scripts: ^5.0.1
     sass: ^1.53.0
     stylelint: ^14.9.1
+    ts-jest: ^28.0.5
     typescript: ^4.6.4
   languageName: unknown
   linkType: soft
@@ -3390,6 +3400,7 @@ __metadata:
     js-yaml: ^4.1.0
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
+    ts-jest: ^28.0.5
     typescript: ^4.6.4
   languageName: unknown
   linkType: soft
@@ -3414,6 +3425,7 @@ __metadata:
     lodash: ^4.17.21
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
+    ts-jest: ^28.0.5
     typescript: ^4.6.4
   languageName: unknown
   linkType: soft
@@ -3441,6 +3453,7 @@ __metadata:
     prettier: ^2.6.2
     tar: ^6.1.11
     tmp-promise: ^3.0.3
+    ts-jest: ^28.0.5
     typescript: ^4.6.4
   languageName: unknown
   linkType: soft
@@ -3461,61 +3474,62 @@ __metadata:
     npm-run-all: ^4.1.5
     open: ^8.4.0
     prettier: ^2.6.2
+    ts-jest: ^28.0.5
     typescript: ^4.6.4
   languageName: unknown
   linkType: soft
 
-"@fern-api/mrlint-commons@npm:0.0.46":
-  version: 0.0.46
-  resolution: "@fern-api/mrlint-commons@npm:0.0.46"
+"@fern-api/mrlint-commons@npm:0.0.50":
+  version: 0.0.50
+  resolution: "@fern-api/mrlint-commons@npm:0.0.50"
   dependencies:
-    "@fern-api/mrlint-virtual-file-system": 0.0.46
-  checksum: 88254c30b861f699c9b52f886d29bc47cc012447132f0d6b983adacc595c2c15ca193cb6ee6619ef06d4fb929a4f4ab1b6c10fc774fba0eae88197f4b112815d
+    "@fern-api/mrlint-virtual-file-system": 0.0.50
+  checksum: 2106f1cb85cc6b429b3640903a1b2d6fb90df310ba9d61406ef7c1811305b07ca0231f06bdcc25c846814aafa23cec98ece4cc0570f190c9829e04c89d0b0efd
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-lint@npm:0.0.46":
-  version: 0.0.46
-  resolution: "@fern-api/mrlint-lint@npm:0.0.46"
+"@fern-api/mrlint-lint@npm:0.0.50":
+  version: 0.0.50
+  resolution: "@fern-api/mrlint-lint@npm:0.0.50"
   dependencies:
-    "@fern-api/mrlint-commons": 0.0.46
-    "@fern-api/mrlint-virtual-file-system": 0.0.46
+    "@fern-api/mrlint-commons": 0.0.50
+    "@fern-api/mrlint-virtual-file-system": 0.0.50
     chalk: ^4.1.2
     diff: ^5.0.0
     prettier: ^2.6.2
-  checksum: 0e49f17a5bdc9f2f7bf4631306ec327de351fbc1178c0498eb2e9c98e6af3ab66b299a2aca7d157fa4e1414bfe206ff5badc26582acfbb686c443abf16b3f74c
+  checksum: b77f12256dbc2d9a9a5e177286790f081be32e362885d3529465876aebf373fc2956cecae7aa993405b78e5f5b88b1c2cd3d672a9f51e117c6a42c3244e75ccd
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-parser@npm:0.0.46":
-  version: 0.0.46
-  resolution: "@fern-api/mrlint-parser@npm:0.0.46"
+"@fern-api/mrlint-parser@npm:0.0.50":
+  version: 0.0.50
+  resolution: "@fern-api/mrlint-parser@npm:0.0.50"
   dependencies:
-    "@fern-api/mrlint-commons": 0.0.46
-    "@fern-api/mrlint-rules": 0.0.46
+    "@fern-api/mrlint-commons": 0.0.50
+    "@fern-api/mrlint-rules": 0.0.50
     execa: ^5.1.1
     find-up: ^5.0.0
     js-yaml: ^4.1.0
     zod: ^3.14.3
-  checksum: 19615fd5efc411f6be91a6db5c9848d1be55bc8101ec7c10b7f2ab476c2f99d0635b2920cd2f371cb0549acbb8a4c1cb187f5434596fad9ed2ce2290415aabac
+  checksum: a8d224a95bbdab64060872f4abe18cf75e28db0bac0885df239dfc83678066f3b20c53809b23100d5134547e4c3a53f3d51c5a963ebf5cee639e49047d24ce64
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-rules@npm:0.0.46":
-  version: 0.0.46
-  resolution: "@fern-api/mrlint-rules@npm:0.0.46"
+"@fern-api/mrlint-rules@npm:0.0.50":
+  version: 0.0.50
+  resolution: "@fern-api/mrlint-rules@npm:0.0.50"
   dependencies:
-    "@fern-api/mrlint-commons": 0.0.46
-    "@fern-api/mrlint-virtual-file-system": 0.0.46
+    "@fern-api/mrlint-commons": 0.0.50
+    "@fern-api/mrlint-virtual-file-system": 0.0.50
     immer: ^9.0.12
-  checksum: 47f43854467a5e5f163f1d9d42be59d3820cab01a139ec6978f8a7a4947065ceaadc681c106d93a87b0971d62bdf16e426c8e4c120382504eab6dd539c0f611a
+  checksum: 70661176953b0bf3d44bb1b9904f97b447dfbf86ae7fd7d64bd7c781d84428e7a6122d1e92cb3da7198ddba1ec3d31da2b5d39349727884547e7259318247a03
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-virtual-file-system@npm:0.0.46":
-  version: 0.0.46
-  resolution: "@fern-api/mrlint-virtual-file-system@npm:0.0.46"
-  checksum: 1f7d194acc9d6319c60d07c85495b590829222cd30af35ed762123585b2fbb88d428ad4a676238de809529c567eaf1d7775a16e4132b816a5f3e81169ffe27e4
+"@fern-api/mrlint-virtual-file-system@npm:0.0.50":
+  version: 0.0.50
+  resolution: "@fern-api/mrlint-virtual-file-system@npm:0.0.50"
+  checksum: a8c8b76d27e0fe795e4c0a9467b4d4de8d29ac4d60c1145dc535187c9fe3bc393606bd52049d8d64d9441c00af00798ccecf61e59f371810f8ec889320b10884
   languageName: node
   linkType: hard
 
@@ -3540,6 +3554,7 @@ __metadata:
     npm-run-all: ^4.1.5
     openapi-types: ^12.0.0
     prettier: ^2.6.2
+    ts-jest: ^28.0.5
     typescript: ^4.6.4
   languageName: unknown
   linkType: soft
@@ -3564,6 +3579,7 @@ __metadata:
     jest: ^28.1.1
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
+    ts-jest: ^28.0.5
     typescript: ^4.6.4
   languageName: unknown
   linkType: soft
@@ -3585,6 +3601,7 @@ __metadata:
     js-yaml: ^4.1.0
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
+    ts-jest: ^28.0.5
     typescript: ^4.6.4
     zod: ^3.14.3
   languageName: unknown
@@ -3631,6 +3648,7 @@ __metadata:
     memfs: ^3.4.1
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
+    ts-jest: ^28.0.5
     ts-morph: ^14.0.0
     typescript: ^4.6.4
   languageName: unknown
@@ -3659,6 +3677,7 @@ __metadata:
     npm-run-all: ^4.1.5
     package-json-type: ^1.0.3
     prettier: ^2.6.2
+    ts-jest: ^28.0.5
     ts-morph: ^14.0.0
     typescript: ^4.6.4
   languageName: unknown
@@ -3681,6 +3700,7 @@ __metadata:
     jest: ^28.1.1
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
+    ts-jest: ^28.0.5
     ts-morph: ^14.0.0
     typescript: ^4.6.4
   languageName: unknown
@@ -3703,6 +3723,7 @@ __metadata:
     jest: ^28.1.1
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
+    ts-jest: ^28.0.5
     typescript: ^4.6.4
   languageName: unknown
   linkType: soft
@@ -3725,6 +3746,7 @@ __metadata:
     jest: ^28.1.1
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
+    ts-jest: ^28.0.5
     typescript: ^4.6.4
     zod: ^3.14.3
   languageName: unknown
@@ -3746,6 +3768,7 @@ __metadata:
     jest: ^28.1.1
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
+    ts-jest: ^28.0.5
     ts-morph: ^14.0.0
     typescript: ^4.6.4
   languageName: unknown
@@ -3766,6 +3789,7 @@ __metadata:
     jest: ^28.1.1
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
+    ts-jest: ^28.0.5
     typescript: ^4.6.4
   languageName: unknown
   linkType: soft
@@ -3787,6 +3811,7 @@ __metadata:
     jest: ^28.1.1
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
+    ts-jest: ^28.0.5
     ts-morph: ^14.0.0
     typescript: ^4.6.4
   languageName: unknown
@@ -3814,6 +3839,7 @@ __metadata:
     memfs: ^3.4.1
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
+    ts-jest: ^28.0.5
     ts-morph: ^14.0.0
     typescript: ^4.6.4
   languageName: unknown
@@ -3843,6 +3869,7 @@ __metadata:
     memfs: ^3.4.1
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
+    ts-jest: ^28.0.5
     ts-morph: ^14.0.0
     typescript: ^4.6.4
   languageName: unknown
@@ -3869,6 +3896,7 @@ __metadata:
     lodash: ^4.17.21
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
+    ts-jest: ^28.0.5
     ts-morph: ^14.0.0
     typescript: ^4.6.4
   languageName: unknown
@@ -3898,6 +3926,7 @@ __metadata:
     jest: ^28.1.1
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
+    ts-jest: ^28.0.5
     typescript: ^4.6.4
   languageName: unknown
   linkType: soft
@@ -3924,6 +3953,7 @@ __metadata:
     memfs: ^3.4.1
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
+    ts-jest: ^28.0.5
     typescript: ^4.6.4
   languageName: unknown
   linkType: soft
@@ -3947,6 +3977,7 @@ __metadata:
     lodash: ^4.17.21
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
+    ts-jest: ^28.0.5
     ts-morph: ^14.0.0
     typescript: ^4.6.4
   languageName: unknown
@@ -7540,6 +7571,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"bs-logger@npm:0.x":
+  version: 0.2.6
+  resolution: "bs-logger@npm:0.2.6"
+  dependencies:
+    fast-json-stable-stringify: 2.x
+  checksum: d34bdaf68c64bd099ab97c3ea608c9ae7d3f5faa1178b3f3f345acd94e852e608b2d4f9103fb2e503f5e69780e98293df41691b84be909b41cf5045374d54606
+  languageName: node
+  linkType: hard
+
 "bser@npm:2.1.1":
   version: 2.1.1
   resolution: "bser@npm:2.1.1"
@@ -10442,7 +10482,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-json-stable-stringify@npm:^2.0.0, fast-json-stable-stringify@npm:^2.1.0":
+"fast-json-stable-stringify@npm:2.x, fast-json-stable-stringify@npm:^2.0.0, fast-json-stable-stringify@npm:^2.1.0":
   version: 2.1.0
   resolution: "fast-json-stable-stringify@npm:2.1.0"
   checksum: b191531e36c607977e5b1c47811158733c34ccb3bfde92c44798929e9b4154884378536d26ad90dfecd32e1ffc09c545d23535ad91b3161a27ddbb8ebe0cbecb
@@ -10528,6 +10568,7 @@ __metadata:
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
     simple-progress-webpack-plugin: ^2.0.0
+    ts-jest: ^28.0.5
     ts-loader: ^9.3.1
     ts-node: ^10.8.1
     typescript: ^4.6.4
@@ -10568,12 +10609,13 @@ __metadata:
     jest: ^28.1.2
     lint-staged: ^12.3.7
     lodash: ^4.17.21
-    mrlint: ^0.0.46
+    mrlint: ^0.0.50
     npm-run-all: ^4.1.5
     prettier: ^2.6.2
     stylelint: ^14.9.1
     stylelint-config-prettier-scss: ^0.0.1
     stylelint-config-standard-scss: ^4.0.0
+    ts-jest: ^28.0.5
     ts-node: ^10.8.0
     typescript: ^4.6.4
   languageName: unknown
@@ -13397,7 +13439,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-util@npm:^28.1.1":
+"jest-util@npm:^28.0.0, jest-util@npm:^28.1.1":
   version: 28.1.1
   resolution: "jest-util@npm:28.1.1"
   dependencies:
@@ -14044,7 +14086,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash.memoize@npm:^4.1.2":
+"lodash.memoize@npm:4.x, lodash.memoize@npm:^4.1.2":
   version: 4.1.2
   resolution: "lodash.memoize@npm:4.1.2"
   checksum: 9ff3942feeccffa4f1fafa88d32f0d24fdc62fd15ded5a74a5f950ff5f0c6f61916157246744c620173dddf38d37095a92327d5fd3861e2063e736a5c207d089
@@ -14185,7 +14227,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"make-error@npm:^1.1.1":
+"make-error@npm:1.x, make-error@npm:^1.1.1":
   version: 1.3.6
   resolution: "make-error@npm:1.3.6"
   checksum: b86e5e0e25f7f777b77fabd8e2cbf15737972869d852a22b7e73c17623928fccb826d8e46b9951501d3f20e51ad74ba8c59ed584f610526a48f8ccf88aaec402
@@ -14611,19 +14653,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mrlint@npm:^0.0.46":
-  version: 0.0.46
-  resolution: "mrlint@npm:0.0.46"
+"mrlint@npm:^0.0.50":
+  version: 0.0.50
+  resolution: "mrlint@npm:0.0.50"
   dependencies:
-    "@fern-api/mrlint-commons": 0.0.46
-    "@fern-api/mrlint-lint": 0.0.46
-    "@fern-api/mrlint-parser": 0.0.46
-    "@fern-api/mrlint-rules": 0.0.46
+    "@fern-api/mrlint-commons": 0.0.50
+    "@fern-api/mrlint-lint": 0.0.50
+    "@fern-api/mrlint-parser": 0.0.50
+    "@fern-api/mrlint-rules": 0.0.50
     chalk: ^4.1.2
     yargs: ^17.3.1
   bin:
     mrlint: ./cli
-  checksum: fe7c57dc0926bb317a351678a5d3e8d82bfa1a37d206d5ad2afb708b4441d87fdf797a7534275d5d320e5735c4598b18ad847f99d28036fbd224154ccd4d06f6
+  checksum: 1f0e631dcf4094403ba81b6131de1b084618331fba18071b69b9e4d4de696d7b7c9b4c5079ebcd28d615abdb83a6856f2782fa1fe5fd787dd504280df1bc8231
   languageName: node
   linkType: hard
 
@@ -17901,16 +17943,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^6.0.0, semver@npm:^6.1.1, semver@npm:^6.1.2, semver@npm:^6.2.0, semver@npm:^6.3.0":
-  version: 6.3.0
-  resolution: "semver@npm:6.3.0"
-  bin:
-    semver: ./bin/semver.js
-  checksum: 1b26ecf6db9e8292dd90df4e781d91875c0dcc1b1909e70f5d12959a23c7eebb8f01ea581c00783bbee72ceeaad9505797c381756326073850dc36ed284b21b9
-  languageName: node
-  linkType: hard
-
-"semver@npm:^7.0.0, semver@npm:^7.3.2, semver@npm:^7.3.4, semver@npm:^7.3.5, semver@npm:^7.3.7":
+"semver@npm:7.x, semver@npm:^7.0.0, semver@npm:^7.3.2, semver@npm:^7.3.4, semver@npm:^7.3.5, semver@npm:^7.3.7":
   version: 7.3.7
   resolution: "semver@npm:7.3.7"
   dependencies:
@@ -17918,6 +17951,15 @@ __metadata:
   bin:
     semver: bin/semver.js
   checksum: 2fa3e877568cd6ce769c75c211beaed1f9fce80b28338cadd9d0b6c40f2e2862bafd62c19a6cff42f3d54292b7c623277bcab8816a2b5521cf15210d43e75232
+  languageName: node
+  linkType: hard
+
+"semver@npm:^6.0.0, semver@npm:^6.1.1, semver@npm:^6.1.2, semver@npm:^6.2.0, semver@npm:^6.3.0":
+  version: 6.3.0
+  resolution: "semver@npm:6.3.0"
+  bin:
+    semver: ./bin/semver.js
+  checksum: 1b26ecf6db9e8292dd90df4e781d91875c0dcc1b1909e70f5d12959a23c7eebb8f01ea581c00783bbee72ceeaad9505797c381756326073850dc36ed284b21b9
   languageName: node
   linkType: hard
 
@@ -19351,6 +19393,36 @@ __metadata:
   version: 1.0.1
   resolution: "tryer@npm:1.0.1"
   checksum: 1cf14d7f67c79613f054b569bfc9a89c7020d331573a812dfcf7437244e8f8e6eb6893b210cbd9cc217f67c1d72617f89793df231e4fe7d53634ed91cf3a89d1
+  languageName: node
+  linkType: hard
+
+"ts-jest@npm:^28.0.5":
+  version: 28.0.5
+  resolution: "ts-jest@npm:28.0.5"
+  dependencies:
+    bs-logger: 0.x
+    fast-json-stable-stringify: 2.x
+    jest-util: ^28.0.0
+    json5: ^2.2.1
+    lodash.memoize: 4.x
+    make-error: 1.x
+    semver: 7.x
+    yargs-parser: ^21.0.1
+  peerDependencies:
+    "@babel/core": ">=7.0.0-beta.0 <8"
+    babel-jest: ^28.0.0
+    jest: ^28.0.0
+    typescript: ">=4.3"
+  peerDependenciesMeta:
+    "@babel/core":
+      optional: true
+    babel-jest:
+      optional: true
+    esbuild:
+      optional: true
+  bin:
+    ts-jest: cli.js
+  checksum: 53e05db5b7e1e4f4137c47594f902f5caf585ebc73dda67c4552c1ed784d4fde532c5693a61d877d9462290c7965233c2124050b0f00fd4c85cde9bb1a51c974
   languageName: node
   linkType: hard
 
@@ -20899,7 +20971,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs-parser@npm:^21.0.0":
+"yargs-parser@npm:^21.0.0, yargs-parser@npm:^21.0.1":
   version: 21.0.1
   resolution: "yargs-parser@npm:21.0.1"
   checksum: c3ea2ed12cad0377ce3096b3f138df8267edf7b1aa7d710cd502fe16af417bafe4443dd71b28158c22fcd1be5dfd0e86319597e47badf42ff83815485887323a

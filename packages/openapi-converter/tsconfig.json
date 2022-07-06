@@ -1,6 +1,6 @@
 {
   "extends": "../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "lib/cjs", "rootDir": "src", "module": "CommonJS" },
+  "compilerOptions": { "composite": true, "outDir": "lib/esm", "rootDir": "src", "module": "esnext" },
   "include": ["./src"],
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [{ "path": "../compiler/syntax-analysis/tsconfig.json" }]

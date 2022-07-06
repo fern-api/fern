@@ -1,0 +1,10 @@
+{
+  "extends": "../../../../shared/tsconfig.shared.json",
+  "compilerOptions": { "composite": true, "outDir": "lib/cjs", "rootDir": "src", "module": "CommonJS" },
+  "include": ["./src"],
+  "references": [
+    { "path": "../../../commons/tsconfig.cjs.json" },
+    { "path": "../built-in/json-encoding-helper/tsconfig.cjs.json" },
+    { "path": "../utils/tsconfig.cjs.json" }
+  ]
+}

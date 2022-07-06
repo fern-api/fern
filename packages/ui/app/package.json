@@ -12,8 +12,8 @@
   ],
   "source": "src/index.ts",
   "module": "src/index.ts",
-  "main": "./lib/cjs/index.js",
-  "types": "./lib/cjs/index.d.ts",
+  "main": "./lib/esm/index.js",
+  "types": "./lib/esm/index.d.ts",
   "exports": {
     ".": {
       "require": "./lib/cjs/index.js",
@@ -22,12 +22,12 @@
   },
   "sideEffects": false,
   "scripts": {
-    "clean": "tsc --build --clean tsconfig.json && tsc --build --clean tsconfig.esm.json",
-    "compile": "yarn run compile:cjs",
-    "compile:all": "run-s compile:cjs compile:esm",
-    "compile:cjs": "tsc --build tsconfig.json && echo '{ \"type\": \"commonjs\" }' > lib/cjs/package.json",
-    "compile:esm": "tsc --build tsconfig.esm.json && echo '{ \"type\": \"module\" }' > lib/esm/package.json",
-    "test": "yarn run compile && jest --passWithNoTests",
+    "clean": "tsc --build --clean tsconfig.json && tsc --build --clean tsconfig.cjs.json",
+    "compile": "yarn run compile:esm",
+    "compile:all": "run-s compile:esm compile:cjs",
+    "compile:esm": "tsc --build tsconfig.json && echo '{ \"type\": \"module\" }' > lib/esm/package.json",
+    "compile:cjs": "tsc --build tsconfig.cjs.json && echo '{ \"type\": \"commonjs\" }' > lib/cjs/package.json",
+    "test": "yarn run compile:all && jest --passWithNoTests",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
@@ -52,6 +52,7 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^2.6.2",
     "stylelint": "^14.9.1",
+    "ts-jest": "^28.0.5",
     "typescript": "^4.6.4"
   }
 }

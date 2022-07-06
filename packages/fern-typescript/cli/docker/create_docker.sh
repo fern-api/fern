@@ -9,9 +9,7 @@ DOCKER_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}"; )" &> /dev/null && 
 WEBPACK_CONFIG="$DOCKER_DIR/webpack.config.ts"
 WEBPACK_TS_CONFIG="$DOCKER_DIR/tsconfig.webpack.json"
 
-# compile ESM so we can tree-shaking
-# compile CJS so we have the most up-to-date .d.ts declarations
-yarn run --top-level compile:all
+yarn run compile
 
 webpack_mode="production"
 if [[ "$TAG" == "local" ]]; then

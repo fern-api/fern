@@ -15,9 +15,7 @@ cd $(cd -P -- "$(dirname -- "$0")" && pwd -P)
 # remove existing dist
 /bin/rm -rf "$dist_dir"
 
-# compile ESM so we can tree-shake
-# compile CJS so we have the most up-to-date .d.ts declarations
-yarn run --top-level compile:all
+yarn run --top-level compile
 
 # webpack
 package_version=$(yarn info @fern-api/cli --all --json | jq -r .children.Version)
