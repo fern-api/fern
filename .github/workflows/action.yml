@@ -10,5 +10,7 @@ jobs:
       - uses: gaurav-nelson/github-action-markdown-link-check@v1
         # prettier-ignore
         with:
-          # prettier-ignore
-          folder-path: 'docs/markdown_files'
+        # prettier-ignore
+        folder-path: 'docs'
+        # prettier-ignore
+        use-quiet-mode: 'yes'
