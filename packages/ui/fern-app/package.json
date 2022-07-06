@@ -14,6 +14,12 @@
   "module": "src/index.ts",
   "main": "./lib/cjs/index.js",
   "types": "./lib/cjs/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./lib/cjs/index.js",
+      "default": "./lib/esm/index.js"
+    }
+  },
   "sideEffects": false,
   "scripts": {
     "clean": "tsc --build --clean tsconfig.json && tsc --build --clean tsconfig.esm.json",
