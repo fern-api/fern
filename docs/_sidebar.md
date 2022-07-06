@@ -2,15 +2,15 @@
 
 - Getting started
 
-  - [Tutorial: IMDb](markdown_files/imdb.md)
-  - [CLI](markdown_files/cli.md)
+  - [Tutorial: IMDb](_/imdb.md)
+  - [CLI](_/cli.md)
 
 - Concepts
 
-  - [Fern API Definition](markdown_files/definition.md)
-  - [Generators](markdown_files/generators.md)
+  - [Fern API Definition](_/definition.md)
+  - [Generators](_/generators.md)
 
 - Reference
   p
-  - [FAQs](markdown_files/faq.md)
+  - [Comparison with OpenAPI](_/comparison.md)
   - [Join the Discord](https://discord.gg/JkkXumPzcG)
