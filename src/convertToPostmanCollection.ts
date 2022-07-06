@@ -9,6 +9,7 @@ import {
     RequestDefinition,
     ResponseDefinition,
 } from "postman-collection";
+import urlJoin from "url-join";
 import { getMockBodyFromType } from "./getMockBody";
 
 const BASE_URL_VARIABLE_NAME = "base_url";
@@ -115,17 +116,17 @@ function convertRequest(
     return convertedRequest;
 }
 
-function getPathString(basePath: string | undefined | null, endpointPath: HttpPath) {
-    let path = "";
-    if (basePath != null) {
-        path += basePath;
+function getPathString(basePath: string | undefined | null = "/", endpointPath: HttpPath) {
+    const endpointPathString = endpointPath.parts.reduce(
+        (str, part) => str + `:${part.pathParameter}` + part.tail,
+        endpointPath.head
+    );
+
+    if (basePath == null) {
+        return endpointPathString;
+    } else {
+        return urlJoin(basePath, endpointPathString);
     }
-    let joinedEndpointPath = endpointPath.head;
-    for (const part of endpointPath.parts) {
-        joinedEndpointPath += `:${part.pathParameter}` + part.tail;
-    }
-    path += joinedEndpointPath;
-    return path;
 }
 
 function convertHttpMethod(httpMethod: HttpMethod): string {

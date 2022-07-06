@@ -28,7 +28,6 @@ services:
   http:
     PostsService:
       auth: none
-      base-path: /posts
       endpoints:
         createPost:
           docs: Creates a blog post and returns blog post id.
