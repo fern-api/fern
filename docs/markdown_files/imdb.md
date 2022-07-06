@@ -113,7 +113,7 @@ app.listen(8080);
 
 Our IDE will give us red lines indicating that we need to add missing properties.
 
-![server.ts error message](/docs/assets/tutorial/server.ts%20error%20message.png)
+![server.ts error message](../assets/tutorial/server.ts%20error%20message.png)
 
 You can implement the missing methods, for example:
 
@@ -166,7 +166,7 @@ Open Postman and File -> Import `api/generated-postman/collection.json`.
 
 Select the `createMovie` endpoint and hit `Send`. You should get a response back from your server **`iron-man-3`**.
 
-![postman-testing](/docs/assets/tutorial/postman-testing.png)
+![postman-testing](../assets/tutorial/postman-testing.png)
 
 ## Step 8: Celebrate
 
