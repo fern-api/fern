@@ -46,7 +46,6 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import org.apache.commons.lang3.StringUtils;
 import org.immutables.value.Value;
@@ -105,7 +104,6 @@ public final class FailedResponseGenerator extends Generator {
         Map<ErrorName, MethodSpec> errorNameToMethodSpec = getStaticBuilderMethods();
         TypeSpec endpointErrorTypeSpec = TypeSpec.classBuilder(generatedEndpointErrorClassName)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                .superclass(WebApplicationException.class)
                 .addAnnotation(Value.Enclosing.class)
                 .addField(FieldSpec.builder(internalValueInterfaceClassName, VALUE_FIELD_NAME)
                         .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
@@ -301,15 +299,11 @@ public final class FailedResponseGenerator extends Generator {
                 .getImmutablesUtils()
                 .getKeyWordCompatibleImmutablesPropertyMethod(
                         responseError.discriminantValue(), generatedError.className());
-        // Add @JsonValue annotation on object type reference because properties are collapsed one level
-        if (generatedError.errorDeclaration().type().isObject()) {
-            return MethodSpec.methodBuilder(internalValueImmutablesProperty.name)
-                    .addModifiers(internalValueImmutablesProperty.modifiers)
-                    .addAnnotations(internalValueImmutablesProperty.annotations)
-                    .addAnnotation(JsonValue.class)
-                    .returns(internalValueImmutablesProperty.returnType)
-                    .build();
-        }
-        return internalValueImmutablesProperty;
+        return MethodSpec.methodBuilder(internalValueImmutablesProperty.name)
+                .addModifiers(internalValueImmutablesProperty.modifiers)
+                .addAnnotations(internalValueImmutablesProperty.annotations)
+                .addAnnotation(JsonValue.class)
+                .returns(internalValueImmutablesProperty.returnType)
+                .build();
     }
 }

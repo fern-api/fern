@@ -247,12 +247,11 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.lang.Exception;
 import java.lang.Override;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import org.immutables.value.Value;
 
 @Value.Enclosing
-public final class GetPostError extends WebApplicationException {
+public final class GetPostError {
   private final InternalValue value;
 
   @JsonCreator(
