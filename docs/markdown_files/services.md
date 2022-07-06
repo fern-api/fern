@@ -1,6 +1,6 @@
 # Defining a service
 
-This page is about defining a REST service, which communciates over HTTP.
+This page is about defining a REST service, which communicates over HTTP.
 
 _If you're interested in \_defining a \_real-time_ API (_e.g. over WebSocket), you'll likely want to [define a channel](channels.md) instead._
 

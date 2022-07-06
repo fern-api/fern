@@ -4,11 +4,11 @@
 
 ## How does it work?
 
-![Overview diagram](assets/diagrams/overview-diagram.png)
+![Overview diagram](/docs/assets/diagrams/overview-diagram.png)
 
 Fern reads in your [Fern API Definition](#what-is-a-fern-api-definition), invokes remote [generators](#what-are-fern-generators), and creates clients, server stubs, and interactive documentation for your API.
 
-- **Client libraries**: one generated SDK for each supported platform and language that's automatically published to a registry (e.g., npm, maven, pypi)!
+- **Client libraries**: one generated SDK for each supported platform and language that's automatically published to a registry (e.g., NPM, Maven, PyPI)!
 
 - **Servers**: get server stubs for your API so all you need to do is implement the server logic.
 
