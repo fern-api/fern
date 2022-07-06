@@ -45,7 +45,7 @@ import javax.lang.model.element.Modifier;
 public final class ErrorGenerator extends Generator {
 
     private static final String STATUS_CODE_FIELD_NAME = "STATUS_CODE";
-    private static final String GET_STATUS_CODE_METHOD_NAME;
+    public static final String GET_STATUS_CODE_METHOD_NAME;
     private static final String GET_ERROR_INSTANCE_ID_METHOD_NAME;
 
     static {

@@ -132,7 +132,6 @@ repositories {
 dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
     implementation 'com.google.code.findbugs:annotations:3.0.1'
-    implementation 'javax.ws.rs:javax.ws.rs-api:2.1.1'
     api 'io.github.fern-api:exception-utils:0.0.50'
     api 'io.github.fern-api:immutables-utils:0.0.50'
 
@@ -198,6 +197,60 @@ public abstract class PostNotFoundError extends Exception implements HttpExcepti
 ]
 
 
+basic[api/generated-java/blog-api-model/src/main/java/com/blog/errors/UnauthorizedError.java]=[
+package com.blog.errors;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fern.java.exception.HttpException;
+import com.fern.java.immutables.StagedBuilderImmutablesStyle;
+import java.lang.Exception;
+import java.lang.Override;
+import java.lang.String;
+import org.immutables.value.Value;
+
+@Value.Immutable
+@StagedBuilderImmutablesStyle
+@JsonDeserialize(
+    as = ImmutableUnauthorizedError.class
+)
+@JsonIgnoreProperties(
+    ignoreUnknown = true,
+    value = {
+        "stackTrace",
+        "cause",
+        "detailMessage",
+        "localizedMessage",
+        "statusCode",
+        "message",
+        "suppressed",
+        "errorInstanceId"
+    }
+)
+public abstract class UnauthorizedError extends Exception implements HttpException {
+  public static final int STATUS_CODE = 403;
+
+  public abstract String reason();
+
+  public static ImmutableUnauthorizedError.ReasonBuildStage builder() {
+    return ImmutableUnauthorizedError.builder();
+  }
+
+  @Override
+  public int getStatusCode() {
+    return STATUS_CODE;
+  }
+
+  @JsonProperty("_errorInstanceId")
+  public final String errorInstanceId() {
+    return getErrorInstanceId();
+  }
+}
+
+]
+
+
 basic[api/generated-java/blog-api-model/src/main/java/com/blog/services/CreatePostRequest.java]=[
 package com.blog.services;
 
@@ -247,7 +300,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.lang.Exception;
 import java.lang.Override;
-import javax.ws.rs.core.Response;
 import org.immutables.value.Value;
 
 @Value.Enclosing
@@ -264,11 +316,6 @@ public final class GetPostError {
   @JsonValue
   InternalValue getInternalValue() {
     return value;
-  }
-
-  @Override
-  public final Response getResponse() {
-    return Response.status(value.getStatusCode()).entity(value).build();
   }
 
   public final Exception getNestedError() {
@@ -697,7 +744,6 @@ dependencies {
 basic[api/generated-java/blog-api-server/src/main/java/com/blog/errors/PostNotFoundErrorExceptionMapper.java]=[
 package com.blog.errors;
 
-import com.blog.services.GetPostError;
 import com.fern.java.jersey.ResourceInfoUtils;
 import java.lang.Override;
 import javax.ws.rs.container.ResourceInfo;
@@ -718,7 +764,7 @@ public final class PostNotFoundErrorExceptionMapper implements ExceptionMapper<P
     log.info("Error handling request. ErrorInstanceId= {}", e.getErrorInstanceId(), e);
     if (ResourceInfoUtils.getInterfaceNames(resourceInfo).contains("PostsService")) {
       if (ResourceInfoUtils.getMethodName(resourceInfo).contains("getPost")) {
-        return GetPostError.postNotFoundError(e).getResponse();
+        return Response.status(e.getStatusCode()).entity(com.blog.services.GetPostError.postNotFoundError(e)).build();
       }
     }
     return null;

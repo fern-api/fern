@@ -49,7 +49,6 @@ public abstract class CodeGenerationResult {
                 + "dependencies {\n"
                 + "    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'\n"
                 + "    implementation 'com.google.code.findbugs:annotations:3.0.1'\n"
-                + "    implementation 'javax.ws.rs:javax.ws.rs-api:2.1.1'\n"
                 + "    api 'io.github.fern-api:exception-utils:" + pluginConfig.version() + "'\n"
                 + "    api 'io.github.fern-api:immutables-utils:" + pluginConfig.version() + "'\n"
                 + "\n"

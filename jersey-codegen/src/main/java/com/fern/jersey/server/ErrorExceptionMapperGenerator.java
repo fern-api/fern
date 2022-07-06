@@ -25,7 +25,7 @@ import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameConstants;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.model.codegen.Generator;
-import com.fern.model.codegen.services.payloads.FailedResponseGenerator;
+import com.fern.model.codegen.errors.ErrorGenerator;
 import com.fern.types.services.EndpointId;
 import com.fern.types.services.HttpEndpoint;
 import com.fern.types.services.HttpService;
@@ -164,13 +164,16 @@ public final class ErrorExceptionMapperGenerator extends Generator {
                                 "Expected endpoint error to exist, but not found. EndpointId=" + endpointId));
 
                 toResponseMethodBuilder.addStatement(
-                        "return $T.$N($L).$L()",
+                        "return $T.status($L.$L()).entity($L.$L($L)).build()",
+                        Response.class,
+                        EXCEPTION_PARAMETER_NAME,
+                        ErrorGenerator.GET_STATUS_CODE_METHOD_NAME,
                         generatedEndpointError.className(),
                         generatedEndpointError
                                 .constructorsByResponseError()
-                                .get(generatedError.errorDeclaration().name()),
-                        EXCEPTION_PARAMETER_NAME,
-                        FailedResponseGenerator.GET_RESPONSE_METHOD_NAME);
+                                .get(generatedError.errorDeclaration().name())
+                                .name,
+                        EXCEPTION_PARAMETER_NAME);
 
                 toResponseMethodBuilder.endControlFlow();
                 firstEndpointCondition = false;

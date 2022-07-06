@@ -46,7 +46,6 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
-import javax.ws.rs.core.Response;
 import org.apache.commons.lang3.StringUtils;
 import org.immutables.value.Value;
 
@@ -61,7 +60,6 @@ public final class FailedResponseGenerator extends Generator {
     private static final String GET_INTERNAL_VALUE_METHOD_NAME = "getInternalValue";
     private static final String GET_STATUS_CODE_METHOD_NAME = "getStatusCode";
     public static final String GET_NESTED_ERROR_METHOD_NAME = "getNestedError";
-    public static final String GET_RESPONSE_METHOD_NAME = "getResponse";
 
     private static final String VALUE_FIELD_NAME = "value";
 
@@ -110,7 +108,6 @@ public final class FailedResponseGenerator extends Generator {
                         .build())
                 .addMethod(getConstructor())
                 .addMethod(getInternalValueMethod())
-                .addMethod(getResponseMethodSpec())
                 .addMethod(getNestedErrorMethodSpec())
                 .addMethods(errorNameToMethodSpec.values())
                 .addType(getInternalValueInterface())
@@ -145,20 +142,6 @@ public final class FailedResponseGenerator extends Generator {
                 .returns(internalValueInterfaceClassName)
                 .addStatement("return value")
                 .addAnnotation(JsonValue.class)
-                .build();
-    }
-
-    private MethodSpec getResponseMethodSpec() {
-        return MethodSpec.methodBuilder(GET_RESPONSE_METHOD_NAME)
-                .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                .returns(Response.class)
-                .addAnnotation(Override.class)
-                .addStatement(
-                        "return $T.status($L.$L()).entity($L).build()",
-                        Response.class,
-                        VALUE_FIELD_NAME,
-                        GET_STATUS_CODE_METHOD_NAME,
-                        VALUE_FIELD_NAME)
                 .build();
     }
 

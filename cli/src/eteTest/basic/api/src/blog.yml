@@ -27,6 +27,12 @@ errors:
     type:
       properties:
         id: PostId
+  UnauthorizedError:
+    http:
+      statusCode: 403
+    type:
+      properties:
+        reason: string
 services:
   http:
     PostsService:
