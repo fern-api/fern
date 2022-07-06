@@ -3116,9 +3116,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/app@workspace:*, @fern-api/app@workspace:packages/ui/fern-app":
+"@fern-api/app@workspace:*, @fern-api/app@workspace:packages/ui/app":
   version: 0.0.0-use.local
-  resolution: "@fern-api/app@workspace:packages/ui/fern-app"
+  resolution: "@fern-api/app@workspace:packages/ui/app"
   dependencies:
     "@babel/core": ^7.18.5
     "@babel/preset-env": ^7.18.2
@@ -3336,9 +3336,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/fe-bundle@workspace:*, @fern-api/fe-bundle@workspace:packages/ui/fern-fe-bundle":
+"@fern-api/fe-bundle@workspace:*, @fern-api/fe-bundle@workspace:packages/ui/fe-bundle":
   version: 0.0.0-use.local
-  resolution: "@fern-api/fe-bundle@workspace:packages/ui/fern-fe-bundle"
+  resolution: "@fern-api/fe-bundle@workspace:packages/ui/fe-bundle"
   dependencies:
     "@babel/core": ^7.18.5
     "@babel/preset-env": ^7.18.2
@@ -3349,13 +3349,11 @@ __metadata:
     "@blueprintjs/select": ^4.4.1
     "@craco/craco": ^6.4.4
     "@fern-api/app": "workspace:*"
-    "@tsed/yarn-workspaces": ^1.21.0
     "@types/craco__craco": ^6.4.0
     "@types/jest": ^28.1.2
     "@types/node": ^17.0.33
     "@types/react": ^18.0.15
     "@types/react-dom": ^18.0.6
-    "@types/webpack": ^5.28.0
     depcheck: ^1.4.3
     env-cmd: ^10.1.0
     eslint: ^8.12.0
@@ -3371,7 +3369,6 @@ __metadata:
     sass: ^1.53.0
     stylelint: ^14.9.1
     typescript: ^4.6.4
-    webpack: ^5.73.0
   languageName: unknown
   linkType: soft
 
@@ -5146,17 +5143,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tsed/yarn-workspaces@npm:^1.21.0":
-  version: 1.21.0
-  resolution: "@tsed/yarn-workspaces@npm:1.21.0"
-  dependencies:
-    find-up: 5.0.0
-    fs-extra: 10.0.0
-    glob: 7.1.6
-  checksum: 636c3563e3584494076b049a80c86ef447971b73cf069689fe542e6556f7dbfe22adaf2ce2851cb8efddc8e8ef069457c4d8ea0253b515e4d39589ee17aca2b3
-  languageName: node
-  linkType: hard
-
 "@types/autoprefixer@npm:^9.7.2":
   version: 9.7.2
   resolution: "@types/autoprefixer@npm:9.7.2"
@@ -5852,17 +5838,6 @@ __metadata:
     anymatch: ^3.0.0
     source-map: ^0.6.0
   checksum: e594a1357cbbc2f7c6ca47785c5a11adb5591a774a69afaeab07cd6f6bff6c6aea2030bd37b32bdd19d0ec2336a346db754e8d8d236ba8effeab542716fb32b7
-  languageName: node
-  linkType: hard
-
-"@types/webpack@npm:^5.28.0":
-  version: 5.28.0
-  resolution: "@types/webpack@npm:5.28.0"
-  dependencies:
-    "@types/node": "*"
-    tapable: ^2.2.0
-    webpack: ^5
-  checksum: a038d7e12dd109c6a8d2eb744fd32070ef94f1655e730fb1443b370db98864c3a0e408638b02d12ba08269b9c012b3be8b801117ced2d1102e7676203fd663ed
   languageName: node
   linkType: hard
 
@@ -10711,16 +10686,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"find-up@npm:5.0.0, find-up@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "find-up@npm:5.0.0"
-  dependencies:
-    locate-path: "npm:^6.0.0"
-    path-exists: "npm:^4.0.0"
-  checksum: 07955e357348f34660bde7920783204ff5a26ac2cafcaa28bace494027158a97b9f56faaf2d89a6106211a8174db650dd9f503f9c0d526b1202d5554a00b9095
-  languageName: node
-  linkType: hard
-
 "find-up@npm:^2.1.0":
   version: 2.1.0
   resolution: "find-up@npm:2.1.0"
@@ -10746,6 +10711,16 @@ __metadata:
     locate-path: "npm:^5.0.0"
     path-exists: "npm:^4.0.0"
   checksum: 4c172680e8f8c1f78839486e14a43ef82e9decd0e74145f40707cc42e7420506d5ec92d9a11c22bd2c48fb0c384ea05dd30e10dd152fefeec6f2f75282a8b844
+  languageName: node
+  linkType: hard
+
+"find-up@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "find-up@npm:5.0.0"
+  dependencies:
+    locate-path: "npm:^6.0.0"
+    path-exists: "npm:^4.0.0"
+  checksum: 07955e357348f34660bde7920783204ff5a26ac2cafcaa28bace494027158a97b9f56faaf2d89a6106211a8174db650dd9f503f9c0d526b1202d5554a00b9095
   languageName: node
   linkType: hard
 
@@ -10889,17 +10864,6 @@ __metadata:
   version: 1.0.0
   resolution: "fs-constants@npm:1.0.0"
   checksum: 18f5b718371816155849475ac36c7d0b24d39a11d91348cfcb308b4494824413e03572c403c86d3a260e049465518c4f0d5bd00f0371cdfcad6d4f30a85b350d
-  languageName: node
-  linkType: hard
-
-"fs-extra@npm:10.0.0":
-  version: 10.0.0
-  resolution: "fs-extra@npm:10.0.0"
-  dependencies:
-    graceful-fs: ^4.2.0
-    jsonfile: ^6.0.1
-    universalify: ^2.0.0
-  checksum: 5285a3d8f34b917cf2b66af8c231a40c1623626e9d701a20051d3337be16c6d7cac94441c8b3732d47a92a2a027886ca93c69b6a4ae6aee3c89650d2a8880c0a
   languageName: node
   linkType: hard
 
@@ -11160,20 +11124,6 @@ __metadata:
   version: 0.4.1
   resolution: "glob-to-regexp@npm:0.4.1"
   checksum: e795f4e8f06d2a15e86f76e4d92751cf8bbfcf0157cea5c2f0f35678a8195a750b34096b1256e436f0cebc1883b5ff0888c47348443e69546a5a87f9e1eb1167
-  languageName: node
-  linkType: hard
-
-"glob@npm:7.1.6":
-  version: 7.1.6
-  resolution: "glob@npm:7.1.6"
-  dependencies:
-    fs.realpath: ^1.0.0
-    inflight: ^1.0.4
-    inherits: 2
-    minimatch: ^3.0.4
-    once: ^1.3.0
-    path-is-absolute: ^1.0.0
-  checksum: 351d549dd90553b87c2d3f90ce11aed9e1093c74130440e7ae0592e11bbcd2ce7f0ebb8ba6bfe63aaf9b62166a7f4c80cb84490ae5d78408bb2572bf7d4ee0a6
   languageName: node
   linkType: hard
 

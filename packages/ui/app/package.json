@@ -1,10 +1,10 @@
 {
-  "name": "@fern-api/fe-bundle",
+  "name": "@fern-api/app",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "git@github.com:fern-api/fern.git",
-    "directory": "packages/ui/fern-fe-bundle"
+    "directory": "packages/ui/app"
   },
   "private": true,
   "files": [
@@ -34,65 +34,24 @@
     "lint:style:fix": "stylelint '**/*.scss' --allow-empty-input --max-warnings 0 --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "depcheck": "depcheck",
-    "start": "env-cmd -e development env-cmd -f .env.local --silent craco start",
-    "build:staging": "REACT_APP_PRODUCTION_ENVIRONMENT=STAGING env-cmd -e development craco --max_old_space_size=4096 build",
-    "build:production": "REACT_APP_PRODUCTION_ENVIRONMENT=PRODUCTION env-cmd -e production craco --max_old_space_size=4096 build",
-    "eject": "react-scripts eject"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "depcheck": "depcheck"
   },
   "dependencies": {
-    "@blueprintjs/core": "^4.5.1",
-    "@blueprintjs/icons": "^4.3.0",
-    "@blueprintjs/popover2": "^1.4.1",
-    "@blueprintjs/select": "^4.4.1",
-    "@fern-api/app": "workspace:*",
-    "normalize.css": "^8.0.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^18.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",
     "@babel/preset-env": "^7.18.2",
     "@babel/preset-typescript": "^7.17.12",
-    "@craco/craco": "^6.4.4",
-    "@tsed/yarn-workspaces": "^1.21.0",
-    "@types/craco__craco": "^6.4.0",
     "@types/jest": "^28.1.2",
     "@types/node": "^17.0.33",
     "@types/react": "^18.0.15",
-    "@types/react-dom": "^18.0.6",
-    "@types/webpack": "^5.28.0",
     "depcheck": "^1.4.3",
-    "env-cmd": "^10.1.0",
     "eslint": "^8.12.0",
-    "fork-ts-checker-webpack-plugin": "^7.2.11",
     "jest": "^28.1.1",
-    "node-polyfill-webpack-plugin": "^2.0.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.6.2",
-    "react-scripts": "^5.0.1",
-    "sass": "^1.53.0",
     "stylelint": "^14.9.1",
-    "typescript": "^4.6.4",
-    "webpack": "^5.73.0"
-  },
-  "postcss": {
-    "postcss-modules": {
-      "globalModulePaths": [
-        "@blueprintjs.*"
-      ]
-    }
+    "typescript": "^4.6.4"
   }
 }

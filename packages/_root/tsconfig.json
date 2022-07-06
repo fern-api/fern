@@ -32,7 +32,7 @@
     { "path": "../login/tsconfig.json" },
     { "path": "../openapi-converter/tsconfig.json" },
     { "path": "../remote-generation/remote-workspace-runner/tsconfig.json" },
-    { "path": "../ui/fern-app/tsconfig.json" },
-    { "path": "../ui/fern-fe-bundle/tsconfig.json" }
+    { "path": "../ui/app/tsconfig.json" },
+    { "path": "../ui/fe-bundle/tsconfig.json" }
   ]
 }
