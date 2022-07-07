@@ -680,7 +680,7 @@ export declare namespace PostsService {
     }
 
     interface Headers {
-        \\"X-Service-Header\\": string;
+        \\"X-Service-Header\\": MaybeGetter<string>;
     }
 }
 
@@ -701,7 +701,10 @@ export class PostsService implements PostsService {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/\\"),
             method: \\"POST\\",
-            headers: { ...this.headers, \\"X-Endpoint-Header\\": request[\\"X-Endpoint-Header\\"] },
+            headers: {
+                \\"X-Service-Header\\": await (typeof this.headers[\\"X-Service-Header\\"] === \\"function\\" ? this.headers[\\"X-Service-Header\\"]() : this.headers[\\"X-Service-Header\\"]),
+                \\"X-Endpoint-Header\\": request[\\"X-Endpoint-Header\\"]
+            },
             token: this.token,
             body: {
                 content: JSON.stringify(request.body),
@@ -735,7 +738,9 @@ export class PostsService implements PostsService {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \`/\${request.postId}\`),
             method: \\"GET\\",
-            headers: { ...this.headers },
+            headers: {
+                \\"X-Service-Header\\": await (typeof this.headers[\\"X-Service-Header\\"] === \\"function\\" ? this.headers[\\"X-Service-Header\\"]() : this.headers[\\"X-Service-Header\\"])
+            },
             token: this.token,
             queryParameters
         });
@@ -760,7 +765,9 @@ export class PostsService implements PostsService {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/get\\"),
             method: \\"GET\\",
-            headers: { ...this.headers },
+            headers: {
+                \\"X-Service-Header\\": await (typeof this.headers[\\"X-Service-Header\\"] === \\"function\\" ? this.headers[\\"X-Service-Header\\"]() : this.headers[\\"X-Service-Header\\"])
+            },
             token: this.token,
             body: {
                 content: JSON.stringify(request),
