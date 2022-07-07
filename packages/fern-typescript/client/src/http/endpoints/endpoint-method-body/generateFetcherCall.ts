@@ -175,12 +175,30 @@ function getHeadersPropertyValue({
 
     const properties: ts.ObjectLiteralElementLike[] = [];
 
-    if (doesServiceHaveHeaders(service)) {
+    for (const header of service.headers) {
+        const referenceToHeader = ts.factory.createElementAccessExpression(
+            ts.factory.createPropertyAccessExpression(
+                ts.factory.createThis(),
+                ts.factory.createIdentifier(ClientConstants.HttpService.PrivateMembers.HEADERS)
+            ),
+            ts.factory.createStringLiteral(header.header)
+        );
+
         properties.push(
-            ts.factory.createSpreadAssignment(
-                ts.factory.createPropertyAccessExpression(
-                    ts.factory.createThis(),
-                    ts.factory.createIdentifier(ClientConstants.HttpService.PrivateMembers.HEADERS)
+            ts.factory.createPropertyAssignment(
+                ts.factory.createStringLiteral(header.header),
+                ts.factory.createAwaitExpression(
+                    ts.factory.createConditionalExpression(
+                        ts.factory.createBinaryExpression(
+                            ts.factory.createTypeOfExpression(referenceToHeader),
+                            ts.factory.createToken(ts.SyntaxKind.EqualsEqualsEqualsToken),
+                            ts.factory.createStringLiteral("function")
+                        ),
+                        ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                        ts.factory.createCallExpression(referenceToHeader, undefined, []),
+                        ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                        referenceToHeader
+                    )
                 )
             )
         );
@@ -198,5 +216,5 @@ function getHeadersPropertyValue({
         );
     }
 
-    return ts.factory.createObjectLiteralExpression(properties);
+    return ts.factory.createObjectLiteralExpression(properties, true);
 }

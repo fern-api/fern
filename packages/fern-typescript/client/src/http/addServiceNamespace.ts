@@ -49,7 +49,7 @@ export function addServiceNamespace({
     });
 
     maybeAddTokenProperty({ service, dependencyManager, serviceFile, initInterface });
-    maybeAddHeadersProperty({ service, initInterface, module, modelContext });
+    maybeAddHeaders({ service, initInterface, module, modelContext, dependencyManager });
 }
 
 function maybeAddTokenProperty({
@@ -95,16 +95,18 @@ function maybeAddTokenProperty({
     });
 }
 
-function maybeAddHeadersProperty({
+function maybeAddHeaders({
     service,
     initInterface,
     module,
     modelContext,
+    dependencyManager,
 }: {
     service: HttpService;
     initInterface: InterfaceDeclaration;
     module: ModuleDeclaration;
     modelContext: ModelContext;
+    dependencyManager: DependencyManager;
 }) {
     if (doesServiceHaveHeaders(service)) {
         initInterface.addProperty({
@@ -117,9 +119,16 @@ function maybeAddHeadersProperty({
             properties: service.headers.map((header) => ({
                 name: `"${header.header}"`,
                 type: getTextOfTsNode(
-                    modelContext.getReferenceToType({
-                        reference: header.valueType,
+                    getReferenceToFernServiceUtilsType({
+                        type: "MaybeGetter",
+                        dependencyManager,
                         referencedIn: module.getSourceFile(),
+                        typeArguments: [
+                            modelContext.getReferenceToType({
+                                reference: header.valueType,
+                                referencedIn: module.getSourceFile(),
+                            }),
+                        ],
                     })
                 ),
             })),
