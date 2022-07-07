@@ -18,14 +18,28 @@ export function generateRequestTypes({
     serviceName,
     modelContext,
 }: generateRequestTypes.Args): GeneratedRequest<HttpServiceTypeMetadata> {
-    const getAdditionalProperties = [
+    const additionalProperties = [
         ...[...endpoint.pathParameters, ...endpoint.queryParameters].map(
             (parameter) =>
                 (requestFile: SourceFile): OptionalKind<PropertySignatureStructure> => ({
                     name: parameter.key,
+                    docs: parameter.docs != null ? [parameter.docs] : undefined,
                     type: getTextOfTsNode(
                         modelContext.getReferenceToType({
                             reference: parameter.valueType,
+                            referencedIn: requestFile,
+                        })
+                    ),
+                })
+        ),
+        ...endpoint.headers.map(
+            (header) =>
+                (requestFile: SourceFile): OptionalKind<PropertySignatureStructure> => ({
+                    name: `"${header.header}"`,
+                    docs: header.docs != null ? [header.docs] : undefined,
+                    type: getTextOfTsNode(
+                        modelContext.getReferenceToType({
+                            reference: header.valueType,
                             referencedIn: requestFile,
                         })
                     ),
@@ -44,7 +58,7 @@ export function generateRequestTypes({
             type: endpoint.request.type,
             docs: endpoint.request.docs,
         },
-        additionalProperties: getAdditionalProperties,
+        additionalProperties,
         writeServiceTypeFile: createHttpServiceTypeFileWriter({ modelContext, serviceName, endpoint }),
     });
 }
