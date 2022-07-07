@@ -16,7 +16,7 @@
 
 package com.example;
 
-import com.server.AbstractServiceRegistry;
+import com.fern.example.server.AbstractServiceRegistry;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration

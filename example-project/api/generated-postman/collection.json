@@ -1,11 +1,11 @@
 {
     "item": [
         {
-            "id": "1535c244-08b2-48cc-ba2c-afb2d084b143",
+            "id": "7407ab0f-f558-4647-9b20-f84eda865778",
             "name": "ExampleService",
             "item": [
                 {
-                    "id": "4af086cf-38b4-4fbb-bb68-8b8ced78976a",
+                    "id": "c0e88fcf-a840-46a9-9644-8106c45c449a",
                     "name": "getExampleObject",
                     "description": {},
                     "request": {
@@ -34,7 +34,7 @@
                     },
                     "response": [
                         {
-                            "id": "27acad77-083e-4fd9-bb70-0ca7e6cc28e2",
+                            "id": "e572641d-ed9a-498a-8839-48cabe6d31f6",
                             "name": "Successful getExampleObject",
                             "description": {},
                             "originalRequest": {
@@ -76,7 +76,7 @@
                     "event": []
                 },
                 {
-                    "id": "745db234-cb1c-4492-969c-b6f31f12c10e",
+                    "id": "69995226-0b91-42c0-a288-aedcb790d0d3",
                     "name": "throwError",
                     "description": {},
                     "request": {
@@ -105,7 +105,7 @@
                     },
                     "response": [
                         {
-                            "id": "5086ee24-5db1-4d9a-aa48-b04a12c57a27",
+                            "id": "8a519aa5-d211-404c-95ee-6ad3c68d5f43",
                             "name": "Successful throwError",
                             "description": {},
                             "originalRequest": {

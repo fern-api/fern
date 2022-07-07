@@ -16,13 +16,16 @@
 
 package com.example;
 
-import com.errors.GenericMessageError;
-import com.errors.NotFoundError;
-import com.errors.UnauthorizedError;
-import com.server.ExampleService;
-import com.types.ErrorType;
-import com.types.ExampleId;
-import com.types.ExampleObject;
+import com.fern.example.errors.GenericMessageError;
+import com.fern.example.errors.GenericMessageErrorBody;
+import com.fern.example.errors.NotFoundError;
+import com.fern.example.errors.NotFoundErrorBody;
+import com.fern.example.errors.UnauthorizedError;
+import com.fern.example.errors.UnauthorizedErrorBody;
+import com.fern.example.server.ExampleService;
+import com.fern.example.types.ErrorType;
+import com.fern.example.types.ExampleId;
+import com.fern.example.types.ExampleObject;
 
 public final class ExampleResource implements ExampleService {
     @Override
@@ -38,11 +41,13 @@ public final class ExampleResource implements ExampleService {
     public void throwError(ErrorType errorType) throws NotFoundError, UnauthorizedError, GenericMessageError {
         switch (errorType.getEnumValue()) {
             case NOT_FOUND:
-                throw NotFoundError.builder().build();
+                throw new NotFoundError(NotFoundErrorBody.builder().build());
             case UNAUTHORIZED:
-                throw UnauthorizedError.builder().build();
+                throw new UnauthorizedError(UnauthorizedErrorBody.builder().build());
             case GENERIC:
-                throw GenericMessageError.builder().msg("my message").build();
+                throw new GenericMessageError(GenericMessageErrorBody.builder()
+                        .msg("myMessage")
+                        .build());
             case UNKNOWN:
                 throw new RuntimeException("Encountered unknown errorType: " + errorType);
         }

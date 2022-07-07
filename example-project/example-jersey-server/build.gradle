@@ -11,5 +11,5 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jersey:2.6.7'
-    implementation 'com.fern-fern.fern:example-api-server:0.0.4'
+    implementation 'com.fern-fern.fern:example-api-server-jersey:0.0.14'
 }

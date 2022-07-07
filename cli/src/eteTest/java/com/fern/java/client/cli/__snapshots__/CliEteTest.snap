@@ -151,7 +151,7 @@ import java.lang.Override;
 public final class PostNotFoundError extends HttpException {
   PostNotFoundErrorBody body;
 
-  PostNotFoundError(PostNotFoundErrorBody body) {
+  public PostNotFoundError(PostNotFoundErrorBody body) {
     this.body = body;
   }
 
@@ -205,7 +205,7 @@ import java.lang.Override;
 public final class UnauthorizedError extends HttpException {
   UnauthorizedErrorBody body;
 
-  UnauthorizedError(UnauthorizedErrorBody body) {
+  public UnauthorizedError(UnauthorizedErrorBody body) {
     this.body = body;
   }
 
