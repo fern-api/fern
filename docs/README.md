@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD033 -->
+
 # Fern
 
 > **Fern is a framework for building APIs.** You can think of it as an alternative to OpenAPI (f.k.a Swagger).
