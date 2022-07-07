@@ -1,7 +1,6 @@
 export { DependencyManager, DependencyType } from "./dependencies/DependencyManager";
 export { generateUuidCall } from "./dependencies/generateUuidCall";
 export {
-    getReferenceToFernServiceUtilsServiceNamespaceType,
     getReferenceToFernServiceUtilsTokenMethod,
     getReferenceToFernServiceUtilsType,
     getReferenceToFernServiceUtilsValue,

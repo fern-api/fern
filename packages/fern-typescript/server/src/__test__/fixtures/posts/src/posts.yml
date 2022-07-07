@@ -40,6 +40,8 @@ services:
           method: POST
           path: /
           auth-override: none
+          headers:
+            X-Endpoint-Header: string
           request:
             type:
               properties:

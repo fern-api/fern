@@ -276,7 +276,7 @@ export * from \\"./GetResponse\\";
         \\"build\\": \\"esbuild $(find . -name '*.ts' -not -path './node_modules/*') --format=cjs --sourcemap --outdir=. && tsc\\"
     },
     \\"dependencies\\": {
-        \\"@fern-typescript/service-utils\\": \\"0.0.114\\",
+        \\"@fern-typescript/service-utils\\": \\"0.0.124\\",
         \\"url-join\\": \\"5.0.0\\"
     },
     \\"devDependencies\\": {
@@ -285,7 +285,7 @@ export * from \\"./GetResponse\\";
         \\"typescript\\": \\"4.6.4\\"
     }
 }",
-  "/services/NoErrorsService.ts": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+  "/services/NoErrorsService.ts": "import { isResponseOk, defaultFetcher, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
@@ -293,15 +293,21 @@ export interface NoErrorsService {
     get(): Promise<model.GetResponse>;
 }
 
+export declare namespace NoErrorsService {
+    interface Init {
+        origin: string;
+        fetcher?: Fetcher;
+    }
+}
+
 export class NoErrorsService implements NoErrorsService {
     private baseUrl: string;
     private fetcher: Fetcher;
     private token: MaybeGetter<Token | undefined>;
 
-    constructor(args: Service.Init) {
+    constructor(args: NoErrorsService.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
         this.baseUrl = urlJoin(args.origin, \\"no-errors-service\\");
-        this.token = args.token;
     }
 
     public async get(): Promise<model.GetResponse> {
@@ -378,6 +384,13 @@ export const CreatePostErrorBody = {
   "/model/_service-types/PostsService/CreatePostRequest.ts": "import * as model from \\"../..\\";
 
 export interface CreatePostRequest {
+    \\"X-Endpoint-Header\\": string;
+    body: model.CreatePostRequestBody;
+}
+",
+  "/model/_service-types/PostsService/CreatePostRequestBody.ts": "import * as model from \\"../..\\";
+
+export interface CreatePostRequestBody {
     type: model.PostType;
     title: string;
     author: model.Author;
@@ -510,7 +523,8 @@ namespace GetPostV2Response {
     }
 }
 ",
-  "/model/_service-types/PostsService/index.ts": "export * from \\"./CreatePostRequest\\";
+  "/model/_service-types/PostsService/index.ts": "export * from \\"./CreatePostRequestBody\\";
+export * from \\"./CreatePostRequest\\";
 export * from \\"./CreatePostErrorBody\\";
 export * from \\"./CreatePostResponse\\";
 export * from \\"./GetPostRequest\\";
@@ -638,7 +652,7 @@ export * from \\"./_service-types\\";
     \\"dependencies\\": {
         \\"uuid\\": \\"8.3.2\\",
         \\"@types/uuid\\": \\"8.3.4\\",
-        \\"@fern-typescript/service-utils\\": \\"0.0.114\\",
+        \\"@fern-typescript/service-utils\\": \\"0.0.124\\",
         \\"url-join\\": \\"5.0.0\\"
     },
     \\"devDependencies\\": {
@@ -647,7 +661,7 @@ export * from \\"./_service-types\\";
         \\"typescript\\": \\"4.6.4\\"
     }
 }",
-  "/services/PostsService.ts": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+  "/services/PostsService.ts": "import { isResponseOk, defaultFetcher, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
@@ -657,25 +671,40 @@ export interface PostsService {
     getPostV2(request: model.PostId): Promise<model.GetPostV2Response>;
 }
 
+export declare namespace PostsService {
+    interface Init {
+        origin: string;
+        fetcher?: Fetcher;
+        token: MaybeGetter<Token>;
+        headers: Headers;
+    }
+
+    interface Headers {
+        \\"X-Service-Header\\": string;
+    }
+}
+
 export class PostsService implements PostsService {
     private baseUrl: string;
     private fetcher: Fetcher;
     private token: MaybeGetter<Token | undefined>;
+    private headers: PostsService.Headers;
 
-    constructor(args: Service.Init) {
+    constructor(args: PostsService.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
         this.baseUrl = urlJoin(args.origin, \\"/posts\\");
         this.token = args.token;
+        this.headers = args.headers;
     }
 
     public async createPost(request: model.CreatePostRequest): Promise<model.CreatePostResponse> {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/\\"),
             method: \\"POST\\",
-            headers: {},
+            headers: { ...this.headers, \\"X-Endpoint-Header\\": request[\\"X-Endpoint-Header\\"] },
             token: this.token,
             body: {
-                content: JSON.stringify(request),
+                content: JSON.stringify(request.body),
                 contentType: \\"application/json\\"
             }
         });
@@ -706,7 +735,7 @@ export class PostsService implements PostsService {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \`/\${request.postId}\`),
             method: \\"GET\\",
-            headers: {},
+            headers: { ...this.headers },
             token: this.token,
             queryParameters
         });
@@ -731,7 +760,7 @@ export class PostsService implements PostsService {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/get\\"),
             method: \\"GET\\",
-            headers: {},
+            headers: { ...this.headers },
             token: this.token,
             body: {
                 content: JSON.stringify(request),

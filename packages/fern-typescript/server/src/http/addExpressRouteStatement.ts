@@ -67,6 +67,7 @@ export function getExpressRouteStatement({
                     ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
                     ts.factory.createBlock(
                         generateEndpointBody({
+                            service,
                             endpoint,
                             generatedEndpointTypes,
                             modelContext,
@@ -118,12 +119,14 @@ function generateExpressRoutePath({
 }
 
 function generateEndpointBody({
+    service,
     endpoint,
     generatedEndpointTypes,
     modelContext,
     file,
     dependencyManager,
 }: {
+    service: HttpService;
     endpoint: HttpEndpoint;
     generatedEndpointTypes: GeneratedHttpEndpointTypes;
     modelContext: ModelContext;
@@ -141,7 +144,14 @@ function generateEndpointBody({
                         ),
                         undefined,
                         undefined,
-                        generateImplCall({ endpoint, generatedEndpointTypes, modelContext, dependencyManager, file })
+                        generateImplCall({
+                            service,
+                            endpoint,
+                            generatedEndpointTypes,
+                            modelContext,
+                            dependencyManager,
+                            file,
+                        })
                     ),
                 ],
                 ts.NodeFlags.Const
