@@ -28,11 +28,17 @@ services:
   http:
     PostsService:
       auth: none
+      headers:
+        x-service-header: string
       endpoints:
         createPost:
           docs: Creates a blog post and returns blog post id.
           method: POST
           path: /create
+          headers:
+            x-endpoint-header:
+              docs: I'm a header!
+              type: string
           request:
             type:
               properties:

@@ -2413,6 +2413,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash@npm:^4.14.182":
+  version: 4.14.182
+  resolution: "@types/lodash@npm:4.14.182"
+  checksum: 7dd137aa9dbabd632408bd37009d984655164fa1ecc3f2b6eb94afe35bf0a5852cbab6183148d883e9c73a958b7fec9a9bcf7c8e45d41195add6a18c34958209
+  languageName: node
+  linkType: hard
+
 "@types/minimatch@npm:*, @types/minimatch@npm:^3.0.3":
   version: 3.0.5
   resolution: "@types/minimatch@npm:3.0.5"
@@ -4225,6 +4232,7 @@ __metadata:
     "@fern-api/compiler": ^0.0.124
     "@fern-fern/ir-model": 0.0.15
     "@types/jest": ^27.5.0
+    "@types/lodash": ^4.14.182
     "@types/postman-collection": ^3.5.7
     "@types/uuid": ^8.3.4
     depcheck: ^1.4.3
@@ -4232,6 +4240,7 @@ __metadata:
     husky: ^8.0.1
     jest: ^28.1.1
     lint-staged: ^12.4.1
+    lodash: ^4.17.21
     postman-collection: ^4.1.2
     prettier: ^2.6.2
     simple-progress-webpack-plugin: ^2.0.0

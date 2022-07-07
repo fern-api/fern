@@ -31,11 +31,21 @@ Object {
                 "key": "Content-Type",
                 "value": "application/json",
               },
+              Object {
+                "description": undefined,
+                "key": "x-service-header",
+                "value": "example",
+              },
+              Object {
+                "description": "I'm a header!",
+                "key": "x-endpoint-header",
+                "value": "example",
+              },
             ],
             "method": "POST",
             "url": Object {
               "host": Array [
-                "{{base_url}}",
+                "{{origin}}",
               ],
               "path": Array [
                 "posts-service/create",
@@ -73,11 +83,21 @@ Object {
                     "key": "Content-Type",
                     "value": "application/json",
                   },
+                  Object {
+                    "description": undefined,
+                    "key": "x-service-header",
+                    "value": "example",
+                  },
+                  Object {
+                    "description": "I'm a header!",
+                    "key": "x-endpoint-header",
+                    "value": "example",
+                  },
                 ],
                 "method": "POST",
                 "url": Object {
                   "host": Array [
-                    "{{base_url}}",
+                    "{{origin}}",
                   ],
                   "path": Array [
                     "posts-service/create",
@@ -103,11 +123,16 @@ Object {
                 "key": "Content-Type",
                 "value": "application/json",
               },
+              Object {
+                "description": undefined,
+                "key": "x-service-header",
+                "value": "example",
+              },
             ],
             "method": "GET",
             "url": Object {
               "host": Array [
-                "{{base_url}}",
+                "{{origin}}",
               ],
               "path": Array [
                 "posts-service/:postId",
@@ -146,11 +171,16 @@ Object {
                     "key": "Content-Type",
                     "value": "application/json",
                   },
+                  Object {
+                    "description": undefined,
+                    "key": "x-service-header",
+                    "value": "example",
+                  },
                 ],
                 "method": "GET",
                 "url": Object {
                   "host": Array [
-                    "{{base_url}}",
+                    "{{origin}}",
                   ],
                   "path": Array [
                     "posts-service/:postId",
@@ -167,7 +197,7 @@ Object {
   ],
   "variable": Array [
     Object {
-      "key": "base_url",
+      "key": "origin",
       "value": "http://localhost:8080",
     },
   ],

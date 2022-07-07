@@ -1,4 +1,5 @@
 import { ContainerType, PrimitiveType, Type, TypeDeclaration, TypeReference } from "@fern-fern/ir-model";
+import { isEqual } from "lodash";
 import uuid from "uuid";
 
 export function getMockBodyFromType(type: Type, allTypes: TypeDeclaration[]): unknown {
@@ -61,7 +62,7 @@ export function getMockBodyFromType(type: Type, allTypes: TypeDeclaration[]): un
     });
 }
 
-function getMockBodyFromTypeReference(typeReference: TypeReference, allTypes: TypeDeclaration[]): any {
+export function getMockBodyFromTypeReference(typeReference: TypeReference, allTypes: TypeDeclaration[]): any {
     return TypeReference._visit(typeReference, {
         primitive: (primitive) =>
             PrimitiveType._visit<any>(primitive, {
@@ -95,10 +96,11 @@ function getMockBodyFromTypeReference(typeReference: TypeReference, allTypes: Ty
             }),
         named: (typeName) => {
             const namedType = allTypes.find(
-                (val) => val.name.name === typeName.name && val.name.fernFilepath === typeName.fernFilepath
+                (val) => val.name.name === typeName.name && isEqual(val.name.fernFilepath, typeName.fernFilepath)
             );
             if (namedType === undefined) {
-                return undefined;
+                console.log({ allTypes, typeName });
+                throw new Error("Cannot find type: " + typeName.name);
             }
             return getMockBodyFromType(namedType.shape, allTypes);
         },

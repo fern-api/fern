@@ -1,5 +1,5 @@
 import { IntermediateRepresentation, TypeDeclaration } from "@fern-fern/ir-model";
-import { HttpAuth, HttpEndpoint, HttpMethod, HttpPath, HttpService } from "@fern-fern/ir-model/services";
+import { HttpAuth, HttpEndpoint, HttpHeader, HttpMethod, HttpPath, HttpService } from "@fern-fern/ir-model/services";
 import {
     CollectionDefinition,
     HeaderDefinition,
@@ -10,11 +10,11 @@ import {
     ResponseDefinition,
 } from "postman-collection";
 import urlJoin from "url-join";
-import { getMockBodyFromType } from "./getMockBody";
+import { getMockBodyFromType, getMockBodyFromTypeReference } from "./getMockBody";
 
-const BASE_URL_VARIABLE_NAME = "base_url";
-const BASE_URL_VARIABLE = `{{${BASE_URL_VARIABLE_NAME}}}`;
-const BASE_URL_DEFAULT_VAULE = "http://localhost:8080";
+const ORIGIN_VARIABLE_NAME = "origin";
+const ORIGIN_VARIABLE = `{{${ORIGIN_VARIABLE_NAME}}}`;
+const ORIGIN_DEFAULT_VAULE = "http://localhost:8080";
 
 const APPLICATION_JSON_HEADER_DEFINITION: HeaderDefinition = {
     key: "Content-Type",
@@ -31,8 +31,8 @@ export function convertToPostmanCollection(ir: IntermediateRepresentation): Coll
         item: getCollectionItems(ir),
         variable: [
             {
-                key: BASE_URL_VARIABLE_NAME,
-                value: BASE_URL_DEFAULT_VAULE,
+                key: ORIGIN_VARIABLE_NAME,
+                value: ORIGIN_DEFAULT_VAULE,
             },
         ],
     };
@@ -99,10 +99,14 @@ function convertRequest(
 ): RequestDefinition {
     let convertedRequest: RequestDefinition = {
         url: {
-            host: [BASE_URL_VARIABLE],
+            host: [ORIGIN_VARIABLE],
             path: [getPathString(httpService.basePath, httpEndpoint.path)],
         },
-        header: [APPLICATION_JSON_HEADER_DEFINITION],
+        header: [
+            APPLICATION_JSON_HEADER_DEFINITION,
+            ...httpService.headers.map((header) => convertHeader(header, allTypes)),
+            ...httpEndpoint.headers.map((header) => convertHeader(header, allTypes)),
+        ],
         method: convertHttpMethod(httpEndpoint.method),
         auth: convertAuth(httpEndpoint.auth),
     };
@@ -127,6 +131,14 @@ function getPathString(basePath: string | undefined | null = "/", endpointPath: 
     } else {
         return urlJoin(basePath, endpointPathString);
     }
+}
+
+function convertHeader(header: HttpHeader, allTypes: TypeDeclaration[]): HeaderDefinition {
+    return {
+        key: header.header,
+        description: header.docs ?? undefined,
+        value: getMockBodyFromTypeReference(header.valueType, allTypes),
+    };
 }
 
 function convertHttpMethod(httpMethod: HttpMethod): string {
