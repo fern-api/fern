@@ -169,18 +169,21 @@ function getHeadersPropertyValue({
     service: HttpService;
     endpoint: HttpEndpoint;
 }): ts.Expression {
-    if (endpoint.headers.length === 0) {
-        if (doesServiceHaveHeaders(service)) {
-            return getReferenceToServiceHeaders();
-        } else {
-            return ts.factory.createObjectLiteralExpression([]);
-        }
+    if (!doesServiceHaveHeaders(service) && endpoint.headers.length === 0) {
+        return ts.factory.createObjectLiteralExpression([]);
     }
 
     const properties: ts.ObjectLiteralElementLike[] = [];
 
     if (doesServiceHaveHeaders(service)) {
-        properties.push(ts.factory.createSpreadAssignment(getReferenceToServiceHeaders()));
+        properties.push(
+            ts.factory.createSpreadAssignment(
+                ts.factory.createPropertyAccessExpression(
+                    ts.factory.createThis(),
+                    ts.factory.createIdentifier(ClientConstants.HttpService.PrivateMembers.HEADERS)
+                )
+            )
+        );
     }
 
     for (const header of endpoint.headers) {
@@ -196,11 +199,4 @@ function getHeadersPropertyValue({
     }
 
     return ts.factory.createObjectLiteralExpression(properties);
-}
-
-function getReferenceToServiceHeaders(): ts.Expression {
-    return ts.factory.createPropertyAccessExpression(
-        ts.factory.createThis(),
-        ts.factory.createIdentifier(ClientConstants.HttpService.PrivateMembers.HEADERS)
-    );
 }

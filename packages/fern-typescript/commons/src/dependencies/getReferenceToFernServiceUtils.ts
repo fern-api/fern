@@ -2,7 +2,7 @@ import { SourceFile, ts } from "ts-morph";
 import { DependencyManager } from "./DependencyManager";
 
 const PACKAGE_NAME = "@fern-typescript/service-utils";
-const VERSION = "0.0.114";
+const VERSION = "0.0.125";
 
 type FernServiceUtilsExport = ExportedFernServiceUtilsType | ExportedFernServiceUtilsValue;
 

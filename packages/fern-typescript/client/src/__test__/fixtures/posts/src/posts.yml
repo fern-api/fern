@@ -36,9 +36,7 @@ services:
       base-path: /posts
       auth: bearer
       headers:
-        apiKey:
-          key: X-API-Key
-          type: string
+        X-Service-Header: string
       endpoints:
         createPost:
           method: POST

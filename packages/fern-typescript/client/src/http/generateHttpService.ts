@@ -15,6 +15,7 @@ import { ClientConstants } from "../constants";
 import { addServiceConstructor } from "./addServiceConstructor";
 import { addServiceNamespace } from "./addServiceNamespace";
 import { addEndpointToService } from "./endpoints/addEndpointToService";
+import { doesServiceHaveHeaders } from "./utils";
 
 export async function generateHttpService({
     servicesDirectory,
@@ -82,18 +83,20 @@ export async function generateHttpService({
         ),
     });
 
-    serviceClass.addProperty({
-        name: ClientConstants.HttpService.PrivateMembers.HEADERS,
-        scope: Scope.Private,
-        type: getTextOfTsNode(
-            ts.factory.createTypeReferenceNode(
-                ts.factory.createQualifiedName(
-                    ts.factory.createIdentifier(service.name.name),
-                    ts.factory.createIdentifier(ClientConstants.HttpService.ServiceNamespace.Headers.TYPE_NAME)
+    if (doesServiceHaveHeaders(service)) {
+        serviceClass.addProperty({
+            name: ClientConstants.HttpService.PrivateMembers.HEADERS,
+            scope: Scope.Private,
+            type: getTextOfTsNode(
+                ts.factory.createTypeReferenceNode(
+                    ts.factory.createQualifiedName(
+                        ts.factory.createIdentifier(service.name.name),
+                        ts.factory.createIdentifier(ClientConstants.HttpService.ServiceNamespace.Headers.TYPE_NAME)
+                    )
                 )
-            )
-        ),
-    });
+            ),
+        });
+    }
 
     addServiceConstructor({ serviceClass, serviceDefinition: service, dependencyManager });
 

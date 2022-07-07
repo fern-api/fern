@@ -8,24 +8,19 @@ const FIXTURES_DIR = "fixtures";
 const MOCK_HELPERS_MANAGERS = new HelperManager({ encodings: {} });
 
 describe("generateClientProject", () => {
-    itFernETE(
-        "posts",
-        {
-            testFile: __filename,
-            pathToFixture: path.join(FIXTURES_DIR, "posts"),
-            generateFiles: async ({ volume, intermediateRepresentation }) => {
-                await generateClientProject({
-                    packageName: "posts",
-                    packageVersion: "0.0.0",
-                    volume,
-                    intermediateRepresentation,
-                    helperManager: MOCK_HELPERS_MANAGERS,
-                });
-            },
-            outputToDisk: true,
+    itFernETE("posts", {
+        testFile: __filename,
+        pathToFixture: path.join(FIXTURES_DIR, "posts"),
+        generateFiles: async ({ volume, intermediateRepresentation }) => {
+            await generateClientProject({
+                packageName: "posts",
+                packageVersion: "0.0.0",
+                volume,
+                intermediateRepresentation,
+                helperManager: MOCK_HELPERS_MANAGERS,
+            });
         },
-        { only: true }
-    );
+    });
 
     itFernETE("no errors", {
         testFile: __filename,
