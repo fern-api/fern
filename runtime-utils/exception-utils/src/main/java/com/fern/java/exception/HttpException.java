@@ -17,11 +17,11 @@ package com.fern.java.exception;
 
 import java.util.UUID;
 
-public interface HttpException {
+public abstract class HttpException extends Exception {
 
-    int getStatusCode();
+    public abstract int getStatusCode();
 
-    default String getErrorInstanceId() {
+    public final String getErrorInstanceId() {
         return UUID.randomUUID().toString();
     }
 }

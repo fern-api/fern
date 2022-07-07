@@ -16,10 +16,13 @@
 package com.fern.model.codegen.services.payloads;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.codegen.GeneratedEndpointError;
@@ -28,7 +31,9 @@ import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameConstants;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.codegen.utils.MethodNameUtils;
+import com.fern.java.exception.HttpException;
 import com.fern.model.codegen.Generator;
+import com.fern.model.codegen.errors.ErrorGenerator;
 import com.fern.types.ErrorName;
 import com.fern.types.services.FailedResponse;
 import com.fern.types.services.HttpEndpoint;
@@ -42,6 +47,7 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
+import com.squareup.javapoet.TypeVariableName;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -51,15 +57,16 @@ import org.immutables.value.Value;
 
 public final class FailedResponseGenerator extends Generator {
 
-    private static final String CLASSNAME_ERROR_SUFFIX = "Error";
+    private static final String FAILED_RESPONSE_SUFFIX = "FailedResponse";
 
     private static final String INTERNAL_VALUE_INTERFACE_NAME = "InternalValue";
     private static final String INTERNAL_CLASS_NAME_PREFIX = "Internal";
     private static final String INTERNAL_CLASS_NAME_SUFFIX = "Value";
 
     private static final String GET_INTERNAL_VALUE_METHOD_NAME = "getInternalValue";
-    private static final String GET_STATUS_CODE_METHOD_NAME = "getStatusCode";
-    public static final String GET_NESTED_ERROR_METHOD_NAME = "getNestedError";
+
+    private static final String GET_ERROR_INSTANCE_ID_METHOD_NAME = "getErrorInstanceId";
+    public static final String GET_EXCEPTION_METHOD_NAME = "getException";
 
     private static final String VALUE_FIELD_NAME = "value";
 
@@ -86,7 +93,7 @@ public final class FailedResponseGenerator extends Generator {
                                 .name(httpEndpoint.endpointId().value())
                                 .build(),
                         PackageType.SERVICES,
-                        CLASSNAME_ERROR_SUFFIX);
+                        FAILED_RESPONSE_SUFFIX);
         this.internalValueClassNames = failedResponse.errors().stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
@@ -108,7 +115,7 @@ public final class FailedResponseGenerator extends Generator {
                         .build())
                 .addMethod(getConstructor())
                 .addMethod(getInternalValueMethod())
-                .addMethod(getNestedErrorMethodSpec())
+                .addMethod(getExceptionMethodSpec())
                 .addMethods(errorNameToMethodSpec.values())
                 .addType(getInternalValueInterface())
                 .addTypes(getInternalValueTypeSpecs().values())
@@ -145,11 +152,11 @@ public final class FailedResponseGenerator extends Generator {
                 .build();
     }
 
-    private MethodSpec getNestedErrorMethodSpec() {
-        return MethodSpec.methodBuilder("getNestedError")
+    private MethodSpec getExceptionMethodSpec() {
+        return MethodSpec.methodBuilder(GET_EXCEPTION_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .returns(ClassNameConstants.EXCEPTION_CLASS_NAME)
-                .addStatement("return $L.$L()", VALUE_FIELD_NAME, GET_NESTED_ERROR_METHOD_NAME)
+                .addStatement("return $L.$L()", VALUE_FIELD_NAME, GET_EXCEPTION_METHOD_NAME)
                 .build();
     }
 
@@ -189,15 +196,25 @@ public final class FailedResponseGenerator extends Generator {
      * }
      */
     private TypeSpec getInternalValueInterface() {
+        TypeVariableName genericExceptionTypeVar = TypeVariableName.get("T").withBounds(HttpException.class);
         TypeSpec.Builder baseInterfaceTypeSpecBuilder = TypeSpec.interfaceBuilder(internalValueInterfaceClassName)
                 .addModifiers(Modifier.PRIVATE)
-                .addMethod(MethodSpec.methodBuilder(GET_STATUS_CODE_METHOD_NAME)
-                        .returns(ClassName.INT)
+                .addTypeVariable(genericExceptionTypeVar)
+                .addMethod(MethodSpec.methodBuilder(GET_EXCEPTION_METHOD_NAME)
+                        .addAnnotation(JsonIgnore.class)
+                        .returns(genericExceptionTypeVar)
                         .addModifiers(Modifier.ABSTRACT, Modifier.PUBLIC)
                         .build())
-                .addMethod(MethodSpec.methodBuilder(GET_NESTED_ERROR_METHOD_NAME)
-                        .returns(ClassNameConstants.EXCEPTION_CLASS_NAME)
-                        .addModifiers(Modifier.ABSTRACT, Modifier.PUBLIC)
+                .addMethod(MethodSpec.methodBuilder(GET_ERROR_INSTANCE_ID_METHOD_NAME)
+                        .returns(String.class)
+                        .addAnnotation(AnnotationSpec.builder(JsonProperty.class)
+                                .addMember(
+                                        "value",
+                                        "$S",
+                                        generatorContext.getFernConstants().errorInstanceIdKey())
+                                .build())
+                        .addModifiers(Modifier.DEFAULT, Modifier.PUBLIC)
+                        .addStatement("return $L().$L()", GET_EXCEPTION_METHOD_NAME, "getErrorInstanceId")
                         .build())
                 .addAnnotation(AnnotationSpec.builder(JsonTypeInfo.class)
                         .addMember("use", "$T.$L", ClassName.get(JsonTypeInfo.Id.class), JsonTypeInfo.Id.NAME.name())
@@ -245,11 +262,18 @@ public final class FailedResponseGenerator extends Generator {
                                     internalValueClassName.simpleName())
                             .build())
                     .addSuperinterface(internalValueInterfaceClassName);
-
-            MethodSpec internalValueImmutablesProperty = getInternalValueImmutablesProperty(responseError);
             GeneratedError generatedError = generatedErrors.get(responseError.error());
             return typeSpecBuilder
-                    .addMethod(internalValueImmutablesProperty)
+                    .addMethod(MethodSpec.methodBuilder("body")
+                            .addModifiers(Modifier.PUBLIC, Modifier.DEFAULT)
+                            .returns(generatedError.generatedBodyFile().className())
+                            .addAnnotation(Value.Derived.class)
+                            .addAnnotation(JsonUnwrapped.class)
+                            .addStatement(
+                                    "return $L().$L()",
+                                    GET_EXCEPTION_METHOD_NAME,
+                                    ErrorGenerator.GET_ERROR_BODY_METHOD_NAME)
+                            .build())
                     .addMethod(MethodSpec.methodBuilder("of")
                             .addModifiers(Modifier.STATIC, Modifier.PUBLIC)
                             .returns(internalValueClassName)
@@ -258,35 +282,9 @@ public final class FailedResponseGenerator extends Generator {
                                     "return Immutable$L.$L.builder().$L(value).build()",
                                     generatedEndpointErrorClassName.simpleName(),
                                     internalValueClassName.simpleName(),
-                                    internalValueImmutablesProperty.name)
-                            .build())
-                    .addMethod(MethodSpec.methodBuilder(GET_STATUS_CODE_METHOD_NAME)
-                            .returns(ClassName.INT)
-                            .addAnnotation(Override.class)
-                            .addStatement("return $L().$L()", capitalizedDiscriminantValue, GET_STATUS_CODE_METHOD_NAME)
-                            .addModifiers(Modifier.DEFAULT, Modifier.PUBLIC)
-                            .build())
-                    .addMethod(MethodSpec.methodBuilder(GET_NESTED_ERROR_METHOD_NAME)
-                            .returns(ClassNameConstants.EXCEPTION_CLASS_NAME)
-                            .addAnnotation(Override.class)
-                            .addStatement("return $L()", capitalizedDiscriminantValue)
-                            .addModifiers(Modifier.DEFAULT, Modifier.PUBLIC)
+                                    "exception")
                             .build())
                     .build();
         }));
-    }
-
-    private MethodSpec getInternalValueImmutablesProperty(ResponseError responseError) {
-        GeneratedError generatedError = generatedErrors.get(responseError.error());
-        MethodSpec internalValueImmutablesProperty = generatorContext
-                .getImmutablesUtils()
-                .getKeyWordCompatibleImmutablesPropertyMethod(
-                        responseError.discriminantValue(), generatedError.className());
-        return MethodSpec.methodBuilder(internalValueImmutablesProperty.name)
-                .addModifiers(internalValueImmutablesProperty.modifiers)
-                .addAnnotations(internalValueImmutablesProperty.annotations)
-                .addAnnotation(JsonValue.class)
-                .returns(internalValueImmutablesProperty.returnType)
-                .build();
     }
 }

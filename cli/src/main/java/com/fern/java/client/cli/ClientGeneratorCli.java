@@ -16,6 +16,7 @@
 package com.fern.java.client.cli;
 
 import com.fern.codegen.GeneratedAbstractHttpServiceRegistry;
+import com.fern.codegen.GeneratedError;
 import com.fern.codegen.GeneratedFile;
 import com.fern.codegen.GeneratedHttpServiceClient;
 import com.fern.codegen.GeneratedHttpServiceServer;
@@ -146,6 +147,9 @@ public final class ClientGeneratorCli {
         resultBuilder.addAllModelFiles(modelGeneratorResult.objects());
         resultBuilder.addAllModelFiles(modelGeneratorResult.unions());
         resultBuilder.addAllModelFiles(modelGeneratorResult.errors().values());
+        resultBuilder.addAllModelFiles(modelGeneratorResult.errors().values().stream()
+                .map(GeneratedError::generatedBodyFile)
+                .collect(Collectors.toList()));
         resultBuilder.addAllModelFiles(modelGeneratorResult.endpointModelFiles());
         return modelGeneratorResult;
     }

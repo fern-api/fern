@@ -69,6 +69,11 @@ public final class ClassNameUtils {
                 errorName.name(), Optional.empty(), Optional.of(packageType), Optional.of(errorName.fernFilepath()));
     }
 
+    public ClassName getClassNameFromErrorName(ErrorName errorName, PackageType packageType, String suffix) {
+        return getClassName(
+                errorName.name(), Optional.of(suffix), Optional.of(packageType), Optional.of(errorName.fernFilepath()));
+    }
+
     public ClassName getNestedClassName(ClassName outerClassName, String nestedClassName) {
         String compatibleNestedClassName = getCompatibleClassName(nestedClassName);
         return outerClassName.nestedClass(compatibleNestedClassName);

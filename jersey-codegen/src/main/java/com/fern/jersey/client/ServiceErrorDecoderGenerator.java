@@ -115,7 +115,7 @@ public final class ServiceErrorDecoderGenerator extends Generator {
                             DECODE_METHOD_RESPONSE_PARAMETER_NAME,
                             maybeGeneratedEndpointErrorFile.get().className(),
                             maybeGeneratedEndpointErrorFile.get().className(),
-                            FailedResponseGenerator.GET_NESTED_ERROR_METHOD_NAME)
+                            FailedResponseGenerator.GET_EXCEPTION_METHOD_NAME)
                     .endControlFlow();
         }
         codeBlockBuilder.addStatement(

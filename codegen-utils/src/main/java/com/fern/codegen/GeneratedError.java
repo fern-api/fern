@@ -25,6 +25,8 @@ public interface GeneratedError extends IGeneratedFile {
 
     ErrorDeclaration errorDeclaration();
 
+    IGeneratedFile generatedBodyFile();
+
     static ImmutableGeneratedError.FileBuildStage builder() {
         return ImmutableGeneratedError.builder();
     }
