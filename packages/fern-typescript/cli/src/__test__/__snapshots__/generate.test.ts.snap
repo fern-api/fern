@@ -6715,7 +6715,7 @@ export * from \\"./_service-types\\";
         \\"build\\": \\"esbuild $(find . -name '*.ts' -not -path './node_modules/*') --format=cjs --sourcemap --outdir=. && tsc\\"
     },
     \\"dependencies\\": {
-        \\"@fern-typescript/service-utils\\": \\"0.0.114\\",
+        \\"@fern-typescript/service-utils\\": \\"0.0.124\\",
         \\"url-join\\": \\"5.0.0\\"
     },
     \\"devDependencies\\": {
