@@ -80,6 +80,7 @@ public final class ErrorGenerator extends Generator {
                 .addField(FieldSpec.builder(generatedBodyFile.className(), BODY_FIELD_NAME)
                         .build())
                 .addMethod(MethodSpec.constructorBuilder()
+                        .addModifiers(Modifier.PUBLIC)
                         .addParameter(generatedBodyFile.className(), BODY_FIELD_NAME)
                         .addStatement("this.$L = $L", BODY_FIELD_NAME, BODY_FIELD_NAME)
                         .build())
