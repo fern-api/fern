@@ -1,0 +1,166 @@
+{
+    "item": [
+        {
+            "id": "1535c244-08b2-48cc-ba2c-afb2d084b143",
+            "name": "ExampleService",
+            "item": [
+                {
+                    "id": "4af086cf-38b4-4fbb-bb68-8b8ced78976a",
+                    "name": "getExampleObject",
+                    "description": {},
+                    "request": {
+                        "description": {},
+                        "url": {
+                            "path": [
+                                "example-service/get-example-object"
+                            ],
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": ""
+                        }
+                    },
+                    "response": [
+                        {
+                            "id": "27acad77-083e-4fd9-bb70-0ca7e6cc28e2",
+                            "name": "Successful getExampleObject",
+                            "description": {},
+                            "originalRequest": {
+                                "description": {},
+                                "url": {
+                                    "path": [
+                                        "example-service/get-example-object"
+                                    ],
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": ""
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "cookie": [],
+                            "responseTime": 0
+                        }
+                    ],
+                    "event": []
+                },
+                {
+                    "id": "745db234-cb1c-4492-969c-b6f31f12c10e",
+                    "name": "throwError",
+                    "description": {},
+                    "request": {
+                        "description": {},
+                        "url": {
+                            "path": [
+                                "example-service/throw-error"
+                            ],
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": ""
+                        }
+                    },
+                    "response": [
+                        {
+                            "id": "5086ee24-5db1-4d9a-aa48-b04a12c57a27",
+                            "name": "Successful throwError",
+                            "description": {},
+                            "originalRequest": {
+                                "description": {},
+                                "url": {
+                                    "path": [
+                                        "example-service/throw-error"
+                                    ],
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": ""
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "cookie": [],
+                            "responseTime": 0
+                        }
+                    ],
+                    "event": []
+                }
+            ],
+            "event": []
+        }
+    ],
+    "event": [],
+    "variable": [
+        {
+            "type": "any",
+            "value": "http://localhost:8080",
+            "key": "base_url"
+        }
+    ],
+    "info": {
+        "_postman_id": "example-api",
+        "name": "example-api",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    }
+}
