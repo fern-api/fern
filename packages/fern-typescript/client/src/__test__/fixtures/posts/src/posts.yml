@@ -35,10 +35,16 @@ services:
     PostsService:
       base-path: /posts
       auth: bearer
+      headers:
+        apiKey:
+          key: X-API-Key
+          type: string
       endpoints:
         createPost:
           method: POST
           path: /
+          headers:
+            X-Endpoint-Header: string
           request:
             type:
               properties:

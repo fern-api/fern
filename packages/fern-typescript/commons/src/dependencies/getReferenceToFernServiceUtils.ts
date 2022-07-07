@@ -4,12 +4,9 @@ import { DependencyManager } from "./DependencyManager";
 const PACKAGE_NAME = "@fern-typescript/service-utils";
 const VERSION = "0.0.114";
 
-type FernServiceUtilsExport =
-    | ExportedFernServiceUtilsType
-    | ExportedFernServiceUtilsValue
-    | typeof SERVICE_NAMESPACE_NAME;
+type FernServiceUtilsExport = ExportedFernServiceUtilsType | ExportedFernServiceUtilsValue;
 
-export type ExportedFernServiceUtilsType = "Fetcher" | "Token" | "MaybePromise" | "MaybeGetter";
+export type ExportedFernServiceUtilsType = "Fetcher" | "Token" | "MaybeGetter";
 
 export function getReferenceToFernServiceUtilsType({
     type,
@@ -39,27 +36,6 @@ export function getReferenceToFernServiceUtilsValue({
 }): ts.Identifier {
     addFernServiceUtilsImport({ imports: [value], file: referencedIn, dependencyManager });
     return ts.factory.createIdentifier(value);
-}
-
-const SERVICE_NAMESPACE_NAME = "Service";
-export type ExportedServiceNamespaceType = "Init";
-
-export function getReferenceToFernServiceUtilsServiceNamespaceType({
-    type,
-    dependencyManager,
-    referencedIn,
-}: {
-    type: ExportedServiceNamespaceType;
-    dependencyManager: DependencyManager;
-    referencedIn: SourceFile;
-}): ts.TypeNode {
-    addFernServiceUtilsImport({ imports: [SERVICE_NAMESPACE_NAME], file: referencedIn, dependencyManager });
-    return ts.factory.createTypeReferenceNode(
-        ts.factory.createQualifiedName(
-            ts.factory.createIdentifier(SERVICE_NAMESPACE_NAME),
-            ts.factory.createIdentifier(type)
-        )
-    );
 }
 
 const TOKEN_UTILS_NAME = "Token";

@@ -15,7 +15,10 @@ export const ServerConstants = {
             PARAMS: "params",
             QUERY_PARAMS: "query",
             BODY: "body",
-            HEADERS: "headers",
+        },
+
+        RequestMethods: {
+            HEADER: "header",
         },
 
         ResponseMethods: {

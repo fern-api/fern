@@ -40,13 +40,6 @@ export const ClientConstants = {
         // TODO this should probably live with the fern service-utils
         // helpers in fern-typescript commons
         ServiceUtils: {
-            ServiceInit: {
-                Properties: {
-                    FETCHER: "fetcher",
-                    ORIGIN: "origin",
-                    TOKEN: "token",
-                },
-            },
             Fetcher: {
                 Parameters: {
                     URL: "url",
@@ -69,10 +62,26 @@ export const ClientConstants = {
                 },
             },
         },
+        ServiceNamespace: {
+            Init: {
+                TYPE_NAME: "Init",
+                Properties: {
+                    FETCHER: "fetcher",
+                    ORIGIN: "origin",
+                    TOKEN: "token",
+                    HEADERS: "headers",
+                },
+            },
+
+            Headers: {
+                TYPE_NAME: "Headers",
+            },
+        },
         PrivateMembers: {
             BASE_URL: "baseUrl",
             FETCHER: "fetcher",
             TOKEN: "token",
+            HEADERS: "headers",
         },
         Endpoint: {
             Signature: {

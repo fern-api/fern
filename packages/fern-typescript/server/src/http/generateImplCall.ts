@@ -1,4 +1,4 @@
-import { HttpAuth, HttpEndpoint } from "@fern-fern/ir-model/services";
+import { HttpAuth, HttpEndpoint, HttpService } from "@fern-fern/ir-model/services";
 import { DependencyManager, getReferenceToFernServiceUtilsTokenMethod } from "@fern-typescript/commons";
 import { GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/model-context";
 import { SourceFile, ts } from "ts-morph";
@@ -6,19 +6,28 @@ import { ServerConstants } from "../constants";
 import { convertParamValueForExpectedType } from "./convertParamValueForExpectedType";
 
 export function generateImplCall({
+    service,
     endpoint,
     generatedEndpointTypes,
     modelContext,
     file,
     dependencyManager,
 }: {
+    service: HttpService;
     endpoint: HttpEndpoint;
     generatedEndpointTypes: GeneratedHttpEndpointTypes;
     modelContext: ModelContext;
     file: SourceFile;
     dependencyManager: DependencyManager;
 }): ts.Expression {
-    const args = generateImplCallArguments({ endpoint, generatedEndpointTypes, modelContext, dependencyManager, file });
+    const args = generateImplCallArguments({
+        service,
+        endpoint,
+        generatedEndpointTypes,
+        modelContext,
+        dependencyManager,
+        file,
+    });
     return ts.factory.createAwaitExpression(
         ts.factory.createCallExpression(
             ts.factory.createPropertyAccessExpression(
@@ -32,12 +41,14 @@ export function generateImplCall({
 }
 
 function generateImplCallArguments({
+    service,
     endpoint,
     generatedEndpointTypes,
     modelContext,
     file,
     dependencyManager,
 }: {
+    service: HttpService;
     endpoint: HttpEndpoint;
     generatedEndpointTypes: GeneratedHttpEndpointTypes;
     modelContext: ModelContext;
@@ -46,7 +57,7 @@ function generateImplCallArguments({
 }): ts.Expression[] {
     return [
         ...generateImplAuthArguments({ endpoint, dependencyManager, file }),
-        ...generateImplRequestArguments({ endpoint, generatedEndpointTypes, modelContext, file }),
+        ...generateImplRequestArguments({ service, endpoint, generatedEndpointTypes, modelContext, file }),
     ];
 }
 
@@ -69,20 +80,7 @@ function generateImplAuthArguments({
                         referencedIn: file,
                     }),
                     undefined,
-                    [
-                        ts.factory.createAsExpression(
-                            ts.factory.createElementAccessExpression(
-                                ts.factory.createPropertyAccessExpression(
-                                    ts.factory.createIdentifier(
-                                        ServerConstants.Middleware.EndpointImplementation.Request.PARAMETER_NAME
-                                    ),
-                                    ts.factory.createIdentifier(ServerConstants.Express.RequestProperties.HEADERS)
-                                ),
-                                ts.factory.createStringLiteral("Authorization")
-                            ),
-                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-                        ),
-                    ]
+                    [ts.factory.createNonNullExpression(getRequestHeader("Authorization"))]
                 ),
             ];
         },
@@ -94,11 +92,13 @@ function generateImplAuthArguments({
 }
 
 function generateImplRequestArguments({
+    service,
     endpoint,
     generatedEndpointTypes,
     modelContext,
     file,
 }: {
+    service: HttpService;
     endpoint: HttpEndpoint;
     generatedEndpointTypes: GeneratedHttpEndpointTypes;
     modelContext: ModelContext;
@@ -148,6 +148,18 @@ function generateImplRequestArguments({
                     })
                 )
             ),
+            ...[...service.headers, ...endpoint.headers].map((header) =>
+                ts.factory.createPropertyAssignment(
+                    ts.factory.createStringLiteral(header.header),
+                    convertParamValueForExpectedType({
+                        valueReference: ts.factory.createNonNullExpression(getRequestHeader(header.header)),
+                        isValueReferenceTypedAsString: true,
+                        modelContext,
+                        expectedType: header.valueType,
+                        file,
+                    })
+                )
+            ),
         ];
 
         if (generatedEndpointTypes.request.body != null) {
@@ -177,4 +189,15 @@ function generateImplRequestArguments({
     }
 
     return [];
+}
+
+function getRequestHeader(header: string) {
+    return ts.factory.createCallExpression(
+        ts.factory.createPropertyAccessExpression(
+            ts.factory.createIdentifier(ServerConstants.Middleware.EndpointImplementation.Request.PARAMETER_NAME),
+            ts.factory.createIdentifier(ServerConstants.Express.RequestMethods.HEADER)
+        ),
+        undefined,
+        [ts.factory.createStringLiteral(header)]
+    );
 }
