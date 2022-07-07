@@ -84,8 +84,8 @@ public final class ErrorGenerator extends Generator {
                         .addStatement("this.$L = $L", BODY_FIELD_NAME, BODY_FIELD_NAME)
                         .build())
                 .addMethod(MethodSpec.methodBuilder(GET_ERROR_BODY_METHOD_NAME)
+                        .addModifiers(Modifier.PUBLIC)
                         .returns(bodyClassName)
-                        .addParameter(generatedBodyFile.className(), BODY_FIELD_NAME)
                         .addStatement("return $L", BODY_FIELD_NAME)
                         .build());
         if (errorDeclaration.http().isPresent()) {

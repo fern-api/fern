@@ -155,7 +155,7 @@ public final class PostNotFoundError extends HttpException {
     this.body = body;
   }
 
-  PostNotFoundErrorBody getBody(PostNotFoundErrorBody body) {
+  public PostNotFoundErrorBody getBody() {
     return body;
   }
 
@@ -209,7 +209,7 @@ public final class UnauthorizedError extends HttpException {
     this.body = body;
   }
 
-  UnauthorizedErrorBody getBody(UnauthorizedErrorBody body) {
+  public UnauthorizedErrorBody getBody() {
     return body;
   }
 
@@ -355,7 +355,7 @@ public final class GetPostFailedResponse {
   @JsonDeserialize(
       as = GetPostFailedResponse.InternalPostNotFoundErrorValue.class
   )
-  interface InternalPostNotFoundErrorValue extends InternalValue {
+  interface InternalPostNotFoundErrorValue extends InternalValue<PostNotFoundError> {
     @Value.Derived
     @JsonUnwrapped
     default PostNotFoundErrorBody body() {

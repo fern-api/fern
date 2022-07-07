@@ -46,6 +46,7 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.TypeVariableName;
 import java.util.Map;
@@ -247,7 +248,7 @@ public final class FailedResponseGenerator extends Generator {
 
     private Map<ResponseError, TypeSpec> getInternalValueTypeSpecs() {
         return failedResponse.errors().stream().collect(Collectors.toMap(Function.identity(), responseError -> {
-            String capitalizedDiscriminantValue = StringUtils.capitalize(responseError.discriminantValue());
+            GeneratedError generatedError = generatedErrors.get(responseError.error());
             ClassName internalValueClassName = internalValueClassNames.get(responseError);
             TypeSpec.Builder typeSpecBuilder = TypeSpec.interfaceBuilder(internalValueClassName)
                     .addAnnotation(Value.Immutable.class)
@@ -261,8 +262,8 @@ public final class FailedResponseGenerator extends Generator {
                                     generatedEndpointErrorClassName,
                                     internalValueClassName.simpleName())
                             .build())
-                    .addSuperinterface(internalValueInterfaceClassName);
-            GeneratedError generatedError = generatedErrors.get(responseError.error());
+                    .addSuperinterface(
+                            ParameterizedTypeName.get(internalValueInterfaceClassName, generatedError.className()));
             return typeSpecBuilder
                     .addMethod(MethodSpec.methodBuilder("body")
                             .addModifiers(Modifier.PUBLIC, Modifier.DEFAULT)
