@@ -3,20 +3,19 @@
 <!-- check for broken .md links in docs/:
 
 markdown-link-check -q docs/*.md
-markdown-link-check -q docs/_/*.md
 -->
 
 - Getting started
 
-  - [Tutorial: IMDb](_/imdb.md)
-  - [CLI](_/cli.md)
+  - [Tutorial: IMDb](imdb.md)
+  - [CLI](cli.md)
 
 - Concepts
 
-  - [Fern API Definition](_/definition.md)
-  - [Generators](_/generators.md)
+  - [Fern API Definition](definition.md)
+  - [Generators](generators.md)
 
 - Reference
   p
-  - [Comparison with OpenAPI](_/comparison.md)
+  - [Comparison with OpenAPI](comparison.md)
   - [Join the Discord](https://discord.gg/JkkXumPzcG)
