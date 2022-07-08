@@ -2778,19 +2778,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@blueprintjs/colors@npm:^4.1.3":
-  version: 4.1.3
-  resolution: "@blueprintjs/colors@npm:4.1.3"
-  checksum: 024c37b1d51c1de94a8b495ec7fc4d207a5ec91f39ce48559a43fb268f8d394efaea700718c7a73a54b4d27d99600a206fe5c9a22d239deb0861869292e638e0
+"@blueprintjs/colors@npm:^4.1.4":
+  version: 4.1.4
+  resolution: "@blueprintjs/colors@npm:4.1.4"
+  checksum: 178d002bd5c67d8bfee64874895de04c0d6ced63718b341e818a7aa4bd3d4ce398edcbc515d1747678686bafa6a660c24aa7d10cc1e55a7870ffe2919e34aeed
   languageName: node
   linkType: hard
 
-"@blueprintjs/core@npm:^4.5.1":
-  version: 4.5.1
-  resolution: "@blueprintjs/core@npm:4.5.1"
+"@blueprintjs/core@npm:^4.6.0":
+  version: 4.6.0
+  resolution: "@blueprintjs/core@npm:4.6.0"
   dependencies:
-    "@blueprintjs/colors": ^4.1.3
-    "@blueprintjs/icons": ^4.3.0
+    "@blueprintjs/colors": ^4.1.4
+    "@blueprintjs/icons": ^4.3.1
     "@juggle/resize-observer": ^3.3.1
     "@types/dom4": ^2.0.1
     classnames: ^2.2
@@ -2806,36 +2806,36 @@ __metadata:
   bin:
     upgrade-blueprint-2.0.0-rename: scripts/upgrade-blueprint-2.0.0-rename.sh
     upgrade-blueprint-3.0.0-rename: scripts/upgrade-blueprint-3.0.0-rename.sh
-  checksum: 1c874c7267f7a0bb1a4aa01b8aeefcc497f2ed8e43ea1c55a36112da520ca4841c18ef91cbdc8f5fa86dec0c041849984deae5204bd876c0654dd60f50418d3b
+  checksum: 1a471553e8f6d34fa959c12da0f23d95cb38fae637ab45afb1198af014a896cb51fe4710b0e9c0721fdeed2c13eb7e7adb69fa2d4f5b00dcfea4564997a64503
   languageName: node
   linkType: hard
 
-"@blueprintjs/eslint-plugin@npm:^2.1.1":
-  version: 2.1.1
-  resolution: "@blueprintjs/eslint-plugin@npm:2.1.1"
+"@blueprintjs/eslint-plugin@npm:^2.1.2":
+  version: 2.1.2
+  resolution: "@blueprintjs/eslint-plugin@npm:2.1.2"
   dependencies:
     "@typescript-eslint/utils": ^5.21.0
     eslint: ^8.14.0
-  checksum: ac5c56167d49de4d3645a0f146f4b81d05fde37f89828ce7a5a5406a1b67402d31c7a5cced133b9075400c6ff3ad0d1977e7017ac42ea9bd0d064f332d79163a
+  checksum: cf3fb5279aec578daed1adb967aaf8d25489bd79bc6efa59fd5e0e2fa8600e7314e5785777c8f7a7d8e8f970119f622073f1709b81c074d922072131454d0c6c
   languageName: node
   linkType: hard
 
-"@blueprintjs/icons@npm:^4.3.0":
-  version: 4.3.0
-  resolution: "@blueprintjs/icons@npm:4.3.0"
+"@blueprintjs/icons@npm:^4.3.1":
+  version: 4.3.1
+  resolution: "@blueprintjs/icons@npm:4.3.1"
   dependencies:
     change-case: ^4.1.2
     classnames: ^2.2
     tslib: ~2.3.1
-  checksum: e2541f8160fe497de0cafedf6e292ff821cb37cd23df12501407e7c719afabc9eb27c404bd932501ad97f9a681b300c1cd514b8f32b4ef63d0cbe85c11c8828a
+  checksum: 7f28f5c55529964d0584ec3f10f9960001fdb17e401c217b80d08e00c2ebddb4880a8a3cc9a5c793b8eaf6a48b2b9585c8cb50e0e89093d944c3a1cab0a27ff8
   languageName: node
   linkType: hard
 
-"@blueprintjs/popover2@npm:^1.4.1":
-  version: 1.4.1
-  resolution: "@blueprintjs/popover2@npm:1.4.1"
+"@blueprintjs/popover2@npm:^1.4.2":
+  version: 1.4.2
+  resolution: "@blueprintjs/popover2@npm:1.4.2"
   dependencies:
-    "@blueprintjs/core": ^4.5.1
+    "@blueprintjs/core": ^4.6.0
     "@juggle/resize-observer": ^3.3.1
     "@popperjs/core": ^2.5.4
     classnames: ^2.2
@@ -2844,36 +2844,37 @@ __metadata:
     tslib: ~2.3.1
   peerDependencies:
     react: ^16.8 || 17 || 18
-  checksum: e8024b750b9f5bfe52d5b26014ce4fab791cfddd56ac4baf39444473d6633165d2c1efa72209b55443d321fbf656219c5d1a94641291f296e1a45602cf000da2
+    react-dom: ^16.8 || 17 || 18
+  checksum: 0cbe2b04732c8913c6dad3121e60d24f5d1f15d9b0d8b173573ca5efc322f67db2d604603641142aa4aa5f66d7aa4379e4316a36c1a0e19fabd1e9c4071eb78a
   languageName: node
   linkType: hard
 
-"@blueprintjs/select@npm:^4.4.1":
-  version: 4.4.1
-  resolution: "@blueprintjs/select@npm:4.4.1"
+"@blueprintjs/select@npm:^4.4.2":
+  version: 4.4.2
+  resolution: "@blueprintjs/select@npm:4.4.2"
   dependencies:
-    "@blueprintjs/core": ^4.5.1
-    "@blueprintjs/popover2": ^1.4.1
+    "@blueprintjs/core": ^4.6.0
+    "@blueprintjs/popover2": ^1.4.2
     classnames: ^2.2
     tslib: ~2.3.1
   peerDependencies:
     react: ^16.8 || 17 || 18
     react-dom: ^16.8 || 17 || 18
-  checksum: 3232c04882b099c3836ac3f47289a6e522c3212d74423fe330181e3d14c9529e4cc5f94f707696946bf9f76cc55a650e5e92d3019fc340389f2495e90a2bb7c9
+  checksum: eb41a9ea513d477fd6336e4875a605b467d174b3fa6bfe7bd4ccd5f6247a3d528802757cc13e39be40312f494640d5aa02c0378a4964558a1cfeb94a98c1dc20
   languageName: node
   linkType: hard
 
-"@blueprintjs/stylelint-plugin@npm:^2.0.7":
-  version: 2.0.7
-  resolution: "@blueprintjs/stylelint-plugin@npm:2.0.7"
+"@blueprintjs/stylelint-plugin@npm:^2.0.8":
+  version: 2.0.8
+  resolution: "@blueprintjs/stylelint-plugin@npm:2.0.8"
   dependencies:
-    "@blueprintjs/colors": ^4.1.3
+    "@blueprintjs/colors": ^4.1.4
     postcss: ^8.4.12
     postcss-selector-parser: ^6.0.10
     postcss-value-parser: ^4.2.0
   peerDependencies:
     stylelint: ^14.6.1
-  checksum: f13c92ce65ba96a35bcd0a0c40a9f7e16a8c3d41dd5012a69902bf9b58f58162c497b7da8768f8902e4b547dc7ee7426caaf27b47465e612ba6082c8b029e95d
+  checksum: 884f1dda616fd5117f5641e75ace79b0b9a5880d2beff6e573188b4acfaa9008e336885fab31e8ff36a23d4dd1b758e3403b0692013c206f93ecca6872bd1623
   languageName: node
   linkType: hard
 
@@ -3352,10 +3353,10 @@ __metadata:
     "@babel/core": ^7.18.5
     "@babel/preset-env": ^7.18.2
     "@babel/preset-typescript": ^7.17.12
-    "@blueprintjs/core": ^4.5.1
-    "@blueprintjs/icons": ^4.3.0
-    "@blueprintjs/popover2": ^1.4.1
-    "@blueprintjs/select": ^4.4.1
+    "@blueprintjs/core": ^4.6.0
+    "@blueprintjs/icons": ^4.3.1
+    "@blueprintjs/popover2": ^1.4.2
+    "@blueprintjs/select": ^4.4.2
     "@craco/craco": ^6.4.4
     "@fern-api/app": "workspace:*"
     "@types/craco__craco": ^6.4.0
@@ -10588,8 +10589,8 @@ __metadata:
     "@babel/core": ^7.18.5
     "@babel/preset-env": ^7.18.2
     "@babel/preset-typescript": ^7.17.12
-    "@blueprintjs/eslint-plugin": ^2.1.1
-    "@blueprintjs/stylelint-plugin": ^2.0.7
+    "@blueprintjs/eslint-plugin": ^2.1.2
+    "@blueprintjs/stylelint-plugin": ^2.0.8
     "@types/is-ci": ^3.0.0
     "@types/jest": ^28.1.2
     "@types/lodash": ^4.14.182
