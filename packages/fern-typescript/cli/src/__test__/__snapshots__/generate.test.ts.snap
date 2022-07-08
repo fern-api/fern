@@ -143,29 +143,6 @@ export const StoreTracedTestCaseErrorBody = {
               Object {
                 "contents": "import * as model from \\"../..\\";
 
-export interface StoreTracedTestCaseRequest {
-    submissionId: model.SubmissionId;
-    testCaseId: string;
-    body: model.StoreTracedTestCaseRequestBody;
-}
-",
-                "name": "StoreTracedTestCaseRequest.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface StoreTracedTestCaseRequestBody {
-    result: model.TestCaseResultWithStdout;
-    traceResponses: model.TraceResponse[];
-}
-",
-                "name": "StoreTracedTestCaseRequestBody.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
 export type StoreTracedTestCaseResponse = StoreTracedTestCaseResponse.SuccessResponse | StoreTracedTestCaseResponse.ErrorResponse;
 
 namespace StoreTracedTestCaseResponse {
@@ -251,28 +228,6 @@ export const StoreTracedWorkspaceErrorBody = {
 } as const;
 ",
                 "name": "StoreTracedWorkspaceErrorBody.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface StoreTracedWorkspaceRequest {
-    submissionId: model.SubmissionId;
-    body: model.StoreTracedWorkspaceRequestBody;
-}
-",
-                "name": "StoreTracedWorkspaceRequest.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface StoreTracedWorkspaceRequestBody {
-    workspaceRunDetails: model.WorkspaceRunDetails;
-    traceResponses: model.TraceResponse[];
-}
-",
-                "name": "StoreTracedWorkspaceRequestBody.ts",
                 "type": "file",
               },
               Object {
@@ -445,6 +400,29 @@ namespace UpdateWorkspaceSubmissionStatusResponse {
                 "type": "file",
               },
               Object {
+                "contents": "import * as model from \\"../..\\";
+
+export interface _StoreTracedTestCaseRequest {
+    submissionId: model.SubmissionId;
+    testCaseId: string;
+    body: model.StoreTracedTestCaseRequest;
+}
+",
+                "name": "_StoreTracedTestCaseRequest.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
+export interface _StoreTracedWorkspaceRequest {
+    submissionId: model.SubmissionId;
+    body: model.StoreTracedWorkspaceRequest;
+}
+",
+                "name": "_StoreTracedWorkspaceRequest.ts",
+                "type": "file",
+              },
+              Object {
                 "contents": "export * from \\"./UpdateTestSubmissionStatusRequest\\";
 export * from \\"./UpdateTestSubmissionStatusErrorBody\\";
 export * from \\"./UpdateTestSubmissionStatusResponse\\";
@@ -457,15 +435,13 @@ export * from \\"./UpdateWorkspaceSubmissionStatusResponse\\";
 export * from \\"./SendWorkspaceSubmissionUpdateRequest\\";
 export * from \\"./SendWorkspaceSubmissionUpdateErrorBody\\";
 export * from \\"./SendWorkspaceSubmissionUpdateResponse\\";
-export * from \\"./StoreTracedTestCaseRequestBody\\";
-export * from \\"./StoreTracedTestCaseRequest\\";
+export * from \\"./_StoreTracedTestCaseRequest\\";
 export * from \\"./StoreTracedTestCaseErrorBody\\";
 export * from \\"./StoreTracedTestCaseResponse\\";
 export * from \\"./StoreTracedTestCaseV2Request\\";
 export * from \\"./StoreTracedTestCaseV2ErrorBody\\";
 export * from \\"./StoreTracedTestCaseV2Response\\";
-export * from \\"./StoreTracedWorkspaceRequestBody\\";
-export * from \\"./StoreTracedWorkspaceRequest\\";
+export * from \\"./_StoreTracedWorkspaceRequest\\";
 export * from \\"./StoreTracedWorkspaceErrorBody\\";
 export * from \\"./StoreTracedWorkspaceResponse\\";
 export * from \\"./StoreTracedWorkspaceV2Request\\";
@@ -607,7 +583,7 @@ export type GetExecutionSessionsStateResponse = GetExecutionSessionsStateRespons
 namespace GetExecutionSessionsStateResponse {
     export interface SuccessResponse {
         ok: true;
-        body: model.GetExecutionSessionsStateResponseBody;
+        body: model.GetExecutionSessionStateResponse;
     }
 
     export interface ErrorResponse {
@@ -617,18 +593,6 @@ namespace GetExecutionSessionsStateResponse {
 }
 ",
                 "name": "GetExecutionSessionsStateResponse.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface GetExecutionSessionsStateResponseBody {
-    states: Record<string, model.ExecutionSessionState>;
-    numWarmingInstances: number | null | undefined;
-    warmingSessionIds: string[];
-}
-",
-                "name": "GetExecutionSessionsStateResponseBody.ts",
                 "type": "file",
               },
               Object {
@@ -688,7 +652,6 @@ export * from \\"./GetExecutionSessionResponse\\";
 export * from \\"./StopExecutionSessionRequest\\";
 export * from \\"./StopExecutionSessionErrorBody\\";
 export * from \\"./StopExecutionSessionResponse\\";
-export * from \\"./GetExecutionSessionsStateResponseBody\\";
 export * from \\"./GetExecutionSessionsStateErrorBody\\";
 export * from \\"./GetExecutionSessionsStateResponse\\";
 ",
@@ -866,17 +829,6 @@ export const CreatePlaylistErrorBody = {
 } as const;
 ",
                 "name": "CreatePlaylistErrorBody.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface CreatePlaylistRequest {
-    name: string;
-    problems: model.ProblemId[];
-}
-",
-                "name": "CreatePlaylistRequest.ts",
                 "type": "file",
               },
               Object {
@@ -1061,28 +1013,6 @@ export const UpdatePlaylistErrorBody = {
               Object {
                 "contents": "import * as model from \\"../..\\";
 
-export interface UpdatePlaylistRequest {
-    playlistId: model.PlaylistId;
-    body: model.UpdatePlaylistRequestBody;
-}
-",
-                "name": "UpdatePlaylistRequest.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface UpdatePlaylistRequestBody {
-    name: string;
-    problems: model.ProblemId[];
-}
-",
-                "name": "UpdatePlaylistRequestBody.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
 export type UpdatePlaylistResponse = UpdatePlaylistResponse.SuccessResponse | UpdatePlaylistResponse.ErrorResponse;
 
 namespace UpdatePlaylistResponse {
@@ -1101,16 +1031,25 @@ namespace UpdatePlaylistResponse {
                 "type": "file",
               },
               Object {
-                "contents": "export * from \\"./CreatePlaylistRequest\\";
-export * from \\"./CreatePlaylistErrorBody\\";
+                "contents": "import * as model from \\"../..\\";
+
+export interface _UpdatePlaylistRequest {
+    playlistId: model.PlaylistId;
+    body: model.UpdatePlaylistRequest;
+}
+",
+                "name": "_UpdatePlaylistRequest.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "export * from \\"./CreatePlaylistErrorBody\\";
 export * from \\"./CreatePlaylistResponse\\";
 export * from \\"./GetPlaylistsErrorBody\\";
 export * from \\"./GetPlaylistsResponse\\";
 export * from \\"./GetPlaylistRequest\\";
 export * from \\"./GetPlaylistErrorBody\\";
 export * from \\"./GetPlaylistResponse\\";
-export * from \\"./UpdatePlaylistRequestBody\\";
-export * from \\"./UpdatePlaylistRequest\\";
+export * from \\"./_UpdatePlaylistRequest\\";
 export * from \\"./UpdatePlaylistErrorBody\\";
 export * from \\"./UpdatePlaylistResponse\\";
 export * from \\"./DeletePlaylistRequest\\";
@@ -1216,48 +1155,6 @@ export const GetDefaultStarterFilesErrorBody = {
                 "type": "file",
               },
               Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface GetDefaultStarterFilesRequest {
-    inputParams: model.VariableTypeAndName[];
-    outputType: model.VariableType;
-    methodName: string;
-}
-",
-                "name": "GetDefaultStarterFilesRequest.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export type GetDefaultStarterFilesResponse = GetDefaultStarterFilesResponse.SuccessResponse | GetDefaultStarterFilesResponse.ErrorResponse;
-
-namespace GetDefaultStarterFilesResponse {
-    export interface SuccessResponse {
-        ok: true;
-        body: model.GetDefaultStarterFilesResponseBody;
-    }
-
-    export interface ErrorResponse {
-        ok: false;
-        error: model.GetDefaultStarterFilesErrorBody;
-    }
-}
-",
-                "name": "GetDefaultStarterFilesResponse.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface GetDefaultStarterFilesResponseBody {
-    files: Record<model.Language, model.ProblemFiles>;
-}
-",
-                "name": "GetDefaultStarterFilesResponseBody.ts",
-                "type": "file",
-              },
-              Object {
                 "contents": "export type UpdateProblemErrorBody = never;
 
 export declare namespace UpdateProblemErrorBody {
@@ -1311,6 +1208,26 @@ namespace _CreateProblemResponse {
               Object {
                 "contents": "import * as model from \\"../..\\";
 
+export type _GetDefaultStarterFilesResponse = _GetDefaultStarterFilesResponse.SuccessResponse | _GetDefaultStarterFilesResponse.ErrorResponse;
+
+namespace _GetDefaultStarterFilesResponse {
+    export interface SuccessResponse {
+        ok: true;
+        body: model.GetDefaultStarterFilesResponse;
+    }
+
+    export interface ErrorResponse {
+        ok: false;
+        error: model.GetDefaultStarterFilesErrorBody;
+    }
+}
+",
+                "name": "_GetDefaultStarterFilesResponse.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
 export type _UpdateProblemResponse = _UpdateProblemResponse.SuccessResponse | _UpdateProblemResponse.ErrorResponse;
 
 namespace _UpdateProblemResponse {
@@ -1337,10 +1254,8 @@ export * from \\"./_UpdateProblemResponse\\";
 export * from \\"./DeleteProblemRequest\\";
 export * from \\"./DeleteProblemErrorBody\\";
 export * from \\"./DeleteProblemResponse\\";
-export * from \\"./GetDefaultStarterFilesRequest\\";
-export * from \\"./GetDefaultStarterFilesResponseBody\\";
 export * from \\"./GetDefaultStarterFilesErrorBody\\";
-export * from \\"./GetDefaultStarterFilesResponse\\";
+export * from \\"./_GetDefaultStarterFilesResponse\\";
 ",
                 "name": "index.ts",
                 "type": "file",
@@ -1596,39 +1511,6 @@ export interface GetSubmissionStateRequest {
                 "type": "file",
               },
               Object {
-                "contents": "import * as model from \\"../..\\";
-
-export type GetSubmissionStateResponse = GetSubmissionStateResponse.SuccessResponse | GetSubmissionStateResponse.ErrorResponse;
-
-namespace GetSubmissionStateResponse {
-    export interface SuccessResponse {
-        ok: true;
-        body: model.GetSubmissionStateResponseBody;
-    }
-
-    export interface ErrorResponse {
-        ok: false;
-        error: model.GetSubmissionStateErrorBody;
-    }
-}
-",
-                "name": "GetSubmissionStateResponse.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface GetSubmissionStateResponseBody {
-    timeSubmitted: string | null | undefined;
-    submission: string;
-    language: model.Language;
-    submissionTypeState: model.SubmissionTypeState;
-}
-",
-                "name": "GetSubmissionStateResponseBody.ts",
-                "type": "file",
-              },
-              Object {
                 "contents": "export type GetSubmissionStateV2ErrorBody = never;
 
 export declare namespace GetSubmissionStateV2ErrorBody {
@@ -1666,7 +1548,7 @@ export type GetSubmissionStateV2Response = GetSubmissionStateV2Response.SuccessR
 namespace GetSubmissionStateV2Response {
     export interface SuccessResponse {
         ok: true;
-        body: model.GetSubmissionStateV2ResponseBody;
+        body: model.GetSubmissionStateResponse;
     }
 
     export interface ErrorResponse {
@@ -1676,19 +1558,6 @@ namespace GetSubmissionStateV2Response {
 }
 ",
                 "name": "GetSubmissionStateV2Response.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "import * as model from \\"../..\\";
-
-export interface GetSubmissionStateV2ResponseBody {
-    timeSubmitted: string;
-    language: model.Language;
-    submissionFiles: model.SubmissionFileInfo[];
-    submissionStatus: model.SubmissionStatusV2;
-}
-",
-                "name": "GetSubmissionStateV2ResponseBody.ts",
                 "type": "file",
               },
               Object {
@@ -1888,6 +1757,26 @@ namespace GetTraceResponsesV2PageResponse {
               Object {
                 "contents": "import * as model from \\"../..\\";
 
+export type _GetSubmissionStateResponse = _GetSubmissionStateResponse.SuccessResponse | _GetSubmissionStateResponse.ErrorResponse;
+
+namespace _GetSubmissionStateResponse {
+    export interface SuccessResponse {
+        ok: true;
+        body: model.GetSubmissionStateResponse;
+    }
+
+    export interface ErrorResponse {
+        ok: false;
+        error: model.GetSubmissionStateErrorBody;
+    }
+}
+",
+                "name": "_GetSubmissionStateResponse.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
 export interface _GetTraceResponsesPageRequest {
     submissionId: model.SubmissionId;
     testCaseId: string;
@@ -1899,11 +1788,9 @@ export interface _GetTraceResponsesPageRequest {
               },
               Object {
                 "contents": "export * from \\"./GetSubmissionStateRequest\\";
-export * from \\"./GetSubmissionStateResponseBody\\";
 export * from \\"./GetSubmissionStateErrorBody\\";
-export * from \\"./GetSubmissionStateResponse\\";
+export * from \\"./_GetSubmissionStateResponse\\";
 export * from \\"./GetSubmissionStateV2Request\\";
-export * from \\"./GetSubmissionStateV2ResponseBody\\";
 export * from \\"./GetSubmissionStateV2ErrorBody\\";
 export * from \\"./GetSubmissionStateV2Response\\";
 export * from \\"./_GetTraceResponsesPageRequest\\";
@@ -3069,6 +2956,53 @@ export interface FinishedResponse {
             "type": "file",
           },
           Object {
+            "contents": "import * as model from \\"..\\";
+
+export interface GetDefaultStarterFilesRequest {
+    inputParams: model.VariableTypeAndName[];
+    outputType: model.VariableType;
+    methodName: string;
+}
+",
+            "name": "GetDefaultStarterFilesRequest.ts",
+            "type": "file",
+          },
+          Object {
+            "contents": "import * as model from \\"..\\";
+
+export interface GetDefaultStarterFilesResponse {
+    files: Record<model.Language, model.ProblemFiles>;
+}
+",
+            "name": "GetDefaultStarterFilesResponse.ts",
+            "type": "file",
+          },
+          Object {
+            "contents": "import * as model from \\"..\\";
+
+export interface GetExecutionSessionStateResponse {
+    states: Record<string, model.ExecutionSessionState>;
+    numWarmingInstances: number | null | undefined;
+    warmingSessionIds: string[];
+}
+",
+            "name": "GetExecutionSessionStateResponse.ts",
+            "type": "file",
+          },
+          Object {
+            "contents": "import * as model from \\"..\\";
+
+export interface GetSubmissionStateResponse {
+    timeSubmitted: string | null | undefined;
+    submission: string;
+    language: model.Language;
+    submissionTypeState: model.SubmissionTypeState;
+}
+",
+            "name": "GetSubmissionStateResponse.ts",
+            "type": "file",
+          },
+          Object {
             "contents": "export interface GetTraceResponsesPageRequest {
     offset: number | null | undefined;
 }
@@ -3386,6 +3320,17 @@ export interface Playlist {
 }
 ",
             "name": "Playlist.ts",
+            "type": "file",
+          },
+          Object {
+            "contents": "import * as model from \\"..\\";
+
+export interface PlaylistCreateRequest {
+    name: string;
+    problems: model.ProblemId[];
+}
+",
+            "name": "PlaylistCreateRequest.ts",
             "type": "file",
           },
           Object {
@@ -3739,6 +3684,28 @@ export interface StoppedResponse {
 }
 ",
             "name": "StoppedResponse.ts",
+            "type": "file",
+          },
+          Object {
+            "contents": "import * as model from \\"..\\";
+
+export interface StoreTracedTestCaseRequest {
+    result: model.TestCaseResultWithStdout;
+    traceResponses: model.TraceResponse[];
+}
+",
+            "name": "StoreTracedTestCaseRequest.ts",
+            "type": "file",
+          },
+          Object {
+            "contents": "import * as model from \\"..\\";
+
+export interface StoreTracedWorkspaceRequest {
+    workspaceRunDetails: model.WorkspaceRunDetails;
+    traceResponses: model.TraceResponse[];
+}
+",
+            "name": "StoreTracedWorkspaceRequest.ts",
             "type": "file",
           },
           Object {
@@ -4579,6 +4546,17 @@ export interface UnexpectedLanguageError {
             "type": "file",
           },
           Object {
+            "contents": "import * as model from \\"..\\";
+
+export interface UpdatePlaylistRequest {
+    name: string;
+    problems: model.ProblemId[];
+}
+",
+            "name": "UpdatePlaylistRequest.ts",
+            "type": "file",
+          },
+          Object {
             "contents": "export interface UpdateProblemResponse {
     problemVersion: number;
 }
@@ -5205,7 +5183,9 @@ export interface WorkspaceSubmitRequest {
             "type": "file",
           },
           Object {
-            "contents": "export * from \\"./UserId\\";
+            "contents": "export * from \\"./StoreTracedTestCaseRequest\\";
+export * from \\"./StoreTracedWorkspaceRequest\\";
+export * from \\"./UserId\\";
 export * from \\"./ProblemId\\";
 export * from \\"./NodeId\\";
 export * from \\"./VariableType\\";
@@ -5237,6 +5217,8 @@ export * from \\"./MigrationStatus\\";
 export * from \\"./Migration\\";
 export * from \\"./PlaylistId\\";
 export * from \\"./Playlist\\";
+export * from \\"./PlaylistCreateRequest\\";
+export * from \\"./UpdatePlaylistRequest\\";
 export * from \\"./ProblemInfo\\";
 export * from \\"./ProblemDescription\\";
 export * from \\"./ProblemDescriptionBoard\\";
@@ -5247,6 +5229,8 @@ export * from \\"./CreateProblemResponse\\";
 export * from \\"./UpdateProblemResponse\\";
 export * from \\"./CreateProblemError\\";
 export * from \\"./GenericCreateProblemError\\";
+export * from \\"./GetDefaultStarterFilesRequest\\";
+export * from \\"./GetDefaultStarterFilesResponse\\";
 export * from \\"./SubmissionId\\";
 export * from \\"./ShareId\\";
 export * from \\"./SubmissionRequest\\";
@@ -5325,6 +5309,8 @@ export * from \\"./WorkspaceStarterFilesResponse\\";
 export * from \\"./WorkspaceStarterFilesResponseV2\\";
 export * from \\"./WorkspaceFiles\\";
 export * from \\"./ExecutionSessionState\\";
+export * from \\"./GetExecutionSessionStateResponse\\";
+export * from \\"./GetSubmissionStateResponse\\";
 ",
             "name": "index.ts",
             "type": "file",
@@ -5457,47 +5443,6 @@ export const GetBasicSolutionFileErrorBody = {
                     "type": "file",
                   },
                   Object {
-                    "contents": "import * as model from \\"../../..\\";
-
-export interface GetBasicSolutionFileRequest {
-    methodName: string;
-    signature: model.problemV2.NonVoidFunctionSignature;
-}
-",
-                    "name": "GetBasicSolutionFileRequest.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import * as model from \\"../../..\\";
-
-export type GetBasicSolutionFileResponse = GetBasicSolutionFileResponse.SuccessResponse | GetBasicSolutionFileResponse.ErrorResponse;
-
-namespace GetBasicSolutionFileResponse {
-    export interface SuccessResponse {
-        ok: true;
-        body: model.problemV2.GetBasicSolutionFileResponseBody;
-    }
-
-    export interface ErrorResponse {
-        ok: false;
-        error: model.problemV2.GetBasicSolutionFileErrorBody;
-    }
-}
-",
-                    "name": "GetBasicSolutionFileResponse.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import * as model from \\"../../..\\";
-
-export interface GetBasicSolutionFileResponseBody {
-    solutionFileByLanguage: Record<model.Language, model.problemV2.FileInfoV2>;
-}
-",
-                    "name": "GetBasicSolutionFileResponseBody.ts",
-                    "type": "file",
-                  },
-                  Object {
                     "contents": "export type GetDefaultDirectoryForProblemFilesErrorBody = never;
 
 export declare namespace GetDefaultDirectoryForProblemFilesErrorBody {
@@ -5558,46 +5503,6 @@ export const GetFunctionSignatureErrorBody = {
                     "type": "file",
                   },
                   Object {
-                    "contents": "import * as model from \\"../../..\\";
-
-export interface GetFunctionSignatureRequest {
-    functionSignature: model.problemV2.FunctionSignature;
-}
-",
-                    "name": "GetFunctionSignatureRequest.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import * as model from \\"../../..\\";
-
-export type GetFunctionSignatureResponse = GetFunctionSignatureResponse.SuccessResponse | GetFunctionSignatureResponse.ErrorResponse;
-
-namespace GetFunctionSignatureResponse {
-    export interface SuccessResponse {
-        ok: true;
-        body: model.problemV2.GetFunctionSignatureResponseBody;
-    }
-
-    export interface ErrorResponse {
-        ok: false;
-        error: model.problemV2.GetFunctionSignatureErrorBody;
-    }
-}
-",
-                    "name": "GetFunctionSignatureResponse.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import * as model from \\"../../..\\";
-
-export interface GetFunctionSignatureResponseBody {
-    functionByLanguage: Record<model.Language, string>;
-}
-",
-                    "name": "GetFunctionSignatureResponseBody.ts",
-                    "type": "file",
-                  },
-                  Object {
                     "contents": "export type GetGeneratedTestCaseFileErrorBody = never;
 
 export declare namespace GetGeneratedTestCaseFileErrorBody {
@@ -5615,20 +5520,6 @@ export const GetGeneratedTestCaseFileErrorBody = {
 } as const;
 ",
                     "name": "GetGeneratedTestCaseFileErrorBody.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import * as model from \\"../../..\\";
-
-/**
- * Supply template if the test case relies on it
- */
-export interface GetGeneratedTestCaseFileRequest {
-    template: model.problemV2.TestCaseTemplate | null | undefined;
-    testCase: model.problemV2.TestCaseV2;
-}
-",
-                    "name": "GetGeneratedTestCaseFileRequest.ts",
                     "type": "file",
                   },
                   Object {
@@ -5669,16 +5560,6 @@ export const GetGeneratedTestCaseTemplateFileErrorBody = {
 } as const;
 ",
                     "name": "GetGeneratedTestCaseTemplateFileErrorBody.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import * as model from \\"../../..\\";
-
-export interface GetGeneratedTestCaseTemplateFileRequest {
-    template: model.problemV2.TestCaseTemplate;
-}
-",
-                    "name": "GetGeneratedTestCaseTemplateFileRequest.ts",
                     "type": "file",
                   },
                   Object {
@@ -5753,6 +5634,46 @@ namespace UpdateProblemResponse {
                     "type": "file",
                   },
                   Object {
+                    "contents": "import * as model from \\"../../..\\";
+
+export type _GetBasicSolutionFileResponse = _GetBasicSolutionFileResponse.SuccessResponse | _GetBasicSolutionFileResponse.ErrorResponse;
+
+namespace _GetBasicSolutionFileResponse {
+    export interface SuccessResponse {
+        ok: true;
+        body: model.problemV2.GetBasicSolutionFileResponse;
+    }
+
+    export interface ErrorResponse {
+        ok: false;
+        error: model.problemV2.GetBasicSolutionFileErrorBody;
+    }
+}
+",
+                    "name": "_GetBasicSolutionFileResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import * as model from \\"../../..\\";
+
+export type _GetFunctionSignatureResponse = _GetFunctionSignatureResponse.SuccessResponse | _GetFunctionSignatureResponse.ErrorResponse;
+
+namespace _GetFunctionSignatureResponse {
+    export interface SuccessResponse {
+        ok: true;
+        body: model.problemV2.GetFunctionSignatureResponse;
+    }
+
+    export interface ErrorResponse {
+        ok: false;
+        error: model.problemV2.GetFunctionSignatureErrorBody;
+    }
+}
+",
+                    "name": "_GetFunctionSignatureResponse.ts",
+                    "type": "file",
+                  },
+                  Object {
                     "contents": "export * from \\"./CreateProblemErrorBody\\";
 export * from \\"./CreateProblemResponse\\";
 export * from \\"./UpdateProblemRequest\\";
@@ -5761,20 +5682,14 @@ export * from \\"./UpdateProblemResponse\\";
 export * from \\"./DeleteProblemRequest\\";
 export * from \\"./DeleteProblemErrorBody\\";
 export * from \\"./DeleteProblemResponse\\";
-export * from \\"./GetFunctionSignatureRequest\\";
-export * from \\"./GetFunctionSignatureResponseBody\\";
 export * from \\"./GetFunctionSignatureErrorBody\\";
-export * from \\"./GetFunctionSignatureResponse\\";
-export * from \\"./GetBasicSolutionFileRequest\\";
-export * from \\"./GetBasicSolutionFileResponseBody\\";
+export * from \\"./_GetFunctionSignatureResponse\\";
 export * from \\"./GetBasicSolutionFileErrorBody\\";
-export * from \\"./GetBasicSolutionFileResponse\\";
+export * from \\"./_GetBasicSolutionFileResponse\\";
 export * from \\"./GetDefaultDirectoryForProblemFilesErrorBody\\";
 export * from \\"./GetDefaultDirectoryForProblemFilesResponse\\";
-export * from \\"./GetGeneratedTestCaseFileRequest\\";
 export * from \\"./GetGeneratedTestCaseFileErrorBody\\";
 export * from \\"./GetGeneratedTestCaseFileResponse\\";
-export * from \\"./GetGeneratedTestCaseTemplateFileRequest\\";
 export * from \\"./GetGeneratedTestCaseTemplateFileErrorBody\\";
 export * from \\"./GetGeneratedTestCaseTemplateFileResponse\\";
 ",
@@ -6278,6 +6193,68 @@ export interface GeneratedFiles {
               Object {
                 "contents": "import * as model from \\"../..\\";
 
+export interface GetBasicSolutionFileRequest {
+    methodName: string;
+    signature: model.problemV2.NonVoidFunctionSignature;
+}
+",
+                "name": "GetBasicSolutionFileRequest.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
+export interface GetBasicSolutionFileResponse {
+    solutionFileByLanguage: Record<model.Language, model.problemV2.FileInfoV2>;
+}
+",
+                "name": "GetBasicSolutionFileResponse.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
+export interface GetFunctionSignatureRequest {
+    functionSignature: model.problemV2.FunctionSignature;
+}
+",
+                "name": "GetFunctionSignatureRequest.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
+export interface GetFunctionSignatureResponse {
+    functionByLanguage: Record<model.Language, string>;
+}
+",
+                "name": "GetFunctionSignatureResponse.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
+export interface GetGeneratedTestCaseFileRequest {
+    template: model.problemV2.TestCaseTemplate | null | undefined;
+    testCase: model.problemV2.TestCaseV2;
+}
+",
+                "name": "GetGeneratedTestCaseFileRequest.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
+export interface GetGeneratedTestCaseTemplateFileRequest {
+    template: model.problemV2.TestCaseTemplate;
+}
+",
+                "name": "GetGeneratedTestCaseTemplateFileRequest.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import * as model from \\"../..\\";
+
 export interface LightweightProblemInfoV2 {
     problemId: model.ProblemId;
     problemName: string;
@@ -6683,6 +6660,12 @@ export * from \\"./Files\\";
 export * from \\"./FileInfoV2\\";
 export * from \\"./DefaultProvidedFile\\";
 export * from \\"./FunctionSignature\\";
+export * from \\"./GetFunctionSignatureRequest\\";
+export * from \\"./GetFunctionSignatureResponse\\";
+export * from \\"./GetBasicSolutionFileRequest\\";
+export * from \\"./GetBasicSolutionFileResponse\\";
+export * from \\"./GetGeneratedTestCaseFileRequest\\";
+export * from \\"./GetGeneratedTestCaseTemplateFileRequest\\";
 ",
                 "name": "index.ts",
                 "type": "file",
@@ -6739,9 +6722,9 @@ export interface AdminService {
     sendTestSubmissionUpdate(request: model.SendTestSubmissionUpdateRequest): Promise<model.SendTestSubmissionUpdateResponse>;
     updateWorkspaceSubmissionStatus(request: model.UpdateWorkspaceSubmissionStatusRequest): Promise<model.UpdateWorkspaceSubmissionStatusResponse>;
     sendWorkspaceSubmissionUpdate(request: model.SendWorkspaceSubmissionUpdateRequest): Promise<model.SendWorkspaceSubmissionUpdateResponse>;
-    storeTracedTestCase(request: model.StoreTracedTestCaseRequest): Promise<model.StoreTracedTestCaseResponse>;
+    storeTracedTestCase(request: model._StoreTracedTestCaseRequest): Promise<model.StoreTracedTestCaseResponse>;
     storeTracedTestCaseV2(request: model.StoreTracedTestCaseV2Request): Promise<model.StoreTracedTestCaseV2Response>;
-    storeTracedWorkspace(request: model.StoreTracedWorkspaceRequest): Promise<model.StoreTracedWorkspaceResponse>;
+    storeTracedWorkspace(request: model._StoreTracedWorkspaceRequest): Promise<model.StoreTracedWorkspaceResponse>;
     storeTracedWorkspaceV2(request: model.StoreTracedWorkspaceV2Request): Promise<model.StoreTracedWorkspaceV2Response>;
 }
 
@@ -6860,7 +6843,7 @@ export class AdminService implements AdminService {
         }
     }
 
-    public async storeTracedTestCase(request: model.StoreTracedTestCaseRequest): Promise<model.StoreTracedTestCaseResponse> {
+    public async storeTracedTestCase(request: model._StoreTracedTestCaseRequest): Promise<model.StoreTracedTestCaseResponse> {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \`/store-test-trace/submission/\${request.submissionId}/testCase/\${request.testCaseId}\`),
             method: \\"POST\\",
@@ -6912,7 +6895,7 @@ export class AdminService implements AdminService {
         }
     }
 
-    public async storeTracedWorkspace(request: model.StoreTracedWorkspaceRequest): Promise<model.StoreTracedWorkspaceResponse> {
+    public async storeTracedWorkspace(request: model._StoreTracedWorkspaceRequest): Promise<model.StoreTracedWorkspaceResponse> {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \`/store-workspace-trace/submission/\${request.submissionId}\`),
             method: \\"POST\\",
@@ -7076,7 +7059,7 @@ export class ExecutionSesssionManagementService implements ExecutionSesssionMana
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.GetExecutionSessionsStateResponseBody
+                body: response as model.GetExecutionSessionStateResponse
             };
         }
         else {
@@ -7221,10 +7204,10 @@ import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
 export interface PlaylistCrudService {
-    createPlaylist(request: model.CreatePlaylistRequest): Promise<model.CreatePlaylistResponse>;
+    createPlaylist(request: model.PlaylistCreateRequest): Promise<model.CreatePlaylistResponse>;
     getPlaylists(): Promise<model.GetPlaylistsResponse>;
     getPlaylist(request: model.GetPlaylistRequest): Promise<model.GetPlaylistResponse>;
-    updatePlaylist(request: model.UpdatePlaylistRequest): Promise<model.UpdatePlaylistResponse>;
+    updatePlaylist(request: model._UpdatePlaylistRequest): Promise<model.UpdatePlaylistResponse>;
     deletePlaylist(request: model.DeletePlaylistRequest): Promise<model.DeletePlaylistResponse>;
 }
 
@@ -7239,7 +7222,7 @@ export class PlaylistCrudService implements PlaylistCrudService {
         this.token = args.token;
     }
 
-    public async createPlaylist(request: model.CreatePlaylistRequest): Promise<model.CreatePlaylistResponse> {
+    public async createPlaylist(request: model.PlaylistCreateRequest): Promise<model.CreatePlaylistResponse> {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/create\\"),
             method: \\"POST\\",
@@ -7315,7 +7298,7 @@ export class PlaylistCrudService implements PlaylistCrudService {
         }
     }
 
-    public async updatePlaylist(request: model.UpdatePlaylistRequest): Promise<model.UpdatePlaylistResponse> {
+    public async updatePlaylist(request: model._UpdatePlaylistRequest): Promise<model.UpdatePlaylistResponse> {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \`/\${request.playlistId}\`),
             method: \\"PUT\\",
@@ -7378,7 +7361,7 @@ export interface ProblemCrudService {
     createProblem(request: model.CreateProblemRequest): Promise<model._CreateProblemResponse>;
     updateProblem(request: model.UpdateProblemRequest): Promise<model._UpdateProblemResponse>;
     deleteProblem(request: model.DeleteProblemRequest): Promise<model.DeleteProblemResponse>;
-    getDefaultStarterFiles(request: model.GetDefaultStarterFilesRequest): Promise<model.GetDefaultStarterFilesResponse>;
+    getDefaultStarterFiles(request: model.GetDefaultStarterFilesRequest): Promise<model._GetDefaultStarterFilesResponse>;
 }
 
 export class ProblemCrudService implements ProblemCrudService {
@@ -7470,7 +7453,7 @@ export class ProblemCrudService implements ProblemCrudService {
         }
     }
 
-    public async getDefaultStarterFiles(request: model.GetDefaultStarterFilesRequest): Promise<model.GetDefaultStarterFilesResponse> {
+    public async getDefaultStarterFiles(request: model.GetDefaultStarterFilesRequest): Promise<model._GetDefaultStarterFilesResponse> {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/default-starter-files\\"),
             method: \\"POST\\",
@@ -7486,7 +7469,7 @@ export class ProblemCrudService implements ProblemCrudService {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.GetDefaultStarterFilesResponseBody
+                body: response as model.GetDefaultStarterFilesResponse
             };
         }
         else {
@@ -7634,7 +7617,7 @@ import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
 export interface SubmissionInfoService {
-    getSubmissionState(request: model.GetSubmissionStateRequest): Promise<model.GetSubmissionStateResponse>;
+    getSubmissionState(request: model.GetSubmissionStateRequest): Promise<model._GetSubmissionStateResponse>;
     getSubmissionStateV2(request: model.GetSubmissionStateV2Request): Promise<model.GetSubmissionStateV2Response>;
     getTraceResponsesPage(request: model._GetTraceResponsesPageRequest): Promise<model.GetTraceResponsesPageResponse>;
     getTraceResponsesV2Page(request: model.GetTraceResponsesV2PageRequest): Promise<model.GetTraceResponsesV2PageResponse>;
@@ -7656,7 +7639,7 @@ export class SubmissionInfoService implements SubmissionInfoService {
         this.token = args.token;
     }
 
-    public async getSubmissionState(request: model.GetSubmissionStateRequest): Promise<model.GetSubmissionStateResponse> {
+    public async getSubmissionState(request: model.GetSubmissionStateRequest): Promise<model._GetSubmissionStateResponse> {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \`/\${request.submissionId}\`),
             method: \\"GET\\",
@@ -7668,7 +7651,7 @@ export class SubmissionInfoService implements SubmissionInfoService {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.GetSubmissionStateResponseBody
+                body: response as model.GetSubmissionStateResponse
             };
         }
         else {
@@ -7692,7 +7675,7 @@ export class SubmissionInfoService implements SubmissionInfoService {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.GetSubmissionStateV2ResponseBody
+                body: response as model.GetSubmissionStateResponse
             };
         }
         else {
@@ -7991,8 +7974,8 @@ export interface ProblemCrudServiceV2 {
     createProblem(request: model.problemV2.CreateProblemRequestV2): Promise<model.problemV2.CreateProblemResponse>;
     updateProblem(request: model.problemV2.UpdateProblemRequest): Promise<model.problemV2.UpdateProblemResponse>;
     deleteProblem(request: model.problemV2.DeleteProblemRequest): Promise<model.problemV2.DeleteProblemResponse>;
-    getFunctionSignature(request: model.problemV2.GetFunctionSignatureRequest): Promise<model.problemV2.GetFunctionSignatureResponse>;
-    getBasicSolutionFile(request: model.problemV2.GetBasicSolutionFileRequest): Promise<model.problemV2.GetBasicSolutionFileResponse>;
+    getFunctionSignature(request: model.problemV2.GetFunctionSignatureRequest): Promise<model.problemV2._GetFunctionSignatureResponse>;
+    getBasicSolutionFile(request: model.problemV2.GetBasicSolutionFileRequest): Promise<model.problemV2._GetBasicSolutionFileResponse>;
     getDefaultDirectoryForProblemFiles(): Promise<model.problemV2.GetDefaultDirectoryForProblemFilesResponse>;
     getGeneratedTestCaseFile(request: model.problemV2.GetGeneratedTestCaseFileRequest): Promise<model.problemV2.GetGeneratedTestCaseFileResponse>;
     getGeneratedTestCaseTemplateFile(request: model.problemV2.GetGeneratedTestCaseTemplateFileRequest): Promise<model.problemV2.GetGeneratedTestCaseTemplateFileResponse>;
@@ -8087,7 +8070,7 @@ export class ProblemCrudServiceV2 implements ProblemCrudServiceV2 {
         }
     }
 
-    public async getFunctionSignature(request: model.problemV2.GetFunctionSignatureRequest): Promise<model.problemV2.GetFunctionSignatureResponse> {
+    public async getFunctionSignature(request: model.problemV2.GetFunctionSignatureRequest): Promise<model.problemV2._GetFunctionSignatureResponse> {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/function-signature\\"),
             method: \\"POST\\",
@@ -8103,7 +8086,7 @@ export class ProblemCrudServiceV2 implements ProblemCrudServiceV2 {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.problemV2.GetFunctionSignatureResponseBody
+                body: response as model.problemV2.GetFunctionSignatureResponse
             };
         }
         else {
@@ -8115,7 +8098,7 @@ export class ProblemCrudServiceV2 implements ProblemCrudServiceV2 {
         }
     }
 
-    public async getBasicSolutionFile(request: model.problemV2.GetBasicSolutionFileRequest): Promise<model.problemV2.GetBasicSolutionFileResponse> {
+    public async getBasicSolutionFile(request: model.problemV2.GetBasicSolutionFileRequest): Promise<model.problemV2._GetBasicSolutionFileResponse> {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/basic-solution-file\\"),
             method: \\"POST\\",
@@ -8131,7 +8114,7 @@ export class ProblemCrudServiceV2 implements ProblemCrudServiceV2 {
             const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.problemV2.GetBasicSolutionFileResponseBody
+                body: response as model.problemV2.GetBasicSolutionFileResponse
             };
         }
         else {

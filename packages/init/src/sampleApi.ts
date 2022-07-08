@@ -19,6 +19,12 @@ const API: RawSchemas.FernConfigurationSchema = {
                 rating: "double",
             },
         },
+        CreateMovieRequest: {
+            properties: {
+                title: "string",
+                rating: "double",
+            },
+        },
     },
     errors: {
         NotFoundError: {
@@ -33,24 +39,11 @@ const API: RawSchemas.FernConfigurationSchema = {
                 auth: "none",
                 endpoints: {
                     createMovie: {
-                        request: {
-                            type: {
-                                properties: {
-                                    title: "string",
-                                    rating: "double",
-                                },
-                            },
-                        },
+                        request: "CreateMovieRequest",
                         response: "MovieId",
                     },
                     getMovie: {
-                        request: {
-                            type: {
-                                properties: {
-                                    movieId: "MovieId",
-                                },
-                            },
-                        },
+                        request: "MovieId",
                         response: {
                             ok: "Movie",
                             failed: {

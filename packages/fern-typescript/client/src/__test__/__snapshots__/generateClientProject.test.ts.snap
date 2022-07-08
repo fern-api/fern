@@ -375,15 +375,6 @@ export const CreatePostErrorBody = {
     _types: (): CreatePostErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
-  "/model/_service-types/PostsService/CreatePostRequest.ts": "import * as model from \\"../..\\";
-
-export interface CreatePostRequest {
-    type: model.PostType;
-    title: string;
-    author: model.Author;
-    content: string;
-}
-",
   "/model/_service-types/PostsService/CreatePostResponse.ts": "import * as model from \\"../..\\";
 
 export type CreatePostResponse = CreatePostResponse.SuccessResponse | CreatePostResponse.ErrorResponse;
@@ -510,8 +501,7 @@ namespace GetPostV2Response {
     }
 }
 ",
-  "/model/_service-types/PostsService/index.ts": "export * from \\"./CreatePostRequest\\";
-export * from \\"./CreatePostErrorBody\\";
+  "/model/_service-types/PostsService/index.ts": "export * from \\"./CreatePostErrorBody\\";
 export * from \\"./CreatePostResponse\\";
 export * from \\"./GetPostRequest\\";
 export * from \\"./GetPostErrorBody\\";
@@ -562,6 +552,15 @@ export const Author = {
 
     _types: (): Author[\\"_type\\"][] => [\\"anonymous\\", \\"named\\"],
 } as const;
+",
+  "/model/_types/CreatePostRequest.ts": "import * as model from \\"..\\";
+
+export interface CreatePostRequest {
+    type: model.PostType;
+    title: string;
+    author: model.Author;
+    content: string;
+}
 ",
   "/model/_types/Post.ts": "import * as model from \\"..\\";
 
@@ -622,6 +621,7 @@ export declare namespace PostType {
 export * from \\"./Post\\";
 export * from \\"./PostType\\";
 export * from \\"./Author\\";
+export * from \\"./CreatePostRequest\\";
 ",
   "/model/index.ts": "export * from \\"./_types\\";
 export * from \\"./_errors\\";

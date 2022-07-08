@@ -35,7 +35,7 @@
     "@fern-api/compiler-commons": "workspace:*",
     "@fern-api/ir-generation": "workspace:*",
     "@fern-api/syntax-analysis": "workspace:*",
-    "@fern-fern/ir-model": "0.0.15"
+    "@fern-fern/ir-model": "0.0.17"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",

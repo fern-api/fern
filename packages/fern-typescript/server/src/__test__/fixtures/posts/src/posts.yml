@@ -12,6 +12,13 @@ types:
       content: string
       relatedPosts: list<Post>
 
+  CreatePostRequest:
+    properties:
+      type: PostType
+      title: string
+      author: Author
+      content: string
+
   PostType:
     enum:
       - LONG
@@ -40,13 +47,7 @@ services:
           method: POST
           path: /
           auth-override: none
-          request:
-            type:
-              properties:
-                type: PostType
-                title: string
-                author: Author
-                content: string
+          request: CreatePostRequest
           response: commons.PostId
         getPost:
           method: GET

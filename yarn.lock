@@ -1719,7 +1719,7 @@ __metadata:
     "@fern-api/compiler-commons": "workspace:*"
     "@fern-api/ir-generation": "workspace:*"
     "@fern-api/syntax-analysis": "workspace:*"
-    "@fern-fern/ir-model": 0.0.15
+    "@fern-fern/ir-model": 0.0.17
     "@types/jest": ^28.1.2
     "@types/node": ^17.0.33
     depcheck: ^1.4.3
@@ -1804,7 +1804,7 @@ __metadata:
     "@fern-api/commons": "workspace:*"
     "@fern-api/compiler-commons": "workspace:*"
     "@fern-api/syntax-analysis": "workspace:*"
-    "@fern-fern/ir-model": 0.0.15
+    "@fern-fern/ir-model": 0.0.17
     "@types/jest": ^28.1.2
     "@types/lodash": ^4.14.182
     "@types/node": ^17.0.33
@@ -1828,7 +1828,7 @@ __metadata:
     "@fern-api/commons": "workspace:*"
     "@fern-api/compiler": "workspace:*"
     "@fern-api/docker-utils": "workspace:*"
-    "@fern-fern/ir-model": 0.0.15
+    "@fern-fern/ir-model": 0.0.17
     "@types/jest": ^28.1.2
     "@types/node": ^17.0.33
     "@types/tar": ^6.1.1
@@ -1999,10 +1999,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/ir-model@npm:0.0.15":
-  version: 0.0.15
-  resolution: "@fern-fern/ir-model@npm:0.0.15"
-  checksum: e875e70396653643924ca46dccca20f4834de3d8531bafc22faea926581ee6dee47f482dc12f6918a13a949c1c7fa856ae22ec5465d98e90c16fca699b8f1910
+"@fern-fern/ir-model@npm:0.0.17":
+  version: 0.0.17
+  resolution: "@fern-fern/ir-model@npm:0.0.17"
+  checksum: df72be754a326d7a4faa85e23e4e1da2d82a20fdcbe4e6c07917f8750d361cb3cad6c21d3f9ac988e02404ae5fd1b1474215cc77cd31e650f969d1ab481b294f
   languageName: node
   linkType: hard
 
@@ -2014,7 +2014,7 @@ __metadata:
     "@babel/preset-env": ^7.18.2
     "@babel/preset-typescript": ^7.17.12
     "@fern-api/commons": "workspace:*"
-    "@fern-fern/ir-model": 0.0.15
+    "@fern-fern/ir-model": 0.0.17
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/encoders": "workspace:*"
     "@fern-typescript/helper-manager": "workspace:*"
@@ -2044,7 +2044,7 @@ __metadata:
     "@babel/preset-env": ^7.18.2
     "@babel/preset-typescript": ^7.17.12
     "@fern-api/commons": "workspace:*"
-    "@fern-fern/ir-model": 0.0.15
+    "@fern-fern/ir-model": 0.0.17
     "@types/esutils": ^2.0.0
     "@types/jest": ^28.1.2
     "@types/lodash": ^4.14.182
@@ -2071,7 +2071,7 @@ __metadata:
     "@babel/core": ^7.18.5
     "@babel/preset-env": ^7.18.2
     "@babel/preset-typescript": ^7.17.12
-    "@fern-fern/ir-model": 0.0.15
+    "@fern-fern/ir-model": 0.0.17
     "@fern-typescript/helper-manager": "workspace:*"
     "@fern-typescript/model-context": "workspace:*"
     "@types/jest": ^28.1.2
@@ -2093,7 +2093,7 @@ __metadata:
     "@babel/core": ^7.18.5
     "@babel/preset-env": ^7.18.2
     "@babel/preset-typescript": ^7.17.12
-    "@fern-fern/ir-model": 0.0.15
+    "@fern-fern/ir-model": 0.0.17
     "@fern-typescript/model-context": "workspace:*"
     "@fern-typescript/types": "workspace:*"
     "@types/jest": ^28.1.2
@@ -2115,7 +2115,7 @@ __metadata:
     "@babel/preset-env": ^7.18.2
     "@babel/preset-typescript": ^7.17.12
     "@fern-api/commons": "workspace:*"
-    "@fern-fern/ir-model": 0.0.15
+    "@fern-fern/ir-model": 0.0.17
     "@fern-typescript/helper-utils": "workspace:*"
     "@fern-typescript/json-encoding-helper": "workspace:*"
     "@types/jest": ^28.1.2
@@ -2137,7 +2137,7 @@ __metadata:
     "@babel/core": ^7.18.5
     "@babel/preset-env": ^7.18.2
     "@babel/preset-typescript": ^7.17.12
-    "@fern-fern/ir-model": 0.0.15
+    "@fern-fern/ir-model": 0.0.17
     "@fern-typescript/model-context": "workspace:*"
     "@types/jest": ^28.1.2
     "@types/node": ^17.0.33
@@ -2178,7 +2178,7 @@ __metadata:
     "@babel/preset-env": ^7.18.2
     "@babel/preset-typescript": ^7.17.12
     "@fern-api/commons": "workspace:*"
-    "@fern-fern/ir-model": 0.0.15
+    "@fern-fern/ir-model": 0.0.17
     "@fern-typescript/commons": "workspace:*"
     "@types/jest": ^28.1.2
     "@types/node": ^17.0.33
@@ -2199,7 +2199,7 @@ __metadata:
     "@babel/core": ^7.18.5
     "@babel/preset-env": ^7.18.2
     "@babel/preset-typescript": ^7.17.12
-    "@fern-fern/ir-model": 0.0.15
+    "@fern-fern/ir-model": 0.0.17
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/errors": "workspace:*"
     "@fern-typescript/model-context": "workspace:*"
@@ -2226,7 +2226,7 @@ __metadata:
     "@babel/core": ^7.18.5
     "@babel/preset-env": ^7.18.2
     "@babel/preset-typescript": ^7.17.12
-    "@fern-fern/ir-model": 0.0.15
+    "@fern-fern/ir-model": 0.0.17
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/encoders": "workspace:*"
     "@fern-typescript/helper-manager": "workspace:*"
@@ -2256,7 +2256,7 @@ __metadata:
     "@babel/preset-env": ^7.18.2
     "@babel/preset-typescript": ^7.17.12
     "@fern-api/commons": "workspace:*"
-    "@fern-fern/ir-model": 0.0.15
+    "@fern-fern/ir-model": 0.0.17
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/model-context": "workspace:*"
     "@fern-typescript/types": "workspace:*"
@@ -2311,7 +2311,7 @@ __metadata:
     "@babel/preset-typescript": ^7.17.12
     "@fern-api/cli": "workspace:*"
     "@fern-api/compiler": "workspace:*"
-    "@fern-fern/ir-model": 0.0.15
+    "@fern-fern/ir-model": 0.0.17
     "@fern-typescript/commons": "workspace:*"
     "@types/is-ci": ^3.0.0
     "@types/jest": ^28.1.2
@@ -2335,7 +2335,7 @@ __metadata:
     "@babel/core": ^7.18.5
     "@babel/preset-env": ^7.18.2
     "@babel/preset-typescript": ^7.17.12
-    "@fern-fern/ir-model": 0.0.15
+    "@fern-fern/ir-model": 0.0.17
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/model-context": "workspace:*"
     "@types/jest": ^28.1.2
@@ -5621,7 +5621,7 @@ __metadata:
     "@fern-api/cli": "workspace:*"
     "@fern-api/commons": "workspace:*"
     "@fern-api/compiler": "workspace:*"
-    "@fern-fern/ir-model": 0.0.15
+    "@fern-fern/ir-model": 0.0.17
     "@fern-typescript/client": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/helper-manager": "workspace:*"

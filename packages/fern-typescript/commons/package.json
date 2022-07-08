@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@fern-api/commons": "workspace:*",
-    "@fern-fern/ir-model": "0.0.15",
+    "@fern-fern/ir-model": "0.0.17",
     "esutils": "^2.0.3",
     "immer": "^9.0.15",
     "lodash": "^4.17.21",
