@@ -1,7 +1,7 @@
 import { RawSchemas } from "@fern-api/syntax-analysis";
-import { FernFilepath } from "@fern-fern/ir-model";
+import { FernFilepath, TypeReference } from "@fern-fern/ir-model";
 import { CustomWireMessageEncoding, WebSocketChannel, WebSocketMessenger } from "@fern-fern/ir-model/services";
-import { convertInlineTypeDeclaration } from "../type-declarations/convertInlineTypeDeclaration";
+import { createTypeReferenceParser, TypeReferenceParser } from "../../utils/parseInlineType";
 import { convertEncoding } from "./convertEncoding";
 import { convertFailedResponse } from "./convertFailedResponse";
 
@@ -56,51 +56,66 @@ function convertWebSocketMessenger({
     imports: Record<string, string>;
     nonStandardEncodings: CustomWireMessageEncoding[];
 }): WebSocketMessenger {
+    const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
     return {
         operations:
             messenger?.operations != null
-                ? Object.entries(messenger.operations).map(([operationId, operation]) => ({
-                      docs: operation.docs,
-                      operationId,
-                      request: {
-                          docs: typeof operation.request !== "string" ? operation.request?.docs : undefined,
-                          type: convertInlineTypeDeclaration({
-                              typeDeclarationOrShorthand: operation.request,
-                              getTypeDeclaration: (request) => request.type,
-                              fernFilepath,
-                              imports,
-                          }),
-                          encoding: convertEncoding({
-                              rawEncoding:
-                                  typeof operation.request !== "string" ? operation.request?.encoding : undefined,
-                              nonStandardEncodings,
-                          }),
-                      },
-                      response: {
-                          docs: typeof operation.response !== "string" ? operation.response?.docs : undefined,
-                          encoding: convertEncoding({
-                              rawEncoding:
-                                  typeof operation.response !== "string" ? operation.response?.encoding : undefined,
-                              nonStandardEncodings,
-                          }),
-                          ok: {
+                ? Object.entries(messenger.operations).map(([operationId, operation]) => {
+                      return {
+                          docs: operation.docs,
+                          operationId,
+                          request: {
+                              docs: typeof operation.request !== "string" ? operation.request?.docs : undefined,
+                              type:
+                                  operation.request != null
+                                      ? parseTypeReference(operation.request)
+                                      : TypeReference.void(),
+                              encoding: convertEncoding({
+                                  rawEncoding:
+                                      typeof operation.request !== "string" ? operation.request?.encoding : undefined,
+                                  nonStandardEncodings,
+                              }),
+                          },
+                          response: {
                               docs: typeof operation.response !== "string" ? operation.response?.docs : undefined,
-                              type: convertInlineTypeDeclaration({
-                                  typeDeclarationOrShorthand: operation.response,
-                                  getTypeDeclaration: (response) =>
-                                      typeof response.ok == "string" ? response.ok : response.ok?.type,
+                              encoding: convertEncoding({
+                                  rawEncoding:
+                                      typeof operation.response !== "string" ? operation.response?.encoding : undefined,
+                                  nonStandardEncodings,
+                              }),
+                              ok: {
+                                  docs: typeof operation.response !== "string" ? operation.response?.docs : undefined,
+                                  type:
+                                      operation != null
+                                          ? getResponseTypeReference(operation.response)
+                                          : TypeReference.void(),
+                              },
+                              failed: convertFailedResponse({
+                                  rawFailedResponse:
+                                      typeof operation.response !== "string" ? operation.response?.failed : undefined,
                                   fernFilepath,
                                   imports,
                               }),
                           },
-                          failed: convertFailedResponse({
-                              rawFailedResponse:
-                                  typeof operation.response !== "string" ? operation.response?.failed : undefined,
-                              fernFilepath,
-                              imports,
-                          }),
-                      },
-                  }))
+                      };
+                  })
                 : [],
     };
+}
+
+function getResponseTypeReference({
+    parseTypeReference,
+    response,
+}: {
+    parseTypeReference: TypeReferenceParser;
+    response: RawSchemas.WebSocketResponseSchema | undefined;
+}): TypeReference {
+    if (response == null) {
+        return TypeReference.void();
+    } else if (typeof response === "string") {
+        return parseTypeReference(response);
+    } else if (response.ok == null) {
+        return TypeReference.void();
+    }
+    return parseTypeReference(response.ok);
 }

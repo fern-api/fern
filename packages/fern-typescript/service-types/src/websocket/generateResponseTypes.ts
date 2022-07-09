@@ -30,7 +30,7 @@ export function generateResponseTypes({
         modelContext,
         dependencyManager,
         successResponse: {
-            type: operation.response.ok.type,
+            typeReference: operation.response.ok.type,
             docs: operation.response.ok.docs,
         },
         failedResponse: operation.response.failed,

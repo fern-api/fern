@@ -28,7 +28,7 @@ export function generateResponseTypes({
         modelContext,
         dependencyManager,
         successResponse: {
-            type: endpoint.response.ok.type,
+            typeReference: endpoint.response.ok.type,
             docs: endpoint.response.ok.docs,
         },
         failedResponse: endpoint.response.failed,

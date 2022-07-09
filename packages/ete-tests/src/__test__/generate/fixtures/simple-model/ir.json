@@ -1,0 +1,49 @@
+{
+  "workspaceName": "posts",
+  "types": [
+    {
+      "docs": "A blog post",
+      "name": {
+        "fernFilepath": [],
+        "name": "Post"
+      },
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "primitive": "STRING",
+              "_type": "primitive"
+            }
+          },
+          {
+            "key": "title",
+            "valueType": {
+              "primitive": "STRING",
+              "_type": "primitive"
+            }
+          },
+          {
+            "key": "content",
+            "valueType": {
+              "primitive": "STRING",
+              "_type": "primitive"
+            }
+          }
+        ],
+        "_type": "object"
+      }
+    }
+  ],
+  "errors": [],
+  "services": {
+    "http": [],
+    "websocket": []
+  },
+  "constants": {
+    "errorDiscriminant": "_error",
+    "errorInstanceIdKey": "_errorInstanceId",
+    "unknownErrorDiscriminantValue": "_unknown"
+  }
+}

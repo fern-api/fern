@@ -1,6 +1,6 @@
-import { Type } from "@fern-fern/ir-model";
+import { TypeReference } from "@fern-fern/ir-model";
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { ModelContext, ServiceTypeReference } from "@fern-typescript/model-context";
+import { ServiceTypeReference } from "@fern-typescript/model-context";
 import { OptionalKind, PropertySignatureStructure, SourceFile, ts } from "ts-morph";
 import { ServiceTypesConstants } from "../../constants";
 import {
@@ -25,14 +25,13 @@ export interface GeneratedRequest<M> {
 
 export declare namespace generateRequest {
     export interface Args<M> {
-        modelContext: ModelContext;
         writeServiceTypeFile: ServiceTypeFileWriter<M>;
         getTypeReferenceToServiceType: (args: {
             reference: ServiceTypeReference<M>;
             referencedIn: SourceFile;
         }) => ts.TypeNode;
         body: {
-            type: Type;
+            typeReference: TypeReference;
             docs: string | null | undefined;
         };
         additionalProperties?: (
@@ -44,7 +43,6 @@ export declare namespace generateRequest {
 
 export function generateRequest<M>({
     writeServiceTypeFile,
-    modelContext,
     getTypeReferenceToServiceType,
     body,
     additionalProperties = [],
@@ -52,11 +50,7 @@ export function generateRequest<M>({
     if (additionalProperties.length === 0) {
         const requestBodyReference = generateServiceTypeReference({
             // use the request body as the Request (don't generate a RequestBody type at all)
-            typeName: ServiceTypesConstants.Commons.Request.TYPE_NAME,
-            type: body.type,
-            docs: body.docs,
-            modelContext,
-            writer: writeServiceTypeFile,
+            typeReference: body.typeReference,
         });
         if (requestBodyReference == null) {
             return { body: undefined, wrapper: undefined };
@@ -70,11 +64,7 @@ export function generateRequest<M>({
 
     const requestBodyReference = generateServiceTypeReference({
         // put the request body in its own RequestBody type/file
-        typeName: ServiceTypesConstants.Commons.Request.Properties.Body.TYPE_NAME,
-        type: body.type,
-        docs: body.docs,
-        modelContext,
-        writer: writeServiceTypeFile,
+        typeReference: body.typeReference,
     });
 
     const requestMetadata = writeServiceTypeFile(

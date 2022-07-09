@@ -1,4 +1,4 @@
-import { FernConstants, Type } from "@fern-fern/ir-model";
+import { FernConstants, TypeReference } from "@fern-fern/ir-model";
 import { FailedResponse } from "@fern-fern/ir-model/services";
 import { DependencyManager, getTextOfTsNode } from "@fern-typescript/commons";
 import { InlinedServiceTypeReference, ModelContext, ServiceTypeReference } from "@fern-typescript/model-context";
@@ -17,7 +17,7 @@ export declare namespace generateResponse {
         dependencyManager: DependencyManager;
         successResponse: {
             docs: string | null | undefined;
-            type: Type;
+            typeReference: TypeReference;
         };
         failedResponse: FailedResponse;
         getTypeReferenceToServiceType: (args: {
@@ -46,11 +46,7 @@ export function generateResponse<M>({
     fernConstants,
 }: generateResponse.Args<M>): generateResponse.Return<M> {
     const successBodyReference = generateServiceTypeReference({
-        typeName: ServiceTypesConstants.Commons.Response.Success.Properties.Body.TYPE_NAME,
-        writer: writeServiceTypeFile,
-        type: successResponse.type,
-        docs: successResponse.docs,
-        modelContext,
+        typeReference: successResponse.typeReference,
     });
 
     const { errorBodyReference } = maybeGenerateErrorBody({

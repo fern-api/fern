@@ -24,7 +24,7 @@ types:
     extends: commons.WithDocs
     properties:
       encoding: serviceCommons.Encoding
-      type: types.Type
+      type: types.TypeReference
   WebSocketResponse:
     extends: commons.WithDocs
     properties:
@@ -34,7 +34,7 @@ types:
   WebSocketOkResponse:
     extends: commons.WithDocs
     properties:
-      type: types.Type
+      type: types.TypeReference
   WebSocketOperationProperties:
     properties:
       id: string
