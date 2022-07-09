@@ -85,10 +85,10 @@ function convertWebSocketMessenger({
                               }),
                               ok: {
                                   docs: typeof operation.response !== "string" ? operation.response?.docs : undefined,
-                                  type:
-                                      operation != null
-                                          ? getResponseTypeReference(operation.response)
-                                          : TypeReference.void(),
+                                  type: getResponseTypeReference({
+                                      parseTypeReference,
+                                      response: operation.response,
+                                  }),
                               },
                               failed: convertFailedResponse({
                                   rawFailedResponse:
