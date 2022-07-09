@@ -4,9 +4,9 @@
   "include": ["./src"],
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
-    { "path": "../../cli/tsconfig.json" },
     { "path": "../../commons/tsconfig.json" },
-    { "path": "../../compiler/compiler/tsconfig.json" },
+    { "path": "../../ir/ir-generator/tsconfig.json" },
+    { "path": "../../workspace-parser/tsconfig.json" },
     { "path": "../client/tsconfig.json" },
     { "path": "../commons/tsconfig.json" },
     { "path": "../helpers/helper-manager/tsconfig.json" },
