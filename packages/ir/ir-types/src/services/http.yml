@@ -62,7 +62,7 @@ types:
     extends: commons.WithDocs
     properties:
       encoding: serviceCommons.Encoding
-      type: types.Type
+      type: types.TypeReference
   HttpResponse:
     extends: commons.WithDocs
     properties:
@@ -72,4 +72,4 @@ types:
   HttpOkResponse:
     extends: commons.WithDocs
     properties:
-      type: types.Type
+      type: types.TypeReference

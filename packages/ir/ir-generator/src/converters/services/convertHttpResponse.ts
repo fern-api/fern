@@ -1,7 +1,7 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { FernFilepath } from "@fern-fern/ir-model";
 import { CustomWireMessageEncoding, HttpResponse } from "@fern-fern/ir-model/services";
-import { convertInlineTypeDeclaration } from "../type-declarations/convertInlineTypeDeclaration";
+import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { convertEncoding } from "./convertEncoding";
 import { convertFailedResponse } from "./convertFailedResponse";
 
@@ -24,12 +24,7 @@ export function convertHttpResponse({
         }),
         ok: {
             docs: typeof response !== "string" && typeof response?.ok !== "string" ? response?.ok?.docs : undefined,
-            type: convertInlineTypeDeclaration({
-                typeDeclarationOrShorthand: response,
-                getTypeDeclaration: (response) => (typeof response.ok == "string" ? response.ok : response.ok?.type),
-                fernFilepath,
-                imports,
-            }),
+            type: getResponseTypeReference({ fernFilepath, imports, response }),
         },
         failed: convertFailedResponse({
             rawFailedResponse: typeof response !== "string" ? response?.failed : undefined,
@@ -37,4 +32,24 @@ export function convertHttpResponse({
             imports,
         }),
     };
+}
+
+function getResponseTypeReference({
+    fernFilepath,
+    imports,
+    response,
+}: {
+    fernFilepath: FernFilepath;
+    imports: Record<string, string>;
+    response: RawSchemas.HttpResponseSchema | undefined;
+}): TypeReference {
+    const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
+    if (response == null) {
+        return TypeReference.void();
+    } else if (typeof response === "string") {
+        return parseTypeReference(response);
+    } else if (response.ok == null) {
+        return TypeReference.void();
+    }
+    return parseTypeReference(response.ok);
 }

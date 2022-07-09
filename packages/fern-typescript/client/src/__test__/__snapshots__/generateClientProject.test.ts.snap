@@ -52,19 +52,6 @@ export const SendChatErrorBody = {
     _types: (): SendChatErrorBody[\\"_error\\"][] => [\\"GenericMessage\\"],
 } as const;
 ",
-  "/model/_service-types/ChatService/SendChatRequest.ts": "import * as model from \\"../..\\";
-
-export interface SendChatRequest {
-    id: string;
-    operation: \\"sendChat\\";
-    body: model.SendChatRequestBody;
-}
-",
-  "/model/_service-types/ChatService/SendChatRequestBody.ts": "export interface SendChatRequestBody {
-    title: string;
-    content: string;
-}
-",
   "/model/_service-types/ChatService/SendChatResponse.ts": "import * as model from \\"../..\\";
 
 export type SendChatResponse = SendChatResponse.SuccessResponse | SendChatResponse.ErrorResponse;
@@ -85,8 +72,15 @@ namespace SendChatResponse {
     }
 }
 ",
-  "/model/_service-types/ChatService/index.ts": "export * from \\"./SendChatRequestBody\\";
-export * from \\"./SendChatRequest\\";
+  "/model/_service-types/ChatService/_SendChatRequest.ts": "import * as model from \\"../..\\";
+
+export interface _SendChatRequest {
+    id: string;
+    operation: \\"sendChat\\";
+    body: model.SendChatRequest;
+}
+",
+  "/model/_service-types/ChatService/index.ts": "export * from \\"./_SendChatRequest\\";
 export * from \\"./SendChatErrorBody\\";
 export * from \\"./SendChatResponse\\";
 ",
@@ -108,8 +102,14 @@ export const ChatMessageId = {
     of: (value: string): ChatMessageId => value as ChatMessageId
 };
 ",
+  "/model/_types/SendChatRequest.ts": "export interface SendChatRequest {
+    title: string;
+    content: string;
+}
+",
   "/model/_types/index.ts": "export * from \\"./ChatMessageId\\";
 export * from \\"./ChatMessage\\";
+export * from \\"./SendChatRequest\\";
 ",
   "/model/index.ts": "export * from \\"./_types\\";
 export * from \\"./_errors\\";
@@ -147,7 +147,7 @@ export declare namespace ChatService {
 }
 
 export interface ChatService {
-    sendChat(request: model.SendChatRequestBody): Promise<model.SendChatResponse>;
+    sendChat(request: model.SendChatRequest): Promise<model.SendChatResponse>;
 }
 
 export class ChatService implements ChatService {
@@ -164,11 +164,11 @@ export class ChatService implements ChatService {
         });
     }
 
-    public async sendChat(request: model.SendChatRequestBody): Promise<model.SendChatResponse> {
+    public async sendChat(request: model.SendChatRequest): Promise<model.SendChatResponse> {
         const socket = await this.socket;
 
         return new Promise(resolve => {
-            const message: model.SendChatRequest = {
+            const message: model._SendChatRequest = {
                 id: uuid.v4(),
                 operation: \\"sendChat\\",
                 body: request
@@ -381,6 +381,7 @@ export const CreatePostErrorBody = {
     _types: (): CreatePostErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
+<<<<<<< HEAD
   "/model/_service-types/PostsService/CreatePostRequest.ts": "import * as model from \\"../..\\";
 
 export interface CreatePostRequest {
@@ -397,6 +398,8 @@ export interface CreatePostRequestBody {
     content: string;
 }
 ",
+=======
+>>>>>>> dsinghvi/remove-inlined-requests-responses
   "/model/_service-types/PostsService/CreatePostResponse.ts": "import * as model from \\"../..\\";
 
 export type CreatePostResponse = CreatePostResponse.SuccessResponse | CreatePostResponse.ErrorResponse;
@@ -523,9 +526,13 @@ namespace GetPostV2Response {
     }
 }
 ",
+<<<<<<< HEAD
   "/model/_service-types/PostsService/index.ts": "export * from \\"./CreatePostRequestBody\\";
 export * from \\"./CreatePostRequest\\";
 export * from \\"./CreatePostErrorBody\\";
+=======
+  "/model/_service-types/PostsService/index.ts": "export * from \\"./CreatePostErrorBody\\";
+>>>>>>> dsinghvi/remove-inlined-requests-responses
 export * from \\"./CreatePostResponse\\";
 export * from \\"./GetPostRequest\\";
 export * from \\"./GetPostErrorBody\\";
@@ -576,6 +583,15 @@ export const Author = {
 
     _types: (): Author[\\"_type\\"][] => [\\"anonymous\\", \\"named\\"],
 } as const;
+",
+  "/model/_types/CreatePostRequest.ts": "import * as model from \\"..\\";
+
+export interface CreatePostRequest {
+    type: model.PostType;
+    title: string;
+    author: model.Author;
+    content: string;
+}
 ",
   "/model/_types/Post.ts": "import * as model from \\"..\\";
 
@@ -636,6 +652,7 @@ export declare namespace PostType {
 export * from \\"./Post\\";
 export * from \\"./PostType\\";
 export * from \\"./Author\\";
+export * from \\"./CreatePostRequest\\";
 ",
   "/model/index.ts": "export * from \\"./_types\\";
 export * from \\"./_errors\\";

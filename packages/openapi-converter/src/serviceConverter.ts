@@ -84,11 +84,11 @@ function getFernHttpEndpoint(
 ): ConvertedHttpEndpointResponse {
     const operationId = getOperationIdOrThrow(httpOperation);
 
-    let response: RawSchemas.TypeDeclarationSchema | string | undefined = undefined;
+    let response: string | undefined = undefined;
     const openApiResponse = getResponseMaybe(httpOperation);
     response = openApiResponse === undefined ? undefined : convertToFernType(openApiResponse);
 
-    let request: RawSchemas.TypeDeclarationSchema | string | undefined = undefined;
+    let request: string | undefined = undefined;
     const openApiRequest = httpOperation.requestBody;
     request = openApiRequest === undefined ? undefined : convertToFernType(openApiRequest);
 
@@ -127,7 +127,7 @@ function getOperationIdOrThrow(httpOperation: OpenAPIV3.OperationObject): string
 
 function convertToFernType(
     response: OpenAPIV3.ResponseObject | OpenAPIV3.ReferenceObject | OpenAPIV3.RequestBodyObject
-): RawSchemas.TypeDeclarationSchema | string {
+): string {
     if (isReferenceObject(response)) {
         return getTypeNameFromReferenceObject(response);
     } else if (response.content !== undefined) {

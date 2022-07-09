@@ -10,6 +10,16 @@ types:
       problems: list<commons.ProblemId>
       ownerId: commons.UserId
 
+  PlaylistCreateRequest:
+    properties:
+      name: string
+      problems: list<commons.ProblemId>
+
+  UpdatePlaylistRequest:
+    properties:
+      name: string
+      problems: list<commons.ProblemId>
+
 services:
   http:
     PlaylistCrudService:
@@ -20,11 +30,7 @@ services:
           docs: Create a new playlist
           method: POST
           path: /create
-          request:
-            type:
-              properties:
-                name: string
-                problems: list<commons.ProblemId>
+          request: PlaylistCreateRequest
           response: Playlist
 
         getPlaylists:
@@ -48,11 +54,7 @@ services:
           path: /{playlistId}
           path-parameters:
             playlistId: PlaylistId
-          request:
-            type:
-              properties:
-                name: string
-                problems: list<commons.ProblemId>
+          request: UpdatePlaylistRequest
           response: Playlist
 
         deletePlaylist:

@@ -418,6 +418,19 @@ types:
       language: commons.Language
       status: ExecutionSessionStatus
 
+  GetExecutionSessionStateResponse:
+    properties:
+      states: map<string, ExecutionSessionState>
+      numWarmingInstances: optional<integer>
+      warmingSessionIds: list<string>
+
+  GetSubmissionStateResponse:
+    properties:
+      timeSubmitted: optional<datetime>
+      submission: string
+      language: commons.Language
+      submissionTypeState: SubmissionTypeState
+
 services:
   http:
     ExecutionSesssionManagementService:
@@ -451,13 +464,7 @@ services:
         getExecutionSessionsState:
           method: GET
           path: /execution-sessions-state
-          response:
-            ok:
-              type:
-                properties:
-                  states: map<string, ExecutionSessionState>
-                  numWarmingInstances: optional<integer>
-                  warmingSessionIds: list<string>
+          response: GetExecutionSessionStateResponse
 
     SubmissionInfoService:
       docs: Responsible for serving information about submissions
@@ -470,14 +477,7 @@ services:
           path: /{submissionId}
           path-parameters:
             submissionId: SubmissionId
-          response:
-            ok:
-              type:
-                properties:
-                  timeSubmitted: optional<datetime>
-                  submission: string
-                  language: commons.Language
-                  submissionTypeState: SubmissionTypeState
+          response: GetSubmissionStateResponse
 
         getSubmissionStateV2:
           docs: Returns information about submission for problem V2
@@ -485,14 +485,7 @@ services:
           path: /v2/{submissionId}
           path-parameters:
             submissionId: SubmissionId
-          response:
-            ok:
-              type:
-                properties:
-                  timeSubmitted: datetime
-                  language: commons.Language
-                  submissionFiles: list<SubmissionFileInfo>
-                  submissionStatus: SubmissionStatusV2
+          response: GetSubmissionStateResponse
 
         getTraceResponsesPage:
           docs: Returns traces for the submission and test case

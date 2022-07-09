@@ -15,24 +15,50 @@ services:
       base-path: /movies
       endpoints:
 
-        # Here's an HTTP endpoint. Fern uses sane defaults for endpoint path and HTTP method.
-        createMovie:
-          request:
-            type:
-              properties:
-                title: string
-                rating: double
-          response: MovieId
-
-        getMovie:
-          request: MovieId
-          response:
-            ok: Movie
-            failed:
-              errors:
-                - NotFoundError
-
-errors:
-  NotFoundError:
-    http:
-      statusCode: 404`;
+const API: RawSchemas.FernConfigurationSchema = {
+    ids: ["MovieId"],
+    types: {
+        Movie: {
+            properties: {
+                id: "MovieId",
+                title: "string",
+                rating: "double",
+            },
+        },
+        CreateMovieRequest: {
+            properties: {
+                title: "string",
+                rating: "double",
+            },
+        },
+    },
+    errors: {
+        NotFoundError: {
+            http: {
+                statusCode: 404,
+            },
+        },
+    },
+    services: {
+        http: {
+            MoviesService: {
+                auth: "none",
+                endpoints: {
+                    createMovie: {
+                        request: "CreateMovieRequest",
+                        response: "MovieId",
+                    },
+                    getMovie: {
+                        request: "MovieId",
+                        response: {
+                            ok: "Movie",
+                            failed: {
+                                errors: ["NotFoundError"],
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    },
+};

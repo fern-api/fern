@@ -161,6 +161,29 @@ types:
       voidThatTakesActualResult:
         type: VoidFunctionSignatureThatTakesActualResult
         docs: Useful when specifying custom grading for a testcase where actualResult is defined.
+  GetFunctionSignatureRequest:
+    properties:
+      functionSignature: FunctionSignature
+  GetFunctionSignatureResponse:
+    properties:
+      functionByLanguage: map<commons.Language, string>
+
+  GetBasicSolutionFileRequest:
+    properties:
+      methodName: string
+      signature: NonVoidFunctionSignature
+  GetBasicSolutionFileResponse:
+    properties:
+      solutionFileByLanguage: map<commons.Language, FileInfoV2>
+
+  GetGeneratedTestCaseFileRequest:
+    properties:
+      template: optional<TestCaseTemplate>
+      testCase: TestCaseV2
+
+  GetGeneratedTestCaseTemplateFileRequest:
+    properties:
+      template: TestCaseTemplate
 
 services:
   http:
@@ -228,30 +251,16 @@ services:
           docs: Get the generated function signature in every language
           method: POST
           path: /function-signature
-          request:
-            type:
-              properties:
-                functionSignature: FunctionSignature
+          request: GetFunctionSignatureRequest
           response:
-            ok:
-              type:
-                properties:
-                  functionByLanguage: map<commons.Language, string>
+            ok: GetFunctionSignatureResponse
 
         getBasicSolutionFile:
           docs: Returns solution file for basic starter files
           method: POST
           path: /basic-solution-file
-          request:
-            type:
-              properties:
-                methodName: string
-                signature: NonVoidFunctionSignature
-          response:
-            ok:
-              type:
-                properties:
-                  solutionFileByLanguage: map<commons.Language, FileInfoV2>
+          request: GetBasicSolutionFileRequest
+          response: GetBasicSolutionFileResponse
 
         getDefaultDirectoryForProblemFiles:
           docs: Returns the default directory where a problem's files should live
@@ -265,18 +274,12 @@ services:
           path: /generated-test-case-file
           request:
             docs: Supply template if the test case relies on it
-            type:
-              properties:
-                template: optional<TestCaseTemplate>
-                testCase: TestCaseV2
+            type: GetGeneratedTestCaseFileRequest
           response: map<commons.Language, FileInfoV2>
 
         getGeneratedTestCaseTemplateFile:
           docs: Returns the default directory where a problem's files should live
           method: POST
           path: /generated-test-case-template-file
-          request:
-            type:
-              properties:
-                template: TestCaseTemplate
+          request: GetGeneratedTestCaseTemplateFileRequest
           response: map<commons.Language, FileInfoV2>
