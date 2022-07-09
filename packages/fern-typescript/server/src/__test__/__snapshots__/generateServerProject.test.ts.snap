@@ -32,6 +32,7 @@ export const CreatePostErrorBody = {
 ",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   "/model/_service-types/PostsService/CreatePostRequest.ts": "import * as model from \\"../..\\";
 
 export interface CreatePostRequest {
@@ -50,6 +51,8 @@ export interface CreatePostRequestBody {
 ",
 =======
 >>>>>>> dsinghvi/remove-inlined-requests-responses
+=======
+>>>>>>> @{-1}
 =======
 >>>>>>> @{-1}
   "/model/_service-types/PostsService/CreatePostResponse.ts": "import * as model from \\"../..\\";
@@ -279,8 +282,19 @@ namespace NoopWithoutAuthResponse {
 ",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   "/model/_service-types/PostsService/index.ts": "export * from \\"./CreatePostRequestBody\\";
 export * from \\"./CreatePostRequest\\";
+=======
+  "/model/_service-types/PostsService/_CreatePostRequest.ts": "import * as model from \\"../..\\";
+
+export interface _CreatePostRequest {
+    \\"X-Endpoint-Header\\": string;
+    body: model.CreatePostRequest;
+}
+",
+  "/model/_service-types/PostsService/index.ts": "export * from \\"./_CreatePostRequest\\";
+>>>>>>> @{-1}
 export * from \\"./CreatePostErrorBody\\";
 =======
   "/model/_service-types/PostsService/index.ts": "export * from \\"./CreatePostErrorBody\\";
