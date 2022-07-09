@@ -22,6 +22,13 @@ types:
       anonymous: {}
       named: string
 
+  CreatePostRequest:
+    properties:
+      type: PostType
+      title: string
+      author: Author
+      content: string
+
 errors:
   PostNotFoundError:
     http:
@@ -44,12 +51,7 @@ services:
           headers:
             X-Endpoint-Header: string
           request:
-            type:
-              properties:
-                type: PostType
-                title: string
-                author: Author
-                content: string
+            type: CreatePostRequest
           response: commons.PostId
         getPost:
           method: GET

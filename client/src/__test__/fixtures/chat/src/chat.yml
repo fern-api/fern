@@ -8,6 +8,11 @@ types:
       title: string
       content: string
 
+  SendChatRequest:
+    properties:
+      title: string
+      content: string
+
 errors:
   GenericMessage:
     type: string
@@ -20,11 +25,7 @@ services:
       client:
         operations:
           sendChat:
-            request:
-              type:
-                properties:
-                  title: string
-                  content: string
+            request: SendChatRequest
             response:
               ok: ChatMessage
               failed:

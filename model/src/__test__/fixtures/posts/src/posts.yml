@@ -32,6 +32,10 @@ types:
       author: Author
       content: string
 
+  GetPostResponse:
+    properties:
+      a: integer
+
 errors:
   PostNotFoundError:
     http:
@@ -51,10 +55,7 @@ services:
             postId: string
           request: CreatePostRequest
           response:
-            ok:
-              type:
-                properties:
-                  a: integer
+            ok: GetPostResponse
             failed:
               errors:
                 - PostNotFoundError

@@ -48,14 +48,13 @@ export function generateRequestTypes({
     ];
 
     return generateRequest({
-        modelContext,
         getTypeReferenceToServiceType: ({ reference, referencedIn }) =>
             modelContext.getReferenceToHttpServiceType({
                 reference,
                 referencedIn,
             }),
         body: {
-            type: endpoint.request.type,
+            typeReference: endpoint.request.type,
             docs: endpoint.request.docs,
         },
         additionalProperties,

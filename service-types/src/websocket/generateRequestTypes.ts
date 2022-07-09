@@ -33,14 +33,13 @@ export function generateRequestTypes({
     ];
 
     return generateRequest({
-        modelContext,
         getTypeReferenceToServiceType: ({ reference, referencedIn }) =>
             modelContext.getReferenceToWebSocketChannelType({
                 reference,
                 referencedIn,
             }),
         body: {
-            type: operation.request.type,
+            typeReference: operation.request.type,
             docs: operation.request.docs,
         },
         additionalProperties,
