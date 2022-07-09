@@ -50,6 +50,32 @@ exports[`fern-compile-tests simple 1`] = `
                 ],
                 \\"_type\\": \\"object\\"
             }
+        },
+        {
+            \\"name\\": {
+                \\"fernFilepath\\": [],
+                \\"name\\": \\"CreateMovieRequest\\"
+            },
+            \\"shape\\": {
+                \\"extends\\": [],
+                \\"properties\\": [
+                    {
+                        \\"key\\": \\"title\\",
+                        \\"valueType\\": {
+                            \\"primitive\\": \\"STRING\\",
+                            \\"_type\\": \\"primitive\\"
+                        }
+                    },
+                    {
+                        \\"key\\": \\"rating\\",
+                        \\"valueType\\": {
+                            \\"primitive\\": \\"DOUBLE\\",
+                            \\"_type\\": \\"primitive\\"
+                        }
+                    }
+                ],
+                \\"_type\\": \\"object\\"
+            }
         }
     ],
     \\"errors\\": [
@@ -95,24 +121,9 @@ exports[`fern-compile-tests simple 1`] = `
                                 \\"_type\\": \\"json\\"
                             },
                             \\"type\\": {
-                                \\"extends\\": [],
-                                \\"properties\\": [
-                                    {
-                                        \\"key\\": \\"title\\",
-                                        \\"valueType\\": {
-                                            \\"primitive\\": \\"STRING\\",
-                                            \\"_type\\": \\"primitive\\"
-                                        }
-                                    },
-                                    {
-                                        \\"key\\": \\"rating\\",
-                                        \\"valueType\\": {
-                                            \\"primitive\\": \\"DOUBLE\\",
-                                            \\"_type\\": \\"primitive\\"
-                                        }
-                                    }
-                                ],
-                                \\"_type\\": \\"object\\"
+                                \\"name\\": \\"CreateMovieRequest\\",
+                                \\"fernFilepath\\": [],
+                                \\"_type\\": \\"named\\"
                             }
                         },
                         \\"response\\": {
@@ -121,12 +132,9 @@ exports[`fern-compile-tests simple 1`] = `
                             },
                             \\"ok\\": {
                                 \\"type\\": {
-                                    \\"aliasOf\\": {
-                                        \\"name\\": \\"MovieId\\",
-                                        \\"fernFilepath\\": [],
-                                        \\"_type\\": \\"named\\"
-                                    },
-                                    \\"_type\\": \\"alias\\"
+                                    \\"name\\": \\"MovieId\\",
+                                    \\"fernFilepath\\": [],
+                                    \\"_type\\": \\"named\\"
                                 }
                             },
                             \\"failed\\": {
@@ -164,10 +172,7 @@ exports[`fern-compile-tests simple 1`] = `
                                 \\"_type\\": \\"json\\"
                             },
                             \\"type\\": {
-                                \\"aliasOf\\": {
-                                    \\"_type\\": \\"void\\"
-                                },
-                                \\"_type\\": \\"alias\\"
+                                \\"_type\\": \\"void\\"
                             }
                         },
                         \\"response\\": {
@@ -176,12 +181,9 @@ exports[`fern-compile-tests simple 1`] = `
                             },
                             \\"ok\\": {
                                 \\"type\\": {
-                                    \\"aliasOf\\": {
-                                        \\"name\\": \\"Movie\\",
-                                        \\"fernFilepath\\": [],
-                                        \\"_type\\": \\"named\\"
-                                    },
-                                    \\"_type\\": \\"alias\\"
+                                    \\"name\\": \\"Movie\\",
+                                    \\"fernFilepath\\": [],
+                                    \\"_type\\": \\"named\\"
                                 }
                             },
                             \\"failed\\": {

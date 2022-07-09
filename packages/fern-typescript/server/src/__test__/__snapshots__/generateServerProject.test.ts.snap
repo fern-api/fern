@@ -30,22 +30,6 @@ export const CreatePostErrorBody = {
     _types: (): CreatePostErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
-  "/model/_service-types/PostsService/CreatePostRequest.ts": "import * as model from \\"../..\\";
-
-export interface CreatePostRequest {
-    \\"X-Endpoint-Header\\": string;
-    body: model.CreatePostRequestBody;
-}
-",
-  "/model/_service-types/PostsService/CreatePostRequestBody.ts": "import * as model from \\"../..\\";
-
-export interface CreatePostRequestBody {
-    type: model.PostType;
-    title: string;
-    author: model.Author;
-    content: string;
-}
-",
   "/model/_service-types/PostsService/CreatePostResponse.ts": "import * as model from \\"../..\\";
 
 export type CreatePostResponse = CreatePostResponse.SuccessResponse | CreatePostResponse.ErrorResponse;
@@ -271,8 +255,14 @@ namespace NoopWithoutAuthResponse {
     }
 }
 ",
-  "/model/_service-types/PostsService/index.ts": "export * from \\"./CreatePostRequestBody\\";
-export * from \\"./CreatePostRequest\\";
+  "/model/_service-types/PostsService/_CreatePostRequest.ts": "import * as model from \\"../..\\";
+
+export interface _CreatePostRequest {
+    \\"X-Endpoint-Header\\": string;
+    body: model.CreatePostRequest;
+}
+",
+  "/model/_service-types/PostsService/index.ts": "export * from \\"./_CreatePostRequest\\";
 export * from \\"./CreatePostErrorBody\\";
 export * from \\"./CreatePostResponse\\";
 export * from \\"./GetPostRequest\\";
@@ -332,6 +322,15 @@ export const Author = {
     _types: (): Author[\\"_type\\"][] => [\\"anonymous\\", \\"named\\"],
 } as const;
 ",
+  "/model/_types/CreatePostRequest.ts": "import * as model from \\"..\\";
+
+export interface CreatePostRequest {
+    type: model.PostType;
+    title: string;
+    author: model.Author;
+    content: string;
+}
+",
   "/model/_types/Post.ts": "import * as model from \\"..\\";
 
 /**
@@ -389,6 +388,7 @@ export declare namespace PostType {
 ",
   "/model/_types/index.ts": "export * from \\"./PostId\\";
 export * from \\"./Post\\";
+export * from \\"./CreatePostRequest\\";
 export * from \\"./PostType\\";
 export * from \\"./Author\\";
 ",
@@ -426,7 +426,7 @@ import { Token } from \\"@fern-typescript/service-utils\\";
 import express, { Express } from \\"express\\";
 
 export interface PostsService {
-    createPost(request: model.CreatePostRequest): model.CreatePostResponse | Promise<model.CreatePostResponse>;
+    createPost(request: model._CreatePostRequest): model.CreatePostResponse | Promise<model.CreatePostResponse>;
     getPost(token: Token, request: model.GetPostRequest): model.GetPostResponse | Promise<model.GetPostResponse>;
     getPostV2(token: Token, request: model.PostId): model.GetPostV2Response | Promise<model.GetPostV2Response>;
     deletePost(token: Token, request: model.DeletePostRequest): model.DeletePostResponse | Promise<model.DeletePostResponse>;

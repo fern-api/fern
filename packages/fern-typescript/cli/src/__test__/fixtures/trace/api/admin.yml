@@ -2,6 +2,17 @@ imports:
   submission: submission.yml
   problemV2: problem-v2/problemV2.yml
 
+types:
+  StoreTracedTestCaseRequest:
+    properties:
+      result: submission.TestCaseResultWithStdout
+      traceResponses: list<submission.TraceResponse>
+
+  StoreTracedWorkspaceRequest:
+    properties:
+      workspaceRunDetails: submission.WorkspaceRunDetails
+      traceResponses: list<submission.TraceResponse>
+
 services:
   http:
     AdminService:
@@ -41,11 +52,7 @@ services:
           path-parameters:
             submissionId: submission.SubmissionId
             testCaseId: string
-          request:
-            type:
-              properties:
-                result: submission.TestCaseResultWithStdout
-                traceResponses: list<submission.TraceResponse>
+          request: StoreTracedTestCaseRequest
           method: POST
 
         storeTracedTestCaseV2:
@@ -60,11 +67,7 @@ services:
           path: /store-workspace-trace/submission/{submissionId}
           path-parameters:
             submissionId: submission.SubmissionId
-          request:
-            type:
-              properties:
-                workspaceRunDetails: submission.WorkspaceRunDetails
-                traceResponses: list<submission.TraceResponse>
+          request: StoreTracedWorkspaceRequest
           method: POST
 
         storeTracedWorkspaceV2:

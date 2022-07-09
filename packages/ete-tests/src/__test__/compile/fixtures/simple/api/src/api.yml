@@ -6,6 +6,10 @@ types:
       id: MovieId
       title: string
       rating: double
+  CreateMovieRequest:
+    properties:
+      title: string
+      rating: double
 errors:
   NotFoundError:
     http:
@@ -19,11 +23,7 @@ services:
         createMovie:
           method: POST
           path: /
-          request:
-            type:
-              properties:
-                title: string
-                rating: double
+          request: CreateMovieRequest
           response: MovieId
         getMovie:
           method: GET

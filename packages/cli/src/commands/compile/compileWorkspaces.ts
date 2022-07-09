@@ -20,7 +20,11 @@ export async function compileWorkspaces({
                 absolutePathToWorkspaceDefinition: uniqueWorkspaceDefinitionPath,
             });
             if (!compileResult.didSucceed) {
-                console.log("%s: failed to compile API Definition", workspaceDefinition.name);
+                console.log(
+                    "%s: failed to compile API Definition",
+                    workspaceDefinition.name,
+                    JSON.stringify(compileResult.failure)
+                );
             } else if (writeIr) {
                 const workspaceDirectory = path.dirname(uniqueWorkspaceDefinitionPath);
                 const irOutputFilePath = path.join(workspaceDirectory, IR_FILENAME);

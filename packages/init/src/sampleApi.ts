@@ -8,6 +8,11 @@ types:
       title: string
       rating: double
 
+  CreateMovieRequest: 
+    properties:
+      title: string
+      rating: double 
+
 services:
   http:
     MoviesService:
@@ -17,11 +22,7 @@ services:
 
         # Here's an HTTP endpoint. Fern uses sane defaults for endpoint path and HTTP method.
         createMovie:
-          request:
-            type:
-              properties:
-                title: string
-                rating: double
+          request: CreateMovieRequest
           response: MovieId
 
         getMovie:

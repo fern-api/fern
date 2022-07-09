@@ -887,14 +887,14 @@ export interface GetPostRequest {
     body: model.CreatePostRequest;
 }
 ",
-  "/_service-types/PostsService/GetPostResponse.ts": "import * as model from \\"../..\\";
+  "/_service-types/PostsService/_GetPostResponse.ts": "import * as model from \\"../..\\";
 
-export type GetPostResponse = GetPostResponse.SuccessResponse | GetPostResponse.ErrorResponse;
+export type _GetPostResponse = _GetPostResponse.SuccessResponse | _GetPostResponse.ErrorResponse;
 
-namespace GetPostResponse {
+namespace _GetPostResponse {
     export interface SuccessResponse {
         ok: true;
-        body: model.GetPostResponseBody;
+        body: model.GetPostResponse;
     }
 
     export interface ErrorResponse {
@@ -903,14 +903,9 @@ namespace GetPostResponse {
     }
 }
 ",
-  "/_service-types/PostsService/GetPostResponseBody.ts": "export interface GetPostResponseBody {
-    a: number;
-}
-",
   "/_service-types/PostsService/index.ts": "export * from \\"./GetPostRequest\\";
-export * from \\"./GetPostResponseBody\\";
 export * from \\"./GetPostErrorBody\\";
-export * from \\"./GetPostResponse\\";
+export * from \\"./_GetPostResponse\\";
 ",
   "/_service-types/index.ts": "export * from \\"./PostsService\\";
 ",
@@ -996,6 +991,10 @@ export interface CreatePostRequest {
     content: string;
 }
 ",
+  "/_types/GetPostResponse.ts": "export interface GetPostResponse {
+    a: number;
+}
+",
   "/_types/Post.ts": "import * as model from \\"..\\";
 
 /**
@@ -1057,6 +1056,7 @@ export * from \\"./BlogPostReference\\";
 export * from \\"./PostType\\";
 export * from \\"./Author\\";
 export * from \\"./CreatePostRequest\\";
+export * from \\"./GetPostResponse\\";
 ",
   "/index.ts": "export * from \\"./_types\\";
 export * from \\"./_errors\\";
