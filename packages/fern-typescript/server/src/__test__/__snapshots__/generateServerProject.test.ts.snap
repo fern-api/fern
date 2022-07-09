@@ -31,6 +31,7 @@ export const CreatePostErrorBody = {
 } as const;
 ",
 <<<<<<< HEAD
+<<<<<<< HEAD
   "/model/_service-types/PostsService/CreatePostRequest.ts": "import * as model from \\"../..\\";
 
 export interface CreatePostRequest {
@@ -49,6 +50,8 @@ export interface CreatePostRequestBody {
 ",
 =======
 >>>>>>> dsinghvi/remove-inlined-requests-responses
+=======
+>>>>>>> @{-1}
   "/model/_service-types/PostsService/CreatePostResponse.ts": "import * as model from \\"../..\\";
 
 export type CreatePostResponse = CreatePostResponse.SuccessResponse | CreatePostResponse.ErrorResponse;
@@ -275,12 +278,24 @@ namespace NoopWithoutAuthResponse {
 }
 ",
 <<<<<<< HEAD
+<<<<<<< HEAD
   "/model/_service-types/PostsService/index.ts": "export * from \\"./CreatePostRequestBody\\";
 export * from \\"./CreatePostRequest\\";
 export * from \\"./CreatePostErrorBody\\";
 =======
   "/model/_service-types/PostsService/index.ts": "export * from \\"./CreatePostErrorBody\\";
 >>>>>>> dsinghvi/remove-inlined-requests-responses
+=======
+  "/model/_service-types/PostsService/_CreatePostRequest.ts": "import * as model from \\"../..\\";
+
+export interface _CreatePostRequest {
+    \\"X-Endpoint-Header\\": string;
+    body: model.CreatePostRequest;
+}
+",
+  "/model/_service-types/PostsService/index.ts": "export * from \\"./_CreatePostRequest\\";
+export * from \\"./CreatePostErrorBody\\";
+>>>>>>> @{-1}
 export * from \\"./CreatePostResponse\\";
 export * from \\"./GetPostRequest\\";
 export * from \\"./GetPostErrorBody\\";
@@ -443,7 +458,7 @@ import { Token } from \\"@fern-typescript/service-utils\\";
 import express, { Express } from \\"express\\";
 
 export interface PostsService {
-    createPost(request: model.CreatePostRequest): model.CreatePostResponse | Promise<model.CreatePostResponse>;
+    createPost(request: model._CreatePostRequest): model.CreatePostResponse | Promise<model.CreatePostResponse>;
     getPost(token: Token, request: model.GetPostRequest): model.GetPostResponse | Promise<model.GetPostResponse>;
     getPostV2(token: Token, request: model.PostId): model.GetPostV2Response | Promise<model.GetPostV2Response>;
     deletePost(token: Token, request: model.DeletePostRequest): model.DeletePostResponse | Promise<model.DeletePostResponse>;

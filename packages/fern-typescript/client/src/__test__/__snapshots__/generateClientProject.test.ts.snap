@@ -382,6 +382,7 @@ export const CreatePostErrorBody = {
 } as const;
 ",
 <<<<<<< HEAD
+<<<<<<< HEAD
   "/model/_service-types/PostsService/CreatePostRequest.ts": "import * as model from \\"../..\\";
 
 export interface CreatePostRequest {
@@ -400,6 +401,8 @@ export interface CreatePostRequestBody {
 ",
 =======
 >>>>>>> dsinghvi/remove-inlined-requests-responses
+=======
+>>>>>>> @{-1}
   "/model/_service-types/PostsService/CreatePostResponse.ts": "import * as model from \\"../..\\";
 
 export type CreatePostResponse = CreatePostResponse.SuccessResponse | CreatePostResponse.ErrorResponse;
@@ -527,12 +530,24 @@ namespace GetPostV2Response {
 }
 ",
 <<<<<<< HEAD
+<<<<<<< HEAD
   "/model/_service-types/PostsService/index.ts": "export * from \\"./CreatePostRequestBody\\";
 export * from \\"./CreatePostRequest\\";
 export * from \\"./CreatePostErrorBody\\";
 =======
   "/model/_service-types/PostsService/index.ts": "export * from \\"./CreatePostErrorBody\\";
 >>>>>>> dsinghvi/remove-inlined-requests-responses
+=======
+  "/model/_service-types/PostsService/_CreatePostRequest.ts": "import * as model from \\"../..\\";
+
+export interface _CreatePostRequest {
+    \\"X-Endpoint-Header\\": string;
+    body: model.CreatePostRequest;
+}
+",
+  "/model/_service-types/PostsService/index.ts": "export * from \\"./_CreatePostRequest\\";
+export * from \\"./CreatePostErrorBody\\";
+>>>>>>> @{-1}
 export * from \\"./CreatePostResponse\\";
 export * from \\"./GetPostRequest\\";
 export * from \\"./GetPostErrorBody\\";
@@ -683,7 +698,7 @@ import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
 export interface PostsService {
-    createPost(request: model.CreatePostRequest): Promise<model.CreatePostResponse>;
+    createPost(request: model._CreatePostRequest): Promise<model.CreatePostResponse>;
     getPost(request: model.GetPostRequest): Promise<model.GetPostResponse>;
     getPostV2(request: model.PostId): Promise<model.GetPostV2Response>;
 }
@@ -714,7 +729,7 @@ export class PostsService implements PostsService {
         this.headers = args.headers;
     }
 
-    public async createPost(request: model.CreatePostRequest): Promise<model.CreatePostResponse> {
+    public async createPost(request: model._CreatePostRequest): Promise<model.CreatePostResponse> {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/\\"),
             method: \\"POST\\",
