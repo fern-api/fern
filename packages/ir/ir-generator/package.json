@@ -35,7 +35,9 @@
   },
   "dependencies": {
     "@fern-api/commons": "workspace:*",
-    "@fern-fern/ir-model": "0.0.20",
+    "@fern-api/workspace-parser": "workspace:*",
+    "@fern-api/yaml-schema": "workspace:*",
+    "@fern-fern/ir-model": "0.0.21",
     "lodash": "^4.17.21"
   },
   "devDependencies": {

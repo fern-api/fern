@@ -1,10 +1,5 @@
-<<<<<<< HEAD:packages/ir/ir-generator/src/converters/services/convertHttpRequest.ts
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { FernFilepath } from "@fern-fern/ir-model";
-=======
-import { RawSchemas } from "@fern-api/syntax-analysis";
 import { FernFilepath, TypeReference } from "@fern-fern/ir-model";
->>>>>>> @{-1}:packages/compiler/ir-generation/src/converters/services/convertHttpRequest.ts
 import { CustomWireMessageEncoding, HttpRequest } from "@fern-fern/ir-model/services";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { convertEncoding } from "./convertEncoding";

@@ -38,7 +38,7 @@ async function runCli() {
     addConvertCommand(cli);
     addGenerateCommand(cli);
     addLoginCommand(cli);
-    addGeneratorIrCommand(cli);
+    addGenerateIrCommand(cli);
 
     await cli.parse();
 }
@@ -155,7 +155,7 @@ function addLoginCommand(cli: Argv) {
     });
 }
 
-function addGeneratorIrCommand(cli: Argv) {
+function addGenerateIrCommand(cli: Argv) {
     cli.command(
         "ir [workspaces...]",
         "Compiles your Fern API Definition",

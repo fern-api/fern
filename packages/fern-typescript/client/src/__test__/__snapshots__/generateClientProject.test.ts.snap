@@ -381,31 +381,6 @@ export const CreatePostErrorBody = {
     _types: (): CreatePostErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-  "/model/_service-types/PostsService/CreatePostRequest.ts": "import * as model from \\"../..\\";
-
-export interface CreatePostRequest {
-    \\"X-Endpoint-Header\\": string;
-    body: model.CreatePostRequestBody;
-}
-",
-  "/model/_service-types/PostsService/CreatePostRequestBody.ts": "import * as model from \\"../..\\";
-
-export interface CreatePostRequestBody {
-    type: model.PostType;
-    title: string;
-    author: model.Author;
-    content: string;
-}
-",
-=======
->>>>>>> dsinghvi/remove-inlined-requests-responses
-=======
->>>>>>> @{-1}
-=======
->>>>>>> @{-1}
   "/model/_service-types/PostsService/CreatePostResponse.ts": "import * as model from \\"../..\\";
 
 export type CreatePostResponse = CreatePostResponse.SuccessResponse | CreatePostResponse.ErrorResponse;
@@ -532,26 +507,6 @@ namespace GetPostV2Response {
     }
 }
 ",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-  "/model/_service-types/PostsService/index.ts": "export * from \\"./CreatePostRequestBody\\";
-export * from \\"./CreatePostRequest\\";
-=======
-  "/model/_service-types/PostsService/_CreatePostRequest.ts": "import * as model from \\"../..\\";
-
-export interface _CreatePostRequest {
-    \\"X-Endpoint-Header\\": string;
-    body: model.CreatePostRequest;
-}
-",
-  "/model/_service-types/PostsService/index.ts": "export * from \\"./_CreatePostRequest\\";
->>>>>>> @{-1}
-export * from \\"./CreatePostErrorBody\\";
-=======
-  "/model/_service-types/PostsService/index.ts": "export * from \\"./CreatePostErrorBody\\";
->>>>>>> dsinghvi/remove-inlined-requests-responses
-=======
   "/model/_service-types/PostsService/_CreatePostRequest.ts": "import * as model from \\"../..\\";
 
 export interface _CreatePostRequest {
@@ -561,7 +516,6 @@ export interface _CreatePostRequest {
 ",
   "/model/_service-types/PostsService/index.ts": "export * from \\"./_CreatePostRequest\\";
 export * from \\"./CreatePostErrorBody\\";
->>>>>>> @{-1}
 export * from \\"./CreatePostResponse\\";
 export * from \\"./GetPostRequest\\";
 export * from \\"./GetPostErrorBody\\";
