@@ -1,0 +1,214 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`fern-ir-tests simple 1`] = `
+"{
+    \\"workspaceName\\": \\"api\\",
+    \\"types\\": [
+        {
+            \\"name\\": {
+                \\"fernFilepath\\": [],
+                \\"name\\": \\"MovieId\\"
+            },
+            \\"shape\\": {
+                \\"aliasOf\\": {
+                    \\"primitive\\": \\"STRING\\",
+                    \\"_type\\": \\"primitive\\"
+                },
+                \\"_type\\": \\"alias\\"
+            }
+        },
+        {
+            \\"name\\": {
+                \\"fernFilepath\\": [],
+                \\"name\\": \\"Movie\\"
+            },
+            \\"shape\\": {
+                \\"extends\\": [],
+                \\"properties\\": [
+                    {
+                        \\"key\\": \\"id\\",
+                        \\"valueType\\": {
+                            \\"name\\": \\"MovieId\\",
+                            \\"fernFilepath\\": [],
+                            \\"_type\\": \\"named\\"
+                        }
+                    },
+                    {
+                        \\"key\\": \\"title\\",
+                        \\"valueType\\": {
+                            \\"primitive\\": \\"STRING\\",
+                            \\"_type\\": \\"primitive\\"
+                        }
+                    },
+                    {
+                        \\"key\\": \\"rating\\",
+                        \\"valueType\\": {
+                            \\"primitive\\": \\"DOUBLE\\",
+                            \\"_type\\": \\"primitive\\"
+                        }
+                    }
+                ],
+                \\"_type\\": \\"object\\"
+            }
+        },
+        {
+            \\"name\\": {
+                \\"fernFilepath\\": [],
+                \\"name\\": \\"CreateMovieRequest\\"
+            },
+            \\"shape\\": {
+                \\"extends\\": [],
+                \\"properties\\": [
+                    {
+                        \\"key\\": \\"title\\",
+                        \\"valueType\\": {
+                            \\"primitive\\": \\"STRING\\",
+                            \\"_type\\": \\"primitive\\"
+                        }
+                    },
+                    {
+                        \\"key\\": \\"rating\\",
+                        \\"valueType\\": {
+                            \\"primitive\\": \\"DOUBLE\\",
+                            \\"_type\\": \\"primitive\\"
+                        }
+                    }
+                ],
+                \\"_type\\": \\"object\\"
+            }
+        }
+    ],
+    \\"errors\\": [
+        {
+            \\"name\\": {
+                \\"name\\": \\"NotFoundError\\",
+                \\"fernFilepath\\": []
+            },
+            \\"http\\": {
+                \\"statusCode\\": 404
+            },
+            \\"type\\": {
+                \\"aliasOf\\": {
+                    \\"_type\\": \\"void\\"
+                },
+                \\"_type\\": \\"alias\\"
+            }
+        }
+    ],
+    \\"services\\": {
+        \\"http\\": [
+            {
+                \\"name\\": {
+                    \\"name\\": \\"MoviesService\\",
+                    \\"fernFilepath\\": []
+                },
+                \\"basePath\\": \\"/movies\\",
+                \\"headers\\": [],
+                \\"endpoints\\": [
+                    {
+                        \\"endpointId\\": \\"createMovie\\",
+                        \\"auth\\": \\"NONE\\",
+                        \\"method\\": \\"POST\\",
+                        \\"path\\": {
+                            \\"head\\": \\"/\\",
+                            \\"parts\\": []
+                        },
+                        \\"pathParameters\\": [],
+                        \\"queryParameters\\": [],
+                        \\"headers\\": [],
+                        \\"request\\": {
+                            \\"encoding\\": {
+                                \\"_type\\": \\"json\\"
+                            },
+                            \\"type\\": {
+                                \\"name\\": \\"CreateMovieRequest\\",
+                                \\"fernFilepath\\": [],
+                                \\"_type\\": \\"named\\"
+                            }
+                        },
+                        \\"response\\": {
+                            \\"encoding\\": {
+                                \\"_type\\": \\"json\\"
+                            },
+                            \\"ok\\": {
+                                \\"type\\": {
+                                    \\"name\\": \\"MovieId\\",
+                                    \\"fernFilepath\\": [],
+                                    \\"_type\\": \\"named\\"
+                                }
+                            },
+                            \\"failed\\": {
+                                \\"errors\\": []
+                            }
+                        }
+                    },
+                    {
+                        \\"endpointId\\": \\"getMovie\\",
+                        \\"auth\\": \\"NONE\\",
+                        \\"method\\": \\"GET\\",
+                        \\"path\\": {
+                            \\"head\\": \\"/\\",
+                            \\"parts\\": [
+                                {
+                                    \\"pathParameter\\": \\"movieId\\",
+                                    \\"tail\\": \\"\\"
+                                }
+                            ]
+                        },
+                        \\"pathParameters\\": [
+                            {
+                                \\"key\\": \\"postId\\",
+                                \\"valueType\\": {
+                                    \\"name\\": \\"MovieId\\",
+                                    \\"fernFilepath\\": [],
+                                    \\"_type\\": \\"named\\"
+                                }
+                            }
+                        ],
+                        \\"queryParameters\\": [],
+                        \\"headers\\": [],
+                        \\"request\\": {
+                            \\"encoding\\": {
+                                \\"_type\\": \\"json\\"
+                            },
+                            \\"type\\": {
+                                \\"_type\\": \\"void\\"
+                            }
+                        },
+                        \\"response\\": {
+                            \\"encoding\\": {
+                                \\"_type\\": \\"json\\"
+                            },
+                            \\"ok\\": {
+                                \\"type\\": {
+                                    \\"name\\": \\"Movie\\",
+                                    \\"fernFilepath\\": [],
+                                    \\"_type\\": \\"named\\"
+                                }
+                            },
+                            \\"failed\\": {
+                                \\"errors\\": [
+                                    {
+                                        \\"discriminantValue\\": \\"NotFoundError\\",
+                                        \\"error\\": {
+                                            \\"name\\": \\"NotFoundError\\",
+                                            \\"fernFilepath\\": []
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+        \\"websocket\\": [],
+        \\"nonStandardEncodings\\": []
+    },
+    \\"constants\\": {
+        \\"errorDiscriminant\\": \\"_error\\",
+        \\"errorInstanceIdKey\\": \\"_errorInstanceId\\",
+        \\"unknownErrorDiscriminantValue\\": \\"_unknown\\"
+    }
+}"
+`;

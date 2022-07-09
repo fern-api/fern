@@ -3,5 +3,5 @@
   "compilerOptions": { "composite": true, "outDir": "lib/cjs", "rootDir": "src", "module": "CommonJS" },
   "include": ["./src"],
   "exclude": ["./src/**/__test__/**/generated"],
-  "references": [{ "path": "../compiler/syntax-analysis/tsconfig.cjs.json" }]
+  "references": [{ "path": "../yaml-schema/tsconfig.cjs.json" }]
 }

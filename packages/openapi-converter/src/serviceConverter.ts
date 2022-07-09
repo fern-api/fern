@@ -1,4 +1,4 @@
-import { RawSchemas } from "@fern-api/syntax-analysis";
+import { RawSchemas } from "@fern-api/yaml-schema";
 import { lowerFirst } from "lodash";
 import { OpenAPIV3 } from "openapi-types";
 import { getTypeNameFromReferenceObject } from "./typeConverter";

@@ -1,4 +1,4 @@
-import { RawSchemas } from "@fern-api/syntax-analysis";
+import { RawSchemas } from "@fern-api/yaml-schema";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";

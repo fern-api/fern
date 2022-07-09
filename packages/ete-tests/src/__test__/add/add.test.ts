@@ -1,7 +1,7 @@
 import { WORKSPACE_DEFINITION_FILENAME } from "@fern-api/commons";
-import execa from "execa";
 import { mkdir, readFile, rm } from "fs/promises";
 import path from "path";
+import { runFernCli } from "../utils/runFernCli";
 
 const GENERATED_DIR = path.join(__dirname, "generated");
 const GENERATED_API_DIR = path.join(GENERATED_DIR, "api");
@@ -18,20 +18,13 @@ it("fern add", async () => {
 }, 60_000);
 
 async function init() {
-    const init = execa(
-        "node",
-        [path.join(__dirname, "../../../../cli/webpack/dist/bundle.js"), "init", "--organization", "fern"],
-        {
-            cwd: GENERATED_DIR,
-        }
-    );
-    init.stdout?.pipe(process.stdout);
-    init.stderr?.pipe(process.stderr);
-    await init;
+    await runFernCli(["init", "--organization", "fern"], {
+        cwd: GENERATED_DIR,
+    });
 }
 
 async function add(generator: string) {
-    await execa("node", [path.join(__dirname, "../../../../cli/cli"), "add", generator], {
+    await runFernCli(["add", generator], {
         cwd: GENERATED_DIR,
     });
 }

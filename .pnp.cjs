@@ -37,22 +37,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/commons"\
       },\
       {\
-        "name": "@fern-api/compiler-commons",\
-        "reference": "workspace:packages/compiler/commons"\
-      },\
-      {\
-        "name": "@fern-api/compiler",\
-        "reference": "workspace:packages/compiler/compiler"\
-      },\
-      {\
-        "name": "@fern-api/ir-generation",\
-        "reference": "workspace:packages/compiler/ir-generation"\
-      },\
-      {\
-        "name": "@fern-api/syntax-analysis",\
-        "reference": "workspace:packages/compiler/syntax-analysis"\
-      },\
-      {\
         "name": "@fern-api/ete-tests",\
         "reference": "workspace:packages/ete-tests"\
       },\
@@ -121,6 +105,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/init"\
       },\
       {\
+        "name": "@fern-api/ir-generator",\
+        "reference": "workspace:packages/ir/ir-generator"\
+      },\
+      {\
         "name": "@fern-api/docker-utils",\
         "reference": "workspace:packages/local-generation/docker-utils"\
       },\
@@ -147,6 +135,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       {\
         "name": "@fern-api/fe-bundle",\
         "reference": "workspace:packages/ui/fe-bundle"\
+      },\
+      {\
+        "name": "@fern-api/workspace-parser",\
+        "reference": "workspace:packages/workspace-parser"\
+      },\
+      {\
+        "name": "@fern-api/yaml-schema",\
+        "reference": "workspace:packages/yaml-schema"\
       }\
     ],\
     "enableTopLevelFallback": true,\
@@ -157,18 +153,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-api/cli", ["workspace:packages/cli"]],\
       ["@fern-api/commons", ["workspace:packages/commons"]],\
       ["@fern-api/compile-root", ["workspace:packages/_root"]],\
-      ["@fern-api/compiler", ["workspace:packages/compiler/compiler"]],\
-      ["@fern-api/compiler-commons", ["workspace:packages/compiler/commons"]],\
       ["@fern-api/docker-utils", ["workspace:packages/local-generation/docker-utils"]],\
       ["@fern-api/ete-tests", ["workspace:packages/ete-tests"]],\
       ["@fern-api/fe-bundle", ["workspace:packages/ui/fe-bundle"]],\
       ["@fern-api/init", ["workspace:packages/init"]],\
-      ["@fern-api/ir-generation", ["workspace:packages/compiler/ir-generation"]],\
+      ["@fern-api/ir-generator", ["workspace:packages/ir/ir-generator"]],\
       ["@fern-api/local-workspace-runner", ["workspace:packages/local-generation/local-workspace-runner"]],\
       ["@fern-api/login", ["workspace:packages/login"]],\
       ["@fern-api/openapi-converter", ["workspace:packages/openapi-converter"]],\
       ["@fern-api/remote-workspace-runner", ["workspace:packages/remote-generation/remote-workspace-runner"]],\
-      ["@fern-api/syntax-analysis", ["workspace:packages/compiler/syntax-analysis"]],\
+      ["@fern-api/workspace-parser", ["workspace:packages/workspace-parser"]],\
+      ["@fern-api/yaml-schema", ["workspace:packages/yaml-schema"]],\
       ["@fern-typescript/client", ["workspace:packages/fern-typescript/client"]],\
       ["@fern-typescript/commons", ["workspace:packages/fern-typescript/commons"]],\
       ["@fern-typescript/encoders", ["workspace:packages/fern-typescript/encoders"]],\
@@ -7285,14 +7280,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.17.12"],\
             ["@fern-api/add-generator", "workspace:packages/add-generator"],\
             ["@fern-api/commons", "workspace:packages/commons"],\
-            ["@fern-api/compiler", "workspace:packages/compiler/compiler"],\
-            ["@fern-api/compiler-commons", "workspace:packages/compiler/commons"],\
             ["@fern-api/init", "workspace:packages/init"],\
+            ["@fern-api/ir-generator", "workspace:packages/ir/ir-generator"],\
             ["@fern-api/local-workspace-runner", "workspace:packages/local-generation/local-workspace-runner"],\
             ["@fern-api/login", "workspace:packages/login"],\
             ["@fern-api/openapi-converter", "workspace:packages/openapi-converter"],\
             ["@fern-api/remote-workspace-runner", "workspace:packages/remote-generation/remote-workspace-runner"],\
-            ["@fern-api/syntax-analysis", "workspace:packages/compiler/syntax-analysis"],\
+            ["@fern-api/workspace-parser", "workspace:packages/workspace-parser"],\
+            ["@fern-fern/ir-model", "npm:0.0.21"],\
             ["@types/inquirer", "npm:8.2.1"],\
             ["@types/jest", "npm:28.1.2"],\
             ["@types/js-yaml", "npm:4.0.5"],\
@@ -7303,7 +7298,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.15.0"],\
             ["glob", "npm:7.2.3"],\
-            ["glob-promise", "virtual:909a3ad0503c6a40b1eda456c4db8b2a60b9422bba9121b95eef4169ee16677e7144d66526740c016c87dd3dc339185e62726b17a4bb073916f17da3fb3c2c2f#npm:4.2.2"],\
+            ["glob-promise", "virtual:e5a0a756b779a8ebcfc2ec41f6fadcbb663da3504994ade181681a8f05dfa6aa97544a05fc59dd6ca738d9243c828233eb7f9b144c7be32a366ee678af963404#npm:4.2.2"],\
             ["inquirer", "npm:8.2.4"],\
             ["jest", "virtual:33e3bdbf7fa5e7d67a169bcdae0e2087d849097f5a378245e86fb92d10d2653fdf9d594cdb1a5bf8cfadcbf1009b79b64646fafed7dc31ed357978dc9b6978f0#npm:28.1.1"],\
             ["js-yaml", "npm:4.1.0"],\
@@ -7360,18 +7355,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/app", "workspace:packages/ui/app"],\
             ["@fern-api/cli", "workspace:packages/cli"],\
             ["@fern-api/commons", "workspace:packages/commons"],\
-            ["@fern-api/compiler", "workspace:packages/compiler/compiler"],\
-            ["@fern-api/compiler-commons", "workspace:packages/compiler/commons"],\
             ["@fern-api/docker-utils", "workspace:packages/local-generation/docker-utils"],\
             ["@fern-api/ete-tests", "workspace:packages/ete-tests"],\
             ["@fern-api/fe-bundle", "workspace:packages/ui/fe-bundle"],\
             ["@fern-api/init", "workspace:packages/init"],\
-            ["@fern-api/ir-generation", "workspace:packages/compiler/ir-generation"],\
+            ["@fern-api/ir-generator", "workspace:packages/ir/ir-generator"],\
             ["@fern-api/local-workspace-runner", "workspace:packages/local-generation/local-workspace-runner"],\
             ["@fern-api/login", "workspace:packages/login"],\
             ["@fern-api/openapi-converter", "workspace:packages/openapi-converter"],\
             ["@fern-api/remote-workspace-runner", "workspace:packages/remote-generation/remote-workspace-runner"],\
-            ["@fern-api/syntax-analysis", "workspace:packages/compiler/syntax-analysis"],\
+            ["@fern-api/workspace-parser", "workspace:packages/workspace-parser"],\
+            ["@fern-api/yaml-schema", "workspace:packages/yaml-schema"],\
             ["@fern-typescript/client", "workspace:packages/fern-typescript/client"],\
             ["@fern-typescript/commons", "workspace:packages/fern-typescript/commons"],\
             ["@fern-typescript/encoders", "workspace:packages/fern-typescript/encoders"],\
@@ -7391,52 +7385,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.15.0"],\
             ["fern-typescript", "workspace:packages/fern-typescript/cli"],\
-            ["jest", "virtual:33e3bdbf7fa5e7d67a169bcdae0e2087d849097f5a378245e86fb92d10d2653fdf9d594cdb1a5bf8cfadcbf1009b79b64646fafed7dc31ed357978dc9b6978f0#npm:28.1.1"],\
-            ["npm-run-all", "npm:4.1.5"],\
-            ["prettier", "npm:2.6.2"],\
-            ["ts-jest", "virtual:33e3bdbf7fa5e7d67a169bcdae0e2087d849097f5a378245e86fb92d10d2653fdf9d594cdb1a5bf8cfadcbf1009b79b64646fafed7dc31ed357978dc9b6978f0#npm:28.0.5"],\
-            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=7ad353"]\
-          ],\
-          "linkType": "SOFT"\
-        }]\
-      ]],\
-      ["@fern-api/compiler", [\
-        ["workspace:packages/compiler/compiler", {\
-          "packageLocation": "./packages/compiler/compiler/",\
-          "packageDependencies": [\
-            ["@fern-api/compiler", "workspace:packages/compiler/compiler"],\
-            ["@babel/core", "npm:7.18.5"],\
-            ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.2"],\
-            ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.17.12"],\
-            ["@fern-api/compiler-commons", "workspace:packages/compiler/commons"],\
-            ["@fern-api/ir-generation", "workspace:packages/compiler/ir-generation"],\
-            ["@fern-api/syntax-analysis", "workspace:packages/compiler/syntax-analysis"],\
-            ["@fern-fern/ir-model", "npm:0.0.20"],\
-            ["@types/jest", "npm:28.1.2"],\
-            ["@types/node", "npm:17.0.34"],\
-            ["depcheck", "npm:1.4.3"],\
-            ["eslint", "npm:8.15.0"],\
-            ["jest", "virtual:33e3bdbf7fa5e7d67a169bcdae0e2087d849097f5a378245e86fb92d10d2653fdf9d594cdb1a5bf8cfadcbf1009b79b64646fafed7dc31ed357978dc9b6978f0#npm:28.1.1"],\
-            ["npm-run-all", "npm:4.1.5"],\
-            ["prettier", "npm:2.6.2"],\
-            ["ts-jest", "virtual:33e3bdbf7fa5e7d67a169bcdae0e2087d849097f5a378245e86fb92d10d2653fdf9d594cdb1a5bf8cfadcbf1009b79b64646fafed7dc31ed357978dc9b6978f0#npm:28.0.5"],\
-            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=7ad353"]\
-          ],\
-          "linkType": "SOFT"\
-        }]\
-      ]],\
-      ["@fern-api/compiler-commons", [\
-        ["workspace:packages/compiler/commons", {\
-          "packageLocation": "./packages/compiler/commons/",\
-          "packageDependencies": [\
-            ["@fern-api/compiler-commons", "workspace:packages/compiler/commons"],\
-            ["@babel/core", "npm:7.18.5"],\
-            ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.2"],\
-            ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.17.12"],\
-            ["@types/jest", "npm:28.1.2"],\
-            ["@types/node", "npm:17.0.34"],\
-            ["depcheck", "npm:1.4.3"],\
-            ["eslint", "npm:8.15.0"],\
             ["jest", "virtual:33e3bdbf7fa5e7d67a169bcdae0e2087d849097f5a378245e86fb92d10d2653fdf9d594cdb1a5bf8cfadcbf1009b79b64646fafed7dc31ed357978dc9b6978f0#npm:28.1.1"],\
             ["npm-run-all", "npm:4.1.5"],\
             ["prettier", "npm:2.6.2"],\
@@ -7541,7 +7489,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.2"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.17.12"],\
             ["@fern-api/commons", "workspace:packages/commons"],\
-            ["@fern-api/syntax-analysis", "workspace:packages/compiler/syntax-analysis"],\
+            ["@fern-api/yaml-schema", "workspace:packages/yaml-schema"],\
             ["@types/jest", "npm:28.1.2"],\
             ["@types/js-yaml", "npm:4.0.5"],\
             ["@types/node", "npm:17.0.34"],\
@@ -7557,18 +7505,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
-      ["@fern-api/ir-generation", [\
-        ["workspace:packages/compiler/ir-generation", {\
-          "packageLocation": "./packages/compiler/ir-generation/",\
+      ["@fern-api/ir-generator", [\
+        ["workspace:packages/ir/ir-generator", {\
+          "packageLocation": "./packages/ir/ir-generator/",\
           "packageDependencies": [\
-            ["@fern-api/ir-generation", "workspace:packages/compiler/ir-generation"],\
+            ["@fern-api/ir-generator", "workspace:packages/ir/ir-generator"],\
             ["@babel/core", "npm:7.18.5"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.2"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.17.12"],\
             ["@fern-api/commons", "workspace:packages/commons"],\
-            ["@fern-api/compiler-commons", "workspace:packages/compiler/commons"],\
-            ["@fern-api/syntax-analysis", "workspace:packages/compiler/syntax-analysis"],\
-            ["@fern-fern/ir-model", "npm:0.0.20"],\
+            ["@fern-api/workspace-parser", "workspace:packages/workspace-parser"],\
+            ["@fern-api/yaml-schema", "workspace:packages/yaml-schema"],\
+            ["@fern-fern/ir-model", "npm:0.0.21"],\
             ["@types/jest", "npm:28.1.2"],\
             ["@types/lodash", "npm:4.14.182"],\
             ["@types/node", "npm:17.0.34"],\
@@ -7593,9 +7541,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.2"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.17.12"],\
             ["@fern-api/commons", "workspace:packages/commons"],\
-            ["@fern-api/compiler", "workspace:packages/compiler/compiler"],\
             ["@fern-api/docker-utils", "workspace:packages/local-generation/docker-utils"],\
-            ["@fern-fern/ir-model", "npm:0.0.20"],\
+            ["@fern-fern/ir-model", "npm:0.0.21"],\
             ["@types/jest", "npm:28.1.2"],\
             ["@types/node", "npm:17.0.34"],\
             ["@types/tar", "npm:6.1.1"],\
@@ -7706,7 +7653,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.18.5"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.2"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.17.12"],\
-            ["@fern-api/syntax-analysis", "workspace:packages/compiler/syntax-analysis"],\
+            ["@fern-api/yaml-schema", "workspace:packages/yaml-schema"],\
             ["@types/jest", "npm:28.1.2"],\
             ["@types/js-yaml", "npm:4.0.5"],\
             ["@types/lodash", "npm:4.14.182"],\
@@ -7734,8 +7681,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.2"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.17.12"],\
             ["@fern-api/commons", "workspace:packages/commons"],\
-            ["@fern-api/compiler", "workspace:packages/compiler/compiler"],\
             ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.4"],\
+            ["@fern-fern/ir-model", "npm:0.0.21"],\
             ["@types/jest", "npm:28.1.2"],\
             ["@types/node", "npm:17.0.34"],\
             ["axios", "npm:0.27.2"],\
@@ -7752,22 +7699,46 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
-      ["@fern-api/syntax-analysis", [\
-        ["workspace:packages/compiler/syntax-analysis", {\
-          "packageLocation": "./packages/compiler/syntax-analysis/",\
+      ["@fern-api/workspace-parser", [\
+        ["workspace:packages/workspace-parser", {\
+          "packageLocation": "./packages/workspace-parser/",\
           "packageDependencies": [\
-            ["@fern-api/syntax-analysis", "workspace:packages/compiler/syntax-analysis"],\
+            ["@fern-api/workspace-parser", "workspace:packages/workspace-parser"],\
             ["@babel/core", "npm:7.18.5"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.2"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.17.12"],\
-            ["@fern-api/compiler-commons", "workspace:packages/compiler/commons"],\
+            ["@fern-api/yaml-schema", "workspace:packages/yaml-schema"],\
             ["@types/jest", "npm:28.1.2"],\
             ["@types/js-yaml", "npm:4.0.5"],\
             ["@types/node", "npm:17.0.34"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.15.0"],\
+            ["glob", "npm:7.2.3"],\
+            ["glob-promise", "virtual:e5a0a756b779a8ebcfc2ec41f6fadcbb663da3504994ade181681a8f05dfa6aa97544a05fc59dd6ca738d9243c828233eb7f9b144c7be32a366ee678af963404#npm:4.2.2"],\
             ["jest", "virtual:33e3bdbf7fa5e7d67a169bcdae0e2087d849097f5a378245e86fb92d10d2653fdf9d594cdb1a5bf8cfadcbf1009b79b64646fafed7dc31ed357978dc9b6978f0#npm:28.1.1"],\
             ["js-yaml", "npm:4.1.0"],\
+            ["npm-run-all", "npm:4.1.5"],\
+            ["prettier", "npm:2.6.2"],\
+            ["ts-jest", "virtual:33e3bdbf7fa5e7d67a169bcdae0e2087d849097f5a378245e86fb92d10d2653fdf9d594cdb1a5bf8cfadcbf1009b79b64646fafed7dc31ed357978dc9b6978f0#npm:28.0.5"],\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=7ad353"],\
+            ["zod", "npm:3.16.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@fern-api/yaml-schema", [\
+        ["workspace:packages/yaml-schema", {\
+          "packageLocation": "./packages/yaml-schema/",\
+          "packageDependencies": [\
+            ["@fern-api/yaml-schema", "workspace:packages/yaml-schema"],\
+            ["@babel/core", "npm:7.18.5"],\
+            ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.2"],\
+            ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.17.12"],\
+            ["@types/jest", "npm:28.1.2"],\
+            ["@types/node", "npm:17.0.34"],\
+            ["depcheck", "npm:1.4.3"],\
+            ["eslint", "npm:8.15.0"],\
+            ["jest", "virtual:33e3bdbf7fa5e7d67a169bcdae0e2087d849097f5a378245e86fb92d10d2653fdf9d594cdb1a5bf8cfadcbf1009b79b64646fafed7dc31ed357978dc9b6978f0#npm:28.1.1"],\
             ["npm-run-all", "npm:4.1.5"],\
             ["prettier", "npm:2.6.2"],\
             ["ts-jest", "virtual:33e3bdbf7fa5e7d67a169bcdae0e2087d849097f5a378245e86fb92d10d2653fdf9d594cdb1a5bf8cfadcbf1009b79b64646fafed7dc31ed357978dc9b6978f0#npm:28.0.5"],\
@@ -7788,10 +7759,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/ir-model", [\
-        ["npm:0.0.20", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-ir-model-npm-0.0.20-82a3c769a3-0f5ced17bc.zip/node_modules/@fern-fern/ir-model/",\
+        ["npm:0.0.21", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-ir-model-npm-0.0.21-0862536d9a-ca7d921b06.zip/node_modules/@fern-fern/ir-model/",\
           "packageDependencies": [\
-            ["@fern-fern/ir-model", "npm:0.0.20"]\
+            ["@fern-fern/ir-model", "npm:0.0.21"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -7805,7 +7776,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.2"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.17.12"],\
             ["@fern-api/commons", "workspace:packages/commons"],\
-            ["@fern-fern/ir-model", "npm:0.0.20"],\
+            ["@fern-fern/ir-model", "npm:0.0.21"],\
             ["@fern-typescript/commons", "workspace:packages/fern-typescript/commons"],\
             ["@fern-typescript/encoders", "workspace:packages/fern-typescript/encoders"],\
             ["@fern-typescript/helper-manager", "workspace:packages/fern-typescript/helpers/helper-manager"],\
@@ -7838,7 +7809,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.2"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.17.12"],\
             ["@fern-api/commons", "workspace:packages/commons"],\
-            ["@fern-fern/ir-model", "npm:0.0.20"],\
+            ["@fern-fern/ir-model", "npm:0.0.21"],\
             ["@types/esutils", "npm:2.0.0"],\
             ["@types/jest", "npm:28.1.2"],\
             ["@types/lodash", "npm:4.14.182"],\
@@ -7868,7 +7839,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.18.5"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.2"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.17.12"],\
-            ["@fern-fern/ir-model", "npm:0.0.20"],\
+            ["@fern-fern/ir-model", "npm:0.0.21"],\
             ["@fern-typescript/helper-manager", "workspace:packages/fern-typescript/helpers/helper-manager"],\
             ["@fern-typescript/model-context", "workspace:packages/fern-typescript/model-context"],\
             ["@types/jest", "npm:28.1.2"],\
@@ -7893,7 +7864,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.18.5"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.2"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.17.12"],\
-            ["@fern-fern/ir-model", "npm:0.0.20"],\
+            ["@fern-fern/ir-model", "npm:0.0.21"],\
             ["@fern-typescript/model-context", "workspace:packages/fern-typescript/model-context"],\
             ["@fern-typescript/types", "workspace:packages/fern-typescript/types"],\
             ["@types/jest", "npm:28.1.2"],\
@@ -7918,7 +7889,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.2"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.17.12"],\
             ["@fern-api/commons", "workspace:packages/commons"],\
-            ["@fern-fern/ir-model", "npm:0.0.20"],\
+            ["@fern-fern/ir-model", "npm:0.0.21"],\
             ["@fern-typescript/helper-utils", "workspace:packages/fern-typescript/helpers/utils"],\
             ["@fern-typescript/json-encoding-helper", "workspace:packages/fern-typescript/helpers/built-in/json-encoding-helper"],\
             ["@types/jest", "npm:28.1.2"],\
@@ -7943,7 +7914,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.18.5"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.2"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.17.12"],\
-            ["@fern-fern/ir-model", "npm:0.0.20"],\
+            ["@fern-fern/ir-model", "npm:0.0.21"],\
             ["@fern-typescript/model-context", "workspace:packages/fern-typescript/model-context"],\
             ["@types/jest", "npm:28.1.2"],\
             ["@types/node", "npm:17.0.34"],\
@@ -7989,7 +7960,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.18.5"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.2"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.17.12"],\
-            ["@fern-fern/ir-model", "npm:0.0.20"],\
+            ["@fern-fern/ir-model", "npm:0.0.21"],\
             ["@fern-typescript/commons", "workspace:packages/fern-typescript/commons"],\
             ["@fern-typescript/errors", "workspace:packages/fern-typescript/errors"],\
             ["@fern-typescript/model-context", "workspace:packages/fern-typescript/model-context"],\
@@ -8020,7 +7991,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.2"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.17.12"],\
             ["@fern-api/commons", "workspace:packages/commons"],\
-            ["@fern-fern/ir-model", "npm:0.0.20"],\
+            ["@fern-fern/ir-model", "npm:0.0.21"],\
             ["@fern-typescript/commons", "workspace:packages/fern-typescript/commons"],\
             ["@types/jest", "npm:28.1.2"],\
             ["@types/node", "npm:17.0.34"],\
@@ -8044,7 +8015,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.18.5"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.2"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.17.12"],\
-            ["@fern-fern/ir-model", "npm:0.0.20"],\
+            ["@fern-fern/ir-model", "npm:0.0.21"],\
             ["@fern-typescript/commons", "workspace:packages/fern-typescript/commons"],\
             ["@fern-typescript/encoders", "workspace:packages/fern-typescript/encoders"],\
             ["@fern-typescript/helper-manager", "workspace:packages/fern-typescript/helpers/helper-manager"],\
@@ -8077,7 +8048,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.2"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.17.12"],\
             ["@fern-api/commons", "workspace:packages/commons"],\
-            ["@fern-fern/ir-model", "npm:0.0.20"],\
+            ["@fern-fern/ir-model", "npm:0.0.21"],\
             ["@fern-typescript/commons", "workspace:packages/fern-typescript/commons"],\
             ["@fern-typescript/model-context", "workspace:packages/fern-typescript/model-context"],\
             ["@fern-typescript/types", "workspace:packages/fern-typescript/types"],\
@@ -8135,9 +8106,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.18.5"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.2"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.17.12"],\
-            ["@fern-api/cli", "workspace:packages/cli"],\
-            ["@fern-api/compiler", "workspace:packages/compiler/compiler"],\
-            ["@fern-fern/ir-model", "npm:0.0.20"],\
+            ["@fern-api/ir-generator", "workspace:packages/ir/ir-generator"],\
+            ["@fern-api/workspace-parser", "workspace:packages/workspace-parser"],\
+            ["@fern-fern/ir-model", "npm:0.0.21"],\
             ["@fern-typescript/commons", "workspace:packages/fern-typescript/commons"],\
             ["@types/is-ci", "npm:3.0.0"],\
             ["@types/jest", "npm:28.1.2"],\
@@ -8164,7 +8135,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.18.5"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.2"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.17.12"],\
-            ["@fern-fern/ir-model", "npm:0.0.20"],\
+            ["@fern-fern/ir-model", "npm:0.0.21"],\
             ["@fern-typescript/commons", "workspace:packages/fern-typescript/commons"],\
             ["@fern-typescript/model-context", "workspace:packages/fern-typescript/model-context"],\
             ["@types/jest", "npm:28.1.2"],\
@@ -16521,10 +16492,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.18.5"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.2"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.17.12"],\
-            ["@fern-api/cli", "workspace:packages/cli"],\
             ["@fern-api/commons", "workspace:packages/commons"],\
-            ["@fern-api/compiler", "workspace:packages/compiler/compiler"],\
-            ["@fern-fern/ir-model", "npm:0.0.20"],\
+            ["@fern-api/ir-generator", "workspace:packages/ir/ir-generator"],\
+            ["@fern-api/workspace-parser", "workspace:packages/workspace-parser"],\
+            ["@fern-fern/ir-model", "npm:0.0.21"],\
             ["@fern-typescript/client", "workspace:packages/fern-typescript/client"],\
             ["@fern-typescript/commons", "workspace:packages/fern-typescript/commons"],\
             ["@fern-typescript/helper-manager", "workspace:packages/fern-typescript/helpers/helper-manager"],\
@@ -17213,10 +17184,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:909a3ad0503c6a40b1eda456c4db8b2a60b9422bba9121b95eef4169ee16677e7144d66526740c016c87dd3dc339185e62726b17a4bb073916f17da3fb3c2c2f#npm:4.2.2", {\
-          "packageLocation": "./.yarn/__virtual__/glob-promise-virtual-ab26f4435e/0/cache/glob-promise-npm-4.2.2-30777327f7-c1a3d95f7c.zip/node_modules/glob-promise/",\
+        ["virtual:e5a0a756b779a8ebcfc2ec41f6fadcbb663da3504994ade181681a8f05dfa6aa97544a05fc59dd6ca738d9243c828233eb7f9b144c7be32a366ee678af963404#npm:4.2.2", {\
+          "packageLocation": "./.yarn/__virtual__/glob-promise-virtual-7d07db4581/0/cache/glob-promise-npm-4.2.2-30777327f7-c1a3d95f7c.zip/node_modules/glob-promise/",\
           "packageDependencies": [\
-            ["glob-promise", "virtual:909a3ad0503c6a40b1eda456c4db8b2a60b9422bba9121b95eef4169ee16677e7144d66526740c016c87dd3dc339185e62726b17a4bb073916f17da3fb3c2c2f#npm:4.2.2"],\
+            ["glob-promise", "virtual:e5a0a756b779a8ebcfc2ec41f6fadcbb663da3504994ade181681a8f05dfa6aa97544a05fc59dd6ca738d9243c828233eb7f9b144c7be32a366ee678af963404#npm:4.2.2"],\
             ["@types/glob", "npm:7.2.0"],\
             ["glob", "npm:7.2.3"]\
           ],\

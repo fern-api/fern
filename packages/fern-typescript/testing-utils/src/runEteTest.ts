@@ -1,5 +1,5 @@
-import { parseFernInput } from "@fern-api/cli";
-import { compile } from "@fern-api/compiler";
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { parseWorkspaceDefinition } from "@fern-api/workspace-parser";
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
 import { writeVolumeToDisk } from "@fern-typescript/commons";
 import { rm } from "fs/promises";
@@ -49,17 +49,20 @@ export async function runEteTest({
     const pathToGenerated = path.join(absolutePathToFixture, "generated");
     await deleteDirectory(pathToGenerated);
 
-    const files = await parseFernInput(path.join(absolutePathToFixture, "src"));
-    const compilerResult = await compile(files, undefined);
-    if (!compilerResult.didSucceed) {
-        throw new Error(JSON.stringify(compilerResult.failure));
+    const parseWorkspaceResult = await parseWorkspaceDefinition({
+        name: undefined,
+        absolutePathToDefinition: path.join(absolutePathToFixture, "src"),
+    });
+    if (!parseWorkspaceResult.didSucceed) {
+        throw new Error(JSON.stringify(parseWorkspaceResult.failures));
     }
+    const intermediateRepresentation = await generateIntermediateRepresentation(parseWorkspaceResult.workspace);
 
     const volume = new Volume();
 
     await generateFiles({
         volume,
-        intermediateRepresentation: compilerResult.intermediateRepresentation,
+        intermediateRepresentation,
     });
 
     await writeVolumeToDisk(volume, pathToGenerated);

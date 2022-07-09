@@ -1,4 +1,4 @@
-import { RawSchemas } from "@fern-api/syntax-analysis";
+import { RawSchemas } from "@fern-api/yaml-schema";
 import _ from "lodash";
 import { OpenAPIV3 } from "openapi-types";
 import { isReferenceObject, isSchemaObject } from "./utils";

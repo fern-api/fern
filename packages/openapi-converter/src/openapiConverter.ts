@@ -1,5 +1,5 @@
 import SwaggerParser from "@apidevtools/swagger-parser";
-import { RawSchemas } from "@fern-api/syntax-analysis";
+import { RawSchemas } from "@fern-api/yaml-schema";
 import { OpenAPI, OpenAPIV3 } from "openapi-types";
 import { convertToFernService } from "./serviceConverter";
 import { convertToFernType } from "./typeConverter";

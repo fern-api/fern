@@ -5,8 +5,9 @@ import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
-import { compileAndGenerateWorkspaces, compileWorkspaces } from "./commands/compile/compileWorkspaces";
 import { convertOpenApiToFernApiDefinition } from "./commands/convert-openapi/convertOpenApi";
+import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
+import { generateWorkspaces } from "./commands/generate/generateWorkspaces";
 
 void runCli();
 
@@ -37,7 +38,7 @@ async function runCli() {
     addConvertCommand(cli);
     addGenerateCommand(cli);
     addLoginCommand(cli);
-    addCompileCommand(cli);
+    addGenerateIrCommand(cli);
 
     await cli.parse();
 }
@@ -115,7 +116,7 @@ function addGenerateCommand(cli: Argv) {
                         "If omitted, every workspace specified in the project-level configuration (fern.config.json) will be processed.",
                 }),
         async (argv) => {
-            await compileAndGenerateWorkspaces({
+            await generateWorkspaces({
                 commandLineWorkspaces: argv.workspaces ?? [],
                 runLocal: argv.local,
                 keepDocker: argv.keepDocker,
@@ -154,15 +155,16 @@ function addLoginCommand(cli: Argv) {
     });
 }
 
-function addCompileCommand(cli: Argv) {
+function addGenerateIrCommand(cli: Argv) {
     cli.command(
-        "compile [workspaces...]",
+        "ir [workspaces...]",
         "Compiles your Fern API Definition",
         (yargs) =>
             yargs
-                .option("writeIr", {
-                    type: "boolean",
-                    description: "Should output compiled intermediate representation (IR)",
+                .option("output", {
+                    type: "string",
+                    description: "Path to write intermediate representation (IR)",
+                    demandOption: true,
                 })
                 .positional("workspaces", {
                     array: true,
@@ -171,9 +173,9 @@ function addCompileCommand(cli: Argv) {
                         "If omitted, every workspace specified in the project-level configuration (fern.config.json) will be processed.",
                 }),
         (argv) =>
-            compileWorkspaces({
+            generateIrForWorkspaces({
                 commandLineWorkspaces: argv.workspaces ?? [],
-                writeIr: argv.writeIr ?? false,
+                irFilepath: argv.output,
             })
     );
 }

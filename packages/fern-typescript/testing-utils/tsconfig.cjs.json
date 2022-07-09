@@ -3,8 +3,8 @@
   "compilerOptions": { "composite": true, "outDir": "lib/cjs", "rootDir": "src", "module": "CommonJS" },
   "include": ["./src"],
   "references": [
-    { "path": "../../cli/tsconfig.cjs.json" },
-    { "path": "../../compiler/compiler/tsconfig.cjs.json" },
+    { "path": "../../ir/ir-generator/tsconfig.cjs.json" },
+    { "path": "../../workspace-parser/tsconfig.cjs.json" },
     { "path": "../commons/tsconfig.cjs.json" }
   ]
 }

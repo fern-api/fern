@@ -34,7 +34,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-fern/ir-model": "0.0.20",
+    "@fern-fern/ir-model": "0.0.21",
     "@fern-typescript/model-context": "workspace:*",
     "ts-morph": "^14.0.0"
   },
