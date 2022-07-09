@@ -31,7 +31,7 @@
     "depcheck": "yarn workspaces foreach --verbose --parallel run depcheck",
     "codegen": "fern generate",
     "codegen:local": "yarn fern:local generate",
-    "fern:local": "yarn workspace @fern-api/cli compile && node packages/cli/cli",
+    "fern:local": "yarn workspace @fern-api/cli dist && node packages/cli/webpack/bundle.js",
     "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public",
     "docs:preview": "yarn docsify serve docs",
     "webpack:cli": "packages/cli/webpack/bundle.sh local"
