@@ -47,6 +47,8 @@ services:
           method: POST
           path: /
           auth-override: none
+          headers:
+            X-Endpoint-Header: string
           request: CreatePostRequest
           response: commons.PostId
         getPost:

@@ -7,12 +7,18 @@ export declare namespace runDocker {
         imageName: string;
         args?: string[];
         binds?: string[];
+        removeAfterCompletion?: boolean;
     }
 }
 
-export async function runDocker({ imageName, args, binds }: runDocker.Args): Promise<void> {
+export async function runDocker({
+    imageName,
+    args,
+    binds,
+    removeAfterCompletion = false,
+}: runDocker.Args): Promise<void> {
     const docker = new Docker();
-    const tryRun = () => tryRunDocker({ docker, imageName, args, binds });
+    const tryRun = () => tryRunDocker({ docker, imageName, args, binds, removeAfterCompletion });
     try {
         await tryRun();
     } catch (e) {
@@ -32,11 +38,13 @@ async function tryRunDocker({
     imageName,
     args,
     binds,
+    removeAfterCompletion,
 }: {
     docker: Docker;
     imageName: string;
     args?: string[];
     binds?: string[];
+    removeAfterCompletion: boolean;
 }): Promise<void> {
     const runResponse = await docker.run(
         imageName,
@@ -52,7 +60,7 @@ async function tryRunDocker({
         }
     );
 
-    if (process.env.NODE_ENV !== "development") {
+    if (removeAfterCompletion) {
         const container = runResponse[1];
         await container.remove();
     }

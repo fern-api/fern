@@ -6,7 +6,7 @@ export declare namespace Fetcher {
     export interface Args {
         url: string;
         method: string;
-        headers?: Record<string, string>;
+        headers: Record<string, string>;
         token?: MaybeGetter<Token | undefined>;
         queryParameters?: URLSearchParams;
         body?: {

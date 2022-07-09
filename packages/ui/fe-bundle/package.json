@@ -1,0 +1,95 @@
+{
+  "name": "@fern-api/fe-bundle",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:fern-api/fern.git",
+    "directory": "packages/ui/fe-bundle"
+  },
+  "private": true,
+  "files": [
+    "lib"
+  ],
+  "source": "src/index.ts",
+  "module": "src/index.ts",
+  "main": "./lib/esm/index.js",
+  "types": "./lib/esm/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./lib/cjs/index.js",
+      "default": "./lib/esm/index.js"
+    }
+  },
+  "sideEffects": false,
+  "scripts": {
+    "clean": "tsc --build --clean tsconfig.json && tsc --build --clean tsconfig.cjs.json",
+    "compile": "yarn run compile:esm",
+    "compile:all": "run-s compile:esm compile:cjs",
+    "compile:esm": "tsc --build tsconfig.json && echo '{ \"type\": \"module\" }' > lib/esm/package.json",
+    "compile:cjs": "tsc --build tsconfig.cjs.json && echo '{ \"type\": \"commonjs\" }' > lib/cjs/package.json",
+    "test": "yarn run compile:all && jest --passWithNoTests",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
+    "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore --fix",
+    "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
+    "lint:style:fix": "yarn run lint:style --fix",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "depcheck": "depcheck",
+    "start": "env-cmd -e development env-cmd -f .env.local --silent craco start",
+    "build": "yarn run compile && craco build",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "dependencies": {
+    "@blueprintjs/core": "^4.6.0",
+    "@blueprintjs/icons": "^4.3.1",
+    "@blueprintjs/popover2": "^1.4.2",
+    "@blueprintjs/select": "^4.4.2",
+    "@fern-api/app": "workspace:*",
+    "normalize.css": "^8.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.18.5",
+    "@babel/preset-env": "^7.18.2",
+    "@babel/preset-typescript": "^7.17.12",
+    "@craco/craco": "^6.4.4",
+    "@types/craco__craco": "^6.4.0",
+    "@types/jest": "^28.1.2",
+    "@types/node": "^17.0.33",
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
+    "depcheck": "^1.4.3",
+    "env-cmd": "^10.1.0",
+    "eslint": "^8.12.0",
+    "fork-ts-checker-webpack-plugin": "^7.2.11",
+    "jest": "^28.1.1",
+    "node-polyfill-webpack-plugin": "^2.0.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.6.2",
+    "react-scripts": "^5.0.1",
+    "sass": "^1.53.0",
+    "stylelint": "^14.9.1",
+    "ts-jest": "^28.0.5",
+    "typescript": "^4.6.4"
+  },
+  "postcss": {
+    "postcss-modules": {
+      "globalModulePaths": [
+        "@blueprintjs.*"
+      ]
+    }
+  }
+}

@@ -2,6 +2,7 @@
   "ignores": [
     "@types/jest",
     "@types/node",
+    "ts-jest",
     "webpack-cli",
     "umd-compat-loader",
     "@ts-morph/common",

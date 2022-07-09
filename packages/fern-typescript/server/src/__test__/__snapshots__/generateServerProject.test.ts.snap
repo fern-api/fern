@@ -255,7 +255,15 @@ namespace NoopWithoutAuthResponse {
     }
 }
 ",
-  "/model/_service-types/PostsService/index.ts": "export * from \\"./CreatePostErrorBody\\";
+  "/model/_service-types/PostsService/_CreatePostRequest.ts": "import * as model from \\"../..\\";
+
+export interface _CreatePostRequest {
+    \\"X-Endpoint-Header\\": string;
+    body: model.CreatePostRequest;
+}
+",
+  "/model/_service-types/PostsService/index.ts": "export * from \\"./_CreatePostRequest\\";
+export * from \\"./CreatePostErrorBody\\";
 export * from \\"./CreatePostResponse\\";
 export * from \\"./GetPostRequest\\";
 export * from \\"./GetPostErrorBody\\";
@@ -399,7 +407,7 @@ export * from \\"./_service-types\\";
     \\"dependencies\\": {
         \\"uuid\\": \\"8.3.2\\",
         \\"@types/uuid\\": \\"8.3.4\\",
-        \\"@fern-typescript/service-utils\\": \\"0.0.114\\",
+        \\"@fern-typescript/service-utils\\": \\"0.0.124\\",
         \\"express\\": \\"4.18.1\\",
         \\"@types/express\\": \\"4.17.13\\"
     },
@@ -414,16 +422,16 @@ export * from \\"./_service-types\\";
     }
 }",
   "/services/PostsService.ts": "import * as model from \\"../model\\";
-import { MaybePromise, Token } from \\"@fern-typescript/service-utils\\";
+import { Token } from \\"@fern-typescript/service-utils\\";
 import express, { Express } from \\"express\\";
 
 export interface PostsService {
-    createPost(request: model.CreatePostRequest): MaybePromise<model.CreatePostResponse>;
-    getPost(token: Token, request: model.GetPostRequest): MaybePromise<model.GetPostResponse>;
-    getPostV2(token: Token, request: model.PostId): MaybePromise<model.GetPostV2Response>;
-    deletePost(token: Token, request: model.DeletePostRequest): MaybePromise<model.DeletePostResponse>;
-    noopWithAuth(token: Token): MaybePromise<model.NoopWithAuthResponse>;
-    noopWithoutAuth(): MaybePromise<model.NoopWithoutAuthResponse>;
+    createPost(request: model._CreatePostRequest): model.CreatePostResponse | Promise<model.CreatePostResponse>;
+    getPost(token: Token, request: model.GetPostRequest): model.GetPostResponse | Promise<model.GetPostResponse>;
+    getPostV2(token: Token, request: model.PostId): model.GetPostV2Response | Promise<model.GetPostV2Response>;
+    deletePost(token: Token, request: model.DeletePostRequest): model.DeletePostResponse | Promise<model.DeletePostResponse>;
+    noopWithAuth(token: Token): model.NoopWithAuthResponse | Promise<model.NoopWithAuthResponse>;
+    noopWithoutAuth(): model.NoopWithoutAuthResponse | Promise<model.NoopWithoutAuthResponse>;
 }
 
 export const PostsService = {
@@ -431,7 +439,10 @@ export const PostsService = {
         const app = express();
         app.use(express.json());
         app.post(\\"/posts/\\", async (request, response) => {
-            const result = await impl.createPost(request.body);
+            const result = await impl.createPost({
+                \\"X-Endpoint-Header\\": request.header(\\"X-Endpoint-Header\\")!,
+                body: request.body
+            });
             if (result.ok) {
                 response.send(result.body);
             }
@@ -440,7 +451,7 @@ export const PostsService = {
             }
         });
         app.get(\\"/posts/:postId\\", async (request, response) => {
-            const result = await impl.getPost(Token.fromAuthorizationHeader(request.headers[\\"Authorization\\"] as string), {
+            const result = await impl.getPost(Token.fromAuthorizationHeader(request.header(\\"Authorization\\")!), {
                 postId: model.PostId.of(request.params.postId),
                 page: request.query.page != null ? Number(request.query.page) : undefined,
                 otherParam: Number(request.query.otherParam)
@@ -457,7 +468,7 @@ export const PostsService = {
             }
         });
         app.get(\\"/posts/get\\", async (request, response) => {
-            const result = await impl.getPostV2(Token.fromAuthorizationHeader(request.headers[\\"Authorization\\"] as string), request.body);
+            const result = await impl.getPostV2(Token.fromAuthorizationHeader(request.header(\\"Authorization\\")!), request.body);
             if (result.ok) {
                 response.send(result.body);
             }
@@ -470,7 +481,7 @@ export const PostsService = {
             }
         });
         app.delete(\\"/posts/:postId\\", async (request, response) => {
-            const result = await impl.deletePost(Token.fromAuthorizationHeader(request.headers[\\"Authorization\\"] as string), {
+            const result = await impl.deletePost(Token.fromAuthorizationHeader(request.header(\\"Authorization\\")!), {
                 postId: model.PostId.of(request.params.postId)
             });
             if (result.ok) {
@@ -481,7 +492,7 @@ export const PostsService = {
             }
         });
         app.get(\\"/posts/\\", async (request, response) => {
-            const result = await impl.noopWithAuth(Token.fromAuthorizationHeader(request.headers[\\"Authorization\\"] as string));
+            const result = await impl.noopWithAuth(Token.fromAuthorizationHeader(request.header(\\"Authorization\\")!));
             if (result.ok) {
                 response.end();
             }

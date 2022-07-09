@@ -1,6 +1,6 @@
 {
   "extends": "../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "lib/cjs", "rootDir": "src", "module": "CommonJS" },
+  "compilerOptions": { "composite": true, "outDir": "lib/esm", "rootDir": "src", "module": "esnext" },
   "include": ["./src"],
   "references": [
     { "path": "../add-generator/tsconfig.json" },
@@ -31,6 +31,8 @@
     { "path": "../local-generation/local-workspace-runner/tsconfig.json" },
     { "path": "../login/tsconfig.json" },
     { "path": "../openapi-converter/tsconfig.json" },
-    { "path": "../remote-generation/remote-workspace-runner/tsconfig.json" }
+    { "path": "../remote-generation/remote-workspace-runner/tsconfig.json" },
+    { "path": "../ui/app/tsconfig.json" },
+    { "path": "../ui/fe-bundle/tsconfig.json" }
   ]
 }

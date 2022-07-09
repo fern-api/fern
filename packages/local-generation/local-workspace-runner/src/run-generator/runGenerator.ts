@@ -20,6 +20,8 @@ export declare namespace runGenerator {
         absolutePathToIr: string;
         absolutePathToOutput: string | undefined;
         pathToWriteConfigJson: string;
+
+        keepDocker: boolean;
     }
 }
 
@@ -32,6 +34,7 @@ export async function runGenerator({
     pathToWriteConfigJson,
     helpers,
     customConfig,
+    keepDocker,
 }: runGenerator.Args): Promise<void> {
     const binds = [
         `${pathToWriteConfigJson}:${DOCKER_GENERATOR_CONFIG_PATH}:ro`,
@@ -56,5 +59,6 @@ export async function runGenerator({
         imageName,
         args: [DOCKER_GENERATOR_CONFIG_PATH],
         binds,
+        removeAfterCompletion: !keepDocker,
     });
 }

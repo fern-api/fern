@@ -13,9 +13,6 @@ it("fern init", async () => {
         "node",
         [path.join(__dirname, "../../../../cli/webpack/dist/bundle.js"), "init", "--organization", "fern"],
         {
-            env: {
-                NODE_ENV: "development",
-            },
             cwd: GENERATED_DIR,
         }
     );

@@ -1,0 +1,17 @@
+{
+  "extends": "../../../shared/tsconfig.shared.json",
+  "compilerOptions": { "composite": true, "outDir": "lib/cjs", "rootDir": "src", "module": "CommonJS" },
+  "include": ["./src"],
+  "exclude": ["./src/**/__test__/**/generated"],
+  "references": [
+    { "path": "../../cli/tsconfig.cjs.json" },
+    { "path": "../../commons/tsconfig.cjs.json" },
+    { "path": "../../compiler/compiler/tsconfig.cjs.json" },
+    { "path": "../client/tsconfig.cjs.json" },
+    { "path": "../commons/tsconfig.cjs.json" },
+    { "path": "../helpers/helper-manager/tsconfig.cjs.json" },
+    { "path": "../model/tsconfig.cjs.json" },
+    { "path": "../server/tsconfig.cjs.json" },
+    { "path": "../testing-utils/tsconfig.cjs.json" }
+  ]
+}

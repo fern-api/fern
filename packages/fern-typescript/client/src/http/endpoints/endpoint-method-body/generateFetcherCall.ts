@@ -5,6 +5,7 @@ import { GeneratedHttpEndpointTypes } from "@fern-typescript/model-context";
 import { SourceFile, StatementStructures, StructureKind, ts, VariableDeclarationKind } from "ts-morph";
 import { ClientConstants } from "../../../constants";
 import { generateJoinUrlPathsCall } from "../../../utils/generateJoinPathsCall";
+import { doesServiceHaveHeaders } from "../../utils";
 import { convertPathToTemplateString } from "./convertPathToTemplateString";
 import { generateEncoderCall } from "./generateEncoderCall";
 
@@ -44,10 +45,7 @@ export async function generateFetcherCall({
             ts.factory.createIdentifier(ClientConstants.HttpService.ServiceUtils.Fetcher.Parameters.METHOD),
             ts.factory.createStringLiteral(endpoint.method)
         ),
-        ts.factory.createPropertyAssignment(
-            ts.factory.createIdentifier(ClientConstants.HttpService.ServiceUtils.Fetcher.Parameters.HEADERS),
-            ts.factory.createObjectLiteralExpression([])
-        ),
+        getHeadersPropertyAssignment({ service: serviceDefinition, endpoint }),
         ts.factory.createPropertyAssignment(
             ts.factory.createIdentifier(ClientConstants.HttpService.ServiceUtils.Fetcher.Parameters.TOKEN),
             ts.factory.createPropertyAccessExpression(
@@ -149,4 +147,74 @@ export async function generateFetcherCall({
             },
         ],
     };
+}
+
+function getHeadersPropertyAssignment({
+    service,
+    endpoint,
+}: {
+    service: HttpService;
+    endpoint: HttpEndpoint;
+}): ts.ObjectLiteralElementLike {
+    return ts.factory.createPropertyAssignment(
+        ts.factory.createIdentifier(ClientConstants.HttpService.ServiceUtils.Fetcher.Parameters.HEADERS),
+        getHeadersPropertyValue({ service, endpoint })
+    );
+}
+
+function getHeadersPropertyValue({
+    service,
+    endpoint,
+}: {
+    service: HttpService;
+    endpoint: HttpEndpoint;
+}): ts.Expression {
+    if (!doesServiceHaveHeaders(service) && endpoint.headers.length === 0) {
+        return ts.factory.createObjectLiteralExpression([]);
+    }
+
+    const properties: ts.ObjectLiteralElementLike[] = [];
+
+    for (const header of service.headers) {
+        const referenceToHeader = ts.factory.createElementAccessExpression(
+            ts.factory.createPropertyAccessExpression(
+                ts.factory.createThis(),
+                ts.factory.createIdentifier(ClientConstants.HttpService.PrivateMembers.HEADERS)
+            ),
+            ts.factory.createStringLiteral(header.header)
+        );
+
+        properties.push(
+            ts.factory.createPropertyAssignment(
+                ts.factory.createStringLiteral(header.header),
+                ts.factory.createAwaitExpression(
+                    ts.factory.createConditionalExpression(
+                        ts.factory.createBinaryExpression(
+                            ts.factory.createTypeOfExpression(referenceToHeader),
+                            ts.factory.createToken(ts.SyntaxKind.EqualsEqualsEqualsToken),
+                            ts.factory.createStringLiteral("function")
+                        ),
+                        ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                        ts.factory.createCallExpression(referenceToHeader, undefined, []),
+                        ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                        referenceToHeader
+                    )
+                )
+            )
+        );
+    }
+
+    for (const header of endpoint.headers) {
+        properties.push(
+            ts.factory.createPropertyAssignment(
+                ts.factory.createStringLiteral(header.header),
+                ts.factory.createElementAccessExpression(
+                    ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Signature.REQUEST_PARAMETER),
+                    ts.factory.createStringLiteral(header.header)
+                )
+            )
+        );
+    }
+
+    return ts.factory.createObjectLiteralExpression(properties, true);
 }

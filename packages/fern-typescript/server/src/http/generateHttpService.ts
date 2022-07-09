@@ -99,8 +99,6 @@ function addEndpointToService({
                     reference: generatedEndpointTypes.response.reference,
                     referencedIn: serviceFile,
                 }),
-                dependencyManager,
-                file: serviceFile,
             })
         ),
     });

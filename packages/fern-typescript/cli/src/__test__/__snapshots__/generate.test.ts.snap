@@ -6698,7 +6698,7 @@ export * from \\"./_service-types\\";
         \\"build\\": \\"esbuild $(find . -name '*.ts' -not -path './node_modules/*') --format=cjs --sourcemap --outdir=. && tsc\\"
     },
     \\"dependencies\\": {
-        \\"@fern-typescript/service-utils\\": \\"0.0.114\\",
+        \\"@fern-typescript/service-utils\\": \\"0.0.124\\",
         \\"url-join\\": \\"5.0.0\\"
     },
     \\"devDependencies\\": {
@@ -6713,7 +6713,7 @@ export * from \\"./_service-types\\";
   Object {
     "contents": Array [
       Object {
-        "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+        "contents": "import { isResponseOk, defaultFetcher, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
@@ -6728,15 +6728,21 @@ export interface AdminService {
     storeTracedWorkspaceV2(request: model.StoreTracedWorkspaceV2Request): Promise<model.StoreTracedWorkspaceV2Response>;
 }
 
+export declare namespace AdminService {
+    interface Init {
+        origin: string;
+        fetcher?: Fetcher;
+    }
+}
+
 export class AdminService implements AdminService {
     private baseUrl: string;
     private fetcher: Fetcher;
     private token: MaybeGetter<Token | undefined>;
 
-    constructor(args: Service.Init) {
+    constructor(args: AdminService.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
         this.baseUrl = urlJoin(args.origin, \\"/admin\\");
-        this.token = args.token;
     }
 
     public async updateTestSubmissionStatus(request: model.UpdateTestSubmissionStatusRequest): Promise<model.UpdateTestSubmissionStatusResponse> {
@@ -6952,7 +6958,7 @@ export class AdminService implements AdminService {
         "type": "file",
       },
       Object {
-        "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+        "contents": "import { isResponseOk, defaultFetcher, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
@@ -6963,6 +6969,13 @@ export interface ExecutionSesssionManagementService {
     getExecutionSessionsState(): Promise<model.GetExecutionSessionsStateResponse>;
 }
 
+export declare namespace ExecutionSesssionManagementService {
+    interface Init {
+        origin: string;
+        fetcher?: Fetcher;
+    }
+}
+
 /**
  * Responsible for spinning up and spinning down execution.
  */
@@ -6971,10 +6984,9 @@ export class ExecutionSesssionManagementService implements ExecutionSesssionMana
     private fetcher: Fetcher;
     private token: MaybeGetter<Token | undefined>;
 
-    constructor(args: Service.Init) {
+    constructor(args: ExecutionSesssionManagementService.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
         this.baseUrl = urlJoin(args.origin, \\"/sessions\\");
-        this.token = args.token;
     }
 
     public async createExecutionSession(request: model.CreateExecutionSessionRequest): Promise<model.CreateExecutionSessionResponse> {
@@ -7076,7 +7088,7 @@ export class ExecutionSesssionManagementService implements ExecutionSesssionMana
         "type": "file",
       },
       Object {
-        "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+        "contents": "import { isResponseOk, defaultFetcher, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
@@ -7085,15 +7097,21 @@ export interface HomepageProblemService {
     setHomepageProblems(request: model.ProblemId[]): Promise<model.SetHomepageProblemsResponse>;
 }
 
+export declare namespace HomepageProblemService {
+    interface Init {
+        origin: string;
+        fetcher?: Fetcher;
+    }
+}
+
 export class HomepageProblemService implements HomepageProblemService {
     private baseUrl: string;
     private fetcher: Fetcher;
     private token: MaybeGetter<Token | undefined>;
 
-    constructor(args: Service.Init) {
+    constructor(args: HomepageProblemService.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
         this.baseUrl = urlJoin(args.origin, \\"/homepage-problems\\");
-        this.token = args.token;
     }
 
     public async getHomepageProblems(): Promise<model.GetHomepageProblemsResponse> {
@@ -7151,7 +7169,7 @@ export class HomepageProblemService implements HomepageProblemService {
         "type": "file",
       },
       Object {
-        "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+        "contents": "import { isResponseOk, defaultFetcher, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
@@ -7159,15 +7177,21 @@ export interface MigrationInfoService {
     getAttemptedMigrations(): Promise<model.GetAttemptedMigrationsResponse>;
 }
 
+export declare namespace MigrationInfoService {
+    interface Init {
+        origin: string;
+        fetcher?: Fetcher;
+    }
+}
+
 export class MigrationInfoService implements MigrationInfoService {
     private baseUrl: string;
     private fetcher: Fetcher;
     private token: MaybeGetter<Token | undefined>;
 
-    constructor(args: Service.Init) {
+    constructor(args: MigrationInfoService.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
         this.baseUrl = urlJoin(args.origin, \\"/migration-info\\");
-        this.token = args.token;
     }
 
     public async getAttemptedMigrations(): Promise<model.GetAttemptedMigrationsResponse> {
@@ -7199,7 +7223,7 @@ export class MigrationInfoService implements MigrationInfoService {
         "type": "file",
       },
       Object {
-        "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+        "contents": "import { isResponseOk, defaultFetcher, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
@@ -7211,12 +7235,20 @@ export interface PlaylistCrudService {
     deletePlaylist(request: model.DeletePlaylistRequest): Promise<model.DeletePlaylistResponse>;
 }
 
+export declare namespace PlaylistCrudService {
+    interface Init {
+        origin: string;
+        fetcher?: Fetcher;
+        token?: MaybeGetter<Token | undefined>;
+    }
+}
+
 export class PlaylistCrudService implements PlaylistCrudService {
     private baseUrl: string;
     private fetcher: Fetcher;
     private token: MaybeGetter<Token | undefined>;
 
-    constructor(args: Service.Init) {
+    constructor(args: PlaylistCrudService.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
         this.baseUrl = urlJoin(args.origin, \\"/v2/playlist\\");
         this.token = args.token;
@@ -7353,7 +7385,7 @@ export class PlaylistCrudService implements PlaylistCrudService {
         "type": "file",
       },
       Object {
-        "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+        "contents": "import { isResponseOk, defaultFetcher, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
@@ -7364,15 +7396,21 @@ export interface ProblemCrudService {
     getDefaultStarterFiles(request: model.GetDefaultStarterFilesRequest): Promise<model._GetDefaultStarterFilesResponse>;
 }
 
+export declare namespace ProblemCrudService {
+    interface Init {
+        origin: string;
+        fetcher?: Fetcher;
+    }
+}
+
 export class ProblemCrudService implements ProblemCrudService {
     private baseUrl: string;
     private fetcher: Fetcher;
     private token: MaybeGetter<Token | undefined>;
 
-    constructor(args: Service.Init) {
+    constructor(args: ProblemCrudService.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
         this.baseUrl = urlJoin(args.origin, \\"/problem-crud\\");
-        this.token = args.token;
     }
 
     public async createProblem(request: model.CreateProblemRequest): Promise<model._CreateProblemResponse> {
@@ -7486,7 +7524,7 @@ export class ProblemCrudService implements ProblemCrudService {
         "type": "file",
       },
       Object {
-        "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+        "contents": "import { isResponseOk, defaultFetcher, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
@@ -7497,6 +7535,13 @@ export interface ProblemInfoService {
     getExpectedResult(request: model.GetExpectedResultRequest): Promise<model.GetExpectedResultResponse>;
 }
 
+export declare namespace ProblemInfoService {
+    interface Init {
+        origin: string;
+        fetcher?: Fetcher;
+    }
+}
+
 /**
  * Information about different problems
  */
@@ -7505,10 +7550,9 @@ export class ProblemInfoService implements ProblemInfoService {
     private fetcher: Fetcher;
     private token: MaybeGetter<Token | undefined>;
 
-    constructor(args: Service.Init) {
+    constructor(args: ProblemInfoService.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
         this.baseUrl = urlJoin(args.origin, \\"/problems\\");
-        this.token = args.token;
     }
 
     public async getProblems(): Promise<model.GetProblemsResponse> {
@@ -7612,7 +7656,7 @@ export class ProblemInfoService implements ProblemInfoService {
         "type": "file",
       },
       Object {
-        "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+        "contents": "import { isResponseOk, defaultFetcher, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
@@ -7625,6 +7669,13 @@ export interface SubmissionInfoService {
     getTraceResponsesV2PageForWorkspace(request: model.GetTraceResponsesV2PageForWorkspaceRequest): Promise<model.GetTraceResponsesV2PageForWorkspaceResponse>;
 }
 
+export declare namespace SubmissionInfoService {
+    interface Init {
+        origin: string;
+        fetcher?: Fetcher;
+    }
+}
+
 /**
  * Responsible for serving information about submissions
  */
@@ -7633,10 +7684,9 @@ export class SubmissionInfoService implements SubmissionInfoService {
     private fetcher: Fetcher;
     private token: MaybeGetter<Token | undefined>;
 
-    constructor(args: Service.Init) {
+    constructor(args: SubmissionInfoService.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
         this.baseUrl = urlJoin(args.origin, \\"/submissions\\");
-        this.token = args.token;
     }
 
     public async getSubmissionState(request: model.GetSubmissionStateRequest): Promise<model._GetSubmissionStateResponse> {
@@ -7804,7 +7854,7 @@ export class SubmissionInfoService implements SubmissionInfoService {
         "type": "file",
       },
       Object {
-        "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+        "contents": "import { isResponseOk, defaultFetcher, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
@@ -7813,15 +7863,21 @@ export interface SysPropCrudService {
     getNumWarmInstances(): Promise<model.GetNumWarmInstancesResponse>;
 }
 
+export declare namespace SysPropCrudService {
+    interface Init {
+        origin: string;
+        fetcher?: Fetcher;
+    }
+}
+
 export class SysPropCrudService implements SysPropCrudService {
     private baseUrl: string;
     private fetcher: Fetcher;
     private token: MaybeGetter<Token | undefined>;
 
-    constructor(args: Service.Init) {
+    constructor(args: SysPropCrudService.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
         this.baseUrl = urlJoin(args.origin, \\"/sysprop\\");
-        this.token = args.token;
     }
 
     public async setNumWarmInstances(request: model.SetNumWarmInstancesRequest): Promise<model.SetNumWarmInstancesResponse> {
@@ -7875,7 +7931,7 @@ export class SysPropCrudService implements SysPropCrudService {
         "type": "file",
       },
       Object {
-        "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+        "contents": "import { isResponseOk, defaultFetcher, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
@@ -7884,15 +7940,21 @@ export interface WorkspaceInfoService {
     getWorkspaceStarterFilesV2(): Promise<model.GetWorkspaceStarterFilesV2Response>;
 }
 
+export declare namespace WorkspaceInfoService {
+    interface Init {
+        origin: string;
+        fetcher?: Fetcher;
+    }
+}
+
 export class WorkspaceInfoService implements WorkspaceInfoService {
     private baseUrl: string;
     private fetcher: Fetcher;
     private token: MaybeGetter<Token | undefined>;
 
-    constructor(args: Service.Init) {
+    constructor(args: WorkspaceInfoService.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
         this.baseUrl = urlJoin(args.origin, \\"/workspace\\");
-        this.token = args.token;
     }
 
     public async getWorkspaceStarterFiles(): Promise<model.GetWorkspaceStarterFilesResponse> {
@@ -7966,7 +8028,7 @@ export * from \\"./SysPropCrudService\\";
       Object {
         "contents": Array [
           Object {
-            "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+            "contents": "import { isResponseOk, defaultFetcher, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../../model\\";
 
@@ -7981,15 +8043,21 @@ export interface ProblemCrudServiceV2 {
     getGeneratedTestCaseTemplateFile(request: model.problemV2.GetGeneratedTestCaseTemplateFileRequest): Promise<model.problemV2.GetGeneratedTestCaseTemplateFileResponse>;
 }
 
+export declare namespace ProblemCrudServiceV2 {
+    interface Init {
+        origin: string;
+        fetcher?: Fetcher;
+    }
+}
+
 export class ProblemCrudServiceV2 implements ProblemCrudServiceV2 {
     private baseUrl: string;
     private fetcher: Fetcher;
     private token: MaybeGetter<Token | undefined>;
 
-    constructor(args: Service.Init) {
+    constructor(args: ProblemCrudServiceV2.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
         this.baseUrl = urlJoin(args.origin, \\"/problem-crud-v2\\");
-        this.token = args.token;
     }
 
     public async createProblem(request: model.problemV2.CreateProblemRequestV2): Promise<model.problemV2.CreateProblemResponse> {
@@ -8211,7 +8279,7 @@ export class ProblemCrudServiceV2 implements ProblemCrudServiceV2 {
             "type": "file",
           },
           Object {
-            "contents": "import { isResponseOk, defaultFetcher, Service, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
+            "contents": "import { isResponseOk, defaultFetcher, MaybeGetter, Token, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../../model\\";
 
@@ -8222,15 +8290,21 @@ export interface ProblemInfoServicV2 {
     getProblemVersion(request: model.problemV2.GetProblemVersionRequest): Promise<model.problemV2.GetProblemVersionResponse>;
 }
 
+export declare namespace ProblemInfoServicV2 {
+    interface Init {
+        origin: string;
+        fetcher?: Fetcher;
+    }
+}
+
 export class ProblemInfoServicV2 implements ProblemInfoServicV2 {
     private baseUrl: string;
     private fetcher: Fetcher;
     private token: MaybeGetter<Token | undefined>;
 
-    constructor(args: Service.Init) {
+    constructor(args: ProblemInfoServicV2.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
         this.baseUrl = urlJoin(args.origin, \\"/problems-v2\\");
-        this.token = args.token;
     }
 
     public async getLightweightProblems(): Promise<model.problemV2.GetLightweightProblemsResponse> {

@@ -9,11 +9,10 @@ ids:
     type: integer
 ```
 
-## Key benefit of IDs
+## The key benefit of IDs
 
 Without IDs, developers can accidentally send a string/number of the wrong ID to an endpoint and the compiler doesn't know the difference. This can lead to bugs in production.
-
-With branded types `MovieId` is defined as:
+With branded types, `MovieId` is defined as:
 
 ```typescript
 export type MovieId = string & { __MovieId: void };

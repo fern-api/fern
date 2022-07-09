@@ -24,7 +24,8 @@ export default (): webpack.Configuration => {
                     loader: "ts-loader",
                     options: {
                         projectReferences: true,
-                        configFile: "tsconfig.esm.json",
+                        // esm config
+                        configFile: "tsconfig.json",
                     },
                     exclude: /node_modules/,
                 },
