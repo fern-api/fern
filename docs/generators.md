@@ -20,8 +20,8 @@ Code generators run remotely in the cloud. They take a set of Fern API Definitio
 
 ### Generating clients
 
-![client generators](../assets/diagrams/frontend-diagram.png)
+![client generators](assets/diagrams/frontend-diagram.png)
 
 ### Generating servers
 
-![server generators](../assets/diagrams/backend-diagram.png)
+![server generators](assets/diagrams/backend-diagram.png)

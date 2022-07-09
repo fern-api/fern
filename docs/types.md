@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD036 -->
+
 # Types
 
 Types describe the data model of your API. You can use built-in types or create your own.
@@ -8,7 +10,7 @@ Types describe the data model of your API. You can use built-in types or create 
 - Create your own types
   - [Objects](#objects)
   - [Unions](#objects)
-    - [Enums](#enums)
+  - [Enums](#enums)
   - [Aliases](#aliases)
 
 ## Built-in types
@@ -88,6 +90,30 @@ interface Movie {
   rating: double;
   inTheaters?: boolean;
 }
+```
+
+### Extending objects
+
+It’s pretty common to have objects that might be more specific versions of other objects. For example, we might have an `Animal` object.
+
+```yaml
+types:
+  Animal:
+    properties:
+      name: string
+      color: string
+```
+
+We want to extend the `Animal` object to create a `Dog` object.
+
+```yaml
+types:
+  Dog:
+    extends: Animal
+    properties:
+      type:
+        likesTreats: boolean
+        furColor: optional<string>
 ```
 
 ### Unions
