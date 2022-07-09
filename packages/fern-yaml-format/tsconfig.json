@@ -1,0 +1,11 @@
+{
+  "extends": "../../shared/tsconfig.shared.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "../yaml-schema/lib/esm",
+    "rootDir": "../yaml-schema/src",
+    "module": "esnext"
+  },
+  "include": ["../yaml-schema/src"],
+  "references": [{ "path": "../compiler/commons/tsconfig.json" }]
+}

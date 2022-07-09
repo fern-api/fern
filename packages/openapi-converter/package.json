@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@apidevtools/swagger-parser": "^10.1.0",
-    "@fern-api/syntax-analysis": "workspace:*",
+    "@fern-api/yaml-schema": "workspace:*",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21",
     "openapi-types": "^12.0.0"

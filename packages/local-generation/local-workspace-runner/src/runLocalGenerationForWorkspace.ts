@@ -1,5 +1,5 @@
 import { GeneratorInvocation, WorkspaceDefinition } from "@fern-api/commons";
-import { Compiler } from "@fern-api/compiler";
+import { IntermediateRepresentation } from "@fern-fern/ir-model";
 import { CustomWireMessageEncoding } from "@fern-fern/ir-model/services";
 import { mkdir, rm, writeFile } from "fs/promises";
 import os from "os";
@@ -12,12 +12,12 @@ import { runGenerator } from "./run-generator/runGenerator";
 export async function runLocalGenerationForWorkspace({
     organization,
     workspaceDefinition,
-    compileResult,
+    intermediateRepresentation,
     keepDocker,
 }: {
     organization: string;
     workspaceDefinition: WorkspaceDefinition;
-    compileResult: Compiler.SuccessfulResult;
+    intermediateRepresentation: IntermediateRepresentation;
     keepDocker: boolean;
 }): Promise<void> {
     if (workspaceDefinition.generators.length === 0) {
@@ -32,7 +32,7 @@ export async function runLocalGenerationForWorkspace({
     });
 
     const absolutePathToIr = path.join(workspaceTempDir.path, "ir.json");
-    await writeFile(absolutePathToIr, JSON.stringify(compileResult.intermediateRepresentation));
+    await writeFile(absolutePathToIr, JSON.stringify(intermediateRepresentation));
 
     await Promise.all(
         workspaceDefinition.generators.map(async (generatorInvocation) =>
@@ -42,7 +42,7 @@ export async function runLocalGenerationForWorkspace({
                 generatorInvocation,
                 workspaceTempDir,
                 absolutePathToIr,
-                nonStandardEncodings: compileResult.nonStandardEncodings,
+                nonStandardEncodings: intermediateRepresentation.services.nonStandardEncodings,
                 keepDocker,
             })
         )

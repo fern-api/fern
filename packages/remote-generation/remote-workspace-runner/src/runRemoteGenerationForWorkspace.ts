@@ -1,7 +1,7 @@
 import { WorkspaceDefinition } from "@fern-api/commons";
-import { Compiler } from "@fern-api/compiler";
 import { model, services } from "@fern-fern/fiddle-coordinator-api-client";
 import { GetJobStatusResponse } from "@fern-fern/fiddle-coordinator-api-client/model/remoteGen";
+import { IntermediateRepresentation } from "@fern-fern/ir-model";
 import axios, { AxiosError } from "axios";
 import chalk from "chalk";
 import FormData from "form-data";
@@ -14,11 +14,11 @@ const REMOTE_GENERATION_SERVICE = new services.remoteGen.RemoteGenerationService
 export async function runRemoteGenerationForWorkspace({
     organization,
     workspaceDefinition,
-    compileResult,
+    intermediateRepresentation,
 }: {
     organization: string;
     workspaceDefinition: WorkspaceDefinition;
-    compileResult: Compiler.SuccessfulResult;
+    intermediateRepresentation: IntermediateRepresentation;
 }): Promise<void> {
     if (workspaceDefinition.generators.length === 0) {
         return;
@@ -41,7 +41,7 @@ export async function runRemoteGenerationForWorkspace({
     const job = createResponse.body;
 
     const formData = new FormData();
-    formData.append("file", JSON.stringify(compileResult.intermediateRepresentation));
+    formData.append("file", JSON.stringify(intermediateRepresentation));
     await axios.post(
         `https://fiddle-coordinator-dev.buildwithfern.com/api/remote-gen/jobs/${job.jobId}/start`,
         formData,

@@ -5,13 +5,13 @@
   "references": [
     { "path": "../add-generator/tsconfig.json" },
     { "path": "../commons/tsconfig.json" },
-    { "path": "../compiler/commons/tsconfig.json" },
-    { "path": "../compiler/compiler/tsconfig.json" },
-    { "path": "../compiler/syntax-analysis/tsconfig.json" },
     { "path": "../init/tsconfig.json" },
+    { "path": "../ir/ir-generator/tsconfig.json" },
     { "path": "../local-generation/local-workspace-runner/tsconfig.json" },
     { "path": "../login/tsconfig.json" },
     { "path": "../openapi-converter/tsconfig.json" },
-    { "path": "../remote-generation/remote-workspace-runner/tsconfig.json" }
+    { "path": "../remote-generation/remote-workspace-runner/tsconfig.json" },
+    { "path": "../workspace-parser/tsconfig.json" },
+    { "path": "../yaml-schema/tsconfig.json" }
   ]
 }

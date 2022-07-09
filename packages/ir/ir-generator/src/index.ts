@@ -1,0 +1,1 @@
+export { generateIntermediateRepresentation } from "./generateIntermediateRepresentation";

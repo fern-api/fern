@@ -1,0 +1,29 @@
+imports:
+  types: types.yml
+  errors: errors.yml
+  serviceCommons: services/commons.yml
+  http: services/http.yml
+  websocket: services/websocket.yml
+types:
+  IntermediateRepresentation:
+    docs: "Complete representation of the API schema"
+    properties:
+      workspaceName: optional<string>
+      types:
+        docs: "The types described by this API"
+        type: list<types.TypeDeclaration>
+      services:
+        docs: "The services exposed by this API"
+        type: Services
+      errors: list<errors.ErrorDeclaration>
+      constants: FernConstants
+  Services:
+    properties:
+      http: list<http.HttpService>
+      websocket: list<websocket.WebSocketChannel>
+      nonStandardEncodings: list<serviceCommons.CustomWireMessageEncoding>
+  FernConstants:
+    properties:
+      errorDiscriminant: string
+      unknownErrorDiscriminantValue: string
+      errorInstanceIdKey: string

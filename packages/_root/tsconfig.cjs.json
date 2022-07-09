@@ -6,10 +6,6 @@
     { "path": "../add-generator/tsconfig.cjs.json" },
     { "path": "../cli/tsconfig.cjs.json" },
     { "path": "../commons/tsconfig.cjs.json" },
-    { "path": "../compiler/commons/tsconfig.cjs.json" },
-    { "path": "../compiler/compiler/tsconfig.cjs.json" },
-    { "path": "../compiler/ir-generation/tsconfig.cjs.json" },
-    { "path": "../compiler/syntax-analysis/tsconfig.cjs.json" },
     { "path": "../ete-tests/tsconfig.cjs.json" },
     { "path": "../fern-typescript/cli/tsconfig.cjs.json" },
     { "path": "../fern-typescript/client/tsconfig.cjs.json" },
@@ -27,12 +23,15 @@
     { "path": "../fern-typescript/testing-utils/tsconfig.cjs.json" },
     { "path": "../fern-typescript/types/tsconfig.cjs.json" },
     { "path": "../init/tsconfig.cjs.json" },
+    { "path": "../ir/ir-generator/tsconfig.cjs.json" },
     { "path": "../local-generation/docker-utils/tsconfig.cjs.json" },
     { "path": "../local-generation/local-workspace-runner/tsconfig.cjs.json" },
     { "path": "../login/tsconfig.cjs.json" },
     { "path": "../openapi-converter/tsconfig.cjs.json" },
     { "path": "../remote-generation/remote-workspace-runner/tsconfig.cjs.json" },
     { "path": "../ui/app/tsconfig.cjs.json" },
-    { "path": "../ui/fe-bundle/tsconfig.cjs.json" }
+    { "path": "../ui/fe-bundle/tsconfig.cjs.json" },
+    { "path": "../workspace-parser/tsconfig.cjs.json" },
+    { "path": "../yaml-schema/tsconfig.cjs.json" }
   ]
 }

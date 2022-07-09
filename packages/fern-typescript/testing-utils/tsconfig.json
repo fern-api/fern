@@ -4,7 +4,8 @@
   "include": ["./src"],
   "references": [
     { "path": "../../cli/tsconfig.json" },
-    { "path": "../../compiler/compiler/tsconfig.json" },
+    { "path": "../../ir/ir-generator/tsconfig.json" },
+    { "path": "../../workspace-parser/tsconfig.json" },
     { "path": "../commons/tsconfig.json" }
   ]
 }

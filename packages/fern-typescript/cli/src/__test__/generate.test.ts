@@ -1,6 +1,6 @@
-import { parseFernInput } from "@fern-api/cli";
 import { getDirectoryContents } from "@fern-api/commons";
-import { compile } from "@fern-api/compiler";
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { parseWorkspaceDefinition } from "@fern-api/workspace-parser";
 import { GeneratorConfig } from "@fern-fern/ir-model/generators";
 import { installAndCompileGeneratedProjects } from "@fern-typescript/testing-utils";
 import { rm, writeFile } from "fs/promises";
@@ -26,12 +26,18 @@ describe("runGenerator", () => {
                 await rm(outputPath, { recursive: true, force: true });
                 await rm(configPath, { force: true });
 
-                const files = await parseFernInput(apiPath);
-                const compilerResult = await compile(files, undefined);
-                if (!compilerResult.didSucceed) {
-                    throw new Error(JSON.stringify(compilerResult.failure));
+                const parseWorkspaceResult = await parseWorkspaceDefinition({
+                    name: undefined,
+                    absolutePathToDefinition: apiPath,
+                });
+                if (!parseWorkspaceResult.didSucceed) {
+                    throw new Error(JSON.stringify(parseWorkspaceResult.failures));
                 }
-                await writeFile(irPath, JSON.stringify(compilerResult.intermediateRepresentation, undefined, 4));
+                const intermediateRepresentation = await generateIntermediateRepresentation(
+                    parseWorkspaceResult.workspace
+                );
+
+                await writeFile(irPath, JSON.stringify(intermediateRepresentation, undefined, 4));
 
                 const config: GeneratorConfig = {
                     irFilepath: irPath,
