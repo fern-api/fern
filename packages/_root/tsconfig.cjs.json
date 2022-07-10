@@ -31,6 +31,7 @@
     { "path": "../remote-generation/remote-workspace-runner/tsconfig.cjs.json" },
     { "path": "../ui/app/tsconfig.cjs.json" },
     { "path": "../ui/fe-bundle/tsconfig.cjs.json" },
+    { "path": "../validator/tsconfig.cjs.json" },
     { "path": "../workspace-parser/tsconfig.cjs.json" },
     { "path": "../yaml-schema/tsconfig.cjs.json" }
   ]
