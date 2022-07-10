@@ -1,10 +1,10 @@
 import { FailedResponse } from "@fern-fern/ir-model/services";
-import { convertFailedResponse } from "../converters/services/convertFailedResponse";
+import { convertResponseErrors } from "../converters/services/convertResponseErrors";
 
 describe("convertResponseErrors", () => {
     it("reference to an error in another file", () => {
-        const actualResponseErrors = convertFailedResponse({
-            rawFailedResponse: {
+        const actualResponseErrors = convertResponseErrors({
+            errors: {
                 errors: ["commons.UnauthorizedError"],
             },
             fernFilepath: ["path", "to"],

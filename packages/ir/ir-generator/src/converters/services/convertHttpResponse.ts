@@ -3,7 +3,7 @@ import { FernFilepath, TypeReference } from "@fern-fern/ir-model";
 import { CustomWireMessageEncoding, HttpResponse } from "@fern-fern/ir-model/services";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { convertEncoding } from "./convertEncoding";
-import { convertFailedResponse } from "./convertFailedResponse";
+import { convertResponseErrors } from "./convertResponseErrors";
 
 export function convertHttpResponse({
     response,
@@ -26,8 +26,8 @@ export function convertHttpResponse({
             docs: typeof response !== "string" && typeof response?.ok !== "string" ? response?.ok?.docs : undefined,
             type: getResponseTypeReference({ fernFilepath, imports, response }),
         },
-        failed: convertFailedResponse({
-            rawFailedResponse: typeof response !== "string" ? response?.failed : undefined,
+        failed: convertResponseErrors({
+            errors: typeof response !== "string" ? response?.failed : undefined,
             fernFilepath,
             imports,
         }),

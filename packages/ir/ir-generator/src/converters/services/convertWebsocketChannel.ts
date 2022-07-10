@@ -3,7 +3,7 @@ import { FernFilepath, TypeReference } from "@fern-fern/ir-model";
 import { CustomWireMessageEncoding, WebSocketChannel, WebSocketMessenger } from "@fern-fern/ir-model/services";
 import { createTypeReferenceParser, TypeReferenceParser } from "../../utils/parseInlineType";
 import { convertEncoding } from "./convertEncoding";
-import { convertFailedResponse } from "./convertFailedResponse";
+import { convertResponseErrors } from "./convertResponseErrors";
 
 export function convertWebsocketChannel({
     channelDefinition,
@@ -90,8 +90,8 @@ function convertWebSocketMessenger({
                                       response: operation.response,
                                   }),
                               },
-                              failed: convertFailedResponse({
-                                  rawFailedResponse:
+                              failed: convertResponseErrors({
+                                  errors:
                                       typeof operation.response !== "string" ? operation.response?.failed : undefined,
                                   fernFilepath,
                                   imports,
