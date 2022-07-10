@@ -130,17 +130,13 @@ exports[`fern-ir-tests simple 1`] = `
                             \\"encoding\\": {
                                 \\"_type\\": \\"json\\"
                             },
-                            \\"ok\\": {
-                                \\"type\\": {
-                                    \\"name\\": \\"MovieId\\",
-                                    \\"fernFilepath\\": [],
-                                    \\"_type\\": \\"named\\"
-                                }
-                            },
-                            \\"failed\\": {
-                                \\"errors\\": []
+                            \\"type\\": {
+                                \\"name\\": \\"MovieId\\",
+                                \\"fernFilepath\\": [],
+                                \\"_type\\": \\"named\\"
                             }
-                        }
+                        },
+                        \\"errors\\": []
                     },
                     {
                         \\"endpointId\\": \\"getMovie\\",
@@ -179,25 +175,21 @@ exports[`fern-ir-tests simple 1`] = `
                             \\"encoding\\": {
                                 \\"_type\\": \\"json\\"
                             },
-                            \\"ok\\": {
-                                \\"type\\": {
-                                    \\"name\\": \\"Movie\\",
-                                    \\"fernFilepath\\": [],
-                                    \\"_type\\": \\"named\\"
-                                }
-                            },
-                            \\"failed\\": {
-                                \\"errors\\": [
-                                    {
-                                        \\"discriminantValue\\": \\"NotFoundError\\",
-                                        \\"error\\": {
-                                            \\"name\\": \\"NotFoundError\\",
-                                            \\"fernFilepath\\": []
-                                        }
-                                    }
-                                ]
+                            \\"type\\": {
+                                \\"name\\": \\"Movie\\",
+                                \\"fernFilepath\\": [],
+                                \\"_type\\": \\"named\\"
                             }
-                        }
+                        },
+                        \\"errors\\": [
+                            {
+                                \\"discriminantValue\\": \\"NotFoundError\\",
+                                \\"error\\": {
+                                    \\"name\\": \\"NotFoundError\\",
+                                    \\"fernFilepath\\": []
+                                }
+                            }
+                        ]
                     }
                 ]
             }
