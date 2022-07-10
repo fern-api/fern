@@ -252,8 +252,7 @@ services:
           method: POST
           path: /function-signature
           request: GetFunctionSignatureRequest
-          response:
-            ok: GetFunctionSignatureResponse
+          response: GetFunctionSignatureResponse
 
         getBasicSolutionFile:
           docs: Returns solution file for basic starter files

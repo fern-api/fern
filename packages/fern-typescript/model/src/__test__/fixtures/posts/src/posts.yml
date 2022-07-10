@@ -54,8 +54,6 @@ services:
           path-parameters:
             postId: string
           request: CreatePostRequest
-          response:
-            ok: GetPostResponse
-            failed:
-              errors:
-                - PostNotFoundError
+          response: GetPostResponse
+          errors:
+            - PostNotFoundError

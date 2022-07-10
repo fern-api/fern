@@ -26,8 +26,6 @@ services:
         operations:
           sendChat:
             request: SendChatRequest
-            response:
-              ok: ChatMessage
-              failed:
-                errors:
-                  - GenericMessage
+            response: ChatMessage
+            errors:
+              - GenericMessage
