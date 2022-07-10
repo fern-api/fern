@@ -2,7 +2,56 @@ import { ContainerType, PrimitiveType, Type, TypeDeclaration, TypeReference } fr
 import { isEqual } from "lodash";
 import uuid from "uuid";
 
-export function getMockBodyFromType(type: Type, allTypes: TypeDeclaration[]): unknown {
+export function getMockBodyFromTypeReference(typeReference: TypeReference, allTypes: TypeDeclaration[]): any {
+    return TypeReference._visit(typeReference, {
+        primitive: (primitive) =>
+            PrimitiveType._visit<any>(primitive, {
+                integer: () => 0,
+                double: () => 0.0,
+                string: () => "example",
+                boolean: () => true,
+                long: () => 10000000,
+                dateTime: () => new Date().toISOString(),
+                uuid: () => uuid.v4(),
+                _unknown: () => {
+                    throw new Error("Encountered unknown primtiveType: " + primitive);
+                },
+            }),
+        void: () => undefined,
+        container: (container) =>
+            ContainerType._visit<any>(container, {
+                list: (value) => [getMockBodyFromTypeReference(value, allTypes)],
+                map: (value) => {
+                    let result = {};
+                    const mockKey = getMockBodyFromTypeReference(value.keyType, allTypes);
+                    const mockValue = getMockBodyFromTypeReference(value.valueType, allTypes);
+                    result[mockKey] = mockValue;
+                    return result;
+                },
+                set: (value) => [getMockBodyFromTypeReference(value, allTypes)],
+                optional: (value) => getMockBodyFromTypeReference(value, allTypes),
+                _unknown: () => {
+                    throw new Error("Encountered unknown wireMessage: " + typeReference);
+                },
+            }),
+        named: (typeName) => {
+            const namedType = allTypes.find(
+                (val) => val.name.name === typeName.name && isEqual(val.name.fernFilepath, typeName.fernFilepath)
+            );
+            if (namedType === undefined) {
+                console.log({ allTypes, typeName });
+                throw new Error("Cannot find type: " + typeName.name);
+            }
+            return getMockBodyFromType(namedType.shape, allTypes);
+        },
+        unknown: () => "UNKNOWN",
+        _unknown: () => {
+            throw new Error("Encountered unknown type reference: " + typeReference._type);
+        },
+    });
+}
+
+function getMockBodyFromType(type: Type, allTypes: TypeDeclaration[]): unknown {
     return Type._visit(type, {
         object: (objectDeclaration) => {
             let object = {};
@@ -58,55 +107,6 @@ export function getMockBodyFromType(type: Type, allTypes: TypeDeclaration[]): un
         },
         _unknown: () => {
             throw new Error("Unknown type: " + type._type);
-        },
-    });
-}
-
-export function getMockBodyFromTypeReference(typeReference: TypeReference, allTypes: TypeDeclaration[]): any {
-    return TypeReference._visit(typeReference, {
-        primitive: (primitive) =>
-            PrimitiveType._visit<any>(primitive, {
-                integer: () => 0,
-                double: () => 0.0,
-                string: () => "example",
-                boolean: () => true,
-                long: () => 10000000,
-                dateTime: () => new Date().toISOString(),
-                uuid: () => uuid.v4(),
-                _unknown: () => {
-                    throw new Error("Encountered unknown primtiveType: " + primitive);
-                },
-            }),
-        void: () => undefined,
-        container: (container) =>
-            ContainerType._visit<any>(container, {
-                list: (value) => [getMockBodyFromTypeReference(value, allTypes)],
-                map: (value) => {
-                    let result = {};
-                    const mockKey = getMockBodyFromTypeReference(value.keyType, allTypes);
-                    const mockValue = getMockBodyFromTypeReference(value.valueType, allTypes);
-                    result[mockKey] = mockValue;
-                    return result;
-                },
-                set: (value) => [getMockBodyFromTypeReference(value, allTypes)],
-                optional: (value) => getMockBodyFromTypeReference(value, allTypes),
-                _unknown: () => {
-                    throw new Error("Encountered unknown wireMessage: " + typeReference);
-                },
-            }),
-        named: (typeName) => {
-            const namedType = allTypes.find(
-                (val) => val.name.name === typeName.name && isEqual(val.name.fernFilepath, typeName.fernFilepath)
-            );
-            if (namedType === undefined) {
-                console.log({ allTypes, typeName });
-                throw new Error("Cannot find type: " + typeName.name);
-            }
-            return getMockBodyFromType(namedType.shape, allTypes);
-        },
-        unknown: () => "UNKNOWN",
-        _unknown: () => {
-            throw new Error("Encountered unknown type reference: " + typeReference._type);
         },
     });
 }

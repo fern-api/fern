@@ -10,7 +10,7 @@ import {
     ResponseDefinition,
 } from "postman-collection";
 import urlJoin from "url-join";
-import { getMockBodyFromType, getMockBodyFromTypeReference } from "./getMockBody";
+import { getMockBodyFromTypeReference } from "./getMockBody";
 
 const ORIGIN_VARIABLE_NAME = "origin";
 const ORIGIN_VARIABLE = `{{${ORIGIN_VARIABLE_NAME}}}`;
@@ -84,7 +84,7 @@ function convertResponse(
     if (httpEndpoint.response != null) {
         convertedResponse.description = httpEndpoint.response.docs ?? undefined;
         convertedResponse.body = JSON.stringify(
-            getMockBodyFromType(httpEndpoint.response.ok.type, allTypes),
+            getMockBodyFromTypeReference(httpEndpoint.response.type, allTypes),
             undefined,
             4
         );
@@ -114,7 +114,7 @@ function convertRequest(
         convertedRequest.description = httpEndpoint.docs ?? undefined;
         convertedRequest.body = {
             mode: "raw",
-            raw: JSON.stringify(getMockBodyFromType(httpEndpoint.request.type, allTypes), undefined, 4),
+            raw: JSON.stringify(getMockBodyFromTypeReference(httpEndpoint.request.type, allTypes), undefined, 4),
         };
     }
     return convertedRequest;

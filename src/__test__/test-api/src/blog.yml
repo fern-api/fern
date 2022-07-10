@@ -17,6 +17,14 @@ types:
     union:
       anonymous: {}
       name: string
+  CreatePostRequest:
+    properties:
+      title: string
+      author:
+        type: Author
+        docs: Author is the writer.
+      content: string
+      postType: PostType
 errors:
   PostNotFoundError:
     http:
@@ -39,15 +47,7 @@ services:
             x-endpoint-header:
               docs: I'm a header!
               type: string
-          request:
-            type:
-              properties:
-                title: string
-                author:
-                  type: Author
-                  docs: Author is the writer.
-                content: string
-                postType: PostType
+          request: CreatePostRequest
           response: PostId
         getPost:
           docs: Gets a blog post.
@@ -55,8 +55,6 @@ services:
           path: /{postId}
           path-parameters:
             postId: PostId
-          response:
-            ok: BlogPost
-            failed:
-              errors:
-                - PostNotFoundError
+          response: BlogPost
+          errors:
+            - PostNotFoundError

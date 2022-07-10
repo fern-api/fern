@@ -24,8 +24,8 @@
     "@babel/eslint-parser": "^7.17.0",
     "@babel/preset-env": "^7.18.2",
     "@babel/preset-typescript": "^7.17.12",
-    "@fern-api/cli": "^0.0.124",
-    "@fern-api/compiler": "^0.0.124",
+    "@fern-api/ir-generator": "^0.0.128",
+    "@fern-api/workspace-parser": "^0.0.128",
     "@types/jest": "^27.5.0",
     "@types/postman-collection": "^3.5.7",
     "@types/uuid": "^8.3.4",
@@ -41,7 +41,7 @@
     "webpack-cli": "^4.9.2"
   },
   "dependencies": {
-    "@fern-fern/ir-model": "0.0.15",
+    "@fern-fern/ir-model": "0.0.23",
     "@types/lodash": "^4.14.182",
     "lodash": "^4.17.21",
     "postman-collection": "^4.1.2",
