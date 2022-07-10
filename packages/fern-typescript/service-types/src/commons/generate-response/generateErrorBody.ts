@@ -1,5 +1,5 @@
 import { FernConstants, PrimitiveType, TypeReference } from "@fern-fern/ir-model";
-import { FailedResponse, ResponseError } from "@fern-fern/ir-model/services";
+import { ResponseError, ResponseErrors } from "@fern-fern/ir-model/services";
 import { DependencyManager, generateUuidCall } from "@fern-typescript/commons";
 import { ModelContext } from "@fern-typescript/model-context";
 import {
@@ -11,14 +11,14 @@ import {
 import { SourceFile } from "ts-morph";
 
 export function generateErrorBody({
-    failedResponse,
+    responseErrors,
     errorBodyTypeName,
     errorBodyFile,
     modelContext,
     dependencyManager,
     fernConstants,
 }: {
-    failedResponse: FailedResponse;
+    responseErrors: ResponseErrors;
     errorBodyTypeName: string;
     errorBodyFile: SourceFile;
     modelContext: ModelContext;
@@ -28,10 +28,10 @@ export function generateErrorBody({
     generateUnionType({
         file: errorBodyFile,
         typeName: errorBodyTypeName,
-        docs: failedResponse.docs,
+        docs: undefined,
         discriminant: fernConstants.errorDiscriminant,
         resolvedTypes: [
-            ...failedResponse.errors.map((error) => ({
+            ...responseErrors.map((error) => ({
                 docs: error.docs,
                 discriminantValue: error.discriminantValue,
                 valueType: getValueType({ error, file: errorBodyFile, modelContext }),

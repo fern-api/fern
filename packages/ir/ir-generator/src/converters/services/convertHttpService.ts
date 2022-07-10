@@ -15,6 +15,7 @@ import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { constructHttpPath } from "./constructHttpPath";
 import { convertHttpRequest } from "./convertHttpRequest";
 import { convertHttpResponse } from "./convertHttpResponse";
+import { convertResponseErrors } from "./convertResponseErrors";
 
 export function convertHttpService({
     serviceDefinition,
@@ -94,6 +95,11 @@ export function convertHttpService({
                     fernFilepath,
                     imports,
                     nonStandardEncodings,
+                }),
+                errors: convertResponseErrors({
+                    errors: endpoint.errors,
+                    fernFilepath,
+                    imports,
                 }),
             })
         ),

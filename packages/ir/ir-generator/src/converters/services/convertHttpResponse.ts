@@ -3,7 +3,6 @@ import { FernFilepath, TypeReference } from "@fern-fern/ir-model";
 import { CustomWireMessageEncoding, HttpResponse } from "@fern-fern/ir-model/services";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { convertEncoding } from "./convertEncoding";
-import { convertResponseErrors } from "./convertResponseErrors";
 
 export function convertHttpResponse({
     response,
@@ -16,40 +15,13 @@ export function convertHttpResponse({
     imports: Record<string, string>;
     nonStandardEncodings: CustomWireMessageEncoding[];
 }): HttpResponse {
+    const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
     return {
         docs: typeof response !== "string" ? response?.docs : undefined,
         encoding: convertEncoding({
-            rawEncoding: typeof response !== "string" ? response?.encoding : undefined,
+            rawEncoding: undefined,
             nonStandardEncodings,
         }),
-        ok: {
-            docs: typeof response !== "string" && typeof response?.ok !== "string" ? response?.ok?.docs : undefined,
-            type: getResponseTypeReference({ fernFilepath, imports, response }),
-        },
-        failed: convertResponseErrors({
-            errors: typeof response !== "string" ? response?.failed : undefined,
-            fernFilepath,
-            imports,
-        }),
+        type: response != null ? parseTypeReference(response) : TypeReference.void(),
     };
-}
-
-function getResponseTypeReference({
-    fernFilepath,
-    imports,
-    response,
-}: {
-    fernFilepath: FernFilepath;
-    imports: Record<string, string>;
-    response: RawSchemas.HttpResponseSchema | undefined;
-}): TypeReference {
-    const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
-    if (response == null) {
-        return TypeReference.void();
-    } else if (typeof response === "string") {
-        return parseTypeReference(response);
-    } else if (response.ok == null) {
-        return TypeReference.void();
-    }
-    return parseTypeReference(response.ok);
 }
