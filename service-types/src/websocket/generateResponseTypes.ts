@@ -30,10 +30,10 @@ export function generateResponseTypes({
         modelContext,
         dependencyManager,
         successResponse: {
-            typeReference: operation.response.ok.type,
-            docs: operation.response.ok.docs,
+            typeReference: operation.response.type,
+            docs: operation.response.docs,
         },
-        failedResponse: operation.response.failed,
+        responseErrors: operation.errors,
         getTypeReferenceToServiceType: ({ reference, referencedIn }) =>
             modelContext.getReferenceToWebSocketChannelType({
                 reference,
