@@ -47,7 +47,7 @@
     "@fern-api/openapi-converter": "workspace:*",
     "@fern-api/remote-workspace-runner": "workspace:*",
     "@fern-api/workspace-parser": "workspace:*",
-    "@fern-fern/ir-model": "0.0.21",
+    "@fern-fern/ir-model": "0.0.23",
     "chalk": "^4.1.2",
     "glob": "^7.2.0",
     "glob-promise": "^4.2.2",

@@ -1,0 +1,5 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+pwd
+find packages -name 'tsconfig*tsbuildinfo' -exec /bin/rm {} \;

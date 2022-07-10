@@ -36,7 +36,7 @@
   "dependencies": {
     "@fern-api/commons": "workspace:*",
     "@fern-api/docker-utils": "workspace:*",
-    "@fern-fern/ir-model": "0.0.21",
+    "@fern-fern/ir-model": "0.0.23",
     "execa": "^5.1.1",
     "tar": "^6.1.11",
     "tmp-promise": "^3.0.3"

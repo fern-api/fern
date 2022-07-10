@@ -20,6 +20,7 @@ types:
       operationId: string
       request: WebSocketRequest
       response: WebSocketResponse
+      errors: serviceCommons.ResponseErrors
   WebSocketRequest:
     extends: commons.WithDocs
     properties:
@@ -29,11 +30,6 @@ types:
     extends: commons.WithDocs
     properties:
       encoding: serviceCommons.Encoding
-      ok: WebSocketOkResponse
-      failed: serviceCommons.FailedResponse
-  WebSocketOkResponse:
-    extends: commons.WithDocs
-    properties:
       type: types.TypeReference
   WebSocketOperationProperties:
     properties:

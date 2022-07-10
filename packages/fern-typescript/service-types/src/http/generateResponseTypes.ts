@@ -28,10 +28,10 @@ export function generateResponseTypes({
         modelContext,
         dependencyManager,
         successResponse: {
-            typeReference: endpoint.response.ok.type,
-            docs: endpoint.response.ok.docs,
+            typeReference: endpoint.response.type,
+            docs: endpoint.response.docs,
         },
-        failedResponse: endpoint.response.failed,
+        responseErrors: endpoint.errors,
         getTypeReferenceToServiceType: ({ reference, referencedIn }) =>
             modelContext.getReferenceToHttpServiceType({
                 reference,

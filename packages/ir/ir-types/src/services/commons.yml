@@ -14,13 +14,7 @@ types:
   CustomWireMessageEncoding:
     properties:
       encoding: string
-  FailedResponse:
-    extends: commons.WithDocs
-    properties:
-      errors: list<ResponseError>
-  ResponseErrorProperties:
-    properties:
-      errorInstanceId: string
+  ResponseErrors: list<ResponseError>
   ResponseError:
     extends: commons.WithDocs
     properties:

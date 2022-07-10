@@ -27,6 +27,7 @@ types:
       queryParameters: list<QueryParameter>
       request: HttpRequest
       response: HttpResponse
+      errors: serviceCommons.ResponseErrors
       auth: HttpAuth
   HttpPath:
     properties:
@@ -67,9 +68,4 @@ types:
     extends: commons.WithDocs
     properties:
       encoding: serviceCommons.Encoding
-      ok: HttpOkResponse
-      failed: serviceCommons.FailedResponse
-  HttpOkResponse:
-    extends: commons.WithDocs
-    properties:
       type: types.TypeReference
