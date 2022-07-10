@@ -27,11 +27,9 @@ services:
 
         getMovie:
           request: MovieId
-          response:
-            ok: Movie
-            failed:
-              errors:
-                - NotFoundError
+          response: Movie
+          errors:
+            - NotFoundError
 
 errors:
   NotFoundError:
