@@ -11,7 +11,7 @@ types:
       workspaceName: optional<string>
       types:
         docs: "The types described by this API"
-        type: list<types.TypeDecaration>
+        type: list<types.TypeDeclaration>
       services:
         docs: "The services exposed by this API"
         type: Services
