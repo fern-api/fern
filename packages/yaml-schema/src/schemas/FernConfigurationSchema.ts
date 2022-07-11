@@ -9,7 +9,7 @@ export const FernConfigurationSchema = z.strictObject({
     ids: z.optional(z.array(IdSchema)),
     types: z.optional(z.record(TypeDeclarationSchema)),
     services: z.optional(ServicesSchema),
-    errors: z.optional(z.record(z.union([z.string(), ErrorDeclarationSchema]))),
+    errors: z.optional(z.record(ErrorDeclarationSchema)),
 });
 
 export type FernConfigurationSchema = z.infer<typeof FernConfigurationSchema>;

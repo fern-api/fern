@@ -1,5 +1,6 @@
 {
   "extends": "../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib/cjs", "rootDir": "src", "module": "CommonJS" },
-  "include": ["./src"]
+  "include": ["./src"],
+  "references": [{ "path": "../workspace-parser/tsconfig.cjs.json" }, { "path": "../yaml-schema/tsconfig.cjs.json" }]
 }
