@@ -9,14 +9,16 @@ export interface Rule {
 
 export interface RuleContext {
     workspace: Workspace;
-    relativeFilePath: RelativeFilePath;
-    contents: FernConfigurationSchema;
 }
 
 export type RuleRunner = {
-    [K in keyof FernAstNodeTypes]?: (node: FernAstNodeTypes[K]) => RuleViolation[];
+    [K in keyof FernAstNodeTypes]?: (node: FernAstNodeTypes[K], args: RuleRunnerArgs) => RuleViolation[];
 };
 
+export interface RuleRunnerArgs {
+    relativeFilePath: RelativeFilePath;
+    contents: FernConfigurationSchema;
+}
 export interface RuleViolation {
     severity: "warning" | "error";
     message: string;

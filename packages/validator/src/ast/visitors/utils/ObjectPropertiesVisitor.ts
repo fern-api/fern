@@ -4,10 +4,7 @@ type ObjectPropertiesVisitor<T> = {
 
 export function visitObject<T extends Record<string, unknown>>(object: T, visitor: ObjectPropertiesVisitor<T>): void {
     for (const key of keys(object)) {
-        const visit = visitor[key];
-        if (visit != null) {
-            visit(object[key]);
-        }
+        visitor[key](object[key]);
     }
 }
 

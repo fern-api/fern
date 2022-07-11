@@ -20,51 +20,41 @@ function validateFernFile({
     relativeFilePath: RelativeFilePath;
     contents: FernConfigurationSchema;
 }): void {
-    const astVisitor = createAstVisitor({ workspace, relativeFilePath, contents });
+    const ruleRunners = rules.map((rule) => rule.create({ workspace }));
+    const astVisitor = createAstVisitor({ relativeFilePath, contents, ruleRunners });
     visitAst(contents, astVisitor);
 }
 
 function createAstVisitor({
-    workspace,
     relativeFilePath,
     contents,
+    ruleRunners,
 }: {
-    workspace: Workspace;
     relativeFilePath: string;
     contents: FernConfigurationSchema;
+    ruleRunners: RuleRunner[];
 }): FernAstVisitor {
-    const ruleRunners = rules.map((rule) =>
-        rule.create({
-            workspace,
-            relativeFilePath,
-            contents,
-        })
-    );
+    function createAstNodeVisitor<K extends keyof FernAstNodeTypes>(nodeType: K): Record<K, FernAstNodeVisitor<K>> {
+        const visit: FernAstNodeVisitor<K> = (node: FernAstNodeTypes[K]) => {
+            for (const visitor of ruleRunners) {
+                visitor[nodeType]?.(node, { relativeFilePath, contents });
+            }
+        };
+        return { [nodeType]: visit } as Record<K, FernAstNodeVisitor<K>>;
+    }
 
     const astVisitor: FernAstVisitor = {
-        ...createAstNodeVisitor("docs", ruleRunners),
-        ...createAstNodeVisitor("import", ruleRunners),
-        ...createAstNodeVisitor("id", ruleRunners),
-        ...createAstNodeVisitor("typeReference", ruleRunners),
-        ...createAstNodeVisitor("typeDeclaration", ruleRunners),
-        ...createAstNodeVisitor("typeName", ruleRunners),
-        ...createAstNodeVisitor("httpService", ruleRunners),
-        ...createAstNodeVisitor("httpEndpoint", ruleRunners),
-        ...createAstNodeVisitor("errorDeclaration", ruleRunners),
-        ...createAstNodeVisitor("errorReference", ruleRunners),
+        ...createAstNodeVisitor("docs"),
+        ...createAstNodeVisitor("import"),
+        ...createAstNodeVisitor("id"),
+        ...createAstNodeVisitor("typeReference"),
+        ...createAstNodeVisitor("typeDeclaration"),
+        ...createAstNodeVisitor("typeName"),
+        ...createAstNodeVisitor("httpService"),
+        ...createAstNodeVisitor("httpEndpoint"),
+        ...createAstNodeVisitor("errorDeclaration"),
+        ...createAstNodeVisitor("errorReference"),
     };
 
     return astVisitor;
-}
-
-function createAstNodeVisitor<K extends keyof FernAstNodeTypes>(
-    key: K,
-    ruleRunners: RuleRunner[]
-): Record<K, FernAstNodeVisitor<K>> {
-    const visit: FernAstNodeVisitor<K> = (node: FernAstNodeTypes[K]) => {
-        for (const visitor of ruleRunners) {
-            visitor[key]?.(node);
-        }
-    };
-    return { [key]: visit } as Record<K, FernAstNodeVisitor<K>>;
 }

@@ -1,6 +1,6 @@
 import { EndpointId, ServiceName } from "@fern-fern/ir-model/services";
 import { ImportStrategy } from "@fern-typescript/commons";
-import { Directory, SourceFile, ts } from "ts-morph";
+import { SourceFile, ts } from "ts-morph";
 import { StringifiedFernFilepath, stringifyFernFilepath } from "../stringifyFernFilepath";
 import { BaseServiceTypeContext, ServiceTypeMetadata } from "./BaseServiceTypeContext";
 import { GeneratedRequest, InlinedServiceTypeReference, ServiceTypeReference } from "./types";
@@ -63,10 +63,6 @@ export class HttpServiceTypeContext extends BaseServiceTypeContext {
         StringifiedFernFilepath,
         Record<NonQualifiedServiceName, Record<EndpointId, GeneratedHttpEndpointTypes>>
     > = {};
-
-    constructor(modelDirectory: Directory) {
-        super(modelDirectory);
-    }
 
     public addHttpServiceTypeDeclaration(
         metadata: HttpServiceTypeMetadata,

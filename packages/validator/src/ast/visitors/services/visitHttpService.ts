@@ -19,9 +19,7 @@ export function visitHttpService({ service, visitor }: { service: HttpServiceSch
                 } else {
                     visitObject(header, {
                         type: (type) => {
-                            if (type != null) {
-                                visitor.typeReference(type);
-                            }
+                            visitor.typeReference(type);
                         },
                         docs: createDocsVisitor(visitor),
                     });

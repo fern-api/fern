@@ -17,7 +17,7 @@ export function convertToFernType(typeName: string, schemaObject: OpenAPIV3.Sche
     };
     if (_.isEmpty(schemaObject)) {
         conversionResult.typeDeclarations[typeName] = EMPTY_OBJECT_TYPE_DEFINITION;
-    } else if (schemaObject.oneOf !== undefined) {
+    } else if (schemaObject.oneOf != null) {
         const unionTypeDeclaration: RawSchemas.UnionSchema = { union: {} };
         schemaObject.oneOf.forEach((nestedUnionType) => {
             if (isSchemaObject(nestedUnionType)) {
@@ -28,7 +28,7 @@ export function convertToFernType(typeName: string, schemaObject: OpenAPIV3.Sche
             }
         });
         conversionResult.typeDeclarations[typeName] = unionTypeDeclaration;
-    } else if (schemaObject.enum !== undefined) {
+    } else if (schemaObject.enum != null) {
         conversionResult.typeDeclarations[typeName] = {
             enum: schemaObject.enum.filter((value) => typeof value === "string"),
         };
@@ -42,7 +42,7 @@ export function convertToFernType(typeName: string, schemaObject: OpenAPIV3.Sche
         conversionResult.typeDeclarations[typeName] = "string";
     } else if (schemaObject.type == "object" || schemaObject.properties != null) {
         const requiredProperties = new Set();
-        if (schemaObject.required !== undefined) {
+        if (schemaObject.required != null) {
             schemaObject.required.forEach((requiredProperty) => requiredProperties.add(requiredProperty));
         }
         const objectTypeDeclaration: RawSchemas.TypeDeclarationSchema = EMPTY_OBJECT_TYPE_DEFINITION;
@@ -50,14 +50,14 @@ export function convertToFernType(typeName: string, schemaObject: OpenAPIV3.Sche
             for (const propertyName of Object.keys(schemaObject.properties)) {
                 const propertyType = schemaObject.properties[propertyName];
                 let fernPropertyType: string;
-                if (propertyType === undefined) {
+                if (propertyType == null) {
                     continue;
                 } else if (isReferenceObject(propertyType)) {
                     fernPropertyType = getTypeNameFromReferenceObject(propertyType);
                 } else {
                     const nestedConversionResult = convertToFernTypeNested([typeName], propertyName, propertyType);
                     fernPropertyType = nestedConversionResult.convertedTypeName;
-                    if (nestedConversionResult.newTypeDeclarations !== undefined) {
+                    if (nestedConversionResult.newTypeDeclarations != null) {
                         for (const [newTypeName, newTypeDeclaration] of Object.entries(
                             nestedConversionResult.newTypeDeclarations
                         )) {
@@ -87,7 +87,7 @@ function convertToFernTypeNested(
     schemaObjectTypeName: string,
     schemaObject: OpenAPIV3.SchemaObject
 ): NestedFernTypeConversionResult {
-    if (schemaObject.enum !== undefined) {
+    if (schemaObject.enum != null) {
         const enumTypeName = getTypeName([...typeNameHierarchy, schemaObjectTypeName]);
         return {
             convertedTypeName: enumTypeName,
@@ -97,26 +97,24 @@ function convertToFernTypeNested(
                 },
             },
         };
-    } else if (schemaObject.type !== undefined) {
+    } else if (schemaObject.type != null) {
         if (schemaObject.type === "array") {
-            if (schemaObject.items !== undefined) {
-                if (isReferenceObject(schemaObject.items)) {
-                    return {
-                        convertedTypeName: "list<" + getTypeNameFromReferenceObject(schemaObject.items) + ">",
-                    };
-                } else {
-                    const nestedConversionResult = convertToFernTypeNested(
-                        [...typeNameHierarchy, schemaObjectTypeName],
-                        "Item",
-                        schemaObject.items
-                    );
-                    return {
-                        convertedTypeName: "list<" + nestedConversionResult.convertedTypeName + ">",
-                        newTypeDeclarations: {
-                            ...nestedConversionResult.newTypeDeclarations,
-                        },
-                    };
-                }
+            if (isReferenceObject(schemaObject.items)) {
+                return {
+                    convertedTypeName: "list<" + getTypeNameFromReferenceObject(schemaObject.items) + ">",
+                };
+            } else {
+                const nestedConversionResult = convertToFernTypeNested(
+                    [...typeNameHierarchy, schemaObjectTypeName],
+                    "Item",
+                    schemaObject.items
+                );
+                return {
+                    convertedTypeName: "list<" + nestedConversionResult.convertedTypeName + ">",
+                    newTypeDeclarations: {
+                        ...nestedConversionResult.newTypeDeclarations,
+                    },
+                };
             }
         } else if (schemaObject.type == "boolean") {
             return { convertedTypeName: "boolean" };

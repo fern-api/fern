@@ -22,7 +22,7 @@ export async function generateTypeScriptProject({
     volume: Volume;
     packageName: string;
     packageVersion: string | undefined;
-    generateSrc: (directory: Directory) => MaybePromise<GeneratedProjectSrcInfo | void>;
+    generateSrc: (directory: Directory) => MaybePromise<GeneratedProjectSrcInfo>;
 }): Promise<void> {
     const projectCreator = new ProjectCreator();
     const generatedSrcInfo = await projectCreator.withProject((p) => generateSrc(p.createDirectory(".")));
@@ -33,7 +33,7 @@ export async function generateTypeScriptProject({
         volume,
         packageName,
         packageVersion,
-        dependencies: generatedSrcInfo?.dependencies,
+        dependencies: generatedSrcInfo.dependencies,
     });
     await generateTsConfig(volume);
     await generateNpmIgnore(volume);

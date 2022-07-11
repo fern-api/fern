@@ -12,7 +12,7 @@ export function convertToFernService(
     const fernEndpoints: Record<string, RawSchemas.HttpEndpointSchema> = {};
     for (const pathName of Object.keys(paths)) {
         const pathEndpoints = paths[pathName];
-        if (pathEndpoints === undefined) {
+        if (pathEndpoints == null) {
             continue;
         }
         const convertedEndponts = convertToFernEndpoint(pathName, pathEndpoints);
@@ -27,11 +27,11 @@ export function convertToFernService(
 }
 
 function convertToFernAuth(securitySchemes: undefined | OpenApiSecuritySchemes) {
-    if (securitySchemes !== undefined) {
+    if (securitySchemes != null) {
         for (const key of Object.keys(securitySchemes)) {
             const securitySchemeValue = securitySchemes[key];
             if (
-                securitySchemeValue !== undefined &&
+                securitySchemeValue != null &&
                 !isReferenceObject(securitySchemeValue) &&
                 (securitySchemeValue.type === "oauth2" || securitySchemeValue.type === "http")
             ) {
@@ -47,27 +47,24 @@ function convertToFernEndpoint(
     pathItem: OpenAPIV3.PathItemObject
 ): Record<string, RawSchemas.HttpEndpointSchema> {
     const fernHttpEndpoints: Record<string, RawSchemas.HttpEndpointSchema> = {};
-    if (pathItem === undefined) {
-        return fernHttpEndpoints;
-    }
-    if (pathItem.get !== undefined) {
+    if (pathItem.get != null) {
         const fernGetEndpoint = getFernHttpEndpoint(pathName, pathItem.get, "GET");
         fernHttpEndpoints[lowerFirst(fernGetEndpoint.operationId)] = fernGetEndpoint.convertedEndpoint;
     }
-    if (pathItem.post !== undefined) {
+    if (pathItem.post != null) {
         const fernPostEndpoint = getFernHttpEndpoint(pathName, pathItem.post, "POST");
         fernHttpEndpoints[lowerFirst(fernPostEndpoint.operationId)] = fernPostEndpoint.convertedEndpoint;
     }
-    if (pathItem.put !== undefined) {
+    if (pathItem.put != null) {
         const fernPutEndpoint = getFernHttpEndpoint(pathName, pathItem.put, "PUT");
         fernHttpEndpoints[lowerFirst(fernPutEndpoint.operationId)] = fernPutEndpoint.convertedEndpoint;
     }
-    if (pathItem.delete !== undefined) {
+    if (pathItem.delete != null) {
         const fernDeleteEndpoint = getFernHttpEndpoint(pathName, pathItem.delete, "DELETE");
         fernHttpEndpoints[lowerFirst(fernDeleteEndpoint.operationId)] = fernDeleteEndpoint.convertedEndpoint;
     }
     // TODO(dsinghvi): handle patch endpoints
-    // if (pathItem.patch !== undefined) {
+    // if (pathItem.patch != null) {
     // }
     return fernHttpEndpoints;
 }
@@ -86,11 +83,11 @@ function getFernHttpEndpoint(
 
     let response: string | undefined = undefined;
     const openApiResponse = getResponseMaybe(httpOperation);
-    response = openApiResponse === undefined ? undefined : convertToFernType(openApiResponse);
+    response = openApiResponse == null ? undefined : convertToFernType(openApiResponse);
 
     let request: string | undefined = undefined;
     const openApiRequest = httpOperation.requestBody;
-    request = openApiRequest === undefined ? undefined : convertToFernType(openApiRequest);
+    request = openApiRequest == null ? undefined : convertToFernType(openApiRequest);
 
     const convertedParameters = getFernPathParameters(httpOperation);
     return {
@@ -110,16 +107,16 @@ function getFernHttpEndpoint(
 function getResponseMaybe(
     httpOperation: OpenAPIV3.OperationObject
 ): OpenAPIV3.ReferenceObject | OpenAPIV3.ResponseObject | undefined {
-    if (httpOperation.responses["200"] !== undefined) {
+    if (httpOperation.responses["200"] != null) {
         return httpOperation.responses["200"];
-    } else if (httpOperation.responses["201"] !== undefined) {
+    } else if (httpOperation.responses["201"] != null) {
         return httpOperation.responses["201"];
     }
     return undefined;
 }
 
 function getOperationIdOrThrow(httpOperation: OpenAPIV3.OperationObject): string {
-    if (httpOperation.operationId === undefined) {
+    if (httpOperation.operationId == null) {
         throw new Error("Failed to retrieve operationId for path.");
     }
     return httpOperation.operationId;
@@ -130,11 +127,11 @@ function convertToFernType(
 ): string {
     if (isReferenceObject(response)) {
         return getTypeNameFromReferenceObject(response);
-    } else if (response.content !== undefined) {
+    } else if (response.content != null) {
         for (const contentType in response.content) {
             if (contentType.includes("json")) {
                 const responseMediaInfo = response.content[contentType];
-                if (responseMediaInfo !== undefined && responseMediaInfo.schema !== undefined) {
+                if (responseMediaInfo?.schema != null) {
                     if (isReferenceObject(responseMediaInfo.schema)) {
                         return getTypeNameFromReferenceObject(responseMediaInfo.schema);
                     }
@@ -174,7 +171,7 @@ function getFernPathParameters(pathOperation: OpenAPIV3.OperationObject): Conver
 }
 
 function convertToFernParameter(parameter: OpenAPIV3.ParameterObject): string {
-    if (parameter.schema !== undefined) {
+    if (parameter.schema != null) {
         if (isSchemaObject(parameter.schema)) {
             return convertSchemaToFernParameter(parameter.schema, parameter.name);
         } else {

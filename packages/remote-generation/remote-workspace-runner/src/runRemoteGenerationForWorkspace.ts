@@ -1,4 +1,4 @@
-import { WorkspaceDefinition } from "@fern-api/commons";
+import { assertNever, WorkspaceDefinition } from "@fern-api/commons";
 import { model, services } from "@fern-fern/fiddle-coordinator-api-client";
 import { GetJobStatusResponse } from "@fern-fern/fiddle-coordinator-api-client/model/remoteGen";
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
@@ -67,7 +67,11 @@ export async function runRemoteGenerationForWorkspace({
                     jobId: job.jobId,
                 });
             } catch (error) {
-                console.error("Failed to get job status.", (error as AxiosError)?.message ?? "<unknown error>");
+                console.error(
+                    "Failed to get job status.",
+                    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                    (error as AxiosError).message ?? "<unknown error>"
+                );
                 return;
             }
 
@@ -89,12 +93,17 @@ export async function runRemoteGenerationForWorkspace({
                                 console.log(
                                     `Published ${chalk.bold(`${publishedPackage.name}@${publishedPackage.version}`)}`
                                 );
-                            } else if (publishedPackage._type === "maven") {
+                            } else if (
+                                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                                publishedPackage._type === "maven"
+                            ) {
                                 console.log(
                                     `Published ${chalk.bold(
                                         `${publishedPackage.group}:${publishedPackage.artifact}:${publishedPackage.version}`
                                     )}`
                                 );
+                            } else {
+                                assertNever(publishedPackage);
                             }
                         }
                         if (status.hasFilesToDownload && generator.generate?.absolutePathToLocalOutput != null) {
@@ -114,7 +123,8 @@ export async function runRemoteGenerationForWorkspace({
                                 .catch((error) => {
                                     console.error(
                                         "Failed to download.",
-                                        (error as AxiosError)?.message ?? "<unknown error>"
+                                        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                                        (error as AxiosError).message ?? "<unknown error>"
                                     );
                                 });
                         }

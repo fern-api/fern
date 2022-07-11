@@ -42,7 +42,7 @@ export function parseInlineType({ type, fernFilepath, imports }: parseInlineType
     }
 
     const mapMatch = type.match(MAP_REGEX);
-    if (mapMatch != null && mapMatch[1] != null && mapMatch[2] != null) {
+    if (mapMatch?.[1] != null && mapMatch[2] != null) {
         return TypeReference.container(
             ContainerType.map({
                 keyType: parseInlineTypeRecursive(mapMatch[1]),
@@ -52,17 +52,17 @@ export function parseInlineType({ type, fernFilepath, imports }: parseInlineType
     }
 
     const listMatch = type.match(LIST_REGEX);
-    if (listMatch != null && listMatch[1] != null) {
+    if (listMatch?.[1] != null) {
         return TypeReference.container(ContainerType.list(parseInlineTypeRecursive(listMatch[1])));
     }
 
     const setMatch = type.match(SET_REGEX);
-    if (setMatch != null && setMatch[1] != null) {
+    if (setMatch?.[1] != null) {
         return TypeReference.container(ContainerType.set(parseInlineTypeRecursive(setMatch[1])));
     }
 
     const optionalMatch = type.match(OPTIONAL_REGEX);
-    if (optionalMatch != null && optionalMatch[1] != null) {
+    if (optionalMatch?.[1] != null) {
         return TypeReference.container(ContainerType.optional(parseInlineTypeRecursive(optionalMatch[1])));
     }
 

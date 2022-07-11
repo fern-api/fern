@@ -94,6 +94,7 @@ export function getQualifiedReferenceToModelItem<T>({
         });
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (importStrategy === ImportStrategy.TOP_PACKAGE_IMPORT) {
         maybeAddImport({
             importOf: modelDirectory,
