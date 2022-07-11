@@ -14,9 +14,6 @@ export async function runCommand({
     command: Command<string>;
     config: FernTypescriptGeneratorConfig;
 }): Promise<void> {
-    if (config.output == null) {
-        throw new Error("Output directory is not specified.");
-    }
     const {
         output: { path: baseOutputPath },
     } = config;
