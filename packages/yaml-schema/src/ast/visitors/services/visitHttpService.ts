@@ -1,4 +1,4 @@
-import { HttpEndpointSchema, HttpServiceSchema } from "@fern-api/yaml-schema/src/schemas";
+import { HttpEndpointSchema, HttpServiceSchema } from "../../../schemas";
 import { FernAstVisitor } from "../../FernAstVisitor";
 import { NodePath } from "../../NodePath";
 import { createDocsVisitor } from "../utils/createDocsVisitor";

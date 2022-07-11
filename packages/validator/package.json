@@ -37,7 +37,6 @@
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/workspace-parser": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
-    "@fern-fern/ir-model": "0.0.23",
     "chalk": "^4.1.2"
   },
   "devDependencies": {

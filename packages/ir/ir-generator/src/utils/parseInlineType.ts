@@ -17,8 +17,8 @@ export function parseInlineType({ type, fernFilepath, imports }: parseInlineType
         void: TypeReference.void,
         map: ({ keyType, valueType }) => TypeReference.container(ContainerType.map({ keyType, valueType })),
         list: (valueType) => TypeReference.container(ContainerType.list(valueType)),
-        set: (valueType) => TypeReference.container(ContainerType.list(valueType)),
-        optional: (valueType) => TypeReference.container(ContainerType.list(valueType)),
+        set: (valueType) => TypeReference.container(ContainerType.set(valueType)),
+        optional: (valueType) => TypeReference.container(ContainerType.optional(valueType)),
         named: (namedType) =>
             TypeReference.named(
                 parseTypeName({

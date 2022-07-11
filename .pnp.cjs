@@ -6258,7 +6258,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/ir-generator", "workspace:packages/ir/ir-generator"],\
             ["@fern-api/workspace-parser", "workspace:packages/workspace-parser"],\
             ["@fern-api/yaml-schema", "workspace:packages/yaml-schema"],\
-            ["@fern-fern/ir-model", "npm:0.0.23"],\
             ["@types/jest", "npm:28.1.4"],\
             ["@types/node", "npm:18.0.3"],\
             ["chalk", "npm:4.1.2"],\

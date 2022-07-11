@@ -1,4 +1,4 @@
-import { ServicesSchema } from "@fern-api/yaml-schema/src/schemas";
+import { ServicesSchema } from "../../../schemas";
 import { FernAstVisitor } from "../../FernAstVisitor";
 import { NodePath } from "../../NodePath";
 import { noop } from "../utils/noop";
