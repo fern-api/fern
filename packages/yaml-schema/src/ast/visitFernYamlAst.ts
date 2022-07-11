@@ -1,5 +1,5 @@
-import { FernConfigurationSchema } from "@fern-api/yaml-schema";
-import { FernAstVisitor } from "./AstVisitor";
+import { FernConfigurationSchema } from "../schemas";
+import { FernAstVisitor } from "./FernAstVisitor";
 import { visitServices } from "./visitors/services/visitServices";
 import { visitObject } from "./visitors/utils/ObjectPropertiesVisitor";
 import { visitErrorDeclarations } from "./visitors/visitErrorDeclarations";
@@ -7,22 +7,22 @@ import { visitIds } from "./visitors/visitIds";
 import { visitImports } from "./visitors/visitImports";
 import { visitTypeDeclarations } from "./visitors/visitTypeDeclarations";
 
-export function visitAst(contents: FernConfigurationSchema, visitor: Partial<FernAstVisitor>): void {
+export function visitFernYamlAst(contents: FernConfigurationSchema, visitor: Partial<FernAstVisitor>): void {
     visitObject(contents, {
         imports: (imports) => {
-            visitImports(imports, visitor);
+            visitImports({ imports, visitor, nodePath: ["imports"] });
         },
         ids: (ids) => {
-            visitIds(ids, visitor);
+            visitIds({ ids, visitor, nodePath: ["ids"] });
         },
         types: (types) => {
-            visitTypeDeclarations(types, visitor);
+            visitTypeDeclarations({ typeDeclarations: types, visitor, nodePath: ["types"] });
         },
         services: (services) => {
-            visitServices(services, visitor);
+            visitServices({ services, visitor, nodePath: ["services"] });
         },
         errors: (errors) => {
-            visitErrorDeclarations(errors, visitor);
+            visitErrorDeclarations({ errorDeclarations: errors, visitor, nodePath: ["errors"] });
         },
     });
 }

@@ -1,14 +1,20 @@
 import { RelativeFilePath, Workspace } from "@fern-api/workspace-parser";
-import { FernConfigurationSchema } from "@fern-api/yaml-schema";
-import { FernAstNodeTypes, FernAstNodeVisitor, FernAstVisitor } from "./ast/AstVisitor";
-import { visitAst } from "./ast/visitAst";
-import { RuleRunner } from "./Rule";
+import { FernConfigurationSchema, visitFernYamlAst } from "@fern-api/yaml-schema";
+import { createAstVisitorForRules } from "./createAstVisitorForRules";
 import { rules } from "./rules";
+import { ValidationViolation } from "./ValidationViolation";
 
-export function validateFernDefinition(workspace: Workspace): void {
+export function validateFernDefinition(workspace: Workspace): ValidationViolation[] {
+    const violations: ValidationViolation[] = [];
     for (const [relativeFilePath, contents] of Object.entries(workspace.files)) {
-        validateFernFile({ workspace, relativeFilePath, contents });
+        const violationsForFile = validateFernFile({
+            workspace,
+            relativeFilePath,
+            contents,
+        });
+        violations.push(...violationsForFile);
     }
+    return violations;
 }
 
 function validateFernFile({
@@ -19,42 +25,19 @@ function validateFernFile({
     workspace: Workspace;
     relativeFilePath: RelativeFilePath;
     contents: FernConfigurationSchema;
-}): void {
+}): ValidationViolation[] {
+    const violations: ValidationViolation[] = [];
     const ruleRunners = rules.map((rule) => rule.create({ workspace }));
-    const astVisitor = createAstVisitor({ relativeFilePath, contents, ruleRunners });
-    visitAst(contents, astVisitor);
-}
 
-function createAstVisitor({
-    relativeFilePath,
-    contents,
-    ruleRunners,
-}: {
-    relativeFilePath: string;
-    contents: FernConfigurationSchema;
-    ruleRunners: RuleRunner[];
-}): FernAstVisitor {
-    function createAstNodeVisitor<K extends keyof FernAstNodeTypes>(nodeType: K): Record<K, FernAstNodeVisitor<K>> {
-        const visit: FernAstNodeVisitor<K> = (node: FernAstNodeTypes[K]) => {
-            for (const visitor of ruleRunners) {
-                visitor[nodeType]?.(node, { relativeFilePath, contents });
-            }
-        };
-        return { [nodeType]: visit } as Record<K, FernAstNodeVisitor<K>>;
-    }
+    const astVisitor = createAstVisitorForRules({
+        relativeFilePath,
+        contents,
+        ruleRunners,
+        addViolations: (newViolations: ValidationViolation[]) => {
+            violations.push(...newViolations);
+        },
+    });
+    visitFernYamlAst(contents, astVisitor);
 
-    const astVisitor: FernAstVisitor = {
-        ...createAstNodeVisitor("docs"),
-        ...createAstNodeVisitor("import"),
-        ...createAstNodeVisitor("id"),
-        ...createAstNodeVisitor("typeReference"),
-        ...createAstNodeVisitor("typeDeclaration"),
-        ...createAstNodeVisitor("typeName"),
-        ...createAstNodeVisitor("httpService"),
-        ...createAstNodeVisitor("httpEndpoint"),
-        ...createAstNodeVisitor("errorDeclaration"),
-        ...createAstNodeVisitor("errorReference"),
-    };
-
-    return astVisitor;
+    return violations;
 }

@@ -1,6 +1,5 @@
 import { RelativeFilePath, Workspace } from "@fern-api/workspace-parser";
-import { FernConfigurationSchema } from "@fern-api/yaml-schema";
-import { FernAstNodeTypes } from "./ast/AstVisitor";
+import { FernAstNodeTypes, FernConfigurationSchema } from "@fern-api/yaml-schema";
 
 export interface Rule {
     name: string;

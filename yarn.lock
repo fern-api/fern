@@ -2343,6 +2343,7 @@ __metadata:
     "@fern-api/login": "workspace:*"
     "@fern-api/openapi-converter": "workspace:*"
     "@fern-api/remote-workspace-runner": "workspace:*"
+    "@fern-api/validator": "workspace:*"
     "@fern-api/workspace-parser": "workspace:*"
     "@fern-fern/ir-model": 0.0.23
     "@types/inquirer": ^8.2.1
@@ -2759,6 +2760,7 @@ __metadata:
     "@fern-fern/ir-model": 0.0.23
     "@types/jest": ^28.1.4
     "@types/node": ^18.0.3
+    chalk: ^4.1.2
     depcheck: ^1.4.3
     eslint: ^8.19.0
     jest: ^28.1.2
@@ -2801,6 +2803,8 @@ __metadata:
     "@babel/core": ^7.18.6
     "@babel/preset-env": ^7.18.6
     "@babel/preset-typescript": ^7.18.6
+    "@fern-api/commons": "workspace:*"
+    "@fern-fern/ir-model": 0.0.23
     "@types/jest": ^28.1.4
     "@types/node": ^18.0.3
     depcheck: ^1.4.3

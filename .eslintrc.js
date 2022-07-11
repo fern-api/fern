@@ -77,5 +77,7 @@ module.exports = {
         "jest/unbound-method": ["error"],
         "object-shorthand": ["error"],
         "@typescript-eslint/no-invalid-void-type": "off",
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": "off",
     },
 };

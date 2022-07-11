@@ -1,6 +1,11 @@
 import { z } from "zod";
-import { TypeReferenceWithDocsSchema } from "./TypeReferenceSchema";
+import { WithDocsSchema } from "./WithDocsSchema";
 
-export const SingleUnionTypeSchema = TypeReferenceWithDocsSchema;
+export const SingleUnionTypeSchema = z.union([
+    z.string(),
+    WithDocsSchema.extend({
+        type: z.optional(z.string()),
+    }),
+]);
 
 export type SingleUnionTypeSchema = z.infer<typeof SingleUnionTypeSchema>;

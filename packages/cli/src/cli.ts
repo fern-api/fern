@@ -8,6 +8,7 @@ import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorT
 import { convertOpenApiToFernApiDefinition } from "./commands/convert-openapi/convertOpenApi";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateWorkspaces } from "./commands/generate/generateWorkspaces";
+import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
 
 void runCli();
 
@@ -39,6 +40,7 @@ async function runCli() {
     addGenerateCommand(cli);
     addLoginCommand(cli);
     addGenerateIrCommand(cli);
+    addValidateCommand(cli);
 
     await cli.parse();
 }
@@ -176,6 +178,24 @@ function addGenerateIrCommand(cli: Argv) {
             generateIrForWorkspaces({
                 commandLineWorkspaces: argv.workspaces ?? [],
                 irFilepath: argv.output,
+            })
+    );
+}
+
+function addValidateCommand(cli: Argv) {
+    cli.command(
+        "check [workspaces...]",
+        "Validates your Fern API Definition",
+        (yargs) =>
+            yargs.positional("workspaces", {
+                array: true,
+                type: "string",
+                description:
+                    "If omitted, every workspace specified in the project-level configuration (fern.config.json) will be processed.",
+            }),
+        (argv) =>
+            validateWorkspaces({
+                commandLineWorkspaces: argv.workspaces ?? [],
             })
     );
 }

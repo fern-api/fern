@@ -3,6 +3,7 @@ import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { parseWorkspaceDefinition } from "@fern-api/workspace-parser";
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
 import validatePackageName from "validate-npm-package-name";
+import { validateWorkspace } from "../validate/validateWorkspace";
 import { handleFailedWorkspaceParserResult } from "./handleWorkspaceParserFailures";
 
 export async function generateIrForWorkspace({
@@ -19,6 +20,7 @@ export async function generateIrForWorkspace({
         handleFailedWorkspaceParserResult(parseResult);
         throw new Error("Failed to parse workspace");
     }
+    validateWorkspace(parseResult.workspace);
     return generateIntermediateRepresentation(parseResult.workspace);
 }
 

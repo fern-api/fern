@@ -2,6 +2,7 @@ import { assertNever } from "@fern-api/commons";
 import { RelativeFilePath, WorkspaceParser, WorkspaceParserFailureType } from "@fern-api/workspace-parser";
 import chalk from "chalk";
 import { ZodIssue, ZodIssueCode } from "zod";
+import { logIssueInYaml } from "../../logger/logIssueInYaml";
 
 export function handleFailedWorkspaceParserResult(result: WorkspaceParser.FailedResult): void {
     for (const [relativeFilePath, failure] of Object.entries(result.failures)) {
@@ -26,13 +27,13 @@ function handleWorkspaceParserFailureForFile({
         case WorkspaceParserFailureType.STRUCTURE_VALIDATION:
             for (const issue of failure.error.issues) {
                 for (const { title, subtitle } of parseIssue(issue)) {
-                    console.group(chalk.bold.red(`Validation error: ${title}`));
-                    if (subtitle != null) {
-                        console.log(subtitle);
-                    }
-                    console.log(chalk.blue([relativeFilePath, ...issue.path].join(" -> ")));
-                    console.log();
-                    console.groupEnd();
+                    logIssueInYaml({
+                        severity: "error",
+                        relativeFilePath,
+                        breadcrumbs: issue.path,
+                        title,
+                        subtitle,
+                    });
                 }
             }
             break;
