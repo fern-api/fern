@@ -5,7 +5,13 @@ import { createDocsVisitor } from "../utils/createDocsVisitor";
 import { noop } from "../utils/noop";
 import { visitObject } from "../utils/ObjectPropertiesVisitor";
 
-export function visitHttpService({ service, visitor }: { service: HttpServiceSchema; visitor: FernAstVisitor }): void {
+export function visitHttpService({
+    service,
+    visitor,
+}: {
+    service: HttpServiceSchema;
+    visitor: Partial<FernAstVisitor>;
+}): void {
     visitObject(service, {
         "base-path": noop,
         docs: createDocsVisitor(visitor),
@@ -15,11 +21,11 @@ export function visitHttpService({ service, visitor }: { service: HttpServiceSch
             }
             for (const header of Object.values(headers)) {
                 if (typeof header === "string") {
-                    visitor.typeReference(header);
+                    visitor.typeReference?.(header);
                 } else {
                     visitObject(header, {
                         type: (type) => {
-                            visitor.typeReference(type);
+                            visitor.typeReference?.(type);
                         },
                         docs: createDocsVisitor(visitor),
                     });
@@ -29,14 +35,20 @@ export function visitHttpService({ service, visitor }: { service: HttpServiceSch
         auth: noop,
         endpoints: (endpoints) => {
             for (const [endpointId, endpoint] of Object.entries(endpoints)) {
-                visitor.httpEndpoint({ endpointId, endpoint });
+                visitor.httpEndpoint?.({ endpointId, endpoint });
                 visitEndpoint({ endpoint, visitor });
             }
         },
     });
 }
 
-function visitEndpoint({ endpoint, visitor }: { endpoint: RawSchemas.HttpEndpointSchema; visitor: FernAstVisitor }) {
+function visitEndpoint({
+    endpoint,
+    visitor,
+}: {
+    endpoint: RawSchemas.HttpEndpointSchema;
+    visitor: Partial<FernAstVisitor>;
+}) {
     visitObject(endpoint, {
         docs: createDocsVisitor(visitor),
         path: noop,
@@ -46,13 +58,13 @@ function visitEndpoint({ endpoint, visitor }: { endpoint: RawSchemas.HttpEndpoin
             }
             for (const pathParameter of Object.values(pathParameters)) {
                 if (typeof pathParameter === "string") {
-                    visitor.typeReference(pathParameter);
+                    visitor.typeReference?.(pathParameter);
                 } else {
                     visitObject(pathParameter, {
                         docs: createDocsVisitor(visitor),
                         type: (type) => {
                             if (type != null) {
-                                visitor.typeReference(type);
+                                visitor.typeReference?.(type);
                             }
                         },
                     });
@@ -65,13 +77,13 @@ function visitEndpoint({ endpoint, visitor }: { endpoint: RawSchemas.HttpEndpoin
             }
             for (const queryParameter of Object.values(queryParameters)) {
                 if (typeof queryParameter === "string") {
-                    visitor.typeReference(queryParameter);
+                    visitor.typeReference?.(queryParameter);
                 } else {
                     visitObject(queryParameter, {
                         docs: createDocsVisitor(visitor),
                         type: (type) => {
                             if (type != null) {
-                                visitor.typeReference(type);
+                                visitor.typeReference?.(type);
                             }
                         },
                     });
@@ -86,11 +98,11 @@ function visitEndpoint({ endpoint, visitor }: { endpoint: RawSchemas.HttpEndpoin
                 return;
             }
             if (typeof request === "string") {
-                visitor.typeReference(request);
+                visitor.typeReference?.(request);
             } else {
                 visitObject(request, {
                     docs: createDocsVisitor(visitor),
-                    type: (type) => visitor.typeReference(type),
+                    type: (type) => visitor.typeReference?.(type),
                     encoding: noop,
                 });
             }
@@ -100,11 +112,13 @@ function visitEndpoint({ endpoint, visitor }: { endpoint: RawSchemas.HttpEndpoin
                 return;
             }
             if (typeof response === "string") {
-                visitor.typeReference(response);
+                visitor.typeReference?.(response);
             } else {
                 visitObject(response, {
                     docs: createDocsVisitor(visitor),
-                    type: visitor.typeReference,
+                    type: (type) => {
+                        visitor.typeReference?.(type);
+                    },
                 });
             }
         },
@@ -114,11 +128,13 @@ function visitEndpoint({ endpoint, visitor }: { endpoint: RawSchemas.HttpEndpoin
             }
             for (const error of errors) {
                 if (typeof error === "string") {
-                    visitor.typeReference(error);
+                    visitor.typeReference?.(error);
                 } else {
                     visitObject(error, {
                         docs: createDocsVisitor(visitor),
-                        error: visitor.errorReference,
+                        error: (error) => {
+                            visitor.errorReference?.(error);
+                        },
                     });
                 }
             }

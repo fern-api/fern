@@ -7,20 +7,20 @@ import { visitTypeDeclaration } from "./visitTypeDeclarations";
 
 export function visitErrorDeclarations(
     errorDeclarations: Record<string, RawSchemas.ErrorDeclarationSchema> | undefined,
-    visitor: FernAstVisitor
+    visitor: Partial<FernAstVisitor>
 ): void {
     if (errorDeclarations == null) {
         return;
     }
     for (const [errorName, errorDeclaration] of Object.entries(errorDeclarations)) {
-        visitor.errorDeclaration({ errorName, declaration: errorDeclaration });
+        visitor.errorDeclaration?.({ errorName, declaration: errorDeclaration });
         visitErrorDeclaration(errorDeclaration, visitor);
     }
 }
 
-function visitErrorDeclaration(declaration: RawSchemas.ErrorDeclarationSchema, visitor: FernAstVisitor) {
+function visitErrorDeclaration(declaration: RawSchemas.ErrorDeclarationSchema, visitor: Partial<FernAstVisitor>) {
     if (typeof declaration === "string") {
-        visitor.typeReference(declaration);
+        visitor.typeReference?.(declaration);
     } else {
         visitObject(declaration, {
             docs: createDocsVisitor(visitor),
@@ -29,7 +29,7 @@ function visitErrorDeclaration(declaration: RawSchemas.ErrorDeclarationSchema, v
                     return;
                 }
                 if (typeof type === "string") {
-                    visitor.typeReference(type);
+                    visitor.typeReference?.(type);
                 } else {
                     visitTypeDeclaration(type, visitor);
                 }
