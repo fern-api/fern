@@ -27,22 +27,24 @@ export function visitRawTypeDeclaration<R>(
     assertNever(declaration);
 }
 
-function isRawAliasDefinition(rawTypeDeclaration: TypeDeclarationSchema): rawTypeDeclaration is string | AliasSchema {
+export function isRawAliasDefinition(
+    rawTypeDeclaration: TypeDeclarationSchema
+): rawTypeDeclaration is string | AliasSchema {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return typeof rawTypeDeclaration === "string" || (rawTypeDeclaration as AliasSchema).alias != null;
 }
 
-function isRawObjectDefinition(rawTypeDeclaration: TypeDeclarationSchema): rawTypeDeclaration is ObjectSchema {
+export function isRawObjectDefinition(rawTypeDeclaration: TypeDeclarationSchema): rawTypeDeclaration is ObjectSchema {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (rawTypeDeclaration as ObjectSchema).properties != null;
 }
 
-function isRawUnionDefinition(rawTypeDeclaration: TypeDeclarationSchema): rawTypeDeclaration is UnionSchema {
+export function isRawUnionDefinition(rawTypeDeclaration: TypeDeclarationSchema): rawTypeDeclaration is UnionSchema {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (rawTypeDeclaration as UnionSchema).union != null;
 }
 
-function isRawEnumDefinition(rawTypeDeclaration: TypeDeclarationSchema): rawTypeDeclaration is EnumSchema {
+export function isRawEnumDefinition(rawTypeDeclaration: TypeDeclarationSchema): rawTypeDeclaration is EnumSchema {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (rawTypeDeclaration as EnumSchema).enum != null;
 }
