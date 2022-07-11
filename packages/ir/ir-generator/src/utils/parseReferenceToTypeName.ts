@@ -1,16 +1,20 @@
-import { FernFilepath } from "@fern-fern/ir-model";
 import path from "path";
-import { convertToFernFilepath } from "./convertToFernFilepath";
 
-export function parseReference({
+export interface ReferenceToTypeName {
+    referenceName: string;
+    // if not defined, the reference lives in the same file as the referencer
+    relativeFilePath: string | undefined;
+}
+
+export function parseReferenceToTypeName({
     reference,
-    fernFilepath,
+    relativeFilePathOfDirectory,
     imports,
 }: {
     reference: string;
-    fernFilepath: FernFilepath;
+    relativeFilePathOfDirectory: string;
     imports: Record<string, string>;
-}): { fernFilepath: FernFilepath; referenceName: string } {
+}): ReferenceToTypeName {
     const [firstPart, secondPart, ...rest] = reference.split(".");
 
     if (firstPart == null || rest.length > 0) {
@@ -19,8 +23,8 @@ export function parseReference({
 
     if (secondPart == null) {
         return {
-            fernFilepath,
             referenceName: firstPart,
+            relativeFilePath: undefined,
         };
     }
 
@@ -31,7 +35,7 @@ export function parseReference({
     }
 
     return {
-        fernFilepath: convertToFernFilepath(path.join(fernFilepath.join(path.sep), importPath)),
+        relativeFilePath: path.join(relativeFilePathOfDirectory, importPath),
         referenceName: secondPart,
     };
 }

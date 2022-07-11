@@ -1,10 +1,8 @@
-import { assertNever } from "@fern-api/commons";
-import { RawSchemas } from "@fern-api/yaml-schema";
+import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
 import { FernFilepath, Type, TypeDeclaration, TypeReference } from "@fern-fern/ir-model";
 import { getDocs } from "../../utils/getDocs";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { parseTypeName } from "../../utils/parseTypeName";
-import { isRawAliasDefinition, isRawEnumDefinition, isRawObjectDefinition, isRawUnionDefinition } from "./utils";
 
 export function convertTypeDeclaration({
     typeName,
@@ -41,58 +39,59 @@ export function convertType({
     }
     const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
 
-    if (typeof typeDeclaration === "string" || isRawAliasDefinition(typeDeclaration)) {
-        return Type.alias({
-            aliasOf: parseTypeReference(typeof typeDeclaration === "string" ? typeDeclaration : typeDeclaration.alias),
-        });
-    }
-
-    if (isRawObjectDefinition(typeDeclaration)) {
-        return Type.object({
-            extends:
-                typeDeclaration.extends != null
-                    ? typeof typeDeclaration.extends === "string"
-                        ? [
-                              parseTypeName({
-                                  typeName: typeDeclaration.extends,
-                                  fernFilepath,
-                                  imports,
+    return visitRawTypeDeclaration<Type>(typeDeclaration, {
+        alias: (alias) =>
+            Type.alias({
+                aliasOf: parseTypeReference(typeof alias === "string" ? alias : alias.alias),
+            }),
+        object: (object) =>
+            Type.object({
+                extends:
+                    object.extends != null
+                        ? typeof object.extends === "string"
+                            ? [
+                                  parseTypeName({
+                                      typeName: object.extends,
+                                      fernFilepath,
+                                      imports,
+                                  }),
+                              ]
+                            : object.extends.map((extended) =>
+                                  parseTypeName({ typeName: extended, fernFilepath, imports })
+                              )
+                        : [],
+                properties: [
+                    ...Object.entries(object.properties).map(([propertyName, propertyDefinition]) => ({
+                        key: propertyName,
+                        valueType: parseTypeReference(propertyDefinition),
+                        docs: getDocs(propertyDefinition),
+                    })),
+                ],
+            }),
+        union: (union) =>
+            Type.union({
+                discriminant: union.discriminant ?? "_type",
+                types: Object.entries(union.union).map(([discriminantValue, unionedType]) => ({
+                    discriminantValue,
+                    valueType:
+                        typeof unionedType === "string"
+                            ? parseTypeReference(unionedType)
+                            : unionedType.type == null
+                            ? TypeReference.void()
+                            : parseTypeReference({
+                                  ...unionedType,
+                                  type: unionedType.type,
                               }),
-                          ]
-                        : typeDeclaration.extends.map((extended) =>
-                              parseTypeName({ typeName: extended, fernFilepath, imports })
-                          )
-                    : [],
-            properties: [
-                ...Object.entries(typeDeclaration.properties).map(([propertyName, propertyDefinition]) => ({
-                    key: propertyName,
-                    valueType: parseTypeReference(propertyDefinition),
-                    docs: getDocs(propertyDefinition),
+                    docs: getDocs(unionedType),
                 })),
-            ],
-        });
-    }
-
-    if (isRawUnionDefinition(typeDeclaration)) {
-        return Type.union({
-            discriminant: typeDeclaration.discriminant ?? "_type",
-            types: Object.entries(typeDeclaration.union).map(([discriminantValue, unionedType]) => ({
-                discriminantValue,
-                valueType: parseTypeReference(unionedType),
-                docs: getDocs(unionedType),
-            })),
-        });
-    }
-
-    if (isRawEnumDefinition(typeDeclaration)) {
-        return Type.enum({
-            values: typeDeclaration.enum.map((value) =>
-                typeof value === "string"
-                    ? { value, name: value, docs: undefined }
-                    : { value: value.value, name: value.name != null ? value.name : value.value, docs: value.docs }
-            ),
-        });
-    }
-
-    assertNever(typeDeclaration);
+            }),
+        enum: (_enum) =>
+            Type.enum({
+                values: _enum.enum.map((value) =>
+                    typeof value === "string"
+                        ? { value, name: value, docs: undefined }
+                        : { value: value.value, name: value.name != null ? value.name : value.value, docs: value.docs }
+                ),
+            }),
+    });
 }

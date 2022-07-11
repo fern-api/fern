@@ -1,5 +1,10 @@
 {
   "extends": "../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib/esm", "rootDir": "src", "module": "esnext" },
-  "include": ["./src"]
+  "include": ["./src"],
+  "references": [
+    { "path": "../ir/ir-generator/tsconfig.json" },
+    { "path": "../workspace-parser/tsconfig.json" },
+    { "path": "../yaml-schema/tsconfig.json" }
+  ]
 }

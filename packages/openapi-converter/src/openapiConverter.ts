@@ -25,7 +25,7 @@ export enum OpenApiConversionFailure {
 
 export async function convertOpenApi(openapiFilepath: string): Promise<OpenApiConverter.Result> {
     const openApi = await SwaggerParser.parse(openapiFilepath);
-    if (openApi === undefined || !isOpenApiV3(openApi)) {
+    if (!isOpenApiV3(openApi)) {
         return {
             didSucceed: false,
             failure: OpenApiConversionFailure.FAILED_TO_PARSE_OPENAPI,
@@ -39,10 +39,10 @@ export async function convertOpenApi(openapiFilepath: string): Promise<OpenApiCo
         services: {},
     };
     try {
-        if (openApi.components !== undefined && openApi.components.schemas !== undefined) {
+        if (openApi.components?.schemas != null) {
             for (const typeName of Object.keys(openApi.components.schemas)) {
                 const typeDeclaration = openApi.components.schemas[typeName];
-                if (typeDeclaration !== undefined && isSchemaObject(typeDeclaration)) {
+                if (typeDeclaration != null && isSchemaObject(typeDeclaration)) {
                     const fernConversionResult = convertToFernType(typeName, typeDeclaration);
                     for (const [convertedTypeName, convertedTypeDeclaration] of Object.entries(
                         fernConversionResult.typeDeclarations
@@ -53,8 +53,8 @@ export async function convertOpenApi(openapiFilepath: string): Promise<OpenApiCo
             }
         }
         const fernService = convertToFernService(openApi.paths, openApi.components?.securitySchemes);
-        convertedFernConfiguration.services["http"] = {};
-        convertedFernConfiguration.services["http"]["OpenApiService"] = fernService;
+        convertedFernConfiguration.services.http = {};
+        convertedFernConfiguration.services.http.OpenApiService = fernService;
         return {
             didSucceed: true,
             fernConfiguration: convertedFernConfiguration,
@@ -71,9 +71,11 @@ export async function convertOpenApi(openapiFilepath: string): Promise<OpenApiCo
 function isSchemaObject(
     typeDeclaration: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject
 ): typeDeclaration is OpenAPIV3.SchemaObject {
-    return !(typeDeclaration as OpenAPIV3.ReferenceObject).$ref !== undefined;
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    return !(typeDeclaration as OpenAPIV3.ReferenceObject).$ref != null;
 }
 
 function isOpenApiV3(openApi: OpenAPI.Document): openApi is OpenAPIV3.Document {
-    return (openApi as OpenAPIV3.Document).openapi !== undefined;
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    return (openApi as OpenAPIV3.Document).openapi != null;
 }

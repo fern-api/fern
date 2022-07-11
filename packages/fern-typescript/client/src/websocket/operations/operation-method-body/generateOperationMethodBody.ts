@@ -113,7 +113,7 @@ function generatePromiseBody({
             ts.factory.createStringLiteral(operation.operationId)
         ),
     ];
-    if (operationTypes.request?.body != null) {
+    if (operationTypes.request.body != null) {
         messageElements.push(
             ts.factory.createPropertyAssignment(
                 ts.factory.createIdentifier(ServiceTypesConstants.Commons.Request.Properties.Body.PROPERTY_NAME),

@@ -4,7 +4,7 @@ import { WithDocsSchema } from "./WithDocsSchema";
 export const WebSocketResponseSchema = z.union([
     z.string(),
     WithDocsSchema.extend({
-        type: z.optional(z.string()),
+        type: z.string(),
     }),
 ]);
 

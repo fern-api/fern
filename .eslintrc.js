@@ -7,7 +7,7 @@ module.exports = {
     plugins: ["@typescript-eslint", "jest", "@blueprintjs"],
     extends: [
         "eslint:recommended",
-        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/strict",
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:jest/recommended",
         "plugin:@blueprintjs/recommended",
@@ -76,5 +76,8 @@ module.exports = {
         ],
         "jest/unbound-method": ["error"],
         "object-shorthand": ["error"],
+        "@typescript-eslint/no-invalid-void-type": "off",
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": "off",
     },
 };
