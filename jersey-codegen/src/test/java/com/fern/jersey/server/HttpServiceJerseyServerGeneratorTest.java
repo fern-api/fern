@@ -20,7 +20,6 @@ import com.fern.codegen.GeneratorContext;
 import com.fern.java.test.TestConstants;
 import com.fern.model.codegen.ModelGenerator;
 import com.fern.model.codegen.ModelGeneratorResult;
-import com.fern.types.AliasTypeDeclaration;
 import com.fern.types.DeclaredTypeName;
 import com.fern.types.ErrorDeclaration;
 import com.fern.types.ErrorName;
@@ -33,11 +32,9 @@ import com.fern.types.Type;
 import com.fern.types.TypeReference;
 import com.fern.types.services.Encoding;
 import com.fern.types.services.EndpointId;
-import com.fern.types.services.FailedResponse;
 import com.fern.types.services.HttpAuth;
 import com.fern.types.services.HttpEndpoint;
 import com.fern.types.services.HttpMethod;
-import com.fern.types.services.HttpOkResponse;
 import com.fern.types.services.HttpPath;
 import com.fern.types.services.HttpPathPart;
 import com.fern.types.services.HttpRequest;
@@ -45,6 +42,7 @@ import com.fern.types.services.HttpResponse;
 import com.fern.types.services.HttpService;
 import com.fern.types.services.PathParameter;
 import com.fern.types.services.ResponseError;
+import com.fern.types.services.ResponseErrors;
 import com.fern.types.services.ServiceName;
 import java.util.Collections;
 import java.util.List;
@@ -77,22 +75,16 @@ public final class HttpServiceJerseyServerGeneratorTest {
                                 .build())
                         .request(HttpRequest.builder()
                                 .encoding(Encoding.json())
-                                .type(Type.alias(AliasTypeDeclaration.builder()
-                                        .aliasOf(TypeReference._void())
-                                        .build()))
+                                .type(TypeReference._void())
                                 .build())
                         .response(HttpResponse.builder()
                                 .encoding(Encoding.json())
-                                .ok(HttpOkResponse.builder()
-                                        .type(Type.alias(AliasTypeDeclaration.builder()
-                                                .aliasOf(TypeReference.named(DeclaredTypeName.builder()
-                                                        .fernFilepath(FernFilepath.valueOf(List.of("fern")))
-                                                        .name("Person")
-                                                        .build()))
-                                                .build()))
-                                        .build())
-                                .failed(FailedResponse.builder().build())
+                                .type(TypeReference.named(DeclaredTypeName.builder()
+                                        .fernFilepath(FernFilepath.valueOf(List.of("fern")))
+                                        .name("Person")
+                                        .build()))
                                 .build())
+                        .errors(ResponseErrors.valueOf(List.of()))
                         .auth(HttpAuth.NONE)
                         .addPathParameters(PathParameter.builder()
                                 .key("personId")
@@ -105,22 +97,16 @@ public final class HttpServiceJerseyServerGeneratorTest {
                         .path(HttpPath.builder().head("/create").build())
                         .request(HttpRequest.builder()
                                 .encoding(Encoding.json())
-                                .type(Type.alias(AliasTypeDeclaration.builder()
-                                        .aliasOf(TypeReference.named(DeclaredTypeName.builder()
-                                                .fernFilepath(FernFilepath.valueOf(List.of("fern")))
-                                                .name("CreatePersonRequest")
-                                                .build()))
+                                .type(TypeReference.named(DeclaredTypeName.builder()
+                                        .fernFilepath(FernFilepath.valueOf(List.of("fern")))
+                                        .name("CreatePersonRequest")
                                         .build()))
                                 .build())
                         .response(HttpResponse.builder()
                                 .encoding(Encoding.json())
-                                .ok(HttpOkResponse.builder()
-                                        .type(Type.alias(AliasTypeDeclaration.builder()
-                                                .aliasOf(TypeReference.primitive(PrimitiveType.STRING))
-                                                .build()))
-                                        .build())
-                                .failed(FailedResponse.builder().build())
+                                .type(TypeReference.primitive(PrimitiveType.STRING))
                                 .build())
+                        .errors(ResponseErrors.valueOf(List.of()))
                         .auth(HttpAuth.NONE)
                         .build())
                 .build();
@@ -172,27 +158,19 @@ public final class HttpServiceJerseyServerGeneratorTest {
                                 .build())
                         .request(HttpRequest.builder()
                                 .encoding(Encoding.json())
-                                .type(Type.alias(AliasTypeDeclaration.builder()
-                                        .aliasOf(TypeReference._void())
-                                        .build()))
+                                .type(TypeReference._void())
                                 .build())
                         .response(HttpResponse.builder()
                                 .encoding(Encoding.json())
-                                .ok(HttpOkResponse.builder()
-                                        .type(Type.alias(AliasTypeDeclaration.builder()
-                                                .aliasOf(TypeReference.named(DeclaredTypeName.builder()
-                                                        .fernFilepath(FernFilepath.valueOf(List.of("fern")))
-                                                        .name("Person")
-                                                        .build()))
-                                                .build()))
-                                        .build())
-                                .failed(FailedResponse.builder()
-                                        .addErrors(ResponseError.builder()
-                                                .discriminantValue("notFound")
-                                                .error(personIdNotFound.name())
-                                                .build())
-                                        .build())
+                                .type(TypeReference.named(DeclaredTypeName.builder()
+                                        .fernFilepath(FernFilepath.valueOf(List.of("fern")))
+                                        .name("Person")
+                                        .build()))
                                 .build())
+                        .errors(ResponseErrors.valueOf(List.of(ResponseError.builder()
+                                .discriminantValue("notFound")
+                                .error(personIdNotFound.name())
+                                .build())))
                         .auth(HttpAuth.NONE)
                         .addPathParameters(PathParameter.builder()
                                 .key("personId")
@@ -205,22 +183,16 @@ public final class HttpServiceJerseyServerGeneratorTest {
                         .path(HttpPath.builder().head("/create").build())
                         .request(HttpRequest.builder()
                                 .encoding(Encoding.json())
-                                .type(Type.alias(AliasTypeDeclaration.builder()
-                                        .aliasOf(TypeReference.named(DeclaredTypeName.builder()
-                                                .fernFilepath(FernFilepath.valueOf(List.of("fern")))
-                                                .name("CreatePersonRequest")
-                                                .build()))
+                                .type(TypeReference.named(DeclaredTypeName.builder()
+                                        .fernFilepath(FernFilepath.valueOf(List.of("fern")))
+                                        .name("CreatePersonRequest")
                                         .build()))
                                 .build())
                         .response(HttpResponse.builder()
                                 .encoding(Encoding.json())
-                                .ok(HttpOkResponse.builder()
-                                        .type(Type.alias(AliasTypeDeclaration.builder()
-                                                .aliasOf(TypeReference.primitive(PrimitiveType.STRING))
-                                                .build()))
-                                        .build())
-                                .failed(FailedResponse.builder().build())
+                                .type(TypeReference.primitive(PrimitiveType.STRING))
                                 .build())
+                        .errors(ResponseErrors.valueOf(List.of()))
                         .auth(HttpAuth.NONE)
                         .build())
                 .build();

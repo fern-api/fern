@@ -34,8 +34,8 @@ basic[api/generated-java/blog-api-client/src/main/java/com/blog/client/PostsServ
 package com.blog.client;
 
 import com.blog.errors.PostNotFoundError;
-import com.blog.services.CreatePostRequest;
 import com.blog.types.BlogPost;
+import com.blog.types.CreatePostRequest;
 import com.blog.types.PostId;
 import com.fern.java.exception.UnknownRemoteException;
 import com.fern.java.jackson.ClientObjectMappers;
@@ -244,42 +244,6 @@ public interface UnauthorizedErrorBody {
 
   static ImmutableUnauthorizedErrorBody.ReasonBuildStage builder() {
     return ImmutableUnauthorizedErrorBody.builder();
-  }
-}
-
-]
-
-
-basic[api/generated-java/blog-api-model/src/main/java/com/blog/services/CreatePostRequest.java]=[
-package com.blog.services;
-
-import com.blog.types.Author;
-import com.blog.types.PostType;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import java.lang.String;
-import org.immutables.value.Value;
-
-@Value.Immutable
-@StagedBuilderImmutablesStyle
-@JsonDeserialize(
-    as = ImmutableCreatePostRequest.class
-)
-@JsonIgnoreProperties(
-    ignoreUnknown = true
-)
-public interface CreatePostRequest {
-  String title();
-
-  Author author();
-
-  String content();
-
-  PostType postType();
-
-  static ImmutableCreatePostRequest.TitleBuildStage builder() {
-    return ImmutableCreatePostRequest.builder();
   }
 }
 
@@ -582,6 +546,40 @@ public interface BlogPost {
 ]
 
 
+basic[api/generated-java/blog-api-model/src/main/java/com/blog/types/CreatePostRequest.java]=[
+package com.blog.types;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fern.java.immutables.StagedBuilderImmutablesStyle;
+import java.lang.String;
+import org.immutables.value.Value;
+
+@Value.Immutable
+@StagedBuilderImmutablesStyle
+@JsonDeserialize(
+    as = ImmutableCreatePostRequest.class
+)
+@JsonIgnoreProperties(
+    ignoreUnknown = true
+)
+public interface CreatePostRequest {
+  String title();
+
+  Author author();
+
+  String content();
+
+  PostType postType();
+
+  static ImmutableCreatePostRequest.TitleBuildStage builder() {
+    return ImmutableCreatePostRequest.builder();
+  }
+}
+
+]
+
+
 basic[api/generated-java/blog-api-model/src/main/java/com/blog/types/PostId.java]=[
 package com.blog.types;
 
@@ -851,8 +849,8 @@ basic[api/generated-java/blog-api-server-jersey/src/main/java/com/blog/server/Po
 package com.blog.server;
 
 import com.blog.errors.PostNotFoundError;
-import com.blog.services.CreatePostRequest;
 import com.blog.types.BlogPost;
+import com.blog.types.CreatePostRequest;
 import com.blog.types.PostId;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -1007,8 +1005,8 @@ basic[api/generated-java/blog-api-server-spring/src/main/java/com/blog/server/Po
 package com.blog.server;
 
 import com.blog.errors.PostNotFoundError;
-import com.blog.services.CreatePostRequest;
 import com.blog.types.BlogPost;
+import com.blog.types.CreatePostRequest;
 import com.blog.types.PostId;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

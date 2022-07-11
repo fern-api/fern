@@ -12,6 +12,12 @@ types:
       title: string
       author: Author
       content: string
+  CreatePostRequest:
+    properties:
+      title: string
+      author: Author
+      content: string
+      postType: PostType
   PostType:
     enum:
       - LONG
@@ -43,20 +49,12 @@ services:
           docs: Create a new blog post
           method: POST
           path: /create
-          request:
-            type:
-              properties:
-                title: string
-                author: Author
-                content: string
-                postType: PostType
+          request: CreatePostRequest
         getPost:
           method: GET
           path: /{postId}
           path-parameters:
             postId: PostId
-          response:
-            ok: BlogPost
-            failed:
-              errors:
-                - PostNotFoundError
+          response: BlogPost
+          errors:
+            - PostNotFoundError

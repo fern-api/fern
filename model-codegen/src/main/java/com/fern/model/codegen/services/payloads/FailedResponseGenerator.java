@@ -35,10 +35,10 @@ import com.fern.java.exception.HttpException;
 import com.fern.model.codegen.Generator;
 import com.fern.model.codegen.errors.ErrorGenerator;
 import com.fern.types.ErrorName;
-import com.fern.types.services.FailedResponse;
 import com.fern.types.services.HttpEndpoint;
 import com.fern.types.services.HttpService;
 import com.fern.types.services.ResponseError;
+import com.fern.types.services.ResponseErrors;
 import com.fern.types.services.ServiceName;
 import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.AnnotationSpec;
@@ -71,7 +71,7 @@ public final class FailedResponseGenerator extends Generator {
 
     private static final String VALUE_FIELD_NAME = "value";
 
-    private final FailedResponse failedResponse;
+    private final ResponseErrors responseErrors;
     private final Map<ErrorName, GeneratedError> generatedErrors;
     private final ClassName generatedEndpointErrorClassName;
     private final Map<ResponseError, ClassName> internalValueClassNames;
@@ -80,11 +80,10 @@ public final class FailedResponseGenerator extends Generator {
     public FailedResponseGenerator(
             HttpService httpService,
             HttpEndpoint httpEndpoint,
-            FailedResponse failedResponse,
             GeneratorContext generatorContext,
             Map<ErrorName, GeneratedError> generatedErrors) {
         super(generatorContext, PackageType.SERVICES);
-        this.failedResponse = failedResponse;
+        this.responseErrors = httpEndpoint.errors();
         this.generatedErrors = generatedErrors;
         this.generatedEndpointErrorClassName = generatorContext
                 .getClassNameUtils()
@@ -95,7 +94,7 @@ public final class FailedResponseGenerator extends Generator {
                                 .build(),
                         PackageType.SERVICES,
                         FAILED_RESPONSE_SUFFIX);
-        this.internalValueClassNames = failedResponse.errors().stream()
+        this.internalValueClassNames = httpEndpoint.errors().value().stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
                         error -> generatedEndpointErrorClassName.nestedClass(INTERNAL_CLASS_NAME_PREFIX
@@ -162,7 +161,7 @@ public final class FailedResponseGenerator extends Generator {
     }
 
     private Map<ErrorName, MethodSpec> getStaticBuilderMethods() {
-        return failedResponse.errors().stream().collect(Collectors.toMap(ResponseError::error, errorResponse -> {
+        return responseErrors.value().stream().collect(Collectors.toMap(ResponseError::error, errorResponse -> {
             String methodName = MethodNameUtils.getCompatibleMethodName(errorResponse.discriminantValue());
             MethodSpec.Builder staticBuilder = MethodSpec.methodBuilder(methodName)
                     .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
@@ -247,7 +246,7 @@ public final class FailedResponseGenerator extends Generator {
     }
 
     private Map<ResponseError, TypeSpec> getInternalValueTypeSpecs() {
-        return failedResponse.errors().stream().collect(Collectors.toMap(Function.identity(), responseError -> {
+        return responseErrors.value().stream().collect(Collectors.toMap(Function.identity(), responseError -> {
             GeneratedError generatedError = generatedErrors.get(responseError.error());
             ClassName internalValueClassName = internalValueClassNames.get(responseError);
             TypeSpec.Builder typeSpecBuilder = TypeSpec.interfaceBuilder(internalValueClassName)

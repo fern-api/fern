@@ -16,7 +16,6 @@
 package com.fern.spring;
 
 import com.fern.codegen.GeneratorContext;
-import com.fern.codegen.payload.GeneratedFilePayload;
 import com.fern.codegen.payload.Payload;
 import com.fern.codegen.payload.TypeNamePayload;
 import com.fern.codegen.payload.VoidPayload;
@@ -72,8 +71,6 @@ public final class SpringServiceGeneratorUtils {
     public Optional<TypeName> getPayloadTypeName(Payload payload) {
         if (payload instanceof VoidPayload) {
             return Optional.empty();
-        } else if (payload instanceof GeneratedFilePayload) {
-            return Optional.of(((GeneratedFilePayload) payload).generatedFile().className());
         } else if (payload instanceof TypeNamePayload) {
             return Optional.of(((TypeNamePayload) payload).typeName());
         }

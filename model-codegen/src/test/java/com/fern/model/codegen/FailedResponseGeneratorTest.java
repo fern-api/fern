@@ -34,10 +34,10 @@ import com.fern.types.PrimitiveType;
 import com.fern.types.Type;
 import com.fern.types.TypeReference;
 import com.fern.types.services.EndpointId;
-import com.fern.types.services.FailedResponse;
 import com.fern.types.services.HttpEndpoint;
 import com.fern.types.services.HttpService;
 import com.fern.types.services.ResponseError;
+import com.fern.types.services.ResponseErrors;
 import com.fern.types.services.ServiceName;
 import java.util.Collections;
 import java.util.List;
@@ -74,12 +74,11 @@ public class FailedResponseGeneratorTest {
                         .aliasOf(TypeReference.primitive(PrimitiveType.STRING))
                         .build()))
                 .build();
-        FailedResponse failedResponse = FailedResponse.builder()
-                .addErrors(ResponseError.builder()
+        when(httpEndpoint.errors())
+                .thenReturn(ResponseErrors.valueOf(List.of(ResponseError.builder()
                         .discriminantValue("noViewPermissions")
                         .error(noViewPermissionsErrorNamedType)
-                        .build())
-                .build();
+                        .build())));
         GeneratorContext generatorContext = new GeneratorContext(
                 Optional.of(TestConstants.PACKAGE_PREFIX),
                 Collections.emptyMap(),
@@ -104,7 +103,6 @@ public class FailedResponseGeneratorTest {
         FailedResponseGenerator failedResponseGenerator = new FailedResponseGenerator(
                 httpService,
                 httpEndpoint,
-                failedResponse,
                 generatorContext,
                 Collections.singletonMap(noViewPermissionsErrorNamedType, generatedNoViewPermissionsError));
         GeneratedEndpointError generatedError = failedResponseGenerator.generate();

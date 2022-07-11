@@ -9,7 +9,7 @@ org.apache.commons:commons-lang3 = 3.12.0
 
 # fern
 com.fern:fern-immutables-style = 0.0.15-2-g2ec8163
-com.fern-fern.fern:ir-model = 0.0.15
+com.fern-fern.fern:ir-model = 0.0.23
 
 # testing
 org.junit.jupiter:* = 5.5.0

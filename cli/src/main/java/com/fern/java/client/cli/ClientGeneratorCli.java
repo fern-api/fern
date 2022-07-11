@@ -285,7 +285,7 @@ public final class ClientGeneratorCli {
             HttpService httpService,
             HttpEndpoint httpEndpoint,
             Map<ErrorName, Map<HttpService, List<HttpEndpoint>>> errorMap) {
-        httpEndpoint.response().failed().errors().forEach(responseError -> {
+        httpEndpoint.errors().value().forEach(responseError -> {
             ErrorName errorName = responseError.error();
             Map<HttpService, List<HttpEndpoint>> containingEndpoints;
             if (errorMap.containsKey(errorName)) {

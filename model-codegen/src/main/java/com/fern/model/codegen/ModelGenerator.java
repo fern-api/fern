@@ -19,22 +19,18 @@ import com.fern.codegen.GeneratedAlias;
 import com.fern.codegen.GeneratedEndpointModel;
 import com.fern.codegen.GeneratedEnum;
 import com.fern.codegen.GeneratedError;
-import com.fern.codegen.GeneratedFile;
 import com.fern.codegen.GeneratedInterface;
 import com.fern.codegen.GeneratedObject;
 import com.fern.codegen.GeneratedUnion;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.IGeneratedFile;
 import com.fern.codegen.ImmutableGeneratedEndpointModel;
-import com.fern.codegen.payload.GeneratedFilePayload;
 import com.fern.codegen.payload.Payload;
 import com.fern.codegen.payload.TypeNamePayload;
 import com.fern.codegen.payload.VoidPayload;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.model.codegen.errors.ErrorGenerator;
 import com.fern.model.codegen.services.payloads.FailedResponseGenerator;
-import com.fern.model.codegen.services.payloads.RequestResponseGenerator;
-import com.fern.model.codegen.services.payloads.RequestResponseGeneratorResult;
 import com.fern.model.codegen.types.InterfaceGenerator;
 import com.fern.types.DeclaredTypeName;
 import com.fern.types.ErrorDeclaration;
@@ -42,15 +38,15 @@ import com.fern.types.ErrorName;
 import com.fern.types.ObjectTypeDeclaration;
 import com.fern.types.Type;
 import com.fern.types.TypeDeclaration;
+import com.fern.types.TypeReference;
 import com.fern.types.services.EndpointId;
-import com.fern.types.services.HttpEndpoint;
 import com.fern.types.services.HttpService;
+import com.squareup.javapoet.TypeName;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public final class ModelGenerator {
@@ -143,29 +139,17 @@ public final class ModelGenerator {
                     ImmutableGeneratedEndpointModel.Builder generatedEndpointModel =
                             GeneratedEndpointModel.builder().httpEndpoint(httpEndpoint);
 
-                    Payload requestPayload = generatePayload(
-                            httpService,
-                            httpEndpoint,
-                            generatedInterfaces,
-                            () -> httpEndpoint.request().type(),
-                            true);
+                    Payload requestPayload =
+                            generatePayload(httpEndpoint.request().type());
                     generatedEndpointModel.generatedHttpRequest(requestPayload);
 
-                    Payload responsePayload = generatePayload(
-                            httpService,
-                            httpEndpoint,
-                            generatedInterfaces,
-                            () -> httpEndpoint.response().ok().type(),
-                            false);
+                    Payload responsePayload =
+                            generatePayload(httpEndpoint.response().type());
                     generatedEndpointModel.generatedHttpResponse(responsePayload);
 
-                    if (!httpEndpoint.response().failed().errors().isEmpty()) {
+                    if (!httpEndpoint.errors().value().isEmpty()) {
                         FailedResponseGenerator failedResponseGenerator = new FailedResponseGenerator(
-                                httpService,
-                                httpEndpoint,
-                                httpEndpoint.response().failed(),
-                                generatorContext,
-                                generatedErrors);
+                                httpService, httpEndpoint, generatorContext, generatedErrors);
                         generatedEndpointModel.errorFile(failedResponseGenerator.generate());
                     }
                     return generatedEndpointModel.build();
@@ -176,32 +160,11 @@ public final class ModelGenerator {
                         Function.identity()));
     }
 
-    private Payload generatePayload(
-            HttpService httpService,
-            HttpEndpoint httpEndpoint,
-            Map<DeclaredTypeName, GeneratedInterface> generatedInterfaces,
-            Supplier<Type> typeSupplier,
-            boolean isRequest) {
-        if (isVoid(typeSupplier.get())) {
+    private Payload generatePayload(TypeReference typeReference) {
+        if (typeReference.isVoid()) {
             return VoidPayload.INSTANCE;
         }
-        RequestResponseGenerator generator = new RequestResponseGenerator(
-                generatorContext, generatedInterfaces, httpService, httpEndpoint, typeSupplier.get(), isRequest);
-        RequestResponseGeneratorResult result = generator.generate();
-        if (result.generatedFile().isPresent()) {
-            return GeneratedFilePayload.builder()
-                    .generatedFile(GeneratedFile.builder()
-                            .file(result.generatedFile().get().file())
-                            .className(result.generatedFile().get().className())
-                            .build())
-                    .build();
-        }
-        return TypeNamePayload.builder().typeName(result.typeName()).build();
-    }
-
-    private static boolean isVoid(Type type) {
-        return type.getAlias()
-                .map(aliasTypeDefinition -> aliasTypeDefinition.aliasOf().isVoid())
-                .orElse(false);
+        TypeName typeName = generatorContext.getClassNameUtils().getTypeNameFromTypeReference(true, typeReference);
+        return TypeNamePayload.builder().typeName(typeName).build();
     }
 }

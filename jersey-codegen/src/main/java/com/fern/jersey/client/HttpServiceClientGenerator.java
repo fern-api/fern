@@ -31,7 +31,6 @@ import com.fern.model.codegen.Generator;
 import com.fern.types.ErrorName;
 import com.fern.types.services.EndpointId;
 import com.fern.types.services.HttpEndpoint;
-import com.fern.types.services.HttpResponse;
 import com.fern.types.services.HttpService;
 import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.AnnotationSpec;
@@ -146,7 +145,7 @@ public final class HttpServiceClientGenerator extends Generator {
                 .getPayloadTypeName(generatedEndpointModel.generatedHttpResponse())
                 .ifPresent(endpointMethodBuilder::returns);
 
-        List<ClassName> errorClassNames = httpEndpoint.response().failed().errors().stream()
+        List<ClassName> errorClassNames = httpEndpoint.errors().value().stream()
                 .map(responseError -> generatedErrors.get(responseError.error()).className())
                 .collect(Collectors.toList());
         endpointMethodBuilder.addExceptions(errorClassNames);
@@ -159,9 +158,7 @@ public final class HttpServiceClientGenerator extends Generator {
     private Optional<GeneratedErrorDecoder> getGeneratedErrorDecoder() {
         Optional<GeneratedErrorDecoder> maybeGeneratedErrorDecoder = Optional.empty();
         boolean shouldGenerateErrorDecoder = httpService.endpoints().stream()
-                        .map(HttpEndpoint::response)
-                        .map(HttpResponse::failed)
-                        .flatMap(failedResponse -> failedResponse.errors().stream())
+                        .flatMap(httpEndpoint -> httpEndpoint.errors().value().stream())
                         .count()
                 > 0;
         if (shouldGenerateErrorDecoder) {

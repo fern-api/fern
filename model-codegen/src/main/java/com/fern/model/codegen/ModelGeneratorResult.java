@@ -23,7 +23,6 @@ import com.fern.codegen.GeneratedInterface;
 import com.fern.codegen.GeneratedObject;
 import com.fern.codegen.GeneratedUnion;
 import com.fern.codegen.IGeneratedFile;
-import com.fern.codegen.payload.GeneratedFilePayload;
 import com.fern.types.DeclaredTypeName;
 import com.fern.types.ErrorName;
 import com.fern.types.services.EndpointId;
@@ -59,14 +58,6 @@ public interface ModelGeneratorResult {
                     if (generatedEndpointModel.errorFile().isPresent()) {
                         generatedFileStream.add(
                                 generatedEndpointModel.errorFile().get());
-                    }
-                    if (generatedEndpointModel.generatedHttpRequest() instanceof GeneratedFilePayload) {
-                        generatedFileStream.add(
-                                ((GeneratedFilePayload) generatedEndpointModel.generatedHttpRequest()).generatedFile());
-                    }
-                    if (generatedEndpointModel.generatedHttpResponse() instanceof GeneratedFilePayload) {
-                        generatedFileStream.add(((GeneratedFilePayload) generatedEndpointModel.generatedHttpResponse())
-                                .generatedFile());
                     }
                     return generatedFileStream.build();
                 })

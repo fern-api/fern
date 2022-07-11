@@ -122,7 +122,7 @@ public final class HttpServiceSpringServerGenerator extends Generator {
                 springServiceGeneratorUtils.getPayloadTypeName(generatedEndpointModel.generatedHttpResponse());
         returnPayload.ifPresent(endpointMethodBuilder::returns);
 
-        List<ClassName> errorClassNames = httpEndpoint.response().failed().errors().stream()
+        List<ClassName> errorClassNames = httpEndpoint.errors().value().stream()
                 .map(responseError -> generatedErrors.get(responseError.error()).className())
                 .collect(Collectors.toList());
         endpointMethodBuilder.addExceptions(errorClassNames);
