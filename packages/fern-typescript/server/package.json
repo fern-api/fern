@@ -48,7 +48,7 @@
     "@babel/core": "^7.18.6",
     "@babel/preset-env": "^7.18.6",
     "@babel/preset-typescript": "^7.18.6",
-    "@fern-fern/ir-model": "0.0.25",
+    "@fern-fern/ir-model": "0.0.42",
     "@fern-typescript/testing-utils": "workspace:*",
     "@types/jest": "^28.1.4",
     "@types/node": "^18.0.3",
