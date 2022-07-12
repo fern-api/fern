@@ -59,20 +59,16 @@ services:
           query-parameters:
             page: optional<integer>
             otherParam: integer
-          response:
-            ok: Post
-            failed:
-              errors:
-                - PostNotFoundError
+          response: Post
+          errors:
+            - PostNotFoundError
         getPostV2:
           method: GET
           path: /get
           request: commons.PostId
-          response:
-            ok: Post
-            failed:
-              errors:
-                - PostNotFoundError
+          response: Post
+          errors:
+            - PostNotFoundError
         deletePost:
           method: DELETE
           path: /{postId}

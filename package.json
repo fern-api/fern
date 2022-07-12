@@ -31,7 +31,7 @@
     "depcheck": "yarn workspaces foreach --verbose --parallel run depcheck",
     "codegen": "fern generate",
     "codegen:local": "yarn fern:local generate",
-    "fern:local": "yarn workspace @fern-api/cli dist && node packages/cli/webpack/bundle.js",
+    "fern:local": "yarn workspace @fern-api/cli dist && node packages/cli/webpack/dist/bundle.js",
     "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public",
     "docs:preview": "yarn docsify serve docs",
     "add-package": "yarn mrlint create-package"
@@ -54,7 +54,7 @@
     "eslint": "^8.19.0",
     "eslint-plugin-jest": "^26.5.3",
     "execa": "^5.1.1",
-    "fern-api": "0.0.115",
+    "fern-api": "0.0.127",
     "husky": "^7.0.4",
     "immer": "^9.0.15",
     "is-ci": "^3.0.1",

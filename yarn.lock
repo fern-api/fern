@@ -2343,6 +2343,7 @@ __metadata:
     "@fern-api/login": "workspace:*"
     "@fern-api/openapi-converter": "workspace:*"
     "@fern-api/remote-workspace-runner": "workspace:*"
+    "@fern-api/validator": "workspace:*"
     "@fern-api/workspace-parser": "workspace:*"
     "@fern-fern/ir-model": 0.0.24
     "@types/inquirer": ^8.2.1
@@ -2753,8 +2754,12 @@ __metadata:
     "@babel/core": ^7.18.6
     "@babel/preset-env": ^7.18.6
     "@babel/preset-typescript": ^7.18.6
+    "@fern-api/ir-generator": "workspace:*"
+    "@fern-api/workspace-parser": "workspace:*"
+    "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^28.1.4
     "@types/node": ^18.0.3
+    chalk: ^4.1.2
     depcheck: ^1.4.3
     eslint: ^8.19.0
     jest: ^28.1.2
@@ -2797,6 +2802,8 @@ __metadata:
     "@babel/core": ^7.18.6
     "@babel/preset-env": ^7.18.6
     "@babel/preset-typescript": ^7.18.6
+    "@fern-api/commons": "workspace:*"
+    "@fern-fern/ir-model": 0.0.24
     "@types/jest": ^28.1.4
     "@types/node": ^18.0.3
     depcheck: ^1.4.3
@@ -9457,12 +9464,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fern-api@npm:0.0.115":
-  version: 0.0.115
-  resolution: "fern-api@npm:0.0.115"
+"fern-api@npm:0.0.127":
+  version: 0.0.127
+  resolution: "fern-api@npm:0.0.127"
   bin:
     fern: bundle.js
-  checksum: 7e6fdb64630ae37c5f4f77d33ce51814de04a5e6ec3fced086ff300dc42e5a0ae8c0a7029f7fe1fd375cedfd70c4d4f6beca70e74300eff16ecf6bccb480e5f1
+  checksum: f86ca79312f19d42ed11c8d6e6ddfb137168a75ba42e14ca21b8547fb04a823720f44e18fb2dc25815ce65cffec1c636abf63d48002a8a57143e5c7205e87575
   languageName: node
   linkType: hard
 
@@ -9529,7 +9536,7 @@ __metadata:
     eslint: ^8.19.0
     eslint-plugin-jest: ^26.5.3
     execa: ^5.1.1
-    fern-api: 0.0.115
+    fern-api: 0.0.127
     husky: ^7.0.4
     immer: ^9.0.15
     is-ci: ^3.0.1

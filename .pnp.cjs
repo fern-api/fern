@@ -210,7 +210,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.19.0"],\
             ["eslint-plugin-jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:26.5.3"],\
             ["execa", "npm:5.1.1"],\
-            ["fern-api", "npm:0.0.115"],\
+            ["fern-api", "npm:0.0.127"],\
             ["husky", "npm:7.0.4"],\
             ["immer", "npm:9.0.15"],\
             ["is-ci", "npm:3.0.1"],\
@@ -5815,6 +5815,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/login", "workspace:packages/login"],\
             ["@fern-api/openapi-converter", "workspace:packages/openapi-converter"],\
             ["@fern-api/remote-workspace-runner", "workspace:packages/remote-generation/remote-workspace-runner"],\
+            ["@fern-api/validator", "workspace:packages/validator"],\
             ["@fern-api/workspace-parser", "workspace:packages/workspace-parser"],\
             ["@fern-fern/ir-model", "npm:0.0.24"],\
             ["@types/inquirer", "npm:8.2.1"],\
@@ -6254,8 +6255,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.18.6"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
+            ["@fern-api/ir-generator", "workspace:packages/ir/ir-generator"],\
+            ["@fern-api/workspace-parser", "workspace:packages/workspace-parser"],\
+            ["@fern-api/yaml-schema", "workspace:packages/yaml-schema"],\
             ["@types/jest", "npm:28.1.4"],\
             ["@types/node", "npm:18.0.3"],\
+            ["chalk", "npm:4.1.2"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.19.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.2"],\
@@ -6302,6 +6307,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.18.6"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
+            ["@fern-api/commons", "workspace:packages/commons"],\
+            ["@fern-fern/ir-model", "npm:0.0.24"],\
             ["@types/jest", "npm:28.1.4"],\
             ["@types/node", "npm:18.0.3"],\
             ["depcheck", "npm:1.4.3"],\
@@ -14665,7 +14672,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.19.0"],\
             ["eslint-plugin-jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:26.5.3"],\
             ["execa", "npm:5.1.1"],\
-            ["fern-api", "npm:0.0.115"],\
+            ["fern-api", "npm:0.0.127"],\
             ["husky", "npm:7.0.4"],\
             ["immer", "npm:9.0.15"],\
             ["is-ci", "npm:3.0.1"],\
@@ -14686,10 +14693,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["fern-api", [\
-        ["npm:0.0.115", {\
-          "packageLocation": "./.yarn/cache/fern-api-npm-0.0.115-b7dcc0dd5f-7e6fdb6463.zip/node_modules/fern-api/",\
+        ["npm:0.0.127", {\
+          "packageLocation": "./.yarn/cache/fern-api-npm-0.0.127-eafa4285fa-f86ca79312.zip/node_modules/fern-api/",\
           "packageDependencies": [\
-            ["fern-api", "npm:0.0.115"]\
+            ["fern-api", "npm:0.0.127"]\
           ],\
           "linkType": "HARD"\
         }]\

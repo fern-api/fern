@@ -1,9 +1,9 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { FernFilepath, TypeReference } from "@fern-fern/ir-model";
 import { CustomWireMessageEncoding, WebSocketChannel, WebSocketMessenger } from "@fern-fern/ir-model/services";
-import { createTypeReferenceParser, TypeReferenceParser } from "../../utils/parseInlineType";
+import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { convertEncoding } from "./convertEncoding";
-import { convertFailedResponse } from "./convertFailedResponse";
+import { convertResponseErrors } from "./convertResponseErrors";
 
 export function convertWebsocketChannel({
     channelDefinition,
@@ -79,43 +79,21 @@ function convertWebSocketMessenger({
                           response: {
                               docs: typeof operation.response !== "string" ? operation.response?.docs : undefined,
                               encoding: convertEncoding({
-                                  rawEncoding:
-                                      typeof operation.response !== "string" ? operation.response?.encoding : undefined,
+                                  rawEncoding: undefined,
                                   nonStandardEncodings,
                               }),
-                              ok: {
-                                  docs: typeof operation.response !== "string" ? operation.response?.docs : undefined,
-                                  type: getResponseTypeReference({
-                                      parseTypeReference,
-                                      response: operation.response,
-                                  }),
-                              },
-                              failed: convertFailedResponse({
-                                  rawFailedResponse:
-                                      typeof operation.response !== "string" ? operation.response?.failed : undefined,
-                                  fernFilepath,
-                                  imports,
-                              }),
+                              type:
+                                  operation.response != null
+                                      ? parseTypeReference(operation.response)
+                                      : TypeReference.void(),
                           },
+                          errors: convertResponseErrors({
+                              errors: operation.errors,
+                              fernFilepath,
+                              imports,
+                          }),
                       };
                   })
                 : [],
     };
-}
-
-function getResponseTypeReference({
-    parseTypeReference,
-    response,
-}: {
-    parseTypeReference: TypeReferenceParser;
-    response: RawSchemas.WebSocketResponseSchema | undefined;
-}): TypeReference {
-    if (response == null) {
-        return TypeReference.void();
-    } else if (typeof response === "string") {
-        return parseTypeReference(response);
-    } else if (response.ok == null) {
-        return TypeReference.void();
-    }
-    return parseTypeReference(response.ok);
 }

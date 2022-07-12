@@ -3,6 +3,9 @@ import { FernFilepath, PrimitiveType, Type, TypeDeclaration, TypeReference } fro
 import { getDocs } from "../utils/getDocs";
 import { createTypeReferenceParser } from "../utils/parseInlineType";
 
+export const RAW_DEFAULT_ID_TYPE = "string";
+export const DEFAULT_ID_TYPE = TypeReference.primitive(PrimitiveType.String);
+
 export function convertId({
     id,
     fernFilepath,
@@ -21,10 +24,7 @@ export function convertId({
             name: typeof id === "string" ? id : id.name,
         },
         shape: Type.alias({
-            aliasOf:
-                typeof id === "string" || id.type == null
-                    ? TypeReference.primitive(PrimitiveType.String)
-                    : parseTypeReference(id.type),
+            aliasOf: typeof id === "string" || id.type == null ? DEFAULT_ID_TYPE : parseTypeReference(id.type),
         }),
     };
 }

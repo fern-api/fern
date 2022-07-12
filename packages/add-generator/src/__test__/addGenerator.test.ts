@@ -9,7 +9,7 @@ describe("addGenerator", () => {
             generators: [],
         };
         const updatedWorkspaceDefinition = addJavaGenerator(workspaceDefinition);
-        expect(updatedWorkspaceDefinition.generators?.length).toEqual(1);
+        expect(updatedWorkspaceDefinition.generators.length).toEqual(1);
     });
 
     it("skip if present", () => {

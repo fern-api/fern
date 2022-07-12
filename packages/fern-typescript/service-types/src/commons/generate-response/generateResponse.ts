@@ -1,5 +1,5 @@
 import { FernConstants, TypeReference } from "@fern-fern/ir-model";
-import { FailedResponse } from "@fern-fern/ir-model/services";
+import { ResponseErrors } from "@fern-fern/ir-model/services";
 import { DependencyManager, getTextOfTsNode } from "@fern-typescript/commons";
 import { InlinedServiceTypeReference, ModelContext, ServiceTypeReference } from "@fern-typescript/model-context";
 import { ModuleDeclaration, OptionalKind, PropertySignatureStructure, SourceFile, ts, Writers } from "ts-morph";
@@ -19,7 +19,7 @@ export declare namespace generateResponse {
             docs: string | null | undefined;
             typeReference: TypeReference;
         };
-        failedResponse: FailedResponse;
+        responseErrors: ResponseErrors;
         getTypeReferenceToServiceType: (args: {
             reference: ServiceTypeReference<M>;
             referencedIn: SourceFile;
@@ -40,7 +40,7 @@ export function generateResponse<M>({
     writeServiceTypeFile,
     dependencyManager,
     successResponse,
-    failedResponse,
+    responseErrors,
     getTypeReferenceToServiceType,
     additionalProperties = [],
     fernConstants,
@@ -51,7 +51,7 @@ export function generateResponse<M>({
 
     const { errorBodyReference } = maybeGenerateErrorBody({
         modelContext,
-        failedResponse,
+        responseErrors,
         dependencyManager,
         writeServiceTypeFile,
         fernConstants,
@@ -215,13 +215,13 @@ function createBaseResponseProperties({ ok }: { ok: boolean }): OptionalKind<Pro
 
 function maybeGenerateErrorBody<M>({
     modelContext,
-    failedResponse,
+    responseErrors,
     dependencyManager,
     writeServiceTypeFile,
     fernConstants,
 }: {
     modelContext: ModelContext;
-    failedResponse: FailedResponse;
+    responseErrors: ResponseErrors;
     dependencyManager: DependencyManager;
     writeServiceTypeFile: ServiceTypeFileWriter<M>;
     fernConstants: FernConstants;
@@ -230,7 +230,7 @@ function maybeGenerateErrorBody<M>({
         ServiceTypesConstants.Commons.Response.Error.Properties.Body.TYPE_NAME,
         (errorBodyFile, transformedTypeName) => {
             generateErrorBody({
-                failedResponse,
+                responseErrors,
                 errorBodyFile,
                 errorBodyTypeName: transformedTypeName,
                 modelContext,

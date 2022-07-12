@@ -13,7 +13,7 @@ export async function addGeneratorToWorkspaces(
     for (const workspaceDefinitionPath of workspacePaths) {
         const workspaceDefinition = await loadWorkspaceDefinitionSchema(workspaceDefinitionPath);
         const updatedWorkspaceDefinition = getUpdatedWorkspaceDefinition(generatorName, workspaceDefinition);
-        if (updatedWorkspaceDefinition !== undefined && updatedWorkspaceDefinition !== workspaceDefinition) {
+        if (updatedWorkspaceDefinition !== workspaceDefinition) {
             await writeFile(workspaceDefinitionPath, yaml.dump(updatedWorkspaceDefinition));
         }
     }

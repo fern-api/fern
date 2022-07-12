@@ -39,5 +39,6 @@ function getFilePath(item: SourceFile | Directory): string {
 }
 
 function isSourceFile(item: SourceFile | Directory): item is SourceFile {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (item as SourceFile).getFilePath != null;
 }

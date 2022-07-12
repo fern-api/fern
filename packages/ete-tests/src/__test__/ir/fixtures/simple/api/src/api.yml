@@ -30,8 +30,6 @@ services:
           path: /{movieId}
           path-parameters:
             postId: MovieId
-          response:
-            ok: Movie
-            failed:
-              errors:
-                - NotFoundError
+          response: Movie
+          errors:
+            - NotFoundError

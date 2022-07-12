@@ -57,6 +57,8 @@ export async function generateFetcherCall({
 
     if (includeQueryParams) {
         fetcherArgs.push(
+            // keep this check around in case the constants change
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             ClientConstants.HttpService.Endpoint.Variables.QUERY_PARAMETERS ===
                 ClientConstants.HttpService.ServiceUtils.Fetcher.Parameters.QUERY_PARAMS
                 ? ts.factory.createShorthandPropertyAssignment(
@@ -71,7 +73,7 @@ export async function generateFetcherCall({
         );
     }
 
-    if (endpointTypes.request?.body != null) {
+    if (endpointTypes.request.body != null) {
         const requestBodyReference =
             endpointTypes.request.wrapper != null
                 ? ts.factory.createPropertyAccessExpression(

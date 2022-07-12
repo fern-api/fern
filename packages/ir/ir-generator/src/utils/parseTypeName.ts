@@ -1,5 +1,7 @@
 import { DeclaredTypeName, FernFilepath } from "@fern-fern/ir-model";
-import { parseReference } from "./parseReference";
+import path from "path";
+import { convertToFernFilepath } from "./convertToFernFilepath";
+import { parseReferenceToTypeName } from "./parseReferenceToTypeName";
 
 export function parseTypeName({
     typeName,
@@ -10,13 +12,14 @@ export function parseTypeName({
     fernFilepath: FernFilepath;
     imports: Record<string, string>;
 }): DeclaredTypeName {
-    const reference = parseReference({
+    const reference = parseReferenceToTypeName({
         reference: typeName,
-        fernFilepath,
+        relativeFilePathOfDirectory: fernFilepath.join(path.sep),
         imports,
     });
     return {
         name: reference.referenceName,
-        fernFilepath: reference.fernFilepath,
+        fernFilepath:
+            reference.relativeFilePath != null ? convertToFernFilepath(reference.relativeFilePath) : fernFilepath,
     };
 }

@@ -1,6 +1,6 @@
 import { ServiceName } from "@fern-fern/ir-model/services";
 import { ImportStrategy } from "@fern-typescript/commons";
-import { Directory, SourceFile, ts } from "ts-morph";
+import { SourceFile, ts } from "ts-morph";
 import { StringifiedFernFilepath, stringifyFernFilepath } from "../stringifyFernFilepath";
 import { BaseServiceTypeContext, ServiceTypeMetadata } from "./BaseServiceTypeContext";
 import { GeneratedRequest, InlinedServiceTypeReference, ServiceTypeReference } from "./types";
@@ -56,10 +56,6 @@ export class WebSocketChannelTypeContext extends BaseServiceTypeContext {
         StringifiedFernFilepath,
         Record<NonQualifiedChannelName, Record<OperationId, GeneratedWebSocketOperationTypes>>
     > = {};
-
-    constructor(modelDirectory: Directory) {
-        super(modelDirectory);
-    }
 
     public addWebSocketChannelTypeDeclaration(
         metadata: WebSocketChannelTypeMetadata,

@@ -20,7 +20,7 @@ export function generateReturnFailedResponse({
     modelContext: ModelContext;
     file: SourceFile;
 }): ts.Statement[] {
-    if (endpoint.response.failed.errors.length === 0) {
+    if (endpoint.errors.length === 0) {
         return [
             ts.factory.createExpressionStatement(
                 ts.factory.createCallExpression(
@@ -65,7 +65,7 @@ export function generateReturnFailedResponse({
                                 ),
                                 ts.factory.createObjectLiteralExpression(
                                     [
-                                        ...endpoint.response.failed.errors.map((error) => {
+                                        ...endpoint.errors.map((error) => {
                                             const errorDeclaration = modelContext.getErrorDeclarationFromName(
                                                 error.error
                                             );

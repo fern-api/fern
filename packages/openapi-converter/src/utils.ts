@@ -3,7 +3,8 @@ import { OpenAPIV3 } from "openapi-types";
 export function isSchemaObject(
     typeDeclaration: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject
 ): typeDeclaration is OpenAPIV3.SchemaObject {
-    return (typeDeclaration as OpenAPIV3.ReferenceObject).$ref === undefined;
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    return (typeDeclaration as OpenAPIV3.ReferenceObject).$ref == null;
 }
 
 export function isReferenceObject(
@@ -15,5 +16,6 @@ export function isReferenceObject(
         | OpenAPIV3.RequestBodyObject
         | OpenAPIV3.SecuritySchemeObject
 ): typeDeclaration is OpenAPIV3.ReferenceObject {
-    return (typeDeclaration as OpenAPIV3.ReferenceObject).$ref !== undefined;
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    return (typeDeclaration as OpenAPIV3.ReferenceObject).$ref != null;
 }
