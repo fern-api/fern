@@ -8,6 +8,7 @@ types:
       organization: string
       helpers: GeneratorHelpers
       customConfig: map<string, string>
+      environment: GeneratorEnvironment
   GeneratorOutputConfig:
     properties:
       path: string
@@ -36,3 +37,10 @@ types:
       name: string
       version: string
       absolutePath: string
+  GeneratorEnvironment:
+    union:
+      local: {}
+      remote: RemoteGeneratorEnvironment
+  RemoteGeneratorEnvironment:
+    properties:
+      coordinatorUrl: string
