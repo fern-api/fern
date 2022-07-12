@@ -53,6 +53,7 @@ describe("runGenerator", () => {
                     },
                     workspaceName: "my-api",
                     organization: "fern-api",
+                    environment: { _type: "local" },
                 };
 
                 await writeFile(configPath, JSON.stringify(config, undefined, 4));
