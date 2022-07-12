@@ -34,7 +34,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-fern/ir-model": "0.0.23",
+    "@fern-fern/ir-model": "0.0.25",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/model-context": "workspace:*",
     "lodash": "^4.17.21",

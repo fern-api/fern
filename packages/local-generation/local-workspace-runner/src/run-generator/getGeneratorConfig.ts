@@ -53,6 +53,7 @@ export function getGeneratorConfig({
             helpers: convertedHelpers,
             workspaceName,
             organization,
+            environment: { _type: "local" },
         },
     };
 }
