@@ -39,7 +39,9 @@
     "@fern-fern/ir-model": "0.0.25",
     "axios": "^0.27.2",
     "chalk": "^4.1.2",
-    "form-data": "^4.0.0"
+    "form-data": "^4.0.0",
+    "log-update": "^5.0.1",
+    "ora": "^6.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",

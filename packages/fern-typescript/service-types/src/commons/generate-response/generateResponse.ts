@@ -87,6 +87,8 @@ export function generateResponse<M>({
 
             const responseNamespace = responseFile.addModule({
                 name: transformedTypeName,
+                isExported: true,
+                hasDeclareKeyword: true,
             });
 
             addSuccessResponseInterface({
