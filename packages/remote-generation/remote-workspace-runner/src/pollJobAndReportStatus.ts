@@ -1,10 +1,5 @@
 import { WorkspaceDefinition } from "@fern-api/commons";
-import {
-    CreateJobResponseBody,
-    RemoteGenTaskId,
-    TaskStatus,
-} from "@fern-fern/fiddle-coordinator-api-client/model/remoteGen";
-import chalk from "chalk";
+import { CreateJobResponse, RemoteGenTaskId, Task, TaskStatus } from "@fern-fern/fiddle-coordinator-api-client/model";
 import logUpdate from "log-update";
 import { getLogForTaskStatuses } from "./getLogForTaskStatus";
 import { processFinishedTask } from "./processFinishedTask";
@@ -18,7 +13,7 @@ export function pollJobAndReportStatus({
     job,
     workspaceDefinition,
 }: {
-    job: CreateJobResponseBody;
+    job: CreateJobResponse;
     workspaceDefinition: WorkspaceDefinition;
 }): Promise<void> {
     const generatorInvocationsWithTaskIds: GeneratorInvocationWithTaskId[] = workspaceDefinition.generators.map(
@@ -29,11 +24,11 @@ export function pollJobAndReportStatus({
     );
 
     let numConsecutiveFailed = 0;
-    let lastSuccessfulTaskStatuses: Record<RemoteGenTaskId, TaskStatus>;
+    let lastSuccessfulTasks: Record<RemoteGenTaskId, Task>;
     const processedTasks = new Set<RemoteGenTaskId>();
 
     function logJobStatus() {
-        logUpdate(getLogForTaskStatuses({ statuses: lastSuccessfulTaskStatuses, generatorInvocationsWithTaskIds }));
+        logUpdate(getLogForTaskStatuses({ tasks: lastSuccessfulTasks, generatorInvocationsWithTaskIds }));
     }
     const logInterval = setInterval(logJobStatus, SPINNER.interval);
 
@@ -43,7 +38,7 @@ export function pollJobAndReportStatus({
         async function pollForStatus() {
             const response = await fetchJobStatus(job);
             if (response?.ok) {
-                lastSuccessfulTaskStatuses = response.body;
+                lastSuccessfulTasks = response.body;
             } else {
                 numConsecutiveFailed++;
             }
@@ -53,22 +48,22 @@ export function pollJobAndReportStatus({
                 reject();
             } else if (response?.ok) {
                 let someTaskIsRunning = false;
-                for (const [taskIdStr, taskStatus] of Object.entries(response.body)) {
+                for (const [taskIdStr, task] of Object.entries(response.body)) {
                     const taskId = RemoteGenTaskId.of(taskIdStr);
 
                     // if a task just finished, process it
-                    if (!processedTasks.has(taskId) && taskStatus._type === "finished") {
+                    if (!processedTasks.has(taskId) && task.status._type === "finished") {
                         processedTasks.add(taskId);
                         const generatorInvocation = generatorInvocationsWithTaskIds.find(
                             (generatorInvocationWithTaskId) => generatorInvocationWithTaskId.taskId === taskId
                         )?.generatorInvocation;
                         if (generatorInvocation != null) {
                             // kick off, but don't await
-                            void processFinishedTask({ job, taskId, taskStatus, generatorInvocation });
+                            void processFinishedTask({ job, taskId, task, generatorInvocation });
                         }
                     }
 
-                    someTaskIsRunning ||= !isStatusComplete(taskStatus);
+                    someTaskIsRunning ||= !isStatusComplete(task);
                 }
 
                 if (!someTaskIsRunning) {
@@ -83,7 +78,7 @@ export function pollJobAndReportStatus({
     });
 }
 
-async function fetchJobStatus(job: CreateJobResponseBody) {
+async function fetchJobStatus(job: CreateJobResponse) {
     try {
         return await REMOTE_GENERATION_SERVICE.getJobStatus({
             jobId: job.jobId,
@@ -94,18 +89,15 @@ async function fetchJobStatus(job: CreateJobResponseBody) {
     }
 }
 
-function isStatusComplete(status: TaskStatus | undefined): boolean {
-    if (status == null) {
+function isStatusComplete(task: Task | undefined): boolean {
+    if (task == null) {
         return false;
     }
-    return TaskStatus._visit(status, {
+    return TaskStatus._visit(task.status, {
         notStarted: () => false,
         running: () => false,
         finished: () => true,
         failed: () => true,
-        _unknown: () => {
-            console.log(chalk.red("Unknown status", status._type));
-            return true;
-        },
+        _unknown: () => true,
     });
 }

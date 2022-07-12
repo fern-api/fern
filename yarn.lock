@@ -2730,7 +2730,7 @@ __metadata:
     "@babel/preset-env": ^7.18.6
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/commons": "workspace:*"
-    "@fern-fern/fiddle-coordinator-api-client": ^0.0.4
+    "@fern-fern/fiddle-coordinator-api-client": ^0.0.26
     "@fern-fern/ir-model": 0.0.25
     "@types/jest": ^28.1.4
     "@types/node": ^18.0.3
@@ -2819,12 +2819,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-fern/fiddle-coordinator-api-client@npm:^0.0.4":
-  version: 0.0.4
-  resolution: "@fern-fern/fiddle-coordinator-api-client@npm:0.0.4"
+"@fern-fern/fiddle-coordinator-api-client@npm:^0.0.26":
+  version: 0.0.26
+  resolution: "@fern-fern/fiddle-coordinator-api-client@npm:0.0.26"
   dependencies:
-    "@fern-typescript/service-utils": 0.0.100
-  checksum: 81e54bfa32a06cae510ba9f08cfbba0a8cb9700997a9c3ba2cfd4edc25b6e17ff971365064150a77c4d8241d50f45cf54e12bf771c5d21e7e8c71243a0bd673a
+    "@fern-typescript/service-utils": 0.0.124
+    "@types/uuid": 8.3.4
+    url-join: 5.0.0
+    uuid: 8.3.2
+  checksum: 49027b05701e5f4466e60b159a3723a68d9673c68d18c47fd64db9410601671e2325b3daea97df1112f37a8e9150df1c536a1424fb5190ed8d5e279c3a2e8813
   languageName: node
   linkType: hard
 
@@ -3114,12 +3117,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/service-utils@npm:0.0.100":
-  version: 0.0.100
-  resolution: "@fern-typescript/service-utils@npm:0.0.100"
+"@fern-typescript/service-utils@npm:0.0.124":
+  version: 0.0.124
+  resolution: "@fern-typescript/service-utils@npm:0.0.124"
   dependencies:
     axios: ^0.27.2
-  checksum: 48fb2ab1e53ab993e14a47717f96baa17f58cc5b4e19f2c84b2790cf1fcf326d5f6b20f9d58abfbbedb5d4ac5d06c81e7458947de6086165ec9590aa8704db59
+  checksum: e94d6fb8f1f29b005cd7679ca0c6e231ff4fb65d109176ccd74fc8dfb8573bbbc5118c1bd4e6d822c0011fe1696bc976c216c702c807ba2fa6a9f6426b30846c
   languageName: node
   linkType: hard
 
@@ -4858,6 +4861,13 @@ __metadata:
   dependencies:
     source-map: ^0.6.1
   checksum: 10b0c4a5f361b1389cdef0b705747586ff7ddd37894e55921b8ed02718bc64ee608f4f5493c571f95ce29a3fe8d3538b7236185974dad93c750d8c05b7bceab4
+  languageName: node
+  linkType: hard
+
+"@types/uuid@npm:8.3.4":
+  version: 8.3.4
+  resolution: "@types/uuid@npm:8.3.4"
+  checksum: 6f11f3ff70f30210edaa8071422d405e9c1d4e53abbe50fdce365150d3c698fe7bbff65c1e71ae080cbfb8fded860dbb5e174da96fdbbdfcaa3fb3daa474d20f
   languageName: node
   linkType: hard
 
@@ -18687,6 +18697,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"url-join@npm:5.0.0":
+  version: 5.0.0
+  resolution: "url-join@npm:5.0.0"
+  checksum: 5921384a8ad4395b49ce4b50aa26efbc429cebe0bc8b3660ad693dd12fd859747b5369be0443e60e53a7850b2bc9d7d0687bcb94386662b40e743596bbf38101
+  languageName: node
+  linkType: hard
+
 "url-parse-lax@npm:^3.0.0":
   version: 3.0.0
   resolution: "url-parse-lax@npm:3.0.0"
@@ -18753,7 +18770,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:^8.3.2":
+"uuid@npm:8.3.2, uuid@npm:^8.3.2":
   version: 8.3.2
   resolution: "uuid@npm:8.3.2"
   bin:

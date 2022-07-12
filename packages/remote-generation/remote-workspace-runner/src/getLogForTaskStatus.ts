@@ -1,18 +1,21 @@
 import { GeneratorInvocation } from "@fern-api/commons";
 import {
-    PublishedPackage,
+    Package,
+    PackageCoordinate,
+    PackagePublishStatus,
     RemoteGenTaskId,
+    Task,
     TaskStatus,
-} from "@fern-fern/fiddle-coordinator-api-client/model/remoteGen";
+} from "@fern-fern/fiddle-coordinator-api-client/model";
 import chalk from "chalk";
 import { SPINNER } from "./spinner";
 import { GeneratorInvocationWithTaskId } from "./types";
 
 export function getLogForTaskStatuses({
-    statuses,
+    tasks,
     generatorInvocationsWithTaskIds,
 }: {
-    statuses: Record<RemoteGenTaskId, TaskStatus> | undefined;
+    tasks: Record<RemoteGenTaskId, Task> | undefined;
     generatorInvocationsWithTaskIds: readonly GeneratorInvocationWithTaskId[];
 }): string {
     const spinnerFrame = SPINNER.frame();
@@ -22,7 +25,7 @@ export function getLogForTaskStatuses({
                 "\n" +
                 getLogForTaskStatus({
                     generatorInvocation,
-                    status: taskId != null ? statuses?.[taskId] : undefined,
+                    task: taskId != null ? tasks?.[taskId] : undefined,
                     spinnerFrame,
                 }).join("\n") +
                 "\n"
@@ -32,16 +35,14 @@ export function getLogForTaskStatuses({
 
 function getLogForTaskStatus({
     generatorInvocation,
-    status,
+    task,
     spinnerFrame,
 }: {
     generatorInvocation: GeneratorInvocation;
-    status: TaskStatus | undefined;
+    task: Task | undefined;
     spinnerFrame: string;
 }): string[] {
-    if (status == null) {
-        status = TaskStatus.notStarted();
-    }
+    const status = task?.status ?? TaskStatus.notStarted();
 
     const icon = TaskStatus._visit(status, {
         notStarted: () => spinnerFrame,
@@ -51,32 +52,54 @@ function getLogForTaskStatus({
         _unknown: () => "❓",
     });
 
-    const text = TaskStatus._visit(status, {
-        notStarted: () => "Queued",
-        running: () => "Generating...",
-        failed: () => "Failed",
-        finished: () => "Succeeded",
-        _unknown: () => "<Unknown status>",
-    });
+    const lastLog = task != null ? task.logs[task.logs.length - 1] : undefined;
+    const text =
+        lastLog ??
+        TaskStatus._visit(status, {
+            notStarted: () => "Queued",
+            running: () => "Generating...",
+            failed: () => "Failed",
+            finished: () => "Succeeded",
+            _unknown: () => "<Unknown status>",
+        });
 
     const messages = [`${icon} ${chalk.bold(generatorInvocation.name)} ${chalk.gray(text)}`];
 
-    if (status._type === "finished") {
-        for (const publishedPackage of status.publishedPackages) {
-            const coordinate = PublishedPackage._visit(publishedPackage, {
-                npm: (npmPackage) => `${npmPackage.name}@${npmPackage.version}`,
-                maven: (mavenPackage) => `${mavenPackage.group}:${mavenPackage.artifact}:${mavenPackage.version}`,
-                _unknown: () => "<unknown package>",
-            });
-            messages.push(getSubLog(`✔️ Published: ${coordinate}`));
+    if (task != null) {
+        for (const packageForTask of task.packages) {
+            const logForPackage = getLogForPackage({ packageForTask, spinnerFrame });
+            messages.push(logForPackage);
         }
 
-        if (status.hasFilesToDownload && generatorInvocation.generate?.absolutePathToLocalOutput != null) {
+        if (
+            task.status._type === "finished" &&
+            task.status.hasFilesToDownload &&
+            generatorInvocation.generate?.absolutePathToLocalOutput != null
+        ) {
             messages.push(getSubLog(`📁 Downloaded ${generatorInvocation.generate.absolutePathToLocalOutput}`));
         }
     }
 
     return messages;
+}
+
+function getLogForPackage({ packageForTask, spinnerFrame }: { packageForTask: Package; spinnerFrame: string }) {
+    const icon = PackagePublishStatus._visit(packageForTask.status, {
+        notStartedPublishing: () => "○",
+        publishing: () => spinnerFrame,
+        published: () => "✔️",
+        failedToPublish: () => "❌",
+        _unknown: () => "❓",
+    });
+
+    const coordinate = PackageCoordinate._visit(packageForTask.coordinate, {
+        npm: (npmPackage) => `${npmPackage.name}@${npmPackage.version}`,
+        maven: (mavenPackage) => `${mavenPackage.group}:${mavenPackage.artifact}:${mavenPackage.version}`,
+        _unknown: () => "<unknown package>",
+    });
+
+    const logForPackage = getSubLog(`${icon} ${coordinate}`);
+    return logForPackage;
 }
 
 function getSubLog(text: string) {
