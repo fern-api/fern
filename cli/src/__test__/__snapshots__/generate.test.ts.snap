@@ -56,7 +56,7 @@ export interface SendTestSubmissionUpdateRequest {
 
 export type SendTestSubmissionUpdateResponse = SendTestSubmissionUpdateResponse.SuccessResponse | SendTestSubmissionUpdateResponse.ErrorResponse;
 
-namespace SendTestSubmissionUpdateResponse {
+export declare namespace SendTestSubmissionUpdateResponse {
     export interface SuccessResponse {
         ok: true;
     }
@@ -106,7 +106,7 @@ export interface SendWorkspaceSubmissionUpdateRequest {
 
 export type SendWorkspaceSubmissionUpdateResponse = SendWorkspaceSubmissionUpdateResponse.SuccessResponse | SendWorkspaceSubmissionUpdateResponse.ErrorResponse;
 
-namespace SendWorkspaceSubmissionUpdateResponse {
+export declare namespace SendWorkspaceSubmissionUpdateResponse {
     export interface SuccessResponse {
         ok: true;
     }
@@ -145,7 +145,7 @@ export const StoreTracedTestCaseErrorBody = {
 
 export type StoreTracedTestCaseResponse = StoreTracedTestCaseResponse.SuccessResponse | StoreTracedTestCaseResponse.ErrorResponse;
 
-namespace StoreTracedTestCaseResponse {
+export declare namespace StoreTracedTestCaseResponse {
     export interface SuccessResponse {
         ok: true;
     }
@@ -196,7 +196,7 @@ export interface StoreTracedTestCaseV2Request {
 
 export type StoreTracedTestCaseV2Response = StoreTracedTestCaseV2Response.SuccessResponse | StoreTracedTestCaseV2Response.ErrorResponse;
 
-namespace StoreTracedTestCaseV2Response {
+export declare namespace StoreTracedTestCaseV2Response {
     export interface SuccessResponse {
         ok: true;
     }
@@ -235,7 +235,7 @@ export const StoreTracedWorkspaceErrorBody = {
 
 export type StoreTracedWorkspaceResponse = StoreTracedWorkspaceResponse.SuccessResponse | StoreTracedWorkspaceResponse.ErrorResponse;
 
-namespace StoreTracedWorkspaceResponse {
+export declare namespace StoreTracedWorkspaceResponse {
     export interface SuccessResponse {
         ok: true;
     }
@@ -285,7 +285,7 @@ export interface StoreTracedWorkspaceV2Request {
 
 export type StoreTracedWorkspaceV2Response = StoreTracedWorkspaceV2Response.SuccessResponse | StoreTracedWorkspaceV2Response.ErrorResponse;
 
-namespace StoreTracedWorkspaceV2Response {
+export declare namespace StoreTracedWorkspaceV2Response {
     export interface SuccessResponse {
         ok: true;
     }
@@ -335,7 +335,7 @@ export interface UpdateTestSubmissionStatusRequest {
 
 export type UpdateTestSubmissionStatusResponse = UpdateTestSubmissionStatusResponse.SuccessResponse | UpdateTestSubmissionStatusResponse.ErrorResponse;
 
-namespace UpdateTestSubmissionStatusResponse {
+export declare namespace UpdateTestSubmissionStatusResponse {
     export interface SuccessResponse {
         ok: true;
     }
@@ -385,7 +385,7 @@ export interface UpdateWorkspaceSubmissionStatusRequest {
 
 export type UpdateWorkspaceSubmissionStatusResponse = UpdateWorkspaceSubmissionStatusResponse.SuccessResponse | UpdateWorkspaceSubmissionStatusResponse.ErrorResponse;
 
-namespace UpdateWorkspaceSubmissionStatusResponse {
+export declare namespace UpdateWorkspaceSubmissionStatusResponse {
     export interface SuccessResponse {
         ok: true;
     }
@@ -492,7 +492,7 @@ export interface CreateExecutionSessionRequest {
 
 export type CreateExecutionSessionResponse = CreateExecutionSessionResponse.SuccessResponse | CreateExecutionSessionResponse.ErrorResponse;
 
-namespace CreateExecutionSessionResponse {
+export declare namespace CreateExecutionSessionResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.ExecutionSessionResponse;
@@ -540,7 +540,7 @@ export const GetExecutionSessionErrorBody = {
 
 export type GetExecutionSessionResponse = GetExecutionSessionResponse.SuccessResponse | GetExecutionSessionResponse.ErrorResponse;
 
-namespace GetExecutionSessionResponse {
+export declare namespace GetExecutionSessionResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.ExecutionSessionResponse | null | undefined;
@@ -580,7 +580,7 @@ export const GetExecutionSessionsStateErrorBody = {
 
 export type GetExecutionSessionsStateResponse = GetExecutionSessionsStateResponse.SuccessResponse | GetExecutionSessionsStateResponse.ErrorResponse;
 
-namespace GetExecutionSessionsStateResponse {
+export declare namespace GetExecutionSessionsStateResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.GetExecutionSessionStateResponse;
@@ -628,7 +628,7 @@ export const StopExecutionSessionErrorBody = {
 
 export type StopExecutionSessionResponse = StopExecutionSessionResponse.SuccessResponse | StopExecutionSessionResponse.ErrorResponse;
 
-namespace StopExecutionSessionResponse {
+export declare namespace StopExecutionSessionResponse {
     export interface SuccessResponse {
         ok: true;
     }
@@ -689,7 +689,7 @@ export const GetHomepageProblemsErrorBody = {
 
 export type GetHomepageProblemsResponse = GetHomepageProblemsResponse.SuccessResponse | GetHomepageProblemsResponse.ErrorResponse;
 
-namespace GetHomepageProblemsResponse {
+export declare namespace GetHomepageProblemsResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.ProblemId[];
@@ -729,7 +729,7 @@ export const SetHomepageProblemsErrorBody = {
 
 export type SetHomepageProblemsResponse = SetHomepageProblemsResponse.SuccessResponse | SetHomepageProblemsResponse.ErrorResponse;
 
-namespace SetHomepageProblemsResponse {
+export declare namespace SetHomepageProblemsResponse {
     export interface SuccessResponse {
         ok: true;
     }
@@ -783,7 +783,7 @@ export const GetAttemptedMigrationsErrorBody = {
 
 export type GetAttemptedMigrationsResponse = GetAttemptedMigrationsResponse.SuccessResponse | GetAttemptedMigrationsResponse.ErrorResponse;
 
-namespace GetAttemptedMigrationsResponse {
+export declare namespace GetAttemptedMigrationsResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.Migration[];
@@ -836,7 +836,7 @@ export const CreatePlaylistErrorBody = {
 
 export type CreatePlaylistResponse = CreatePlaylistResponse.SuccessResponse | CreatePlaylistResponse.ErrorResponse;
 
-namespace CreatePlaylistResponse {
+export declare namespace CreatePlaylistResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.Playlist;
@@ -886,7 +886,7 @@ export interface DeletePlaylistRequest {
 
 export type DeletePlaylistResponse = DeletePlaylistResponse.SuccessResponse | DeletePlaylistResponse.ErrorResponse;
 
-namespace DeletePlaylistResponse {
+export declare namespace DeletePlaylistResponse {
     export interface SuccessResponse {
         ok: true;
     }
@@ -935,7 +935,7 @@ export interface GetPlaylistRequest {
 
 export type GetPlaylistResponse = GetPlaylistResponse.SuccessResponse | GetPlaylistResponse.ErrorResponse;
 
-namespace GetPlaylistResponse {
+export declare namespace GetPlaylistResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.Playlist;
@@ -975,7 +975,7 @@ export const GetPlaylistsErrorBody = {
 
 export type GetPlaylistsResponse = GetPlaylistsResponse.SuccessResponse | GetPlaylistsResponse.ErrorResponse;
 
-namespace GetPlaylistsResponse {
+export declare namespace GetPlaylistsResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.Playlist[];
@@ -1015,7 +1015,7 @@ export const UpdatePlaylistErrorBody = {
 
 export type UpdatePlaylistResponse = UpdatePlaylistResponse.SuccessResponse | UpdatePlaylistResponse.ErrorResponse;
 
-namespace UpdatePlaylistResponse {
+export declare namespace UpdatePlaylistResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.Playlist;
@@ -1120,7 +1120,7 @@ export interface DeleteProblemRequest {
 
 export type DeleteProblemResponse = DeleteProblemResponse.SuccessResponse | DeleteProblemResponse.ErrorResponse;
 
-namespace DeleteProblemResponse {
+export declare namespace DeleteProblemResponse {
     export interface SuccessResponse {
         ok: true;
     }
@@ -1190,7 +1190,7 @@ export interface UpdateProblemRequest {
 
 export type _CreateProblemResponse = _CreateProblemResponse.SuccessResponse | _CreateProblemResponse.ErrorResponse;
 
-namespace _CreateProblemResponse {
+export declare namespace _CreateProblemResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.CreateProblemResponse;
@@ -1210,7 +1210,7 @@ namespace _CreateProblemResponse {
 
 export type _GetDefaultStarterFilesResponse = _GetDefaultStarterFilesResponse.SuccessResponse | _GetDefaultStarterFilesResponse.ErrorResponse;
 
-namespace _GetDefaultStarterFilesResponse {
+export declare namespace _GetDefaultStarterFilesResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.GetDefaultStarterFilesResponse;
@@ -1230,7 +1230,7 @@ namespace _GetDefaultStarterFilesResponse {
 
 export type _UpdateProblemResponse = _UpdateProblemResponse.SuccessResponse | _UpdateProblemResponse.ErrorResponse;
 
-namespace _UpdateProblemResponse {
+export declare namespace _UpdateProblemResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.UpdateProblemResponse;
@@ -1302,7 +1302,7 @@ export interface GetExpectedResultRequest {
 
 export type GetExpectedResultResponse = GetExpectedResultResponse.SuccessResponse | GetExpectedResultResponse.ErrorResponse;
 
-namespace GetExpectedResultResponse {
+export declare namespace GetExpectedResultResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.TestCaseWithExpectedResult;
@@ -1352,7 +1352,7 @@ export interface GetLatestProblemRequest {
 
 export type GetLatestProblemResponse = GetLatestProblemResponse.SuccessResponse | GetLatestProblemResponse.ErrorResponse;
 
-namespace GetLatestProblemResponse {
+export declare namespace GetLatestProblemResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.ProblemInfo;
@@ -1403,7 +1403,7 @@ export interface GetProblemVersionRequest {
 
 export type GetProblemVersionResponse = GetProblemVersionResponse.SuccessResponse | GetProblemVersionResponse.ErrorResponse;
 
-namespace GetProblemVersionResponse {
+export declare namespace GetProblemVersionResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.ProblemInfo;
@@ -1443,7 +1443,7 @@ export const GetProblemsErrorBody = {
 
 export type GetProblemsResponse = GetProblemsResponse.SuccessResponse | GetProblemsResponse.ErrorResponse;
 
-namespace GetProblemsResponse {
+export declare namespace GetProblemsResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.ProblemInfo[];
@@ -1545,7 +1545,7 @@ export interface GetSubmissionStateV2Request {
 
 export type GetSubmissionStateV2Response = GetSubmissionStateV2Response.SuccessResponse | GetSubmissionStateV2Response.ErrorResponse;
 
-namespace GetSubmissionStateV2Response {
+export declare namespace GetSubmissionStateV2Response {
     export interface SuccessResponse {
         ok: true;
         body: model.GetSubmissionStateResponse;
@@ -1616,7 +1616,7 @@ export interface GetTraceResponsesPageForWorkspaceRequest {
 
 export type GetTraceResponsesPageForWorkspaceResponse = GetTraceResponsesPageForWorkspaceResponse.SuccessResponse | GetTraceResponsesPageForWorkspaceResponse.ErrorResponse;
 
-namespace GetTraceResponsesPageForWorkspaceResponse {
+export declare namespace GetTraceResponsesPageForWorkspaceResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.TraceResponsesPage;
@@ -1636,7 +1636,7 @@ namespace GetTraceResponsesPageForWorkspaceResponse {
 
 export type GetTraceResponsesPageResponse = GetTraceResponsesPageResponse.SuccessResponse | GetTraceResponsesPageResponse.ErrorResponse;
 
-namespace GetTraceResponsesPageResponse {
+export declare namespace GetTraceResponsesPageResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.TraceResponsesPage;
@@ -1707,7 +1707,7 @@ export interface GetTraceResponsesV2PageForWorkspaceRequest {
 
 export type GetTraceResponsesV2PageForWorkspaceResponse = GetTraceResponsesV2PageForWorkspaceResponse.SuccessResponse | GetTraceResponsesV2PageForWorkspaceResponse.ErrorResponse;
 
-namespace GetTraceResponsesV2PageForWorkspaceResponse {
+export declare namespace GetTraceResponsesV2PageForWorkspaceResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.TraceResponsesPageV2;
@@ -1739,7 +1739,7 @@ export interface GetTraceResponsesV2PageRequest {
 
 export type GetTraceResponsesV2PageResponse = GetTraceResponsesV2PageResponse.SuccessResponse | GetTraceResponsesV2PageResponse.ErrorResponse;
 
-namespace GetTraceResponsesV2PageResponse {
+export declare namespace GetTraceResponsesV2PageResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.TraceResponsesPageV2;
@@ -1759,7 +1759,7 @@ namespace GetTraceResponsesV2PageResponse {
 
 export type _GetSubmissionStateResponse = _GetSubmissionStateResponse.SuccessResponse | _GetSubmissionStateResponse.ErrorResponse;
 
-namespace _GetSubmissionStateResponse {
+export declare namespace _GetSubmissionStateResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.GetSubmissionStateResponse;
@@ -1840,7 +1840,7 @@ export const GetNumWarmInstancesErrorBody = {
 
 export type GetNumWarmInstancesResponse = GetNumWarmInstancesResponse.SuccessResponse | GetNumWarmInstancesResponse.ErrorResponse;
 
-namespace GetNumWarmInstancesResponse {
+export declare namespace GetNumWarmInstancesResponse {
     export interface SuccessResponse {
         ok: true;
         body: Record<model.Language, number>;
@@ -1891,7 +1891,7 @@ export interface SetNumWarmInstancesRequest {
 
 export type SetNumWarmInstancesResponse = SetNumWarmInstancesResponse.SuccessResponse | SetNumWarmInstancesResponse.ErrorResponse;
 
-namespace SetNumWarmInstancesResponse {
+export declare namespace SetNumWarmInstancesResponse {
     export interface SuccessResponse {
         ok: true;
     }
@@ -1946,7 +1946,7 @@ export const GetWorkspaceStarterFilesErrorBody = {
 
 export type GetWorkspaceStarterFilesResponse = GetWorkspaceStarterFilesResponse.SuccessResponse | GetWorkspaceStarterFilesResponse.ErrorResponse;
 
-namespace GetWorkspaceStarterFilesResponse {
+export declare namespace GetWorkspaceStarterFilesResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.WorkspaceStarterFilesResponse;
@@ -1986,7 +1986,7 @@ export const GetWorkspaceStarterFilesV2ErrorBody = {
 
 export type GetWorkspaceStarterFilesV2Response = GetWorkspaceStarterFilesV2Response.SuccessResponse | GetWorkspaceStarterFilesV2Response.ErrorResponse;
 
-namespace GetWorkspaceStarterFilesV2Response {
+export declare namespace GetWorkspaceStarterFilesV2Response {
     export interface SuccessResponse {
         ok: true;
         body: model.WorkspaceStarterFilesResponseV2;
@@ -5358,7 +5358,7 @@ export const CreateProblemErrorBody = {
 
 export type CreateProblemResponse = CreateProblemResponse.SuccessResponse | CreateProblemResponse.ErrorResponse;
 
-namespace CreateProblemResponse {
+export declare namespace CreateProblemResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.CreateProblemResponse;
@@ -5408,7 +5408,7 @@ export interface DeleteProblemRequest {
 
 export type DeleteProblemResponse = DeleteProblemResponse.SuccessResponse | DeleteProblemResponse.ErrorResponse;
 
-namespace DeleteProblemResponse {
+export declare namespace DeleteProblemResponse {
     export interface SuccessResponse {
         ok: true;
     }
@@ -5467,7 +5467,7 @@ export const GetDefaultDirectoryForProblemFilesErrorBody = {
 
 export type GetDefaultDirectoryForProblemFilesResponse = GetDefaultDirectoryForProblemFilesResponse.SuccessResponse | GetDefaultDirectoryForProblemFilesResponse.ErrorResponse;
 
-namespace GetDefaultDirectoryForProblemFilesResponse {
+export declare namespace GetDefaultDirectoryForProblemFilesResponse {
     export interface SuccessResponse {
         ok: true;
         body: Record<model.Language, string>;
@@ -5527,7 +5527,7 @@ export const GetGeneratedTestCaseFileErrorBody = {
 
 export type GetGeneratedTestCaseFileResponse = GetGeneratedTestCaseFileResponse.SuccessResponse | GetGeneratedTestCaseFileResponse.ErrorResponse;
 
-namespace GetGeneratedTestCaseFileResponse {
+export declare namespace GetGeneratedTestCaseFileResponse {
     export interface SuccessResponse {
         ok: true;
         body: Record<model.Language, model.problemV2.FileInfoV2>;
@@ -5567,7 +5567,7 @@ export const GetGeneratedTestCaseTemplateFileErrorBody = {
 
 export type GetGeneratedTestCaseTemplateFileResponse = GetGeneratedTestCaseTemplateFileResponse.SuccessResponse | GetGeneratedTestCaseTemplateFileResponse.ErrorResponse;
 
-namespace GetGeneratedTestCaseTemplateFileResponse {
+export declare namespace GetGeneratedTestCaseTemplateFileResponse {
     export interface SuccessResponse {
         ok: true;
         body: Record<model.Language, model.problemV2.FileInfoV2>;
@@ -5618,7 +5618,7 @@ export interface UpdateProblemRequest {
 
 export type UpdateProblemResponse = UpdateProblemResponse.SuccessResponse | UpdateProblemResponse.ErrorResponse;
 
-namespace UpdateProblemResponse {
+export declare namespace UpdateProblemResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.UpdateProblemResponse;
@@ -5638,7 +5638,7 @@ namespace UpdateProblemResponse {
 
 export type _GetBasicSolutionFileResponse = _GetBasicSolutionFileResponse.SuccessResponse | _GetBasicSolutionFileResponse.ErrorResponse;
 
-namespace _GetBasicSolutionFileResponse {
+export declare namespace _GetBasicSolutionFileResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.problemV2.GetBasicSolutionFileResponse;
@@ -5658,7 +5658,7 @@ namespace _GetBasicSolutionFileResponse {
 
 export type _GetFunctionSignatureResponse = _GetFunctionSignatureResponse.SuccessResponse | _GetFunctionSignatureResponse.ErrorResponse;
 
-namespace _GetFunctionSignatureResponse {
+export declare namespace _GetFunctionSignatureResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.problemV2.GetFunctionSignatureResponse;
@@ -5737,7 +5737,7 @@ export interface GetLatestProblemRequest {
 
 export type GetLatestProblemResponse = GetLatestProblemResponse.SuccessResponse | GetLatestProblemResponse.ErrorResponse;
 
-namespace GetLatestProblemResponse {
+export declare namespace GetLatestProblemResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.problemV2.ProblemInfoV2;
@@ -5777,7 +5777,7 @@ export const GetLightweightProblemsErrorBody = {
 
 export type GetLightweightProblemsResponse = GetLightweightProblemsResponse.SuccessResponse | GetLightweightProblemsResponse.ErrorResponse;
 
-namespace GetLightweightProblemsResponse {
+export declare namespace GetLightweightProblemsResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.problemV2.LightweightProblemInfoV2[];
@@ -5828,7 +5828,7 @@ export interface GetProblemVersionRequest {
 
 export type GetProblemVersionResponse = GetProblemVersionResponse.SuccessResponse | GetProblemVersionResponse.ErrorResponse;
 
-namespace GetProblemVersionResponse {
+export declare namespace GetProblemVersionResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.problemV2.ProblemInfoV2;
@@ -5868,7 +5868,7 @@ export const GetProblemsErrorBody = {
 
 export type GetProblemsResponse = GetProblemsResponse.SuccessResponse | GetProblemsResponse.ErrorResponse;
 
-namespace GetProblemsResponse {
+export declare namespace GetProblemsResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.problemV2.ProblemInfoV2[];
