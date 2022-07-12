@@ -56,7 +56,7 @@ export const SendChatErrorBody = {
 
 export type SendChatResponse = SendChatResponse.SuccessResponse | SendChatResponse.ErrorResponse;
 
-namespace SendChatResponse {
+export declare namespace SendChatResponse {
     export interface SuccessResponse {
         ok: true;
         id: string;
@@ -249,7 +249,7 @@ export const GetErrorBody = {
 
 export type GetResponse = GetResponse.SuccessResponse | GetResponse.ErrorResponse;
 
-namespace GetResponse {
+export declare namespace GetResponse {
     export interface SuccessResponse {
         ok: true;
     }
@@ -385,7 +385,7 @@ export const CreatePostErrorBody = {
 
 export type CreatePostResponse = CreatePostResponse.SuccessResponse | CreatePostResponse.ErrorResponse;
 
-namespace CreatePostResponse {
+export declare namespace CreatePostResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.PostId;
@@ -444,7 +444,7 @@ export interface GetPostRequest {
 
 export type GetPostResponse = GetPostResponse.SuccessResponse | GetPostResponse.ErrorResponse;
 
-namespace GetPostResponse {
+export declare namespace GetPostResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.Post;
@@ -495,7 +495,7 @@ export const GetPostV2ErrorBody = {
 
 export type GetPostV2Response = GetPostV2Response.SuccessResponse | GetPostV2Response.ErrorResponse;
 
-namespace GetPostV2Response {
+export declare namespace GetPostV2Response {
     export interface SuccessResponse {
         ok: true;
         body: model.Post;
