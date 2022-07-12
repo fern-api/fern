@@ -34,7 +34,7 @@ export const CreatePostErrorBody = {
 
 export type CreatePostResponse = CreatePostResponse.SuccessResponse | CreatePostResponse.ErrorResponse;
 
-namespace CreatePostResponse {
+export declare namespace CreatePostResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.PostId;
@@ -72,7 +72,7 @@ export interface DeletePostRequest {
 
 export type DeletePostResponse = DeletePostResponse.SuccessResponse | DeletePostResponse.ErrorResponse;
 
-namespace DeletePostResponse {
+export declare namespace DeletePostResponse {
     export interface SuccessResponse {
         ok: true;
     }
@@ -130,7 +130,7 @@ export interface GetPostRequest {
 
 export type GetPostResponse = GetPostResponse.SuccessResponse | GetPostResponse.ErrorResponse;
 
-namespace GetPostResponse {
+export declare namespace GetPostResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.Post;
@@ -181,7 +181,7 @@ export const GetPostV2ErrorBody = {
 
 export type GetPostV2Response = GetPostV2Response.SuccessResponse | GetPostV2Response.ErrorResponse;
 
-namespace GetPostV2Response {
+export declare namespace GetPostV2Response {
     export interface SuccessResponse {
         ok: true;
         body: model.Post;
@@ -213,7 +213,7 @@ export const NoopWithAuthErrorBody = {
 
 export type NoopWithAuthResponse = NoopWithAuthResponse.SuccessResponse | NoopWithAuthResponse.ErrorResponse;
 
-namespace NoopWithAuthResponse {
+export declare namespace NoopWithAuthResponse {
     export interface SuccessResponse {
         ok: true;
     }
@@ -244,7 +244,7 @@ export const NoopWithoutAuthErrorBody = {
 
 export type NoopWithoutAuthResponse = NoopWithoutAuthResponse.SuccessResponse | NoopWithoutAuthResponse.ErrorResponse;
 
-namespace NoopWithoutAuthResponse {
+export declare namespace NoopWithoutAuthResponse {
     export interface SuccessResponse {
         ok: true;
     }

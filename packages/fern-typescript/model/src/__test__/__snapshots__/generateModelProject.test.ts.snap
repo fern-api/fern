@@ -891,7 +891,7 @@ export interface GetPostRequest {
 
 export type _GetPostResponse = _GetPostResponse.SuccessResponse | _GetPostResponse.ErrorResponse;
 
-namespace _GetPostResponse {
+export declare namespace _GetPostResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.GetPostResponse;
