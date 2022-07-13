@@ -3,11 +3,11 @@ import { Command } from "../Command";
 
 export const clientCommand: Command<"client"> = {
     key: "client",
-    generate: async ({ intermediateRepresentation, helperManager, volume, packageName, packageVersion }) => {
+    generate: async ({ intermediateRepresentation, helperManager, volume, fullPackageName, packageVersion }) => {
         await generateClientProject({
             intermediateRepresentation,
             helperManager,
-            packageName,
+            packageName: fullPackageName,
             packageVersion,
             volume,
         });
