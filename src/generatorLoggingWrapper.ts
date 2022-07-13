@@ -1,30 +1,32 @@
-import { services, model } from "@fern-fern/generator-logging-api-client";
-import { TaskId } from "@fern-fern/generator-logging-api-client/model";
+import { GeneratorUpdate } from "@fern-fern/generator-logging-api-client/model";
+import { GeneratorLoggingService } from "@fern-fern/generator-logging-api-client/services";
 import { GeneratorConfig } from "@fern-fern/ir-model/generators";
 
-export class GeneratorLoggingClientWrapper {
-    private generatorLoggingClient: undefined | services.GeneratorLoggingService;
-    private taskId: undefined | TaskId;
+export class GeneratorLoggingWrapper {
+    private maybeSendUpdates = async (_updates: GeneratorUpdate[]) => {
+        /* default to no-op */
+    };
 
     constructor(generatorConfig: GeneratorConfig) {
         if (generatorConfig.environment._type === "remote") {
-            this.generatorLoggingClient = new services.GeneratorLoggingService({
+            const generatorLoggingClient = new GeneratorLoggingService({
                 origin: generatorConfig.environment.coordinatorUrl,
             });
-            this.taskId = generatorConfig.environment.id;
+            const taskId = generatorConfig.environment.id;
+            this.maybeSendUpdates = async (updates) => {
+                await generatorLoggingClient.sendUpdate({
+                    taskId,
+                    body: updates,
+                });
+            };
         }
     }
 
-    public sendUpdate(update: model.GeneratorUpdate): void {
-        this.sendUpdates([update]);
+    public async sendUpdate(update: GeneratorUpdate): Promise<void> {
+        await this.sendUpdates([update]);
     }
 
-    public sendUpdates(updates: model.GeneratorUpdate[]): void {
-        if (this.generatorLoggingClient !== undefined && this.taskId !== undefined) {
-            this.generatorLoggingClient.sendUpdate({
-                taskId: this.taskId,
-                body: updates,
-            });
-        }
+    public async sendUpdates(updates: GeneratorUpdate[]): Promise<void> {
+        await this.maybeSendUpdates(updates);
     }
 }

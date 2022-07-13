@@ -5,7 +5,7 @@ import { readFile, writeFile } from "fs/promises";
 import path from "path";
 import { Collection } from "postman-collection";
 import { convertToPostmanCollection } from "./convertToPostmanCollection";
-import { GeneratorLoggingClientWrapper } from "./generatorLoggingWrapper";
+import { GeneratorLoggingWrapper } from "./generatorLoggingWrapper";
 
 const COLLECTION_OUTPUT_FILENAME = "collection.json";
 
@@ -17,10 +17,10 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
         throw new Error("Output directory is not specified.");
     }
 
-    const generatorLoggingClient = new GeneratorLoggingClientWrapper(config);
+    const generatorLoggingClient = new GeneratorLoggingWrapper(config);
 
     try {
-        generatorLoggingClient.sendUpdate(
+        await generatorLoggingClient.sendUpdate(
             GeneratorUpdate.init({
                 packagesToPublish: [],
             })
@@ -32,16 +32,12 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
             path.join(config.output.path, COLLECTION_OUTPUT_FILENAME),
             JSON.stringify(new Collection(collectionDefinition), undefined, 4)
         );
-        generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful()));
+        await generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful()));
     } catch (e) {
-        let message = "Encountered error";
-        if (e instanceof Error) {
-            message = e.message;
-        }
-        generatorLoggingClient.sendUpdate(
+        await generatorLoggingClient.sendUpdate(
             GeneratorUpdate.exitStatusUpdate(
                 ExitStatusUpdate.error({
-                    message,
+                    message: e instanceof Error ? e.message : "Encountered error",
                 })
             )
         );
