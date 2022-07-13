@@ -1,14 +1,12 @@
+import { PackageCoordinate } from "@fern-fern/generator-logging-api-client/model";
 import { FernTypescriptGeneratorConfig } from "../generator/FernGeneratorConfig";
 import { Command } from "./Command";
 
-export interface PublishNpmPackage {
-    name: string;
-    publishVersion: string;
-}
-
 export interface NpmPackage {
-    name: string;
-    publishVersion: undefined | string;
+    scope: string;
+    packageName: string;
+    fullPackageName: string;
+    packageCoordinate: PackageCoordinate | undefined;
 }
 
 export function getCommandPackageCoordinate({
@@ -18,13 +16,19 @@ export function getCommandPackageCoordinate({
     command: Command<string>;
     config: FernTypescriptGeneratorConfig;
 }): NpmPackage {
-    const scopeWithAtSign = `@${config.organization}`;
+    const scope = config.organization;
+    const packageName = `${config.workspaceName}-${command.key}`;
+    const fullPackageName = `@${scope}/${packageName}`;
     return {
-        name: `${scopeWithAtSign}/${config.workspaceName}-${command.key}`,
-        publishVersion: config.publish?.version,
+        scope,
+        packageName,
+        fullPackageName,
+        packageCoordinate:
+            config.publish != null
+                ? PackageCoordinate.npm({
+                      name: fullPackageName,
+                      version: config.publish.version,
+                  })
+                : undefined,
     };
-}
-
-export function isPublishNpmPackage(npmPackage: NpmPackage): npmPackage is PublishNpmPackage {
-    return npmPackage.publishVersion != null;
 }

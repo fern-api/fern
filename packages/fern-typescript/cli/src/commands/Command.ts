@@ -10,7 +10,7 @@ export const CommandKey = {
 
 export declare namespace Command {
     export interface Args {
-        packageName: string;
+        fullPackageName: string;
         packageVersion: string | undefined;
         volume: Volume;
         intermediateRepresentation: IntermediateRepresentation;
