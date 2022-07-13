@@ -1,0 +1,1 @@
+git describe --exact-match HEAD > /dev/null 2> /dev/null && echo latest || echo next
