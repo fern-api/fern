@@ -172,16 +172,15 @@ public abstract class CodeGenerationResult {
         return settingsGradle;
     }
 
-    public static String getBuildDotGradle(String orgName, GeneratorPublishConfig publishConfig) {
+    public static String getBuildDotGradle(FernPluginConfig fernPluginConfig, GeneratorPublishConfig publishConfig) {
         MavenRegistryConfig mavenRegistryConfig = publishConfig.registries().maven();
-        String coordinate = "com." + orgName + ".fern";
         return "plugins {\n"
                 + "    id 'maven-publish'\n"
                 + "}\n"
                 + "\n"
                 + "subprojects {\n"
                 + "\n"
-                + "    group '" + coordinate + "'\n"
+                + "    group '" + fernPluginConfig.getMavenGroup() + "'\n"
                 + "    version '" + publishConfig.version() + "'\n"
                 + "\n"
                 + "    apply plugin: \"maven-publish\"\n"

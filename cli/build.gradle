@@ -17,6 +17,7 @@ dependencies {
     implementation 'com.fern:fern-immutables-style'
     implementation 'com.squareup:javapoet'
     implementation 'ch.qos.logback:logback-classic'
+    implementation 'com.fern-fern.fern:generator-logging-api-client'
 
     annotationProcessor 'org.immutables:value'
 

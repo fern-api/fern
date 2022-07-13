@@ -19,7 +19,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.immutables.StagedBuilderStyle;
 import com.fern.java.client.cli.CustomPluginConfig.Mode;
+import com.fern.java.client.cli.CustomPluginConfig.ServerFramework;
 import com.fern.types.generators.GeneratorConfig;
+import com.fiddle.generator.logging.types.MavenCoordinate;
+import com.fiddle.generator.logging.types.PackageCoordinate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import org.immutables.value.Value;
 
@@ -35,6 +42,44 @@ public interface FernPluginConfig {
 
     String version();
 
+    default List<PackageCoordinate> getPackageCoordinates() {
+        List<PackageCoordinate> result = new ArrayList<>();
+        Optional<PackageCoordinate> modelCoordinate = getPackageCoordinate(getModelProjectName());
+        Optional<PackageCoordinate> clientCoordinate = getPackageCoordinate(getClientProjectName());
+
+        Map<ServerFramework, Optional<PackageCoordinate>> serverPackageCoordinates = new HashMap<>();
+        for (ServerFramework serverFramework : customPluginConfig().getServerFrameworkEnums()) {
+            serverPackageCoordinates.put(serverFramework, getPackageCoordinate(getServerProjectName(serverFramework)));
+        }
+        switch (customPluginConfig().mode()) {
+            case MODEL:
+                modelCoordinate.ifPresent(result::add);
+                break;
+            case CLIENT:
+                modelCoordinate.ifPresent(result::add);
+                clientCoordinate.ifPresent(result::add);
+                break;
+            case SERVER:
+                modelCoordinate.ifPresent(result::add);
+                customPluginConfig().getServerFrameworkEnums().forEach(serverFramework -> serverPackageCoordinates
+                        .get(serverFramework)
+                        .ifPresent(result::add));
+                break;
+            case CLIENT_AND_SERVER:
+                modelCoordinate.ifPresent(result::add);
+                clientCoordinate.ifPresent(result::add);
+                customPluginConfig().getServerFrameworkEnums().forEach(serverFramework -> serverPackageCoordinates
+                        .get(serverFramework)
+                        .ifPresent(result::add));
+                break;
+        }
+        return result;
+    }
+
+    default String getMavenGroup() {
+        return "com." + generatorConfig().organization() + ".fern";
+    }
+
     default String getModelProjectName() {
         return getSubProjectName("model");
     }
@@ -49,6 +94,16 @@ public interface FernPluginConfig {
 
     default String getSubProjectName(String projectSuffix) {
         return generatorConfig().workspaceName() + "-" + projectSuffix;
+    }
+
+    default Optional<PackageCoordinate> getPackageCoordinate(String projectName) {
+        return generatorConfig()
+                .publish()
+                .map(generatorPublishConfig -> PackageCoordinate.maven(MavenCoordinate.builder()
+                        .group(getMavenGroup())
+                        .artifact(projectName)
+                        .version(generatorPublishConfig.version())
+                        .build()));
     }
 
     static FernPluginConfig create(GeneratorConfig generatorConfig, String version) {

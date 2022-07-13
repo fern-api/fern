@@ -41,6 +41,11 @@ import com.fern.types.generators.GeneratorConfig;
 import com.fern.types.generators.GeneratorOutputConfig;
 import com.fern.types.services.HttpEndpoint;
 import com.fern.types.services.HttpService;
+import com.fiddle.generator.logging.types.ErrorExitStatusUpdate;
+import com.fiddle.generator.logging.types.ExitStatusUpdate;
+import com.fiddle.generator.logging.types.GeneratorUpdate;
+import com.fiddle.generator.logging.types.InitUpdate;
+import com.fiddle.generator.logging.types.PackageCoordinate;
 import com.squareup.javapoet.JavaFile;
 import java.io.File;
 import java.io.IOException;
@@ -66,13 +71,35 @@ public final class ClientGeneratorCli {
     public static void main(String... args) {
         String pluginPath = args[0];
         GeneratorConfig generatorConfig = getGeneratorConfig(pluginPath);
+        GeneratorLoggingClientWrapper loggingClient = new GeneratorLoggingClientWrapper(generatorConfig);
 
-        FernPluginConfig fernPluginConfig = FernPluginConfig.create(generatorConfig, "0.0.64");
-        createOutputDirectory(fernPluginConfig.generatorConfig().output());
-        startGradleDaemon(fernPluginConfig);
+        try {
+            FernPluginConfig fernPluginConfig = FernPluginConfig.create(generatorConfig, "0.0.64");
+            List<PackageCoordinate> packageCoordinates = fernPluginConfig.getPackageCoordinates();
+            loggingClient.sendUpdate(GeneratorUpdate.init(InitUpdate.builder()
+                    .addAllPackagesToPublish(packageCoordinates)
+                    .build()));
 
-        IntermediateRepresentation ir = getIr(fernPluginConfig.generatorConfig());
-        generate(ir, fernPluginConfig);
+            createOutputDirectory(fernPluginConfig.generatorConfig().output());
+            startGradleDaemon(fernPluginConfig);
+
+            for (PackageCoordinate packageCoordinate : fernPluginConfig.getPackageCoordinates()) {
+                loggingClient.sendUpdate(GeneratorUpdate.publishing(packageCoordinate));
+            }
+            publish(fernPluginConfig);
+
+            IntermediateRepresentation ir = getIr(fernPluginConfig.generatorConfig());
+            generate(ir, fernPluginConfig);
+
+            for (PackageCoordinate packageCoordinate : fernPluginConfig.getPackageCoordinates()) {
+                loggingClient.sendUpdate(GeneratorUpdate.published(packageCoordinate));
+            }
+
+            loggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful()));
+        } catch (Exception e) {
+            loggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.error(
+                    ErrorExitStatusUpdate.builder().message(e.getMessage()).build())));
+        }
     }
 
     private static GeneratorConfig getGeneratorConfig(String pluginPath) {
@@ -132,6 +159,14 @@ public final class ClientGeneratorCli {
         }
         CodeGenerationResult codeGenerationResult = resultBuilder.build();
         writeToFiles(codeGenerationResult, fernPluginConfig);
+    }
+
+    private static void publish(FernPluginConfig fernPluginConfig) {
+        String outputDirectory = fernPluginConfig.generatorConfig().output().path();
+        if (fernPluginConfig.generatorConfig().publish().isPresent()) {
+            runCommandBlocking(
+                    new String[] {"gradle", "--parallel", "--no-daemon", "publish"}, Paths.get(outputDirectory));
+        }
     }
 
     private static ModelGeneratorResult addModelFiles(
@@ -315,7 +350,7 @@ public final class ClientGeneratorCli {
             writeFileContents(
                     Paths.get(outputDirectory, "build.gradle"),
                     CodeGenerationResult.getBuildDotGradle(
-                            fernPluginConfig.generatorConfig().organization(),
+                            fernPluginConfig,
                             fernPluginConfig.generatorConfig().publish().get()));
         }
     }
@@ -366,11 +401,6 @@ public final class ClientGeneratorCli {
             writeFileContents(
                     Paths.get(outputDirectory, serverDirectory, BUILD_GRADLE),
                     CodeGenerationResult.getServerBuildGradle(fernPluginConfig, ServerFramework.SPRING));
-        }
-
-        if (fernPluginConfig.generatorConfig().publish().isPresent()) {
-            runCommandBlocking(
-                    new String[] {"gradle", "--parallel", "--no-daemon", "publish"}, Paths.get(outputDirectory));
         }
     }
 
