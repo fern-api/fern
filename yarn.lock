@@ -1696,10 +1696,36 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fern-fern/generator-logging-api-client@npm:^0.0.11":
+  version: 0.0.11
+  resolution: "@fern-fern/generator-logging-api-client@npm:0.0.11"
+  dependencies:
+    "@fern-typescript/service-utils": 0.0.124
+    url-join: 5.0.0
+  checksum: cf1c7876b2213856ed525453b155e2dc84b9d0d95534567c0044c9ca91408a1445626357f2f1066def4a1d60a099e0895699d5880e221390ebbf7220edc714c3
+  languageName: node
+  linkType: hard
+
 "@fern-fern/ir-model@npm:0.0.23":
   version: 0.0.23
   resolution: "@fern-fern/ir-model@npm:0.0.23"
   checksum: 7f05baa9c984b56b8e2138471ec251e4da164042eab86427854c4619f7b4a82abea38c17bcedde7e830c28d73061bba313ef6463f8d73af33362a7a8b8654ec4
+  languageName: node
+  linkType: hard
+
+"@fern-fern/ir-model@npm:0.0.42":
+  version: 0.0.42
+  resolution: "@fern-fern/ir-model@npm:0.0.42"
+  checksum: e94596305752782680398d968bbb3b7e0dcef40e8a600aad8f0a4fda593593471c6407f2e1e39f9137a79344b5b140ada6ee1ceed52e8a31d462fa9e024d86fa
+  languageName: node
+  linkType: hard
+
+"@fern-typescript/service-utils@npm:0.0.124":
+  version: 0.0.124
+  resolution: "@fern-typescript/service-utils@npm:0.0.124"
+  dependencies:
+    axios: ^0.27.2
+  checksum: e94d6fb8f1f29b005cd7679ca0c6e231ff4fb65d109176ccd74fc8dfb8573bbbc5118c1bd4e6d822c0011fe1696bc976c216c702c807ba2fa6a9f6426b30846c
   languageName: node
   linkType: hard
 
@@ -2782,6 +2808,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"asynckit@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "asynckit@npm:0.4.0"
+  checksum: 7b78c451df768adba04e2d02e63e2d0bf3b07adcd6e42b4cf665cb7ce899bedd344c69a1dcbce355b5f972d597b25aaa1c1742b52cffd9caccb22f348114f6be
+  languageName: node
+  linkType: hard
+
+"axios@npm:^0.27.2":
+  version: 0.27.2
+  resolution: "axios@npm:0.27.2"
+  dependencies:
+    follow-redirects: ^1.14.9
+    form-data: ^4.0.0
+  checksum: 38cb7540465fe8c4102850c4368053c21683af85c5fdf0ea619f9628abbcb59415d1e22ebc8a6390d2bbc9b58a9806c874f139767389c862ec9b772235f06854
+  languageName: node
+  linkType: hard
+
 "babel-jest@npm:^28.1.2":
   version: 28.1.2
   resolution: "babel-jest@npm:28.1.2"
@@ -3242,6 +3285,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"combined-stream@npm:^1.0.8":
+  version: 1.0.8
+  resolution: "combined-stream@npm:1.0.8"
+  dependencies:
+    delayed-stream: ~1.0.0
+  checksum: 49fa4aeb4916567e33ea81d088f6584749fc90c7abec76fd516bf1c5aa5c79f3584b5ba3de6b86d26ddd64bae5329c4c7479343250cfe71c75bb366eae53bb7c
+  languageName: node
+  linkType: hard
+
 "commander@npm:^2.20.0":
   version: 2.20.3
   resolution: "commander@npm:2.20.3"
@@ -3360,6 +3412,13 @@ __metadata:
     has-property-descriptors: ^1.0.0
     object-keys: ^1.1.1
   checksum: ce0aef3f9eb193562b5cfb79b2d2c86b6a109dfc9fdcb5f45d680631a1a908c06824ddcdb72b7573b54e26ace07f0a23420aaba0d5c627b34d2c1de8ef527e2b
+  languageName: node
+  linkType: hard
+
+"delayed-stream@npm:~1.0.0":
+  version: 1.0.0
+  resolution: "delayed-stream@npm:1.0.0"
+  checksum: 46fe6e83e2cb1d85ba50bd52803c68be9bd953282fa7096f51fc29edd5d67ff84ff753c51966061e5ba7cb5e47ef6d36a91924eddb7f3f3483b1c560f77a0020
   languageName: node
   linkType: hard
 
@@ -3816,7 +3875,8 @@ __metadata:
     "@babel/preset-typescript": ^7.17.12
     "@fern-api/ir-generator": ^0.0.128
     "@fern-api/workspace-parser": ^0.0.128
-    "@fern-fern/ir-model": 0.0.23
+    "@fern-fern/generator-logging-api-client": ^0.0.11
+    "@fern-fern/ir-model": 0.0.42
     "@types/jest": ^27.5.0
     "@types/lodash": ^4.14.182
     "@types/postman-collection": ^3.5.7
@@ -3906,6 +3966,27 @@ __metadata:
   version: 3.2.5
   resolution: "flatted@npm:3.2.5"
   checksum: 3c436e9695ccca29620b4be5671dd72e5dd0a7500e0856611b7ca9bd8169f177f408c3b9abfa78dfe1493ee2d873e2c119080a8a9bee4e1a186a9e60ca6c89f1
+  languageName: node
+  linkType: hard
+
+"follow-redirects@npm:^1.14.9":
+  version: 1.15.1
+  resolution: "follow-redirects@npm:1.15.1"
+  peerDependenciesMeta:
+    debug:
+      optional: true
+  checksum: 6aa4e3e3cdfa3b9314801a1cd192ba756a53479d9d8cca65bf4db3a3e8834e62139245cd2f9566147c8dfe2efff1700d3e6aefd103de4004a7b99985e71dd533
+  languageName: node
+  linkType: hard
+
+"form-data@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "form-data@npm:4.0.0"
+  dependencies:
+    asynckit: ^0.4.0
+    combined-stream: ^1.0.8
+    mime-types: ^2.1.12
+  checksum: 01135bf8675f9d5c61ff18e2e2932f719ca4de964e3be90ef4c36aacfc7b9cb2fceb5eca0b7e0190e3383fe51c5b37f4cb80b62ca06a99aaabfcfd6ac7c9328c
   languageName: node
   linkType: hard
 
@@ -5323,7 +5404,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mime-types@npm:2.1.35, mime-types@npm:^2.1.27":
+"mime-types@npm:2.1.35, mime-types@npm:^2.1.12, mime-types@npm:^2.1.27":
   version: 2.1.35
   resolution: "mime-types@npm:2.1.35"
   dependencies:
@@ -6864,6 +6945,13 @@ __metadata:
   dependencies:
     punycode: ^2.1.0
   checksum: 7167432de6817fe8e9e0c9684f1d2de2bb688c94388f7569f7dbdb1587c9f4ca2a77962f134ec90be0cc4d004c939ff0d05acc9f34a0db39a3c797dada262633
+  languageName: node
+  linkType: hard
+
+"url-join@npm:5.0.0":
+  version: 5.0.0
+  resolution: "url-join@npm:5.0.0"
+  checksum: 5921384a8ad4395b49ce4b50aa26efbc429cebe0bc8b3660ad693dd12fd859747b5369be0443e60e53a7850b2bc9d7d0687bcb94386662b40e743596bbf38101
   languageName: node
   linkType: hard
 

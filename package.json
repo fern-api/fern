@@ -41,7 +41,8 @@
     "webpack-cli": "^4.9.2"
   },
   "dependencies": {
-    "@fern-fern/ir-model": "0.0.23",
+    "@fern-fern/generator-logging-api-client": "^0.0.11",
+    "@fern-fern/ir-model": "0.0.42",
     "@types/lodash": "^4.14.182",
     "lodash": "^4.17.21",
     "postman-collection": "^4.1.2",
