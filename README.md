@@ -1,6 +1,6 @@
 # Fern
 
-Fern is a framework for building APIs. You can think of it as an alternative to OpenAPI (f.k.a Swagger).
+Define your API once. Get end-to-end type safety across clients, server stubs, and docs.
 
 [View our docs ➚](https://docs.buildwithfern.com/#/)
 
