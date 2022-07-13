@@ -75,13 +75,13 @@ jobs:
           command: yarn compile:all
       - run:
           name: Publish all packages
-          command: yarn run publish
+          command: yarn run publish --tag $(./scripts/npm-tag.sh)
       - run:
           name: Publish fern-api
           command: |
             yarn workspace @fern-api/cli dist
             cd $(yarn workspace @fern-api/cli exec pwd)/webpack/dist
-            yarn npm publish
+            yarn npm publish --tag $(./scripts/npm-tag.sh)
       - run:
           name: Publish fern-typescript docker
           command: |
@@ -94,27 +94,16 @@ workflows:
   version: 2
   build:
     jobs:
-      - lint:
-          filters:
-            tags:
-              only: /.*/
-
-      - compile-and-test:
-          filters:
-            tags:
-              only: /.*/
-
+      - lint
+      - compile-and-test
       - ete-tests:
-          filters:
-            tags:
-              only: /.*/
           context:
             - auth0-dev
 
       - publish:
           filters:
-            tags:
-              only: /.*/
+            branches:
+              only: main
           requires:
             - lint
             - compile-and-test
