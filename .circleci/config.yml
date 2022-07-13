@@ -79,9 +79,10 @@ jobs:
       - run:
           name: Publish fern-api
           command: |
+            npm_tag=$(./scripts/npm-tag.sh)
             yarn workspace @fern-api/cli dist
             cd $(yarn workspace @fern-api/cli exec pwd)/webpack/dist
-            yarn npm publish --tag $(./scripts/npm-tag.sh)
+            yarn npm publish --tag $npm_tag
       - run:
           name: Publish fern-typescript docker
           command: |
