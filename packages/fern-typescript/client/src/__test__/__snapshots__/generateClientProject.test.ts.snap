@@ -126,7 +126,8 @@ export * from \\"./_service-types\\";
     \\"dependencies\\": {
         \\"uuid\\": \\"8.3.2\\",
         \\"@types/uuid\\": \\"8.3.4\\",
-        \\"url-join\\": \\"5.0.0\\"
+        \\"url-join\\": \\"4.0.1\\",
+        \\"@types/url-join\\": \\"4.0.1\\"
     },
     \\"devDependencies\\": {
         \\"@types/node\\": \\"17.0.33\\",
@@ -277,7 +278,8 @@ export * from \\"./GetResponse\\";
     },
     \\"dependencies\\": {
         \\"@fern-typescript/service-utils\\": \\"0.0.124\\",
-        \\"url-join\\": \\"5.0.0\\"
+        \\"url-join\\": \\"4.0.1\\",
+        \\"@types/url-join\\": \\"4.0.1\\"
     },
     \\"devDependencies\\": {
         \\"@types/node\\": \\"17.0.33\\",
@@ -653,7 +655,8 @@ export * from \\"./_service-types\\";
         \\"uuid\\": \\"8.3.2\\",
         \\"@types/uuid\\": \\"8.3.4\\",
         \\"@fern-typescript/service-utils\\": \\"0.0.124\\",
-        \\"url-join\\": \\"5.0.0\\"
+        \\"url-join\\": \\"4.0.1\\",
+        \\"@types/url-join\\": \\"4.0.1\\"
     },
     \\"devDependencies\\": {
         \\"@types/node\\": \\"17.0.33\\",
