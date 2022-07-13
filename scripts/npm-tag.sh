@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # cd to script directory
 cd $(cd -P -- "$(dirname -- "$0")" && pwd -P)
