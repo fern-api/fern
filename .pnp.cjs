@@ -6338,6 +6338,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@fern-fern/generator-logging-api-client", [\
+        ["npm:0.0.11", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-generator-logging-api-client-npm-0.0.11-715af9a8a8-cf1c7876b2.zip/node_modules/@fern-fern/generator-logging-api-client/",\
+          "packageDependencies": [\
+            ["@fern-fern/generator-logging-api-client", "npm:0.0.11"],\
+            ["@fern-typescript/service-utils", "npm:0.0.124"],\
+            ["url-join", "npm:5.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@fern-fern/ir-model", [\
         ["npm:0.0.42", {\
           "packageLocation": "./.yarn/cache/@fern-fern-ir-model-npm-0.0.42-f7e42702ca-e945963057.zip/node_modules/@fern-fern/ir-model/",\
@@ -14759,6 +14770,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/commons", "workspace:packages/commons"],\
             ["@fern-api/ir-generator", "workspace:packages/ir/ir-generator"],\
             ["@fern-api/workspace-parser", "workspace:packages/workspace-parser"],\
+            ["@fern-fern/generator-logging-api-client", "npm:0.0.11"],\
             ["@fern-fern/ir-model", "npm:0.0.42"],\
             ["@fern-typescript/client", "workspace:packages/fern-typescript/client"],\
             ["@fern-typescript/commons", "workspace:packages/fern-typescript/commons"],\

@@ -2831,6 +2831,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fern-fern/generator-logging-api-client@npm:^0.0.11":
+  version: 0.0.11
+  resolution: "@fern-fern/generator-logging-api-client@npm:0.0.11"
+  dependencies:
+    "@fern-typescript/service-utils": 0.0.124
+    url-join: 5.0.0
+  checksum: cf1c7876b2213856ed525453b155e2dc84b9d0d95534567c0044c9ca91408a1445626357f2f1066def4a1d60a099e0895699d5880e221390ebbf7220edc714c3
+  languageName: node
+  linkType: hard
+
 "@fern-fern/ir-model@npm:0.0.42":
   version: 0.0.42
   resolution: "@fern-fern/ir-model@npm:0.0.42"
@@ -9531,6 +9541,7 @@ __metadata:
     "@fern-api/commons": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/workspace-parser": "workspace:*"
+    "@fern-fern/generator-logging-api-client": ^0.0.11
     "@fern-fern/ir-model": 0.0.42
     "@fern-typescript/client": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
