@@ -95,9 +95,18 @@ workflows:
   version: 2
   build:
     jobs:
-      - lint
-      - compile-and-test
+      - lint:
+          filters:
+            tags:
+              only: /.*/
+      - compile-and-test:
+          filters:
+            tags:
+              only: /.*/
       - ete-tests:
+          filters:
+            tags:
+              only: /.*/
           context:
             - auth0-dev
 
@@ -105,6 +114,8 @@ workflows:
           filters:
             branches:
               only: main
+            tags:
+              only: /.*/
           requires:
             - lint
             - compile-and-test
