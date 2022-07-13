@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/commons";
 import { RelativeFilePath, WorkspaceParser, WorkspaceParserFailureType } from "@fern-api/workspace-parser";
 import chalk from "chalk";
+import { YAMLException } from "js-yaml";
 import { ZodIssue, ZodIssueCode } from "zod";
 import { logIssueInYaml } from "../../logger/logIssueInYaml";
 
@@ -22,7 +23,16 @@ function handleWorkspaceParserFailureForFile({
             console.error("Failed to open file", relativeFilePath);
             break;
         case WorkspaceParserFailureType.FILE_PARSE:
-            console.error("Failed to parse file", relativeFilePath);
+            if (failure.error instanceof YAMLException) {
+                logIssueInYaml({
+                    severity: "error",
+                    relativeFilePath,
+                    title: `Failed to parse YAML: ${failure.error.reason}`,
+                    subtitle: failure.error.mark.snippet,
+                });
+            } else {
+                console.error("Failed to parse file", relativeFilePath);
+            }
             break;
         case WorkspaceParserFailureType.STRUCTURE_VALIDATION:
             for (const issue of failure.error.issues) {
