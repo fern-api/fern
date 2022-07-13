@@ -83,13 +83,13 @@ public final class ClientGeneratorCli {
             createOutputDirectory(fernPluginConfig.generatorConfig().output());
             startGradleDaemon(fernPluginConfig);
 
+            IntermediateRepresentation ir = getIr(fernPluginConfig.generatorConfig());
+            generate(ir, fernPluginConfig);
+
             for (PackageCoordinate packageCoordinate : fernPluginConfig.getPackageCoordinates()) {
                 loggingClient.sendUpdate(GeneratorUpdate.publishing(packageCoordinate));
             }
             publish(fernPluginConfig);
-
-            IntermediateRepresentation ir = getIr(fernPluginConfig.generatorConfig());
-            generate(ir, fernPluginConfig);
 
             for (PackageCoordinate packageCoordinate : fernPluginConfig.getPackageCoordinates()) {
                 loggingClient.sendUpdate(GeneratorUpdate.published(packageCoordinate));
