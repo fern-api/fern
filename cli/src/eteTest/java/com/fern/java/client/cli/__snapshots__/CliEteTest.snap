@@ -30,6 +30,44 @@ dependencies {
 ]
 
 
+basic[api/generated-java/blog-api-client/src/main/java/com/blog/client/DummyServiceClient.java]=[
+package com.blog.client;
+
+import com.blog.types.DummyId;
+import com.fern.java.auth.AuthHeader;
+import com.fern.java.jackson.ClientObjectMappers;
+import feign.Feign;
+import feign.jackson.JacksonDecoder;
+import feign.jackson.JacksonEncoder;
+import feign.jaxrs.JAXRSContract;
+import java.lang.String;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+@Path("dummy-service")
+public interface DummyServiceClient {
+  @POST
+  @Path("get-dummy")
+  void getDummy(@HeaderParam("Authorization") AuthHeader authHeader, DummyId request);
+
+  static DummyServiceClient getClient(String url) {
+    return Feign.builder()
+        .contract(new JAXRSContract())
+        .decoder(new JacksonDecoder(ClientObjectMappers.JSON_MAPPER))
+        .encoder(new JacksonEncoder(ClientObjectMappers.JSON_MAPPER))
+        .target(DummyServiceClient.class, url);
+  }
+}
+
+]
+
+
 basic[api/generated-java/blog-api-client/src/main/java/com/blog/client/PostsServiceClient.java]=[
 package com.blog.client;
 
@@ -580,6 +618,38 @@ public interface CreatePostRequest {
 ]
 
 
+basic[api/generated-java/blog-api-model/src/main/java/com/blog/types/DummyId.java]=[
+package com.blog.types;
+
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fern.java.immutables.AliasImmutablesStyle;
+import java.lang.Override;
+import java.lang.String;
+import org.immutables.value.Value;
+
+@Value.Immutable
+@AliasImmutablesStyle
+@JsonDeserialize(
+    as = ImmutableDummyId.class
+)
+public abstract class DummyId {
+  @JsonValue
+  public abstract String value();
+
+  public static DummyId valueOf(String value) {
+    return ImmutableDummyId.of(value);
+  }
+
+  @Override
+  public String toString() {
+    return value();
+  }
+}
+
+]
+
+
 basic[api/generated-java/blog-api-model/src/main/java/com/blog/types/PostId.java]=[
 package com.blog.types;
 
@@ -785,9 +855,10 @@ public abstract class AbstractServiceRegistry extends ResourceConfig {
     register(PostNotFoundErrorExceptionMapper.class);
   }
 
-  public AbstractServiceRegistry(PostsService postsService) {
+  public AbstractServiceRegistry(PostsService postsService, DummyService dummyService) {
     this();
     register(postsService);
+    register(dummyService);
   }
 }
 
@@ -840,6 +911,30 @@ public final class DefaultExceptionMapper implements ExceptionMapper<Exception> 
       return ImmutableDefaultExceptionBody.of();
     }
   }
+}
+
+]
+
+
+basic[api/generated-java/blog-api-server-jersey/src/main/java/com/blog/server/DummyService.java]=[
+package com.blog.server;
+
+import com.blog.types.DummyId;
+import com.fern.java.auth.AuthHeader;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+@Path("dummy-service")
+public interface DummyService {
+  @POST
+  @Path("get-dummy")
+  void getDummy(@HeaderParam("Authorization") AuthHeader authHeader, DummyId request);
 }
 
 ]
@@ -996,6 +1091,29 @@ public final class DefaultExceptionMapper extends ResponseEntityExceptionHandler
       return ImmutableDefaultExceptionBody.of();
     }
   }
+}
+
+]
+
+
+basic[api/generated-java/blog-api-server-spring/src/main/java/com/blog/server/DummyService.java]=[
+package com.blog.server;
+
+import com.blog.types.DummyId;
+import com.fern.java.auth.AuthHeader;
+import javax.ws.rs.HeaderParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@RequestMapping(
+    path = "dummy-service",
+    consumes = "application/json",
+    produces = "application/json"
+)
+public interface DummyService {
+  @PostMapping("get-dummy")
+  void getDummy(@HeaderParam("Authorization") AuthHeader authHeader, @RequestBody DummyId request);
 }
 
 ]
