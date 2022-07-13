@@ -17,5 +17,6 @@ export function generateJoinUrlPathsCall({
         moduleSpecifier: "url-join",
     });
     dependencyManager.addDependency("url-join", "4.0.1");
+    dependencyManager.addDependency("@types/url-join", "4.0.1");
     return ts.factory.createCallExpression(ts.factory.createIdentifier(DEFAULT_IMPORT), undefined, paths);
 }
