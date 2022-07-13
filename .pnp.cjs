@@ -6229,7 +6229,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-api/commons", "workspace:packages/commons"],\
-            ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.4"],\
+            ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.26"],\
             ["@fern-fern/ir-model", "npm:0.0.42"],\
             ["@types/jest", "npm:28.1.4"],\
             ["@types/node", "npm:18.0.3"],\
@@ -6326,11 +6326,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/fiddle-coordinator-api-client", [\
-        ["npm:0.0.4", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-fiddle-coordinator-api-client-npm-0.0.4-ad4208f80b-81e54bfa32.zip/node_modules/@fern-fern/fiddle-coordinator-api-client/",\
+        ["npm:0.0.26", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-fiddle-coordinator-api-client-npm-0.0.26-87170c8059-49027b0570.zip/node_modules/@fern-fern/fiddle-coordinator-api-client/",\
           "packageDependencies": [\
-            ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.4"],\
-            ["@fern-typescript/service-utils", "npm:0.0.100"]\
+            ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.26"],\
+            ["@fern-typescript/service-utils", "npm:0.0.124"],\
+            ["@types/uuid", "npm:8.3.4"],\
+            ["url-join", "npm:5.0.0"],\
+            ["uuid", "npm:8.3.2"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -6646,10 +6649,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-typescript/service-utils", [\
-        ["npm:0.0.100", {\
-          "packageLocation": "./.yarn/cache/@fern-typescript-service-utils-npm-0.0.100-28753495b9-48fb2ab1e5.zip/node_modules/@fern-typescript/service-utils/",\
+        ["npm:0.0.124", {\
+          "packageLocation": "./.yarn/cache/@fern-typescript-service-utils-npm-0.0.124-eb81d631f3-e94d6fb8f1.zip/node_modules/@fern-typescript/service-utils/",\
           "packageDependencies": [\
-            ["@fern-typescript/service-utils", "npm:0.0.100"],\
+            ["@fern-typescript/service-utils", "npm:0.0.124"],\
             ["axios", "npm:0.27.2"]\
           ],\
           "linkType": "HARD"\
@@ -8679,6 +8682,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@types/uglify-js", "npm:3.16.0"],\
             ["source-map", "npm:0.6.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/uuid", [\
+        ["npm:8.3.4", {\
+          "packageLocation": "./.yarn/cache/@types-uuid-npm-8.3.4-7547f4402c-6f11f3ff70.zip/node_modules/@types/uuid/",\
+          "packageDependencies": [\
+            ["@types/uuid", "npm:8.3.4"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -26077,6 +26089,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["url", "npm:0.11.0"],\
             ["punycode", "npm:1.3.2"],\
             ["querystring", "npm:0.2.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["url-join", [\
+        ["npm:5.0.0", {\
+          "packageLocation": "./.yarn/cache/url-join-npm-5.0.0-27d329c4cf-5921384a8a.zip/node_modules/url-join/",\
+          "packageDependencies": [\
+            ["url-join", "npm:5.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\

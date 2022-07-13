@@ -1,5 +1,5 @@
 import { WorkspaceDefinition } from "@fern-api/commons";
-import { CreateJobResponseBody } from "@fern-fern/fiddle-coordinator-api-client/model/remoteGen";
+import { CreateJobResponse } from "@fern-fern/fiddle-coordinator-api-client/model";
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
 import axios from "axios";
 import FormData from "form-data";
@@ -13,7 +13,7 @@ export async function createAndStartJob({
     workspaceDefinition: WorkspaceDefinition;
     organization: string;
     intermediateRepresentation: IntermediateRepresentation;
-}): Promise<CreateJobResponseBody | undefined> {
+}): Promise<CreateJobResponse | undefined> {
     const job = await createJob({ workspaceDefinition, organization });
     try {
         await startJob({ intermediateRepresentation, job });
@@ -32,10 +32,11 @@ async function createJob({
 }) {
     const createResponse = await REMOTE_GENERATION_SERVICE.createJob({
         apiName: workspaceDefinition.name,
-        orgName: organization,
+        organizationName: organization,
         generators: workspaceDefinition.generators.map((generator) => ({
             id: generator.name,
             version: generator.version,
+            willDownloadFiles: generator.generate?.absolutePathToLocalOutput != null,
             // TODO delete this cast
             customConfig: generator.config as Record<string, string>,
         })),
@@ -53,7 +54,7 @@ async function startJob({
     job,
 }: {
     intermediateRepresentation: IntermediateRepresentation;
-    job: CreateJobResponseBody;
+    job: CreateJobResponse;
 }) {
     const formData = new FormData();
     formData.append("file", JSON.stringify(intermediateRepresentation));

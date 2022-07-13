@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@fern-api/commons": "workspace:*",
-    "@fern-fern/fiddle-coordinator-api-client": "^0.0.4",
+    "@fern-fern/fiddle-coordinator-api-client": "^0.0.26",
     "@fern-fern/ir-model": "0.0.42",
     "axios": "^0.27.2",
     "chalk": "^4.1.2",

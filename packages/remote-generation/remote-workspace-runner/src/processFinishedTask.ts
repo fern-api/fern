@@ -1,10 +1,10 @@
 import { GeneratorInvocation } from "@fern-api/commons";
 import {
-    CreateJobResponseBody,
+    CreateJobResponse,
     RemoteGenJobId,
     RemoteGenTaskId,
-    TaskStatus,
-} from "@fern-fern/fiddle-coordinator-api-client/model/remoteGen";
+    Task,
+} from "@fern-fern/fiddle-coordinator-api-client/model";
 import axios, { AxiosError } from "axios";
 import chalk from "chalk";
 import { createWriteStream } from "fs";
@@ -12,17 +12,17 @@ import { createWriteStream } from "fs";
 export async function processFinishedTask({
     job,
     taskId,
-    taskStatus,
+    task,
     generatorInvocation,
 }: {
-    job: CreateJobResponseBody;
+    job: CreateJobResponse;
     taskId: RemoteGenTaskId;
-    taskStatus: TaskStatus;
+    task: Task;
     generatorInvocation: GeneratorInvocation;
 }): Promise<void> {
     if (
-        taskStatus._type === "finished" &&
-        taskStatus.hasFilesToDownload &&
+        task.status._type === "finished" &&
+        task.status.hasFilesToDownload &&
         generatorInvocation.generate?.absolutePathToLocalOutput != null
     ) {
         try {
