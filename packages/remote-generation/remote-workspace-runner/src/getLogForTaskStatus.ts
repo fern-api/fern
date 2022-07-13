@@ -41,6 +41,7 @@ function getLogForTaskStatus({
     task: Task | undefined;
 }): string[] {
     const spinnerFrame = SPINNER.frame();
+
     const icon = TaskStatus._visit(task?.status ?? DEFAULT_TASK_STATUS, {
         notStarted: () => spinnerFrame,
         running: () => spinnerFrame,
@@ -72,20 +73,11 @@ function getLogForTaskStatus({
 
 const QUEUED_TEXT = "Queued...";
 function getTitleForTask(task: Task | undefined) {
-    if (task != null) {
-        if (task.status._type === "failed") {
-            return task.status.message;
-        }
-        const lastLog = task.logs[task.logs.length - 1];
-        if (lastLog != null) {
-            return lastLog;
-        }
-    }
-
+    const lastLog = task != null ? task.logs[task.logs.length - 1]?.message : undefined;
     return TaskStatus._visit(task?.status ?? DEFAULT_TASK_STATUS, {
         notStarted: () => QUEUED_TEXT,
-        running: () => "Generating...",
-        failed: () => "Failed",
+        running: () => lastLog ?? "Generating...",
+        failed: (failed) => failed.message,
         finished: () => "Succeeded",
         _unknown: () => "<Unknown status>",
     });
