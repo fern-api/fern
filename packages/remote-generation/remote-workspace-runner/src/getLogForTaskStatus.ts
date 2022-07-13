@@ -11,6 +11,8 @@ import chalk from "chalk";
 import { SPINNER } from "./spinner";
 import { GeneratorInvocationWithTaskId } from "./types";
 
+const DEFAULT_TASK_STATUS = TaskStatus.notStarted();
+
 export function getLogForTaskStatuses({
     tasks,
     generatorInvocationsWithTaskIds,
@@ -18,7 +20,6 @@ export function getLogForTaskStatuses({
     tasks: Record<RemoteGenTaskId, Task> | undefined;
     generatorInvocationsWithTaskIds: readonly GeneratorInvocationWithTaskId[];
 }): string {
-    const spinnerFrame = SPINNER.frame();
     return generatorInvocationsWithTaskIds
         .map(
             ({ generatorInvocation, taskId }) =>
@@ -26,7 +27,6 @@ export function getLogForTaskStatuses({
                 getLogForTaskStatus({
                     generatorInvocation,
                     task: taskId != null ? tasks?.[taskId] : undefined,
-                    spinnerFrame,
                 }).join("\n") +
                 "\n"
         )
@@ -36,15 +36,13 @@ export function getLogForTaskStatuses({
 function getLogForTaskStatus({
     generatorInvocation,
     task,
-    spinnerFrame,
 }: {
     generatorInvocation: GeneratorInvocation;
     task: Task | undefined;
-    spinnerFrame: string;
 }): string[] {
-    const status = task?.status ?? TaskStatus.notStarted();
+    const spinnerFrame = SPINNER.frame();
 
-    const icon = TaskStatus._visit(status, {
+    const icon = TaskStatus._visit(task?.status ?? DEFAULT_TASK_STATUS, {
         notStarted: () => spinnerFrame,
         running: () => spinnerFrame,
         failed: () => "❌",
@@ -52,18 +50,8 @@ function getLogForTaskStatus({
         _unknown: () => "❓",
     });
 
-    const lastLog = task != null ? task.logs[task.logs.length - 1] : undefined;
-    const text =
-        lastLog ??
-        TaskStatus._visit(status, {
-            notStarted: () => "Queued",
-            running: () => "Generating...",
-            failed: () => "Failed",
-            finished: () => "Succeeded",
-            _unknown: () => "<Unknown status>",
-        });
-
-    const messages = [`${icon} ${chalk.bold(generatorInvocation.name)} ${chalk.gray(text)}`];
+    const title = getTitleForTask(task);
+    const messages = [`${icon} ${chalk.bold(generatorInvocation.name)} ${chalk.gray(title)}`];
 
     if (task != null) {
         for (const packageForTask of task.packages) {
@@ -81,6 +69,18 @@ function getLogForTaskStatus({
     }
 
     return messages;
+}
+
+const QUEUED_TEXT = "Queued...";
+function getTitleForTask(task: Task | undefined) {
+    const lastLog = task != null ? task.logs[task.logs.length - 1]?.message : undefined;
+    return TaskStatus._visit(task?.status ?? DEFAULT_TASK_STATUS, {
+        notStarted: () => QUEUED_TEXT,
+        running: () => lastLog ?? "Generating...",
+        failed: (failed) => failed.message,
+        finished: () => "Succeeded",
+        _unknown: () => "<Unknown status>",
+    });
 }
 
 function getLogForPackage({ packageForTask, spinnerFrame }: { packageForTask: Package; spinnerFrame: string }) {
