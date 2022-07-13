@@ -5,7 +5,7 @@ exports[`fern add 1`] = `
 definition: src
 generators:
   - name: fernapi/fern-java
-    version: 0.0.55
+    version: 0.0.71
     generate: true
     config:
       packagePrefix: com
@@ -16,7 +16,7 @@ generators:
     config:
       mode: client_and_server
   - name: fernapi/fern-postman
-    version: 0.0.10
+    version: 0.0.13
     generate:
       enabled: true
       output: ./generated-postman.json
