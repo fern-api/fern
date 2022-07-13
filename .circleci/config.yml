@@ -115,8 +115,6 @@ workflows:
           filters:
             branches:
               only: main
-            tags:
-              only: /.*/
           requires:
             - lint
             - compile-and-test
