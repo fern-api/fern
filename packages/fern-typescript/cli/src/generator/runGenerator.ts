@@ -34,14 +34,16 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
             return runCommand({ command, config, npmPackage, generatorLoggingWrapper });
         })
     )
-        .then(() => {
-            GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful());
+        .then(async () => {
+            await generatorLoggingWrapper.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful()));
         })
-        .catch((e) => {
-            GeneratorUpdate.exitStatusUpdate(
-                ExitStatusUpdate.error({
-                    message: e instanceof Error ? e.message : "Encountered error",
-                })
+        .catch(async (e) => {
+            await generatorLoggingWrapper.sendUpdate(
+                GeneratorUpdate.exitStatusUpdate(
+                    ExitStatusUpdate.error({
+                        message: e instanceof Error ? e.message : "Encountered error",
+                    })
+                )
             );
         });
 }
