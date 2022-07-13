@@ -2,7 +2,7 @@
 
 # Fern
 
-> **Fern is a framework for building APIs.** You can think of it as an alternative to OpenAPI (f.k.a Swagger).
+> **Define your API once.** Get end-to-end type safety across clients, server stubs, and docs.
 
 <a href="https://www.loom.com/share/c892f4a9fc674c4bb42fb31d395d9ebf">
     <p>Fern TypeScript Server Tutorial</p>
