@@ -1,3 +1,5 @@
+ids:
+  - TaskId
 types:
   GeneratorConfig:
     properties:
@@ -44,3 +46,4 @@ types:
   RemoteGeneratorEnvironment:
     properties:
       coordinatorUrl: string
+      id: TaskId
