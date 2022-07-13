@@ -1,6 +1,3 @@
 #!/usr/bin/env bash
 
-# cd to script directory
-cd $(cd -P -- "$(dirname -- "$0")" && pwd -P)
-
-[[ -z "$(./git-tag.sh)" ]] && echo next || echo latest
+[[ -z "$(git describe --exact-match HEAD 2> /dev/null || :)" ]] && echo next || echo latest
