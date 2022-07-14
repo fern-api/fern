@@ -60,13 +60,14 @@ export function convertType({
                                   parseTypeName({ typeName: extended, fernFilepath, imports })
                               )
                         : [],
-                properties: [
-                    ...Object.entries(object.properties).map(([propertyName, propertyDefinition]) => ({
-                        key: propertyName,
-                        valueType: parseTypeReference(propertyDefinition),
-                        docs: getDocs(propertyDefinition),
-                    })),
-                ],
+                properties:
+                    object.properties != null
+                        ? Object.entries(object.properties).map(([propertyName, propertyDefinition]) => ({
+                              key: propertyName,
+                              valueType: parseTypeReference(propertyDefinition),
+                              docs: getDocs(propertyDefinition),
+                          }))
+                        : [],
             }),
         union: (union) =>
             Type.union({

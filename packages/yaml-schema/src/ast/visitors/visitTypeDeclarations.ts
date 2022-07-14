@@ -61,6 +61,9 @@ export function visitTypeDeclaration({
                     }
                 },
                 properties: (properties) => {
+                    if (properties == null) {
+                        return;
+                    }
                     for (const [propertyKey, property] of Object.entries(properties)) {
                         const nodePathForProperty = [...nodePathForType, "properties", propertyKey];
                         if (typeof property === "string") {
