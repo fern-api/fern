@@ -420,6 +420,7 @@ import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import org.immutables.value.Value;
 
@@ -437,6 +438,20 @@ public final class Author {
   @JsonValue
   InternalValue getInternalValue() {
     return value;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    return this == other || (other instanceof Author && equalTo((Author) other));
+  }
+
+  private boolean equalTo(Author other) {
+    return this.value.equals(other.value);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(this.value);
   }
 
   public static Author anonymous() {

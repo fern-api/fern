@@ -50,6 +50,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -71,6 +72,7 @@ public final class UnionGenerator extends Generator {
     private static final String IS_METHOD_NAME_PREFIX = "is";
     private static final String GET_INTERNAL_VALUE_METHOD_NAME = "getInternalValue";
     private static final String VISIT_METHOD_NAME = "visit";
+    private static final String EQUALS_METHOD_OTHER_PARAM_NAME = "other";
 
     private final DeclaredTypeName declaredTypeName;
     private final UnionTypeDeclaration unionTypeDeclaration;
@@ -120,6 +122,8 @@ public final class UnionGenerator extends Generator {
                 .addFields(getFields())
                 .addMethod(getConstructor())
                 .addMethod(getInternalValueMethod())
+                .addMethods(getEqualsMethods())
+                .addMethod(getHashCodeMethod())
                 .addMethods(getStaticBuilderMethods())
                 .addMethods(isTypeMethods.values())
                 .addMethods(getSingleUnionTypeGetterMethods(isTypeMethods, internalValueTypeSpecs))
@@ -169,9 +173,46 @@ public final class UnionGenerator extends Generator {
     private MethodSpec getInternalValueMethod() {
         return MethodSpec.methodBuilder(GET_INTERNAL_VALUE_METHOD_NAME)
                 .returns(internalValueInterfaceClassName)
-                .addStatement("return value")
+                .addStatement("return $L", VALUE_FIELD_NAME)
                 .addAnnotation(JsonValue.class)
                 .build();
+    }
+
+    private MethodSpec getHashCodeMethod() {
+        return MethodSpec.methodBuilder("hashCode")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(int.class)
+                .addStatement("return $T.hashCode(this.$L)", ClassName.get(Objects.class), VALUE_FIELD_NAME)
+                .addAnnotation(Override.class)
+                .build();
+    }
+
+    private List<MethodSpec> getEqualsMethods() {
+        MethodSpec equalToMethod = MethodSpec.methodBuilder("equalTo")
+                .addModifiers(Modifier.PRIVATE)
+                .returns(boolean.class)
+                .addParameter(generatedUnionClassName, EQUALS_METHOD_OTHER_PARAM_NAME)
+                .addStatement(
+                        "return this.$L.equals($L.$L)",
+                        VALUE_FIELD_NAME,
+                        EQUALS_METHOD_OTHER_PARAM_NAME,
+                        VALUE_FIELD_NAME)
+                .build();
+        MethodSpec equalsMethod = MethodSpec.methodBuilder("equals")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(boolean.class)
+                .addParameter(Object.class, EQUALS_METHOD_OTHER_PARAM_NAME)
+                .addStatement(
+                        "return this == $L || ($L instanceof $T && $N(($T) $L))",
+                        EQUALS_METHOD_OTHER_PARAM_NAME,
+                        EQUALS_METHOD_OTHER_PARAM_NAME,
+                        generatedUnionClassName,
+                        equalToMethod,
+                        generatedUnionClassName,
+                        EQUALS_METHOD_OTHER_PARAM_NAME)
+                .addAnnotation(Override.class)
+                .build();
+        return List.of(equalsMethod, equalToMethod);
     }
 
     private List<MethodSpec> getStaticBuilderMethods() {
