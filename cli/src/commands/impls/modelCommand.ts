@@ -1,14 +1,22 @@
 import { generateModelProject } from "@fern-typescript/model";
-import { Command } from "../Command";
+import { FernTypescriptGeneratorConfig } from "../../generator/FernGeneratorConfig";
+import { Command, CommandKey } from "../Command";
+import { constructNpmPackage } from "../constructNpmPackageForCommand";
 
-export const modelCommand: Command<"model"> = {
-    key: "model",
-    generate: async ({ volume, intermediateRepresentation, fullPackageName, packageVersion }) => {
-        await generateModelProject({
-            packageName: fullPackageName,
-            packageVersion,
-            volume,
-            intermediateRepresentation,
-        });
-    },
-};
+const COMMAND_KEY = CommandKey.Model;
+
+export function createModelCommand(generatorConfig: FernTypescriptGeneratorConfig): Command<typeof COMMAND_KEY> {
+    const npmPackage = constructNpmPackage({ commandKey: COMMAND_KEY, generatorConfig });
+    return {
+        key: COMMAND_KEY,
+        npmPackage,
+        generate: async ({ intermediateRepresentation, volume }) => {
+            await generateModelProject({
+                intermediateRepresentation,
+                packageName: npmPackage.packageName,
+                packageVersion: npmPackage.publishInfo?.packageCoordinate.version,
+                volume,
+            });
+        },
+    };
+}

@@ -1,0 +1,42 @@
+import { PackageCoordinate } from "@fern-fern/generator-logging-api-client/model";
+import { NpmRegistryConfig } from "@fern-fern/ir-model/generators";
+import { FernTypescriptGeneratorConfig } from "../generator/FernGeneratorConfig";
+import { CommandKey } from "./Command";
+
+export interface NpmPackage {
+    scopeWithAtSign: string;
+    packageName: string;
+    publishInfo: PublishInfo | undefined;
+}
+
+export interface PublishInfo {
+    registry: NpmRegistryConfig;
+    packageCoordinate: PackageCoordinate.Npm;
+}
+
+export function constructNpmPackage({
+    commandKey,
+    generatorConfig,
+}: {
+    commandKey: CommandKey;
+    generatorConfig: FernTypescriptGeneratorConfig;
+}): NpmPackage {
+    const scope = generatorConfig.organization;
+    const scopeWithAtSign = `@${scope}`;
+    const packageNameWithoutScope = `${generatorConfig.workspaceName}-${commandKey}`;
+    const packageName = `${scopeWithAtSign}/${packageNameWithoutScope}`;
+    return {
+        scopeWithAtSign,
+        packageName,
+        publishInfo:
+            generatorConfig.publish != null
+                ? {
+                      registry: generatorConfig.publish.registries.npm,
+                      packageCoordinate: PackageCoordinate.npm({
+                          name: packageName,
+                          version: generatorConfig.publish.version,
+                      }),
+                  }
+                : undefined,
+    };
+}
