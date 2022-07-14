@@ -1,18 +1,18 @@
 import { FernConstants } from "@fern-fern/ir-model";
-import { HttpEndpoint, ServiceName } from "@fern-fern/ir-model/services";
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services";
 import { DependencyManager } from "@fern-typescript/commons";
 import { GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/model-context";
 import { generateRequestTypes } from "./generateRequestTypes";
 import { generateResponseTypes } from "./generateResponseTypes";
 
 export function generateHttpEndpointTypes({
-    serviceName,
+    service,
     endpoint,
     modelContext,
     dependencyManager,
     fernConstants,
 }: {
-    serviceName: ServiceName;
+    service: HttpService;
     endpoint: HttpEndpoint;
     modelContext: ModelContext;
     dependencyManager: DependencyManager;
@@ -20,12 +20,12 @@ export function generateHttpEndpointTypes({
 }): GeneratedHttpEndpointTypes {
     return {
         request: generateRequestTypes({
-            serviceName,
+            service,
             endpoint,
             modelContext,
         }),
         response: generateResponseTypes({
-            serviceName,
+            serviceName: service.name,
             endpoint,
             modelContext,
             dependencyManager,
