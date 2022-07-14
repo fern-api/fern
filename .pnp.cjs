@@ -6339,12 +6339,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/generator-logging-api-client", [\
-        ["npm:0.0.11", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-generator-logging-api-client-npm-0.0.11-715af9a8a8-cf1c7876b2.zip/node_modules/@fern-fern/generator-logging-api-client/",\
+        ["npm:0.0.15", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-generator-logging-api-client-npm-0.0.15-360b689b27-b6daffa2b3.zip/node_modules/@fern-fern/generator-logging-api-client/",\
           "packageDependencies": [\
-            ["@fern-fern/generator-logging-api-client", "npm:0.0.11"],\
+            ["@fern-fern/generator-logging-api-client", "npm:0.0.15"],\
             ["@fern-typescript/service-utils", "npm:0.0.124"],\
-            ["url-join", "npm:5.0.0"]\
+            ["@types/url-join", "npm:4.0.1"],\
+            ["url-join", "npm:4.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -8693,6 +8694,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@types/uglify-js", "npm:3.16.0"],\
             ["source-map", "npm:0.6.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/url-join", [\
+        ["npm:4.0.1", {\
+          "packageLocation": "./.yarn/cache/@types-url-join-npm-4.0.1-996120d4f1-29444b90e1.zip/node_modules/@types/url-join/",\
+          "packageDependencies": [\
+            ["@types/url-join", "npm:4.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -14770,7 +14780,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/commons", "workspace:packages/commons"],\
             ["@fern-api/ir-generator", "workspace:packages/ir/ir-generator"],\
             ["@fern-api/workspace-parser", "workspace:packages/workspace-parser"],\
-            ["@fern-fern/generator-logging-api-client", "npm:0.0.11"],\
+            ["@fern-fern/generator-logging-api-client", "npm:0.0.15"],\
             ["@fern-fern/ir-model", "npm:0.0.42"],\
             ["@fern-typescript/client", "workspace:packages/fern-typescript/client"],\
             ["@fern-typescript/commons", "workspace:packages/fern-typescript/commons"],\
@@ -26106,6 +26116,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["url-join", [\
+        ["npm:4.0.1", {\
+          "packageLocation": "./.yarn/cache/url-join-npm-4.0.1-e1f4415722-f74e868bf2.zip/node_modules/url-join/",\
+          "packageDependencies": [\
+            ["url-join", "npm:4.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
         ["npm:5.0.0", {\
           "packageLocation": "./.yarn/cache/url-join-npm-5.0.0-27d329c4cf-5921384a8a.zip/node_modules/url-join/",\
           "packageDependencies": [\

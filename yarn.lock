@@ -2831,13 +2831,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/generator-logging-api-client@npm:^0.0.11":
-  version: 0.0.11
-  resolution: "@fern-fern/generator-logging-api-client@npm:0.0.11"
+"@fern-fern/generator-logging-api-client@npm:^0.0.15":
+  version: 0.0.15
+  resolution: "@fern-fern/generator-logging-api-client@npm:0.0.15"
   dependencies:
     "@fern-typescript/service-utils": 0.0.124
-    url-join: 5.0.0
-  checksum: cf1c7876b2213856ed525453b155e2dc84b9d0d95534567c0044c9ca91408a1445626357f2f1066def4a1d60a099e0895699d5880e221390ebbf7220edc714c3
+    "@types/url-join": 4.0.1
+    url-join: 4.0.1
+  checksum: b6daffa2b3f4d0b3002658456925f2b98dd98811492199686119f2dd143f1649c59733338e1835a4b3033776a5a7c2e77b3ddd1ad753204b1af4df0b5a0446ac
   languageName: node
   linkType: hard
 
@@ -4871,6 +4872,13 @@ __metadata:
   dependencies:
     source-map: ^0.6.1
   checksum: 10b0c4a5f361b1389cdef0b705747586ff7ddd37894e55921b8ed02718bc64ee608f4f5493c571f95ce29a3fe8d3538b7236185974dad93c750d8c05b7bceab4
+  languageName: node
+  linkType: hard
+
+"@types/url-join@npm:4.0.1":
+  version: 4.0.1
+  resolution: "@types/url-join@npm:4.0.1"
+  checksum: 29444b90e165b3970c8ad3fcef1e2de092e72b67e1f3aaff3016eea1697f98a01a28fb4f71f8044e3338a95bd2262327e9299be416efe5297018658760a331b4
   languageName: node
   linkType: hard
 
@@ -9541,7 +9549,7 @@ __metadata:
     "@fern-api/commons": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/workspace-parser": "workspace:*"
-    "@fern-fern/generator-logging-api-client": ^0.0.11
+    "@fern-fern/generator-logging-api-client": ^0.0.15
     "@fern-fern/ir-model": 0.0.42
     "@fern-typescript/client": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
@@ -18705,6 +18713,13 @@ __metadata:
   dependencies:
     punycode: "npm:^2.1.0"
   checksum: 7167432de6817fe8e9e0c9684f1d2de2bb688c94388f7569f7dbdb1587c9f4ca2a77962f134ec90be0cc4d004c939ff0d05acc9f34a0db39a3c797dada262633
+  languageName: node
+  linkType: hard
+
+"url-join@npm:4.0.1":
+  version: 4.0.1
+  resolution: "url-join@npm:4.0.1"
+  checksum: f74e868bf25dbc8be6a8d7237d4c36bb5b6c62c72e594d5ab1347fe91d6af7ccd9eb5d621e30152e4da45c2e9a26bec21390e911ab54a62d4d82e76028374ee5
   languageName: node
   linkType: hard
 
