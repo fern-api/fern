@@ -13,10 +13,11 @@ repositories {
 
 dependencies {
     api project(':blog-api-model')
-    api 'io.github.fern-api:auth-utils:0.0.64'
-    api 'io.github.fern-api:exception-utils:0.0.64'
-    api 'io.github.fern-api:immutables-utils:0.0.64'
-    api 'io.github.fern-api:jackson-utils:0.0.64'
+    api 'io.github.fern-api:auth-utils:0.0.75'
+    api 'io.github.fern-api:exception-utils:0.0.75'
+    api 'io.github.fern-api:immutables-utils:0.0.75'
+    api 'io.github.fern-api:jackson-utils:0.0.75'
+    implementation 'io.github.fern-api:jersey-utils:0.0.75'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.3'
     implementation 'io.github.openfeign:feign-jackson:11.8'
@@ -36,6 +37,7 @@ package com.blog.client;
 import com.blog.types.DummyId;
 import com.fern.java.auth.AuthHeader;
 import com.fern.java.jackson.ClientObjectMappers;
+import com.fern.java.jersey.contracts.OptionalAwareContract;
 import feign.Feign;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
@@ -58,7 +60,7 @@ public interface DummyServiceClient {
 
   static DummyServiceClient getClient(String url) {
     return Feign.builder()
-        .contract(new JAXRSContract())
+        .contract(new OptionalAwareContract(new JAXRSContract()))
         .decoder(new JacksonDecoder(ClientObjectMappers.JSON_MAPPER))
         .encoder(new JacksonEncoder(ClientObjectMappers.JSON_MAPPER))
         .target(DummyServiceClient.class, url);
@@ -77,6 +79,7 @@ import com.blog.types.CreatePostRequest;
 import com.blog.types.PostId;
 import com.fern.java.exception.UnknownRemoteException;
 import com.fern.java.jackson.ClientObjectMappers;
+import com.fern.java.jersey.contracts.OptionalAwareContract;
 import feign.Feign;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
@@ -105,7 +108,7 @@ public interface PostsServiceClient {
 
   static PostsServiceClient getClient(String url) {
     return Feign.builder()
-        .contract(new JAXRSContract())
+        .contract(new OptionalAwareContract(new JAXRSContract()))
         .decoder(new JacksonDecoder(ClientObjectMappers.JSON_MAPPER))
         .encoder(new JacksonEncoder(ClientObjectMappers.JSON_MAPPER))
         .errorDecoder(new PostsServiceErrorDecoder()).target(PostsServiceClient.class, url);
@@ -170,8 +173,8 @@ repositories {
 dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
     implementation 'com.google.code.findbugs:annotations:3.0.1'
-    api 'io.github.fern-api:exception-utils:0.0.64'
-    api 'io.github.fern-api:immutables-utils:0.0.64'
+    api 'io.github.fern-api:exception-utils:0.0.75'
+    api 'io.github.fern-api:immutables-utils:0.0.75'
 
     annotationProcessor 'org.immutables:value:2.8.8'
     compileOnly 'org.immutables:value-annotations:2.8.8'
@@ -805,11 +808,11 @@ repositories {
 
 dependencies {
     api project(':blog-api-model')
-    api 'io.github.fern-api:auth-utils:0.0.64'
-    api 'io.github.fern-api:exception-utils:0.0.64'
-    api 'io.github.fern-api:immutables-utils:0.0.64'
-    api 'io.github.fern-api:jackson-utils:0.0.64'
-    api 'io.github.fern-api:jersey-utils:0.0.64'
+    api 'io.github.fern-api:auth-utils:0.0.75'
+    api 'io.github.fern-api:exception-utils:0.0.75'
+    api 'io.github.fern-api:immutables-utils:0.0.75'
+    api 'io.github.fern-api:jackson-utils:0.0.75'
+    api 'io.github.fern-api:jersey-utils:0.0.75'
     implementation 'org.slf4j:slf4j-api:1.7.36'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.3'
@@ -1001,11 +1004,11 @@ repositories {
 
 dependencies {
     api project(':blog-api-model')
-    api 'io.github.fern-api:auth-utils:0.0.64'
-    api 'io.github.fern-api:exception-utils:0.0.64'
-    api 'io.github.fern-api:immutables-utils:0.0.64'
-    api 'io.github.fern-api:jackson-utils:0.0.64'
-    api 'io.github.fern-api:spring-utils:0.0.64'
+    api 'io.github.fern-api:auth-utils:0.0.75'
+    api 'io.github.fern-api:exception-utils:0.0.75'
+    api 'io.github.fern-api:immutables-utils:0.0.75'
+    api 'io.github.fern-api:jackson-utils:0.0.75'
+    api 'io.github.fern-api:spring-utils:0.0.75'
     implementation 'org.slf4j:slf4j-api:1.7.36'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.3'

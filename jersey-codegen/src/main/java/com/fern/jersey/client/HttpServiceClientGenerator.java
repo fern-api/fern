@@ -25,6 +25,7 @@ import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.codegen.utils.server.HttpAuthParameterSpecVisitor;
 import com.fern.codegen.utils.server.HttpPathUtils;
 import com.fern.java.exception.UnknownRemoteException;
+import com.fern.java.jersey.contracts.OptionalAwareContract;
 import com.fern.jersey.JerseyHttpMethodAnnotationVisitor;
 import com.fern.jersey.JerseyServiceGeneratorUtils;
 import com.fern.model.codegen.Generator;
@@ -178,7 +179,7 @@ public final class HttpServiceClientGenerator extends Generator {
                 .add("return $T.builder()\n", Feign.class)
                 .indent()
                 .indent()
-                .add(".contract(new $T())\n", JAXRSContract.class)
+                .add(".contract(new $T(new $T()))\n", OptionalAwareContract.class, JAXRSContract.class)
                 .add(
                         ".decoder(new $T($T.$L))\n",
                         JacksonDecoder.class,

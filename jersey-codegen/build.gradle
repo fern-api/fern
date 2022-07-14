@@ -4,6 +4,7 @@ dependencies {
     implementation project(':runtime-utils:auth-utils')
     implementation project(':runtime-utils:jackson-utils')
     implementation project(':runtime-utils:exception-utils')
+    implementation project(':runtime-utils:jersey-utils')
     implementation 'com.fern-fern.fern:ir-model'
     implementation 'com.fern:fern-immutables-style'
     implementation 'com.squareup:javapoet'
