@@ -2,6 +2,7 @@
 dependencies {
     api 'org.glassfish.jersey.core:jersey-common'
     implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'io.github.openfeign:feign-core'
     implementation project(':runtime-utils:immutables-utils')
 
     compileOnly 'org.immutables:value::annotations'
