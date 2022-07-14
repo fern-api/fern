@@ -7,5 +7,4 @@ tag="$(git describe --exact-match --tags HEAD 2> /dev/null || :)"
 if [[ -n "$tag" && -z "$CIRCLE_TAG" ]]; then
 	exclude_param="--exclude $tag"
 fi
-
-git describe --tags --always --first-parent "$exclude_param"
+git describe --tags --always --first-parent $exclude_param
