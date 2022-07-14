@@ -1,4 +1,4 @@
-import { HttpEndpoint, ServiceName } from "@fern-fern/ir-model/services";
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { HttpServiceTypeMetadata, ModelContext } from "@fern-typescript/model-context";
 import { OptionalKind, PropertySignatureStructure, SourceFile } from "ts-morph";
@@ -7,15 +7,15 @@ import { createHttpServiceTypeFileWriter } from "./createHttpServiceTypeFileWrit
 
 export declare namespace generateRequestTypes {
     export interface Args {
+        service: HttpService;
         endpoint: HttpEndpoint;
-        serviceName: ServiceName;
         modelContext: ModelContext;
     }
 }
 
 export function generateRequestTypes({
+    service,
     endpoint,
-    serviceName,
     modelContext,
 }: generateRequestTypes.Args): GeneratedRequest<HttpServiceTypeMetadata> {
     const additionalProperties = [
@@ -32,7 +32,7 @@ export function generateRequestTypes({
                     ),
                 })
         ),
-        ...endpoint.headers.map(
+        ...[...service.headers, ...endpoint.headers].map(
             (header) =>
                 (requestFile: SourceFile): OptionalKind<PropertySignatureStructure> => ({
                     name: `"${header.header}"`,
@@ -58,6 +58,6 @@ export function generateRequestTypes({
             docs: endpoint.request.docs,
         },
         additionalProperties,
-        writeServiceTypeFile: createHttpServiceTypeFileWriter({ modelContext, serviceName, endpoint }),
+        writeServiceTypeFile: createHttpServiceTypeFileWriter({ modelContext, serviceName: service.name, endpoint }),
     });
 }
