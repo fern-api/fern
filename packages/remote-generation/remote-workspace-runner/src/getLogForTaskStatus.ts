@@ -84,21 +84,34 @@ function getTitleForTask(task: Task | undefined) {
 }
 
 function getLogForPackage({ packageForTask, spinnerFrame }: { packageForTask: Package; spinnerFrame: string }) {
+    const parts: string[] = [];
+
     const icon = PackagePublishStatus._visit(packageForTask.status, {
-        notStartedPublishing: () => "○",
+        notStartedPublishing: () => spinnerFrame,
         publishing: () => spinnerFrame,
-        published: () => "✔️",
+        published: () => "✔️ ",
         failedToPublish: () => "❌",
         _unknown: () => "❓",
     });
+    parts.push(icon);
 
     const coordinate = PackageCoordinate._visit(packageForTask.coordinate, {
         npm: (npmPackage) => `${npmPackage.name}@${npmPackage.version}`,
         maven: (mavenPackage) => `${mavenPackage.group}:${mavenPackage.artifact}:${mavenPackage.version}`,
         _unknown: () => "<unknown package>",
     });
+    parts.push(coordinate);
 
-    const logForPackage = getSubLog(`${icon} ${coordinate}`);
+    const registry = PackageCoordinate._visit(packageForTask.coordinate, {
+        npm: () => "npm",
+        maven: () => "maven",
+        _unknown: () => undefined,
+    });
+    if (registry != null) {
+        parts.push(chalk.gray(`(${registry})`));
+    }
+
+    const logForPackage = getSubLog(parts.join(" "));
     return logForPackage;
 }
 
