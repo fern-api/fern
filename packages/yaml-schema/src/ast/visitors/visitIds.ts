@@ -4,6 +4,8 @@ import { NodePath } from "../NodePath";
 import { createDocsVisitor } from "./utils/createDocsVisitor";
 import { visitObject } from "./utils/ObjectPropertiesVisitor";
 
+export const RAW_DEFAULT_ID_TYPE = "string";
+
 export function visitIds({
     ids,
     visitor,
@@ -20,11 +22,11 @@ export function visitIds({
     for (const id of ids) {
         const nodePathForId = [...nodePath, typeof id === "string" ? id : id.name];
         visitor.id?.(id, nodePathForId);
-        if (typeof id !== "string" && id.type != null) {
+        if (typeof id !== "string") {
             visitor.typeDeclaration?.(
                 {
                     typeName: id.name,
-                    declaration: id.type,
+                    declaration: id.type ?? RAW_DEFAULT_ID_TYPE,
                 },
                 nodePathForId
             );

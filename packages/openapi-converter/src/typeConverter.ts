@@ -7,7 +7,7 @@ export interface FernTypeConversionResult {
     typeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema | string>;
 }
 
-const EMPTY_OBJECT_TYPE_DEFINITION: RawSchemas.ObjectSchema = {
+const EMPTY_OBJECT_TYPE_DEFINITION: RawSchemas.ObjectSchema & Pick<Required<RawSchemas.ObjectSchema>, "properties"> = {
     properties: {},
 };
 
@@ -45,7 +45,8 @@ export function convertToFernType(typeName: string, schemaObject: OpenAPIV3.Sche
         if (schemaObject.required != null) {
             schemaObject.required.forEach((requiredProperty) => requiredProperties.add(requiredProperty));
         }
-        const objectTypeDeclaration: RawSchemas.TypeDeclarationSchema = EMPTY_OBJECT_TYPE_DEFINITION;
+        const objectTypeDeclaration = EMPTY_OBJECT_TYPE_DEFINITION;
+
         if (schemaObject.properties != null) {
             for (const propertyName of Object.keys(schemaObject.properties)) {
                 const propertyType = schemaObject.properties[propertyName];
