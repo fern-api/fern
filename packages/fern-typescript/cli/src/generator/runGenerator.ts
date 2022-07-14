@@ -1,8 +1,9 @@
 import { ExitStatusUpdate, GeneratorUpdate, PackageCoordinate } from "@fern-fern/generator-logging-api-client/model";
 import { readFile } from "fs/promises";
 import { Command } from "../commands/Command";
-import { COMMANDS } from "../commands/commands";
-import { getCommandPackageCoordinate } from "../commands/getCommandPackageCoordinate";
+import { createClientCommand } from "../commands/impls/clientCommand";
+import { createModelCommand } from "../commands/impls/modelCommand";
+import { createServerCommand } from "../commands/impls/serverCommand";
 import { runCommand } from "../commands/runCommand";
 import { GeneratorLoggingWrapper } from "../utils/generatorLoggingWrapper";
 import { FernTypescriptGeneratorConfig } from "./FernGeneratorConfig";
@@ -13,50 +14,40 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
     const commands = getCommands(config);
     const generatorLoggingWrapper = new GeneratorLoggingWrapper(config);
 
-    const npmPackages = commands.map((command) => {
-        return getCommandPackageCoordinate({ command, config });
-    });
     await generatorLoggingWrapper.sendUpdate(
         GeneratorUpdate.init({
-            packagesToPublish: npmPackages
-                .map((npmPackage) => npmPackage.packageCoordinate)
-                .filter((val): val is PackageCoordinate => {
-                    return val !== undefined;
-                }),
+            packagesToPublish: commands.reduce<PackageCoordinate[]>((all, command) => {
+                if (command.npmPackage.publishInfo != null) {
+                    all.push(command.npmPackage.publishInfo.packageCoordinate);
+                }
+                return all;
+            }, []),
         })
     );
-    await Promise.all(
-        commands.map(async (command, idx) => {
-            const npmPackage = npmPackages[idx];
-            if (npmPackage == null) {
-                throw new Error("Failed to find npmPackage for command");
-            }
-            return runCommand({ command, config, npmPackage, generatorLoggingWrapper });
-        })
-    )
-        .then(async () => {
-            await generatorLoggingWrapper.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful()));
-        })
-        .catch(async (e) => {
-            await generatorLoggingWrapper.sendUpdate(
-                GeneratorUpdate.exitStatusUpdate(
-                    ExitStatusUpdate.error({
-                        message: e instanceof Error ? e.message : "Encountered error",
-                    })
-                )
-            );
-        });
+
+    try {
+        await Promise.all(commands.map((command) => runCommand({ command, config, generatorLoggingWrapper })));
+        await generatorLoggingWrapper.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful()));
+    } catch (e) {
+        await generatorLoggingWrapper.sendUpdate(
+            GeneratorUpdate.exitStatusUpdate(
+                ExitStatusUpdate.error({
+                    message: e instanceof Error ? e.message : "Encountered error",
+                })
+            )
+        );
+    }
 }
 
-function getCommands(config: FernTypescriptGeneratorConfig): Command<string>[] {
-    switch (config.customConfig.mode) {
+function getCommands(generatorConfig: FernTypescriptGeneratorConfig): Command<string>[] {
+    switch (generatorConfig.customConfig.mode) {
         case "client":
-            return [COMMANDS.client];
+            return [createClientCommand(generatorConfig)];
         case "server":
-            return [COMMANDS.server];
+            return [createServerCommand(generatorConfig)];
         case "model":
-            return [COMMANDS.model];
+            return [createModelCommand(generatorConfig)];
         case "client_and_server":
-            return [COMMANDS.client, COMMANDS.server];
+            return [createClientCommand(generatorConfig), createServerCommand(generatorConfig)];
     }
 }
