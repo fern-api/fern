@@ -29,7 +29,7 @@ import javax.ws.rs.QueryParam;
 
 public final class OptionalAwareContract extends AbstractDelegatingContract {
 
-    OptionalAwareContract(Contract delegate) {
+    public OptionalAwareContract(Contract delegate) {
         super(delegate);
     }
 
