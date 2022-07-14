@@ -19,7 +19,7 @@ export function generateServiceTypeFiles({
     for (const service of intermediateRepresentation.services.http) {
         for (const endpoint of service.endpoints) {
             const generatedTypes = generateHttpEndpointTypes({
-                serviceName: service.name,
+                service,
                 endpoint,
                 modelContext,
                 dependencyManager,

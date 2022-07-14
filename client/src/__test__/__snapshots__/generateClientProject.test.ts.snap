@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`generateClientProject chat app 1`] = `
+exports[`generateClientProject chat 1`] = `
 Object {
   "/.npmignore": "tsconfig.json",
   "/index.ts": "export * as model from \\"./model\\";
@@ -224,7 +224,7 @@ export class ChatService implements ChatService {
 }
 `;
 
-exports[`generateClientProject no errors 1`] = `
+exports[`generateClientProject no-errors 1`] = `
 Object {
   "/.npmignore": "tsconfig.json",
   "/index.ts": "export * as model from \\"./model\\";
@@ -440,6 +440,7 @@ export interface GetPostRequest {
     postId: model.PostId;
     page: number | null | undefined;
     otherParam: number;
+    \\"X-Service-Header\\": string;
 }
 ",
   "/model/_service-types/PostsService/GetPostResponse.ts": "import * as model from \\"../..\\";
@@ -493,6 +494,13 @@ export const GetPostV2ErrorBody = {
     _types: (): GetPostV2ErrorBody[\\"_error\\"][] => [\\"PostNotFoundError\\"],
 } as const;
 ",
+  "/model/_service-types/PostsService/GetPostV2Request.ts": "import * as model from \\"../..\\";
+
+export interface GetPostV2Request {
+    \\"X-Service-Header\\": string;
+    body: model.PostId;
+}
+",
   "/model/_service-types/PostsService/GetPostV2Response.ts": "import * as model from \\"../..\\";
 
 export type GetPostV2Response = GetPostV2Response.SuccessResponse | GetPostV2Response.ErrorResponse;
@@ -512,6 +520,7 @@ export declare namespace GetPostV2Response {
   "/model/_service-types/PostsService/_CreatePostRequest.ts": "import * as model from \\"../..\\";
 
 export interface _CreatePostRequest {
+    \\"X-Service-Header\\": string;
     \\"X-Endpoint-Header\\": string;
     body: model.CreatePostRequest;
 }
@@ -522,6 +531,7 @@ export * from \\"./CreatePostResponse\\";
 export * from \\"./GetPostRequest\\";
 export * from \\"./GetPostErrorBody\\";
 export * from \\"./GetPostResponse\\";
+export * from \\"./GetPostV2Request\\";
 export * from \\"./GetPostV2ErrorBody\\";
 export * from \\"./GetPostV2Response\\";
 ",
@@ -671,7 +681,7 @@ import * as model from \\"../model\\";
 export interface PostsService {
     createPost(request: model._CreatePostRequest): Promise<model.CreatePostResponse>;
     getPost(request: model.GetPostRequest): Promise<model.GetPostResponse>;
-    getPostV2(request: model.PostId): Promise<model.GetPostV2Response>;
+    getPostV2(request: model.GetPostV2Request): Promise<model.GetPostV2Response>;
 }
 
 export declare namespace PostsService {
@@ -764,7 +774,7 @@ export class PostsService implements PostsService {
         }
     }
 
-    public async getPostV2(request: model.PostId): Promise<model.GetPostV2Response> {
+    public async getPostV2(request: model.GetPostV2Request): Promise<model.GetPostV2Response> {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/get\\"),
             method: \\"GET\\",
@@ -773,7 +783,7 @@ export class PostsService implements PostsService {
             },
             token: this.token,
             body: {
-                content: JSON.stringify(request),
+                content: JSON.stringify(request.body),
                 contentType: \\"application/json\\"
             }
         });
