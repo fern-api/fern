@@ -6,7 +6,7 @@ const VERSION = "0.0.124";
 
 type FernServiceUtilsExport = ExportedFernServiceUtilsType | ExportedFernServiceUtilsValue;
 
-export type ExportedFernServiceUtilsType = "Fetcher" | "Token" | "MaybeGetter";
+export type ExportedFernServiceUtilsType = "Fetcher" | "BearerToken" | "BasicAuth" | "MaybeGetter";
 
 export function getReferenceToFernServiceUtilsType({
     type,
@@ -38,21 +38,40 @@ export function getReferenceToFernServiceUtilsValue({
     return ts.factory.createIdentifier(value);
 }
 
-const TOKEN_UTILS_NAME = "Token";
-type TokenUtil = "of" | "fromAuthorizationHeader";
+const BEARER_TOKEN_UTILS_NAME = "BearerToken";
+type BearerTokenUtil = "toAuthorizationHeader" | "fromAuthorizationHeader";
 
-export function getReferenceToFernServiceUtilsTokenMethod({
+export function getReferenceToFernServiceUtilsBearerTokenMethod({
     util,
     dependencyManager,
     referencedIn,
 }: {
-    util: TokenUtil;
+    util: BearerTokenUtil;
     dependencyManager: DependencyManager;
     referencedIn: SourceFile;
 }): ts.PropertyAccessExpression {
-    addFernServiceUtilsImport({ imports: [TOKEN_UTILS_NAME], file: referencedIn, dependencyManager });
+    addFernServiceUtilsImport({ imports: [BEARER_TOKEN_UTILS_NAME], file: referencedIn, dependencyManager });
     return ts.factory.createPropertyAccessExpression(
-        ts.factory.createIdentifier(TOKEN_UTILS_NAME),
+        ts.factory.createIdentifier(BEARER_TOKEN_UTILS_NAME),
+        ts.factory.createIdentifier(util)
+    );
+}
+
+const BASIC_AUTH_UTILS_NAME = "BasicAuth";
+type BasicAuthUtil = "toAuthorizationHeader" | "fromAuthorizationHeader";
+
+export function getReferenceToFernServiceUtilsBasicAuthMethod({
+    util,
+    dependencyManager,
+    referencedIn,
+}: {
+    util: BasicAuthUtil;
+    dependencyManager: DependencyManager;
+    referencedIn: SourceFile;
+}): ts.PropertyAccessExpression {
+    addFernServiceUtilsImport({ imports: [BASIC_AUTH_UTILS_NAME], file: referencedIn, dependencyManager });
+    return ts.factory.createPropertyAccessExpression(
+        ts.factory.createIdentifier(BASIC_AUTH_UTILS_NAME),
         ts.factory.createIdentifier(util)
     );
 }

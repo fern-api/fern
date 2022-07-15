@@ -239,7 +239,21 @@ function getAuthParameters({
                     name: ServiceTypesConstants.HttpEndpint.Token.VARIABLE_NAME,
                     type: getTextOfTsNode(
                         getReferenceToFernServiceUtilsType({
-                            type: "Token",
+                            type: "BearerToken",
+                            dependencyManager,
+                            referencedIn: file,
+                        })
+                    ),
+                },
+            ];
+        },
+        basic: () => {
+            return [
+                {
+                    name: ServiceTypesConstants.HttpEndpint.Token.VARIABLE_NAME,
+                    type: getTextOfTsNode(
+                        getReferenceToFernServiceUtilsType({
+                            type: "BasicAuth",
                             dependencyManager,
                             referencedIn: file,
                         })
