@@ -3146,12 +3146,14 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@types/basic-auth": ^1.1.3
     "@types/jest": ^28.1.4
+    "@types/js-base64": ^3.3.1
     "@types/node": ^18.0.3
     axios: ^0.27.2
     basic-auth: ^2.0.1
     depcheck: ^1.4.3
     eslint: ^8.19.0
     jest: ^28.1.2
+    js-base64: ^3.7.2
     npm-run-all: ^4.1.5
     prettier: ^2.7.1
     ts-jest: ^28.0.5
@@ -4601,6 +4603,15 @@ __metadata:
     jest-matcher-utils: ^28.0.0
     pretty-format: ^28.0.0
   checksum: 97e22c600397bb4f30e39b595f8285ae92e4eb29a1ef6d1689749e4a4da683d88ecfe717b64492f6adc4c17c1c989520c3546f938c84a7d435c6ac3acf1a2bdc
+  languageName: node
+  linkType: hard
+
+"@types/js-base64@npm:^3.3.1":
+  version: 3.3.1
+  resolution: "@types/js-base64@npm:3.3.1"
+  dependencies:
+    js-base64: "*"
+  checksum: fbaaa1e6d298c8c774e7302faa4997c7ed8159b612e288d3d0f17c412fee88b84e4d5c2fc42c3b22b5691508a58807c0f9de1db5c8d6e57abc934e40ea868620
   languageName: node
   linkType: hard
 
@@ -12438,6 +12449,13 @@ __metadata:
   bin:
     jest: bin/jest.js
   checksum: 8ad37088c42cd5a6decb54c61dfe6a45131a50dfe4c805aef1228cae4ca91b0fc7dfe2991ea771d88118151f5f1697d113b6f45c9b0d88b2ece2aac229e77150
+  languageName: node
+  linkType: hard
+
+"js-base64@npm:*, js-base64@npm:^3.7.2":
+  version: 3.7.2
+  resolution: "js-base64@npm:3.7.2"
+  checksum: 573f28e9a27c3df60096d4d3f551bcb4fcb6d49161cf83396e9bad9b76f94736a70bb70b8808fe834dff2a388f76604ba09d6e153bbf181646e407720139fa5b
   languageName: node
   linkType: hard
 

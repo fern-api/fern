@@ -6678,12 +6678,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@types/basic-auth", "npm:1.1.3"],\
             ["@types/jest", "npm:28.1.4"],\
+            ["@types/js-base64", "npm:3.3.1"],\
             ["@types/node", "npm:18.0.3"],\
             ["axios", "npm:0.27.2"],\
             ["basic-auth", "npm:2.0.1"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.19.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.2"],\
+            ["js-base64", "npm:3.7.2"],\
             ["npm-run-all", "npm:4.1.5"],\
             ["prettier", "npm:2.7.1"],\
             ["ts-jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.0.5"],\
@@ -8367,6 +8369,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:28.1.4"],\
             ["jest-matcher-utils", "npm:28.1.1"],\
             ["pretty-format", "npm:28.1.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/js-base64", [\
+        ["npm:3.3.1", {\
+          "packageLocation": "./.yarn/cache/@types-js-base64-npm-3.3.1-0a2c52ee43-fbaaa1e6d2.zip/node_modules/@types/js-base64/",\
+          "packageDependencies": [\
+            ["@types/js-base64", "npm:3.3.1"],\
+            ["js-base64", "npm:3.7.2"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -18039,6 +18051,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:17.0.34"],\
             ["merge-stream", "npm:2.0.0"],\
             ["supports-color", "npm:8.1.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["js-base64", [\
+        ["npm:3.7.2", {\
+          "packageLocation": "./.yarn/cache/js-base64-npm-3.7.2-706fb77a0b-573f28e9a2.zip/node_modules/js-base64/",\
+          "packageDependencies": [\
+            ["js-base64", "npm:3.7.2"]\
           ],\
           "linkType": "HARD"\
         }]\
