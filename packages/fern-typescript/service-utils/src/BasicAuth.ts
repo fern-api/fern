@@ -7,8 +7,8 @@ export interface BasicAuth {
 }
 
 export const BasicAuth = {
-    toAuthorizationHeader: (username: string, password: string): string => {
-        const token = Buffer.from(`${username}:${password}`).toString("base64");
+    toAuthorizationHeader: (basicAuth: BasicAuth): string => {
+        const token = Buffer.from(`${basicAuth.username}:${basicAuth.password}`).toString("base64");
         return `Basic ${token}`;
     },
     fromAuthorizationHeader: (header: string): BasicAuth => {
