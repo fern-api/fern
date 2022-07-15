@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`no-undefined-path-parameters simple 1`] = `
+Array [
+  Object {
+    "message": "Endpoint is missing path-parameter: [1mparameter2[22m",
+    "nodePath": Array [
+      "services",
+      "http",
+      "SimpleService",
+      "endpoints",
+      "missingPathParameters",
+    ],
+    "relativeFilePath": "src/simple.yml",
+    "severity": "error",
+  },
+  Object {
+    "message": "Endpoint path has unused path-parameter: [1mparameter1[22m",
+    "nodePath": Array [
+      "services",
+      "http",
+      "SimpleService",
+      "endpoints",
+      "unusedPathParameters",
+    ],
+    "relativeFilePath": "src/simple.yml",
+    "severity": "error",
+  },
+]
+`;

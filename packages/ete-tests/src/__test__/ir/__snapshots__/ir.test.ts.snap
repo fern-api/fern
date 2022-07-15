@@ -153,7 +153,7 @@ exports[`fern-ir-tests simple 1`] = `
                         },
                         \\"pathParameters\\": [
                             {
-                                \\"key\\": \\"postId\\",
+                                \\"key\\": \\"movieId\\",
                                 \\"valueType\\": {
                                     \\"name\\": \\"MovieId\\",
                                     \\"fernFilepath\\": [],

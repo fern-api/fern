@@ -29,7 +29,7 @@ services:
           method: GET
           path: /{movieId}
           path-parameters:
-            postId: MovieId
+            movieId: MovieId
           response: Movie
           errors:
             - NotFoundError
