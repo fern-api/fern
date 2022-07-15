@@ -3149,6 +3149,7 @@ __metadata:
     "@types/node": ^18.0.3
     axios: ^0.27.2
     basic-auth: ^2.0.1
+    basic-auth-token: ^0.4.2
     depcheck: ^1.4.3
     eslint: ^8.19.0
     jest: ^28.1.2
@@ -6371,6 +6372,13 @@ __metadata:
   version: 1.5.1
   resolution: "base64-js@npm:1.5.1"
   checksum: 669632eb3745404c2f822a18fc3a0122d2f9a7a13f7fb8b5823ee19d1d2ff9ee5b52c53367176ea4ad093c332fd5ab4bd0ebae5a8e27917a4105a4cfc86b1005
+  languageName: node
+  linkType: hard
+
+"basic-auth-token@npm:^0.4.2":
+  version: 0.4.2
+  resolution: "basic-auth-token@npm:0.4.2"
+  checksum: 6898504f334eef22cd297fd1a4ad627dc758e29e361c83f99a5c1f9194ab8bb58aac13e686669e912ab4ffb5724d7c599fa50bff29af3f19cdd7f65054fcd7cd
   languageName: node
   linkType: hard
 
