@@ -1,5 +1,5 @@
 import { parse } from "basic-auth";
-import { Buffer } from "buffer";
+import { Base64 } from "js-base64";
 
 export interface BasicAuth {
     username: string;
@@ -8,7 +8,7 @@ export interface BasicAuth {
 
 export const BasicAuth = {
     toAuthorizationHeader: (basicAuth: BasicAuth): string => {
-        const token = Buffer.from(`${basicAuth.username}:${basicAuth.password}`).toString("base64");
+        const token = Base64.encode(`${basicAuth.username}:${basicAuth.password}`);
         return `Basic ${token}`;
     },
     fromAuthorizationHeader: (header: string): BasicAuth => {
