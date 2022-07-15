@@ -1,5 +1,5 @@
+import { Token } from "./BearerToken";
 import { MaybeGetter } from "./MaybeGetter";
-import { Token } from "./Token";
 
 export type Fetcher = (args: Fetcher.Args) => Promise<Fetcher.Response>;
 export declare namespace Fetcher {
