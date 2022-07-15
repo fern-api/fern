@@ -6681,7 +6681,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.0.3"],\
             ["axios", "npm:0.27.2"],\
             ["basic-auth", "npm:2.0.1"],\
-            ["basic-auth-token", "npm:0.4.2"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.19.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.2"],\
@@ -10900,15 +10899,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["basic-auth", "npm:2.0.1"],\
             ["safe-buffer", "npm:5.1.2"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["basic-auth-token", [\
-        ["npm:0.4.2", {\
-          "packageLocation": "./.yarn/cache/basic-auth-token-npm-0.4.2-cd744fc028-6898504f33.zip/node_modules/basic-auth-token/",\
-          "packageDependencies": [\
-            ["basic-auth-token", "npm:0.4.2"]\
           ],\
           "linkType": "HARD"\
         }]\
