@@ -606,6 +606,7 @@ basic[api/generated-java/blog-api-model/src/main/java/com/blog/types/CreatePostR
 package com.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import java.lang.String;
@@ -627,6 +628,9 @@ public interface CreatePostRequest {
   String content();
 
   PostType postType();
+
+  @JsonProperty("switch")
+  int _switch();
 
   static ImmutableCreatePostRequest.TitleBuildStage builder() {
     return ImmutableCreatePostRequest.builder();

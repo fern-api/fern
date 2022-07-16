@@ -19,6 +19,7 @@ types:
       author: Author
       content: string
       postType: PostType
+      switch: integer
   PostType:
     enum:
       - LONG

@@ -31,7 +31,8 @@ public final class KeyWordUtils {
             "return",
             "import",
             "for",
-            "assert");
+            "assert",
+            "switch");
 
     private KeyWordUtils() {}
 
