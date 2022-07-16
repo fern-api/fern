@@ -13,11 +13,11 @@ repositories {
 
 dependencies {
     api project(':blog-api-model')
-    api 'io.github.fern-api:auth-utils:0.0.75'
-    api 'io.github.fern-api:exception-utils:0.0.75'
-    api 'io.github.fern-api:immutables-utils:0.0.75'
-    api 'io.github.fern-api:jackson-utils:0.0.75'
-    implementation 'io.github.fern-api:jersey-utils:0.0.75'
+    api 'io.github.fern-api:auth-utils:0.0.77'
+    api 'io.github.fern-api:exception-utils:0.0.77'
+    api 'io.github.fern-api:immutables-utils:0.0.77'
+    api 'io.github.fern-api:jackson-utils:0.0.77'
+    implementation 'io.github.fern-api:jersey-utils:0.0.77'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.3'
     implementation 'io.github.openfeign:feign-jackson:11.8'
@@ -35,7 +35,7 @@ basic[api/generated-java/blog-api-client/src/main/java/com/blog/client/DummyServ
 package com.blog.client;
 
 import com.blog.types.DummyId;
-import com.fern.java.auth.AuthHeader;
+import com.fern.java.auth.BearerAuthHeader;
 import com.fern.java.jackson.ClientObjectMappers;
 import com.fern.java.jersey.contracts.OptionalAwareContract;
 import feign.Feign;
@@ -56,7 +56,7 @@ import javax.ws.rs.core.MediaType;
 public interface DummyServiceClient {
   @POST
   @Path("get-dummy")
-  void getDummy(@HeaderParam("Authorization") AuthHeader authHeader, DummyId request);
+  void getDummy(@HeaderParam("Authorization") BearerAuthHeader authHeader, DummyId request);
 
   static DummyServiceClient getClient(String url) {
     return Feign.builder()
@@ -173,8 +173,8 @@ repositories {
 dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
     implementation 'com.google.code.findbugs:annotations:3.0.1'
-    api 'io.github.fern-api:exception-utils:0.0.75'
-    api 'io.github.fern-api:immutables-utils:0.0.75'
+    api 'io.github.fern-api:exception-utils:0.0.77'
+    api 'io.github.fern-api:immutables-utils:0.0.77'
 
     annotationProcessor 'org.immutables:value:2.8.8'
     compileOnly 'org.immutables:value-annotations:2.8.8'
@@ -808,11 +808,11 @@ repositories {
 
 dependencies {
     api project(':blog-api-model')
-    api 'io.github.fern-api:auth-utils:0.0.75'
-    api 'io.github.fern-api:exception-utils:0.0.75'
-    api 'io.github.fern-api:immutables-utils:0.0.75'
-    api 'io.github.fern-api:jackson-utils:0.0.75'
-    api 'io.github.fern-api:jersey-utils:0.0.75'
+    api 'io.github.fern-api:auth-utils:0.0.77'
+    api 'io.github.fern-api:exception-utils:0.0.77'
+    api 'io.github.fern-api:immutables-utils:0.0.77'
+    api 'io.github.fern-api:jackson-utils:0.0.77'
+    api 'io.github.fern-api:jersey-utils:0.0.77'
     implementation 'org.slf4j:slf4j-api:1.7.36'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.3'
@@ -938,7 +938,7 @@ basic[api/generated-java/blog-api-server-jersey/src/main/java/com/blog/server/Du
 package com.blog.server;
 
 import com.blog.types.DummyId;
-import com.fern.java.auth.AuthHeader;
+import com.fern.java.auth.BearerAuthHeader;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
@@ -952,7 +952,7 @@ import javax.ws.rs.core.MediaType;
 public interface DummyService {
   @POST
   @Path("get-dummy")
-  void getDummy(@HeaderParam("Authorization") AuthHeader authHeader, DummyId request);
+  void getDummy(@HeaderParam("Authorization") BearerAuthHeader authHeader, DummyId request);
 }
 
 ]
@@ -1004,11 +1004,11 @@ repositories {
 
 dependencies {
     api project(':blog-api-model')
-    api 'io.github.fern-api:auth-utils:0.0.75'
-    api 'io.github.fern-api:exception-utils:0.0.75'
-    api 'io.github.fern-api:immutables-utils:0.0.75'
-    api 'io.github.fern-api:jackson-utils:0.0.75'
-    api 'io.github.fern-api:spring-utils:0.0.75'
+    api 'io.github.fern-api:auth-utils:0.0.77'
+    api 'io.github.fern-api:exception-utils:0.0.77'
+    api 'io.github.fern-api:immutables-utils:0.0.77'
+    api 'io.github.fern-api:jackson-utils:0.0.77'
+    api 'io.github.fern-api:spring-utils:0.0.77'
     implementation 'org.slf4j:slf4j-api:1.7.36'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.3'
@@ -1118,7 +1118,7 @@ basic[api/generated-java/blog-api-server-spring/src/main/java/com/blog/server/Du
 package com.blog.server;
 
 import com.blog.types.DummyId;
-import com.fern.java.auth.AuthHeader;
+import com.fern.java.auth.BearerAuthHeader;
 import javax.ws.rs.HeaderParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -1131,7 +1131,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 )
 public interface DummyService {
   @PostMapping("get-dummy")
-  void getDummy(@HeaderParam("Authorization") AuthHeader authHeader, @RequestBody DummyId request);
+  void getDummy(@HeaderParam("Authorization") BearerAuthHeader authHeader,
+      @RequestBody DummyId request);
 }
 
 ]
