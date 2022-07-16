@@ -74,7 +74,7 @@ public final class ClientGeneratorCli {
         GeneratorLoggingClientWrapper loggingClient = new GeneratorLoggingClientWrapper(generatorConfig);
 
         try {
-            FernPluginConfig fernPluginConfig = FernPluginConfig.create(generatorConfig, "0.0.77");
+            FernPluginConfig fernPluginConfig = FernPluginConfig.create(generatorConfig, "0.0.82");
             List<PackageCoordinate> packageCoordinates = fernPluginConfig.getPackageCoordinates();
             loggingClient.sendUpdate(GeneratorUpdate.init(InitUpdate.builder()
                     .addAllPackagesToPublish(packageCoordinates)

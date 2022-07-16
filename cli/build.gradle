@@ -57,5 +57,11 @@ eteTest {
     }
 }
 
+task deleteSnapshot(type: Exec) {
+    commandLine 'rm', '-rf', 'src/eteTest/java/com/fern/java/client/cli/__snapshots__/CliEteTest.snap'
+}
+
 rootProject.tasks.build.dependsOn eteTest
 tasks.eteTest.dependsOn ':cli:dockerTagLatest'
+
+
