@@ -1,4 +1,4 @@
-import { HttpService } from "@fern-fern/ir-model/services";
+import { HttpAuth, HttpService } from "@fern-fern/ir-model/services";
 import {
     createDirectoriesForFernFilepath,
     createSourceFileAndExportFromModule,
@@ -15,7 +15,7 @@ import { ClientConstants } from "../constants";
 import { addServiceConstructor } from "./addServiceConstructor";
 import { addServiceNamespace } from "./addServiceNamespace";
 import { addEndpointToService } from "./endpoints/addEndpointToService";
-import { doesServiceHaveHeaders } from "./utils";
+import { doesServiceHaveAuth, doesServiceHaveHeaders } from "./utils";
 
 export async function generateHttpService({
     servicesDirectory,
@@ -61,27 +61,31 @@ export async function generateHttpService({
         ),
     });
 
-    serviceClass.addProperty({
-        name: ClientConstants.HttpService.PrivateMembers.TOKEN,
-        scope: Scope.Private,
-        type: getTextOfTsNode(
-            getReferenceToFernServiceUtilsType({
-                type: "MaybeGetter",
-                dependencyManager,
-                referencedIn: serviceFile,
-                typeArguments: [
-                    ts.factory.createUnionTypeNode([
-                        getReferenceToFernServiceUtilsType({
-                            type: "Token",
-                            dependencyManager,
-                            referencedIn: serviceFile,
-                        }),
-                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
-                    ]),
-                ],
-            })
-        ),
-    });
+    const authInfo = doesServiceHaveAuth(service);
+
+    if (authInfo.hasAuth) {
+        serviceClass.addProperty({
+            name: ClientConstants.HttpService.PrivateMembers.TOKEN,
+            scope: Scope.Private,
+            type: getTextOfTsNode(
+                getReferenceToFernServiceUtilsType({
+                    type: "MaybeGetter",
+                    dependencyManager,
+                    referencedIn: serviceFile,
+                    typeArguments: [
+                        ts.factory.createUnionTypeNode([
+                            getReferenceToFernServiceUtilsType({
+                                type: authInfo.authType === HttpAuth.Bearer ? "BearerToken" : "BasicAuth",
+                                dependencyManager,
+                                referencedIn: serviceFile,
+                            }),
+                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
+                        ]),
+                    ],
+                })
+            ),
+        });
+    }
 
     if (doesServiceHaveHeaders(service)) {
         serviceClass.addProperty({

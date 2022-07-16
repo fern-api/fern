@@ -6,22 +6,28 @@ export function doesServiceHaveHeaders(service: HttpService): boolean {
 
 export function doesServiceHaveAuth(
     service: HttpService
-): { hasAuth: false } | { hasAuth: true; isOptional: boolean; authType: HttpAuth } {
+): { hasAuth: false } | { hasAuth: true; isOptional: boolean; authType: HttpAuth.Bearer | HttpAuth.Basic } {
     let someEndpointHasAuth = false;
     let allEndpointsHaveAuth = true;
-    const authTypes = new Set<HttpAuth>();
+    let authType = undefined;
     for (const endpoint of service.endpoints) {
         if (endpoint.auth === HttpAuth.None) {
             allEndpointsHaveAuth = false;
         } else {
             someEndpointHasAuth = true;
-            authTypes.add(endpoint.auth);
+            if (authType == null) {
+                authType = endpoint.auth;
+            }
         }
     }
 
     if (!someEndpointHasAuth) {
         return { hasAuth: false };
-    } else {
+    } else if (authType != null) {
         return { hasAuth: true, isOptional: !allEndpointsHaveAuth, authType };
+    } else {
+        throw new Error(
+            `Encountered unexpected state. ${service.name.name} has endpoints with auth, but only found HttpAuth.None`
+        );
     }
 }

@@ -1,4 +1,4 @@
-import { HttpService } from "@fern-fern/ir-model/services";
+import { HttpAuth, HttpService } from "@fern-fern/ir-model/services";
 import {
     DependencyManager,
     getReferenceToFernServiceUtilsType,
@@ -69,7 +69,7 @@ function maybeAddTokenProperty({
     }
 
     const referenceToTokenType = getReferenceToFernServiceUtilsType({
-        type: "Token",
+        type: authInfo.authType === HttpAuth.Bearer ? "BearerToken" : "BasicAuth",
         dependencyManager,
         referencedIn: serviceFile,
     });
