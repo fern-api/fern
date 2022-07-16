@@ -9,6 +9,14 @@ describe("valid-auth-in-service", () => {
             absolutePathToDefinition: path.join(__dirname, "fixtures", "simple"),
         });
 
-        expect(violations).toMatchSnapshot();
+        expect(violations).toMatchObject([
+            {
+                severity: "error",
+                relativeFilePath: "src/simple.yml",
+                nodePath: ["services", "http", "InvalidService"],
+                message:
+                    /Service .*InvalidService.* has endpoints with both bearer and basic auth. Only one of the two can be used./,
+            },
+        ]);
     });
 });
