@@ -22,6 +22,6 @@ export function doesServiceHaveAuth(
     if (!someEndpointHasAuth) {
         return { hasAuth: false };
     } else {
-        return { hasAuth: true, isOptional: !allEndpointsHaveAuth };
+        return { hasAuth: true, isOptional: !allEndpointsHaveAuth, authType };
     }
 }
