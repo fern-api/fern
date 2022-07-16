@@ -20,10 +20,6 @@ import feign.Param.Expander;
 import java.util.Objects;
 import java.util.Optional;
 
-/**
- * Expands Optional by using the empty string for {@link Optional#empty()} and the {@link Object#toString()} of the
- * value otherwise.
- */
 public final class OptionalExpander implements Expander {
 
     @Override
@@ -33,6 +29,6 @@ public final class OptionalExpander implements Expander {
                     "Value must be an Optional. Was: " + value.getClass().getName());
         }
         Optional<?> optional = (Optional<?>) value;
-        return optional.isPresent() ? Objects.toString(optional.get()) : "";
+        return optional.isPresent() ? Objects.toString(optional.get()) : null;
     }
 }
