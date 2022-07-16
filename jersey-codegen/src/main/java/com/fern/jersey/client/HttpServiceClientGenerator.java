@@ -51,6 +51,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -60,6 +61,9 @@ public final class HttpServiceClientGenerator extends Generator {
     private static final String CLIENT_CLASS_NAME_SUFFIX = "client";
 
     private static final String GET_CLIENT_METHOD_NAME = "getClient";
+
+    private static final HttpAuthParameterSpecVisitor JERSEY_AUTH_PARAMATER_SPEC_VISITOR =
+            new HttpAuthParameterSpecVisitor(HeaderParam.class);
 
     private final HttpService httpService;
     private final ClassName generatedServiceClassName;
@@ -122,7 +126,7 @@ public final class HttpServiceClientGenerator extends Generator {
         endpointMethodBuilder.addAnnotation(AnnotationSpec.builder(Path.class)
                 .addMember("value", "$S", HttpPathUtils.getPathWithCurlyBracedPathParams(httpEndpoint.path()))
                 .build());
-        httpEndpoint.auth().visit(new HttpAuthParameterSpecVisitor()).ifPresent(endpointMethodBuilder::addParameter);
+        httpEndpoint.auth().visit(JERSEY_AUTH_PARAMATER_SPEC_VISITOR).ifPresent(endpointMethodBuilder::addParameter);
         httpService.headers().stream()
                 .map(jerseyServiceGeneratorUtils::getHeaderParameterSpec)
                 .forEach(endpointMethodBuilder::addParameter);

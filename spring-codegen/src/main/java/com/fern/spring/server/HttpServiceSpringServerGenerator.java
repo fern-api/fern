@@ -42,9 +42,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 public final class HttpServiceSpringServerGenerator extends Generator {
+
+    private static final HttpAuthParameterSpecVisitor SPRING_AUTH_PARAMATER_SPEC_VISITOR =
+            new HttpAuthParameterSpecVisitor(RequestHeader.class);
 
     private final HttpService httpService;
     private final ClassName generatedServiceClassName;
@@ -97,7 +101,7 @@ public final class HttpServiceSpringServerGenerator extends Generator {
                         httpEndpoint.endpointId().value())
                 .addAnnotation(httpEndpoint.method().visit(new SpringHttpMethodAnnotationVisitor(httpEndpoint)))
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT);
-        httpEndpoint.auth().visit(HttpAuthParameterSpecVisitor.INSTANCE).ifPresent(endpointMethodBuilder::addParameter);
+        httpEndpoint.auth().visit(SPRING_AUTH_PARAMATER_SPEC_VISITOR).ifPresent(endpointMethodBuilder::addParameter);
         httpService.headers().stream()
                 .map(springServiceGeneratorUtils::getHeaderParameterSpec)
                 .forEach(endpointMethodBuilder::addParameter);

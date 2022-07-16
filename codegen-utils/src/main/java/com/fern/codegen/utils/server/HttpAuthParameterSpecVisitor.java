@@ -21,18 +21,21 @@ import com.fern.types.services.HttpAuth;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ParameterSpec;
 import java.util.Optional;
-import javax.ws.rs.HeaderParam;
 
 public final class HttpAuthParameterSpecVisitor implements HttpAuth.Visitor<Optional<ParameterSpec>> {
 
-    public static final HttpAuthParameterSpecVisitor INSTANCE = new HttpAuthParameterSpecVisitor();
-
     private static final String AUTHORIZATION_HEADER_NAME = "Authorization";
+
+    private final Class<?> headerAnnotationClazz;
+
+    public HttpAuthParameterSpecVisitor(Class<?> headerAnnotationClazz) {
+        this.headerAnnotationClazz = headerAnnotationClazz;
+    }
 
     @Override
     public Optional<ParameterSpec> visitBASIC() {
         return Optional.of(ParameterSpec.builder(BasicAuthHeader.class, "authHeader")
-                .addAnnotation(AnnotationSpec.builder(HeaderParam.class)
+                .addAnnotation(AnnotationSpec.builder(headerAnnotationClazz)
                         .addMember("value", "$S", AUTHORIZATION_HEADER_NAME)
                         .build())
                 .build());
@@ -41,7 +44,7 @@ public final class HttpAuthParameterSpecVisitor implements HttpAuth.Visitor<Opti
     @Override
     public Optional<ParameterSpec> visitBEARER() {
         return Optional.of(ParameterSpec.builder(BearerAuthHeader.class, "authHeader")
-                .addAnnotation(AnnotationSpec.builder(HeaderParam.class)
+                .addAnnotation(AnnotationSpec.builder(headerAnnotationClazz)
                         .addMember("value", "$S", AUTHORIZATION_HEADER_NAME)
                         .build())
                 .build());

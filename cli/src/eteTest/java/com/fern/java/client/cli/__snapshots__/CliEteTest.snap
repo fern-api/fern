@@ -752,7 +752,7 @@ public final class PostType {
     switch (value) {
       case SHORT:
         return visitor.visitShort();
-      case med.med:
+      case Medium:
         return visitor.visitMedium();
       case LONG:
         return visitor.visitLong();
@@ -1129,9 +1129,9 @@ package com.blog.server;
 
 import com.blog.types.DummyId;
 import com.fern.java.auth.BearerAuthHeader;
-import javax.ws.rs.HeaderParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping(
@@ -1141,7 +1141,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 )
 public interface DummyService {
   @PostMapping("get-dummy")
-  void getDummy(@HeaderParam("Authorization") BearerAuthHeader authHeader,
+  void getDummy(@RequestHeader("Authorization") BearerAuthHeader authHeader,
       @RequestBody DummyId request);
 }
 

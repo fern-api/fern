@@ -215,7 +215,7 @@ public final class EnumGenerator extends Generator {
         CodeBlock.Builder acceptMethodImplementation = CodeBlock.builder().beginControlFlow("switch (value)");
         generatedVisitor.visitMethodsByKeyName().forEach((enumValue, visitMethod) -> {
             acceptMethodImplementation
-                    .add("case $L:\n", enumValue.value())
+                    .add("case $L:\n", enumValue.name())
                     .indent()
                     .addStatement("return visitor.$L()", visitMethod.name)
                     .unindent();

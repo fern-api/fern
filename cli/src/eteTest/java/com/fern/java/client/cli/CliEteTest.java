@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -45,7 +46,7 @@ public class CliEteTest {
         Path basicFernProjectPath = currentPath.endsWith("cli")
                 ? currentPath.resolve(Paths.get("src/eteTest/basic"))
                 : currentPath.resolve(Paths.get("cli/src/eteTest/basic"));
-        fernLocalGenerate(basicFernProjectPath);
+        runCommand(basicFernProjectPath, new String[] {"fern", "generate", "--local", "--keepDocker"});
         List<Path> paths = Files.walk(basicFernProjectPath.resolve(Paths.get("api/generated-java")))
                 .collect(Collectors.toList());
         boolean filesGenerated = false;
@@ -70,13 +71,18 @@ public class CliEteTest {
         if (!filesGenerated) {
             throw new RuntimeException("Failed to generate any files!");
         }
+
+        Path apiPath = basicFernProjectPath.resolve("api");
+        Path generatedJavaPath = apiPath.resolve("generated-java");
+        runCommand(apiPath, new String[] {"cp", "gradlew", "generated-java/"});
+        runCommand(apiPath, new String[] {"cp", "-R", "gradle-wrapper/.", "generated-java/"});
+        runCommand(generatedJavaPath, new String[] {"./gradlew", "compileJava"});
     }
 
-    private static void fernLocalGenerate(Path projectPath) {
+    private static void runCommand(Path projectPath, String[] command) {
         int exitCode;
         try {
-            ProcessBuilder pb =
-                    new ProcessBuilder("fern", "generate", "--local", "--keepDocker").directory(projectPath.toFile());
+            ProcessBuilder pb = new ProcessBuilder(command).directory(projectPath.toFile());
 
             Map<String, String> env = pb.environment();
 
@@ -87,10 +93,10 @@ public class CliEteTest {
             outputGobbler.start();
             exitCode = process.waitFor();
             if (exitCode != 0) {
-                throw new RuntimeException("Failed to run fern generate!");
+                throw new RuntimeException("Command failed with non-zero exit code: " + Arrays.asList(command));
             }
         } catch (IOException | InterruptedException e) {
-            throw new RuntimeException("Failed to run fern generate!", e);
+            throw new RuntimeException("Failed to run command: " + Arrays.asList(command), e);
         }
     }
 }
