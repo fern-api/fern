@@ -5,6 +5,7 @@ export {
     getReferenceToFernServiceUtilsBearerTokenMethod,
     getReferenceToFernServiceUtilsType,
     getReferenceToFernServiceUtilsValue,
+    invokeMaybeGetter,
 } from "./dependencies/getReferenceToFernServiceUtils";
 export {
     createDirectories,

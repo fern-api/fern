@@ -7,9 +7,8 @@ export const defaultFetcher: Fetcher = async (args) => {
         "Content-Type": args.body != null ? args.body.contentType : "application/json",
     };
 
-    const authHeader = await (typeof args.authHeader === "function" ? args.authHeader() : args.authHeader);
-    if (authHeader != null) {
-        headers.Authorization = authHeader;
+    if (args.authHeader != null) {
+        headers.Authorization = args.authHeader;
     }
 
     const response = await axios({

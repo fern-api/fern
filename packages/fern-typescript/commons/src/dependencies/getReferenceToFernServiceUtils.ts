@@ -91,3 +91,21 @@ function addFernServiceUtilsImport({
     });
     dependencyManager.addDependency(PACKAGE_NAME, VERSION);
 }
+
+export function invokeMaybeGetter(maybeGetter: ts.Expression): ts.Expression {
+    return ts.factory.createAwaitExpression(
+        ts.factory.createParenthesizedExpression(
+            ts.factory.createConditionalExpression(
+                ts.factory.createBinaryExpression(
+                    ts.factory.createTypeOfExpression(maybeGetter),
+                    ts.factory.createToken(ts.SyntaxKind.EqualsEqualsEqualsToken),
+                    ts.factory.createStringLiteral("function")
+                ),
+                ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                ts.factory.createCallExpression(maybeGetter, undefined, []),
+                ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                maybeGetter
+            )
+        )
+    );
+}
