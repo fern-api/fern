@@ -3,7 +3,7 @@ import { DependencyManager, getReferenceToFernServiceUtilsValue, getTextOfTsNode
 import { ClassDeclaration, ts } from "ts-morph";
 import { ClientConstants } from "../constants";
 import { generateJoinUrlPathsCall } from "../utils/generateJoinPathsCall";
-import { doesServiceHaveAuth, doesServiceHaveHeaders } from "./utils";
+import { doesServiceHaveBasicAuth, doesServiceHaveBearerAuth, doesServiceHaveHeaders } from "./utils";
 
 const SERVICE_INIT_PARAMETER_NAME = "args";
 
@@ -89,13 +89,27 @@ function getConstructorStatements({
         }),
     ];
 
-    if (doesServiceHaveAuth(serviceDefinition).hasAuth) {
+    if (doesServiceHaveBearerAuth(serviceDefinition).hasAuth) {
         statements.push(
             createClassMemberAssignment({
-                member: ClientConstants.HttpService.PrivateMembers.TOKEN,
+                member: ClientConstants.HttpService.PrivateMembers.BEARER_TOKEN,
                 initialValue: ts.factory.createPropertyAccessExpression(
                     ts.factory.createIdentifier(SERVICE_INIT_PARAMETER_NAME),
-                    ts.factory.createIdentifier(ClientConstants.HttpService.ServiceNamespace.Init.Properties.TOKEN)
+                    ts.factory.createIdentifier(
+                        ClientConstants.HttpService.ServiceNamespace.Init.Properties.BEARER_TOKEN
+                    )
+                ),
+            })
+        );
+    }
+
+    if (doesServiceHaveBasicAuth(serviceDefinition).hasAuth) {
+        statements.push(
+            createClassMemberAssignment({
+                member: ClientConstants.HttpService.PrivateMembers.BASIC_AUTH,
+                initialValue: ts.factory.createPropertyAccessExpression(
+                    ts.factory.createIdentifier(SERVICE_INIT_PARAMETER_NAME),
+                    ts.factory.createIdentifier(ClientConstants.HttpService.ServiceNamespace.Init.Properties.BASIC_AUTH)
                 ),
             })
         );

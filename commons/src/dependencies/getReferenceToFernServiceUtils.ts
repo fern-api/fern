@@ -2,11 +2,11 @@ import { SourceFile, ts } from "ts-morph";
 import { DependencyManager } from "./DependencyManager";
 
 const PACKAGE_NAME = "@fern-typescript/service-utils";
-const VERSION = "0.0.124";
+const VERSION = "0.0.151";
 
 type FernServiceUtilsExport = ExportedFernServiceUtilsType | ExportedFernServiceUtilsValue;
 
-export type ExportedFernServiceUtilsType = "Fetcher" | "Token" | "MaybeGetter";
+export type ExportedFernServiceUtilsType = "Fetcher" | "BearerToken" | "BasicAuth" | "MaybeGetter";
 
 export function getReferenceToFernServiceUtilsType({
     type,
@@ -38,21 +38,40 @@ export function getReferenceToFernServiceUtilsValue({
     return ts.factory.createIdentifier(value);
 }
 
-const TOKEN_UTILS_NAME = "Token";
-type TokenUtil = "of" | "fromAuthorizationHeader";
+const BEARER_TOKEN_UTILS_NAME = "BearerToken";
+type BearerTokenUtil = "toAuthorizationHeader" | "fromAuthorizationHeader";
 
-export function getReferenceToFernServiceUtilsTokenMethod({
+export function getReferenceToFernServiceUtilsBearerTokenMethod({
     util,
     dependencyManager,
     referencedIn,
 }: {
-    util: TokenUtil;
+    util: BearerTokenUtil;
     dependencyManager: DependencyManager;
     referencedIn: SourceFile;
 }): ts.PropertyAccessExpression {
-    addFernServiceUtilsImport({ imports: [TOKEN_UTILS_NAME], file: referencedIn, dependencyManager });
+    addFernServiceUtilsImport({ imports: [BEARER_TOKEN_UTILS_NAME], file: referencedIn, dependencyManager });
     return ts.factory.createPropertyAccessExpression(
-        ts.factory.createIdentifier(TOKEN_UTILS_NAME),
+        ts.factory.createIdentifier(BEARER_TOKEN_UTILS_NAME),
+        ts.factory.createIdentifier(util)
+    );
+}
+
+const BASIC_AUTH_UTILS_NAME = "BasicAuth";
+type BasicAuthUtil = "toAuthorizationHeader" | "fromAuthorizationHeader";
+
+export function getReferenceToFernServiceUtilsBasicAuthMethod({
+    util,
+    dependencyManager,
+    referencedIn,
+}: {
+    util: BasicAuthUtil;
+    dependencyManager: DependencyManager;
+    referencedIn: SourceFile;
+}): ts.PropertyAccessExpression {
+    addFernServiceUtilsImport({ imports: [BASIC_AUTH_UTILS_NAME], file: referencedIn, dependencyManager });
+    return ts.factory.createPropertyAccessExpression(
+        ts.factory.createIdentifier(BASIC_AUTH_UTILS_NAME),
         ts.factory.createIdentifier(util)
     );
 }
@@ -71,4 +90,22 @@ function addFernServiceUtilsImport({
         namedImports: imports,
     });
     dependencyManager.addDependency(PACKAGE_NAME, VERSION);
+}
+
+export function invokeMaybeGetter(maybeGetter: ts.Expression): ts.Expression {
+    return ts.factory.createAwaitExpression(
+        ts.factory.createParenthesizedExpression(
+            ts.factory.createConditionalExpression(
+                ts.factory.createBinaryExpression(
+                    ts.factory.createTypeOfExpression(maybeGetter),
+                    ts.factory.createToken(ts.SyntaxKind.EqualsEqualsEqualsToken),
+                    ts.factory.createStringLiteral("function")
+                ),
+                ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                ts.factory.createCallExpression(maybeGetter, undefined, []),
+                ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                maybeGetter
+            )
+        )
+    );
 }

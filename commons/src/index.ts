@@ -1,9 +1,11 @@
 export { DependencyManager, DependencyType } from "./dependencies/DependencyManager";
 export { generateUuidCall } from "./dependencies/generateUuidCall";
 export {
-    getReferenceToFernServiceUtilsTokenMethod,
+    getReferenceToFernServiceUtilsBasicAuthMethod,
+    getReferenceToFernServiceUtilsBearerTokenMethod,
     getReferenceToFernServiceUtilsType,
     getReferenceToFernServiceUtilsValue,
+    invokeMaybeGetter,
 } from "./dependencies/getReferenceToFernServiceUtils";
 export {
     createDirectories,

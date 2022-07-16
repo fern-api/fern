@@ -8,7 +8,7 @@ import {
 import { ModelContext } from "@fern-typescript/model-context";
 import { InterfaceDeclaration, ModuleDeclaration, SourceFile, ts } from "ts-morph";
 import { ClientConstants } from "../constants";
-import { doesServiceHaveAuth, doesServiceHaveHeaders } from "./utils";
+import { doesServiceHaveBasicAuth, doesServiceHaveBearerAuth, doesServiceHaveHeaders } from "./utils";
 
 export function addServiceNamespace({
     serviceFile,
@@ -48,11 +48,12 @@ export function addServiceNamespace({
         ],
     });
 
-    maybeAddTokenProperty({ service, dependencyManager, serviceFile, initInterface });
+    maybeAddBasicAuthProperties({ service, dependencyManager, serviceFile, initInterface });
+    maybeAddBearerTokenProperty({ service, dependencyManager, serviceFile, initInterface });
     maybeAddHeaders({ service, initInterface, module, modelContext, dependencyManager });
 }
 
-function maybeAddTokenProperty({
+function maybeAddBasicAuthProperties({
     service,
     dependencyManager,
     serviceFile,
@@ -63,19 +64,62 @@ function maybeAddTokenProperty({
     serviceFile: SourceFile;
     initInterface: InterfaceDeclaration;
 }) {
-    const authInfo = doesServiceHaveAuth(service);
+    const authInfo = doesServiceHaveBasicAuth(service);
     if (!authInfo.hasAuth) {
         return;
     }
 
-    const referenceToTokenType = getReferenceToFernServiceUtilsType({
-        type: "Token",
+    const referenceToBasicAuthType = getReferenceToFernServiceUtilsType({
+        type: "BasicAuth",
         dependencyManager,
         referencedIn: serviceFile,
     });
 
     initInterface.addProperty({
-        name: ClientConstants.HttpService.ServiceNamespace.Init.Properties.TOKEN,
+        name: ClientConstants.HttpService.ServiceNamespace.Init.Properties.BASIC_AUTH,
+        hasQuestionToken: authInfo.isOptional,
+        type: getTextOfTsNode(
+            getReferenceToFernServiceUtilsType({
+                type: "MaybeGetter",
+                typeArguments: [
+                    authInfo.isOptional
+                        ? ts.factory.createUnionTypeNode([
+                              referenceToBasicAuthType,
+                              ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
+                          ])
+                        : referenceToBasicAuthType,
+                ],
+                dependencyManager,
+                referencedIn: serviceFile,
+            })
+        ),
+    });
+}
+
+function maybeAddBearerTokenProperty({
+    service,
+    dependencyManager,
+    serviceFile,
+    initInterface,
+}: {
+    service: HttpService;
+    dependencyManager: DependencyManager;
+    serviceFile: SourceFile;
+    initInterface: InterfaceDeclaration;
+}) {
+    const authInfo = doesServiceHaveBearerAuth(service);
+    if (!authInfo.hasAuth) {
+        return;
+    }
+
+    const referenceToTokenType = getReferenceToFernServiceUtilsType({
+        type: "BearerToken",
+        dependencyManager,
+        referencedIn: serviceFile,
+    });
+
+    initInterface.addProperty({
+        name: ClientConstants.HttpService.ServiceNamespace.Init.Properties.BEARER_TOKEN,
         hasQuestionToken: authInfo.isOptional,
         type: getTextOfTsNode(
             getReferenceToFernServiceUtilsType({

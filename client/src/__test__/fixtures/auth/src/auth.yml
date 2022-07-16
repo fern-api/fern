@@ -1,0 +1,46 @@
+types:
+  SomeType: string
+services:
+  http:
+    ServiceWithNoAuth:
+      auth: none
+      endpoints:
+        endpointA: {}
+
+    ServiceWithBasicAuth:
+      auth: basic
+      endpoints:
+        endpointB: {}
+
+    ServiceWithBearerAuth:
+      auth: bearer
+      endpoints:
+        endpointC: {}
+
+    ServiceWithNoAuthWithBearerOverride:
+      auth: none
+      endpoints:
+        endpointD: {}
+        overrideEndpointD:
+          auth-override: bearer
+
+    ServiceWithNoAuthWithBasicOverride:
+      auth: none
+      endpoints:
+        endpointE: {}
+        overrideEndpointE:
+          auth-override: basic
+
+    ServiceWithBearerAuthWithOverride:
+      auth: bearer
+      endpoints:
+        endpointF: {}
+        overrideEndpointF:
+          auth-override: none
+
+    ServiceWithBasicAuthWithOverride:
+      auth: basic
+      endpoints:
+        endpointG: {}
+        overrideEndpointG:
+          auth-override: none
