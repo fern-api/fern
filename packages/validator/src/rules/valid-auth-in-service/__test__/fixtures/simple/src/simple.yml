@@ -1,0 +1,18 @@
+services:
+  http:
+    InvalidService:
+      auth: none
+      endpoints:
+        withBearerAuth:
+          auth-override: bearer
+
+        withBasicAUth:
+          auth-override: basic
+
+    ValidService:
+      auth: bearer
+      endpoints:
+        noAuth:
+          auth-override: none
+
+        dummy: {}
