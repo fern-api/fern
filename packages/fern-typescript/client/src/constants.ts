@@ -46,7 +46,7 @@ export const ClientConstants = {
                     METHOD: "method",
                     HEADERS: "headers",
                     QUERY_PARAMS: "queryParameters",
-                    TOKEN: "token",
+                    AUTH_HEADER: "authHeader",
 
                     Body: {
                         PROPERTY_NAME: "body",
@@ -68,7 +68,8 @@ export const ClientConstants = {
                 Properties: {
                     FETCHER: "fetcher",
                     ORIGIN: "origin",
-                    TOKEN: "token",
+                    BEARER_TOKEN: "token",
+                    BASIC_AUTH: "credentials",
                     HEADERS: "headers",
                 },
             },
@@ -80,7 +81,8 @@ export const ClientConstants = {
         PrivateMembers: {
             BASE_URL: "baseUrl",
             FETCHER: "fetcher",
-            TOKEN: "token",
+            BEARER_TOKEN: "token",
+            BASIC_AUTH: "credentials",
             HEADERS: "headers",
         },
         Endpoint: {
@@ -92,6 +94,9 @@ export const ClientConstants = {
                 ENCODED_RESPONSE: "encodedResponse",
                 DECODED_RESPONSE: "response",
                 DECODED_ERROR: "error",
+            },
+            FetcherCall: {
+                AUTH_HEADER_LOCAL_VARIABLE: "authHeader",
             },
         },
     },

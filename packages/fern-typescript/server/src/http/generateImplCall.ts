@@ -1,5 +1,9 @@
 import { HttpAuth, HttpEndpoint, HttpService } from "@fern-fern/ir-model/services";
-import { DependencyManager, getReferenceToFernServiceUtilsTokenMethod } from "@fern-typescript/commons";
+import {
+    DependencyManager,
+    getReferenceToFernServiceUtilsBasicAuthMethod,
+    getReferenceToFernServiceUtilsBearerTokenMethod,
+} from "@fern-typescript/commons";
 import { GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/model-context";
 import { SourceFile, ts } from "ts-morph";
 import { ServerConstants } from "../constants";
@@ -74,7 +78,20 @@ function generateImplAuthArguments({
         bearer: () => {
             return [
                 ts.factory.createCallExpression(
-                    getReferenceToFernServiceUtilsTokenMethod({
+                    getReferenceToFernServiceUtilsBearerTokenMethod({
+                        util: "fromAuthorizationHeader",
+                        dependencyManager,
+                        referencedIn: file,
+                    }),
+                    undefined,
+                    [ts.factory.createNonNullExpression(getRequestHeader("Authorization"))]
+                ),
+            ];
+        },
+        basic: () => {
+            return [
+                ts.factory.createCallExpression(
+                    getReferenceToFernServiceUtilsBasicAuthMethod({
                         util: "fromAuthorizationHeader",
                         dependencyManager,
                         referencedIn: file,

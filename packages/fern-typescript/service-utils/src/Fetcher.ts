@@ -1,12 +1,10 @@
-import { MaybeGetter } from "./MaybeGetter";
-
 export type Fetcher = (args: Fetcher.Args) => Promise<Fetcher.Response>;
 export declare namespace Fetcher {
     export interface Args {
         url: string;
         method: string;
         headers: Record<string, string>;
-        authHeader?: MaybeGetter<string | undefined>;
+        authHeader?: string | undefined;
         queryParameters?: URLSearchParams;
         body?: {
             content: string | ArrayBuffer;

@@ -148,6 +148,8 @@ function convertHttpAuth(auth: RawSchemas.AuthSchema): HttpAuth {
             return HttpAuth.Bearer;
         case "none":
             return HttpAuth.None;
+        case "basic":
+            return HttpAuth.Basic;
         default:
             assertNever(auth);
     }

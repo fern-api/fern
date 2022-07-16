@@ -1,5 +1,5 @@
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services";
-import { DependencyManager, getTextOfTsNode } from "@fern-typescript/commons";
+import { DependencyManager, getTextOfTsNode, invokeMaybeGetter } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import { GeneratedHttpEndpointTypes } from "@fern-typescript/model-context";
 import { SourceFile, StatementStructures, StructureKind, ts, VariableDeclarationKind } from "ts-morph";
@@ -17,6 +17,7 @@ export async function generateFetcherCall({
     includeQueryParams,
     helperManager,
     dependencyManager,
+    referenceToAuthHeader,
 }: {
     serviceFile: SourceFile;
     serviceDefinition: HttpService;
@@ -25,6 +26,7 @@ export async function generateFetcherCall({
     includeQueryParams: boolean;
     helperManager: HelperManager;
     dependencyManager: DependencyManager;
+    referenceToAuthHeader: ts.Expression | undefined;
 }): Promise<StatementStructures> {
     const fetcherArgs: ts.ObjectLiteralElementLike[] = [
         ts.factory.createPropertyAssignment(
@@ -46,13 +48,6 @@ export async function generateFetcherCall({
             ts.factory.createStringLiteral(endpoint.method)
         ),
         getHeadersPropertyAssignment({ service: serviceDefinition, endpoint }),
-        ts.factory.createPropertyAssignment(
-            ts.factory.createIdentifier(ClientConstants.HttpService.ServiceUtils.Fetcher.Parameters.TOKEN),
-            ts.factory.createPropertyAccessExpression(
-                ts.factory.createThis(),
-                ts.factory.createIdentifier(ClientConstants.HttpService.PrivateMembers.TOKEN)
-            )
-        ),
     ];
 
     if (includeQueryParams) {
@@ -128,6 +123,15 @@ export async function generateFetcherCall({
         );
     }
 
+    if (referenceToAuthHeader != null) {
+        fetcherArgs.push(
+            ts.factory.createPropertyAssignment(
+                ClientConstants.HttpService.ServiceUtils.Fetcher.Parameters.AUTH_HEADER,
+                referenceToAuthHeader
+            )
+        );
+    }
+
     return {
         kind: StructureKind.VariableStatement,
         declarationKind: VariableDeclarationKind.Const,
@@ -189,19 +193,7 @@ function getHeadersPropertyValue({
         properties.push(
             ts.factory.createPropertyAssignment(
                 ts.factory.createStringLiteral(header.header),
-                ts.factory.createAwaitExpression(
-                    ts.factory.createConditionalExpression(
-                        ts.factory.createBinaryExpression(
-                            ts.factory.createTypeOfExpression(referenceToHeader),
-                            ts.factory.createToken(ts.SyntaxKind.EqualsEqualsEqualsToken),
-                            ts.factory.createStringLiteral("function")
-                        ),
-                        ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-                        ts.factory.createCallExpression(referenceToHeader, undefined, []),
-                        ts.factory.createToken(ts.SyntaxKind.ColonToken),
-                        referenceToHeader
-                    )
-                )
+                invokeMaybeGetter(referenceToHeader)
             )
         );
     }

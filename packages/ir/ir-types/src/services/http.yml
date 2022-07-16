@@ -14,6 +14,7 @@ types:
       headers: list<HttpHeader>
   HttpAuth:
     enum:
+      - BASIC
       - BEARER
       - NONE
   HttpEndpoint:

@@ -3,7 +3,7 @@ import chalk from "chalk";
 import { Rule, RuleViolation } from "../../Rule";
 
 export const NoUndefinedPathParametersRule: Rule = {
-    name: "no-duplicate-enum-values",
+    name: "no-undefined-path-parameters",
     create: () => {
         return {
             httpEndpoint: ({ endpoint }) => {

@@ -4,7 +4,7 @@ import path from "path";
 import { generateClientProject } from "../generateClientProject";
 
 const FIXTURES_DIR = path.join(__dirname, "fixtures");
-const FIXTURES = ["posts", "no-errors", "chat"];
+const FIXTURES = ["posts", "no-errors", "chat", "auth"];
 const MOCK_HELPERS_MANAGERS = new HelperManager({ encodings: {} });
 
 describe("generateClientProject", () => {
