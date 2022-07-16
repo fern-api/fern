@@ -1713,10 +1713,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/ir-model@npm:0.0.42":
-  version: 0.0.42
-  resolution: "@fern-fern/ir-model@npm:0.0.42"
-  checksum: e94596305752782680398d968bbb3b7e0dcef40e8a600aad8f0a4fda593593471c6407f2e1e39f9137a79344b5b140ada6ee1ceed52e8a31d462fa9e024d86fa
+"@fern-fern/ir-model@npm:0.0.48":
+  version: 0.0.48
+  resolution: "@fern-fern/ir-model@npm:0.0.48"
+  checksum: 7c6cd746664eb9d3d225d5dd04e528018372afcfc841813744f1d5ce7389ae3e3e0b39d8877670f52fcf58913ea0a4fe4a18c5a7a8cfebd1a1814b01c465a44c
   languageName: node
   linkType: hard
 
@@ -3876,7 +3876,7 @@ __metadata:
     "@fern-api/ir-generator": ^0.0.128
     "@fern-api/workspace-parser": ^0.0.128
     "@fern-fern/generator-logging-api-client": ^0.0.11
-    "@fern-fern/ir-model": 0.0.42
+    "@fern-fern/ir-model": 0.0.48
     "@types/jest": ^27.5.0
     "@types/lodash": ^4.14.182
     "@types/postman-collection": ^3.5.7

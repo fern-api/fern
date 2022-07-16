@@ -154,10 +154,16 @@ function convertHttpMethod(httpMethod: HttpMethod): string {
     });
 }
 
+const BASIC_AUTH_DEFINITION: RequestAuthDefinition = { type: "basic" };
+const BEARER_AUTH_DEFINITION: RequestAuthDefinition = { type: "bearer" };
+
 function convertAuth(httpAuth: HttpAuth): RequestAuthDefinition | undefined {
     return HttpAuth._visit(httpAuth, {
+        basic: () => {
+            return BASIC_AUTH_DEFINITION;
+        },
         bearer: () => {
-            return { type: "bearer" };
+            return BEARER_AUTH_DEFINITION;
         },
         none: () => {
             return undefined;
