@@ -23,6 +23,8 @@ types:
     enum:
       - LONG
       - SHORT
+      - name: Medium
+        value: med.med
   Author:
     union:
       anonymous: {}

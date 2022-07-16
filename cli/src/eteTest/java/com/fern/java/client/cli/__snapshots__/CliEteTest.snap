@@ -714,6 +714,8 @@ import javax.annotation.Nonnull;
 public final class PostType {
   public static final PostType SHORT = new PostType(Value.SHORT, "SHORT");
 
+  public static final PostType Medium = new PostType(Value.Medium, "med.med");
+
   public static final PostType LONG = new PostType(Value.LONG, "LONG");
 
   private final Value value;
@@ -749,9 +751,11 @@ public final class PostType {
   public <T> T visit(Visitor<T> visitor) {
     switch (value) {
       case SHORT:
-        return visitor.visitSHORT();
+        return visitor.visitShort();
+      case med.med:
+        return visitor.visitMedium();
       case LONG:
-        return visitor.visitLONG();
+        return visitor.visitLong();
       case UNKNOWN:
       default:
         return visitor.visitUnknown(string);
@@ -766,6 +770,8 @@ public final class PostType {
     switch (upperCasedValue) {
       case "SHORT":
         return SHORT;
+      case "med.med":
+        return Medium;
       case "LONG":
         return LONG;
       default:
@@ -778,13 +784,17 @@ public final class PostType {
 
     SHORT,
 
+    Medium,
+
     UNKNOWN
   }
 
   public interface Visitor<T> {
-    T visitLONG();
+    T visitLong();
 
-    T visitSHORT();
+    T visitShort();
+
+    T visitMedium();
 
     T visitUnknown(String unknownType);
   }
