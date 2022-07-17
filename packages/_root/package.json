@@ -44,6 +44,7 @@
     "@fern-api/fe-bundle": "workspace:*",
     "@fern-api/init": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
+    "@fern-api/jsonschema-generation": "workspace:*",
     "@fern-api/local-workspace-runner": "workspace:*",
     "@fern-api/login": "workspace:*",
     "@fern-api/openapi-converter": "workspace:*",

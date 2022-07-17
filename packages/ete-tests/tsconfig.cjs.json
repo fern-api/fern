@@ -5,6 +5,7 @@
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
     { "path": "../commons/tsconfig.cjs.json" },
-    { "path": "../fern-typescript/testing-utils/tsconfig.cjs.json" }
+    { "path": "../fern-typescript/testing-utils/tsconfig.cjs.json" },
+    { "path": "../jsonschema-generation/tsconfig.cjs.json" }
   ]
 }

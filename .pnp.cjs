@@ -109,6 +109,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/ir/ir-generator"\
       },\
       {\
+        "name": "@fern-api/jsonschema-generation",\
+        "reference": "workspace:packages/jsonschema-generation"\
+      },\
+      {\
         "name": "@fern-api/docker-utils",\
         "reference": "workspace:packages/local-generation/docker-utils"\
       },\
@@ -162,6 +166,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-api/fe-bundle", ["workspace:packages/ui/fe-bundle"]],\
       ["@fern-api/init", ["workspace:packages/init"]],\
       ["@fern-api/ir-generator", ["workspace:packages/ir/ir-generator"]],\
+      ["@fern-api/jsonschema-generation", ["workspace:packages/jsonschema-generation"]],\
       ["@fern-api/local-workspace-runner", ["workspace:packages/local-generation/local-workspace-runner"]],\
       ["@fern-api/login", ["workspace:packages/login"]],\
       ["@fern-api/openapi-converter", ["workspace:packages/openapi-converter"]],\
@@ -5890,6 +5895,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fe-bundle", "workspace:packages/ui/fe-bundle"],\
             ["@fern-api/init", "workspace:packages/init"],\
             ["@fern-api/ir-generator", "workspace:packages/ir/ir-generator"],\
+            ["@fern-api/jsonschema-generation", "workspace:packages/jsonschema-generation"],\
             ["@fern-api/local-workspace-runner", "workspace:packages/local-generation/local-workspace-runner"],\
             ["@fern-api/login", "workspace:packages/login"],\
             ["@fern-api/openapi-converter", "workspace:packages/openapi-converter"],\
@@ -5957,6 +5963,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-api/commons", "workspace:packages/commons"],\
+            ["@fern-api/jsonschema-generation", "workspace:packages/jsonschema-generation"],\
             ["@fern-typescript/testing-utils", "workspace:packages/fern-typescript/testing-utils"],\
             ["@types/jest", "npm:28.1.4"],\
             ["@types/node", "npm:18.0.3"],\
@@ -6059,6 +6066,30 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.7.1"],\
             ["ts-jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.0.5"],\
             ["typescript", "patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=7ad353"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@fern-api/jsonschema-generation", [\
+        ["workspace:packages/jsonschema-generation", {\
+          "packageLocation": "./packages/jsonschema-generation/",\
+          "packageDependencies": [\
+            ["@fern-api/jsonschema-generation", "workspace:packages/jsonschema-generation"],\
+            ["@babel/core", "npm:7.18.6"],\
+            ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
+            ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
+            ["@fern-api/yaml-schema", "workspace:packages/yaml-schema"],\
+            ["@types/jest", "npm:28.1.4"],\
+            ["@types/node", "npm:18.0.3"],\
+            ["depcheck", "npm:1.4.3"],\
+            ["eslint", "npm:8.19.0"],\
+            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.2"],\
+            ["npm-run-all", "npm:4.1.5"],\
+            ["prettier", "npm:2.7.1"],\
+            ["ts-jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.0.5"],\
+            ["typescript", "patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=7ad353"],\
+            ["zod", "npm:3.16.0"],\
+            ["zod-to-json-schema", "virtual:dda932b3eff9a975fbbd81cf217f5a992239585791646b8a1a8b4f269792657d11f4dc29314fbaf65164e1a2e7624554e001f61c10221e44ca58dd37e0df98bf#npm:3.14.1"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -27547,6 +27578,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/zod-npm-3.16.0-c3f0e1082d-2879a18e09.zip/node_modules/zod/",\
           "packageDependencies": [\
             ["zod", "npm:3.16.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["zod-to-json-schema", [\
+        ["npm:3.14.1", {\
+          "packageLocation": "./.yarn/cache/zod-to-json-schema-npm-3.14.1-c35e839296-8c15ff5eef.zip/node_modules/zod-to-json-schema/",\
+          "packageDependencies": [\
+            ["zod-to-json-schema", "npm:3.14.1"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:dda932b3eff9a975fbbd81cf217f5a992239585791646b8a1a8b4f269792657d11f4dc29314fbaf65164e1a2e7624554e001f61c10221e44ca58dd37e0df98bf#npm:3.14.1", {\
+          "packageLocation": "./.yarn/__virtual__/zod-to-json-schema-virtual-c071137d66/0/cache/zod-to-json-schema-npm-3.14.1-c35e839296-8c15ff5eef.zip/node_modules/zod-to-json-schema/",\
+          "packageDependencies": [\
+            ["zod-to-json-schema", "virtual:dda932b3eff9a975fbbd81cf217f5a992239585791646b8a1a8b4f269792657d11f4dc29314fbaf65164e1a2e7624554e001f61c10221e44ca58dd37e0df98bf#npm:3.14.1"],\
+            ["@types/zod", null],\
+            ["zod", "npm:3.16.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/zod",\
+            "zod"\
           ],\
           "linkType": "HARD"\
         }]\
