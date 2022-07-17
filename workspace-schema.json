@@ -1,0 +1,467 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/FernWorkspaceSchema",
+  "definitions": {
+    "FernWorkspaceSchema": {
+      "type": "object",
+      "properties": {
+        "imports": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "ids": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "docs": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["string", "uuid"]
+                  }
+                },
+                "required": ["name"],
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "types": {
+          "type": "object",
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "docs": {
+                        "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
+                      },
+                      "extends": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        ]
+                      },
+                      "properties": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "type": "string"
+                                },
+                                "docs": {
+                                  "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
+                                }
+                              },
+                              "required": ["type"],
+                              "additionalProperties": false
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "required": ["extends"],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "docs": {
+                        "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
+                      },
+                      "extends": {
+                        "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
+                      },
+                      "properties": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
+                        }
+                      }
+                    },
+                    "required": ["properties"],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "docs": {
+                    "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
+                  },
+                  "union": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "docs": {
+                              "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
+                            },
+                            "type": {
+                              "type": "string"
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      ]
+                    }
+                  },
+                  "discriminant": {
+                    "type": "string"
+                  }
+                },
+                "required": ["union"],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "docs": {
+                    "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
+                  },
+                  "alias": {
+                    "type": "string",
+                    "default": "void"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "docs": {
+                    "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
+                  },
+                  "enum": {
+                    "type": "array",
+                    "items": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "docs": {
+                              "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "value": {
+                              "type": "string"
+                            }
+                          },
+                          "required": ["value"],
+                          "additionalProperties": false
+                        }
+                      ]
+                    }
+                  }
+                },
+                "required": ["enum"],
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "services": {
+          "type": "object",
+          "properties": {
+            "http": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "docs": {
+                    "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
+                  },
+                  "auth": {
+                    "type": "string",
+                    "enum": ["bearer", "basic", "none"]
+                  },
+                  "base-path": {
+                    "type": "string"
+                  },
+                  "headers": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
+                    }
+                  },
+                  "endpoints": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "object",
+                      "properties": {
+                        "docs": {
+                          "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
+                        },
+                        "method": {
+                          "type": "string",
+                          "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"]
+                        },
+                        "path": {
+                          "type": "string"
+                        },
+                        "path-parameters": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
+                          }
+                        },
+                        "query-parameters": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
+                          }
+                        },
+                        "headers": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
+                          }
+                        },
+                        "auth-override": {
+                          "$ref": "#/properties/services/properties/http/additionalProperties/properties/auth"
+                        },
+                        "request": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "docs": {
+                                  "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
+                                },
+                                "encoding": {
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": ["type"],
+                              "additionalProperties": false
+                            }
+                          ]
+                        },
+                        "response": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "docs": {
+                                  "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
+                                },
+                                "type": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": ["type"],
+                              "additionalProperties": false
+                            }
+                          ]
+                        },
+                        "errors": {
+                          "type": "array",
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "docs": {
+                                    "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
+                                  },
+                                  "error": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": ["error"],
+                                "additionalProperties": false
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": ["auth", "endpoints"],
+                "additionalProperties": false
+              }
+            },
+            "websocket": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "docs": {
+                    "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
+                  },
+                  "auth": {
+                    "$ref": "#/properties/services/properties/http/additionalProperties/properties/auth"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "client": {
+                    "type": "object",
+                    "properties": {
+                      "operations": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "object",
+                          "properties": {
+                            "docs": {
+                              "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
+                            },
+                            "request": {
+                              "anyOf": [
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "docs": {
+                                      "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
+                                    },
+                                    "type": {
+                                      "type": "string"
+                                    },
+                                    "encoding": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": ["type"],
+                                  "additionalProperties": false
+                                }
+                              ]
+                            },
+                            "response": {
+                              "anyOf": [
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "docs": {
+                                      "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
+                                    },
+                                    "type": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": ["type"],
+                                  "additionalProperties": false
+                                }
+                              ]
+                            },
+                            "errors": {
+                              "$ref": "#/properties/services/properties/http/additionalProperties/properties/endpoints/additionalProperties/properties/errors"
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "server": {
+                    "$ref": "#/properties/services/properties/websocket/additionalProperties/properties/client"
+                  }
+                },
+                "required": ["auth", "path"],
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "errors": {
+          "type": "object",
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "docs": {
+                    "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
+                  },
+                  "http": {
+                    "type": "object",
+                    "properties": {
+                      "docs": {
+                        "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
+                      },
+                      "statusCode": {
+                        "type": "number"
+                      }
+                    },
+                    "required": ["statusCode"],
+                    "additionalProperties": false
+                  },
+                  "type": {
+                    "$ref": "#/properties/types/additionalProperties"
+                  }
+                },
+                "additionalProperties": false
+              }
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

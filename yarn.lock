@@ -2416,6 +2416,7 @@ __metadata:
     "@fern-api/fe-bundle": "workspace:*"
     "@fern-api/init": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
+    "@fern-api/jsonschema-generation": "workspace:*"
     "@fern-api/local-workspace-runner": "workspace:*"
     "@fern-api/login": "workspace:*"
     "@fern-api/openapi-converter": "workspace:*"
@@ -2479,6 +2480,7 @@ __metadata:
     "@babel/preset-env": ^7.18.6
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/commons": "workspace:*"
+    "@fern-api/jsonschema-generation": "workspace:*"
     "@fern-typescript/testing-utils": "workspace:*"
     "@types/jest": ^28.1.4
     "@types/node": ^18.0.3
@@ -2575,6 +2577,28 @@ __metadata:
     prettier: ^2.7.1
     ts-jest: ^28.0.5
     typescript: ^4.7.4
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/jsonschema-generation@workspace:*, @fern-api/jsonschema-generation@workspace:packages/jsonschema-generation":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/jsonschema-generation@workspace:packages/jsonschema-generation"
+  dependencies:
+    "@babel/core": ^7.18.6
+    "@babel/preset-env": ^7.18.6
+    "@babel/preset-typescript": ^7.18.6
+    "@fern-api/yaml-schema": "workspace:*"
+    "@types/jest": ^28.1.4
+    "@types/node": ^18.0.3
+    depcheck: ^1.4.3
+    eslint: ^8.19.0
+    jest: ^28.1.2
+    npm-run-all: ^4.1.5
+    prettier: ^2.7.1
+    ts-jest: ^28.0.5
+    typescript: ^4.7.4
+    zod: ^3.14.3
+    zod-to-json-schema: 3.14.1
   languageName: unknown
   linkType: soft
 
@@ -19848,6 +19872,15 @@ __metadata:
   version: 0.1.0
   resolution: "yocto-queue@npm:0.1.0"
   checksum: f77b3d8d00310def622123df93d4ee654fc6a0096182af8bd60679ddcdfb3474c56c6c7190817c84a2785648cdee9d721c0154eb45698c62176c322fb46fc700
+  languageName: node
+  linkType: hard
+
+"zod-to-json-schema@npm:3.14.1":
+  version: 3.14.1
+  resolution: "zod-to-json-schema@npm:3.14.1"
+  peerDependencies:
+    zod: ^3.14.4
+  checksum: 8c15ff5eef0da041a5435bd1f471e040747ccb003982586a6f3a2402057fcf0681b138d0ac531c1c1b60481fd0e2741ade8ddeeb5a8d7f3539092d219bb8b9be
   languageName: node
   linkType: hard
 

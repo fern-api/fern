@@ -1,12 +1,11 @@
 {
-  "name": "@fern-api/ete-tests",
+  "name": "@fern-api/jsonschema-generation",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "git@github.com:fern-api/fern.git",
-    "directory": "packages/ete-tests"
+    "directory": "packages/jsonschema-generation"
   },
-  "private": true,
   "files": [
     "lib"
   ],
@@ -35,15 +34,14 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/commons": "workspace:*",
-    "@fern-api/jsonschema-generation": "workspace:*",
-    "execa": "^5.1.1"
+    "@fern-api/yaml-schema": "workspace:*",
+    "zod": "^3.14.3",
+    "zod-to-json-schema": "3.14.1"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",
     "@babel/preset-env": "^7.18.6",
     "@babel/preset-typescript": "^7.18.6",
-    "@fern-typescript/testing-utils": "workspace:*",
     "@types/jest": "^28.1.4",
     "@types/node": "^18.0.3",
     "depcheck": "^1.4.3",
