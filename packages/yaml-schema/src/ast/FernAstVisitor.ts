@@ -14,7 +14,7 @@ export type FernAstVisitor<R = void> = {
 
 export interface FernAstNodeTypes {
     docs: string;
-    import: string;
+    import: { importKey: string; importPath: string };
     id: IdSchema;
     typeDeclaration: { typeName: string; declaration: TypeDeclarationSchema };
     typeReference: TypeReferenceSchema;

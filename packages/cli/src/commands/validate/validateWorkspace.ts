@@ -18,7 +18,7 @@ export async function parseAndValidateWorkspace({
         handleFailedWorkspaceParserResult(parseResult);
         throw new Error("Failed to parse workspace");
     }
-    const violations = validateFernDefinition(parseResult.workspace);
+    const violations = validateFernDefinition({ workspace: parseResult.workspace, absolutePathToWorkspaceDefinition });
     for (const violation of violations) {
         logIssueInYaml({
             severity: violation.severity,

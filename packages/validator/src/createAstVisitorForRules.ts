@@ -4,11 +4,13 @@ import { RuleRunner } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";
 
 export function createAstVisitorForRules({
+    absoluteFilePath,
     relativeFilePath,
     contents,
     ruleRunners,
     addViolations,
 }: {
+    absoluteFilePath: string;
     relativeFilePath: string;
     contents: FernConfigurationSchema;
     ruleRunners: RuleRunner[];
@@ -19,7 +21,7 @@ export function createAstVisitorForRules({
             for (const visitorInRule of ruleRunners) {
                 const visitFromRule = visitorInRule[nodeType];
                 if (visitFromRule != null) {
-                    const ruleViolations = visitFromRule(node, { relativeFilePath, contents });
+                    const ruleViolations = visitFromRule(node, { relativeFilePath, contents, absoluteFilePath });
                     addViolations(
                         ruleViolations.map((violation) => ({
                             severity: violation.severity,

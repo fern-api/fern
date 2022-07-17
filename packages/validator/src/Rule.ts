@@ -15,6 +15,7 @@ export type RuleRunner = {
 };
 
 export interface RuleRunnerArgs {
+    absoluteFilePath: string;
     relativeFilePath: RelativeFilePath;
     contents: FernConfigurationSchema;
 }

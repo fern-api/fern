@@ -13,7 +13,7 @@ export function visitImports({
     if (imports == null) {
         return;
     }
-    for (const _import of Object.values(imports)) {
-        visitor.import?.(_import, [...nodePath, _import]);
+    for (const [importKey, importPath] of Object.entries(imports)) {
+        visitor.import?.({ importKey, importPath }, [...nodePath, importPath]);
     }
 }
