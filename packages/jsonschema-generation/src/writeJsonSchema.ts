@@ -3,8 +3,10 @@ import { lstat, rm, writeFile } from "fs/promises";
 import path from "path";
 import zodToJsonSchema from "zod-to-json-schema";
 
-export const ABSOLUTE_PATH_TO_WORKSPACE_JSON_SCHEMA = path.join(__dirname, "../../../workspace-schema.json");
+export const FERN_JSON_SCHEMA_FILENAME = "workspace-schema.json";
 export const FERN_JSON_SCHEMA = zodToJsonSchema(FernConfigurationSchema, "FernWorkspaceSchema");
+
+const ABSOLUTE_PATH_TO_WORKSPACE_JSON_SCHEMA = path.join(__dirname, `../../../${FERN_JSON_SCHEMA_FILENAME}`);
 
 async function writeJsonSchema() {
     const schemaFileExists = await doesPathExist(ABSOLUTE_PATH_TO_WORKSPACE_JSON_SCHEMA);
