@@ -5,7 +5,7 @@ import { noop } from "../utils/noop";
 import { visitObject } from "../utils/ObjectPropertiesVisitor";
 import { visitHttpService } from "./visitHttpService";
 
-export function visitServices({
+export async function visitServices({
     services,
     visitor,
     nodePath,
@@ -13,19 +13,19 @@ export function visitServices({
     services: ServicesSchema | undefined;
     visitor: Partial<FernAstVisitor>;
     nodePath: NodePath;
-}): void {
+}): Promise<void> {
     if (services == null) {
         return;
     }
-    visitObject(services, {
-        http: (httpServices) => {
+    await visitObject(services, {
+        http: async (httpServices) => {
             if (httpServices == null) {
                 return;
             }
             for (const [httpServiceName, httpService] of Object.entries(httpServices)) {
                 const nodePathForService = [...nodePath, "http", httpServiceName];
-                visitor.httpService?.({ serviceName: httpServiceName, service: httpService }, nodePathForService);
-                visitHttpService({ service: httpService, visitor, nodePathForService });
+                await visitor.httpService?.({ serviceName: httpServiceName, service: httpService }, nodePathForService);
+                await visitHttpService({ service: httpService, visitor, nodePathForService });
             }
         },
         websocket: noop,

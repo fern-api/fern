@@ -1,15 +1,15 @@
+import { doesPathExist } from "@fern-api/commons";
 import chalk from "chalk";
-import { lstat } from "fs/promises";
 import path from "path";
 import { Rule, RuleViolation } from "../../Rule";
 
 export const ImportFileExistsRule: Rule = {
     name: "imxport-file-exists",
-    create: async () => {
+    create: ({ workspace }) => {
         return {
-            import: async ({ importKey, importPath }, { absoluteFilePath }) => {
+            import: async ({ importKey, importPath }, { relativeFilePath }) => {
                 const violations: RuleViolation[] = [];
-                const importedFilePath = path.join(absoluteFilePath, importPath);
+                const importedFilePath = path.join(workspace.absolutePath, path.dirname(relativeFilePath), importPath);
                 const fileExists = await doesPathExist(importedFilePath);
                 if (!fileExists) {
                     violations.push({
@@ -24,12 +24,3 @@ export const ImportFileExistsRule: Rule = {
         };
     },
 };
-
-async function doesPathExist(filepath: string): Promise<boolean> {
-    try {
-        await lstat(filepath);
-        return true;
-    } catch {
-        return false;
-    }
-}

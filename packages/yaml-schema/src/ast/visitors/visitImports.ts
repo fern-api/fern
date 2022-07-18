@@ -1,7 +1,7 @@
 import { FernAstVisitor } from "../FernAstVisitor";
 import { NodePath } from "../NodePath";
 
-export function visitImports({
+export async function visitImports({
     imports,
     visitor,
     nodePath,
@@ -9,11 +9,11 @@ export function visitImports({
     imports: Record<string, string> | undefined;
     visitor: Partial<FernAstVisitor>;
     nodePath: NodePath;
-}): void {
+}): Promise<void> {
     if (imports == null) {
         return;
     }
     for (const [importKey, importPath] of Object.entries(imports)) {
-        visitor.import?.({ importKey, importPath }, [...nodePath, importPath]);
+        await visitor.import?.({ importKey, importPath }, [...nodePath, importPath]);
     }
 }

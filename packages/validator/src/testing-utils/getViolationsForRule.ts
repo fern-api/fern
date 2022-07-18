@@ -34,7 +34,7 @@ export async function getViolationsForRule({
                 violations.push(...newViolations);
             },
         });
-        visitFernYamlAst(contents, visitor);
+        await visitFernYamlAst(contents, visitor);
     }
 
     return violations;

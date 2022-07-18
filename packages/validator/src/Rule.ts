@@ -11,11 +11,10 @@ export interface RuleContext {
 }
 
 export type RuleRunner = {
-    [K in keyof FernAstNodeTypes]?: (node: FernAstNodeTypes[K], args: RuleRunnerArgs) => RuleViolation[];
+    [K in keyof FernAstNodeTypes]?: (node: FernAstNodeTypes[K], args: RuleRunnerArgs) => MaybePromise<RuleViolation[]>;
 };
 
 export interface RuleRunnerArgs {
-    absoluteFilePath: string;
     relativeFilePath: RelativeFilePath;
     contents: FernConfigurationSchema;
 }
@@ -23,3 +22,5 @@ export interface RuleViolation {
     severity: "warning" | "error";
     message: string;
 }
+
+export type MaybePromise<T> = T | Promise<T>;
