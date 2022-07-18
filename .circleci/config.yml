@@ -165,8 +165,8 @@ workflows:
           filters:
             branches:
               only: main
-              tags:
-                only: /.*/
+            tags:
+              only: /.*/
           context:
             - docker-hub
 
