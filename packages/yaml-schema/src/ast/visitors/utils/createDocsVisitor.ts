@@ -5,9 +5,9 @@ export function createDocsVisitor(
     visitor: Partial<FernAstVisitor>,
     nodePath: NodePath
 ): (docs: string | undefined) => void {
-    return (docs: string | undefined) => {
+    return async (docs: string | undefined) => {
         if (docs != null) {
-            visitor.docs?.(docs, [...nodePath, "docs"]);
+            await visitor.docs?.(docs, [...nodePath, "docs"]);
         }
     };
 }

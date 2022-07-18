@@ -7,22 +7,25 @@ import { visitIds } from "./visitors/visitIds";
 import { visitImports } from "./visitors/visitImports";
 import { visitTypeDeclarations } from "./visitors/visitTypeDeclarations";
 
-export function visitFernYamlAst(contents: FernConfigurationSchema, visitor: Partial<FernAstVisitor>): void {
-    visitObject(contents, {
-        imports: (imports) => {
-            visitImports({ imports, visitor, nodePath: ["imports"] });
+export async function visitFernYamlAst(
+    contents: FernConfigurationSchema,
+    visitor: Partial<FernAstVisitor>
+): Promise<void> {
+    await visitObject(contents, {
+        imports: async (imports) => {
+            await visitImports({ imports, visitor, nodePath: ["imports"] });
         },
-        ids: (ids) => {
-            visitIds({ ids, visitor, nodePath: ["ids"] });
+        ids: async (ids) => {
+            await visitIds({ ids, visitor, nodePath: ["ids"] });
         },
-        types: (types) => {
-            visitTypeDeclarations({ typeDeclarations: types, visitor, nodePath: ["types"] });
+        types: async (types) => {
+            await visitTypeDeclarations({ typeDeclarations: types, visitor, nodePath: ["types"] });
         },
-        services: (services) => {
-            visitServices({ services, visitor, nodePath: ["services"] });
+        services: async (services) => {
+            await visitServices({ services, visitor, nodePath: ["services"] });
         },
-        errors: (errors) => {
-            visitErrorDeclarations({ errorDeclarations: errors, visitor, nodePath: ["errors"] });
+        errors: async (errors) => {
+            await visitErrorDeclarations({ errorDeclarations: errors, visitor, nodePath: ["errors"] });
         },
     });
 }

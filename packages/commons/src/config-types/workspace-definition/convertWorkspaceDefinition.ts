@@ -2,6 +2,8 @@ import path from "path";
 import { WorkspaceDefinitionSchema } from "./schemas/WorkspaceDefinitionSchema";
 import { WorkspaceDefinition } from "./WorkspaceDefinition";
 
+// TODO "definition" already refers to the API definition.
+// We should use a different word to refer to the .fernrc
 export function convertWorkspaceDefinition({
     workspaceDefinition,
     absolutePathToDefinition,

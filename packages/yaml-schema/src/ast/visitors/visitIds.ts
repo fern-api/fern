@@ -6,7 +6,7 @@ import { visitObject } from "./utils/ObjectPropertiesVisitor";
 
 export const RAW_DEFAULT_ID_TYPE = "string";
 
-export function visitIds({
+export async function visitIds({
     ids,
     visitor,
     nodePath,
@@ -14,16 +14,16 @@ export function visitIds({
     ids: IdSchema[] | undefined;
     visitor: Partial<FernAstVisitor>;
     nodePath: NodePath;
-}): void {
+}): Promise<void> {
     if (ids == null) {
         return;
     }
 
     for (const id of ids) {
         const nodePathForId = [...nodePath, typeof id === "string" ? id : id.name];
-        visitor.id?.(id, nodePathForId);
+        await visitor.id?.(id, nodePathForId);
         if (typeof id !== "string") {
-            visitor.typeDeclaration?.(
+            await visitor.typeDeclaration?.(
                 {
                     typeName: id.name,
                     declaration: id.type ?? RAW_DEFAULT_ID_TYPE,
@@ -33,16 +33,16 @@ export function visitIds({
         }
 
         if (typeof id === "string") {
-            visitor.typeName?.(id, nodePathForId);
+            await visitor.typeName?.(id, nodePathForId);
         } else {
-            visitObject(id, {
-                name: (name) => {
-                    visitor.typeName?.(name, [...nodePathForId, "name"]);
+            await visitObject(id, {
+                name: async (name) => {
+                    await visitor.typeName?.(name, [...nodePathForId, "name"]);
                 },
                 docs: createDocsVisitor(visitor, nodePathForId),
-                type: (type) => {
+                type: async (type) => {
                     if (type != null) {
-                        visitor.typeReference?.(type, [...nodePathForId, "type"]);
+                        await visitor.typeReference?.(type, [...nodePathForId, "type"]);
                     }
                 },
             });

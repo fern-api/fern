@@ -8,13 +8,13 @@ import {
 } from "../schemas";
 import { NodePath } from "./NodePath";
 
-export type FernAstVisitor<R = void> = {
+export type FernAstVisitor<R = void | Promise<void>> = {
     [K in keyof FernAstNodeTypes]: FernAstNodeVisitor<K, R>;
 };
 
 export interface FernAstNodeTypes {
     docs: string;
-    import: string;
+    import: { importKey: string; importPath: string };
     id: IdSchema;
     typeDeclaration: { typeName: string; declaration: TypeDeclarationSchema };
     typeReference: TypeReferenceSchema;
@@ -25,7 +25,7 @@ export interface FernAstNodeTypes {
     errorReference: string;
 }
 
-export type FernAstNodeVisitor<K extends keyof FernAstNodeTypes, R = void> = (
+export type FernAstNodeVisitor<K extends keyof FernAstNodeTypes, R = void | Promise<void>> = (
     node: FernAstNodeTypes[K],
     nodePath: NodePath
 ) => R;

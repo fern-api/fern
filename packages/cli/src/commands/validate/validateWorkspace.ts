@@ -18,19 +18,11 @@ export async function parseAndValidateWorkspace({
         handleFailedWorkspaceParserResult(parseResult);
         throw new Error("Failed to parse workspace");
     }
-    const violations = validateFernDefinition(parseResult.workspace);
-    for (const violation of violations) {
-        logIssueInYaml({
-            severity: violation.severity,
-            relativeFilePath: violation.relativeFilePath,
-            breadcrumbs: violation.nodePath,
-            title: violation.message,
-        });
-    }
+    await validateWorkspace(parseResult.workspace);
 }
 
-export function validateWorkspace(workspace: Workspace): void {
-    const violations = validateFernDefinition(workspace);
+export async function validateWorkspace(workspace: Workspace): Promise<void> {
+    const violations = await validateFernDefinition(workspace);
     for (const violation of violations) {
         logIssueInYaml({
             severity: violation.severity,

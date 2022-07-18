@@ -26,6 +26,7 @@ export async function parseWorkspaceDefinition({
         didSucceed: true,
         workspace: {
             name,
+            absolutePath: absolutePathToDefinition,
             files: structuralValidationResult.validatedFiles,
         },
     };

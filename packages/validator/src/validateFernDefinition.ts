@@ -4,10 +4,10 @@ import { createAstVisitorForRules } from "./createAstVisitorForRules";
 import { rules } from "./rules";
 import { ValidationViolation } from "./ValidationViolation";
 
-export function validateFernDefinition(workspace: Workspace): ValidationViolation[] {
+export async function validateFernDefinition(workspace: Workspace): Promise<ValidationViolation[]> {
     const violations: ValidationViolation[] = [];
     for (const [relativeFilePath, contents] of Object.entries(workspace.files)) {
-        const violationsForFile = validateFernFile({
+        const violationsForFile = await validateFernFile({
             workspace,
             relativeFilePath,
             contents,
@@ -17,7 +17,7 @@ export function validateFernDefinition(workspace: Workspace): ValidationViolatio
     return violations;
 }
 
-function validateFernFile({
+async function validateFernFile({
     workspace,
     relativeFilePath,
     contents,
@@ -25,9 +25,9 @@ function validateFernFile({
     workspace: Workspace;
     relativeFilePath: RelativeFilePath;
     contents: FernConfigurationSchema;
-}): ValidationViolation[] {
+}): Promise<ValidationViolation[]> {
     const violations: ValidationViolation[] = [];
-    const ruleRunners = rules.map((rule) => rule.create({ workspace }));
+    const ruleRunners = await Promise.all(rules.map((rule) => rule.create({ workspace })));
 
     const astVisitor = createAstVisitorForRules({
         relativeFilePath,
@@ -37,7 +37,7 @@ function validateFernFile({
             violations.push(...newViolations);
         },
     });
-    visitFernYamlAst(contents, astVisitor);
+    await visitFernYamlAst(contents, astVisitor);
 
     return violations;
 }

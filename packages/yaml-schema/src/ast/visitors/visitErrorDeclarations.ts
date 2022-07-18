@@ -6,7 +6,7 @@ import { noop } from "./utils/noop";
 import { visitObject } from "./utils/ObjectPropertiesVisitor";
 import { visitTypeDeclaration } from "./visitTypeDeclarations";
 
-export function visitErrorDeclarations({
+export async function visitErrorDeclarations({
     errorDeclarations,
     visitor,
     nodePath,
@@ -14,36 +14,36 @@ export function visitErrorDeclarations({
     errorDeclarations: Record<string, ErrorDeclarationSchema> | undefined;
     visitor: Partial<FernAstVisitor>;
     nodePath: NodePath;
-}): void {
+}): Promise<void> {
     if (errorDeclarations == null) {
         return;
     }
     for (const [errorName, errorDeclaration] of Object.entries(errorDeclarations)) {
         const nodePathForError = [...nodePath, errorName];
-        visitor.errorDeclaration?.({ errorName, declaration: errorDeclaration }, nodePathForError);
-        visitErrorDeclaration(errorDeclaration, visitor, nodePathForError);
+        await visitor.errorDeclaration?.({ errorName, declaration: errorDeclaration }, nodePathForError);
+        await visitErrorDeclaration(errorDeclaration, visitor, nodePathForError);
     }
 }
 
-function visitErrorDeclaration(
+async function visitErrorDeclaration(
     declaration: ErrorDeclarationSchema,
     visitor: Partial<FernAstVisitor>,
     nodePathForError: NodePath
 ) {
     if (typeof declaration === "string") {
-        visitor.typeReference?.(declaration, nodePathForError);
+        await visitor.typeReference?.(declaration, nodePathForError);
     } else {
-        visitObject(declaration, {
+        await visitObject(declaration, {
             docs: createDocsVisitor(visitor, nodePathForError),
-            type: (type) => {
+            type: async (type) => {
                 if (type == null) {
                     return;
                 }
                 const nodePathForErrorType = [...nodePathForError, "type"];
                 if (typeof type === "string") {
-                    visitor.typeReference?.(type, nodePathForErrorType);
+                    await visitor.typeReference?.(type, nodePathForErrorType);
                 } else {
-                    visitTypeDeclaration({ declaration: type, visitor, nodePathForType: nodePathForErrorType });
+                    await visitTypeDeclaration({ declaration: type, visitor, nodePathForType: nodePathForErrorType });
                 }
             },
             http: noop,
