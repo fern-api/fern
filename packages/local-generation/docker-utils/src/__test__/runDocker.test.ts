@@ -1,5 +1,6 @@
+import { doesPathExist } from "@fern-api/commons";
 import { exec } from "child_process";
-import { lstat, mkdir, rm } from "fs/promises";
+import { mkdir, rm } from "fs/promises";
 import path from "path";
 import { promisify } from "util";
 import { runDocker } from "../runDocker";
@@ -37,12 +38,3 @@ describe("runDocker", () => {
         expect(fileExists).toBe(true);
     }, 15_000);
 });
-
-async function doesPathExist(filepath: string): Promise<boolean> {
-    try {
-        await lstat(filepath);
-        return true;
-    } catch {
-        return false;
-    }
-}

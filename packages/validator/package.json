@@ -34,6 +34,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
+    "@fern-api/commons": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/workspace-parser": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",

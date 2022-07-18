@@ -7,8 +7,8 @@ import { Rule, RuleViolation } from "../../Rule";
 
 export const NoUndefinedTypeReferenceRule: Rule = {
     name: "no-undefined-type-reference",
-    create: ({ workspace }) => {
-        const typesByFilepath = getTypesByFilepath(workspace);
+    create: async ({ workspace }) => {
+        const typesByFilepath = await getTypesByFilepath(workspace);
 
         return {
             typeReference: (typeReference, { relativeFilePath, contents }) => {
@@ -40,14 +40,14 @@ export const NoUndefinedTypeReferenceRule: Rule = {
     },
 };
 
-function getTypesByFilepath(workspace: Workspace) {
+async function getTypesByFilepath(workspace: Workspace) {
     const typesByFilepath: Record<string, Set<string>> = {};
 
     for (const [relativeFilepath, file] of Object.entries(workspace.files)) {
         const typesForFile = new Set<string>();
         typesByFilepath[relativeFilepath] = typesForFile;
 
-        visitFernYamlAst(file, {
+        await visitFernYamlAst(file, {
             id: (id) => {
                 typesForFile.add(typeof id === "string" ? id : id.name);
             },
