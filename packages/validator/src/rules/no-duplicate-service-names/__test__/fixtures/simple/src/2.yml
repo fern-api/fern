@@ -1,0 +1,8 @@
+services:
+  http:
+    OneService:
+      auth: none
+      endpoints: {}
+    TwoService:
+      auth: bearer
+      endpoints: {}
