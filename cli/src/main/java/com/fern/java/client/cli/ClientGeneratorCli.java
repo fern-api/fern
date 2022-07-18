@@ -350,7 +350,6 @@ public final class ClientGeneratorCli {
             writeFileContents(
                     Paths.get(outputDirectory, "build.gradle"),
                     CodeGenerationResult.getBuildDotGradle(
-                            fernPluginConfig,
                             fernPluginConfig.generatorConfig().publish().get()));
         }
     }

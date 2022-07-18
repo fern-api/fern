@@ -76,10 +76,6 @@ public interface FernPluginConfig {
         return result;
     }
 
-    default String getMavenGroup() {
-        return "com." + generatorConfig().organization() + ".fern";
-    }
-
     default String getModelProjectName() {
         return getSubProjectName("model");
     }
@@ -100,7 +96,7 @@ public interface FernPluginConfig {
         return generatorConfig()
                 .publish()
                 .map(generatorPublishConfig -> PackageCoordinate.maven(MavenCoordinate.builder()
-                        .group(getMavenGroup())
+                        .group(generatorPublishConfig.registries().maven().group())
                         .artifact(projectName)
                         .version(generatorPublishConfig.version())
                         .build()));
