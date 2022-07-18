@@ -21,7 +21,7 @@ export function constructNpmPackage({
     commandKey: CommandKey;
     generatorConfig: FernTypescriptGeneratorConfig;
 }): NpmPackage {
-    const scope = generatorConfig.organization;
+    const scope = generatorConfig.publish?.registries.npm.scope ?? generatorConfig.organization;
     const scopeWithAtSign = `@${scope}`;
     const packageNameWithoutScope = `${generatorConfig.workspaceName}-${commandKey}`;
     const packageName = `${scopeWithAtSign}/${packageNameWithoutScope}`;

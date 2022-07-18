@@ -27,10 +27,12 @@ types:
       registryUrl: string
       username: string
       password: string
+      group: string
   NpmRegistryConfig:
     properties:
       registryUrl: string
       token: string
+      scope: string
   GeneratorHelpers:
     properties:
       encodings: map<string, GeneratorHelperReference>
