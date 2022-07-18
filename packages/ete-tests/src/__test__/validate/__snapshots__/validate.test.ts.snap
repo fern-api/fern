@@ -1,3 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`fern-ir-tests simple 1`] = `""`;
+exports[`fern-ir-tests simple 1`] = `
+"[31mType [1mMissingType[22m is not defined.[39m
+  [34mapi.yml -> types -> MyType[39m
+  "
+`;

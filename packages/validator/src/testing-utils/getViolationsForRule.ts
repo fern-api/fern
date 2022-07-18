@@ -22,7 +22,7 @@ export async function getViolationsForRule({
         throw new Error("Failed to parse workspace");
     }
 
-    const ruleRunner = rule.create({ workspace: parseResult.workspace });
+    const ruleRunner = await rule.create({ workspace: parseResult.workspace });
     const violations: RuleViolation[] = [];
 
     for (const [relativeFilePath, contents] of Object.entries(parseResult.workspace.files)) {

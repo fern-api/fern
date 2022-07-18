@@ -3,7 +3,7 @@ import { FernAstNodeTypes, FernConfigurationSchema } from "@fern-api/yaml-schema
 
 export interface Rule {
     name: string;
-    create: (context: RuleContext) => RuleRunner;
+    create: (context: RuleContext) => MaybePromise<RuleRunner>;
 }
 
 export interface RuleContext {
