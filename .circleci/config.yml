@@ -116,13 +116,13 @@ jobs:
     machine:
       image: ubuntu-2004:202104-01
       docker_layer_caching: true
-      environment:
-        CIRCLE_TEST_REPORTS: /home/circleci/junit
-        CIRCLE_ARTIFACTS: /home/circleci/artifacts
-        _JAVA_OPTIONS: -Dorg.gradle.internal.launcher.welcomeMessageEnabled=false -Xmx8192m
-        JAVA_HOME: /opt/java11
-        CI: true
-        TERM: dumb
+    environment:
+      CIRCLE_TEST_REPORTS: /home/circleci/junit
+      CIRCLE_ARTIFACTS: /home/circleci/artifacts
+      _JAVA_OPTIONS: -Dorg.gradle.internal.launcher.welcomeMessageEnabled=false -Xmx8192m
+      JAVA_HOME: /opt/java11
+      CI: true
+      TERM: dumb
     resource_class: small
     steps:
       - attach_workspace: { at: /home/circleci }
