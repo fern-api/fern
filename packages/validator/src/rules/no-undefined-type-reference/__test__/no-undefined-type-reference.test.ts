@@ -11,7 +11,7 @@ describe("no-undefined-type-reference", () => {
 
         expect(violations).toMatchObject([
             {
-                message: /Type .*MissingType.* is not defined/,
+                message: expect.stringMatching(/Type .*MissingType.* is not defined/),
                 nodePath: ["types", "MyType"],
                 relativeFilePath: "src/simple.yml",
                 severity: "error",
