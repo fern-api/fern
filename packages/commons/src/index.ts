@@ -17,5 +17,6 @@ export {
     type GeneratorInvocation,
     type WorkspaceDefinition,
 } from "./config-types/workspace-definition/WorkspaceDefinition";
+export { doesPathExist } from "./doesPathExist";
 export { getDirectoryContents } from "./testing-utils/getDirectoryContents";
 export { validateSchema } from "./validateSchema";

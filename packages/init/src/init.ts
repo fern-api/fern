@@ -1,10 +1,11 @@
 import {
+    doesPathExist,
     ProjectConfigSchema,
     PROJECT_CONFIG_FILENAME,
     WorkspaceDefinitionSchema,
     WORKSPACE_DEFINITION_FILENAME,
 } from "@fern-api/commons";
-import { lstat, mkdir, writeFile } from "fs/promises";
+import { mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 import { writeSampleApiToDirectory } from "./writeSampleApiToDirectory";
@@ -46,14 +47,5 @@ async function writeProjectConfigIfNotExists({ organization }: { organization: s
             organization,
         };
         await writeFile(PROJECT_CONFIG_FILENAME, JSON.stringify(projectConfig, undefined, 4));
-    }
-}
-
-async function doesPathExist(filepath: string): Promise<boolean> {
-    try {
-        await lstat(filepath);
-        return true;
-    } catch {
-        return false;
     }
 }

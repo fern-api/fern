@@ -20,7 +20,7 @@ export async function generateIrForWorkspace({
         handleFailedWorkspaceParserResult(parseResult);
         throw new Error("Failed to parse workspace");
     }
-    validateWorkspace(parseResult.workspace);
+    await validateWorkspace(parseResult.workspace);
     return generateIntermediateRepresentation(parseResult.workspace);
 }
 

@@ -11,13 +11,13 @@ describe("no-undefined-path-parameters", () => {
 
         expect(violations).toMatchObject([
             {
-                message: /Endpoint is missing path-parameter: .*parameter2.*/,
+                message: expect.stringMatching(/Endpoint is missing path-parameter: .*parameter2.*/),
                 nodePath: ["services", "http", "SimpleService", "endpoints", "missingPathParameters"],
                 relativeFilePath: "src/simple.yml",
                 severity: "error",
             },
             {
-                message: /Endpoint path has unused path-parameter: .*parameter1.*/,
+                message: expect.stringMatching(/Endpoint path has unused path-parameter: .*parameter1.*/),
                 nodePath: ["services", "http", "SimpleService", "endpoints", "unusedPathParameters"],
                 relativeFilePath: "src/simple.yml",
                 severity: "error",

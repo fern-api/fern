@@ -5,7 +5,7 @@ import { createDocsVisitor } from "../utils/createDocsVisitor";
 import { noop } from "../utils/noop";
 import { visitObject } from "../utils/ObjectPropertiesVisitor";
 
-export function visitHttpService({
+export async function visitHttpService({
     service,
     visitor,
     nodePathForService,
@@ -13,22 +13,22 @@ export function visitHttpService({
     service: HttpServiceSchema;
     visitor: Partial<FernAstVisitor>;
     nodePathForService: NodePath;
-}): void {
-    visitObject(service, {
+}): Promise<void> {
+    await visitObject(service, {
         "base-path": noop,
         docs: createDocsVisitor(visitor, nodePathForService),
-        headers: (headers) => {
+        headers: async (headers) => {
             if (headers == null) {
                 return;
             }
             for (const [headerKey, header] of Object.entries(headers)) {
                 const nodePathForHeader = [...nodePathForService, "headers", headerKey];
                 if (typeof header === "string") {
-                    visitor.typeReference?.(header, nodePathForHeader);
+                    await visitor.typeReference?.(header, nodePathForHeader);
                 } else {
-                    visitObject(header, {
-                        type: (type) => {
-                            visitor.typeReference?.(type, nodePathForHeader);
+                    await visitObject(header, {
+                        type: async (type) => {
+                            await visitor.typeReference?.(type, nodePathForHeader);
                         },
                         docs: createDocsVisitor(visitor, nodePathForHeader),
                     });
@@ -36,17 +36,17 @@ export function visitHttpService({
             }
         },
         auth: noop,
-        endpoints: (endpoints) => {
+        endpoints: async (endpoints) => {
             for (const [endpointId, endpoint] of Object.entries(endpoints)) {
                 const nodePathForEndpoint = [...nodePathForService, "endpoints", endpointId];
-                visitor.httpEndpoint?.({ endpointId, endpoint }, nodePathForEndpoint);
-                visitEndpoint({ endpoint, visitor, nodePathForEndpoint });
+                await visitor.httpEndpoint?.({ endpointId, endpoint }, nodePathForEndpoint);
+                await visitEndpoint({ endpoint, visitor, nodePathForEndpoint });
             }
         },
     });
 }
 
-function visitEndpoint({
+async function visitEndpoint({
     endpoint,
     visitor,
     nodePathForEndpoint,
@@ -55,40 +55,40 @@ function visitEndpoint({
     visitor: Partial<FernAstVisitor>;
     nodePathForEndpoint: NodePath;
 }) {
-    visitObject(endpoint, {
+    await visitObject(endpoint, {
         docs: createDocsVisitor(visitor, nodePathForEndpoint),
         path: noop,
-        "path-parameters": (pathParameters) => {
+        "path-parameters": async (pathParameters) => {
             if (pathParameters == null) {
                 return;
             }
             for (const [pathParameterKey, pathParameter] of Object.entries(pathParameters)) {
                 const nodePathForPathParameter = [...nodePathForEndpoint, "path-parameters", pathParameterKey];
                 if (typeof pathParameter === "string") {
-                    visitor.typeReference?.(pathParameter, nodePathForPathParameter);
+                    await visitor.typeReference?.(pathParameter, nodePathForPathParameter);
                 } else {
-                    visitObject(pathParameter, {
+                    await visitObject(pathParameter, {
                         docs: createDocsVisitor(visitor, nodePathForPathParameter),
-                        type: (type) => {
-                            visitor.typeReference?.(type, [...nodePathForPathParameter, "type"]);
+                        type: async (type) => {
+                            await visitor.typeReference?.(type, [...nodePathForPathParameter, "type"]);
                         },
                     });
                 }
             }
         },
-        "query-parameters": (queryParameters) => {
+        "query-parameters": async (queryParameters) => {
             if (queryParameters == null) {
                 return;
             }
             for (const [queryParameterKey, queryParameter] of Object.entries(queryParameters)) {
                 const nodePathForQueryParameter = [...nodePathForEndpoint, "query", queryParameterKey];
                 if (typeof queryParameter === "string") {
-                    visitor.typeReference?.(queryParameter, nodePathForQueryParameter);
+                    await visitor.typeReference?.(queryParameter, nodePathForQueryParameter);
                 } else {
-                    visitObject(queryParameter, {
+                    await visitObject(queryParameter, {
                         docs: createDocsVisitor(visitor, nodePathForQueryParameter),
-                        type: (type) => {
-                            visitor.typeReference?.(type, [...nodePathForQueryParameter, "type"]);
+                        type: async (type) => {
+                            await visitor.typeReference?.(type, [...nodePathForQueryParameter, "type"]);
                         },
                     });
                 }
@@ -97,38 +97,40 @@ function visitEndpoint({
         method: noop,
         "auth-override": noop,
         headers: noop,
-        request: (request) => {
+        request: async (request) => {
             if (request == null) {
                 return;
             }
             const nodePathForRequest = [...nodePathForEndpoint, "request"];
             if (typeof request === "string") {
-                visitor.typeReference?.(request, nodePathForRequest);
+                await visitor.typeReference?.(request, nodePathForRequest);
             } else {
-                visitObject(request, {
+                await visitObject(request, {
                     docs: createDocsVisitor(visitor, nodePathForRequest),
-                    type: (type) => visitor.typeReference?.(type, [...nodePathForRequest, "type"]),
+                    type: async (type) => {
+                        await visitor.typeReference?.(type, [...nodePathForRequest, "type"]);
+                    },
                     encoding: noop,
                 });
             }
         },
-        response: (response) => {
+        response: async (response) => {
             if (response == null) {
                 return;
             }
             const nodePathForResponse = [...nodePathForEndpoint, "response"];
             if (typeof response === "string") {
-                visitor.typeReference?.(response, nodePathForResponse);
+                await visitor.typeReference?.(response, nodePathForResponse);
             } else {
-                visitObject(response, {
+                await visitObject(response, {
                     docs: createDocsVisitor(visitor, nodePathForResponse),
-                    type: (type) => {
-                        visitor.typeReference?.(type, [...nodePathForResponse, "type"]);
+                    type: async (type) => {
+                        await visitor.typeReference?.(type, [...nodePathForResponse, "type"]);
                     },
                 });
             }
         },
-        errors: (errors) => {
+        errors: async (errors) => {
             if (errors == null) {
                 return;
             }
@@ -139,12 +141,12 @@ function visitEndpoint({
                     typeof error === "string" ? error : error.error,
                 ];
                 if (typeof error === "string") {
-                    visitor.errorReference?.(error, nodePathForError);
+                    await visitor.errorReference?.(error, nodePathForError);
                 } else {
-                    visitObject(error, {
+                    await visitObject(error, {
                         docs: createDocsVisitor(visitor, nodePathForError),
-                        error: (error) => {
-                            visitor.errorReference?.(error, [...nodePathForError, "error"]);
+                        error: async (error) => {
+                            await visitor.errorReference?.(error, [...nodePathForError, "error"]);
                         },
                     });
                 }
