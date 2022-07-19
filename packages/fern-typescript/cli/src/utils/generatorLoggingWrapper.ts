@@ -1,6 +1,6 @@
 import { GeneratorUpdate } from "@fern-fern/generator-logging-api-client/model";
 import { GeneratorLoggingService } from "@fern-fern/generator-logging-api-client/services";
-import { FernTypescriptGeneratorConfig } from "../generator/FernGeneratorConfig";
+import { FernTypescriptGeneratorConfig } from "@fern-typescript/commons";
 
 export class GeneratorLoggingWrapper {
     private maybeSendUpdates = async (_updates: GeneratorUpdate[]) => {

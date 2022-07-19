@@ -49,6 +49,7 @@ async function generateClientFiles({
         modelDirectory: createDirectoryAndExportFromModule(directory, "model"),
         intermediateRepresentation,
         dependencyManager,
+        mode: "client",
     });
 
     const servicesDirectory = createDirectoryAndExportFromModule(directory, "services");

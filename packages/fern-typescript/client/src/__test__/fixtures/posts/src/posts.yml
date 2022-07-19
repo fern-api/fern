@@ -71,3 +71,7 @@ services:
           response: Post
           errors:
             - PostNotFoundError
+        getAllPosts:
+          method: GET
+          path: /get-all
+          response: list<Post>
