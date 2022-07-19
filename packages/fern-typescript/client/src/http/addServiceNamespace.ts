@@ -80,7 +80,7 @@ function maybeAddBasicAuthProperties({
         hasQuestionToken: authInfo.isOptional,
         type: getTextOfTsNode(
             getReferenceToFernServiceUtilsType({
-                type: "MaybeGetter",
+                type: "Supplier",
                 typeArguments: [
                     authInfo.isOptional
                         ? ts.factory.createUnionTypeNode([
@@ -123,7 +123,7 @@ function maybeAddBearerTokenProperty({
         hasQuestionToken: authInfo.isOptional,
         type: getTextOfTsNode(
             getReferenceToFernServiceUtilsType({
-                type: "MaybeGetter",
+                type: "Supplier",
                 typeArguments: [
                     authInfo.isOptional
                         ? ts.factory.createUnionTypeNode([
@@ -164,7 +164,7 @@ function maybeAddHeaders({
                 name: `"${header.header}"`,
                 type: getTextOfTsNode(
                     getReferenceToFernServiceUtilsType({
-                        type: "MaybeGetter",
+                        type: "Supplier",
                         dependencyManager,
                         referencedIn: module.getSourceFile(),
                         typeArguments: [

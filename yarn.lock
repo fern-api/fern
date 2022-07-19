@@ -2600,6 +2600,8 @@ __metadata:
     typescript: ^4.7.4
     zod: ^3.14.3
     zod-to-json-schema: 3.14.1
+  bin:
+    generate-fern-json-schema: ./cli
   languageName: unknown
   linkType: soft
 
