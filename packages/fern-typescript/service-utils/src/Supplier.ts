@@ -4,5 +4,5 @@ export type Supplier<T extends SuppliableType> = T | Promise<T> | (() => T | Pro
 
 export const Supplier = {
     get: async <T extends SuppliableType>(supplier: Supplier<T>): Promise<T> =>
-        await (typeof supplier === "function" ? supplier() : supplier),
+        typeof supplier === "function" ? supplier() : supplier,
 };
