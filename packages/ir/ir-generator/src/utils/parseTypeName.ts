@@ -17,8 +17,11 @@ export function parseTypeName({
         relativeFilePathOfDirectory: fernFilepath.join(path.sep),
         imports,
     });
+    if (reference == null) {
+        throw new Error("Failed to locate type: " + typeName);
+    }
     return {
-        name: reference.referenceName,
+        name: reference.typeName,
         fernFilepath:
             reference.relativeFilePath != null ? convertToFernFilepath(reference.relativeFilePath) : fernFilepath,
     };
