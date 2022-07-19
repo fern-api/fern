@@ -10,8 +10,7 @@ const MOCK_HELPERS_MANAGERS = new HelperManager({ encodings: {} });
 
 describe("generateServerProject", () => {
     for (const fixture of FIXTURES) {
-        itFernETE({
-            testName: fixture,
+        itFernETE(fixture, {
             testFile: __filename,
             pathToFixture: path.join(FIXTURES_DIR, fixture),
             generateFiles: async ({ volume, intermediateRepresentation }) => {

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`generateServerProject posts: posts 1`] = `
+exports[`generateServerProject posts 1`] = `
 Object {
   "/.npmignore": "tsconfig.json",
   "/index.ts": "export * as model from \\"./model\\";

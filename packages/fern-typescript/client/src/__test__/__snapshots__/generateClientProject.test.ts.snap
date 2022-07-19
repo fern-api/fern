@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`generateClientProject auth: auth 1`] = `
+exports[`generateClientProject auth 1`] = `
 Object {
   "/.npmignore": "tsconfig.json",
   "/index.ts": "export * as model from \\"./model\\";
@@ -896,7 +896,7 @@ export * from \\"./ServiceWithBasicAuthWithOverride\\";
 }
 `;
 
-exports[`generateClientProject chat: chat 1`] = `
+exports[`generateClientProject chat 1`] = `
 Object {
   "/.npmignore": "tsconfig.json",
   "/index.ts": "export * as model from \\"./model\\";
@@ -1120,7 +1120,7 @@ export class ChatService implements ChatService {
 }
 `;
 
-exports[`generateClientProject no-errors: no-errors 1`] = `
+exports[`generateClientProject no-errors 1`] = `
 Object {
   "/.npmignore": "tsconfig.json",
   "/index.ts": "export * as model from \\"./model\\";
@@ -1247,7 +1247,7 @@ export class NoErrorsService implements NoErrorsService {
 }
 `;
 
-exports[`generateClientProject posts: posts 1`] = `
+exports[`generateClientProject posts 1`] = `
 Object {
   "/.npmignore": "tsconfig.json",
   "/index.ts": "export * as model from \\"./model\\";

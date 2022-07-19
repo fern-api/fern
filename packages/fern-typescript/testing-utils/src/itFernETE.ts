@@ -1,5 +1,5 @@
 import { runEteTest } from "./runEteTest";
 
-export function itFernETE(args: runEteTest.Args, { only = false }: { only?: boolean } = {}): void {
-    (only ? it.only : it)(args.testName, () => runEteTest(args), 120_000);
+export function itFernETE(testName: string, args: runEteTest.Args, { only = false }: { only?: boolean } = {}): void {
+    (only ? it.only : it)(testName, () => runEteTest(args), 120_000);
 }

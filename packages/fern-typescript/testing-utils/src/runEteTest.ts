@@ -10,8 +10,6 @@ import { installAndCompileGeneratedProject } from "./installAndCompileGeneratedP
 
 export declare namespace runEteTest {
     export interface Args {
-        testName: string;
-
         /**
          * the file where the test lives.
          */
@@ -37,7 +35,6 @@ export declare namespace runEteTest {
 }
 
 export async function runEteTest({
-    testName,
     testFile,
     pathToFixture,
     generateFiles,
@@ -75,7 +72,7 @@ export async function runEteTest({
         await deleteDirectory(pathToGenerated);
     }
 
-    expect(volume.toJSON()).toMatchSnapshot(testName);
+    expect(volume.toJSON()).toMatchSnapshot();
 }
 
 function deleteDirectory(pathToDirectory: string): Promise<void> {
