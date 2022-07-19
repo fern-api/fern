@@ -7205,7 +7205,7 @@ export class MigrationInfoService implements MigrationInfoService {
         "type": "file",
       },
       Object {
-        "contents": "import { isResponseOk, BearerToken, defaultFetcher, MaybeGetter, Fetcher } from \\"@fern-typescript/service-utils\\";
+        "contents": "import { isResponseOk, BearerToken, defaultFetcher, Supplier, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
@@ -7221,14 +7221,14 @@ export declare namespace PlaylistCrudService {
     interface Init {
         origin: string;
         fetcher?: Fetcher;
-        token?: MaybeGetter<BearerToken | undefined>;
+        token?: Supplier<BearerToken | undefined>;
     }
 }
 
 export class PlaylistCrudService implements PlaylistCrudService {
     private baseUrl: string;
     private fetcher: Fetcher;
-    private token: MaybeGetter<BearerToken | undefined>;
+    private token: Supplier<BearerToken | undefined>;
 
     constructor(args: PlaylistCrudService.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;

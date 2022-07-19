@@ -1,5 +1,5 @@
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services";
-import { DependencyManager, getTextOfTsNode, invokeMaybeGetter } from "@fern-typescript/commons";
+import { DependencyManager, getTextOfTsNode, invokeSupplier } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import { GeneratedHttpEndpointTypes } from "@fern-typescript/model-context";
 import { SourceFile, StatementStructures, StructureKind, ts, VariableDeclarationKind } from "ts-morph";
@@ -47,7 +47,12 @@ export async function generateFetcherCall({
             ts.factory.createIdentifier(ClientConstants.HttpService.ServiceUtils.Fetcher.Parameters.METHOD),
             ts.factory.createStringLiteral(endpoint.method)
         ),
-        getHeadersPropertyAssignment({ service: serviceDefinition, endpoint }),
+        getHeadersPropertyAssignment({
+            service: serviceDefinition,
+            endpoint,
+            serviceFile,
+            dependencyManager,
+        }),
     ];
 
     if (includeQueryParams) {
@@ -158,22 +163,30 @@ export async function generateFetcherCall({
 function getHeadersPropertyAssignment({
     service,
     endpoint,
+    serviceFile,
+    dependencyManager,
 }: {
     service: HttpService;
     endpoint: HttpEndpoint;
+    serviceFile: SourceFile;
+    dependencyManager: DependencyManager;
 }): ts.ObjectLiteralElementLike {
     return ts.factory.createPropertyAssignment(
         ts.factory.createIdentifier(ClientConstants.HttpService.ServiceUtils.Fetcher.Parameters.HEADERS),
-        getHeadersPropertyValue({ service, endpoint })
+        getHeadersPropertyValue({ service, endpoint, serviceFile, dependencyManager })
     );
 }
 
 function getHeadersPropertyValue({
     service,
     endpoint,
+    serviceFile,
+    dependencyManager,
 }: {
     service: HttpService;
     endpoint: HttpEndpoint;
+    serviceFile: SourceFile;
+    dependencyManager: DependencyManager;
 }): ts.Expression {
     if (!doesServiceHaveHeaders(service) && endpoint.headers.length === 0) {
         return ts.factory.createObjectLiteralExpression([]);
@@ -193,7 +206,7 @@ function getHeadersPropertyValue({
         properties.push(
             ts.factory.createPropertyAssignment(
                 ts.factory.createStringLiteral(header.header),
-                invokeMaybeGetter(referenceToHeader)
+                invokeSupplier({ supplier: referenceToHeader, dependencyManager, referencedIn: serviceFile })
             )
         );
     }

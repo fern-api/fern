@@ -416,7 +416,7 @@ export * from \\"./_service-types\\";
         \\"typescript\\": \\"4.6.4\\"
     }
 }",
-  "/services/ServiceWithBasicAuth.ts": "import { isResponseOk, BasicAuth, defaultFetcher, MaybeGetter, Fetcher } from \\"@fern-typescript/service-utils\\";
+  "/services/ServiceWithBasicAuth.ts": "import { isResponseOk, BasicAuth, defaultFetcher, Supplier, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
@@ -428,14 +428,14 @@ export declare namespace ServiceWithBasicAuth {
     interface Init {
         origin: string;
         fetcher?: Fetcher;
-        credentials: MaybeGetter<BasicAuth>;
+        credentials: Supplier<BasicAuth>;
     }
 }
 
 export class ServiceWithBasicAuth implements ServiceWithBasicAuth {
     private baseUrl: string;
     private fetcher: Fetcher;
-    private credentials: MaybeGetter<BasicAuth>;
+    private credentials: Supplier<BasicAuth>;
 
     constructor(args: ServiceWithBasicAuth.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
@@ -467,7 +467,7 @@ export class ServiceWithBasicAuth implements ServiceWithBasicAuth {
     }
 }
 ",
-  "/services/ServiceWithBasicAuthWithOverride.ts": "import { isResponseOk, BasicAuth, defaultFetcher, MaybeGetter, Fetcher } from \\"@fern-typescript/service-utils\\";
+  "/services/ServiceWithBasicAuthWithOverride.ts": "import { isResponseOk, BasicAuth, defaultFetcher, Supplier, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
@@ -480,14 +480,14 @@ export declare namespace ServiceWithBasicAuthWithOverride {
     interface Init {
         origin: string;
         fetcher?: Fetcher;
-        credentials?: MaybeGetter<BasicAuth | undefined>;
+        credentials?: Supplier<BasicAuth | undefined>;
     }
 }
 
 export class ServiceWithBasicAuthWithOverride implements ServiceWithBasicAuthWithOverride {
     private baseUrl: string;
     private fetcher: Fetcher;
-    private credentials: MaybeGetter<BasicAuth | undefined>;
+    private credentials: Supplier<BasicAuth | undefined>;
 
     constructor(args: ServiceWithBasicAuthWithOverride.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
@@ -544,7 +544,7 @@ export class ServiceWithBasicAuthWithOverride implements ServiceWithBasicAuthWit
     }
 }
 ",
-  "/services/ServiceWithBearerAuth.ts": "import { isResponseOk, BearerToken, defaultFetcher, MaybeGetter, Fetcher } from \\"@fern-typescript/service-utils\\";
+  "/services/ServiceWithBearerAuth.ts": "import { isResponseOk, BearerToken, defaultFetcher, Supplier, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
@@ -556,14 +556,14 @@ export declare namespace ServiceWithBearerAuth {
     interface Init {
         origin: string;
         fetcher?: Fetcher;
-        token: MaybeGetter<BearerToken>;
+        token: Supplier<BearerToken>;
     }
 }
 
 export class ServiceWithBearerAuth implements ServiceWithBearerAuth {
     private baseUrl: string;
     private fetcher: Fetcher;
-    private token: MaybeGetter<BearerToken>;
+    private token: Supplier<BearerToken>;
 
     constructor(args: ServiceWithBearerAuth.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
@@ -595,7 +595,7 @@ export class ServiceWithBearerAuth implements ServiceWithBearerAuth {
     }
 }
 ",
-  "/services/ServiceWithBearerAuthWithOverride.ts": "import { isResponseOk, BearerToken, defaultFetcher, MaybeGetter, Fetcher } from \\"@fern-typescript/service-utils\\";
+  "/services/ServiceWithBearerAuthWithOverride.ts": "import { isResponseOk, BearerToken, defaultFetcher, Supplier, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
@@ -608,14 +608,14 @@ export declare namespace ServiceWithBearerAuthWithOverride {
     interface Init {
         origin: string;
         fetcher?: Fetcher;
-        token?: MaybeGetter<BearerToken | undefined>;
+        token?: Supplier<BearerToken | undefined>;
     }
 }
 
 export class ServiceWithBearerAuthWithOverride implements ServiceWithBearerAuthWithOverride {
     private baseUrl: string;
     private fetcher: Fetcher;
-    private token: MaybeGetter<BearerToken | undefined>;
+    private token: Supplier<BearerToken | undefined>;
 
     constructor(args: ServiceWithBearerAuthWithOverride.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
@@ -718,7 +718,7 @@ export class ServiceWithNoAuth implements ServiceWithNoAuth {
     }
 }
 ",
-  "/services/ServiceWithNoAuthWithBasicOverride.ts": "import { isResponseOk, BasicAuth, defaultFetcher, MaybeGetter, Fetcher } from \\"@fern-typescript/service-utils\\";
+  "/services/ServiceWithNoAuthWithBasicOverride.ts": "import { isResponseOk, BasicAuth, defaultFetcher, Supplier, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
@@ -731,14 +731,14 @@ export declare namespace ServiceWithNoAuthWithBasicOverride {
     interface Init {
         origin: string;
         fetcher?: Fetcher;
-        credentials?: MaybeGetter<BasicAuth | undefined>;
+        credentials?: Supplier<BasicAuth | undefined>;
     }
 }
 
 export class ServiceWithNoAuthWithBasicOverride implements ServiceWithNoAuthWithBasicOverride {
     private baseUrl: string;
     private fetcher: Fetcher;
-    private credentials: MaybeGetter<BasicAuth | undefined>;
+    private credentials: Supplier<BasicAuth | undefined>;
 
     constructor(args: ServiceWithNoAuthWithBasicOverride.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
@@ -795,7 +795,7 @@ export class ServiceWithNoAuthWithBasicOverride implements ServiceWithNoAuthWith
     }
 }
 ",
-  "/services/ServiceWithNoAuthWithBearerOverride.ts": "import { isResponseOk, BearerToken, defaultFetcher, MaybeGetter, Fetcher } from \\"@fern-typescript/service-utils\\";
+  "/services/ServiceWithNoAuthWithBearerOverride.ts": "import { isResponseOk, BearerToken, defaultFetcher, Supplier, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
@@ -808,14 +808,14 @@ export declare namespace ServiceWithNoAuthWithBearerOverride {
     interface Init {
         origin: string;
         fetcher?: Fetcher;
-        token?: MaybeGetter<BearerToken | undefined>;
+        token?: Supplier<BearerToken | undefined>;
     }
 }
 
 export class ServiceWithNoAuthWithBearerOverride implements ServiceWithNoAuthWithBearerOverride {
     private baseUrl: string;
     private fetcher: Fetcher;
-    private token: MaybeGetter<BearerToken | undefined>;
+    private token: Supplier<BearerToken | undefined>;
 
     constructor(args: ServiceWithNoAuthWithBearerOverride.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
@@ -1592,7 +1592,7 @@ export * from \\"./_service-types\\";
         \\"typescript\\": \\"4.6.4\\"
     }
 }",
-  "/services/PostsService.ts": "import { isResponseOk, BearerToken, defaultFetcher, MaybeGetter, Fetcher } from \\"@fern-typescript/service-utils\\";
+  "/services/PostsService.ts": "import { isResponseOk, BearerToken, defaultFetcher, Supplier, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
@@ -1607,19 +1607,19 @@ export declare namespace PostsService {
     interface Init {
         origin: string;
         fetcher?: Fetcher;
-        token: MaybeGetter<BearerToken>;
+        token: Supplier<BearerToken>;
         headers: Headers;
     }
 
     interface Headers {
-        \\"X-Service-Header\\": MaybeGetter<string>;
+        \\"X-Service-Header\\": Supplier<string>;
     }
 }
 
 export class PostsService implements PostsService {
     private baseUrl: string;
     private fetcher: Fetcher;
-    private token: MaybeGetter<BearerToken>;
+    private token: Supplier<BearerToken>;
     private headers: PostsService.Headers;
 
     constructor(args: PostsService.Init) {

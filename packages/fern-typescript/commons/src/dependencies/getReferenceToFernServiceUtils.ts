@@ -2,11 +2,11 @@ import { SourceFile, ts } from "ts-morph";
 import { DependencyManager } from "./DependencyManager";
 
 const PACKAGE_NAME = "@fern-typescript/service-utils";
-const VERSION = "0.0.151";
+const VERSION = "0.0.154";
 
 type FernServiceUtilsExport = ExportedFernServiceUtilsType | ExportedFernServiceUtilsValue;
 
-export type ExportedFernServiceUtilsType = "Fetcher" | "BearerToken" | "BasicAuth" | "MaybeGetter";
+export type ExportedFernServiceUtilsType = "Fetcher" | "BearerToken" | "BasicAuth" | "Supplier";
 
 export function getReferenceToFernServiceUtilsType({
     type,
@@ -92,20 +92,43 @@ function addFernServiceUtilsImport({
     dependencyManager.addDependency(PACKAGE_NAME, VERSION);
 }
 
-export function invokeMaybeGetter(maybeGetter: ts.Expression): ts.Expression {
+const SUPPLIER_UTILS_NAME = "Supplier";
+type SupplierUtil = "get";
+
+export function getReferenceToFernServiceUtilsSupplierMethod({
+    util,
+    dependencyManager,
+    referencedIn,
+}: {
+    util: SupplierUtil;
+    dependencyManager: DependencyManager;
+    referencedIn: SourceFile;
+}): ts.PropertyAccessExpression {
+    addFernServiceUtilsImport({ imports: [SUPPLIER_UTILS_NAME], file: referencedIn, dependencyManager });
+    return ts.factory.createPropertyAccessExpression(
+        ts.factory.createIdentifier(SUPPLIER_UTILS_NAME),
+        ts.factory.createIdentifier(util)
+    );
+}
+
+export function invokeSupplier({
+    supplier,
+    dependencyManager,
+    referencedIn,
+}: {
+    supplier: ts.Expression;
+    dependencyManager: DependencyManager;
+    referencedIn: SourceFile;
+}): ts.Expression {
     return ts.factory.createAwaitExpression(
-        ts.factory.createParenthesizedExpression(
-            ts.factory.createConditionalExpression(
-                ts.factory.createBinaryExpression(
-                    ts.factory.createTypeOfExpression(maybeGetter),
-                    ts.factory.createToken(ts.SyntaxKind.EqualsEqualsEqualsToken),
-                    ts.factory.createStringLiteral("function")
-                ),
-                ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-                ts.factory.createCallExpression(maybeGetter, undefined, []),
-                ts.factory.createToken(ts.SyntaxKind.ColonToken),
-                maybeGetter
-            )
+        ts.factory.createCallExpression(
+            getReferenceToFernServiceUtilsSupplierMethod({
+                util: "get",
+                dependencyManager,
+                referencedIn,
+            }),
+            undefined,
+            [supplier]
         )
     );
 }
