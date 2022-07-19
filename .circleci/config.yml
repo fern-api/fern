@@ -70,6 +70,9 @@ jobs:
             echo Publishing version: $(./scripts/git-version.sh)
             yarn mrlint version $(./scripts/git-version.sh)
       - run:
+          name: Update yarn.lock with new versions
+          command: yarn
+      - run:
           name: Compile
           command: yarn compile:all
       - run:
