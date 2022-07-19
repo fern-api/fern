@@ -25,7 +25,6 @@ export function convertToPostmanCollection(ir: IntermediateRepresentation): Coll
     const id = ir.workspaceName ?? "Untitled API";
     return {
         info: {
-            id,
             name: id,
         },
         item: getCollectionItems(ir),

@@ -3,7 +3,6 @@
 exports[`Postman Conversion Blog Post API 1`] = `
 Object {
   "info": Object {
-    "id": "Blog API",
     "name": "Blog API",
   },
   "item": Array [

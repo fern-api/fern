@@ -1,0 +1,67 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/workspace-schema.json
+
+ids:
+  - CollectionId
+  - WorkspaceId
+
+types:
+  PostmanCollection:
+    properties:
+      collection: unknown
+
+  GetAllCollectionMetadataResponse:
+    properties:
+      collections: list<CollectionMetadata>
+
+  CollectionMetadata:
+    properties:
+      id: CollectionId
+      name: string
+      owner: string
+      createdAt: datetime
+      updatedAt: datetime
+      uid: string
+      isPublic: boolean
+      forkInfo: optional<CollectionForkInfo>
+
+  CollectionForkInfo:
+    properties:
+      label: string
+      createdAt: datetime
+      from: string
+
+services:
+  http:
+    CollectionService:
+      auth: none
+      headers:
+        X-API-Key: string
+      base-path: /collections
+      endpoints:
+        createCollection:
+          method: POST
+          path: /
+          query-parameters:
+            workspace: optional<WorkspaceId>
+          request: PostmanCollection
+
+        getCollection:
+          method: GET
+          path: /{collectionId}
+          path-parameters:
+            collectionId: CollectionId
+          response: PostmanCollection
+
+        getAllCollectionMetadata:
+          method: GET
+          path: /
+          query-parameters:
+            workspace: optional<WorkspaceId>
+          response: GetAllCollectionMetadataResponse
+
+        updateCollection:
+          method: PUT
+          path: /{collectionId}
+          path-parameters:
+            collectionId: CollectionId
+          request: PostmanCollection

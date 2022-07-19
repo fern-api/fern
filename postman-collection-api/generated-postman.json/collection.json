@@ -1,0 +1,318 @@
+{
+  "item": [
+    {
+      "id": "02c23074-0e2b-43a0-aeaf-ad9dbad06a9d",
+      "name": "CollectionService",
+      "item": [
+        {
+          "id": "a4c6d9a6-8588-4113-848a-2a95e1ebc090",
+          "name": "createCollection",
+          "description": {},
+          "request": {
+            "description": {},
+            "url": {
+              "path": ["/collections/"],
+              "host": ["{{origin}}"],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "description": {},
+                "key": "X-API-Key",
+                "value": "example"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"collection\": \"UNKNOWN\"\n}"
+            }
+          },
+          "response": [
+            {
+              "id": "032405bd-062a-4a64-aeb9-22146cc5cb24",
+              "name": "Successful createCollection",
+              "description": {},
+              "originalRequest": {
+                "description": {},
+                "url": {
+                  "path": ["/collections/"],
+                  "host": ["{{origin}}"],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {},
+                    "key": "X-API-Key",
+                    "value": "example"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"collection\": \"UNKNOWN\"\n}"
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": 0
+            }
+          ],
+          "event": []
+        },
+        {
+          "id": "b8021fe2-1cdd-4546-ba7a-41047fd225c7",
+          "name": "getCollection",
+          "description": {},
+          "request": {
+            "description": {},
+            "url": {
+              "path": ["/collections/:collectionId"],
+              "host": ["{{origin}}"],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "description": {},
+                "key": "X-API-Key",
+                "value": "example"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            }
+          },
+          "response": [
+            {
+              "id": "5a12696f-198f-422c-9288-3561dcf7b740",
+              "name": "Successful getCollection",
+              "description": {},
+              "originalRequest": {
+                "description": {},
+                "url": {
+                  "path": ["/collections/:collectionId"],
+                  "host": ["{{origin}}"],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {},
+                    "key": "X-API-Key",
+                    "value": "example"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n    \"collection\": \"UNKNOWN\"\n}",
+              "cookie": [],
+              "responseTime": 0
+            }
+          ],
+          "event": []
+        },
+        {
+          "id": "db1c933e-5e84-4577-9f36-5cd3fcdfacaa",
+          "name": "getAllCollectionMetadata",
+          "description": {},
+          "request": {
+            "description": {},
+            "url": {
+              "path": ["/collections/"],
+              "host": ["{{origin}}"],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "description": {},
+                "key": "X-API-Key",
+                "value": "example"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            }
+          },
+          "response": [
+            {
+              "id": "34b0ef1c-8646-4757-bebf-48f72c7e4cb7",
+              "name": "Successful getAllCollectionMetadata",
+              "description": {},
+              "originalRequest": {
+                "description": {},
+                "url": {
+                  "path": ["/collections/"],
+                  "host": ["{{origin}}"],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {},
+                    "key": "X-API-Key",
+                    "value": "example"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n    \"collections\": [\n        {\n            \"id\": \"example\",\n            \"name\": \"example\",\n            \"owner\": \"example\",\n            \"createdAt\": \"2022-07-19T09:19:05.980Z\",\n            \"updatedAt\": \"2022-07-19T09:19:05.980Z\",\n            \"uid\": \"example\",\n            \"isPublic\": true,\n            \"forkInfo\": {\n                \"label\": \"example\",\n                \"createdAt\": \"2022-07-19T09:19:05.982Z\",\n                \"from\": \"example\"\n            }\n        }\n    ]\n}",
+              "cookie": [],
+              "responseTime": 0
+            }
+          ],
+          "event": []
+        },
+        {
+          "id": "0cacebfe-3ee0-41c3-9d99-cbbd9ba5206d",
+          "name": "updateCollection",
+          "description": {},
+          "request": {
+            "description": {},
+            "url": {
+              "path": ["/collections/:collectionId"],
+              "host": ["{{origin}}"],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "description": {},
+                "key": "X-API-Key",
+                "value": "example"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"collection\": \"UNKNOWN\"\n}"
+            }
+          },
+          "response": [
+            {
+              "id": "0dae34ff-f6c8-4801-99e5-e72ec1abff74",
+              "name": "Successful updateCollection",
+              "description": {},
+              "originalRequest": {
+                "description": {},
+                "url": {
+                  "path": ["/collections/:collectionId"],
+                  "host": ["{{origin}}"],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {},
+                    "key": "X-API-Key",
+                    "value": "example"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"collection\": \"UNKNOWN\"\n}"
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": 0
+            }
+          ],
+          "event": []
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "any",
+      "value": "http://localhost:8080",
+      "key": "origin"
+    }
+  ],
+  "info": {
+    "_postman_id": "164feb3e-f78e-40cf-95fb-e61de9bf2f13",
+    "name": "postman-collection-api",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  }
+}

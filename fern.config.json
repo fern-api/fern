@@ -1,0 +1,4 @@
+{
+  "workspaces": ["postman-collection-api"],
+  "organization": "fern"
+}

@@ -1642,10 +1642,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@faker-js/faker@npm:6.0.0":
-  version: 6.0.0
-  resolution: "@faker-js/faker@npm:6.0.0"
-  checksum: 099f712ad6c323847ffe10cd522861eccd81c80812b59ae5e0011ee2fa4881a50ff1183686e9c1bb043fd0b2ff4fac291c776093ccab7a38c4baafa71fa39198
+"@faker-js/faker@npm:5.5.3":
+  version: 5.5.3
+  resolution: "@faker-js/faker@npm:5.5.3"
+  checksum: d248a042e47ac00613d2d7cc29d4504cc5e5d843162454eede8c35f31c74b19a8fd7cecc0d5ea9e3fbbfc812abc51143c3699e51049fd64300e23e6588e76d39
   languageName: node
   linkType: hard
 
@@ -1717,6 +1717,17 @@ __metadata:
   version: 0.0.48
   resolution: "@fern-fern/ir-model@npm:0.0.48"
   checksum: 7c6cd746664eb9d3d225d5dd04e528018372afcfc841813744f1d5ce7389ae3e3e0b39d8877670f52fcf58913ea0a4fe4a18c5a7a8cfebd1a1814b01c465a44c
+  languageName: node
+  linkType: hard
+
+"@fern-fern/postman-collection-api-client@npm:0.0.4":
+  version: 0.0.4
+  resolution: "@fern-fern/postman-collection-api-client@npm:0.0.4"
+  dependencies:
+    "@fern-typescript/service-utils": 0.0.124
+    "@types/url-join": 4.0.1
+    url-join: 4.0.1
+  checksum: 7473ed3129b5c6f6d41f84ee3c749885189ff523bc0b8e579447beb012394f32d8fd2d3a2dea228b167e4f8943d974675fe01831de6377304658afd91abc1959
   languageName: node
   linkType: hard
 
@@ -2303,6 +2314,13 @@ __metadata:
   version: 2.0.1
   resolution: "@types/stack-utils@npm:2.0.1"
   checksum: 205fdbe3326b7046d7eaf5e494d8084f2659086a266f3f9cf00bccc549c8e36e407f88168ad4383c8b07099957ad669f75f2532ed4bc70be2b037330f7bae019
+  languageName: node
+  linkType: hard
+
+"@types/url-join@npm:4.0.1":
+  version: 4.0.1
+  resolution: "@types/url-join@npm:4.0.1"
+  checksum: 29444b90e165b3970c8ad3fcef1e2de092e72b67e1f3aaff3016eea1697f98a01a28fb4f71f8044e3338a95bd2262327e9299be416efe5297018658760a331b4
   languageName: node
   linkType: hard
 
@@ -3877,6 +3895,7 @@ __metadata:
     "@fern-api/workspace-parser": ^0.0.128
     "@fern-fern/generator-logging-api-client": ^0.0.11
     "@fern-fern/ir-model": 0.0.48
+    "@fern-fern/postman-collection-api-client": 0.0.4
     "@types/jest": ^27.5.0
     "@types/lodash": ^4.14.182
     "@types/postman-collection": ^3.5.7
@@ -5873,10 +5892,10 @@ __metadata:
   linkType: hard
 
 "postman-collection@npm:^4.1.2":
-  version: 4.1.2
-  resolution: "postman-collection@npm:4.1.2"
+  version: 4.1.4
+  resolution: "postman-collection@npm:4.1.4"
   dependencies:
-    "@faker-js/faker": 6.0.0
+    "@faker-js/faker": 5.5.3
     file-type: 3.9.0
     http-reasons: 0.1.0
     iconv-lite: 0.6.3
@@ -5885,9 +5904,9 @@ __metadata:
     mime-format: 2.0.1
     mime-types: 2.1.35
     postman-url-encoder: 3.0.5
-    semver: 7.3.5
+    semver: 7.3.7
     uuid: 8.3.2
-  checksum: 3bad0a10f0ce5f2780704eebf56730d18d67a6b451f2baffbfea38e91e230f4393f199c6159dceaeb16954335e9fb83c0a50bf4870104b567a36cded5284d046
+  checksum: cd8edd6720777b13015107d92c4dba8a778eee765e8dc30debd5204a18d7c38c5795f17e72e1ad5f53ec68bc9083808201f104f98d98b3bda965fe7859772a3c
   languageName: node
   linkType: hard
 
@@ -6303,14 +6322,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:7.3.5":
-  version: 7.3.5
-  resolution: "semver@npm:7.3.5"
+"semver@npm:7.3.7, semver@npm:^7.3.2, semver@npm:^7.3.5":
+  version: 7.3.7
+  resolution: "semver@npm:7.3.7"
   dependencies:
     lru-cache: ^6.0.0
   bin:
     semver: bin/semver.js
-  checksum: 5eafe6102bea2a7439897c1856362e31cc348ccf96efd455c8b5bc2c61e6f7e7b8250dc26b8828c1d76a56f818a7ee907a36ae9fb37a599d3d24609207001d60
+  checksum: 2fa3e877568cd6ce769c75c211beaed1f9fce80b28338cadd9d0b6c40f2e2862bafd62c19a6cff42f3d54292b7c623277bcab8816a2b5521cf15210d43e75232
   languageName: node
   linkType: hard
 
@@ -6320,17 +6339,6 @@ __metadata:
   bin:
     semver: ./bin/semver.js
   checksum: 1b26ecf6db9e8292dd90df4e781d91875c0dcc1b1909e70f5d12959a23c7eebb8f01ea581c00783bbee72ceeaad9505797c381756326073850dc36ed284b21b9
-  languageName: node
-  linkType: hard
-
-"semver@npm:^7.3.2, semver@npm:^7.3.5":
-  version: 7.3.7
-  resolution: "semver@npm:7.3.7"
-  dependencies:
-    lru-cache: ^6.0.0
-  bin:
-    semver: bin/semver.js
-  checksum: 2fa3e877568cd6ce769c75c211beaed1f9fce80b28338cadd9d0b6c40f2e2862bafd62c19a6cff42f3d54292b7c623277bcab8816a2b5521cf15210d43e75232
   languageName: node
   linkType: hard
 
@@ -6948,17 +6956,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"url-join@npm:4.0.1, url-join@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "url-join@npm:4.0.1"
+  checksum: f74e868bf25dbc8be6a8d7237d4c36bb5b6c62c72e594d5ab1347fe91d6af7ccd9eb5d621e30152e4da45c2e9a26bec21390e911ab54a62d4d82e76028374ee5
+  languageName: node
+  linkType: hard
+
 "url-join@npm:5.0.0":
   version: 5.0.0
   resolution: "url-join@npm:5.0.0"
   checksum: 5921384a8ad4395b49ce4b50aa26efbc429cebe0bc8b3660ad693dd12fd859747b5369be0443e60e53a7850b2bc9d7d0687bcb94386662b40e743596bbf38101
-  languageName: node
-  linkType: hard
-
-"url-join@npm:^4.0.1":
-  version: 4.0.1
-  resolution: "url-join@npm:4.0.1"
-  checksum: f74e868bf25dbc8be6a8d7237d4c36bb5b6c62c72e594d5ab1347fe91d6af7ccd9eb5d621e30152e4da45c2e9a26bec21390e911ab54a62d4d82e76028374ee5
   languageName: node
   linkType: hard
 
