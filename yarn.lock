@@ -2588,6 +2588,7 @@ __metadata:
     "@babel/core": ^7.18.6
     "@babel/preset-env": ^7.18.6
     "@babel/preset-typescript": ^7.18.6
+    "@fern-api/commons": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^28.1.4
     "@types/node": ^18.0.3
@@ -2600,6 +2601,8 @@ __metadata:
     typescript: ^4.7.4
     zod: ^3.14.3
     zod-to-json-schema: 3.14.1
+  bin:
+    generate-fern-json-schema: ./cli
   languageName: unknown
   linkType: soft
 

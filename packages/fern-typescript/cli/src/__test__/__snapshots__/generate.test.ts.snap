@@ -6698,7 +6698,7 @@ export * from \\"./_service-types\\";
         \\"build\\": \\"esbuild $(find . -name '*.ts' -not -path './node_modules/*') --format=cjs --sourcemap --outdir=. && tsc\\"
     },
     \\"dependencies\\": {
-        \\"@fern-typescript/service-utils\\": \\"0.0.151\\",
+        \\"@fern-typescript/service-utils\\": \\"0.0.155\\",
         \\"url-join\\": \\"4.0.1\\",
         \\"@types/url-join\\": \\"4.0.1\\"
     },
@@ -7205,7 +7205,7 @@ export class MigrationInfoService implements MigrationInfoService {
         "type": "file",
       },
       Object {
-        "contents": "import { isResponseOk, BearerToken, defaultFetcher, Supplier, Fetcher } from \\"@fern-typescript/service-utils\\";
+        "contents": "import { isResponseOk, BearerToken, Supplier, defaultFetcher, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../model\\";
 
@@ -7237,7 +7237,7 @@ export class PlaylistCrudService implements PlaylistCrudService {
     }
 
     public async createPlaylist(request: model.PlaylistCreateRequest): Promise<model.CreatePlaylistResponse> {
-        const token = await (typeof this.token === \\"function\\" ? this.token() : this.token);
+        const token = await Supplier.get(this.token);
         if (token == null) {
             throw new Error(\\"token is not defined.\\");
         }
@@ -7270,7 +7270,7 @@ export class PlaylistCrudService implements PlaylistCrudService {
     }
 
     public async getPlaylists(): Promise<model.GetPlaylistsResponse> {
-        const token = await (typeof this.token === \\"function\\" ? this.token() : this.token);
+        const token = await Supplier.get(this.token);
         if (token == null) {
             throw new Error(\\"token is not defined.\\");
         }
@@ -7322,7 +7322,7 @@ export class PlaylistCrudService implements PlaylistCrudService {
     }
 
     public async updatePlaylist(request: model._UpdatePlaylistRequest): Promise<model.UpdatePlaylistResponse> {
-        const token = await (typeof this.token === \\"function\\" ? this.token() : this.token);
+        const token = await Supplier.get(this.token);
         if (token == null) {
             throw new Error(\\"token is not defined.\\");
         }
@@ -7355,7 +7355,7 @@ export class PlaylistCrudService implements PlaylistCrudService {
     }
 
     public async deletePlaylist(request: model.DeletePlaylistRequest): Promise<model.DeletePlaylistResponse> {
-        const token = await (typeof this.token === \\"function\\" ? this.token() : this.token);
+        const token = await Supplier.get(this.token);
         if (token == null) {
             throw new Error(\\"token is not defined.\\");
         }

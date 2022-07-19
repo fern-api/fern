@@ -34,7 +34,8 @@
     "fern:local": "yarn workspace @fern-api/cli dist && node packages/cli/webpack/dist/bundle.js",
     "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public",
     "docs:preview": "yarn docsify serve docs",
-    "add-package": "yarn mrlint create-package"
+    "add-package": "yarn mrlint create-package",
+    "generate-json-schema": "yarn workspace @fern-api/jsonschema-generation compile:cjs && node packages/jsonschema-generation/cli"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",
