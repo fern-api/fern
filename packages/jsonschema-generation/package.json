@@ -37,7 +37,6 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/commons": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
     "zod": "^3.14.3",
     "zod-to-json-schema": "3.14.1"
