@@ -1,2 +1,3 @@
 types:
   MyType: MissingType
+  ImportedType: commons.DoesNotExist

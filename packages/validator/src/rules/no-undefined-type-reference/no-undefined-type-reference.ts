@@ -10,26 +10,27 @@ export const NoUndefinedTypeReferenceRule: Rule = {
     create: async ({ workspace }) => {
         const typesByFilepath = await getTypesByFilepath(workspace);
 
+        function doesTypeExist(reference: ReferenceToTypeName) {
+            if (reference.parsed == null) {
+                return false;
+            }
+            const typesForFilepath = typesByFilepath[reference.parsed.relativeFilePath];
+            if (typesForFilepath == null) {
+                return false;
+            }
+            return typesForFilepath.has(reference.parsed.typeName);
+        }
+
         return {
             typeReference: (typeReference, { relativeFilePath, contents }) => {
-                const typesForFilepath = typesByFilepath[relativeFilePath];
-                if (typesForFilepath == null) {
-                    throw new Error("Encountered unexpected file: " + relativeFilePath);
-                }
-
                 const type = typeof typeReference === "string" ? typeReference : typeReference.type;
                 const namedTypes = getAllNamedTypes(type, relativeFilePath, contents.imports ?? {});
 
                 return namedTypes.reduce<RuleViolation[]>((violations, namedType) => {
-                    const typesForOtherFilepath = typesByFilepath[namedType.relativeFilePath];
-                    if (typesForOtherFilepath == null) {
-                        throw new Error("Encountered unexpected file: " + namedType.relativeFilePath);
-                    }
-
-                    if (!typesForOtherFilepath.has(namedType.referenceName)) {
+                    if (!doesTypeExist(namedType)) {
                         violations.push({
                             severity: "error",
-                            message: `Type ${chalk.bold(namedType.referenceName)} is not defined.`,
+                            message: `Type ${chalk.bold(namedType.fullyQualifiedName)} is not defined.`,
                         });
                     }
 
@@ -61,8 +62,13 @@ async function getTypesByFilepath(workspace: Workspace) {
 }
 
 interface ReferenceToTypeName {
-    referenceName: string;
-    relativeFilePath: string;
+    fullyQualifiedName: string;
+    parsed:
+        | {
+              typeName: string;
+              relativeFilePath: string;
+          }
+        | undefined;
 }
 
 function getAllNamedTypes(
@@ -88,8 +94,14 @@ function getAllNamedTypes(
             });
             return [
                 {
-                    referenceName: reference.referenceName,
-                    relativeFilePath: reference.relativeFilePath ?? relativeFilePath,
+                    fullyQualifiedName: type,
+                    parsed:
+                        reference != null
+                            ? {
+                                  typeName: reference.typeName,
+                                  relativeFilePath: reference.relativeFilePath ?? relativeFilePath,
+                              }
+                            : undefined,
                 },
             ];
         },
