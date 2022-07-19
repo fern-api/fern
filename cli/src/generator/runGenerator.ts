@@ -1,4 +1,10 @@
+import { validateSchema } from "@fern-api/commons";
 import { ExitStatusUpdate, GeneratorUpdate, PackageCoordinate } from "@fern-fern/generator-logging-api-client/model";
+import {
+    FernTypescriptGeneratorConfig,
+    FernTypescriptGeneratorCustomConfig,
+    FernTypescriptGeneratorCustomConfigSchema,
+} from "@fern-typescript/commons";
 import { readFile } from "fs/promises";
 import { Command } from "../commands/Command";
 import { createClientCommand } from "../commands/impls/clientCommand";
@@ -6,11 +12,15 @@ import { createModelCommand } from "../commands/impls/modelCommand";
 import { createServerCommand } from "../commands/impls/serverCommand";
 import { runCommand } from "../commands/runCommand";
 import { GeneratorLoggingWrapper } from "../utils/generatorLoggingWrapper";
-import { FernTypescriptGeneratorConfig } from "./FernGeneratorConfig";
 
 export async function runGenerator(pathToConfig: string): Promise<void> {
     const configStr = await readFile(pathToConfig);
     const config = JSON.parse(configStr.toString()) as FernTypescriptGeneratorConfig;
+    await validateSchema<FernTypescriptGeneratorCustomConfig>(
+        FernTypescriptGeneratorCustomConfigSchema,
+        config.customConfig
+    );
+
     const commands = getCommands(config);
     const generatorLoggingWrapper = new GeneratorLoggingWrapper(config);
 

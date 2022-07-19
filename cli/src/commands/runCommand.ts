@@ -1,10 +1,9 @@
 import { GeneratorUpdate } from "@fern-fern/generator-logging-api-client/model";
-import { BUILD_PROJECT_SCRIPT_NAME, writeVolumeToDisk } from "@fern-typescript/commons";
+import { BUILD_PROJECT_SCRIPT_NAME, FernTypescriptGeneratorConfig, writeVolumeToDisk } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import execa from "execa";
 import { Volume } from "memfs/lib/volume";
 import path from "path";
-import { FernTypescriptGeneratorConfig } from "../generator/FernGeneratorConfig";
 import { GeneratorLoggingWrapper } from "../utils/generatorLoggingWrapper";
 import { loadIntermediateRepresentation } from "../utils/loadIntermediateRepresentation";
 import { Command } from "./Command";

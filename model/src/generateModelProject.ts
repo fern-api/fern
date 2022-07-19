@@ -1,5 +1,6 @@
+import { assertNever } from "@fern-api/commons";
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
-import { DependencyManager, generateTypeScriptProject } from "@fern-typescript/commons";
+import { DependencyManager, FernTypescriptGeneratorMode, generateTypeScriptProject } from "@fern-typescript/commons";
 import { generateErrorFiles } from "@fern-typescript/errors";
 import { ModelContext } from "@fern-typescript/model-context";
 import { generateServiceTypeFiles } from "@fern-typescript/service-types";
@@ -28,6 +29,7 @@ export async function generateModelProject({
                 intermediateRepresentation,
                 modelDirectory: srcDirectory,
                 dependencyManager,
+                mode: "model",
             });
             return { dependencies: dependencyManager.getDependencies() };
         },
@@ -38,21 +40,34 @@ export function generateModelFiles({
     intermediateRepresentation,
     modelDirectory,
     dependencyManager,
+    mode,
 }: {
     intermediateRepresentation: IntermediateRepresentation;
     modelDirectory: Directory;
     dependencyManager: DependencyManager;
+    mode: Extract<FernTypescriptGeneratorMode, "client" | "server" | "model">;
 }): ModelContext {
     const modelContext = new ModelContext({ modelDirectory, intermediateRepresentation });
 
     generateTypeFiles({ intermediateRepresentation, modelContext });
     generateErrorFiles({ intermediateRepresentation, modelContext });
-    generateServiceTypeFiles({
-        intermediateRepresentation,
-        modelContext,
-        dependencyManager,
-        fernConstants: intermediateRepresentation.constants,
-    });
+
+    switch (mode) {
+        case "model":
+            break;
+        case "client":
+        case "server":
+            generateServiceTypeFiles({
+                mode,
+                intermediateRepresentation,
+                modelContext,
+                dependencyManager,
+                fernConstants: intermediateRepresentation.constants,
+            });
+            break;
+        default:
+            assertNever(mode);
+    }
 
     return modelContext;
 }
