@@ -1,4 +1,4 @@
-type SuppliableType = string | number | boolean | undefined;
+type SuppliableType = string | number | boolean | undefined | object;
 
 export type Supplier<T extends SuppliableType> = T | Promise<T> | (() => T | Promise<T>);
 
