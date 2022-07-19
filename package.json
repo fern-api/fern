@@ -35,7 +35,7 @@
     "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public",
     "docs:preview": "yarn docsify serve docs",
     "add-package": "yarn mrlint create-package",
-    "generate-json-schema": "yarn workspace @fern-api/jsonschema-generation compile:cjs && node packages/jsonschema-generation/cli"
+    "generate-json-schema": "yarn workspace @fern-api/jsonschema-generation compile:cjs && yarn workspace @fern-api/jsonschema-generation generate-fern-json-schema"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",
