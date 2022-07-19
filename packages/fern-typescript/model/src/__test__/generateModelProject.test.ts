@@ -5,7 +5,8 @@ import { generateModelProject } from "../generateModelProject";
 const FIXTURES_DIR = "fixtures";
 
 describe("generateModelProject", () => {
-    itFernETE("posts", {
+    itFernETE({
+        testName: "posts",
         testFile: __filename,
         pathToFixture: path.join(FIXTURES_DIR, "posts"),
         generateFiles: async ({ volume, intermediateRepresentation }) => {
@@ -18,7 +19,8 @@ describe("generateModelProject", () => {
         },
     });
 
-    itFernETE("fern IR", {
+    itFernETE({
+        testName: "fern IR",
         testFile: __filename,
         pathToFixture: path.join(FIXTURES_DIR, "fern-ir"),
         generateFiles: async ({ volume, intermediateRepresentation }) => {

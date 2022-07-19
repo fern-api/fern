@@ -4,6 +4,7 @@
   "include": ["./src"],
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
+    { "path": "../../commons/tsconfig.json" },
     { "path": "../commons/tsconfig.json" },
     { "path": "../errors/tsconfig.json" },
     { "path": "../model-context/tsconfig.json" },

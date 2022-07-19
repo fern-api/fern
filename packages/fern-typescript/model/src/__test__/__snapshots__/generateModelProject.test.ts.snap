@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`generateModelProject fern IR 1`] = `
+exports[`generateModelProject fern IR: fern IR 1`] = `
 Object {
   "/.npmignore": "tsconfig.json",
   "/_types/AliasTypeDeclaration.ts": "import * as model from \\"..\\";
@@ -831,7 +831,7 @@ export * from \\"./WebSocketOperationProperties\\";
 }
 `;
 
-exports[`generateModelProject posts 1`] = `
+exports[`generateModelProject posts: posts 1`] = `
 Object {
   "/.npmignore": "tsconfig.json",
   "/_errors/PostNotFoundError.ts": "export type PostNotFoundError = string & {
@@ -843,71 +843,6 @@ export const PostNotFoundError = {
 };
 ",
   "/_errors/index.ts": "export * from \\"./PostNotFoundError\\";
-",
-  "/_service-types/PostsService/GetPostErrorBody.ts": "import * as model from \\"../..\\";
-import * as uuid from \\"uuid\\";
-
-export type GetPostErrorBody =
-    | GetPostErrorBody.PostNotFoundError;
-
-export declare namespace GetPostErrorBody {
-    interface PostNotFoundError {
-        _error: \\"PostNotFoundError\\";
-        _errorInstanceId: string;
-        PostNotFoundError: model.PostNotFoundError;
-    }
-
-    export interface _Visitor<Result> {
-        PostNotFoundError: (value: model.PostNotFoundError) => Result;
-        _unknown: () => Result;
-    }
-}
-
-export const GetPostErrorBody = {
-    PostNotFoundError: (value: model.PostNotFoundError): GetPostErrorBody.PostNotFoundError => ({
-        PostNotFoundError: value,
-        _error: \\"PostNotFoundError\\",
-        _errorInstanceId: uuid.v4()
-    }),
-
-    _visit: <Result>(value: GetPostErrorBody, visitor: GetPostErrorBody._Visitor<Result>): Result => {
-        switch (value._error) {
-            case \\"PostNotFoundError\\": return visitor.PostNotFoundError(value.PostNotFoundError);
-            default: return visitor._unknown();
-        }
-    },
-
-    _types: (): GetPostErrorBody[\\"_error\\"][] => [\\"PostNotFoundError\\"],
-} as const;
-",
-  "/_service-types/PostsService/GetPostRequest.ts": "import * as model from \\"../..\\";
-
-export interface GetPostRequest {
-    postId: string;
-    body: model.CreatePostRequest;
-}
-",
-  "/_service-types/PostsService/_GetPostResponse.ts": "import * as model from \\"../..\\";
-
-export type _GetPostResponse = _GetPostResponse.SuccessResponse | _GetPostResponse.ErrorResponse;
-
-export declare namespace _GetPostResponse {
-    export interface SuccessResponse {
-        ok: true;
-        body: model.GetPostResponse;
-    }
-
-    export interface ErrorResponse {
-        ok: false;
-        error: model.GetPostErrorBody;
-    }
-}
-",
-  "/_service-types/PostsService/index.ts": "export * from \\"./GetPostRequest\\";
-export * from \\"./GetPostErrorBody\\";
-export * from \\"./_GetPostResponse\\";
-",
-  "/_service-types/index.ts": "export * from \\"./PostsService\\";
 ",
   "/_types/Author.ts": "export type Author =
     | Author.Anonymous
@@ -1060,7 +995,6 @@ export * from \\"./GetPostResponse\\";
 ",
   "/index.ts": "export * from \\"./_types\\";
 export * from \\"./_errors\\";
-export * from \\"./_service-types\\";
 ",
   "/package.json": "{
     \\"name\\": \\"posts\\",
@@ -1069,10 +1003,6 @@ export * from \\"./_service-types\\";
     \\"types\\": \\"./index.d.ts\\",
     \\"scripts\\": {
         \\"build\\": \\"esbuild $(find . -name '*.ts' -not -path './node_modules/*') --format=cjs --sourcemap --outdir=. && tsc\\"
-    },
-    \\"dependencies\\": {
-        \\"uuid\\": \\"8.3.2\\",
-        \\"@types/uuid\\": \\"8.3.4\\"
     },
     \\"devDependencies\\": {
         \\"@types/node\\": \\"17.0.33\\",
