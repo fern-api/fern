@@ -17,7 +17,7 @@ generators: []
 `;
 
 exports[`fern init 3`] = `
-"# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/0.0.152/workspace-schema.json
+"# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 # This is a sample IMDb API to get you more familiar with defining APIs in Fern.
 
