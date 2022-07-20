@@ -1,4 +1,7 @@
-export const SAMPLE_API = `# This is a sample IMDb API to get you more familiar with defining APIs in Fern.
+// Whenever the json schema is updated, this link will need to get bumped.
+export const SAMPLE_API = `# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+# This is a sample IMDb API to get you more familiar with defining APIs in Fern.
 
 types:
   MovieId: string

@@ -17,7 +17,9 @@ generators: []
 `;
 
 exports[`fern init 3`] = `
-"# This is a sample IMDb API to get you more familiar with defining APIs in Fern.
+"# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+# This is a sample IMDb API to get you more familiar with defining APIs in Fern.
 
 types:
   MovieId: string
