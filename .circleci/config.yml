@@ -68,14 +68,14 @@ jobs:
           name: ETE Test
           command: |
             yarn workspace @fern-api/cli dist
-            alias local-fern="node $(yarn workspace @fern-api/cli exec pwd)/webpack/dist/bundle.js"
+            cli_path = yarn workspace @fern-api/cli exec pwd
             mkdir pre-release-test
             cd pre-release-test
-            local-fern init --organization fern
-            local-fern add java
-            local-fern add typescript
-            local-fern add postman
-            local-fern generate
+            node ${cli_path}/webpack/dist/bundle.js init --organization fern
+            node ${cli_path}/webpack/dist/bundle.js add java
+            node ${cli_path}/webpack/dist/bundle.js add typescript
+            node ${cli_path}/webpack/dist/bundle.js add postman
+            node ${cli_path}/webpack/dist/bundle.js generate
             rm -rf pre-release-test
 
   publish:
