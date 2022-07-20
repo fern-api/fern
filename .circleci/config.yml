@@ -62,17 +62,20 @@ jobs:
       image: ubuntu-2004:current
     steps:
       - checkout
-      - run: |
-          yarn workspace @fern-api/cli dist
-          alias fern=“node $CIRCLE_PROJECT/packages/cli/webpack/dist/bundle.js”
-          mkdir pre-release-test
-          cd pre-release-test
-          fern init --organization fern
-          fern add java
-          fern add typescript
-          fern add postman
-          fern generate
-          rm -rf pre-release-test
+      - run:
+          name: ETE Test
+          command: |
+            if [ "$CIRCLE_TAG" -eq 0 ] ; then exit 0; fi
+            yarn workspace @fern-api/cli dist
+            alias local-fern="node $(yarn workspace @fern-api/cli exec pwd)/webpack/dist/bundle.js"
+            mkdir pre-release-test
+            cd pre-release-test
+            local-fern init --organization fern
+            local-fern add java
+            local-fern add typescript
+            local-fern add postman
+            local-fern generate
+            rm -rf pre-release-test
 
   publish:
     machine:
@@ -128,6 +131,7 @@ workflows:
               only: /.*/
           context:
             - auth0-dev
+
       - pre-release-test:
           filters:
             tags:
@@ -143,6 +147,7 @@ workflows:
             - lint
             - compile-and-test
             - ete-tests
+            - pre-release-test
           context:
             - npm
             - docker-hub
