@@ -63,7 +63,8 @@ jobs:
     steps:
       - checkout
       - run: |
-          npm install -g fern-api@next
+          yarn fern:local
+          alias fern=“node $CIRCLE_PROJECT/packages/cli/webpack/dist/bundle.js”
           mkdir pre-release-test
           cd pre-release-test
           fern init --organization fern
