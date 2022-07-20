@@ -139,6 +139,8 @@ workflows:
             #   only: main
             tags:
               only: /.*/
+          context:
+            - auth0-dev
 
       - publish:
           filters:
