@@ -68,6 +68,7 @@ jobs:
           name: ETE Test
           command: |
             if [[ -z "${CIRCLE_TAG}" ]]; then
+              echo "Skipping test because no git tag found"
               exit 0
             fi
 
@@ -75,11 +76,16 @@ jobs:
             cli_path="$(yarn workspace @fern-api/cli exec pwd)"
             mkdir pre-release-test
             cd pre-release-test
+
+            echo "Running Fern Commands!"
             node $cli_path/webpack/dist/bundle.js init --organization fern
             node $cli_path/webpack/dist/bundle.js add java
             node $cli_path/webpack/dist/bundle.js add typescript
             node $cli_path/webpack/dist/bundle.js add postman
             node $cli_path/webpack/dist/bundle.js generate
+
+            echo "Cleaning up!"
+            cd ..
             rm -rf pre-release-test
 
   publish:
