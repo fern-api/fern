@@ -67,7 +67,6 @@ jobs:
       - run:
           name: ETE Test
           command: |
-            if [ "$CIRCLE_TAG" -eq 0 ] ; then exit 0; fi
             yarn workspace @fern-api/cli dist
             alias local-fern="node $(yarn workspace @fern-api/cli exec pwd)/webpack/dist/bundle.js"
             mkdir pre-release-test
@@ -136,6 +135,8 @@ workflows:
 
       - pre-release-test:
           filters:
+            branches:
+              only: main
             tags:
               only: /.*/
 
