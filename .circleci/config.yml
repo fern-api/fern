@@ -68,14 +68,14 @@ jobs:
           name: ETE Test
           command: |
             yarn workspace @fern-api/cli dist
-            cli_path = yarn workspace @fern-api/cli exec pwd
+            cli_path="$(yarn workspace @fern-api/cli exec pwd)"
             mkdir pre-release-test
             cd pre-release-test
-            node ${cli_path}/webpack/dist/bundle.js init --organization fern
-            node ${cli_path}/webpack/dist/bundle.js add java
-            node ${cli_path}/webpack/dist/bundle.js add typescript
-            node ${cli_path}/webpack/dist/bundle.js add postman
-            node ${cli_path}/webpack/dist/bundle.js generate
+            node $cli_path/webpack/dist/bundle.js init --organization fern
+            node $cli_path/webpack/dist/bundle.js add java
+            node $cli_path/webpack/dist/bundle.js add typescript
+            node $cli_path/webpack/dist/bundle.js add postman
+            node $cli_path/webpack/dist/bundle.js generate
             rm -rf pre-release-test
 
   publish:
