@@ -63,7 +63,7 @@ jobs:
     steps:
       - checkout
       - run: |
-          yarn fern:local
+          yarn workspace @fern-api/cli dist
           alias fern=“node $CIRCLE_PROJECT/packages/cli/webpack/dist/bundle.js”
           mkdir pre-release-test
           cd pre-release-test
