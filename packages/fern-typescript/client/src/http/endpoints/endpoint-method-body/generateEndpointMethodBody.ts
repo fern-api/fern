@@ -4,7 +4,7 @@ import {
     getReferenceToFernServiceUtilsBasicAuthMethod,
     getReferenceToFernServiceUtilsBearerTokenMethod,
     getTextOfTsNode,
-    invokeMaybeGetter,
+    invokeSupplier,
 } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import { GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/model-context";
@@ -106,14 +106,16 @@ function getAuthStatements({
                         {
                             name: TOKEN_LOCAL_VARIABLE_NAME,
                             initializer: getTextOfTsNode(
-                                invokeMaybeGetter(
-                                    ts.factory.createPropertyAccessExpression(
+                                invokeSupplier({
+                                    supplier: ts.factory.createPropertyAccessExpression(
                                         ts.factory.createThis(),
                                         ts.factory.createIdentifier(
                                             ClientConstants.HttpService.PrivateMembers.BEARER_TOKEN
                                         )
-                                    )
-                                )
+                                    ),
+                                    dependencyManager,
+                                    referencedIn: serviceFile,
+                                })
                             ),
                         },
                     ],
@@ -180,14 +182,16 @@ function getAuthStatements({
                         {
                             name: BASIC_AUTH_LOCAL_VARIABLE_NAME,
                             initializer: getTextOfTsNode(
-                                invokeMaybeGetter(
-                                    ts.factory.createPropertyAccessExpression(
+                                invokeSupplier({
+                                    supplier: ts.factory.createPropertyAccessExpression(
                                         ts.factory.createThis(),
                                         ts.factory.createIdentifier(
                                             ClientConstants.HttpService.PrivateMembers.BASIC_AUTH
                                         )
-                                    )
-                                )
+                                    ),
+                                    dependencyManager,
+                                    referencedIn: serviceFile,
+                                })
                             ),
                         },
                     ],

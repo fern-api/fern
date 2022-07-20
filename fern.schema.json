@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$ref": "#/definitions/FernWorkspaceSchema",
+  "$ref": "#/definitions/Fern API Definition",
   "definitions": {
-    "FernWorkspaceSchema": {
+    "Fern API Definition": {
       "type": "object",
       "properties": {
         "imports": {

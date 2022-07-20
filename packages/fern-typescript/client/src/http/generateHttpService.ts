@@ -73,7 +73,7 @@ export async function generateHttpService({
             scope: Scope.Private,
             type: getTextOfTsNode(
                 getReferenceToFernServiceUtilsType({
-                    type: "MaybeGetter",
+                    type: "Supplier",
                     dependencyManager,
                     referencedIn: serviceFile,
                     typeArguments: [
@@ -101,7 +101,7 @@ export async function generateHttpService({
             scope: Scope.Private,
             type: getTextOfTsNode(
                 getReferenceToFernServiceUtilsType({
-                    type: "MaybeGetter",
+                    type: "Supplier",
                     dependencyManager,
                     referencedIn: serviceFile,
                     typeArguments: [

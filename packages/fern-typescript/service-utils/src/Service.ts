@@ -1,10 +1,10 @@
 import { Fetcher } from "./Fetcher";
-import { MaybeGetter } from "./MaybeGetter";
+import { Supplier } from "./Supplier";
 
 export declare namespace Service {
     interface Init {
         origin: string;
-        authHeader?: MaybeGetter<string | undefined>;
+        authHeader?: Supplier<string | undefined>;
         fetcher?: Fetcher;
     }
 }

@@ -5,7 +5,7 @@ export {
     getReferenceToFernServiceUtilsBearerTokenMethod,
     getReferenceToFernServiceUtilsType,
     getReferenceToFernServiceUtilsValue,
-    invokeMaybeGetter,
+    invokeSupplier,
 } from "./dependencies/getReferenceToFernServiceUtils";
 export {
     createDirectories,
@@ -23,6 +23,15 @@ export {
     type GeneratedProjectSrcInfo,
 } from "./generate-ts-project/generateTypeScriptProject";
 export { writeVolumeToDisk } from "./generate-ts-project/writeVolumeToDisk";
+export type { FernTypescriptGeneratorConfig } from "./generator-config/FernTypescriptGeneratorConfig";
+export {
+    FernTypescriptGeneratorCustomConfigSchema,
+    type FernTypescriptGeneratorCustomConfig,
+} from "./generator-config/FernTypescriptGeneratorCustomConfig";
+export {
+    FernTypescriptGeneratorModeSchema,
+    type FernTypescriptGeneratorMode,
+} from "./generator-config/FernTypescriptGeneratorMode";
 export { exportFromModule } from "./import-export/exportFromModule";
 export { ImportStrategy } from "./import-export/ImportStrategy";
 export { addBrandedTypeAlias } from "./utils/addBrandedTypeAlias";

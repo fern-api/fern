@@ -3,6 +3,7 @@ import { WebSocketChannel, WebSocketOperation } from "@fern-fern/ir-model/servic
 import { DependencyManager } from "@fern-typescript/commons";
 import { ModelContext } from "@fern-typescript/model-context";
 import { generateHttpEndpointTypes } from "./http/generateHttpEndpointTypes";
+import { ServiceTypesGenerationMode } from "./types";
 import { generateWebSocketOperationTypes } from "./websocket/generateWebSocketOperationTypes";
 
 export function generateServiceTypeFiles({
@@ -10,11 +11,13 @@ export function generateServiceTypeFiles({
     modelContext,
     dependencyManager,
     fernConstants,
+    mode,
 }: {
     intermediateRepresentation: IntermediateRepresentation;
     modelContext: ModelContext;
     dependencyManager: DependencyManager;
     fernConstants: FernConstants;
+    mode: ServiceTypesGenerationMode;
 }): void {
     for (const service of intermediateRepresentation.services.http) {
         for (const endpoint of service.endpoints) {
@@ -24,6 +27,7 @@ export function generateServiceTypeFiles({
                 modelContext,
                 dependencyManager,
                 fernConstants,
+                mode,
             });
             modelContext.registerGeneratedHttpServiceTypes({
                 serviceName: service.name,

@@ -1,5 +1,5 @@
 import { generateClientProject } from "@fern-typescript/client";
-import { FernTypescriptGeneratorConfig } from "../../generator/FernGeneratorConfig";
+import { FernTypescriptGeneratorConfig } from "@fern-typescript/commons";
 import { Command, CommandKey } from "../Command";
 import { constructNpmPackage } from "../constructNpmPackageForCommand";
 

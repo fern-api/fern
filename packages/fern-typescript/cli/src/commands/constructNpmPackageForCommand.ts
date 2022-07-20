@@ -1,6 +1,6 @@
 import { PackageCoordinate } from "@fern-fern/generator-logging-api-client/model";
 import { NpmRegistryConfig } from "@fern-fern/ir-model/generators";
-import { FernTypescriptGeneratorConfig } from "../generator/FernGeneratorConfig";
+import { FernTypescriptGeneratorConfig } from "@fern-typescript/commons";
 import { CommandKey } from "./Command";
 
 export interface NpmPackage {
@@ -21,7 +21,7 @@ export function constructNpmPackage({
     commandKey: CommandKey;
     generatorConfig: FernTypescriptGeneratorConfig;
 }): NpmPackage {
-    const scope = generatorConfig.organization;
+    const scope = generatorConfig.publish?.registries.npm.scope ?? generatorConfig.organization;
     const scopeWithAtSign = `@${scope}`;
     const packageNameWithoutScope = `${generatorConfig.workspaceName}-${commandKey}`;
     const packageName = `${scopeWithAtSign}/${packageNameWithoutScope}`;

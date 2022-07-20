@@ -48,6 +48,7 @@ async function generateServerFiles({
         modelDirectory: createDirectoryAndExportFromModule(directory, "model"),
         intermediateRepresentation,
         dependencyManager,
+        mode: "server",
     });
 
     const servicesDirectory = createDirectoryAndExportFromModule(directory, "services");

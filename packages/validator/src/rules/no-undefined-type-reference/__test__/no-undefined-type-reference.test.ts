@@ -16,6 +16,12 @@ describe("no-undefined-type-reference", () => {
                 relativeFilePath: "src/simple.yml",
                 severity: "error",
             },
+            {
+                message: expect.stringMatching(/Type .*commons.DoesNotExist.* is not defined/),
+                nodePath: ["types", "ImportedType"],
+                relativeFilePath: "src/simple.yml",
+                severity: "error",
+            },
         ]);
     });
 });
