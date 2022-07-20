@@ -58,10 +58,12 @@ jobs:
           command: git --no-pager diff
 
   pre-release-test:
-    machine:
-      image: ubuntu-2004:current
+    docker:
+      - image: cimg/node:current
     steps:
       - checkout
+      - node/install-packages:
+          pkg-manager: yarn-berry
       - run:
           name: ETE Test
           command: |
