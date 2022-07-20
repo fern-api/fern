@@ -169,39 +169,40 @@ async function getSource$1(urlString, context, defaultGetSource) {
   };
 }
 
-async function load$1(urlString, context, defaultLoad) {
+async function load$1(urlString, context, nextLoad) {
   const url = tryParseURL(urlString);
   if ((url == null ? void 0 : url.protocol) !== `file:`)
-    return defaultLoad(urlString, context, defaultLoad);
+    return nextLoad(urlString, context, nextLoad);
   const filePath = fileURLToPath(url);
   const format = getFileFormat(filePath);
   if (!format)
-    return defaultLoad(urlString, context, defaultLoad);
+    return nextLoad(urlString, context, nextLoad);
   return {
     format,
-    source: await fs.promises.readFile(filePath, `utf8`)
+    source: await fs.promises.readFile(filePath, `utf8`),
+    shortCircuit: true
   };
 }
 
 const pathRegExp = /^(?![a-zA-Z]:[\\/]|\\\\|\.{0,2}(?:\/|$))((?:node:)?(?:@[^/]+\/)?[^/]+)\/*(.*|)$/;
 const isRelativeRegexp = /^\.{0,2}\//;
-async function resolve$1(originalSpecifier, context, defaultResolver) {
+async function resolve$1(originalSpecifier, context, nextResolve) {
   var _a;
   const {findPnpApi} = moduleExports;
   if (!findPnpApi || isBuiltinModule(originalSpecifier))
-    return defaultResolver(originalSpecifier, context, defaultResolver);
+    return nextResolve(originalSpecifier, context, nextResolve);
   let specifier = originalSpecifier;
   const url = tryParseURL(specifier, isRelativeRegexp.test(specifier) ? context.parentURL : void 0);
   if (url) {
     if (url.protocol !== `file:`)
-      return defaultResolver(originalSpecifier, context, defaultResolver);
+      return nextResolve(originalSpecifier, context, nextResolve);
     specifier = fileURLToPath(url);
   }
   const {parentURL, conditions = []} = context;
   const issuer = parentURL ? fileURLToPath(parentURL) : process.cwd();
   const pnpapi = (_a = findPnpApi(issuer)) != null ? _a : url ? findPnpApi(specifier) : null;
   if (!pnpapi)
-    return defaultResolver(originalSpecifier, context, defaultResolver);
+    return nextResolve(originalSpecifier, context, nextResolve);
   const dependencyNameMatch = specifier.match(pathRegExp);
   let allowLegacyResolve = false;
   if (dependencyNameMatch) {
@@ -231,7 +232,8 @@ async function resolve$1(originalSpecifier, context, defaultResolver) {
   if (!parentURL)
     setEntrypointPath(fileURLToPath(resultURL));
   return {
-    url: resultURL.href
+    url: resultURL.href,
+    shortCircuit: true
   };
 }
 
