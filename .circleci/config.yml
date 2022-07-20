@@ -139,8 +139,8 @@ workflows:
 
       - pre-release-test:
           filters:
-            branches:
-              only: main
+            # branches:
+            #   only: main
             tags:
               only: /.*/
           context:
