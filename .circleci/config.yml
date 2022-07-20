@@ -57,6 +57,13 @@ jobs:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff
 
+  pre-release-test:
+    machine:
+      image: ubuntu-2004:current
+    steps:
+      - checkout
+      - run: ./scripts/pre-release-test.sh
+
   publish:
     machine:
       image: ubuntu-2004:current
@@ -111,6 +118,10 @@ workflows:
               only: /.*/
           context:
             - auth0-dev
+      - pre-release-test:
+          filters:
+            tags:
+              only: /.*/
 
       - publish:
           filters:
