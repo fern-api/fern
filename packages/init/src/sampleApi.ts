@@ -1,5 +1,5 @@
 // Whenever the json schema is updated, this link will need to get bumped.
-export const SAMPLE_API = `# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/0.0.152/workspace-schema.json
+export const SAMPLE_API = `# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 # This is a sample IMDb API to get you more familiar with defining APIs in Fern.
 
