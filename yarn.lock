@@ -3906,11 +3906,10 @@ __metadata:
     jest: ^28.1.1
     lint-staged: ^12.4.1
     lodash: ^4.17.21
-    postman-collection: ^4.1.2
+    postman-collection: ^4.1.4
     prettier: ^2.6.2
     simple-progress-webpack-plugin: ^2.0.0
     typescript: ^4.6.4
-    url-join: ^4.0.1
     uuid: ^8.3.2
     webpack: ^5.72.1
     webpack-cli: ^4.9.2
@@ -5891,7 +5890,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postman-collection@npm:^4.1.2":
+"postman-collection@npm:^4.1.4":
   version: 4.1.4
   resolution: "postman-collection@npm:4.1.4"
   dependencies:
@@ -6956,7 +6955,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"url-join@npm:4.0.1, url-join@npm:^4.0.1":
+"url-join@npm:4.0.1":
   version: 4.0.1
   resolution: "url-join@npm:4.0.1"
   checksum: f74e868bf25dbc8be6a8d7237d4c36bb5b6c62c72e594d5ab1347fe91d6af7ccd9eb5d621e30152e4da45c2e9a26bec21390e911ab54a62d4d82e76028374ee5

@@ -11,10 +11,18 @@ Object {
         Object {
           "description": "Creates a blog post and returns blog post id.",
           "name": "createPost",
+          "protocolProfileBehavior": Object {
+            "disableBodyPruning": true,
+          },
           "request": Object {
             "auth": undefined,
             "body": Object {
               "mode": "raw",
+              "options": Object {
+                "raw": Object {
+                  "language": "json",
+                },
+              },
               "raw": "{
     \\"title\\": \\"example\\",
     \\"author\\": {
@@ -27,17 +35,15 @@ Object {
             "description": "Creates a blog post and returns blog post id.",
             "header": Array [
               Object {
-                "key": "Content-Type",
-                "value": "application/json",
-              },
-              Object {
                 "description": undefined,
                 "key": "x-service-header",
+                "type": "text",
                 "value": "example",
               },
               Object {
                 "description": "I'm a header!",
                 "key": "x-endpoint-header",
+                "type": "text",
                 "value": "example",
               },
             ],
@@ -47,26 +53,28 @@ Object {
                 "{{origin}}",
               ],
               "path": Array [
-                "posts-service/create",
+                "posts-service",
+                "create",
               ],
             },
           },
           "response": Array [
             Object {
+              "_postman_previewlanguage": "json",
               "body": "\\"example\\"",
               "code": 200,
               "description": undefined,
-              "header": Array [
-                Object {
-                  "key": "Content-Type",
-                  "value": "application/json",
-                },
-              ],
+              "header": Array [],
               "name": "Successful createPost",
               "originalRequest": Object {
                 "auth": undefined,
                 "body": Object {
                   "mode": "raw",
+                  "options": Object {
+                    "raw": Object {
+                      "language": "json",
+                    },
+                  },
                   "raw": "{
     \\"title\\": \\"example\\",
     \\"author\\": {
@@ -79,17 +87,15 @@ Object {
                 "description": "Creates a blog post and returns blog post id.",
                 "header": Array [
                   Object {
-                    "key": "Content-Type",
-                    "value": "application/json",
-                  },
-                  Object {
                     "description": undefined,
                     "key": "x-service-header",
+                    "type": "text",
                     "value": "example",
                   },
                   Object {
                     "description": "I'm a header!",
                     "key": "x-endpoint-header",
+                    "type": "text",
                     "value": "example",
                   },
                 ],
@@ -99,7 +105,8 @@ Object {
                     "{{origin}}",
                   ],
                   "path": Array [
-                    "posts-service/create",
+                    "posts-service",
+                    "create",
                   ],
                 },
               },
@@ -110,21 +117,26 @@ Object {
         Object {
           "description": "Gets a blog post.",
           "name": "getPost",
+          "protocolProfileBehavior": Object {
+            "disableBodyPruning": true,
+          },
           "request": Object {
             "auth": undefined,
             "body": Object {
               "mode": "raw",
+              "options": Object {
+                "raw": Object {
+                  "language": "json",
+                },
+              },
               "raw": undefined,
             },
             "description": "Gets a blog post.",
             "header": Array [
               Object {
-                "key": "Content-Type",
-                "value": "application/json",
-              },
-              Object {
                 "description": undefined,
                 "key": "x-service-header",
+                "type": "text",
                 "value": "example",
               },
             ],
@@ -134,12 +146,14 @@ Object {
                 "{{origin}}",
               ],
               "path": Array [
-                "posts-service/:postId",
+                "posts-service",
+                ":postId",
               ],
             },
           },
           "response": Array [
             Object {
+              "_postman_previewlanguage": "json",
               "body": "{
     \\"id\\": \\"example\\",
     \\"type\\": \\"LONG\\",
@@ -151,28 +165,25 @@ Object {
 }",
               "code": 200,
               "description": undefined,
-              "header": Array [
-                Object {
-                  "key": "Content-Type",
-                  "value": "application/json",
-                },
-              ],
+              "header": Array [],
               "name": "Successful getPost",
               "originalRequest": Object {
                 "auth": undefined,
                 "body": Object {
                   "mode": "raw",
+                  "options": Object {
+                    "raw": Object {
+                      "language": "json",
+                    },
+                  },
                   "raw": undefined,
                 },
                 "description": "Gets a blog post.",
                 "header": Array [
                   Object {
-                    "key": "Content-Type",
-                    "value": "application/json",
-                  },
-                  Object {
                     "description": undefined,
                     "key": "x-service-header",
+                    "type": "text",
                     "value": "example",
                   },
                 ],
@@ -182,7 +193,8 @@ Object {
                     "{{origin}}",
                   ],
                   "path": Array [
-                    "posts-service/:postId",
+                    "posts-service",
+                    ":postId",
                   ],
                 },
               },
@@ -197,6 +209,7 @@ Object {
   "variable": Array [
     Object {
       "key": "origin",
+      "type": "string",
       "value": "http://localhost:8080",
     },
   ],

@@ -9,17 +9,11 @@ import {
     RequestDefinition,
     ResponseDefinition,
 } from "postman-collection";
-import urlJoin from "url-join";
 import { getMockBodyFromTypeReference } from "./getMockBody";
 
 const ORIGIN_VARIABLE_NAME = "origin";
 const ORIGIN_VARIABLE = `{{${ORIGIN_VARIABLE_NAME}}}`;
 const ORIGIN_DEFAULT_VAULE = "http://localhost:8080";
-
-const APPLICATION_JSON_HEADER_DEFINITION: HeaderDefinition = {
-    key: "Content-Type",
-    value: "application/json",
-};
 
 export function convertToPostmanCollection(ir: IntermediateRepresentation): CollectionDefinition {
     const id = ir.workspaceName ?? "Untitled API";
@@ -32,6 +26,7 @@ export function convertToPostmanCollection(ir: IntermediateRepresentation): Coll
             {
                 key: ORIGIN_VARIABLE_NAME,
                 value: ORIGIN_DEFAULT_VAULE,
+                type: "string",
             },
         ],
     };
@@ -65,6 +60,9 @@ function convertEndpoint(
         convertedEndpoint.response = [convertResponse(httpEndpoint, allTypes, convertedEndpoint.request)];
     }
     convertedEndpoint.description = httpEndpoint.docs ?? undefined;
+    convertedEndpoint["protocolProfileBehavior"] = {
+        disableBodyPruning: true,
+    };
     return convertedEndpoint;
 }
 
@@ -76,10 +74,11 @@ function convertResponse(
     let convertedResponse: ResponseDefinition = {
         name: "Successful " + httpEndpoint.endpointId,
         code: 200,
-        header: [APPLICATION_JSON_HEADER_DEFINITION],
+        header: [],
         responseTime: 0,
         originalRequest: convertedRequest,
     };
+    convertedResponse["_postman_previewlanguage"] = "json";
     if (httpEndpoint.response != null) {
         convertedResponse.description = httpEndpoint.response.docs ?? undefined;
         convertedResponse.body = JSON.stringify(
@@ -99,10 +98,9 @@ function convertRequest(
     let convertedRequest: RequestDefinition = {
         url: {
             host: [ORIGIN_VARIABLE],
-            path: [getPathString(httpService.basePath, httpEndpoint.path)],
+            path: getPathArray(httpService.basePath, httpEndpoint.path),
         },
         header: [
-            APPLICATION_JSON_HEADER_DEFINITION,
             ...httpService.headers.map((header) => convertHeader(header, allTypes)),
             ...httpEndpoint.headers.map((header) => convertHeader(header, allTypes)),
         ],
@@ -115,29 +113,41 @@ function convertRequest(
             mode: "raw",
             raw: JSON.stringify(getMockBodyFromTypeReference(httpEndpoint.request.type, allTypes), undefined, 4),
         };
+        convertedRequest.body["options"] = {
+            raw: {
+                language: "json",
+            },
+        };
     }
     return convertedRequest;
 }
 
-function getPathString(basePath: string | undefined | null = "/", endpointPath: HttpPath) {
-    const endpointPathString = endpointPath.parts.reduce(
-        (str, part) => str + `:${part.pathParameter}` + part.tail,
-        endpointPath.head
-    );
-
-    if (basePath == null) {
-        return endpointPathString;
-    } else {
-        return urlJoin(basePath, endpointPathString);
+function getPathArray(basePath: string | undefined | null, endpointPath: HttpPath): string[] {
+    const urlParts: string[] = [];
+    if (basePath != null) {
+        splitPathString(basePath).forEach((splitPart) => urlParts.push(splitPart));
     }
+    if (endpointPath.head !== "/") {
+        splitPathString(endpointPath.head).forEach((splitPart) => urlParts.push(splitPart));
+    }
+    endpointPath.parts.forEach((part) => {
+        urlParts.push(`:${part.pathParameter}`);
+        splitPathString(part.tail).forEach((splitPart) => urlParts.push(splitPart));
+    });
+    return urlParts;
+}
+
+function splitPathString(path: string) {
+    return path.split("/").filter((val) => val.length > 0 && val !== "/");
 }
 
 function convertHeader(header: HttpHeader, allTypes: TypeDeclaration[]): HeaderDefinition {
     return {
         key: header.header,
         description: header.docs ?? undefined,
+        type: "text",
         value: getMockBodyFromTypeReference(header.valueType, allTypes),
-    };
+    } as HeaderDefinition;
 }
 
 function convertHttpMethod(httpMethod: HttpMethod): string {

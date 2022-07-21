@@ -46,8 +46,7 @@
     "@fern-fern/postman-collection-api-client": "0.0.4",
     "@types/lodash": "^4.14.182",
     "lodash": "^4.17.21",
-    "postman-collection": "^4.1.2",
-    "url-join": "^4.0.1",
+    "postman-collection": "^4.1.4",
     "uuid": "^8.3.2"
   },
   "packageManager": "yarn@3.2.0"
