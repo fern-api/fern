@@ -1,0 +1,96 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  PostmanCollectionSchema:
+    properties:
+      info: PostmanCollectionInfo
+      item: list<PostmanCollectionServiceItem>
+      variable: list<PostmanVariable>
+
+  PostmanVariable:
+    properties:
+      key: string
+      value: string
+      type: string
+
+  PostmanCollectionInfo:
+    properties:
+      name: string
+      schema: string
+
+  PostmanCollectionServiceItem:
+    properties:
+      name: string
+      item: list<PostmanCollectionEndpointItem>
+
+  PostmanCollectionEndpointItem:
+    properties:
+      name: string
+      request: PostmanRequest
+      response: list<PostmanExampleResponse>
+
+  PostmanUrl:
+    properties:
+      host: list<string>
+      path: list<string>
+
+  PostmanRequest:
+    properties:
+      url: PostmanUrl
+      method: PostmanMethod
+      description: optional<string>
+      header: list<PostmanHeader>
+      auth: optional<PostmanRequestAuth>
+      body: optional<PostmanRequestBody>
+
+  PostmanRequestAuth:
+    discriminant: type
+    union:
+      basic: {}
+      bearer: {}
+
+  PostmanExampleResponse:
+    properties:
+      description: optional<string>
+      name: string
+      originalRequest: PostmanRequest
+      code: integer
+      body: string
+      "_postman_previewlanguage": optional<string>
+
+  PostmanMethod:
+    enum:
+      - POST
+      - PUT
+      - GET
+      - DELETE
+      - PATCH
+
+  PostmanHeader:
+    properties:
+      key: string
+      value: string
+      type: string
+      description: optional<string>
+
+  PostmanRequestBody:
+    properties:
+      mode: PostmanRequestBodyMode
+      raw: string
+      options: PostmanRequestBodyOptions
+
+  PostmanRequestBodyMode:
+    enum:
+      - raw
+
+  PostmanRequestBodyOptions:
+    properties:
+      raw: PostmanRawRequestBodyOptions
+
+  PostmanRawRequestBodyOptions:
+    properties:
+      language: PostmanRawRequestBodyLanguage
+
+  PostmanRawRequestBodyLanguage:
+    enum:
+      - json

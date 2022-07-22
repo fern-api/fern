@@ -1,14 +1,14 @@
 name: postman-collection-api
 definition: src
 generators:
-  - name: fern-postman
-    version: local
-    generate:
-      enabled: true
-      output: ./generated-postman.json
-    config:
-      api-key: $POSTMAN_API_KEY
-      workspace-id: 7e790b68-d56f-4984-82c1-1beb234ae59d
+  # - name: fern-postman
+  #   version: local
+  #   generate:
+  #     enabled: true
+  #     output: ./generated-postman.json
+  #   config:
+  #     api-key: $POSTMAN_API_KEY
+  #     workspace-id: 7e790b68-d56f-4984-82c1-1beb234ae59d
   - name: fernapi/fern-typescript
     version: 0.0.144
     generate: true

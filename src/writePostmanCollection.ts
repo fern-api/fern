@@ -35,7 +35,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
         const collectionDefinition = convertToPostmanCollection(ir);
         await writeFile(
             path.join(config.output.path, COLLECTION_OUTPUT_FILENAME),
-            JSON.stringify(new Collection(collectionDefinition), undefined, 4)
+            JSON.stringify(collectionDefinition, undefined, 4)
         );
 
         if (publishConfig != null) {

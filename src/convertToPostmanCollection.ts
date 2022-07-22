@@ -1,27 +1,28 @@
 import { IntermediateRepresentation, TypeDeclaration } from "@fern-fern/ir-model";
 import { HttpAuth, HttpEndpoint, HttpHeader, HttpMethod, HttpPath, HttpService } from "@fern-fern/ir-model/services";
 import {
-    CollectionDefinition,
-    HeaderDefinition,
-    ItemDefinition,
-    ItemGroupDefinition,
-    RequestAuthDefinition,
-    RequestDefinition,
-    ResponseDefinition,
-} from "postman-collection";
+    PostmanCollectionEndpointItem,
+    PostmanCollectionSchema,
+    PostmanCollectionServiceItem,
+    PostmanExampleResponse,
+    PostmanHeader,
+    PostmanMethod,
+    PostmanRequest,
+    PostmanRequestAuth,
+} from "@fern-fern/postman-collection-api-client/model/collection";
 import { getMockBodyFromTypeReference } from "./getMockBody";
 
 const ORIGIN_VARIABLE_NAME = "origin";
 const ORIGIN_VARIABLE = `{{${ORIGIN_VARIABLE_NAME}}}`;
 const ORIGIN_DEFAULT_VAULE = "http://localhost:8080";
 
-export function convertToPostmanCollection(ir: IntermediateRepresentation): CollectionDefinition {
+export function convertToPostmanCollection(ir: IntermediateRepresentation): PostmanCollectionSchema {
     const id = ir.workspaceName ?? "Untitled API";
     return {
         info: {
             name: id,
+            schema: "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
         },
-        item: getCollectionItems(ir),
         variable: [
             {
                 key: ORIGIN_VARIABLE_NAME,
@@ -29,17 +30,18 @@ export function convertToPostmanCollection(ir: IntermediateRepresentation): Coll
                 type: "string",
             },
         ],
+        item: getCollectionItems(ir),
     };
 }
 
-function getCollectionItems(ir: IntermediateRepresentation): ItemGroupDefinition[] {
-    let serviceItems: ItemGroupDefinition[] = [];
+function getCollectionItems(ir: IntermediateRepresentation): PostmanCollectionServiceItem[] {
+    let serviceItems: PostmanCollectionServiceItem[] = [];
     for (const httpService of ir.services.http) {
-        let endpointItems: ItemDefinition[] = [];
+        let endpointItems: PostmanCollectionEndpointItem[] = [];
         for (const httpEndpoint of httpService.endpoints) {
             endpointItems.push(convertEndpoint(httpEndpoint, httpService, ir.types));
         }
-        const serviceItem: ItemGroupDefinition = {
+        const serviceItem: PostmanCollectionServiceItem = {
             name: httpService.name.name,
             item: endpointItems,
         };
@@ -52,50 +54,40 @@ function convertEndpoint(
     httpEndpoint: HttpEndpoint,
     httpService: HttpService,
     allTypes: TypeDeclaration[]
-): ItemDefinition {
-    let convertedEndpoint: ItemDefinition = {};
-    convertedEndpoint.name = httpEndpoint.endpointId;
-    convertedEndpoint.request = convertRequest(httpService, httpEndpoint, allTypes);
-    if (httpEndpoint.response != null) {
-        convertedEndpoint.response = [convertResponse(httpEndpoint, allTypes, convertedEndpoint.request)];
-    }
-    convertedEndpoint.description = httpEndpoint.docs ?? undefined;
-    convertedEndpoint["protocolProfileBehavior"] = {
-        disableBodyPruning: true,
+): PostmanCollectionEndpointItem {
+    const convertedRequest = convertRequest(httpService, httpEndpoint, allTypes);
+    return {
+        name: httpEndpoint.endpointId,
+        request: convertedRequest,
+        response: [convertResponse(httpEndpoint, allTypes, convertedRequest)],
     };
-    return convertedEndpoint;
 }
 
 function convertResponse(
     httpEndpoint: HttpEndpoint,
     allTypes: TypeDeclaration[],
-    convertedRequest: RequestDefinition
-): ResponseDefinition {
-    let convertedResponse: ResponseDefinition = {
+    convertedRequest: PostmanRequest
+): PostmanExampleResponse {
+    return {
         name: "Successful " + httpEndpoint.endpointId,
         code: 200,
-        header: [],
-        responseTime: 0,
         originalRequest: convertedRequest,
+        description: httpEndpoint.response.docs ?? undefined,
+        body:
+            httpEndpoint.response != null
+                ? JSON.stringify(getMockBodyFromTypeReference(httpEndpoint.response.type, allTypes), undefined, 4)
+                : "",
+        _postman_previewlanguage: "json",
     };
-    convertedResponse["_postman_previewlanguage"] = "json";
-    if (httpEndpoint.response != null) {
-        convertedResponse.description = httpEndpoint.response.docs ?? undefined;
-        convertedResponse.body = JSON.stringify(
-            getMockBodyFromTypeReference(httpEndpoint.response.type, allTypes),
-            undefined,
-            4
-        );
-    }
-    return convertedResponse;
 }
 
 function convertRequest(
     httpService: HttpService,
     httpEndpoint: HttpEndpoint,
     allTypes: TypeDeclaration[]
-): RequestDefinition {
-    let convertedRequest: RequestDefinition = {
+): PostmanRequest {
+    return {
+        description: httpEndpoint.docs ?? undefined,
         url: {
             host: [ORIGIN_VARIABLE],
             path: getPathArray(httpService.basePath, httpEndpoint.path),
@@ -106,20 +98,23 @@ function convertRequest(
         ],
         method: convertHttpMethod(httpEndpoint.method),
         auth: convertAuth(httpEndpoint.auth),
+        body:
+            httpEndpoint.request == null
+                ? undefined
+                : {
+                      mode: "raw",
+                      raw: JSON.stringify(
+                          getMockBodyFromTypeReference(httpEndpoint.request.type, allTypes),
+                          undefined,
+                          4
+                      ),
+                      options: {
+                          raw: {
+                              language: "json",
+                          },
+                      },
+                  },
     };
-    if (httpEndpoint.request != null) {
-        convertedRequest.description = httpEndpoint.docs ?? undefined;
-        convertedRequest.body = {
-            mode: "raw",
-            raw: JSON.stringify(getMockBodyFromTypeReference(httpEndpoint.request.type, allTypes), undefined, 4),
-        };
-        convertedRequest.body["options"] = {
-            raw: {
-                language: "json",
-            },
-        };
-    }
-    return convertedRequest;
 }
 
 function getPathArray(basePath: string | undefined | null, endpointPath: HttpPath): string[] {
@@ -141,38 +136,35 @@ function splitPathString(path: string) {
     return path.split("/").filter((val) => val.length > 0 && val !== "/");
 }
 
-function convertHeader(header: HttpHeader, allTypes: TypeDeclaration[]): HeaderDefinition {
+function convertHeader(header: HttpHeader, allTypes: TypeDeclaration[]): PostmanHeader {
     return {
         key: header.header,
         description: header.docs ?? undefined,
         type: "text",
         value: getMockBodyFromTypeReference(header.valueType, allTypes),
-    } as HeaderDefinition;
+    };
 }
 
-function convertHttpMethod(httpMethod: HttpMethod): string {
-    return HttpMethod._visit(httpMethod, {
-        get: () => "GET",
-        post: () => "POST",
-        put: () => "PUT",
-        patch: () => "PATCH",
-        delete: () => "DELETE",
+function convertHttpMethod(httpMethod: HttpMethod): PostmanMethod {
+    return HttpMethod._visit<PostmanMethod>(httpMethod, {
+        get: () => PostmanMethod.Get,
+        post: () => PostmanMethod.Post,
+        put: () => PostmanMethod.Put,
+        patch: () => PostmanMethod.Patch,
+        delete: () => PostmanMethod.Delete,
         _unknown: () => {
             throw new Error("Unexpected httpMethod: " + httpMethod);
         },
     });
 }
 
-const BASIC_AUTH_DEFINITION: RequestAuthDefinition = { type: "basic" };
-const BEARER_AUTH_DEFINITION: RequestAuthDefinition = { type: "bearer" };
-
-function convertAuth(httpAuth: HttpAuth): RequestAuthDefinition | undefined {
-    return HttpAuth._visit(httpAuth, {
+function convertAuth(httpAuth: HttpAuth): PostmanRequestAuth | undefined {
+    return HttpAuth._visit<PostmanRequestAuth | undefined>(httpAuth, {
         basic: () => {
-            return BASIC_AUTH_DEFINITION;
+            return PostmanRequestAuth.basic();
         },
         bearer: () => {
-            return BEARER_AUTH_DEFINITION;
+            return PostmanRequestAuth.bearer();
         },
         none: () => {
             return undefined;

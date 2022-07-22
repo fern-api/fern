@@ -4,16 +4,13 @@ exports[`Postman Conversion Blog Post API 1`] = `
 Object {
   "info": Object {
     "name": "Blog API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
   },
   "item": Array [
     Object {
       "item": Array [
         Object {
-          "description": "Creates a blog post and returns blog post id.",
           "name": "createPost",
-          "protocolProfileBehavior": Object {
-            "disableBodyPruning": true,
-          },
           "request": Object {
             "auth": undefined,
             "body": Object {
@@ -64,7 +61,6 @@ Object {
               "body": "\\"example\\"",
               "code": 200,
               "description": undefined,
-              "header": Array [],
               "name": "Successful createPost",
               "originalRequest": Object {
                 "auth": undefined,
@@ -110,16 +106,11 @@ Object {
                   ],
                 },
               },
-              "responseTime": 0,
             },
           ],
         },
         Object {
-          "description": "Gets a blog post.",
           "name": "getPost",
-          "protocolProfileBehavior": Object {
-            "disableBodyPruning": true,
-          },
           "request": Object {
             "auth": undefined,
             "body": Object {
@@ -165,7 +156,6 @@ Object {
 }",
               "code": 200,
               "description": undefined,
-              "header": Array [],
               "name": "Successful getPost",
               "originalRequest": Object {
                 "auth": undefined,
@@ -198,7 +188,6 @@ Object {
                   ],
                 },
               },
-              "responseTime": 0,
             },
           ],
         },
