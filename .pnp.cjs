@@ -5863,12 +5863,14 @@ const RAW_RUNTIME_STATE =
           ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
           ["@types/jest", "npm:28.1.4"],\
           ["@types/js-yaml", "npm:4.0.5"],\
+          ["@types/lodash", "npm:4.14.182"],\
           ["@types/node", "npm:18.0.3"],\
           ["depcheck", "npm:1.4.3"],\
           ["eslint", "npm:8.19.0"],\
           ["find-up", "npm:5.0.0"],\
           ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.2"],\
           ["js-yaml", "npm:4.1.0"],\
+          ["lodash", "npm:4.17.21"],\
           ["npm-run-all", "npm:4.1.5"],\
           ["prettier", "npm:2.7.1"],\
           ["ts-jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.0.5"],\
