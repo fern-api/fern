@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  other: other.yml
+
+services:
+  http:
+    MyService:
+      auth: none
+      endpoints:
+        referenceNonExistentError:
+          errors:
+            - NonExistentError
+
+        ferenceNonExisttentImportedError:
+          errors:
+            - other.NonExistentError
+
+        referenceError:
+          errors:
+            - GenericError
+
+        referenceImportedError:
+          errors:
+            - other.OtherError
+
+errors:
+  GenericError:
+    http:
+      statusCode: 400
