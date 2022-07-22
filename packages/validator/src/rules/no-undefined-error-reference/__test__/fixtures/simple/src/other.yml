@@ -1,7 +1,6 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
-services:
-  http:
-    OneService:
-      auth: none
-      endpoints: {}
+errors:
+  OtherError:
+    http:
+      statusCode: 400
