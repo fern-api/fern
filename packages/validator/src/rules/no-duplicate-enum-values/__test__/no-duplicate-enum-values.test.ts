@@ -11,7 +11,7 @@ describe("no-duplicate-enum-values", () => {
 
         expect(violations).toMatchObject([
             {
-                message: expect.stringMatching(/Duplicated enum value: .*A.*/),
+                message: "Duplicated enum value: A.",
                 nodePath: ["types", "MyEnum"],
                 relativeFilePath: "src/simple.yml",
                 severity: "error",

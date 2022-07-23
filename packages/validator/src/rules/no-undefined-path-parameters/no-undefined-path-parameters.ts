@@ -18,7 +18,7 @@ export const NoUndefinedPathParametersRule: Rule = {
                                 severity: "error",
                                 message: `Endpoint path has duplicate path parameter: ${chalk.bold(
                                     part.pathParameter
-                                )}`,
+                                )}.`,
                             });
                         }
                         urlPathParameters.add(part.pathParameter);
@@ -32,7 +32,7 @@ export const NoUndefinedPathParametersRule: Rule = {
                 undefinedPathParameters.forEach((pathParameter) => {
                     errors.push({
                         severity: "error",
-                        message: `Endpoint is missing path-parameter: ${chalk.bold(pathParameter)}`,
+                        message: `Endpoint is missing path-parameter: ${chalk.bold(pathParameter)}.`,
                     });
                 });
 
@@ -41,7 +41,7 @@ export const NoUndefinedPathParametersRule: Rule = {
                 missingUrlPathParameters.forEach((pathParameter) => {
                     errors.push({
                         severity: "error",
-                        message: `Endpoint path has unused path-parameter: ${chalk.bold(pathParameter)}`,
+                        message: `Endpoint path has unused path-parameter: ${chalk.bold(pathParameter)}.`,
                     });
                 });
 

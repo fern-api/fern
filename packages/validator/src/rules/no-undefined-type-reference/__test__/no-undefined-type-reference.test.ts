@@ -11,13 +11,31 @@ describe("no-undefined-type-reference", () => {
 
         expect(violations).toMatchObject([
             {
-                message: expect.stringMatching(/Type .*MissingType.* is not defined/),
+                message: "Type MissingType is not defined.",
                 nodePath: ["types", "MyType"],
                 relativeFilePath: "src/simple.yml",
                 severity: "error",
             },
             {
-                message: expect.stringMatching(/Type .*commons.DoesNotExist.* is not defined/),
+                message: "Type MissingType is not defined.",
+                nodePath: ["types", "MyListType"],
+                relativeFilePath: "src/simple.yml",
+                severity: "error",
+            },
+            {
+                message: "Type commons.MissingType is not defined.",
+                nodePath: ["types", "MyListType2"],
+                relativeFilePath: "src/simple.yml",
+                severity: "error",
+            },
+            {
+                message: "Type nonExistentFile.MissingType is not defined.",
+                nodePath: ["types", "MyListType3"],
+                relativeFilePath: "src/simple.yml",
+                severity: "error",
+            },
+            {
+                message: "Type commons.DoesNotExist is not defined.",
                 nodePath: ["types", "ImportedType"],
                 relativeFilePath: "src/simple.yml",
                 severity: "error",

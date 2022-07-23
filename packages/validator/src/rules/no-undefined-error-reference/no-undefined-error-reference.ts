@@ -1,40 +1,43 @@
 import { parseReferenceToTypeName } from "@fern-api/ir-generator";
 import { Workspace } from "@fern-api/workspace-parser";
 import { visitFernYamlAst } from "@fern-api/yaml-schema";
-import chalk from "chalk";
 import path from "path";
-import { Rule, RuleViolation } from "../../Rule";
+import { Rule } from "../../Rule";
 
 export const NoUndefinedErrorReferenceRule: Rule = {
     name: "no-undefined-type-reference",
     create: async ({ workspace }) => {
         const errorsByFilepath = await getErrorsByFilepath(workspace);
 
-        function doesErrorExist(reference: ReferenceToErrorName) {
-            if (reference.parsed == null) {
-                return false;
-            }
-            const errorsForFilepath = errorsByFilepath[reference.parsed.relativeFilePath];
+        function doesErrorExist(errorName: string, relativeFilePath: string) {
+            const errorsForFilepath = errorsByFilepath[relativeFilePath];
             if (errorsForFilepath == null) {
                 return false;
             }
-            return errorsForFilepath.has(reference.parsed.errorName);
+            return errorsForFilepath.has(errorName);
         }
 
         return {
             errorReference: (errorReference, { relativeFilePath, contents }) => {
-                const namedErrors = getAllNamedErrors(errorReference, relativeFilePath, contents.imports ?? {});
+                const parsedReference = parseReferenceToTypeName({
+                    reference: errorReference,
+                    relativeFilePathOfDirectory: path.dirname(relativeFilePath),
+                    imports: contents.imports ?? {},
+                });
 
-                return namedErrors.reduce<RuleViolation[]>((violations, namedType) => {
-                    if (!doesErrorExist(namedType)) {
-                        violations.push({
-                            severity: "error",
-                            message: `Error ${chalk.bold(namedType.fullyQualifiedName)} is not defined.`,
-                        });
-                    }
+                if (
+                    parsedReference != null &&
+                    doesErrorExist(parsedReference.typeName, parsedReference.relativeFilePath ?? relativeFilePath)
+                ) {
+                    return [];
+                }
 
-                    return violations;
-                }, []);
+                return [
+                    {
+                        severity: "error",
+                        message: "Error is not defined.",
+                    },
+                ];
             },
         };
     },
@@ -55,38 +58,4 @@ async function getErrorsByFilepath(workspace: Workspace) {
     }
 
     return erorrsByFilepath;
-}
-
-interface ReferenceToErrorName {
-    fullyQualifiedName: string;
-    parsed:
-        | {
-              errorName: string;
-              relativeFilePath: string;
-          }
-        | undefined;
-}
-
-function getAllNamedErrors(
-    errorName: string,
-    relativeFilePath: string,
-    imports: Record<string, string>
-): ReferenceToErrorName[] {
-    const reference = parseReferenceToTypeName({
-        reference: errorName,
-        relativeFilePathOfDirectory: path.dirname(relativeFilePath),
-        imports,
-    });
-    return [
-        {
-            fullyQualifiedName: errorName,
-            parsed:
-                reference != null
-                    ? {
-                          errorName: reference.typeName,
-                          relativeFilePath: reference.relativeFilePath ?? relativeFilePath,
-                      }
-                    : undefined,
-        },
-    ];
 }

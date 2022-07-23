@@ -24,13 +24,15 @@ export const NoUndefinedTypeReferenceRule: Rule = {
         return {
             typeReference: (typeReference, { relativeFilePath, contents }) => {
                 const type = typeof typeReference === "string" ? typeReference : typeReference.type;
-                const namedTypes = getAllNamedTypes(type, relativeFilePath, contents.imports ?? {});
+                const namedTypes = getAllNamedTypes({ type, relativeFilePath, imports: contents.imports ?? {} });
 
                 return namedTypes.reduce<RuleViolation[]>((violations, namedType) => {
                     if (!doesTypeExist(namedType)) {
                         violations.push({
                             severity: "error",
-                            message: `Type ${chalk.bold(namedType.fullyQualifiedName)} is not defined.`,
+                            message: `Type ${chalk.bold(
+                                namedType.parsed?.typeName ?? namedType.fullyQualifiedName
+                            )} is not defined.`,
                         });
                     }
 
@@ -71,11 +73,15 @@ interface ReferenceToTypeName {
         | undefined;
 }
 
-function getAllNamedTypes(
-    type: string,
-    relativeFilePath: string,
-    imports: Record<string, string>
-): ReferenceToTypeName[] {
+function getAllNamedTypes({
+    type,
+    relativeFilePath,
+    imports,
+}: {
+    type: string;
+    relativeFilePath: string;
+    imports: Record<string, string>;
+}): ReferenceToTypeName[] {
     return visitRawTypeReference<ReferenceToTypeName[]>(type, {
         primitive: () => [],
         unknown: () => [],
@@ -94,7 +100,7 @@ function getAllNamedTypes(
             });
             return [
                 {
-                    fullyQualifiedName: type,
+                    fullyQualifiedName: named,
                     parsed:
                         reference != null
                             ? {

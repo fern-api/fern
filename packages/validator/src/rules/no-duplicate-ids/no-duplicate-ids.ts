@@ -1,27 +1,35 @@
 import chalk from "chalk";
-import { Rule, RuleViolation } from "../../Rule";
+import { Rule } from "../../Rule";
+
+type Id = string;
+type RelativeFilePath = string;
 
 export const NoDuplicateIdsRule: Rule = {
     name: "no-duplicate-ids",
     create: () => {
-        const names: Record<string, string> = {};
+        const idToDeclaredPath: Record<Id, RelativeFilePath> = {};
         return {
             id: (id, { relativeFilePath }) => {
-                const name = typeof id === "string" ? id : id.name;
-                const violations: RuleViolation[] = [];
-                if (names[name] != null) {
-                    const duplicateMessage =
-                        names[name] === relativeFilePath
-                            ? `Duplicate lives in same file ${relativeFilePath}`
-                            : `Duplicate lives in another file ${relativeFilePath}`;
-                    violations.push({
-                        severity: "error",
-                        message: `Found duplicated id: ${chalk.bold(name)}. ${duplicateMessage}`,
-                    });
-                } else {
-                    names[name] = relativeFilePath;
+                const idStr = typeof id === "string" ? id : id.name;
+
+                const pathOfDuplicateId = idToDeclaredPath[idStr];
+                if (pathOfDuplicateId == null) {
+                    idToDeclaredPath[idStr] = relativeFilePath;
+                    return [];
                 }
-                return violations;
+
+                let message = `The ID ${chalk.bold(idStr)} is already declared`;
+                if (pathOfDuplicateId !== relativeFilePath) {
+                    message += ` in ${chalk.bold(pathOfDuplicateId)}`;
+                }
+                message += ".";
+
+                return [
+                    {
+                        severity: "error",
+                        message,
+                    },
+                ];
             },
         };
     },

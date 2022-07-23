@@ -3,6 +3,13 @@ import { visitFernYamlAst } from "@fern-api/yaml-schema";
 import { createAstVisitorForRules } from "../createAstVisitorForRules";
 import { Rule, RuleViolation } from "../Rule";
 
+const CHALK_ESCAPE_SEQUENCES = [
+    // bold:open
+    "\x1B\\[1m",
+    // bold:close
+    "\x1B\\[22m",
+];
+
 export declare namespace getViolationsForRule {
     export interface Args {
         rule: Rule;
@@ -37,5 +44,8 @@ export async function getViolationsForRule({
         await visitFernYamlAst(contents, visitor);
     }
 
-    return violations;
+    return violations.map((violation) => ({
+        ...violation,
+        message: violation.message.replaceAll(new RegExp(`${CHALK_ESCAPE_SEQUENCES.join("|")}`, "g"), ""),
+    }));
 }
