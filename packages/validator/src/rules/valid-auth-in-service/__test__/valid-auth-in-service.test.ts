@@ -15,7 +15,7 @@ describe("valid-auth-in-service", () => {
                 relativeFilePath: "src/simple.yml",
                 nodePath: ["services", "http", "InvalidService"],
                 message: expect.stringMatching(
-                    /Service .*InvalidService.* has endpoints with both bearer and basic auth. Only one of the two can be used./
+                    "Service InvalidService has endpoints with both bearer and basic auth. Only one of the two can be used."
                 ),
             },
         ]);

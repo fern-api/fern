@@ -88,11 +88,32 @@ export function convertType({
             }),
         enum: (_enum) =>
             Type.enum({
-                values: _enum.enum.map((value) =>
-                    typeof value === "string"
-                        ? { value, name: value, docs: undefined }
-                        : { value: value.value, name: value.name != null ? value.name : value.value, docs: value.docs }
-                ),
+                values: _enum.enum.map((value) => ({
+                    name: getEnumName(value).name,
+                    value: typeof value === "string" ? value : value.value,
+                    docs: typeof value !== "string" ? value.docs : undefined,
+                })),
             }),
     });
+}
+
+export function getEnumName(enumValue: RawSchemas.EnumValueSchema): { name: string; wasExplicitlySet: boolean } {
+    if (typeof enumValue === "string") {
+        return {
+            name: enumValue,
+            wasExplicitlySet: false,
+        };
+    }
+
+    if (enumValue.name == null) {
+        return {
+            name: enumValue.value,
+            wasExplicitlySet: false,
+        };
+    }
+
+    return {
+        name: enumValue.name,
+        wasExplicitlySet: true,
+    };
 }

@@ -2,7 +2,7 @@ import path from "path";
 import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
 import { NoUndefinedErrorReferenceRule } from "../no-undefined-error-reference";
 
-describe("no-undefined-type-reference", () => {
+describe("no-undefined-error-reference", () => {
     it("simple", async () => {
         const violations = await getViolationsForRule({
             rule: NoUndefinedErrorReferenceRule,
@@ -21,7 +21,7 @@ describe("no-undefined-type-reference", () => {
                     "errors",
                     "NonExistentError",
                 ],
-                message: "Error \x1B[1mNonExistentError\x1B[22m is not defined.",
+                message: "Error is not defined.",
             },
             {
                 severity: "error",
@@ -31,11 +31,11 @@ describe("no-undefined-type-reference", () => {
                     "http",
                     "MyService",
                     "endpoints",
-                    "ferenceNonExisttentImportedError",
+                    "referenceNonExistentImportedError",
                     "errors",
                     "other.NonExistentError",
                 ],
-                message: "Error \x1B[1mother.NonExistentError\x1B[22m is not defined.",
+                message: "Error is not defined.",
             },
         ]);
     });

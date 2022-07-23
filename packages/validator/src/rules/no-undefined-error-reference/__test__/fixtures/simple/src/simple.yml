@@ -12,7 +12,7 @@ services:
           errors:
             - NonExistentError
 
-        ferenceNonExisttentImportedError:
+        referenceNonExistentImportedError:
           errors:
             - other.NonExistentError
 

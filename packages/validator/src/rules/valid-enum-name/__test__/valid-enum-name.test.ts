@@ -15,28 +15,28 @@ describe("valid-enum-name", () => {
                 relativeFilePath: "src/simple.yml",
                 nodePath: ["types", "ValidAndInvalidEnum"],
                 message:
-                    "Please add an enum name for the folliwng enum: \x1B[1m523_Invalid\x1B[22m. Make sure the name starts with a letter and only contains alphanumeric and underscore characters.",
+                    'Enum value 523_Invalid requires a "name" property that starts with a letter and contains only letters, numbers, and underscores. This is used for code generation.',
             },
             {
                 severity: "error",
                 relativeFilePath: "src/simple.yml",
                 nodePath: ["types", "ValidAndInvalidEnum"],
                 message:
-                    "Please add an enum name for the folliwng enum: \x1B[1mbla.bla\x1B[22m. Make sure the name starts with a letter and only contains alphanumeric and underscore characters.",
+                    'Enum value bla.bla requires a "name" property that starts with a letter and contains only letters, numbers, and underscores. This is used for code generation.',
             },
             {
                 severity: "error",
                 relativeFilePath: "src/simple.yml",
                 nodePath: ["types", "ValidAndInvalidEnum"],
                 message:
-                    "Please add an enum name for the folliwng enum: \x1B[1m23-Invalid\x1B[22m. Make sure the name starts with a letter and only contains alphanumeric and underscore characters.",
+                    'Enum value 23-Invalid requires a "name" property that starts with a letter and contains only letters, numbers, and underscores. This is used for code generation.',
             },
             {
                 severity: "error",
                 relativeFilePath: "src/simple.yml",
                 nodePath: ["types", "ValidAndInvalidEnum"],
                 message:
-                    "Found illegal enum name: \x1B[1m_invalidName\x1B[22m. Please make sure name starts with a letter and only contains alphanumeric and underscore characters.",
+                    "Enum name _invalidName is invalid. It must start with a letter and only contain letters, numbers, and underscores.",
             },
         ]);
     });

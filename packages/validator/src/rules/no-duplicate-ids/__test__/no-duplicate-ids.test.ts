@@ -14,13 +14,13 @@ describe("no-duplicate-ids", () => {
                 severity: "error",
                 relativeFilePath: "src/simple.yml",
                 nodePath: ["ids", "AnimalId"],
-                message: "Found duplicated id: \x1B[1mAnimalId\x1B[22m. Duplicate lives in another file src/simple.yml",
+                message: "The ID AnimalId is already declared in src/other.yml.",
             },
             {
                 severity: "error",
                 relativeFilePath: "src/simple.yml",
                 nodePath: ["ids", "PersonId"],
-                message: "Found duplicated id: \x1B[1mPersonId\x1B[22m. Duplicate lives in same file src/simple.yml",
+                message: "The ID PersonId is already declared.",
             },
         ]);
     });

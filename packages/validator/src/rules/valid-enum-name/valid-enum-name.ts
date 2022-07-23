@@ -1,8 +1,9 @@
+import { getEnumName } from "@fern-api/ir-generator";
 import { isRawEnumDefinition } from "@fern-api/yaml-schema";
 import chalk from "chalk";
 import { Rule, RuleViolation } from "../../Rule";
 
-// Enum names must start with a letter
+// Enum names must start with a letter and contain only letters, numbers, and underscores
 const ENUM_NAME_REGEX = new RegExp("^[a-zA-Z][a-zA-Z0-9_]*$");
 
 export const ValidEnumNameRule: Rule = {
@@ -11,32 +12,35 @@ export const ValidEnumNameRule: Rule = {
         return {
             typeDeclaration: ({ declaration }) => {
                 const violations: RuleViolation[] = [];
+
                 if (!isRawEnumDefinition(declaration)) {
                     return violations;
                 }
-                declaration.enum.forEach((val) => {
-                    const name = typeof val === "string" ? val : val.name ?? val.value;
-                    const nameIsValue = typeof val === "string" || val.name == null;
-                    const isValid = ENUM_NAME_REGEX.test(name);
-                    if (isValid) {
+
+                declaration.enum.forEach((enumValue) => {
+                    const enumName = getEnumName(enumValue);
+
+                    if (ENUM_NAME_REGEX.test(enumName.name)) {
                         return;
                     }
-                    if (nameIsValue) {
+
+                    if (enumName.wasExplicitlySet) {
                         violations.push({
                             severity: "error",
-                            message: `Please add an enum name for the folliwng enum: ${chalk.bold(
-                                name
-                            )}. Make sure the name starts with a letter and only contains alphanumeric and underscore characters.`,
+                            message: `Enum name ${chalk.bold(
+                                enumName.name
+                            )} is invalid. It must start with a letter and only contain letters, numbers, and underscores.`,
                         });
                     } else {
                         violations.push({
                             severity: "error",
-                            message: `Found illegal enum name: ${chalk.bold(
-                                name
-                            )}. Please make sure name starts with a letter and only contains alphanumeric and underscore characters.`,
+                            message: `Enum value ${chalk.bold(
+                                typeof enumValue === "string" ? enumValue : enumValue.value
+                            )} requires a "name" property that starts with a letter and contains only letters, numbers, and underscores. This is used for code generation.`,
                         });
                     }
                 });
+
                 return violations;
             },
         };

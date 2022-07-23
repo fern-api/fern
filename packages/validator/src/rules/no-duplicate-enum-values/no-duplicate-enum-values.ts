@@ -23,7 +23,7 @@ export const NoDuplicateEnumValuesRule: Rule = {
 
                 return [...duplicatedValues].map((duplicatedValue) => ({
                     severity: "error",
-                    message: `Duplicated enum value: ${chalk.bold(duplicatedValue)}`,
+                    message: `Duplicated enum value: ${chalk.bold(duplicatedValue)}.`,
                 }));
             },
         };

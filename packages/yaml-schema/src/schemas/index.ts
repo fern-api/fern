@@ -2,6 +2,7 @@ export { AliasSchema } from "./AliasSchema";
 export { AuthSchema } from "./AuthSchema";
 export { BaseServiceSchema } from "./BaseServiceSchema";
 export { EnumSchema } from "./EnumSchema";
+export { EnumValueSchema } from "./EnumValueSchema";
 export { ErrorDeclarationSchema } from "./ErrorDeclarationSchema";
 export { ErrorReferenceSchema } from "./ErrorReferenceSchema";
 export { FernConfigurationSchema } from "./FernConfigurationSchema";

@@ -14,8 +14,7 @@ describe("no-duplicate-ids", () => {
                 severity: "error",
                 relativeFilePath: "src/2.yml",
                 nodePath: ["services", "http", "OneService"],
-                message:
-                    "Found duplicated service: \x1B[1mOneService\x1B[22m. Duplicate lives in another file src/2.yml",
+                message: "A service with the name OneService is already declared in src/1.yml.",
             },
         ]);
     });
