@@ -6263,7 +6263,7 @@ const RAW_RUNTIME_STATE =
           ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
           ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
           ["@fern-api/commons", "workspace:packages/commons"],\
-          ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.26"],\
+          ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.38"],\
           ["@fern-fern/ir-model", "npm:0.0.49"],\
           ["@types/jest", "npm:28.1.4"],\
           ["@types/node", "npm:18.0.3"],\
@@ -6273,9 +6273,9 @@ const RAW_RUNTIME_STATE =
           ["eslint", "npm:8.19.0"],\
           ["form-data", "npm:4.0.0"],\
           ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.2"],\
-          ["log-update", "npm:5.0.1"],\
+          ["log-update", "npm:4.0.0"],\
           ["npm-run-all", "npm:4.1.5"],\
-          ["ora", "npm:6.1.2"],\
+          ["ora", "npm:5.4.1"],\
           ["prettier", "npm:2.7.1"],\
           ["ts-jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.0.5"],\
           ["typescript", "patch:typescript@npm%3A4.7.4#optional!builtin<compat/typescript>::version=4.7.4&hash=f456af"]\
@@ -6361,13 +6361,14 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@fern-fern/fiddle-coordinator-api-client", [\
-      ["npm:0.0.26", {\
-        "packageLocation": "../../../../.yarn/berry/cache/@fern-fern-fiddle-coordinator-api-client-npm-0.0.26-87170c8059-9.zip/node_modules/@fern-fern/fiddle-coordinator-api-client/",\
+      ["npm:0.0.38", {\
+        "packageLocation": "../../../../.yarn/berry/cache/@fern-fern-fiddle-coordinator-api-client-npm-0.0.38-15ee5443cb-9.zip/node_modules/@fern-fern/fiddle-coordinator-api-client/",\
         "packageDependencies": [\
-          ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.26"],\
+          ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.38"],\
           ["@fern-typescript/service-utils", "npm:0.0.124"],\
+          ["@types/url-join", "npm:4.0.1"],\
           ["@types/uuid", "npm:8.3.4"],\
-          ["url-join", "npm:5.0.0"],\
+          ["url-join", "npm:4.0.1"],\
           ["uuid", "npm:8.3.2"]\
         ],\
         "linkType": "HARD"\
@@ -10013,14 +10014,6 @@ const RAW_RUNTIME_STATE =
           ["type-fest", "npm:0.21.3"]\
         ],\
         "linkType": "HARD"\
-      }],\
-      ["npm:5.0.0", {\
-        "packageLocation": "../../../../.yarn/berry/cache/ansi-escapes-npm-5.0.0-8a26b6a77d-9.zip/node_modules/ansi-escapes/",\
-        "packageDependencies": [\
-          ["ansi-escapes", "npm:5.0.0"],\
-          ["type-fest", "npm:1.4.0"]\
-        ],\
-        "linkType": "HARD"\
       }]\
     ]],\
     ["ansi-html-community", [\
@@ -11012,16 +11005,6 @@ const RAW_RUNTIME_STATE =
           ["readable-stream", "npm:3.6.0"]\
         ],\
         "linkType": "HARD"\
-      }],\
-      ["npm:5.0.0", {\
-        "packageLocation": "../../../../.yarn/berry/cache/bl-npm-5.0.0-cd18f87fd8-9.zip/node_modules/bl/",\
-        "packageDependencies": [\
-          ["bl", "npm:5.0.0"],\
-          ["buffer", "npm:6.0.3"],\
-          ["inherits", "npm:2.0.4"],\
-          ["readable-stream", "npm:3.6.0"]\
-        ],\
-        "linkType": "HARD"\
       }]\
     ]],\
     ["bluebird", [\
@@ -11581,13 +11564,6 @@ const RAW_RUNTIME_STATE =
           ["supports-color", "npm:7.2.0"]\
         ],\
         "linkType": "HARD"\
-      }],\
-      ["npm:5.0.1", {\
-        "packageLocation": "../../../../.yarn/berry/cache/chalk-npm-5.0.1-6afcb94227-9.zip/node_modules/chalk/",\
-        "packageDependencies": [\
-          ["chalk", "npm:5.0.1"]\
-        ],\
-        "linkType": "HARD"\
       }]\
     ]],\
     ["change-case", [\
@@ -11773,14 +11749,6 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["cli-cursor", "npm:3.1.0"],\
           ["restore-cursor", "npm:3.1.0"]\
-        ],\
-        "linkType": "HARD"\
-      }],\
-      ["npm:4.0.0", {\
-        "packageLocation": "../../../../.yarn/berry/cache/cli-cursor-npm-4.0.0-08e7cbaf41-9.zip/node_modules/cli-cursor/",\
-        "packageDependencies": [\
-          ["cli-cursor", "npm:4.0.0"],\
-          ["restore-cursor", "npm:4.0.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -16647,13 +16615,6 @@ const RAW_RUNTIME_STATE =
           ["is-interactive", "npm:1.0.0"]\
         ],\
         "linkType": "HARD"\
-      }],\
-      ["npm:2.0.0", {\
-        "packageLocation": "../../../../.yarn/berry/cache/is-interactive-npm-2.0.0-dcec8b26d7-9.zip/node_modules/is-interactive/",\
-        "packageDependencies": [\
-          ["is-interactive", "npm:2.0.0"]\
-        ],\
-        "linkType": "HARD"\
       }]\
     ]],\
     ["is-lambda", [\
@@ -16892,13 +16853,6 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../../../.yarn/berry/cache/is-unicode-supported-npm-0.1.0-0833e1bbfb-9.zip/node_modules/is-unicode-supported/",\
         "packageDependencies": [\
           ["is-unicode-supported", "npm:0.1.0"]\
-        ],\
-        "linkType": "HARD"\
-      }],\
-      ["npm:1.2.0", {\
-        "packageLocation": "../../../../.yarn/berry/cache/is-unicode-supported-npm-1.2.0-ed541ab508-9.zip/node_modules/is-unicode-supported/",\
-        "packageDependencies": [\
-          ["is-unicode-supported", "npm:1.2.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -18674,15 +18628,6 @@ const RAW_RUNTIME_STATE =
           ["is-unicode-supported", "npm:0.1.0"]\
         ],\
         "linkType": "HARD"\
-      }],\
-      ["npm:5.1.0", {\
-        "packageLocation": "../../../../.yarn/berry/cache/log-symbols-npm-5.1.0-75864cfeb4-9.zip/node_modules/log-symbols/",\
-        "packageDependencies": [\
-          ["log-symbols", "npm:5.1.0"],\
-          ["chalk", "npm:5.0.1"],\
-          ["is-unicode-supported", "npm:1.2.0"]\
-        ],\
-        "linkType": "HARD"\
       }]\
     ]],\
     ["log-update", [\
@@ -18694,18 +18639,6 @@ const RAW_RUNTIME_STATE =
           ["cli-cursor", "npm:3.1.0"],\
           ["slice-ansi", "npm:4.0.0"],\
           ["wrap-ansi", "npm:6.2.0"]\
-        ],\
-        "linkType": "HARD"\
-      }],\
-      ["npm:5.0.1", {\
-        "packageLocation": "../../../../.yarn/berry/cache/log-update-npm-5.0.1-1e016d7086-9.zip/node_modules/log-update/",\
-        "packageDependencies": [\
-          ["log-update", "npm:5.0.1"],\
-          ["ansi-escapes", "npm:5.0.0"],\
-          ["cli-cursor", "npm:4.0.0"],\
-          ["slice-ansi", "npm:5.0.0"],\
-          ["strip-ansi", "npm:7.0.1"],\
-          ["wrap-ansi", "npm:8.0.1"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -19990,22 +19923,6 @@ const RAW_RUNTIME_STATE =
           ["is-unicode-supported", "npm:0.1.0"],\
           ["log-symbols", "npm:4.1.0"],\
           ["strip-ansi", "npm:6.0.1"],\
-          ["wcwidth", "npm:1.0.1"]\
-        ],\
-        "linkType": "HARD"\
-      }],\
-      ["npm:6.1.2", {\
-        "packageLocation": "../../../../.yarn/berry/cache/ora-npm-6.1.2-539cf319fe-9.zip/node_modules/ora/",\
-        "packageDependencies": [\
-          ["ora", "npm:6.1.2"],\
-          ["bl", "npm:5.0.0"],\
-          ["chalk", "npm:5.0.1"],\
-          ["cli-cursor", "npm:4.0.0"],\
-          ["cli-spinners", "npm:2.6.1"],\
-          ["is-interactive", "npm:2.0.0"],\
-          ["is-unicode-supported", "npm:1.2.0"],\
-          ["log-symbols", "npm:5.1.0"],\
-          ["strip-ansi", "npm:7.0.1"],\
           ["wcwidth", "npm:1.0.1"]\
         ],\
         "linkType": "HARD"\
@@ -23415,15 +23332,6 @@ const RAW_RUNTIME_STATE =
           ["signal-exit", "npm:3.0.7"]\
         ],\
         "linkType": "HARD"\
-      }],\
-      ["npm:4.0.0", {\
-        "packageLocation": "../../../../.yarn/berry/cache/restore-cursor-npm-4.0.0-d42254f39d-9.zip/node_modules/restore-cursor/",\
-        "packageDependencies": [\
-          ["restore-cursor", "npm:4.0.0"],\
-          ["onetime", "npm:5.1.2"],\
-          ["signal-exit", "npm:3.0.7"]\
-        ],\
-        "linkType": "HARD"\
       }]\
     ]],\
     ["retry", [\
@@ -25921,13 +25829,6 @@ const RAW_RUNTIME_STATE =
         ],\
         "linkType": "HARD"\
       }],\
-      ["npm:1.4.0", {\
-        "packageLocation": "../../../../.yarn/berry/cache/type-fest-npm-1.4.0-7dd848962a-9.zip/node_modules/type-fest/",\
-        "packageDependencies": [\
-          ["type-fest", "npm:1.4.0"]\
-        ],\
-        "linkType": "HARD"\
-      }],\
       ["npm:2.16.0", {\
         "packageLocation": "../../../../.yarn/berry/cache/type-fest-npm-2.16.0-8d42df3332-9.zip/node_modules/type-fest/",\
         "packageDependencies": [\
@@ -26203,13 +26104,6 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../../../.yarn/berry/cache/url-join-npm-4.0.1-e1f4415722-9.zip/node_modules/url-join/",\
         "packageDependencies": [\
           ["url-join", "npm:4.0.1"]\
-        ],\
-        "linkType": "HARD"\
-      }],\
-      ["npm:5.0.0", {\
-        "packageLocation": "../../../../.yarn/berry/cache/url-join-npm-5.0.0-27d329c4cf-9.zip/node_modules/url-join/",\
-        "packageDependencies": [\
-          ["url-join", "npm:5.0.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -27276,16 +27170,6 @@ const RAW_RUNTIME_STATE =
           ["ansi-styles", "npm:4.3.0"],\
           ["string-width", "npm:4.2.3"],\
           ["strip-ansi", "npm:6.0.1"]\
-        ],\
-        "linkType": "HARD"\
-      }],\
-      ["npm:8.0.1", {\
-        "packageLocation": "../../../../.yarn/berry/cache/wrap-ansi-npm-8.0.1-b8ba4ced36-9.zip/node_modules/wrap-ansi/",\
-        "packageDependencies": [\
-          ["wrap-ansi", "npm:8.0.1"],\
-          ["ansi-styles", "npm:6.1.0"],\
-          ["string-width", "npm:5.1.2"],\
-          ["strip-ansi", "npm:7.0.1"]\
         ],\
         "linkType": "HARD"\
       }]\
