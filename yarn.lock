@@ -2173,7 +2173,7 @@ __metadata:
     zod: "npm:^3.14.3"
     zod-to-json-schema: "npm:3.14.1"
   bin:
-    generate: ./cli
+    json-schema: ./cli
   languageName: unknown
   linkType: soft
 
