@@ -31,7 +31,7 @@
     "depcheck": "yarn workspaces foreach --verbose --parallel run depcheck",
     "codegen": "fern generate",
     "codegen:local": "yarn fern:local generate",
-    "fern:local": "yarn workspace @fern-api/cli compile:cjs && node packages/cli/lib/cjs/cli.js",
+    "fern:local": "yarn workspace @fern-api/cli compile:cjs && yarn workspace @fern-api/cli fern",
     "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public",
     "docs:preview": "yarn docsify serve docs",
     "add-package": "yarn mrlint create-package",
