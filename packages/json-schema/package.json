@@ -1,11 +1,12 @@
 {
-  "name": "@fern-api/jsonschema-generation",
+  "name": "@fern-api/json-schema",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "git@github.com:fern-api/fern.git",
-    "directory": "packages/jsonschema-generation"
+    "directory": "packages/json-schema"
   },
+  "private": true,
   "files": [
     "lib"
   ],
@@ -21,7 +22,7 @@
   },
   "sideEffects": false,
   "bin": {
-    "generate-fern-json-schema": "./cli"
+    "generate": "./cli"
   },
   "scripts": {
     "clean": "tsc --build --clean tsconfig.json && tsc --build --clean tsconfig.cjs.json",
@@ -38,6 +39,7 @@
   },
   "dependencies": {
     "@fern-api/yaml-schema": "workspace:*",
+    "execa": "^5.1.1",
     "zod": "^3.14.3",
     "zod-to-json-schema": "3.14.1"
   },

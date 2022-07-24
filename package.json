@@ -31,11 +31,11 @@
     "depcheck": "yarn workspaces foreach --verbose --parallel run depcheck",
     "codegen": "fern generate",
     "codegen:local": "yarn fern:local generate",
-    "fern:local": "yarn workspace @fern-api/cli compile:cjs && node packages/cli/lib/cjs/cli.js",
+    "fern:local": "yarn workspace @fern-api/cli compile:cjs && node packages/cli/cli",
     "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public",
     "docs:preview": "yarn docsify serve docs",
     "add-package": "yarn mrlint create-package",
-    "generate-json-schema": "yarn workspace @fern-api/jsonschema-generation compile:cjs && yarn workspace @fern-api/jsonschema-generation generate-fern-json-schema"
+    "generate-json-schema": "yarn workspace @fern-api/json-schema compile:cjs && node packages/json-schema/cli"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",
