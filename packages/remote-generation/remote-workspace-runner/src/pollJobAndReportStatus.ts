@@ -30,7 +30,7 @@ export function pollJobAndReportStatus({
     function logJobStatus() {
         logUpdate(getLogForTaskStatuses({ tasks: lastSuccessfulTasks, generatorInvocationsWithTaskIds }));
     }
-    const logInterval = setInterval(logJobStatus, SPINNER.interval);
+    const logInterval = setInterval(logJobStatus, getSpinnerInterval());
 
     return new Promise((resolve, reject) => {
         void pollForStatus();
@@ -100,4 +100,12 @@ function isStatusComplete(task: Task | undefined): boolean {
         failed: () => true,
         _unknown: () => true,
     });
+}
+
+function getSpinnerInterval() {
+    if (typeof SPINNER.spinner !== "string" && SPINNER.spinner.interval != null) {
+        return SPINNER.spinner.interval;
+    } else {
+        return 100;
+    }
 }

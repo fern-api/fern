@@ -35,13 +35,13 @@
   },
   "dependencies": {
     "@fern-api/commons": "workspace:*",
-    "@fern-fern/fiddle-coordinator-api-client": "^0.0.26",
+    "@fern-fern/fiddle-coordinator-api-client": "^0.0.38",
     "@fern-fern/ir-model": "0.0.49",
     "axios": "^0.27.2",
     "chalk": "^4.1.2",
     "form-data": "^4.0.0",
-    "log-update": "^5.0.1",
-    "ora": "^6.1.2"
+    "log-update": "^4.0.0",
+    "ora": "^5.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",

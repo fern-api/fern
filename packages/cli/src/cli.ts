@@ -21,7 +21,6 @@ async function runCli() {
         .alias("v", "version")
         .demandCommand()
         .recommendCommands()
-        .showHelpOnFail(false)
         .fail(() => {
             if (passedInArgs.length === 0) {
                 cli.showHelp();
