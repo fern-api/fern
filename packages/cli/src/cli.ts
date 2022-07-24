@@ -13,20 +13,9 @@ import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
 void runCli();
 
 async function runCli() {
-    const passedInArgs = hideBin(process.argv);
-    const cli = yargs(passedInArgs);
+    const cli = yargs(hideBin(process.argv));
 
-    cli.scriptName("fern")
-        .strict()
-        .alias("v", "version")
-        .demandCommand()
-        .recommendCommands()
-        .fail(() => {
-            if (passedInArgs.length === 0) {
-                cli.showHelp();
-                process.exit(1);
-            }
-        });
+    cli.scriptName("fern").strict().alias("v", "version").demandCommand().recommendCommands();
 
     const packageVersion = process.env.PACKAGE_VERSION;
     if (packageVersion != null) {

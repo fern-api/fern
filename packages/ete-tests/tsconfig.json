@@ -3,9 +3,5 @@
   "compilerOptions": { "composite": true, "outDir": "lib/esm", "rootDir": "src", "module": "esnext" },
   "include": ["./src"],
   "exclude": ["./src/**/__test__/**/generated"],
-  "references": [
-    { "path": "../commons/tsconfig.json" },
-    { "path": "../fern-typescript/testing-utils/tsconfig.json" },
-    { "path": "../jsonschema-generation/tsconfig.json" }
-  ]
+  "references": [{ "path": "../commons/tsconfig.json" }, { "path": "../fern-typescript/testing-utils/tsconfig.json" }]
 }

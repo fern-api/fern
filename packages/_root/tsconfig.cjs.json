@@ -24,7 +24,7 @@
     { "path": "../fern-typescript/types/tsconfig.cjs.json" },
     { "path": "../init/tsconfig.cjs.json" },
     { "path": "../ir/ir-generator/tsconfig.cjs.json" },
-    { "path": "../jsonschema-generation/tsconfig.cjs.json" },
+    { "path": "../json-schema/tsconfig.cjs.json" },
     { "path": "../local-generation/docker-utils/tsconfig.cjs.json" },
     { "path": "../local-generation/local-workspace-runner/tsconfig.cjs.json" },
     { "path": "../login/tsconfig.cjs.json" },
