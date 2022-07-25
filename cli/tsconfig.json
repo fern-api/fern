@@ -7,7 +7,7 @@
     { "path": "../../commons/core-utils/tsconfig.json" },
     { "path": "../../config-management/config-management-commons/tsconfig.json" },
     { "path": "../../generation/ir/ir-generator/tsconfig.json" },
-    { "path": "../../workspace-parser/tsconfig.json" },
+    { "path": "../../workspace-loader/tsconfig.json" },
     { "path": "../client/tsconfig.json" },
     { "path": "../fern-typescript-commons/tsconfig.json" },
     { "path": "../helpers/helper-manager/tsconfig.json" },

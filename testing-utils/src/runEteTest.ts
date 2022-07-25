@@ -1,5 +1,5 @@
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
-import { parseWorkspaceDefinition } from "@fern-api/workspace-parser";
+import { loadWorkspace } from "@fern-api/workspace-loader";
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
 import { writeVolumeToDisk } from "@fern-typescript/commons";
 import { rm } from "fs/promises";
@@ -49,7 +49,7 @@ export async function runEteTest({
     const pathToGenerated = path.join(absolutePathToFixture, "generated");
     await deleteDirectory(pathToGenerated);
 
-    const parseWorkspaceResult = await parseWorkspaceDefinition({
+    const parseWorkspaceResult = await loadWorkspace({
         name: undefined,
         absolutePathToDefinition: path.join(absolutePathToFixture, "src"),
     });
