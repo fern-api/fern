@@ -1,0 +1,46 @@
+@import "~@blueprintjs/core/lib/scss/variables";
+
+.link,
+.link:hover {
+    cursor: pointer;
+    color: $dark-gray3;
+
+    &.muted {
+        color: $pt-text-color-muted;
+    }
+
+    border: 1px solid transparent;
+
+    &:hover {
+        text-decoration: none;
+
+        &.hoverState {
+            color: $black;
+
+            &.showUnderline {
+                border-bottom-color: $black;
+            }
+        }
+    }
+}
+
+:global(.#{$ns}-dark) {
+    .link,
+    .link:hover {
+        color: $pt-dark-text-color;
+
+        &.muted {
+            color: $pt-dark-text-color-muted;
+        }
+
+        &:hover {
+            &.hoverState {
+                color: $gray3;
+
+                &.showUnderline {
+                    border-bottom-color: $gray3;
+                }
+            }
+        }
+    }
+}

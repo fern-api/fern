@@ -22,7 +22,7 @@
     "lint:eslint": "eslint --max-warnings 0 .",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "lint:monorepo": "mrlint lint",
-    "lint:monorepo:fix": "yarn lint:monorepo --fix",
+    "lint:monorepo:fix": "yarn lint:monorepo --fix && yarn compile:prepare",
     "lint:style": "stylelint 'packages/**/src/**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "yarn run lint:style --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ./shared/.prettierignore",
@@ -70,7 +70,7 @@
     "stylelint-config-standard-scss": "^4.0.0",
     "ts-jest": "^28.0.5",
     "ts-node": "^10.8.0",
-    "typescript": "^4.7.4"
+    "typescript": "4.6.4"
   },
   "packageManager": "yarn@4.0.0-rc.13"
 }
