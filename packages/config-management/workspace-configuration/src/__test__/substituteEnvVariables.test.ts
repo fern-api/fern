@@ -12,7 +12,6 @@ describe("substituteEnvVariables", () => {
         plugh: \${ENV_VAR}`;
         const parsedYaml = yaml.load(rawYaml);
         const substitutedYaml = substituteEnvVariables(parsedYaml);
-        console.log(substitutedYaml);
         expect(substitutedYaml).toEqual({ foo: "bar", baz: { qux: { thud: "test" } }, plugh: "test" });
     });
 });
