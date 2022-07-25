@@ -1,5 +1,5 @@
-import { assertNever, entries } from "@fern-api/commons";
 import { RelativeFilePath } from "@fern-api/config-management-commons";
+import { assertNever, entries } from "@fern-api/core-utils";
 import { WorkspaceParser, WorkspaceParserFailureType } from "@fern-api/workspace-parser";
 import chalk from "chalk";
 import { YAMLException } from "js-yaml";

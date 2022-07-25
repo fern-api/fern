@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/commons";
+import { assertNever } from "@fern-api/core-utils";
 import { AliasSchema, EnumSchema, ObjectSchema, TypeDeclarationSchema, UnionSchema } from "../schemas";
 
 export interface RawTypeDeclarationVisitor<R> {

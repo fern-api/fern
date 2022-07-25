@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/commons";
+import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { FernFilepath } from "@fern-fern/ir-model";
 import {

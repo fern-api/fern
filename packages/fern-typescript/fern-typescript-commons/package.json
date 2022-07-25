@@ -1,10 +1,10 @@
 {
-  "name": "@fern-api/commons",
+  "name": "@fern-typescript/commons",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "git@github.com:fern-api/fern.git",
-    "directory": "packages/commons/commons"
+    "directory": "packages/fern-typescript/fern-typescript-commons"
   },
   "files": [
     "lib"
@@ -34,18 +34,29 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "typescript": "4.6.4"
+    "@fern-api/core-utils": "workspace:*",
+    "@fern-fern/ir-model": "0.0.49",
+    "esutils": "^2.0.3",
+    "immer": "^9.0.15",
+    "lodash": "^4.17.21",
+    "ts-morph": "^14.0.0",
+    "typescript": "4.6.4",
+    "zod": "^3.14.3"
   },
   "devDependencies": {
     "@babel/core": "^7.18.9",
     "@babel/preset-env": "^7.18.9",
     "@babel/preset-typescript": "^7.18.6",
+    "@types/esutils": "^2.0.0",
     "@types/jest": "^28.1.6",
+    "@types/lodash": "^4.14.182",
     "@types/node": "^18.6.1",
     "depcheck": "^1.4.3",
     "eslint": "^8.20.0",
     "jest": "^28.1.3",
+    "memfs": "^3.4.1",
     "npm-run-all": "^4.1.5",
+    "package-json-type": "^1.0.3",
     "prettier": "^2.7.1",
     "ts-jest": "^28.0.7"
   }

@@ -1,4 +1,4 @@
-import { entries } from "@fern-api/commons";
+import { entries } from "@fern-api/core-utils";
 import { parseWorkspaceDefinition } from "@fern-api/workspace-parser";
 import { visitFernYamlAst } from "@fern-api/yaml-schema";
 import { createAstVisitorForRules } from "../createAstVisitorForRules";

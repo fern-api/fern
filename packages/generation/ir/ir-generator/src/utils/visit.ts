@@ -1,4 +1,4 @@
-import { keys } from "@fern-api/commons";
+import { keys } from "@fern-api/core-utils";
 
 export type Visitor<T> = { [K in keyof T]-?: (value: T[K]) => void };
 

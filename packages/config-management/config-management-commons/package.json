@@ -4,7 +4,7 @@
   "repository": {
     "type": "git",
     "url": "git@github.com:fern-api/fern.git",
-    "directory": "packages/config-management/commons"
+    "directory": "packages/config-management/config-management-commons"
   },
   "files": [
     "lib"

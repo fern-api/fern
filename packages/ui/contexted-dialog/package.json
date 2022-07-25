@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "@blueprintjs/core": "^4.6.0",
-    "@fern-api/commons": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
     "@fern-ui/react-commons": "workspace:*",
     "@fern-ui/theme": "workspace:*",
     "@fern-ui/toaster": "workspace:*",

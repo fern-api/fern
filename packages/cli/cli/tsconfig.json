@@ -3,9 +3,9 @@
   "compilerOptions": { "composite": true, "outDir": "lib/esm", "rootDir": "src", "module": "esnext" },
   "include": ["./src"],
   "references": [
-    { "path": "../../commons/commons/tsconfig.json" },
+    { "path": "../../commons/core-utils/tsconfig.json" },
     { "path": "../../config-management/add-generator/tsconfig.json" },
-    { "path": "../../config-management/commons/tsconfig.json" },
+    { "path": "../../config-management/config-management-commons/tsconfig.json" },
     { "path": "../../config-management/init/tsconfig.json" },
     { "path": "../../config-management/project-configuration/tsconfig.json" },
     { "path": "../../config-management/workspace-configuration/tsconfig.json" },

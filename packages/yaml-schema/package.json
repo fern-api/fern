@@ -34,7 +34,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/commons": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
     "@fern-fern/ir-model": "0.0.49",
     "prettier": "^2.7.1",
     "zod": "^3.14.3",

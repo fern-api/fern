@@ -4,9 +4,9 @@
   "include": ["./src"],
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
-    { "path": "../../commons/commons/tsconfig.json" },
-    { "path": "../commons/tsconfig.json" },
+    { "path": "../../commons/core-utils/tsconfig.json" },
     { "path": "../errors/tsconfig.json" },
+    { "path": "../fern-typescript-commons/tsconfig.json" },
     { "path": "../model-context/tsconfig.json" },
     { "path": "../service-types/tsconfig.json" },
     { "path": "../testing-utils/tsconfig.json" },

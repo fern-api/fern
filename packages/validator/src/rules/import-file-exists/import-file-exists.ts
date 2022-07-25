@@ -1,4 +1,4 @@
-import { doesPathExist } from "@fern-api/commons";
+import { doesPathExist } from "@fern-api/core-utils";
 import chalk from "chalk";
 import path from "path";
 import { Rule, RuleViolation } from "../../Rule";

@@ -5,6 +5,6 @@
   "references": [
     { "path": "../../generation/ir/ir-generator/tsconfig.json" },
     { "path": "../../workspace-parser/tsconfig.json" },
-    { "path": "../commons/tsconfig.json" }
+    { "path": "../fern-typescript-commons/tsconfig.json" }
   ]
 }

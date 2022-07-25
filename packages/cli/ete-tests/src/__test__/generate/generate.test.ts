@@ -1,4 +1,4 @@
-import { getDirectoryContents } from "@fern-api/commons";
+import { getDirectoryContents } from "@fern-api/core-utils";
 import { installAndCompileGeneratedProjects } from "@fern-typescript/testing-utils";
 import { rm } from "fs/promises";
 import path from "path";

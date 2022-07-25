@@ -1,4 +1,4 @@
-import { doesPathExist } from "@fern-api/commons";
+import { doesPathExist } from "@fern-api/core-utils";
 import { ProjectConfigSchema, PROJECT_CONFIG_FILENAME } from "@fern-api/project-configuration";
 import { WorkspaceDefinitionSchema, WORKSPACE_DEFINITION_FILENAME } from "@fern-api/workspace-configuration";
 import { mkdir, writeFile } from "fs/promises";

@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/commons";
+import { assertNever } from "@fern-api/core-utils";
 import esutils from "esutils";
 import { CodeBlockWriter, WriterFunction, WriterFunctionOrValue } from "ts-morph";
 

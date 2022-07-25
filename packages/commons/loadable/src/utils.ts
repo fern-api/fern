@@ -1,4 +1,4 @@
-import { keys } from "@fern-api/commons";
+import { keys } from "@fern-api/core-utils";
 import { failed, isFailed, isLoaded, Loadable, loaded, Loading, loading, NotFailed } from "./Loadable";
 import { visitLoadable } from "./visitor";
 
