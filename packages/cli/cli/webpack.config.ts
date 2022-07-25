@@ -45,7 +45,10 @@ export default (): webpack.Configuration => {
                 ".ts",
             ],
         },
-        plugins: [new webpack.BannerPlugin({ banner: "#!/usr/bin/env node", raw: true })],
+        plugins: [
+            new webpack.BannerPlugin({ banner: "#!/usr/bin/env node", raw: true }),
+            new webpack.EnvironmentPlugin("PACKAGE_VERSION", "AUTH0_DOMAIN", "AUTH0_CLIENT_ID"),
+        ],
         output: {
             path: path.join(__dirname, "dist"),
             filename: "bundle.cjs",
