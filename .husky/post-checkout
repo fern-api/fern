@@ -1,4 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-find packages -name 'lib' -exec '/bin/rm -r {} 2> /dev/null' \;
+find packages -name 'lib' -exec /bin/rm -r {} \; 2> /dev/null
