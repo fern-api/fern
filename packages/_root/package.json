@@ -10,13 +10,13 @@
   "files": [
     "lib"
   ],
+  "type": "module",
   "source": "src/index.ts",
   "module": "src/index.ts",
-  "main": "./src/index.ts",
-  "types": "./lib/index.d.ts",
+  "main": "src/index.ts",
   "sideEffects": false,
   "scripts": {
-    "clean": "rm -r ./lib",
+    "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
     "test": "yarn run compile && jest --passWithNoTests",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
@@ -59,6 +59,7 @@
     "@fern-typescript/types": "workspace:*",
     "@fern-ui/app": "workspace:*",
     "@fern-ui/contexted-dialog": "workspace:*",
+    "@fern-ui/fe-bundle": "workspace:*",
     "@fern-ui/react-commons": "workspace:*",
     "@fern-ui/react-query-utils": "workspace:*",
     "@fern-ui/routing-utils": "workspace:*",

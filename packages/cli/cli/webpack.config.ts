@@ -1,5 +1,8 @@
-import path from "path";
-import * as webpack from "webpack";
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
+import webpack from "webpack";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default (): webpack.Configuration => {
     return {
@@ -45,7 +48,7 @@ export default (): webpack.Configuration => {
         plugins: [new webpack.BannerPlugin({ banner: "#!/usr/bin/env node", raw: true })],
         output: {
             path: path.join(__dirname, "dist"),
-            filename: "bundle.js",
+            filename: "bundle.cjs",
         },
         optimization: {
             minimize: false,

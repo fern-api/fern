@@ -10,16 +10,16 @@
     "lib",
     "dist"
   ],
+  "type": "module",
   "source": "src/index.ts",
   "module": "src/index.ts",
-  "main": "./src/index.ts",
-  "types": "./lib/index.d.ts",
+  "main": "src/index.ts",
   "sideEffects": false,
   "bin": {
-    "fern": "dist/bundle.js"
+    "fern": "dist/bundle.cjs"
   },
   "scripts": {
-    "clean": "rm -r ./lib",
+    "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
     "test": "yarn run compile && jest --passWithNoTests",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
@@ -27,7 +27,7 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck",
-    "dist": "TS_NODE_PROJECT=tsconfig.webpack.json yarn webpack --progress"
+    "dist": "yarn node --loader ts-node/esm $(yarn bin webpack)"
   },
   "dependencies": {
     "@fern-api/add-generator": "workspace:*",
