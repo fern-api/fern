@@ -1,7 +1,7 @@
 import { CracoConfig, getLoader, loaderByName } from "@craco/craco";
 import { ForkTsCheckerWebpackPluginConfig } from "fork-ts-checker-webpack-plugin/lib/plugin-config";
 import NodePolyfillPlugin from "node-polyfill-webpack-plugin";
-import { getAllPackages } from "../../../scripts/getAllPackages";
+import { getAllPackages } from "../../scripts/src/getAllPackages";
 
 module.exports = async function (): Promise<CracoConfig> {
     const packages = await getAllPackages();

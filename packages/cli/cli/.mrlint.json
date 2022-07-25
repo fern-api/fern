@@ -4,13 +4,7 @@
   "private": false,
   "rules": {
     "depcheck": {
-      "ignores": ["webpack-cli", "ts-loader", "node-loader", "ts-node"],
-      "ignore-patterns": ["webpack/dist/bundle.js"]
-    },
-    "package-json": {
-      "scripts": {
-        "dist": "./webpack/bundle.sh $(yarn info @fern-api/cli --all --json | jq -r .children.Version)"
-      }
+      "ignores": ["webpack-cli", "ts-loader", "node-loader", "ts-node"]
     }
   }
 }

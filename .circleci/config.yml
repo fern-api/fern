@@ -13,6 +13,9 @@ jobs:
           name: lint:monorepo
           command: yarn lint:monorepo
       - run:
+          name: Check root package
+          command: yarn check-root-package
+      - run:
           name: Format
           command: yarn format:check
       - run:
@@ -33,6 +36,7 @@ jobs:
   compile-and-test:
     machine:
       image: ubuntu-2004:current
+    resource_class: xlarge
     steps:
       - checkout
       - node/install-packages:
@@ -81,11 +85,11 @@ jobs:
             cd pre-release-test
 
             echo "Running Fern Commands!"
-            node $cli_path/webpack/dist/bundle.js init --organization fern
-            node $cli_path/webpack/dist/bundle.js add java
-            node $cli_path/webpack/dist/bundle.js add typescript
-            node $cli_path/webpack/dist/bundle.js add postman
-            node $cli_path/webpack/dist/bundle.js generate
+            node $cli_path/dist/bundle.cjs init --organization fern
+            node $cli_path/dist/bundle.cjs add java
+            node $cli_path/dist/bundle.cjs add typescript
+            node $cli_path/dist/bundle.cjs add postman
+            node $cli_path/dist/bundle.cjs generate
 
             echo "Cleaning up!"
             cd ..
@@ -108,17 +112,10 @@ jobs:
           command: yarn
       - run:
           name: Compile
-          command: yarn compile:all
+          command: yarn compile
       - run:
           name: Publish all packages
           command: yarn run publish --tag $(./scripts/npm-tag.sh)
-      - run:
-          name: Publish fern-api
-          command: |
-            npm_tag=$(./scripts/npm-tag.sh)
-            yarn workspace @fern-api/cli dist
-            cd $(yarn workspace @fern-api/cli exec pwd)/webpack/dist
-            yarn npm publish --tag $npm_tag
       - run:
           name: Publish fern-typescript docker
           command: |

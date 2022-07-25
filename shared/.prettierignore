@@ -4,6 +4,6 @@ dist
 .yarn
 .husky
 generated
-bundle.js
+bundle.c?js
 .pnp*
 ../packages/compiler/ir-types/fern-ir-typescript

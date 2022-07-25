@@ -15,7 +15,8 @@ webpack_mode="production"
 if [[ "$TAG" == "local" ]]; then
 	webpack_mode="development"
 fi
-TS_NODE_PROJECT="$WEBPACK_TS_CONFIG" yarn webpack --config "$WEBPACK_CONFIG" --mode "$webpack_mode"
+
+yarn node --loader ts-node/esm $(yarn bin webpack) --config "$WEBPACK_CONFIG" --mode "$webpack_mode"
 
 docker build -f "$DOCKER_DIR/Dockerfile" -t "$DOCKER_NAME" "$DOCKER_DIR"
 

@@ -1,11 +1,11 @@
 {
   "extends": "../../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "lib/esm", "rootDir": "src", "module": "esnext" },
+  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
   "references": [
-    { "path": "../../commons/core-utils/tsconfig.json" },
-    { "path": "../fern-typescript-commons/tsconfig.json" },
-    { "path": "../model-context/tsconfig.json" },
-    { "path": "../types/tsconfig.json" }
+    { "path": "../../commons/core-utils" },
+    { "path": "../fern-typescript-commons" },
+    { "path": "../model-context" },
+    { "path": "../types" }
   ]
 }

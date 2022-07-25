@@ -1,8 +1,16 @@
-import path from "path";
+import { createRequire } from "module";
+import path, { dirname } from "path";
 import SimpleProgressWebpackPlugin from "simple-progress-webpack-plugin";
-import * as webpack from "webpack";
+import { fileURLToPath } from "url";
+import webpack from "webpack";
 
-export default (_env: unknown, { mode = "production" }: webpack.WebpackOptionsNormalized): webpack.Configuration => {
+const require = createRequire(import.meta.url);
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+export default async (
+    _env: unknown,
+    { mode = "production" }: webpack.WebpackOptionsNormalized
+): Promise<webpack.Configuration> => {
     return {
         mode,
         target: "node",
@@ -20,8 +28,7 @@ export default (_env: unknown, { mode = "production" }: webpack.WebpackOptionsNo
                     loader: "ts-loader",
                     options: {
                         projectReferences: true,
-                        // esm config
-                        configFile: "tsconfig.json",
+                        transpileOnly: true,
                     },
                     exclude: /node_modules/,
                 },

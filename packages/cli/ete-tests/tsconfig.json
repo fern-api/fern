@@ -1,12 +1,12 @@
 {
   "extends": "../../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "lib/esm", "rootDir": "src", "module": "esnext" },
+  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
-    { "path": "../../commons/core-utils/tsconfig.json" },
-    { "path": "../../config-management/project-configuration/tsconfig.json" },
-    { "path": "../../config-management/workspace-configuration/tsconfig.json" },
-    { "path": "../../fern-typescript/testing-utils/tsconfig.json" }
+    { "path": "../../commons/core-utils" },
+    { "path": "../../config-management/project-configuration" },
+    { "path": "../../config-management/workspace-configuration" },
+    { "path": "../../fern-typescript/testing-utils" }
   ]
 }
