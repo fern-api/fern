@@ -37,6 +37,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
+    "@fern-ui/theme": "workspace:*",
     "react": "^18.2.0"
   },
   "devDependencies": {

@@ -1,3 +1,9 @@
+import { ThemeProvider } from "@fern-ui/theme";
+
 export const App: React.FC = () => {
-    return <div>I am a frontend!</div>;
+    return (
+        <ThemeProvider defaultIsDarkTheme>
+            <div>I am a frontend!</div>
+        </ThemeProvider>
+    );
 };
