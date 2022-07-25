@@ -16,5 +16,5 @@
     "node-loader",
     "ts-node"
   ],
-  "ignore-patterns": ["lib", "webpack/dist/bundle.js"]
+  "ignore-patterns": ["lib"]
 }

@@ -81,11 +81,11 @@ jobs:
             cd pre-release-test
 
             echo "Running Fern Commands!"
-            node $cli_path/webpack/dist/bundle.js init --organization fern
-            node $cli_path/webpack/dist/bundle.js add java
-            node $cli_path/webpack/dist/bundle.js add typescript
-            node $cli_path/webpack/dist/bundle.js add postman
-            node $cli_path/webpack/dist/bundle.js generate
+            node $cli_path/dist/bundle.cjs init --organization fern
+            node $cli_path/dist/bundle.cjs add java
+            node $cli_path/dist/bundle.cjs add typescript
+            node $cli_path/dist/bundle.cjs add postman
+            node $cli_path/dist/bundle.cjs generate
 
             echo "Cleaning up!"
             cd ..

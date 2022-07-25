@@ -28,7 +28,7 @@
     "depcheck": "yarn workspaces foreach --verbose --parallel run depcheck",
     "codegen": "fern generate",
     "codegen:local": "yarn fern:local generate",
-    "fern:local": "yarn workspace fern-api dist && node $(yarn workspace fern-api exec pwd)/dist/bundle.js",
+    "fern:local": "yarn workspace fern-api dist && node $(yarn workspace fern-api exec pwd)/dist/bundle.cjs",
     "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public",
     "docs:preview": "yarn docsify serve docs",
     "add-package": "yarn mrlint add-package",
