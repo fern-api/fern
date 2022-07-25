@@ -1,0 +1,12 @@
+@import "~@blueprintjs/core/lib/scss/variables";
+
+.container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background-color: $light-gray5;
+
+    &:global(.#{$ns}-dark) {
+        background-color: $dark-gray1;
+    }
+}

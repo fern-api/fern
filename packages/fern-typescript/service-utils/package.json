@@ -39,19 +39,19 @@
     "js-base64": "^3.7.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.18.6",
-    "@babel/preset-env": "^7.18.6",
+    "@babel/core": "^7.18.9",
+    "@babel/preset-env": "^7.18.9",
     "@babel/preset-typescript": "^7.18.6",
     "@types/basic-auth": "^1.1.3",
-    "@types/jest": "^28.1.4",
+    "@types/jest": "^28.1.6",
     "@types/js-base64": "^3.3.1",
-    "@types/node": "^18.0.3",
+    "@types/node": "^18.6.0",
     "depcheck": "^1.4.3",
-    "eslint": "^8.19.0",
-    "jest": "^28.1.2",
+    "eslint": "^8.20.0",
+    "jest": "^28.1.3",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.7.1",
-    "ts-jest": "^28.0.5",
-    "typescript": "^4.7.4"
+    "ts-jest": "^28.0.7",
+    "typescript": "4.6.4"
   }
 }
