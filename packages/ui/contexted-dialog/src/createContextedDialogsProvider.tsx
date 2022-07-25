@@ -1,4 +1,4 @@
-import { keys } from "@fern-api/commons";
+import { keys } from "@fern-api/core-utils";
 import { createContextedDialog } from "./createContextedDialog";
 import { EasyOpenDialogHooks, OpenDialogHooks, SingleContextedDialogProviderRenderer } from "./types";
 import { typedCapitalize } from "./utils";

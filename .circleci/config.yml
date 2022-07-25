@@ -25,6 +25,9 @@ jobs:
           name: lint:style
           command: yarn lint:style
       - run:
+          name: Generate Fern JSON Schema
+          command: yarn generate-json-schema
+      - run:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff
   compile-and-test:

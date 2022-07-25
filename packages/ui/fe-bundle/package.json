@@ -68,7 +68,7 @@
     "@craco/craco": "^6.4.4",
     "@types/craco__craco": "^6.4.0",
     "@types/jest": "^28.1.6",
-    "@types/node": "^18.6.0",
+    "@types/node": "^18.6.1",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "depcheck": "^1.4.3",

@@ -3,7 +3,7 @@
   "compilerOptions": { "composite": true, "outDir": "lib/esm", "rootDir": "src", "module": "esnext" },
   "include": ["./src"],
   "references": [
-    { "path": "../../../commons/tsconfig.json" },
+    { "path": "../../../config-management/config-management-commons/tsconfig.json" },
     { "path": "../built-in/json-encoding-helper/tsconfig.json" },
     { "path": "../utils/tsconfig.json" }
   ]

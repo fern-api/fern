@@ -1,3 +1,4 @@
+import { RelativeFilePath } from "@fern-api/config-management-commons";
 import { FernAstNodeTypes, FernConfigurationSchema, NodePath } from "@fern-api/yaml-schema";
 import { FernAstNodeVisitor, FernAstVisitor } from "@fern-api/yaml-schema/src/ast/FernAstVisitor";
 import { RuleRunner } from "./Rule";
@@ -9,7 +10,7 @@ export function createAstVisitorForRules({
     ruleRunners,
     addViolations,
 }: {
-    relativeFilePath: string;
+    relativeFilePath: RelativeFilePath;
     contents: FernConfigurationSchema;
     ruleRunners: RuleRunner[];
     addViolations: (newViolations: ValidationViolation[]) => void;
@@ -31,6 +32,7 @@ export function createAstVisitorForRules({
                 }
             }
         };
+
         return { [nodeType]: visit } as Record<K, FernAstNodeVisitor<K>>;
     }
 

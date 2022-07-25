@@ -1,5 +1,6 @@
+import { RelativeFilePath } from "@fern-api/config-management-commons";
+import { entries } from "@fern-api/core-utils";
 import { FernConfigurationSchema } from "@fern-api/yaml-schema";
-import { RelativeFilePath } from "./types/RelativeFilePath";
 import { WorkspaceParser, WorkspaceParserFailureType } from "./types/Result";
 
 export declare namespace validateStructureOfYamlFiles {
@@ -22,7 +23,7 @@ export function validateStructureOfYamlFiles(
     const validatedFiles: Record<RelativeFilePath, FernConfigurationSchema> = {};
     const failures: Record<RelativeFilePath, WorkspaceParser.StructureValidationFailure> = {};
 
-    for (const [relativeFilePath, parsedFileContents] of Object.entries(files)) {
+    for (const [relativeFilePath, parsedFileContents] of entries(files)) {
         const parsed = FernConfigurationSchema.safeParse(parsedFileContents);
         if (parsed.success) {
             validatedFiles[relativeFilePath] = parsed.data;

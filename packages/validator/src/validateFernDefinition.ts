@@ -1,4 +1,6 @@
-import { RelativeFilePath, Workspace } from "@fern-api/workspace-parser";
+import { RelativeFilePath } from "@fern-api/config-management-commons";
+import { entries } from "@fern-api/core-utils";
+import { Workspace } from "@fern-api/workspace-parser";
 import { FernConfigurationSchema, visitFernYamlAst } from "@fern-api/yaml-schema";
 import { createAstVisitorForRules } from "./createAstVisitorForRules";
 import { rules } from "./rules";
@@ -6,7 +8,7 @@ import { ValidationViolation } from "./ValidationViolation";
 
 export async function validateFernDefinition(workspace: Workspace): Promise<ValidationViolation[]> {
     const violations: ValidationViolation[] = [];
-    for (const [relativeFilePath, contents] of Object.entries(workspace.files)) {
+    for (const [relativeFilePath, contents] of entries(workspace.files)) {
         const violationsForFile = await validateFernFile({
             workspace,
             relativeFilePath,

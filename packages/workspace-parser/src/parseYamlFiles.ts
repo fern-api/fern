@@ -1,6 +1,6 @@
+import { RelativeFilePath } from "@fern-api/config-management-commons";
 import yaml from "js-yaml";
 import { FernFile } from "./types/FernFile";
-import { RelativeFilePath } from "./types/RelativeFilePath";
 import { WorkspaceParser, WorkspaceParserFailureType } from "./types/Result";
 
 export type ParsedFileContents = unknown;

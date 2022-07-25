@@ -5,32 +5,18 @@
     "Fern API Definition": {
       "type": "object",
       "properties": {
-        "imports": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          }
-        },
+        "imports": { "type": "object", "additionalProperties": { "type": "string" } },
         "ids": {
           "type": "array",
           "items": {
             "anyOf": [
-              {
-                "type": "string"
-              },
+              { "type": "string" },
               {
                 "type": "object",
                 "properties": {
-                  "docs": {
-                    "type": "string"
-                  },
-                  "name": {
-                    "type": "string"
-                  },
-                  "type": {
-                    "type": "string",
-                    "enum": ["string", "uuid"]
-                  }
+                  "docs": { "type": "string" },
+                  "name": { "type": "string" },
+                  "type": { "type": "string", "enum": ["string", "uuid"] }
                 },
                 "required": ["name"],
                 "additionalProperties": false
@@ -42,46 +28,26 @@
           "type": "object",
           "additionalProperties": {
             "anyOf": [
-              {
-                "type": "string"
-              },
+              { "type": "string" },
               {
                 "anyOf": [
                   {
                     "type": "object",
                     "properties": {
-                      "docs": {
-                        "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                      },
+                      "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
                       "extends": {
-                        "anyOf": [
-                          {
-                            "type": "string"
-                          },
-                          {
-                            "type": "array",
-                            "items": {
-                              "type": "string"
-                            }
-                          }
-                        ]
+                        "anyOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }]
                       },
                       "properties": {
                         "type": "object",
                         "additionalProperties": {
                           "anyOf": [
-                            {
-                              "type": "string"
-                            },
+                            { "type": "string" },
                             {
                               "type": "object",
                               "properties": {
-                                "type": {
-                                  "type": "string"
-                                },
-                                "docs": {
-                                  "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                                }
+                                "type": { "type": "string" },
+                                "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" }
                               },
                               "required": ["type"],
                               "additionalProperties": false
@@ -96,9 +62,7 @@
                   {
                     "type": "object",
                     "properties": {
-                      "docs": {
-                        "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                      },
+                      "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
                       "extends": {
                         "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
                       },
@@ -117,34 +81,24 @@
               {
                 "type": "object",
                 "properties": {
-                  "docs": {
-                    "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                  },
+                  "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
                   "union": {
                     "type": "object",
                     "additionalProperties": {
                       "anyOf": [
-                        {
-                          "type": "string"
-                        },
+                        { "type": "string" },
                         {
                           "type": "object",
                           "properties": {
-                            "docs": {
-                              "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                            },
-                            "type": {
-                              "type": "string"
-                            }
+                            "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
+                            "type": { "type": "string" }
                           },
                           "additionalProperties": false
                         }
                       ]
                     }
                   },
-                  "discriminant": {
-                    "type": "string"
-                  }
+                  "discriminant": { "type": "string" }
                 },
                 "required": ["union"],
                 "additionalProperties": false
@@ -152,41 +106,26 @@
               {
                 "type": "object",
                 "properties": {
-                  "docs": {
-                    "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                  },
-                  "alias": {
-                    "type": "string",
-                    "default": "void"
-                  }
+                  "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
+                  "alias": { "type": "string", "default": "void" }
                 },
                 "additionalProperties": false
               },
               {
                 "type": "object",
                 "properties": {
-                  "docs": {
-                    "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                  },
+                  "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
                   "enum": {
                     "type": "array",
                     "items": {
                       "anyOf": [
-                        {
-                          "type": "string"
-                        },
+                        { "type": "string" },
                         {
                           "type": "object",
                           "properties": {
-                            "docs": {
-                              "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                            },
-                            "name": {
-                              "type": "string"
-                            },
-                            "value": {
-                              "type": "string"
-                            }
+                            "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
+                            "name": { "type": "string" },
+                            "value": { "type": "string" }
                           },
                           "required": ["value"],
                           "additionalProperties": false
@@ -209,16 +148,9 @@
               "additionalProperties": {
                 "type": "object",
                 "properties": {
-                  "docs": {
-                    "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                  },
-                  "auth": {
-                    "type": "string",
-                    "enum": ["bearer", "basic", "none"]
-                  },
-                  "base-path": {
-                    "type": "string"
-                  },
+                  "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
+                  "auth": { "type": "string", "enum": ["bearer", "basic", "none"] },
+                  "base-path": { "type": "string" },
                   "headers": {
                     "type": "object",
                     "additionalProperties": {
@@ -230,16 +162,9 @@
                     "additionalProperties": {
                       "type": "object",
                       "properties": {
-                        "docs": {
-                          "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                        },
-                        "method": {
-                          "type": "string",
-                          "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"]
-                        },
-                        "path": {
-                          "type": "string"
-                        },
+                        "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
+                        "method": { "type": "string", "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"] },
+                        "path": { "type": "string" },
                         "path-parameters": {
                           "type": "object",
                           "additionalProperties": {
@@ -263,21 +188,13 @@
                         },
                         "request": {
                           "anyOf": [
-                            {
-                              "type": "string"
-                            },
+                            { "type": "string" },
                             {
                               "type": "object",
                               "properties": {
-                                "docs": {
-                                  "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                                },
-                                "encoding": {
-                                  "type": "string"
-                                },
-                                "type": {
-                                  "type": "string"
-                                }
+                                "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
+                                "encoding": { "type": "string" },
+                                "type": { "type": "string" }
                               },
                               "required": ["type"],
                               "additionalProperties": false
@@ -286,18 +203,12 @@
                         },
                         "response": {
                           "anyOf": [
-                            {
-                              "type": "string"
-                            },
+                            { "type": "string" },
                             {
                               "type": "object",
                               "properties": {
-                                "docs": {
-                                  "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                                },
-                                "type": {
-                                  "type": "string"
-                                }
+                                "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
+                                "type": { "type": "string" }
                               },
                               "required": ["type"],
                               "additionalProperties": false
@@ -308,18 +219,12 @@
                           "type": "array",
                           "items": {
                             "anyOf": [
-                              {
-                                "type": "string"
-                              },
+                              { "type": "string" },
                               {
                                 "type": "object",
                                 "properties": {
-                                  "docs": {
-                                    "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                                  },
-                                  "error": {
-                                    "type": "string"
-                                  }
+                                  "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
+                                  "error": { "type": "string" }
                                 },
                                 "required": ["error"],
                                 "additionalProperties": false
@@ -341,15 +246,9 @@
               "additionalProperties": {
                 "type": "object",
                 "properties": {
-                  "docs": {
-                    "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                  },
-                  "auth": {
-                    "$ref": "#/properties/services/properties/http/additionalProperties/properties/auth"
-                  },
-                  "path": {
-                    "type": "string"
-                  },
+                  "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
+                  "auth": { "$ref": "#/properties/services/properties/http/additionalProperties/properties/auth" },
+                  "path": { "type": "string" },
                   "client": {
                     "type": "object",
                     "properties": {
@@ -358,26 +257,16 @@
                         "additionalProperties": {
                           "type": "object",
                           "properties": {
-                            "docs": {
-                              "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                            },
+                            "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
                             "request": {
                               "anyOf": [
-                                {
-                                  "type": "string"
-                                },
+                                { "type": "string" },
                                 {
                                   "type": "object",
                                   "properties": {
-                                    "docs": {
-                                      "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                                    },
-                                    "type": {
-                                      "type": "string"
-                                    },
-                                    "encoding": {
-                                      "type": "string"
-                                    }
+                                    "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
+                                    "type": { "type": "string" },
+                                    "encoding": { "type": "string" }
                                   },
                                   "required": ["type"],
                                   "additionalProperties": false
@@ -386,18 +275,12 @@
                             },
                             "response": {
                               "anyOf": [
-                                {
-                                  "type": "string"
-                                },
+                                { "type": "string" },
                                 {
                                   "type": "object",
                                   "properties": {
-                                    "docs": {
-                                      "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                                    },
-                                    "type": {
-                                      "type": "string"
-                                    }
+                                    "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
+                                    "type": { "type": "string" }
                                   },
                                   "required": ["type"],
                                   "additionalProperties": false
@@ -429,31 +312,21 @@
           "type": "object",
           "additionalProperties": {
             "anyOf": [
-              {
-                "type": "string"
-              },
+              { "type": "string" },
               {
                 "type": "object",
                 "properties": {
-                  "docs": {
-                    "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                  },
+                  "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
                   "http": {
                     "type": "object",
                     "properties": {
-                      "docs": {
-                        "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                      },
-                      "statusCode": {
-                        "type": "number"
-                      }
+                      "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
+                      "statusCode": { "type": "number" }
                     },
                     "required": ["statusCode"],
                     "additionalProperties": false
                   },
-                  "type": {
-                    "$ref": "#/properties/types/additionalProperties"
-                  }
+                  "type": { "$ref": "#/properties/types/additionalProperties" }
                 },
                 "additionalProperties": false
               }

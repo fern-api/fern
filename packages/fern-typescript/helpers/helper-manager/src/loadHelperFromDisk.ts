@@ -1,4 +1,4 @@
-import { validateSchema } from "@fern-api/commons";
+import { validateSchema } from "@fern-api/config-management-commons";
 import { FernTypescriptHelper } from "@fern-typescript/helper-utils";
 import path from "path";
 import { FernTypescriptHelperSchema } from "./helper-schema/FernTypescriptHelperSchema";

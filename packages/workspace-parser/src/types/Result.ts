@@ -1,6 +1,6 @@
+import { RelativeFilePath } from "@fern-api/config-management-commons";
 import { FernConfigurationSchema } from "@fern-api/yaml-schema";
 import { ZodError } from "zod";
-import { RelativeFilePath } from "./RelativeFilePath";
 import { Workspace } from "./Workspace";
 
 export declare namespace WorkspaceParser {

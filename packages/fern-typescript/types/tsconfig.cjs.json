@@ -3,5 +3,8 @@
   "compilerOptions": { "composite": true, "outDir": "lib/cjs", "rootDir": "src", "module": "CommonJS" },
   "include": ["./src"],
   "exclude": ["./src/**/__test__/**/generated"],
-  "references": [{ "path": "../commons/tsconfig.cjs.json" }, { "path": "../model-context/tsconfig.cjs.json" }]
+  "references": [
+    { "path": "../fern-typescript-commons/tsconfig.cjs.json" },
+    { "path": "../model-context/tsconfig.cjs.json" }
+  ]
 }

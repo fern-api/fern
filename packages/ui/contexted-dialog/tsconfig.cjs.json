@@ -3,7 +3,7 @@
   "compilerOptions": { "composite": true, "outDir": "lib/cjs", "rootDir": "src", "module": "CommonJS" },
   "include": ["./src"],
   "references": [
-    { "path": "../../commons/tsconfig.cjs.json" },
+    { "path": "../../commons/core-utils/tsconfig.cjs.json" },
     { "path": "../react-commons/tsconfig.cjs.json" },
     { "path": "../theme/tsconfig.cjs.json" },
     { "path": "../toaster/tsconfig.cjs.json" }

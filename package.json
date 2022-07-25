@@ -31,11 +31,11 @@
     "depcheck": "yarn workspaces foreach --verbose --parallel run depcheck",
     "codegen": "fern generate",
     "codegen:local": "yarn fern:local generate",
-    "fern:local": "yarn workspace @fern-api/cli compile:cjs && node packages/cli/cli",
+    "fern:local": "yarn workspace @fern-api/cli compile:all && node $(yarn workspace @fern-api/cli exec pwd)/cli",
     "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public",
     "docs:preview": "yarn docsify serve docs",
-    "add-package": "yarn mrlint create-package",
-    "generate-json-schema": "yarn workspace @fern-api/json-schema compile:cjs && node packages/json-schema/cli"
+    "add-package": "yarn mrlint add-package",
+    "generate-json-schema": "yarn workspace @fern-api/yaml-schema compile:all && ts-node scripts/writeFernJsonSchema.ts"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",
@@ -43,6 +43,7 @@
     "@babel/preset-typescript": "^7.18.6",
     "@blueprintjs/eslint-plugin": "^2.1.2",
     "@blueprintjs/stylelint-plugin": "^2.0.8",
+    "@fern-api/yaml-schema": "workspace:^",
     "@types/is-ci": "^3.0.0",
     "@types/jest": "^28.1.4",
     "@types/lodash": "^4.14.182",

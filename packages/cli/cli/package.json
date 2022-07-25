@@ -1,0 +1,87 @@
+{
+  "name": "@fern-api/cli",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:fern-api/fern.git",
+    "directory": "packages/cli/cli"
+  },
+  "files": [
+    "lib"
+  ],
+  "source": "src/index.ts",
+  "module": "src/index.ts",
+  "main": "./lib/esm/index.js",
+  "types": "./lib/esm/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./lib/cjs/index.js",
+      "default": "./lib/esm/index.js"
+    }
+  },
+  "sideEffects": false,
+  "bin": {
+    "fern": "./cli"
+  },
+  "scripts": {
+    "clean": "tsc --build --clean tsconfig.json && tsc --build --clean tsconfig.cjs.json",
+    "compile": "yarn run compile:esm",
+    "compile:all": "run-s compile:esm compile:cjs",
+    "compile:esm": "tsc --build tsconfig.json && echo '{ \"type\": \"module\" }' > lib/esm/package.json",
+    "compile:cjs": "tsc --build tsconfig.cjs.json && echo '{ \"type\": \"commonjs\" }' > lib/cjs/package.json",
+    "test": "yarn run compile:all && jest --passWithNoTests",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
+    "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore --fix",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "depcheck": "depcheck",
+    "dist": "./webpack/bundle.sh $(yarn info @fern-api/cli --all --json | jq -r .children.Version)"
+  },
+  "dependencies": {
+    "@fern-api/add-generator": "workspace:*",
+    "@fern-api/config-management-commons": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
+    "@fern-api/init": "workspace:*",
+    "@fern-api/ir-generator": "workspace:*",
+    "@fern-api/local-workspace-runner": "workspace:*",
+    "@fern-api/login": "workspace:*",
+    "@fern-api/openapi-converter": "workspace:*",
+    "@fern-api/project-configuration": "workspace:*",
+    "@fern-api/remote-workspace-runner": "workspace:*",
+    "@fern-api/validator": "workspace:*",
+    "@fern-api/workspace-configuration": "workspace:*",
+    "@fern-api/workspace-parser": "workspace:*",
+    "@fern-fern/ir-model": "0.0.49",
+    "chalk": "^4.1.2",
+    "glob": "^7.2.0",
+    "glob-promise": "^4.2.2",
+    "inquirer": "^8.0.0",
+    "js-yaml": "^4.1.0",
+    "validate-npm-package-name": "^4.0.0",
+    "yargs": "^17.4.1",
+    "zod": "^3.14.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.18.9",
+    "@babel/preset-env": "^7.18.9",
+    "@babel/preset-typescript": "^7.18.6",
+    "@types/inquirer": "^8.2.1",
+    "@types/jest": "^28.1.6",
+    "@types/js-yaml": "^4.0.5",
+    "@types/node": "^18.6.1",
+    "@types/validate-npm-package-name": "^4.0.0",
+    "@types/yargs": "^17.0.10",
+    "depcheck": "^1.4.3",
+    "eslint": "^8.20.0",
+    "jest": "^28.1.3",
+    "node-loader": "^2.0.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.7.1",
+    "ts-jest": "^28.0.7",
+    "ts-loader": "^9.3.1",
+    "ts-node": "^10.8.1",
+    "typescript": "4.6.4",
+    "webpack": "^5.73.0",
+    "webpack-cli": "^4.10.0"
+  }
+}

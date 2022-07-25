@@ -34,6 +34,8 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
+    "@fern-api/config-management-commons": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
     "glob": "^7.2.0",
     "glob-promise": "^4.2.2",
@@ -46,7 +48,7 @@
     "@babel/preset-typescript": "^7.18.6",
     "@types/jest": "^28.1.6",
     "@types/js-yaml": "^4.0.5",
-    "@types/node": "^18.6.0",
+    "@types/node": "^18.6.1",
     "depcheck": "^1.4.3",
     "eslint": "^8.20.0",
     "jest": "^28.1.3",
