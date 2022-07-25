@@ -1,16 +1,16 @@
 {
   "extends": "../../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "lib/esm", "rootDir": "src", "module": "esnext" },
+  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
-    { "path": "../encoders/tsconfig.json" },
-    { "path": "../fern-typescript-commons/tsconfig.json" },
-    { "path": "../helpers/helper-manager/tsconfig.json" },
-    { "path": "../model/tsconfig.json" },
-    { "path": "../model-context/tsconfig.json" },
-    { "path": "../service-types/tsconfig.json" },
-    { "path": "../testing-utils/tsconfig.json" },
-    { "path": "../types/tsconfig.json" }
+    { "path": "../encoders" },
+    { "path": "../fern-typescript-commons" },
+    { "path": "../helpers/helper-manager" },
+    { "path": "../model" },
+    { "path": "../model-context" },
+    { "path": "../service-types" },
+    { "path": "../testing-utils" },
+    { "path": "../types" }
   ]
 }

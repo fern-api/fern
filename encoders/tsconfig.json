@@ -1,6 +1,6 @@
 {
   "extends": "../../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "lib/esm", "rootDir": "src", "module": "esnext" },
+  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
-  "references": [{ "path": "../helpers/helper-manager/tsconfig.json" }, { "path": "../model-context/tsconfig.json" }]
+  "references": [{ "path": "../helpers/helper-manager" }, { "path": "../model-context" }]
 }

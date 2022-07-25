@@ -1,20 +1,11 @@
-import { createRequire } from "module";
-import path, { dirname } from "path";
-import SimpleProgressWebpackPlugin from "simple-progress-webpack-plugin";
-import { fileURLToPath } from "url";
-import webpack from "webpack";
+import path from "path";
+import * as webpack from "webpack";
 
-const require = createRequire(import.meta.url);
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
-export default async (
-    _env: unknown,
-    { mode = "production" }: webpack.WebpackOptionsNormalized
-): Promise<webpack.Configuration> => {
+export default (): webpack.Configuration => {
     return {
-        mode,
+        mode: "production",
         target: "node",
-        entry: path.join(__dirname, "../src/cli.ts"),
+        entry: path.join(__dirname, "./src/cli.ts"),
         module: {
             rules: [
                 {
@@ -28,18 +19,19 @@ export default async (
                     loader: "ts-loader",
                     options: {
                         projectReferences: true,
-                        transpileOnly: true,
                     },
                     exclude: /node_modules/,
                 },
-                // https://github.com/dsherret/ts-morph/issues/171#issuecomment-1107867732
                 {
-                    test: /node_modules[\\|/]code-block-writer[\\|/]umd[\\|/]/,
-                    use: { loader: "umd-compat-loader" },
+                    test: /\.node$/,
+                    loader: "node-loader",
                 },
             ],
-            // https://github.com/dsherret/ts-morph/issues/171#issuecomment-1107867732
-            noParse: [require.resolve("@ts-morph/common/dist/typescript.js")],
+            parser: {
+                javascript: {
+                    commonjsMagicComments: true,
+                },
+            },
         },
         resolve: {
             extensions: [
@@ -49,11 +41,11 @@ export default async (
                 ".ts",
             ],
         },
+        plugins: [new webpack.BannerPlugin({ banner: "#!/usr/bin/env node", raw: true })],
         output: {
             path: path.join(__dirname, "dist"),
             filename: "bundle.js",
         },
-        plugins: [new SimpleProgressWebpackPlugin({})],
         optimization: {
             minimize: false,
         },
