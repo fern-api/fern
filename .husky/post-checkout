@@ -1,4 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-find packages -name 'tsconfig*tsbuildinfo' -exec /bin/rm {} \;
+find packages -name 'lib' -exec '/bin/rm -r {} 2> /dev/null' \;

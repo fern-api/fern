@@ -1,34 +1,37 @@
 import { addJavaGenerator, addPostmanGenerator, addTypescriptGenerator } from "@fern-api/add-generator";
-import { loadWorkspaceDefinitionSchema, WorkspaceDefinitionSchema } from "@fern-api/workspace-configuration";
+import { loadRawWorkspaceConfiguration, WorkspaceConfigurationSchema } from "@fern-api/workspace-configuration";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
-import { loadProjectAndWorkspaces } from "../utils/loadProjectAndWorkspaces";
+import { loadProject } from "../utils/load-project/loadProject";
 
 export async function addGeneratorToWorkspaces(
     commandLineWorkspaces: readonly string[],
     generatorName: "java" | "typescript" | "postman"
 ): Promise<void> {
-    const { workspacePaths } = await loadProjectAndWorkspaces({ commandLineWorkspaces });
+    const { workspaceConfigurations } = await loadProject({ commandLineWorkspaces });
 
-    for (const workspaceDefinitionPath of workspacePaths) {
-        const workspaceDefinition = await loadWorkspaceDefinitionSchema(workspaceDefinitionPath);
-        const updatedWorkspaceDefinition = getUpdatedWorkspaceDefinition(generatorName, workspaceDefinition);
-        if (updatedWorkspaceDefinition !== workspaceDefinition) {
-            await writeFile(workspaceDefinitionPath, yaml.dump(updatedWorkspaceDefinition));
+    for (const workspaceConfigurationFilePath of workspaceConfigurations) {
+        const workspaceConfiguration = await loadRawWorkspaceConfiguration(workspaceConfigurationFilePath);
+        const updatedWorkspaceConfiguration = addGeneratorToWorkspaceConfiguration(
+            generatorName,
+            workspaceConfiguration
+        );
+        if (updatedWorkspaceConfiguration !== workspaceConfiguration) {
+            await writeFile(workspaceConfigurationFilePath, yaml.dump(updatedWorkspaceConfiguration));
         }
     }
 }
 
-function getUpdatedWorkspaceDefinition(
+function addGeneratorToWorkspaceConfiguration(
     generatorName: "java" | "typescript" | "postman",
-    workspaceDefinition: WorkspaceDefinitionSchema
-): WorkspaceDefinitionSchema {
+    workspaceConfiguration: WorkspaceConfigurationSchema
+): WorkspaceConfigurationSchema {
     switch (generatorName) {
         case "java":
-            return addJavaGenerator(workspaceDefinition);
+            return addJavaGenerator(workspaceConfiguration);
         case "typescript":
-            return addTypescriptGenerator(workspaceDefinition);
+            return addTypescriptGenerator(workspaceConfiguration);
         case "postman":
-            return addPostmanGenerator(workspaceDefinition);
+            return addPostmanGenerator(workspaceConfiguration);
     }
 }

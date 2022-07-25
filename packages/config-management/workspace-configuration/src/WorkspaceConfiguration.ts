@@ -1,9 +1,9 @@
-export interface WorkspaceDefinition {
+export interface WorkspaceConfiguration {
     // path to the workspace directory
     _absolutePath: string;
 
     name: string;
-    absolutePathToDefinition: string;
+    absolutePathToConfiguration: string;
     generators: GeneratorInvocation[];
 }
 

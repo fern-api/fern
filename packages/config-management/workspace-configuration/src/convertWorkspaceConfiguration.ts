@@ -1,22 +1,22 @@
 import path from "path";
-import { WorkspaceDefinitionSchema } from "./schemas/WorkspaceDefinitionSchema";
-import { WorkspaceDefinition } from "./WorkspaceDefinition";
+import { WorkspaceConfigurationSchema } from "./schemas/WorkspaceConfigurationSchema";
+import { WorkspaceConfiguration } from "./WorkspaceConfiguration";
 
 // TODO "definition" already refers to the API definition.
 // We should use a different word to refer to the .fernrc
-export function convertWorkspaceDefinition({
-    workspaceDefinition,
+export function convertWorkspaceConfiguration({
+    workspaceConfiguration,
     absolutePathToDefinition,
 }: {
-    workspaceDefinition: WorkspaceDefinitionSchema;
+    workspaceConfiguration: WorkspaceConfigurationSchema;
     absolutePathToDefinition: string;
-}): WorkspaceDefinition {
+}): WorkspaceConfiguration {
     const absolutePathToWorkspaceDir = path.dirname(absolutePathToDefinition);
     return {
         _absolutePath: absolutePathToWorkspaceDir,
-        name: workspaceDefinition.name,
-        absolutePathToDefinition: path.resolve(absolutePathToWorkspaceDir, workspaceDefinition.definition),
-        generators: workspaceDefinition.generators.map((generatorInvocation) => {
+        name: workspaceConfiguration.name,
+        absolutePathToConfiguration: path.resolve(absolutePathToWorkspaceDir, workspaceConfiguration.definition),
+        generators: workspaceConfiguration.generators.map((generatorInvocation) => {
             return {
                 name: generatorInvocation.name,
                 version: generatorInvocation.version,

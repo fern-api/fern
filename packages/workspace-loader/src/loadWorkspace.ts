@@ -1,15 +1,15 @@
 import { listYamlFilesForWorkspace } from "./listYamlFilesForWorkspace";
 import { parseYamlFiles } from "./parseYamlFiles";
-import { WorkspaceParser } from "./types/Result";
+import { WorkspaceLoader } from "./types/Result";
 import { validateStructureOfYamlFiles } from "./validateStructureOfYamlFiles";
 
-export async function parseWorkspaceDefinition({
+export async function loadWorkspace({
     name,
     absolutePathToDefinition,
 }: {
     name: string | undefined;
     absolutePathToDefinition: string;
-}): Promise<WorkspaceParser.Result> {
+}): Promise<WorkspaceLoader.Result> {
     const files = await listYamlFilesForWorkspace(absolutePathToDefinition);
 
     const parseResult = await parseYamlFiles(files);

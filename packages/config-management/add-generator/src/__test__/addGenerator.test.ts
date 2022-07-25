@@ -1,19 +1,19 @@
-import { WorkspaceDefinitionSchema } from "@fern-api/workspace-configuration";
+import { WorkspaceConfigurationSchema } from "@fern-api/workspace-configuration";
 import { addJavaGenerator, addTypescriptGenerator } from "../addGenerator";
 
 describe("addGenerator", () => {
     it("adds generator if not present", () => {
-        const workspaceDefinition: WorkspaceDefinitionSchema = {
+        const workspaceConfiguration: WorkspaceConfigurationSchema = {
             name: "my-definition",
             definition: "./src",
             generators: [],
         };
-        const updatedWorkspaceDefinition = addJavaGenerator(workspaceDefinition);
-        expect(updatedWorkspaceDefinition.generators.length).toEqual(1);
+        const updatedWorkspaceConfiguration = addJavaGenerator(workspaceConfiguration);
+        expect(updatedWorkspaceConfiguration.generators.length).toEqual(1);
     });
 
     it("skip if present", () => {
-        const workspaceDefinition: WorkspaceDefinitionSchema = {
+        const workspaceConfiguration: WorkspaceConfigurationSchema = {
             name: "my-definition",
             definition: "./src",
             generators: [
@@ -23,7 +23,7 @@ describe("addGenerator", () => {
                 },
             ],
         };
-        const updatedWorkspaceDefinition = addTypescriptGenerator(workspaceDefinition);
-        expect(updatedWorkspaceDefinition).toEqual(workspaceDefinition);
+        const updatedWorkspaceConfiguration = addTypescriptGenerator(workspaceConfiguration);
+        expect(updatedWorkspaceConfiguration).toEqual(workspaceConfiguration);
     });
 });

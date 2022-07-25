@@ -1,18 +1,18 @@
 import { validateFernDefinition } from "@fern-api/validator";
-import { loadWorkspaceDefinition } from "@fern-api/workspace-configuration";
-import { parseWorkspaceDefinition, Workspace } from "@fern-api/workspace-parser";
+import { loadWorkspaceConfiguration } from "@fern-api/workspace-configuration";
+import { loadWorkspace, Workspace } from "@fern-api/workspace-loader";
 import { logIssueInYaml } from "../../logger/logIssueInYaml";
 import { handleFailedWorkspaceParserResult } from "../generate-ir/handleWorkspaceParserFailures";
 
 export async function parseAndValidateWorkspace({
-    absolutePathToWorkspaceDefinition,
+    absolutePathToWorkspaceConfiguration,
 }: {
-    absolutePathToWorkspaceDefinition: string;
+    absolutePathToWorkspaceConfiguration: string;
 }): Promise<void> {
-    const workspaceDefinition = await loadWorkspaceDefinition(absolutePathToWorkspaceDefinition);
-    const parseResult = await parseWorkspaceDefinition({
-        name: workspaceDefinition.name,
-        absolutePathToDefinition: workspaceDefinition.absolutePathToDefinition,
+    const workspaceConfiguration = await loadWorkspaceConfiguration(absolutePathToWorkspaceConfiguration);
+    const parseResult = await loadWorkspace({
+        name: workspaceConfiguration.name,
+        absolutePathToDefinition: workspaceConfiguration.absolutePathToConfiguration,
     });
     if (!parseResult.didSucceed) {
         handleFailedWorkspaceParserResult(parseResult);

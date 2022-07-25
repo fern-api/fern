@@ -1,4 +1,4 @@
-import { GeneratorInvocationSchema, WorkspaceDefinitionSchema } from "@fern-api/workspace-configuration";
+import { GeneratorInvocationSchema, WorkspaceConfigurationSchema } from "@fern-api/workspace-configuration";
 
 const JAVA_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
     name: "fernapi/fern-java",
@@ -28,42 +28,46 @@ const POSTMAN_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
     },
 };
 
-export function addJavaGenerator(workspaceDefinition: WorkspaceDefinitionSchema): WorkspaceDefinitionSchema {
+export function addJavaGenerator(workspaceConfiguration: WorkspaceConfigurationSchema): WorkspaceConfigurationSchema {
     return addGeneratorIfNotPresent({
-        workspaceDefinition,
+        workspaceConfiguration,
         invocation: JAVA_GENERATOR_INVOCATION,
     });
 }
 
-export function addTypescriptGenerator(workspaceDefinition: WorkspaceDefinitionSchema): WorkspaceDefinitionSchema {
+export function addTypescriptGenerator(
+    workspaceConfiguration: WorkspaceConfigurationSchema
+): WorkspaceConfigurationSchema {
     return addGeneratorIfNotPresent({
-        workspaceDefinition,
+        workspaceConfiguration,
         invocation: TYPESCRIPT_GENERATOR_INVOCATION,
     });
 }
 
-export function addPostmanGenerator(workspaceDefinition: WorkspaceDefinitionSchema): WorkspaceDefinitionSchema {
+export function addPostmanGenerator(
+    workspaceConfiguration: WorkspaceConfigurationSchema
+): WorkspaceConfigurationSchema {
     return addGeneratorIfNotPresent({
-        workspaceDefinition,
+        workspaceConfiguration,
         invocation: POSTMAN_GENERATOR_INVOCATION,
     });
 }
 
 function addGeneratorIfNotPresent({
-    workspaceDefinition,
+    workspaceConfiguration,
     invocation,
 }: {
-    workspaceDefinition: WorkspaceDefinitionSchema;
+    workspaceConfiguration: WorkspaceConfigurationSchema;
     invocation: GeneratorInvocationSchema;
-}): WorkspaceDefinitionSchema {
-    const isAlreadyInstalled = workspaceDefinition.generators.some(
+}): WorkspaceConfigurationSchema {
+    const isAlreadyInstalled = workspaceConfiguration.generators.some(
         (otherInvocation) => otherInvocation.name === invocation.name
     );
     if (isAlreadyInstalled) {
-        return workspaceDefinition;
+        return workspaceConfiguration;
     }
     return {
-        ...workspaceDefinition,
-        generators: [...workspaceDefinition.generators, invocation],
+        ...workspaceConfiguration,
+        generators: [...workspaceConfiguration.generators, invocation],
     };
 }

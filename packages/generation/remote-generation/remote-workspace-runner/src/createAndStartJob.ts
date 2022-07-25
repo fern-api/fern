@@ -1,4 +1,4 @@
-import { WorkspaceDefinition } from "@fern-api/workspace-configuration";
+import { WorkspaceConfiguration } from "@fern-api/workspace-configuration";
 import { CreateJobResponse } from "@fern-fern/fiddle-coordinator-api-client/model";
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
 import axios from "axios";
@@ -6,15 +6,15 @@ import FormData from "form-data";
 import { REMOTE_GENERATION_SERVICE } from "./service";
 
 export async function createAndStartJob({
-    workspaceDefinition,
+    workspaceConfiguration,
     organization,
     intermediateRepresentation,
 }: {
-    workspaceDefinition: WorkspaceDefinition;
+    workspaceConfiguration: WorkspaceConfiguration;
     organization: string;
     intermediateRepresentation: IntermediateRepresentation;
 }): Promise<CreateJobResponse | undefined> {
-    const job = await createJob({ workspaceDefinition, organization });
+    const job = await createJob({ workspaceConfiguration, organization });
     try {
         await startJob({ intermediateRepresentation, job });
         return job;
@@ -24,16 +24,16 @@ export async function createAndStartJob({
 }
 
 async function createJob({
-    workspaceDefinition,
+    workspaceConfiguration,
     organization,
 }: {
-    workspaceDefinition: WorkspaceDefinition;
+    workspaceConfiguration: WorkspaceConfiguration;
     organization: string;
 }) {
     const createResponse = await REMOTE_GENERATION_SERVICE.createJob({
-        apiName: workspaceDefinition.name,
+        apiName: workspaceConfiguration.name,
         organizationName: organization,
-        generators: workspaceDefinition.generators.map((generator) => ({
+        generators: workspaceConfiguration.generators.map((generator) => ({
             id: generator.name,
             version: generator.version,
             willDownloadFiles: generator.generate?.absolutePathToLocalOutput != null,

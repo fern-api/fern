@@ -14,7 +14,7 @@
     { "path": "../../generation/remote-generation/remote-workspace-runner/tsconfig.cjs.json" },
     { "path": "../../openapi-converter/tsconfig.cjs.json" },
     { "path": "../../validator/tsconfig.cjs.json" },
-    { "path": "../../workspace-parser/tsconfig.cjs.json" },
+    { "path": "../../workspace-loader/tsconfig.cjs.json" },
     { "path": "../login/tsconfig.cjs.json" }
   ]
 }

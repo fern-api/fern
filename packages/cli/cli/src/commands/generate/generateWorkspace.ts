@@ -1,31 +1,31 @@
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { runRemoteGenerationForWorkspace } from "@fern-api/remote-workspace-runner";
-import { loadWorkspaceDefinition } from "@fern-api/workspace-configuration";
+import { loadWorkspaceConfiguration } from "@fern-api/workspace-configuration";
 import { generateIrForWorkspace } from "../generate-ir/generateIrForWorkspace";
 
 export async function generateWorkspace({
-    absolutePathToWorkspaceDefinition,
+    absolutePathToWorkspaceConfiguration,
     runLocal,
     keepDocker,
     organization,
 }: {
-    absolutePathToWorkspaceDefinition: string;
+    absolutePathToWorkspaceConfiguration: string;
     runLocal: boolean;
     keepDocker: boolean;
     organization: string;
 }): Promise<void> {
-    const workspaceDefinition = await loadWorkspaceDefinition(absolutePathToWorkspaceDefinition);
-    const intermediateRepresentation = await generateIrForWorkspace({ workspaceDefinition });
+    const workspaceConfiguration = await loadWorkspaceConfiguration(absolutePathToWorkspaceConfiguration);
+    const intermediateRepresentation = await generateIrForWorkspace({ workspaceConfiguration });
     if (runLocal) {
         await runLocalGenerationForWorkspace({
             organization,
-            workspaceDefinition,
+            workspaceConfiguration,
             intermediateRepresentation,
             keepDocker,
         });
     } else {
         await runRemoteGenerationForWorkspace({
-            workspaceDefinition,
+            workspaceConfiguration,
             intermediateRepresentation,
             organization,
         });

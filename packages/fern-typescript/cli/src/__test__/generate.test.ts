@@ -1,6 +1,6 @@
 import { getDirectoryContents } from "@fern-api/core-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
-import { parseWorkspaceDefinition } from "@fern-api/workspace-parser";
+import { loadWorkspace } from "@fern-api/workspace-loader";
 import { GeneratorConfig } from "@fern-fern/ir-model/generators";
 import { installAndCompileGeneratedProjects } from "@fern-typescript/testing-utils";
 import { rm, writeFile } from "fs/promises";
@@ -26,7 +26,7 @@ describe("runGenerator", () => {
                 await rm(outputPath, { recursive: true, force: true });
                 await rm(configPath, { force: true });
 
-                const parseWorkspaceResult = await parseWorkspaceDefinition({
+                const parseWorkspaceResult = await loadWorkspace({
                     name: undefined,
                     absolutePathToDefinition: apiPath,
                 });

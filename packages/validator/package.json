@@ -37,7 +37,7 @@
     "@fern-api/config-management-commons": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
-    "@fern-api/workspace-parser": "workspace:*",
+    "@fern-api/workspace-loader": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
     "chalk": "^4.1.2"
   },

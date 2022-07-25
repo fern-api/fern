@@ -1,10 +1,10 @@
 {
-  "name": "@fern-api/workspace-parser",
+  "name": "@fern-api/workspace-loader",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "git@github.com:fern-api/fern.git",
-    "directory": "packages/workspace-parser"
+    "directory": "packages/workspace-loader"
   },
   "files": [
     "lib"

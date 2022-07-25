@@ -1,8 +1,8 @@
 export {
-    loadWorkspaceDefinition,
-    loadWorkspaceDefinitionSchema,
-    WORKSPACE_DEFINITION_FILENAME,
-} from "./loadWorkspaceDefinition";
+    loadRawWorkspaceConfiguration,
+    loadWorkspaceConfiguration,
+    WORKSPACE_CONFIGURATION_FILENAME,
+} from "./loadWorkspaceConfiguration";
 export { type GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
-export { type WorkspaceDefinitionSchema } from "./schemas/WorkspaceDefinitionSchema";
-export { type GeneratorHelper, type GeneratorInvocation, type WorkspaceDefinition } from "./WorkspaceDefinition";
+export { type WorkspaceConfigurationSchema } from "./schemas/WorkspaceConfigurationSchema";
+export { type GeneratorHelper, type GeneratorInvocation, type WorkspaceConfiguration } from "./WorkspaceConfiguration";

@@ -1,4 +1,4 @@
-import { WORKSPACE_DEFINITION_FILENAME } from "@fern-api/workspace-configuration";
+import { WORKSPACE_CONFIGURATION_FILENAME } from "@fern-api/workspace-configuration";
 import { mkdir, readFile, rm } from "fs/promises";
 import path from "path";
 import { runFernCli } from "../utils/runFernCli";
@@ -13,7 +13,7 @@ it("fern add", async () => {
     await add("java");
     await add("typescript");
     await add("postman");
-    const fileContents = await readFile(path.join(GENERATED_API_DIR, WORKSPACE_DEFINITION_FILENAME));
+    const fileContents = await readFile(path.join(GENERATED_API_DIR, WORKSPACE_CONFIGURATION_FILENAME));
     expect(fileContents.toString()).toMatchSnapshot();
 }, 60_000);
 

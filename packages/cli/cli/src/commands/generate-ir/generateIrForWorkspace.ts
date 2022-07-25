@@ -1,20 +1,20 @@
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
-import { WorkspaceDefinition } from "@fern-api/workspace-configuration";
-import { parseWorkspaceDefinition } from "@fern-api/workspace-parser";
+import { WorkspaceConfiguration } from "@fern-api/workspace-configuration";
+import { loadWorkspace } from "@fern-api/workspace-loader";
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
 import validatePackageName from "validate-npm-package-name";
 import { validateWorkspace } from "../validate/validateWorkspace";
 import { handleFailedWorkspaceParserResult } from "./handleWorkspaceParserFailures";
 
 export async function generateIrForWorkspace({
-    workspaceDefinition,
+    workspaceConfiguration,
 }: {
-    workspaceDefinition: WorkspaceDefinition;
+    workspaceConfiguration: WorkspaceConfiguration;
 }): Promise<IntermediateRepresentation> {
-    validateWorkspaceName(workspaceDefinition.name);
-    const parseResult = await parseWorkspaceDefinition({
-        name: workspaceDefinition.name,
-        absolutePathToDefinition: workspaceDefinition.absolutePathToDefinition,
+    validateWorkspaceName(workspaceConfiguration.name);
+    const parseResult = await loadWorkspace({
+        name: workspaceConfiguration.name,
+        absolutePathToDefinition: workspaceConfiguration.absolutePathToConfiguration,
     });
     if (!parseResult.didSucceed) {
         handleFailedWorkspaceParserResult(parseResult);

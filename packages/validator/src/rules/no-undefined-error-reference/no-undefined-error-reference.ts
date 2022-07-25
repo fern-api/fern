@@ -1,5 +1,5 @@
 import { parseReferenceToTypeName } from "@fern-api/ir-generator";
-import { Workspace } from "@fern-api/workspace-parser";
+import { Workspace } from "@fern-api/workspace-loader";
 import { visitFernYamlAst } from "@fern-api/yaml-schema";
 import path from "path";
 import { Rule } from "../../Rule";

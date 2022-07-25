@@ -1,4 +1,4 @@
-import { WorkspaceDefinition } from "@fern-api/workspace-configuration";
+import { WorkspaceConfiguration } from "@fern-api/workspace-configuration";
 import { CreateJobResponse, RemoteGenTaskId, Task, TaskStatus } from "@fern-fern/fiddle-coordinator-api-client/model";
 import logUpdate from "log-update";
 import { getLogForTaskStatuses } from "./getLogForTaskStatus";
@@ -11,12 +11,12 @@ const MAX_UNSUCCESSFUL_ATTEMPTS = 3;
 
 export function pollJobAndReportStatus({
     job,
-    workspaceDefinition,
+    workspaceConfiguration,
 }: {
     job: CreateJobResponse;
-    workspaceDefinition: WorkspaceDefinition;
+    workspaceConfiguration: WorkspaceConfiguration;
 }): Promise<void> {
-    const generatorInvocationsWithTaskIds: GeneratorInvocationWithTaskId[] = workspaceDefinition.generators.map(
+    const generatorInvocationsWithTaskIds: GeneratorInvocationWithTaskId[] = workspaceConfiguration.generators.map(
         (generatorInvocation, index) => ({
             generatorInvocation,
             taskId: job.taskIds[index],

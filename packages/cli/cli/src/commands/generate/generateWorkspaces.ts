@@ -1,4 +1,4 @@
-import { loadProjectAndWorkspaces } from "../utils/loadProjectAndWorkspaces";
+import { loadProject } from "../utils/load-project/loadProject";
 import { generateWorkspace } from "./generateWorkspace";
 
 export async function generateWorkspaces({
@@ -10,14 +10,14 @@ export async function generateWorkspaces({
     runLocal: boolean;
     keepDocker: boolean;
 }): Promise<void> {
-    const { projectConfig, workspacePaths } = await loadProjectAndWorkspaces({
+    const { projectConfig, workspaceConfigurations } = await loadProject({
         commandLineWorkspaces,
     });
 
     await Promise.all(
-        workspacePaths.map((uniqueWorkspaceDefinitionPath) =>
+        workspaceConfigurations.map((workspaceConfigurationFilePath) =>
             generateWorkspace({
-                absolutePathToWorkspaceDefinition: uniqueWorkspaceDefinitionPath,
+                absolutePathToWorkspaceConfiguration: workspaceConfigurationFilePath,
                 runLocal,
                 keepDocker,
                 organization: projectConfig.organization,
