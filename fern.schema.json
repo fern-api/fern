@@ -5,10 +5,7 @@
     "Fern API Definition": {
       "type": "object",
       "properties": {
-        "imports": {
-          "type": "object",
-          "additionalProperties": { "type": "string" }
-        },
+        "imports": { "type": "object", "additionalProperties": { "type": "string" } },
         "ids": {
           "type": "array",
           "items": {
@@ -37,14 +34,9 @@
                   {
                     "type": "object",
                     "properties": {
-                      "docs": {
-                        "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                      },
+                      "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
                       "extends": {
-                        "anyOf": [
-                          { "type": "string" },
-                          { "type": "array", "items": { "type": "string" } }
-                        ]
+                        "anyOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }]
                       },
                       "properties": {
                         "type": "object",
@@ -55,9 +47,7 @@
                               "type": "object",
                               "properties": {
                                 "type": { "type": "string" },
-                                "docs": {
-                                  "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                                }
+                                "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" }
                               },
                               "required": ["type"],
                               "additionalProperties": false
@@ -72,9 +62,7 @@
                   {
                     "type": "object",
                     "properties": {
-                      "docs": {
-                        "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                      },
+                      "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
                       "extends": {
                         "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
                       },
@@ -93,9 +81,7 @@
               {
                 "type": "object",
                 "properties": {
-                  "docs": {
-                    "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                  },
+                  "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
                   "union": {
                     "type": "object",
                     "additionalProperties": {
@@ -104,9 +90,7 @@
                         {
                           "type": "object",
                           "properties": {
-                            "docs": {
-                              "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                            },
+                            "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
                             "type": { "type": "string" }
                           },
                           "additionalProperties": false
@@ -122,9 +106,7 @@
               {
                 "type": "object",
                 "properties": {
-                  "docs": {
-                    "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                  },
+                  "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
                   "alias": { "type": "string", "default": "void" }
                 },
                 "additionalProperties": false
@@ -132,9 +114,7 @@
               {
                 "type": "object",
                 "properties": {
-                  "docs": {
-                    "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                  },
+                  "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
                   "enum": {
                     "type": "array",
                     "items": {
@@ -143,9 +123,7 @@
                         {
                           "type": "object",
                           "properties": {
-                            "docs": {
-                              "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                            },
+                            "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
                             "name": { "type": "string" },
                             "value": { "type": "string" }
                           },
@@ -170,13 +148,8 @@
               "additionalProperties": {
                 "type": "object",
                 "properties": {
-                  "docs": {
-                    "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                  },
-                  "auth": {
-                    "type": "string",
-                    "enum": ["bearer", "basic", "none"]
-                  },
+                  "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
+                  "auth": { "type": "string", "enum": ["bearer", "basic", "none"] },
                   "base-path": { "type": "string" },
                   "headers": {
                     "type": "object",
@@ -189,13 +162,8 @@
                     "additionalProperties": {
                       "type": "object",
                       "properties": {
-                        "docs": {
-                          "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                        },
-                        "method": {
-                          "type": "string",
-                          "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"]
-                        },
+                        "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
+                        "method": { "type": "string", "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"] },
                         "path": { "type": "string" },
                         "path-parameters": {
                           "type": "object",
@@ -224,9 +192,7 @@
                             {
                               "type": "object",
                               "properties": {
-                                "docs": {
-                                  "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                                },
+                                "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
                                 "encoding": { "type": "string" },
                                 "type": { "type": "string" }
                               },
@@ -241,9 +207,7 @@
                             {
                               "type": "object",
                               "properties": {
-                                "docs": {
-                                  "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                                },
+                                "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
                                 "type": { "type": "string" }
                               },
                               "required": ["type"],
@@ -259,9 +223,7 @@
                               {
                                 "type": "object",
                                 "properties": {
-                                  "docs": {
-                                    "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                                  },
+                                  "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
                                   "error": { "type": "string" }
                                 },
                                 "required": ["error"],
@@ -284,12 +246,8 @@
               "additionalProperties": {
                 "type": "object",
                 "properties": {
-                  "docs": {
-                    "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                  },
-                  "auth": {
-                    "$ref": "#/properties/services/properties/http/additionalProperties/properties/auth"
-                  },
+                  "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
+                  "auth": { "$ref": "#/properties/services/properties/http/additionalProperties/properties/auth" },
                   "path": { "type": "string" },
                   "client": {
                     "type": "object",
@@ -299,18 +257,14 @@
                         "additionalProperties": {
                           "type": "object",
                           "properties": {
-                            "docs": {
-                              "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                            },
+                            "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
                             "request": {
                               "anyOf": [
                                 { "type": "string" },
                                 {
                                   "type": "object",
                                   "properties": {
-                                    "docs": {
-                                      "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                                    },
+                                    "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
                                     "type": { "type": "string" },
                                     "encoding": { "type": "string" }
                                   },
@@ -325,9 +279,7 @@
                                 {
                                   "type": "object",
                                   "properties": {
-                                    "docs": {
-                                      "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                                    },
+                                    "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
                                     "type": { "type": "string" }
                                   },
                                   "required": ["type"],
@@ -364,15 +316,11 @@
               {
                 "type": "object",
                 "properties": {
-                  "docs": {
-                    "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                  },
+                  "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
                   "http": {
                     "type": "object",
                     "properties": {
-                      "docs": {
-                        "$ref": "#/properties/ids/items/anyOf/1/properties/docs"
-                      },
+                      "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
                       "statusCode": { "type": "number" }
                     },
                     "required": ["statusCode"],
