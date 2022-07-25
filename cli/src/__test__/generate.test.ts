@@ -1,4 +1,4 @@
-import { getDirectoryContents } from "@fern-api/commons";
+import { getDirectoryContents } from "@fern-api/core-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { parseWorkspaceDefinition } from "@fern-api/workspace-parser";
 import { GeneratorConfig } from "@fern-fern/ir-model/generators";

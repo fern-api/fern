@@ -1,4 +1,4 @@
-import { ValuesUnion } from "@fern-api/commons";
+import { Values } from "@fern-api/core-utils";
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import { Volume } from "memfs/lib/volume";
@@ -9,7 +9,7 @@ export const CommandKey = {
     Client: "client",
     Model: "model",
 } as const;
-export type CommandKey = ValuesUnion<typeof CommandKey>;
+export type CommandKey = Values<typeof CommandKey>;
 
 export declare namespace Command {
     export namespace generate {

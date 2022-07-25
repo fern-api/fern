@@ -1,4 +1,4 @@
-import { validateSchema } from "@fern-api/commons";
+import { validateSchema } from "@fern-api/config-management-commons";
 import { ExitStatusUpdate, GeneratorUpdate, PackageCoordinate } from "@fern-fern/generator-logging-api-client/model";
 import {
     FernTypescriptGeneratorConfig,

@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/commons";
+import { assertNever } from "@fern-api/core-utils";
 import { Directory, SourceFile } from "ts-morph";
 import { getOrCreateSourceFile } from "../file-system/getOrCreateSourceFile";
 import { getParentDirectory, getRelativePathAsModuleSpecifierTo } from "../utils/getRelativePathAsModuleSpecifierTo";

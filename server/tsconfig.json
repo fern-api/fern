@@ -4,8 +4,8 @@
   "include": ["./src"],
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
-    { "path": "../commons/tsconfig.json" },
     { "path": "../encoders/tsconfig.json" },
+    { "path": "../fern-typescript-commons/tsconfig.json" },
     { "path": "../helpers/helper-manager/tsconfig.json" },
     { "path": "../model/tsconfig.json" },
     { "path": "../model-context/tsconfig.json" },

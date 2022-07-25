@@ -34,7 +34,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/commons": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/model-context": "workspace:*",
     "@fern-typescript/types": "workspace:*",
@@ -48,7 +48,7 @@
     "@fern-fern/ir-model": "0.0.49",
     "@types/jest": "^28.1.6",
     "@types/lodash": "^4.14.182",
-    "@types/node": "^18.6.0",
+    "@types/node": "^18.6.1",
     "depcheck": "^1.4.3",
     "eslint": "^8.20.0",
     "jest": "^28.1.3",
