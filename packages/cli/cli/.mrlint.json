@@ -1,6 +1,7 @@
 {
   "type": "cli",
   "cliName": "fern",
+  "environmentVariables": ["PACKAGE_VERSION", "AUTH0_DOMAIN", "AUTH0_CLIENT_ID"],
   "private": false,
   "rules": {
     "depcheck": {

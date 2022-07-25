@@ -63,7 +63,7 @@
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "depcheck": "^1.4.3",
-    "env-cmd": "^10.1.0",
+    "env-cmd": "toddbluhm/env-cmd",
     "eslint": "^8.20.0",
     "fork-ts-checker-webpack-plugin": "^7.2.11",
     "jest": "^28.1.3",
