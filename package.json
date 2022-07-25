@@ -12,14 +12,13 @@
   ],
   "scripts": {
     "clean": "yarn workspaces foreach --verbose --parallel run clean",
-    "compile": "yarn compile:prepare && yarn workspace @fern-api/compile-root run compile",
-    "compile:prepare": "ts-node scripts/checkRootPackage.ts --fix",
+    "compile": "yarn workspace @fern-api/compile-root run compile",
     "test": "yarn compile && jest --passWithNoTests",
     "test:ete": "yarn workspace fern-api dist && yarn workspace fern-typescript dockerTagLocal && yarn workspace @fern-api/ete-tests test",
     "lint:eslint": "eslint --max-warnings 0 .",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "lint:monorepo": "mrlint lint",
-    "lint:monorepo:fix": "yarn lint:monorepo --fix && yarn compile:prepare",
+    "lint:monorepo:fix": "yarn lint:monorepo --fix",
     "lint:style": "stylelint 'packages/**/src/**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "yarn run lint:style --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ./shared/.prettierignore",
@@ -32,7 +31,10 @@
     "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public",
     "docs:preview": "yarn docsify serve docs",
     "add-package": "yarn mrlint add-package",
-    "generate-json-schema": "yarn workspace @fern-api/yaml-schema compile && ts-node scripts/writeFernJsonSchema.ts"
+    "fern-script": "yarn workspace @fern-api/scripts dist && node packages/scripts/dist/bundle.cjs",
+    "generate-json-schema": "yarn run fern-script write-json-schema",
+    "check-root-package": "yarn run fern-script check-root-package",
+    "fix-root-package": "yarn run check-root-package --fix"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",
@@ -40,7 +42,6 @@
     "@babel/preset-typescript": "^7.18.6",
     "@blueprintjs/eslint-plugin": "^2.1.2",
     "@blueprintjs/stylelint-plugin": "^2.0.8",
-    "@fern-api/yaml-schema": "workspace:^",
     "@types/is-ci": "^3.0.0",
     "@types/jest": "^28.1.6",
     "@types/lodash": "^4.14.182",
@@ -67,7 +68,7 @@
     "stylelint-config-standard-scss": "^4.0.0",
     "ts-jest": "^28.0.7",
     "ts-node": "^10.8.0",
-    "typescript": "^4.7.4"
+    "typescript": "4.6.4"
   },
   "packageManager": "yarn@3.2.2"
 }

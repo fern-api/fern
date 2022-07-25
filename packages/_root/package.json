@@ -39,6 +39,7 @@
     "@fern-api/openapi-converter": "workspace:*",
     "@fern-api/project-configuration": "workspace:*",
     "@fern-api/remote-workspace-runner": "workspace:*",
+    "@fern-api/scripts": "workspace:*",
     "@fern-api/validator": "workspace:*",
     "@fern-api/workspace-configuration": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",

@@ -1,21 +1,15 @@
 import chalk from "chalk";
-import { exec } from "child_process";
+import execa from "execa";
 import { readFile, writeFile } from "fs/promises";
 import produce from "immer";
 import { isEqual } from "lodash";
 import path from "path";
 import process from "process";
-import { promisify } from "util";
 import { getAllPackages } from "./getAllPackages";
-
-const promisifiedExec = promisify(exec);
 
 const COMPILE_ROOT_PACKAGE = "@fern-api/compile-root";
 
-async function main() {
-    const argv = process.argv;
-    const shouldFix = argv[2] === "--fix";
-
+export async function checkRootPackage({ shouldFix }: { shouldFix: boolean }): Promise<void> {
     const packages = await getAllPackages();
 
     const rootPackage = packages.find((p) => p.name === COMPILE_ROOT_PACKAGE);
@@ -42,7 +36,11 @@ async function main() {
         return;
     } else if (!shouldFix) {
         console.log(
-            chalk.red(`${COMPILE_ROOT_PACKAGE} dependencies are not correct. Run ${chalk.bold("yarn compile")} to fix.`)
+            chalk.red(
+                `${COMPILE_ROOT_PACKAGE} dependencies are not correct. Run ${chalk.bold(
+                    "yarn fix-root-package"
+                )} to fix.`
+            )
         );
         process.exit(1);
     } else {
@@ -56,10 +54,8 @@ async function main() {
                 2
             )
         );
-        await promisifiedExec("yarn lint:monorepo:fix");
-        await promisifiedExec("yarn install");
+        await execa("yarn", ["lint:monorepo:fix"]);
+        await execa("yarn", ["install"]);
         console.log(chalk.green(`Updated ${COMPILE_ROOT_PACKAGE}`));
     }
 }
-
-void main();
