@@ -76,7 +76,6 @@ jobs:
       CIRCLE_TEST_REPORTS: /home/circleci/junit
       CIRCLE_ARTIFACTS: /home/circleci/artifacts
       _JAVA_OPTIONS: -Dorg.gradle.internal.launcher.welcomeMessageEnabled=false -Xmx8192m
-      JAVA_HOME: /opt/java11
       CI: true
       TERM: dumb
     steps:
@@ -86,12 +85,6 @@ jobs:
       - run:
           name: Install Fern
           command: npm install -g fern-api@0.0.132
-      - run:
-          name: Install Java
-          command: |
-            sudo mkdir -p /opt/java && cd /opt/java && sudo chown -R circleci:circleci .
-            curl https://cdn.azul.com/zulu/bin/zulu11.41.23-ca-jdk11.0.8-linux_x64.tar.gz | tar -xzf - -C /opt/java
-            sudo ln -s /opt/java/zulu*/ /opt/java11
       - run: docker network prune -f
       - run: ./gradlew --parallel --stacktrace build -x test -x check
       - run:
@@ -114,14 +107,12 @@ jobs:
 
   publish-docker:
     machine:
-      image: ubuntu-2004:202104-01
+      image: ubuntu-2004:current
       docker_layer_caching: true
     environment:
       CIRCLE_TEST_REPORTS: /home/circleci/junit
       CIRCLE_ARTIFACTS: /home/circleci/artifacts
       _JAVA_OPTIONS: -Dorg.gradle.internal.launcher.welcomeMessageEnabled=false -Xmx8192m
-      JAVA_HOME: /opt/java11
-      CI: true
       TERM: dumb
     resource_class: small
     steps:
