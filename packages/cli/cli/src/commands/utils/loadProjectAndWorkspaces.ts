@@ -1,4 +1,4 @@
-import { loadProjectConfig, ProjectConfig } from "@fern-api/commons";
+import { loadProjectConfig, ProjectConfig } from "@fern-api/project-configuration";
 import { getUniqueWorkspaces } from "./getUniqueWorkspaces";
 
 export async function loadProjectAndWorkspaces({

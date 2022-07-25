@@ -1,6 +1,6 @@
-import { loadWorkspaceDefinition } from "@fern-api/commons";
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { runRemoteGenerationForWorkspace } from "@fern-api/remote-workspace-runner";
+import { loadWorkspaceDefinition } from "@fern-api/workspace-configuration";
 import { generateIrForWorkspace } from "../generate-ir/generateIrForWorkspace";
 
 export async function generateWorkspace({

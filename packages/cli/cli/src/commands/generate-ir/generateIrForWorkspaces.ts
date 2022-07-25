@@ -1,4 +1,4 @@
-import { loadWorkspaceDefinition } from "@fern-api/commons";
+import { loadWorkspaceDefinition } from "@fern-api/workspace-configuration";
 import { writeFile } from "fs/promises";
 import path from "path";
 import { loadProjectAndWorkspaces } from "../utils/loadProjectAndWorkspaces";

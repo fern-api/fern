@@ -36,6 +36,8 @@
   },
   "dependencies": {
     "@fern-api/commons": "workspace:*",
+    "@fern-api/project-configuration": "workspace:*",
+    "@fern-api/workspace-configuration": "workspace:*",
     "execa": "^5.1.1"
   },
   "devDependencies": {
@@ -44,7 +46,7 @@
     "@babel/preset-typescript": "^7.18.6",
     "@fern-typescript/testing-utils": "workspace:*",
     "@types/jest": "^28.1.6",
-    "@types/node": "^18.6.0",
+    "@types/node": "^18.6.1",
     "depcheck": "^1.4.3",
     "eslint": "^8.20.0",
     "jest": "^28.1.3",

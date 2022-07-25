@@ -4,8 +4,8 @@
   "include": ["./src"],
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
-    { "path": "../../commons/tsconfig.cjs.json" },
-    { "path": "../../ir/ir-generator/tsconfig.cjs.json" },
+    { "path": "../../commons/commons/tsconfig.cjs.json" },
+    { "path": "../../generation/ir/ir-generator/tsconfig.cjs.json" },
     { "path": "../../workspace-parser/tsconfig.cjs.json" },
     { "path": "../client/tsconfig.cjs.json" },
     { "path": "../commons/tsconfig.cjs.json" },

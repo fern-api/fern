@@ -1,5 +1,5 @@
-import { loadWorkspaceDefinition } from "@fern-api/commons";
 import { validateFernDefinition } from "@fern-api/validator";
+import { loadWorkspaceDefinition } from "@fern-api/workspace-configuration";
 import { parseWorkspaceDefinition, Workspace } from "@fern-api/workspace-parser";
 import { logIssueInYaml } from "../../logger/logIssueInYaml";
 import { handleFailedWorkspaceParserResult } from "../generate-ir/handleWorkspaceParserFailures";

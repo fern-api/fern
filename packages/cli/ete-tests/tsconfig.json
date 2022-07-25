@@ -4,7 +4,9 @@
   "include": ["./src"],
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
-    { "path": "../../commons/tsconfig.json" },
+    { "path": "../../commons/commons/tsconfig.json" },
+    { "path": "../../config-management/project-configuration/tsconfig.json" },
+    { "path": "../../config-management/workspace-configuration/tsconfig.json" },
     { "path": "../../fern-typescript/testing-utils/tsconfig.json" }
   ]
 }

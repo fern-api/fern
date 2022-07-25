@@ -1,4 +1,5 @@
-import { ProjectConfig, WORKSPACE_DEFINITION_FILENAME } from "@fern-api/commons";
+import { ProjectConfig } from "@fern-api/project-configuration";
+import { WORKSPACE_DEFINITION_FILENAME } from "@fern-api/workspace-configuration";
 import { lstat } from "fs/promises";
 import glob from "glob-promise";
 

@@ -1,4 +1,5 @@
-import { PROJECT_CONFIG_FILENAME, WORKSPACE_DEFINITION_FILENAME } from "@fern-api/commons";
+import { PROJECT_CONFIG_FILENAME } from "@fern-api/project-configuration";
+import { WORKSPACE_DEFINITION_FILENAME } from "@fern-api/workspace-configuration";
 import { mkdir, readFile, rm } from "fs/promises";
 import path from "path";
 import { runFernCli } from "../utils/runFernCli";

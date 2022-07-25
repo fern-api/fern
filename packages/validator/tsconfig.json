@@ -3,8 +3,8 @@
   "compilerOptions": { "composite": true, "outDir": "lib/esm", "rootDir": "src", "module": "esnext" },
   "include": ["./src"],
   "references": [
-    { "path": "../commons/tsconfig.json" },
-    { "path": "../ir/ir-generator/tsconfig.json" },
+    { "path": "../commons/commons/tsconfig.json" },
+    { "path": "../generation/ir/ir-generator/tsconfig.json" },
     { "path": "../workspace-parser/tsconfig.json" },
     { "path": "../yaml-schema/tsconfig.json" }
   ]

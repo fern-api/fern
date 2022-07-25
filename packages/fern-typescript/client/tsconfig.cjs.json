@@ -4,7 +4,7 @@
   "include": ["./src"],
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
-    { "path": "../../commons/tsconfig.cjs.json" },
+    { "path": "../../commons/commons/tsconfig.cjs.json" },
     { "path": "../commons/tsconfig.cjs.json" },
     { "path": "../encoders/tsconfig.cjs.json" },
     { "path": "../helpers/helper-manager/tsconfig.cjs.json" },

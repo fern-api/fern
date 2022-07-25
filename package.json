@@ -34,7 +34,7 @@
     "fern:local": "yarn workspace @fern-api/cli compile:all && node $(yarn workspace @fern-api/cli exec pwd)/cli",
     "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public",
     "docs:preview": "yarn docsify serve docs",
-    "add-package": "yarn mrlint create-package",
+    "add-package": "yarn mrlint add-package",
     "generate-json-schema": "yarn workspace @fern-api/yaml-schema compile:all && ts-node scripts/writeFernJsonSchema.ts"
   },
   "devDependencies": {

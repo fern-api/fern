@@ -1856,16 +1856,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/add-generator@workspace:*, @fern-api/add-generator@workspace:packages/add-generator":
+"@fern-api/add-generator@workspace:*, @fern-api/add-generator@workspace:packages/config-management/add-generator":
   version: 0.0.0-use.local
-  resolution: "@fern-api/add-generator@workspace:packages/add-generator"
+  resolution: "@fern-api/add-generator@workspace:packages/config-management/add-generator"
   dependencies:
     "@babel/core": ^7.18.9
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/commons": "workspace:*"
+    "@fern-api/workspace-configuration": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
@@ -1890,14 +1891,16 @@ __metadata:
     "@fern-api/local-workspace-runner": "workspace:*"
     "@fern-api/login": "workspace:*"
     "@fern-api/openapi-converter": "workspace:*"
+    "@fern-api/project-configuration": "workspace:*"
     "@fern-api/remote-workspace-runner": "workspace:*"
     "@fern-api/validator": "workspace:*"
+    "@fern-api/workspace-configuration": "workspace:*"
     "@fern-api/workspace-parser": "workspace:*"
     "@fern-fern/ir-model": 0.0.49
     "@types/inquirer": ^8.2.1
     "@types/jest": ^28.1.6
     "@types/js-yaml": ^4.0.5
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     "@types/validate-npm-package-name": ^4.0.0
     "@types/yargs": ^17.0.10
     chalk: ^4.1.2
@@ -1925,9 +1928,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/commons@workspace:*, @fern-api/commons@workspace:packages/commons":
+"@fern-api/commons@workspace:*, @fern-api/commons@workspace:packages/commons/commons":
   version: 0.0.0-use.local
-  resolution: "@fern-api/commons@workspace:packages/commons"
+  resolution: "@fern-api/commons@workspace:packages/commons/commons"
   dependencies:
     "@babel/core": ^7.18.9
     "@babel/preset-env": ^7.18.9
@@ -1935,10 +1938,9 @@ __metadata:
     "@types/jest": ^28.1.6
     "@types/js-yaml": ^4.0.5
     "@types/lodash": ^4.14.182
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     depcheck: ^1.4.3
     eslint: ^8.20.0
-    find-up: ^5.0.0
     jest: ^28.1.3
     js-yaml: ^4.1.0
     lodash: ^4.17.21
@@ -1968,8 +1970,10 @@ __metadata:
     "@fern-api/local-workspace-runner": "workspace:*"
     "@fern-api/login": "workspace:*"
     "@fern-api/openapi-converter": "workspace:*"
+    "@fern-api/project-configuration": "workspace:*"
     "@fern-api/remote-workspace-runner": "workspace:*"
     "@fern-api/validator": "workspace:*"
+    "@fern-api/workspace-configuration": "workspace:*"
     "@fern-api/workspace-parser": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@fern-typescript/client": "workspace:*"
@@ -1995,7 +1999,7 @@ __metadata:
     "@fern-ui/theme": "workspace:*"
     "@fern-ui/toaster": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     depcheck: ^1.4.3
     eslint: ^8.20.0
     fern-typescript: "workspace:*"
@@ -2007,9 +2011,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/docker-utils@workspace:*, @fern-api/docker-utils@workspace:packages/local-generation/docker-utils":
+"@fern-api/docker-utils@workspace:*, @fern-api/docker-utils@workspace:packages/generation/local-generation/docker-utils":
   version: 0.0.0-use.local
-  resolution: "@fern-api/docker-utils@workspace:packages/local-generation/docker-utils"
+  resolution: "@fern-api/docker-utils@workspace:packages/generation/local-generation/docker-utils"
   dependencies:
     "@babel/core": ^7.18.9
     "@babel/preset-env": ^7.18.9
@@ -2017,7 +2021,7 @@ __metadata:
     "@fern-api/commons": "workspace:*"
     "@types/dockerode": ^3.3.8
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     depcheck: ^1.4.3
     dockerode: ^3.3.1
     eslint: ^8.20.0
@@ -2037,9 +2041,11 @@ __metadata:
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/commons": "workspace:*"
+    "@fern-api/project-configuration": "workspace:*"
+    "@fern-api/workspace-configuration": "workspace:*"
     "@fern-typescript/testing-utils": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     depcheck: ^1.4.3
     eslint: ^8.20.0
     execa: ^5.1.1
@@ -2051,18 +2057,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/init@workspace:*, @fern-api/init@workspace:packages/init":
+"@fern-api/init@workspace:*, @fern-api/init@workspace:packages/config-management/init":
   version: 0.0.0-use.local
-  resolution: "@fern-api/init@workspace:packages/init"
+  resolution: "@fern-api/init@workspace:packages/config-management/init"
   dependencies:
     "@babel/core": ^7.18.9
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/commons": "workspace:*"
+    "@fern-api/project-configuration": "workspace:*"
+    "@fern-api/workspace-configuration": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/js-yaml": ^4.0.5
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
@@ -2074,9 +2082,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/ir-generator@workspace:*, @fern-api/ir-generator@workspace:packages/ir/ir-generator":
+"@fern-api/ir-generator@workspace:*, @fern-api/ir-generator@workspace:packages/generation/ir/ir-generator":
   version: 0.0.0-use.local
-  resolution: "@fern-api/ir-generator@workspace:packages/ir/ir-generator"
+  resolution: "@fern-api/ir-generator@workspace:packages/generation/ir/ir-generator"
   dependencies:
     "@babel/core": ^7.18.9
     "@babel/preset-env": ^7.18.9
@@ -2087,7 +2095,7 @@ __metadata:
     "@fern-fern/ir-model": 0.0.49
     "@types/jest": ^28.1.6
     "@types/lodash": ^4.14.182
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
@@ -2099,16 +2107,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/loadable@workspace:*, @fern-api/loadable@workspace:packages/loadable":
+"@fern-api/loadable@workspace:*, @fern-api/loadable@workspace:packages/commons/loadable":
   version: 0.0.0-use.local
-  resolution: "@fern-api/loadable@workspace:packages/loadable"
+  resolution: "@fern-api/loadable@workspace:packages/commons/loadable"
   dependencies:
     "@babel/core": ^7.18.9
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/commons": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     "@types/react": ^18.0.15
     depcheck: ^1.4.3
     eslint: ^8.20.0
@@ -2122,18 +2130,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/local-workspace-runner@workspace:*, @fern-api/local-workspace-runner@workspace:packages/local-generation/local-workspace-runner":
+"@fern-api/local-workspace-runner@workspace:*, @fern-api/local-workspace-runner@workspace:packages/generation/local-generation/local-workspace-runner":
   version: 0.0.0-use.local
-  resolution: "@fern-api/local-workspace-runner@workspace:packages/local-generation/local-workspace-runner"
+  resolution: "@fern-api/local-workspace-runner@workspace:packages/generation/local-generation/local-workspace-runner"
   dependencies:
     "@babel/core": ^7.18.9
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/commons": "workspace:*"
     "@fern-api/docker-utils": "workspace:*"
+    "@fern-api/workspace-configuration": "workspace:*"
     "@fern-fern/ir-model": 0.0.49
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     "@types/tar": ^6.1.1
     "@types/tmp": ^0.2.3
     depcheck: ^1.4.3
@@ -2149,15 +2158,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/login@workspace:*, @fern-api/login@workspace:packages/login":
+"@fern-api/login@workspace:*, @fern-api/login@workspace:packages/cli/login":
   version: 0.0.0-use.local
-  resolution: "@fern-api/login@workspace:packages/login"
+  resolution: "@fern-api/login@workspace:packages/cli/login"
   dependencies:
     "@babel/core": ^7.18.9
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     axios: ^0.27.2
     depcheck: ^1.4.3
     eslint: ^8.20.0
@@ -2252,7 +2261,7 @@ __metadata:
     "@types/jest": ^28.1.6
     "@types/js-yaml": ^4.0.5
     "@types/lodash": ^4.14.182
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
@@ -2266,18 +2275,40 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/remote-workspace-runner@workspace:*, @fern-api/remote-workspace-runner@workspace:packages/remote-generation/remote-workspace-runner":
+"@fern-api/project-configuration@workspace:*, @fern-api/project-configuration@workspace:packages/config-management/project-configuration":
   version: 0.0.0-use.local
-  resolution: "@fern-api/remote-workspace-runner@workspace:packages/remote-generation/remote-workspace-runner"
+  resolution: "@fern-api/project-configuration@workspace:packages/config-management/project-configuration"
+  dependencies:
+    "@babel/core": ^7.18.9
+    "@babel/preset-env": ^7.18.9
+    "@babel/preset-typescript": ^7.18.6
+    "@types/jest": ^28.1.6
+    "@types/node": ^18.6.1
+    depcheck: ^1.4.3
+    eslint: ^8.20.0
+    find-up: ^5.0.0
+    jest: ^28.1.3
+    npm-run-all: ^4.1.5
+    prettier: ^2.7.1
+    ts-jest: ^28.0.7
+    typescript: 4.6.4
+    zod: ^3.14.3
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/remote-workspace-runner@workspace:*, @fern-api/remote-workspace-runner@workspace:packages/generation/remote-generation/remote-workspace-runner":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/remote-workspace-runner@workspace:packages/generation/remote-generation/remote-workspace-runner"
   dependencies:
     "@babel/core": ^7.18.9
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/commons": "workspace:*"
+    "@fern-api/workspace-configuration": "workspace:*"
     "@fern-fern/fiddle-coordinator-api-client": ^0.0.38
     "@fern-fern/ir-model": 0.0.49
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     axios: ^0.27.2
     chalk: ^4.1.2
     depcheck: ^1.4.3
@@ -2305,7 +2336,7 @@ __metadata:
     "@fern-api/workspace-parser": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     chalk: ^4.1.2
     depcheck: ^1.4.3
     eslint: ^8.20.0
@@ -2314,6 +2345,31 @@ __metadata:
     prettier: ^2.7.1
     ts-jest: ^28.0.7
     typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/workspace-configuration@workspace:*, @fern-api/workspace-configuration@workspace:packages/config-management/workspace-configuration":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/workspace-configuration@workspace:packages/config-management/workspace-configuration"
+  dependencies:
+    "@babel/core": ^7.18.9
+    "@babel/preset-env": ^7.18.9
+    "@babel/preset-typescript": ^7.18.6
+    "@fern-api/commons": "workspace:*"
+    "@types/jest": ^28.1.6
+    "@types/js-yaml": ^4.0.5
+    "@types/lodash": ^4.14.182
+    "@types/node": ^18.6.1
+    depcheck: ^1.4.3
+    eslint: ^8.20.0
+    jest: ^28.1.3
+    js-yaml: ^4.1.0
+    lodash: ^4.17.21
+    npm-run-all: ^4.1.5
+    prettier: ^2.7.1
+    ts-jest: ^28.0.7
+    typescript: 4.6.4
+    zod: ^3.14.3
   languageName: unknown
   linkType: soft
 
@@ -2327,7 +2383,7 @@ __metadata:
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/js-yaml": ^4.0.5
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     depcheck: ^1.4.3
     eslint: ^8.20.0
     glob: ^7.2.0
@@ -2352,7 +2408,7 @@ __metadata:
     "@fern-api/commons": "workspace:*"
     "@fern-fern/ir-model": 0.0.49
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     "@types/prettier": ^2.6.3
     depcheck: ^1.4.3
     eslint: ^8.20.0
@@ -2415,7 +2471,7 @@ __metadata:
     "@fern-typescript/service-types": "workspace:*"
     "@fern-typescript/testing-utils": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
@@ -2440,7 +2496,7 @@ __metadata:
     "@types/esutils": ^2.0.0
     "@types/jest": ^28.1.6
     "@types/lodash": ^4.14.182
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     depcheck: ^1.4.3
     eslint: ^8.20.0
     esutils: ^2.0.3
@@ -2469,7 +2525,7 @@ __metadata:
     "@fern-typescript/helper-manager": "workspace:*"
     "@fern-typescript/model-context": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
@@ -2492,7 +2548,7 @@ __metadata:
     "@fern-typescript/model-context": "workspace:*"
     "@fern-typescript/types": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
@@ -2515,7 +2571,7 @@ __metadata:
     "@fern-typescript/helper-utils": "workspace:*"
     "@fern-typescript/json-encoding-helper": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
@@ -2537,7 +2593,7 @@ __metadata:
     "@fern-fern/ir-model": 0.0.49
     "@fern-typescript/model-context": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
@@ -2558,7 +2614,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-typescript/helper-utils": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
@@ -2580,7 +2636,7 @@ __metadata:
     "@fern-fern/ir-model": 0.0.49
     "@fern-typescript/commons": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
@@ -2608,7 +2664,7 @@ __metadata:
     "@fern-typescript/testing-utils": "workspace:*"
     "@fern-typescript/types": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
@@ -2638,7 +2694,7 @@ __metadata:
     "@fern-typescript/testing-utils": "workspace:*"
     "@fern-typescript/types": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
@@ -2665,7 +2721,7 @@ __metadata:
     "@fern-typescript/types": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/lodash": ^4.14.182
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
@@ -2697,7 +2753,7 @@ __metadata:
     "@types/basic-auth": ^1.1.3
     "@types/jest": ^28.1.6
     "@types/js-base64": ^3.3.1
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     axios: ^0.27.2
     basic-auth: ^2.0.1
     depcheck: ^1.4.3
@@ -2724,7 +2780,7 @@ __metadata:
     "@fern-typescript/commons": "workspace:*"
     "@types/is-ci": ^3.0.0
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     depcheck: ^1.4.3
     eslint: ^8.20.0
     execa: ^5.1.1
@@ -2750,7 +2806,7 @@ __metadata:
     "@fern-typescript/model-context": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/lodash": ^4.14.182
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
@@ -2771,7 +2827,7 @@ __metadata:
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     "@types/react": ^18.0.15
     depcheck: ^1.4.3
     eslint: ^8.20.0
@@ -2798,7 +2854,7 @@ __metadata:
     "@fern-ui/theme": "workspace:*"
     "@fern-ui/toaster": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     "@types/react": ^18.0.15
     classnames: ^2.3.1
     depcheck: ^1.4.3
@@ -2828,7 +2884,7 @@ __metadata:
     "@fern-ui/app": "workspace:*"
     "@types/craco__craco": ^6.4.0
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     "@types/react": ^18.0.15
     "@types/react-dom": ^18.0.6
     depcheck: ^1.4.3
@@ -2858,7 +2914,7 @@ __metadata:
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     "@types/react": ^18.0.15
     depcheck: ^1.4.3
     eslint: ^8.20.0
@@ -2881,7 +2937,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/loadable": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     "@types/react": ^18.0.15
     depcheck: ^1.4.3
     eslint: ^8.20.0
@@ -2905,7 +2961,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@blueprintjs/core": ^4.6.0
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     "@types/react": ^18.0.15
     classnames: ^2.3.1
     depcheck: ^1.4.3
@@ -2930,7 +2986,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@blueprintjs/core": ^4.6.0
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     "@types/react": ^18.0.15
     classnames: ^2.3.1
     depcheck: ^1.4.3
@@ -2954,7 +3010,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@blueprintjs/core": ^4.6.0
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     classnames: ^2.3.1
     depcheck: ^1.4.3
     eslint: ^8.20.0
@@ -4409,10 +4465,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^18.0.3, @types/node@npm:^18.6.0":
+"@types/node@npm:*, @types/node@npm:^18.0.3":
   version: 18.6.0
   resolution: "@types/node@npm:18.6.0"
   checksum: 53a910b28d0eef4baf7059e3fea2f69d06ee72e39dd11e72e317cdf7f4e859683ff2d6fb1ef5e6287bbfa56b3f2bf056227a8b12bcc4ff0f724b6a13b030091b
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^18.6.1":
+  version: 18.6.1
+  resolution: "@types/node@npm:18.6.1"
+  checksum: 06331f68bc73d93b73977ae19ca87818e004bc7b8e70b0d4f73b0ea5e341a4a1ba6f0e79db8fb75a841af2b8d74552d6b9a8f846b267954689f57effedcf5d77
   languageName: node
   linkType: hard
 
@@ -9137,7 +9200,7 @@ __metadata:
     "@fern-typescript/testing-utils": "workspace:*"
     "@ts-morph/common": ^0.13.0
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.0
+    "@types/node": ^18.6.1
     "@types/webpack-bundle-analyzer": ^4.4.1
     depcheck: ^1.4.3
     eslint: ^8.20.0

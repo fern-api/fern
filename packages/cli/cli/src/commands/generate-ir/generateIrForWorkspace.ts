@@ -1,5 +1,5 @@
-import { WorkspaceDefinition } from "@fern-api/commons";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { WorkspaceDefinition } from "@fern-api/workspace-configuration";
 import { parseWorkspaceDefinition } from "@fern-api/workspace-parser";
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
 import validatePackageName from "validate-npm-package-name";

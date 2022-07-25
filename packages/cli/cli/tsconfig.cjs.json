@@ -3,15 +3,17 @@
   "compilerOptions": { "composite": true, "outDir": "lib/cjs", "rootDir": "src", "module": "CommonJS" },
   "include": ["./src"],
   "references": [
-    { "path": "../../add-generator/tsconfig.cjs.json" },
-    { "path": "../../commons/tsconfig.cjs.json" },
-    { "path": "../../init/tsconfig.cjs.json" },
-    { "path": "../../ir/ir-generator/tsconfig.cjs.json" },
-    { "path": "../../local-generation/local-workspace-runner/tsconfig.cjs.json" },
-    { "path": "../../login/tsconfig.cjs.json" },
+    { "path": "../../commons/commons/tsconfig.cjs.json" },
+    { "path": "../../config-management/add-generator/tsconfig.cjs.json" },
+    { "path": "../../config-management/init/tsconfig.cjs.json" },
+    { "path": "../../config-management/project-configuration/tsconfig.cjs.json" },
+    { "path": "../../config-management/workspace-configuration/tsconfig.cjs.json" },
+    { "path": "../../generation/ir/ir-generator/tsconfig.cjs.json" },
+    { "path": "../../generation/local-generation/local-workspace-runner/tsconfig.cjs.json" },
+    { "path": "../../generation/remote-generation/remote-workspace-runner/tsconfig.cjs.json" },
     { "path": "../../openapi-converter/tsconfig.cjs.json" },
-    { "path": "../../remote-generation/remote-workspace-runner/tsconfig.cjs.json" },
     { "path": "../../validator/tsconfig.cjs.json" },
-    { "path": "../../workspace-parser/tsconfig.cjs.json" }
+    { "path": "../../workspace-parser/tsconfig.cjs.json" },
+    { "path": "../login/tsconfig.cjs.json" }
   ]
 }
