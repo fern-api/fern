@@ -1,9 +1,0 @@
-{
-  "extends": "../../../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "lib/cjs", "rootDir": "src", "module": "CommonJS" },
-  "include": ["./src"],
-  "references": [
-    { "path": "../../../config-management/workspace-configuration/tsconfig.cjs.json" },
-    { "path": "../docker-utils/tsconfig.cjs.json" }
-  ]
-}
