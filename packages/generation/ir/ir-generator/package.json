@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "@fern-api/commons": "workspace:*",
+    "@fern-api/config-management-commons": "workspace:*",
     "@fern-api/workspace-parser": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
     "@fern-fern/ir-model": "0.0.49",

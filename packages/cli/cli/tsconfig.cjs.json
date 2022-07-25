@@ -5,6 +5,7 @@
   "references": [
     { "path": "../../commons/commons/tsconfig.cjs.json" },
     { "path": "../../config-management/add-generator/tsconfig.cjs.json" },
+    { "path": "../../config-management/commons/tsconfig.cjs.json" },
     { "path": "../../config-management/init/tsconfig.cjs.json" },
     { "path": "../../config-management/project-configuration/tsconfig.cjs.json" },
     { "path": "../../config-management/workspace-configuration/tsconfig.cjs.json" },

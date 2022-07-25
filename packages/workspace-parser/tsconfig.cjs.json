@@ -2,5 +2,9 @@
   "extends": "../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib/cjs", "rootDir": "src", "module": "CommonJS" },
   "include": ["./src"],
-  "references": [{ "path": "../yaml-schema/tsconfig.cjs.json" }]
+  "references": [
+    { "path": "../commons/commons/tsconfig.cjs.json" },
+    { "path": "../config-management/commons/tsconfig.cjs.json" },
+    { "path": "../yaml-schema/tsconfig.cjs.json" }
+  ]
 }

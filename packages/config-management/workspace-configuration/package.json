@@ -34,7 +34,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/commons": "workspace:*",
+    "@fern-api/config-management-commons": "workspace:*",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21",
     "zod": "^3.14.3"

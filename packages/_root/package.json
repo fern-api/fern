@@ -38,6 +38,7 @@
     "@fern-api/add-generator": "workspace:*",
     "@fern-api/cli": "workspace:*",
     "@fern-api/commons": "workspace:*",
+    "@fern-api/config-management-commons": "workspace:*",
     "@fern-api/docker-utils": "workspace:*",
     "@fern-api/ete-tests": "workspace:*",
     "@fern-api/init": "workspace:*",

@@ -40,6 +40,7 @@
   "dependencies": {
     "@fern-api/add-generator": "workspace:*",
     "@fern-api/commons": "workspace:*",
+    "@fern-api/config-management-commons": "workspace:*",
     "@fern-api/init": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/local-workspace-runner": "workspace:*",

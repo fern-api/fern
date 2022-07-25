@@ -1,4 +1,4 @@
-import { validateSchema } from "@fern-api/commons";
+import { validateSchema } from "@fern-api/config-management-commons";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { convertWorkspaceDefinition } from "./convertWorkspaceDefinition";

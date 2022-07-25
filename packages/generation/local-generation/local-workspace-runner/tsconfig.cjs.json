@@ -3,7 +3,6 @@
   "compilerOptions": { "composite": true, "outDir": "lib/cjs", "rootDir": "src", "module": "CommonJS" },
   "include": ["./src"],
   "references": [
-    { "path": "../../../commons/commons/tsconfig.cjs.json" },
     { "path": "../../../config-management/workspace-configuration/tsconfig.cjs.json" },
     { "path": "../docker-utils/tsconfig.cjs.json" }
   ]

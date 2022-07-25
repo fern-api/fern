@@ -1,9 +1,10 @@
+import { RelativeFilePath } from "@fern-api/config-management-commons";
 import path from "path";
 
 export interface ReferenceToTypeName {
     typeName: string;
     // if not defined, the reference lives in the same file as the referencer
-    relativeFilePath: string | undefined;
+    relativeFilePath: RelativeFilePath | undefined;
 }
 
 export function parseReferenceToTypeName({
@@ -35,7 +36,7 @@ export function parseReferenceToTypeName({
     }
 
     return {
-        relativeFilePath: path.join(relativeFilePathOfDirectory, importPath),
+        relativeFilePath: path.join(relativeFilePathOfDirectory, importPath) as RelativeFilePath,
         typeName: secondPart,
     };
 }

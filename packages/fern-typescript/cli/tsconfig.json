@@ -5,6 +5,7 @@
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
     { "path": "../../commons/commons/tsconfig.json" },
+    { "path": "../../config-management/commons/tsconfig.json" },
     { "path": "../../generation/ir/ir-generator/tsconfig.json" },
     { "path": "../../workspace-parser/tsconfig.json" },
     { "path": "../client/tsconfig.json" },

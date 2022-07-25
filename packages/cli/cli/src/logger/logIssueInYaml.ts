@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/workspace-parser";
+import { RelativeFilePath } from "@fern-api/config-management-commons";
 import chalk from "chalk";
 
 type Severity = "error" | "warning";

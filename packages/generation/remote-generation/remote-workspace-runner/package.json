@@ -34,7 +34,6 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/commons": "workspace:*",
     "@fern-api/workspace-configuration": "workspace:*",
     "@fern-fern/fiddle-coordinator-api-client": "^0.0.38",
     "@fern-fern/ir-model": "0.0.49",

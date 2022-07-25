@@ -1,3 +1,4 @@
+import { RelativeFilePath } from "@fern-api/config-management-commons";
 import { lstat, readFile } from "fs/promises";
 import glob from "glob-promise";
 import path from "path";
@@ -8,7 +9,7 @@ export async function listYamlFilesForWorkspace(absolutePathToDefinition: string
     try {
         const stats = await lstat(absolutePathToDefinition);
         if (stats.isFile()) {
-            const relativeFilepath = path.basename(absolutePathToDefinition);
+            const relativeFilepath = path.basename(absolutePathToDefinition) as RelativeFilePath;
             return [
                 await createFernFile({
                     relativeFilepath,
@@ -32,7 +33,7 @@ export async function listYamlFilesForWorkspace(absolutePathToDefinition: string
         try {
             files.push(
                 await createFernFile({
-                    relativeFilepath: filepath,
+                    relativeFilepath: filepath as RelativeFilePath,
                     absoluteFilepath: path.join(absolutePathToDefinition, filepath),
                 })
             );
@@ -48,7 +49,7 @@ async function createFernFile({
     relativeFilepath,
     absoluteFilepath,
 }: {
-    relativeFilepath: string;
+    relativeFilepath: RelativeFilePath;
     absoluteFilepath: string;
 }): Promise<FernFile> {
     return {

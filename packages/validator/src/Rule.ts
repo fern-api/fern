@@ -1,4 +1,5 @@
-import { RelativeFilePath, Workspace } from "@fern-api/workspace-parser";
+import { RelativeFilePath } from "@fern-api/config-management-commons";
+import { Workspace } from "@fern-api/workspace-parser";
 import { FernAstNodeTypes, FernConfigurationSchema } from "@fern-api/yaml-schema";
 
 export interface Rule {

@@ -1,8 +1,8 @@
 export { assertNever } from "./assertNever";
 export { delay } from "./delay";
 export { doesPathExist } from "./doesPathExist";
+export { entries, type Entries } from "./entries";
 export { keys } from "./keys";
 export { getDirectoryContents } from "./testing-utils/getDirectoryContents";
-export { validateSchema } from "./validateSchema";
-export { type ValuesUnion } from "./ValuesUnion";
+export { type Values } from "./Values";
 export { withMinimumTime } from "./withMinimumTime";

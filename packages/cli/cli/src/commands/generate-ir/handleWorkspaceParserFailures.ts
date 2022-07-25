@@ -1,12 +1,13 @@
-import { assertNever } from "@fern-api/commons";
-import { RelativeFilePath, WorkspaceParser, WorkspaceParserFailureType } from "@fern-api/workspace-parser";
+import { assertNever, entries } from "@fern-api/commons";
+import { RelativeFilePath } from "@fern-api/config-management-commons";
+import { WorkspaceParser, WorkspaceParserFailureType } from "@fern-api/workspace-parser";
 import chalk from "chalk";
 import { YAMLException } from "js-yaml";
 import { ZodIssue, ZodIssueCode } from "zod";
 import { logIssueInYaml } from "../../logger/logIssueInYaml";
 
 export function handleFailedWorkspaceParserResult(result: WorkspaceParser.FailedResult): void {
-    for (const [relativeFilePath, failure] of Object.entries(result.failures)) {
+    for (const [relativeFilePath, failure] of entries(result.failures)) {
         handleWorkspaceParserFailureForFile({ relativeFilePath, failure });
     }
 }

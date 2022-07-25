@@ -34,7 +34,6 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/commons": "workspace:*",
     "@fern-api/docker-utils": "workspace:*",
     "@fern-api/workspace-configuration": "workspace:*",
     "@fern-fern/ir-model": "0.0.49",

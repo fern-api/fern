@@ -1,1 +1,0 @@
-export type RelativeFilePath = string;
