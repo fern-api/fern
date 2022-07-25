@@ -41,6 +41,7 @@
     { "path": "../ui/routing-utils/tsconfig.cjs.json" },
     { "path": "../ui/theme/tsconfig.cjs.json" },
     { "path": "../ui/toaster/tsconfig.cjs.json" },
+    { "path": "../ui/vite-project/tsconfig.cjs.json" },
     { "path": "../validator/tsconfig.cjs.json" },
     { "path": "../workspace-loader/tsconfig.cjs.json" },
     { "path": "../yaml-schema/tsconfig.cjs.json" }

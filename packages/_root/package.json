@@ -75,7 +75,8 @@
     "@fern-ui/routing-utils": "workspace:*",
     "@fern-ui/theme": "workspace:*",
     "@fern-ui/toaster": "workspace:*",
-    "fern-typescript": "workspace:*"
+    "fern-typescript": "workspace:*",
+    "vite-project": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.18.9",
