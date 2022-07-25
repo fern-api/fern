@@ -170,7 +170,7 @@ workflows:
           context:
             - docker-hub
 
-      - publish-release:
+      - publish-jars:
           requires: [ check, unit-test, build]
           filters:
             branches:
