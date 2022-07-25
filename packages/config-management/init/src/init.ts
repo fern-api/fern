@@ -1,6 +1,6 @@
 import { doesPathExist } from "@fern-api/core-utils";
 import { ProjectConfigSchema, PROJECT_CONFIG_FILENAME } from "@fern-api/project-configuration";
-import { WorkspaceDefinitionSchema, WORKSPACE_DEFINITION_FILENAME } from "@fern-api/workspace-configuration";
+import { WorkspaceConfigurationSchema, WORKSPACE_CONFIGURATION_FILENAME } from "@fern-api/workspace-configuration";
 import { mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
@@ -20,19 +20,19 @@ async function writeApiSubDirectoryIfNotExists(): Promise<void> {
     if (!apiSubDirectoryExists) {
         await mkdir(API_DIRECTORY);
         await mkdir(API_SRC_DIRECTORY);
-        await writeWorkspaceDefinitionFile(API_DIRECTORY);
+        await writeWorkspaceConfiguration(API_DIRECTORY);
         await writeSampleApiToDirectory(API_SRC_DIRECTORY);
     }
 }
 
-const API_WORKSPACE_DEFINITION: WorkspaceDefinitionSchema = {
+const API_WORKSPACE_DEFINITION: WorkspaceConfigurationSchema = {
     name: "api",
     definition: SRC_DIRECTORY,
     generators: [],
 };
 
-async function writeWorkspaceDefinitionFile(dir: string): Promise<void> {
-    await writeFile(path.join(dir, WORKSPACE_DEFINITION_FILENAME), yaml.dump(API_WORKSPACE_DEFINITION));
+async function writeWorkspaceConfiguration(dir: string): Promise<void> {
+    await writeFile(path.join(dir, WORKSPACE_CONFIGURATION_FILENAME), yaml.dump(API_WORKSPACE_DEFINITION));
 }
 
 async function writeProjectConfigIfNotExists({ organization }: { organization: string }): Promise<void> {

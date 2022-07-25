@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/config-management-commons";
 import { entries } from "@fern-api/core-utils";
-import { Workspace } from "@fern-api/workspace-parser";
+import { Workspace } from "@fern-api/workspace-loader";
 import { FernConfigurationSchema, visitFernYamlAst } from "@fern-api/yaml-schema";
 import { createAstVisitorForRules } from "./createAstVisitorForRules";
 import { rules } from "./rules";

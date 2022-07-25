@@ -1,7 +1,7 @@
 import { RelativeFilePath } from "@fern-api/config-management-commons";
 import { entries } from "@fern-api/core-utils";
 import { FernConfigurationSchema } from "@fern-api/yaml-schema";
-import { WorkspaceParser, WorkspaceParserFailureType } from "./types/Result";
+import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
 
 export declare namespace validateStructureOfYamlFiles {
     export type Return = SuccessfulResult | FailedResult;
@@ -13,7 +13,7 @@ export declare namespace validateStructureOfYamlFiles {
 
     export interface FailedResult {
         didSucceed: false;
-        failures: Record<RelativeFilePath, WorkspaceParser.StructureValidationFailure>;
+        failures: Record<RelativeFilePath, WorkspaceLoader.StructureValidationFailure>;
     }
 }
 
@@ -21,7 +21,7 @@ export function validateStructureOfYamlFiles(
     files: Record<RelativeFilePath, unknown>
 ): validateStructureOfYamlFiles.Return {
     const validatedFiles: Record<RelativeFilePath, FernConfigurationSchema> = {};
-    const failures: Record<RelativeFilePath, WorkspaceParser.StructureValidationFailure> = {};
+    const failures: Record<RelativeFilePath, WorkspaceLoader.StructureValidationFailure> = {};
 
     for (const [relativeFilePath, parsedFileContents] of entries(files)) {
         const parsed = FernConfigurationSchema.safeParse(parsedFileContents);
@@ -29,7 +29,7 @@ export function validateStructureOfYamlFiles(
             validatedFiles[relativeFilePath] = parsed.data;
         } else {
             failures[relativeFilePath] = {
-                type: WorkspaceParserFailureType.STRUCTURE_VALIDATION,
+                type: WorkspaceLoaderFailureType.STRUCTURE_VALIDATION,
                 error: parsed.error,
             };
         }

@@ -1,4 +1,4 @@
-import { GeneratorInvocation, WorkspaceDefinition } from "@fern-api/workspace-configuration";
+import { GeneratorInvocation, WorkspaceConfiguration } from "@fern-api/workspace-configuration";
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
 import { CustomWireMessageEncoding } from "@fern-fern/ir-model/services";
 import { mkdir, rm, writeFile } from "fs/promises";
@@ -11,16 +11,16 @@ import { runGenerator } from "./run-generator/runGenerator";
 
 export async function runLocalGenerationForWorkspace({
     organization,
-    workspaceDefinition,
+    workspaceConfiguration,
     intermediateRepresentation,
     keepDocker,
 }: {
     organization: string;
-    workspaceDefinition: WorkspaceDefinition;
+    workspaceConfiguration: WorkspaceConfiguration;
     intermediateRepresentation: IntermediateRepresentation;
     keepDocker: boolean;
 }): Promise<void> {
-    if (workspaceDefinition.generators.length === 0) {
+    if (workspaceConfiguration.generators.length === 0) {
         return;
     }
 
@@ -35,10 +35,10 @@ export async function runLocalGenerationForWorkspace({
     await writeFile(absolutePathToIr, JSON.stringify(intermediateRepresentation));
 
     await Promise.all(
-        workspaceDefinition.generators.map(async (generatorInvocation) =>
+        workspaceConfiguration.generators.map(async (generatorInvocation) =>
             loadHelpersAndRunGenerator({
                 organization,
-                workspaceDefinition,
+                workspaceConfiguration,
                 generatorInvocation,
                 workspaceTempDir,
                 absolutePathToIr,
@@ -51,7 +51,7 @@ export async function runLocalGenerationForWorkspace({
 
 async function loadHelpersAndRunGenerator({
     organization,
-    workspaceDefinition,
+    workspaceConfiguration,
     generatorInvocation,
     workspaceTempDir,
     absolutePathToIr,
@@ -59,7 +59,7 @@ async function loadHelpersAndRunGenerator({
     keepDocker,
 }: {
     organization: string;
-    workspaceDefinition: WorkspaceDefinition;
+    workspaceConfiguration: WorkspaceConfiguration;
     generatorInvocation: GeneratorInvocation;
     workspaceTempDir: DirectoryResult;
     absolutePathToIr: string;
@@ -92,7 +92,7 @@ async function loadHelpersAndRunGenerator({
             absolutePathToWorkspaceTempDir: workspaceTempDir.path,
         }),
         customConfig: generatorInvocation.config,
-        workspaceName: workspaceDefinition.name,
+        workspaceName: workspaceConfiguration.name,
         organization,
         keepDocker,
     });

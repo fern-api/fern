@@ -1,12 +1,12 @@
 import { RelativeFilePath } from "@fern-api/config-management-commons";
 import { assertNever, entries } from "@fern-api/core-utils";
-import { WorkspaceParser, WorkspaceParserFailureType } from "@fern-api/workspace-parser";
+import { WorkspaceLoader, WorkspaceLoaderFailureType } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { YAMLException } from "js-yaml";
 import { ZodIssue, ZodIssueCode } from "zod";
 import { logIssueInYaml } from "../../logger/logIssueInYaml";
 
-export function handleFailedWorkspaceParserResult(result: WorkspaceParser.FailedResult): void {
+export function handleFailedWorkspaceParserResult(result: WorkspaceLoader.FailedResult): void {
     for (const [relativeFilePath, failure] of entries(result.failures)) {
         handleWorkspaceParserFailureForFile({ relativeFilePath, failure });
     }
@@ -17,13 +17,13 @@ function handleWorkspaceParserFailureForFile({
     failure,
 }: {
     relativeFilePath: RelativeFilePath;
-    failure: WorkspaceParser.Failure;
+    failure: WorkspaceLoader.Failure;
 }): void {
     switch (failure.type) {
-        case WorkspaceParserFailureType.FILE_READ:
+        case WorkspaceLoaderFailureType.FILE_READ:
             console.error("Failed to open file", relativeFilePath);
             break;
-        case WorkspaceParserFailureType.FILE_PARSE:
+        case WorkspaceLoaderFailureType.FILE_PARSE:
             if (failure.error instanceof YAMLException) {
                 logIssueInYaml({
                     severity: "error",
@@ -35,7 +35,7 @@ function handleWorkspaceParserFailureForFile({
                 console.error("Failed to parse file", relativeFilePath);
             }
             break;
-        case WorkspaceParserFailureType.STRUCTURE_VALIDATION:
+        case WorkspaceLoaderFailureType.STRUCTURE_VALIDATION:
             for (const issue of failure.error.issues) {
                 for (const { title, subtitle } of parseIssue(issue)) {
                     logIssueInYaml({

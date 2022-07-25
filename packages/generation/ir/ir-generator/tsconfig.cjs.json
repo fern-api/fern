@@ -5,7 +5,7 @@
   "references": [
     { "path": "../../../commons/core-utils/tsconfig.cjs.json" },
     { "path": "../../../config-management/config-management-commons/tsconfig.cjs.json" },
-    { "path": "../../../workspace-parser/tsconfig.cjs.json" },
+    { "path": "../../../workspace-loader/tsconfig.cjs.json" },
     { "path": "../../../yaml-schema/tsconfig.cjs.json" }
   ]
 }

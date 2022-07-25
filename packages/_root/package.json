@@ -51,7 +51,7 @@
     "@fern-api/remote-workspace-runner": "workspace:*",
     "@fern-api/validator": "workspace:*",
     "@fern-api/workspace-configuration": "workspace:*",
-    "@fern-api/workspace-parser": "workspace:*",
+    "@fern-api/workspace-loader": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
     "@fern-typescript/client": "workspace:*",
     "@fern-typescript/commons": "workspace:*",

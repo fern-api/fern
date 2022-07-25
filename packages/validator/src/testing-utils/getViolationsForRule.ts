@@ -1,5 +1,5 @@
 import { entries } from "@fern-api/core-utils";
-import { parseWorkspaceDefinition } from "@fern-api/workspace-parser";
+import { loadWorkspace } from "@fern-api/workspace-loader";
 import { visitFernYamlAst } from "@fern-api/yaml-schema";
 import { createAstVisitorForRules } from "../createAstVisitorForRules";
 import { Rule, RuleViolation } from "../Rule";
@@ -24,7 +24,7 @@ export async function getViolationsForRule({
     rule,
     absolutePathToDefinition,
 }: getViolationsForRule.Args): Promise<RuleViolation[]> {
-    const parseResult = await parseWorkspaceDefinition({
+    const parseResult = await loadWorkspace({
         name: undefined,
         absolutePathToDefinition,
     });

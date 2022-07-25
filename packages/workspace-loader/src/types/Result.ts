@@ -3,7 +3,7 @@ import { FernConfigurationSchema } from "@fern-api/yaml-schema";
 import { ZodError } from "zod";
 import { Workspace } from "./Workspace";
 
-export declare namespace WorkspaceParser {
+export declare namespace WorkspaceLoader {
     export type Result = SuccessfulResult | FailedResult;
 
     export interface SuccessfulResult {
@@ -19,22 +19,22 @@ export declare namespace WorkspaceParser {
     export type Failure = FileReadFilure | FileParseFailure | StructureValidationFailure;
 
     export interface FileReadFilure {
-        type: WorkspaceParserFailureType.FILE_READ;
+        type: WorkspaceLoaderFailureType.FILE_READ;
         error: unknown;
     }
 
     export interface FileParseFailure {
-        type: WorkspaceParserFailureType.FILE_PARSE;
+        type: WorkspaceLoaderFailureType.FILE_PARSE;
         error: unknown;
     }
 
     export interface StructureValidationFailure {
-        type: WorkspaceParserFailureType.STRUCTURE_VALIDATION;
+        type: WorkspaceLoaderFailureType.STRUCTURE_VALIDATION;
         error: ZodError<FernConfigurationSchema>;
     }
 }
 
-export enum WorkspaceParserFailureType {
+export enum WorkspaceLoaderFailureType {
     FILE_READ = "FILE_READ",
     FILE_PARSE = "FILE_PARSE",
     STRUCTURE_VALIDATION = "STRUCTURE_VALIDATION",

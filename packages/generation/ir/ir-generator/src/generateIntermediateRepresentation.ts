@@ -1,4 +1,4 @@
-import { Workspace } from "@fern-api/workspace-parser";
+import { Workspace } from "@fern-api/workspace-loader";
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
 import { convertErrorDeclaration } from "./converters/convertErrorDeclaration";
 import { convertId } from "./converters/convertId";

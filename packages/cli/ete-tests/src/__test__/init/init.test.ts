@@ -1,5 +1,5 @@
 import { PROJECT_CONFIG_FILENAME } from "@fern-api/project-configuration";
-import { WORKSPACE_DEFINITION_FILENAME } from "@fern-api/workspace-configuration";
+import { WORKSPACE_CONFIGURATION_FILENAME } from "@fern-api/workspace-configuration";
 import { mkdir, readFile, rm } from "fs/promises";
 import path from "path";
 import { runFernCli } from "../utils/runFernCli";
@@ -17,7 +17,7 @@ it("fern init", async () => {
 
     expect(await getFileContentsAsString(path.join(GENERATED_DIR, PROJECT_CONFIG_FILENAME))).toMatchSnapshot();
     expect(
-        await getFileContentsAsString(path.join(GENERATED_API_DIR, WORKSPACE_DEFINITION_FILENAME))
+        await getFileContentsAsString(path.join(GENERATED_API_DIR, WORKSPACE_CONFIGURATION_FILENAME))
     ).toMatchSnapshot();
     expect(await getFileContentsAsString(path.join(GENERATED_API_DIR, "src", "api.yml"))).toMatchSnapshot();
 }, 60_000);

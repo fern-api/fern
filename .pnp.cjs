@@ -181,8 +181,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/validator"\
       },\
       {\
-        "name": "@fern-api/workspace-parser",\
-        "reference": "workspace:packages/workspace-parser"\
+        "name": "@fern-api/workspace-loader",\
+        "reference": "workspace:packages/workspace-loader"\
       },\
       {\
         "name": "@fern-api/yaml-schema",\
@@ -209,7 +209,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-api/remote-workspace-runner", ["workspace:packages/generation/remote-generation/remote-workspace-runner"]],\
       ["@fern-api/validator", ["workspace:packages/validator"]],\
       ["@fern-api/workspace-configuration", ["workspace:packages/config-management/workspace-configuration"]],\
-      ["@fern-api/workspace-parser", ["workspace:packages/workspace-parser"]],\
+      ["@fern-api/workspace-loader", ["workspace:packages/workspace-loader"]],\
       ["@fern-api/yaml-schema", ["workspace:packages/yaml-schema"]],\
       ["@fern-typescript/client", ["workspace:packages/fern-typescript/client"]],\
       ["@fern-typescript/commons", ["workspace:packages/fern-typescript/fern-typescript-commons"]],\
@@ -3772,7 +3772,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/remote-workspace-runner", "workspace:packages/generation/remote-generation/remote-workspace-runner"],\
             ["@fern-api/validator", "workspace:packages/validator"],\
             ["@fern-api/workspace-configuration", "workspace:packages/config-management/workspace-configuration"],\
-            ["@fern-api/workspace-parser", "workspace:packages/workspace-parser"],\
+            ["@fern-api/workspace-loader", "workspace:packages/workspace-loader"],\
             ["@fern-fern/ir-model", "npm:0.0.49"],\
             ["@types/inquirer", "npm:8.2.1"],\
             ["@types/jest", "npm:28.1.6"],\
@@ -3784,7 +3784,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.20.0"],\
             ["glob", "npm:7.2.3"],\
-            ["glob-promise", "virtual:e5a0a756b779a8ebcfc2ec41f6fadcbb663da3504994ade181681a8f05dfa6aa97544a05fc59dd6ca738d9243c828233eb7f9b144c7be32a366ee678af963404#npm:4.2.2"],\
+            ["glob-promise", "virtual:d42202f54ebe8449bdad925e0e92409cc6ed6906161306e0aadb2e2eea476e38663413b7ae1d8cffd01ad4074a1fff5140d4921c5cc463beb233d92f2669bb9c#npm:4.2.2"],\
             ["inquirer", "npm:8.2.4"],\
             ["jest", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:28.1.3"],\
             ["js-yaml", "npm:4.1.0"],\
@@ -3828,7 +3828,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/remote-workspace-runner", "workspace:packages/generation/remote-generation/remote-workspace-runner"],\
             ["@fern-api/validator", "workspace:packages/validator"],\
             ["@fern-api/workspace-configuration", "workspace:packages/config-management/workspace-configuration"],\
-            ["@fern-api/workspace-parser", "workspace:packages/workspace-parser"],\
+            ["@fern-api/workspace-loader", "workspace:packages/workspace-loader"],\
             ["@fern-api/yaml-schema", "workspace:packages/yaml-schema"],\
             ["@fern-typescript/client", "workspace:packages/fern-typescript/client"],\
             ["@fern-typescript/commons", "workspace:packages/fern-typescript/fern-typescript-commons"],\
@@ -3996,7 +3996,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:7.18.6"],\
             ["@fern-api/config-management-commons", "workspace:packages/config-management/config-management-commons"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-api/workspace-parser", "workspace:packages/workspace-parser"],\
+            ["@fern-api/workspace-loader", "workspace:packages/workspace-loader"],\
             ["@fern-api/yaml-schema", "workspace:packages/yaml-schema"],\
             ["@fern-fern/ir-model", "npm:0.0.49"],\
             ["@types/jest", "npm:28.1.6"],\
@@ -4259,7 +4259,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/config-management-commons", "workspace:packages/config-management/config-management-commons"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/ir-generator", "workspace:packages/generation/ir/ir-generator"],\
-            ["@fern-api/workspace-parser", "workspace:packages/workspace-parser"],\
+            ["@fern-api/workspace-loader", "workspace:packages/workspace-loader"],\
             ["@fern-api/yaml-schema", "workspace:packages/yaml-schema"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/node", "npm:18.6.1"],\
@@ -4302,11 +4302,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
-      ["@fern-api/workspace-parser", [\
-        ["workspace:packages/workspace-parser", {\
-          "packageLocation": "./packages/workspace-parser/",\
+      ["@fern-api/workspace-loader", [\
+        ["workspace:packages/workspace-loader", {\
+          "packageLocation": "./packages/workspace-loader/",\
           "packageDependencies": [\
-            ["@fern-api/workspace-parser", "workspace:packages/workspace-parser"],\
+            ["@fern-api/workspace-loader", "workspace:packages/workspace-loader"],\
             ["@babel/core", "npm:7.18.9"],\
             ["@babel/preset-env", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:7.18.9"],\
             ["@babel/preset-typescript", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:7.18.6"],\
@@ -4319,7 +4319,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.20.0"],\
             ["glob", "npm:7.2.3"],\
-            ["glob-promise", "virtual:e5a0a756b779a8ebcfc2ec41f6fadcbb663da3504994ade181681a8f05dfa6aa97544a05fc59dd6ca738d9243c828233eb7f9b144c7be32a366ee678af963404#npm:4.2.2"],\
+            ["glob-promise", "virtual:d42202f54ebe8449bdad925e0e92409cc6ed6906161306e0aadb2e2eea476e38663413b7ae1d8cffd01ad4074a1fff5140d4921c5cc463beb233d92f2669bb9c#npm:4.2.2"],\
             ["jest", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:28.1.3"],\
             ["js-yaml", "npm:4.1.0"],\
             ["npm-run-all", "npm:4.1.5"],\
@@ -4738,7 +4738,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-env", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:7.18.9"],\
             ["@babel/preset-typescript", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:7.18.6"],\
             ["@fern-api/ir-generator", "workspace:packages/generation/ir/ir-generator"],\
-            ["@fern-api/workspace-parser", "workspace:packages/workspace-parser"],\
+            ["@fern-api/workspace-loader", "workspace:packages/workspace-loader"],\
             ["@fern-fern/ir-model", "npm:0.0.49"],\
             ["@fern-typescript/commons", "workspace:packages/fern-typescript/fern-typescript-commons"],\
             ["@types/is-ci", "npm:3.0.0"],\
@@ -12732,7 +12732,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/config-management-commons", "workspace:packages/config-management/config-management-commons"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/ir-generator", "workspace:packages/generation/ir/ir-generator"],\
-            ["@fern-api/workspace-parser", "workspace:packages/workspace-parser"],\
+            ["@fern-api/workspace-loader", "workspace:packages/workspace-loader"],\
             ["@fern-fern/generator-logging-api-client", "npm:0.0.15"],\
             ["@fern-fern/ir-model", "npm:0.0.49"],\
             ["@fern-typescript/client", "workspace:packages/fern-typescript/client"],\
@@ -13413,10 +13413,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:e5a0a756b779a8ebcfc2ec41f6fadcbb663da3504994ade181681a8f05dfa6aa97544a05fc59dd6ca738d9243c828233eb7f9b144c7be32a366ee678af963404#npm:4.2.2", {\
-          "packageLocation": "./.yarn/__virtual__/glob-promise-virtual-7d07db4581/0/cache/glob-promise-npm-4.2.2-30777327f7-c1a3d95f7c.zip/node_modules/glob-promise/",\
+        ["virtual:d42202f54ebe8449bdad925e0e92409cc6ed6906161306e0aadb2e2eea476e38663413b7ae1d8cffd01ad4074a1fff5140d4921c5cc463beb233d92f2669bb9c#npm:4.2.2", {\
+          "packageLocation": "./.yarn/__virtual__/glob-promise-virtual-8159f850f7/0/cache/glob-promise-npm-4.2.2-30777327f7-c1a3d95f7c.zip/node_modules/glob-promise/",\
           "packageDependencies": [\
-            ["glob-promise", "virtual:e5a0a756b779a8ebcfc2ec41f6fadcbb663da3504994ade181681a8f05dfa6aa97544a05fc59dd6ca738d9243c828233eb7f9b144c7be32a366ee678af963404#npm:4.2.2"],\
+            ["glob-promise", "virtual:d42202f54ebe8449bdad925e0e92409cc6ed6906161306e0aadb2e2eea476e38663413b7ae1d8cffd01ad4074a1fff5140d4921c5cc463beb233d92f2669bb9c#npm:4.2.2"],\
             ["@types/glob", "npm:7.2.0"],\
             ["glob", "npm:7.2.3"]\
           ],\

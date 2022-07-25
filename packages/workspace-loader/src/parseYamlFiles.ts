@@ -1,7 +1,7 @@
 import { RelativeFilePath } from "@fern-api/config-management-commons";
 import yaml from "js-yaml";
 import { FernFile } from "./types/FernFile";
-import { WorkspaceParser, WorkspaceParserFailureType } from "./types/Result";
+import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
 
 export type ParsedFileContents = unknown;
 
@@ -15,13 +15,13 @@ export declare namespace Parser {
 
     export interface FailedResult {
         didSucceed: false;
-        failures: Record<RelativeFilePath, WorkspaceParser.FileParseFailure>;
+        failures: Record<RelativeFilePath, WorkspaceLoader.FileParseFailure>;
     }
 }
 
 export async function parseYamlFiles(files: readonly FernFile[]): Promise<Parser.Result> {
     const parsedFiles: Record<RelativeFilePath, ParsedFileContents> = {};
-    const failures: Record<RelativeFilePath, WorkspaceParser.FileParseFailure> = {};
+    const failures: Record<RelativeFilePath, WorkspaceLoader.FileParseFailure> = {};
 
     function parseFilePath(file: FernFile) {
         try {
@@ -29,7 +29,7 @@ export async function parseYamlFiles(files: readonly FernFile[]): Promise<Parser
             parsedFiles[file.filepath] = parsed;
         } catch (error) {
             failures[file.filepath] = {
-                type: WorkspaceParserFailureType.FILE_PARSE,
+                type: WorkspaceLoaderFailureType.FILE_PARSE,
                 error,
             };
         }
