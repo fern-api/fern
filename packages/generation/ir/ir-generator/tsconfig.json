@@ -1,11 +1,11 @@
 {
   "extends": "../../../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "lib/esm", "rootDir": "src", "module": "esnext" },
+  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
   "references": [
-    { "path": "../../../commons/core-utils/tsconfig.json" },
-    { "path": "../../../config-management/config-management-commons/tsconfig.json" },
-    { "path": "../../../workspace-loader/tsconfig.json" },
-    { "path": "../../../yaml-schema/tsconfig.json" }
+    { "path": "../../../commons/core-utils" },
+    { "path": "../../../config-management/config-management-commons" },
+    { "path": "../../../workspace-loader" },
+    { "path": "../../../yaml-schema" }
   ]
 }

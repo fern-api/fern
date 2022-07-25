@@ -108,17 +108,10 @@ jobs:
           command: yarn
       - run:
           name: Compile
-          command: yarn compile:all
+          command: yarn compile
       - run:
           name: Publish all packages
           command: yarn run publish --tag $(./scripts/npm-tag.sh)
-      - run:
-          name: Publish fern-api
-          command: |
-            npm_tag=$(./scripts/npm-tag.sh)
-            yarn workspace @fern-api/cli dist
-            cd $(yarn workspace @fern-api/cli exec pwd)/webpack/dist
-            yarn npm publish --tag $npm_tag
       - run:
           name: Publish fern-typescript docker
           command: |

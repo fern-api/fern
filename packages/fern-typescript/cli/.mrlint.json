@@ -1,5 +1,5 @@
 {
-  "type": "cli",
+  "type": "library",
   "private": false,
   "rules": {
     "package-json": {
