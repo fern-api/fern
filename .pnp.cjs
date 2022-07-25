@@ -6234,6 +6234,7 @@ const RAW_RUNTIME_STATE =
           ["@babel/preset-typescript", "virtual:33e3bdbf7fa5e7d67a169bcdae0e2087d849097f5a378245e86fb92d10d2653fdf9d594cdb1a5bf8cfadcbf1009b79b64646fafed7dc31ed357978dc9b6978f0#npm:7.18.6"],\
           ["@types/jest", "npm:28.1.6"],\
           ["@types/node", "npm:18.6.0"],\
+          ["@types/react", "npm:18.0.15"],\
           ["depcheck", "npm:1.4.3"],\
           ["eslint", "npm:8.20.0"],\
           ["jest", "virtual:33e3bdbf7fa5e7d67a169bcdae0e2087d849097f5a378245e86fb92d10d2653fdf9d594cdb1a5bf8cfadcbf1009b79b64646fafed7dc31ed357978dc9b6978f0#npm:28.1.3"],\

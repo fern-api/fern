@@ -1,7 +1,7 @@
 import { Button, Classes, Intent } from "@blueprintjs/core";
 import { assertNever, withMinimumTime } from "@fern-api/commons";
 import { errorToast, Toast } from "@fern-ui/toaster";
-import { useCallback, useMemo, useReducer, useRef } from "react";
+import { useCallback, useReducer, useRef } from "react";
 import { RenderFormDialogArgs } from "./types";
 
 export declare namespace FormDialogContents {
@@ -55,34 +55,32 @@ export function FormDialogContents<P, R>({
 
     const failedToast = useRef<Toast>();
 
-    const handleClickCreate = useMemo(() => {
-        return async () => {
-            failedToast.current?.dismiss();
+    const handleClickCreate = useCallback(async () => {
+        failedToast.current?.dismiss();
 
-            if (createPayload == null) {
-                updateCreateState("invalid_fields");
-                return;
-            }
-            updateCreateState("creating");
+        if (createPayload == null) {
+            updateCreateState("invalid_fields");
+            return;
+        }
+        updateCreateState("creating");
 
-            try {
-                const result = await withMinimumTime(onClickCreate(createPayload), 1_000);
-                onSuccessfulCreate?.(result);
-                closeDialog();
-            } catch (e) {
-                console.error("Failed to create", e);
-                failedToast.current = errorToast(errorToastText, {
-                    toastKey: failedToast.current?.toastKey,
-                });
-                updateCreateState("failed_to_create");
-            }
-        };
+        try {
+            const result = await withMinimumTime(onClickCreate(createPayload), 1_000);
+            onSuccessfulCreate?.(result);
+            closeDialog();
+        } catch (e) {
+            console.error("Failed to create", e);
+            failedToast.current = errorToast(errorToastText, {
+                toastKey: failedToast.current?.toastKey,
+            });
+            updateCreateState("failed_to_create");
+        }
     }, [onClickCreate, createPayload, onSuccessfulCreate, closeDialog, errorToastText]);
 
     const onKeyDown = useCallback(
-        (event: React.KeyboardEvent<HTMLDivElement>) => {
+        async (event: React.KeyboardEvent<HTMLDivElement>) => {
             if (event.key === "Enter") {
-                handleClickCreate();
+                await handleClickCreate();
             }
         },
         [handleClickCreate]
@@ -98,12 +96,7 @@ export function FormDialogContents<P, R>({
             <div className={Classes.DIALOG_BODY}>{form}</div>
             <div className={Classes.DIALOG_FOOTER}>
                 <div className={Classes.DIALOG_FOOTER_ACTIONS}>
-                    <Button
-                        intent={Intent.SUCCESS}
-                        disabled={handleClickCreate == null}
-                        onClick={handleClickCreate}
-                        loading={createState.isCreating}
-                    >
+                    <Button intent={Intent.SUCCESS} onClick={handleClickCreate} loading={createState.isCreating}>
                         Create
                     </Button>
                 </div>
