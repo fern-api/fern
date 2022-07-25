@@ -79,8 +79,8 @@ jobs:
               exit 0
             fi
 
-            yarn workspace @fern-api/cli dist
-            cli_path="$(yarn workspace @fern-api/cli exec pwd)"
+            yarn workspace fern-api dist
+            cli_path="$(yarn workspace fern-api exec pwd)"
             mkdir pre-release-test
             cd pre-release-test
 
