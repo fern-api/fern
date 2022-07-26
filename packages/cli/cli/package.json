@@ -17,7 +17,7 @@
   "types": "lib/index.d.ts",
   "sideEffects": false,
   "bin": {
-    "fern": "dist/cli"
+    "fern": "dist/cli.cjs"
   },
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",

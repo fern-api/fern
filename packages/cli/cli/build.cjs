@@ -34,12 +34,12 @@ async function main() {
 
     // write cli executable
     await writeFile(
-        "cli",
+        "cli.cjs",
         `#!/usr/bin/env node
 
 require("./bundle.cjs");`
     );
-    await chmod("cli", "755");
+    await chmod("cli.cjs", "755");
 
     // write cli's package.json
     const packageJson = require("./package.json");
@@ -50,8 +50,8 @@ require("./bundle.cjs");`
                 name: "fern-api",
                 version: packageJson.version,
                 repository: packageJson.repository,
-                files: ["bundle.cjs", "cli"],
-                bin: { fern: "cli" },
+                files: ["bundle.cjs", "cli.cjs"],
+                bin: { fern: "cli.cjs" },
             },
             undefined,
             2

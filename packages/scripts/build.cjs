@@ -21,10 +21,10 @@ async function main() {
 
     // write cli executable
     await writeFile(
-        "cli",
+        "cli.cjs",
         `#!/usr/bin/env node
 
 require("./bundle.cjs");`
     );
-    await chmod("cli", "755");
+    await chmod("cli.cjs", "755");
 }
