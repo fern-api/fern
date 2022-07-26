@@ -3819,7 +3819,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.20.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
@@ -3865,7 +3864,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["js-yaml", "npm:4.1.0"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:e27057136cbc8d6604e8ad844644db08f7b9ebb1ee6412bdae58c0b53531f2ce21503c38b50a31a3b4d352bf8b1c84e4bd18636df76f7a5ae6b0b24714362ee9#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
             ["validate-npm-package-name", "npm:4.0.0"],\
             ["yargs", "npm:17.5.1"],\
@@ -3930,7 +3928,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["fern-typescript", "workspace:packages/fern-typescript/cli"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
@@ -3950,7 +3947,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.20.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
             ["zod", "npm:3.16.0"]\
           ],\
@@ -3971,7 +3967,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.20.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
@@ -3994,7 +3989,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.20.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
@@ -4019,7 +4013,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["execa", "npm:5.1.1"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
@@ -4045,7 +4038,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["js-yaml", "npm:4.1.0"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
@@ -4072,7 +4064,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["lodash", "npm:4.17.21"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
@@ -4096,7 +4087,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.7.1"],\
             ["react", "npm:18.2.0"],\
             ["stylelint", "npm:14.9.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
@@ -4124,7 +4114,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.7.1"],\
             ["tar", "npm:6.1.11"],\
             ["tmp-promise", "npm:3.0.3"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
@@ -4146,7 +4135,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["open", "npm:8.4.0"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
@@ -4173,7 +4161,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["lodash", "npm:4.17.21"],\
             ["openapi-types", "npm:12.0.0"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
@@ -4194,7 +4181,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["find-up", "npm:5.0.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
             ["zod", "npm:3.16.0"]\
           ],\
@@ -4223,7 +4209,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["log-update", "npm:4.0.0"],\
             ["ora", "npm:5.4.1"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
@@ -4253,7 +4238,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["lodash", "npm:4.17.21"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:e27057136cbc8d6604e8ad844644db08f7b9ebb1ee6412bdae58c0b53531f2ce21503c38b50a31a3b4d352bf8b1c84e4bd18636df76f7a5ae6b0b24714362ee9#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
             ["yargs", "npm:17.5.1"]\
           ],\
@@ -4280,7 +4264,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.20.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
@@ -4305,7 +4288,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["js-yaml", "npm:4.1.0"],\
             ["lodash", "npm:4.17.21"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
             ["zod", "npm:3.16.0"]\
           ],\
@@ -4333,7 +4315,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["js-yaml", "npm:4.1.0"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
             ["zod", "npm:3.16.0"]\
           ],\
@@ -4357,7 +4338,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.20.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
             ["zod", "npm:3.16.0"],\
             ["zod-to-json-schema", "virtual:6cc98e0263ecd254c1c1470f1fa23b545e7ab57544323a6a2d626c7a677f777249b2e4418dbbdb5c3fe92e813814c0c2d45d6b7ee6f938035241afc04b89bea8#npm:3.14.1"]\
@@ -4425,7 +4405,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["memfs", "npm:3.4.7"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["ts-morph", "npm:14.0.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
@@ -4455,7 +4434,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["memfs", "npm:3.4.7"],\
             ["package-json-type", "npm:1.0.3"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["ts-morph", "npm:14.0.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
             ["zod", "npm:3.16.0"]\
@@ -4480,7 +4458,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.20.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["ts-morph", "npm:14.0.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
@@ -4504,7 +4481,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.20.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
@@ -4528,7 +4504,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.20.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
             ["zod", "npm:3.16.0"]\
           ],\
@@ -4551,7 +4526,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.20.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["ts-morph", "npm:14.0.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
@@ -4573,7 +4547,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.20.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
@@ -4602,7 +4575,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["memfs", "npm:3.4.7"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["ts-morph", "npm:14.0.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
@@ -4626,7 +4598,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.20.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["ts-morph", "npm:14.0.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
@@ -4657,7 +4628,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["memfs", "npm:3.4.7"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["ts-morph", "npm:14.0.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
@@ -4685,7 +4655,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["lodash", "npm:4.17.21"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["ts-morph", "npm:14.0.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
@@ -4719,7 +4688,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["js-base64", "npm:3.7.2"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
@@ -4747,7 +4715,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["memfs", "npm:3.4.7"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
@@ -4772,7 +4739,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["lodash", "npm:4.17.21"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["ts-morph", "npm:14.0.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
@@ -4796,7 +4762,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.7.1"],\
             ["react", "npm:18.2.0"],\
             ["stylelint", "npm:14.9.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
@@ -4825,7 +4790,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.7.1"],\
             ["react", "npm:18.2.0"],\
             ["stylelint", "npm:14.9.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
@@ -4863,7 +4827,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-scripts", "virtual:513b573dadecb2e53485d1d420245b36c5c83edc3fbf86eee8f7b0afd025eda848cf0f2926d4221e8442f13b570dfe0c9f589b89f35fea0b33c733f83aca7ca6#npm:5.0.1"],\
             ["sass", "npm:1.54.0"],\
             ["stylelint", "npm:14.9.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
@@ -4886,7 +4849,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.7.1"],\
             ["react", "npm:18.2.0"],\
             ["stylelint", "npm:14.9.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
@@ -4911,7 +4873,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react", "npm:18.2.0"],\
             ["react-query", "virtual:519d43b3bd5fbfb78a9f1a2f682af52dfa247891d802d643f24cb2872fe71f65a0388b8ed75609395383473c5a866037e9680553f715d82506a3c039cd6e36e0#npm:3.39.2"],\
             ["stylelint", "npm:14.9.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
@@ -4937,7 +4898,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react", "npm:18.2.0"],\
             ["react-router-dom", "virtual:4989c3f26449688542d8fbbd1f322fc5d13c87fc4ffb4655d471d726ec2f56ccdba7f4e809e23357dbd07dc8c3c67c2a5caa390b7ad047875c0589bba4993083#npm:6.3.0"],\
             ["stylelint", "npm:14.9.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
@@ -4962,7 +4922,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.7.1"],\
             ["react", "npm:18.2.0"],\
             ["stylelint", "npm:14.9.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
@@ -4986,7 +4945,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.7.1"],\
             ["react", "npm:18.2.0"],\
             ["stylelint", "npm:14.9.1"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
@@ -9352,16 +9310,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["bs-logger", [\
-        ["npm:0.2.6", {\
-          "packageLocation": "./.yarn/cache/bs-logger-npm-0.2.6-7670f88b66-d34bdaf68c.zip/node_modules/bs-logger/",\
-          "packageDependencies": [\
-            ["bs-logger", "npm:0.2.6"],\
-            ["fast-json-stable-stringify", "npm:2.1.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["bser", [\
         ["npm:2.1.1", {\
           "packageLocation": "./.yarn/cache/bser-npm-2.1.1-cc902055ce-9ba4dc58ce.zip/node_modules/bser/",\
@@ -13106,7 +13054,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["node-loader", "virtual:5b8f83b261217e1d7a6ba4f4e8ce453aec5ae01ffc6ce377573050afedd12ba6250c8912c326b5f5c4f58d71dc3b73737f866aff31a3f57f7db9e63374ae0787#npm:2.0.0"],\
             ["prettier", "npm:2.7.1"],\
             ["simple-progress-webpack-plugin", "virtual:5b8f83b261217e1d7a6ba4f4e8ce453aec5ae01ffc6ce377573050afedd12ba6250c8912c326b5f5c4f58d71dc3b73737f866aff31a3f57f7db9e63374ae0787#npm:2.0.0"],\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
             ["ts-loader", "virtual:5b8f83b261217e1d7a6ba4f4e8ce453aec5ae01ffc6ce377573050afedd12ba6250c8912c326b5f5c4f58d71dc3b73737f866aff31a3f57f7db9e63374ae0787#npm:9.3.1"],\
             ["ts-node", "virtual:5b8f83b261217e1d7a6ba4f4e8ce453aec5ae01ffc6ce377573050afedd12ba6250c8912c326b5f5c4f58d71dc3b73737f866aff31a3f57f7db9e63374ae0787#npm:10.9.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
@@ -23715,97 +23662,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/tryer-npm-1.0.1-f48ab9ec32-1cf14d7f67.zip/node_modules/tryer/",\
           "packageDependencies": [\
             ["tryer", "npm:1.0.1"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["ts-jest", [\
-        ["npm:28.0.7", {\
-          "packageLocation": "./.yarn/cache/ts-jest-npm-28.0.7-5e5007d2e9-be6ad6382e.zip/node_modules/ts-jest/",\
-          "packageDependencies": [\
-            ["ts-jest", "npm:28.0.7"]\
-          ],\
-          "linkType": "SOFT"\
-        }],\
-        ["virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7", {\
-          "packageLocation": "./.yarn/__virtual__/ts-jest-virtual-d274f149df/0/cache/ts-jest-npm-28.0.7-5e5007d2e9-be6ad6382e.zip/node_modules/ts-jest/",\
-          "packageDependencies": [\
-            ["ts-jest", "virtual:5813a29614ce84b4ff4d3beec91a52e15a28d45a09a1e98c40c7ad05439ab0d12eb1ea90fc218668a8c35f28a82935da45adb6a7b924ed0d697e501bcee96f08#npm:28.0.7"],\
-            ["@babel/core", "npm:7.18.9"],\
-            ["@jest/types", null],\
-            ["@types/babel-jest", null],\
-            ["@types/babel__core", null],\
-            ["@types/esbuild", null],\
-            ["@types/jest", "npm:28.1.6"],\
-            ["@types/jest__types", null],\
-            ["@types/typescript", null],\
-            ["babel-jest", null],\
-            ["bs-logger", "npm:0.2.6"],\
-            ["esbuild", null],\
-            ["fast-json-stable-stringify", "npm:2.1.0"],\
-            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
-            ["jest-util", "npm:28.1.3"],\
-            ["json5", "npm:2.2.1"],\
-            ["lodash.memoize", "npm:4.1.2"],\
-            ["make-error", "npm:1.3.6"],\
-            ["semver", "npm:7.3.7"],\
-            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
-            ["yargs-parser", "npm:21.0.1"]\
-          ],\
-          "packagePeers": [\
-            "@babel/core",\
-            "@jest/types",\
-            "@types/babel-jest",\
-            "@types/babel__core",\
-            "@types/esbuild",\
-            "@types/jest",\
-            "@types/jest__types",\
-            "@types/typescript",\
-            "babel-jest",\
-            "esbuild",\
-            "jest",\
-            "typescript"\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["virtual:e27057136cbc8d6604e8ad844644db08f7b9ebb1ee6412bdae58c0b53531f2ce21503c38b50a31a3b4d352bf8b1c84e4bd18636df76f7a5ae6b0b24714362ee9#npm:28.0.7", {\
-          "packageLocation": "./.yarn/__virtual__/ts-jest-virtual-fbce7460d5/0/cache/ts-jest-npm-28.0.7-5e5007d2e9-be6ad6382e.zip/node_modules/ts-jest/",\
-          "packageDependencies": [\
-            ["ts-jest", "virtual:e27057136cbc8d6604e8ad844644db08f7b9ebb1ee6412bdae58c0b53531f2ce21503c38b50a31a3b4d352bf8b1c84e4bd18636df76f7a5ae6b0b24714362ee9#npm:28.0.7"],\
-            ["@babel/core", "npm:7.18.9"],\
-            ["@jest/types", null],\
-            ["@types/babel-jest", null],\
-            ["@types/babel__core", null],\
-            ["@types/esbuild", null],\
-            ["@types/jest", "npm:28.1.6"],\
-            ["@types/jest__types", null],\
-            ["@types/typescript", null],\
-            ["babel-jest", null],\
-            ["bs-logger", "npm:0.2.6"],\
-            ["esbuild", "npm:0.14.50"],\
-            ["fast-json-stable-stringify", "npm:2.1.0"],\
-            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
-            ["jest-util", "npm:28.1.3"],\
-            ["json5", "npm:2.2.1"],\
-            ["lodash.memoize", "npm:4.1.2"],\
-            ["make-error", "npm:1.3.6"],\
-            ["semver", "npm:7.3.7"],\
-            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
-            ["yargs-parser", "npm:21.0.1"]\
-          ],\
-          "packagePeers": [\
-            "@babel/core",\
-            "@jest/types",\
-            "@types/babel-jest",\
-            "@types/babel__core",\
-            "@types/esbuild",\
-            "@types/jest",\
-            "@types/jest__types",\
-            "@types/typescript",\
-            "babel-jest",\
-            "esbuild",\
-            "jest",\
-            "typescript"\
           ],\
           "linkType": "HARD"\
         }]\
