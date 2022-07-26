@@ -15,7 +15,7 @@ const options: BuildOptions = {
 function getEnvironmentVariable(environmentVariable: string): string {
     const value = process.env[environmentVariable];
     if (value != null) {
-        return value;
+        return `"${value}"`;
     }
     throw new Error(`Environment variable ${environmentVariable} is not defined.`);
 }
