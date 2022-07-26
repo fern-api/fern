@@ -80,9 +80,11 @@ jobs:
             echo Publishing version: "${git_version}"
       - run:
           name: Add version to package.json's
-          command: yarn mrlint version "$git_version"
+          command: |
+            git_version="$(./scripts/git-version.sh)"
+            yarn mrlint version "$git_version"
       - run:
-          name: Publish fern-api CLI (snapshot)
+          name: Publish fern-api-dev
           command: yarn workspace @fern-api/cli publish:cli --access restricted
           environment:
             FERN_CLI_PACKAGE_NAME: "@fern-api/fern-api-dev"
@@ -142,7 +144,9 @@ jobs:
             echo Publishing version: "${git_version}"
       - run:
           name: Add version to package.json's
-          command: yarn mrlint version "$git_version"
+          command: |
+            git_version="$(./scripts/git-version.sh)"
+            yarn mrlint version "$git_version"
       - run:
           name: Update yarn.lock with new versions
           command: yarn
