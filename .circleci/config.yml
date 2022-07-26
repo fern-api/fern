@@ -85,7 +85,7 @@ jobs:
           name: Publish fern-api CLI (snapshot)
           command: yarn workspace @fern-api/cli publish:cli --access restricted
           environment:
-            FERN_CLI_PACKAGE_NAME: fern-api-dev
+            FERN_CLI_PACKAGE_NAME: "@fern-api/fern-api-dev"
 
   publish-fern-typescript:
     machine:
