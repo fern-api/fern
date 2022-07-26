@@ -31,7 +31,7 @@
     "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public",
     "docs:preview": "yarn docsify serve docs",
     "add-package": "yarn mrlint add-package",
-    "fern-script": "yarn workspace @fern-api/scripts dist && node $(yarn workspace fern-api bin scripts)",
+    "fern-script": "yarn workspace @fern-api/scripts dist && node $(yarn workspace @fern-api/scripts bin scripts)",
     "generate-json-schema": "yarn run fern-script write-json-schema",
     "check-root-package": "yarn run fern-script check-root-package",
     "fix-root-package": "yarn run check-root-package --fix"
