@@ -48,7 +48,7 @@ require("./bundle.cjs");`
         "package.json",
         JSON.stringify(
             {
-                name: process.env.FERN_API_CLI_PACKAGE_NAME ?? "fern-api",
+                name: process.env.FERN_CLI_PACKAGE_NAME ?? "fern-api",
                 version: packageJson.version,
                 repository: packageJson.repository,
                 files: ["bundle.cjs", "cli.cjs"],

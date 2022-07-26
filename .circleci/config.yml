@@ -138,17 +138,17 @@ jobs:
           name: Publish fern-api CLI
           command: yarn workspace @fern-api/cli publish:cli
 
-    publish-fern-typescript:
-      machine:
-        image: ubuntu-2004:current
-      steps:
-        - run:
-            name: Publish fern-typescript Docker
-            command: |
-              projectVersion=$(./scripts/git-version.sh)
-              yarn workspace fern-typescript dockerTagVersion
-              echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
-              docker push fernapi/fern-typescript:"$projectVersion"
+  publish-fern-typescript:
+    machine:
+      image: ubuntu-2004:current
+    steps:
+      - run:
+          name: Publish fern-typescript Docker
+          command: |
+            projectVersion=$(./scripts/git-version.sh)
+            yarn workspace fern-typescript dockerTagVersion
+            echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
+            docker push fernapi/fern-typescript:"$projectVersion"
 
 workflows:
   version: 2
