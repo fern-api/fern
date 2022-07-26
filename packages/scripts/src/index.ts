@@ -1,1 +1,1 @@
-export { getAllPackages } from "./getAllPackages";
+export {};
