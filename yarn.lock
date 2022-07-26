@@ -9596,7 +9596,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.1.10, postcss@npm:^8.4.12, postcss@npm:^8.4.14":
+"postcss@npm:*, postcss@npm:^8.1.10, postcss@npm:^8.4.12, postcss@npm:^8.4.14":
   version: 8.4.14
   resolution: "postcss@npm:8.4.14"
   dependencies:

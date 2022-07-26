@@ -12593,11 +12593,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["postcss-scss", "virtual:6198d94c8bdeabb84e43dfb10583647301a67dd264bd58d6116a20cfe6243ce93e00fd27260426a81127ffce99ecd32b0a3e85a8396b85ec5f820003a737ee9c#npm:4.0.4"],\
             ["@types/postcss", null],\
-            ["postcss", null]\
+            ["postcss", "npm:8.4.14"]\
           ],\
           "packagePeers": [\
-            "@types/postcss",\
-            "postcss"\
+            "@types/postcss"\
           ],\
           "linkType": "HARD"\
         }]\
