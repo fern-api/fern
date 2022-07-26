@@ -1,5 +1,7 @@
 const { pnpPlugin } = require("@yarnpkg/esbuild-plugin-pnp");
 const { build } = require("esbuild");
+const path = require("path");
+const { chmod, writeFile } = require("fs/promises");
 
 main();
 
@@ -14,4 +16,15 @@ async function main() {
     };
 
     await build(options).catch(() => process.exit(1));
+
+    process.chdir(path.join(__dirname, "dist"));
+
+    // write cli executable
+    await writeFile(
+        "cli",
+        `#!/usr/bin/env node
+
+require("./bundle.cjs");`
+    );
+    await chmod("cli", "755");
 }
