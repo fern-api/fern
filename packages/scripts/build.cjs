@@ -12,7 +12,7 @@ async function main() {
         entryPoints: ["./src/cli.ts"],
         outfile: "./dist/bundle.cjs",
         bundle: true,
-        external: ["cpu-features", "ssh2"],
+        external: ["cpu-features"],
         plugins: [pnpPlugin()],
     };
 
