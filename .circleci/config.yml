@@ -98,7 +98,7 @@ jobs:
           name: Publish fern-typescript Docker
           command: |
             projectVersion=$(./scripts/git-version.sh)
-            yarn workspace fern-typescript dockerTagVersion
+            yarn workspace fern-typescript dockerTagVersion "$projectVersion"
             echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
             docker push fernapi/fern-typescript:"$projectVersion"
 
