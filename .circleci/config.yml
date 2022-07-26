@@ -35,8 +35,9 @@ jobs:
           command: git --no-pager diff
 
   compile-and-test:
-    docker:
-      - image: cimg/node:current
+    # this is machine because of the docker-utils tests
+    machine:
+      image: ubuntu-2004:current
     steps:
       - checkout
       - node/install-packages:
