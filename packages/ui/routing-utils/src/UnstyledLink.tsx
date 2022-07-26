@@ -20,9 +20,9 @@ export const UnstyledLink: React.FC<UnstyledLink.Props> = ({
     return (
         <Link
             className={classNames(styles.link, className, {
-                [styles.showUnderline]: showUnderline,
-                [styles.muted]: muted,
-                [styles.hoverState]: !noHoverState,
+                [styles.showUnderline ?? "_"]: showUnderline,
+                [styles.muted ?? "_"]: muted,
+                [styles.hoverState ?? "_"]: !noHoverState,
             })}
             {...linkProps}
         />

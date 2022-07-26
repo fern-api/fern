@@ -1,4 +1,12 @@
 {
-  "ignores": ["@types/jest", "@types/node", "@babel/core", "@babel/preset-env", "@babel/preset-typescript", "sass"],
+  "ignores": [
+    "@types/jest",
+    "@types/node",
+    "@babel/core",
+    "@babel/preset-env",
+    "@babel/preset-typescript",
+    "sass",
+    "vite"
+  ],
   "ignore-patterns": ["lib"]
 }

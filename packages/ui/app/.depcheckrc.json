@@ -5,6 +5,7 @@
     "@babel/core",
     "@babel/preset-env",
     "@babel/preset-typescript",
+    "vite",
     "@types/react"
   ],
   "ignore-patterns": ["lib"]

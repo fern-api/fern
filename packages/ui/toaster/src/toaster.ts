@@ -42,7 +42,9 @@ export function showToast(
     const toastKey = toaster.show(
         {
             ...toastProps,
-            className: classNames(toastProps.className, styles.toast, { [styles.hideCloseButton]: preventDismiss }),
+            className: classNames(toastProps.className, styles.toast, {
+                [styles.hideCloseButton ?? "_"]: preventDismiss,
+            }),
             message,
         },
         existingToastKey
