@@ -18,6 +18,44 @@
 
 Code generators run remotely in the cloud. They take a set of Fern API Definition YAML files, run the generators listed in `.fernrc.yml, and produce generated files as an output. Files can output locally (i.e., seen in the file system of your IDE) or remotely (i.e., in a package manager like NPM, Maven, or PyPI).
 
+## How can I automatically update my Postman Collection?
+
+### Get your Postman Workspace ID
+
+Login to Postman and then pick an existing Workspace (or create a new one.) Navigate to the Workspace Overview page. Copy the link to the Workspace and open it in your browser. It should be along the lines of `https://www.postman.com/banana-stand-335770/workspace/fern`. On the left side of the webpage, click on the name of your workspace. Your URL should now show a unique identifier, such as `https://www.postman.com/banana-stand-335770/workspace/d790dd10-gg1a-443k-8p7y-b464move1499/overview`. Copy the Postman Workspace ID, for example `d790dd10-gg1a-443k-8p7y-b464move1499`.
+
+### Get your Postman API Key
+
+Generate a Postman API Key [here](Postman API Keys page).
+
+### Save your variables in your local environment
+
+You'll want to create a local environment variable by running:
+
+```bash
+~/.bash_profile
+```
+
+and adding:
+
+```bash
+POSTMAN_WORKSPACE_ID="Your Workspace ID"
+POSTMAN_API_TOKEN="Your API Key"
+```
+
+Here's what the Postman Generator configuration could look like:
+
+```yaml
+- name: fernapi/fern-postman
+  version: 0.0.xx
+  generate:
+    enabled: true
+    output: ./generated-postman.json
+  config:
+    api-key: ${POSTMAN_API_KEY}
+    workspace-id: ${POSTMAN_WORKSPACE_ID}
+```
+
 ### Generating clients
 
 ![client generators](assets/diagrams/frontend-diagram.png)
