@@ -1,5 +1,7 @@
 const { pnpPlugin } = require("@yarnpkg/esbuild-plugin-pnp");
 const { build } = require("esbuild");
+const path = require("path");
+const { chmod, writeFile } = require("fs/promises");
 
 main();
 
@@ -28,12 +30,19 @@ async function main() {
 
     await build(options).catch(() => process.exit(1));
 
-    const path = require("path");
     process.chdir(path.join(__dirname, "dist"));
+
+    // write cli executable
+    await writeFile(
+        "cli.cjs",
+        `#!/usr/bin/env node
+
+require("./bundle.cjs");`
+    );
+    await chmod("cli.cjs", "755");
 
     // write cli's package.json
     const packageJson = require("./package.json");
-    const { writeFile } = require("fs/promises");
     await writeFile(
         "package.json",
         JSON.stringify(
@@ -41,8 +50,8 @@ async function main() {
                 name: "fern-api",
                 version: packageJson.version,
                 repository: packageJson.repository,
-                files: ["bundle.cjs"],
-                bin: { fern: "bundle.cjs" },
+                files: ["bundle.cjs", "cli.cjs"],
+                bin: { fern: "cli.cjs" },
             },
             undefined,
             2

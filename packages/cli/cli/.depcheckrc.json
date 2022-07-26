@@ -8,5 +8,5 @@
     "esbuild",
     "@yarnpkg/esbuild-plugin-pnp"
   ],
-  "ignore-patterns": ["lib"]
+  "ignore-patterns": ["lib", "dist"]
 }
