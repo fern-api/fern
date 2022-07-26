@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@fern-api/add-generator": "workspace:*",
+    "@fern-api/cli": "workspace:*",
     "@fern-api/config-management-commons": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/docker-utils": "workspace:*",
@@ -67,7 +68,6 @@
     "@fern-ui/routing-utils": "workspace:*",
     "@fern-ui/theme": "workspace:*",
     "@fern-ui/toaster": "workspace:*",
-    "fern-api": "workspace:*",
     "fern-typescript": "workspace:*"
   },
   "devDependencies": {

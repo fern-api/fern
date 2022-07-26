@@ -1928,6 +1928,55 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-api/cli@workspace:*, @fern-api/cli@workspace:packages/cli/cli":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/cli@workspace:packages/cli/cli"
+  dependencies:
+    "@babel/core": ^7.18.9
+    "@babel/preset-env": ^7.18.9
+    "@babel/preset-typescript": ^7.18.6
+    "@fern-api/add-generator": "workspace:*"
+    "@fern-api/config-management-commons": "workspace:*"
+    "@fern-api/core-utils": "workspace:*"
+    "@fern-api/init": "workspace:*"
+    "@fern-api/ir-generator": "workspace:*"
+    "@fern-api/local-workspace-runner": "workspace:*"
+    "@fern-api/login": "workspace:*"
+    "@fern-api/openapi-converter": "workspace:*"
+    "@fern-api/project-configuration": "workspace:*"
+    "@fern-api/remote-workspace-runner": "workspace:*"
+    "@fern-api/validator": "workspace:*"
+    "@fern-api/workspace-configuration": "workspace:*"
+    "@fern-api/workspace-loader": "workspace:*"
+    "@fern-fern/ir-model": 0.0.53
+    "@types/inquirer": ^8.2.1
+    "@types/jest": ^28.1.6
+    "@types/js-yaml": ^4.0.5
+    "@types/node": ^18.6.1
+    "@types/validate-npm-package-name": ^4.0.0
+    "@types/yargs": ^17.0.10
+    "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
+    chalk: ^4.1.2
+    depcheck: ^1.4.3
+    env-cmd: toddbluhm/env-cmd
+    esbuild: ^0.14.50
+    eslint: ^8.20.0
+    glob: ^7.2.0
+    glob-promise: ^4.2.2
+    inquirer: ^8.0.0
+    jest: ^28.1.3
+    js-yaml: ^4.1.0
+    prettier: ^2.7.1
+    ts-jest: ^28.0.7
+    typescript: 4.6.4
+    validate-npm-package-name: ^4.0.0
+    yargs: ^17.4.1
+    zod: ^3.14.3
+  bin:
+    fern: dist/bundle.cjs
+  languageName: unknown
+  linkType: soft
+
 "@fern-api/compile-root@workspace:packages/_root":
   version: 0.0.0-use.local
   resolution: "@fern-api/compile-root@workspace:packages/_root"
@@ -1936,6 +1985,7 @@ __metadata:
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/add-generator": "workspace:*"
+    "@fern-api/cli": "workspace:*"
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/docker-utils": "workspace:*"
@@ -1979,7 +2029,6 @@ __metadata:
     "@types/node": ^18.6.1
     depcheck: ^1.4.3
     eslint: ^8.20.0
-    fern-api: "workspace:*"
     fern-typescript: "workspace:*"
     jest: ^28.1.3
     prettier: ^2.7.1
@@ -2186,77 +2235,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/mrlint-add-package@npm:0.0.68":
-  version: 0.0.68
-  resolution: "@fern-api/mrlint-add-package@npm:0.0.68"
-  dependencies:
-    "@fern-api/mrlint-commons": 0.0.68
-    "@fern-api/mrlint-lint": 0.0.68
-    "@fern-api/mrlint-parser": 0.0.68
-    execa: ^5.1.1
-    inquirer: ^8.0.0
-    inquirer-file-tree-selection-prompt: ^1.0.19
-  checksum: f0477e270675a21c0436e9e42a14fcc7699fe7162f96f2c1dfad55ba0b4fd48ebaeb39b7f0944cb1cb88c4b16044f9e5fe8fbbfd41218148c4791feec224c30d
-  languageName: node
-  linkType: hard
-
-"@fern-api/mrlint-commons@npm:0.0.68":
-  version: 0.0.68
-  resolution: "@fern-api/mrlint-commons@npm:0.0.68"
-  dependencies:
-    "@fern-api/mrlint-virtual-file-system": 0.0.68
-    find-up: ^5.0.0
-    micromatch: ^4.0.5
-  checksum: 453ca5e87183a8ebd722d9aa3e387129f7c907ac0691668db41b157532c48e92115fae87dffff4e07f6be9421adb2486bdf79348f9662aa17ed76ccc95815975
-  languageName: node
-  linkType: hard
-
-"@fern-api/mrlint-lint@npm:0.0.68":
-  version: 0.0.68
-  resolution: "@fern-api/mrlint-lint@npm:0.0.68"
-  dependencies:
-    "@fern-api/mrlint-commons": 0.0.68
-    "@fern-api/mrlint-rules": 0.0.68
-    "@fern-api/mrlint-virtual-file-system": 0.0.68
-    chalk: ^4.1.2
-    diff: ^5.0.0
-    prettier: ^2.6.2
-  checksum: 491f1e95c9b7081b0b511a4c5d9c12719e7f9fb1733115a5c7fef3f808eb7620c967956bb17f63b8a91eba97d630f96901d73220202eda8e3f6a906e3a70c02b
-  languageName: node
-  linkType: hard
-
-"@fern-api/mrlint-parser@npm:0.0.68":
-  version: 0.0.68
-  resolution: "@fern-api/mrlint-parser@npm:0.0.68"
-  dependencies:
-    "@fern-api/mrlint-commons": 0.0.68
-    execa: ^5.1.1
-    find-up: ^5.0.0
-    js-yaml: ^4.1.0
-    zod: ^3.14.3
-  checksum: ad46af83bb7753e56f3ca2c7a9acd8fe429b86a9694a40a79970f42cba281a3dccb938d89e9c04a35b585f1f88eeaf2d2d0c021720f9610b763a7d40aed3249a
-  languageName: node
-  linkType: hard
-
-"@fern-api/mrlint-rules@npm:0.0.68":
-  version: 0.0.68
-  resolution: "@fern-api/mrlint-rules@npm:0.0.68"
-  dependencies:
-    "@fern-api/mrlint-commons": 0.0.68
-    "@fern-api/mrlint-virtual-file-system": 0.0.68
-    immer: ^9.0.15
-    semver: ^7.3.7
-  checksum: 3d14bae4fee1db8d7337034ff4208c75978e4d164d88ec318bcd310e8cdb9e8e3edec9c0624e47c23f22e009c48093968dfc25d90b28aa2f4a0679d015cc0903
-  languageName: node
-  linkType: hard
-
-"@fern-api/mrlint-virtual-file-system@npm:0.0.68":
-  version: 0.0.68
-  resolution: "@fern-api/mrlint-virtual-file-system@npm:0.0.68"
-  checksum: 3c3320ab8f4e6cb7778c7a4a1dece03468a3b842fbce1abf2d1047b76b09284762da8d9e9c7f59d9712e1e265072f3a1af22d516fc32db3fbb6e112826458c08
-  languageName: node
-  linkType: hard
-
 "@fern-api/openapi-converter@workspace:*, @fern-api/openapi-converter@workspace:packages/openapi-converter":
   version: 0.0.0-use.local
   resolution: "@fern-api/openapi-converter@workspace:packages/openapi-converter"
@@ -2355,7 +2333,7 @@ __metadata:
     typescript: 4.6.4
     yargs: ^17.4.1
   bin:
-    scripts: dist/bundle.cjs
+    fern-scripts: dist/bundle.cjs
   languageName: unknown
   linkType: soft
 
@@ -6935,7 +6913,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cli-cursor@npm:^3, cli-cursor@npm:^3.1.0":
+"cli-cursor@npm:^3.1.0":
   version: 3.1.0
   resolution: "cli-cursor@npm:3.1.0"
   dependencies:
@@ -8112,13 +8090,6 @@ __metadata:
   version: 4.0.2
   resolution: "diff@npm:4.0.2"
   checksum: f2c09b0ce4e6b301c221addd83bf3f454c0bc00caa3dd837cf6c127d6edf7223aa2bbe3b688feea110b7f262adbfc845b757c44c8a9f8c0c5b15d8fa9ce9d20d
-  languageName: node
-  linkType: hard
-
-"diff@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "diff@npm:5.0.0"
-  checksum: f19fe29284b633afdb2725c2a8bb7d25761ea54d321d8e67987ac851c5294be4afeab532bd84531e02583a3fe7f4014aa314a3eda84f5590e7a9e6b371ef3b46
   languageName: node
   linkType: hard
 
@@ -9555,55 +9526,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"fern-api@workspace:*, fern-api@workspace:packages/cli/cli":
-  version: 0.0.0-use.local
-  resolution: "fern-api@workspace:packages/cli/cli"
-  dependencies:
-    "@babel/core": ^7.18.9
-    "@babel/preset-env": ^7.18.9
-    "@babel/preset-typescript": ^7.18.6
-    "@fern-api/add-generator": "workspace:*"
-    "@fern-api/config-management-commons": "workspace:*"
-    "@fern-api/core-utils": "workspace:*"
-    "@fern-api/init": "workspace:*"
-    "@fern-api/ir-generator": "workspace:*"
-    "@fern-api/local-workspace-runner": "workspace:*"
-    "@fern-api/login": "workspace:*"
-    "@fern-api/openapi-converter": "workspace:*"
-    "@fern-api/project-configuration": "workspace:*"
-    "@fern-api/remote-workspace-runner": "workspace:*"
-    "@fern-api/validator": "workspace:*"
-    "@fern-api/workspace-configuration": "workspace:*"
-    "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/ir-model": 0.0.53
-    "@types/inquirer": ^8.2.1
-    "@types/jest": ^28.1.6
-    "@types/js-yaml": ^4.0.5
-    "@types/node": ^18.6.1
-    "@types/validate-npm-package-name": ^4.0.0
-    "@types/yargs": ^17.0.10
-    "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
-    chalk: ^4.1.2
-    depcheck: ^1.4.3
-    env-cmd: toddbluhm/env-cmd
-    esbuild: ^0.14.50
-    eslint: ^8.20.0
-    glob: ^7.2.0
-    glob-promise: ^4.2.2
-    inquirer: ^8.0.0
-    jest: ^28.1.3
-    js-yaml: ^4.1.0
-    prettier: ^2.7.1
-    ts-jest: ^28.0.7
-    typescript: 4.6.4
-    validate-npm-package-name: ^4.0.0
-    yargs: ^17.4.1
-    zod: ^3.14.3
-  bin:
-    fern: dist/bundle.cjs
-  languageName: unknown
-  linkType: soft
-
 "fern-typescript@workspace:*, fern-typescript@workspace:packages/fern-typescript/cli":
   version: 0.0.0-use.local
   resolution: "fern-typescript@workspace:packages/fern-typescript/cli"
@@ -9674,7 +9596,7 @@ env-cmd@toddbluhm/env-cmd:
     jest: ^28.1.3
     lint-staged: ^12.3.7
     lodash: ^4.17.21
-    mrlint: ^0.0.68
+    mrlint: ^0.0.70
     prettier: ^2.7.1
     stylelint: ^14.9.1
     stylelint-config-prettier-scss: ^0.0.1
@@ -9691,7 +9613,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"figures@npm:3.2.x, figures@npm:^3, figures@npm:^3.0.0":
+"figures@npm:3.2.x, figures@npm:^3.0.0":
   version: 3.2.0
   resolution: "figures@npm:3.2.0"
   dependencies:
@@ -10943,19 +10865,6 @@ env-cmd@toddbluhm/env-cmd:
   version: 1.3.8
   resolution: "ini@npm:1.3.8"
   checksum: dfd98b0ca3a4fc1e323e38a6c8eb8936e31a97a918d3b377649ea15bdb15d481207a0dda1021efbd86b464cae29a0d33c1d7dcaf6c5672bee17fa849bc50a1b3
-  languageName: node
-  linkType: hard
-
-"inquirer-file-tree-selection-prompt@npm:^1.0.19":
-  version: 1.0.19
-  resolution: "inquirer-file-tree-selection-prompt@npm:1.0.19"
-  dependencies:
-    chalk: "npm:^4.0.0"
-    cli-cursor: "npm:^3"
-    figures: "npm:^3"
-    lodash: "npm:^4.17.11"
-    rxjs: "npm:^7.5.2"
-  checksum: d31104d8b070e038d1988f980a6aa88c2222fdb03d214dccbf9411cd3ae1b809a9b0a5f4e32da5ab6d5ce564f0a0d796f2cb80da37458a8384b93e8236c0e72a
   languageName: node
   linkType: hard
 
@@ -12959,7 +12868,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.17.11, lodash@npm:^4.17.15, lodash@npm:^4.17.20, lodash@npm:^4.17.21, lodash@npm:^4.7.0":
+"lodash@npm:^4.17.15, lodash@npm:^4.17.20, lodash@npm:^4.17.21, lodash@npm:^4.7.0":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: eb835a2e51d381e561e508ce932ea50a8e5a68f4ebdd771ea240d3048244a8d13658acbd502cd4829768c56f2e16bdd4340b9ea141297d472517b83868e677f7
@@ -13492,19 +13401,12 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"mrlint@npm:^0.0.68":
-  version: 0.0.68
-  resolution: "mrlint@npm:0.0.68"
-  dependencies:
-    "@fern-api/mrlint-add-package": 0.0.68
-    "@fern-api/mrlint-commons": 0.0.68
-    "@fern-api/mrlint-lint": 0.0.68
-    "@fern-api/mrlint-parser": 0.0.68
-    chalk: ^4.1.2
-    yargs: ^17.5.1
+"mrlint@npm:^0.0.70":
+  version: 0.0.70
+  resolution: "mrlint@npm:0.0.70"
   bin:
-    mrlint: dist/bundle.cjs
-  checksum: e0c0a3a5b84a420bae21273bdd0da2a735d82f7aa12f108e632913ace21935a425f94c79d5642ce7854596bd0eca0aaa4c9a97e1e27e709ace64ef9ee68352f7
+    mrlint: bundle.cjs
+  checksum: fe79f368e24794a5c0e9857f71f6635b903a74f55eee76197597b5a55d3a1eea1e29fe1368815578861d5dec4ea86769d5f096d03fd3f894624cc6c4af3c998a
   languageName: node
   linkType: hard
 
@@ -15413,7 +15315,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.6.2, prettier@npm:^2.7.1":
+"prettier@npm:^2.7.1":
   version: 2.7.1
   resolution: "prettier@npm:2.7.1"
   bin:
@@ -16493,7 +16395,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"rxjs@npm:^7.2.0, rxjs@npm:^7.5.2, rxjs@npm:^7.5.5":
+"rxjs@npm:^7.2.0, rxjs@npm:^7.5.5":
   version: 7.5.5
   resolution: "rxjs@npm:7.5.5"
   dependencies:
@@ -19663,7 +19565,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"yargs@npm:^17.3.1, yargs@npm:^17.4.1, yargs@npm:^17.5.1":
+"yargs@npm:^17.3.1, yargs@npm:^17.4.1":
   version: 17.5.1
   resolution: "yargs@npm:17.5.1"
   dependencies:
