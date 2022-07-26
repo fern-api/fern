@@ -13,7 +13,8 @@
     "node-loader",
     "ts-node",
     "webpack-bundle-analyzer",
-    "@types/webpack-bundle-analyzer"
+    "@types/webpack-bundle-analyzer",
+    "simple-progress-webpack-plugin"
   ],
   "ignore-patterns": ["lib", "docker/bundle.js"]
 }
