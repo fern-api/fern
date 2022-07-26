@@ -1,16 +1,7 @@
-import { createRequire } from "module";
-import path, { dirname } from "path";
-import SimpleProgressWebpackPlugin from "simple-progress-webpack-plugin";
-import { fileURLToPath } from "url";
-import webpack from "webpack";
+const path = require("path");
+const SimpleProgressWebpackPlugin = require("simple-progress-webpack-plugin");
 
-const require = createRequire(import.meta.url);
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
-export default async (
-    _env: unknown,
-    { mode = "production" }: webpack.WebpackOptionsNormalized
-): Promise<webpack.Configuration> => {
+module.exports = async (_env, { mode = "production" }) => {
     return {
         mode,
         target: "node",

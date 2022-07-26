@@ -6,7 +6,7 @@ TAG="$1"
 DOCKER_NAME=fernapi/fern-typescript:"$TAG"
 
 DOCKER_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}"; )" &> /dev/null && pwd 2> /dev/null; )";
-WEBPACK_CONFIG="$DOCKER_DIR/webpack.config.ts"
+WEBPACK_CONFIG="$DOCKER_DIR/webpack.config.cjs"
 WEBPACK_TS_CONFIG="$DOCKER_DIR/tsconfig.webpack.json"
 
 yarn run compile
@@ -16,7 +16,7 @@ if [[ "$TAG" == "local" ]]; then
 	webpack_mode="development"
 fi
 
-yarn node --loader ts-node/esm $(yarn bin webpack) --config "$WEBPACK_CONFIG" --mode "$webpack_mode"
+yarn node $(yarn bin webpack) --config "$WEBPACK_CONFIG" --mode "$webpack_mode"
 
 docker build -f "$DOCKER_DIR/Dockerfile" -t "$DOCKER_NAME" "$DOCKER_DIR"
 
