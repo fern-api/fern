@@ -35,8 +35,8 @@ jobs:
           command: git --no-pager diff
 
   compile-and-test:
-    machine:
-      image: ubuntu-2004:current
+    docker:
+      - image: cimg/node:current
     steps:
       - checkout
       - node/install-packages:
@@ -90,6 +90,9 @@ jobs:
     machine:
       image: ubuntu-2004:current
     steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn-berry
       - run:
           name: Publish fern-typescript Docker
           command: |
