@@ -1656,7 +1656,6 @@ __metadata:
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/docker-utils": "workspace:*"
     "@fern-api/ete-tests": "workspace:*"
-    "@fern-api/fe-bundle": "workspace:*"
     "@fern-api/init": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/loadable": "workspace:*"
@@ -1686,6 +1685,7 @@ __metadata:
     "@fern-typescript/types": "workspace:*"
     "@fern-ui/app": "workspace:*"
     "@fern-ui/contexted-dialog": "workspace:*"
+    "@fern-ui/fe-bundle": "workspace:*"
     "@fern-ui/react-commons": "workspace:*"
     "@fern-ui/react-query-utils": "workspace:*"
     "@fern-ui/routing-utils": "workspace:*"
@@ -1776,39 +1776,6 @@ __metadata:
     jest: ^28.1.3
     prettier: ^2.7.1
     typescript: 4.6.4
-  languageName: unknown
-  linkType: soft
-
-"@fern-api/fe-bundle@workspace:*, @fern-api/fe-bundle@workspace:packages/ui/fe-bundle":
-  version: 0.0.0-use.local
-  resolution: "@fern-api/fe-bundle@workspace:packages/ui/fe-bundle"
-  dependencies:
-    "@babel/core": ^7.18.9
-    "@babel/preset-env": ^7.18.9
-    "@babel/preset-typescript": ^7.18.6
-    "@blueprintjs/core": ^4.6.1
-    "@blueprintjs/icons": ^4.3.1
-    "@blueprintjs/popover2": ^1.4.2
-    "@blueprintjs/select": ^4.4.2
-    "@fern-ui/app": "workspace:*"
-    "@fern-ui/theme": "workspace:*"
-    "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
-    "@types/react": ^18.0.15
-    "@types/react-dom": ^18.0.6
-    "@vitejs/plugin-react": ^2.0.0
-    depcheck: ^1.4.3
-    eslint: ^8.20.0
-    jest: ^28.1.3
-    normalize.css: ^8.0.1
-    npm-run-all: ^4.1.5
-    prettier: ^2.7.1
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    stylelint: ^14.9.1
-    ts-jest: ^28.0.7
-    typescript: 4.6.4
-    vite: ^3.0.3
   languageName: unknown
   linkType: soft
 
@@ -2491,6 +2458,7 @@ __metadata:
     "@babel/core": ^7.18.9
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
+    "@blueprintjs/core": ^4.6.1
     "@types/jest": ^28.1.6
     "@types/node": ^18.6.1
     "@types/react": ^18.0.15
@@ -2525,8 +2493,44 @@ __metadata:
     jest: ^28.1.3
     prettier: ^2.7.1
     react: ^18.2.0
+    react-dom: ^18.2.0
     stylelint: ^14.9.1
     typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
+"@fern-ui/fe-bundle@workspace:*, @fern-ui/fe-bundle@workspace:packages/ui/fe-bundle":
+  version: 0.0.0-use.local
+  resolution: "@fern-ui/fe-bundle@workspace:packages/ui/fe-bundle"
+  dependencies:
+    "@babel/core": ^7.18.9
+    "@babel/preset-env": ^7.18.9
+    "@babel/preset-typescript": ^7.18.6
+    "@blueprintjs/core": ^4.6.1
+    "@blueprintjs/icons": ^4.3.1
+    "@blueprintjs/popover2": ^1.4.2
+    "@blueprintjs/select": ^4.4.2
+    "@fern-ui/app": "workspace:*"
+    "@fern-ui/theme": "workspace:*"
+    "@types/jest": ^28.1.6
+    "@types/node": ^18.6.1
+    "@types/react": ^18.0.15
+    "@types/react-dom": ^18.0.6
+    "@vitejs/plugin-react": ^2.0.0
+    depcheck: ^1.4.3
+    eslint: ^8.20.0
+    jest: ^28.1.3
+    normalize.css: ^8.0.1
+    npm-run-all: ^4.1.5
+    prettier: ^2.7.1
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    sass: ^1.54.0
+    stylelint: ^14.9.1
+    ts-jest: ^28.0.7
+    typescript: 4.6.4
+    vite: ^3.0.3
+    vite-plugin-checker: ^0.4.9
   languageName: unknown
   linkType: soft
 
@@ -2589,6 +2593,7 @@ __metadata:
     jest: ^28.1.3
     prettier: ^2.7.1
     react: ^18.2.0
+    react-dom: ^18.2.0
     react-router-dom: ^6.2.1
     stylelint: ^14.9.1
     typescript: 4.6.4
@@ -2612,6 +2617,7 @@ __metadata:
     jest: ^28.1.3
     prettier: ^2.7.1
     react: ^18.2.0
+    react-dom: ^18.2.0
     stylelint: ^14.9.1
     typescript: 4.6.4
   languageName: unknown
@@ -2633,6 +2639,7 @@ __metadata:
     jest: ^28.1.3
     prettier: ^2.7.1
     react: ^18.2.0
+    react-dom: ^18.2.0
     stylelint: ^14.9.1
     typescript: 4.6.4
   languageName: unknown
@@ -4835,7 +4842,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chokidar@npm:>=3.0.0 <4.0.0, chokidar@npm:^3.5.0":
+"chokidar@npm:>=3.0.0 <4.0.0, chokidar@npm:^3.5.0, chokidar@npm:^3.5.1":
   version: 3.5.3
   resolution: "chokidar@npm:3.5.3"
   dependencies:
@@ -5124,7 +5131,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:^8.3.0":
+"commander@npm:^8.0.0, commander@npm:^8.3.0":
   version: 8.3.0
   resolution: "commander@npm:8.3.0"
   checksum: 0f82321821fc27b83bd409510bb9deeebcfa799ff0bf5d102128b500b7af22872c0c92cb6a0ebc5a4cf19c6b550fba9cedfa7329d18c6442a625f851377bacf0
@@ -6391,7 +6398,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"fast-glob@npm:^3.2.11, fast-glob@npm:^3.2.9":
+"fast-glob@npm:^3.2.11, fast-glob@npm:^3.2.7, fast-glob@npm:^3.2.9":
   version: 3.2.11
   resolution: "fast-glob@npm:3.2.11"
   dependencies:
@@ -6521,7 +6528,7 @@ env-cmd@toddbluhm/env-cmd:
     jest: ^28.1.3
     lint-staged: ^12.3.7
     lodash: ^4.17.21
-    mrlint: ^0.0.74
+    mrlint: ^0.0.76
     prettier: ^2.7.1
     stylelint: ^14.9.1
     stylelint-config-prettier-scss: ^0.0.1
@@ -8591,6 +8598,13 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"lodash.pick@npm:^4.4.0":
+  version: 4.4.0
+  resolution: "lodash.pick@npm:4.4.0"
+  checksum: 2c36cab7da6b999a20bd3373b40e31a3ef81fa264f34a6979c852c5bc8ac039379686b27380f0cb8e3781610844fafec6949c6fbbebc059c98f8fa8570e3675f
+  languageName: node
+  linkType: hard
+
 "lodash.truncate@npm:^4.4.2":
   version: 4.4.2
   resolution: "lodash.truncate@npm:4.4.2"
@@ -9044,12 +9058,12 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"mrlint@npm:^0.0.74":
-  version: 0.0.74
-  resolution: "mrlint@npm:0.0.74"
+"mrlint@npm:^0.0.76":
+  version: 0.0.76
+  resolution: "mrlint@npm:0.0.76"
   bin:
     mrlint: cli.cjs
-  checksum: 84bbbae561f01ad7906826271672822970e9298630d828aed58c897e0e5b0adf8ddf49606a70a9302eba0a51be9703baee5a99c4b3695fbccd8f0eb8c503ad60
+  checksum: ee7a8b7d818c2def9f4deab7845c38caf6aad312d9fa8d650bfc118a2c27138a3b5fcc123b60f33e27380bb4573c058d6deb6c6e45a778df08d1c3ca2c7bbe3d
   languageName: node
   linkType: hard
 
@@ -10583,6 +10597,19 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"sass@npm:^1.54.0":
+  version: 1.54.0
+  resolution: "sass@npm:1.54.0"
+  dependencies:
+    chokidar: ">=3.0.0 <4.0.0"
+    immutable: ^4.0.0
+    source-map-js: ">=0.6.2 <2.0.0"
+  bin:
+    sass: sass.js
+  checksum: 7d3acf124d771e8811fce876ad37f786faafa9edce64b20dcf32bf6aed5116802c863d3311fd79e7e7682fcccc4dc684960be1365cffa7dad045be7251c40d70
+  languageName: node
+  linkType: hard
+
 "scheduler@npm:^0.23.0":
   version: 0.23.0
   resolution: "scheduler@npm:0.23.0"
@@ -11549,6 +11576,13 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"tiny-invariant@npm:^1.1.0":
+  version: 1.2.0
+  resolution: "tiny-invariant@npm:1.2.0"
+  checksum: e09a718a7c4a499ba592cdac61f015d87427a0867ca07f50c11fd9b623f90cdba18937b515d4a5e4f43dac92370498d7bdaee0d0e7a377a61095e02c4a92eade
+  languageName: node
+  linkType: hard
+
 "tinydate@npm:^1.3.0":
   version: 1.3.0
   resolution: "tinydate@npm:1.3.0"
@@ -12120,6 +12154,33 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"vite-plugin-checker@npm:^0.4.9":
+  version: 0.4.9
+  resolution: "vite-plugin-checker@npm:0.4.9"
+  dependencies:
+    "@babel/code-frame": ^7.12.13
+    ansi-escapes: ^4.3.0
+    chalk: ^4.1.1
+    chokidar: ^3.5.1
+    commander: ^8.0.0
+    fast-glob: ^3.2.7
+    lodash.debounce: ^4.0.8
+    lodash.pick: ^4.4.0
+    npm-run-path: ^4.0.1
+    strip-ansi: ^6.0.0
+    tiny-invariant: ^1.1.0
+    vscode-languageclient: ^7.0.0
+    vscode-languageserver: ^7.0.0
+    vscode-languageserver-textdocument: ^1.0.1
+    vscode-uri: ^3.0.2
+  peerDependencies:
+    vite: ^2.0.0 || ^3.0.0-0
+  bin:
+    vite-plugin-checker-vls: bin/vls
+  checksum: b3bff686c3a48335869376d01ceb98ec4a5fa961dcdb4968ab2e629ab989a7760f2ea29c3660cf3fa54f3354968c93415fc918f2bebea2ec8a6bb93692eec41a
+  languageName: node
+  linkType: hard
+
 "vite@npm:^3.0.3":
   version: 3.0.3
   resolution: "vite@npm:3.0.3"
@@ -12149,6 +12210,66 @@ env-cmd@toddbluhm/env-cmd:
   bin:
     vite: bin/vite.js
   checksum: 0b15d6bb062ab56dd8a0d47262344dcb48423d658c153c88a8a41f9301a70f32dd0fa2c037fa39a0a7888be1005cb763aad94235f82439441a13cef5103c29c4
+  languageName: node
+  linkType: hard
+
+"vscode-jsonrpc@npm:6.0.0":
+  version: 6.0.0
+  resolution: "vscode-jsonrpc@npm:6.0.0"
+  checksum: 3a67a56f287e8c449f2d9752eedf91e704dc7b9a326f47fb56ac07667631deb45ca52192e9bccb2ab108764e48409d70fa64b930d46fc3822f75270b111c5f53
+  languageName: node
+  linkType: hard
+
+"vscode-languageclient@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "vscode-languageclient@npm:7.0.0"
+  dependencies:
+    minimatch: ^3.0.4
+    semver: ^7.3.4
+    vscode-languageserver-protocol: 3.16.0
+  checksum: fde7122e96838f0de1940dba80fc4b6bb80717695dbfaff005b9d44eeea371b7f09daedefaebcbf0ff278f67446e37837ec0730ddbc7dbd82aca5d8567065594
+  languageName: node
+  linkType: hard
+
+"vscode-languageserver-protocol@npm:3.16.0":
+  version: 3.16.0
+  resolution: "vscode-languageserver-protocol@npm:3.16.0"
+  dependencies:
+    vscode-jsonrpc: 6.0.0
+    vscode-languageserver-types: 3.16.0
+  checksum: ac30cbe4b778344f7b93defbaa1332dcb5a5a3a0afda6b88618a9ed44093c1ae1d2f11548bdcff42a73bb46943df025d4fe721559144dd7bf25ae60663aabe06
+  languageName: node
+  linkType: hard
+
+"vscode-languageserver-textdocument@npm:^1.0.1":
+  version: 1.0.5
+  resolution: "vscode-languageserver-textdocument@npm:1.0.5"
+  checksum: 758ca33c8e332de0af53935f6863fba60b8f06812d821d03f16cffbbb0a67ffab7f5a1f4fb02f57832a1232236ac703602a6a9d8de9b5e690d8cb7ee0c2dfa6a
+  languageName: node
+  linkType: hard
+
+"vscode-languageserver-types@npm:3.16.0":
+  version: 3.16.0
+  resolution: "vscode-languageserver-types@npm:3.16.0"
+  checksum: 7a44fb10b9fbeb9529f832337b7f0430fc6275d62945b86851d425a950e22da3917ef5f6c552688191769dd1eae047c6ee9ec3d9f2280498353007c2dfe0725c
+  languageName: node
+  linkType: hard
+
+"vscode-languageserver@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "vscode-languageserver@npm:7.0.0"
+  dependencies:
+    vscode-languageserver-protocol: 3.16.0
+  bin:
+    installServerIntoExtension: bin/installServerIntoExtension
+  checksum: 80cfbd5f8f0869c5369d1a61fe86b3210ee941cb646eb31b672045670ef3ce213dc1fd3bcd4cef6ef8bc7c5025f98e4a70dad645d97a0bd4708962bbd921683a
+  languageName: node
+  linkType: hard
+
+"vscode-uri@npm:^3.0.2":
+  version: 3.0.3
+  resolution: "vscode-uri@npm:3.0.3"
+  checksum: 683bf9de835c3cef0b51c104a4949bf746148ded7c2287ebafcc506d20aa0e90b99385a972dba8132903420dba67fc33a5e146e30212c4a6b3ca5d74d1f95702
   languageName: node
   linkType: hard
 

@@ -29,6 +29,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
+    "@blueprintjs/core": "^4.6.1",
     "react": "^18.2.0"
   },
   "devDependencies": {
