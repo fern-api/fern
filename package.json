@@ -24,8 +24,8 @@
     "@babel/eslint-parser": "^7.17.0",
     "@babel/preset-env": "^7.18.2",
     "@babel/preset-typescript": "^7.17.12",
-    "@fern-api/ir-generator": "^0.0.128",
-    "@fern-api/workspace-parser": "^0.0.128",
+    "@fern-api/ir-generator": "0.0.160",
+    "@fern-api/workspace-loader": "^0.0.160",
     "@types/jest": "^27.5.0",
     "@types/postman-collection": "^3.5.7",
     "@types/uuid": "^8.3.4",
@@ -41,9 +41,9 @@
     "webpack-cli": "^4.9.2"
   },
   "dependencies": {
-    "@fern-fern/generator-logging-api-client": "^0.0.11",
-    "@fern-fern/ir-model": "0.0.48",
-    "@fern-fern/postman-collection-api-client": "0.0.13",
+    "@fern-fern/generator-logging-api-client": "^0.0.25",
+    "@fern-fern/ir-model": "^0.0.53",
+    "@fern-fern/postman-collection-api-client": "^0.0.15",
     "@types/lodash": "^4.14.182",
     "lodash": "^4.17.21",
     "postman-collection": "^4.1.4",

@@ -1,6 +1,4 @@
 {
   "testMatch": ["**/__test__/**/*.test.ts{,x}"],
-  "transform": {
-    ".*\\.ts$": ["babel-jest", { "rootMode": "upward" }]
-  }
+  "transformIgnorePatterns": ["node_modules/(?!@fern-api)"]
 }

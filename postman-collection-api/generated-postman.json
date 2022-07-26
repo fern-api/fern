@@ -175,7 +175,7 @@
                   }
                 }
               },
-              "body": "{\n    \"collections\": [\n        {\n            \"id\": \"example\",\n            \"name\": \"example\",\n            \"owner\": \"example\",\n            \"createdAt\": \"2022-07-22T20:09:07.504Z\",\n            \"updatedAt\": \"2022-07-22T20:09:07.504Z\",\n            \"uid\": \"example\",\n            \"isPublic\": true,\n            \"forkInfo\": {\n                \"label\": \"example\",\n                \"createdAt\": \"2022-07-22T20:09:07.504Z\",\n                \"from\": \"example\"\n            }\n        }\n    ]\n}",
+              "body": "{\n    \"collections\": [\n        {\n            \"id\": \"example\",\n            \"name\": \"example\",\n            \"owner\": \"example\",\n            \"createdAt\": \"2022-07-25T19:04:08.486Z\",\n            \"updatedAt\": \"2022-07-25T19:04:08.486Z\",\n            \"uid\": \"example\",\n            \"isPublic\": true,\n            \"forkInfo\": {\n                \"label\": \"example\",\n                \"createdAt\": \"2022-07-25T19:04:08.512Z\",\n                \"from\": \"example\"\n            }\n        }\n    ]\n}",
               "_postman_previewlanguage": "json"
             }
           ]
