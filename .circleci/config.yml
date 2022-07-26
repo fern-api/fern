@@ -102,10 +102,14 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
-          name: Add version to package.json's
+          name: Print version
           command: |
-            echo Publishing version: $(./scripts/git-version.sh)
-            yarn mrlint version $(./scripts/git-version.sh)
+            git_version="$(./scripts/git-version.sh)"
+            npm_tag="$(./scripts/npm-tag.sh)"
+            echo Publishing version: "${git_version}@${npm_tag}"
+      - run:
+          name: Add version to package.json's
+          command: yarn mrlint version "$git_version"
       - run:
           name: Update yarn.lock with new versions
           command: yarn
@@ -114,7 +118,7 @@ jobs:
           command: yarn compile
       - run:
           name: Publish all packages
-          command: yarn run publish --tag $(./scripts/npm-tag.sh)
+          command: yarn run publish --tag "$(./scripts/npm-tag.sh)"
       - run:
           name: Publish fern-api CLI
           command: |
