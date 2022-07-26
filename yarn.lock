@@ -2186,74 +2186,74 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/mrlint-add-package@npm:0.0.61":
-  version: 0.0.61
-  resolution: "@fern-api/mrlint-add-package@npm:0.0.61"
+"@fern-api/mrlint-add-package@npm:0.0.62":
+  version: 0.0.62
+  resolution: "@fern-api/mrlint-add-package@npm:0.0.62"
   dependencies:
-    "@fern-api/mrlint-commons": 0.0.61
-    "@fern-api/mrlint-lint": 0.0.61
-    "@fern-api/mrlint-parser": 0.0.61
+    "@fern-api/mrlint-commons": 0.0.62
+    "@fern-api/mrlint-lint": 0.0.62
+    "@fern-api/mrlint-parser": 0.0.62
     execa: ^5.1.1
     inquirer: ^8.0.0
     inquirer-file-tree-selection-prompt: ^1.0.19
-  checksum: d75f5d9eda0f13626377e102c21c8330c0b9ce9f24ff75d7fca1e05d1823a5ea3282e6371a32731c52090ab73ea536094a9178bc45b52875c49fe1c3e9f40430
+  checksum: c59425baa2e69bfa6f1dc3150b884ad2e5e81241caa8a8d2de5401bb913132f42188071c3232d8332bd4e4a024aae19725fc28a4c3e7ec8eb3c132f02a7ece0b
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-commons@npm:0.0.61":
-  version: 0.0.61
-  resolution: "@fern-api/mrlint-commons@npm:0.0.61"
+"@fern-api/mrlint-commons@npm:0.0.62":
+  version: 0.0.62
+  resolution: "@fern-api/mrlint-commons@npm:0.0.62"
   dependencies:
-    "@fern-api/mrlint-virtual-file-system": 0.0.61
+    "@fern-api/mrlint-virtual-file-system": 0.0.62
     find-up: ^5.0.0
     micromatch: ^4.0.5
-  checksum: 37b03a4b7216099c006dc9aab001cc7cc9a9a413b6ceca57e5331e18fdc3b8ae8333491a57795fb3aef55ea695f5ac09cffe432ce09209c3f9c452f623685727
+  checksum: c82cfcb3b063e06c8a4ba8901613d233f75c297bd82918ceee2e975aaf6100b7c15d1601bea82c1a883d64c866e7d4d422567bf8b273820edbe79f4b38014fd4
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-lint@npm:0.0.61":
-  version: 0.0.61
-  resolution: "@fern-api/mrlint-lint@npm:0.0.61"
+"@fern-api/mrlint-lint@npm:0.0.62":
+  version: 0.0.62
+  resolution: "@fern-api/mrlint-lint@npm:0.0.62"
   dependencies:
-    "@fern-api/mrlint-commons": 0.0.61
-    "@fern-api/mrlint-rules": 0.0.61
-    "@fern-api/mrlint-virtual-file-system": 0.0.61
+    "@fern-api/mrlint-commons": 0.0.62
+    "@fern-api/mrlint-rules": 0.0.62
+    "@fern-api/mrlint-virtual-file-system": 0.0.62
     chalk: ^4.1.2
     diff: ^5.0.0
     prettier: ^2.6.2
-  checksum: 0604a863313c319b0edcfe7ceca331f986871de30e29a367d9a7720cfd87df4b8b8d341e5f02f276d1393365947015fb895f0bde86a8e1d476a89a13ba2fccf7
+  checksum: e718f5da544acc213a5d09dabf89f831289b62ba4aeb1c8c4d4bd70dc1b42ac20f5922d9d6f3d05184455d1e02bd10067e4c7fc7e29d5120658a2f2c598779cd
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-parser@npm:0.0.61":
-  version: 0.0.61
-  resolution: "@fern-api/mrlint-parser@npm:0.0.61"
+"@fern-api/mrlint-parser@npm:0.0.62":
+  version: 0.0.62
+  resolution: "@fern-api/mrlint-parser@npm:0.0.62"
   dependencies:
-    "@fern-api/mrlint-commons": 0.0.61
+    "@fern-api/mrlint-commons": 0.0.62
     execa: ^5.1.1
     find-up: ^5.0.0
     js-yaml: ^4.1.0
     zod: ^3.14.3
-  checksum: 03797d73345d6fff13b95f8f25f8c49264fe0e3eade04ce2ede90fa3c2c4ebf3be2bb3c708d77a7d985ef1aaadf26e1fd4bcf6122fab181dc09403ff38b64283
+  checksum: 37f8c7e547007ac419d1fdfd44e7df060d06256092fdc8875aa8f65e43f68c1cab7da165228b69430d4726943777e008a7fb76a9073b7245f3d4db73472216ea
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-rules@npm:0.0.61":
-  version: 0.0.61
-  resolution: "@fern-api/mrlint-rules@npm:0.0.61"
+"@fern-api/mrlint-rules@npm:0.0.62":
+  version: 0.0.62
+  resolution: "@fern-api/mrlint-rules@npm:0.0.62"
   dependencies:
-    "@fern-api/mrlint-commons": 0.0.61
-    "@fern-api/mrlint-virtual-file-system": 0.0.61
+    "@fern-api/mrlint-commons": 0.0.62
+    "@fern-api/mrlint-virtual-file-system": 0.0.62
     immer: ^9.0.12
     semver: ^7.3.7
-  checksum: 71eaf27f3afd6fae5debf00f75031ee6c7d061eabf3aa9f3f2eaec4a247ae3470bc2df80252329c856181ddfed6b15070e2872177bc29ce9c52a06f1243a31e9
+  checksum: 892e1d220d638f27d5b03266a965bdd73e882110f361cced1f0ba43932b5f326332b2537ea0865caa3ac497fac81bb8722e579526b2073a5bb7022181af91db5
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-virtual-file-system@npm:0.0.61":
-  version: 0.0.61
-  resolution: "@fern-api/mrlint-virtual-file-system@npm:0.0.61"
-  checksum: 1355186f628c9c52746afef2ccde4a652b4bcaad267f98bea2cfc156e88c5b17e52901ec9a02d791804663420ed4e87ddf9f0ccdc8dacb12a75436cc64f15f85
+"@fern-api/mrlint-virtual-file-system@npm:0.0.62":
+  version: 0.0.62
+  resolution: "@fern-api/mrlint-virtual-file-system@npm:0.0.62"
+  checksum: 51127e6fdde633f1a1600d6b51628dcf6af41dc9c0133302ac437840f63f9f588f3822c1a9b44330a978f54eb2bf19058ddc0d42b786295ac2e9b2cce4ada3bc
   languageName: node
   linkType: hard
 
@@ -9456,13 +9456,11 @@ env-cmd@toddbluhm/env-cmd:
     jest: ^28.1.3
     lint-staged: ^12.3.7
     lodash: ^4.17.21
-    mrlint: ^0.0.61
+    mrlint: ^0.0.62
     prettier: ^2.7.1
     stylelint: ^14.9.1
     stylelint-config-prettier-scss: ^0.0.1
     stylelint-config-standard-scss: ^4.0.0
-    ts-jest: ^28.0.7
-    ts-node: ^10.8.0
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -13275,19 +13273,19 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"mrlint@npm:^0.0.61":
-  version: 0.0.61
-  resolution: "mrlint@npm:0.0.61"
+"mrlint@npm:^0.0.62":
+  version: 0.0.62
+  resolution: "mrlint@npm:0.0.62"
   dependencies:
-    "@fern-api/mrlint-add-package": 0.0.61
-    "@fern-api/mrlint-commons": 0.0.61
-    "@fern-api/mrlint-lint": 0.0.61
-    "@fern-api/mrlint-parser": 0.0.61
+    "@fern-api/mrlint-add-package": 0.0.62
+    "@fern-api/mrlint-commons": 0.0.62
+    "@fern-api/mrlint-lint": 0.0.62
+    "@fern-api/mrlint-parser": 0.0.62
     chalk: ^4.1.2
     yargs: ^17.3.1
   bin:
     mrlint: dist/bundle.cjs
-  checksum: 04ada578fad5779e618b260edbaffa65fb450dea9883744898a72ac7162f74b4d4b16e48aad98157385447c8fb8962bad4b5a65ccac741330fdf09a17b6c119c
+  checksum: 14d1a8b656846cb42403d5499c83a114c25ced146d2f9c6305df991b344ba3ddcc520d42c7318c4206b5fa4f4732d05d3623dec7bf99e0581d9d66db544ceeaa
   languageName: node
   linkType: hard
 
@@ -17990,44 +17988,6 @@ env-cmd@toddbluhm/env-cmd:
     ts-node-transpile-only: dist/bin-transpile.js
     ts-script: dist/bin-script-deprecated.js
   checksum: 090adff1302ab20bd3486e6b4799e90f97726ed39e02b39e566f8ab674fd5bd5f727f43615debbfc580d33c6d9d1c6b1b3ce7d8e3cca3e20530a145ffa232c35
-  languageName: node
-  linkType: hard
-
-"ts-node@npm:^10.8.0":
-  version: 10.8.2
-  resolution: "ts-node@npm:10.8.2"
-  dependencies:
-    "@cspotcode/source-map-support": "npm:^0.8.0"
-    "@tsconfig/node10": "npm:^1.0.7"
-    "@tsconfig/node12": "npm:^1.0.7"
-    "@tsconfig/node14": "npm:^1.0.0"
-    "@tsconfig/node16": "npm:^1.0.2"
-    acorn: "npm:^8.4.1"
-    acorn-walk: "npm:^8.1.1"
-    arg: "npm:^4.1.0"
-    create-require: "npm:^1.1.0"
-    diff: "npm:^4.0.1"
-    make-error: "npm:^1.1.1"
-    v8-compile-cache-lib: "npm:^3.0.1"
-    yn: "npm:3.1.1"
-  peerDependencies:
-    "@swc/core": ">=1.2.50"
-    "@swc/wasm": ">=1.2.50"
-    "@types/node": "*"
-    typescript: ">=2.7"
-  peerDependenciesMeta:
-    "@swc/core":
-      optional: true
-    "@swc/wasm":
-      optional: true
-  bin:
-    ts-node: dist/bin.js
-    ts-node-cwd: dist/bin-cwd.js
-    ts-node-esm: dist/bin-esm.js
-    ts-node-script: dist/bin-script.js
-    ts-node-transpile-only: dist/bin-transpile.js
-    ts-script: dist/bin-script-deprecated.js
-  checksum: 1eede939beed9f4db35bcc88d78ef803815b99dcdbed1ecac728d861d74dc694918a7f0f437aa08d026193743a31e7e00e2ee34f875f909b5879981c1808e2a7
   languageName: node
   linkType: hard
 

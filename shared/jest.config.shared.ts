@@ -2,17 +2,11 @@
 import { Config } from "jest";
 
 const config: Config = {
-    preset: "ts-jest/presets/default-esm",
-    globals: {
-        "ts-jest": {
-            useESM: true,
-        },
-    },
-    moduleNameMapper: {
-        "^(\\.{1,2}/.*)\\.js$": "$1",
-    },
-    testEnvironment: "node",
     testMatch: ["**/__test__/**/*.test.ts{,x}"],
+    transform: {
+        "\\.[jt]sx?$": ["babel-jest", { rootMode: "upward" }],
+    },
+    modulePathIgnorePatterns: ["<rootDir>/packages/.*/__test__/.*/generated"],
 };
 
 export default config;
