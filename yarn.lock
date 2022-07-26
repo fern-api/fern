@@ -1805,6 +1805,7 @@ __metadata:
     prettier: ^2.7.1
     react: ^18.2.0
     react-dom: ^18.2.0
+    stylelint: ^14.9.1
     ts-jest: ^28.0.7
     typescript: 4.6.4
     vite: ^3.0.3
@@ -6520,7 +6521,7 @@ env-cmd@toddbluhm/env-cmd:
     jest: ^28.1.3
     lint-staged: ^12.3.7
     lodash: ^4.17.21
-    mrlint: ^0.0.73
+    mrlint: ^0.0.74
     prettier: ^2.7.1
     stylelint: ^14.9.1
     stylelint-config-prettier-scss: ^0.0.1
@@ -9043,12 +9044,12 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"mrlint@npm:^0.0.73":
-  version: 0.0.73
-  resolution: "mrlint@npm:0.0.73"
+"mrlint@npm:^0.0.74":
+  version: 0.0.74
+  resolution: "mrlint@npm:0.0.74"
   bin:
     mrlint: cli.cjs
-  checksum: e20e14891e1199599fe6f92a8f63218264d7404a040c77dfc368633c38006899a0c74111e2c62ee44c6375be2f1eb9d6fc869b567db6b3992619f5fe7c6d55b8
+  checksum: 84bbbae561f01ad7906826271672822970e9298630d828aed58c897e0e5b0adf8ddf49606a70a9302eba0a51be9703baee5a99c4b3695fbccd8f0eb8c503ad60
   languageName: node
   linkType: hard
 

@@ -20,7 +20,7 @@
     "lint:monorepo": "mrlint lint",
     "lint:monorepo:fix": "yarn lint:monorepo --fix",
     "lint:style": "stylelint 'packages/**/src/**/*.scss' --allow-empty-input --max-warnings 0",
-    "lint:style:fix": "yarn run lint:style --fix",
+    "lint:style:fix": "yarn lint:style --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ./shared/.prettierignore",
     "format:all": "yarn format \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ./shared/.prettierignore \"**\"",
@@ -32,9 +32,9 @@
     "docs:preview": "yarn docsify serve docs",
     "add-package": "yarn mrlint add-package",
     "fern-script": "yarn workspace @fern-api/scripts dist && node $(yarn workspace @fern-api/scripts bin fern-scripts)",
-    "generate-json-schema": "yarn run fern-script write-json-schema",
-    "check-root-package": "yarn run fern-script check-root-package",
-    "fix-root-package": "yarn run check-root-package --fix"
+    "generate-json-schema": "yarn fern-script write-json-schema",
+    "check-root-package": "yarn fern-script check-root-package",
+    "fix-root-package": "yarn check-root-package --fix"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",
@@ -61,7 +61,7 @@
     "jest": "^28.1.3",
     "lint-staged": "^12.3.7",
     "lodash": "^4.17.21",
-    "mrlint": "^0.0.73",
+    "mrlint": "^0.0.74",
     "prettier": "^2.7.1",
     "stylelint": "^14.9.1",
     "stylelint-config-prettier-scss": "^0.0.1",

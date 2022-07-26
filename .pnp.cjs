@@ -272,7 +272,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["lint-staged", "npm:12.4.1"],\
             ["lodash", "npm:4.17.21"],\
-            ["mrlint", "npm:0.0.73"],\
+            ["mrlint", "npm:0.0.74"],\
             ["prettier", "npm:2.7.1"],\
             ["stylelint", "npm:14.9.1"],\
             ["stylelint-config-prettier-scss", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:0.0.1"],\
@@ -3424,6 +3424,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.7.1"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:9b60843f93b40879d252e7157e551df447110dfbf7733263381f1a30af265b2804b12983457ee32c7facca51b4c4d5cc30287dc9e2725b4cbb8a618f3beae533#npm:18.2.0"],\
+            ["stylelint", "npm:14.9.1"],\
             ["ts-jest", "virtual:9b60843f93b40879d252e7157e551df447110dfbf7733263381f1a30af265b2804b12983457ee32c7facca51b4c4d5cc30287dc9e2725b4cbb8a618f3beae533#npm:28.0.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
             ["vite", "virtual:9b60843f93b40879d252e7157e551df447110dfbf7733263381f1a30af265b2804b12983457ee32c7facca51b4c4d5cc30287dc9e2725b4cbb8a618f3beae533#npm:3.0.3"]\
@@ -8971,7 +8972,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["lint-staged", "npm:12.4.1"],\
             ["lodash", "npm:4.17.21"],\
-            ["mrlint", "npm:0.0.73"],\
+            ["mrlint", "npm:0.0.74"],\
             ["prettier", "npm:2.7.1"],\
             ["stylelint", "npm:14.9.1"],\
             ["stylelint-config-prettier-scss", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:0.0.1"],\
@@ -11908,10 +11909,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["mrlint", [\
-        ["npm:0.0.73", {\
-          "packageLocation": "./.yarn/cache/mrlint-npm-0.0.73-33fbdf4831-e20e14891e.zip/node_modules/mrlint/",\
+        ["npm:0.0.74", {\
+          "packageLocation": "./.yarn/cache/mrlint-npm-0.0.74-7d275aae79-84bbbae561.zip/node_modules/mrlint/",\
           "packageDependencies": [\
-            ["mrlint", "npm:0.0.73"]\
+            ["mrlint", "npm:0.0.74"]\
           ],\
           "linkType": "HARD"\
         }]\

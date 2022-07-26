@@ -2,6 +2,9 @@
   "type": "cli",
   "cliName": "fern",
   "cliPackageName": "fern-api",
-  "environmentVariables": ["PACKAGE_VERSION", "AUTH0_DOMAIN", "AUTH0_CLIENT_ID"],
+  "environment": {
+    "environments": ["production"],
+    "variables": ["PACKAGE_VERSION", "AUTH0_DOMAIN", "AUTH0_CLIENT_ID"]
+  },
   "private": false
 }
