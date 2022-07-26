@@ -4,6 +4,7 @@ import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 import "@blueprintjs/popover2/lib/css/blueprint-popover2.css";
 import "@blueprintjs/select/lib/css/blueprint-select.css";
 import { App } from "@fern-ui/app";
+import { ThemeProvider } from "@fern-ui/theme";
 import "normalize.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
@@ -13,10 +14,12 @@ FocusStyleManager.onlyShowFocusOnTabs();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
-        <HotkeysProvider>
-            <div className={styles.app}>
-                <App />
-            </div>
-        </HotkeysProvider>
+        <ThemeProvider defaultIsDarkTheme>
+            <HotkeysProvider>
+                <div className={styles.app}>
+                    <App />
+                </div>
+            </HotkeysProvider>
+        </ThemeProvider>
     </React.StrictMode>
 );
