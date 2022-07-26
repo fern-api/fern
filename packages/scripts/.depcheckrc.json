@@ -6,7 +6,8 @@
     "@babel/core",
     "@babel/preset-env",
     "@babel/preset-typescript",
-    "ts-node"
+    "esbuild",
+    "@yarnpkg/esbuild-plugin-pnp"
   ],
   "ignore-patterns": ["lib"]
 }

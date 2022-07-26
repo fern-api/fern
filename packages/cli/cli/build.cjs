@@ -1,10 +1,12 @@
-import { build, BuildOptions } from "esbuild";
+const { pnpPlugin } = require("@yarnpkg/esbuild-plugin-pnp");
+const { build } = require("esbuild");
 
-const options: BuildOptions = {
+const options = {
     platform: "node",
     entryPoints: ["./src/cli.ts"],
     outfile: "./dist/bundle.cjs",
     bundle: true,
+    plugins: [pnpPlugin()],
     define: {
         "process.env.PACKAGE_VERSION": getEnvironmentVariable("PACKAGE_VERSION"),
         "process.env.AUTH0_DOMAIN": getEnvironmentVariable("AUTH0_DOMAIN"),
