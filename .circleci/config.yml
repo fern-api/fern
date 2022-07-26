@@ -124,7 +124,7 @@ jobs:
           command: |
             yarn workspace @fern-api/cli dist
             cd $(yarn workspace @fern-api/cli exec pwd)/dist
-            yarn npm publish
+            yarn npm publish --tag "$(./scripts/npm-tag.sh)"
       - run:
           name: Publish fern-typescript docker
           command: |
