@@ -2337,7 +2337,9 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^28.1.6
+    "@types/lodash": ^4.14.182
     "@types/node": ^18.6.1
+    "@types/yargs": ^17.0.10
     chalk: ^4.1.2
     depcheck: ^1.4.3
     env-cmd: toddbluhm/env-cmd
