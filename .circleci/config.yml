@@ -175,8 +175,6 @@ workflows:
           filters:
             branches:
               only: main
-            tags:
-              only: /.*/
           requires:
             - lint
             - compile-and-test
@@ -187,6 +185,8 @@ workflows:
 
       - pre-release-test:
           filters:
+            branches:
+              only: main
             tags:
               only: /.*/
           context:
@@ -194,6 +194,8 @@ workflows:
 
       - publish:
           filters:
+            branches:
+              only: main
             tags:
               only: /.*/
           requires:
