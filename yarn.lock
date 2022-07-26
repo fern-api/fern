@@ -2186,74 +2186,74 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/mrlint-add-package@npm:0.0.62":
-  version: 0.0.62
-  resolution: "@fern-api/mrlint-add-package@npm:0.0.62"
+"@fern-api/mrlint-add-package@npm:0.0.68":
+  version: 0.0.68
+  resolution: "@fern-api/mrlint-add-package@npm:0.0.68"
   dependencies:
-    "@fern-api/mrlint-commons": 0.0.62
-    "@fern-api/mrlint-lint": 0.0.62
-    "@fern-api/mrlint-parser": 0.0.62
+    "@fern-api/mrlint-commons": 0.0.68
+    "@fern-api/mrlint-lint": 0.0.68
+    "@fern-api/mrlint-parser": 0.0.68
     execa: ^5.1.1
     inquirer: ^8.0.0
     inquirer-file-tree-selection-prompt: ^1.0.19
-  checksum: c59425baa2e69bfa6f1dc3150b884ad2e5e81241caa8a8d2de5401bb913132f42188071c3232d8332bd4e4a024aae19725fc28a4c3e7ec8eb3c132f02a7ece0b
+  checksum: f0477e270675a21c0436e9e42a14fcc7699fe7162f96f2c1dfad55ba0b4fd48ebaeb39b7f0944cb1cb88c4b16044f9e5fe8fbbfd41218148c4791feec224c30d
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-commons@npm:0.0.62":
-  version: 0.0.62
-  resolution: "@fern-api/mrlint-commons@npm:0.0.62"
+"@fern-api/mrlint-commons@npm:0.0.68":
+  version: 0.0.68
+  resolution: "@fern-api/mrlint-commons@npm:0.0.68"
   dependencies:
-    "@fern-api/mrlint-virtual-file-system": 0.0.62
+    "@fern-api/mrlint-virtual-file-system": 0.0.68
     find-up: ^5.0.0
     micromatch: ^4.0.5
-  checksum: c82cfcb3b063e06c8a4ba8901613d233f75c297bd82918ceee2e975aaf6100b7c15d1601bea82c1a883d64c866e7d4d422567bf8b273820edbe79f4b38014fd4
+  checksum: 453ca5e87183a8ebd722d9aa3e387129f7c907ac0691668db41b157532c48e92115fae87dffff4e07f6be9421adb2486bdf79348f9662aa17ed76ccc95815975
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-lint@npm:0.0.62":
-  version: 0.0.62
-  resolution: "@fern-api/mrlint-lint@npm:0.0.62"
+"@fern-api/mrlint-lint@npm:0.0.68":
+  version: 0.0.68
+  resolution: "@fern-api/mrlint-lint@npm:0.0.68"
   dependencies:
-    "@fern-api/mrlint-commons": 0.0.62
-    "@fern-api/mrlint-rules": 0.0.62
-    "@fern-api/mrlint-virtual-file-system": 0.0.62
+    "@fern-api/mrlint-commons": 0.0.68
+    "@fern-api/mrlint-rules": 0.0.68
+    "@fern-api/mrlint-virtual-file-system": 0.0.68
     chalk: ^4.1.2
     diff: ^5.0.0
     prettier: ^2.6.2
-  checksum: e718f5da544acc213a5d09dabf89f831289b62ba4aeb1c8c4d4bd70dc1b42ac20f5922d9d6f3d05184455d1e02bd10067e4c7fc7e29d5120658a2f2c598779cd
+  checksum: 491f1e95c9b7081b0b511a4c5d9c12719e7f9fb1733115a5c7fef3f808eb7620c967956bb17f63b8a91eba97d630f96901d73220202eda8e3f6a906e3a70c02b
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-parser@npm:0.0.62":
-  version: 0.0.62
-  resolution: "@fern-api/mrlint-parser@npm:0.0.62"
+"@fern-api/mrlint-parser@npm:0.0.68":
+  version: 0.0.68
+  resolution: "@fern-api/mrlint-parser@npm:0.0.68"
   dependencies:
-    "@fern-api/mrlint-commons": 0.0.62
+    "@fern-api/mrlint-commons": 0.0.68
     execa: ^5.1.1
     find-up: ^5.0.0
     js-yaml: ^4.1.0
     zod: ^3.14.3
-  checksum: 37f8c7e547007ac419d1fdfd44e7df060d06256092fdc8875aa8f65e43f68c1cab7da165228b69430d4726943777e008a7fb76a9073b7245f3d4db73472216ea
+  checksum: ad46af83bb7753e56f3ca2c7a9acd8fe429b86a9694a40a79970f42cba281a3dccb938d89e9c04a35b585f1f88eeaf2d2d0c021720f9610b763a7d40aed3249a
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-rules@npm:0.0.62":
-  version: 0.0.62
-  resolution: "@fern-api/mrlint-rules@npm:0.0.62"
+"@fern-api/mrlint-rules@npm:0.0.68":
+  version: 0.0.68
+  resolution: "@fern-api/mrlint-rules@npm:0.0.68"
   dependencies:
-    "@fern-api/mrlint-commons": 0.0.62
-    "@fern-api/mrlint-virtual-file-system": 0.0.62
-    immer: ^9.0.12
+    "@fern-api/mrlint-commons": 0.0.68
+    "@fern-api/mrlint-virtual-file-system": 0.0.68
+    immer: ^9.0.15
     semver: ^7.3.7
-  checksum: 892e1d220d638f27d5b03266a965bdd73e882110f361cced1f0ba43932b5f326332b2537ea0865caa3ac497fac81bb8722e579526b2073a5bb7022181af91db5
+  checksum: 3d14bae4fee1db8d7337034ff4208c75978e4d164d88ec318bcd310e8cdb9e8e3edec9c0624e47c23f22e009c48093968dfc25d90b28aa2f4a0679d015cc0903
   languageName: node
   linkType: hard
 
-"@fern-api/mrlint-virtual-file-system@npm:0.0.62":
-  version: 0.0.62
-  resolution: "@fern-api/mrlint-virtual-file-system@npm:0.0.62"
-  checksum: 51127e6fdde633f1a1600d6b51628dcf6af41dc9c0133302ac437840f63f9f588f3822c1a9b44330a978f54eb2bf19058ddc0d42b786295ac2e9b2cce4ada3bc
+"@fern-api/mrlint-virtual-file-system@npm:0.0.68":
+  version: 0.0.68
+  resolution: "@fern-api/mrlint-virtual-file-system@npm:0.0.68"
+  checksum: 3c3320ab8f4e6cb7778c7a4a1dece03468a3b842fbce1abf2d1047b76b09284762da8d9e9c7f59d9712e1e265072f3a1af22d516fc32db3fbb6e112826458c08
   languageName: node
   linkType: hard
 
@@ -2337,23 +2337,22 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^28.1.6
+    "@types/lodash": ^4.14.182
     "@types/node": ^18.6.1
+    "@types/yargs": ^17.0.10
+    "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
     chalk: ^4.1.2
     depcheck: ^1.4.3
     env-cmd: toddbluhm/env-cmd
+    esbuild: ^0.14.50
     eslint: ^8.20.0
     execa: ^5.1.1
     immer: ^9.0.15
     jest: ^28.1.3
     lodash: ^4.17.21
-    node-loader: ^2.0.0
     prettier: ^2.7.1
     ts-jest: ^28.0.7
-    ts-loader: ^9.3.1
-    ts-node: ^10.9.1
     typescript: 4.6.4
-    webpack: ^5.74.0
-    webpack-cli: ^4.10.0
     yargs: ^17.4.1
   bin:
     scripts: dist/bundle.cjs
@@ -5310,6 +5309,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@yarnpkg/esbuild-plugin-pnp@npm:^3.0.0-rc.14":
+  version: 3.0.0-rc.14
+  resolution: "@yarnpkg/esbuild-plugin-pnp@npm:3.0.0-rc.14"
+  dependencies:
+    tslib: ^1.13.0
+  peerDependencies:
+    esbuild: ">=0.10.0"
+  checksum: 7213b06d807b20dfb51a631779b8279abcad822be0c0ef14312401fde30fcb4a6a997a195f7971d5f4df0099d9bd5dc00b8a18004af920c21c0c72eec160dcff
+  languageName: node
+  linkType: hard
+
 "abab@npm:^2.0.3, abab@npm:^2.0.5":
   version: 2.0.6
   resolution: "abab@npm:2.0.6"
@@ -7798,16 +7808,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:2.6.9, debug@npm:^2.6.0, debug@npm:^2.6.9":
-  version: 2.6.9
-  resolution: "debug@npm:2.6.9"
-  dependencies:
-    ms: "npm:2.0.0"
-  checksum: d2f51589ca66df60bf36e1fa6e4386b318c3f1e06772280eea5b1ae9fd3d05e9c2b7fd8a7d862457d00853c75b00451aa2d7459b924629ee385287a650f58fe6
-  languageName: node
-  linkType: hard
-
-"debug@npm:4, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.2.0, debug@npm:^4.3.2, debug@npm:^4.3.3, debug@npm:^4.3.4":
+"debug@npm:*, debug@npm:4, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.2.0, debug@npm:^4.3.2, debug@npm:^4.3.3, debug@npm:^4.3.4":
   version: 4.3.4
   resolution: "debug@npm:4.3.4"
   dependencies:
@@ -7816,6 +7817,15 @@ __metadata:
     supports-color:
       optional: true
   checksum: 3dbad3f94ea64f34431a9cbf0bafb61853eda57bff2880036153438f50fb5a84f27683ba0d8e5426bf41a8c6ff03879488120cf5b3a761e77953169c0600a708
+  languageName: node
+  linkType: hard
+
+"debug@npm:2.6.9, debug@npm:^2.6.0, debug@npm:^2.6.9":
+  version: 2.6.9
+  resolution: "debug@npm:2.6.9"
+  dependencies:
+    ms: "npm:2.0.0"
+  checksum: d2f51589ca66df60bf36e1fa6e4386b318c3f1e06772280eea5b1ae9fd3d05e9c2b7fd8a7d862457d00853c75b00451aa2d7459b924629ee385287a650f58fe6
   languageName: node
   linkType: hard
 
@@ -8677,6 +8687,217 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"esbuild-android-64@npm:0.14.50":
+  version: 0.14.50
+  resolution: "esbuild-android-64@npm:0.14.50"
+  conditions: os=android & cpu=x64
+  languageName: node
+  linkType: hard
+
+"esbuild-android-arm64@npm:0.14.50":
+  version: 0.14.50
+  resolution: "esbuild-android-arm64@npm:0.14.50"
+  conditions: os=android & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"esbuild-darwin-64@npm:0.14.50":
+  version: 0.14.50
+  resolution: "esbuild-darwin-64@npm:0.14.50"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"esbuild-darwin-arm64@npm:0.14.50":
+  version: 0.14.50
+  resolution: "esbuild-darwin-arm64@npm:0.14.50"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"esbuild-freebsd-64@npm:0.14.50":
+  version: 0.14.50
+  resolution: "esbuild-freebsd-64@npm:0.14.50"
+  conditions: os=freebsd & cpu=x64
+  languageName: node
+  linkType: hard
+
+"esbuild-freebsd-arm64@npm:0.14.50":
+  version: 0.14.50
+  resolution: "esbuild-freebsd-arm64@npm:0.14.50"
+  conditions: os=freebsd & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"esbuild-linux-32@npm:0.14.50":
+  version: 0.14.50
+  resolution: "esbuild-linux-32@npm:0.14.50"
+  conditions: os=linux & cpu=ia32
+  languageName: node
+  linkType: hard
+
+"esbuild-linux-64@npm:0.14.50":
+  version: 0.14.50
+  resolution: "esbuild-linux-64@npm:0.14.50"
+  conditions: os=linux & cpu=x64
+  languageName: node
+  linkType: hard
+
+"esbuild-linux-arm64@npm:0.14.50":
+  version: 0.14.50
+  resolution: "esbuild-linux-arm64@npm:0.14.50"
+  conditions: os=linux & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"esbuild-linux-arm@npm:0.14.50":
+  version: 0.14.50
+  resolution: "esbuild-linux-arm@npm:0.14.50"
+  conditions: os=linux & cpu=arm
+  languageName: node
+  linkType: hard
+
+"esbuild-linux-mips64le@npm:0.14.50":
+  version: 0.14.50
+  resolution: "esbuild-linux-mips64le@npm:0.14.50"
+  conditions: os=linux & cpu=mips64el
+  languageName: node
+  linkType: hard
+
+"esbuild-linux-ppc64le@npm:0.14.50":
+  version: 0.14.50
+  resolution: "esbuild-linux-ppc64le@npm:0.14.50"
+  conditions: os=linux & cpu=ppc64
+  languageName: node
+  linkType: hard
+
+"esbuild-linux-riscv64@npm:0.14.50":
+  version: 0.14.50
+  resolution: "esbuild-linux-riscv64@npm:0.14.50"
+  conditions: os=linux & cpu=riscv64
+  languageName: node
+  linkType: hard
+
+"esbuild-linux-s390x@npm:0.14.50":
+  version: 0.14.50
+  resolution: "esbuild-linux-s390x@npm:0.14.50"
+  conditions: os=linux & cpu=s390x
+  languageName: node
+  linkType: hard
+
+"esbuild-netbsd-64@npm:0.14.50":
+  version: 0.14.50
+  resolution: "esbuild-netbsd-64@npm:0.14.50"
+  conditions: os=netbsd & cpu=x64
+  languageName: node
+  linkType: hard
+
+"esbuild-openbsd-64@npm:0.14.50":
+  version: 0.14.50
+  resolution: "esbuild-openbsd-64@npm:0.14.50"
+  conditions: os=openbsd & cpu=x64
+  languageName: node
+  linkType: hard
+
+"esbuild-sunos-64@npm:0.14.50":
+  version: 0.14.50
+  resolution: "esbuild-sunos-64@npm:0.14.50"
+  conditions: os=sunos & cpu=x64
+  languageName: node
+  linkType: hard
+
+"esbuild-windows-32@npm:0.14.50":
+  version: 0.14.50
+  resolution: "esbuild-windows-32@npm:0.14.50"
+  conditions: os=win32 & cpu=ia32
+  languageName: node
+  linkType: hard
+
+"esbuild-windows-64@npm:0.14.50":
+  version: 0.14.50
+  resolution: "esbuild-windows-64@npm:0.14.50"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"esbuild-windows-arm64@npm:0.14.50":
+  version: 0.14.50
+  resolution: "esbuild-windows-arm64@npm:0.14.50"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"esbuild@npm:^0.14.50":
+  version: 0.14.50
+  resolution: "esbuild@npm:0.14.50"
+  dependencies:
+    esbuild-android-64: 0.14.50
+    esbuild-android-arm64: 0.14.50
+    esbuild-darwin-64: 0.14.50
+    esbuild-darwin-arm64: 0.14.50
+    esbuild-freebsd-64: 0.14.50
+    esbuild-freebsd-arm64: 0.14.50
+    esbuild-linux-32: 0.14.50
+    esbuild-linux-64: 0.14.50
+    esbuild-linux-arm: 0.14.50
+    esbuild-linux-arm64: 0.14.50
+    esbuild-linux-mips64le: 0.14.50
+    esbuild-linux-ppc64le: 0.14.50
+    esbuild-linux-riscv64: 0.14.50
+    esbuild-linux-s390x: 0.14.50
+    esbuild-netbsd-64: 0.14.50
+    esbuild-openbsd-64: 0.14.50
+    esbuild-sunos-64: 0.14.50
+    esbuild-windows-32: 0.14.50
+    esbuild-windows-64: 0.14.50
+    esbuild-windows-arm64: 0.14.50
+  dependenciesMeta:
+    esbuild-android-64:
+      optional: true
+    esbuild-android-arm64:
+      optional: true
+    esbuild-darwin-64:
+      optional: true
+    esbuild-darwin-arm64:
+      optional: true
+    esbuild-freebsd-64:
+      optional: true
+    esbuild-freebsd-arm64:
+      optional: true
+    esbuild-linux-32:
+      optional: true
+    esbuild-linux-64:
+      optional: true
+    esbuild-linux-arm:
+      optional: true
+    esbuild-linux-arm64:
+      optional: true
+    esbuild-linux-mips64le:
+      optional: true
+    esbuild-linux-ppc64le:
+      optional: true
+    esbuild-linux-riscv64:
+      optional: true
+    esbuild-linux-s390x:
+      optional: true
+    esbuild-netbsd-64:
+      optional: true
+    esbuild-openbsd-64:
+      optional: true
+    esbuild-sunos-64:
+      optional: true
+    esbuild-windows-32:
+      optional: true
+    esbuild-windows-64:
+      optional: true
+    esbuild-windows-arm64:
+      optional: true
+  bin:
+    esbuild: bin/esbuild
+  checksum: 91e9b9403804ad24c61477d509bbe908ee17d53a6ad368e29882889da0e1c7d352937239ca8bad82c4357960c1606a8ef9c2ac97781e59aa82dc9dadff345525
+  languageName: node
+  linkType: hard
+
 "escalade@npm:^3.1.1":
   version: 3.1.1
   resolution: "escalade@npm:3.1.1"
@@ -9361,24 +9582,21 @@ env-cmd@toddbluhm/env-cmd:
     "@types/node": ^18.6.1
     "@types/validate-npm-package-name": ^4.0.0
     "@types/yargs": ^17.0.10
+    "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
     chalk: ^4.1.2
     depcheck: ^1.4.3
     env-cmd: toddbluhm/env-cmd
+    esbuild: ^0.14.50
     eslint: ^8.20.0
     glob: ^7.2.0
     glob-promise: ^4.2.2
     inquirer: ^8.0.0
     jest: ^28.1.3
     js-yaml: ^4.1.0
-    node-loader: ^2.0.0
     prettier: ^2.7.1
     ts-jest: ^28.0.7
-    ts-loader: ^9.3.1
-    ts-node: ^10.9.1
     typescript: 4.6.4
     validate-npm-package-name: ^4.0.0
-    webpack: ^5.74.0
-    webpack-cli: ^4.10.0
     yargs: ^17.4.1
     zod: ^3.14.3
   bin:
@@ -9456,11 +9674,12 @@ env-cmd@toddbluhm/env-cmd:
     jest: ^28.1.3
     lint-staged: ^12.3.7
     lodash: ^4.17.21
-    mrlint: ^0.0.62
+    mrlint: ^0.0.68
     prettier: ^2.7.1
     stylelint: ^14.9.1
     stylelint-config-prettier-scss: ^0.0.1
     stylelint-config-standard-scss: ^4.0.0
+    ts-node: ^10.9.1
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -10618,7 +10837,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"immer@npm:^9.0.12, immer@npm:^9.0.15, immer@npm:^9.0.7":
+"immer@npm:^9.0.15, immer@npm:^9.0.7":
   version: 9.0.15
   resolution: "immer@npm:9.0.15"
   checksum: 92e3d63e810e3c3c2bb61b70c45443e37ef983ad12924e3edaf03725ae5979618f5b473439bb3bb4a8c4769f25132f18dec10ea15c40f0b20da5691ff96ff611
@@ -13273,19 +13492,19 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"mrlint@npm:^0.0.62":
-  version: 0.0.62
-  resolution: "mrlint@npm:0.0.62"
+"mrlint@npm:^0.0.68":
+  version: 0.0.68
+  resolution: "mrlint@npm:0.0.68"
   dependencies:
-    "@fern-api/mrlint-add-package": 0.0.62
-    "@fern-api/mrlint-commons": 0.0.62
-    "@fern-api/mrlint-lint": 0.0.62
-    "@fern-api/mrlint-parser": 0.0.62
+    "@fern-api/mrlint-add-package": 0.0.68
+    "@fern-api/mrlint-commons": 0.0.68
+    "@fern-api/mrlint-lint": 0.0.68
+    "@fern-api/mrlint-parser": 0.0.68
     chalk: ^4.1.2
-    yargs: ^17.3.1
+    yargs: ^17.5.1
   bin:
     mrlint: dist/bundle.cjs
-  checksum: 14d1a8b656846cb42403d5499c83a114c25ced146d2f9c6305df991b344ba3ddcc520d42c7318c4206b5fa4f4732d05d3623dec7bf99e0581d9d66db544ceeaa
+  checksum: e0c0a3a5b84a420bae21273bdd0da2a735d82f7aa12f108e632913ace21935a425f94c79d5642ce7854596bd0eca0aaa4c9a97e1e27e709ace64ef9ee68352f7
   languageName: node
   linkType: hard
 
@@ -17413,6 +17632,13 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"supports-color@npm:*, supports-color@npm:^9.2.1":
+  version: 9.2.2
+  resolution: "supports-color@npm:9.2.2"
+  checksum: 976d84877402fc38c1d43b1fde20b0a8dc0283273f21cfebe4ff7507d27543cdfbeec7db108a96b82d694465f06d64e8577562b05d0520b41710088e0a33cc50
+  languageName: node
+  linkType: hard
+
 "supports-color@npm:^2.0.0":
   version: 2.0.0
   resolution: "supports-color@npm:2.0.0"
@@ -17444,13 +17670,6 @@ env-cmd@toddbluhm/env-cmd:
   dependencies:
     has-flag: "npm:^4.0.0"
   checksum: c052193a7e43c6cdc741eb7f378df605636e01ad434badf7324f17fb60c69a880d8d8fcdcb562cf94c2350e57b937d7425ab5b8326c67c2adc48f7c87c1db406
-  languageName: node
-  linkType: hard
-
-"supports-color@npm:^9.2.1":
-  version: 9.2.2
-  resolution: "supports-color@npm:9.2.2"
-  checksum: 976d84877402fc38c1d43b1fde20b0a8dc0283273f21cfebe4ff7507d27543cdfbeec7db108a96b82d694465f06d64e8577562b05d0520b41710088e0a33cc50
   languageName: node
   linkType: hard
 
@@ -18010,7 +18229,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"tslib@npm:^1.8.1":
+"tslib@npm:^1.13.0, tslib@npm:^1.8.1":
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: dbe628ef87f66691d5d2959b3e41b9ca0045c3ee3c7c7b906cc1e328b39f199bb1ad9e671c39025bd56122ac57dfbf7385a94843b1cc07c60a4db74795829acd
@@ -19444,7 +19663,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"yargs@npm:^17.3.1, yargs@npm:^17.4.1":
+"yargs@npm:^17.3.1, yargs@npm:^17.4.1, yargs@npm:^17.5.1":
   version: 17.5.1
   resolution: "yargs@npm:17.5.1"
   dependencies:
