@@ -1844,6 +1844,7 @@ __metadata:
     react: ^18.2.0
     stylelint: ^14.9.1
     typescript: 4.6.4
+    vite: ^3.0.3
   languageName: unknown
   linkType: soft
 
@@ -2469,6 +2470,7 @@ __metadata:
     react: ^18.2.0
     stylelint: ^14.9.1
     typescript: 4.6.4
+    vite: ^3.0.3
   languageName: unknown
   linkType: soft
 
@@ -2496,6 +2498,7 @@ __metadata:
     react-dom: ^18.2.0
     stylelint: ^14.9.1
     typescript: 4.6.4
+    vite: ^3.0.3
   languageName: unknown
   linkType: soft
 
@@ -2551,6 +2554,7 @@ __metadata:
     react: ^18.2.0
     stylelint: ^14.9.1
     typescript: 4.6.4
+    vite: ^3.0.3
   languageName: unknown
   linkType: soft
 
@@ -2573,6 +2577,7 @@ __metadata:
     react-query: ^3.34.12
     stylelint: ^14.9.1
     typescript: 4.6.4
+    vite: ^3.0.3
   languageName: unknown
   linkType: soft
 
@@ -2597,6 +2602,7 @@ __metadata:
     react-router-dom: ^6.2.1
     stylelint: ^14.9.1
     typescript: 4.6.4
+    vite: ^3.0.3
   languageName: unknown
   linkType: soft
 
@@ -2620,6 +2626,7 @@ __metadata:
     react-dom: ^18.2.0
     stylelint: ^14.9.1
     typescript: 4.6.4
+    vite: ^3.0.3
   languageName: unknown
   linkType: soft
 
@@ -2642,6 +2649,7 @@ __metadata:
     react-dom: ^18.2.0
     stylelint: ^14.9.1
     typescript: 4.6.4
+    vite: ^3.0.3
   languageName: unknown
   linkType: soft
 
@@ -6528,7 +6536,7 @@ env-cmd@toddbluhm/env-cmd:
     jest: ^28.1.3
     lint-staged: ^12.3.7
     lodash: ^4.17.21
-    mrlint: ^0.0.76
+    mrlint: ^0.0.77
     prettier: ^2.7.1
     stylelint: ^14.9.1
     stylelint-config-prettier-scss: ^0.0.1
@@ -9058,12 +9066,12 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"mrlint@npm:^0.0.76":
-  version: 0.0.76
-  resolution: "mrlint@npm:0.0.76"
+"mrlint@npm:^0.0.77":
+  version: 0.0.77
+  resolution: "mrlint@npm:0.0.77"
   bin:
     mrlint: cli.cjs
-  checksum: ee7a8b7d818c2def9f4deab7845c38caf6aad312d9fa8d650bfc118a2c27138a3b5fcc123b60f33e27380bb4573c058d6deb6c6e45a778df08d1c3ca2c7bbe3d
+  checksum: 0f295f0f52554933f3008a97a027e3a478796bd4b168597e37c9843c797d851fa296a10331f31f52d4aae4a5b2a7b7084cc7bb350f1e374b61cf84dad026a89d
   languageName: node
   linkType: hard
 
