@@ -5,8 +5,8 @@
     "@babel/core",
     "@babel/preset-env",
     "@babel/preset-typescript",
-    "react-scripts",
-    "sass"
+    "sass",
+    "vite"
   ],
   "ignore-patterns": ["lib"]
 }

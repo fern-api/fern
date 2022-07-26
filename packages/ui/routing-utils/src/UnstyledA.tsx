@@ -17,8 +17,8 @@ export const UnstyledA: React.FC<UnstyledA.Props> = ({
     return (
         <a
             className={classNames(styles.link, className, {
-                [styles.showUnderline]: showUnderline,
-                [styles.muted]: muted,
+                [styles.showUnderline ?? "_"]: showUnderline,
+                [styles.muted ?? "_"]: muted,
             })}
             {...linkProps}
         />

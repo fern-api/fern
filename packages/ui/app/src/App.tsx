@@ -1,3 +1,10 @@
+import { Button, Card, Intent } from "@blueprintjs/core";
+
 export const App: React.FC = () => {
-    return <div>I am a frontend!</div>;
+    return (
+        <div>
+            <Card interactive>I am a frontend!</Card>
+            <Button text="button" intent={Intent.DANGER} />
+        </div>
+    );
 };
