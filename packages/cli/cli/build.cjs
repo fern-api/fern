@@ -14,7 +14,7 @@ const options = {
     },
 };
 
-function getEnvironmentVariable(environmentVariable: string): string {
+function getEnvironmentVariable(environmentVariable) {
     const value = process.env[environmentVariable];
     if (value != null) {
         return `"${value}"`;
