@@ -6,6 +6,7 @@ const options = {
     entryPoints: ["./src/cli.ts"],
     outfile: "./dist/bundle.cjs",
     bundle: true,
+    external: ["cpu-features"],
     plugins: [pnpPlugin()],
     define: {
         "process.env.PACKAGE_VERSION": getEnvironmentVariable("PACKAGE_VERSION"),
