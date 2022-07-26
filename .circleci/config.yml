@@ -79,16 +79,16 @@ jobs:
             fi
 
             yarn workspace fern-api dist
-            cli_path="$(yarn workspace fern-api exec pwd)"
+            cli_path="$(yarn workspace fern-api bin fern)"
             mkdir pre-release-test
             cd pre-release-test
 
             echo "Running Fern Commands!"
-            node $cli_path/dist/bundle.cjs init --organization fern
-            node $cli_path/dist/bundle.cjs add java
-            node $cli_path/dist/bundle.cjs add typescript
-            node $cli_path/dist/bundle.cjs add postman
-            node $cli_path/dist/bundle.cjs generate
+            node $cli_path init --organization fern
+            node $cli_path add java
+            node $cli_path add typescript
+            node $cli_path add postman
+            node $cli_path generate
 
             echo "Cleaning up!"
             cd ..

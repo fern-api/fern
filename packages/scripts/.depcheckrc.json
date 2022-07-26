@@ -6,10 +6,6 @@
     "@babel/core",
     "@babel/preset-env",
     "@babel/preset-typescript",
-    "webpack",
-    "webpack-cli",
-    "ts-loader",
-    "node-loader",
     "ts-node"
   ],
   "ignore-patterns": ["lib"]
