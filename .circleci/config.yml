@@ -63,37 +63,6 @@ jobs:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff
 
-  pre-release-test:
-    docker:
-      - image: cimg/node:current
-    steps:
-      - checkout
-      - node/install-packages:
-          pkg-manager: yarn-berry
-      - run:
-          name: ETE Test
-          command: |
-            if [[ -z "${CIRCLE_TAG}" ]]; then
-              echo "Skipping test because no git tag found"
-              exit 0
-            fi
-
-            yarn workspace @fern-api/cli dist
-            cli_path="$(yarn workspace @fern-api/cli bin fern)"
-            mkdir pre-release-test
-            cd pre-release-test
-
-            echo "Running Fern Commands!"
-            node $cli_path init --organization fern
-            node $cli_path add java
-            node $cli_path add typescript
-            node $cli_path add postman
-            node $cli_path generate
-
-            echo "Cleaning up!"
-            cd ..
-            rm -rf pre-release-test
-
   publish-dev:
     docker:
       - image: cimg/node:current
@@ -115,9 +84,35 @@ jobs:
           environment:
             FERN_CLI_PACKAGE_NAME: fern-api-dev
 
+  pre-release-test:
+    docker:
+      - image: cimg/node:current
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn-berry
+      - run:
+          name: ETE Test (live)
+          command: |
+            yarn workspace @fern-api/cli dist
+            cli_path="$(yarn workspace @fern-api/cli bin fern)"
+            mkdir pre-release-test
+            cd pre-release-test
+
+            echo "Running Fern Commands!"
+            node $cli_path init --organization fern
+            node $cli_path add java
+            node $cli_path add typescript
+            node $cli_path add postman
+            node $cli_path generate
+
+            echo "Cleaning up!"
+            cd ..
+            rm -rf pre-release-test
+
   publish:
-    machine:
-      image: ubuntu-2004:current
+    docker:
+      - image: cimg/node:current
     steps:
       - checkout
       - node/install-packages:
@@ -142,13 +137,18 @@ jobs:
       - run:
           name: Publish fern-api CLI
           command: yarn workspace @fern-api/cli publish:cli
-      - run:
-          name: Publish fern-typescript docker
-          command: |
-            projectVersion=$(./scripts/git-version.sh)
-            yarn workspace fern-typescript dockerTagVersion
-            echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
-            docker push fernapi/fern-typescript:"$projectVersion"
+
+    publish-fern-typescript:
+      machine:
+        image: ubuntu-2004:current
+      steps:
+        - run:
+            name: Publish fern-typescript Docker
+            command: |
+              projectVersion=$(./scripts/git-version.sh)
+              yarn workspace fern-typescript dockerTagVersion
+              echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
+              docker push fernapi/fern-typescript:"$projectVersion"
 
 workflows:
   version: 2
@@ -158,21 +158,14 @@ workflows:
           filters:
             tags:
               only: /.*/
+
       - compile-and-test:
           filters:
             tags:
               only: /.*/
+
       - ete-tests:
           filters:
-            tags:
-              only: /.*/
-          context:
-            - auth0-dev
-
-      - pre-release-test:
-          filters:
-            branches:
-              only: main
             tags:
               only: /.*/
           context:
@@ -188,10 +181,15 @@ workflows:
             - lint
             - compile-and-test
             - ete-tests
-            - pre-release-test
           context:
             - npm
-            - docker-hub
+            - auth0-dev
+
+      - pre-release-test:
+          filters:
+            tags:
+              only: /.*/
+          context:
             - auth0-dev
 
       - publish:
@@ -205,5 +203,19 @@ workflows:
             - pre-release-test
           context:
             - npm
+            - auth0-dev
+
+      - publish-fern-typescript:
+          filters:
+            branches:
+              only: main
+            tags:
+              only: /.*/
+          requires:
+            - lint
+            - compile-and-test
+            - ete-tests
+            - pre-release-test
+          context:
             - docker-hub
             - auth0-dev
