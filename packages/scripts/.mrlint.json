@@ -1,4 +1,5 @@
 {
   "type": "cli",
+  "cliName": "fern-scripts",
   "private": true
 }

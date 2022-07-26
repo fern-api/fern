@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@fern-api/add-generator": "workspace:*",
+    "@fern-api/cli": "workspace:*",
     "@fern-api/config-management-commons": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/docker-utils": "workspace:*",
@@ -67,7 +68,6 @@
     "@fern-ui/routing-utils": "workspace:*",
     "@fern-ui/theme": "workspace:*",
     "@fern-ui/toaster": "workspace:*",
-    "fern-api": "workspace:*",
     "fern-typescript": "workspace:*"
   },
   "devDependencies": {
@@ -80,7 +80,6 @@
     "eslint": "^8.20.0",
     "jest": "^28.1.3",
     "prettier": "^2.7.1",
-    "ts-jest": "^28.0.7",
     "typescript": "4.6.4"
   }
 }

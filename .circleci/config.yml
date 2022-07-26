@@ -78,8 +78,8 @@ jobs:
               exit 0
             fi
 
-            yarn workspace fern-api dist
-            cli_path="$(yarn workspace fern-api bin fern)"
+            yarn workspace @fern-api/cli dist
+            cli_path="$(yarn workspace @fern-api/cli bin fern)"
             mkdir pre-release-test
             cd pre-release-test
 
@@ -115,6 +115,12 @@ jobs:
       - run:
           name: Publish all packages
           command: yarn run publish --tag $(./scripts/npm-tag.sh)
+      - run:
+          name: Publish fern-api CLI
+          command: |
+            yarn workspace @fern-api/cli dist
+            cd $(yarn workspace @fern-api/cli exec pwd)/dist
+            yarn npm publish
       - run:
           name: Publish fern-typescript docker
           command: |
