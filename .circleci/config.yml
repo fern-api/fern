@@ -63,6 +63,27 @@ jobs:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff
 
+  publish-dev:
+    docker:
+      - image: cimg/node:current
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn-berry
+      - run:
+          name: Print version
+          command: |
+            git_version="$(./scripts/git-version.sh)"
+            echo Publishing version: "${git_version}"
+      - run:
+          name: Add version to package.json's
+          command: yarn mrlint version "$git_version"
+      - run:
+          name: Publish fern-api CLI (snapshot)
+          command: yarn workspace @fern-api/cli publish:cli --access restricted
+          environment:
+            FERN_CLI_PACKAGE_NAME: fern-api-dev
+
   pre-release-test:
     docker:
       - image: cimg/node:current
@@ -71,13 +92,8 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
-          name: ETE Test
+          name: ETE Test (live)
           command: |
-            if [[ -z "${CIRCLE_TAG}" ]]; then
-              echo "Skipping test because no git tag found"
-              exit 0
-            fi
-
             yarn workspace @fern-api/cli dist
             cli_path="$(yarn workspace @fern-api/cli bin fern)"
             mkdir pre-release-test
@@ -95,17 +111,20 @@ jobs:
             rm -rf pre-release-test
 
   publish:
-    machine:
-      image: ubuntu-2004:current
+    docker:
+      - image: cimg/node:current
     steps:
       - checkout
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
-          name: Add version to package.json's
+          name: Print version
           command: |
-            echo Publishing version: $(./scripts/git-version.sh)
-            yarn mrlint version $(./scripts/git-version.sh)
+            git_version="$(./scripts/git-version.sh)"
+            echo Publishing version: "${git_version}"
+      - run:
+          name: Add version to package.json's
+          command: yarn mrlint version "$git_version"
       - run:
           name: Update yarn.lock with new versions
           command: yarn
@@ -114,15 +133,17 @@ jobs:
           command: yarn compile
       - run:
           name: Publish all packages
-          command: yarn run publish --tag $(./scripts/npm-tag.sh)
+          command: yarn run publish
       - run:
           name: Publish fern-api CLI
-          command: |
-            yarn workspace @fern-api/cli dist
-            cd $(yarn workspace @fern-api/cli exec pwd)/dist
-            yarn npm publish
+          command: yarn workspace @fern-api/cli publish:cli
+
+  publish-fern-typescript:
+    machine:
+      image: ubuntu-2004:current
+    steps:
       - run:
-          name: Publish fern-typescript docker
+          name: Publish fern-typescript Docker
           command: |
             projectVersion=$(./scripts/git-version.sh)
             yarn workspace fern-typescript dockerTagVersion
@@ -137,15 +158,29 @@ workflows:
           filters:
             tags:
               only: /.*/
+
       - compile-and-test:
           filters:
             tags:
               only: /.*/
+
       - ete-tests:
           filters:
             tags:
               only: /.*/
           context:
+            - auth0-dev
+
+      - publish-dev:
+          filters:
+            branches:
+              only: main
+          requires:
+            - lint
+            - compile-and-test
+            - ete-tests
+          context:
+            - npm
             - auth0-dev
 
       - pre-release-test:
@@ -170,5 +205,19 @@ workflows:
             - pre-release-test
           context:
             - npm
+            - auth0-dev
+
+      - publish-fern-typescript:
+          filters:
+            branches:
+              only: main
+            tags:
+              only: /.*/
+          requires:
+            - lint
+            - compile-and-test
+            - ete-tests
+            - pre-release-test
+          context:
             - docker-hub
             - auth0-dev
