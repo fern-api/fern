@@ -25,7 +25,7 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck",
     "dockerTagLocal": "./docker/create_docker.sh local",
-    "dockerTagVersion": "./docker/create_docker.sh $(yarn info fern-typescript --all --json | jq -r .children.Version)"
+    "dockerTagVersion": "./docker/create_docker.sh"
   },
   "dependencies": {
     "@fern-api/config-management-commons": "workspace:*",
