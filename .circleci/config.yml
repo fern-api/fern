@@ -33,6 +33,7 @@ jobs:
       - run:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff
+
   compile-and-test:
     machine:
       image: ubuntu-2004:current
@@ -49,6 +50,7 @@ jobs:
       - run:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff
+
   ete-tests:
     machine:
       image: ubuntu-2004:current
@@ -84,6 +86,18 @@ jobs:
           environment:
             FERN_CLI_PACKAGE_NAME: fern-api-dev
 
+  publish-fern-typescript:
+    machine:
+      image: ubuntu-2004:current
+    steps:
+      - run:
+          name: Publish fern-typescript Docker
+          command: |
+            projectVersion=$(./scripts/git-version.sh)
+            yarn workspace fern-typescript dockerTagVersion
+            echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
+            docker push fernapi/fern-typescript:"$projectVersion"
+
   pre-release-test:
     docker:
       - image: cimg/node:current
@@ -109,18 +123,6 @@ jobs:
             echo "Cleaning up!"
             cd ..
             rm -rf pre-release-test
-
-  publish-fern-typescript:
-    machine:
-      image: ubuntu-2004:current
-    steps:
-      - run:
-          name: Publish fern-typescript Docker
-          command: |
-            projectVersion=$(./scripts/git-version.sh)
-            yarn workspace fern-typescript dockerTagVersion
-            echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
-            docker push fernapi/fern-typescript:"$projectVersion"
 
   publish:
     docker:
@@ -183,15 +185,6 @@ workflows:
             - npm
             - auth0-dev
 
-      - pre-release-test:
-          filters:
-            branches:
-              only: main
-            tags:
-              only: /.*/
-          context:
-            - auth0-dev
-
       - publish-fern-typescript:
           filters:
             branches:
@@ -204,6 +197,15 @@ workflows:
             - ete-tests
           context:
             - docker-hub
+            - auth0-dev
+
+      - pre-release-test:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
+          context:
             - auth0-dev
 
       - publish:
