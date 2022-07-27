@@ -185,8 +185,6 @@ workflows:
           filters:
             branches:
               only: main
-            tags:
-              only: /.*/
           context:
             - auth0-dev
 
@@ -235,7 +233,6 @@ workflows:
             - lint
             - compile-and-test
             - ete-tests
-            - live-test-dev
             - live-test
           context:
             - npm
