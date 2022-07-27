@@ -7,6 +7,6 @@
     background-color: $light-gray5;
 
     &:global(.#{$ns}-dark) {
-        background-color: $dark-gray1;
+        background-color: $black;
     }
 }

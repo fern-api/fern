@@ -8,18 +8,18 @@ import { ThemeProvider } from "@fern-ui/theme";
 import "normalize.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import styles from "./index.module.scss";
+import styles from "./main.module.scss";
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
-        <ThemeProvider defaultIsDarkTheme>
-            <HotkeysProvider>
-                <div className={styles.app}>
+        <div className={styles.app}>
+            <ThemeProvider defaultIsDarkTheme>
+                <HotkeysProvider>
                     <App />
-                </div>
-            </HotkeysProvider>
-        </ThemeProvider>
+                </HotkeysProvider>
+            </ThemeProvider>
+        </div>
     </React.StrictMode>
 );
