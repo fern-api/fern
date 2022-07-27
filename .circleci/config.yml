@@ -112,8 +112,8 @@ jobs:
       - run:
           name: ETE Test (live)
           command: |
-            yarn workspace @fern-api/cli dist
-            cli_path="$(yarn workspace @fern-api/cli bin fern)"
+            yarn workspace @fern-api/cli dist:cli:prod
+            cli_path="$(yarn workspace @fern-api/cli bin fern:prod)"
             mkdir pre-release-test
             cd pre-release-test
 
