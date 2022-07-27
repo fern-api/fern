@@ -68,7 +68,7 @@ async function startJob({
 }) {
     const formData = new FormData();
     formData.append("file", JSON.stringify(intermediateRepresentation));
-    const url = urlJoin(FIDDLE_API_URL, `/api/remote-gen/jobs/${job.jobId}/start`);
+    const url = urlJoin(FIDDLE_API_URL, `/remote-gen/jobs/${job.jobId}/start`);
     await axios.post(url, formData, {
         headers: {
             "Content-Type": `multipart/form-data; boundary=${formData.getBoundary()}`,
