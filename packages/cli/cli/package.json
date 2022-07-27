@@ -34,8 +34,8 @@
     "env:prod": "env-cmd -r .env-cmdrc.cjs -e prod",
     "dist:cli:dev": "yarn compile && yarn env:dev node build.dev.cjs",
     "dist:cli:prod": "yarn compile && yarn env:prod node build.prod.cjs",
-    "publish:cli:dev": "yarn dist:cli:dev && yarn env:dev cd dist/dev && yarn npm publish",
-    "publish:cli:prod": "yarn dist:cli:prod && yarn env:prod cd dist/prod && yarn npm publish"
+    "publish:cli:dev": "yarn dist:cli:dev && cd dist/dev && yarn npm publish",
+    "publish:cli:prod": "yarn dist:cli:prod && cd dist/prod && yarn npm publish"
   },
   "dependencies": {
     "@fern-api/add-generator": "workspace:*",
