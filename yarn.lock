@@ -1639,7 +1639,8 @@ __metadata:
     yargs: ^17.4.1
     zod: ^3.14.3
   bin:
-    fern: dist/cli.cjs
+    "fern:dev": ./dist/dev/bundle.cjs
+    "fern:prod": ./dist/prod/bundle.cjs
   languageName: unknown
   linkType: soft
 
@@ -1985,7 +1986,7 @@ __metadata:
     typescript: 4.6.4
     yargs: ^17.4.1
   bin:
-    fern-scripts: dist/cli.cjs
+    fern-scripts: ./dist/bundle.cjs
   languageName: unknown
   linkType: soft
 
@@ -6469,7 +6470,7 @@ env-cmd@toddbluhm/env-cmd:
     jest: ^28.1.3
     lint-staged: ^12.3.7
     lodash: ^4.17.21
-    mrlint: ^0.0.83
+    mrlint: ^0.0.85
     prettier: ^2.7.1
     stylelint: ^14.9.1
     stylelint-config-prettier-scss: ^0.0.1
@@ -8848,12 +8849,12 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"mrlint@npm:^0.0.83":
-  version: 0.0.83
-  resolution: "mrlint@npm:0.0.83"
+"mrlint@npm:^0.0.85":
+  version: 0.0.85
+  resolution: "mrlint@npm:0.0.85"
   bin:
     mrlint: cli.cjs
-  checksum: fa540178918b52ef5126dc0a9d67e6ef69d12c7c772c904444270f39c2854a664f0450ddb10863dd2dae5ae9346f59fc78ff736778a3f138a6bf0f65123a8323
+  checksum: 2374cf4a721e50fdf185d50a48fc739a537a176f5c4f5de710c02b330ee2006a21e630396d4d1dccab20cc0dc0d5651345dfe81b8db973d48c5eca83265d7911
   languageName: node
   linkType: hard
 

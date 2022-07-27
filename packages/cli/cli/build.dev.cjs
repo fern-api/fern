@@ -10,7 +10,7 @@ async function main() {
         platform: "node",
         target: "node14",
         entryPoints: ["./src/cli.ts"],
-        outfile: "./dist/bundle.cjs",
+        outfile: "./dist/dev/bundle.cjs",
         bundle: true,
         external: ["cpu-features"],
         plugins: [pnpPlugin()],
@@ -31,7 +31,7 @@ async function main() {
 
     await build(options).catch(() => process.exit(1));
 
-    process.chdir(path.join(__dirname, "dist"));
+    process.chdir(path.join(__dirname, "dist/dev"));
 
     // write cli executable
     await writeFile(
@@ -48,11 +48,11 @@ require("./bundle.cjs");`
         "package.json",
         JSON.stringify(
             {
-                name: process.env.FERN_CLI_PACKAGE_NAME ?? "fern-api",
+                name: "@fern-api/fern-api-dev",
                 version: packageJson.version,
                 repository: packageJson.repository,
                 files: ["bundle.cjs", "cli.cjs"],
-                bin: { fern: "cli.cjs" },
+                bin: { "fern-dev": "cli.cjs" },
             },
             undefined,
             2

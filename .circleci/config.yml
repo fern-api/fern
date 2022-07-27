@@ -85,9 +85,7 @@ jobs:
             yarn mrlint version "$git_version"
       - run:
           name: Publish fern-api-dev
-          command: yarn workspace @fern-api/cli publish:cli --access restricted
-          environment:
-            FERN_CLI_PACKAGE_NAME: "@fern-api/fern-api-dev"
+          command: yarn workspace @fern-api/cli publish:cli:dev --access restricted
 
   publish-fern-typescript:
     machine:
@@ -158,7 +156,7 @@ jobs:
           command: yarn run publish
       - run:
           name: Publish fern-api CLI
-          command: yarn workspace @fern-api/cli publish:cli
+          command: yarn workspace @fern-api/cli publish:cli:prod
 
 workflows:
   version: 2

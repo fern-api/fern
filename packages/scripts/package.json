@@ -8,8 +8,7 @@
   },
   "private": true,
   "files": [
-    "lib",
-    "dist"
+    "lib"
   ],
   "type": "module",
   "source": "src/index.ts",
@@ -18,7 +17,7 @@
   "types": "lib/index.d.ts",
   "sideEffects": false,
   "bin": {
-    "fern-scripts": "dist/cli.cjs"
+    "fern-scripts": "./dist/bundle.cjs"
   },
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
@@ -29,8 +28,8 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck",
-    "dist": "yarn compile && node build.cjs",
-    "publish:cli": "yarn dist && cd dist && yarn npm publish"
+    "dist:cli": "yarn compile && node build.cjs",
+    "publish:cli": "yarn dist:cli && cd dist && yarn npm publish"
   },
   "dependencies": {
     "@fern-api/yaml-schema": "workspace:*",
