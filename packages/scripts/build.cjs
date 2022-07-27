@@ -15,7 +15,7 @@ async function main() {
         external: ["cpu-features"],
         plugins: [pnpPlugin()],
         define: {
-            "process.env.CLI_NAME": "fern-scripts",
+            "process.env.CLI_NAME": JSON.stringify("fern-scripts"),
         },
     };
 
