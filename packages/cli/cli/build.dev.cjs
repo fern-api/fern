@@ -22,6 +22,14 @@ async function main() {
         },
     };
 
+    function getEnvironmentVariable(environmentVariable) {
+        const value = process.env[environmentVariable];
+        if (value != null) {
+            return `"${value}"`;
+        }
+        throw new Error(`Environment variable ${environmentVariable} is not defined.`);
+    }
+
     await build(options).catch(() => process.exit(1));
 
     process.chdir(path.join(__dirname, "dist/dev"));
