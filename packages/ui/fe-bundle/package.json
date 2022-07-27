@@ -13,41 +13,31 @@
   "type": "module",
   "source": "src/index.ts",
   "module": "src/index.ts",
-  "main": "src/index.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "sideEffects": false,
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "test": "yarn run compile && jest --passWithNoTests",
+    "test": "yarn compile && jest --passWithNoTests",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
-    "lint:style:fix": "yarn run lint:style --fix",
+    "lint:style:fix": "yarn lint:style --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck",
-    "start": "env-cmd -e development env-cmd -f .env.local --silent craco start",
-    "build": "yarn run compile && craco build",
-    "eject": "react-scripts eject"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "start": "vite",
+    "build": "yarn compile && vite build",
+    "preview": "yarn compile && vite preview"
   },
   "dependencies": {
-    "@blueprintjs/core": "^4.6.0",
+    "@blueprintjs/core": "^4.6.1",
     "@blueprintjs/icons": "^4.3.1",
     "@blueprintjs/popover2": "^1.4.2",
     "@blueprintjs/select": "^4.4.2",
     "@fern-ui/app": "workspace:*",
+    "@fern-ui/theme": "workspace:*",
     "normalize.css": "^8.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
@@ -56,30 +46,19 @@
     "@babel/core": "^7.18.9",
     "@babel/preset-env": "^7.18.9",
     "@babel/preset-typescript": "^7.18.6",
-    "@craco/craco": "^6.4.4",
-    "@types/craco__craco": "^6.4.0",
     "@types/jest": "^28.1.6",
     "@types/node": "^18.6.1",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
+    "@vitejs/plugin-react": "^2.0.0",
     "depcheck": "^1.4.3",
-    "env-cmd": "^10.1.0",
     "eslint": "^8.20.0",
-    "fork-ts-checker-webpack-plugin": "^7.2.11",
     "jest": "^28.1.3",
-    "node-polyfill-webpack-plugin": "^2.0.0",
     "prettier": "^2.7.1",
-    "react-scripts": "^5.0.1",
-    "sass": "^1.53.0",
+    "sass": "^1.54.0",
     "stylelint": "^14.9.1",
-    "ts-jest": "^28.0.7",
-    "typescript": "4.6.4"
-  },
-  "postcss": {
-    "postcss-modules": {
-      "globalModulePaths": [
-        "@blueprintjs.*"
-      ]
-    }
+    "typescript": "4.6.4",
+    "vite": "^3.0.3",
+    "vite-plugin-checker": "^0.4.9"
   }
 }

@@ -1,3 +1,1 @@
-import packageConfig from "../../shared/jest.config.shared";
-
-export default packageConfig;
+export { default } from "../../shared/jest.config.shared";

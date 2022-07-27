@@ -1,10 +1,18 @@
 {
   "type": "cli",
   "cliName": "fern",
-  "private": false,
-  "rules": {
-    "depcheck": {
-      "ignores": ["webpack-cli", "ts-loader", "node-loader", "ts-node"]
-    }
-  }
+  "environment": {
+    "environments": {
+      "prod": {
+        "cliName": "fern",
+        "cliPackageName": "fern-api"
+      },
+      "dev": {
+        "cliName": "fern-dev",
+        "cliPackageName": "@fern-api/fern-api-dev"
+      }
+    },
+    "variables": ["PACKAGE_VERSION", "AUTH0_DOMAIN", "AUTH0_CLIENT_ID", "DEFAULT_FIDDLE_ORIGIN"]
+  },
+  "private": false
 }

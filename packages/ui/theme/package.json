@@ -13,24 +13,26 @@
   "type": "module",
   "source": "src/index.ts",
   "module": "src/index.ts",
-  "main": "src/index.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "sideEffects": false,
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "test": "yarn run compile && jest --passWithNoTests",
+    "test": "yarn compile && jest --passWithNoTests",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
-    "lint:style:fix": "yarn run lint:style --fix",
+    "lint:style:fix": "yarn lint:style --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@blueprintjs/core": "^4.6.0",
+    "@blueprintjs/core": "^4.6.1",
     "classnames": "^2.3.1",
-    "react": "^18.2.0"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.9",
@@ -44,14 +46,7 @@
     "jest": "^28.1.3",
     "prettier": "^2.7.1",
     "stylelint": "^14.9.1",
-    "ts-jest": "^28.0.7",
-    "typescript": "4.6.4"
-  },
-  "postcss": {
-    "postcss-modules": {
-      "globalModulePaths": [
-        "@blueprintjs.*"
-      ]
-    }
+    "typescript": "4.6.4",
+    "vite": "^3.0.3"
   }
 }

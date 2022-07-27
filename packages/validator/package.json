@@ -12,12 +12,13 @@
   "type": "module",
   "source": "src/index.ts",
   "module": "src/index.ts",
-  "main": "src/index.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "sideEffects": false,
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "test": "yarn run compile && jest --passWithNoTests",
+    "test": "yarn compile && jest --passWithNoTests",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
     "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
@@ -42,7 +43,6 @@
     "eslint": "^8.20.0",
     "jest": "^28.1.3",
     "prettier": "^2.7.1",
-    "ts-jest": "^28.0.7",
     "typescript": "4.6.4"
   }
 }

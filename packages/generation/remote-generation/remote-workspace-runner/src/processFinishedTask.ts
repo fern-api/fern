@@ -8,6 +8,8 @@ import {
 import axios, { AxiosError } from "axios";
 import chalk from "chalk";
 import { createWriteStream } from "fs";
+import urlJoin from "url-join";
+import { FIDDLE_API_URL } from "./service";
 
 export async function processFinishedTask({
     job,
@@ -46,10 +48,9 @@ async function downloadFilesForTask({
 }) {
     const writer = createWriteStream(absolutePathToLocalOutput);
     await axios
-        .get(
-            `https://fiddle-coordinator-dev.buildwithfern.com/api/remote-gen/tasks/${taskId}/jobs/${jobId}/downloadFiles`,
-            { responseType: "stream" }
-        )
+        .get(urlJoin(FIDDLE_API_URL, `/remote-gen/tasks/${taskId}/jobs/${jobId}/downloadFiles`), {
+            responseType: "stream",
+        })
         .then((response) => {
             response.data.pipe(writer);
             console.log("Downloaded Postman collection to: " + chalk.bold(absolutePathToLocalOutput));

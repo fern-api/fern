@@ -1,12 +1,11 @@
 import { writeFernJsonSchema } from "@fern-api/yaml-schema";
-import path, { dirname } from "path";
-import { fileURLToPath } from "url";
+import path from "path";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 import { checkRootPackage } from "./checkRootPackage";
 
 void yargs(hideBin(process.argv))
-    .scriptName("scripts")
+    .scriptName(process.env.CLI_NAME ?? "fern-scripts")
     .strict()
     .command(
         "write-json-schema",
@@ -15,7 +14,6 @@ void yargs(hideBin(process.argv))
             /* no-op */
         },
         async () => {
-            const __dirname = dirname(fileURLToPath(import.meta.url));
             await writeFernJsonSchema(path.join(__dirname, "../../../fern.schema.json"));
         }
     )

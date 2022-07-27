@@ -13,15 +13,8 @@ export async function runRemoteGenerationForWorkspace({
     intermediateRepresentation: IntermediateRepresentation;
 }): Promise<void> {
     if (workspaceConfiguration.generators.length === 0) {
-        console.log("No generators specified.");
-        return;
+        throw new Error("No generators specified.");
     }
-
     const job = await createAndStartJob({ workspaceConfiguration, organization, intermediateRepresentation });
-    if (job == null) {
-        console.log("Failed to start job.");
-        return;
-    }
-
     await pollJobAndReportStatus({ job, workspaceConfiguration });
 }

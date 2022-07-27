@@ -33,10 +33,11 @@ jobs:
       - run:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff
+
   compile-and-test:
+    # this is machine because of the docker-utils tests
     machine:
       image: ubuntu-2004:current
-    resource_class: xlarge
     steps:
       - checkout
       - node/install-packages:
@@ -50,6 +51,7 @@ jobs:
       - run:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff
+
   ete-tests:
     machine:
       image: ubuntu-2004:current
@@ -64,6 +66,42 @@ jobs:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff
 
+  publish-dev:
+    docker:
+      - image: cimg/node:current
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn-berry
+      - run:
+          name: Print version
+          command: |
+            git_version="$(./scripts/git-version.sh)"
+            echo Publishing version: "${git_version}"
+      - run:
+          name: Add version to package.json's
+          command: |
+            git_version="$(./scripts/git-version.sh)"
+            yarn mrlint version "$git_version"
+      - run:
+          name: Publish fern-api-dev
+          command: yarn workspace @fern-api/cli publish:cli:dev --access restricted
+
+  publish-fern-typescript:
+    machine:
+      image: ubuntu-2004:current
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn-berry
+      - run:
+          name: Publish fern-typescript Docker
+          command: |
+            projectVersion=$(./scripts/git-version.sh)
+            yarn workspace fern-typescript dockerTagVersion "$projectVersion"
+            echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
+            docker push fernapi/fern-typescript:"$projectVersion"
+
   pre-release-test:
     docker:
       - image: cimg/node:current
@@ -72,41 +110,41 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
-          name: ETE Test
+          name: ETE Test (live)
           command: |
-            if [[ -z "${CIRCLE_TAG}" ]]; then
-              echo "Skipping test because no git tag found"
-              exit 0
-            fi
-
-            yarn workspace fern-api dist
-            cli_path="$(yarn workspace fern-api exec pwd)"
+            yarn workspace @fern-api/cli dist:cli:prod
+            cli_path="$(yarn workspace @fern-api/cli bin fern:prod)"
             mkdir pre-release-test
             cd pre-release-test
 
             echo "Running Fern Commands!"
-            node $cli_path/dist/bundle.cjs init --organization fern
-            node $cli_path/dist/bundle.cjs add java
-            node $cli_path/dist/bundle.cjs add typescript
-            node $cli_path/dist/bundle.cjs add postman
-            node $cli_path/dist/bundle.cjs generate
+            node $cli_path init --organization fern
+            node $cli_path add java
+            node $cli_path add typescript
+            node $cli_path add postman
+            node $cli_path generate
 
             echo "Cleaning up!"
             cd ..
             rm -rf pre-release-test
 
   publish:
-    machine:
-      image: ubuntu-2004:current
+    docker:
+      - image: cimg/node:current
     steps:
       - checkout
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
+          name: Print version
+          command: |
+            git_version="$(./scripts/git-version.sh)"
+            echo Publishing version: "${git_version}"
+      - run:
           name: Add version to package.json's
           command: |
-            echo Publishing version: $(./scripts/git-version.sh)
-            yarn mrlint version $(./scripts/git-version.sh)
+            git_version="$(./scripts/git-version.sh)"
+            yarn mrlint version "$git_version"
       - run:
           name: Update yarn.lock with new versions
           command: yarn
@@ -115,14 +153,10 @@ jobs:
           command: yarn compile
       - run:
           name: Publish all packages
-          command: yarn run publish --tag $(./scripts/npm-tag.sh)
+          command: yarn run publish
       - run:
-          name: Publish fern-typescript docker
-          command: |
-            projectVersion=$(./scripts/git-version.sh)
-            yarn workspace fern-typescript dockerTagVersion
-            echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
-            docker push fernapi/fern-typescript:"$projectVersion"
+          name: Publish fern-api CLI
+          command: yarn workspace @fern-api/cli publish:cli:prod
 
 workflows:
   version: 2
@@ -132,10 +166,12 @@ workflows:
           filters:
             tags:
               only: /.*/
+
       - compile-and-test:
           filters:
             tags:
               only: /.*/
+
       - ete-tests:
           filters:
             tags:
@@ -143,16 +179,19 @@ workflows:
           context:
             - auth0-dev
 
-      - pre-release-test:
+      - publish-dev:
           filters:
             branches:
               only: main
-            tags:
-              only: /.*/
+          requires:
+            - lint
+            - compile-and-test
+            - ete-tests
           context:
+            - npm
             - auth0-dev
 
-      - publish:
+      - publish-fern-typescript:
           filters:
             branches:
               only: main
@@ -162,8 +201,30 @@ workflows:
             - lint
             - compile-and-test
             - ete-tests
+          context:
+            - docker-hub
+            - auth0-dev
+
+      - pre-release-test:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
+          context:
+            - auth0-dev
+
+      - publish:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
+          requires:
+            - lint
+            - compile-and-test
+            - ete-tests
             - pre-release-test
           context:
             - npm
-            - docker-hub
             - auth0-dev
