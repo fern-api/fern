@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
-    "@fern-fern/ir-model": "0.0.53",
+    "@fern-fern/ir-model": "0.0.54",
     "esutils": "^2.0.3",
     "immer": "^9.0.15",
     "lodash": "^4.17.21",

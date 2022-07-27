@@ -43,7 +43,7 @@
     "@fern-api/validator": "workspace:*",
     "@fern-api/workspace-configuration": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-fern/ir-model": "0.0.53",
+    "@fern-fern/ir-model": "0.0.54",
     "chalk": "^4.1.2",
     "glob": "^7.2.0",
     "glob-promise": "^4.2.2",
