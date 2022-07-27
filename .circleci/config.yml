@@ -66,6 +66,34 @@ jobs:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff
 
+  live-test:
+    docker:
+      - image: cimg/node:current
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn-berry
+      - run:
+          name: Live Test (prod)
+          command: |
+            yarn workspace @fern-api/cli dist:cli:prod
+            cli_path="$(yarn workspace @fern-api/cli bin fern:prod)"
+            ./scripts/live-test.sh "$cli_path"
+
+  live-test-dev:
+    docker:
+      - image: cimg/node:current
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn-berry
+      - run:
+          name: Live Test (dev)
+          command: |
+            yarn workspace @fern-api/cli dist:cli:dev
+            cli_path="$(yarn workspace @fern-api/cli bin fern:dev)"
+            ./scripts/live-test.sh "$cli_path"
+
   publish-dev:
     docker:
       - image: cimg/node:current
@@ -101,32 +129,6 @@ jobs:
             yarn workspace fern-typescript dockerTagVersion "$projectVersion"
             echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
             docker push fernapi/fern-typescript:"$projectVersion"
-
-  pre-release-test:
-    docker:
-      - image: cimg/node:current
-    steps:
-      - checkout
-      - node/install-packages:
-          pkg-manager: yarn-berry
-      - run:
-          name: ETE Test (live)
-          command: |
-            yarn workspace @fern-api/cli dist:cli:prod
-            cli_path="$(yarn workspace @fern-api/cli bin fern:prod)"
-            mkdir pre-release-test
-            cd pre-release-test
-
-            echo "Running Fern Commands!"
-            node $cli_path init --organization fern
-            node $cli_path add java
-            node $cli_path add typescript
-            node $cli_path add postman
-            node $cli_path generate
-
-            echo "Cleaning up!"
-            cd ..
-            rm -rf pre-release-test
 
   publish:
     docker:
@@ -179,6 +181,24 @@ workflows:
           context:
             - auth0-dev
 
+      - live-test-dev:
+          filters:
+            branches:
+              only: main
+            tags:
+              only: /.*/
+          context:
+            - auth0-dev
+
+      - live-test:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
+          context:
+            - auth0-dev
+
       - publish-dev:
           filters:
             branches:
@@ -205,15 +225,6 @@ workflows:
             - docker-hub
             - auth0-dev
 
-      - pre-release-test:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /.*/
-          context:
-            - auth0-dev
-
       - publish:
           filters:
             branches:
@@ -224,7 +235,8 @@ workflows:
             - lint
             - compile-and-test
             - ete-tests
-            - pre-release-test
+            - live-test-dev
+            - live-test
           context:
             - npm
             - auth0-dev
