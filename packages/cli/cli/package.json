@@ -8,7 +8,8 @@
   },
   "files": [
     "lib",
-    "dist"
+    "dist/dev",
+    "dist/prod"
   ],
   "type": "module",
   "source": "src/index.ts",
@@ -17,7 +18,8 @@
   "types": "lib/index.d.ts",
   "sideEffects": false,
   "bin": {
-    "fern": "dist/cli.cjs"
+    "fern:dev": "./dist/dev/bundle.cjs",
+    "fern:prod": "./dist/prod/bundle.cjs"
   },
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
@@ -28,9 +30,12 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck",
-    "env:production": "env-cmd -r .env-cmdrc.cjs -e production",
-    "dist": "yarn compile && yarn env:production node build.cjs",
-    "publish:cli": "yarn dist && cd dist && yarn npm publish"
+    "env:dev": "env-cmd -r .env-cmdrc.cjs -e dev",
+    "env:prod": "env-cmd -r .env-cmdrc.cjs -e prod",
+    "dist:cli:dev": "yarn compile && yarn env:dev node build.dev.cjs",
+    "dist:cli:prod": "yarn compile && yarn env:prod node build.prod.cjs",
+    "publish:cli:dev": "yarn dist:cli:dev && yarn env:dev cd dist/dev && yarn npm publish",
+    "publish:cli:prod": "yarn dist:cli:prod && yarn env:prod cd dist/prod && yarn npm publish"
   },
   "dependencies": {
     "@fern-api/add-generator": "workspace:*",
