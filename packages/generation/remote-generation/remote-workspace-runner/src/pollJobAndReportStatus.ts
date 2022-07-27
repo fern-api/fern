@@ -84,6 +84,7 @@ async function fetchJobStatus(job: CreateJobResponse) {
             jobId: job.jobId,
         });
     } catch (error) {
+        console.log("Failed to get job status.");
         // TODO pass this through? or maybe fern should never throw
         return undefined;
     }
