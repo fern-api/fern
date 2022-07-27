@@ -14,6 +14,9 @@ async function main() {
         bundle: true,
         external: ["cpu-features"],
         plugins: [pnpPlugin()],
+        define: {
+            "process.env.CLI_NAME": "fern-scripts",
+        },
     };
 
     await build(options).catch(() => process.exit(1));

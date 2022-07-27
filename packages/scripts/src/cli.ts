@@ -5,7 +5,7 @@ import yargs from "yargs/yargs";
 import { checkRootPackage } from "./checkRootPackage";
 
 void yargs(hideBin(process.argv))
-    .scriptName("scripts")
+    .scriptName(process.env.CLI_NAME ?? "fern-scripts")
     .strict()
     .command(
         "write-json-schema",
