@@ -3,7 +3,7 @@ import { entries } from "@fern-api/core-utils";
 import { Workspace } from "@fern-api/workspace-loader";
 import { FernConfigurationSchema, visitFernYamlAst } from "@fern-api/yaml-schema";
 import { createAstVisitorForRules } from "./createAstVisitorForRules";
-import { rules } from "./rules";
+import { getAllRules } from "./getAllRules";
 import { ValidationViolation } from "./ValidationViolation";
 
 export async function validateFernDefinition(workspace: Workspace): Promise<ValidationViolation[]> {
@@ -29,7 +29,7 @@ async function validateFernFile({
     contents: FernConfigurationSchema;
 }): Promise<ValidationViolation[]> {
     const violations: ValidationViolation[] = [];
-    const ruleRunners = await Promise.all(rules.map((rule) => rule.create({ workspace })));
+    const ruleRunners = await Promise.all(getAllRules().map((rule) => rule.create({ workspace })));
 
     const astVisitor = createAstVisitorForRules({
         relativeFilePath,
