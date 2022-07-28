@@ -4,7 +4,7 @@ import path from "path";
 import { Rule, RuleViolation } from "../../Rule";
 
 export const ImportFileExistsRule: Rule = {
-    name: "imxport-file-exists",
+    name: "import-file-exists",
     create: ({ workspace }) => {
         return {
             import: async ({ importKey, importPath }, { relativeFilePath }) => {
