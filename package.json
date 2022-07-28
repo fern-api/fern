@@ -28,6 +28,7 @@
     "codegen": "fern generate",
     "codegen:local": "yarn fern:local generate",
     "fern:local": "yarn workspace @fern-api/cli dist:cli:prod && node $(yarn workspace @fern-api/cli bin fern:prod)",
+    "fern-dev:local": "yarn workspace @fern-api/cli dist:cli:dev && node $(yarn workspace @fern-api/cli bin fern:dev)",
     "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public",
     "docs:preview": "yarn docsify serve docs",
     "add-package": "yarn mrlint add-package",
