@@ -27,4 +27,12 @@ describe("getAllRules", () => {
             );
         }
     });
+
+    it("ensure rule names are unique", () => {
+        const rules = getAllRules();
+        for (const { name } of rules) {
+            const rulesWithName = rules.filter((rule) => rule.name === name);
+            expect(rulesWithName).toHaveLength(1);
+        }
+    });
 });
