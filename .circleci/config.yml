@@ -14,7 +14,7 @@ jobs:
           command: yarn lint:monorepo
       - run:
           name: Check root package
-          command: yarn check-root-package
+          command: yarn root-package:check
       - run:
           name: Format
           command: yarn format:check

@@ -34,28 +34,30 @@ export async function checkRootPackage({ shouldFix }: { shouldFix: boolean }): P
 
     if (isEqual(oldDependencies, newDependencies)) {
         return;
-    } else if (!shouldFix) {
+    }
+
+    if (!shouldFix) {
         console.log(
             chalk.red(
                 `${COMPILE_ROOT_PACKAGE} dependencies are not correct. Run ${chalk.bold(
-                    "yarn fix-root-package"
+                    "yarn root-package:fix"
                 )} to fix.`
             )
         );
         process.exit(1);
-    } else {
-        await writeFile(
-            pathToRootPackageJson,
-            JSON.stringify(
-                produce(rootPackageJson, (draft) => {
-                    draft.dependencies = newDependencies;
-                }),
-                undefined,
-                2
-            )
-        );
-        await execa("yarn", ["lint:monorepo:fix"]);
-        await execa("yarn", ["install"]);
-        console.log(chalk.green(`Updated ${COMPILE_ROOT_PACKAGE}`));
     }
+
+    await writeFile(
+        pathToRootPackageJson,
+        JSON.stringify(
+            produce(rootPackageJson, (draft) => {
+                draft.dependencies = newDependencies;
+            }),
+            undefined,
+            2
+        )
+    );
+    await execa("yarn", ["lint:monorepo:fix"]);
+    await execa("yarn", ["install"]);
+    console.log(chalk.green(`Updated ${COMPILE_ROOT_PACKAGE}`));
 }

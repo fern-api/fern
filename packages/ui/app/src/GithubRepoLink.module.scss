@@ -1,0 +1,19 @@
+@import "~@blueprintjs/core/lib/scss/variables";
+
+.container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.repoName {
+    margin-left: 10px;
+}
+
+.underlined {
+    text-decoration: underline;
+}
+
+.linkArrow {
+    margin-left: 5px;
+}

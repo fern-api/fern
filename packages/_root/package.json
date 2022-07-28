@@ -62,6 +62,7 @@
     "@fern-typescript/testing-utils": "workspace:*",
     "@fern-typescript/types": "workspace:*",
     "@fern-ui/app": "workspace:*",
+    "@fern-ui/common-components": "workspace:*",
     "@fern-ui/contexted-dialog": "workspace:*",
     "@fern-ui/fe-bundle": "workspace:*",
     "@fern-ui/react-commons": "workspace:*",

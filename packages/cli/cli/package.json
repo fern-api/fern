@@ -7,9 +7,7 @@
     "directory": "packages/cli/cli"
   },
   "files": [
-    "lib",
-    "dist/dev",
-    "dist/prod"
+    "lib"
   ],
   "type": "module",
   "source": "src/index.ts",

@@ -36,6 +36,7 @@
     { "path": "../openapi-converter" },
     { "path": "../scripts" },
     { "path": "../ui/app" },
+    { "path": "../ui/common-components" },
     { "path": "../ui/contexted-dialog" },
     { "path": "../ui/fe-bundle" },
     { "path": "../ui/react-commons" },
