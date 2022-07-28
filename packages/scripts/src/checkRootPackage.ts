@@ -38,7 +38,7 @@ export async function checkRootPackage({ shouldFix }: { shouldFix: boolean }): P
         console.log(
             chalk.red(
                 `${COMPILE_ROOT_PACKAGE} dependencies are not correct. Run ${chalk.bold(
-                    "yarn fix-root-package"
+                    "yarn root-package:fix"
                 )} to fix.`
             )
         );
