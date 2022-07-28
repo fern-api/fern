@@ -32,7 +32,7 @@ jobs:
           command: yarn generate-json-schema
       - run:
           name: fern check
-          command: fern check
+          command: yarn fern check
       - run:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff
