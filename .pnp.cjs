@@ -3300,6 +3300,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/ete-tests", "workspace:packages/cli/ete-tests"],\
             ["@fern-api/init", "workspace:packages/config-management/init"],\
             ["@fern-api/ir-generator", "workspace:packages/generation/ir/ir-generator"],\
+            ["@fern-api/json-schema", "workspace:packages/json-schema"],\
             ["@fern-api/loadable", "workspace:packages/commons/loadable"],\
             ["@fern-api/local-workspace-runner", "workspace:packages/generation/local-generation/local-workspace-runner"],\
             ["@fern-api/login", "workspace:packages/cli/login"],\

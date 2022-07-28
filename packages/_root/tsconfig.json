@@ -32,6 +32,7 @@
     { "path": "../generation/local-generation/docker-utils" },
     { "path": "../generation/local-generation/local-workspace-runner" },
     { "path": "../generation/remote-generation/remote-workspace-runner" },
+    { "path": "../json-schema" },
     { "path": "../openapi-converter" },
     { "path": "../scripts" },
     { "path": "../ui/app" },
