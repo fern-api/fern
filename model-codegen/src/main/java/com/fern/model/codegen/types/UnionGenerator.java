@@ -29,7 +29,7 @@ import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.codegen.utils.KeyWordUtils;
 import com.fern.codegen.utils.VisitorUtils;
 import com.fern.codegen.utils.VisitorUtils.GeneratedVisitor;
-import com.fern.immutables.StagedBuilderStyle;
+import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.model.codegen.Generator;
 import com.fern.types.DeclaredTypeName;
 import com.fern.types.SingleUnionType;
@@ -551,7 +551,7 @@ public final class UnionGenerator extends Generator {
     }
 
     @Value.Immutable
-    @StagedBuilderStyle
+    @StagedBuilderImmutablesStyle
     interface GeneratedInternalValueTypeSpec {
 
         TypeSpec typeSpec();

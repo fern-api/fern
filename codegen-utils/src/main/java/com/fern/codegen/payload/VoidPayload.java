@@ -15,11 +15,11 @@
  */
 package com.fern.codegen.payload;
 
-import com.fern.immutables.StagedBuilderStyle;
+import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import org.immutables.value.Value;
 
 @Value.Immutable
-@StagedBuilderStyle
+@StagedBuilderImmutablesStyle
 public interface VoidPayload extends Payload {
 
     VoidPayload INSTANCE = builder().build();

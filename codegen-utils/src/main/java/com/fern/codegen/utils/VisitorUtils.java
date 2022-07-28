@@ -15,7 +15,7 @@
  */
 package com.fern.codegen.utils;
 
-import com.fern.immutables.StagedBuilderStyle;
+import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
@@ -74,7 +74,7 @@ public final class VisitorUtils {
     }
 
     @Value.Immutable
-    @StagedBuilderStyle
+    @StagedBuilderImmutablesStyle
     public interface VisitMethodArgs<T> {
         T key();
 
@@ -99,7 +99,7 @@ public final class VisitorUtils {
     }
 
     @Value.Immutable
-    @StagedBuilderStyle
+    @StagedBuilderImmutablesStyle
     public interface GeneratedVisitor<T> {
         TypeSpec typeSpec();
 

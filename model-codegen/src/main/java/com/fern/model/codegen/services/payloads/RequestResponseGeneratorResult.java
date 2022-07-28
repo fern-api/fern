@@ -16,13 +16,13 @@
 package com.fern.model.codegen.services.payloads;
 
 import com.fern.codegen.IGeneratedFile;
-import com.fern.immutables.StagedBuilderStyle;
+import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.squareup.javapoet.TypeName;
 import java.util.Optional;
 import org.immutables.value.Value;
 
 @Value.Immutable
-@StagedBuilderStyle
+@StagedBuilderImmutablesStyle
 public interface RequestResponseGeneratorResult {
 
     TypeName typeName();

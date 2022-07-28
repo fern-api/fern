@@ -15,7 +15,7 @@
  */
 package com.fern.codegen;
 
-import com.fern.immutables.StagedBuilderStyle;
+import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.types.ObjectProperty;
 import com.fern.types.ObjectTypeDeclaration;
 import com.squareup.javapoet.MethodSpec;
@@ -23,7 +23,7 @@ import java.util.Map;
 import org.immutables.value.Value;
 
 @Value.Immutable
-@StagedBuilderStyle
+@StagedBuilderImmutablesStyle
 public interface GeneratedInterface extends IGeneratedFile {
 
     ObjectTypeDeclaration objectTypeDeclaration();

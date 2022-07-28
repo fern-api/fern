@@ -15,13 +15,13 @@
  */
 package com.fern.codegen;
 
-import com.fern.immutables.StagedBuilderStyle;
+import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.types.services.HttpService;
 import java.util.Optional;
 import org.immutables.value.Value;
 
 @Value.Immutable
-@StagedBuilderStyle
+@StagedBuilderImmutablesStyle
 public interface GeneratedHttpServiceClient extends IGeneratedFile {
 
     HttpService httpService();

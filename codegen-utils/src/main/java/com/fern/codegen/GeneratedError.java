@@ -15,12 +15,12 @@
  */
 package com.fern.codegen;
 
-import com.fern.immutables.StagedBuilderStyle;
+import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.types.ErrorDeclaration;
 import org.immutables.value.Value;
 
 @Value.Immutable
-@StagedBuilderStyle
+@StagedBuilderImmutablesStyle
 public interface GeneratedError extends IGeneratedFile {
 
     ErrorDeclaration errorDeclaration();

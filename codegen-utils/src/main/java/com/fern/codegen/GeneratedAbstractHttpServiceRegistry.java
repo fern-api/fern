@@ -16,11 +16,11 @@
 
 package com.fern.codegen;
 
-import com.fern.immutables.StagedBuilderStyle;
+import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import org.immutables.value.Value;
 
 @Value.Immutable
-@StagedBuilderStyle
+@StagedBuilderImmutablesStyle
 public interface GeneratedAbstractHttpServiceRegistry extends IGeneratedFile {
 
     GeneratedFile defaultExceptionMapper();

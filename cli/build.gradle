@@ -14,7 +14,6 @@ dependencies {
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
     implementation 'com.fern-fern.fern:ir-model'
     implementation 'org.immutables:value::annotations'
-    implementation 'com.fern:fern-immutables-style'
     implementation 'com.squareup:javapoet'
     implementation 'ch.qos.logback:logback-classic'
     implementation 'com.fern-fern.fern:generator-logging-api-client'

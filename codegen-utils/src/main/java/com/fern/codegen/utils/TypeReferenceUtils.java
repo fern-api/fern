@@ -78,7 +78,7 @@ class TypeReferenceUtils {
 
         @Override
         public TypeName visitUnknown() {
-            return ClassName.get(Object.class);
+            return ParameterizedTypeName.get(Optional.class, Object.class);
         }
 
         @Override

@@ -16,7 +16,7 @@
 package com.fern.java.client.cli;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fern.immutables.StagedBuilderStyle;
+import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 import org.immutables.value.Value;
 
 @Value.Immutable
-@StagedBuilderStyle
+@StagedBuilderImmutablesStyle
 @JsonDeserialize(as = ImmutableCustomPluginConfig.class)
 public interface CustomPluginConfig {
 

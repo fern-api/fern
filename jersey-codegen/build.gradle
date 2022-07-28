@@ -6,7 +6,6 @@ dependencies {
     implementation project(':runtime-utils:exception-utils')
     implementation project(':runtime-utils:jersey-utils')
     implementation 'com.fern-fern.fern:ir-model'
-    implementation 'com.fern:fern-immutables-style'
     implementation 'com.squareup:javapoet'
     implementation 'org.slf4j:slf4j-api'
     implementation 'com.fasterxml.jackson.core:jackson-databind'
