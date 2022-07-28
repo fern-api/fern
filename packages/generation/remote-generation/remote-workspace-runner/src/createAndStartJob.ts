@@ -34,8 +34,7 @@ async function createJob({
             id: generator.name,
             version: generator.version,
             willDownloadFiles: generator.generate?.absolutePathToLocalOutput != null,
-            // TODO delete this cast
-            customConfig: generator.config as Record<string, string>,
+            customConfig: generator.config,
         })),
     });
 
