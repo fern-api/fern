@@ -1,4 +1,5 @@
 import { ErrorDeclaration, ErrorName, IntermediateRepresentation } from "@fern-fern/ir-model";
+import path from "path";
 import { StringifiedFernFilepath, stringifyFernFilepath } from "../stringifyFernFilepath";
 
 type SimpleErrorName = string;
@@ -23,5 +24,5 @@ export class ErrorResolver {
 }
 
 function errorNameToString(errorName: ErrorName) {
-    return `${stringifyFernFilepath(errorName.fernFilepath)}.${errorName.name}`;
+    return path.join(stringifyFernFilepath(errorName.fernFilepath), errorName.name);
 }
