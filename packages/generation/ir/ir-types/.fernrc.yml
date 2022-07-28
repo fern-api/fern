@@ -7,7 +7,7 @@ generators:
     config:
       mode: model
   - name: fernapi/fern-java
-    version: 0.0.72
+    version: 0.0.84
     generate: true
     config:
       packagePrefix: "com.fern"
