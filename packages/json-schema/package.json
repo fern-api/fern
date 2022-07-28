@@ -26,9 +26,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/core-utils": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
-    "@fern-fern/ir-model": "0.0.54",
     "prettier": "^2.7.1",
     "zod": "^3.14.3",
     "zod-to-json-schema": "3.14.1"
