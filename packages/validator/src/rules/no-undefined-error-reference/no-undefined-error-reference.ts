@@ -5,7 +5,7 @@ import path from "path";
 import { Rule } from "../../Rule";
 
 export const NoUndefinedErrorReferenceRule: Rule = {
-    name: "no-undefined-type-reference",
+    name: "no-undefined-error-reference",
     create: async ({ workspace }) => {
         const errorsByFilepath = await getErrorsByFilepath(workspace);
 
