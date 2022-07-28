@@ -11,7 +11,7 @@ types:
       workspaceName: string
       organization: string
       helpers: GeneratorHelpers
-      customConfig: map<string, unknown>
+      customConfig: unknown
       environment: GeneratorEnvironment
   GeneratorOutputConfig:
     properties:
