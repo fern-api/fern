@@ -10,7 +10,7 @@ types:
   IntermediateRepresentation:
     docs: "Complete representation of the API schema"
     properties:
-      workspaceName: optional<string>
+      workspaceName: optional<strig>
       types:
         docs: "The types described by this API"
         type: list<types.TypeDeclaration>

@@ -1,4 +1,5 @@
 import { DeclaredTypeName, IntermediateRepresentation, Type, TypeReference } from "@fern-fern/ir-model";
+import path from "path";
 import { StringifiedFernFilepath, stringifyFernFilepath } from "../stringifyFernFilepath";
 import { ResolvedType } from "./ResolvedType";
 
@@ -111,5 +112,5 @@ export class TypeResolver {
 }
 
 function typeNameToString(typeName: DeclaredTypeName) {
-    return `${stringifyFernFilepath(typeName.fernFilepath)}.${typeName.name}`;
+    return path.join(stringifyFernFilepath(typeName.fernFilepath), typeName.name);
 }
