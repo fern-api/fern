@@ -1,5 +1,6 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
-import _ from "lodash";
+import capitalize from "lodash-es/capitalize";
+import isEmpty from "lodash-es/isEmpty";
 import { OpenAPIV3 } from "openapi-types";
 import { isReferenceObject, isSchemaObject } from "./utils";
 
@@ -15,7 +16,7 @@ export function convertToFernType(typeName: string, schemaObject: OpenAPIV3.Sche
     const conversionResult: FernTypeConversionResult = {
         typeDeclarations: {},
     };
-    if (_.isEmpty(schemaObject)) {
+    if (isEmpty(schemaObject)) {
         conversionResult.typeDeclarations[typeName] = EMPTY_OBJECT_TYPE_DEFINITION;
     } else if (schemaObject.oneOf != null) {
         const unionTypeDeclaration: RawSchemas.UnionSchema = { union: {} };
@@ -135,5 +136,5 @@ export function getTypeNameFromReferenceObject(referenceObject: OpenAPIV3.Refere
 }
 
 function getTypeName(typeNameHierarchy: string[]) {
-    return typeNameHierarchy.map((typeName) => _.capitalize(typeName)).join("");
+    return typeNameHierarchy.map((typeName) => capitalize(typeName)).join("");
 }
