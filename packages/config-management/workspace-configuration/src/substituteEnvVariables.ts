@@ -1,4 +1,5 @@
-import { isPlainObject, set } from "lodash";
+import isPlainObject from "lodash-es/isPlainObject";
+import set from "lodash-es/set";
 
 export function substituteEnvVariables(yaml: unknown): unknown {
     const processedYaml = {};

@@ -9,7 +9,7 @@ import {
     HttpMethod,
     HttpService,
 } from "@fern-fern/ir-model/services";
-import { kebabCase } from "lodash";
+import kebabCase from "lodash-es/kebabCase";
 import { getDocs } from "../../utils/getDocs";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { constructHttpPath } from "./constructHttpPath";

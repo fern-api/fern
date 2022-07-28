@@ -28,20 +28,19 @@
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
     "@fern-fern/ir-model": "0.0.54",
-    "prettier": "^2.7.1",
-    "zod": "^3.14.3",
-    "zod-to-json-schema": "3.14.1"
+    "zod": "^3.14.3"
   },
   "devDependencies": {
     "@babel/core": "^7.18.9",
     "@babel/preset-env": "^7.18.9",
     "@babel/preset-typescript": "^7.18.6",
     "@types/jest": "^28.1.6",
-    "@types/node": "^18.6.1",
+    "@types/node": "^18.6.2",
     "@types/prettier": "^2.6.3",
     "depcheck": "^1.4.3",
     "eslint": "^8.20.0",
     "jest": "^28.1.3",
+    "prettier": "^2.7.1",
     "typescript": "4.6.4"
   }
 }
