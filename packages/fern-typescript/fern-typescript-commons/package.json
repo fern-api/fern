@@ -27,10 +27,10 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
-    "@fern-fern/ir-model": "0.0.53",
+    "@fern-fern/ir-model": "0.0.56",
     "esutils": "^2.0.3",
     "immer": "^9.0.15",
-    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "ts-morph": "^14.0.0",
     "typescript": "4.6.4",
     "zod": "^3.14.3"
@@ -41,8 +41,8 @@
     "@babel/preset-typescript": "^7.18.6",
     "@types/esutils": "^2.0.0",
     "@types/jest": "^28.1.6",
-    "@types/lodash": "^4.14.182",
-    "@types/node": "^18.6.1",
+    "@types/lodash-es": "^4.17.6",
+    "@types/node": "^18.6.2",
     "depcheck": "^1.4.3",
     "eslint": "^8.20.0",
     "jest": "^28.1.3",

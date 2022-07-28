@@ -6,6 +6,7 @@ const config: Config = {
     transform: {
         "\\.[jt]sx?$": ["babel-jest", { rootMode: "upward" }],
     },
+    transformIgnorePatterns: ["<rootDir>/node_modules/(?!lodash-es)"],
     modulePathIgnorePatterns: ["<rootDir>/packages/.*/__test__/.*/generated"],
 };
 

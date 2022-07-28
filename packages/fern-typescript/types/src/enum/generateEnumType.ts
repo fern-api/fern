@@ -6,7 +6,7 @@ import {
     maybeAddDocs,
     visitorUtils,
 } from "@fern-typescript/commons";
-import { lowerFirst } from "lodash";
+import lowerFirst from "lodash-es/lowerFirst";
 import { SourceFile, ts, VariableDeclarationKind, WriterFunction } from "ts-morph";
 import { getKeyForEnum } from "./utils";
 

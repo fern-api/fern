@@ -5,6 +5,20 @@ __metadata:
   version: 6
   cacheKey: 8
 
+"#ansi-styles@npm:ansi-styles@6.1.0, ansi-styles@npm:^6.0.0, ansi-styles@npm:^6.1.0":
+  version: 6.1.0
+  resolution: "ansi-styles@npm:6.1.0"
+  checksum: 7a7f8528c07a9d20c3a92bccd2b6bc3bb4d26e5cb775c02826921477377bd495d615d61f710d56216344b6238d1d11ef2b0348e146c5b128715578bfb3217229
+  languageName: node
+  linkType: hard
+
+"#supports-color@npm:supports-color@9.2.2, supports-color@npm:*, supports-color@npm:^9.2.1":
+  version: 9.2.2
+  resolution: "supports-color@npm:9.2.2"
+  checksum: 976d84877402fc38c1d43b1fde20b0a8dc0283273f21cfebe4ff7507d27543cdfbeec7db108a96b82d694465f06d64e8577562b05d0520b41710088e0a33cc50
+  languageName: node
+  linkType: hard
+
 "@ampproject/remapping@npm:^2.1.0":
   version: 2.2.0
   resolution: "@ampproject/remapping@npm:2.2.0"
@@ -1719,7 +1733,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/workspace-configuration": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
@@ -1748,22 +1762,22 @@ __metadata:
     "@fern-api/validator": "workspace:*"
     "@fern-api/workspace-configuration": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/ir-model": 0.0.53
+    "@fern-fern/ir-model": 0.0.56
     "@types/inquirer": ^8.2.1
     "@types/jest": ^28.1.6
     "@types/js-yaml": ^4.0.5
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     "@types/validate-npm-package-name": ^4.0.0
     "@types/yargs": ^17.0.10
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
-    chalk: ^4.1.2
+    chalk: ^5.0.1
     depcheck: ^1.4.3
     env-cmd: toddbluhm/env-cmd
     esbuild: ^0.14.50
     eslint: ^8.20.0
     glob: ^7.2.0
     glob-promise: ^4.2.2
-    inquirer: ^8.0.0
+    inquirer: ^9.0.0
     jest: ^28.1.3
     js-yaml: ^4.1.0
     prettier: ^2.7.1
@@ -1792,6 +1806,7 @@ __metadata:
     "@fern-api/ete-tests": "workspace:*"
     "@fern-api/init": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
+    "@fern-api/json-schema": "workspace:*"
     "@fern-api/loadable": "workspace:*"
     "@fern-api/local-workspace-runner": "workspace:*"
     "@fern-api/login": "workspace:*"
@@ -1827,7 +1842,7 @@ __metadata:
     "@fern-ui/theme": "workspace:*"
     "@fern-ui/toaster": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     depcheck: ^1.4.3
     eslint: ^8.20.0
     fern-typescript: "workspace:*"
@@ -1845,7 +1860,7 @@ __metadata:
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
@@ -1863,7 +1878,7 @@ __metadata:
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
@@ -1882,7 +1897,7 @@ __metadata:
     "@fern-api/core-utils": "workspace:*"
     "@types/dockerode": ^3.3.8
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     depcheck: ^1.4.3
     dockerode: ^3.3.1
     eslint: ^8.20.0
@@ -1904,7 +1919,7 @@ __metadata:
     "@fern-api/workspace-configuration": "workspace:*"
     "@fern-typescript/testing-utils": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     depcheck: ^1.4.3
     eslint: ^8.20.0
     execa: ^5.1.1
@@ -1927,7 +1942,7 @@ __metadata:
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/js-yaml": ^4.0.5
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
@@ -1948,16 +1963,37 @@ __metadata:
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/ir-model": 0.0.53
+    "@fern-fern/ir-model": 0.0.56
     "@types/jest": ^28.1.6
-    "@types/lodash": ^4.14.182
-    "@types/node": ^18.6.1
+    "@types/lodash-es": ^4.17.6
+    "@types/node": ^18.6.2
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
-    lodash: ^4.17.21
+    lodash-es: ^4.17.21
     prettier: ^2.7.1
     typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/json-schema@workspace:*, @fern-api/json-schema@workspace:packages/json-schema":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/json-schema@workspace:packages/json-schema"
+  dependencies:
+    "@babel/core": ^7.18.9
+    "@babel/preset-env": ^7.18.9
+    "@babel/preset-typescript": ^7.18.6
+    "@fern-api/yaml-schema": "workspace:*"
+    "@types/jest": ^28.1.6
+    "@types/node": ^18.6.2
+    "@types/prettier": ^2.6.3
+    depcheck: ^1.4.3
+    eslint: ^8.20.0
+    jest: ^28.1.3
+    prettier: ^2.7.1
+    typescript: 4.6.4
+    zod: ^3.14.3
+    zod-to-json-schema: 3.14.1
   languageName: unknown
   linkType: soft
 
@@ -1970,7 +2006,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     "@types/react": ^18.0.15
     depcheck: ^1.4.3
     eslint: ^8.20.0
@@ -1992,9 +2028,9 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/docker-utils": "workspace:*"
     "@fern-api/workspace-configuration": "workspace:*"
-    "@fern-fern/ir-model": 0.0.53
+    "@fern-fern/ir-model": 0.0.56
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     "@types/tar": ^6.1.1
     "@types/tmp": ^0.2.3
     depcheck: ^1.4.3
@@ -2016,7 +2052,7 @@ __metadata:
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     axios: ^0.27.2
     depcheck: ^1.4.3
     eslint: ^8.20.0
@@ -2038,13 +2074,13 @@ __metadata:
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/js-yaml": ^4.0.5
-    "@types/lodash": ^4.14.182
-    "@types/node": ^18.6.1
+    "@types/lodash-es": ^4.17.6
+    "@types/node": ^18.6.2
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
     js-yaml: ^4.1.0
-    lodash: ^4.17.21
+    lodash-es: ^4.17.21
     openapi-types: ^12.0.0
     prettier: ^2.7.1
     typescript: 4.6.4
@@ -2059,7 +2095,7 @@ __metadata:
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     depcheck: ^1.4.3
     eslint: ^8.20.0
     find-up: ^5.0.0
@@ -2078,18 +2114,18 @@ __metadata:
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/workspace-configuration": "workspace:*"
-    "@fern-fern/fiddle-coordinator-api-client": ^0.0.41
-    "@fern-fern/ir-model": 0.0.53
+    "@fern-fern/fiddle-coordinator-api-client": ^0.0.45
+    "@fern-fern/ir-model": 0.0.56
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     axios: ^0.27.2
-    chalk: ^4.1.2
+    chalk: ^5.0.1
     depcheck: ^1.4.3
     eslint: ^8.20.0
     form-data: ^4.0.0
     jest: ^28.1.3
-    log-update: ^4.0.0
-    ora: ^5.4.1
+    log-update: ^5.0.1
+    ora: ^6.1.2
     prettier: ^2.7.1
     typescript: 4.6.4
     url-join: ^5.0.0
@@ -2103,20 +2139,20 @@ __metadata:
     "@babel/core": ^7.18.9
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
-    "@fern-api/yaml-schema": "workspace:*"
+    "@fern-api/json-schema": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/lodash": ^4.14.182
-    "@types/node": ^18.6.1
+    "@types/lodash-es": ^4.17.6
+    "@types/node": ^18.6.2
     "@types/yargs": ^17.0.10
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
-    chalk: ^4.1.2
+    chalk: ^5.0.1
     depcheck: ^1.4.3
     esbuild: ^0.14.50
     eslint: ^8.20.0
     execa: ^5.1.1
     immer: ^9.0.15
     jest: ^28.1.3
-    lodash: ^4.17.21
+    lodash-es: ^4.17.21
     prettier: ^2.7.1
     typescript: 4.6.4
     yargs: ^17.4.1
@@ -2138,8 +2174,8 @@ __metadata:
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
-    chalk: ^4.1.2
+    "@types/node": ^18.6.2
+    chalk: ^5.0.1
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
@@ -2158,13 +2194,13 @@ __metadata:
     "@fern-api/config-management-commons": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/js-yaml": ^4.0.5
-    "@types/lodash": ^4.14.182
-    "@types/node": ^18.6.1
+    "@types/lodash-es": ^4.17.6
+    "@types/node": ^18.6.2
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
     js-yaml: ^4.1.0
-    lodash: ^4.17.21
+    lodash-es: ^4.17.21
     prettier: ^2.7.1
     typescript: 4.6.4
     zod: ^3.14.3
@@ -2183,7 +2219,7 @@ __metadata:
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/js-yaml": ^4.0.5
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     depcheck: ^1.4.3
     eslint: ^8.20.0
     glob: ^7.2.0
@@ -2204,30 +2240,28 @@ __metadata:
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
-    "@fern-fern/ir-model": 0.0.53
+    "@fern-fern/ir-model": 0.0.56
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
-    "@types/prettier": ^2.6.3
+    "@types/node": ^18.6.2
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
     prettier: ^2.7.1
     typescript: 4.6.4
     zod: ^3.14.3
-    zod-to-json-schema: 3.14.1
   languageName: unknown
   linkType: soft
 
-"@fern-fern/fiddle-coordinator-api-client@npm:^0.0.41":
-  version: 0.0.41
-  resolution: "@fern-fern/fiddle-coordinator-api-client@npm:0.0.41"
+"@fern-fern/fiddle-coordinator-api-client@npm:^0.0.45":
+  version: 0.0.45
+  resolution: "@fern-fern/fiddle-coordinator-api-client@npm:0.0.45"
   dependencies:
     "@fern-typescript/service-utils": 0.0.124
     "@types/url-join": 4.0.1
     "@types/uuid": 8.3.4
     url-join: 4.0.1
     uuid: 8.3.2
-  checksum: 65684e2f5e3c1cad026838e8cb010446d7af7c3e9c537906176b0f4922648d2c2293a9550f34e1efe991e9a040c8b90e9ec376ae8f20bfdd597db0e353ca4fb5
+  checksum: 2266a311ca3114cedad95cbf61b334cf6c4a8f80e4eb724d8cfba8ff36aa090d710dde40fdb3ff6f5c013f08fc46aba8b2cf664d34a1622f47b98b2627b34b5d
   languageName: node
   linkType: hard
 
@@ -2242,10 +2276,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/ir-model@npm:0.0.53":
-  version: 0.0.53
-  resolution: "@fern-fern/ir-model@npm:0.0.53"
-  checksum: df62870db32fef91c78de8f21610d39f506c071e8f236b742004a15d58558e4dc8284b0c3be07e65375b35cec069f255914ca4867a315e5bfd471f615d5ca786
+"@fern-fern/ir-model@npm:0.0.56":
+  version: 0.0.56
+  resolution: "@fern-fern/ir-model@npm:0.0.56"
+  checksum: 498fcb63af916efeaddeb0ab9da861465300e285a4b0b92180ff54472b08ec2bce7e6e8ec725d97f43a9528d8a438a20333ba1de8b0ccaf4433cfc83db2c7709
   languageName: node
   linkType: hard
 
@@ -2257,7 +2291,7 @@ __metadata:
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
-    "@fern-fern/ir-model": 0.0.53
+    "@fern-fern/ir-model": 0.0.56
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/encoders": "workspace:*"
     "@fern-typescript/helper-manager": "workspace:*"
@@ -2267,7 +2301,7 @@ __metadata:
     "@fern-typescript/service-types": "workspace:*"
     "@fern-typescript/testing-utils": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
@@ -2286,17 +2320,17 @@ __metadata:
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
-    "@fern-fern/ir-model": 0.0.53
+    "@fern-fern/ir-model": 0.0.56
     "@types/esutils": ^2.0.0
     "@types/jest": ^28.1.6
-    "@types/lodash": ^4.14.182
-    "@types/node": ^18.6.1
+    "@types/lodash-es": ^4.17.6
+    "@types/node": ^18.6.2
     depcheck: ^1.4.3
     eslint: ^8.20.0
     esutils: ^2.0.3
     immer: ^9.0.15
     jest: ^28.1.3
-    lodash: ^4.17.21
+    lodash-es: ^4.17.21
     memfs: ^3.4.1
     package-json-type: ^1.0.3
     prettier: ^2.7.1
@@ -2313,11 +2347,11 @@ __metadata:
     "@babel/core": ^7.18.9
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/ir-model": 0.0.53
+    "@fern-fern/ir-model": 0.0.56
     "@fern-typescript/helper-manager": "workspace:*"
     "@fern-typescript/model-context": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
@@ -2334,11 +2368,11 @@ __metadata:
     "@babel/core": ^7.18.9
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/ir-model": 0.0.53
+    "@fern-fern/ir-model": 0.0.56
     "@fern-typescript/model-context": "workspace:*"
     "@fern-typescript/types": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
@@ -2355,11 +2389,11 @@ __metadata:
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/config-management-commons": "workspace:*"
-    "@fern-fern/ir-model": 0.0.53
+    "@fern-fern/ir-model": 0.0.56
     "@fern-typescript/helper-utils": "workspace:*"
     "@fern-typescript/json-encoding-helper": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
@@ -2376,10 +2410,10 @@ __metadata:
     "@babel/core": ^7.18.9
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/ir-model": 0.0.53
+    "@fern-fern/ir-model": 0.0.56
     "@fern-typescript/model-context": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
@@ -2398,7 +2432,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-typescript/helper-utils": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
@@ -2415,10 +2449,10 @@ __metadata:
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
-    "@fern-fern/ir-model": 0.0.53
+    "@fern-fern/ir-model": 0.0.56
     "@fern-typescript/commons": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
@@ -2436,7 +2470,7 @@ __metadata:
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
-    "@fern-fern/ir-model": 0.0.53
+    "@fern-fern/ir-model": 0.0.56
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/errors": "workspace:*"
     "@fern-typescript/model-context": "workspace:*"
@@ -2444,7 +2478,7 @@ __metadata:
     "@fern-typescript/testing-utils": "workspace:*"
     "@fern-typescript/types": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
@@ -2462,7 +2496,7 @@ __metadata:
     "@babel/core": ^7.18.9
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/ir-model": 0.0.53
+    "@fern-fern/ir-model": 0.0.56
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/encoders": "workspace:*"
     "@fern-typescript/helper-manager": "workspace:*"
@@ -2472,7 +2506,7 @@ __metadata:
     "@fern-typescript/testing-utils": "workspace:*"
     "@fern-typescript/types": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
@@ -2491,17 +2525,17 @@ __metadata:
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
-    "@fern-fern/ir-model": 0.0.53
+    "@fern-fern/ir-model": 0.0.56
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/model-context": "workspace:*"
     "@fern-typescript/types": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/lodash": ^4.14.182
-    "@types/node": ^18.6.1
+    "@types/lodash-es": ^4.17.6
+    "@types/node": ^18.6.2
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
-    lodash: ^4.17.21
+    lodash-es: ^4.17.21
     prettier: ^2.7.1
     ts-morph: ^14.0.0
     typescript: 4.6.4
@@ -2527,7 +2561,7 @@ __metadata:
     "@types/basic-auth": ^1.1.3
     "@types/jest": ^28.1.6
     "@types/js-base64": ^3.3.1
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     axios: ^0.27.2
     basic-auth: ^2.0.1
     depcheck: ^1.4.3
@@ -2548,11 +2582,11 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/ir-model": 0.0.53
+    "@fern-fern/ir-model": 0.0.56
     "@fern-typescript/commons": "workspace:*"
     "@types/is-ci": ^3.0.0
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     depcheck: ^1.4.3
     eslint: ^8.20.0
     execa: ^5.1.1
@@ -2571,16 +2605,16 @@ __metadata:
     "@babel/core": ^7.18.9
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/ir-model": 0.0.53
+    "@fern-fern/ir-model": 0.0.56
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/model-context": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/lodash": ^4.14.182
-    "@types/node": ^18.6.1
+    "@types/lodash-es": ^4.17.6
+    "@types/node": ^18.6.2
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
-    lodash: ^4.17.21
+    lodash-es: ^4.17.21
     prettier: ^2.7.1
     ts-morph: ^14.0.0
     typescript: 4.6.4
@@ -2603,7 +2637,7 @@ __metadata:
     "@mui/icons-material": ^5.8.4
     "@mui/material": ^5.9.2
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     "@types/react": ^18.0.15
     classnames: ^2.3.1
     depcheck: ^1.4.3
@@ -2627,7 +2661,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@blueprintjs/core": ^4.6.1
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     "@types/react": ^18.0.15
     classnames: ^2.3.1
     depcheck: ^1.4.3
@@ -2655,7 +2689,7 @@ __metadata:
     "@fern-ui/theme": "workspace:*"
     "@fern-ui/toaster": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     "@types/react": ^18.0.15
     classnames: ^2.3.1
     depcheck: ^1.4.3
@@ -2684,7 +2718,7 @@ __metadata:
     "@fern-ui/app": "workspace:*"
     "@fern-ui/theme": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     "@types/react": ^18.0.15
     "@types/react-dom": ^18.0.6
     "@vitejs/plugin-react": ^2.0.0
@@ -2711,7 +2745,7 @@ __metadata:
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     "@types/react": ^18.0.15
     depcheck: ^1.4.3
     eslint: ^8.20.0
@@ -2733,7 +2767,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/loadable": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     "@types/react": ^18.0.15
     depcheck: ^1.4.3
     eslint: ^8.20.0
@@ -2756,7 +2790,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@blueprintjs/core": ^4.6.1
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     "@types/react": ^18.0.15
     classnames: ^2.3.1
     depcheck: ^1.4.3
@@ -2781,7 +2815,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@blueprintjs/core": ^4.6.1
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     "@types/react": ^18.0.15
     classnames: ^2.3.1
     depcheck: ^1.4.3
@@ -2805,7 +2839,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@blueprintjs/core": ^4.6.1
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     classnames: ^2.3.1
     depcheck: ^1.4.3
     eslint: ^8.20.0
@@ -3730,7 +3764,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:^4.14.182":
+"@types/lodash-es@npm:^4.17.6":
+  version: 4.17.6
+  resolution: "@types/lodash-es@npm:4.17.6"
+  dependencies:
+    "@types/lodash": "*"
+  checksum: 9bd239dd525086e278821949ce12fbdd4f100a060fed9323fc7ad5661113e1641f28a7ebab617230ed3474680d8f4de705c1928b48252bb684be6ec9eed715db
+  languageName: node
+  linkType: hard
+
+"@types/lodash@npm:*":
   version: 4.14.182
   resolution: "@types/lodash@npm:4.14.182"
   checksum: 7dd137aa9dbabd632408bd37009d984655164fa1ecc3f2b6eb94afe35bf0a5852cbab6183148d883e9c73a958b7fec9a9bcf7c8e45d41195add6a18c34958209
@@ -3767,10 +3810,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^18.6.1":
-  version: 18.6.1
-  resolution: "@types/node@npm:18.6.1"
-  checksum: 06331f68bc73d93b73977ae19ca87818e004bc7b8e70b0d4f73b0ea5e341a4a1ba6f0e79db8fb75a841af2b8d74552d6b9a8f846b267954689f57effedcf5d77
+"@types/node@npm:^18.6.2":
+  version: 18.6.2
+  resolution: "@types/node@npm:18.6.2"
+  checksum: 644c460baedb1fbbd55369ab621167cb39ddaa727fd4fcf4bc7080183cf936d7ff8c2c886ba93ff42768d6f7a579a540e6d1e63d3adba4e5758fb13671ae68ce
   languageName: node
   linkType: hard
 
@@ -4500,6 +4543,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ansi-escapes@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "ansi-escapes@npm:5.0.0"
+  dependencies:
+    type-fest: ^1.0.2
+  checksum: d4b5eb8207df38367945f5dd2ef41e08c28edc192dc766ef18af6b53736682f49d8bfcfa4e4d6ecbc2e2f97c258fda084fb29a9e43b69170b71090f771afccac
+  languageName: node
+  linkType: hard
+
 "ansi-regex@npm:^2.0.0":
   version: 2.1.1
   resolution: "ansi-regex@npm:2.1.1"
@@ -4550,13 +4602,6 @@ __metadata:
   version: 5.2.0
   resolution: "ansi-styles@npm:5.2.0"
   checksum: d7f4e97ce0623aea6bc0d90dcd28881ee04cba06c570b97fd3391bd7a268eedfd9d5e2dd4fdcbdd82b8105df5faf6f24aaedc08eaf3da898e702db5948f63469
-  languageName: node
-  linkType: hard
-
-"ansi-styles@npm:^6.0.0":
-  version: 6.1.0
-  resolution: "ansi-styles@npm:6.1.0"
-  checksum: 7a7f8528c07a9d20c3a92bccd2b6bc3bb4d26e5cb775c02826921477377bd495d615d61f710d56216344b6238d1d11ef2b0348e146c5b128715578bfb3217229
   languageName: node
   linkType: hard
 
@@ -4877,7 +4922,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bl@npm:^4.0.3, bl@npm:^4.1.0":
+"bl@npm:^4.0.3":
   version: 4.1.0
   resolution: "bl@npm:4.1.0"
   dependencies:
@@ -4885,6 +4930,17 @@ __metadata:
     inherits: "npm:^2.0.4"
     readable-stream: "npm:^3.4.0"
   checksum: 9e8521fa7e83aa9427c6f8ccdcba6e8167ef30cc9a22df26effcc5ab682ef91d2cbc23a239f945d099289e4bbcfae7a192e9c28c84c6202e710a0dfec3722662
+  languageName: node
+  linkType: hard
+
+"bl@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "bl@npm:5.0.0"
+  dependencies:
+    buffer: ^6.0.3
+    inherits: ^2.0.4
+    readable-stream: ^3.4.0
+  checksum: 5dbbcf9cbcf55221dc21f48968bc8cd6d78faea3c653d496ff8e0c382b95e8b6c4b9e818fe67de2f97ed0cd0c219c350ccce42aca91be33e0ad12e698c615061
   languageName: node
   linkType: hard
 
@@ -4985,6 +5041,16 @@ __metadata:
     base64-js: "npm:^1.3.1"
     ieee754: "npm:^1.1.13"
   checksum: e2cf8429e1c4c7b8cbd30834ac09bd61da46ce35f5c22a78e6c2f04497d6d25541b16881e30a019c6fd3154150650ccee27a308eff3e26229d788bbdeb08ab84
+  languageName: node
+  linkType: hard
+
+"buffer@npm:^6.0.3":
+  version: 6.0.3
+  resolution: "buffer@npm:6.0.3"
+  dependencies:
+    base64-js: ^1.3.1
+    ieee754: ^1.2.1
+  checksum: 5ad23293d9a731e4318e420025800b42bf0d264004c0286c8cc010af7a270c7a0f6522e84f54b9ad65cbd6db20b8badbfd8d2ebf4f80fa03dab093b89e68c3f9
   languageName: node
   linkType: hard
 
@@ -5122,7 +5188,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:4.1.x, chalk@npm:^4.0.0, chalk@npm:^4.1.0, chalk@npm:^4.1.1, chalk@npm:^4.1.2":
+"chalk@npm:4.1.x, chalk@npm:^4.0.0, chalk@npm:^4.1.0, chalk@npm:^4.1.1":
   version: 4.1.2
   resolution: "chalk@npm:4.1.2"
   dependencies:
@@ -5163,6 +5229,13 @@ __metadata:
     ansi-styles: "npm:^4.1.0"
     supports-color: "npm:^7.1.0"
   checksum: 8e3ddf3981c4da405ddbd7d9c8d91944ddf6e33d6837756979f7840a29272a69a5189ecae0ff84006750d6d1e92368d413335eab4db5476db6e6703a1d1e0505
+  languageName: node
+  linkType: hard
+
+"chalk@npm:^5.0.0, chalk@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "chalk@npm:5.0.1"
+  checksum: 7b45300372b908f0471fbf7389ce2f5de8d85bb949026fd51a1b95b10d0ed32c7ed5aab36dd5e9d2bf3191867909b4404cef75c5f4d2d1daeeacd301dd280b76
   languageName: node
   linkType: hard
 
@@ -5291,10 +5364,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cli-spinners@npm:^2.5.0":
-  version: 2.6.1
-  resolution: "cli-spinners@npm:2.6.1"
-  checksum: 423409baaa7a58e5104b46ca1745fbfc5888bbd0b0c5a626e052ae1387060839c8efd512fb127e25769b3dc9562db1dc1b5add6e0b93b7ef64f477feb6416a45
+"cli-cursor@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "cli-cursor@npm:4.0.0"
+  dependencies:
+    restore-cursor: ^4.0.0
+  checksum: ab3f3ea2076e2176a1da29f9d64f72ec3efad51c0960898b56c8a17671365c26e67b735920530eaf7328d61f8bd41c27f46b9cf6e4e10fe2fa44b5e8c0e392cc
+  languageName: node
+  linkType: hard
+
+"cli-spinners@npm:^2.6.1":
+  version: 2.7.0
+  resolution: "cli-spinners@npm:2.7.0"
+  checksum: a9afaf73f58d1f951fb23742f503631b3cf513f43f4c7acb1b640100eb76bfa16efbcd1994d149ffc6603a6d75dd3d4a516a76f125f90dce437de9b16fd0ee6f
   languageName: node
   linkType: hard
 
@@ -5318,10 +5400,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cli-width@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "cli-width@npm:3.0.0"
-  checksum: 4c94af3769367a70e11ed69aa6095f1c600c0ff510f3921ab4045af961820d57c0233acfa8b6396037391f31b4c397e1f614d234294f979ff61430a6c166c3f6
+"cli-width@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "cli-width@npm:4.0.0"
+  checksum: 1ec12311217cc8b2d018646a58b61424d2348def598fb58ba2c32e28f0bcb59a35cef168110311cefe3340abf00e5171b351de6c3e2c084bd1642e6e2a9e144e
   languageName: node
   linkType: hard
 
@@ -6446,6 +6528,13 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"escape-string-regexp@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "escape-string-regexp@npm:5.0.0"
+  checksum: 20daabe197f3cb198ec28546deebcf24b3dbb1a5a269184381b3116d12f0532e06007f4bc8da25669d6a7f8efb68db0758df4cd981f57bc5b57f521a3e12c59e
+  languageName: node
+  linkType: hard
+
 "eslint-plugin-jest@npm:^26.5.3":
   version: 26.5.3
   resolution: "eslint-plugin-jest@npm:26.5.3"
@@ -6781,7 +6870,7 @@ env-cmd@toddbluhm/env-cmd:
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/generator-logging-api-client": ^0.0.25
-    "@fern-fern/ir-model": 0.0.53
+    "@fern-fern/ir-model": 0.0.56
     "@fern-typescript/client": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/helper-manager": "workspace:*"
@@ -6790,7 +6879,7 @@ env-cmd@toddbluhm/env-cmd:
     "@fern-typescript/testing-utils": "workspace:*"
     "@ts-morph/common": ^0.13.0
     "@types/jest": ^28.1.6
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.2
     "@types/webpack-bundle-analyzer": ^4.4.1
     depcheck: ^1.4.3
     eslint: ^8.20.0
@@ -6821,11 +6910,11 @@ env-cmd@toddbluhm/env-cmd:
     "@blueprintjs/stylelint-plugin": ^2.0.8
     "@types/is-ci": ^3.0.0
     "@types/jest": ^28.1.6
-    "@types/lodash": ^4.14.182
+    "@types/lodash-es": ^4.17.6
     "@types/node": ^18.0.3
     "@typescript-eslint/eslint-plugin": ^5.27.1
     "@typescript-eslint/parser": ^5.27.1
-    chalk: ^4.1.2
+    chalk: ^5.0.1
     depcheck: ^1.4.3
     docsify-cli: ^4.4.4
     eslint: ^8.19.0
@@ -6837,7 +6926,7 @@ env-cmd@toddbluhm/env-cmd:
     is-ci: ^3.0.1
     jest: ^28.1.3
     lint-staged: ^12.3.7
-    lodash: ^4.17.21
+    lodash-es: ^4.17.21
     mrlint: ^0.0.91
     prettier: ^2.7.1
     stylelint: ^14.9.1
@@ -6855,12 +6944,22 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"figures@npm:3.2.x, figures@npm:^3.0.0":
+"figures@npm:3.2.x":
   version: 3.2.0
   resolution: "figures@npm:3.2.0"
   dependencies:
     escape-string-regexp: "npm:^1.0.5"
   checksum: 85a6ad29e9aca80b49b817e7c89ecc4716ff14e3779d9835af554db91bac41c0f289c418923519392a1e582b4d10482ad282021330cd045bb7b80c84152f2a2b
+  languageName: node
+  linkType: hard
+
+"figures@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "figures@npm:4.0.1"
+  dependencies:
+    escape-string-regexp: ^5.0.0
+    is-unicode-supported: ^1.2.0
+  checksum: 08564c70ec6be8dbd26e24e4f35bacb8d9beb729b3b7faa9cd7ad54f5232b7f9a39f788a847ec45677664d568c86323001d1042482d089c0d0f311e197ad1148
   languageName: node
   linkType: hard
 
@@ -7528,7 +7627,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"ieee754@npm:^1.1.13":
+"ieee754@npm:^1.1.13, ieee754@npm:^1.2.1":
   version: 1.2.1
   resolution: "ieee754@npm:1.2.1"
   checksum: 5144c0c9815e54ada181d80a0b810221a253562422e7c6c3a60b1901154184f49326ec239d618c416c1c5945a2e197107aee8d986a3dd836b53dffefd99b5e7e
@@ -7644,26 +7743,26 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"inquirer@npm:^8.0.0":
-  version: 8.2.4
-  resolution: "inquirer@npm:8.2.4"
+"inquirer@npm:^9.0.0":
+  version: 9.0.2
+  resolution: "inquirer@npm:9.0.2"
   dependencies:
-    ansi-escapes: "npm:^4.2.1"
-    chalk: "npm:^4.1.1"
-    cli-cursor: "npm:^3.1.0"
-    cli-width: "npm:^3.0.0"
-    external-editor: "npm:^3.0.3"
-    figures: "npm:^3.0.0"
-    lodash: "npm:^4.17.21"
-    mute-stream: "npm:0.0.8"
-    ora: "npm:^5.4.1"
-    run-async: "npm:^2.4.0"
-    rxjs: "npm:^7.5.5"
-    string-width: "npm:^4.1.0"
-    strip-ansi: "npm:^6.0.0"
-    through: "npm:^2.3.6"
-    wrap-ansi: "npm:^7.0.0"
-  checksum: dfcb6529d3af443dfea2241cb471508091b51f5121a088fdb8728b23ec9b349ef0a5e13a0ef2c8e19457b0bed22f7cbbcd561f7a4529d084c562a58c605e2655
+    ansi-escapes: ^5.0.0
+    chalk: ^5.0.1
+    cli-cursor: ^4.0.0
+    cli-width: ^4.0.0
+    external-editor: ^3.0.3
+    figures: ^4.0.1
+    lodash: ^4.17.21
+    mute-stream: 0.0.8
+    ora: ^6.1.2
+    run-async: ^2.4.0
+    rxjs: ^7.5.6
+    string-width: ^5.1.2
+    strip-ansi: ^7.0.1
+    through: ^2.3.6
+    wrap-ansi: ^8.0.1
+  checksum: 59dceecd4560374e9b8a8ca766320e6a60379f256fc66636ad0bf14ffb22391719ed3dec0bca066e11ba077ba29e899426aef5caa19e406161006a3700ab269a
   languageName: node
   linkType: hard
 
@@ -7812,10 +7911,10 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"is-interactive@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "is-interactive@npm:1.0.0"
-  checksum: 824808776e2d468b2916cdd6c16acacebce060d844c35ca6d82267da692e92c3a16fdba624c50b54a63f38bdc4016055b6f443ce57d7147240de4f8cdabaf6f9
+"is-interactive@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "is-interactive@npm:2.0.0"
+  checksum: e8d52ad490bed7ae665032c7675ec07732bbfe25808b0efbc4d5a76b1a1f01c165f332775c63e25e9a03d319ebb6b24f571a9e902669fc1e40b0a60b5be6e26c
   languageName: node
   linkType: hard
 
@@ -7908,10 +8007,10 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"is-unicode-supported@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "is-unicode-supported@npm:0.1.0"
-  checksum: a2aab86ee7712f5c2f999180daaba5f361bdad1efadc9610ff5b8ab5495b86e4f627839d085c6530363c6d6d4ecbde340fb8e54bdb83da4ba8e0865ed5513c52
+"is-unicode-supported@npm:^1.1.0, is-unicode-supported@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "is-unicode-supported@npm:1.2.0"
+  checksum: 2d90b4b3ce622c1ecf7414b8954cc8f0483576d4d8e6892cbbdc1e2dd33d6126b1cf0319cf1549bee03d45f989b8b0de3309c879a9388a4fe6b8836f866ed86c
   languageName: node
   linkType: hard
 
@@ -8766,6 +8865,13 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"lodash-es@npm:^4.17.21":
+  version: 4.17.21
+  resolution: "lodash-es@npm:4.17.21"
+  checksum: 05cbffad6e2adbb331a4e16fbd826e7faee403a1a04873b82b42c0f22090f280839f85b95393f487c1303c8a3d2a010048bf06151a6cbe03eee4d388fb0a12d2
+  languageName: node
+  linkType: hard
+
 "lodash.debounce@npm:^4.0.8":
   version: 4.0.8
   resolution: "lodash.debounce@npm:4.0.8"
@@ -8801,13 +8907,13 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"log-symbols@npm:^4.1.0":
-  version: 4.1.0
-  resolution: "log-symbols@npm:4.1.0"
+"log-symbols@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "log-symbols@npm:5.1.0"
   dependencies:
-    chalk: "npm:^4.1.0"
-    is-unicode-supported: "npm:^0.1.0"
-  checksum: fce1497b3135a0198803f9f07464165e9eb83ed02ceb2273930a6f8a508951178d8cf4f0378e9d28300a2ed2bc49050995d2bd5f53ab716bb15ac84d58c6ef74
+    chalk: ^5.0.0
+    is-unicode-supported: ^1.1.0
+  checksum: 7291b6e7f1b3df6865bdaeb9b59605c832668ac2fa0965c63b1e7dd3700349aec09c1d7d40c368d5041ff58b7f89461a56e4009471921301af7b3609cbff9a29
   languageName: node
   linkType: hard
 
@@ -8820,6 +8926,19 @@ env-cmd@toddbluhm/env-cmd:
     slice-ansi: "npm:^4.0.0"
     wrap-ansi: "npm:^6.2.0"
   checksum: ae2f85bbabc1906034154fb7d4c4477c79b3e703d22d78adee8b3862fa913942772e7fa11713e3d96fb46de4e3cabefbf5d0a544344f03b58d3c4bff52aa9eb2
+  languageName: node
+  linkType: hard
+
+"log-update@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "log-update@npm:5.0.1"
+  dependencies:
+    ansi-escapes: ^5.0.0
+    cli-cursor: ^4.0.0
+    slice-ansi: ^5.0.0
+    strip-ansi: ^7.0.1
+    wrap-ansi: ^8.0.1
+  checksum: 2c6b47dcce6f9233df6d232a37d9834cb3657a0749ef6398f1706118de74c55f158587d4128c225297ea66803f35c5ac3db4f3f617046d817233c45eedc32ef1
   languageName: node
   linkType: hard
 
@@ -9643,20 +9762,20 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"ora@npm:^5.4.1":
-  version: 5.4.1
-  resolution: "ora@npm:5.4.1"
+"ora@npm:^6.1.2":
+  version: 6.1.2
+  resolution: "ora@npm:6.1.2"
   dependencies:
-    bl: "npm:^4.1.0"
-    chalk: "npm:^4.1.0"
-    cli-cursor: "npm:^3.1.0"
-    cli-spinners: "npm:^2.5.0"
-    is-interactive: "npm:^1.0.0"
-    is-unicode-supported: "npm:^0.1.0"
-    log-symbols: "npm:^4.1.0"
-    strip-ansi: "npm:^6.0.0"
-    wcwidth: "npm:^1.0.1"
-  checksum: 28d476ee6c1049d68368c0dc922e7225e3b5600c3ede88fade8052837f9ed342625fdaa84a6209302587c8ddd9b664f71f0759833cbdb3a4cf81344057e63c63
+    bl: ^5.0.0
+    chalk: ^5.0.0
+    cli-cursor: ^4.0.0
+    cli-spinners: ^2.6.1
+    is-interactive: ^2.0.0
+    is-unicode-supported: ^1.1.0
+    log-symbols: ^5.1.0
+    strip-ansi: ^7.0.1
+    wcwidth: ^1.0.1
+  checksum: d5af3d67ad7affcf3029ffe3ef547f3335fb72abdc382040ae8bd75ad5c629f5d165ed9e398fd4fb08100701eafbec34bb9dc3f29e919f6f75c443290faa1db2
   languageName: node
   linkType: hard
 
@@ -10586,6 +10705,16 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"restore-cursor@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "restore-cursor@npm:4.0.0"
+  dependencies:
+    onetime: ^5.1.0
+    signal-exit: ^3.0.2
+  checksum: 5b675c5a59763bf26e604289eab35711525f11388d77f409453904e1e69c0d37ae5889295706b2c81d23bd780165084d040f9b68fffc32cc921519031c4fa4af
+  languageName: node
+  linkType: hard
+
 "retry@npm:^0.12.0":
   version: 0.12.0
   resolution: "retry@npm:0.12.0"
@@ -10654,6 +10783,15 @@ env-cmd@toddbluhm/env-cmd:
   dependencies:
     tslib: "npm:^2.1.0"
   checksum: e034f60805210cce756dd2f49664a8108780b117cf5d0e2281506e9e6387f7b4f1532d974a8c8b09314fa7a16dd2f6cff3462072a5789672b5dcb45c4173f3c6
+  languageName: node
+  linkType: hard
+
+"rxjs@npm:^7.5.6":
+  version: 7.5.6
+  resolution: "rxjs@npm:7.5.6"
+  dependencies:
+    tslib: ^2.1.0
+  checksum: fc05f01364a74dac57490fb3e07ea63b422af04017fae1db641a009073f902ef69f285c5daac31359620dc8d9aee7d81e42b370ca2a8573d1feae0b04329383b
   languageName: node
   linkType: hard
 
@@ -11167,7 +11305,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"string-width@npm:^5.0.0":
+"string-width@npm:^5.0.0, string-width@npm:^5.0.1, string-width@npm:^5.1.2":
   version: 5.1.2
   resolution: "string-width@npm:5.1.2"
   dependencies:
@@ -11398,13 +11536,6 @@ env-cmd@toddbluhm/env-cmd:
   version: 4.0.13
   resolution: "stylis@npm:4.0.13"
   checksum: 8ea7a87028b6383c6a982231c4b5b6150031ce028e0fdaf7b2ace82253d28a8af50cc5a9da8a421d3c7c4441592f393086e332795add672aa4a825f0fe3713a3
-  languageName: node
-  linkType: hard
-
-"supports-color@npm:*, supports-color@npm:^9.2.1":
-  version: 9.2.2
-  resolution: "supports-color@npm:9.2.2"
-  checksum: 976d84877402fc38c1d43b1fde20b0a8dc0283273f21cfebe4ff7507d27543cdfbeec7db108a96b82d694465f06d64e8577562b05d0520b41710088e0a33cc50
   languageName: node
   linkType: hard
 
@@ -11859,6 +11990,13 @@ env-cmd@toddbluhm/env-cmd:
   version: 0.8.1
   resolution: "type-fest@npm:0.8.1"
   checksum: d61c4b2eba24009033ae4500d7d818a94fd6d1b481a8111612ee141400d5f1db46f199c014766b9fa9b31a6a7374d96fc748c6d688a78a3ce5a33123839becb7
+  languageName: node
+  linkType: hard
+
+"type-fest@npm:^1.0.2":
+  version: 1.4.0
+  resolution: "type-fest@npm:1.4.0"
+  checksum: b011c3388665b097ae6a109a437a04d6f61d81b7357f74cbcb02246f2f5bd72b888ae33631b99871388122ba0a87f4ff1c94078e7119ff22c70e52c0ff828201
   languageName: node
   linkType: hard
 
@@ -12539,6 +12677,17 @@ env-cmd@toddbluhm/env-cmd:
     string-width: "npm:^4.1.0"
     strip-ansi: "npm:^6.0.0"
   checksum: a790b846fd4505de962ba728a21aaeda189b8ee1c7568ca5e817d85930e06ef8d1689d49dbf0e881e8ef84436af3a88bc49115c2e2788d841ff1b8b5b51a608b
+  languageName: node
+  linkType: hard
+
+"wrap-ansi@npm:^8.0.1":
+  version: 8.0.1
+  resolution: "wrap-ansi@npm:8.0.1"
+  dependencies:
+    ansi-styles: ^6.1.0
+    string-width: ^5.0.1
+    strip-ansi: ^7.0.1
+  checksum: 5d7816e64f75544e466d58a736cb96ca47abad4ad57f48765b9735ba5601221013a37f436662340ca159208b011121e4e030de5a17180c76202e35157195a71e
   languageName: node
   linkType: hard
 

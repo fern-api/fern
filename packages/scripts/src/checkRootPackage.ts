@@ -2,7 +2,7 @@ import chalk from "chalk";
 import execa from "execa";
 import { readFile, writeFile } from "fs/promises";
 import produce from "immer";
-import { isEqual } from "lodash";
+import isEqual from "lodash-es/isEqual";
 import path from "path";
 import process from "process";
 import { getAllPackages } from "./getAllPackages";

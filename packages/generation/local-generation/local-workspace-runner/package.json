@@ -28,7 +28,7 @@
   "dependencies": {
     "@fern-api/docker-utils": "workspace:*",
     "@fern-api/workspace-configuration": "workspace:*",
-    "@fern-fern/ir-model": "0.0.53",
+    "@fern-fern/ir-model": "0.0.56",
     "execa": "^5.1.1",
     "tar": "^6.1.11",
     "tmp-promise": "^3.0.3"
@@ -38,7 +38,7 @@
     "@babel/preset-env": "^7.18.9",
     "@babel/preset-typescript": "^7.18.6",
     "@types/jest": "^28.1.6",
-    "@types/node": "^18.6.1",
+    "@types/node": "^18.6.2",
     "@types/tar": "^6.1.1",
     "@types/tmp": "^0.2.3",
     "depcheck": "^1.4.3",

@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
-    "@fern-fern/ir-model": "0.0.53",
+    "@fern-fern/ir-model": "0.0.56",
     "@fern-typescript/commons": "workspace:*",
     "ts-morph": "^14.0.0",
     "typescript": "4.6.4"
@@ -37,7 +37,7 @@
     "@babel/preset-env": "^7.18.9",
     "@babel/preset-typescript": "^7.18.6",
     "@types/jest": "^28.1.6",
-    "@types/node": "^18.6.1",
+    "@types/node": "^18.6.2",
     "depcheck": "^1.4.3",
     "eslint": "^8.20.0",
     "jest": "^28.1.3",

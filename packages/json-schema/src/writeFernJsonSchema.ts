@@ -1,7 +1,7 @@
+import { FernConfigurationSchema } from "@fern-api/yaml-schema";
 import { writeFile } from "fs/promises";
 import prettier from "prettier";
 import zodToJsonSchema from "zod-to-json-schema";
-import { FernConfigurationSchema } from "../schemas";
 
 export async function writeFernJsonSchema(filepath: string): Promise<void> {
     const jsonSchema = zodToJsonSchema(FernConfigurationSchema, "Fern API Definition");
