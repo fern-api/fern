@@ -79,10 +79,10 @@ fern add typescript
 -generators: []
 +generators:
 +  - name: fernapi/fern-typescript
-+    version: x.x.xxx
++    version: 0.0.xxx
 +    generate: true
 +    config:
-+      mode: server
++      mode: client_and_server
 ```
 
 </details>
@@ -93,14 +93,14 @@ fern add typescript
 fern generate
 ```
 
-In the terminal, you'll see `Published @imdb-fern/imdb-api-server@x.x.x` which we'll add as a dependency. By default, Fern publishes dependencies to a private registry.
+In the terminal, you'll see `Published @imdb-fern/imdb-api-server@0.0.x` which we'll add as a dependency. By default, Fern publishes dependencies to a private registry.
 
 ```bash
 # Teach npm about the Fern private registry
-npm config set --location project @imdb-fern:registry https://npm-dev.buildwithfern.com/
+npm config set --location project @imdb-fern:registry https://npm.buildwithfern.com/
 
 # Your version may be different, but this version will also work
-npm install @imdb-fern/imdb-api-server@0.0.19
+npm install @imdb-fern/imdb-api-server@0.0.1
 ```
 
 ## Step 5: Implement the server
@@ -120,6 +120,8 @@ app.use(
     createMovie: () => {
       return {
         ok: true,
+        // We are hardcoding the movie "Iron Man 3" for this demo
+        // because we don't have our server wired up to a database.
         body: MovieId.of("iron-man-3"),
       };
     },
