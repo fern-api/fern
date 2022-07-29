@@ -1441,14 +1441,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/postman-collection-api-client@npm:^0.0.15":
-  version: 0.0.15
-  resolution: "@fern-fern/postman-collection-api-client@npm:0.0.15"
+"@fern-fern/postman-collection-api-client@npm:0.0.18":
+  version: 0.0.18
+  resolution: "@fern-fern/postman-collection-api-client@npm:0.0.18"
   dependencies:
     "@fern-typescript/service-utils": 0.0.124
     "@types/url-join": 4.0.1
     url-join: 4.0.1
-  checksum: 1ddfe0cb8584d794ff735a0a1704169c5b04968171f40deedb697a73217c1c18ab97c4f8260329ce4ddc0f961670d5059ee30319e3e353fe0db5bca40e3240c9
+  checksum: 4e12f1069ae44065f35d1899dd935c4b2d22ed68c8a783208a36fd0ed5139cdc7e909b9717a6b9347eba2bbea98bf3724e9ffcd0ba01ad16c7f4bf666f1c461a
   languageName: node
   linkType: hard
 
@@ -3615,7 +3615,7 @@ __metadata:
     "@fern-api/workspace-loader": ^0.0.160
     "@fern-fern/generator-logging-api-client": ^0.0.25
     "@fern-fern/ir-model": ^0.0.53
-    "@fern-fern/postman-collection-api-client": ^0.0.15
+    "@fern-fern/postman-collection-api-client": 0.0.18
     "@types/jest": ^27.5.0
     "@types/lodash": ^4.14.182
     "@types/postman-collection": ^3.5.7

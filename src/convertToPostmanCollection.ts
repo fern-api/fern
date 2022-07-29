@@ -86,11 +86,14 @@ function convertRequest(
     httpEndpoint: HttpEndpoint,
     allTypes: TypeDeclaration[]
 ): PostmanRequest {
+    const hostArr = [ORIGIN_VARIABLE];
+    const pathArr = getPathArray(httpService.basePath, httpEndpoint.path);
     return {
         description: httpEndpoint.docs ?? undefined,
         url: {
-            host: [ORIGIN_VARIABLE],
-            path: getPathArray(httpService.basePath, httpEndpoint.path),
+            raw: hostArr.concat(pathArr).join("/"),
+            host: hostArr,
+            path: pathArr,
         },
         header: [
             ...httpService.headers.map((header) => convertHeader(header, allTypes)),
