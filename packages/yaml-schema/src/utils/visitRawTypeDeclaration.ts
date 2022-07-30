@@ -36,7 +36,9 @@ export function isRawAliasDefinition(
 
 export function isRawObjectDefinition(rawTypeDeclaration: TypeDeclarationSchema): rawTypeDeclaration is ObjectSchema {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (rawTypeDeclaration as ObjectSchema).properties != null;
+    return (
+        (rawTypeDeclaration as ObjectSchema).extends != null || (rawTypeDeclaration as ObjectSchema).properties != null
+    );
 }
 
 export function isRawUnionDefinition(rawTypeDeclaration: TypeDeclarationSchema): rawTypeDeclaration is UnionSchema {
