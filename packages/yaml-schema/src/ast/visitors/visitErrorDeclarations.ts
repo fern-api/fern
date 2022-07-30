@@ -4,7 +4,7 @@ import { NodePath } from "../NodePath";
 import { createDocsVisitor } from "./utils/createDocsVisitor";
 import { noop } from "./utils/noop";
 import { visitObject } from "./utils/ObjectPropertiesVisitor";
-import { visitTypeDeclaration } from "./visitTypeDeclarations";
+import { visitExtends, visitObjectProperties } from "./visitTypeDeclarations";
 
 export async function visitErrorDeclarations({
     errorDeclarations,
@@ -35,18 +35,10 @@ async function visitErrorDeclaration(
     } else {
         await visitObject(declaration, {
             docs: createDocsVisitor(visitor, nodePathForError),
-            type: async (type) => {
-                if (type == null) {
-                    return;
-                }
-                const nodePathForErrorType = [...nodePathForError, "type"];
-                if (typeof type === "string") {
-                    await visitor.typeReference?.(type, nodePathForErrorType);
-                } else {
-                    await visitTypeDeclaration({ declaration: type, visitor, nodePathForType: nodePathForErrorType });
-                }
-            },
-            http: noop,
+            extends: (_extends) => visitExtends({ _extends, visitor, nodePath: nodePathForError }),
+            properties: (objectProperties) =>
+                visitObjectProperties({ objectProperties, visitor, nodePath: nodePathForError }),
+            statusCode: noop,
         });
     }
 }

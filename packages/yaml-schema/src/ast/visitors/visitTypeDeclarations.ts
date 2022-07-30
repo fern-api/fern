@@ -1,4 +1,4 @@
-import { TypeDeclarationSchema } from "../../schemas";
+import { ObjectExtendsSchema, ObjectPropertySchema, TypeDeclarationSchema } from "../../schemas";
 import { visitRawTypeDeclaration } from "../../utils/visitRawTypeDeclaration";
 import { FernAstVisitor } from "../FernAstVisitor";
 import { NodePath } from "../NodePath";
@@ -51,33 +51,9 @@ export async function visitTypeDeclaration({
         object: async (object) => {
             await visitObject(object, {
                 docs: createDocsVisitor(visitor, nodePathForType),
-                extends: async (_extends) => {
-                    if (_extends == null) {
-                        return;
-                    }
-                    const extendsList: string[] = typeof _extends === "string" ? [_extends] : _extends;
-                    for (const extendedType of extendsList) {
-                        await visitor.typeReference?.(extendedType, [...nodePathForType, "extends"]);
-                    }
-                },
-                properties: async (properties) => {
-                    if (properties == null) {
-                        return;
-                    }
-                    for (const [propertyKey, property] of Object.entries(properties)) {
-                        const nodePathForProperty = [...nodePathForType, "properties", propertyKey];
-                        if (typeof property === "string") {
-                            await visitor.typeReference?.(property, nodePathForProperty);
-                        } else {
-                            await visitObject(property, {
-                                docs: createDocsVisitor(visitor, nodePathForProperty),
-                                type: async (type) => {
-                                    await visitor.typeReference?.(type, [...nodePathForProperty, "type"]);
-                                },
-                            });
-                        }
-                    }
-                },
+                extends: (_extends) => visitExtends({ _extends, visitor, nodePath: nodePathForType }),
+                properties: (objectProperties) =>
+                    visitObjectProperties({ objectProperties, visitor, nodePath: nodePathForType }),
             });
         },
         union: async (union) => {
@@ -125,4 +101,49 @@ export async function visitTypeDeclaration({
             });
         },
     });
+}
+
+export async function visitExtends({
+    _extends,
+    visitor,
+    nodePath,
+}: {
+    _extends: ObjectExtendsSchema | undefined;
+    visitor: Partial<FernAstVisitor>;
+    nodePath: NodePath;
+}): Promise<void> {
+    if (_extends == null) {
+        return;
+    }
+    const extendsList: string[] = typeof _extends === "string" ? [_extends] : _extends;
+    for (const extendedType of extendsList) {
+        await visitor.typeReference?.(extendedType, [...nodePath, "extends"]);
+    }
+}
+
+export async function visitObjectProperties({
+    objectProperties,
+    visitor,
+    nodePath,
+}: {
+    objectProperties: Record<string, ObjectPropertySchema> | undefined;
+    visitor: Partial<FernAstVisitor>;
+    nodePath: NodePath;
+}): Promise<void> {
+    if (objectProperties == null) {
+        return;
+    }
+    for (const [propertyKey, property] of Object.entries(objectProperties)) {
+        const nodePathForProperty = [...nodePath, "properties", propertyKey];
+        if (typeof property === "string") {
+            await visitor.typeReference?.(property, nodePathForProperty);
+        } else {
+            await visitObject(property, {
+                docs: createDocsVisitor(visitor, nodePathForProperty),
+                type: async (type) => {
+                    await visitor.typeReference?.(type, [...nodePathForProperty, "type"]);
+                },
+            });
+        }
+    }
 }

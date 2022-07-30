@@ -5,7 +5,7 @@ export const WebSocketRequestSchema = z.union([
     z.string(),
     WithDocsSchema.extend({
         type: z.string(),
-        encoding: z.optional(z.string()),
+        encoding: z.string().optional(),
     }),
 ]);
 

@@ -8,10 +8,10 @@ import { WithDocsSchema } from "./WithDocsSchema";
 export const ObjectSchema = z.union([
     WithDocsSchema.extend({
         extends: ObjectExtendsSchema,
-        properties: z.optional(z.record(ObjectPropertySchema)),
+        properties: z.record(ObjectPropertySchema).optional(),
     }),
     WithDocsSchema.extend({
-        extends: z.optional(ObjectExtendsSchema),
+        extends: ObjectExtendsSchema.optional(),
         properties: z.record(ObjectPropertySchema),
     }),
 ]);
