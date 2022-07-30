@@ -34,7 +34,7 @@ services:
           method: GET
           path: /{movieId}
           path-parameters:
-            movieId: MovieId
+            movieId: MovieIdyarn
           response: Movie
           errors:
             - NotFoundError
