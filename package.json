@@ -41,13 +41,15 @@
     "webpack-cli": "^4.9.2"
   },
   "dependencies": {
+    "@fern-api/config-management-commons": "^0.0.170",
     "@fern-fern/generator-logging-api-client": "^0.0.25",
     "@fern-fern/ir-model": "^0.0.53",
     "@fern-fern/postman-collection-api-client": "0.0.18",
     "@types/lodash": "^4.14.182",
     "lodash": "^4.17.21",
     "postman-collection": "^4.1.4",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "zod": "^3.14.3"
   },
   "packageManager": "yarn@3.2.0"
 }

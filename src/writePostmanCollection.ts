@@ -1,3 +1,4 @@
+import { validateSchema } from "@fern-api/config-management-commons";
 import { ExitStatusUpdate, GeneratorUpdate } from "@fern-fern/generator-logging-api-client/model";
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
 import { GeneratorConfig } from "@fern-fern/ir-model/generators";
@@ -6,9 +7,10 @@ import { CollectionService } from "@fern-fern/postman-collection-api-client/serv
 import { readFile, writeFile } from "fs/promises";
 import path from "path";
 import { Collection, CollectionDefinition } from "postman-collection";
+import { PostmanGeneratorConfigSchema } from "./config/schemas/PostmanGeneratorConfigSchema";
+import { PublishConfigSchema } from "./config/schemas/PublishConfigSchema";
 import { convertToPostmanCollection } from "./convertToPostmanCollection";
 import { GeneratorLoggingWrapper } from "./generatorLoggingWrapper";
-import { getPublishConfig, PublishConfig } from "./getPublishConfig";
 
 const COLLECTION_OUTPUT_FILENAME = "collection.json";
 
@@ -20,7 +22,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
         throw new Error("Output directory is not specified.");
     }
 
-    const publishConfig = getPublishConfig(config);
+    const postmanGeneratorConfig = await validateSchema(PostmanGeneratorConfigSchema, config.customConfig);
 
     const generatorLoggingClient = new GeneratorLoggingWrapper(config);
 
@@ -38,8 +40,8 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
             JSON.stringify(collectionDefinition, undefined, 4)
         );
 
-        if (publishConfig != null) {
-            publishCollection(publishConfig, collectionDefinition);
+        if (postmanGeneratorConfig?.publishConfig != null) {
+            publishCollection(postmanGeneratorConfig.publishConfig, collectionDefinition);
         }
 
         await generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful()));
@@ -54,7 +56,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
     }
 }
 
-async function publishCollection(publishConfig: PublishConfig, collectionDefinition: CollectionDefinition) {
+async function publishCollection(publishConfig: PublishConfigSchema, collectionDefinition: CollectionDefinition) {
     const collectionService = new CollectionService({
         origin: "https://api.getpostman.com",
         headers: {

@@ -1374,6 +1374,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fern-api/config-management-commons@npm:^0.0.170":
+  version: 0.0.170
+  resolution: "@fern-api/config-management-commons@npm:0.0.170"
+  dependencies:
+    zod: ^3.14.3
+  checksum: effc811b8da11113e49de6961ce9f375a078dcd4578272ccc041b4413c2bd405cc6ae4901c184ba02d76ca8f9c5a4697b44d1cb1040c68f8b19895d13d231abf
+  languageName: node
+  linkType: hard
+
 "@fern-api/core-utils@npm:0.0.160":
   version: 0.0.160
   resolution: "@fern-api/core-utils@npm:0.0.160"
@@ -3611,6 +3620,7 @@ __metadata:
     "@babel/eslint-parser": ^7.17.0
     "@babel/preset-env": ^7.18.2
     "@babel/preset-typescript": ^7.17.12
+    "@fern-api/config-management-commons": ^0.0.170
     "@fern-api/ir-generator": 0.0.160
     "@fern-api/workspace-loader": ^0.0.160
     "@fern-fern/generator-logging-api-client": ^0.0.25
@@ -3633,6 +3643,7 @@ __metadata:
     uuid: ^8.3.2
     webpack: ^5.72.1
     webpack-cli: ^4.9.2
+    zod: ^3.14.3
   languageName: unknown
   linkType: soft
 
