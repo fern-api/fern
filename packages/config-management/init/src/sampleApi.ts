@@ -1,10 +1,9 @@
 // Whenever the json schema is updated, this link will need to get bumped.
 export const SAMPLE_API = `# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
-# This is a sample IMDb API to get you more familiar with defining APIs in Fern.
-
 types:
   MovieId: string
+
   Movie:
     properties:
       id: MovieId
@@ -18,18 +17,24 @@ types:
 
 services:
   http:
+  
     MoviesService:
       auth: none
       base-path: /movies
       endpoints:
 
-        # Here's an HTTP endpoint. Fern uses sane defaults for endpoint path and HTTP method.
+        # Here's an HTTP endpoint.
         createMovie:
+          method: POST
+          path: /create-movie
           request: CreateMovieRequest
           response: MovieId
 
         getMovie:
-          request: MovieId
+          method: GET
+          path: /{movieId}
+          path-parameters:
+            movieId: MovieIdyarn
           response: Movie
           errors:
             - NotFoundError
