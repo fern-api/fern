@@ -16,6 +16,6 @@ markdown-link-check -q docs/*.md
   - [Generators](generators.md)
 
 - Reference
-  p
+
   - [Comparison with OpenAPI](comparison.md)
   - [Join the Discord](https://discord.gg/JkkXumPzcG)
