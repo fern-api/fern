@@ -834,13 +834,9 @@ export * from \\"./WebSocketOperationProperties\\";
 exports[`generateModelProject posts 1`] = `
 Object {
   "/.npmignore": "tsconfig.json",
-  "/_errors/PostNotFoundError.ts": "export type PostNotFoundError = string & {
-    __PostNotFoundError: void;
-};
-
-export const PostNotFoundError = {
-    of: (value: string): PostNotFoundError => value as PostNotFoundError
-};
+  "/_errors/PostNotFoundError.ts": "export interface PostNotFoundError {
+    key: string;
+}
 ",
   "/_errors/index.ts": "export * from \\"./PostNotFoundError\\";
 ",

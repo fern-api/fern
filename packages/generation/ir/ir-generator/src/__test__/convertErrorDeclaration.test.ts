@@ -6,10 +6,8 @@ describe("convertErrorDeclaration", () => {
         const definition = convertErrorDeclaration({
             errorName: "UnauthorizedError",
             errorDeclaration: {
-                type: {
-                    properties: {
-                        postId: "commons.PostId",
-                    },
+                properties: {
+                    postId: "commons.PostId",
                 },
             },
             fernFilepath: ["path", "to"],
@@ -24,7 +22,7 @@ describe("convertErrorDeclaration", () => {
                 name: "UnauthorizedError",
                 fernFilepath: ["path", "to"],
             },
-            http: undefined,
+            statusCode: undefined,
             type: Type.object({
                 extends: [],
                 properties: [

@@ -8,12 +8,9 @@ types:
     extends: commons.WithDocs
     properties:
       name: ErrorName
-      type: types.Type
-      http: optional<HttpErrorConfiguration>
+      type: types.ObjectTypeDeclaration
+      statusCode: optional<integer>
   ErrorName:
     properties:
       fernFilepath: types.FernFilepath
       name: string
-  HttpErrorConfiguration:
-    properties:
-      statusCode: integer

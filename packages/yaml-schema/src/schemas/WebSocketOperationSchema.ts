@@ -5,9 +5,9 @@ import { WebSocketResponseSchema } from "./WebSocketResponseSchema";
 import { WithDocsSchema } from "./WithDocsSchema";
 
 export const WebSocketOperationSchema = WithDocsSchema.extend({
-    request: z.optional(WebSocketRequestSchema),
-    response: z.optional(WebSocketResponseSchema),
-    errors: z.optional(ResponseErrorsSchema),
+    request: WebSocketRequestSchema.optional(),
+    response: WebSocketResponseSchema.optional(),
+    errors: ResponseErrorsSchema.optional(),
 });
 
 export type WebSocketOperationSchema = z.infer<typeof WebSocketOperationSchema>;

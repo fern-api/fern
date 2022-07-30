@@ -4,7 +4,7 @@ import { WithDocsSchema } from "./WithDocsSchema";
 
 export const UnionSchema = WithDocsSchema.extend({
     union: z.record(SingleUnionTypeSchema),
-    discriminant: z.optional(z.string()),
+    discriminant: z.string().optional(),
 });
 
 export type UnionSchema = z.infer<typeof UnionSchema>;

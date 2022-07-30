@@ -1,5 +1,3 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
 imports:
   other: other.yml
 
@@ -26,5 +24,4 @@ services:
 
 errors:
   GenericError:
-    http:
-      statusCode: 400
+    statusCode: 400

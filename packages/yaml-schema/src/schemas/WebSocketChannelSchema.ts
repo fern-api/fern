@@ -4,8 +4,8 @@ import { WebSocketMessengerSchema } from "./WebSocketMessengerSchema";
 
 export const WebSocketChannelSchema = BaseServiceSchema.extend({
     path: z.string(),
-    client: z.optional(WebSocketMessengerSchema),
-    server: z.optional(WebSocketMessengerSchema),
+    client: WebSocketMessengerSchema.optional(),
+    server: WebSocketMessengerSchema.optional(),
 });
 
 export type WebSocketChannelSchema = z.infer<typeof WebSocketChannelSchema>;

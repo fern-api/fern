@@ -28,7 +28,7 @@
   "dependencies": {
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-fern/ir-model": "0.0.59",
+    "@fern-fern/ir-model": "0.0.61",
     "@fern-typescript/commons": "workspace:*",
     "execa": "^5.1.1",
     "is-ci": "^3.0.1",
