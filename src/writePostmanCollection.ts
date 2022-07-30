@@ -40,8 +40,8 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
             JSON.stringify(collectionDefinition, undefined, 4)
         );
 
-        if (postmanGeneratorConfig?.publishConfig != null) {
-            publishCollection(postmanGeneratorConfig.publishConfig, collectionDefinition);
+        if (postmanGeneratorConfig?.publishing != null) {
+            publishCollection(postmanGeneratorConfig.publishing, collectionDefinition);
         }
 
         await generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful()));
