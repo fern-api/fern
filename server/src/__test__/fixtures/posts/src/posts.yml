@@ -31,11 +31,9 @@ types:
 
 errors:
   PostNotFoundError:
-    http:
-      statusCode: 404
-    type:
-      properties:
-        id: commons.PostId
+    statusCode: 404
+    properties:
+      id: commons.PostId
 
 services:
   http:

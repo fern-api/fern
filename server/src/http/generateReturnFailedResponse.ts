@@ -78,8 +78,8 @@ export function generateReturnFailedResponse({
                                                     undefined,
                                                     undefined,
                                                     ts.factory.createNumericLiteral(
-                                                        errorDeclaration.http != null
-                                                            ? errorDeclaration.http.statusCode
+                                                        errorDeclaration.statusCode != null
+                                                            ? errorDeclaration.statusCode
                                                             : DEFAULT_STATUS_CODE
                                                     )
                                                 )

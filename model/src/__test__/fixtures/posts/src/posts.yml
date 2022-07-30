@@ -38,9 +38,9 @@ types:
 
 errors:
   PostNotFoundError:
-    http:
-      statusCode: 404
-    type: string
+    statusCode: 404
+    properties:
+      key: string
 
 services:
   http:

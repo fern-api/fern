@@ -902,13 +902,9 @@ Object {
   "/index.ts": "export * as model from \\"./model\\";
 export * as services from \\"./services\\";
 ",
-  "/model/_errors/GenericMessage.ts": "export type GenericMessage = string & {
-    __GenericMessage: void;
-};
-
-export const GenericMessage = {
-    of: (value: string): GenericMessage => value as GenericMessage
-};
+  "/model/_errors/GenericMessage.ts": "export interface GenericMessage {
+    type: string;
+}
 ",
   "/model/_errors/index.ts": "export * from \\"./GenericMessage\\";
 ",
@@ -919,10 +915,9 @@ export type SendChatErrorBody =
     | SendChatErrorBody.GenericMessage;
 
 export declare namespace SendChatErrorBody {
-    interface GenericMessage {
+    interface GenericMessage extends model.GenericMessage {
         _error: \\"GenericMessage\\";
         _errorInstanceId: string;
-        GenericMessage: model.GenericMessage;
     }
 
     export interface _Visitor<Result> {
@@ -933,14 +928,14 @@ export declare namespace SendChatErrorBody {
 
 export const SendChatErrorBody = {
     GenericMessage: (value: model.GenericMessage): SendChatErrorBody.GenericMessage => ({
-        GenericMessage: value,
+        ...value,
         _error: \\"GenericMessage\\",
         _errorInstanceId: uuid.v4()
     }),
 
     _visit: <Result>(value: SendChatErrorBody, visitor: SendChatErrorBody._Visitor<Result>): Result => {
         switch (value._error) {
-            case \\"GenericMessage\\": return visitor.GenericMessage(value.GenericMessage);
+            case \\"GenericMessage\\": return visitor.GenericMessage(value);
             default: return visitor._unknown();
         }
     },
