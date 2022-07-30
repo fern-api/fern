@@ -15,6 +15,10 @@ it("fern init", async () => {
         cwd: GENERATED_DIR,
     });
 
+    await runFernCli(["check"], {
+        cwd: GENERATED_DIR,
+    });
+
     expect(await getFileContentsAsString(path.join(GENERATED_DIR, PROJECT_CONFIG_FILENAME))).toMatchSnapshot();
     expect(
         await getFileContentsAsString(path.join(GENERATED_API_DIR, WORKSPACE_CONFIGURATION_FILENAME))

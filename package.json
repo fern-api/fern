@@ -8,7 +8,7 @@
     "packages/**",
     "!packages/**/lib",
     "!packages/**/dist",
-    "!packages/**/__test__"
+    "!packages/**/generated"
   ],
   "scripts": {
     "clean": "yarn workspaces foreach --verbose --parallel run clean",

@@ -3,7 +3,6 @@ import { loadWorkspace } from "@fern-api/workspace-loader";
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
 import { writeVolumeToDisk } from "@fern-typescript/commons";
 import { rm } from "fs/promises";
-import IS_CI from "is-ci";
 import { Volume } from "memfs/lib/volume";
 import path from "path";
 import { installAndCompileGeneratedProject } from "./installAndCompileGeneratedProject";
@@ -25,24 +24,11 @@ export declare namespace runEteTest {
             volume: Volume;
             intermediateRepresentation: IntermediateRepresentation;
         }) => void | Promise<void>;
-
-        /**
-         * If true, generated files are outputed to a generated/ directory.
-         * enforced to false on CI
-         */
-        outputToDisk?: boolean;
     }
 }
 
-export async function runEteTest({
-    testFile,
-    pathToFixture,
-    generateFiles,
-    outputToDisk = false,
-}: runEteTest.Args): Promise<void> {
+export async function runEteTest({ testFile, pathToFixture, generateFiles }: runEteTest.Args): Promise<void> {
     const testDirectory = path.dirname(testFile);
-
-    outputToDisk &&= !IS_CI;
 
     const absolutePathToFixture = path.resolve(testDirectory, pathToFixture);
 
@@ -56,7 +42,7 @@ export async function runEteTest({
     if (!parseWorkspaceResult.didSucceed) {
         throw new Error(JSON.stringify(parseWorkspaceResult.failures));
     }
-    const intermediateRepresentation = await generateIntermediateRepresentation(parseWorkspaceResult.workspace);
+    const intermediateRepresentation = generateIntermediateRepresentation(parseWorkspaceResult.workspace);
 
     const volume = new Volume();
 
@@ -67,10 +53,6 @@ export async function runEteTest({
 
     await writeVolumeToDisk(volume, pathToGenerated);
     await installAndCompileGeneratedProject(pathToGenerated);
-
-    if (!outputToDisk) {
-        await deleteDirectory(pathToGenerated);
-    }
 
     expect(volume.toJSON()).toMatchSnapshot();
 }

@@ -3,10 +3,13 @@ import { Fetcher } from "./Fetcher";
 
 export const defaultFetcher: Fetcher = async (args) => {
     const headers: Record<string, string> = {
-        ...args.headers,
-        "Content-Type": args.body != null ? args.body.contentType : "application/json",
+        "Content-Type": args.body?.contentType ?? "application/json",
     };
-
+    for (const [key, value] of Object.entries(args.headers)) {
+        if (value != null) {
+            headers[key] = value;
+        }
+    }
     if (args.authHeader != null) {
         headers.Authorization = args.authHeader;
     }

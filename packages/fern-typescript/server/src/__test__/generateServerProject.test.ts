@@ -22,7 +22,6 @@ describe("generateServerProject", () => {
                     helperManager: MOCK_HELPERS_MANAGERS,
                 });
             },
-            outputToDisk: true,
         });
     }
 });

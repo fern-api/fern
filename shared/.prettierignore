@@ -6,4 +6,3 @@ dist
 generated
 bundle.c?js
 .pnp*
-../packages/compiler/ir-types/fern-ir-typescript
