@@ -34,8 +34,8 @@
     "add-package": "yarn mrlint add-package",
     "fern-script": "yarn workspace @fern-api/scripts dist:cli && node $(yarn workspace @fern-api/scripts bin fern-scripts)",
     "generate-json-schema": "yarn fern-script write-json-schema",
-    "check-root-package": "yarn fern-script check-root-package",
-    "fix-root-package": "yarn check-root-package --fix"
+    "root-package:check": "yarn fern-script check-root-package",
+    "root-package:fix": "yarn root-package:check --fix"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",
@@ -62,7 +62,7 @@
     "jest": "^28.1.3",
     "lint-staged": "^12.3.7",
     "lodash-es": "^4.17.21",
-    "mrlint": "^0.0.89",
+    "mrlint": "^0.0.92",
     "prettier": "^2.7.1",
     "stylelint": "^14.9.1",
     "stylelint-config-prettier-scss": "^0.0.1",
@@ -70,5 +70,10 @@
     "ts-node": "^10.9.1",
     "typescript": "4.6.4"
   },
-  "packageManager": "yarn@3.2.2"
+  "packageManager": "yarn@3.2.2",
+  "dependenciesMeta": {
+    "vite": {
+      "unplugged": true
+    }
+  }
 }

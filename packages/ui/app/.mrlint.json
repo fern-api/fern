@@ -3,7 +3,7 @@
   "private": true,
   "rules": {
     "depcheck": {
-      "ignores": ["@types/react"]
+      "ignores": ["@types/react", "@emotion/react", "@emotion/styled"]
     }
   }
 }
