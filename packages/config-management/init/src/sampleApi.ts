@@ -33,7 +33,7 @@ services:
         getMovie:
           method: GET
           path: /{movieId}
-          path-param:
+          path-parameters:
             movieId: MovieId
           response: Movie
           errors:
