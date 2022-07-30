@@ -3,18 +3,28 @@ import { ImportStrategy } from "@fern-typescript/commons";
 import { SourceFile, ts } from "ts-morph";
 import { StringifiedFernFilepath, stringifyFernFilepath } from "../stringifyFernFilepath";
 import { BaseServiceTypeContext, ServiceTypeMetadata } from "./BaseServiceTypeContext";
-import { GeneratedRequest, InlinedServiceTypeReference, ServiceTypeReference } from "./types";
+import {
+    GeneratedRequest,
+    InlinedServiceTypeReference,
+    ModelServiceTypeReference,
+    ServiceTypeReference,
+} from "./types";
 
 export type HttpServiceTypeReference = ServiceTypeReference<HttpServiceTypeMetadata>;
 export type InlinedHttpServiceTypeReference = InlinedServiceTypeReference<HttpServiceTypeMetadata>;
 
-export interface GeneratedHttpEndpointTypes {
+export interface GeneratedHttpClientEndpointTypes {
     request: GeneratedRequest<HttpServiceTypeMetadata>;
     response: {
         reference: InlinedHttpServiceTypeReference;
         successBodyReference: HttpServiceTypeReference | undefined;
         errorBodyReference: InlinedHttpServiceTypeReference;
     };
+}
+
+export interface GeneratedHttpServerEndpointTypes {
+    request: GeneratedRequest<HttpServiceTypeMetadata>;
+    response: ModelServiceTypeReference | undefined;
 }
 
 export interface HttpServiceTypeMetadata {

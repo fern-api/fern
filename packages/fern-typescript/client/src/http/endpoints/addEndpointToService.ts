@@ -2,7 +2,7 @@ import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services";
 import { DependencyManager, getTextOfTsNode } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import { ModelContext } from "@fern-typescript/model-context";
-import { getHttpRequestParameters } from "@fern-typescript/service-types";
+import { generateHttpClientEndpointTypes, getHttpRequestParameters } from "@fern-typescript/service-types";
 import { ClassDeclaration, InterfaceDeclaration, Scope, ts } from "ts-morph";
 import { generateEndpointMethodBody } from "./endpoint-method-body/generateEndpointMethodBody";
 
@@ -25,9 +25,12 @@ export async function addEndpointToService({
 }): Promise<void> {
     const serviceFile = serviceInterface.getSourceFile();
 
-    const generatedEndpointTypes = modelContext.getGeneratedHttpServiceTypes({
-        serviceName: serviceDefinition.name,
-        endpointId: endpoint.endpointId,
+    const generatedEndpointTypes = generateHttpClientEndpointTypes({
+        service: serviceDefinition,
+        endpoint,
+        modelContext,
+        dependencyManager,
+        fernConstants,
     });
 
     const parameters = getHttpRequestParameters({ generatedEndpointTypes, modelContext, file: serviceFile });

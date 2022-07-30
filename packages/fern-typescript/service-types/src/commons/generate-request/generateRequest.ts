@@ -14,7 +14,7 @@ import {
  */
 export interface GeneratedRequest<M> {
     body: ServiceTypeReference<M> | undefined;
-    // if there's additional properties with the request, the body might be wrappd
+    // if there's additional properties with the request, the body might be wrapped
     wrapper:
         | {
               propertyName: string;

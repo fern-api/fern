@@ -1,5 +1,5 @@
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/model-context";
+import { GeneratedHttpClientEndpointTypes, ModelContext } from "@fern-typescript/model-context";
 import { OptionalKind, ParameterDeclarationStructure, SourceFile } from "ts-morph";
 import { ServiceTypesConstants } from "../constants";
 
@@ -8,7 +8,7 @@ export function getHttpRequestParameters({
     modelContext,
     file,
 }: {
-    generatedEndpointTypes: GeneratedHttpEndpointTypes;
+    generatedEndpointTypes: GeneratedHttpClientEndpointTypes;
     modelContext: ModelContext;
     file: SourceFile;
 }): OptionalKind<ParameterDeclarationStructure>[] {

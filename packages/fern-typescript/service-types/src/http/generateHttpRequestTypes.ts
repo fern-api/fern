@@ -6,7 +6,7 @@ import { GeneratedRequest, generateRequest } from "../commons/generate-request/g
 import { ServiceTypesGenerationMode } from "../types";
 import { createHttpServiceTypeFileWriter } from "./createHttpServiceTypeFileWriter";
 
-export declare namespace generateRequestTypes {
+export declare namespace generateHttpRequestTypes {
     export interface Args {
         service: HttpService;
         endpoint: HttpEndpoint;
@@ -15,12 +15,12 @@ export declare namespace generateRequestTypes {
     }
 }
 
-export function generateRequestTypes({
+export function generateHttpRequestTypes({
     service,
     endpoint,
     modelContext,
     mode,
-}: generateRequestTypes.Args): GeneratedRequest<HttpServiceTypeMetadata> {
+}: generateHttpRequestTypes.Args): GeneratedRequest<HttpServiceTypeMetadata> {
     const additionalProperties = [
         ...[...endpoint.pathParameters, ...endpoint.queryParameters].map(
             (parameter) =>
@@ -76,7 +76,7 @@ function getHeaders({
 }): HttpHeader[] {
     switch (mode) {
         // for clients, the request only includes the endpoint-level headers.
-        // service-level headers are passed in when the servie is instantiated.
+        // service-level headers are passed in when the service is instantiated.
         case "client":
             return [...endpoint.headers];
         // for servers, each request contains all headers

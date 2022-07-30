@@ -1,13 +1,20 @@
-import { FernConstants, TypeReference } from "@fern-fern/ir-model";
+import { FernConstants } from "@fern-fern/ir-model";
 import { ResponseErrors } from "@fern-fern/ir-model/services";
 import { DependencyManager, getTextOfTsNode } from "@fern-typescript/commons";
 import { InlinedServiceTypeReference, ModelContext, ServiceTypeReference } from "@fern-typescript/model-context";
-import { ModuleDeclaration, OptionalKind, PropertySignatureStructure, SourceFile, ts, Writers } from "ts-morph";
-import { ServiceTypesConstants } from "../../constants";
+import { ModelServiceTypeReference } from "@fern-typescript/model-context/src/service-type-context/types";
 import {
-    generateServiceTypeReference,
-    ServiceTypeFileWriter,
-} from "../service-type-reference/generateServiceTypeReference";
+    ModuleDeclaration,
+    Node,
+    OptionalKind,
+    PropertySignatureStructure,
+    SourceFile,
+    StatementedNode,
+    ts,
+    Writers,
+} from "ts-morph";
+import { ServiceTypesConstants } from "../../constants";
+import { ServiceTypeFileWriter } from "../service-type-reference/generateServiceTypeReference";
 import { generateErrorBody } from "./generateErrorBody";
 
 export declare namespace generateResponse {
@@ -15,10 +22,7 @@ export declare namespace generateResponse {
         modelContext: ModelContext;
         writeServiceTypeFile: ServiceTypeFileWriter<M>;
         dependencyManager: DependencyManager;
-        successResponse: {
-            docs: string | null | undefined;
-            typeReference: TypeReference;
-        };
+        successBodyReference: ModelServiceTypeReference | undefined;
         responseErrors: ResponseErrors;
         getTypeReferenceToServiceType: (args: {
             reference: ServiceTypeReference<M>;
@@ -30,7 +34,6 @@ export declare namespace generateResponse {
 
     export interface Return<M> {
         reference: InlinedServiceTypeReference<M>;
-        successBodyReference: ServiceTypeReference<M> | undefined;
         errorBodyReference: InlinedServiceTypeReference<M>;
     }
 }
@@ -39,16 +42,12 @@ export function generateResponse<M>({
     modelContext,
     writeServiceTypeFile,
     dependencyManager,
-    successResponse,
+    successBodyReference,
     responseErrors,
     getTypeReferenceToServiceType,
     additionalProperties = [],
     fernConstants,
 }: generateResponse.Args<M>): generateResponse.Return<M> {
-    const successBodyReference = generateServiceTypeReference({
-        typeReference: successResponse.typeReference,
-    });
-
     const { errorBodyReference } = maybeGenerateErrorBody({
         modelContext,
         responseErrors,
@@ -92,7 +91,7 @@ export function generateResponse<M>({
             });
 
             addSuccessResponseInterface({
-                responseNamespace,
+                module: responseNamespace,
                 successBodyReference,
                 getTypeReferenceToServiceType,
                 additionalProperties,
@@ -112,15 +111,14 @@ export function generateResponse<M>({
             isInlined: true,
             metadata: responseMetadata,
         },
-        successBodyReference,
         errorBodyReference,
     };
 }
 
-function addSuccessResponseInterface<M>({
+export function addSuccessResponseInterface<M>({
     successBodyReference,
     getTypeReferenceToServiceType,
-    responseNamespace,
+    module,
     additionalProperties,
 }: {
     successBodyReference: ServiceTypeReference<M> | undefined;
@@ -128,18 +126,18 @@ function addSuccessResponseInterface<M>({
         reference: ServiceTypeReference<M>;
         referencedIn: SourceFile;
     }) => ts.TypeNode;
-    responseNamespace: ModuleDeclaration;
+    module: Node & StatementedNode;
     additionalProperties: OptionalKind<PropertySignatureStructure>[];
 }): void {
     const successResponseBodyReference =
         successBodyReference != null
             ? getTypeReferenceToServiceType({
                   reference: successBodyReference,
-                  referencedIn: responseNamespace.getSourceFile(),
+                  referencedIn: module.getSourceFile(),
               })
             : undefined;
 
-    responseNamespace.addInterface({
+    module.addInterface({
         name: ServiceTypesConstants.Commons.Response.Success.TYPE_NAME,
         isExported: true,
         properties: generateSuccessResponseProperties({

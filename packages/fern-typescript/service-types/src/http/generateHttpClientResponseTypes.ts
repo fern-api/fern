@@ -1,11 +1,12 @@
 import { FernConstants } from "@fern-fern/ir-model";
 import { HttpEndpoint, ServiceName } from "@fern-fern/ir-model/services";
 import { DependencyManager } from "@fern-typescript/commons";
-import { GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/model-context";
+import { GeneratedHttpClientEndpointTypes, ModelContext } from "@fern-typescript/model-context";
 import { generateResponse } from "../commons/generate-response/generateResponse";
+import { generateServiceTypeReference } from "../commons/service-type-reference/generateServiceTypeReference";
 import { createHttpServiceTypeFileWriter } from "./createHttpServiceTypeFileWriter";
 
-export declare namespace generateResponseTypes {
+export declare namespace generateHttpClientResponseTypes {
     export interface Args {
         serviceName: ServiceName;
         endpoint: HttpEndpoint;
@@ -14,23 +15,24 @@ export declare namespace generateResponseTypes {
         fernConstants: FernConstants;
     }
 
-    export type Return = GeneratedHttpEndpointTypes["response"];
+    export type Return = GeneratedHttpClientEndpointTypes["response"];
 }
 
-export function generateResponseTypes({
+export function generateHttpClientResponseTypes({
     serviceName,
     endpoint,
     modelContext,
     dependencyManager,
     fernConstants,
-}: generateResponseTypes.Args): generateResponseTypes.Return {
-    const { reference, successBodyReference, errorBodyReference } = generateResponse({
+}: generateHttpClientResponseTypes.Args): generateHttpClientResponseTypes.Return {
+    const successBodyReference = generateServiceTypeReference({
+        typeReference: endpoint.response.type,
+    });
+
+    const { reference, errorBodyReference } = generateResponse({
         modelContext,
         dependencyManager,
-        successResponse: {
-            typeReference: endpoint.response.type,
-            docs: endpoint.response.docs,
-        },
+        successBodyReference,
         responseErrors: endpoint.errors,
         getTypeReferenceToServiceType: ({ reference, referencedIn }) =>
             modelContext.getReferenceToHttpServiceType({

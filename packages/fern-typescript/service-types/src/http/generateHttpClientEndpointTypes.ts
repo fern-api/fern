@@ -1,34 +1,31 @@
 import { FernConstants } from "@fern-fern/ir-model";
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services";
 import { DependencyManager } from "@fern-typescript/commons";
-import { GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/model-context";
-import { ServiceTypesGenerationMode } from "../types";
-import { generateRequestTypes } from "./generateRequestTypes";
-import { generateResponseTypes } from "./generateResponseTypes";
+import { GeneratedHttpClientEndpointTypes, ModelContext } from "@fern-typescript/model-context";
+import { generateHttpClientResponseTypes } from "./generateHttpClientResponseTypes";
+import { generateHttpRequestTypes } from "./generateHttpRequestTypes";
 
-export function generateHttpEndpointTypes({
+export function generateHttpClientEndpointTypes({
     service,
     endpoint,
     modelContext,
     dependencyManager,
     fernConstants,
-    mode,
 }: {
     service: HttpService;
     endpoint: HttpEndpoint;
     modelContext: ModelContext;
     dependencyManager: DependencyManager;
     fernConstants: FernConstants;
-    mode: ServiceTypesGenerationMode;
-}): GeneratedHttpEndpointTypes {
+}): GeneratedHttpClientEndpointTypes {
     return {
-        request: generateRequestTypes({
+        request: generateHttpRequestTypes({
             service,
             endpoint,
             modelContext,
-            mode,
+            mode: "client",
         }),
-        response: generateResponseTypes({
+        response: generateHttpClientResponseTypes({
             serviceName: service.name,
             endpoint,
             modelContext,

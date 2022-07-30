@@ -1,6 +1,7 @@
 export { ModelContext } from "./ModelContext";
 export {
-    type GeneratedHttpEndpointTypes,
+    type GeneratedHttpClientEndpointTypes,
+    type GeneratedHttpServerEndpointTypes,
     type HttpServiceTypeMetadata,
     type HttpServiceTypeReference,
 } from "./service-type-context/HttpServiceTypeContext";
