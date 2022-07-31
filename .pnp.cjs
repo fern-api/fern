@@ -9602,17 +9602,20 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/testing-utils", "workspace:packages/fern-typescript/testing-utils"],\
             ["@ts-morph/common", "npm:0.13.0"],\
             ["@types/jest", "npm:28.1.6"],\
+            ["@types/lodash-es", "npm:4.17.6"],\
             ["@types/node", "npm:18.6.2"],\
             ["@types/webpack-bundle-analyzer", "npm:4.4.1"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.20.0"],\
             ["execa", "npm:5.1.1"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
+            ["lodash-es", "npm:4.17.21"],\
             ["memfs", "npm:3.4.7"],\
             ["node-loader", "virtual:5b8f83b261217e1d7a6ba4f4e8ce453aec5ae01ffc6ce377573050afedd12ba6250c8912c326b5f5c4f58d71dc3b73737f866aff31a3f57f7db9e63374ae0787#npm:2.0.0"],\
             ["prettier", "npm:2.7.1"],\
             ["simple-progress-webpack-plugin", "virtual:5b8f83b261217e1d7a6ba4f4e8ce453aec5ae01ffc6ce377573050afedd12ba6250c8912c326b5f5c4f58d71dc3b73737f866aff31a3f57f7db9e63374ae0787#npm:2.0.0"],\
             ["ts-loader", "virtual:5b8f83b261217e1d7a6ba4f4e8ce453aec5ae01ffc6ce377573050afedd12ba6250c8912c326b5f5c4f58d71dc3b73737f866aff31a3f57f7db9e63374ae0787#npm:9.3.1"],\
+            ["ts-morph", "npm:14.0.0"],\
             ["ts-node", "virtual:5b8f83b261217e1d7a6ba4f4e8ce453aec5ae01ffc6ce377573050afedd12ba6250c8912c326b5f5c4f58d71dc3b73737f866aff31a3f57f7db9e63374ae0787#npm:10.9.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
             ["umd-compat-loader", "npm:2.1.2"],\
