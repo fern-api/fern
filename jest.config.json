@@ -1,0 +1,4 @@
+{
+  "testMatch": ["**/__test__/**/*.test.ts{,x}"],
+  "transformIgnorePatterns": ["node_modules/(?!@fern-api)"]
+}

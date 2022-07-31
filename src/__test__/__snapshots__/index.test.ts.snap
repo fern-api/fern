@@ -1,0 +1,110 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Open API Conversion Blog Post API 1`] = `
+Object {
+  "components": Object {
+    "schemas": Object {
+      "Author": Object {
+        "description": undefined,
+        "oneOf": Array [
+          Object {
+            "properties": Object {
+              "_type": Object {},
+            },
+            "type": "object",
+          },
+          Object {
+            "properties": Object {
+              "_type": Object {
+                "type": "string",
+              },
+            },
+            "type": "object",
+          },
+        ],
+      },
+      "BlogPost": Object {
+        "allOf": Array [],
+        "description": "A blog post",
+        "properties": Object {
+          "author": Object {
+            "$ref": "#/components/schemas/Author",
+            "description": undefined,
+          },
+          "content": Object {
+            "description": undefined,
+            "type": "string",
+          },
+          "id": Object {
+            "$ref": "#/components/schemas/PostId",
+            "description": undefined,
+          },
+          "title": Object {
+            "description": undefined,
+            "type": "string",
+          },
+          "type": Object {
+            "$ref": "#/components/schemas/PostType",
+            "description": undefined,
+          },
+        },
+        "required": Array [
+          "id",
+          "type",
+          "title",
+          "author",
+          "content",
+        ],
+        "type": "object",
+      },
+      "CreatePostRequest": Object {
+        "allOf": Array [],
+        "description": undefined,
+        "properties": Object {
+          "author": Object {
+            "$ref": "#/components/schemas/Author",
+            "description": "Author is the writer.",
+          },
+          "content": Object {
+            "description": undefined,
+            "type": "string",
+          },
+          "postType": Object {
+            "$ref": "#/components/schemas/PostType",
+            "description": undefined,
+          },
+          "title": Object {
+            "description": undefined,
+            "type": "string",
+          },
+        },
+        "required": Array [
+          "title",
+          "author",
+          "content",
+          "postType",
+        ],
+        "type": "object",
+      },
+      "PostId": Object {
+        "description": undefined,
+        "type": "string",
+      },
+      "PostType": Object {
+        "description": undefined,
+        "enum": Array [
+          "LONG",
+          "SHORT",
+        ],
+        "type": "string",
+      },
+    },
+  },
+  "info": Object {
+    "title": "BlogPost API",
+    "version": "0.0.0",
+  },
+  "openapi": "3.0.1",
+  "paths": Object {},
+}
+`;
