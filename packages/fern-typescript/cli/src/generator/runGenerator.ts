@@ -39,6 +39,7 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
         await Promise.all(commands.map((command) => runCommand({ command, config, generatorLoggingWrapper })));
         await generatorLoggingWrapper.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful()));
     } catch (e) {
+        console.error("Failed to generate", e);
         await generatorLoggingWrapper.sendUpdate(
             GeneratorUpdate.exitStatusUpdate(
                 ExitStatusUpdate.error({

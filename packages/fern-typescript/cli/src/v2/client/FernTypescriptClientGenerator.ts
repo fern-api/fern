@@ -1,5 +1,5 @@
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
-import { Project } from "ts-morph";
+import { Directory, Project } from "ts-morph";
 import { TypeDeclarationHandler } from "../model/TypeDeclarationHandler";
 import { Logger } from "./logger/Logger";
 import { TypeResolver } from "./type-resolver/TypeResolver";
@@ -10,9 +10,12 @@ import { getFilepathForType } from "./utils/getFilepathForType";
 import { getGeneratedErrorName } from "./utils/getGeneratedErrorName";
 import { getReferenceToExportedType } from "./utils/getReferenceToExportedType";
 import { getReferenceToType } from "./utils/getReferenceToType";
+import { getRelativeModuleSpecifierTo } from "./utils/getRelativeModuleSpecifierTo";
 import { Imports } from "./utils/Imports";
 
 const IMPORT_OPTIONS: ImportOptions = { importDirectlyFromFile: false };
+
+const ROOT_DIRECTORY = "/";
 
 export class FernTypescriptClientGenerator {
     private exports = new Exports();
@@ -31,11 +34,22 @@ export class FernTypescriptClientGenerator {
     }
 
     public async generate(): Promise<Project> {
+        const rootDirectory = this.getRootDirectory();
+
         await this.generateTypeDeclarations();
-        this.exports.writeExportsToProject(this.project);
-        for (const sourceFile of this.project.getSourceFiles()) {
+        this.exports.writeExportsToProject(rootDirectory);
+
+        // TODO write api.ts
+        const indexTs = rootDirectory.createSourceFile("index.ts");
+        indexTs.addExportDeclaration({
+            namespaceExport: this.apiName,
+            moduleSpecifier: getRelativeModuleSpecifierTo(indexTs, rootDirectory.getSourceFileOrThrow("api.ts")),
+        });
+
+        for (const sourceFile of this.getRootDirectory().getSourceFiles()) {
             sourceFile.formatText();
         }
+
         return this.project;
     }
 
@@ -65,7 +79,7 @@ export class FernTypescriptClientGenerator {
     }) {
         this.logger.info(`Generating ${filepath}`);
 
-        const sourceFile = this.project.createSourceFile(filepath);
+        const sourceFile = this.getRootDirectory().createSourceFile(filepath);
         if (exportDeclaration != null) {
             this.exports.addExport(sourceFile, exportDeclaration);
         }
@@ -97,5 +111,9 @@ export class FernTypescriptClientGenerator {
         await run(file);
 
         imports.writeImportsToSourceFile(sourceFile);
+    }
+
+    private getRootDirectory(): Directory {
+        return this.project.getDirectory(ROOT_DIRECTORY) ?? this.project.createDirectory(ROOT_DIRECTORY);
     }
 }

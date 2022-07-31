@@ -34,8 +34,10 @@ export function getReferenceToExportedType({
         addImport(moduleSpecifierOfRoot, {
             namedImports: [apiName],
         });
-        const qualifiedNameToPackage = exportedFromPath
+        const qualifiedNameToPackage = path
+            .dirname(exportedFromPath)
             .split(path.sep)
+            .filter((part) => part.length > 0)
             .reduce<ts.EntityName>((qualifiedReference, fernFilepathItem) => {
                 return ts.factory.createQualifiedName(qualifiedReference, fernFilepathItem);
             }, ts.factory.createIdentifier(apiName));

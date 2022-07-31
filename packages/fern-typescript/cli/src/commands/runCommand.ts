@@ -1,11 +1,14 @@
 import { GeneratorUpdate } from "@fern-fern/generator-logging-api-client/model";
 import { BUILD_PROJECT_SCRIPT_NAME, FernTypescriptGeneratorConfig, writeVolumeToDisk } from "@fern-typescript/commons";
-import { HelperManager } from "@fern-typescript/helper-manager";
 import execa from "execa";
 import { Volume } from "memfs/lib/volume";
 import path from "path";
 import { GeneratorLoggingWrapper } from "../utils/generatorLoggingWrapper";
 import { loadIntermediateRepresentation } from "../utils/loadIntermediateRepresentation";
+import { FernTypescriptClientGenerator } from "../v2/client/FernTypescriptClientGenerator";
+import { LoggerImpl } from "../v2/client/logger/Logger";
+import { DependencyType } from "../v2/generate-ts-project/DependencyManager";
+import { generateTypeScriptProject } from "../v2/generate-ts-project/generateTypeScriptProject";
 import { Command } from "./Command";
 
 export async function runCommand({
@@ -24,10 +27,31 @@ export async function runCommand({
 
     const volume = new Volume();
 
-    await command.generate({
-        intermediateRepresentation: await loadIntermediateRepresentation(config.irFilepath),
-        helperManager: new HelperManager(config.helpers),
+    const clientGenerator = new FernTypescriptClientGenerator(
+        "BlogPostApi",
+        await loadIntermediateRepresentation(config.irFilepath),
+        new LoggerImpl((message, level) =>
+            generatorLoggingWrapper.sendUpdate(
+                GeneratorUpdate.log({
+                    message,
+                    level,
+                })
+            )
+        )
+    );
+
+    const project = await clientGenerator.generate();
+
+    await generateTypeScriptProject({
         volume,
+        packageName: "blog-post-api",
+        packageVersion: "0.0.1",
+        project,
+        dependencies: {
+            [DependencyType.PROD]: {},
+            [DependencyType.DEV]: {},
+            [DependencyType.PEER]: {},
+        },
     });
 
     await writeVolumeToDisk(volume, outputPath);

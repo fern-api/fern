@@ -1,5 +1,5 @@
 import path from "path";
-import { Project, SourceFile } from "ts-morph";
+import { Directory, SourceFile } from "ts-morph";
 import { ModuleSpecifier } from "../types";
 import { getRelativeModuleSpecifierTo } from "./getRelativeModuleSpecifierTo";
 
@@ -51,7 +51,7 @@ export class Exports {
         }
     }
 
-    public writeExportsToProject(project: Project): void {
+    public writeExportsToProject(rootDirectory: Directory): void {
         for (const [pathToDirectory, moduleSpecifierToExports] of Object.entries(this.exports)) {
             for (const [moduleSpecifier, combinedExportDeclarations] of Object.entries(moduleSpecifierToExports)) {
                 const namespaceExports = [...combinedExportDeclarations.namespaceExports];
@@ -61,7 +61,7 @@ export class Exports {
                     );
                 }
 
-                const exportsFile = getExportsFileForDirectory(pathToDirectory, project);
+                const exportsFile = getExportsFileForDirectory({ pathToDirectory, rootDirectory });
 
                 const namespaceExport = namespaceExports[0];
                 if (namespaceExport != null) {
@@ -77,26 +77,38 @@ export class Exports {
                     namedExports: [...combinedExportDeclarations.namedExports],
                 });
 
-                exportDirectoryUpToRoot(pathToDirectory, project);
+                exportDirectoryUpToRoot({ pathToDirectory, rootDirectory });
             }
         }
     }
 }
 
-function exportDirectoryUpToRoot(pathToDirectory: PathToDirectory, project: Project) {
+function exportDirectoryUpToRoot({
+    pathToDirectory,
+    rootDirectory,
+}: {
+    pathToDirectory: PathToDirectory;
+    rootDirectory: Directory;
+}) {
     if (pathToDirectory === "/") {
         return;
     }
     const pathToParent = path.dirname(pathToDirectory);
-    getExportsFileForDirectory(pathToParent, project).addExportDeclaration({
+    getExportsFileForDirectory({ pathToDirectory: pathToParent, rootDirectory }).addExportDeclaration({
         moduleSpecifier: getRelativeModuleSpecifierTo(pathToParent, pathToDirectory),
     });
-    exportDirectoryUpToRoot(pathToParent, project);
+    exportDirectoryUpToRoot({ pathToDirectory: pathToParent, rootDirectory });
 }
 
-function getExportsFileForDirectory(pathToDirectory: PathToDirectory, project: Project): SourceFile {
+function getExportsFileForDirectory({
+    pathToDirectory,
+    rootDirectory,
+}: {
+    pathToDirectory: PathToDirectory;
+    rootDirectory: Directory;
+}): SourceFile {
     const filepath = getExportsFilePathForDirectory(pathToDirectory);
-    return project.getSourceFile(filepath) ?? project.createSourceFile(filepath);
+    return rootDirectory.getSourceFile(filepath) ?? rootDirectory.createSourceFile(filepath);
 }
 
 function getExportsFilePathForDirectory(pathToDirectory: PathToDirectory): string {
