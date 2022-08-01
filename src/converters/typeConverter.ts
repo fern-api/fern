@@ -46,7 +46,7 @@ export function convertType(typeDeclaration: TypeDeclaration): ConvertedType {
     };
 }
 
-function convertAlias({
+export function convertAlias({
     aliasTypeDeclaration,
     docs,
 }: {
@@ -60,7 +60,7 @@ function convertAlias({
     };
 }
 
-function convertEnum({
+export function convertEnum({
     enumTypeDeclaration,
     docs,
 }: {
@@ -76,7 +76,7 @@ function convertEnum({
     };
 }
 
-function convertObject({
+export function convertObject({
     objectTypeDeclaration,
     docs,
 }: {
@@ -110,7 +110,7 @@ function convertObject({
     };
 }
 
-function convertUnion({
+export function convertUnion({
     unionTypeDeclaration,
     docs,
 }: {
@@ -254,11 +254,11 @@ function convertContainerType(containerType: ContainerType): OpenApiComponentSch
     });
 }
 
-function getReferenceFromDeclaredTypeName(declaredTypeName: DeclaredTypeName) {
+export function getReferenceFromDeclaredTypeName(declaredTypeName: DeclaredTypeName) {
     return `#/components/schemas/${getNameFromDeclaredTypeName(declaredTypeName)}`;
 }
 
-function getNameFromDeclaredTypeName(declaredTypeName: DeclaredTypeName) {
+export function getNameFromDeclaredTypeName(declaredTypeName: DeclaredTypeName) {
     const nameTokens: string[] = [...declaredTypeName.fernFilepath];
     nameTokens.push(declaredTypeName.name);
     return _.upperFirst(_.camelCase(nameTokens.join(" ")));

@@ -1,5 +1,6 @@
-import { DeclaredTypeName, IntermediateRepresentation, TypeDeclaration } from "@fern-fern/ir-model";
+import { DeclaredTypeName, ErrorDeclaration, IntermediateRepresentation, TypeDeclaration } from "@fern-fern/ir-model";
 import { OpenAPIV3 } from "openapi-types";
+import { convertError } from "./converters/errorConverter";
 import { convertServices } from "./converters/servicesConverter";
 import { convertType } from "./converters/typeConverter";
 
@@ -8,8 +9,9 @@ export function convertToOpenApi(
     apiVersion: string,
     ir: IntermediateRepresentation
 ): OpenAPIV3.Document<{}> | undefined {
-    let typesByName: Record<string, TypeDeclaration> = {};
     let schemas: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject> = {};
+
+    let typesByName: Record<string, TypeDeclaration> = {};
     ir.types.forEach((typeDeclaration) => {
         // convert type to open api schema
         const convertedType = convertType(typeDeclaration);
@@ -17,7 +19,17 @@ export function convertToOpenApi(
         // populates typesByName map
         typesByName[getDeclaredTypeNameKey(typeDeclaration.name)] = typeDeclaration;
     });
-    const paths = convertServices(ir.services.http, typesByName);
+
+    let errorsByName: Record<string, ErrorDeclaration> = {};
+    ir.errors.forEach((errorDeclaration) => {
+        // convert error to open api schema
+        const convertedError = convertError(errorDeclaration);
+        schemas[convertedError.schemaName] = convertedError.openApiSchema;
+        // populate errorsByname map
+        errorsByName[getDeclaredTypeNameKey(errorDeclaration.name)] = errorDeclaration;
+    });
+
+    const paths = convertServices(ir.services.http, typesByName, errorsByName, ir.constants);
     return {
         openapi: "3.0.1",
         info: {

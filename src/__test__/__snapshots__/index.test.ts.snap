@@ -90,6 +90,20 @@ Object {
         "description": undefined,
         "type": "string",
       },
+      "PostNotFoundError": Object {
+        "allOf": Array [],
+        "description": undefined,
+        "properties": Object {
+          "id": Object {
+            "$ref": "#/components/schemas/PostId",
+            "description": undefined,
+          },
+        },
+        "required": Array [
+          "id",
+        ],
+        "type": "object",
+      },
       "PostType": Object {
         "description": undefined,
         "enum": Array [
@@ -170,6 +184,37 @@ Object {
               "application/json": Object {
                 "schema": Object {
                   "$ref": "#/components/schemas/BlogPost",
+                },
+              },
+            },
+            "description": "",
+          },
+          "400": Object {
+            "content": Object {
+              "application/json": Object {
+                "schema": Object {
+                  "oneOf": Array [
+                    Object {
+                      "allOf": Array [
+                        Object {
+                          "properties": Object {
+                            "_error": Object {
+                              "enum": Array [
+                                "PostNotFoundError",
+                              ],
+                              "type": "string",
+                            },
+                          },
+                          "type": "object",
+                        },
+                        Object {
+                          "$ref": "#/components/schemas/PostNotFoundError",
+                        },
+                      ],
+                      "description": undefined,
+                      "type": "object",
+                    },
+                  ],
                 },
               },
             },
