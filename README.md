@@ -1,1 +1,1 @@
-# fern-openapi-plugins
+# fern-openapi-generator
