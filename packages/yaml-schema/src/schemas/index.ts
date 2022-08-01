@@ -15,7 +15,6 @@ export { HttpRequestSchema } from "./HttpRequestSchema";
 export { HttpResponseSchema } from "./HttpResponseSchema";
 export { HttpServiceSchema } from "./HttpServiceSchema";
 export { IdSchema } from "./IdSchema";
-export { ObjectExtendsSchema } from "./ObjectExtendsSchema";
 export { ObjectPropertySchema } from "./ObjectPropertySchema";
 export { ObjectSchema } from "./ObjectSchema";
 export { ResponseErrorsSchema } from "./ResponseErrorsSchema";

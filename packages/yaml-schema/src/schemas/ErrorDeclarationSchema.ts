@@ -1,12 +1,14 @@
 import { z } from "zod";
-import { ObjectExtendsSchema } from "./ObjectExtendsSchema";
-import { ObjectPropertySchema } from "./ObjectPropertySchema";
+import { HttpErrorConfigurationSchema } from "./HttpErrorConfigurationSchema";
+import { TypeDeclarationSchema } from "./TypeDeclarationSchema";
 import { WithDocsSchema } from "./WithDocsSchema";
 
-export const ErrorDeclarationSchema = WithDocsSchema.extend({
-    extends: ObjectExtendsSchema.optional(),
-    properties: z.record(ObjectPropertySchema).optional(),
-    statusCode: z.number().optional(),
-});
+export const ErrorDeclarationSchema = z.union([
+    z.string(),
+    WithDocsSchema.extend({
+        http: z.optional(HttpErrorConfigurationSchema),
+        type: z.optional(TypeDeclarationSchema),
+    }),
+]);
 
 export type ErrorDeclarationSchema = z.infer<typeof ErrorDeclarationSchema>;

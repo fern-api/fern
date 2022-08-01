@@ -4,7 +4,7 @@ import { WithDocsSchema } from "./WithDocsSchema";
 export const HttpRequestSchema = z.union([
     z.string(),
     WithDocsSchema.extend({
-        encoding: z.string().optional(),
+        encoding: z.optional(z.string()),
         type: z.string(),
     }),
 ]);

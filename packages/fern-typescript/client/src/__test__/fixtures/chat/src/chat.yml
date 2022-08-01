@@ -15,8 +15,7 @@ types:
 
 errors:
   GenericMessage:
-    properties:
-      type: string
+    type: string
 
 services:
   websocket:

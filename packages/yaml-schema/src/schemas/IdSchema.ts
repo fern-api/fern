@@ -5,7 +5,7 @@ export const IdSchema = z.union([
     z.string(),
     WithDocsSchema.extend({
         name: z.string(),
-        type: z.union([z.literal("string"), z.literal("uuid")]).optional(),
+        type: z.optional(z.union([z.literal("string"), z.literal("uuid")])),
     }),
 ]);
 
