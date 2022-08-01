@@ -282,7 +282,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["lint-staged", "npm:12.4.1"],\
             ["lodash-es", "npm:4.17.21"],\
-            ["mrlint", "npm:0.0.92"],\
+            ["mrlint", "npm:0.0.94"],\
             ["prettier", "npm:2.7.1"],\
             ["stylelint", "npm:14.9.1"],\
             ["stylelint-config-prettier-scss", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:0.0.1"],\
@@ -9560,7 +9560,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["lint-staged", "npm:12.4.1"],\
             ["lodash-es", "npm:4.17.21"],\
-            ["mrlint", "npm:0.0.92"],\
+            ["mrlint", "npm:0.0.94"],\
             ["prettier", "npm:2.7.1"],\
             ["stylelint", "npm:14.9.1"],\
             ["stylelint-config-prettier-scss", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:0.0.1"],\
@@ -12381,10 +12381,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["mrlint", [\
-        ["npm:0.0.92", {\
-          "packageLocation": "./.yarn/cache/mrlint-npm-0.0.92-a7848b3777-a2d8c2e80d.zip/node_modules/mrlint/",\
+        ["npm:0.0.94", {\
+          "packageLocation": "./.yarn/cache/mrlint-npm-0.0.94-c16fd90bdc-f544fa3196.zip/node_modules/mrlint/",\
           "packageDependencies": [\
-            ["mrlint", "npm:0.0.92"]\
+            ["mrlint", "npm:0.0.94"]\
           ],\
           "linkType": "HARD"\
         }]\

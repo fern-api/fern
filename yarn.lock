@@ -6926,7 +6926,7 @@ env-cmd@toddbluhm/env-cmd:
     jest: ^28.1.3
     lint-staged: ^12.3.7
     lodash-es: ^4.17.21
-    mrlint: ^0.0.92
+    mrlint: ^0.0.94
     prettier: ^2.7.1
     stylelint: ^14.9.1
     stylelint-config-prettier-scss: ^0.0.1
@@ -9354,12 +9354,12 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"mrlint@npm:^0.0.92":
-  version: 0.0.92
-  resolution: "mrlint@npm:0.0.92"
+"mrlint@npm:^0.0.94":
+  version: 0.0.94
+  resolution: "mrlint@npm:0.0.94"
   bin:
     mrlint: cli.cjs
-  checksum: a2d8c2e80dd28437c602fb32033912c241046732c28f8b1e3ff8bfd8b64a2079cb8a66ce27982c3f471d5377db5ff2dc7dce874b1dd968874124793a0ac636f2
+  checksum: f544fa31962b3b1fd27429fdcee380c13e203c292df81132e5f55a74f7e088c4261a19d5470d69463d7c6b617e19896132c1f398738b81c60d4391705f3916dc
   languageName: node
   linkType: hard
 
