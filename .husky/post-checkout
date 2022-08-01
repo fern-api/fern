@@ -1,5 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-find packages -name 'lib' -exec /bin/rm -rf {} \+
+find packages -name 'lib' -exec /bin/rm -r {} \+
 find packages -name tsconfig.tsbuildinfo -exec /bin/rm {} \+
