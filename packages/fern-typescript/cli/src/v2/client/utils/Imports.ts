@@ -53,17 +53,21 @@ export class Imports {
             }
 
             const namespaceImport = namespaceImports[0];
-            sourceFile.addImportDeclaration({
-                moduleSpecifier,
-                namespaceImport,
-            });
+            if (namespaceImport != null) {
+                sourceFile.addImportDeclaration({
+                    moduleSpecifier,
+                    namespaceImport,
+                });
+            }
 
             const defaultImport = [...combinedImportDeclarations.defaultImports][0];
-            sourceFile.addImportDeclaration({
-                moduleSpecifier,
-                defaultImport,
-                namedImports: [...combinedImportDeclarations.namedImports].sort(),
-            });
+            if (defaultImport != null || combinedImportDeclarations.namedImports.size > 0) {
+                sourceFile.addImportDeclaration({
+                    moduleSpecifier,
+                    defaultImport,
+                    namedImports: [...combinedImportDeclarations.namedImports].sort(),
+                });
+            }
         }
     }
 }

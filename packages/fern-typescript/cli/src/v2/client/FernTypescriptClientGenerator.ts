@@ -37,9 +37,11 @@ export class FernTypescriptClientGenerator {
         const rootDirectory = this.getRootDirectory();
 
         await this.generateTypeDeclarations();
-        this.exports.writeExportsToProject(rootDirectory);
 
         // TODO write api.ts
+
+        this.exports.writeExportsToProject(rootDirectory);
+
         const indexTs = rootDirectory.createSourceFile("index.ts");
         indexTs.addExportDeclaration({
             namespaceExport: this.apiName,

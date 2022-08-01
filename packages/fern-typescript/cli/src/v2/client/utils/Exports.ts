@@ -27,10 +27,23 @@ export class Exports {
         }
 
         const pathToDirectory = path.dirname(fromPath);
+        const moduleSpecifierToExport = getRelativeModuleSpecifierTo(pathToDirectory, fromPath);
+
+        this._addExportDeclaration({ pathToDirectory, moduleSpecifierToExport, exportDeclaration });
+    }
+
+    private _addExportDeclaration({
+        pathToDirectory,
+        moduleSpecifierToExport,
+        exportDeclaration,
+    }: {
+        pathToDirectory: PathToDirectory;
+        moduleSpecifierToExport: ModuleSpecifier;
+        exportDeclaration: ExportDeclaration;
+    }) {
         const exportsForDirectory = (this.exports[pathToDirectory] ??= {});
 
-        const moduleSpecifier = getRelativeModuleSpecifierTo(pathToDirectory, fromPath);
-        const exportsForModuleSpecifier = (exportsForDirectory[moduleSpecifier] ??= {
+        const exportsForModuleSpecifier = (exportsForDirectory[moduleSpecifierToExport] ??= {
             exportAll: false,
             namespaceExports: new Set(),
             namedExports: new Set(),
@@ -52,6 +65,21 @@ export class Exports {
     }
 
     public writeExportsToProject(rootDirectory: Directory): void {
+        // first, make sure every directory is exported up to the root
+        for (let pathToExport of Object.keys(this.exports)) {
+            while (pathToExport !== "/") {
+                const pathToParent = path.dirname(pathToExport);
+                this._addExportDeclaration({
+                    pathToDirectory: pathToParent,
+                    moduleSpecifierToExport: getRelativeModuleSpecifierTo(pathToParent, pathToExport),
+                    exportDeclaration: {
+                        namespaceExport: path.basename(pathToExport),
+                    },
+                });
+                pathToExport = pathToParent;
+            }
+        }
+
         for (const [pathToDirectory, moduleSpecifierToExports] of Object.entries(this.exports)) {
             for (const [moduleSpecifier, combinedExportDeclarations] of Object.entries(moduleSpecifierToExports)) {
                 const namespaceExports = [...combinedExportDeclarations.namespaceExports];
@@ -69,35 +97,21 @@ export class Exports {
                         moduleSpecifier,
                         namespaceExport,
                     });
-                    // TODO add up as well
                 }
 
-                exportsFile.addExportDeclaration({
-                    moduleSpecifier,
-                    namedExports: [...combinedExportDeclarations.namedExports],
-                });
-
-                exportDirectoryUpToRoot({ pathToDirectory, rootDirectory });
+                if (combinedExportDeclarations.exportAll) {
+                    exportsFile.addExportDeclaration({
+                        moduleSpecifier,
+                    });
+                } else if (combinedExportDeclarations.namedExports.size > 0) {
+                    exportsFile.addExportDeclaration({
+                        moduleSpecifier,
+                        namedExports: [...combinedExportDeclarations.namedExports],
+                    });
+                }
             }
         }
     }
-}
-
-function exportDirectoryUpToRoot({
-    pathToDirectory,
-    rootDirectory,
-}: {
-    pathToDirectory: PathToDirectory;
-    rootDirectory: Directory;
-}) {
-    if (pathToDirectory === "/") {
-        return;
-    }
-    const pathToParent = path.dirname(pathToDirectory);
-    getExportsFileForDirectory({ pathToDirectory: pathToParent, rootDirectory }).addExportDeclaration({
-        moduleSpecifier: getRelativeModuleSpecifierTo(pathToParent, pathToDirectory),
-    });
-    exportDirectoryUpToRoot({ pathToDirectory: pathToParent, rootDirectory });
 }
 
 function getExportsFileForDirectory({

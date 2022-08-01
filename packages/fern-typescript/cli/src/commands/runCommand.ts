@@ -1,60 +1,58 @@
-import { GeneratorUpdate } from "@fern-fern/generator-logging-api-client/model";
+import { GeneratorUpdate, LogLevel } from "@fern-fern/generator-logging-api-client/model";
 import { BUILD_PROJECT_SCRIPT_NAME, FernTypescriptGeneratorConfig, writeVolumeToDisk } from "@fern-typescript/commons";
+import { HelperManager } from "@fern-typescript/helper-manager";
 import execa from "execa";
+import camelCase from "lodash-es/camelCase";
+import upperFirst from "lodash-es/upperFirst";
 import { Volume } from "memfs/lib/volume";
 import path from "path";
-import { GeneratorLoggingWrapper } from "../utils/generatorLoggingWrapper";
+import { GeneratorNotificationService } from "../utils/GeneratorNotificationService";
 import { loadIntermediateRepresentation } from "../utils/loadIntermediateRepresentation";
-import { FernTypescriptClientGenerator } from "../v2/client/FernTypescriptClientGenerator";
-import { LoggerImpl } from "../v2/client/logger/Logger";
-import { DependencyType } from "../v2/generate-ts-project/DependencyManager";
-import { generateTypeScriptProject } from "../v2/generate-ts-project/generateTypeScriptProject";
+import { AsyncLogger } from "../v2/client/logger/AsyncLogger";
 import { Command } from "./Command";
+
+const CONSOLE_LOGGERS: Record<LogLevel, (message: string) => void> = {
+    [LogLevel.Debug]: console.debug,
+    [LogLevel.Info]: console.info,
+    [LogLevel.Warn]: console.warn,
+    [LogLevel.Error]: console.error,
+};
 
 export async function runCommand({
     command,
     config,
-    generatorLoggingWrapper,
+    generatorNotificationService,
 }: {
     command: Command<string>;
     config: FernTypescriptGeneratorConfig;
-    generatorLoggingWrapper: GeneratorLoggingWrapper;
+    generatorNotificationService: GeneratorNotificationService;
 }): Promise<void> {
     const {
         output: { path: baseOutputPath },
     } = config;
     const outputPath = path.join(baseOutputPath, command.key);
 
+    const logger = new AsyncLogger(async (message, level) => {
+        CONSOLE_LOGGERS[level](message);
+        await generatorNotificationService.sendUpdate(
+            GeneratorUpdate.log({
+                message,
+                level,
+            })
+        );
+    });
+
     const volume = new Volume();
-
-    const clientGenerator = new FernTypescriptClientGenerator(
-        "BlogPostApi",
-        await loadIntermediateRepresentation(config.irFilepath),
-        new LoggerImpl((message, level) =>
-            generatorLoggingWrapper.sendUpdate(
-                GeneratorUpdate.log({
-                    message,
-                    level,
-                })
-            )
-        )
-    );
-
-    const project = await clientGenerator.generate();
-
-    await generateTypeScriptProject({
+    await command.generate({
+        intermediateRepresentation: await loadIntermediateRepresentation(config.irFilepath),
+        apiName: upperCamelCase(config.workspaceName),
+        helperManager: new HelperManager(config.helpers),
         volume,
-        packageName: "blog-post-api",
-        packageVersion: "0.0.1",
-        project,
-        dependencies: {
-            [DependencyType.PROD]: {},
-            [DependencyType.DEV]: {},
-            [DependencyType.PEER]: {},
-        },
+        logger,
     });
 
     await writeVolumeToDisk(volume, outputPath);
+    await logger.waitForLogsToHaveSent();
 
     if (command.npmPackage.publishInfo != null) {
         const runNpmCommandInOutputDirectory = async (...args: string[]): Promise<void> => {
@@ -66,7 +64,7 @@ export async function runCommand({
             await command;
         };
 
-        await generatorLoggingWrapper.sendUpdate(
+        await generatorNotificationService.sendUpdate(
             GeneratorUpdate.publishing(command.npmPackage.publishInfo.packageCoordinate)
         );
 
@@ -91,8 +89,12 @@ export async function runCommand({
         await runNpmCommandInOutputDirectory("run", BUILD_PROJECT_SCRIPT_NAME);
         await runNpmCommandInOutputDirectory("publish");
 
-        await generatorLoggingWrapper.sendUpdate(
+        await generatorNotificationService.sendUpdate(
             GeneratorUpdate.published(command.npmPackage.publishInfo.packageCoordinate)
         );
     }
+}
+
+function upperCamelCase(str: string): string {
+    return upperFirst(camelCase(str));
 }

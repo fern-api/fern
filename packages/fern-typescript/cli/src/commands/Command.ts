@@ -2,6 +2,7 @@ import { Values } from "@fern-api/core-utils";
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import { Volume } from "memfs/lib/volume";
+import { Logger } from "../v2/client/logger/Logger";
 import { NpmPackage } from "./constructNpmPackageForCommand";
 
 export const CommandKey = {
@@ -17,6 +18,8 @@ export declare namespace Command {
             volume: Volume;
             intermediateRepresentation: IntermediateRepresentation;
             helperManager: HelperManager;
+            apiName: string;
+            logger: Logger;
         }
     }
 }

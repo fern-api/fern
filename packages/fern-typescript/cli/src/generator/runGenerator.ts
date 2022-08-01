@@ -11,7 +11,7 @@ import { createClientCommand } from "../commands/impls/clientCommand";
 import { createModelCommand } from "../commands/impls/modelCommand";
 import { createServerCommand } from "../commands/impls/serverCommand";
 import { runCommand } from "../commands/runCommand";
-import { GeneratorLoggingWrapper } from "../utils/generatorLoggingWrapper";
+import { GeneratorNotificationService } from "../utils/GeneratorNotificationService";
 
 export async function runGenerator(pathToConfig: string): Promise<void> {
     const configStr = await readFile(pathToConfig);
@@ -22,9 +22,9 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
     );
 
     const commands = getCommands(config);
-    const generatorLoggingWrapper = new GeneratorLoggingWrapper(config);
+    const generatorNotificationService = new GeneratorNotificationService(config);
 
-    await generatorLoggingWrapper.sendUpdate(
+    await generatorNotificationService.sendUpdate(
         GeneratorUpdate.init({
             packagesToPublish: commands.reduce<PackageCoordinate[]>((all, command) => {
                 if (command.npmPackage.publishInfo != null) {
@@ -36,11 +36,11 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
     );
 
     try {
-        await Promise.all(commands.map((command) => runCommand({ command, config, generatorLoggingWrapper })));
-        await generatorLoggingWrapper.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful()));
+        await Promise.all(commands.map((command) => runCommand({ command, config, generatorNotificationService })));
+        await generatorNotificationService.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful()));
     } catch (e) {
         console.error("Failed to generate", e);
-        await generatorLoggingWrapper.sendUpdate(
+        await generatorNotificationService.sendUpdate(
             GeneratorUpdate.exitStatusUpdate(
                 ExitStatusUpdate.error({
                     message: e instanceof Error ? e.message : "Encountered error",
