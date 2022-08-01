@@ -12,6 +12,7 @@
   ],
   "type": "module",
   "source": "src/index.ts",
+  "module": "src/index.ts",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "sideEffects": false,
