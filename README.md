@@ -1,5 +1,4 @@
 # fern-openapi Generator
 
-`fern add openapi` adds the generator in your `.fernrc.yml`. `fern generate` will run the generators and output `openapi.json`. 
-
-Then run `fern generate` to 
+Step 1: Run `fern add openapi`.
+Step 2: Run `fern generate`. In your file system, you'll see a file called `openapi.json`. 
