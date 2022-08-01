@@ -25,6 +25,9 @@ jobs:
           name: Run tests
           command: yarn test --ci
       - run:
+          name: Build docker
+          command: yarn dockerTagLocal
+      - run:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff
   publish:

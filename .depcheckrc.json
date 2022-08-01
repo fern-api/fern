@@ -1,4 +1,12 @@
 {
-  "ignores": ["@types/jest", "@types/node", "@fern-typescript/testing-utils", "lint-staged", "webpack", "webpack-cli"],
+  "ignores": [
+    "@types/jest",
+    "@types/node",
+    "@fern-typescript/testing-utils",
+    "lint-staged",
+    "webpack",
+    "webpack-cli",
+    "ts-loader"
+  ],
   "ignore-patterns": ["lib"]
 }
