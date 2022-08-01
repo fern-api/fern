@@ -30,7 +30,7 @@ const POSTMAN_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
 
 const OPENAPI_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
     name: "fernapi/fern-openapi",
-    version: "0.0.3",
+    version: "0.0.4",
     generate: {
         enabled: true,
         output: "./generated-openapi.yml",
