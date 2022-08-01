@@ -122,10 +122,10 @@ jobs:
           command: yarn compile
       - run:
           name: Publish all packages
-          command: yarn run publish
+          command: yarn run publish --tag next
       - run:
           name: Publish fern-api-dev CLI
-          command: yarn workspace @fern-api/cli publish:cli:dev --access restricted
+          command: yarn workspace @fern-api/cli publish:cli:dev --access restricted --tag next
 
   publish-fern-typescript:
     machine:
@@ -167,10 +167,13 @@ jobs:
           command: yarn compile
       - run:
           name: Publish all packages
-          command: yarn run publish
+          command: yarn run publish --tag latest
+      - run:
+          name: Publish fern-api-dev CLI
+          command: yarn workspace @fern-api/cli publish:cli:dev --access restricted --tag latest
       - run:
           name: Publish fern-api CLI
-          command: yarn workspace @fern-api/cli publish:cli:prod
+          command: yarn workspace @fern-api/cli publish:cli:prod --tag latest
 
 workflows:
   version: 2
