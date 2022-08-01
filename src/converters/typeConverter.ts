@@ -97,17 +97,20 @@ export function convertObject({
             required.push(objectProperty.key);
         }
     });
-    return {
+    const convertedSchemaObject: OpenAPIV3.SchemaObject = {
         type: "object",
         description: docs,
         properties,
         required,
-        allOf: objectTypeDeclaration.extends.map((declaredTypeName) => {
+    };
+    if (objectTypeDeclaration.extends.length > 0) {
+        convertedSchemaObject.allOf = objectTypeDeclaration.extends.map((declaredTypeName) => {
             return {
                 $ref: getReferenceFromDeclaredTypeName(declaredTypeName),
             };
-        }),
-    };
+        });
+    }
+    return convertedSchemaObject;
 }
 
 export function convertUnion({

@@ -24,7 +24,6 @@ Object {
         ],
       },
       "BlogPost": Object {
-        "allOf": Array [],
         "description": "A blog post",
         "properties": Object {
           "author": Object {
@@ -58,7 +57,6 @@ Object {
         "type": "object",
       },
       "CreatePostRequest": Object {
-        "allOf": Array [],
         "description": undefined,
         "properties": Object {
           "author": Object {
@@ -91,7 +89,6 @@ Object {
         "type": "string",
       },
       "PostNotFoundError": Object {
-        "allOf": Array [],
         "description": undefined,
         "properties": Object {
           "id": Object {
