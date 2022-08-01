@@ -167,13 +167,13 @@ jobs:
           command: yarn compile
       - run:
           name: Publish all packages
-          command: yarn run publish --tag latest
+          command: yarn run publish
       - run:
           name: Publish fern-api-dev CLI
-          command: yarn workspace @fern-api/cli publish:cli:dev --access restricted --tag latest
+          command: yarn workspace @fern-api/cli publish:cli:dev --access restricted
       - run:
           name: Publish fern-api CLI
-          command: yarn workspace @fern-api/cli publish:cli:prod --tag latest
+          command: yarn workspace @fern-api/cli publish:cli:prod
 
 workflows:
   version: 2
