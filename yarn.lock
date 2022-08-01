@@ -1962,6 +1962,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/js-yaml@npm:^4.0.5":
+  version: 4.0.5
+  resolution: "@types/js-yaml@npm:4.0.5"
+  checksum: 7dcac8c50fec31643cc9d6444b5503239a861414cdfaa7ae9a38bc22597c4d850c4b8cec3d82d73b3fbca408348ce223b0408d598b32e094470dfffc6d486b4d
+  languageName: node
+  linkType: hard
+
 "@types/json-schema@npm:*, @types/json-schema@npm:^7.0.8":
   version: 7.0.11
   resolution: "@types/json-schema@npm:7.0.11"
@@ -3575,11 +3582,13 @@ __metadata:
     "@fern-fern/generator-logging-api-client": ^0.0.25
     "@fern-fern/ir-model": ^0.0.53
     "@types/jest": ^27.5.0
+    "@types/js-yaml": ^4.0.5
     "@types/lodash": ^4.14.182
     depcheck: ^1.4.3
     eslint: ^8.15.0
     husky: ^8.0.1
     jest: ^28.1.1
+    js-yaml: ^4.1.0
     lint-staged: ^12.4.1
     lodash: ^4.17.21
     openapi-types: ^12.0.0

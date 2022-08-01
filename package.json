@@ -27,6 +27,7 @@
     "@fern-api/ir-generator": "0.0.160",
     "@fern-api/workspace-loader": "^0.0.160",
     "@types/jest": "^27.5.0",
+    "@types/js-yaml": "^4.0.5",
     "@types/lodash": "^4.14.182",
     "depcheck": "^1.4.3",
     "eslint": "^8.15.0",
@@ -42,6 +43,7 @@
   "dependencies": {
     "@fern-fern/generator-logging-api-client": "^0.0.25",
     "@fern-fern/ir-model": "^0.0.53",
+    "js-yaml": "^4.1.0",
     "lodash": "^4.17.21",
     "openapi-types": "^12.0.0"
   },
