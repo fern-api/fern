@@ -54,6 +54,7 @@
     "glob-promise": "^4.2.2",
     "inquirer": "^9.0.0",
     "js-yaml": "^4.1.0",
+    "update-notifier": "^6.0.2",
     "validate-npm-package-name": "^4.0.0",
     "yargs": "^17.4.1",
     "zod": "^3.14.3"
@@ -66,6 +67,7 @@
     "@types/jest": "^28.1.6",
     "@types/js-yaml": "^4.0.5",
     "@types/node": "^18.6.2",
+    "@types/update-notifier": "^6.0.1",
     "@types/validate-npm-package-name": "^4.0.0",
     "@types/yargs": "^17.0.10",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",

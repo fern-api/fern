@@ -1,6 +1,7 @@
 import { initialize } from "@fern-api/init";
 import { initiateLogin } from "@fern-api/login";
 import inquirer, { InputQuestion } from "inquirer";
+import updateNotifier from "update-notifier";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
@@ -24,6 +25,12 @@ async function runCli() {
     const packageVersion = process.env.PACKAGE_VERSION;
     if (packageVersion != null) {
         cli.version(packageVersion);
+        updateNotifier({
+            pkg: {
+                name: "fern-api",
+                version: packageVersion,
+            },
+        }).notify();
     }
 
     addInitCommand(cli);
