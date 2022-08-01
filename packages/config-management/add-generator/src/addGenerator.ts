@@ -26,7 +26,6 @@ const POSTMAN_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
         enabled: true,
         output: "./generated-postman.json",
     },
-    config: {},
 };
 
 const OPENAPI_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
