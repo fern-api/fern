@@ -101,8 +101,10 @@ export function convertObject({
         type: "object",
         description: docs,
         properties,
-        required,
     };
+    if (required.length > 0) {
+        convertedSchemaObject.required = required;
+    }
     if (objectTypeDeclaration.extends.length > 0) {
         convertedSchemaObject.allOf = objectTypeDeclaration.extends.map((declaredTypeName) => {
             return {

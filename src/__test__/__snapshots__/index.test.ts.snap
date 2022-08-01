@@ -126,7 +126,7 @@ Object {
             "description": "I'm a header!",
             "in": "header",
             "name": "x-endpoint-header",
-            "required": false,
+            "required": true,
             "schema": Object {
               "type": "string",
             },
@@ -141,7 +141,7 @@ Object {
             },
           },
           "description": undefined,
-          "required": false,
+          "required": true,
         },
         "responses": Object {
           "200": Object {

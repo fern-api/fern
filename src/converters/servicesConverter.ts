@@ -131,7 +131,7 @@ function convertRequestBody(
     } else {
         return {
             description: httpRequest.docs ?? undefined,
-            required: isTypeReferenceOptional(httpRequest.type, typesByName),
+            required: isTypeReferenceRequired(httpRequest.type, typesByName),
             content: {
                 "application/json": {
                     schema: convertTypeReference(httpRequest.type),
@@ -291,7 +291,7 @@ function convertQueryParameter(
         name: queryParameter.key,
         in: "query",
         description: queryParameter.docs ?? undefined,
-        required: isTypeReferenceOptional(queryParameter.valueType, typesByName),
+        required: isTypeReferenceRequired(queryParameter.valueType, typesByName),
         schema: convertTypeReference(queryParameter.valueType),
     };
 }
@@ -304,7 +304,7 @@ function convertHeader(
         name: httpHeader.header,
         in: "header",
         description: httpHeader.docs ?? undefined,
-        required: isTypeReferenceOptional(httpHeader.valueType, typesByName),
+        required: isTypeReferenceRequired(httpHeader.valueType, typesByName),
         schema: convertTypeReference(httpHeader.valueType),
     };
 }
@@ -346,9 +346,9 @@ function getEndpointPath(httpPath: HttpPath): string {
     return endpointPath;
 }
 
-function isTypeReferenceOptional(typeReference: TypeReference, typesByName: Record<string, TypeDeclaration>): boolean {
+function isTypeReferenceRequired(typeReference: TypeReference, typesByName: Record<string, TypeDeclaration>): boolean {
     if (typeReference._type === "container" && typeReference.container._type === "optional") {
-        return true;
+        return false;
     } else if (typeReference._type === "named") {
         const key = getDeclaredTypeNameKey(typeReference);
         const typeDeclaration = typesByName[key];
@@ -356,8 +356,8 @@ function isTypeReferenceOptional(typeReference: TypeReference, typesByName: Reco
             throw new Error("Encountered non-existent type: " + typeReference);
         }
         if (typeDeclaration.shape._type === "alias") {
-            return isTypeReferenceOptional(typeDeclaration.shape.aliasOf, typesByName);
+            return isTypeReferenceRequired(typeDeclaration.shape.aliasOf, typesByName);
         }
     }
-    return false;
+    return true;
 }
