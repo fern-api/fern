@@ -11,7 +11,7 @@ import { loadProject } from "../utils/load-project/loadProject";
 
 export async function addGeneratorToWorkspaces(
     commandLineWorkspaces: readonly string[],
-    generatorName: "java" | "typescript" | "postman"
+    generatorName: "java" | "typescript" | "postman" | "openapi"
 ): Promise<void> {
     const { workspaceConfigurations } = await loadProject({ commandLineWorkspaces });
 

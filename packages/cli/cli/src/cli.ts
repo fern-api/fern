@@ -77,7 +77,7 @@ function addAddCommand(cli: Argv) {
                         "If omitted, every workspace specified in the project-level configuration (fern.config.json) will be processed.",
                 })
                 .positional("generator", {
-                    choices: ["typescript", "java", "postman"] as const,
+                    choices: ["typescript", "java", "postman", "openapi"] as const,
                     demandOption: true,
                 }),
         async (argv) => {
