@@ -1,14 +1,7 @@
 import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
-import {
-    DeclaredTypeName,
-    FernFilepath,
-    ObjectProperty,
-    Type,
-    TypeDeclaration,
-    TypeReference,
-} from "@fern-fern/ir-model";
+import { FernFilepath, Type, TypeDeclaration, TypeReference } from "@fern-fern/ir-model";
 import { getDocs } from "../../utils/getDocs";
-import { createTypeReferenceParser, TypeReferenceParser } from "../../utils/parseInlineType";
+import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { parseTypeName } from "../../utils/parseTypeName";
 
 export function convertTypeDeclaration({
@@ -53,8 +46,28 @@ export function convertType({
             }),
         object: (object) =>
             Type.object({
-                extends: convertExtends({ _extends: object.extends, fernFilepath, imports }),
-                properties: convertObjectProperties({ objectProperties: object.properties, parseTypeReference }),
+                extends:
+                    object.extends != null
+                        ? typeof object.extends === "string"
+                            ? [
+                                  parseTypeName({
+                                      typeName: object.extends,
+                                      fernFilepath,
+                                      imports,
+                                  }),
+                              ]
+                            : object.extends.map((extended) =>
+                                  parseTypeName({ typeName: extended, fernFilepath, imports })
+                              )
+                        : [],
+                properties:
+                    object.properties != null
+                        ? Object.entries(object.properties).map(([propertyName, propertyDefinition]) => ({
+                              key: propertyName,
+                              valueType: parseTypeReference(propertyDefinition),
+                              docs: getDocs(propertyDefinition),
+                          }))
+                        : [],
             }),
         union: (union) =>
             Type.union({
@@ -103,43 +116,4 @@ export function getEnumName(enumValue: RawSchemas.EnumValueSchema): { name: stri
         name: enumValue.name,
         wasExplicitlySet: true,
     };
-}
-
-export function convertExtends({
-    _extends,
-    fernFilepath,
-    imports,
-}: {
-    _extends: RawSchemas.ObjectExtendsSchema | undefined;
-    fernFilepath: FernFilepath;
-    imports: Record<string, string>;
-}): DeclaredTypeName[] {
-    if (_extends == null) {
-        return [];
-    }
-    if (typeof _extends === "string") {
-        return convertExtends({
-            _extends: [_extends],
-            fernFilepath,
-            imports,
-        });
-    }
-    return _extends.map((extended) => parseTypeName({ typeName: extended, fernFilepath, imports }));
-}
-
-export function convertObjectProperties({
-    objectProperties,
-    parseTypeReference,
-}: {
-    objectProperties: Record<string, RawSchemas.ObjectPropertySchema> | undefined;
-    parseTypeReference: TypeReferenceParser;
-}): ObjectProperty[] {
-    if (objectProperties == null) {
-        return [];
-    }
-    return Object.entries(objectProperties).map(([propertyName, propertyDefinition]) => ({
-        key: propertyName,
-        valueType: parseTypeReference(propertyDefinition),
-        docs: getDocs(propertyDefinition),
-    }));
 }

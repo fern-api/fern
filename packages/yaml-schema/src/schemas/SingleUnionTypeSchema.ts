@@ -4,7 +4,7 @@ import { WithDocsSchema } from "./WithDocsSchema";
 export const SingleUnionTypeSchema = z.union([
     z.string(),
     WithDocsSchema.extend({
-        type: z.string().optional(),
+        type: z.optional(z.string()),
     }),
 ]);
 

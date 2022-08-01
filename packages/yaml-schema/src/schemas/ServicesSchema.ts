@@ -3,8 +3,8 @@ import { HttpServiceSchema } from "./HttpServiceSchema";
 import { WebSocketChannelSchema } from "./WebSocketChannelSchema";
 
 export const ServicesSchema = z.strictObject({
-    http: z.record(HttpServiceSchema).optional(),
-    websocket: z.record(WebSocketChannelSchema).optional(),
+    http: z.optional(z.record(HttpServiceSchema)),
+    websocket: z.optional(z.record(WebSocketChannelSchema)),
 });
 
 export type ServicesSchema = z.infer<typeof ServicesSchema>;

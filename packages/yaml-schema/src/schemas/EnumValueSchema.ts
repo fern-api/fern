@@ -4,7 +4,7 @@ import { WithDocsSchema } from "./WithDocsSchema";
 export const EnumValueSchema = z.union([
     z.string(),
     WithDocsSchema.extend({
-        name: z.string().optional(),
+        name: z.optional(z.string()),
         value: z.string(),
     }),
 ]);

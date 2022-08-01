@@ -1,4 +1,4 @@
-import { FernConstants, PrimitiveType, Type, TypeReference } from "@fern-fern/ir-model";
+import { FernConstants, PrimitiveType, TypeReference } from "@fern-fern/ir-model";
 import { ResponseError, ResponseErrors } from "@fern-fern/ir-model/services";
 import { DependencyManager, generateUuidCall } from "@fern-typescript/commons";
 import { ModelContext } from "@fern-typescript/model-context";
@@ -60,7 +60,7 @@ function getValueType({
     modelContext: ModelContext;
 }): ResolvedSingleUnionValueType | undefined {
     const errorDeclaration = modelContext.getErrorDeclarationFromName(error.error);
-    const resolvedType = modelContext.resolveTypeDeclaration(Type.object(errorDeclaration.type));
+    const resolvedType = modelContext.resolveTypeDeclaration(errorDeclaration.type);
 
     if (resolvedType._type === "void") {
         return undefined;

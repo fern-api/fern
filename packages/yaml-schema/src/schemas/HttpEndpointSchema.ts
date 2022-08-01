@@ -9,15 +9,15 @@ import { ResponseErrorsSchema } from "./ResponseErrorsSchema";
 import { WithDocsSchema } from "./WithDocsSchema";
 
 export const HttpEndpointSchema = WithDocsSchema.extend({
-    method: z.enum(["GET", "POST", "PUT", "PATCH", "DELETE"]).optional(),
-    path: z.string().optional(),
-    ["path-parameters"]: z.record(HttpParameterSchema).optional(),
-    ["query-parameters"]: z.record(HttpQueryParameterSchema).optional(),
-    headers: z.record(HttpHeaderSchema).optional(),
-    "auth-override": AuthSchema.optional(),
-    request: HttpRequestSchema.optional(),
-    response: HttpResponseSchema.optional(),
-    errors: ResponseErrorsSchema.optional(),
+    method: z.optional(z.enum(["GET", "POST", "PUT", "PATCH", "DELETE"])),
+    path: z.optional(z.string()),
+    ["path-parameters"]: z.optional(z.record(HttpParameterSchema)),
+    ["query-parameters"]: z.optional(z.record(HttpQueryParameterSchema)),
+    headers: z.optional(z.record(HttpHeaderSchema)),
+    "auth-override": z.optional(AuthSchema),
+    request: z.optional(HttpRequestSchema),
+    response: z.optional(HttpResponseSchema),
+    errors: z.optional(ResponseErrorsSchema),
 });
 
 export type HttpEndpointSchema = z.infer<typeof HttpEndpointSchema>;
