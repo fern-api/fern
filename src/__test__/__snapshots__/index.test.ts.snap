@@ -105,6 +105,82 @@ Object {
     "version": "0.0.0",
   },
   "openapi": "3.0.1",
-  "paths": Object {},
+  "paths": Object {
+    "posts-service/create": Object {
+      "post": Object {
+        "description": "Creates a blog post and returns blog post id.",
+        "operationId": "createPost",
+        "parameters": Array [
+          Object {
+            "description": "I'm a header!",
+            "in": "header",
+            "name": "x-endpoint-header",
+            "required": false,
+            "schema": Object {
+              "type": "string",
+            },
+          },
+        ],
+        "requestBody": Object {
+          "content": Object {
+            "application/json": Object {
+              "schema": Object {
+                "$ref": "#/components/schemas/CreatePostRequest",
+              },
+            },
+          },
+          "description": undefined,
+          "required": false,
+        },
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "application/json": Object {
+                "schema": Object {
+                  "$ref": "#/components/schemas/PostId",
+                },
+              },
+            },
+            "description": "",
+          },
+        },
+        "tags": Array [
+          "PostsService",
+        ],
+      },
+    },
+    "posts-service/{postId}": Object {
+      "get": Object {
+        "description": "Gets a blog post.",
+        "operationId": "getPost",
+        "parameters": Array [
+          Object {
+            "description": undefined,
+            "in": "path",
+            "name": "postId",
+            "required": true,
+            "schema": Object {
+              "$ref": "#/components/schemas/PostId",
+            },
+          },
+        ],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "application/json": Object {
+                "schema": Object {
+                  "$ref": "#/components/schemas/BlogPost",
+                },
+              },
+            },
+            "description": "",
+          },
+        },
+        "tags": Array [
+          "PostsService",
+        ],
+      },
+    },
+  },
 }
 `;

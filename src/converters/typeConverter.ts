@@ -157,7 +157,7 @@ function convertUnion({
     };
 }
 
-function convertTypeReference(typeReference: TypeReference): OpenApiComponentSchema {
+export function convertTypeReference(typeReference: TypeReference): OpenApiComponentSchema {
     return TypeReference._visit(typeReference, {
         container: (containerType) => {
             return convertContainerType(containerType);
