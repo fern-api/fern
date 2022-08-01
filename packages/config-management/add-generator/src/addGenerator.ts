@@ -2,7 +2,7 @@ import { GeneratorInvocationSchema, WorkspaceConfigurationSchema } from "@fern-a
 
 const JAVA_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
     name: "fernapi/fern-java",
-    version: "0.0.83",
+    version: "0.0.84",
     generate: true,
     config: {
         packagePrefix: "com",
@@ -21,12 +21,34 @@ const TYPESCRIPT_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
 
 const POSTMAN_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
     name: "fernapi/fern-postman",
-    version: "0.0.17",
+    version: "0.0.18",
     generate: {
         enabled: true,
         output: "./generated-postman.json",
     },
+    config: {},
 };
+
+const OPENAPI_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
+    name: "fernapi/fern-openapi",
+    version: "0.0.3",
+    generate: {
+        enabled: true,
+        output: "./generated-openapi.yml",
+    },
+    config: {
+        format: "yaml",
+    },
+};
+
+export function addOpenApiGenerator(
+    workspaceConfiguration: WorkspaceConfigurationSchema
+): WorkspaceConfigurationSchema {
+    return addGeneratorIfNotPresent({
+        workspaceConfiguration,
+        invocation: OPENAPI_GENERATOR_INVOCATION,
+    });
+}
 
 export function addJavaGenerator(workspaceConfiguration: WorkspaceConfigurationSchema): WorkspaceConfigurationSchema {
     return addGeneratorIfNotPresent({

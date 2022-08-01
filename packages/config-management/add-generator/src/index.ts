@@ -1,1 +1,1 @@
-export { addJavaGenerator, addPostmanGenerator, addTypescriptGenerator } from "./addGenerator";
+export { addJavaGenerator, addOpenApiGenerator, addPostmanGenerator, addTypescriptGenerator } from "./addGenerator";

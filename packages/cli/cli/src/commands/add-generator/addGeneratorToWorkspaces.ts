@@ -1,4 +1,9 @@
-import { addJavaGenerator, addPostmanGenerator, addTypescriptGenerator } from "@fern-api/add-generator";
+import {
+    addJavaGenerator,
+    addOpenApiGenerator,
+    addPostmanGenerator,
+    addTypescriptGenerator,
+} from "@fern-api/add-generator";
 import { loadRawWorkspaceConfiguration, WorkspaceConfigurationSchema } from "@fern-api/workspace-configuration";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -23,7 +28,7 @@ export async function addGeneratorToWorkspaces(
 }
 
 function addGeneratorToWorkspaceConfiguration(
-    generatorName: "java" | "typescript" | "postman",
+    generatorName: "java" | "typescript" | "postman" | "openapi",
     workspaceConfiguration: WorkspaceConfigurationSchema
 ): WorkspaceConfigurationSchema {
     switch (generatorName) {
@@ -33,5 +38,7 @@ function addGeneratorToWorkspaceConfiguration(
             return addTypescriptGenerator(workspaceConfiguration);
         case "postman":
             return addPostmanGenerator(workspaceConfiguration);
+        case "openapi":
+            return addOpenApiGenerator(workspaceConfiguration);
     }
 }
