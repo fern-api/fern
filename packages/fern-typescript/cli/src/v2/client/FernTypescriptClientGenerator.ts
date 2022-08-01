@@ -1,13 +1,16 @@
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
 import { Directory, Project } from "ts-morph";
-import { TypeDeclarationHandler } from "../model/TypeDeclarationHandler";
+import { ServiceDeclarationHandler } from "../service-declaration-handler/ServiceDeclarationHandler";
+import { TypeDeclarationHandler } from "../type-declaration-handler/TypeDeclarationHandler";
 import { Logger } from "./logger/Logger";
 import { TypeResolver } from "./type-resolver/TypeResolver";
 import { File, ImportOptions } from "./types";
 import { ExportDeclaration, Exports } from "./utils/Exports";
 import { getFilepathForError } from "./utils/getFilepathForError";
+import { getFilepathForService } from "./utils/getFilepathForService";
 import { getFilepathForType } from "./utils/getFilepathForType";
 import { getGeneratedErrorName } from "./utils/getGeneratedErrorName";
+import { getGeneratedServiceName } from "./utils/getGeneratedServiceName";
 import { getReferenceToExportedType } from "./utils/getReferenceToExportedType";
 import { getReferenceToType } from "./utils/getReferenceToType";
 import { getRelativeModuleSpecifierTo } from "./utils/getRelativeModuleSpecifierTo";
@@ -37,6 +40,7 @@ export class FernTypescriptClientGenerator {
         const rootDirectory = this.getRootDirectory();
 
         await this.generateTypeDeclarations();
+        await this.generateServiceDeclarations();
 
         // TODO write api.ts
 
@@ -62,6 +66,23 @@ export class FernTypescriptClientGenerator {
                     this.withFile({
                         filepath: getFilepathForType(typeDeclaration.name),
                         exportDeclaration: { exportAll: true },
+                        run,
+                    }),
+                logger: this.logger,
+                fernConstants: this.intermediateRepresentation.constants,
+            });
+        }
+    }
+
+    private async generateServiceDeclarations() {
+        for (const serviceDeclaration of this.intermediateRepresentation.services.http) {
+            await ServiceDeclarationHandler.run(serviceDeclaration, {
+                withFile: async (run) =>
+                    this.withFile({
+                        filepath: getFilepathForService(serviceDeclaration.name),
+                        exportDeclaration: {
+                            namespaceExport: getGeneratedServiceName(serviceDeclaration.name),
+                        },
                         run,
                     }),
                 logger: this.logger,
