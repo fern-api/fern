@@ -6,7 +6,7 @@ import path from "path";
 import { convertToOpenApi } from "./convertToOpenApi";
 import { GeneratorLoggingWrapper } from "./generatorLoggingWrapper";
 
-const OPENAPI_YML_FILENAME = "openapi.yml";
+const OPENAPI_JSON_FILENAME = "openapi.json";
 
 export async function writeOpenApi(pathToConfig: string): Promise<void> {
     const configStr = await readFile(pathToConfig);
@@ -28,7 +28,7 @@ export async function writeOpenApi(pathToConfig: string): Promise<void> {
         const ir = await loadIntermediateRepresentation(config.irFilepath);
         const openApiDefinition = convertToOpenApi(config.workspaceName, config.publish?.version ?? "", ir);
         await writeFile(
-            path.join(config.output.path, OPENAPI_YML_FILENAME),
+            path.join(config.output.path, OPENAPI_JSON_FILENAME),
             JSON.stringify(openApiDefinition, undefined, 4)
         );
         await generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful()));

@@ -1,8 +1,8 @@
 {
-  "name": "fern-postman",
+  "name": "fern-openapi",
   "version": "0.0.0",
   "main": "lib/index.js",
-  "repository": "git@github.com:fern-api/fern-postman.git",
+  "repository": "git@github.com:fern-api/fern-openapi.git",
   "author": "Deep Singhvi <deep@buildwithfern.com>",
   "license": "MIT",
   "scripts": {
