@@ -8,7 +8,11 @@ import {
 } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import { ModelContext } from "@fern-typescript/model-context";
-import { getHttpRequestParameters, ServiceTypesConstants } from "@fern-typescript/service-types";
+import {
+    generateHttpServerEndpointTypes,
+    getHttpRequestParameters,
+    ServiceTypesConstants,
+} from "@fern-typescript/service-types";
 import {
     Directory,
     InterfaceDeclaration,
@@ -78,9 +82,10 @@ function addEndpointToService({
     expressRouteStatements: ts.Statement[];
     dependencyManager: DependencyManager;
 }) {
-    const generatedEndpointTypes = modelContext.getGeneratedHttpServiceTypes({
-        serviceName: service.name,
-        endpointId: endpoint.endpointId,
+    const generatedEndpointTypes = generateHttpServerEndpointTypes({
+        service,
+        endpoint,
+        modelContext,
     });
 
     serviceInterface.addMethod({
@@ -96,7 +101,7 @@ function addEndpointToService({
         returnType: getTextOfTsNode(
             generateMaybePromise({
                 type: modelContext.getReferenceToHttpServiceType({
-                    reference: generatedEndpointTypes.response.reference,
+                    reference: generatedEndpointTypes.response,
                     referencedIn: serviceFile,
                 }),
             })

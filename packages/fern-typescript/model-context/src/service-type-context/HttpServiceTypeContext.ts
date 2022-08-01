@@ -1,7 +1,6 @@
 import { EndpointId, ServiceName } from "@fern-fern/ir-model/services";
 import { ImportStrategy } from "@fern-typescript/commons";
 import { SourceFile, ts } from "ts-morph";
-import { StringifiedFernFilepath, stringifyFernFilepath } from "../stringifyFernFilepath";
 import { BaseServiceTypeContext, ServiceTypeMetadata } from "./BaseServiceTypeContext";
 import {
     GeneratedRequest,
@@ -51,29 +50,9 @@ export declare namespace HttpServiceTypeContext {
             importStrategy?: ImportStrategy;
         }
     }
-
-    namespace registerGeneratedTypes {
-        interface Args {
-            serviceName: ServiceName;
-            endpointId: EndpointId;
-            generatedTypes: GeneratedHttpEndpointTypes;
-        }
-    }
-
-    namespace getGeneratedTypes {
-        interface Args {
-            serviceName: ServiceName;
-            endpointId: EndpointId;
-        }
-    }
 }
 
 export class HttpServiceTypeContext extends BaseServiceTypeContext {
-    private generatedTypes: Record<
-        StringifiedFernFilepath,
-        Record<NonQualifiedServiceName, Record<EndpointId, GeneratedHttpEndpointTypes>>
-    > = {};
-
     public addHttpServiceTypeDeclaration(
         metadata: HttpServiceTypeMetadata,
         withFile: (file: SourceFile) => void
@@ -103,30 +82,6 @@ export class HttpServiceTypeContext extends BaseServiceTypeContext {
             referencedIn,
             importStrategy,
         });
-    }
-
-    public registerGeneratedTypes({
-        serviceName,
-        endpointId,
-        generatedTypes,
-    }: HttpServiceTypeContext.registerGeneratedTypes.Args): void {
-        const generatedTypesForPackage = (this.generatedTypes[stringifyFernFilepath(serviceName.fernFilepath)] ??= {});
-        const generatedTypesForService = (generatedTypesForPackage[serviceName.name] ??= {});
-        generatedTypesForService[endpointId] = generatedTypes;
-    }
-
-    public getGeneratedTypes({
-        serviceName,
-        endpointId,
-    }: HttpServiceTypeContext.getGeneratedTypes.Args): GeneratedHttpEndpointTypes {
-        const generatedTypes =
-            this.generatedTypes[stringifyFernFilepath(serviceName.fernFilepath)]?.[serviceName.name]?.[endpointId];
-        if (generatedTypes == null) {
-            throw new Error(
-                "Cannot find generated types for " + `${serviceName.fernFilepath}:${serviceName.name}:${endpointId}`
-            );
-        }
-        return generatedTypes;
     }
 }
 

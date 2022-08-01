@@ -10,7 +10,6 @@ import { ImportStrategy } from "@fern-typescript/commons";
 import { Directory, SourceFile, ts } from "ts-morph";
 import { ErrorContext } from "./error-context/ErrorContext";
 import {
-    GeneratedHttpEndpointTypes,
     HttpServiceTypeContext,
     HttpServiceTypeMetadata,
     HttpServiceTypeReference,
@@ -149,16 +148,6 @@ export class ModelContext {
             referencedIn,
             importStrategy,
         });
-    }
-
-    public registerGeneratedHttpServiceTypes(args: HttpServiceTypeContext.registerGeneratedTypes.Args): void {
-        this.httpServiceTypeContext.registerGeneratedTypes(args);
-    }
-
-    public getGeneratedHttpServiceTypes(
-        args: HttpServiceTypeContext.getGeneratedTypes.Args
-    ): GeneratedHttpEndpointTypes {
-        return this.httpServiceTypeContext.getGeneratedTypes(args);
     }
 
     /**
