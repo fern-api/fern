@@ -13,6 +13,7 @@ node "$cli_path" init --organization fern
 node "$cli_path" add java
 node "$cli_path" add typescript
 node "$cli_path" add postman
+node "$cli_path" add openapi
 node "$cli_path" generate
 set +x
 
