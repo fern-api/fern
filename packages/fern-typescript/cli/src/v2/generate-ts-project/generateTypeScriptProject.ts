@@ -1,6 +1,6 @@
 import { Volume } from "memfs/lib/volume";
 import { Project } from "ts-morph";
-import { PackageDependencies } from "./DependencyManager";
+import { PackageDependencies } from "../client/dependency-manager/DependencyManager";
 import { generateNpmIgnore } from "./generateNpmIgnore";
 import { generatePackageJson } from "./generatePackageJson";
 import { generateTsConfig } from "./generateTsConfig";

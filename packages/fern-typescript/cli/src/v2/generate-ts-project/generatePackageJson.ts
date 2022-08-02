@@ -1,7 +1,7 @@
 import produce from "immer";
 import { Volume } from "memfs/lib/volume";
 import { IPackageJson } from "package-json-type";
-import { DependencyType, PackageDependencies } from "./DependencyManager";
+import { DependencyType, PackageDependencies } from "../client/dependency-manager/DependencyManager";
 import { getPathToProjectFile } from "./utils";
 
 export const BUILD_PROJECT_SCRIPT_NAME = "build";

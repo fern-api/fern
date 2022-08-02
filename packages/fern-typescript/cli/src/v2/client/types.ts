@@ -2,7 +2,7 @@ import { ErrorName, FernConstants, TypeReference } from "@fern-fern/ir-model";
 import { ServiceName } from "@fern-fern/ir-model/services";
 import { ts } from "@ts-morph/common";
 import { SourceFile } from "ts-morph";
-import { FernServiceUtils } from "./FernServiceUtils";
+import { ExternalDependencies } from "./external-dependencies/ExternalDependencies";
 import { Logger } from "./logger/Logger";
 import { ResolvedType } from "./type-resolver/ResolvedType";
 
@@ -23,7 +23,7 @@ export interface File {
     getReferenceToError: (errorName: ErrorName) => ts.TypeNode;
     addDependency: (name: string, version: string, options?: { preferPeer?: boolean }) => void;
     getReferenceToService: (serviceName: ServiceName) => ts.EntityName;
-    serviceUtils: FernServiceUtils;
+    externalDependencies: ExternalDependencies;
 }
 
 export interface ImportOptions {

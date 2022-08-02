@@ -3,7 +3,6 @@ import { getTextOfTsNode } from "@fern-typescript/commons";
 import { ClassDeclaration, ModuleDeclaration, ts } from "ts-morph";
 import { File } from "../../client/types";
 import { ClientConstants } from "../constants";
-import { generateJoinUrlPathsCall } from "./endpoints/endpoint-method-body/generateJoinPathsCall";
 
 const SERVICE_INIT_PARAMETER_NAME = "args";
 
@@ -51,18 +50,15 @@ function getConstructorStatements({
             member: ClientConstants.HttpService.PrivateMembers.BASE_URL,
             initialValue:
                 serviceDefinition.basePath != null
-                    ? generateJoinUrlPathsCall({
-                          file,
-                          paths: [
-                              ts.factory.createPropertyAccessExpression(
-                                  ts.factory.createIdentifier(SERVICE_INIT_PARAMETER_NAME),
-                                  ts.factory.createIdentifier(
-                                      ClientConstants.HttpService.ServiceNamespace.Init.Properties.ORIGIN
-                                  )
-                              ),
-                              ts.factory.createStringLiteral(serviceDefinition.basePath),
-                          ],
-                      })
+                    ? file.externalDependencies.urlJoin.invoke([
+                          ts.factory.createPropertyAccessExpression(
+                              ts.factory.createIdentifier(SERVICE_INIT_PARAMETER_NAME),
+                              ts.factory.createIdentifier(
+                                  ClientConstants.HttpService.ServiceNamespace.Init.Properties.ORIGIN
+                              )
+                          ),
+                          ts.factory.createStringLiteral(serviceDefinition.basePath),
+                      ])
                     : ts.factory.createPropertyAccessExpression(
                           ts.factory.createIdentifier(SERVICE_INIT_PARAMETER_NAME),
                           ts.factory.createIdentifier(

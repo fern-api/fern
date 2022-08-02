@@ -4,7 +4,6 @@ import { File } from "../../../../client/types";
 import { ClientConstants } from "../../../constants";
 import { ClientEndpointRequest, ParsedClientEndpoint } from "../parse-endpoint/parseEndpointAndGenerateEndpointModule";
 import { convertPathToTemplateString } from "./convertPathToTemplateString";
-import { generateJoinUrlPathsCall } from "./generateJoinPathsCall";
 
 export function generateFetcherCall({
     endpoint,
@@ -15,20 +14,17 @@ export function generateFetcherCall({
 }): StatementStructures {
     const fetcherArgs: ts.ObjectLiteralElementLike[] = [
         ts.factory.createPropertyAssignment(
-            ts.factory.createIdentifier(file.serviceUtils.Fetcher.Parameters.URL),
-            generateJoinUrlPathsCall({
-                file,
-                paths: [
-                    ts.factory.createPropertyAccessExpression(
-                        ts.factory.createThis(),
-                        ts.factory.createIdentifier(ClientConstants.HttpService.PrivateMembers.BASE_URL)
-                    ),
-                    convertPathToTemplateString(endpoint),
-                ],
-            })
+            ts.factory.createIdentifier(file.externalDependencies.serviceUtils.Fetcher.Parameters.URL),
+            file.externalDependencies.urlJoin.invoke([
+                ts.factory.createPropertyAccessExpression(
+                    ts.factory.createThis(),
+                    ts.factory.createIdentifier(ClientConstants.HttpService.PrivateMembers.BASE_URL)
+                ),
+                convertPathToTemplateString(endpoint),
+            ])
         ),
         ts.factory.createPropertyAssignment(
-            ts.factory.createIdentifier(file.serviceUtils.Fetcher.Parameters.METHOD),
+            ts.factory.createIdentifier(file.externalDependencies.serviceUtils.Fetcher.Parameters.METHOD),
             ts.factory.createStringLiteral(endpoint.method)
         ),
     ];
@@ -40,7 +36,7 @@ export function generateFetcherCall({
     if (endpoint.request != null && endpoint.request.isWrapped && endpoint.request.queryParameters.length > 0) {
         fetcherArgs.push(
             ts.factory.createPropertyAssignment(
-                ts.factory.createIdentifier(file.serviceUtils.Fetcher.Parameters.QUERY_PARAMS),
+                ts.factory.createIdentifier(file.externalDependencies.serviceUtils.Fetcher.Parameters.QUERY_PARAMS),
                 ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.QUERY_PARAMETERS)
             )
         );
@@ -61,7 +57,7 @@ export function generateFetcherCall({
     if (referenceToBody != null) {
         fetcherArgs.push(
             ts.factory.createPropertyAssignment(
-                ts.factory.createIdentifier(file.serviceUtils.Fetcher.Parameters.BODY),
+                ts.factory.createIdentifier(file.externalDependencies.serviceUtils.Fetcher.Parameters.BODY),
                 referenceToBody
             )
         );
@@ -75,7 +71,9 @@ export function generateFetcherCall({
                 name: ClientConstants.HttpService.Endpoint.Variables.RESPONSE,
                 initializer: getTextOfTsNode(
                     ts.factory.createAwaitExpression(
-                        file.serviceUtils.defaultFetcher(ts.factory.createObjectLiteralExpression(fetcherArgs, true))
+                        file.externalDependencies.serviceUtils.defaultFetcher(
+                            ts.factory.createObjectLiteralExpression(fetcherArgs, true)
+                        )
                     )
                 ),
             },
@@ -91,7 +89,7 @@ function getHeadersPropertyAssignment({
     file: File;
 }): ts.ObjectLiteralElementLike {
     return ts.factory.createPropertyAssignment(
-        ts.factory.createIdentifier(file.serviceUtils.Fetcher.Parameters.HEADERS),
+        ts.factory.createIdentifier(file.externalDependencies.serviceUtils.Fetcher.Parameters.HEADERS),
         getHeadersPropertyValue(request)
     );
 }

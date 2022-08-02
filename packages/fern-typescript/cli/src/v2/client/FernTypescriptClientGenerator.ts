@@ -1,12 +1,12 @@
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
-import { DependencyManager } from "@fern-typescript/commons";
 import { Volume } from "memfs/lib/volume";
 import { Directory, Project } from "ts-morph";
 import { generateTypeScriptProject } from "../generate-ts-project/generateTypeScriptProject";
 import { ServiceDeclarationHandler } from "../service-declaration-handler/ServiceDeclarationHandler";
 import { TypeDeclarationHandler } from "../type-declaration-handler/TypeDeclarationHandler";
+import { DependencyManager } from "./dependency-manager/DependencyManager";
 import { ExportDeclaration, ExportsManager } from "./exports-manager/ExportsManager";
-import { createFernServiceUtils } from "./FernServiceUtils";
+import { createExternalDependencies } from "./external-dependencies/ExternalDependencies";
 import { ImportsManager } from "./imports-manager/ImportsManager";
 import { Logger } from "./logger/Logger";
 import { TypeResolver } from "./type-resolver/TypeResolver";
@@ -153,9 +153,9 @@ export class FernTypescriptClientGenerator {
 
         const importsManager = new ImportsManager();
 
-        function addDependency(_name: string, _version: string, _options?: { preferPeer?: boolean }) {
-            // TODO
-        }
+        const addDependency = (name: string, version: string, options?: { preferPeer?: boolean }) => {
+            this.dependencyManager.addDependency(name, version, options);
+        };
 
         const file: File = {
             sourceFile,
@@ -187,13 +187,14 @@ export class FernTypescriptClientGenerator {
                         importsManager.addImport(moduleSpecifier, importDeclaration),
                     importOptions: IMPORT_OPTIONS,
                 }),
-            serviceUtils: createFernServiceUtils({
+            externalDependencies: createExternalDependencies({
                 addDependency,
                 addImport: (moduleSpecifier, importDeclaration) =>
                     importsManager.addImport(moduleSpecifier, importDeclaration),
             }),
             addDependency,
         };
+
         await run(file);
 
         importsManager.writeImportsToSourceFile(sourceFile);
