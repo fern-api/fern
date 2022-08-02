@@ -1,7 +1,8 @@
+import { camelCase } from "lodash-es";
 import path from "path";
 import { Directory, SourceFile } from "ts-morph";
 import { ModuleSpecifier } from "../types";
-import { getRelativeModuleSpecifierTo } from "./getRelativeModuleSpecifierTo";
+import { getRelativeModuleSpecifierTo } from "../utils/getRelativeModuleSpecifierTo";
 
 export interface ExportDeclaration {
     exportAll?: boolean;
@@ -17,7 +18,7 @@ interface CombinedExportDeclarations {
 
 type PathToDirectory = string;
 
-export class Exports {
+export class ExportsManager {
     private exports: Record<PathToDirectory, Record<ModuleSpecifier, CombinedExportDeclarations>> = {};
 
     public addExport(from: SourceFile, exportDeclaration: ExportDeclaration): void {
@@ -29,10 +30,10 @@ export class Exports {
         const pathToDirectory = path.dirname(fromPath);
         const moduleSpecifierToExport = getRelativeModuleSpecifierTo(pathToDirectory, fromPath);
 
-        this._addExportDeclaration({ pathToDirectory, moduleSpecifierToExport, exportDeclaration });
+        this.addExportDeclarationForDirectory({ pathToDirectory, moduleSpecifierToExport, exportDeclaration });
     }
 
-    private _addExportDeclaration({
+    private addExportDeclarationForDirectory({
         pathToDirectory,
         moduleSpecifierToExport,
         exportDeclaration,
@@ -69,11 +70,11 @@ export class Exports {
         for (let pathToExport of Object.keys(this.exports)) {
             while (pathToExport !== "/") {
                 const pathToParent = path.dirname(pathToExport);
-                this._addExportDeclaration({
+                this.addExportDeclarationForDirectory({
                     pathToDirectory: pathToParent,
                     moduleSpecifierToExport: getRelativeModuleSpecifierTo(pathToParent, pathToExport),
                     exportDeclaration: {
-                        namespaceExport: path.basename(pathToExport),
+                        namespaceExport: convertDirectoryNameToExportedNamespace(path.basename(pathToExport)),
                     },
                 });
                 pathToExport = pathToParent;
@@ -131,4 +132,8 @@ function getExportsFilePathForDirectory(pathToDirectory: PathToDirectory): strin
     } else {
         return path.join(pathToDirectory, "index.ts");
     }
+}
+
+export function convertDirectoryNameToExportedNamespace(directory: string): string {
+    return camelCase(directory);
 }

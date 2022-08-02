@@ -13,7 +13,7 @@ interface CombinedImportDeclarations {
     defaultImports: Set<string>;
 }
 
-export class Imports {
+export class ImportsManager {
     private imports: Record<ModuleSpecifier, CombinedImportDeclarations> = {};
 
     public addImport(moduleSpecifier: ModuleSpecifier, importDeclaration: ImportDeclaration): void {

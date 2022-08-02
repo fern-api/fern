@@ -1,8 +1,8 @@
-import path from "path";
 import { SourceFile, ts } from "ts-morph";
+import { ImportDeclaration } from "../imports-manager/ImportsManager";
 import { ImportOptions, ModuleSpecifier } from "../types";
+import { getQualifiedNameForPackageOfFilepath } from "./getQualifiedNameForPackageOfFilepath";
 import { getRelativeModuleSpecifierTo } from "./getRelativeModuleSpecifierTo";
-import { ImportDeclaration } from "./Imports";
 
 export declare namespace getReferenceToExportedType {
     export interface Args {
@@ -34,13 +34,8 @@ export function getReferenceToExportedType({
         addImport(moduleSpecifierOfRoot, {
             namedImports: [apiName],
         });
-        const qualifiedNameToPackage = path
-            .dirname(exportedFromPath)
-            .split(path.sep)
-            .filter((part) => part.length > 0)
-            .reduce<ts.EntityName>((qualifiedReference, fernFilepathItem) => {
-                return ts.factory.createQualifiedName(qualifiedReference, fernFilepathItem);
-            }, ts.factory.createIdentifier(apiName));
-        return ts.factory.createTypeReferenceNode(ts.factory.createQualifiedName(qualifiedNameToPackage, typeName));
+
+        const qualifiedNameOfPackage = getQualifiedNameForPackageOfFilepath({ exportedFromPath, apiName });
+        return ts.factory.createTypeReferenceNode(ts.factory.createQualifiedName(qualifiedNameOfPackage, typeName));
     }
 }

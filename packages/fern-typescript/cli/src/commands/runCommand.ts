@@ -2,12 +2,11 @@ import { GeneratorUpdate, LogLevel } from "@fern-fern/generator-logging-api-clie
 import { BUILD_PROJECT_SCRIPT_NAME, FernTypescriptGeneratorConfig, writeVolumeToDisk } from "@fern-typescript/commons";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import execa from "execa";
-import camelCase from "lodash-es/camelCase";
-import upperFirst from "lodash-es/upperFirst";
 import { Volume } from "memfs/lib/volume";
 import path from "path";
 import { GeneratorNotificationService } from "../utils/GeneratorNotificationService";
 import { loadIntermediateRepresentation } from "../utils/loadIntermediateRepresentation";
+import { upperCamelCase } from "../utils/upperCamelCase";
 import { AsyncLogger } from "../v2/client/logger/AsyncLogger";
 import { Command } from "./Command";
 
@@ -93,8 +92,4 @@ export async function runCommand({
             GeneratorUpdate.published(command.npmPackage.publishInfo.packageCoordinate)
         );
     }
-}
-
-function upperCamelCase(str: string): string {
-    return upperFirst(camelCase(str));
 }

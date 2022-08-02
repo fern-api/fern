@@ -12,9 +12,9 @@ export interface TypeDeclarationHandler {
 }
 
 export const TypeDeclarationHandler: TypeDeclarationHandler = {
-    run: async (typeDeclaration, args) => {
+    run: async (typeDeclaration, { withFile }) => {
         const typeName = getGeneratedTypeName(typeDeclaration.name);
-        await args.withFile((file) => {
+        await withFile((file) => {
             Type._visit(typeDeclaration.shape, {
                 object: (objectTypeDeclaration) => {
                     generateObjectType({
