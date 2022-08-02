@@ -1,7 +1,7 @@
 const { pnpPlugin } = require("@yarnpkg/esbuild-plugin-pnp");
 const { build } = require("esbuild");
 const path = require("path");
-const { chmod, writeFile } = require("fs/promises");
+const { chmod, writeFile, mkdir } = require("fs/promises");
 
 main();
 
@@ -14,7 +14,9 @@ async function main() {
         bundle: true,
         external: ["cpu-features"],
         plugins: [pnpPlugin()],
+        inject: ["./dist/prod/import-meta-url.js"],
         define: {
+            "import.meta.url": JSON.stringify("import_meta_url"),
             "process.env.CLI_NAME": JSON.stringify("fern"),
             "process.env.PACKAGE_VERSION": getEnvironmentVariable("PACKAGE_VERSION"),
             "process.env.AUTH0_DOMAIN": getEnvironmentVariable("AUTH0_DOMAIN"),
@@ -31,9 +33,12 @@ async function main() {
         throw new Error(`Environment variable ${environmentVariable} is not defined.`);
     }
 
-    await build(options).catch(() => process.exit(1));
+    const outputPath = path.join(__dirname, "dist/prod");
+    await mkdir(outputPath, { recursive: true });
+    process.chdir(outputPath);
+    await writeFile("import-meta-url.js", "export var import_meta_url = require('url').pathToFileURL(__filename);");
 
-    process.chdir(path.join(__dirname, "dist/prod"));
+    await build(options).catch(() => process.exit(1));
 
     // write cli executable
     await writeFile(

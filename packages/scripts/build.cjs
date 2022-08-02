@@ -1,7 +1,7 @@
 const { pnpPlugin } = require("@yarnpkg/esbuild-plugin-pnp");
 const { build } = require("esbuild");
 const path = require("path");
-const { chmod, writeFile } = require("fs/promises");
+const { chmod, writeFile, mkdir } = require("fs/promises");
 
 main();
 
@@ -14,14 +14,19 @@ async function main() {
         bundle: true,
         external: ["cpu-features"],
         plugins: [pnpPlugin()],
+        inject: ["./dist/import-meta-url.js"],
         define: {
+            "import.meta.url": JSON.stringify("import_meta_url"),
             "process.env.CLI_NAME": JSON.stringify("fern-scripts"),
         },
     };
 
-    await build(options).catch(() => process.exit(1));
+    const outputPath = path.join(__dirname, "dist");
+    await mkdir(outputPath, { recursive: true });
+    process.chdir(outputPath);
+    await writeFile("import-meta-url.js", "export var import_meta_url = require('url').pathToFileURL(__filename);");
 
-    process.chdir(path.join(__dirname, "dist"));
+    await build(options).catch(() => process.exit(1));
 
     // write cli executable
     await writeFile(
