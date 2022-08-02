@@ -9,7 +9,7 @@ import { convertOpenApiToFernApiDefinition } from "./commands/convert-openapi/co
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateWorkspaces } from "./commands/generate/generateWorkspaces";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
-import { notifyIfUpgradePossible } from "./upgradeNotifier";
+import { getUpgradeMessage } from "./upgradeNotifier";
 
 void runCli();
 
@@ -25,7 +25,6 @@ async function runCli() {
     const packageVersion = process.env.PACKAGE_VERSION;
     if (packageVersion != null) {
         cli.version(packageVersion);
-        await notifyIfUpgradePossible(packageVersion);
     }
 
     addInitCommand(cli);
@@ -37,6 +36,12 @@ async function runCli() {
     addValidateCommand(cli);
 
     await cli.parse();
+    if (packageVersion != null) {
+        const upgradeMessage = await getUpgradeMessage(packageVersion);
+        if (upgradeMessage != null) {
+            console.error(upgradeMessage);
+        }
+    }
 }
 
 function addInitCommand(cli: Argv) {

@@ -6,7 +6,7 @@ import semverDiff from "semver-diff";
 
 const FERN_PACKAGE_NAME = "fern-api";
 
-export async function notifyIfUpgradePossible(currentVersion: string): Promise<void> {
+export async function getUpgradeMessage(currentVersion: string): Promise<string | undefined> {
     const latestPackageVersion = await latestVersion(FERN_PACKAGE_NAME);
     const diff = semverDiff(currentVersion, latestPackageVersion);
     if (diff != null) {
@@ -33,6 +33,7 @@ export async function notifyIfUpgradePossible(currentVersion: string): Promise<v
                 borderStyle: "round",
             }
         );
-        console.error(message);
+        return message;
     }
+    return undefined;
 }
