@@ -23,8 +23,9 @@ services:
       base-path: /movies
       endpoints:
 
-        # Here's an HTTP endpoint.
+        # Here's an HTTP endpoint
         createMovie:
+          docs: Add a movie to the database
           method: POST
           path: /create-movie
           request: CreateMovieRequest
