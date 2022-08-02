@@ -18,8 +18,6 @@ A **Fern API Definition** is a set of YAML files that describe your API. Each fi
 ## An example of a Fern API Definition
 
 ```yml
-# A sample API for IMDb (International Movie Database)
-
 types:
   MovieId: string
 
@@ -27,7 +25,9 @@ types:
     properties:
       id: MovieId
       title: string
-      rating: double
+      rating:
+        type: double
+        docs: The rating scale is one to five stars
 
   CreateMovieRequest:
     properties:
@@ -40,7 +40,6 @@ services:
       auth: none
       base-path: /movies
       endpoints:
-        # Here's an HTTP endpoint
         createMovie:
           docs: Add a movie to the database
           method: POST

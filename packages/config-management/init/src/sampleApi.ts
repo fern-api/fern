@@ -8,7 +8,9 @@ types:
     properties:
       id: MovieId
       title: string
-      rating: double
+      rating: 
+        type: double
+        docs: The rating scale is one to five stars
 
   CreateMovieRequest: 
     properties:
