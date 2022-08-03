@@ -21,7 +21,7 @@ export function convertErrorDeclaration({
             name: errorName,
             fernFilepath,
         },
-        discriminantValue: errorName,
+        discriminantValue: getErrorDiscriminantValue(errorName),
         docs: typeof errorDeclaration !== "string" ? errorDeclaration.docs : undefined,
         http:
             typeof errorDeclaration !== "string" && errorDeclaration.http != null
@@ -36,4 +36,8 @@ export function convertErrorDeclaration({
                   })
                 : convertType({ typeDeclaration: errorDeclaration.type, fernFilepath, imports }),
     };
+}
+
+export function getErrorDiscriminantValue(errorName: string): string {
+    return errorName;
 }
