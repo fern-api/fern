@@ -33,7 +33,7 @@ export const defaultFetcherV2: FetcherV2 = async (args) => {
             body: response.data,
         };
     } catch (e) {
-        const error: _NetworkError = { _errorName: "_NetworkError" };
+        const error: _NetworkError = { _error: "_NetworkError" };
         return {
             ok: false,
             body: error,
