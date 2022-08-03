@@ -1,4 +1,4 @@
-import { IntermediateRepresentation, Type } from "@fern-fern/ir-model";
+import { IntermediateRepresentation } from "@fern-fern/ir-model";
 import { Volume } from "memfs/lib/volume";
 import { Directory, Project } from "ts-morph";
 import { generateTypeScriptProject } from "../generate-ts-project/generateTypeScriptProject";
@@ -106,7 +106,7 @@ export class FernTypescriptClientGenerator {
                 {
                     docs: errorDeclaration.docs,
                     name: errorDeclaration.name,
-                    shape: Type.object(errorDeclaration.type),
+                    shape: errorDeclaration.type,
                 },
                 {
                     withFile: async (run) =>

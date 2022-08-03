@@ -133,7 +133,8 @@ services:
 
 errors:
   CreateProblemError:
-    properties:
-      message: string
-      type: string
-      stacktrace: string
+    type:
+      properties:
+        message: string
+        type: string
+        stacktrace: string

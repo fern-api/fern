@@ -3,7 +3,7 @@ import { ExternalDependency } from "../ExternalDependency";
 
 export class FernServiceUtils extends ExternalDependency {
     protected PACKAGE_NAME = "@fern-typescript/service-utils";
-    protected VERSION = "0.0.155";
+    protected VERSION = "0.0.173-4-g787c9405";
 
     public readonly Supplier = this.withNamedImport(
         "Supplier",
