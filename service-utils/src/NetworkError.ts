@@ -1,3 +1,3 @@
 export interface _NetworkError {
-    _errorName: "_NetworkError";
+    _error: "_NetworkError";
 }
