@@ -1,3 +1,3 @@
 export interface _UnknownError {
-    _errorName: void;
+    _error: void;
 }
