@@ -7,7 +7,8 @@ import path from "path";
 import { GeneratorNotificationService } from "../utils/GeneratorNotificationService";
 import { loadIntermediateRepresentation } from "../utils/loadIntermediateRepresentation";
 import { upperCamelCase } from "../utils/upperCamelCase";
-import { AsyncLogger } from "../v2/client/logger/AsyncLogger";
+import { GeneratorContextImpl } from "../v2/client/generator-context/GeneratorContext";
+import { createLogger } from "../v2/client/logger/Logger";
 import { Command } from "./Command";
 
 const CONSOLE_LOGGERS: Record<LogLevel, (message: string) => void> = {
@@ -31,15 +32,19 @@ export async function runCommand({
     } = config;
     const outputPath = path.join(baseOutputPath, command.key);
 
-    const logger = new AsyncLogger(async (message, level) => {
-        CONSOLE_LOGGERS[level](message);
-        await generatorNotificationService.sendUpdate(
-            GeneratorUpdate.log({
-                message,
-                level,
-            })
-        );
-    });
+    const generatorContext = new GeneratorContextImpl(
+        createLogger((message, level) => {
+            CONSOLE_LOGGERS[level](message);
+
+            // kick off log, but don't wait for it
+            void generatorNotificationService.sendUpdate(
+                GeneratorUpdate.log({
+                    message,
+                    level,
+                })
+            );
+        })
+    );
 
     const volume = new Volume();
     await command.generate({
@@ -47,11 +52,14 @@ export async function runCommand({
         apiName: upperCamelCase(config.workspaceName),
         helperManager: new HelperManager(config.helpers),
         volume,
-        logger,
+        context: generatorContext,
     });
 
     await writeVolumeToDisk(volume, outputPath);
-    await logger.waitForLogsToHaveSent();
+
+    if (!generatorContext.didSucceed()) {
+        throw new Error("Failed to generate TypeScript project.");
+    }
 
     if (command.npmPackage.publishInfo != null) {
         const runNpmCommandInOutputDirectory = async (...args: string[]): Promise<void> => {

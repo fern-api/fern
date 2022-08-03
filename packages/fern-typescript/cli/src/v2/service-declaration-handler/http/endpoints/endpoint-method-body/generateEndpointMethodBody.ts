@@ -1,7 +1,7 @@
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { StatementStructures, WriterFunction } from "ts-morph";
 import { File } from "../../../../client/types";
-import { ParsedClientEndpoint } from "../parse-endpoint/parseEndpointAndGenerateEndpointModule";
+import { ParsedClientEndpoint } from "../parse-endpoint/parseEndpoint";
 import { generateConstructQueryParams } from "./generateConstructQueryParams";
 import { generateFetcherCall } from "./generateFetcherCall";
 import { generateReturnResponse } from "./generateReturnResponse";

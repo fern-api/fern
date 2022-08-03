@@ -1,7 +1,7 @@
 import { ImportDeclaration } from "../imports-manager/ImportsManager";
 import { ModuleSpecifier } from "../types";
-import { FernServiceUtils } from "./FernServiceUtils";
-import { UrlJoin } from "./UrlJoin";
+import { FernServiceUtils } from "./implementations/FernServiceUtils";
+import { UrlJoin } from "./implementations/UrlJoin";
 
 export interface ExternalDependencies {
     serviceUtils: FernServiceUtils;

@@ -1,4 +1,4 @@
-import { IntermediateRepresentation } from "@fern-fern/ir-model";
+import { IntermediateRepresentation, Type } from "@fern-fern/ir-model";
 import { Volume } from "memfs/lib/volume";
 import { Directory, Project } from "ts-morph";
 import { generateTypeScriptProject } from "../generate-ts-project/generateTypeScriptProject";
@@ -7,19 +7,18 @@ import { TypeDeclarationHandler } from "../type-declaration-handler/TypeDeclarat
 import { DependencyManager } from "./dependency-manager/DependencyManager";
 import { ExportDeclaration, ExportsManager } from "./exports-manager/ExportsManager";
 import { createExternalDependencies } from "./external-dependencies/ExternalDependencies";
+import { GeneratorContext } from "./generator-context/GeneratorContext";
 import { ImportsManager } from "./imports-manager/ImportsManager";
-import { Logger } from "./logger/Logger";
 import { TypeResolver } from "./type-resolver/TypeResolver";
 import { File, ImportOptions } from "./types";
-import { getFilepathForError } from "./utils/getFilepathForError";
 import { getFilepathForService } from "./utils/getFilepathForService";
 import { getFilepathForType } from "./utils/getFilepathForType";
-import { getGeneratedErrorName } from "./utils/getGeneratedErrorName";
 import { getGeneratedServiceName } from "./utils/getGeneratedServiceName";
+import { getGeneratedTypeName } from "./utils/getGeneratedTypeName";
 import { getReferenceToExportedType } from "./utils/getReferenceToExportedType";
 import { getReferenceToService } from "./utils/getReferenceToService";
 import { getReferenceToType } from "./utils/getReferenceToType";
-import { getRelativeModuleSpecifierTo } from "./utils/getRelativeModuleSpecifierTo";
+import { getRelativePathAsModuleSpecifierTo } from "./utils/getRelativePathAsModuleSpecifierTo";
 
 const IMPORT_OPTIONS: ImportOptions = { importDirectlyFromFile: false };
 
@@ -29,7 +28,7 @@ export declare namespace FernTypescriptClientGenerator {
     export interface Init {
         apiName: string;
         intermediateRepresentation: IntermediateRepresentation;
-        logger: Logger;
+        context: GeneratorContext;
         volume: Volume;
         packageName: string;
         packageVersion: string | undefined;
@@ -38,7 +37,7 @@ export declare namespace FernTypescriptClientGenerator {
 
 export class FernTypescriptClientGenerator {
     private apiName: string;
-    private logger: Logger;
+    private context: GeneratorContext;
     private intermediateRepresentation: IntermediateRepresentation;
 
     private project: Project;
@@ -51,13 +50,13 @@ export class FernTypescriptClientGenerator {
     constructor({
         apiName,
         intermediateRepresentation,
-        logger,
+        context,
         volume,
         packageName,
         packageVersion,
     }: FernTypescriptClientGenerator.Init) {
         this.apiName = apiName;
-        this.logger = logger;
+        this.context = context;
         this.intermediateRepresentation = intermediateRepresentation;
 
         this.project = new Project({
@@ -81,6 +80,7 @@ export class FernTypescriptClientGenerator {
         const rootDirectory = this.getRootDirectory();
 
         await this.generateTypeDeclarations();
+        await this.generateErrorDeclarations();
         await this.generateServiceDeclarations();
 
         // TODO write api.ts
@@ -90,7 +90,7 @@ export class FernTypescriptClientGenerator {
         const indexTs = rootDirectory.createSourceFile("index.ts");
         indexTs.addExportDeclaration({
             namespaceExport: this.apiName,
-            moduleSpecifier: getRelativeModuleSpecifierTo(indexTs, rootDirectory.getSourceFileOrThrow("api.ts")),
+            moduleSpecifier: getRelativePathAsModuleSpecifierTo(indexTs, rootDirectory.getSourceFileOrThrow("api.ts")),
         });
 
         for (const sourceFile of this.getRootDirectory().getSourceFiles()) {
@@ -109,9 +109,29 @@ export class FernTypescriptClientGenerator {
                         exportDeclaration: { exportAll: true },
                         run,
                     }),
-                logger: this.logger,
-                fernConstants: this.intermediateRepresentation.constants,
+                context: this.context,
             });
+        }
+    }
+
+    private async generateErrorDeclarations() {
+        for (const errorDeclaration of this.intermediateRepresentation.errors) {
+            await TypeDeclarationHandler.run(
+                {
+                    docs: errorDeclaration.docs,
+                    name: errorDeclaration.name,
+                    shape: Type.object(errorDeclaration.type),
+                },
+                {
+                    withFile: async (run) =>
+                        this.withFile({
+                            filepath: getFilepathForType(errorDeclaration.name),
+                            exportDeclaration: { exportAll: true },
+                            run,
+                        }),
+                    context: this.context,
+                }
+            );
         }
     }
 
@@ -129,8 +149,7 @@ export class FernTypescriptClientGenerator {
                         run,
                     });
                 },
-                logger: this.logger,
-                fernConstants: this.intermediateRepresentation.constants,
+                context: this.context,
             });
         }
     }
@@ -144,7 +163,7 @@ export class FernTypescriptClientGenerator {
         exportDeclaration: ExportDeclaration | undefined;
         run: (file: File) => void | Promise<void>;
     }) {
-        this.logger.info(`Generating ${filepath}`);
+        this.context.logger.info(`Generating ${filepath}`);
 
         const sourceFile = this.getRootDirectory().createSourceFile(filepath);
         if (exportDeclaration != null) {
@@ -181,8 +200,8 @@ export class FernTypescriptClientGenerator {
                 getReferenceToExportedType({
                     apiName: this.apiName,
                     referencedIn: sourceFile,
-                    typeName: getGeneratedErrorName(errorName),
-                    exportedFromPath: getFilepathForError(errorName),
+                    typeName: getGeneratedTypeName(errorName),
+                    exportedFromPath: getFilepathForType(errorName),
                     addImport: (moduleSpecifier, importDeclaration) =>
                         importsManager.addImport(moduleSpecifier, importDeclaration),
                     importOptions: IMPORT_OPTIONS,
@@ -193,6 +212,7 @@ export class FernTypescriptClientGenerator {
                     importsManager.addImport(moduleSpecifier, importDeclaration),
             }),
             addDependency,
+            fernConstants: this.intermediateRepresentation.constants,
         };
 
         await run(file);

@@ -187,7 +187,7 @@ types:
 
 services:
   http:
-    ProblemInfoServicV2:
+    ProblemInfoServiceV2:
       base-path: /problems-v2
       auth: none
       endpoints:

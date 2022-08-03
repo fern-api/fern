@@ -1,6 +1,6 @@
 import { ts } from "ts-morph";
 import { ClientConstants } from "../../../constants";
-import { ParsedClientEndpoint } from "../parse-endpoint/parseEndpointAndGenerateEndpointModule";
+import { ParsedClientEndpoint } from "../parse-endpoint/parseEndpoint";
 
 export function convertPathToTemplateString(endpoint: ParsedClientEndpoint): ts.Expression {
     if (endpoint.path.parts.length === 0 || endpoint.request == null) {

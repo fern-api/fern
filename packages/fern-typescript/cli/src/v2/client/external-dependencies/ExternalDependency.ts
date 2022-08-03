@@ -24,6 +24,13 @@ export abstract class ExternalDependency {
         return this.withImport(namedImport, { namedImports: [namedImport] }, run);
     }
 
+    protected withNamespaceImport<T>(
+        namespaceImport: string,
+        run: (addImport: () => void, namedImport: string) => T
+    ): T {
+        return this.withImport(namespaceImport, { namespaceImport }, run);
+    }
+
     protected withDefaultImport<T>(defaultImport: string, run: (addImport: () => void, defaultImport: string) => T): T {
         return this.withImport(defaultImport, { defaultImport }, run);
     }

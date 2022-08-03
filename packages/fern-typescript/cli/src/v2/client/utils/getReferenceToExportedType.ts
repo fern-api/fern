@@ -2,7 +2,7 @@ import { SourceFile, ts } from "ts-morph";
 import { ImportDeclaration } from "../imports-manager/ImportsManager";
 import { ImportOptions, ModuleSpecifier } from "../types";
 import { getQualifiedNameForPackageOfFilepath } from "./getQualifiedNameForPackageOfFilepath";
-import { getRelativeModuleSpecifierTo } from "./getRelativeModuleSpecifierTo";
+import { getRelativePathAsModuleSpecifierTo } from "./getRelativePathAsModuleSpecifierTo";
 
 export declare namespace getReferenceToExportedType {
     export interface Args {
@@ -24,13 +24,13 @@ export function getReferenceToExportedType({
     importOptions,
 }: getReferenceToExportedType.Args): ts.TypeNode {
     if (importOptions.importDirectlyFromFile) {
-        const moduleSpecifierOfOtherType = getRelativeModuleSpecifierTo(referencedIn, exportedFromPath);
+        const moduleSpecifierOfOtherType = getRelativePathAsModuleSpecifierTo(referencedIn, exportedFromPath);
         addImport(moduleSpecifierOfOtherType, {
             namedImports: [typeName],
         });
         return ts.factory.createTypeReferenceNode(typeName);
     } else {
-        const moduleSpecifierOfRoot = getRelativeModuleSpecifierTo(referencedIn, "/");
+        const moduleSpecifierOfRoot = getRelativePathAsModuleSpecifierTo(referencedIn, "/");
         addImport(moduleSpecifierOfRoot, {
             namedImports: [apiName],
         });

@@ -3,15 +3,14 @@ import { ServiceName } from "@fern-fern/ir-model/services";
 import { ts } from "@ts-morph/common";
 import { SourceFile } from "ts-morph";
 import { ExternalDependencies } from "./external-dependencies/ExternalDependencies";
-import { Logger } from "./logger/Logger";
+import { GeneratorContext } from "./generator-context/GeneratorContext";
 import { ResolvedType } from "./type-resolver/ResolvedType";
 
 export type ModuleSpecifier = string;
 
 export interface DeclarationHandlerArgs {
     withFile: (run: (file: File) => void | Promise<void>) => Promise<void>;
-    logger: Logger;
-    fernConstants: FernConstants;
+    context: GeneratorContext;
 }
 
 export type FileExportStrategy = { type: "all" } | { type: "namespace"; namespace: string };
@@ -24,6 +23,7 @@ export interface File {
     addDependency: (name: string, version: string, options?: { preferPeer?: boolean }) => void;
     getReferenceToService: (serviceName: ServiceName) => ts.EntityName;
     externalDependencies: ExternalDependencies;
+    fernConstants: FernConstants;
 }
 
 export interface ImportOptions {

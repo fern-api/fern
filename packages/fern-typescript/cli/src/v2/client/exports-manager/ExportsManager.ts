@@ -2,7 +2,7 @@ import { camelCase } from "lodash-es";
 import path from "path";
 import { Directory, SourceFile } from "ts-morph";
 import { ModuleSpecifier } from "../types";
-import { getRelativeModuleSpecifierTo } from "../utils/getRelativeModuleSpecifierTo";
+import { getRelativePathAsModuleSpecifierTo } from "../utils/getRelativePathAsModuleSpecifierTo";
 
 export interface ExportDeclaration {
     exportAll?: boolean;
@@ -28,7 +28,7 @@ export class ExportsManager {
         }
 
         const pathToDirectory = path.dirname(fromPath);
-        const moduleSpecifierToExport = getRelativeModuleSpecifierTo(pathToDirectory, fromPath);
+        const moduleSpecifierToExport = getRelativePathAsModuleSpecifierTo(pathToDirectory, fromPath);
 
         this.addExportDeclarationForDirectory({ pathToDirectory, moduleSpecifierToExport, exportDeclaration });
     }
@@ -72,7 +72,7 @@ export class ExportsManager {
                 const pathToParent = path.dirname(pathToExport);
                 this.addExportDeclarationForDirectory({
                     pathToDirectory: pathToParent,
-                    moduleSpecifierToExport: getRelativeModuleSpecifierTo(pathToParent, pathToExport),
+                    moduleSpecifierToExport: getRelativePathAsModuleSpecifierTo(pathToParent, pathToExport),
                     exportDeclaration: {
                         namespaceExport: convertDirectoryNameToExportedNamespace(path.basename(pathToExport)),
                     },

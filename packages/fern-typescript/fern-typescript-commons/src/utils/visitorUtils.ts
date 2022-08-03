@@ -24,7 +24,7 @@ export function generateVisitMethod({
     switchOn,
     items,
 }: {
-    typeName: string;
+    typeName: ts.EntityName | string;
     switchOn: ts.Expression;
     items: readonly VisitableItem[];
 }): ts.ArrowFunction {
@@ -55,7 +55,10 @@ export function generateVisitMethod({
                 undefined,
                 ts.factory.createIdentifier(items.length > 0 ? VALUE_PARAMETER_NAME : `_${VALUE_PARAMETER_NAME}`),
                 undefined,
-                ts.factory.createTypeReferenceNode(ts.factory.createIdentifier(typeName), undefined),
+                ts.factory.createTypeReferenceNode(
+                    typeof typeName === "string" ? ts.factory.createIdentifier(typeName) : typeName,
+                    undefined
+                ),
                 undefined
             ),
             ts.factory.createParameterDeclaration(
@@ -66,7 +69,7 @@ export function generateVisitMethod({
                 undefined,
                 ts.factory.createTypeReferenceNode(
                     ts.factory.createQualifiedName(
-                        ts.factory.createIdentifier(typeName),
+                        typeof typeName === "string" ? ts.factory.createIdentifier(typeName) : typeName,
                         ts.factory.createIdentifier(VISITOR_INTERFACE_NAME)
                     ),
                     [

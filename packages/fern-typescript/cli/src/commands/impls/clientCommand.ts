@@ -10,11 +10,11 @@ export function createClientCommand(generatorConfig: FernTypescriptGeneratorConf
     return {
         key: COMMAND_KEY,
         npmPackage,
-        generate: async ({ intermediateRepresentation, volume, logger, apiName }) => {
+        generate: async ({ intermediateRepresentation, volume, context, apiName }) => {
             await new FernTypescriptClientGenerator({
                 apiName,
                 intermediateRepresentation,
-                logger,
+                context,
                 volume,
                 packageName: npmPackage.packageName,
                 packageVersion: npmPackage.publishInfo?.packageCoordinate.version,

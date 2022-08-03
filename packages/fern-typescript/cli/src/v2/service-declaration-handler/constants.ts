@@ -21,7 +21,6 @@ export const ClientConstants = {
             Variables: {
                 QUERY_PARAMETERS: "queryParameters",
                 RESPONSE: "response",
-                ERROR: "error",
             },
         },
     },

@@ -1,7 +1,7 @@
 import { ts } from "ts-morph";
 import { File } from "../../../../client/types";
 import { ClientConstants } from "../../../constants";
-import { ParsedClientEndpoint } from "../parse-endpoint/parseEndpointAndGenerateEndpointModule";
+import { ParsedClientEndpoint } from "../parse-endpoint/parseEndpoint";
 
 export function generateReturnResponse({
     endpoint,
@@ -11,8 +11,9 @@ export function generateReturnResponse({
     file: File;
 }): ts.Statement {
     return ts.factory.createIfStatement(
-        file.externalDependencies.serviceUtils.isResponseOk(
-            ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.RESPONSE)
+        ts.factory.createPropertyAccessExpression(
+            ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.RESPONSE),
+            ts.factory.createIdentifier(file.externalDependencies.serviceUtils.Fetcher.ReturnValue.OK)
         ),
         ts.factory.createBlock([generateReturnSuccessResponse({ endpoint, file })]),
         ts.factory.createBlock([
@@ -37,7 +38,10 @@ function generateReturnSuccessResponse({
             ts.factory.createPropertyAssignment(
                 ts.factory.createIdentifier(file.externalDependencies.serviceUtils.Response.Success.BODY_PROPERTY_NAME),
                 ts.factory.createAsExpression(
-                    ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.RESPONSE),
+                    ts.factory.createPropertyAccessExpression(
+                        ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.RESPONSE),
+                        file.externalDependencies.serviceUtils.Fetcher.ReturnValue.BODY
+                    ),
                     endpoint.referenceToResponse
                 )
             )
@@ -47,17 +51,25 @@ function generateReturnSuccessResponse({
     return ts.factory.createReturnStatement(ts.factory.createObjectLiteralExpression(properties, true));
 }
 
-function generateReturnErrorResponse({ file }: { endpoint: ParsedClientEndpoint; file: File }): ts.Statement {
-    const properties: ts.ObjectLiteralElementLike[] = getBaseResponseProperties({ ok: false, file });
-
-    properties.push(
-        ts.factory.createPropertyAssignment(
-            file.externalDependencies.serviceUtils.Response.Failure.BODY_PROPERTY_NAME,
-            ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.ERROR)
+function generateReturnErrorResponse({ file, endpoint }: { endpoint: ParsedClientEndpoint; file: File }): ts.Statement {
+    return ts.factory.createReturnStatement(
+        ts.factory.createObjectLiteralExpression(
+            [
+                ...getBaseResponseProperties({ ok: false, file }),
+                ts.factory.createPropertyAssignment(
+                    file.externalDependencies.serviceUtils.Response.Failure.BODY_PROPERTY_NAME,
+                    ts.factory.createAsExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.RESPONSE),
+                            file.externalDependencies.serviceUtils.Fetcher.ReturnValue.BODY
+                        ),
+                        endpoint.referenceToError
+                    )
+                ),
+            ],
+            true
         )
     );
-
-    return ts.factory.createReturnStatement(ts.factory.createObjectLiteralExpression(properties, true));
 }
 
 function getBaseResponseProperties({ ok, file }: { ok: boolean; file: File }): ts.ObjectLiteralElementLike[] {

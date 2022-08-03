@@ -2,7 +2,7 @@ import { getTextOfTsNode } from "@fern-typescript/commons";
 import { StatementStructures, StructureKind, ts, VariableDeclarationKind } from "ts-morph";
 import { File } from "../../../../client/types";
 import { ClientConstants } from "../../../constants";
-import { ClientEndpointRequest, ParsedClientEndpoint } from "../parse-endpoint/parseEndpointAndGenerateEndpointModule";
+import { ClientEndpointRequest, ParsedClientEndpoint } from "../parse-endpoint/parseEndpoint";
 import { convertPathToTemplateString } from "./convertPathToTemplateString";
 
 export function generateFetcherCall({

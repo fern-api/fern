@@ -4,7 +4,7 @@ import { ClassDeclaration, InterfaceDeclaration, Scope, ts } from "ts-morph";
 import { File } from "../../../client/types";
 import { generateEndpointMethodBody } from "./endpoint-method-body/generateEndpointMethodBody";
 import { getHttpRequestParameters } from "./getHttpRequestParameters";
-import { parseEndpointAndGenerateEndpointModule } from "./parse-endpoint/parseEndpointAndGenerateEndpointModule";
+import { parseEndpoint } from "./parse-endpoint/parseEndpoint";
 
 export function addEndpointToService({
     service,
@@ -19,13 +19,13 @@ export function addEndpointToService({
     serviceInterface: InterfaceDeclaration;
     serviceClass: ClassDeclaration;
 }): void {
-    const parsedEndpoint = parseEndpointAndGenerateEndpointModule({ service, endpoint, file });
+    const parsedEndpoint = parseEndpoint({ service, endpoint, file });
 
     const parameters = getHttpRequestParameters(parsedEndpoint);
 
     const returnType = getTextOfTsNode(
         ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
-            file.externalDependencies.serviceUtils.Response.of(
+            file.externalDependencies.serviceUtils.Response._getReferenceToType(
                 parsedEndpoint.referenceToResponse != null
                     ? parsedEndpoint.referenceToResponse
                     : ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword),

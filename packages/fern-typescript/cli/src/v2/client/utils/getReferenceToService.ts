@@ -4,7 +4,7 @@ import { ImportDeclaration } from "../imports-manager/ImportsManager";
 import { ModuleSpecifier } from "../types";
 import { getGeneratedServiceName } from "./getGeneratedServiceName";
 import { getQualifiedNameForPackageOfFilepath } from "./getQualifiedNameForPackageOfFilepath";
-import { getRelativeModuleSpecifierTo } from "./getRelativeModuleSpecifierTo";
+import { getRelativePathAsModuleSpecifierTo } from "./getRelativePathAsModuleSpecifierTo";
 
 export declare namespace getReferenceToService {
     export interface Args {
@@ -21,7 +21,7 @@ export function getReferenceToService({
     addImport,
     serviceName,
 }: getReferenceToService.Args): ts.EntityName {
-    const moduleSpecifierOfRoot = getRelativeModuleSpecifierTo(referencedIn, "/");
+    const moduleSpecifierOfRoot = getRelativePathAsModuleSpecifierTo(referencedIn, "/");
     addImport(moduleSpecifierOfRoot, {
         namedImports: [apiName],
     });

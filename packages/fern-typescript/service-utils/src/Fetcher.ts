@@ -13,7 +13,7 @@ export declare namespace Fetcher {
     }
 
     export interface Response {
-        statusCode: number;
-        body: Uint8Array;
+        ok: boolean;
+        body: unknown;
     }
 }

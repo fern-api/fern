@@ -9,8 +9,7 @@ import {
 } from "@fern-fern/ir-model/services";
 import { getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { ts } from "@ts-morph/common";
-import { camelCase } from "lodash-es";
-import { InterfaceDeclaration } from "ts-morph";
+import { InterfaceDeclaration, ModuleDeclaration } from "ts-morph";
 import { File } from "../../../../client/types";
 import { getReferenceToMaybeVoidType } from "./getReferenceToMaybeVoidType";
 
@@ -32,16 +31,13 @@ export function constructRequestWrapper({
     service,
     endpoint,
     file,
+    endpointModule,
 }: {
     service: HttpService;
     endpoint: HttpEndpoint;
     file: File;
+    endpointModule: ModuleDeclaration;
 }): RequestWrapper {
-    const endpointModule = file.sourceFile.addModule({
-        name: camelCase(endpoint.endpointId),
-        isExported: true,
-    });
-
     const wrapperInterface = endpointModule.addInterface({
         name: "Request",
         isExported: true,
