@@ -11,7 +11,6 @@
   ],
   "type": "module",
   "source": "src/index.ts",
-  "module": "src/index.ts",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "sideEffects": false,
@@ -27,7 +26,7 @@
   },
   "dependencies": {
     "@fern-api/config-management-commons": "workspace:*",
-    "@fern-fern/ir-model": "0.0.61",
+    "@fern-fern/ir-model": "0.0.59",
     "@fern-typescript/helper-utils": "workspace:*",
     "@fern-typescript/json-encoding-helper": "workspace:*",
     "zod": "^3.14.3"

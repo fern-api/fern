@@ -11,7 +11,6 @@
   ],
   "type": "module",
   "source": "src/index.ts",
-  "module": "src/index.ts",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "sideEffects": false,
@@ -28,7 +27,7 @@
   "dependencies": {
     "@fern-api/workspace-configuration": "workspace:*",
     "@fern-fern/fiddle-coordinator-api-client": "^0.0.45",
-    "@fern-fern/ir-model": "0.0.61",
+    "@fern-fern/ir-model": "0.0.59",
     "axios": "^0.27.2",
     "chalk": "^5.0.1",
     "form-data": "^4.0.0",

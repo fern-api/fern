@@ -7,17 +7,30 @@ A **Fern API Definition** is a set of YAML files that describe your API. Each fi
 - **[Errors](errors.md)**: error handling
 - **[IDs](ids.md)**: unique identifiers
 - **[Imports](imports.md)**: share types, errors, and ids across YAML files
+- **[Docs](docs.md)**: add descriptions throughout your definition
+
+## Explore Fern API Definitions on Github
+
+- [Connect Earth](https://github.com/fern-api/fern-connect-earth/blob/main/api/src/charts.yml) helps embed sustainability into financial products.
+
+- [Telematica](https://github.com/fern-api/fern-telematica/blob/main/api/src/vehicleData.yml) is a unified API for electric vehicles.
 
 ## An example of a Fern API Definition
 
 ```yml
-# This is a sample IMDb API to get you more familiar with defining APIs in Fern.
-
 types:
   MovieId: string
+
   Movie:
     properties:
       id: MovieId
+      title: string
+      rating:
+        type: double
+        docs: The rating scale is one to five stars
+
+  CreateMovieRequest:
+    properties:
       title: string
       rating: double
 
@@ -27,22 +40,21 @@ services:
       auth: none
       base-path: /movies
       endpoints:
-        # Here's an HTTP endpoint. Fern uses sane defaults for endpoint path and HTTP method.
         createMovie:
-          request:
-            type:
-              properties:
-                title: string
-                rating: double
+          docs: Add a movie to the database
+          method: POST
+          path: /create-movie
+          request: CreateMovieRequest
           response: MovieId
 
         getMovie:
-          request: MovieId
-          response:
-            ok: Movie
-            failed:
-              errors:
-                - NotFoundError
+          method: GET
+          path: /{movieId}
+          path-parameters:
+            movieId: MovieId
+          response: Movie
+          errors:
+            - NotFoundError
 
 errors:
   NotFoundError:

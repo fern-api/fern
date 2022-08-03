@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const ProjectConfigSchema = z.strictObject({
-    workspaces: z.array(z.string()).optional(),
+    workspaces: z.optional(z.array(z.string())),
     organization: z.string(),
 });
 

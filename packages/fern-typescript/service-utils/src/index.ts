@@ -1,7 +1,10 @@
 export { BasicAuth } from "./BasicAuth";
 export { BearerToken } from "./BearerToken";
 export { defaultFetcher } from "./defaultFetcher";
+export { defaultFetcherV2 } from "./defaultFetcherV2";
 export { type Fetcher } from "./Fetcher";
+export { type FetcherV2 } from "./FetcherV2";
+export { isResponseOk } from "./isResponseOk";
 export { type _NetworkError } from "./NetworkError";
 export { type Service } from "./Service";
 export { Supplier } from "./Supplier";

@@ -11,7 +11,6 @@
   ],
   "type": "module",
   "source": "src/index.ts",
-  "module": "src/index.ts",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "sideEffects": false,
@@ -27,7 +26,7 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
-    "@fern-fern/ir-model": "0.0.61",
+    "@fern-fern/ir-model": "0.0.59",
     "esutils": "^2.0.3",
     "immer": "^9.0.15",
     "lodash-es": "^4.17.21",

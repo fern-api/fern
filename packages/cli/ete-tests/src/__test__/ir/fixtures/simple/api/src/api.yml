@@ -12,7 +12,8 @@ types:
       rating: double
 errors:
   NotFoundError:
-    statusCode: 404
+    http:
+      statusCode: 404
 services:
   http:
     MoviesService:

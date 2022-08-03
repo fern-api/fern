@@ -13,6 +13,7 @@ it("fern add", async () => {
     await add("java");
     await add("typescript");
     await add("postman");
+    await add("openapi");
     const fileContents = await readFile(path.join(GENERATED_API_DIR, WORKSPACE_CONFIGURATION_FILENAME));
     expect(fileContents.toString()).toMatchSnapshot();
 }, 60_000);

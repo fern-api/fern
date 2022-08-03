@@ -8,7 +8,9 @@ types:
     properties:
       id: MovieId
       title: string
-      rating: double
+      rating: 
+        type: double
+        docs: The rating scale is one to five stars
 
   CreateMovieRequest: 
     properties:
@@ -23,8 +25,9 @@ services:
       base-path: /movies
       endpoints:
 
-        # Here's an HTTP endpoint.
+        # Here's an HTTP endpoint
         createMovie:
+          docs: Add a movie to the database
           method: POST
           path: /create-movie
           request: CreateMovieRequest
@@ -41,4 +44,5 @@ services:
 
 errors:
   NotFoundError:
-    statusCode: 404`;
+    http:
+      statusCode: 404`;

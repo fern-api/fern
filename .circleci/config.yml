@@ -115,8 +115,17 @@ jobs:
             git_version="$(./scripts/git-version.sh)"
             yarn mrlint version "$git_version"
       - run:
-          name: Publish fern-api-dev
-          command: yarn workspace @fern-api/cli publish:cli:dev --access restricted
+          name: Update yarn.lock with new versions
+          command: yarn
+      - run:
+          name: Compile
+          command: yarn compile
+      - run:
+          name: Publish all packages
+          command: yarn run publish --tag next
+      - run:
+          name: Publish fern-api-dev CLI
+          command: yarn workspace @fern-api/cli publish:cli:dev --access restricted --tag next
 
   publish-fern-typescript:
     machine:
@@ -159,6 +168,9 @@ jobs:
       - run:
           name: Publish all packages
           command: yarn run publish
+      - run:
+          name: Publish fern-api-dev CLI
+          command: yarn workspace @fern-api/cli publish:cli:dev --access restricted
       - run:
           name: Publish fern-api CLI
           command: yarn workspace @fern-api/cli publish:cli:prod
