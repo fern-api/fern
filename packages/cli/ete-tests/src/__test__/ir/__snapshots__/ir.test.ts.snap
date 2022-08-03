@@ -184,6 +184,7 @@ exports[`fern-ir-tests simple 1`] = `
                         },
                         \\"errors\\": [
                             {
+                                \\"discriminantValue\\": \\"NotFoundError\\",
                                 \\"error\\": {
                                     \\"name\\": \\"NotFoundError\\",
                                     \\"fernFilepath\\": []
