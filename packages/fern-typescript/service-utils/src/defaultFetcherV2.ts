@@ -4,7 +4,7 @@ import { _NetworkError } from "./NetworkError";
 
 export const defaultFetcherV2: FetcherV2 = async (args) => {
     const headers: Record<string, string> = {
-        "Content-Type": args.body?.contentType ?? "application/json",
+        "Content-Type": "application/json",
     };
 
     if (args.headers != null) {
@@ -25,7 +25,7 @@ export const defaultFetcherV2: FetcherV2 = async (args) => {
             params: args.queryParameters,
             method: args.method,
             headers,
-            data: args.body?.content,
+            data: args.body,
         });
 
         return {

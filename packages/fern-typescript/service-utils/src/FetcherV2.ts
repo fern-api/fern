@@ -7,10 +7,7 @@ export declare namespace FetcherV2 {
         headers?: Record<string, string | null | undefined>;
         authHeader?: string | undefined;
         queryParameters?: URLSearchParams;
-        body?: {
-            content: unknown;
-            contentType: string;
-        };
+        body?: unknown;
     }
 
     export interface Response {
