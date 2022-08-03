@@ -1,6 +1,6 @@
 # Fern
 
-Define your API once. Get end-to-end type safety across clients, server stubs, and docs.
+Define your API once. Keep your server, SDKs, and docs in sync.
 
 [View our docs ➚](https://docs.buildwithfern.com/#/)
 
