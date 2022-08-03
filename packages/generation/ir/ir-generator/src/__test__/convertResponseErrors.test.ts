@@ -13,7 +13,6 @@ describe("convertResponseErrors", () => {
 
         const expectedResponseErrors: ResponseErrors = [
             {
-                discriminantValue: "UnauthorizedError",
                 docs: undefined,
                 error: {
                     fernFilepath: ["path", "to"],

@@ -33,7 +33,7 @@ export function generateErrorBody({
         resolvedTypes: [
             ...responseErrors.map((error) => ({
                 docs: error.docs,
-                discriminantValue: error.discriminantValue,
+                discriminantValue: modelContext.getErrorDeclarationFromName(error.error).discriminantValue,
                 valueType: getValueType({ error, file: errorBodyFile, modelContext }),
             })),
         ],

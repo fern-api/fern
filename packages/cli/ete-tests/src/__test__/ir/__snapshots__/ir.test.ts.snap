@@ -84,6 +84,7 @@ exports[`fern-ir-tests simple 1`] = `
                 \\"name\\": \\"NotFoundError\\",
                 \\"fernFilepath\\": []
             },
+            \\"discriminantValue\\": \\"NotFoundError\\",
             \\"http\\": {
                 \\"statusCode\\": 404
             },
@@ -183,7 +184,6 @@ exports[`fern-ir-tests simple 1`] = `
                         },
                         \\"errors\\": [
                             {
-                                \\"discriminantValue\\": \\"NotFoundError\\",
                                 \\"error\\": {
                                     \\"name\\": \\"NotFoundError\\",
                                     \\"fernFilepath\\": []
