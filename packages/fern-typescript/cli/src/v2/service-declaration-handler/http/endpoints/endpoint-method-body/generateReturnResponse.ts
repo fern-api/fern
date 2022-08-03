@@ -32,25 +32,28 @@ function generateReturnSuccessResponse({
     endpoint: ParsedClientEndpoint;
     file: File;
 }): ts.Statement {
-    const properties: ts.ObjectLiteralElementLike[] = getBaseResponseProperties({ ok: true, file });
-    if (endpoint.referenceToResponse != null) {
-        properties.push(
-            ts.factory.createPropertyAssignment(
-                ts.factory.createIdentifier(
-                    file.externalDependencies.serviceUtils._Response.Success.BODY_PROPERTY_NAME
-                ),
-                ts.factory.createAsExpression(
-                    ts.factory.createPropertyAccessExpression(
-                        ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.RESPONSE),
-                        file.externalDependencies.serviceUtils.Fetcher.ReturnValue.BODY
+    return ts.factory.createReturnStatement(
+        ts.factory.createObjectLiteralExpression(
+            [
+                ...getBaseResponseProperties({ ok: true, file }),
+                ts.factory.createPropertyAssignment(
+                    ts.factory.createIdentifier(
+                        file.externalDependencies.serviceUtils._Response.Success.BODY_PROPERTY_NAME
                     ),
-                    endpoint.referenceToResponse
-                )
-            )
-        );
-    }
-
-    return ts.factory.createReturnStatement(ts.factory.createObjectLiteralExpression(properties, true));
+                    endpoint.referenceToResponse != null
+                        ? ts.factory.createAsExpression(
+                              ts.factory.createPropertyAccessExpression(
+                                  ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.RESPONSE),
+                                  file.externalDependencies.serviceUtils.Fetcher.ReturnValue.BODY
+                              ),
+                              endpoint.referenceToResponse
+                          )
+                        : ts.factory.createIdentifier("undefined")
+                ),
+            ],
+            true
+        )
+    );
 }
 
 function generateReturnErrorResponse({ file, endpoint }: { endpoint: ParsedClientEndpoint; file: File }): ts.Statement {

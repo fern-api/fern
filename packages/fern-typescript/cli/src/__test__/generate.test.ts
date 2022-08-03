@@ -59,10 +59,12 @@ describe("runGenerator", () => {
                 await writeFile(configPath, JSON.stringify(config, undefined, 4));
                 await runGenerator(configPath);
 
-                await installAndCompileGeneratedProjects(outputPath);
-
                 const directoryContents = await getDirectoryContents(path.join(outputPath, "client"));
                 expect(directoryContents).toMatchSnapshot();
+
+                // compile after getDirectoryContents(), so directoryContents
+                // doesn't include compiled files, node_modules
+                await installAndCompileGeneratedProjects(outputPath);
             },
             90_000
         );
