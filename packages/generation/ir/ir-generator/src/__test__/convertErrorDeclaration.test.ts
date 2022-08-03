@@ -24,6 +24,7 @@ describe("convertErrorDeclaration", () => {
                 name: "UnauthorizedError",
                 fernFilepath: ["path", "to"],
             },
+            discriminantValue: "UnauthorizedError",
             http: undefined,
             type: Type.object({
                 extends: [],

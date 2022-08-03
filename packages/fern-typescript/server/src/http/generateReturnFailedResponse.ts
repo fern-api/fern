@@ -70,7 +70,10 @@ export function generateReturnFailedResponse({
                                                 error.error
                                             );
                                             return ts.factory.createPropertyAssignment(
-                                                ts.factory.createIdentifier(error.discriminantValue),
+                                                ts.factory.createIdentifier(
+                                                    modelContext.getErrorDeclarationFromName(error.error)
+                                                        .discriminantValue
+                                                ),
                                                 ts.factory.createArrowFunction(
                                                     undefined,
                                                     undefined,
