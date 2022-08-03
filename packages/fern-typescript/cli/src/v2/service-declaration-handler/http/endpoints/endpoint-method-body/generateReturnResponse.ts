@@ -36,7 +36,9 @@ function generateReturnSuccessResponse({
     if (endpoint.referenceToResponse != null) {
         properties.push(
             ts.factory.createPropertyAssignment(
-                ts.factory.createIdentifier(file.externalDependencies.serviceUtils.Response.Success.BODY_PROPERTY_NAME),
+                ts.factory.createIdentifier(
+                    file.externalDependencies.serviceUtils._Response.Success.BODY_PROPERTY_NAME
+                ),
                 ts.factory.createAsExpression(
                     ts.factory.createPropertyAccessExpression(
                         ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.RESPONSE),
@@ -57,7 +59,7 @@ function generateReturnErrorResponse({ file, endpoint }: { endpoint: ParsedClien
             [
                 ...getBaseResponseProperties({ ok: false, file }),
                 ts.factory.createPropertyAssignment(
-                    file.externalDependencies.serviceUtils.Response.Failure.BODY_PROPERTY_NAME,
+                    file.externalDependencies.serviceUtils._Response.Failure.BODY_PROPERTY_NAME,
                     ts.factory.createAsExpression(
                         ts.factory.createPropertyAccessExpression(
                             ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.RESPONSE),
@@ -75,7 +77,7 @@ function generateReturnErrorResponse({ file, endpoint }: { endpoint: ParsedClien
 function getBaseResponseProperties({ ok, file }: { ok: boolean; file: File }): ts.ObjectLiteralElementLike[] {
     return [
         ts.factory.createPropertyAssignment(
-            ts.factory.createIdentifier(file.externalDependencies.serviceUtils.Response.OK_DISCRIMINANT),
+            ts.factory.createIdentifier(file.externalDependencies.serviceUtils._Response.OK_DISCRIMINANT),
             ok ? ts.factory.createTrue() : ts.factory.createFalse()
         ),
     ];

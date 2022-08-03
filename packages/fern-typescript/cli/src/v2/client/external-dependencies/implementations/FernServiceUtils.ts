@@ -4,7 +4,7 @@ import { ExternalDependency } from "../ExternalDependency";
 export class FernServiceUtils extends ExternalDependency {
     protected PACKAGE = {
         name: "@fern-typescript/service-utils",
-        version: "0.0.173-6-g5852fe27",
+        version: "0.0.173-7-ge9345cba",
     };
     protected TYPES_PACKAGE = undefined;
 
@@ -33,8 +33,8 @@ export class FernServiceUtils extends ExternalDependency {
             } as const)
     );
 
-    public readonly Response = this.withNamedImport(
-        "Response",
+    public readonly _Response = this.withNamedImport(
+        "_Response",
         (addImport, responseType) =>
             ({
                 _getReferenceToType: (successType: ts.TypeNode, failureType: ts.TypeNode) => {
