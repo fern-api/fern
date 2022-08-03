@@ -22,7 +22,7 @@ export const ErrorDeclarationHandler: ErrorDeclarationHandler = {
                 shape,
                 additionalProperties: {
                     [file.fernConstants.errorDiscriminant]: ts.factory.createLiteralTypeNode(
-                        ts.factory.createStringLiteral(errorDeclaration.name.name)
+                        ts.factory.createStringLiteral(errorDeclaration.discriminantValue)
                     ),
                 },
             });
