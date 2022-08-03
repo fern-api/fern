@@ -54,7 +54,7 @@ function getConstructorStatements({
                           ts.factory.createPropertyAccessExpression(
                               ts.factory.createIdentifier(SERVICE_INIT_PARAMETER_NAME),
                               ts.factory.createIdentifier(
-                                  ClientConstants.HttpService.ServiceNamespace.Init.Properties.ORIGIN
+                                  ClientConstants.HttpService.ServiceNamespace.Init.Properties.BASE_PATH
                               )
                           ),
                           ts.factory.createStringLiteral(serviceDefinition.basePath),
@@ -62,7 +62,7 @@ function getConstructorStatements({
                     : ts.factory.createPropertyAccessExpression(
                           ts.factory.createIdentifier(SERVICE_INIT_PARAMETER_NAME),
                           ts.factory.createIdentifier(
-                              ClientConstants.HttpService.ServiceNamespace.Init.Properties.ORIGIN
+                              ClientConstants.HttpService.ServiceNamespace.Init.Properties.BASE_PATH
                           )
                       ),
         }),

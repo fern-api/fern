@@ -2,9 +2,15 @@ import { ServiceName } from "@fern-fern/ir-model/services";
 import { SourceFile, ts } from "ts-morph";
 import { ImportDeclaration } from "../imports-manager/ImportsManager";
 import { ModuleSpecifier } from "../types";
+import { getEntityNameOfPackage } from "./getEntityNameOfPackage";
+import { getExpressionOfPackage } from "./getExpressionOfPackage";
 import { getGeneratedServiceName } from "./getGeneratedServiceName";
-import { getQualifiedNameForPackageOfFilepath } from "./getQualifiedNameForPackageOfFilepath";
 import { getRelativePathAsModuleSpecifierTo } from "./getRelativePathAsModuleSpecifierTo";
+
+export interface ServiceReference {
+    entityName: ts.EntityName;
+    expression: ts.Expression;
+}
 
 export declare namespace getReferenceToService {
     export interface Args {
@@ -20,15 +26,19 @@ export function getReferenceToService({
     apiName,
     addImport,
     serviceName,
-}: getReferenceToService.Args): ts.EntityName {
+}: getReferenceToService.Args): ServiceReference {
     const moduleSpecifierOfRoot = getRelativePathAsModuleSpecifierTo(referencedIn, "/");
     addImport(moduleSpecifierOfRoot, {
         namedImports: [apiName],
     });
 
-    const qualifiedNameOfPackage = getQualifiedNameForPackageOfFilepath({
-        exportedFromPath: referencedIn.getFilePath(),
+    const qualifiedNameOfPackage = getEntityNameOfPackage({
+        pathToFileInPackage: referencedIn.getFilePath(),
         apiName,
     });
-    return ts.factory.createQualifiedName(qualifiedNameOfPackage, getGeneratedServiceName(serviceName));
+
+    return {
+        entityName: ts.factory.createQualifiedName(qualifiedNameOfPackage, getGeneratedServiceName(serviceName)),
+        expression: getExpressionOfPackage({ pathToFileInPackage: referencedIn.getFilePath(), apiName }),
+    };
 }

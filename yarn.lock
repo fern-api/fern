@@ -11859,8 +11859,8 @@ env-cmd@toddbluhm/env-cmd:
   version: 14.0.0
   resolution: "ts-morph@npm:14.0.0"
   dependencies:
-    "@ts-morph/common": "npm:~0.13.0"
-    code-block-writer: "npm:^11.0.0"
+    "@ts-morph/common": ~0.13.0
+    code-block-writer: ^11.0.0
   checksum: e975fb245ae558c638e94014dcbbad828b904dee5a7309bfb4ef2b2922d0d7ad902ec00874a959be58991043ce655f78ae78df0d0e0d6fb3800b991b95be08ce
   languageName: node
   linkType: hard

@@ -3,6 +3,7 @@ import path from "path";
 import { Directory, SourceFile } from "ts-morph";
 import { ModuleSpecifier } from "../types";
 import { getRelativePathAsModuleSpecifierTo } from "../utils/getRelativePathAsModuleSpecifierTo";
+import { ROOT_API_FILEPATH } from "../utils/rootApiUtils";
 
 export interface ExportDeclaration {
     exportAll?: boolean;
@@ -90,7 +91,11 @@ export class ExportsManager {
                     );
                 }
 
-                const exportsFile = getExportsFileForDirectory({ pathToDirectory, rootDirectory });
+                const exportsFile = getExportsFileForDirectory({
+                    pathToDirectory,
+                    rootDirectory,
+                    moduleSpecifierBeingExported: moduleSpecifier,
+                });
 
                 const namespaceExport = namespaceExports[0];
                 if (namespaceExport != null) {
@@ -118,20 +123,30 @@ export class ExportsManager {
 function getExportsFileForDirectory({
     pathToDirectory,
     rootDirectory,
+    moduleSpecifierBeingExported,
 }: {
     pathToDirectory: PathToDirectory;
     rootDirectory: Directory;
+    moduleSpecifierBeingExported: ModuleSpecifier;
 }): SourceFile {
-    const filepath = getExportsFilePathForDirectory(pathToDirectory);
+    const filepath = getExportsFilePathForDirectory(pathToDirectory, moduleSpecifierBeingExported);
     return rootDirectory.getSourceFile(filepath) ?? rootDirectory.createSourceFile(filepath);
 }
 
-function getExportsFilePathForDirectory(pathToDirectory: PathToDirectory): string {
+function getExportsFilePathForDirectory(
+    pathToDirectory: PathToDirectory,
+    moduleSpecifierBeingExported: ModuleSpecifier
+): string {
+    // if exporting from the root and we're not exporting from the root API
+    // file, then add the export to the root API file
     if (pathToDirectory === "/") {
-        return "/api.ts";
-    } else {
-        return path.join(pathToDirectory, "index.ts");
+        const pathBeingExported = `${path.join(pathToDirectory, moduleSpecifierBeingExported)}.ts`;
+        if (pathBeingExported !== ROOT_API_FILEPATH) {
+            return ROOT_API_FILEPATH;
+        }
     }
+
+    return path.join(pathToDirectory, "index.ts");
 }
 
 export function convertDirectoryNameToExportedNamespace(directory: string): string {

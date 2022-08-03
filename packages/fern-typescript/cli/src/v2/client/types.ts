@@ -5,6 +5,7 @@ import { SourceFile } from "ts-morph";
 import { ExternalDependencies } from "./external-dependencies/ExternalDependencies";
 import { GeneratorContext } from "./generator-context/GeneratorContext";
 import { ResolvedType } from "./type-resolver/ResolvedType";
+import { ServiceReference } from "./utils/getReferenceToService";
 
 export type ModuleSpecifier = string;
 
@@ -21,11 +22,7 @@ export interface File {
     resolveTypeReference: (typeReference: TypeReference) => ResolvedType;
     getReferenceToError: (errorName: ErrorName) => ts.TypeNode;
     addDependency: (name: string, version: string, options?: { preferPeer?: boolean }) => void;
-    getReferenceToService: (serviceName: ServiceName) => ts.EntityName;
+    getReferenceToService: (serviceName: ServiceName) => ServiceReference;
     externalDependencies: ExternalDependencies;
     fernConstants: FernConstants;
-}
-
-export interface ImportOptions {
-    importDirectlyFromFile: boolean;
 }

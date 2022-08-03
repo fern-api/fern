@@ -1,7 +1,7 @@
 import { ContainerType, PrimitiveType, TypeReference } from "@fern-fern/ir-model";
 import { SourceFile, ts } from "ts-morph";
 import { ImportDeclaration } from "../imports-manager/ImportsManager";
-import { ImportOptions, ModuleSpecifier } from "../types";
+import { ModuleSpecifier } from "../types";
 import { getFilepathForType } from "./getFilepathForType";
 import { getGeneratedTypeName } from "./getGeneratedTypeName";
 import { getReferenceToExportedType } from "./getReferenceToExportedType";
@@ -12,7 +12,6 @@ export declare namespace getReferenceToType {
         referencedIn: SourceFile;
         typeReference: TypeReference;
         addImport: (moduleSpecifier: ModuleSpecifier, importDeclaration: ImportDeclaration) => void;
-        importOptions: ImportOptions;
     }
 }
 
@@ -21,7 +20,6 @@ export function getReferenceToType({
     referencedIn,
     typeReference,
     addImport,
-    importOptions,
 }: getReferenceToType.Args): ts.TypeNode {
     return TypeReference._visit<ts.TypeNode>(typeReference, {
         named: (typeName) => {
@@ -31,7 +29,6 @@ export function getReferenceToType({
                 typeName: getGeneratedTypeName(typeName),
                 exportedFromPath: getFilepathForType(typeName),
                 addImport,
-                importOptions,
             });
         },
 
@@ -59,14 +56,12 @@ export function getReferenceToType({
                             referencedIn,
                             typeReference: map.keyType,
                             addImport,
-                            importOptions,
                         }),
                         getReferenceToType({
                             apiName,
                             referencedIn,
                             typeReference: map.valueType,
                             addImport,
-                            importOptions,
                         }),
                     ]),
                 list: (valueType) =>
@@ -76,7 +71,6 @@ export function getReferenceToType({
                             referencedIn,
                             typeReference: valueType,
                             addImport,
-                            importOptions,
                         })
                     ),
                 set: (valueType) =>
@@ -86,7 +80,6 @@ export function getReferenceToType({
                             referencedIn,
                             typeReference: valueType,
                             addImport,
-                            importOptions,
                         })
                     ),
                 optional: (valueType) =>
@@ -96,7 +89,6 @@ export function getReferenceToType({
                             referencedIn,
                             typeReference: valueType,
                             addImport,
-                            importOptions,
                         })
                     ),
                 _unknown: () => {

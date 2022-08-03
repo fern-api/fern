@@ -14,7 +14,7 @@ export function addServiceNamespace({ file, moduleName }: { file: File; moduleNa
         name: ClientConstants.HttpService.ServiceNamespace.Init.TYPE_NAME,
         properties: [
             {
-                name: ClientConstants.HttpService.ServiceNamespace.Init.Properties.ORIGIN,
+                name: ClientConstants.HttpService.ServiceNamespace.Init.Properties.BASE_PATH,
                 type: getTextOfTsKeyword(ts.SyntaxKind.StringKeyword),
             },
         ],

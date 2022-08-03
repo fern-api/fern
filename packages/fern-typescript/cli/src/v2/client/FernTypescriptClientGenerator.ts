@@ -10,7 +10,7 @@ import { createExternalDependencies } from "./external-dependencies/ExternalDepe
 import { GeneratorContext } from "./generator-context/GeneratorContext";
 import { ImportsManager } from "./imports-manager/ImportsManager";
 import { TypeResolver } from "./type-resolver/TypeResolver";
-import { File, ImportOptions } from "./types";
+import { File } from "./types";
 import { getFilepathForService } from "./utils/getFilepathForService";
 import { getFilepathForType } from "./utils/getFilepathForType";
 import { getGeneratedServiceName } from "./utils/getGeneratedServiceName";
@@ -18,11 +18,8 @@ import { getGeneratedTypeName } from "./utils/getGeneratedTypeName";
 import { getReferenceToExportedType } from "./utils/getReferenceToExportedType";
 import { getReferenceToService } from "./utils/getReferenceToService";
 import { getReferenceToType } from "./utils/getReferenceToType";
-import { getRelativePathAsModuleSpecifierTo } from "./utils/getRelativePathAsModuleSpecifierTo";
-
-const IMPORT_OPTIONS: ImportOptions = { importDirectlyFromFile: false };
-
-const ROOT_DIRECTORY = "/";
+import { ROOT_API_FILEPATH } from "./utils/rootApiUtils";
+import { writeRootApi } from "./writeRootApi";
 
 export declare namespace FernTypescriptClientGenerator {
     export interface Init {
@@ -41,6 +38,7 @@ export class FernTypescriptClientGenerator {
     private intermediateRepresentation: IntermediateRepresentation;
 
     private project: Project;
+    private rootDirectory: Directory;
     private exportsManager = new ExportsManager();
     private dependencyManager = new DependencyManager();
     private typeResolver: TypeResolver;
@@ -62,7 +60,7 @@ export class FernTypescriptClientGenerator {
         this.project = new Project({
             useInMemoryFileSystem: true,
         });
-
+        this.rootDirectory = this.project.createDirectory("/");
         this.typeResolver = new TypeResolver(intermediateRepresentation);
 
         this.generatePackage = async () => {
@@ -77,26 +75,14 @@ export class FernTypescriptClientGenerator {
     }
 
     public async generate(): Promise<void> {
-        const rootDirectory = this.getRootDirectory();
-
         await this.generateTypeDeclarations();
         await this.generateErrorDeclarations();
         await this.generateServiceDeclarations();
-
-        // TODO write api.ts
-
-        this.exportsManager.writeExportsToProject(rootDirectory);
-
-        const indexTs = rootDirectory.createSourceFile("index.ts");
-        indexTs.addExportDeclaration({
-            namespaceExport: this.apiName,
-            moduleSpecifier: getRelativePathAsModuleSpecifierTo(indexTs, rootDirectory.getSourceFileOrThrow("api.ts")),
-        });
-
-        for (const sourceFile of this.getRootDirectory().getSourceFiles()) {
+        await this.generateRootApi();
+        this.exportsManager.writeExportsToProject(this.rootDirectory);
+        for (const sourceFile of this.rootDirectory.getSourceFiles()) {
             sourceFile.formatText();
         }
-
         await this.generatePackage();
     }
 
@@ -154,6 +140,18 @@ export class FernTypescriptClientGenerator {
         }
     }
 
+    private async generateRootApi() {
+        await this.withFile({
+            filepath: ROOT_API_FILEPATH,
+            exportDeclaration: {
+                namespaceExport: this.apiName,
+            },
+            run: (file) => {
+                writeRootApi(this.intermediateRepresentation, file);
+            },
+        });
+    }
+
     private async withFile({
         filepath,
         exportDeclaration,
@@ -165,7 +163,7 @@ export class FernTypescriptClientGenerator {
     }) {
         this.context.logger.info(`Generating ${filepath}`);
 
-        const sourceFile = this.getRootDirectory().createSourceFile(filepath);
+        const sourceFile = this.rootDirectory.createSourceFile(filepath);
         if (exportDeclaration != null) {
             this.exportsManager.addExport(sourceFile, exportDeclaration);
         }
@@ -185,7 +183,6 @@ export class FernTypescriptClientGenerator {
                     typeReference,
                     addImport: (moduleSpecifier, importDeclaration) =>
                         importsManager.addImport(moduleSpecifier, importDeclaration),
-                    importOptions: IMPORT_OPTIONS,
                 }),
             getReferenceToService: (serviceName) =>
                 getReferenceToService({
@@ -204,7 +201,6 @@ export class FernTypescriptClientGenerator {
                     exportedFromPath: getFilepathForType(errorName),
                     addImport: (moduleSpecifier, importDeclaration) =>
                         importsManager.addImport(moduleSpecifier, importDeclaration),
-                    importOptions: IMPORT_OPTIONS,
                 }),
             externalDependencies: createExternalDependencies({
                 addDependency,
@@ -218,9 +214,5 @@ export class FernTypescriptClientGenerator {
         await run(file);
 
         importsManager.writeImportsToSourceFile(sourceFile);
-    }
-
-    private getRootDirectory(): Directory {
-        return this.project.getDirectory(ROOT_DIRECTORY) ?? this.project.createDirectory(ROOT_DIRECTORY);
     }
 }

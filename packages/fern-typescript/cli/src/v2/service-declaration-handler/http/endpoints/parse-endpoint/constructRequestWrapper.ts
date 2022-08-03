@@ -46,7 +46,7 @@ export function constructRequestWrapper({
     const referenceToWrapper = ts.factory.createTypeReferenceNode(
         ts.factory.createQualifiedName(
             ts.factory.createQualifiedName(
-                file.getReferenceToService(service.name),
+                file.getReferenceToService(service.name).entityName,
                 ts.factory.createIdentifier(endpointModule.getName())
             ),
             wrapperInterface.getName()

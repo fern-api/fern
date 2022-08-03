@@ -1,7 +1,7 @@
 import { SourceFile, ts } from "ts-morph";
 import { ImportDeclaration } from "../imports-manager/ImportsManager";
-import { ImportOptions, ModuleSpecifier } from "../types";
-import { getQualifiedNameForPackageOfFilepath } from "./getQualifiedNameForPackageOfFilepath";
+import { ModuleSpecifier } from "../types";
+import { getEntityNameOfPackage } from "./getEntityNameOfPackage";
 import { getRelativePathAsModuleSpecifierTo } from "./getRelativePathAsModuleSpecifierTo";
 
 export declare namespace getReferenceToExportedType {
@@ -11,7 +11,6 @@ export declare namespace getReferenceToExportedType {
         typeName: string;
         exportedFromPath: string;
         addImport: (moduleSpecifier: ModuleSpecifier, importDeclaration: ImportDeclaration) => void;
-        importOptions: ImportOptions;
     }
 }
 
@@ -21,21 +20,14 @@ export function getReferenceToExportedType({
     typeName,
     exportedFromPath,
     addImport,
-    importOptions,
 }: getReferenceToExportedType.Args): ts.TypeNode {
-    if (importOptions.importDirectlyFromFile) {
-        const moduleSpecifierOfOtherType = getRelativePathAsModuleSpecifierTo(referencedIn, exportedFromPath);
-        addImport(moduleSpecifierOfOtherType, {
-            namedImports: [typeName],
-        });
-        return ts.factory.createTypeReferenceNode(typeName);
-    } else {
-        const moduleSpecifierOfRoot = getRelativePathAsModuleSpecifierTo(referencedIn, "/");
-        addImport(moduleSpecifierOfRoot, {
-            namedImports: [apiName],
-        });
-
-        const qualifiedNameOfPackage = getQualifiedNameForPackageOfFilepath({ exportedFromPath, apiName });
-        return ts.factory.createTypeReferenceNode(ts.factory.createQualifiedName(qualifiedNameOfPackage, typeName));
-    }
+    const moduleSpecifierOfRoot = getRelativePathAsModuleSpecifierTo(referencedIn, "/");
+    addImport(moduleSpecifierOfRoot, {
+        namedImports: [apiName],
+    });
+    const qualifiedNameOfPackage = getEntityNameOfPackage({
+        pathToFileInPackage: exportedFromPath,
+        apiName,
+    });
+    return ts.factory.createTypeReferenceNode(ts.factory.createQualifiedName(qualifiedNameOfPackage, typeName));
 }

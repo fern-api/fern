@@ -9,7 +9,7 @@ import { addEndpointToService } from "./endpoints/addEndpointToService";
 
 export function generateHttpService({ service, file }: { service: HttpService; file: File }): void {
     const serviceInterface = file.sourceFile.addInterface({
-        name: "Client",
+        name: ClientConstants.HttpService.SERVICE_NAME,
         isExported: true,
     });
 

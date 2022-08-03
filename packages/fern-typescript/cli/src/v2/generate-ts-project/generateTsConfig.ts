@@ -1,9 +1,11 @@
 import { Volume } from "memfs/lib/volume";
-import { CompilerOptions } from "typescript";
+import { CompilerOptions, ModuleResolutionKind, ScriptTarget } from "ts-morph";
 import { getPathToProjectFile } from "./utils";
 
 const COMPILER_OPTIONS: CompilerOptions = {
     strict: true,
+    target: "esnext" as unknown as ScriptTarget,
+    moduleResolution: "node" as unknown as ModuleResolutionKind,
     skipLibCheck: true,
     declaration: true,
     sourceMap: true,
