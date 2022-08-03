@@ -6,6 +6,7 @@ export { type Fetcher } from "./Fetcher";
 export { type FetcherV2 } from "./FetcherV2";
 export { isResponseOk } from "./isResponseOk";
 export { type _NetworkError } from "./NetworkError";
+export type { _FailedResponse, _Response, _SuccessResponse } from "./Response";
 export { type Service } from "./Service";
 export { Supplier } from "./Supplier";
 export { type _UnknownError } from "./UnknownError";
