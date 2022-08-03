@@ -1,15 +1,11 @@
-export type _Response<S = void, F = void> = _SuccessResponse<S> | _FailedResponse<F>;
+export type _Response<S, F> = _SuccessResponse<S> | _FailedResponse<F>;
 
-export type _SuccessResponse<T> = T extends void
-    ? { ok: true }
-    : {
-          ok: true;
-          body: T;
-      };
+export interface _SuccessResponse<T> {
+    ok: true;
+    body: T;
+}
 
-export type _FailedResponse<T> = T extends void
-    ? { ok: false }
-    : {
-          ok: false;
-          error: T;
-      };
+export interface _FailedResponse<T> {
+    ok: false;
+    error: T;
+}
