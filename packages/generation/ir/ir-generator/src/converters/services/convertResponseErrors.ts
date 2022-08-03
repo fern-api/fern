@@ -23,7 +23,6 @@ export function convertResponseErrors({
               });
               return {
                   docs: typeof errorReference !== "string" ? errorReference.docs : undefined,
-                  discriminantValue: parsedErrorTypeName.name,
                   error: parsedErrorTypeName,
               };
           });

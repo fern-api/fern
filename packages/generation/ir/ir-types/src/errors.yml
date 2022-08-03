@@ -8,6 +8,7 @@ types:
     extends: commons.WithDocs
     properties:
       name: ErrorName
+      discriminantValue: string
       type: types.Type
       http: optional<HttpErrorConfiguration>
   ErrorName:

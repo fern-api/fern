@@ -21,6 +21,7 @@ export function convertErrorDeclaration({
             name: errorName,
             fernFilepath,
         },
+        discriminantValue: errorName,
         docs: typeof errorDeclaration !== "string" ? errorDeclaration.docs : undefined,
         http:
             typeof errorDeclaration !== "string" && errorDeclaration.http != null

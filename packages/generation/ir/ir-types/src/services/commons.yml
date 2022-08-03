@@ -20,5 +20,4 @@ types:
   ResponseError:
     extends: commons.WithDocs
     properties:
-      discriminantValue: string
       error: errors.ErrorName
