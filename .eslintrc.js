@@ -4,7 +4,7 @@ module.exports = {
         browser: true,
         es2021: true,
     },
-    plugins: ["@typescript-eslint", "jest", "@blueprintjs"],
+    plugins: ["@typescript-eslint", "jest", "@blueprintjs", "deprecation"],
     extends: [
         "eslint:recommended",
         "plugin:@typescript-eslint/strict",
@@ -79,5 +79,6 @@ module.exports = {
         "@typescript-eslint/no-invalid-void-type": "off",
         "no-unused-vars": "off",
         "@typescript-eslint/no-unused-vars": "off",
+        "deprecation/deprecation": "error",
     },
 };
