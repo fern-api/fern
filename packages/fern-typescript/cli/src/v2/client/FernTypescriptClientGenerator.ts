@@ -1,6 +1,7 @@
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
 import { Volume } from "memfs/lib/volume";
 import { Directory, Project } from "ts-morph";
+import { ErrorDeclarationHandler } from "../error-declaration-handler/ErrorDeclarationHandler";
 import { generateTypeScriptProject } from "../generate-ts-project/generateTypeScriptProject";
 import { ServiceDeclarationHandler } from "../service-declaration-handler/ServiceDeclarationHandler";
 import { TypeDeclarationHandler } from "../type-declaration-handler/TypeDeclarationHandler";
@@ -102,22 +103,15 @@ export class FernTypescriptClientGenerator {
 
     private async generateErrorDeclarations() {
         for (const errorDeclaration of this.intermediateRepresentation.errors) {
-            await TypeDeclarationHandler.run(
-                {
-                    docs: errorDeclaration.docs,
-                    name: errorDeclaration.name,
-                    shape: errorDeclaration.type,
-                },
-                {
-                    withFile: async (run) =>
-                        this.withFile({
-                            filepath: getFilepathForType(errorDeclaration.name),
-                            exportDeclaration: { exportAll: true },
-                            run,
-                        }),
-                    context: this.context,
-                }
-            );
+            await ErrorDeclarationHandler.run(errorDeclaration, {
+                withFile: async (run) =>
+                    this.withFile({
+                        filepath: getFilepathForType(errorDeclaration.name),
+                        exportDeclaration: { exportAll: true },
+                        run,
+                    }),
+                context: this.context,
+            });
         }
     }
 

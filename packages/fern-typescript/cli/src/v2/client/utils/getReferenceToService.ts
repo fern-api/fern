@@ -4,6 +4,7 @@ import { ImportDeclaration } from "../imports-manager/ImportsManager";
 import { ModuleSpecifier } from "../types";
 import { getEntityNameOfPackage } from "./getEntityNameOfPackage";
 import { getExpressionOfPackage } from "./getExpressionOfPackage";
+import { getFilepathForService } from "./getFilepathForService";
 import { getGeneratedServiceName } from "./getGeneratedServiceName";
 import { getRelativePathAsModuleSpecifierTo } from "./getRelativePathAsModuleSpecifierTo";
 
@@ -32,13 +33,23 @@ export function getReferenceToService({
         namedImports: [apiName],
     });
 
-    const qualifiedNameOfPackage = getEntityNameOfPackage({
-        pathToFileInPackage: referencedIn.getFilePath(),
-        apiName,
-    });
+    const generatedServiceName = getGeneratedServiceName(serviceName);
+    const pathToServiceFile = getFilepathForService(serviceName);
 
     return {
-        entityName: ts.factory.createQualifiedName(qualifiedNameOfPackage, getGeneratedServiceName(serviceName)),
-        expression: getExpressionOfPackage({ pathToFileInPackage: referencedIn.getFilePath(), apiName }),
+        entityName: ts.factory.createQualifiedName(
+            getEntityNameOfPackage({
+                pathToFileInPackage: pathToServiceFile,
+                apiName,
+            }),
+            generatedServiceName
+        ),
+        expression: ts.factory.createPropertyAccessExpression(
+            getExpressionOfPackage({
+                pathToFileInPackage: pathToServiceFile,
+                apiName,
+            }),
+            generatedServiceName
+        ),
     };
 }

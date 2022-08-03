@@ -6,11 +6,16 @@ export declare namespace ExternalDependency {
         addImport: (moduleSpecifier: ModuleSpecifier, importDeclaration: ImportDeclaration) => void;
         addDependency: (name: string, version: string, options?: { preferPeer?: boolean }) => void;
     }
+
+    export interface Package {
+        name: string;
+        version: string;
+    }
 }
 
 export abstract class ExternalDependency {
-    protected abstract readonly PACKAGE_NAME: string;
-    protected abstract readonly VERSION: string;
+    protected abstract readonly PACKAGE: ExternalDependency.Package;
+    protected abstract readonly TYPES_PACKAGE: ExternalDependency.Package | undefined;
 
     private addImport: (moduleSpecifier: ModuleSpecifier, importDeclaration: ImportDeclaration) => void;
     private addDependency: (name: string, version: string, options?: { preferPeer?: boolean }) => void;
@@ -41,8 +46,11 @@ export abstract class ExternalDependency {
         run: (addImport: () => void, importedItem: string) => T
     ): T {
         return run(() => {
-            this.addDependency(this.PACKAGE_NAME, this.VERSION);
-            this.addImport(this.PACKAGE_NAME, importDeclaration);
+            this.addDependency(this.PACKAGE.name, this.PACKAGE.version);
+            if (this.TYPES_PACKAGE != null) {
+                this.addDependency(this.TYPES_PACKAGE.name, this.TYPES_PACKAGE.version);
+            }
+            this.addImport(this.PACKAGE.name, importDeclaration);
         }, importedItem);
     }
 }

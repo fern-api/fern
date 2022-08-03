@@ -2,8 +2,11 @@ import { ts } from "ts-morph";
 import { ExternalDependency } from "../ExternalDependency";
 
 export class FernServiceUtils extends ExternalDependency {
-    protected PACKAGE_NAME = "@fern-typescript/service-utils";
-    protected VERSION = "0.0.173-4-g787c9405";
+    protected PACKAGE = {
+        name: "@fern-typescript/service-utils",
+        version: "0.0.173-6-g5852fe27",
+    };
+    protected TYPES_PACKAGE = undefined;
 
     public readonly Supplier = this.withNamedImport(
         "Supplier",
@@ -50,7 +53,7 @@ export class FernServiceUtils extends ExternalDependency {
     );
 
     public readonly Fetcher = this.withNamedImport(
-        "Fetcher",
+        "FetcherV2",
         (addImport, Fetcher) =>
             ({
                 _getReferenceToType: () => {
@@ -75,7 +78,7 @@ export class FernServiceUtils extends ExternalDependency {
     );
 
     public readonly defaultFetcher = this.withNamedImport(
-        "defaultFetcher",
+        "defaultFetcherV2",
         (addImport, defaultFetcher) => (fetcherArgs: ts.Expression) => {
             addImport();
             return ts.factory.createCallExpression(ts.factory.createIdentifier(defaultFetcher), undefined, [
