@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-=======
 #!/usr/bin/env node
 /* eslint-disable */
 
@@ -27113,4 +27111,3 @@ if (process.mainModule === module) {
 }
 
 module.exports = defaultApi;
->>>>>>> Stashed changes
