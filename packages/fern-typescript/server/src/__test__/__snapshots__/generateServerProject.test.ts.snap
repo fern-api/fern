@@ -2,7 +2,12 @@
 
 exports[`generateServerProject posts 1`] = `
 Object {
-  "/.npmignore": "tsconfig.json",
+  "/.npmignore": "tsconfig.json
+.pnp.*
+.yarn
+yarn.lock
+*.ts
+!*.d.ts",
   "/index.ts": "export * as model from \\"./model\\";
 export * as services from \\"./services\\";
 ",
@@ -419,6 +424,7 @@ export * from \\"./_service-types\\";
 ",
   "/package.json": "{
     \\"name\\": \\"posts\\",
+    \\"packageManager\\": \\"yarn@3.2.2\\",
     \\"version\\": \\"0.0.0\\",
     \\"main\\": \\"./index.js\\",
     \\"types\\": \\"./index.d.ts\\",

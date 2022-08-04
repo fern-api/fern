@@ -9,7 +9,7 @@ export interface YarnPackage {
 export async function getAllPackages({ since = false }: { since?: boolean } = {}): Promise<YarnPackage[]> {
     const args = ["workspaces", "list", "--json"];
     if (since) {
-        args.push("--since");
+        args.push("--since", "--recursive");
     }
 
     const { stdout } = await execa("yarn", args);
