@@ -5,6 +5,7 @@ import { ErrorDeclarationHandler } from "@fern-typescript/errors-v2";
 import { ErrorResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { TypeDeclarationHandler } from "@fern-typescript/types-v2";
 import { Volume } from "memfs/lib/volume";
+import path from "path";
 import { Directory, Project } from "ts-morph";
 import { DependencyManager } from "../dependency-manager/DependencyManager";
 import { ExportDeclaration, ExportsManager } from "../exports-manager/ExportsManager";
@@ -39,7 +40,7 @@ export class FernTypescriptClientGenerator {
 
     private project: Project;
     private rootDirectory: Directory;
-    private exportsManager = new ExportsManager();
+    private exportsManager = new ExportsManager({ rootModuleExportFilepath: ROOT_API_FILEPATH });
     private dependencyManager = new DependencyManager();
     private typeResolver: TypeResolver;
     private errorResolver: ErrorResolver;
@@ -156,7 +157,7 @@ export class FernTypescriptClientGenerator {
         exportDeclaration: ExportDeclaration | undefined;
         run: (file: File) => void | Promise<void>;
     }) {
-        this.context.logger.info(`Generating ${filepath}`);
+        this.context.logger.info(`Generating ${path.relative("/", filepath)}`);
 
         const sourceFile = this.rootDirectory.createSourceFile(filepath);
         if (exportDeclaration != null) {
