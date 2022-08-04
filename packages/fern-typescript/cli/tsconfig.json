@@ -9,10 +9,16 @@
     { "path": "../../generation/ir/ir-generator" },
     { "path": "../../workspace-loader" },
     { "path": "../client" },
+    { "path": "../client-v2" },
+    { "path": "../commons-v2" },
+    { "path": "../declaration-handler" },
+    { "path": "../errors-v2" },
     { "path": "../fern-typescript-commons" },
     { "path": "../helpers/helper-manager" },
     { "path": "../model" },
+    { "path": "../resolvers" },
     { "path": "../server" },
-    { "path": "../testing-utils" }
+    { "path": "../testing-utils" },
+    { "path": "../types-v2" }
   ]
 }

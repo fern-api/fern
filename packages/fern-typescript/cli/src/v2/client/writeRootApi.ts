@@ -1,9 +1,9 @@
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
+import { ClientConstants } from "@fern-typescript/client-v2";
 import { getTextOfTsKeyword, getTextOfTsNode } from "@fern-typescript/commons";
+import { File } from "@fern-typescript/declaration-handler";
 import { camelCase } from "lodash-es";
 import { Scope, ts } from "ts-morph";
-import { ClientConstants } from "../service-declaration-handler/constants";
-import { File } from "./types";
 import { getGeneratedServiceName } from "./utils/getGeneratedServiceName";
 
 export function writeRootApi(intermediateRepresentation: IntermediateRepresentation, file: File): void {

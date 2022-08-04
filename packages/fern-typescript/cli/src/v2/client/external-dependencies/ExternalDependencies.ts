@@ -1,12 +1,8 @@
+import { ExternalDependencies } from "@fern-typescript/declaration-handler";
 import { ImportDeclaration } from "../imports-manager/ImportsManager";
 import { ModuleSpecifier } from "../types";
-import { FernServiceUtils } from "./implementations/FernServiceUtils";
-import { UrlJoin } from "./implementations/UrlJoin";
-
-export interface ExternalDependencies {
-    serviceUtils: FernServiceUtils;
-    urlJoin: UrlJoin;
-}
+import { FernServiceUtilsImpl } from "./implementations/FernServiceUtilsImpl";
+import { UrlJoinImpl } from "./implementations/UrlJoinImpl";
 
 export declare namespace createExternalDependencies {
     export interface Args {
@@ -20,7 +16,7 @@ export function createExternalDependencies({
     addDependency,
 }: createExternalDependencies.Args): ExternalDependencies {
     return {
-        serviceUtils: new FernServiceUtils({ addImport, addDependency }),
-        urlJoin: new UrlJoin({ addImport, addDependency }),
+        serviceUtils: new FernServiceUtilsImpl({ addImport, addDependency }),
+        urlJoin: new UrlJoinImpl({ addImport, addDependency }),
     };
 }

@@ -1,5 +1,7 @@
-import { GeneratorUpdate, LogLevel } from "@fern-fern/generator-logging-api-client/model";
+import { model as GeneratorLoggingApiModel } from "@fern-fern/generator-logging-api-client";
+import { GeneratorUpdate } from "@fern-fern/generator-logging-api-client/model";
 import { BUILD_PROJECT_SCRIPT_NAME, FernTypescriptGeneratorConfig, writeVolumeToDisk } from "@fern-typescript/commons";
+import { createLogger, LogLevel } from "@fern-typescript/commons-v2";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import execa from "execa";
 import { Volume } from "memfs/lib/volume";
@@ -7,8 +9,7 @@ import path from "path";
 import { GeneratorNotificationService } from "../utils/GeneratorNotificationService";
 import { loadIntermediateRepresentation } from "../utils/loadIntermediateRepresentation";
 import { upperCamelCase } from "../utils/upperCamelCase";
-import { GeneratorContextImpl } from "../v2/client/generator-context/GeneratorContext";
-import { createLogger } from "../v2/client/logger/Logger";
+import { GeneratorContextImpl } from "../v2/generator-context/GeneratorContextImpl";
 import { Command } from "./Command";
 
 const CONSOLE_LOGGERS: Record<LogLevel, (message: string) => void> = {
@@ -16,6 +17,13 @@ const CONSOLE_LOGGERS: Record<LogLevel, (message: string) => void> = {
     [LogLevel.Info]: console.info,
     [LogLevel.Warn]: console.warn,
     [LogLevel.Error]: console.error,
+};
+
+const LOG_LEVEL_CONVERSIONS: Record<LogLevel, GeneratorLoggingApiModel.LogLevel> = {
+    [LogLevel.Debug]: GeneratorLoggingApiModel.LogLevel.Debug,
+    [LogLevel.Info]: GeneratorLoggingApiModel.LogLevel.Info,
+    [LogLevel.Warn]: GeneratorLoggingApiModel.LogLevel.Warn,
+    [LogLevel.Error]: GeneratorLoggingApiModel.LogLevel.Error,
 };
 
 export async function runCommand({
@@ -40,7 +48,7 @@ export async function runCommand({
             void generatorNotificationService.sendUpdate(
                 GeneratorUpdate.log({
                     message,
-                    level,
+                    level: LOG_LEVEL_CONVERSIONS[level],
                 })
             );
         })

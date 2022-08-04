@@ -1,17 +1,16 @@
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
+import { ServiceDeclarationHandler } from "@fern-typescript/client-v2";
+import { File, GeneratorContext } from "@fern-typescript/declaration-handler";
+import { ErrorDeclarationHandler } from "@fern-typescript/errors-v2";
+import { ErrorResolver, TypeResolver } from "@fern-typescript/resolvers";
+import { TypeDeclarationHandler } from "@fern-typescript/types-v2";
 import { Volume } from "memfs/lib/volume";
 import { Directory, Project } from "ts-morph";
-import { ErrorDeclarationHandler } from "../error-declaration-handler/ErrorDeclarationHandler";
 import { generateTypeScriptProject } from "../generate-ts-project/generateTypeScriptProject";
-import { ServiceDeclarationHandler } from "../service-declaration-handler/ServiceDeclarationHandler";
-import { TypeDeclarationHandler } from "../type-declaration-handler/TypeDeclarationHandler";
 import { DependencyManager } from "./dependency-manager/DependencyManager";
 import { ExportDeclaration, ExportsManager } from "./exports-manager/ExportsManager";
 import { createExternalDependencies } from "./external-dependencies/ExternalDependencies";
-import { GeneratorContext } from "./generator-context/GeneratorContext";
 import { ImportsManager } from "./imports-manager/ImportsManager";
-import { TypeResolver } from "./type-resolver/TypeResolver";
-import { File } from "./types";
 import { getFilepathForService } from "./utils/getFilepathForService";
 import { getFilepathForType } from "./utils/getFilepathForType";
 import { getGeneratedServiceName } from "./utils/getGeneratedServiceName";
@@ -43,6 +42,7 @@ export class FernTypescriptClientGenerator {
     private exportsManager = new ExportsManager();
     private dependencyManager = new DependencyManager();
     private typeResolver: TypeResolver;
+    private errorResolver: ErrorResolver;
 
     private generatePackage: () => Promise<void>;
 
@@ -63,6 +63,7 @@ export class FernTypescriptClientGenerator {
         });
         this.rootDirectory = this.project.createDirectory("/");
         this.typeResolver = new TypeResolver(intermediateRepresentation);
+        this.errorResolver = new ErrorResolver(intermediateRepresentation);
 
         this.generatePackage = async () => {
             await generateTypeScriptProject({
@@ -187,6 +188,7 @@ export class FernTypescriptClientGenerator {
                         importsManager.addImport(moduleSpecifier, importDeclaration),
                 }),
             resolveTypeReference: (typeReference) => this.typeResolver.resolveTypeReference(typeReference),
+            getErrorDeclaration: (errorName) => this.errorResolver.getErrorDeclarationFromName(errorName),
             getReferenceToError: (errorName) =>
                 getReferenceToExportedType({
                     apiName: this.apiName,

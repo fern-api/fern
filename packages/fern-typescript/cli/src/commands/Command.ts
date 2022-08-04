@@ -1,8 +1,8 @@
 import { Values } from "@fern-api/core-utils";
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
+import { GeneratorContext } from "@fern-typescript/declaration-handler";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import { Volume } from "memfs/lib/volume";
-import { GeneratorContext } from "../v2/client/generator-context/GeneratorContext";
 import { NpmPackage } from "./constructNpmPackageForCommand";
 
 export const CommandKey = {
