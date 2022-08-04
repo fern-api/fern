@@ -105,7 +105,6 @@ services:
           path: /expected-result/{problemId}
           path-parameters:
             problemId: commons.ProblemId
-            testCase: commons.TestCase
           response: commons.TestCaseWithExpectedResult
 
     ProblemCrudService:
