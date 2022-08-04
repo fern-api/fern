@@ -12,6 +12,7 @@
       "ignores": [
         "webpack-cli",
         "umd-compat-loader",
+        "@ts-morph/common",
         "ts-loader",
         "node-loader",
         "ts-node",

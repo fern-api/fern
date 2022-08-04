@@ -3,9 +3,5 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
   "exclude": ["./src/**/__test__/**/generated"],
-  "references": [
-    { "path": "../declaration-handler" },
-    { "path": "../fern-typescript-commons" },
-    { "path": "../resolvers" }
-  ]
+  "references": [{ "path": "../declaration-handler" }, { "path": "../fern-typescript-commons" }]
 }

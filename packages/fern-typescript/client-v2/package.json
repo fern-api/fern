@@ -28,7 +28,6 @@
     "@fern-fern/ir-model": "0.0.5",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/declaration-handler": "workspace:*",
-    "@fern-typescript/resolvers": "workspace:*",
     "lodash-es": "^4.17.21",
     "ts-morph": "^15.1.0"
   },
