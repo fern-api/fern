@@ -23,12 +23,11 @@ export async function installAndCompileGeneratedProject(pathToDirectory: string)
 export async function installAndCompileGeneratedProjects(parent: string): Promise<void> {
     const files = await readdir(parent, { withFileTypes: true });
     await Promise.all(
-        files.map((file) => {
-            if (!file.isDirectory()) {
-                return;
+        files.map(async (file) => {
+            if (file.isDirectory()) {
+                const pathToDirectory = path.join(parent, file.name);
+                await installAndCompileGeneratedProject(pathToDirectory);
             }
-            const pathToDirectory = path.join(parent, file.name);
-            return installAndCompileGeneratedProject(pathToDirectory);
         })
     );
 }

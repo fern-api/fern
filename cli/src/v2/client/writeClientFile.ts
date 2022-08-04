@@ -6,7 +6,7 @@ import { camelCase } from "lodash-es";
 import { Scope, ts } from "ts-morph";
 import { getGeneratedServiceName } from "./utils/getGeneratedServiceName";
 
-export function writeRootApi(intermediateRepresentation: IntermediateRepresentation, file: File): void {
+export function writeClientFile(intermediateRepresentation: IntermediateRepresentation, file: File): void {
     const apiModule = file.sourceFile.addModule({
         name: "Client",
         isExported: true,
