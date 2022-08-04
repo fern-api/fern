@@ -2,7 +2,12 @@
 
 exports[`generateClientProject auth 1`] = `
 Object {
-  "/.npmignore": "tsconfig.json",
+  "/.npmignore": "tsconfig.json
+.pnp.*
+.yarn
+yarn.lock
+*.ts
+!*.d.ts",
   "/index.ts": "export * as model from \\"./model\\";
 export * as services from \\"./services\\";
 ",
@@ -399,6 +404,7 @@ export * from \\"./_service-types\\";
 ",
   "/package.json": "{
     \\"name\\": \\"auth\\",
+    \\"packageManager\\": \\"yarn@3.2.2\\",
     \\"version\\": \\"0.0.0\\",
     \\"main\\": \\"./index.js\\",
     \\"types\\": \\"./index.d.ts\\",
@@ -898,7 +904,12 @@ export * from \\"./ServiceWithBasicAuthWithOverride\\";
 
 exports[`generateClientProject chat 1`] = `
 Object {
-  "/.npmignore": "tsconfig.json",
+  "/.npmignore": "tsconfig.json
+.pnp.*
+.yarn
+yarn.lock
+*.ts
+!*.d.ts",
   "/index.ts": "export * as model from \\"./model\\";
 export * as services from \\"./services\\";
 ",
@@ -1013,6 +1024,7 @@ export * from \\"./_service-types\\";
 ",
   "/package.json": "{
     \\"name\\": \\"chat\\",
+    \\"packageManager\\": \\"yarn@3.2.2\\",
     \\"version\\": \\"0.0.0\\",
     \\"main\\": \\"./index.js\\",
     \\"types\\": \\"./index.d.ts\\",
@@ -1122,7 +1134,12 @@ export class ChatService implements ChatService {
 
 exports[`generateClientProject no-errors 1`] = `
 Object {
-  "/.npmignore": "tsconfig.json",
+  "/.npmignore": "tsconfig.json
+.pnp.*
+.yarn
+yarn.lock
+*.ts
+!*.d.ts",
   "/index.ts": "export * as model from \\"./model\\";
 export * as services from \\"./services\\";
 ",
@@ -1166,6 +1183,7 @@ export * from \\"./GetResponse\\";
 ",
   "/package.json": "{
     \\"name\\": \\"no-errors\\",
+    \\"packageManager\\": \\"yarn@3.2.2\\",
     \\"version\\": \\"0.0.0\\",
     \\"main\\": \\"./index.js\\",
     \\"types\\": \\"./index.d.ts\\",
@@ -1249,7 +1267,12 @@ export class NoErrorsService implements NoErrorsService {
 
 exports[`generateClientProject posts 1`] = `
 Object {
-  "/.npmignore": "tsconfig.json",
+  "/.npmignore": "tsconfig.json
+.pnp.*
+.yarn
+yarn.lock
+*.ts
+!*.d.ts",
   "/index.ts": "export * as model from \\"./model\\";
 export * as services from \\"./services\\";
 ",
@@ -1573,6 +1596,7 @@ export * from \\"./_service-types\\";
 ",
   "/package.json": "{
     \\"name\\": \\"posts\\",
+    \\"packageManager\\": \\"yarn@3.2.2\\",
     \\"version\\": \\"0.0.0\\",
     \\"main\\": \\"./index.js\\",
     \\"types\\": \\"./index.d.ts\\",
