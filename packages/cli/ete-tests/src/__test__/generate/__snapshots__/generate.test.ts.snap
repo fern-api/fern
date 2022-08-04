@@ -3,7 +3,12 @@
 exports[`fern generate tests simple-model 1`] = `
 Array [
   Object {
-    "contents": "tsconfig.json",
+    "contents": "tsconfig.json
+.pnp.*
+.yarn
+yarn.lock
+*.ts
+!*.d.ts",
     "name": ".npmignore",
     "type": "file",
   },
@@ -41,6 +46,7 @@ export interface Post {
   Object {
     "contents": "{
     \\"name\\": \\"@fern/posts-model\\",
+    \\"packageManager\\": \\"yarn@3.2.2\\",
     \\"main\\": \\"./index.js\\",
     \\"types\\": \\"./index.d.ts\\",
     \\"scripts\\": {
