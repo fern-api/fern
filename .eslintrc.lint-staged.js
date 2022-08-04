@@ -21,7 +21,7 @@ module.exports = {
     ),
     rules: Object.entries(DEFAULT_CONFIG.rules).reduce(
         (newRules, [ruleId, rule]) => {
-            if (!ruleId.startsWith(`${TYPESCRIPT_ESLINT}/` || rule === "off")) {
+            if (!doesRuleRequireTypeInformation(ruleId) || rule === "off") {
                 newRules[ruleId] = rule;
             }
             return newRules;
@@ -31,3 +31,15 @@ module.exports = {
         }
     ),
 };
+
+function doesRuleRequireTypeInformation(ruleId) {
+    if (ruleId.startsWith(`${TYPESCRIPT_ESLINT}/`)) {
+        return true;
+    }
+    switch (ruleId) {
+        case "deprecation/deprecation":
+            return true;
+        default:
+            return false;
+    }
+}

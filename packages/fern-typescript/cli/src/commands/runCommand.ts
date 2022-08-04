@@ -1,36 +1,73 @@
+import { model as GeneratorLoggingApiModel } from "@fern-fern/generator-logging-api-client";
 import { GeneratorUpdate } from "@fern-fern/generator-logging-api-client/model";
 import { BUILD_PROJECT_SCRIPT_NAME, FernTypescriptGeneratorConfig, writeVolumeToDisk } from "@fern-typescript/commons";
+import { createLogger, LogLevel } from "@fern-typescript/commons-v2";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import execa from "execa";
 import { Volume } from "memfs/lib/volume";
 import path from "path";
-import { GeneratorLoggingWrapper } from "../utils/generatorLoggingWrapper";
+import { GeneratorNotificationService } from "../utils/GeneratorNotificationService";
 import { loadIntermediateRepresentation } from "../utils/loadIntermediateRepresentation";
+import { upperCamelCase } from "../utils/upperCamelCase";
+import { GeneratorContextImpl } from "../v2/generator-context/GeneratorContextImpl";
 import { Command } from "./Command";
+
+const CONSOLE_LOGGERS: Record<LogLevel, (message: string) => void> = {
+    [LogLevel.Debug]: console.debug,
+    [LogLevel.Info]: console.info,
+    [LogLevel.Warn]: console.warn,
+    [LogLevel.Error]: console.error,
+};
+
+const LOG_LEVEL_CONVERSIONS: Record<LogLevel, GeneratorLoggingApiModel.LogLevel> = {
+    [LogLevel.Debug]: GeneratorLoggingApiModel.LogLevel.Debug,
+    [LogLevel.Info]: GeneratorLoggingApiModel.LogLevel.Info,
+    [LogLevel.Warn]: GeneratorLoggingApiModel.LogLevel.Warn,
+    [LogLevel.Error]: GeneratorLoggingApiModel.LogLevel.Error,
+};
 
 export async function runCommand({
     command,
     config,
-    generatorLoggingWrapper,
+    generatorNotificationService,
 }: {
     command: Command<string>;
     config: FernTypescriptGeneratorConfig;
-    generatorLoggingWrapper: GeneratorLoggingWrapper;
+    generatorNotificationService: GeneratorNotificationService;
 }): Promise<void> {
     const {
         output: { path: baseOutputPath },
     } = config;
     const outputPath = path.join(baseOutputPath, command.key);
 
-    const volume = new Volume();
+    const generatorContext = new GeneratorContextImpl(
+        createLogger((message, level) => {
+            CONSOLE_LOGGERS[level](message);
 
+            // kick off log, but don't wait for it
+            void generatorNotificationService.sendUpdate(
+                GeneratorUpdate.log({
+                    message,
+                    level: LOG_LEVEL_CONVERSIONS[level],
+                })
+            );
+        })
+    );
+
+    const volume = new Volume();
     await command.generate({
         intermediateRepresentation: await loadIntermediateRepresentation(config.irFilepath),
+        apiName: upperCamelCase(config.workspaceName),
         helperManager: new HelperManager(config.helpers),
         volume,
+        context: generatorContext,
     });
 
     await writeVolumeToDisk(volume, outputPath);
+
+    if (!generatorContext.didSucceed()) {
+        throw new Error("Failed to generate TypeScript project.");
+    }
 
     if (command.npmPackage.publishInfo != null) {
         const runNpmCommandInOutputDirectory = async (...args: string[]): Promise<void> => {
@@ -42,7 +79,7 @@ export async function runCommand({
             await command;
         };
 
-        await generatorLoggingWrapper.sendUpdate(
+        await generatorNotificationService.sendUpdate(
             GeneratorUpdate.publishing(command.npmPackage.publishInfo.packageCoordinate)
         );
 
@@ -67,7 +104,7 @@ export async function runCommand({
         await runNpmCommandInOutputDirectory("run", BUILD_PROJECT_SCRIPT_NAME);
         await runNpmCommandInOutputDirectory("publish");
 
-        await generatorLoggingWrapper.sendUpdate(
+        await generatorNotificationService.sendUpdate(
             GeneratorUpdate.published(command.npmPackage.publishInfo.packageCoordinate)
         );
     }

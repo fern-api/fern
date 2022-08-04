@@ -1,0 +1,8 @@
+services:
+  http:
+    NoErrorsService:
+      auth: none
+      endpoints:
+        get:
+          method: GET
+          path: /

@@ -79,6 +79,7 @@ module.exports = {
         "@typescript-eslint/no-invalid-void-type": "off",
         "no-unused-vars": "off",
         "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/prefer-optional-chain": "off",
         "deprecation/deprecation": "error",
     },
 };
