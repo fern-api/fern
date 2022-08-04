@@ -83,14 +83,15 @@ export function getReferenceToType({
                         })
                     ),
                 optional: (valueType) =>
-                    ts.factory.createArrayTypeNode(
+                    ts.factory.createUnionTypeNode([
                         getReferenceToType({
                             apiName,
                             referencedIn,
                             typeReference: valueType,
                             addImport,
-                        })
-                    ),
+                        }),
+                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
+                    ]),
                 _unknown: () => {
                     throw new Error("Unexpected container type: " + container._type);
                 },

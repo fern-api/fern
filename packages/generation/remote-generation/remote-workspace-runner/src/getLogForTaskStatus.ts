@@ -20,6 +20,10 @@ export function getLogForTaskStatuses({
     tasks: Record<RemoteGenTaskId, Task> | undefined;
     generatorInvocationsWithTaskIds: readonly GeneratorInvocationWithTaskId[];
 }): string {
+    // generate next spinner once and reuse it for all tasks.
+    // otherwise the spinner goes faster when there's more generators
+    const spinnerFrame = SPINNER.frame();
+
     return generatorInvocationsWithTaskIds
         .map(
             ({ generatorInvocation, taskId }) =>
@@ -27,6 +31,7 @@ export function getLogForTaskStatuses({
                 getLogForTaskStatus({
                     generatorInvocation,
                     task: taskId != null ? tasks?.[taskId] : undefined,
+                    spinnerFrame,
                 }).join("\n") +
                 "\n"
         )
@@ -36,12 +41,12 @@ export function getLogForTaskStatuses({
 function getLogForTaskStatus({
     generatorInvocation,
     task,
+    spinnerFrame,
 }: {
     generatorInvocation: GeneratorInvocation;
     task: Task | undefined;
+    spinnerFrame: string;
 }): string[] {
-    const spinnerFrame = SPINNER.frame();
-
     const icon = TaskStatus._visit(task?.status ?? DEFAULT_TASK_STATUS, {
         notStarted: () => spinnerFrame,
         running: () => spinnerFrame,
