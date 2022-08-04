@@ -31114,106 +31114,106 @@ export namespace Client {
     export interface Options {
         origin: string;
     }
+}
 
-    export class Client {
-        constructor(private readonly options: Client.Options) {
-        }
+export class Client {
+    constructor(private readonly options: Client.Options) {
+    }
 
-        adminService: MyApi.AdminService.Client | undefined;
+    adminService: MyApi.AdminService.Client | undefined;
 
-        get AdminService(): MyApi.AdminService.Client {
-            return (this.adminService ??= new MyApi.AdminService.Client({
-                basePath: this.options.origin
-            }));
-        }
+    get AdminService(): MyApi.AdminService.Client {
+        return (this.adminService ??= new MyApi.AdminService.Client({
+            basePath: this.options.origin
+        }));
+    }
 
-        homepageProblemService: MyApi.HomepageProblemService.Client | undefined;
+    homepageProblemService: MyApi.HomepageProblemService.Client | undefined;
 
-        get HomepageProblemService(): MyApi.HomepageProblemService.Client {
-            return (this.homepageProblemService ??= new MyApi.HomepageProblemService.Client({
-                basePath: this.options.origin
-            }));
-        }
+    get HomepageProblemService(): MyApi.HomepageProblemService.Client {
+        return (this.homepageProblemService ??= new MyApi.HomepageProblemService.Client({
+            basePath: this.options.origin
+        }));
+    }
 
-        migrationInfoService: MyApi.MigrationInfoService.Client | undefined;
+    migrationInfoService: MyApi.MigrationInfoService.Client | undefined;
 
-        get MigrationInfoService(): MyApi.MigrationInfoService.Client {
-            return (this.migrationInfoService ??= new MyApi.MigrationInfoService.Client({
-                basePath: this.options.origin
-            }));
-        }
+    get MigrationInfoService(): MyApi.MigrationInfoService.Client {
+        return (this.migrationInfoService ??= new MyApi.MigrationInfoService.Client({
+            basePath: this.options.origin
+        }));
+    }
 
-        playlistCrudService: MyApi.PlaylistCrudService.Client | undefined;
+    playlistCrudService: MyApi.PlaylistCrudService.Client | undefined;
 
-        get PlaylistCrudService(): MyApi.PlaylistCrudService.Client {
-            return (this.playlistCrudService ??= new MyApi.PlaylistCrudService.Client({
-                basePath: this.options.origin
-            }));
-        }
+    get PlaylistCrudService(): MyApi.PlaylistCrudService.Client {
+        return (this.playlistCrudService ??= new MyApi.PlaylistCrudService.Client({
+            basePath: this.options.origin
+        }));
+    }
 
-        problemInfoServicV2: MyApi.problemV2.ProblemInfoServicV2.Client | undefined;
+    problemInfoServicV2: MyApi.problemV2.ProblemInfoServicV2.Client | undefined;
 
-        get ProblemInfoServicV2(): MyApi.problemV2.ProblemInfoServicV2.Client {
-            return (this.problemInfoServicV2 ??= new MyApi.problemV2.ProblemInfoServicV2.Client({
-                basePath: this.options.origin
-            }));
-        }
+    get ProblemInfoServicV2(): MyApi.problemV2.ProblemInfoServicV2.Client {
+        return (this.problemInfoServicV2 ??= new MyApi.problemV2.ProblemInfoServicV2.Client({
+            basePath: this.options.origin
+        }));
+    }
 
-        problemCrudServiceV2: MyApi.problemV2.ProblemCrudServiceV2.Client | undefined;
+    problemCrudServiceV2: MyApi.problemV2.ProblemCrudServiceV2.Client | undefined;
 
-        get ProblemCrudServiceV2(): MyApi.problemV2.ProblemCrudServiceV2.Client {
-            return (this.problemCrudServiceV2 ??= new MyApi.problemV2.ProblemCrudServiceV2.Client({
-                basePath: this.options.origin
-            }));
-        }
+    get ProblemCrudServiceV2(): MyApi.problemV2.ProblemCrudServiceV2.Client {
+        return (this.problemCrudServiceV2 ??= new MyApi.problemV2.ProblemCrudServiceV2.Client({
+            basePath: this.options.origin
+        }));
+    }
 
-        problemInfoService: MyApi.ProblemInfoService.Client | undefined;
+    problemInfoService: MyApi.ProblemInfoService.Client | undefined;
 
-        get ProblemInfoService(): MyApi.ProblemInfoService.Client {
-            return (this.problemInfoService ??= new MyApi.ProblemInfoService.Client({
-                basePath: this.options.origin
-            }));
-        }
+    get ProblemInfoService(): MyApi.ProblemInfoService.Client {
+        return (this.problemInfoService ??= new MyApi.ProblemInfoService.Client({
+            basePath: this.options.origin
+        }));
+    }
 
-        problemCrudService: MyApi.ProblemCrudService.Client | undefined;
+    problemCrudService: MyApi.ProblemCrudService.Client | undefined;
 
-        get ProblemCrudService(): MyApi.ProblemCrudService.Client {
-            return (this.problemCrudService ??= new MyApi.ProblemCrudService.Client({
-                basePath: this.options.origin
-            }));
-        }
+    get ProblemCrudService(): MyApi.ProblemCrudService.Client {
+        return (this.problemCrudService ??= new MyApi.ProblemCrudService.Client({
+            basePath: this.options.origin
+        }));
+    }
 
-        executionSesssionManagementService: MyApi.ExecutionSesssionManagementService.Client | undefined;
+    executionSesssionManagementService: MyApi.ExecutionSesssionManagementService.Client | undefined;
 
-        get ExecutionSesssionManagementService(): MyApi.ExecutionSesssionManagementService.Client {
-            return (this.executionSesssionManagementService ??= new MyApi.ExecutionSesssionManagementService.Client({
-                basePath: this.options.origin
-            }));
-        }
+    get ExecutionSesssionManagementService(): MyApi.ExecutionSesssionManagementService.Client {
+        return (this.executionSesssionManagementService ??= new MyApi.ExecutionSesssionManagementService.Client({
+            basePath: this.options.origin
+        }));
+    }
 
-        submissionInfoService: MyApi.SubmissionInfoService.Client | undefined;
+    submissionInfoService: MyApi.SubmissionInfoService.Client | undefined;
 
-        get SubmissionInfoService(): MyApi.SubmissionInfoService.Client {
-            return (this.submissionInfoService ??= new MyApi.SubmissionInfoService.Client({
-                basePath: this.options.origin
-            }));
-        }
+    get SubmissionInfoService(): MyApi.SubmissionInfoService.Client {
+        return (this.submissionInfoService ??= new MyApi.SubmissionInfoService.Client({
+            basePath: this.options.origin
+        }));
+    }
 
-        workspaceInfoService: MyApi.WorkspaceInfoService.Client | undefined;
+    workspaceInfoService: MyApi.WorkspaceInfoService.Client | undefined;
 
-        get WorkspaceInfoService(): MyApi.WorkspaceInfoService.Client {
-            return (this.workspaceInfoService ??= new MyApi.WorkspaceInfoService.Client({
-                basePath: this.options.origin
-            }));
-        }
+    get WorkspaceInfoService(): MyApi.WorkspaceInfoService.Client {
+        return (this.workspaceInfoService ??= new MyApi.WorkspaceInfoService.Client({
+            basePath: this.options.origin
+        }));
+    }
 
-        sysPropCrudService: MyApi.SysPropCrudService.Client | undefined;
+    sysPropCrudService: MyApi.SysPropCrudService.Client | undefined;
 
-        get SysPropCrudService(): MyApi.SysPropCrudService.Client {
-            return (this.sysPropCrudService ??= new MyApi.SysPropCrudService.Client({
-                basePath: this.options.origin
-            }));
-        }
+    get SysPropCrudService(): MyApi.SysPropCrudService.Client {
+        return (this.sysPropCrudService ??= new MyApi.SysPropCrudService.Client({
+            basePath: this.options.origin
+        }));
     }
 }
 
