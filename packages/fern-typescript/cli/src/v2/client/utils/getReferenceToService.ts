@@ -1,12 +1,12 @@
 import { ServiceName } from "@fern-fern/ir-model/services";
 import { SourceFile, ts } from "ts-morph";
-import { ImportDeclaration } from "../imports-manager/ImportsManager";
-import { ModuleSpecifier } from "../types";
+import { getRelativePathAsModuleSpecifierTo } from "../../getRelativePathAsModuleSpecifierTo";
+import { ImportDeclaration } from "../../imports-manager/ImportsManager";
+import { ModuleSpecifier } from "../../types";
 import { getEntityNameOfPackage } from "./getEntityNameOfPackage";
 import { getExpressionOfPackage } from "./getExpressionOfPackage";
 import { getFilepathForService } from "./getFilepathForService";
 import { getGeneratedServiceName } from "./getGeneratedServiceName";
-import { getRelativePathAsModuleSpecifierTo } from "./getRelativePathAsModuleSpecifierTo";
 
 export interface ServiceReference {
     entityName: ts.EntityName;

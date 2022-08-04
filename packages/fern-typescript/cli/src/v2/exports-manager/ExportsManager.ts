@@ -1,9 +1,8 @@
 import { camelCase } from "lodash-es";
 import path from "path";
 import { Directory, SourceFile } from "ts-morph";
+import { getRelativePathAsModuleSpecifierTo } from "../getRelativePathAsModuleSpecifierTo";
 import { ModuleSpecifier } from "../types";
-import { getRelativePathAsModuleSpecifierTo } from "../utils/getRelativePathAsModuleSpecifierTo";
-import { ROOT_API_FILEPATH } from "../utils/rootApiUtils";
 
 export interface ExportDeclaration {
     exportAll?: boolean;
@@ -20,6 +19,12 @@ interface CombinedExportDeclarations {
 type PathToDirectory = string;
 
 export class ExportsManager {
+    private rootModuleExportFilepath: string;
+
+    constructor({ rootModuleExportFilepath = "index.ts" }: { rootModuleExportFilepath?: string } = {}) {
+        this.rootModuleExportFilepath = rootModuleExportFilepath;
+    }
+
     private exports: Record<PathToDirectory, Record<ModuleSpecifier, CombinedExportDeclarations>> = {};
 
     public addExport(from: SourceFile, exportDeclaration: ExportDeclaration): void {
@@ -95,6 +100,7 @@ export class ExportsManager {
                     pathToDirectory,
                     rootDirectory,
                     moduleSpecifierBeingExported: moduleSpecifier,
+                    rootModuleExportFilepath: this.rootModuleExportFilepath,
                 });
 
                 const namespaceExport = namespaceExports[0];
@@ -124,25 +130,36 @@ function getExportsFileForDirectory({
     pathToDirectory,
     rootDirectory,
     moduleSpecifierBeingExported,
+    rootModuleExportFilepath,
 }: {
     pathToDirectory: PathToDirectory;
     rootDirectory: Directory;
     moduleSpecifierBeingExported: ModuleSpecifier;
+    rootModuleExportFilepath: string;
 }): SourceFile {
-    const filepath = getExportsFilePathForDirectory(pathToDirectory, moduleSpecifierBeingExported);
+    const filepath = getExportsFilePathForDirectory({
+        pathToDirectory,
+        moduleSpecifierBeingExported,
+        rootModuleExportFilepath,
+    });
     return rootDirectory.getSourceFile(filepath) ?? rootDirectory.createSourceFile(filepath);
 }
 
-function getExportsFilePathForDirectory(
-    pathToDirectory: PathToDirectory,
-    moduleSpecifierBeingExported: ModuleSpecifier
-): string {
+function getExportsFilePathForDirectory({
+    pathToDirectory,
+    moduleSpecifierBeingExported,
+    rootModuleExportFilepath,
+}: {
+    pathToDirectory: PathToDirectory;
+    moduleSpecifierBeingExported: ModuleSpecifier;
+    rootModuleExportFilepath: string;
+}): string {
     // if exporting from the root and we're not exporting from the root API
     // file, then add the export to the root API file
     if (pathToDirectory === "/") {
         const pathBeingExported = `${path.join(pathToDirectory, moduleSpecifierBeingExported)}.ts`;
-        if (pathBeingExported !== ROOT_API_FILEPATH) {
-            return ROOT_API_FILEPATH;
+        if (pathBeingExported !== rootModuleExportFilepath) {
+            return rootModuleExportFilepath;
         }
     }
 

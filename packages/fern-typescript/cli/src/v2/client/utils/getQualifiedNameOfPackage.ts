@@ -1,5 +1,5 @@
 import path from "path";
-import { convertDirectoryNameToExportedNamespace } from "../exports-manager/ExportsManager";
+import { convertDirectoryNameToExportedNamespace } from "../../exports-manager/ExportsManager";
 
 export declare namespace getQualifiedNameForPackageOfFilepath {
     export interface Args<QualifiedName> {

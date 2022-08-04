@@ -1,7 +1,7 @@
 import { ContainerType, PrimitiveType, TypeReference } from "@fern-fern/ir-model";
 import { SourceFile, ts } from "ts-morph";
-import { ImportDeclaration } from "../imports-manager/ImportsManager";
-import { ModuleSpecifier } from "../types";
+import { ImportDeclaration } from "../../imports-manager/ImportsManager";
+import { ModuleSpecifier } from "../../types";
 import { getFilepathForType } from "./getFilepathForType";
 import { getGeneratedTypeName } from "./getGeneratedTypeName";
 import { getReferenceToExportedType } from "./getReferenceToExportedType";

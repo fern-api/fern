@@ -1,8 +1,8 @@
 import { SourceFile, ts } from "ts-morph";
-import { ImportDeclaration } from "../imports-manager/ImportsManager";
-import { ModuleSpecifier } from "../types";
+import { getRelativePathAsModuleSpecifierTo } from "../../getRelativePathAsModuleSpecifierTo";
+import { ImportDeclaration } from "../../imports-manager/ImportsManager";
+import { ModuleSpecifier } from "../../types";
 import { getEntityNameOfPackage } from "./getEntityNameOfPackage";
-import { getRelativePathAsModuleSpecifierTo } from "./getRelativePathAsModuleSpecifierTo";
 
 export declare namespace getReferenceToExportedType {
     export interface Args {
