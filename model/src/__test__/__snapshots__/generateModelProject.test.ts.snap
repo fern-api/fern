@@ -2,7 +2,12 @@
 
 exports[`generateModelProject fern IR 1`] = `
 Object {
-  "/.npmignore": "tsconfig.json",
+  "/.npmignore": "tsconfig.json
+.pnp.*
+.yarn
+yarn.lock
+*.ts
+!*.d.ts",
   "/_types/AliasTypeDeclaration.ts": "import * as model from \\"..\\";
 
 export interface AliasTypeDeclaration {
@@ -490,6 +495,7 @@ export * as services from \\"./services\\";
 ",
   "/package.json": "{
     \\"name\\": \\"posts\\",
+    \\"packageManager\\": \\"yarn@3.2.2\\",
     \\"version\\": \\"0.0.0\\",
     \\"main\\": \\"./index.js\\",
     \\"types\\": \\"./index.d.ts\\",
@@ -833,7 +839,12 @@ export * from \\"./WebSocketOperationProperties\\";
 
 exports[`generateModelProject posts 1`] = `
 Object {
-  "/.npmignore": "tsconfig.json",
+  "/.npmignore": "tsconfig.json
+.pnp.*
+.yarn
+yarn.lock
+*.ts
+!*.d.ts",
   "/_errors/PostNotFoundError.ts": "export type PostNotFoundError = string & {
     __PostNotFoundError: void;
 };
@@ -998,6 +1009,7 @@ export * from \\"./_errors\\";
 ",
   "/package.json": "{
     \\"name\\": \\"posts\\",
+    \\"packageManager\\": \\"yarn@3.2.2\\",
     \\"version\\": \\"0.0.0\\",
     \\"main\\": \\"./index.js\\",
     \\"types\\": \\"./index.d.ts\\",
