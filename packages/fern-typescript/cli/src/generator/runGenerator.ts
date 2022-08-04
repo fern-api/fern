@@ -8,10 +8,11 @@ import {
 import { readFile } from "fs/promises";
 import { Command } from "../commands/Command";
 import { createClientCommand } from "../commands/impls/clientCommand";
+import { createClientV2Command } from "../commands/impls/clientCommandV2";
 import { createModelCommand } from "../commands/impls/modelCommand";
 import { createServerCommand } from "../commands/impls/serverCommand";
 import { runCommand } from "../commands/runCommand";
-import { GeneratorLoggingWrapper } from "../utils/generatorLoggingWrapper";
+import { GeneratorNotificationService } from "../utils/GeneratorNotificationService";
 
 export async function runGenerator(pathToConfig: string): Promise<void> {
     const configStr = await readFile(pathToConfig);
@@ -22,9 +23,9 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
     );
 
     const commands = getCommands(config);
-    const generatorLoggingWrapper = new GeneratorLoggingWrapper(config);
+    const generatorNotificationService = new GeneratorNotificationService(config);
 
-    await generatorLoggingWrapper.sendUpdate(
+    await generatorNotificationService.sendUpdate(
         GeneratorUpdate.init({
             packagesToPublish: commands.reduce<PackageCoordinate[]>((all, command) => {
                 if (command.npmPackage.publishInfo != null) {
@@ -36,10 +37,11 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
     );
 
     try {
-        await Promise.all(commands.map((command) => runCommand({ command, config, generatorLoggingWrapper })));
-        await generatorLoggingWrapper.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful()));
+        await Promise.all(commands.map((command) => runCommand({ command, config, generatorNotificationService })));
+        await generatorNotificationService.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful()));
     } catch (e) {
-        await generatorLoggingWrapper.sendUpdate(
+        console.error("Failed to generate", e);
+        await generatorNotificationService.sendUpdate(
             GeneratorUpdate.exitStatusUpdate(
                 ExitStatusUpdate.error({
                     message: e instanceof Error ? e.message : "Encountered error",
@@ -53,6 +55,8 @@ function getCommands(generatorConfig: FernTypescriptGeneratorConfig): Command<st
     switch (generatorConfig.customConfig.mode) {
         case "client":
             return [createClientCommand(generatorConfig)];
+        case "client-v2":
+            return [createClientV2Command(generatorConfig)];
         case "server":
             return [createServerCommand(generatorConfig)];
         case "model":

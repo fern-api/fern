@@ -62,10 +62,9 @@ describe("runGenerator", () => {
                 const directoryContents = await getDirectoryContents(path.join(outputPath, "client"));
                 expect(directoryContents).toMatchSnapshot();
 
+                // compile after getDirectoryContents(), so directoryContents
+                // doesn't include compiled files, node_modules
                 await installAndCompileGeneratedProjects(outputPath);
-
-                await rm(configPath);
-                await rm(outputPath, { recursive: true });
             },
             90_000
         );

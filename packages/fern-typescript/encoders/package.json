@@ -27,7 +27,7 @@
   "dependencies": {
     "@fern-typescript/helper-manager": "workspace:*",
     "@fern-typescript/model-context": "workspace:*",
-    "ts-morph": "^14.0.0"
+    "ts-morph": "^15.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.9",

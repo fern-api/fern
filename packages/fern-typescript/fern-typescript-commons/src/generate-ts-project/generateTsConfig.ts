@@ -1,5 +1,5 @@
 import { Volume } from "memfs/lib/volume";
-import { CompilerOptions } from "typescript";
+import { CompilerOptions } from "ts-morph";
 import { getPathToProjectFile } from "./utils";
 
 const COMPILER_OPTIONS: CompilerOptions = {

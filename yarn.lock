@@ -1827,19 +1827,25 @@ __metadata:
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@fern-typescript/client": "workspace:*"
+    "@fern-typescript/client-v2": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
+    "@fern-typescript/commons-v2": "workspace:*"
+    "@fern-typescript/declaration-handler": "workspace:*"
     "@fern-typescript/encoders": "workspace:*"
     "@fern-typescript/errors": "workspace:*"
+    "@fern-typescript/errors-v2": "workspace:*"
     "@fern-typescript/helper-manager": "workspace:*"
     "@fern-typescript/helper-utils": "workspace:*"
     "@fern-typescript/json-encoding-helper": "workspace:*"
     "@fern-typescript/model": "workspace:*"
     "@fern-typescript/model-context": "workspace:*"
+    "@fern-typescript/resolvers": "workspace:*"
     "@fern-typescript/server": "workspace:*"
     "@fern-typescript/service-types": "workspace:*"
     "@fern-typescript/service-utils": "workspace:*"
     "@fern-typescript/testing-utils": "workspace:*"
     "@fern-typescript/types": "workspace:*"
+    "@fern-typescript/types-v2": "workspace:*"
     "@fern-ui/app": "workspace:*"
     "@fern-ui/common-components": "workspace:*"
     "@fern-ui/contexted-dialog": "workspace:*"
@@ -2291,6 +2297,29 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fern-typescript/client-v2@workspace:*, @fern-typescript/client-v2@workspace:packages/fern-typescript/client-v2":
+  version: 0.0.0-use.local
+  resolution: "@fern-typescript/client-v2@workspace:packages/fern-typescript/client-v2"
+  dependencies:
+    "@babel/core": ^7.18.9
+    "@babel/preset-env": ^7.18.9
+    "@babel/preset-typescript": ^7.18.6
+    "@fern-fern/ir-model": 0.0.5
+    "@fern-typescript/commons": "workspace:*"
+    "@fern-typescript/declaration-handler": "workspace:*"
+    "@types/jest": ^28.1.6
+    "@types/lodash-es": ^4.17.6
+    "@types/node": ^18.6.2
+    depcheck: ^1.4.3
+    eslint: ^8.20.0
+    jest: ^28.1.3
+    lodash-es: ^4.17.21
+    prettier: ^2.7.1
+    ts-morph: ^15.1.0
+    typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
 "@fern-typescript/client@workspace:*, @fern-typescript/client@workspace:packages/fern-typescript/client":
   version: 0.0.0-use.local
   resolution: "@fern-typescript/client@workspace:packages/fern-typescript/client"
@@ -2315,7 +2344,24 @@ __metadata:
     jest: ^28.1.3
     memfs: ^3.4.1
     prettier: ^2.7.1
-    ts-morph: ^14.0.0
+    ts-morph: ^15.1.0
+    typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
+"@fern-typescript/commons-v2@workspace:*, @fern-typescript/commons-v2@workspace:packages/fern-typescript/commons-v2":
+  version: 0.0.0-use.local
+  resolution: "@fern-typescript/commons-v2@workspace:packages/fern-typescript/commons-v2"
+  dependencies:
+    "@babel/core": ^7.18.9
+    "@babel/preset-env": ^7.18.9
+    "@babel/preset-typescript": ^7.18.6
+    "@types/jest": ^28.1.6
+    "@types/node": ^18.6.2
+    depcheck: ^1.4.3
+    eslint: ^8.20.0
+    jest: ^28.1.3
+    prettier: ^2.7.1
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -2342,9 +2388,30 @@ __metadata:
     memfs: ^3.4.1
     package-json-type: ^1.0.3
     prettier: ^2.7.1
-    ts-morph: ^14.0.0
+    ts-morph: ^15.1.0
     typescript: 4.6.4
     zod: ^3.14.3
+  languageName: unknown
+  linkType: soft
+
+"@fern-typescript/declaration-handler@workspace:*, @fern-typescript/declaration-handler@workspace:packages/fern-typescript/declaration-handler":
+  version: 0.0.0-use.local
+  resolution: "@fern-typescript/declaration-handler@workspace:packages/fern-typescript/declaration-handler"
+  dependencies:
+    "@babel/core": ^7.18.9
+    "@babel/preset-env": ^7.18.9
+    "@babel/preset-typescript": ^7.18.6
+    "@fern-fern/ir-model": 0.0.5
+    "@fern-typescript/commons-v2": "workspace:*"
+    "@fern-typescript/resolvers": "workspace:*"
+    "@types/jest": ^28.1.6
+    "@types/node": ^18.6.2
+    depcheck: ^1.4.3
+    eslint: ^8.20.0
+    jest: ^28.1.3
+    prettier: ^2.7.1
+    ts-morph: ^15.1.0
+    typescript: 4.6.4
   languageName: unknown
   linkType: soft
 
@@ -2364,7 +2431,28 @@ __metadata:
     eslint: ^8.20.0
     jest: ^28.1.3
     prettier: ^2.7.1
-    ts-morph: ^14.0.0
+    ts-morph: ^15.1.0
+    typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
+"@fern-typescript/errors-v2@workspace:*, @fern-typescript/errors-v2@workspace:packages/fern-typescript/errors-v2":
+  version: 0.0.0-use.local
+  resolution: "@fern-typescript/errors-v2@workspace:packages/fern-typescript/errors-v2"
+  dependencies:
+    "@babel/core": ^7.18.9
+    "@babel/preset-env": ^7.18.9
+    "@babel/preset-typescript": ^7.18.6
+    "@fern-fern/ir-model": 0.0.5
+    "@fern-typescript/declaration-handler": "workspace:*"
+    "@fern-typescript/types-v2": "workspace:*"
+    "@types/jest": ^28.1.6
+    "@types/node": ^18.6.2
+    depcheck: ^1.4.3
+    eslint: ^8.20.0
+    jest: ^28.1.3
+    prettier: ^2.7.1
+    ts-morph: ^15.1.0
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -2426,7 +2514,7 @@ __metadata:
     eslint: ^8.20.0
     jest: ^28.1.3
     prettier: ^2.7.1
-    ts-morph: ^14.0.0
+    ts-morph: ^15.1.0
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -2465,7 +2553,7 @@ __metadata:
     eslint: ^8.20.0
     jest: ^28.1.3
     prettier: ^2.7.1
-    ts-morph: ^14.0.0
+    ts-morph: ^15.1.0
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -2492,7 +2580,25 @@ __metadata:
     jest: ^28.1.3
     memfs: ^3.4.1
     prettier: ^2.7.1
-    ts-morph: ^14.0.0
+    ts-morph: ^15.1.0
+    typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
+"@fern-typescript/resolvers@workspace:*, @fern-typescript/resolvers@workspace:packages/fern-typescript/resolvers":
+  version: 0.0.0-use.local
+  resolution: "@fern-typescript/resolvers@workspace:packages/fern-typescript/resolvers"
+  dependencies:
+    "@babel/core": ^7.18.9
+    "@babel/preset-env": ^7.18.9
+    "@babel/preset-typescript": ^7.18.6
+    "@fern-fern/ir-model": 0.0.5
+    "@types/jest": ^28.1.6
+    "@types/node": ^18.6.2
+    depcheck: ^1.4.3
+    eslint: ^8.20.0
+    jest: ^28.1.3
+    prettier: ^2.7.1
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -2520,7 +2626,7 @@ __metadata:
     jest: ^28.1.3
     memfs: ^3.4.1
     prettier: ^2.7.1
-    ts-morph: ^14.0.0
+    ts-morph: ^15.1.0
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -2545,7 +2651,7 @@ __metadata:
     jest: ^28.1.3
     lodash-es: ^4.17.21
     prettier: ^2.7.1
-    ts-morph: ^14.0.0
+    ts-morph: ^15.1.0
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -2604,6 +2710,30 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-typescript/types-v2@workspace:*, @fern-typescript/types-v2@workspace:packages/fern-typescript/types-v2":
+  version: 0.0.0-use.local
+  resolution: "@fern-typescript/types-v2@workspace:packages/fern-typescript/types-v2"
+  dependencies:
+    "@babel/core": ^7.18.9
+    "@babel/preset-env": ^7.18.9
+    "@babel/preset-typescript": ^7.18.6
+    "@fern-fern/ir-model": 0.0.5
+    "@fern-typescript/commons": "workspace:*"
+    "@fern-typescript/declaration-handler": "workspace:*"
+    "@fern-typescript/resolvers": "workspace:*"
+    "@types/jest": ^28.1.6
+    "@types/lodash-es": ^4.17.6
+    "@types/node": ^18.6.2
+    depcheck: ^1.4.3
+    eslint: ^8.20.0
+    jest: ^28.1.3
+    lodash-es: ^4.17.21
+    prettier: ^2.7.1
+    ts-morph: ^15.1.0
+    typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
 "@fern-typescript/types@workspace:*, @fern-typescript/types@workspace:packages/fern-typescript/types":
   version: 0.0.0-use.local
   resolution: "@fern-typescript/types@workspace:packages/fern-typescript/types"
@@ -2622,7 +2752,7 @@ __metadata:
     jest: ^28.1.3
     lodash-es: ^4.17.21
     prettier: ^2.7.1
-    ts-morph: ^14.0.0
+    ts-morph: ^15.1.0
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -3543,15 +3673,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ts-morph/common@npm:^0.13.0, @ts-morph/common@npm:~0.13.0":
-  version: 0.13.0
-  resolution: "@ts-morph/common@npm:0.13.0"
+"@ts-morph/common@npm:^0.16.0, @ts-morph/common@npm:~0.16.0":
+  version: 0.16.0
+  resolution: "@ts-morph/common@npm:0.16.0"
   dependencies:
-    fast-glob: "npm:^3.2.11"
-    minimatch: "npm:^5.0.1"
-    mkdirp: "npm:^1.0.4"
-    path-browserify: "npm:^1.0.1"
-  checksum: 88b3d4b82dc6aca12741e55c6bf037f2243d14f4b9c42bbe28ed4a773ae9cd8d3ca6a6f9f827b5830c188037b0781d881a002ddb73e094fa5d5ff2a3352dc842
+    fast-glob: ^3.2.11
+    minimatch: ^5.1.0
+    mkdirp: ^1.0.4
+    path-browserify: ^1.0.1
+  checksum: 0ef97330a164a42b81b0499b042e91db8e39d705bb983ef83cbc80cc32ab36123e26baefb78203953d1a0c6e3b92cad9bc7a5e0ea409623a5e7db90cb3742112
   languageName: node
   linkType: hard
 
@@ -7157,24 +7287,35 @@ env-cmd@toddbluhm/env-cmd:
     "@fern-fern/generator-logging-api-client": ^0.0.25
     "@fern-fern/ir-model": 0.0.5
     "@fern-typescript/client": "workspace:*"
+    "@fern-typescript/client-v2": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
+    "@fern-typescript/commons-v2": "workspace:*"
+    "@fern-typescript/declaration-handler": "workspace:*"
+    "@fern-typescript/errors-v2": "workspace:*"
     "@fern-typescript/helper-manager": "workspace:*"
     "@fern-typescript/model": "workspace:*"
+    "@fern-typescript/resolvers": "workspace:*"
     "@fern-typescript/server": "workspace:*"
     "@fern-typescript/testing-utils": "workspace:*"
-    "@ts-morph/common": ^0.13.0
+    "@fern-typescript/types-v2": "workspace:*"
+    "@ts-morph/common": ^0.16.0
     "@types/jest": ^28.1.6
+    "@types/lodash-es": ^4.17.6
     "@types/node": ^18.6.2
     "@types/webpack-bundle-analyzer": ^4.4.1
     depcheck: ^1.4.3
     eslint: ^8.20.0
     execa: ^5.1.1
+    immer: ^9.0.15
     jest: ^28.1.3
+    lodash-es: ^4.17.21
     memfs: ^3.4.1
     node-loader: ^2.0.0
+    package-json-type: ^1.0.3
     prettier: ^2.7.1
     simple-progress-webpack-plugin: ^2.0.0
     ts-loader: ^9.3.1
+    ts-morph: ^15.1.0
     ts-node: ^10.9.1
     typescript: 4.6.4
     umd-compat-loader: ^2.1.2
@@ -9606,7 +9747,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^5.0.1":
+"minimatch@npm:^5.0.1, minimatch@npm:^5.1.0":
   version: 5.1.0
   resolution: "minimatch@npm:5.1.0"
   dependencies:
@@ -12307,13 +12448,13 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"ts-morph@npm:^14.0.0":
-  version: 14.0.0
-  resolution: "ts-morph@npm:14.0.0"
+"ts-morph@npm:^15.1.0":
+  version: 15.1.0
+  resolution: "ts-morph@npm:15.1.0"
   dependencies:
-    "@ts-morph/common": "npm:~0.13.0"
-    code-block-writer: "npm:^11.0.0"
-  checksum: e975fb245ae558c638e94014dcbbad828b904dee5a7309bfb4ef2b2922d0d7ad902ec00874a959be58991043ce655f78ae78df0d0e0d6fb3800b991b95be08ce
+    "@ts-morph/common": ~0.16.0
+    code-block-writer: ^11.0.0
+  checksum: 95e026214282850f08d1d4de673e969cdc166cb6d9366e455e1ea0251a204f80cffcb958c8ed7b1f351e56b972c4244e0dc7be0b13df3c4a6f22abdd4d4608e4
   languageName: node
   linkType: hard
 

@@ -2,22 +2,22 @@ import { GeneratorUpdate } from "@fern-fern/generator-logging-api-client/model";
 import { GeneratorLoggingService } from "@fern-fern/generator-logging-api-client/services";
 import { FernTypescriptGeneratorConfig } from "@fern-typescript/commons";
 
-export class GeneratorLoggingWrapper {
-    private maybeSendUpdates = async (_updates: GeneratorUpdate[]) => {
-        /* default to no-op */
-    };
-
+export class GeneratorNotificationService {
     constructor(generatorConfig: FernTypescriptGeneratorConfig) {
         if (generatorConfig.environment._type === "remote") {
             const generatorLoggingClient = new GeneratorLoggingService({
                 origin: generatorConfig.environment.coordinatorUrl,
             });
             const taskId = generatorConfig.environment.id;
-            this.maybeSendUpdates = async (updates) => {
+            this.sendUpdates = async (updates) => {
                 await generatorLoggingClient.sendUpdate({
                     taskId,
                     body: updates,
                 });
+            };
+        } else {
+            this.sendUpdates = async () => {
+                /* no-op */
             };
         }
     }
@@ -26,7 +26,6 @@ export class GeneratorLoggingWrapper {
         await this.sendUpdates([update]);
     }
 
-    public async sendUpdates(updates: GeneratorUpdate[]): Promise<void> {
-        await this.maybeSendUpdates(updates);
-    }
+    // defined in constructor
+    public sendUpdates: (updates: GeneratorUpdate[]) => Promise<void>;
 }
