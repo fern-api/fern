@@ -3,7 +3,7 @@ import {
     addOpenApiGenerator,
     addPostmanGenerator,
     addTypescriptGenerator,
-} from "@fern-api/add-generator";
+} from "@fern-api/manage-generator";
 import { loadRawWorkspaceConfiguration, WorkspaceConfigurationSchema } from "@fern-api/workspace-configuration";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";

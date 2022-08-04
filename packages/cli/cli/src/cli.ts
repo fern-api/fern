@@ -8,6 +8,7 @@ import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorT
 import { convertOpenApiToFernApiDefinition } from "./commands/convert-openapi/convertOpenApi";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateWorkspaces } from "./commands/generate/generateWorkspaces";
+import { upgradeGeneratorsInWorkspace } from "./commands/upgrade-generator/upgradeGeneratorInWorkspace";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
 import { getUpgradeMessage } from "./upgradeNotifier";
 
@@ -34,6 +35,7 @@ async function runCli() {
     addLoginCommand(cli);
     addGenerateIrCommand(cli);
     addValidateCommand(cli);
+    addUpgradeCommand(cli);
 
     await cli.parse();
     if (packageVersion != null) {
@@ -196,5 +198,22 @@ function addValidateCommand(cli: Argv) {
             validateWorkspaces({
                 commandLineWorkspaces: argv.workspaces ?? [],
             })
+    );
+}
+
+function addUpgradeCommand(cli: Argv) {
+    cli.command(
+        "upgrade [workspaces...]",
+        "Upgrades generator versions in your workspace",
+        (yargs) =>
+            yargs.positional("workspaces", {
+                array: true,
+                type: "string",
+                description:
+                    "If omitted, every workspace specified in the project-level configuration (fern.config.json) will be processed.",
+            }),
+        async (argv) => {
+            await upgradeGeneratorsInWorkspace(argv.workspaces ?? []);
+        }
     );
 }
