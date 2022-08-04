@@ -22,7 +22,7 @@ export function writeClientFile(intermediateRepresentation: IntermediateRepresen
         type: getTextOfTsKeyword(ts.SyntaxKind.StringKeyword),
     });
 
-    const apiClass = apiModule.addClass({
+    const apiClass = file.sourceFile.addClass({
         name: apiModule.getName(),
         isExported: true,
     });
