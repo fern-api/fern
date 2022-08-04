@@ -15,9 +15,15 @@ export interface FernCliNoUpgradeAvailable {
     upgradeAvailable: false;
 }
 
-export async function isFernCliUpgradeAvailable(currentVersion: string): Promise<FernCliUpgradeInfo> {
-    const latestPackageVersion = await latestVersion(currentVersion);
-    const diff = semverDiff(currentVersion, latestPackageVersion);
+export async function isFernCliUpgradeAvailable({
+    packageVersion,
+    packageName,
+}: {
+    packageVersion: string;
+    packageName: string;
+}): Promise<FernCliUpgradeInfo> {
+    const latestPackageVersion = await latestVersion(packageName);
+    const diff = semverDiff(packageVersion, latestPackageVersion);
     if (diff != null) {
         return {
             upgradeAvailable: true,
@@ -29,9 +35,15 @@ export async function isFernCliUpgradeAvailable(currentVersion: string): Promise
     };
 }
 
-export async function getFernCliUpgradeMessage(currentVersion: string): Promise<string | undefined> {
+export async function getFernCliUpgradeMessage({
+    packageVersion,
+    packageName,
+}: {
+    packageVersion: string;
+    packageName: string;
+}): Promise<string | undefined> {
     try {
-        const upgradeInfo = await isFernCliUpgradeAvailable(currentVersion);
+        const upgradeInfo = await isFernCliUpgradeAvailable({ packageVersion, packageName });
         if (upgradeInfo.upgradeAvailable) {
             const template =
                 "Update available " +
@@ -43,8 +55,8 @@ export async function getFernCliUpgradeMessage(currentVersion: string): Promise<
                 " to update";
             const message = boxen(
                 pupa(template, {
-                    packageName: FERN_PACKAGE_NAME,
-                    currentVersion,
+                    packageName,
+                    currentVersion: packageVersion,
                     latestVersion: upgradeInfo.version,
                     updateCommand: "fern upgrade",
                 }),

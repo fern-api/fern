@@ -1,6 +1,6 @@
 import boxen from "boxen";
 import chalk from "chalk";
-import { execa } from "execa";
+import execa from "execa";
 import pupa from "pupa";
 import { PackageInfo } from "../../cli";
 import { isFernCliUpgradeAvailable } from "../../upgradeNotifier";
@@ -18,9 +18,12 @@ export async function upgrade({
     } else if (packageInfo.packageName == null) {
         throw new Error("Failed to upgrade because PACKAGE_NAME is undefined");
     }
-    const fernCliUpgradeInfo = await isFernCliUpgradeAvailable(packageInfo.packageName);
+    const fernCliUpgradeInfo = await isFernCliUpgradeAvailable({
+        packageName: packageInfo.packageName,
+        packageVersion: packageInfo.packageVersion,
+    });
     if (fernCliUpgradeInfo.upgradeAvailable) {
-        await execa("npm install -g fern-api");
+        await execa("npm", ["install", "-g", "fern-api"]);
         const template =
             "Upgraded fern from" + chalk.dim("{currentVersion}") + chalk.reset(" → ") + chalk.green("{latestVersion}");
         const message = boxen(
@@ -38,7 +41,7 @@ export async function upgrade({
             }
         );
         console.log(message);
-        await execa(`fern upgrade ${commandLineWorkspaces.join(" ")}`);
+        await execa("fern", ["upgrade", `${commandLineWorkspaces.join(" ")}`]);
     } else {
         await upgradeGeneratorsInWorkspace(commandLineWorkspaces);
     }

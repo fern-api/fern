@@ -46,8 +46,11 @@ async function runCli() {
     addUpgradeCommand(cli, packageInfo);
 
     await cli.parse();
-    if (packageInfo.packageVersion != null) {
-        const upgradeMessage = await getFernCliUpgradeMessage(packageInfo.packageVersion);
+    if (packageInfo.packageVersion != null && packageInfo.packageName != null) {
+        const upgradeMessage = await getFernCliUpgradeMessage({
+            packageVersion: packageInfo.packageVersion,
+            packageName: packageInfo.packageName,
+        });
         if (upgradeMessage != null) {
             console.error(upgradeMessage);
         }

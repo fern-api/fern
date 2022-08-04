@@ -43,7 +43,7 @@
     "@fern-typescript/resolvers": "workspace:*",
     "@fern-typescript/server": "workspace:*",
     "@fern-typescript/types-v2": "workspace:*",
-    "execa": "^6.1.0",
+    "execa": "^5.1.1",
     "immer": "^9.0.15",
     "lodash-es": "^4.17.21",
     "memfs": "^3.4.1",
