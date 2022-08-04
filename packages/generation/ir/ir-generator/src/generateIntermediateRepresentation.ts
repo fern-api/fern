@@ -1,3 +1,4 @@
+import { noop } from "@fern-api/core-utils";
 import { Workspace } from "@fern-api/workspace-loader";
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
 import { convertErrorDeclaration } from "./converters/convertErrorDeclaration";
@@ -6,7 +7,6 @@ import { convertHttpService } from "./converters/services/convertHttpService";
 import { convertWebsocketChannel } from "./converters/services/convertWebsocketChannel";
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
 import { convertToFernFilepath } from "./utils/convertToFernFilepath";
-import { noop } from "./utils/noop";
 import { visit } from "./utils/visit";
 
 export function generateIntermediateRepresentation(workspace: Workspace): IntermediateRepresentation {

@@ -7,12 +7,8 @@ Array [
       Object {
         "contents": "tsconfig.json
 .pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
+.yarn
+yarn.lock
 *.ts
 !*.d.ts",
         "name": ".npmignore",
@@ -8428,12 +8424,8 @@ Array [
       Object {
         "contents": "tsconfig.json
 .pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
+.yarn
+yarn.lock
 *.ts
 !*.d.ts",
         "name": ".npmignore",
@@ -16844,12 +16836,8 @@ export * from \\"./ProblemCrudServiceV2\\";
       Object {
         "contents": "tsconfig.json
 .pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
+.yarn
+yarn.lock
 *.ts
 !*.d.ts",
         "name": ".npmignore",
@@ -24428,12 +24416,8 @@ Array [
       Object {
         "contents": "tsconfig.json
 .pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
+.yarn
+yarn.lock
 *.ts
 !*.d.ts",
         "name": ".npmignore",
@@ -31300,12 +31284,8 @@ Array [
       Object {
         "contents": "tsconfig.json
 .pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
+.yarn
+yarn.lock
 *.ts
 !*.d.ts",
         "name": ".npmignore",
