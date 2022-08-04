@@ -23,7 +23,7 @@ export async function generateTypeScriptProject({
     project: Project;
     dependencies: PackageDependencies;
 }): Promise<void> {
-    await writeProjectToVolume(project, volume, "/src");
+    await writeProjectToVolume(project, volume, "/");
     await generatePackageJson({
         volume,
         packageName,
