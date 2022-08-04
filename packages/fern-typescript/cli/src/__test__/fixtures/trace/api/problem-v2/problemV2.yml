@@ -187,7 +187,7 @@ types:
 
 services:
   http:
-    ProblemInfoServiceV2:
+    ProblemInfoServicV2:
       base-path: /problems-v2
       auth: none
       endpoints:
@@ -229,6 +229,7 @@ services:
           method: POST
           path: /create
           request: CreateProblemRequestV2
+          response: problem.CreateProblemResponse
 
         updateProblem:
           docs: Updates a problem
