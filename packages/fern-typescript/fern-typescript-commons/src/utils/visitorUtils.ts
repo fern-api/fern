@@ -43,6 +43,7 @@ export function generateVisitMethod({
         undefined,
         [
             ts.factory.createTypeParameterDeclaration(
+                undefined,
                 ts.factory.createIdentifier(VISITOR_RESULT_TYPE_PARAMETER),
                 undefined,
                 undefined
