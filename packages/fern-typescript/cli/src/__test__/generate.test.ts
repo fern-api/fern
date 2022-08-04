@@ -23,7 +23,7 @@ describe("runGenerator", () => {
                     const configPath = path.join(fixturePath, "config.json");
                     const irPath = path.join(fixturePath, "ir.json");
                     const apiPath = path.join(fixturePath, "api");
-                    const relativeOutputPath = "generated";
+                    const relativeOutputPath = path.join("generated", mode);
                     const outputPath = path.join(fixturePath, relativeOutputPath);
 
                     await rm(outputPath, { recursive: true, force: true });
