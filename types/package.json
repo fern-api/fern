@@ -29,7 +29,7 @@
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/model-context": "workspace:*",
     "lodash-es": "^4.17.21",
-    "ts-morph": "^14.0.0"
+    "ts-morph": "^15.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.9",

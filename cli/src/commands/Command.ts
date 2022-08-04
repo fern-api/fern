@@ -1,5 +1,6 @@
 import { Values } from "@fern-api/core-utils";
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
+import { GeneratorContext } from "@fern-typescript/declaration-handler";
 import { HelperManager } from "@fern-typescript/helper-manager";
 import { Volume } from "memfs/lib/volume";
 import { NpmPackage } from "./constructNpmPackageForCommand";
@@ -7,6 +8,7 @@ import { NpmPackage } from "./constructNpmPackageForCommand";
 export const CommandKey = {
     Server: "server",
     Client: "client",
+    ClientV2: "clientV2",
     Model: "model",
 } as const;
 export type CommandKey = Values<typeof CommandKey>;
@@ -17,6 +19,8 @@ export declare namespace Command {
             volume: Volume;
             intermediateRepresentation: IntermediateRepresentation;
             helperManager: HelperManager;
+            apiName: string;
+            context: GeneratorContext;
         }
     }
 }
