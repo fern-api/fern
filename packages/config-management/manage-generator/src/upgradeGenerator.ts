@@ -1,5 +1,6 @@
 import { WorkspaceConfigurationSchema } from "@fern-api/workspace-configuration";
-import { getGeneratorInvocationsByName } from "./generatorInvocations";
+import semverDiff from "semver-diff";
+import { GENERATOR_INVOCATIONS } from "./generatorInvocations";
 
 export interface GeneratorUpgradeResult {
     updatedWorkspaceConfiguration: WorkspaceConfigurationSchema;
@@ -17,11 +18,10 @@ export function upgradeGeneratorsIfPresent({
 }: {
     readonly workspaceConfiguration: WorkspaceConfigurationSchema;
 }): GeneratorUpgradeResult {
-    const generatorInvocationsByName = getGeneratorInvocationsByName();
     const upgrades: GeneratorUpgradeInfo[] = [];
     const updatedGenerators = workspaceConfiguration.generators.map((generatorConfig) => {
-        const updatedInvocation = generatorInvocationsByName[generatorConfig.name];
-        if (updatedInvocation != null && updatedInvocation.version !== generatorConfig.version) {
+        const updatedInvocation = GENERATOR_INVOCATIONS[generatorConfig.name];
+        if (updatedInvocation != null && versionIsHigher(generatorConfig.version, updatedInvocation.version)) {
             upgrades.push({
                 name: generatorConfig.name,
                 previousVersion: generatorConfig.version,
@@ -42,4 +42,12 @@ export function upgradeGeneratorsIfPresent({
         updatedWorkspaceConfiguration,
         upgrades,
     };
+}
+
+/**
+ *
+ * @returns true if versionB is higher than versionA
+ */
+function versionIsHigher(versionA: string, versionB: string): boolean {
+    return semverDiff(versionA, versionB) != null;
 }

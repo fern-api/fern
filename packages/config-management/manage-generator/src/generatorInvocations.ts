@@ -40,11 +40,9 @@ export const OPENAPI_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
     },
 };
 
-export function getGeneratorInvocationsByName(): Record<string, GeneratorInvocationSchema> {
-    const result: Record<string, GeneratorInvocationSchema> = {};
-    result[JAVA_GENERATOR_INVOCATION.name] = JAVA_GENERATOR_INVOCATION;
-    result[TYPESCRIPT_GENERATOR_INVOCATION.name] = TYPESCRIPT_GENERATOR_INVOCATION;
-    result[POSTMAN_GENERATOR_INVOCATION.name] = POSTMAN_GENERATOR_INVOCATION;
-    result[OPENAPI_GENERATOR_INVOCATION.name] = OPENAPI_GENERATOR_INVOCATION;
-    return result;
-}
+export const GENERATOR_INVOCATIONS: Record<string, GeneratorInvocationSchema> = {
+    [JAVA_GENERATOR_INVOCATION.name]: JAVA_GENERATOR_INVOCATION,
+    [TYPESCRIPT_GENERATOR_INVOCATION.name]: TYPESCRIPT_GENERATOR_INVOCATION,
+    [POSTMAN_GENERATOR_INVOCATION.name]: POSTMAN_GENERATOR_INVOCATION,
+    [OPENAPI_GENERATOR_INVOCATION.name]: OPENAPI_GENERATOR_INVOCATION,
+};
