@@ -15,7 +15,7 @@ export interface GeneratorUpgradeInfo {
 export function upgradeGeneratorsIfPresent({
     workspaceConfiguration,
 }: {
-    workspaceConfiguration: WorkspaceConfigurationSchema;
+    readonly workspaceConfiguration: WorkspaceConfigurationSchema;
 }): GeneratorUpgradeResult {
     const generatorInvocationsByName = getGeneratorInvocationsByName();
     const upgrades: GeneratorUpgradeInfo[] = [];
