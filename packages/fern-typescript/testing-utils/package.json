@@ -29,7 +29,7 @@
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/ir-model": "0.0.5",
     "@fern-typescript/commons": "workspace:*",
-    "execa": "^5.1.1",
+    "execa": "^6.1.0",
     "memfs": "^3.4.1",
     "typescript": "4.6.4"
   },

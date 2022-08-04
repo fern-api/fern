@@ -4,13 +4,35 @@ import latestVersion from "latest-version";
 import pupa from "pupa";
 import semverDiff from "semver-diff";
 
-const FERN_PACKAGE_NAME = "fern-api";
+export type FernCliUpgradeInfo = FernCliUpgradeAvailable | FernCliNoUpgradeAvailable;
 
-export async function getUpgradeMessage(currentVersion: string): Promise<string | undefined> {
+export interface FernCliUpgradeAvailable {
+    upgradeAvailable: true;
+    version: string;
+}
+
+export interface FernCliNoUpgradeAvailable {
+    upgradeAvailable: false;
+}
+
+export async function isFernCliUpgradeAvailable(currentVersion: string): Promise<FernCliUpgradeInfo> {
+    const latestPackageVersion = await latestVersion(currentVersion);
+    const diff = semverDiff(currentVersion, latestPackageVersion);
+    if (diff != null) {
+        return {
+            upgradeAvailable: true,
+            version: latestPackageVersion,
+        };
+    }
+    return {
+        upgradeAvailable: false,
+    };
+}
+
+export async function getFernCliUpgradeMessage(currentVersion: string): Promise<string | undefined> {
     try {
-        const latestPackageVersion = await latestVersion(FERN_PACKAGE_NAME);
-        const diff = semverDiff(currentVersion, latestPackageVersion);
-        if (diff != null) {
+        const upgradeInfo = await isFernCliUpgradeAvailable(currentVersion);
+        if (upgradeInfo.upgradeAvailable) {
             const template =
                 "Update available " +
                 chalk.dim("{currentVersion}") +
@@ -23,8 +45,8 @@ export async function getUpgradeMessage(currentVersion: string): Promise<string 
                 pupa(template, {
                     packageName: FERN_PACKAGE_NAME,
                     currentVersion,
-                    latestVersion: latestPackageVersion,
-                    updateCommand: `npm i -g ${FERN_PACKAGE_NAME}`,
+                    latestVersion: upgradeInfo.version,
+                    updateCommand: "fern upgrade",
                 }),
                 {
                     padding: 1,

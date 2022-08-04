@@ -29,7 +29,7 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/project-configuration": "workspace:*",
     "@fern-api/workspace-configuration": "workspace:*",
-    "execa": "^5.1.1"
+    "execa": "^6.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.9",
