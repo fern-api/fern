@@ -1,5 +1,5 @@
+import { generateClientProject } from "@fern-typescript/client";
 import { FernTypescriptGeneratorConfig } from "@fern-typescript/commons";
-import { FernTypescriptClientGenerator } from "../../v2/client/FernTypescriptClientGenerator";
 import { Command, CommandKey } from "../Command";
 import { constructNpmPackage } from "../constructNpmPackageForCommand";
 
@@ -10,15 +10,14 @@ export function createClientCommand(generatorConfig: FernTypescriptGeneratorConf
     return {
         key: COMMAND_KEY,
         npmPackage,
-        generate: async ({ intermediateRepresentation, volume, context, apiName }) => {
-            await new FernTypescriptClientGenerator({
-                apiName,
+        generate: async ({ intermediateRepresentation, helperManager, volume }) => {
+            await generateClientProject({
                 intermediateRepresentation,
-                context,
-                volume,
+                helperManager,
                 packageName: npmPackage.packageName,
                 packageVersion: npmPackage.publishInfo?.packageCoordinate.version,
-            }).generate();
+                volume,
+            });
         },
     };
 }

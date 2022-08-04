@@ -20,7 +20,7 @@ export function generateFetcherCall({
                     ts.factory.createThis(),
                     ts.factory.createIdentifier(ClientConstants.HttpService.PrivateMembers.BASE_URL)
                 ),
-                convertPathToTemplateString(endpoint),
+                convertPathToTemplateString(endpoint.path),
             ])
         ),
         ts.factory.createPropertyAssignment(

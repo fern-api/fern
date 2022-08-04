@@ -8,6 +8,7 @@ import {
 import { readFile } from "fs/promises";
 import { Command } from "../commands/Command";
 import { createClientCommand } from "../commands/impls/clientCommand";
+import { createClientV2Command } from "../commands/impls/clientCommandV2";
 import { createModelCommand } from "../commands/impls/modelCommand";
 import { createServerCommand } from "../commands/impls/serverCommand";
 import { runCommand } from "../commands/runCommand";
@@ -54,6 +55,8 @@ function getCommands(generatorConfig: FernTypescriptGeneratorConfig): Command<st
     switch (generatorConfig.customConfig.mode) {
         case "client":
             return [createClientCommand(generatorConfig)];
+        case "client-v2":
+            return [createClientV2Command(generatorConfig)];
         case "server":
             return [createServerCommand(generatorConfig)];
         case "model":
