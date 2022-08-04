@@ -7302,6 +7302,7 @@ env-cmd@toddbluhm/env-cmd:
     "@types/jest": ^28.1.6
     "@types/lodash-es": ^4.17.6
     "@types/node": ^18.6.2
+    "@types/tmp": ^0.2.3
     "@types/webpack-bundle-analyzer": ^4.4.1
     depcheck: ^1.4.3
     eslint: ^8.20.0
@@ -7314,6 +7315,7 @@ env-cmd@toddbluhm/env-cmd:
     package-json-type: ^1.0.3
     prettier: ^2.7.1
     simple-progress-webpack-plugin: ^2.0.0
+    tmp-promise: ^3.0.3
     ts-loader: ^9.3.1
     ts-morph: ^15.1.0
     ts-node: ^10.9.1

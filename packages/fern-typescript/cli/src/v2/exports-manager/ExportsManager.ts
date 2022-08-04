@@ -19,13 +19,9 @@ interface CombinedExportDeclarations {
 type PathToDirectory = string;
 
 export class ExportsManager {
-    private rootModuleExportFilepath: string;
-
-    constructor({ rootModuleExportFilepath = "index.ts" }: { rootModuleExportFilepath?: string } = {}) {
-        this.rootModuleExportFilepath = rootModuleExportFilepath;
-    }
-
     private exports: Record<PathToDirectory, Record<ModuleSpecifier, CombinedExportDeclarations>> = {};
+
+    constructor(private readonly root: string) {}
 
     public addExport(from: SourceFile, exportDeclaration: ExportDeclaration): void {
         const fromPath = from.getFilePath();
@@ -74,7 +70,7 @@ export class ExportsManager {
     public writeExportsToProject(rootDirectory: Directory): void {
         // first, make sure every directory is exported up to the root
         for (let pathToExport of Object.keys(this.exports)) {
-            while (pathToExport !== "/") {
+            while (pathToExport !== this.root) {
                 const pathToParent = path.dirname(pathToExport);
                 this.addExportDeclarationForDirectory({
                     pathToDirectory: pathToParent,
@@ -99,8 +95,6 @@ export class ExportsManager {
                 const exportsFile = getExportsFileForDirectory({
                     pathToDirectory,
                     rootDirectory,
-                    moduleSpecifierBeingExported: moduleSpecifier,
-                    rootModuleExportFilepath: this.rootModuleExportFilepath,
                 });
 
                 const namespaceExport = namespaceExports[0];
@@ -129,41 +123,12 @@ export class ExportsManager {
 function getExportsFileForDirectory({
     pathToDirectory,
     rootDirectory,
-    moduleSpecifierBeingExported,
-    rootModuleExportFilepath,
 }: {
     pathToDirectory: PathToDirectory;
     rootDirectory: Directory;
-    moduleSpecifierBeingExported: ModuleSpecifier;
-    rootModuleExportFilepath: string;
 }): SourceFile {
-    const filepath = getExportsFilePathForDirectory({
-        pathToDirectory,
-        moduleSpecifierBeingExported,
-        rootModuleExportFilepath,
-    });
+    const filepath = path.join(pathToDirectory, "index.ts");
     return rootDirectory.getSourceFile(filepath) ?? rootDirectory.createSourceFile(filepath);
-}
-
-function getExportsFilePathForDirectory({
-    pathToDirectory,
-    moduleSpecifierBeingExported,
-    rootModuleExportFilepath,
-}: {
-    pathToDirectory: PathToDirectory;
-    moduleSpecifierBeingExported: ModuleSpecifier;
-    rootModuleExportFilepath: string;
-}): string {
-    // if exporting from the root and we're not exporting from the root API
-    // file, then add the export to the root API file
-    if (pathToDirectory === "/") {
-        const pathBeingExported = `${path.join(pathToDirectory, moduleSpecifierBeingExported)}.ts`;
-        if (pathBeingExported !== rootModuleExportFilepath) {
-            return rootModuleExportFilepath;
-        }
-    }
-
-    return path.join(pathToDirectory, "index.ts");
 }
 
 export function convertDirectoryNameToExportedNamespace(directory: string): string {

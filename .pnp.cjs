@@ -10125,6 +10125,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:28.1.6"],\
             ["@types/lodash-es", "npm:4.17.6"],\
             ["@types/node", "npm:18.6.2"],\
+            ["@types/tmp", "npm:0.2.3"],\
             ["@types/webpack-bundle-analyzer", "npm:4.4.1"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.20.0"],\
@@ -10137,6 +10138,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["package-json-type", "npm:1.0.3"],\
             ["prettier", "npm:2.7.1"],\
             ["simple-progress-webpack-plugin", "virtual:5b8f83b261217e1d7a6ba4f4e8ce453aec5ae01ffc6ce377573050afedd12ba6250c8912c326b5f5c4f58d71dc3b73737f866aff31a3f57f7db9e63374ae0787#npm:2.0.0"],\
+            ["tmp-promise", "npm:3.0.3"],\
             ["ts-loader", "virtual:5b8f83b261217e1d7a6ba4f4e8ce453aec5ae01ffc6ce377573050afedd12ba6250c8912c326b5f5c4f58d71dc3b73737f866aff31a3f57f7db9e63374ae0787#npm:9.3.1"],\
             ["ts-morph", "npm:15.1.0"],\
             ["ts-node", "virtual:5b8f83b261217e1d7a6ba4f4e8ce453aec5ae01ffc6ce377573050afedd12ba6250c8912c326b5f5c4f58d71dc3b73737f866aff31a3f57f7db9e63374ae0787#npm:10.9.1"],\

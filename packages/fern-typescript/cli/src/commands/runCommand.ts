@@ -12,13 +12,6 @@ import { upperCamelCase } from "../utils/upperCamelCase";
 import { GeneratorContextImpl } from "../v2/generator-context/GeneratorContextImpl";
 import { Command } from "./Command";
 
-const CONSOLE_LOGGERS: Record<LogLevel, (message: string) => void> = {
-    [LogLevel.Debug]: console.debug,
-    [LogLevel.Info]: console.info,
-    [LogLevel.Warn]: console.warn,
-    [LogLevel.Error]: console.error,
-};
-
 const LOG_LEVEL_CONVERSIONS: Record<LogLevel, GeneratorLoggingApiModel.LogLevel> = {
     [LogLevel.Debug]: GeneratorLoggingApiModel.LogLevel.Debug,
     [LogLevel.Info]: GeneratorLoggingApiModel.LogLevel.Info,
@@ -42,8 +35,6 @@ export async function runCommand({
 
     const generatorContext = new GeneratorContextImpl(
         createLogger((message, level) => {
-            CONSOLE_LOGGERS[level](message);
-
             // kick off log, but don't wait for it
             void generatorNotificationService.sendUpdate(
                 GeneratorUpdate.log({
