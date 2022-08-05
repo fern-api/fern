@@ -51,7 +51,8 @@ export function writeClientFile(intermediateRepresentation: IntermediateRepresen
         );
 
         const serviceProperty = apiClass.addProperty({
-            name: camelCase(service.name.name),
+            name: `_${camelCase(service.name.name)}`,
+            scope: Scope.Private,
             type: getTextOfTsNode(
                 ts.factory.createUnionTypeNode([
                     referenceToServiceClient,
@@ -63,6 +64,7 @@ export function writeClientFile(intermediateRepresentation: IntermediateRepresen
         apiClass.addGetAccessor({
             name: getGeneratedServiceName(service.name),
             returnType: getTextOfTsNode(referenceToServiceClient),
+            scope: Scope.Public,
             statements: [
                 getTextOfTsNode(
                     ts.factory.createReturnStatement(

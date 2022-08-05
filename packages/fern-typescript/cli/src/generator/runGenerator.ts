@@ -40,7 +40,6 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
         await Promise.all(commands.map((command) => runCommand({ command, config, generatorNotificationService })));
         await generatorNotificationService.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful()));
     } catch (e) {
-        console.error("Failed to generate", e);
         await generatorNotificationService.sendUpdate(
             GeneratorUpdate.exitStatusUpdate(
                 ExitStatusUpdate.error({
@@ -48,6 +47,7 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
                 })
             )
         );
+        throw e;
     }
 }
 
