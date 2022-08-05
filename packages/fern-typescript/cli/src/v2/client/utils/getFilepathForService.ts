@@ -4,5 +4,9 @@ import { getFileNameForService } from "./getFileNameForService";
 import { getFilepathForFernFilepath } from "./getFilepathForFernFilepath";
 
 export function getFilepathForService(serviceName: ServiceName): string {
-    return path.join(getFilepathForFernFilepath(serviceName.fernFilepath), getFileNameForService(serviceName));
+    return path.join(
+        getFilepathForFernFilepath(serviceName.fernFilepath),
+        "_services",
+        getFileNameForService(serviceName)
+    );
 }
