@@ -25,7 +25,7 @@ export async function upgrade({
     if (fernCliUpgradeInfo.upgradeAvailable) {
         await execa("npm", ["install", "-g", "fern-api"]);
         const template =
-            "Upgraded fern from" + chalk.dim("{currentVersion}") + chalk.reset(" → ") + chalk.green("{latestVersion}");
+            "Upgraded fern from" + chalk.dim(" {currentVersion}") + chalk.reset(" → ") + chalk.green("{latestVersion}");
         const message = boxen(
             pupa(template, {
                 packageName: packageInfo.packageName,
