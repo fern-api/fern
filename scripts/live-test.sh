@@ -7,6 +7,8 @@ cli_path="$1"
 test_dir="$(mktemp -d)"
 cd "$test_dir"
 
+alias fern="node $cli_path"
+
 echo "Running Fern Commands!"
 set -x
 node "$cli_path" init --organization fern
