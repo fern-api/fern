@@ -34,7 +34,6 @@ export {
 } from "./generator-config/FernTypescriptGeneratorMode";
 export { exportFromModule } from "./import-export/exportFromModule";
 export { ImportStrategy } from "./import-export/ImportStrategy";
-export { addBrandedTypeAlias } from "./utils/addBrandedTypeAlias";
 export { getRelativePathAsModuleSpecifierTo } from "./utils/getRelativePathAsModuleSpecifierTo";
 export { getTextOfTsKeyword } from "./utils/getTextOfTsKeyword";
 export { getTextOfTsNode } from "./utils/getTextOfTsNode";
