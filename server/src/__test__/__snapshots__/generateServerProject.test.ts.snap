@@ -14,13 +14,7 @@ export * as services from \\"./services\\";
   "/model/commons/_types/PostId.ts": "/**
  * An ID of a blog post
  */
-export type PostId = string & {
-    __PostId: void;
-};
-
-export const PostId = {
-    of: (value: string): PostId => value as PostId
-};
+export type PostId = string;
 ",
   "/model/commons/_types/index.ts": "export * from \\"./PostId\\";
 ",
@@ -487,7 +481,7 @@ export const PostsService = {
         });
         app.get(\\"/posts/:postId\\", async (request, response) => {
             const result = await impl.getPost(BearerToken.fromAuthorizationHeader(request.header(\\"Authorization\\")!), {
-                postId: model.commons.PostId.of(request.params.postId),
+                postId: request.params.postId,
                 page: request.query.page != null ? Number(request.query.page) : undefined,
                 otherParam: Number(request.query.otherParam),
                 \\"X-Service-Header\\": request.header(\\"X-Service-Header\\")!
@@ -521,7 +515,7 @@ export const PostsService = {
         });
         app.delete(\\"/posts/:postId\\", async (request, response) => {
             const result = await impl.deletePost(BearerToken.fromAuthorizationHeader(request.header(\\"Authorization\\")!), {
-                postId: model.commons.PostId.of(request.params.postId),
+                postId: request.params.postId,
                 \\"X-Service-Header\\": request.header(\\"X-Service-Header\\")!
             });
             if (result.ok) {

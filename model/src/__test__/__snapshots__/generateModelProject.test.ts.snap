@@ -236,13 +236,7 @@ export * from \\"./ResponseError\\";
 ",
   "/services/commons/index.ts": "export * from \\"./_types\\";
 ",
-  "/services/http/_types/EndpointId.ts": "export type EndpointId = string & {
-    __EndpointId: void;
-};
-
-export const EndpointId = {
-    of: (value: string): EndpointId => value as EndpointId
-};
+  "/services/http/_types/EndpointId.ts": "export type EndpointId = string;
 ",
   "/services/http/_types/HttpAuth.ts": "export type HttpAuth =
     | \\"BEARER\\"
@@ -873,13 +867,7 @@ yarn.lock
   "/commons/_types/PostId.ts": "/**
  * An ID of a blog post
  */
-export type PostId = string & {
-    __PostId: void;
-};
-
-export const PostId = {
-    of: (value: string): PostId => value as PostId
-};
+export type PostId = string;
 ",
   "/commons/_types/index.ts": "export * from \\"./PostId\\";
 ",
@@ -902,13 +890,7 @@ export * as posts from \\"./posts\\";
         \\"typescript\\": \\"4.6.4\\"
     }
 }",
-  "/posts/_errors/PostNotFoundError.ts": "export type PostNotFoundError = string & {
-    __PostNotFoundError: void;
-};
-
-export const PostNotFoundError = {
-    of: (value: string): PostNotFoundError => value as PostNotFoundError
-};
+  "/posts/_errors/PostNotFoundError.ts": "export type PostNotFoundError = string;
 ",
   "/posts/_errors/index.ts": "export * from \\"./PostNotFoundError\\";
 ",

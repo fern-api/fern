@@ -389,13 +389,7 @@ export * from \\"./ServiceWithNoAuthWithBasicOverride\\";
 export * from \\"./ServiceWithBearerAuthWithOverride\\";
 export * from \\"./ServiceWithBasicAuthWithOverride\\";
 ",
-  "/model/auth/_types/SomeType.ts": "export type SomeType = string & {
-    __SomeType: void;
-};
-
-export const SomeType = {
-    of: (value: string): SomeType => value as SomeType
-};
+  "/model/auth/_types/SomeType.ts": "export type SomeType = string;
 ",
   "/model/auth/_types/index.ts": "export * from \\"./SomeType\\";
 ",
@@ -916,13 +910,7 @@ yarn.lock
   "/index.ts": "export * as model from \\"./model\\";
 export * as services from \\"./services\\";
 ",
-  "/model/chat/_errors/GenericMessage.ts": "export type GenericMessage = string & {
-    __GenericMessage: void;
-};
-
-export const GenericMessage = {
-    of: (value: string): GenericMessage => value as GenericMessage
-};
+  "/model/chat/_errors/GenericMessage.ts": "export type GenericMessage = string;
 ",
   "/model/chat/_errors/index.ts": "export * from \\"./GenericMessage\\";
 ",
@@ -1004,13 +992,7 @@ export interface ChatMessage {
     content: string;
 }
 ",
-  "/model/chat/_types/ChatMessageId.ts": "export type ChatMessageId = string & {
-    __ChatMessageId: void;
-};
-
-export const ChatMessageId = {
-    of: (value: string): ChatMessageId => value as ChatMessageId
-};
+  "/model/chat/_types/ChatMessageId.ts": "export type ChatMessageId = string;
 ",
   "/model/chat/_types/SendChatRequest.ts": "export interface SendChatRequest {
     title: string;
@@ -1288,13 +1270,7 @@ export * as services from \\"./services\\";
   "/model/commons/_types/PostId.ts": "/**
  * An ID of a blog post
  */
-export type PostId = string & {
-    __PostId: void;
-};
-
-export const PostId = {
-    of: (value: string): PostId => value as PostId
-};
+export type PostId = string;
 ",
   "/model/commons/_types/index.ts": "export * from \\"./PostId\\";
 ",

@@ -901,25 +901,13 @@ export interface MapValue {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type NodeId = string & {
-    __NodeId: void;
-};
-
-export const NodeId = {
-    of: (value: string): NodeId => value as NodeId
-};
+                    "contents": "export type NodeId = string;
 ",
                     "name": "NodeId.ts",
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type ProblemId = string & {
-    __ProblemId: void;
-};
-
-export const ProblemId = {
-    of: (value: string): ProblemId => value as ProblemId
-};
+                    "contents": "export type ProblemId = string;
 ",
                     "name": "ProblemId.ts",
                     "type": "file",
@@ -981,13 +969,7 @@ export interface TestCaseWithExpectedResult {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type UserId = string & {
-    __UserId: void;
-};
-
-export const UserId = {
-    of: (value: string): UserId => value as UserId
-};
+                    "contents": "export type UserId = string;
 ",
                     "name": "UserId.ts",
                     "type": "file",
@@ -1944,13 +1926,7 @@ export interface PlaylistCreateRequest {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type PlaylistId = string & {
-    __PlaylistId: void;
-};
-
-export const PlaylistId = {
-    of: (value: string): PlaylistId => value as PlaylistId
-};
+                    "contents": "export type PlaylistId = string;
 ",
                     "name": "PlaylistId.ts",
                     "type": "file",
@@ -3689,13 +3665,7 @@ export interface Parameter {
                         "type": "file",
                       },
                       Object {
-                        "contents": "export type ParameterId = string & {
-    __ParameterId: void;
-};
-
-export const ParameterId = {
-    of: (value: string): ParameterId => value as ParameterId
-};
+                        "contents": "export type ParameterId = string;
 ",
                         "name": "ParameterId.ts",
                         "type": "file",
@@ -3776,13 +3746,7 @@ export const TestCaseFunction = {
                         "type": "file",
                       },
                       Object {
-                        "contents": "export type TestCaseId = string & {
-    __TestCaseId: void;
-};
-
-export const TestCaseId = {
-    of: (value: string): TestCaseId => value as TestCaseId
-};
+                        "contents": "export type TestCaseId = string;
 ",
                         "name": "TestCaseId.ts",
                         "type": "file",
@@ -3932,13 +3896,7 @@ export interface TestCaseTemplate {
                         "type": "file",
                       },
                       Object {
-                        "contents": "export type TestCaseTemplateId = string & {
-    __TestCaseTemplateId: void;
-};
-
-export const TestCaseTemplateId = {
-    of: (value: string): TestCaseTemplateId => value as TestCaseTemplateId
-};
+                        "contents": "export type TestCaseTemplateId = string;
 ",
                         "name": "TestCaseTemplateId.ts",
                         "type": "file",
@@ -5535,13 +5493,7 @@ export interface Scope {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type ShareId = string & {
-    __ShareId: void;
-};
-
-export const ShareId = {
-    of: (value: string): ShareId => value as ShareId
-};
+                    "contents": "export type ShareId = string;
 ",
                     "name": "ShareId.ts",
                     "type": "file",
@@ -5622,13 +5574,7 @@ export interface StoppedResponse {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type SubmissionId = string & {
-    __SubmissionId: void;
-};
-
-export const SubmissionId = {
-    of: (value: string): SubmissionId => value as SubmissionId
-};
+                    "contents": "export type SubmissionId = string;
 ",
                     "name": "SubmissionId.ts",
                     "type": "file",
@@ -9676,25 +9622,13 @@ export interface MapValue {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type NodeId = string & {
-    __NodeId: void;
-};
-
-export const NodeId = {
-    of: (value: string): NodeId => value as NodeId
-};
+                    "contents": "export type NodeId = string;
 ",
                     "name": "NodeId.ts",
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type ProblemId = string & {
-    __ProblemId: void;
-};
-
-export const ProblemId = {
-    of: (value: string): ProblemId => value as ProblemId
-};
+                    "contents": "export type ProblemId = string;
 ",
                     "name": "ProblemId.ts",
                     "type": "file",
@@ -9756,13 +9690,7 @@ export interface TestCaseWithExpectedResult {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type UserId = string & {
-    __UserId: void;
-};
-
-export const UserId = {
-    of: (value: string): UserId => value as UserId
-};
+                    "contents": "export type UserId = string;
 ",
                     "name": "UserId.ts",
                     "type": "file",
@@ -10719,13 +10647,7 @@ export interface PlaylistCreateRequest {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type PlaylistId = string & {
-    __PlaylistId: void;
-};
-
-export const PlaylistId = {
-    of: (value: string): PlaylistId => value as PlaylistId
-};
+                    "contents": "export type PlaylistId = string;
 ",
                     "name": "PlaylistId.ts",
                     "type": "file",
@@ -12464,13 +12386,7 @@ export interface Parameter {
                         "type": "file",
                       },
                       Object {
-                        "contents": "export type ParameterId = string & {
-    __ParameterId: void;
-};
-
-export const ParameterId = {
-    of: (value: string): ParameterId => value as ParameterId
-};
+                        "contents": "export type ParameterId = string;
 ",
                         "name": "ParameterId.ts",
                         "type": "file",
@@ -12551,13 +12467,7 @@ export const TestCaseFunction = {
                         "type": "file",
                       },
                       Object {
-                        "contents": "export type TestCaseId = string & {
-    __TestCaseId: void;
-};
-
-export const TestCaseId = {
-    of: (value: string): TestCaseId => value as TestCaseId
-};
+                        "contents": "export type TestCaseId = string;
 ",
                         "name": "TestCaseId.ts",
                         "type": "file",
@@ -12707,13 +12617,7 @@ export interface TestCaseTemplate {
                         "type": "file",
                       },
                       Object {
-                        "contents": "export type TestCaseTemplateId = string & {
-    __TestCaseTemplateId: void;
-};
-
-export const TestCaseTemplateId = {
-    of: (value: string): TestCaseTemplateId => value as TestCaseTemplateId
-};
+                        "contents": "export type TestCaseTemplateId = string;
 ",
                         "name": "TestCaseTemplateId.ts",
                         "type": "file",
@@ -14310,13 +14214,7 @@ export interface Scope {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type ShareId = string & {
-    __ShareId: void;
-};
-
-export const ShareId = {
-    of: (value: string): ShareId => value as ShareId
-};
+                    "contents": "export type ShareId = string;
 ",
                     "name": "ShareId.ts",
                     "type": "file",
@@ -14397,13 +14295,7 @@ export interface StoppedResponse {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type SubmissionId = string & {
-    __SubmissionId: void;
-};
-
-export const SubmissionId = {
-    of: (value: string): SubmissionId => value as SubmissionId
-};
+                    "contents": "export type SubmissionId = string;
 ",
                     "name": "SubmissionId.ts",
                     "type": "file",
@@ -18446,25 +18338,13 @@ export interface MapValue {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type NodeId = string & {
-    __NodeId: void;
-};
-
-export const NodeId = {
-    of: (value: string): NodeId => value as NodeId
-};
+                    "contents": "export type NodeId = string;
 ",
                     "name": "NodeId.ts",
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type ProblemId = string & {
-    __ProblemId: void;
-};
-
-export const ProblemId = {
-    of: (value: string): ProblemId => value as ProblemId
-};
+                    "contents": "export type ProblemId = string;
 ",
                     "name": "ProblemId.ts",
                     "type": "file",
@@ -18526,13 +18406,7 @@ export interface TestCaseWithExpectedResult {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type UserId = string & {
-    __UserId: void;
-};
-
-export const UserId = {
-    of: (value: string): UserId => value as UserId
-};
+                    "contents": "export type UserId = string;
 ",
                     "name": "UserId.ts",
                     "type": "file",
@@ -19489,13 +19363,7 @@ export interface PlaylistCreateRequest {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type PlaylistId = string & {
-    __PlaylistId: void;
-};
-
-export const PlaylistId = {
-    of: (value: string): PlaylistId => value as PlaylistId
-};
+                    "contents": "export type PlaylistId = string;
 ",
                     "name": "PlaylistId.ts",
                     "type": "file",
@@ -21234,13 +21102,7 @@ export interface Parameter {
                         "type": "file",
                       },
                       Object {
-                        "contents": "export type ParameterId = string & {
-    __ParameterId: void;
-};
-
-export const ParameterId = {
-    of: (value: string): ParameterId => value as ParameterId
-};
+                        "contents": "export type ParameterId = string;
 ",
                         "name": "ParameterId.ts",
                         "type": "file",
@@ -21321,13 +21183,7 @@ export const TestCaseFunction = {
                         "type": "file",
                       },
                       Object {
-                        "contents": "export type TestCaseId = string & {
-    __TestCaseId: void;
-};
-
-export const TestCaseId = {
-    of: (value: string): TestCaseId => value as TestCaseId
-};
+                        "contents": "export type TestCaseId = string;
 ",
                         "name": "TestCaseId.ts",
                         "type": "file",
@@ -21477,13 +21333,7 @@ export interface TestCaseTemplate {
                         "type": "file",
                       },
                       Object {
-                        "contents": "export type TestCaseTemplateId = string & {
-    __TestCaseTemplateId: void;
-};
-
-export const TestCaseTemplateId = {
-    of: (value: string): TestCaseTemplateId => value as TestCaseTemplateId
-};
+                        "contents": "export type TestCaseTemplateId = string;
 ",
                         "name": "TestCaseTemplateId.ts",
                         "type": "file",
@@ -23080,13 +22930,7 @@ export interface Scope {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type ShareId = string & {
-    __ShareId: void;
-};
-
-export const ShareId = {
-    of: (value: string): ShareId => value as ShareId
-};
+                    "contents": "export type ShareId = string;
 ",
                     "name": "ShareId.ts",
                     "type": "file",
@@ -23167,13 +23011,7 @@ export interface StoppedResponse {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type SubmissionId = string & {
-    __SubmissionId: void;
-};
-
-export const SubmissionId = {
-    of: (value: string): SubmissionId => value as SubmissionId
-};
+                    "contents": "export type SubmissionId = string;
 ",
                     "name": "SubmissionId.ts",
                     "type": "file",
@@ -24554,7 +24392,7 @@ export const AdminService = {
         app.use(express.json());
         app.post(\\"/admin/store-test-submission-status/:submissionId\\", async (request, response) => {
             const result = await impl.updateTestSubmissionStatus({
-                submissionId: model.submission.SubmissionId.of(request.params.submissionId),
+                submissionId: request.params.submissionId,
                 body: request.body
             });
             if (result.ok) {
@@ -24566,7 +24404,7 @@ export const AdminService = {
         });
         app.post(\\"/admin/store-test-submission-status-v2/:submissionId\\", async (request, response) => {
             const result = await impl.sendTestSubmissionUpdate({
-                submissionId: model.submission.SubmissionId.of(request.params.submissionId),
+                submissionId: request.params.submissionId,
                 body: request.body
             });
             if (result.ok) {
@@ -24578,7 +24416,7 @@ export const AdminService = {
         });
         app.post(\\"/admin/store-workspace-submission-status/:submissionId\\", async (request, response) => {
             const result = await impl.updateWorkspaceSubmissionStatus({
-                submissionId: model.submission.SubmissionId.of(request.params.submissionId),
+                submissionId: request.params.submissionId,
                 body: request.body
             });
             if (result.ok) {
@@ -24590,7 +24428,7 @@ export const AdminService = {
         });
         app.post(\\"/admin/store-workspace-submission-status-v2/:submissionId\\", async (request, response) => {
             const result = await impl.sendWorkspaceSubmissionUpdate({
-                submissionId: model.submission.SubmissionId.of(request.params.submissionId),
+                submissionId: request.params.submissionId,
                 body: request.body
             });
             if (result.ok) {
@@ -24602,7 +24440,7 @@ export const AdminService = {
         });
         app.post(\\"/admin/store-test-trace/submission/:submissionId/testCase/:testCaseId\\", async (request, response) => {
             const result = await impl.storeTracedTestCase({
-                submissionId: model.submission.SubmissionId.of(request.params.submissionId),
+                submissionId: request.params.submissionId,
                 testCaseId: request.params.testCaseId,
                 body: request.body
             });
@@ -24615,8 +24453,8 @@ export const AdminService = {
         });
         app.post(\\"/admin/store-test-trace-v2/submission/:submissionId/testCase/:testCaseId\\", async (request, response) => {
             const result = await impl.storeTracedTestCaseV2({
-                submissionId: model.submission.SubmissionId.of(request.params.submissionId),
-                testCaseId: model.problemV2.problemV2.TestCaseId.of(request.params.testCaseId),
+                submissionId: request.params.submissionId,
+                testCaseId: request.params.testCaseId,
                 body: request.body
             });
             if (result.ok) {
@@ -24628,7 +24466,7 @@ export const AdminService = {
         });
         app.post(\\"/admin/store-workspace-trace/submission/:submissionId\\", async (request, response) => {
             const result = await impl.storeTracedWorkspace({
-                submissionId: model.submission.SubmissionId.of(request.params.submissionId),
+                submissionId: request.params.submissionId,
                 body: request.body
             });
             if (result.ok) {
@@ -24640,7 +24478,7 @@ export const AdminService = {
         });
         app.post(\\"/admin/store-workspace-trace-v2/submission/:submissionId\\", async (request, response) => {
             const result = await impl.storeTracedWorkspaceV2({
-                submissionId: model.submission.SubmissionId.of(request.params.submissionId),
+                submissionId: request.params.submissionId,
                 body: request.body
             });
             if (result.ok) {
@@ -24809,7 +24647,7 @@ export const PlaylistCrudService = {
         });
         app.get(\\"/v2/playlist/:playlistId\\", async (request, response) => {
             const result = await impl.getPlaylist({
-                playlistId: model.playlist.PlaylistId.of(request.params.playlistId)
+                playlistId: request.params.playlistId
             });
             if (result.ok) {
                 response.send(result.body);
@@ -24820,7 +24658,7 @@ export const PlaylistCrudService = {
         });
         app.put(\\"/v2/playlist/:playlistId\\", async (request, response) => {
             const result = await impl.updatePlaylist(BearerToken.fromAuthorizationHeader(request.header(\\"Authorization\\")!), {
-                playlistId: model.playlist.PlaylistId.of(request.params.playlistId),
+                playlistId: request.params.playlistId,
                 body: request.body
             });
             if (result.ok) {
@@ -24832,7 +24670,7 @@ export const PlaylistCrudService = {
         });
         app.delete(\\"/v2/playlist/:playlistId\\", async (request, response) => {
             const result = await impl.deletePlaylist(BearerToken.fromAuthorizationHeader(request.header(\\"Authorization\\")!), {
-                playlistId: model.playlist.PlaylistId.of(request.params.playlistId)
+                playlistId: request.params.playlistId
             });
             if (result.ok) {
                 response.end();
@@ -24886,7 +24724,7 @@ export const ProblemCrudService = {
         });
         app.post(\\"/problem-crud/update/:problemId\\", async (request, response) => {
             const result = await impl.updateProblem({
-                problemId: model.commons.ProblemId.of(request.params.problemId),
+                problemId: request.params.problemId,
                 body: request.body
             });
             if (result.ok) {
@@ -24898,7 +24736,7 @@ export const ProblemCrudService = {
         });
         app.delete(\\"/problem-crud/delete/:problemId\\", async (request, response) => {
             const result = await impl.deleteProblem({
-                problemId: model.commons.ProblemId.of(request.params.problemId)
+                problemId: request.params.problemId
             });
             if (result.ok) {
                 response.end();
@@ -24949,7 +24787,7 @@ export const ProblemInfoService = {
         });
         app.get(\\"/problems/problem-info/:problemId\\", async (request, response) => {
             const result = await impl.getLatestProblem({
-                problemId: model.commons.ProblemId.of(request.params.problemId)
+                problemId: request.params.problemId
             });
             if (result.ok) {
                 response.send(result.body);
@@ -24960,7 +24798,7 @@ export const ProblemInfoService = {
         });
         app.get(\\"/problems/problem-info/:problemId/version/:problemVersion\\", async (request, response) => {
             const result = await impl.getProblemVersion({
-                problemId: model.commons.ProblemId.of(request.params.problemId),
+                problemId: request.params.problemId,
                 problemVersion: Number(request.params.problemVersion)
             });
             if (result.ok) {
@@ -24972,7 +24810,7 @@ export const ProblemInfoService = {
         });
         app.post(\\"/problems/expected-result/:problemId\\", async (request, response) => {
             const result = await impl.getExpectedResult({
-                problemId: model.commons.ProblemId.of(request.params.problemId)
+                problemId: request.params.problemId
             });
             if (result.ok) {
                 response.send(result.body);
@@ -25039,7 +24877,7 @@ export const ProblemCrudServiceV2 = {
         });
         app.post(\\"/problem-crud-v2/update/:problemId\\", async (request, response) => {
             const result = await impl.updateProblem({
-                problemId: model.commons.ProblemId.of(request.params.problemId),
+                problemId: request.params.problemId,
                 body: request.body
             });
             if (result.ok) {
@@ -25051,7 +24889,7 @@ export const ProblemCrudServiceV2 = {
         });
         app.delete(\\"/problem-crud-v2/delete/:problemId\\", async (request, response) => {
             const result = await impl.deleteProblem({
-                problemId: model.commons.ProblemId.of(request.params.problemId)
+                problemId: request.params.problemId
             });
             if (result.ok) {
                 response.end();
@@ -25147,7 +24985,7 @@ export const ProblemInfoServicV2 = {
         });
         app.get(\\"/problems-v2/problem-info/:problemId\\", async (request, response) => {
             const result = await impl.getLatestProblem({
-                problemId: model.commons.ProblemId.of(request.params.problemId)
+                problemId: request.params.problemId
             });
             if (result.ok) {
                 response.send(result.body);
@@ -25158,7 +24996,7 @@ export const ProblemInfoServicV2 = {
         });
         app.get(\\"/problems-v2/problem-info/:problemId/version/:problemVersion\\", async (request, response) => {
             const result = await impl.getProblemVersion({
-                problemId: model.commons.ProblemId.of(request.params.problemId),
+                problemId: request.params.problemId,
                 problemVersion: Number(request.params.problemVersion)
             });
             if (result.ok) {
@@ -25275,7 +25113,7 @@ export const SubmissionInfoService = {
         app.use(express.json());
         app.get(\\"/submissions/:submissionId\\", async (request, response) => {
             const result = await impl.getSubmissionState({
-                submissionId: model.submission.SubmissionId.of(request.params.submissionId)
+                submissionId: request.params.submissionId
             });
             if (result.ok) {
                 response.send(result.body);
@@ -25286,7 +25124,7 @@ export const SubmissionInfoService = {
         });
         app.get(\\"/submissions/v2/:submissionId\\", async (request, response) => {
             const result = await impl.getSubmissionStateV2({
-                submissionId: model.submission.SubmissionId.of(request.params.submissionId)
+                submissionId: request.params.submissionId
             });
             if (result.ok) {
                 response.send(result.body);
@@ -25297,7 +25135,7 @@ export const SubmissionInfoService = {
         });
         app.post(\\"/submissions/trace-respose/:submissionId/testCase/:testCaseId\\", async (request, response) => {
             const result = await impl.getTraceResponsesPage({
-                submissionId: model.submission.SubmissionId.of(request.params.submissionId),
+                submissionId: request.params.submissionId,
                 testCaseId: request.params.testCaseId,
                 body: request.body
             });
@@ -25310,8 +25148,8 @@ export const SubmissionInfoService = {
         });
         app.post(\\"/submissions/trace-response-v2/:submissionId/testCase/:testCaseId\\", async (request, response) => {
             const result = await impl.getTraceResponsesV2Page({
-                submissionId: model.submission.SubmissionId.of(request.params.submissionId),
-                testCaseId: model.problemV2.problemV2.TestCaseId.of(request.params.testCaseId),
+                submissionId: request.params.submissionId,
+                testCaseId: request.params.testCaseId,
                 body: request.body
             });
             if (result.ok) {
@@ -25323,7 +25161,7 @@ export const SubmissionInfoService = {
         });
         app.post(\\"/submissions/workspace-trace-response/:submissionId\\", async (request, response) => {
             const result = await impl.getTraceResponsesPageForWorkspace({
-                submissionId: model.submission.SubmissionId.of(request.params.submissionId),
+                submissionId: request.params.submissionId,
                 body: request.body
             });
             if (result.ok) {
@@ -25335,7 +25173,7 @@ export const SubmissionInfoService = {
         });
         app.post(\\"/submissions/workspace-trace-response-v2/:submissionId\\", async (request, response) => {
             const result = await impl.getTraceResponsesV2PageForWorkspace({
-                submissionId: model.submission.SubmissionId.of(request.params.submissionId),
+                submissionId: request.params.submissionId,
                 body: request.body
             });
             if (result.ok) {
@@ -26397,25 +26235,13 @@ export interface MapValue {
                 "type": "file",
               },
               Object {
-                "contents": "export type NodeId = string & {
-        __NodeId: void;
-    };
-
-export const NodeId = {
-        of: (value: string): NodeId => value as NodeId
-    };
+                "contents": "export type NodeId = string;
 ",
                 "name": "NodeId.ts",
                 "type": "file",
               },
               Object {
-                "contents": "export type ProblemId = string & {
-        __ProblemId: void;
-    };
-
-export const ProblemId = {
-        of: (value: string): ProblemId => value as ProblemId
-    };
+                "contents": "export type ProblemId = string;
 ",
                 "name": "ProblemId.ts",
                 "type": "file",
@@ -26477,13 +26303,7 @@ export interface TestCaseWithExpectedResult {
                 "type": "file",
               },
               Object {
-                "contents": "export type UserId = string & {
-        __UserId: void;
-    };
-
-export const UserId = {
-        of: (value: string): UserId => value as UserId
-    };
+                "contents": "export type UserId = string;
 ",
                 "name": "UserId.ts",
                 "type": "file",
@@ -27466,13 +27286,7 @@ export const deletePlaylist = {
                 "type": "file",
               },
               Object {
-                "contents": "export type PlaylistId = string & {
-        __PlaylistId: void;
-    };
-
-export const PlaylistId = {
-        of: (value: string): PlaylistId => value as PlaylistId
-    };
+                "contents": "export type PlaylistId = string;
 ",
                 "name": "PlaylistId.ts",
                 "type": "file",
@@ -28663,13 +28477,7 @@ export interface Parameter {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type ParameterId = string & {
-        __ParameterId: void;
-    };
-
-export const ParameterId = {
-        of: (value: string): ParameterId => value as ParameterId
-    };
+                    "contents": "export type ParameterId = string;
 ",
                     "name": "ParameterId.ts",
                     "type": "file",
@@ -29436,13 +29244,7 @@ export const TestCaseFunction = {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type TestCaseId = string & {
-        __TestCaseId: void;
-    };
-
-export const TestCaseId = {
-        of: (value: string): TestCaseId => value as TestCaseId
-    };
+                    "contents": "export type TestCaseId = string;
 ",
                     "name": "TestCaseId.ts",
                     "type": "file",
@@ -29592,13 +29394,7 @@ export interface TestCaseTemplate {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type TestCaseTemplateId = string & {
-        __TestCaseTemplateId: void;
-    };
-
-export const TestCaseTemplateId = {
-        of: (value: string): TestCaseTemplateId => value as TestCaseTemplateId
-    };
+                    "contents": "export type TestCaseTemplateId = string;
 ",
                     "name": "TestCaseTemplateId.ts",
                     "type": "file",
@@ -30777,13 +30573,7 @@ export interface Scope {
                 "type": "file",
               },
               Object {
-                "contents": "export type ShareId = string & {
-        __ShareId: void;
-    };
-
-export const ShareId = {
-        of: (value: string): ShareId => value as ShareId
-    };
+                "contents": "export type ShareId = string;
 ",
                 "name": "ShareId.ts",
                 "type": "file",
@@ -30864,13 +30654,7 @@ export interface StoppedResponse {
                 "type": "file",
               },
               Object {
-                "contents": "export type SubmissionId = string & {
-        __SubmissionId: void;
-    };
-
-export const SubmissionId = {
-        of: (value: string): SubmissionId => value as SubmissionId
-    };
+                "contents": "export type SubmissionId = string;
 ",
                 "name": "SubmissionId.ts",
                 "type": "file",
@@ -33771,25 +33555,13 @@ export interface MapValue {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type NodeId = string & {
-    __NodeId: void;
-};
-
-export const NodeId = {
-    of: (value: string): NodeId => value as NodeId
-};
+                    "contents": "export type NodeId = string;
 ",
                     "name": "NodeId.ts",
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type ProblemId = string & {
-    __ProblemId: void;
-};
-
-export const ProblemId = {
-    of: (value: string): ProblemId => value as ProblemId
-};
+                    "contents": "export type ProblemId = string;
 ",
                     "name": "ProblemId.ts",
                     "type": "file",
@@ -33851,13 +33623,7 @@ export interface TestCaseWithExpectedResult {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type UserId = string & {
-    __UserId: void;
-};
-
-export const UserId = {
-    of: (value: string): UserId => value as UserId
-};
+                    "contents": "export type UserId = string;
 ",
                     "name": "UserId.ts",
                     "type": "file",
@@ -34814,13 +34580,7 @@ export interface PlaylistCreateRequest {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type PlaylistId = string & {
-    __PlaylistId: void;
-};
-
-export const PlaylistId = {
-    of: (value: string): PlaylistId => value as PlaylistId
-};
+                    "contents": "export type PlaylistId = string;
 ",
                     "name": "PlaylistId.ts",
                     "type": "file",
@@ -36559,13 +36319,7 @@ export interface Parameter {
                         "type": "file",
                       },
                       Object {
-                        "contents": "export type ParameterId = string & {
-    __ParameterId: void;
-};
-
-export const ParameterId = {
-    of: (value: string): ParameterId => value as ParameterId
-};
+                        "contents": "export type ParameterId = string;
 ",
                         "name": "ParameterId.ts",
                         "type": "file",
@@ -36646,13 +36400,7 @@ export const TestCaseFunction = {
                         "type": "file",
                       },
                       Object {
-                        "contents": "export type TestCaseId = string & {
-    __TestCaseId: void;
-};
-
-export const TestCaseId = {
-    of: (value: string): TestCaseId => value as TestCaseId
-};
+                        "contents": "export type TestCaseId = string;
 ",
                         "name": "TestCaseId.ts",
                         "type": "file",
@@ -36802,13 +36550,7 @@ export interface TestCaseTemplate {
                         "type": "file",
                       },
                       Object {
-                        "contents": "export type TestCaseTemplateId = string & {
-    __TestCaseTemplateId: void;
-};
-
-export const TestCaseTemplateId = {
-    of: (value: string): TestCaseTemplateId => value as TestCaseTemplateId
-};
+                        "contents": "export type TestCaseTemplateId = string;
 ",
                         "name": "TestCaseTemplateId.ts",
                         "type": "file",
@@ -38405,13 +38147,7 @@ export interface Scope {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type ShareId = string & {
-    __ShareId: void;
-};
-
-export const ShareId = {
-    of: (value: string): ShareId => value as ShareId
-};
+                    "contents": "export type ShareId = string;
 ",
                     "name": "ShareId.ts",
                     "type": "file",
@@ -38492,13 +38228,7 @@ export interface StoppedResponse {
                     "type": "file",
                   },
                   Object {
-                    "contents": "export type SubmissionId = string & {
-    __SubmissionId: void;
-};
-
-export const SubmissionId = {
-    of: (value: string): SubmissionId => value as SubmissionId
-};
+                    "contents": "export type SubmissionId = string;
 ",
                     "name": "SubmissionId.ts",
                     "type": "file",
@@ -39879,7 +39609,7 @@ export const AdminService = {
         app.use(express.json());
         app.post(\\"/admin/store-test-submission-status/:submissionId\\", async (request, response) => {
             const result = await impl.updateTestSubmissionStatus({
-                submissionId: model.submission.SubmissionId.of(request.params.submissionId),
+                submissionId: request.params.submissionId,
                 body: request.body
             });
             if (result.ok) {
@@ -39891,7 +39621,7 @@ export const AdminService = {
         });
         app.post(\\"/admin/store-test-submission-status-v2/:submissionId\\", async (request, response) => {
             const result = await impl.sendTestSubmissionUpdate({
-                submissionId: model.submission.SubmissionId.of(request.params.submissionId),
+                submissionId: request.params.submissionId,
                 body: request.body
             });
             if (result.ok) {
@@ -39903,7 +39633,7 @@ export const AdminService = {
         });
         app.post(\\"/admin/store-workspace-submission-status/:submissionId\\", async (request, response) => {
             const result = await impl.updateWorkspaceSubmissionStatus({
-                submissionId: model.submission.SubmissionId.of(request.params.submissionId),
+                submissionId: request.params.submissionId,
                 body: request.body
             });
             if (result.ok) {
@@ -39915,7 +39645,7 @@ export const AdminService = {
         });
         app.post(\\"/admin/store-workspace-submission-status-v2/:submissionId\\", async (request, response) => {
             const result = await impl.sendWorkspaceSubmissionUpdate({
-                submissionId: model.submission.SubmissionId.of(request.params.submissionId),
+                submissionId: request.params.submissionId,
                 body: request.body
             });
             if (result.ok) {
@@ -39927,7 +39657,7 @@ export const AdminService = {
         });
         app.post(\\"/admin/store-test-trace/submission/:submissionId/testCase/:testCaseId\\", async (request, response) => {
             const result = await impl.storeTracedTestCase({
-                submissionId: model.submission.SubmissionId.of(request.params.submissionId),
+                submissionId: request.params.submissionId,
                 testCaseId: request.params.testCaseId,
                 body: request.body
             });
@@ -39940,8 +39670,8 @@ export const AdminService = {
         });
         app.post(\\"/admin/store-test-trace-v2/submission/:submissionId/testCase/:testCaseId\\", async (request, response) => {
             const result = await impl.storeTracedTestCaseV2({
-                submissionId: model.submission.SubmissionId.of(request.params.submissionId),
-                testCaseId: model.problemV2.problemV2.TestCaseId.of(request.params.testCaseId),
+                submissionId: request.params.submissionId,
+                testCaseId: request.params.testCaseId,
                 body: request.body
             });
             if (result.ok) {
@@ -39953,7 +39683,7 @@ export const AdminService = {
         });
         app.post(\\"/admin/store-workspace-trace/submission/:submissionId\\", async (request, response) => {
             const result = await impl.storeTracedWorkspace({
-                submissionId: model.submission.SubmissionId.of(request.params.submissionId),
+                submissionId: request.params.submissionId,
                 body: request.body
             });
             if (result.ok) {
@@ -39965,7 +39695,7 @@ export const AdminService = {
         });
         app.post(\\"/admin/store-workspace-trace-v2/submission/:submissionId\\", async (request, response) => {
             const result = await impl.storeTracedWorkspaceV2({
-                submissionId: model.submission.SubmissionId.of(request.params.submissionId),
+                submissionId: request.params.submissionId,
                 body: request.body
             });
             if (result.ok) {
@@ -40134,7 +39864,7 @@ export const PlaylistCrudService = {
         });
         app.get(\\"/v2/playlist/:playlistId\\", async (request, response) => {
             const result = await impl.getPlaylist({
-                playlistId: model.playlist.PlaylistId.of(request.params.playlistId)
+                playlistId: request.params.playlistId
             });
             if (result.ok) {
                 response.send(result.body);
@@ -40145,7 +39875,7 @@ export const PlaylistCrudService = {
         });
         app.put(\\"/v2/playlist/:playlistId\\", async (request, response) => {
             const result = await impl.updatePlaylist(BearerToken.fromAuthorizationHeader(request.header(\\"Authorization\\")!), {
-                playlistId: model.playlist.PlaylistId.of(request.params.playlistId),
+                playlistId: request.params.playlistId,
                 body: request.body
             });
             if (result.ok) {
@@ -40157,7 +39887,7 @@ export const PlaylistCrudService = {
         });
         app.delete(\\"/v2/playlist/:playlistId\\", async (request, response) => {
             const result = await impl.deletePlaylist(BearerToken.fromAuthorizationHeader(request.header(\\"Authorization\\")!), {
-                playlistId: model.playlist.PlaylistId.of(request.params.playlistId)
+                playlistId: request.params.playlistId
             });
             if (result.ok) {
                 response.end();
@@ -40211,7 +39941,7 @@ export const ProblemCrudService = {
         });
         app.post(\\"/problem-crud/update/:problemId\\", async (request, response) => {
             const result = await impl.updateProblem({
-                problemId: model.commons.ProblemId.of(request.params.problemId),
+                problemId: request.params.problemId,
                 body: request.body
             });
             if (result.ok) {
@@ -40223,7 +39953,7 @@ export const ProblemCrudService = {
         });
         app.delete(\\"/problem-crud/delete/:problemId\\", async (request, response) => {
             const result = await impl.deleteProblem({
-                problemId: model.commons.ProblemId.of(request.params.problemId)
+                problemId: request.params.problemId
             });
             if (result.ok) {
                 response.end();
@@ -40274,7 +40004,7 @@ export const ProblemInfoService = {
         });
         app.get(\\"/problems/problem-info/:problemId\\", async (request, response) => {
             const result = await impl.getLatestProblem({
-                problemId: model.commons.ProblemId.of(request.params.problemId)
+                problemId: request.params.problemId
             });
             if (result.ok) {
                 response.send(result.body);
@@ -40285,7 +40015,7 @@ export const ProblemInfoService = {
         });
         app.get(\\"/problems/problem-info/:problemId/version/:problemVersion\\", async (request, response) => {
             const result = await impl.getProblemVersion({
-                problemId: model.commons.ProblemId.of(request.params.problemId),
+                problemId: request.params.problemId,
                 problemVersion: Number(request.params.problemVersion)
             });
             if (result.ok) {
@@ -40297,7 +40027,7 @@ export const ProblemInfoService = {
         });
         app.post(\\"/problems/expected-result/:problemId\\", async (request, response) => {
             const result = await impl.getExpectedResult({
-                problemId: model.commons.ProblemId.of(request.params.problemId)
+                problemId: request.params.problemId
             });
             if (result.ok) {
                 response.send(result.body);
@@ -40364,7 +40094,7 @@ export const ProblemCrudServiceV2 = {
         });
         app.post(\\"/problem-crud-v2/update/:problemId\\", async (request, response) => {
             const result = await impl.updateProblem({
-                problemId: model.commons.ProblemId.of(request.params.problemId),
+                problemId: request.params.problemId,
                 body: request.body
             });
             if (result.ok) {
@@ -40376,7 +40106,7 @@ export const ProblemCrudServiceV2 = {
         });
         app.delete(\\"/problem-crud-v2/delete/:problemId\\", async (request, response) => {
             const result = await impl.deleteProblem({
-                problemId: model.commons.ProblemId.of(request.params.problemId)
+                problemId: request.params.problemId
             });
             if (result.ok) {
                 response.end();
@@ -40472,7 +40202,7 @@ export const ProblemInfoServicV2 = {
         });
         app.get(\\"/problems-v2/problem-info/:problemId\\", async (request, response) => {
             const result = await impl.getLatestProblem({
-                problemId: model.commons.ProblemId.of(request.params.problemId)
+                problemId: request.params.problemId
             });
             if (result.ok) {
                 response.send(result.body);
@@ -40483,7 +40213,7 @@ export const ProblemInfoServicV2 = {
         });
         app.get(\\"/problems-v2/problem-info/:problemId/version/:problemVersion\\", async (request, response) => {
             const result = await impl.getProblemVersion({
-                problemId: model.commons.ProblemId.of(request.params.problemId),
+                problemId: request.params.problemId,
                 problemVersion: Number(request.params.problemVersion)
             });
             if (result.ok) {
@@ -40600,7 +40330,7 @@ export const SubmissionInfoService = {
         app.use(express.json());
         app.get(\\"/submissions/:submissionId\\", async (request, response) => {
             const result = await impl.getSubmissionState({
-                submissionId: model.submission.SubmissionId.of(request.params.submissionId)
+                submissionId: request.params.submissionId
             });
             if (result.ok) {
                 response.send(result.body);
@@ -40611,7 +40341,7 @@ export const SubmissionInfoService = {
         });
         app.get(\\"/submissions/v2/:submissionId\\", async (request, response) => {
             const result = await impl.getSubmissionStateV2({
-                submissionId: model.submission.SubmissionId.of(request.params.submissionId)
+                submissionId: request.params.submissionId
             });
             if (result.ok) {
                 response.send(result.body);
@@ -40622,7 +40352,7 @@ export const SubmissionInfoService = {
         });
         app.post(\\"/submissions/trace-respose/:submissionId/testCase/:testCaseId\\", async (request, response) => {
             const result = await impl.getTraceResponsesPage({
-                submissionId: model.submission.SubmissionId.of(request.params.submissionId),
+                submissionId: request.params.submissionId,
                 testCaseId: request.params.testCaseId,
                 body: request.body
             });
@@ -40635,8 +40365,8 @@ export const SubmissionInfoService = {
         });
         app.post(\\"/submissions/trace-response-v2/:submissionId/testCase/:testCaseId\\", async (request, response) => {
             const result = await impl.getTraceResponsesV2Page({
-                submissionId: model.submission.SubmissionId.of(request.params.submissionId),
-                testCaseId: model.problemV2.problemV2.TestCaseId.of(request.params.testCaseId),
+                submissionId: request.params.submissionId,
+                testCaseId: request.params.testCaseId,
                 body: request.body
             });
             if (result.ok) {
@@ -40648,7 +40378,7 @@ export const SubmissionInfoService = {
         });
         app.post(\\"/submissions/workspace-trace-response/:submissionId\\", async (request, response) => {
             const result = await impl.getTraceResponsesPageForWorkspace({
-                submissionId: model.submission.SubmissionId.of(request.params.submissionId),
+                submissionId: request.params.submissionId,
                 body: request.body
             });
             if (result.ok) {
@@ -40660,7 +40390,7 @@ export const SubmissionInfoService = {
         });
         app.post(\\"/submissions/workspace-trace-response-v2/:submissionId\\", async (request, response) => {
             const result = await impl.getTraceResponsesV2PageForWorkspace({
-                submissionId: model.submission.SubmissionId.of(request.params.submissionId),
+                submissionId: request.params.submissionId,
                 body: request.body
             });
             if (result.ok) {

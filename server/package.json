@@ -31,7 +31,6 @@
     "@fern-typescript/model": "workspace:*",
     "@fern-typescript/model-context": "workspace:*",
     "@fern-typescript/service-types": "workspace:*",
-    "@fern-typescript/types": "workspace:*",
     "memfs": "^3.4.1",
     "ts-morph": "^15.1.0"
   },
