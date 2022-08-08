@@ -65,7 +65,7 @@ export function generateEnumType({
         });
     }
 
-    moduleDeclaration.addInterface(visitorUtils.generateVisitorInterface(visitorItems));
+    moduleDeclaration.addInterface(visitorUtils.generateVisitorInterface({ items: visitorItems }));
 }
 
 function createUtils({

@@ -28,17 +28,6 @@ export function generateVisitMethod({
     switchOn: ts.Expression;
     items: readonly VisitableItem[];
 }): ts.ArrowFunction {
-    const returnUnknown = ts.factory.createReturnStatement(
-        ts.factory.createCallExpression(
-            ts.factory.createPropertyAccessExpression(
-                ts.factory.createIdentifier(VISITOR_PARAMETER_NAME),
-                ts.factory.createIdentifier(UNKNOWN_PROPERY_NAME)
-            ),
-            undefined,
-            undefined
-        )
-    );
-
     return ts.factory.createArrowFunction(
         undefined,
         [
@@ -85,39 +74,96 @@ export function generateVisitMethod({
         ],
         ts.factory.createTypeReferenceNode(ts.factory.createIdentifier(VISITOR_RESULT_TYPE_PARAMETER), undefined),
         undefined,
-        ts.factory.createBlock(
-            [
-                items.length > 0
-                    ? ts.factory.createSwitchStatement(
-                          switchOn,
-                          ts.factory.createCaseBlock([
-                              ...items.map((item) =>
-                                  ts.factory.createCaseClause(item.caseInSwitchStatement, [
-                                      ts.factory.createReturnStatement(
-                                          ts.factory.createCallExpression(
-                                              ts.factory.createPropertyAccessExpression(
-                                                  ts.factory.createIdentifier(VISITOR_PARAMETER_NAME),
-                                                  ts.factory.createIdentifier(item.keyInVisitor)
-                                              ),
-                                              undefined,
-                                              item.visitorArgument != null ? [item.visitorArgument.argument] : []
-                                          )
-                                      ),
-                                  ])
-                              ),
-                              ts.factory.createDefaultClause([returnUnknown]),
-                          ])
-                      )
-                    : returnUnknown,
-            ],
-            true
-        )
+        generateVisitSwitchStatement({ items, switchOn })
     );
 }
 
-export function generateVisitorInterface(items: readonly VisitableItem[]): OptionalKind<InterfaceDeclarationStructure> {
+export function generateVisitSwitchStatement({
+    items,
+    switchOn,
+}: {
+    items: readonly VisitableItem[];
+    switchOn: ts.Expression;
+}): ts.ConciseBody {
+    const returnUnknown = ts.factory.createReturnStatement(
+        ts.factory.createCallExpression(
+            ts.factory.createPropertyAccessExpression(
+                ts.factory.createIdentifier(VISITOR_PARAMETER_NAME),
+                ts.factory.createIdentifier(UNKNOWN_PROPERY_NAME)
+            ),
+            undefined,
+            undefined
+        )
+    );
+
+    return ts.factory.createBlock(
+        [
+            items.length > 0
+                ? ts.factory.createSwitchStatement(
+                      switchOn,
+                      ts.factory.createCaseBlock([
+                          ...items.map((item) =>
+                              ts.factory.createCaseClause(item.caseInSwitchStatement, [
+                                  ts.factory.createReturnStatement(
+                                      ts.factory.createCallExpression(
+                                          ts.factory.createPropertyAccessExpression(
+                                              ts.factory.createIdentifier(VISITOR_PARAMETER_NAME),
+                                              ts.factory.createIdentifier(item.keyInVisitor)
+                                          ),
+                                          undefined,
+                                          item.visitorArgument != null ? [item.visitorArgument.argument] : []
+                                      )
+                                  ),
+                              ])
+                          ),
+                          ts.factory.createDefaultClause([returnUnknown]),
+                      ])
+                  )
+                : returnUnknown,
+        ],
+        true
+    );
+}
+
+export function generateVisitMethodType(referenceToVisitor: ts.EntityName): ts.TypeNode {
+    return ts.factory.createFunctionTypeNode(
+        [
+            ts.factory.createTypeParameterDeclaration(
+                undefined,
+                ts.factory.createIdentifier(VISITOR_RESULT_TYPE_PARAMETER),
+                undefined,
+                undefined
+            ),
+        ],
+        [
+            ts.factory.createParameterDeclaration(
+                undefined,
+                undefined,
+                undefined,
+                ts.factory.createIdentifier(VISITOR_PARAMETER_NAME),
+                undefined,
+                ts.factory.createTypeReferenceNode(referenceToVisitor, [
+                    ts.factory.createTypeReferenceNode(
+                        ts.factory.createIdentifier(VISITOR_RESULT_TYPE_PARAMETER),
+                        undefined
+                    ),
+                ]),
+                undefined
+            ),
+        ],
+        ts.factory.createTypeReferenceNode(ts.factory.createIdentifier(VISITOR_RESULT_TYPE_PARAMETER), undefined)
+    );
+}
+
+export function generateVisitorInterface({
+    items,
+    name = VISITOR_INTERFACE_NAME,
+}: {
+    items: readonly VisitableItem[];
+    name?: string;
+}): OptionalKind<InterfaceDeclarationStructure> {
     return {
-        name: VISITOR_INTERFACE_NAME,
+        name,
         isExported: true,
         typeParameters: [VISITOR_RESULT_TYPE_PARAMETER],
         properties: [

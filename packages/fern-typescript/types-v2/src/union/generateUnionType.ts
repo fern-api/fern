@@ -114,7 +114,7 @@ export function generateUnionType({
         };
     });
 
-    module.addInterface(visitorUtils.generateVisitorInterface(visitorItems));
+    module.addInterface(visitorUtils.generateVisitorInterface({ items: visitorItems }));
 
     file.sourceFile.addVariableStatement({
         declarationKind: VariableDeclarationKind.Const,
