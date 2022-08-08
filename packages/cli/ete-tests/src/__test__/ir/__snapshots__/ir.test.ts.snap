@@ -6,7 +6,9 @@ exports[`fern-ir-tests simple 1`] = `
     \\"types\\": [
         {
             \\"name\\": {
-                \\"fernFilepath\\": [],
+                \\"fernFilepath\\": [
+                    \\"api\\"
+                ],
                 \\"name\\": \\"MovieId\\"
             },
             \\"shape\\": {
@@ -19,7 +21,9 @@ exports[`fern-ir-tests simple 1`] = `
         },
         {
             \\"name\\": {
-                \\"fernFilepath\\": [],
+                \\"fernFilepath\\": [
+                    \\"api\\"
+                ],
                 \\"name\\": \\"Movie\\"
             },
             \\"shape\\": {
@@ -29,7 +33,9 @@ exports[`fern-ir-tests simple 1`] = `
                         \\"key\\": \\"id\\",
                         \\"valueType\\": {
                             \\"name\\": \\"MovieId\\",
-                            \\"fernFilepath\\": [],
+                            \\"fernFilepath\\": [
+                                \\"api\\"
+                            ],
                             \\"_type\\": \\"named\\"
                         }
                     },
@@ -53,7 +59,9 @@ exports[`fern-ir-tests simple 1`] = `
         },
         {
             \\"name\\": {
-                \\"fernFilepath\\": [],
+                \\"fernFilepath\\": [
+                    \\"api\\"
+                ],
                 \\"name\\": \\"CreateMovieRequest\\"
             },
             \\"shape\\": {
@@ -82,7 +90,9 @@ exports[`fern-ir-tests simple 1`] = `
         {
             \\"name\\": {
                 \\"name\\": \\"NotFoundError\\",
-                \\"fernFilepath\\": []
+                \\"fernFilepath\\": [
+                    \\"api\\"
+                ]
             },
             \\"discriminantValue\\": \\"NotFoundError\\",
             \\"http\\": {
@@ -101,7 +111,9 @@ exports[`fern-ir-tests simple 1`] = `
             {
                 \\"name\\": {
                     \\"name\\": \\"MoviesService\\",
-                    \\"fernFilepath\\": []
+                    \\"fernFilepath\\": [
+                        \\"api\\"
+                    ]
                 },
                 \\"basePath\\": \\"/movies\\",
                 \\"headers\\": [],
@@ -123,7 +135,9 @@ exports[`fern-ir-tests simple 1`] = `
                             },
                             \\"type\\": {
                                 \\"name\\": \\"CreateMovieRequest\\",
-                                \\"fernFilepath\\": [],
+                                \\"fernFilepath\\": [
+                                    \\"api\\"
+                                ],
                                 \\"_type\\": \\"named\\"
                             }
                         },
@@ -133,7 +147,9 @@ exports[`fern-ir-tests simple 1`] = `
                             },
                             \\"type\\": {
                                 \\"name\\": \\"MovieId\\",
-                                \\"fernFilepath\\": [],
+                                \\"fernFilepath\\": [
+                                    \\"api\\"
+                                ],
                                 \\"_type\\": \\"named\\"
                             }
                         },
@@ -157,7 +173,9 @@ exports[`fern-ir-tests simple 1`] = `
                                 \\"key\\": \\"movieId\\",
                                 \\"valueType\\": {
                                     \\"name\\": \\"MovieId\\",
-                                    \\"fernFilepath\\": [],
+                                    \\"fernFilepath\\": [
+                                        \\"api\\"
+                                    ],
                                     \\"_type\\": \\"named\\"
                                 }
                             }
@@ -178,7 +196,9 @@ exports[`fern-ir-tests simple 1`] = `
                             },
                             \\"type\\": {
                                 \\"name\\": \\"Movie\\",
-                                \\"fernFilepath\\": [],
+                                \\"fernFilepath\\": [
+                                    \\"api\\"
+                                ],
                                 \\"_type\\": \\"named\\"
                             }
                         },
@@ -187,7 +207,9 @@ exports[`fern-ir-tests simple 1`] = `
                                 \\"discriminantValue\\": \\"NotFoundError\\",
                                 \\"error\\": {
                                     \\"name\\": \\"NotFoundError\\",
-                                    \\"fernFilepath\\": []
+                                    \\"fernFilepath\\": [
+                                        \\"api\\"
+                                    ]
                                 }
                             }
                         ]

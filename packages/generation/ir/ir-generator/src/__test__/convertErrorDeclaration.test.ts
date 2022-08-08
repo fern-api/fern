@@ -12,7 +12,7 @@ describe("convertErrorDeclaration", () => {
                     },
                 },
             },
-            fernFilepath: ["path", "to"],
+            fernFilepath: ["path", "to", "other"],
             imports: {
                 commons: "./commons",
             },
@@ -22,7 +22,7 @@ describe("convertErrorDeclaration", () => {
             docs: undefined,
             name: {
                 name: "UnauthorizedError",
-                fernFilepath: ["path", "to"],
+                fernFilepath: ["path", "to", "other"],
             },
             discriminantValue: "UnauthorizedError",
             http: undefined,
@@ -33,7 +33,7 @@ describe("convertErrorDeclaration", () => {
                         docs: undefined,
                         key: "postId",
                         valueType: TypeReference.named({
-                            fernFilepath: ["path", "to"],
+                            fernFilepath: ["path", "to", "commons"],
                             name: "PostId",
                         }),
                     },

@@ -9,11 +9,11 @@ export interface ReferenceToTypeName {
 
 export function parseReferenceToTypeName({
     reference,
-    relativeFilePathOfDirectory,
+    referencedIn,
     imports,
 }: {
     reference: string;
-    relativeFilePathOfDirectory: string;
+    referencedIn: RelativeFilePath;
     imports: Record<string, string>;
 }): ReferenceToTypeName | undefined {
     const [firstPart, secondPart, ...rest] = reference.split(".");
@@ -36,7 +36,7 @@ export function parseReferenceToTypeName({
     }
 
     return {
-        relativeFilePath: path.join(relativeFilePathOfDirectory, importPath) as RelativeFilePath,
+        relativeFilePath: path.join(path.dirname(referencedIn), importPath) as RelativeFilePath,
         typeName: secondPart,
     };
 }

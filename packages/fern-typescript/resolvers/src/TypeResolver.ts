@@ -61,7 +61,7 @@ export class TypeResolver {
         typeName: DeclaredTypeName;
         seen?: Record<Filepath, Set<SimpleTypeName>>;
     }): ResolvedType {
-        const seenAtFilepath = seen[stringifyFernFilepath(typeName.fernFilepath)] ?? new Set();
+        const seenAtFilepath = (seen[stringifyFernFilepath(typeName.fernFilepath)] ??= new Set());
         if (seenAtFilepath.has(typeName.name)) {
             throw new Error("Detected cycle when resolving type: " + typeNameToString(typeName));
         }
@@ -112,5 +112,5 @@ export class TypeResolver {
 }
 
 function typeNameToString(typeName: DeclaredTypeName) {
-    return path.join(stringifyFernFilepath(typeName.fernFilepath), typeName.name);
+    return path.join(...typeName.fernFilepath, typeName.name);
 }
