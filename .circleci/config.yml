@@ -125,7 +125,7 @@ jobs:
           command: yarn run publish --tag next
       - run:
           name: Publish fern-api-dev CLI
-          command: yarn workspace @fern-api/cli publish:cli:dev --access restricted --tag next
+          command: yarn workspace @fern-api/cli publish:cli:dev --access restricted
 
   publish-fern-typescript:
     machine:
