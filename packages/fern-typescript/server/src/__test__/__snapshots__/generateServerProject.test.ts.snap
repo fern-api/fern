@@ -11,15 +11,33 @@ yarn.lock
   "/index.ts": "export * as model from \\"./model\\";
 export * as services from \\"./services\\";
 ",
-  "/model/_errors/PostNotFoundError.ts": "import * as model from \\"..\\";
+  "/model/commons/_types/PostId.ts": "/**
+ * An ID of a blog post
+ */
+export type PostId = string & {
+    __PostId: void;
+};
+
+export const PostId = {
+    of: (value: string): PostId => value as PostId
+};
+",
+  "/model/commons/_types/index.ts": "export * from \\"./PostId\\";
+",
+  "/model/commons/index.ts": "export * from \\"./_types\\";
+",
+  "/model/index.ts": "export * as commons from \\"./commons\\";
+export * as posts from \\"./posts\\";
+",
+  "/model/posts/_errors/PostNotFoundError.ts": "import * as model from \\"../..\\";
 
 export interface PostNotFoundError {
-    id: model.PostId;
+    id: model.commons.PostId;
 }
 ",
-  "/model/_errors/index.ts": "export * from \\"./PostNotFoundError\\";
+  "/model/posts/_errors/index.ts": "export * from \\"./PostNotFoundError\\";
 ",
-  "/model/_service-types/PostsService/CreatePostErrorBody.ts": "export type CreatePostErrorBody = never;
+  "/model/posts/_service-types/PostsService/CreatePostErrorBody.ts": "export type CreatePostErrorBody = never;
 
 export declare namespace CreatePostErrorBody {
     export interface _Visitor<Result> {
@@ -35,23 +53,23 @@ export const CreatePostErrorBody = {
     _types: (): CreatePostErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
-  "/model/_service-types/PostsService/CreatePostResponse.ts": "import * as model from \\"../..\\";
+  "/model/posts/_service-types/PostsService/CreatePostResponse.ts": "import * as model from \\"../../..\\";
 
 export type CreatePostResponse = CreatePostResponse.SuccessResponse | CreatePostResponse.ErrorResponse;
 
 export declare namespace CreatePostResponse {
     export interface SuccessResponse {
         ok: true;
-        body: model.PostId;
+        body: model.commons.PostId;
     }
 
     export interface ErrorResponse {
         ok: false;
-        error: model.CreatePostErrorBody;
+        error: model.posts.CreatePostErrorBody;
     }
 }
 ",
-  "/model/_service-types/PostsService/DeletePostErrorBody.ts": "export type DeletePostErrorBody = never;
+  "/model/posts/_service-types/PostsService/DeletePostErrorBody.ts": "export type DeletePostErrorBody = never;
 
 export declare namespace DeletePostErrorBody {
     export interface _Visitor<Result> {
@@ -67,14 +85,14 @@ export const DeletePostErrorBody = {
     _types: (): DeletePostErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
-  "/model/_service-types/PostsService/DeletePostRequest.ts": "import * as model from \\"../..\\";
+  "/model/posts/_service-types/PostsService/DeletePostRequest.ts": "import * as model from \\"../../..\\";
 
 export interface DeletePostRequest {
-    postId: model.PostId;
+    postId: model.commons.PostId;
     \\"X-Service-Header\\": string;
 }
 ",
-  "/model/_service-types/PostsService/DeletePostResponse.ts": "import * as model from \\"../..\\";
+  "/model/posts/_service-types/PostsService/DeletePostResponse.ts": "import * as model from \\"../../..\\";
 
 export type DeletePostResponse = DeletePostResponse.SuccessResponse | DeletePostResponse.ErrorResponse;
 
@@ -85,30 +103,30 @@ export declare namespace DeletePostResponse {
 
     export interface ErrorResponse {
         ok: false;
-        error: model.DeletePostErrorBody;
+        error: model.posts.DeletePostErrorBody;
     }
 }
 ",
-  "/model/_service-types/PostsService/GetPostErrorBody.ts": "import * as model from \\"../..\\";
+  "/model/posts/_service-types/PostsService/GetPostErrorBody.ts": "import { posts } from \\"../../..\\";
 import * as uuid from \\"uuid\\";
 
 export type GetPostErrorBody =
     | GetPostErrorBody.PostNotFoundError;
 
 export declare namespace GetPostErrorBody {
-    interface PostNotFoundError extends model.PostNotFoundError {
+    interface PostNotFoundError extends posts.PostNotFoundError {
         _error: \\"PostNotFoundError\\";
         _errorInstanceId: string;
     }
 
     export interface _Visitor<Result> {
-        PostNotFoundError: (value: model.PostNotFoundError) => Result;
+        PostNotFoundError: (value: posts.PostNotFoundError) => Result;
         _unknown: () => Result;
     }
 }
 
 export const GetPostErrorBody = {
-    PostNotFoundError: (value: model.PostNotFoundError): GetPostErrorBody.PostNotFoundError => ({
+    PostNotFoundError: (value: posts.PostNotFoundError): GetPostErrorBody.PostNotFoundError => ({
         ...value,
         _error: \\"PostNotFoundError\\",
         _errorInstanceId: uuid.v4()
@@ -124,51 +142,51 @@ export const GetPostErrorBody = {
     _types: (): GetPostErrorBody[\\"_error\\"][] => [\\"PostNotFoundError\\"],
 } as const;
 ",
-  "/model/_service-types/PostsService/GetPostRequest.ts": "import * as model from \\"../..\\";
+  "/model/posts/_service-types/PostsService/GetPostRequest.ts": "import * as model from \\"../../..\\";
 
 export interface GetPostRequest {
-    postId: model.PostId;
+    postId: model.commons.PostId;
     page: number | null | undefined;
     otherParam: number;
     \\"X-Service-Header\\": string;
 }
 ",
-  "/model/_service-types/PostsService/GetPostResponse.ts": "import * as model from \\"../..\\";
+  "/model/posts/_service-types/PostsService/GetPostResponse.ts": "import * as model from \\"../../..\\";
 
 export type GetPostResponse = GetPostResponse.SuccessResponse | GetPostResponse.ErrorResponse;
 
 export declare namespace GetPostResponse {
     export interface SuccessResponse {
         ok: true;
-        body: model.Post;
+        body: model.posts.Post;
     }
 
     export interface ErrorResponse {
         ok: false;
-        error: model.GetPostErrorBody;
+        error: model.posts.GetPostErrorBody;
     }
 }
 ",
-  "/model/_service-types/PostsService/GetPostV2ErrorBody.ts": "import * as model from \\"../..\\";
+  "/model/posts/_service-types/PostsService/GetPostV2ErrorBody.ts": "import { posts } from \\"../../..\\";
 import * as uuid from \\"uuid\\";
 
 export type GetPostV2ErrorBody =
     | GetPostV2ErrorBody.PostNotFoundError;
 
 export declare namespace GetPostV2ErrorBody {
-    interface PostNotFoundError extends model.PostNotFoundError {
+    interface PostNotFoundError extends posts.PostNotFoundError {
         _error: \\"PostNotFoundError\\";
         _errorInstanceId: string;
     }
 
     export interface _Visitor<Result> {
-        PostNotFoundError: (value: model.PostNotFoundError) => Result;
+        PostNotFoundError: (value: posts.PostNotFoundError) => Result;
         _unknown: () => Result;
     }
 }
 
 export const GetPostV2ErrorBody = {
-    PostNotFoundError: (value: model.PostNotFoundError): GetPostV2ErrorBody.PostNotFoundError => ({
+    PostNotFoundError: (value: posts.PostNotFoundError): GetPostV2ErrorBody.PostNotFoundError => ({
         ...value,
         _error: \\"PostNotFoundError\\",
         _errorInstanceId: uuid.v4()
@@ -184,30 +202,30 @@ export const GetPostV2ErrorBody = {
     _types: (): GetPostV2ErrorBody[\\"_error\\"][] => [\\"PostNotFoundError\\"],
 } as const;
 ",
-  "/model/_service-types/PostsService/GetPostV2Request.ts": "import * as model from \\"../..\\";
+  "/model/posts/_service-types/PostsService/GetPostV2Request.ts": "import * as model from \\"../../..\\";
 
 export interface GetPostV2Request {
     \\"X-Service-Header\\": string;
-    body: model.PostId;
+    body: model.commons.PostId;
 }
 ",
-  "/model/_service-types/PostsService/GetPostV2Response.ts": "import * as model from \\"../..\\";
+  "/model/posts/_service-types/PostsService/GetPostV2Response.ts": "import * as model from \\"../../..\\";
 
 export type GetPostV2Response = GetPostV2Response.SuccessResponse | GetPostV2Response.ErrorResponse;
 
 export declare namespace GetPostV2Response {
     export interface SuccessResponse {
         ok: true;
-        body: model.Post;
+        body: model.posts.Post;
     }
 
     export interface ErrorResponse {
         ok: false;
-        error: model.GetPostV2ErrorBody;
+        error: model.posts.GetPostV2ErrorBody;
     }
 }
 ",
-  "/model/_service-types/PostsService/NoopWithAuthErrorBody.ts": "export type NoopWithAuthErrorBody = never;
+  "/model/posts/_service-types/PostsService/NoopWithAuthErrorBody.ts": "export type NoopWithAuthErrorBody = never;
 
 export declare namespace NoopWithAuthErrorBody {
     export interface _Visitor<Result> {
@@ -223,11 +241,11 @@ export const NoopWithAuthErrorBody = {
     _types: (): NoopWithAuthErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
-  "/model/_service-types/PostsService/NoopWithAuthRequest.ts": "export interface NoopWithAuthRequest {
+  "/model/posts/_service-types/PostsService/NoopWithAuthRequest.ts": "export interface NoopWithAuthRequest {
     \\"X-Service-Header\\": string;
 }
 ",
-  "/model/_service-types/PostsService/NoopWithAuthResponse.ts": "import * as model from \\"../..\\";
+  "/model/posts/_service-types/PostsService/NoopWithAuthResponse.ts": "import * as model from \\"../../..\\";
 
 export type NoopWithAuthResponse = NoopWithAuthResponse.SuccessResponse | NoopWithAuthResponse.ErrorResponse;
 
@@ -238,11 +256,11 @@ export declare namespace NoopWithAuthResponse {
 
     export interface ErrorResponse {
         ok: false;
-        error: model.NoopWithAuthErrorBody;
+        error: model.posts.NoopWithAuthErrorBody;
     }
 }
 ",
-  "/model/_service-types/PostsService/NoopWithoutAuthErrorBody.ts": "export type NoopWithoutAuthErrorBody = never;
+  "/model/posts/_service-types/PostsService/NoopWithoutAuthErrorBody.ts": "export type NoopWithoutAuthErrorBody = never;
 
 export declare namespace NoopWithoutAuthErrorBody {
     export interface _Visitor<Result> {
@@ -258,11 +276,11 @@ export const NoopWithoutAuthErrorBody = {
     _types: (): NoopWithoutAuthErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
-  "/model/_service-types/PostsService/NoopWithoutAuthRequest.ts": "export interface NoopWithoutAuthRequest {
+  "/model/posts/_service-types/PostsService/NoopWithoutAuthRequest.ts": "export interface NoopWithoutAuthRequest {
     \\"X-Service-Header\\": string;
 }
 ",
-  "/model/_service-types/PostsService/NoopWithoutAuthResponse.ts": "import * as model from \\"../..\\";
+  "/model/posts/_service-types/PostsService/NoopWithoutAuthResponse.ts": "import * as model from \\"../../..\\";
 
 export type NoopWithoutAuthResponse = NoopWithoutAuthResponse.SuccessResponse | NoopWithoutAuthResponse.ErrorResponse;
 
@@ -273,19 +291,19 @@ export declare namespace NoopWithoutAuthResponse {
 
     export interface ErrorResponse {
         ok: false;
-        error: model.NoopWithoutAuthErrorBody;
+        error: model.posts.NoopWithoutAuthErrorBody;
     }
 }
 ",
-  "/model/_service-types/PostsService/_CreatePostRequest.ts": "import * as model from \\"../..\\";
+  "/model/posts/_service-types/PostsService/_CreatePostRequest.ts": "import * as model from \\"../../..\\";
 
 export interface _CreatePostRequest {
     \\"X-Service-Header\\": string;
     \\"X-Endpoint-Header\\": string;
-    body: model.CreatePostRequest;
+    body: model.posts.CreatePostRequest;
 }
 ",
-  "/model/_service-types/PostsService/index.ts": "export * from \\"./_CreatePostRequest\\";
+  "/model/posts/_service-types/PostsService/index.ts": "export * from \\"./_CreatePostRequest\\";
 export * from \\"./CreatePostErrorBody\\";
 export * from \\"./CreatePostResponse\\";
 export * from \\"./GetPostRequest\\";
@@ -304,9 +322,9 @@ export * from \\"./NoopWithoutAuthRequest\\";
 export * from \\"./NoopWithoutAuthErrorBody\\";
 export * from \\"./NoopWithoutAuthResponse\\";
 ",
-  "/model/_service-types/index.ts": "export * from \\"./PostsService\\";
+  "/model/posts/_service-types/index.ts": "export * from \\"./PostsService\\";
 ",
-  "/model/_types/Author.ts": "export type Author =
+  "/model/posts/_types/Author.ts": "export type Author =
     | Author.Anonymous
     | Author.Named;
 
@@ -348,41 +366,30 @@ export const Author = {
     _types: (): Author[\\"_type\\"][] => [\\"anonymous\\", \\"named\\"],
 } as const;
 ",
-  "/model/_types/CreatePostRequest.ts": "import * as model from \\"..\\";
+  "/model/posts/_types/CreatePostRequest.ts": "import * as model from \\"../..\\";
 
 export interface CreatePostRequest {
-    type: model.PostType;
+    type: model.posts.PostType;
     title: string;
-    author: model.Author;
+    author: model.posts.Author;
     content: string;
 }
 ",
-  "/model/_types/Post.ts": "import * as model from \\"..\\";
+  "/model/posts/_types/Post.ts": "import * as model from \\"../..\\";
 
 /**
  * A blog post
  */
 export interface Post {
-    id: model.PostId;
-    type: model.PostType;
+    id: model.commons.PostId;
+    type: model.posts.PostType;
     title: string;
-    author: model.Author;
+    author: model.posts.Author;
     content: string;
-    relatedPosts: model.Post[];
+    relatedPosts: model.posts.Post[];
 }
 ",
-  "/model/_types/PostId.ts": "/**
- * An ID of a blog post
- */
-export type PostId = string & {
-    __PostId: void;
-};
-
-export const PostId = {
-    of: (value: string): PostId => value as PostId
-};
-",
-  "/model/_types/PostType.ts": "export type PostType =
+  "/model/posts/_types/PostType.ts": "export type PostType =
     | \\"LONG\\"
     | \\"SHORT\\";
 
@@ -412,19 +419,17 @@ export declare namespace PostType {
     }
 }
 ",
-  "/model/_types/index.ts": "export * from \\"./PostId\\";
-export * from \\"./Post\\";
+  "/model/posts/_types/index.ts": "export * from \\"./Post\\";
 export * from \\"./CreatePostRequest\\";
 export * from \\"./PostType\\";
 export * from \\"./Author\\";
 ",
-  "/model/index.ts": "export * from \\"./_types\\";
+  "/model/posts/index.ts": "export * from \\"./_types\\";
 export * from \\"./_errors\\";
 export * from \\"./_service-types\\";
 ",
   "/package.json": "{
     \\"name\\": \\"posts\\",
-    \\"packageManager\\": \\"yarn@3.2.2\\",
     \\"version\\": \\"0.0.0\\",
     \\"main\\": \\"./index.js\\",
     \\"types\\": \\"./index.d.ts\\",
@@ -448,17 +453,19 @@ export * from \\"./_service-types\\";
         \\"typescript\\": \\"4.6.4\\"
     }
 }",
-  "/services/PostsService.ts": "import * as model from \\"../model\\";
+  "/services/index.ts": "export * as posts from \\"./posts\\";
+",
+  "/services/posts/PostsService.ts": "import * as model from \\"../../model\\";
 import { BearerToken } from \\"@fern-typescript/service-utils\\";
 import express, { Express } from \\"express\\";
 
 export interface PostsService {
-    createPost(request: model._CreatePostRequest): model.CreatePostResponse | Promise<model.CreatePostResponse>;
-    getPost(token: BearerToken, request: model.GetPostRequest): model.GetPostResponse | Promise<model.GetPostResponse>;
-    getPostV2(token: BearerToken, request: model.GetPostV2Request): model.GetPostV2Response | Promise<model.GetPostV2Response>;
-    deletePost(token: BearerToken, request: model.DeletePostRequest): model.DeletePostResponse | Promise<model.DeletePostResponse>;
-    noopWithAuth(token: BearerToken, request: model.NoopWithAuthRequest): model.NoopWithAuthResponse | Promise<model.NoopWithAuthResponse>;
-    noopWithoutAuth(request: model.NoopWithoutAuthRequest): model.NoopWithoutAuthResponse | Promise<model.NoopWithoutAuthResponse>;
+    createPost(request: model.posts._CreatePostRequest): model.posts.CreatePostResponse | Promise<model.posts.CreatePostResponse>;
+    getPost(token: BearerToken, request: model.posts.GetPostRequest): model.posts.GetPostResponse | Promise<model.posts.GetPostResponse>;
+    getPostV2(token: BearerToken, request: model.posts.GetPostV2Request): model.posts.GetPostV2Response | Promise<model.posts.GetPostV2Response>;
+    deletePost(token: BearerToken, request: model.posts.DeletePostRequest): model.posts.DeletePostResponse | Promise<model.posts.DeletePostResponse>;
+    noopWithAuth(token: BearerToken, request: model.posts.NoopWithAuthRequest): model.posts.NoopWithAuthResponse | Promise<model.posts.NoopWithAuthResponse>;
+    noopWithoutAuth(request: model.posts.NoopWithoutAuthRequest): model.posts.NoopWithoutAuthResponse | Promise<model.posts.NoopWithoutAuthResponse>;
 }
 
 export const PostsService = {
@@ -480,7 +487,7 @@ export const PostsService = {
         });
         app.get(\\"/posts/:postId\\", async (request, response) => {
             const result = await impl.getPost(BearerToken.fromAuthorizationHeader(request.header(\\"Authorization\\")!), {
-                postId: model.PostId.of(request.params.postId),
+                postId: model.commons.PostId.of(request.params.postId),
                 page: request.query.page != null ? Number(request.query.page) : undefined,
                 otherParam: Number(request.query.otherParam),
                 \\"X-Service-Header\\": request.header(\\"X-Service-Header\\")!
@@ -489,7 +496,7 @@ export const PostsService = {
                 response.send(result.body);
             }
             else {
-                const statusCode = model.GetPostErrorBody._visit(result.error, {
+                const statusCode = model.posts.GetPostErrorBody._visit(result.error, {
                     PostNotFoundError: () => 404,
                     _unknown: () => 500
                 });
@@ -505,7 +512,7 @@ export const PostsService = {
                 response.send(result.body);
             }
             else {
-                const statusCode = model.GetPostV2ErrorBody._visit(result.error, {
+                const statusCode = model.posts.GetPostV2ErrorBody._visit(result.error, {
                     PostNotFoundError: () => 404,
                     _unknown: () => 500
                 });
@@ -514,7 +521,7 @@ export const PostsService = {
         });
         app.delete(\\"/posts/:postId\\", async (request, response) => {
             const result = await impl.deletePost(BearerToken.fromAuthorizationHeader(request.header(\\"Authorization\\")!), {
-                postId: model.PostId.of(request.params.postId),
+                postId: model.commons.PostId.of(request.params.postId),
                 \\"X-Service-Header\\": request.header(\\"X-Service-Header\\")!
             });
             if (result.ok) {
@@ -550,7 +557,7 @@ export const PostsService = {
     }
 };
 ",
-  "/services/index.ts": "export * from \\"./PostsService\\";
+  "/services/posts/index.ts": "export * from \\"./PostsService\\";
 ",
   "/tsconfig.json": "{
     \\"compilerOptions\\": {

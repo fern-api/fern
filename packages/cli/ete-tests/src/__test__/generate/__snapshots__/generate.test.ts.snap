@@ -13,32 +13,7 @@ yarn.lock
     "type": "file",
   },
   Object {
-    "contents": Array [
-      Object {
-        "contents": "/**
- * A blog post
- */
-export interface Post {
-    id: string;
-    title: string;
-    content: string;
-}
-",
-        "name": "Post.ts",
-        "type": "file",
-      },
-      Object {
-        "contents": "export * from \\"./Post\\";
-",
-        "name": "index.ts",
-        "type": "file",
-      },
-    ],
-    "name": "_types",
-    "type": "directory",
-  },
-  Object {
-    "contents": "export * from \\"./_types\\";
+    "contents": "export * as posts from \\"./posts\\";
 ",
     "name": "index.ts",
     "type": "file",
@@ -46,7 +21,6 @@ export interface Post {
   Object {
     "contents": "{
     \\"name\\": \\"@fern/posts-model\\",
-    \\"packageManager\\": \\"yarn@3.2.2\\",
     \\"main\\": \\"./index.js\\",
     \\"types\\": \\"./index.d.ts\\",
     \\"scripts\\": {
@@ -60,6 +34,43 @@ export interface Post {
 }",
     "name": "package.json",
     "type": "file",
+  },
+  Object {
+    "contents": Array [
+      Object {
+        "contents": Array [
+          Object {
+            "contents": "/**
+ * A blog post
+ */
+export interface Post {
+    id: string;
+    title: string;
+    content: string;
+}
+",
+            "name": "Post.ts",
+            "type": "file",
+          },
+          Object {
+            "contents": "export * from \\"./Post\\";
+",
+            "name": "index.ts",
+            "type": "file",
+          },
+        ],
+        "name": "_types",
+        "type": "directory",
+      },
+      Object {
+        "contents": "export * from \\"./_types\\";
+",
+        "name": "index.ts",
+        "type": "file",
+      },
+    ],
+    "name": "posts",
+    "type": "directory",
   },
   Object {
     "contents": "{

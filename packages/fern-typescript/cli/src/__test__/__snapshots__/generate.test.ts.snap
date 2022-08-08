@@ -6961,7 +6961,6 @@ export * from \\"./GetNumWarmInstancesResponse\\";
       Object {
         "contents": "{
     \\"name\\": \\"@fern-api/my-api-client\\",
-    \\"packageManager\\": \\"yarn@3.2.2\\",
     \\"main\\": \\"./index.js\\",
     \\"types\\": \\"./index.d.ts\\",
     \\"scripts\\": {
@@ -15737,7 +15736,6 @@ export * from \\"./GetNumWarmInstancesResponse\\";
       Object {
         "contents": "{
     \\"name\\": \\"@fern-api/my-api-client\\",
-    \\"packageManager\\": \\"yarn@3.2.2\\",
     \\"main\\": \\"./index.js\\",
     \\"types\\": \\"./index.d.ts\\",
     \\"scripts\\": {
@@ -24508,7 +24506,6 @@ export * from \\"./GetNumWarmInstancesResponse\\";
       Object {
         "contents": "{
     \\"name\\": \\"@fern-api/my-api-server\\",
-    \\"packageManager\\": \\"yarn@3.2.2\\",
     \\"main\\": \\"./index.js\\",
     \\"types\\": \\"./index.d.ts\\",
     \\"scripts\\": {
@@ -39434,7 +39431,6 @@ export * from \\"./GetNumWarmInstancesResponse\\";
       Object {
         "contents": "{
     \\"name\\": \\"@fern-api/my-api-server\\",
-    \\"packageManager\\": \\"yarn@3.2.2\\",
     \\"main\\": \\"./index.js\\",
     \\"types\\": \\"./index.d.ts\\",
     \\"scripts\\": {
