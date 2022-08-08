@@ -25546,7 +25546,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.admin.AdminService.updateTestSubmissionStatus.Error
+                error: MyApi.admin.AdminService.updateTestSubmissionStatus.Error._parse(response.body as MyApi.admin.AdminService.updateTestSubmissionStatus.Error[\\"body\\"])
             };
         }
     }
@@ -25567,7 +25567,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.admin.AdminService.sendTestSubmissionUpdate.Error
+                error: MyApi.admin.AdminService.sendTestSubmissionUpdate.Error._parse(response.body as MyApi.admin.AdminService.sendTestSubmissionUpdate.Error[\\"body\\"])
             };
         }
     }
@@ -25588,7 +25588,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.admin.AdminService.updateWorkspaceSubmissionStatus.Error
+                error: MyApi.admin.AdminService.updateWorkspaceSubmissionStatus.Error._parse(response.body as MyApi.admin.AdminService.updateWorkspaceSubmissionStatus.Error[\\"body\\"])
             };
         }
     }
@@ -25609,7 +25609,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.admin.AdminService.sendWorkspaceSubmissionUpdate.Error
+                error: MyApi.admin.AdminService.sendWorkspaceSubmissionUpdate.Error._parse(response.body as MyApi.admin.AdminService.sendWorkspaceSubmissionUpdate.Error[\\"body\\"])
             };
         }
     }
@@ -25630,7 +25630,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.admin.AdminService.storeTracedTestCase.Error
+                error: MyApi.admin.AdminService.storeTracedTestCase.Error._parse(response.body as MyApi.admin.AdminService.storeTracedTestCase.Error[\\"body\\"])
             };
         }
     }
@@ -25651,7 +25651,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.admin.AdminService.storeTracedTestCaseV2.Error
+                error: MyApi.admin.AdminService.storeTracedTestCaseV2.Error._parse(response.body as MyApi.admin.AdminService.storeTracedTestCaseV2.Error[\\"body\\"])
             };
         }
     }
@@ -25672,7 +25672,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.admin.AdminService.storeTracedWorkspace.Error
+                error: MyApi.admin.AdminService.storeTracedWorkspace.Error._parse(response.body as MyApi.admin.AdminService.storeTracedWorkspace.Error[\\"body\\"])
             };
         }
     }
@@ -25693,7 +25693,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.admin.AdminService.storeTracedWorkspaceV2.Error
+                error: MyApi.admin.AdminService.storeTracedWorkspaceV2.Error._parse(response.body as MyApi.admin.AdminService.storeTracedWorkspaceV2.Error[\\"body\\"])
             };
         }
     }
@@ -25705,25 +25705,33 @@ export namespace updateTestSubmissionStatus {
         body: MyApi.submission.TestSubmissionStatus;
     }
 
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.admin.AdminService.updateTestSubmissionStatus.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const updateTestSubmissionStatus = {
-        Error: { _visit: <Result>(value: MyApi.admin.AdminService.updateTestSubmissionStatus.Error, visitor: MyApi.admin.AdminService.updateTestSubmissionStatus.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.admin.AdminService.updateTestSubmissionStatus.Error[\\"body\\"]): MyApi.admin.AdminService.updateTestSubmissionStatus.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace sendTestSubmissionUpdate {
@@ -25732,25 +25740,33 @@ export namespace sendTestSubmissionUpdate {
         body: MyApi.submission.TestSubmissionUpdate;
     }
 
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.admin.AdminService.sendTestSubmissionUpdate.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const sendTestSubmissionUpdate = {
-        Error: { _visit: <Result>(value: MyApi.admin.AdminService.sendTestSubmissionUpdate.Error, visitor: MyApi.admin.AdminService.sendTestSubmissionUpdate.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.admin.AdminService.sendTestSubmissionUpdate.Error[\\"body\\"]): MyApi.admin.AdminService.sendTestSubmissionUpdate.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace updateWorkspaceSubmissionStatus {
@@ -25759,25 +25775,33 @@ export namespace updateWorkspaceSubmissionStatus {
         body: MyApi.submission.WorkspaceSubmissionStatus;
     }
 
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.admin.AdminService.updateWorkspaceSubmissionStatus.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const updateWorkspaceSubmissionStatus = {
-        Error: { _visit: <Result>(value: MyApi.admin.AdminService.updateWorkspaceSubmissionStatus.Error, visitor: MyApi.admin.AdminService.updateWorkspaceSubmissionStatus.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.admin.AdminService.updateWorkspaceSubmissionStatus.Error[\\"body\\"]): MyApi.admin.AdminService.updateWorkspaceSubmissionStatus.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace sendWorkspaceSubmissionUpdate {
@@ -25786,25 +25810,33 @@ export namespace sendWorkspaceSubmissionUpdate {
         body: MyApi.submission.WorkspaceSubmissionUpdate;
     }
 
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.admin.AdminService.sendWorkspaceSubmissionUpdate.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const sendWorkspaceSubmissionUpdate = {
-        Error: { _visit: <Result>(value: MyApi.admin.AdminService.sendWorkspaceSubmissionUpdate.Error, visitor: MyApi.admin.AdminService.sendWorkspaceSubmissionUpdate.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.admin.AdminService.sendWorkspaceSubmissionUpdate.Error[\\"body\\"]): MyApi.admin.AdminService.sendWorkspaceSubmissionUpdate.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace storeTracedTestCase {
@@ -25814,25 +25846,33 @@ export namespace storeTracedTestCase {
         body: MyApi.admin.StoreTracedTestCaseRequest;
     }
 
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.admin.AdminService.storeTracedTestCase.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const storeTracedTestCase = {
-        Error: { _visit: <Result>(value: MyApi.admin.AdminService.storeTracedTestCase.Error, visitor: MyApi.admin.AdminService.storeTracedTestCase.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.admin.AdminService.storeTracedTestCase.Error[\\"body\\"]): MyApi.admin.AdminService.storeTracedTestCase.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace storeTracedTestCaseV2 {
@@ -25842,25 +25882,33 @@ export namespace storeTracedTestCaseV2 {
         body: MyApi.submission.TraceResponseV2[];
     }
 
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.admin.AdminService.storeTracedTestCaseV2.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const storeTracedTestCaseV2 = {
-        Error: { _visit: <Result>(value: MyApi.admin.AdminService.storeTracedTestCaseV2.Error, visitor: MyApi.admin.AdminService.storeTracedTestCaseV2.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.admin.AdminService.storeTracedTestCaseV2.Error[\\"body\\"]): MyApi.admin.AdminService.storeTracedTestCaseV2.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace storeTracedWorkspace {
@@ -25869,25 +25917,33 @@ export namespace storeTracedWorkspace {
         body: MyApi.admin.StoreTracedWorkspaceRequest;
     }
 
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.admin.AdminService.storeTracedWorkspace.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const storeTracedWorkspace = {
-        Error: { _visit: <Result>(value: MyApi.admin.AdminService.storeTracedWorkspace.Error, visitor: MyApi.admin.AdminService.storeTracedWorkspace.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.admin.AdminService.storeTracedWorkspace.Error[\\"body\\"]): MyApi.admin.AdminService.storeTracedWorkspace.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace storeTracedWorkspaceV2 {
@@ -25896,25 +25952,33 @@ export namespace storeTracedWorkspaceV2 {
         body: MyApi.submission.TraceResponseV2[];
     }
 
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.admin.AdminService.storeTracedWorkspaceV2.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const storeTracedWorkspaceV2 = {
-        Error: { _visit: <Result>(value: MyApi.admin.AdminService.storeTracedWorkspaceV2.Error, visitor: MyApi.admin.AdminService.storeTracedWorkspaceV2.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.admin.AdminService.storeTracedWorkspaceV2.Error[\\"body\\"]): MyApi.admin.AdminService.storeTracedWorkspaceV2.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 ",
                 "name": "AdminService.ts",
@@ -26796,7 +26860,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.homepage.HomepageProblemService.getHomepageProblems.Error
+                error: MyApi.homepage.HomepageProblemService.getHomepageProblems.Error._parse(response.body as MyApi.homepage.HomepageProblemService.getHomepageProblems.Error[\\"body\\"])
             };
         }
     }
@@ -26817,54 +26881,70 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.homepage.HomepageProblemService.setHomepageProblems.Error
+                error: MyApi.homepage.HomepageProblemService.setHomepageProblems.Error._parse(response.body as MyApi.homepage.HomepageProblemService.setHomepageProblems.Error[\\"body\\"])
             };
         }
     }
 }
 
 export namespace getHomepageProblems {
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.homepage.HomepageProblemService.getHomepageProblems.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const getHomepageProblems = {
-        Error: { _visit: <Result>(value: MyApi.homepage.HomepageProblemService.getHomepageProblems.Error, visitor: MyApi.homepage.HomepageProblemService.getHomepageProblems.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.homepage.HomepageProblemService.getHomepageProblems.Error[\\"body\\"]): MyApi.homepage.HomepageProblemService.getHomepageProblems.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace setHomepageProblems {
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.homepage.HomepageProblemService.setHomepageProblems.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const setHomepageProblems = {
-        Error: { _visit: <Result>(value: MyApi.homepage.HomepageProblemService.setHomepageProblems.Error, visitor: MyApi.homepage.HomepageProblemService.setHomepageProblems.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.homepage.HomepageProblemService.setHomepageProblems.Error[\\"body\\"]): MyApi.homepage.HomepageProblemService.setHomepageProblems.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 ",
                 "name": "HomepageProblemService.ts",
@@ -26974,32 +27054,40 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.migration.MigrationInfoService.getAttemptedMigrations.Error
+                error: MyApi.migration.MigrationInfoService.getAttemptedMigrations.Error._parse(response.body as MyApi.migration.MigrationInfoService.getAttemptedMigrations.Error[\\"body\\"])
             };
         }
     }
 }
 
 export namespace getAttemptedMigrations {
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.migration.MigrationInfoService.getAttemptedMigrations.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const getAttemptedMigrations = {
-        Error: { _visit: <Result>(value: MyApi.migration.MigrationInfoService.getAttemptedMigrations.Error, visitor: MyApi.migration.MigrationInfoService.getAttemptedMigrations.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.migration.MigrationInfoService.getAttemptedMigrations.Error[\\"body\\"]): MyApi.migration.MigrationInfoService.getAttemptedMigrations.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 ",
                 "name": "MigrationInfoService.ts",
@@ -27124,7 +27212,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.playlist.PlaylistCrudService.createPlaylist.Error
+                error: MyApi.playlist.PlaylistCrudService.createPlaylist.Error._parse(response.body as MyApi.playlist.PlaylistCrudService.createPlaylist.Error[\\"body\\"])
             };
         }
     }
@@ -27144,7 +27232,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.playlist.PlaylistCrudService.getPlaylists.Error
+                error: MyApi.playlist.PlaylistCrudService.getPlaylists.Error._parse(response.body as MyApi.playlist.PlaylistCrudService.getPlaylists.Error[\\"body\\"])
             };
         }
     }
@@ -27164,7 +27252,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.playlist.PlaylistCrudService.getPlaylist.Error
+                error: MyApi.playlist.PlaylistCrudService.getPlaylist.Error._parse(response.body as MyApi.playlist.PlaylistCrudService.getPlaylist.Error[\\"body\\"])
             };
         }
     }
@@ -27185,7 +27273,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.playlist.PlaylistCrudService.updatePlaylist.Error
+                error: MyApi.playlist.PlaylistCrudService.updatePlaylist.Error._parse(response.body as MyApi.playlist.PlaylistCrudService.updatePlaylist.Error[\\"body\\"])
             };
         }
     }
@@ -27205,54 +27293,70 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.playlist.PlaylistCrudService.deletePlaylist.Error
+                error: MyApi.playlist.PlaylistCrudService.deletePlaylist.Error._parse(response.body as MyApi.playlist.PlaylistCrudService.deletePlaylist.Error[\\"body\\"])
             };
         }
     }
 }
 
 export namespace createPlaylist {
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.playlist.PlaylistCrudService.createPlaylist.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const createPlaylist = {
-        Error: { _visit: <Result>(value: MyApi.playlist.PlaylistCrudService.createPlaylist.Error, visitor: MyApi.playlist.PlaylistCrudService.createPlaylist.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.playlist.PlaylistCrudService.createPlaylist.Error[\\"body\\"]): MyApi.playlist.PlaylistCrudService.createPlaylist.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace getPlaylists {
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.playlist.PlaylistCrudService.getPlaylists.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const getPlaylists = {
-        Error: { _visit: <Result>(value: MyApi.playlist.PlaylistCrudService.getPlaylists.Error, visitor: MyApi.playlist.PlaylistCrudService.getPlaylists.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.playlist.PlaylistCrudService.getPlaylists.Error[\\"body\\"]): MyApi.playlist.PlaylistCrudService.getPlaylists.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace getPlaylist {
@@ -27260,25 +27364,33 @@ export namespace getPlaylist {
         playlistId: MyApi.playlist.PlaylistId;
     }
 
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.playlist.PlaylistCrudService.getPlaylist.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const getPlaylist = {
-        Error: { _visit: <Result>(value: MyApi.playlist.PlaylistCrudService.getPlaylist.Error, visitor: MyApi.playlist.PlaylistCrudService.getPlaylist.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.playlist.PlaylistCrudService.getPlaylist.Error[\\"body\\"]): MyApi.playlist.PlaylistCrudService.getPlaylist.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace updatePlaylist {
@@ -27287,25 +27399,33 @@ export namespace updatePlaylist {
         body: MyApi.playlist.UpdatePlaylistRequest;
     }
 
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.playlist.PlaylistCrudService.updatePlaylist.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const updatePlaylist = {
-        Error: { _visit: <Result>(value: MyApi.playlist.PlaylistCrudService.updatePlaylist.Error, visitor: MyApi.playlist.PlaylistCrudService.updatePlaylist.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.playlist.PlaylistCrudService.updatePlaylist.Error[\\"body\\"]): MyApi.playlist.PlaylistCrudService.updatePlaylist.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace deletePlaylist {
@@ -27313,25 +27433,33 @@ export namespace deletePlaylist {
         playlistId: MyApi.playlist.PlaylistId;
     }
 
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.playlist.PlaylistCrudService.deletePlaylist.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const deletePlaylist = {
-        Error: { _visit: <Result>(value: MyApi.playlist.PlaylistCrudService.deletePlaylist.Error, visitor: MyApi.playlist.PlaylistCrudService.deletePlaylist.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.playlist.PlaylistCrudService.deletePlaylist.Error[\\"body\\"]): MyApi.playlist.PlaylistCrudService.deletePlaylist.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 ",
                 "name": "PlaylistCrudService.ts",
@@ -27551,7 +27679,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.problem.ProblemCrudService.createProblem.Error
+                error: MyApi.problem.ProblemCrudService.createProblem.Error._parse(response.body as MyApi.problem.ProblemCrudService.createProblem.Error[\\"body\\"])
             };
         }
     }
@@ -27572,7 +27700,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.problem.ProblemCrudService.updateProblem.Error
+                error: MyApi.problem.ProblemCrudService.updateProblem.Error._parse(response.body as MyApi.problem.ProblemCrudService.updateProblem.Error[\\"body\\"])
             };
         }
     }
@@ -27592,7 +27720,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.problem.ProblemCrudService.deleteProblem.Error
+                error: MyApi.problem.ProblemCrudService.deleteProblem.Error._parse(response.body as MyApi.problem.ProblemCrudService.deleteProblem.Error[\\"body\\"])
             };
         }
     }
@@ -27613,32 +27741,40 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.problem.ProblemCrudService.getDefaultStarterFiles.Error
+                error: MyApi.problem.ProblemCrudService.getDefaultStarterFiles.Error._parse(response.body as MyApi.problem.ProblemCrudService.getDefaultStarterFiles.Error[\\"body\\"])
             };
         }
     }
 }
 
 export namespace createProblem {
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.problem.ProblemCrudService.createProblem.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const createProblem = {
-        Error: { _visit: <Result>(value: MyApi.problem.ProblemCrudService.createProblem.Error, visitor: MyApi.problem.ProblemCrudService.createProblem.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.problem.ProblemCrudService.createProblem.Error[\\"body\\"]): MyApi.problem.ProblemCrudService.createProblem.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace updateProblem {
@@ -27647,25 +27783,33 @@ export namespace updateProblem {
         body: MyApi.problem.CreateProblemRequest;
     }
 
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.problem.ProblemCrudService.updateProblem.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const updateProblem = {
-        Error: { _visit: <Result>(value: MyApi.problem.ProblemCrudService.updateProblem.Error, visitor: MyApi.problem.ProblemCrudService.updateProblem.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.problem.ProblemCrudService.updateProblem.Error[\\"body\\"]): MyApi.problem.ProblemCrudService.updateProblem.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace deleteProblem {
@@ -27673,47 +27817,63 @@ export namespace deleteProblem {
         problemId: MyApi.commons.ProblemId;
     }
 
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.problem.ProblemCrudService.deleteProblem.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const deleteProblem = {
-        Error: { _visit: <Result>(value: MyApi.problem.ProblemCrudService.deleteProblem.Error, visitor: MyApi.problem.ProblemCrudService.deleteProblem.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.problem.ProblemCrudService.deleteProblem.Error[\\"body\\"]): MyApi.problem.ProblemCrudService.deleteProblem.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace getDefaultStarterFiles {
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.problem.ProblemCrudService.getDefaultStarterFiles.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const getDefaultStarterFiles = {
-        Error: { _visit: <Result>(value: MyApi.problem.ProblemCrudService.getDefaultStarterFiles.Error, visitor: MyApi.problem.ProblemCrudService.getDefaultStarterFiles.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.problem.ProblemCrudService.getDefaultStarterFiles.Error[\\"body\\"]): MyApi.problem.ProblemCrudService.getDefaultStarterFiles.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 ",
                 "name": "ProblemCrudService.ts",
@@ -27865,7 +28025,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.problem.ProblemInfoService.getProblems.Error
+                error: MyApi.problem.ProblemInfoService.getProblems.Error._parse(response.body as MyApi.problem.ProblemInfoService.getProblems.Error[\\"body\\"])
             };
         }
     }
@@ -27885,7 +28045,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.problem.ProblemInfoService.getLatestProblem.Error
+                error: MyApi.problem.ProblemInfoService.getLatestProblem.Error._parse(response.body as MyApi.problem.ProblemInfoService.getLatestProblem.Error[\\"body\\"])
             };
         }
     }
@@ -27905,7 +28065,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.problem.ProblemInfoService.getProblemVersion.Error
+                error: MyApi.problem.ProblemInfoService.getProblemVersion.Error._parse(response.body as MyApi.problem.ProblemInfoService.getProblemVersion.Error[\\"body\\"])
             };
         }
     }
@@ -27925,32 +28085,40 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.problem.ProblemInfoService.getExpectedResult.Error
+                error: MyApi.problem.ProblemInfoService.getExpectedResult.Error._parse(response.body as MyApi.problem.ProblemInfoService.getExpectedResult.Error[\\"body\\"])
             };
         }
     }
 }
 
 export namespace getProblems {
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.problem.ProblemInfoService.getProblems.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const getProblems = {
-        Error: { _visit: <Result>(value: MyApi.problem.ProblemInfoService.getProblems.Error, visitor: MyApi.problem.ProblemInfoService.getProblems.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.problem.ProblemInfoService.getProblems.Error[\\"body\\"]): MyApi.problem.ProblemInfoService.getProblems.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace getLatestProblem {
@@ -27958,25 +28126,33 @@ export namespace getLatestProblem {
         problemId: MyApi.commons.ProblemId;
     }
 
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.problem.ProblemInfoService.getLatestProblem.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const getLatestProblem = {
-        Error: { _visit: <Result>(value: MyApi.problem.ProblemInfoService.getLatestProblem.Error, visitor: MyApi.problem.ProblemInfoService.getLatestProblem.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.problem.ProblemInfoService.getLatestProblem.Error[\\"body\\"]): MyApi.problem.ProblemInfoService.getLatestProblem.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace getProblemVersion {
@@ -27985,25 +28161,33 @@ export namespace getProblemVersion {
         problemVersion: number;
     }
 
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.problem.ProblemInfoService.getProblemVersion.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const getProblemVersion = {
-        Error: { _visit: <Result>(value: MyApi.problem.ProblemInfoService.getProblemVersion.Error, visitor: MyApi.problem.ProblemInfoService.getProblemVersion.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.problem.ProblemInfoService.getProblemVersion.Error[\\"body\\"]): MyApi.problem.ProblemInfoService.getProblemVersion.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace getExpectedResult {
@@ -28011,25 +28195,33 @@ export namespace getExpectedResult {
         problemId: MyApi.commons.ProblemId;
     }
 
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.problem.ProblemInfoService.getExpectedResult.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const getExpectedResult = {
-        Error: { _visit: <Result>(value: MyApi.problem.ProblemInfoService.getExpectedResult.Error, visitor: MyApi.problem.ProblemInfoService.getExpectedResult.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.problem.ProblemInfoService.getExpectedResult.Error[\\"body\\"]): MyApi.problem.ProblemInfoService.getExpectedResult.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 ",
                 "name": "ProblemInfoService.ts",
@@ -28527,7 +28719,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.problemV2.problemV2.ProblemCrudServiceV2.createProblem.Error
+                error: MyApi.problemV2.problemV2.ProblemCrudServiceV2.createProblem.Error._parse(response.body as MyApi.problemV2.problemV2.ProblemCrudServiceV2.createProblem.Error[\\"body\\"])
             };
         }
     }
@@ -28548,7 +28740,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.problemV2.problemV2.ProblemCrudServiceV2.updateProblem.Error
+                error: MyApi.problemV2.problemV2.ProblemCrudServiceV2.updateProblem.Error._parse(response.body as MyApi.problemV2.problemV2.ProblemCrudServiceV2.updateProblem.Error[\\"body\\"])
             };
         }
     }
@@ -28568,7 +28760,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.problemV2.problemV2.ProblemCrudServiceV2.deleteProblem.Error
+                error: MyApi.problemV2.problemV2.ProblemCrudServiceV2.deleteProblem.Error._parse(response.body as MyApi.problemV2.problemV2.ProblemCrudServiceV2.deleteProblem.Error[\\"body\\"])
             };
         }
     }
@@ -28589,7 +28781,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.problemV2.problemV2.ProblemCrudServiceV2.getFunctionSignature.Error
+                error: MyApi.problemV2.problemV2.ProblemCrudServiceV2.getFunctionSignature.Error._parse(response.body as MyApi.problemV2.problemV2.ProblemCrudServiceV2.getFunctionSignature.Error[\\"body\\"])
             };
         }
     }
@@ -28610,7 +28802,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.problemV2.problemV2.ProblemCrudServiceV2.getBasicSolutionFile.Error
+                error: MyApi.problemV2.problemV2.ProblemCrudServiceV2.getBasicSolutionFile.Error._parse(response.body as MyApi.problemV2.problemV2.ProblemCrudServiceV2.getBasicSolutionFile.Error[\\"body\\"])
             };
         }
     }
@@ -28630,7 +28822,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.problemV2.problemV2.ProblemCrudServiceV2.getDefaultDirectoryForProblemFiles.Error
+                error: MyApi.problemV2.problemV2.ProblemCrudServiceV2.getDefaultDirectoryForProblemFiles.Error._parse(response.body as MyApi.problemV2.problemV2.ProblemCrudServiceV2.getDefaultDirectoryForProblemFiles.Error[\\"body\\"])
             };
         }
     }
@@ -28651,7 +28843,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.problemV2.problemV2.ProblemCrudServiceV2.getGeneratedTestCaseFile.Error
+                error: MyApi.problemV2.problemV2.ProblemCrudServiceV2.getGeneratedTestCaseFile.Error._parse(response.body as MyApi.problemV2.problemV2.ProblemCrudServiceV2.getGeneratedTestCaseFile.Error[\\"body\\"])
             };
         }
     }
@@ -28672,32 +28864,40 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.problemV2.problemV2.ProblemCrudServiceV2.getGeneratedTestCaseTemplateFile.Error
+                error: MyApi.problemV2.problemV2.ProblemCrudServiceV2.getGeneratedTestCaseTemplateFile.Error._parse(response.body as MyApi.problemV2.problemV2.ProblemCrudServiceV2.getGeneratedTestCaseTemplateFile.Error[\\"body\\"])
             };
         }
     }
 }
 
 export namespace createProblem {
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.problemV2.problemV2.ProblemCrudServiceV2.createProblem.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const createProblem = {
-        Error: { _visit: <Result>(value: MyApi.problemV2.problemV2.ProblemCrudServiceV2.createProblem.Error, visitor: MyApi.problemV2.problemV2.ProblemCrudServiceV2.createProblem.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.problemV2.problemV2.ProblemCrudServiceV2.createProblem.Error[\\"body\\"]): MyApi.problemV2.problemV2.ProblemCrudServiceV2.createProblem.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace updateProblem {
@@ -28706,25 +28906,33 @@ export namespace updateProblem {
         body: MyApi.problemV2.problemV2.CreateProblemRequestV2;
     }
 
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.problemV2.problemV2.ProblemCrudServiceV2.updateProblem.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const updateProblem = {
-        Error: { _visit: <Result>(value: MyApi.problemV2.problemV2.ProblemCrudServiceV2.updateProblem.Error, visitor: MyApi.problemV2.problemV2.ProblemCrudServiceV2.updateProblem.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.problemV2.problemV2.ProblemCrudServiceV2.updateProblem.Error[\\"body\\"]): MyApi.problemV2.problemV2.ProblemCrudServiceV2.updateProblem.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace deleteProblem {
@@ -28732,135 +28940,183 @@ export namespace deleteProblem {
         problemId: MyApi.commons.ProblemId;
     }
 
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.problemV2.problemV2.ProblemCrudServiceV2.deleteProblem.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const deleteProblem = {
-        Error: { _visit: <Result>(value: MyApi.problemV2.problemV2.ProblemCrudServiceV2.deleteProblem.Error, visitor: MyApi.problemV2.problemV2.ProblemCrudServiceV2.deleteProblem.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.problemV2.problemV2.ProblemCrudServiceV2.deleteProblem.Error[\\"body\\"]): MyApi.problemV2.problemV2.ProblemCrudServiceV2.deleteProblem.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace getFunctionSignature {
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.problemV2.problemV2.ProblemCrudServiceV2.getFunctionSignature.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const getFunctionSignature = {
-        Error: { _visit: <Result>(value: MyApi.problemV2.problemV2.ProblemCrudServiceV2.getFunctionSignature.Error, visitor: MyApi.problemV2.problemV2.ProblemCrudServiceV2.getFunctionSignature.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.problemV2.problemV2.ProblemCrudServiceV2.getFunctionSignature.Error[\\"body\\"]): MyApi.problemV2.problemV2.ProblemCrudServiceV2.getFunctionSignature.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace getBasicSolutionFile {
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.problemV2.problemV2.ProblemCrudServiceV2.getBasicSolutionFile.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const getBasicSolutionFile = {
-        Error: { _visit: <Result>(value: MyApi.problemV2.problemV2.ProblemCrudServiceV2.getBasicSolutionFile.Error, visitor: MyApi.problemV2.problemV2.ProblemCrudServiceV2.getBasicSolutionFile.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.problemV2.problemV2.ProblemCrudServiceV2.getBasicSolutionFile.Error[\\"body\\"]): MyApi.problemV2.problemV2.ProblemCrudServiceV2.getBasicSolutionFile.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace getDefaultDirectoryForProblemFiles {
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.problemV2.problemV2.ProblemCrudServiceV2.getDefaultDirectoryForProblemFiles.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const getDefaultDirectoryForProblemFiles = {
-        Error: { _visit: <Result>(value: MyApi.problemV2.problemV2.ProblemCrudServiceV2.getDefaultDirectoryForProblemFiles.Error, visitor: MyApi.problemV2.problemV2.ProblemCrudServiceV2.getDefaultDirectoryForProblemFiles.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.problemV2.problemV2.ProblemCrudServiceV2.getDefaultDirectoryForProblemFiles.Error[\\"body\\"]): MyApi.problemV2.problemV2.ProblemCrudServiceV2.getDefaultDirectoryForProblemFiles.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace getGeneratedTestCaseFile {
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.problemV2.problemV2.ProblemCrudServiceV2.getGeneratedTestCaseFile.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const getGeneratedTestCaseFile = {
-        Error: { _visit: <Result>(value: MyApi.problemV2.problemV2.ProblemCrudServiceV2.getGeneratedTestCaseFile.Error, visitor: MyApi.problemV2.problemV2.ProblemCrudServiceV2.getGeneratedTestCaseFile.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.problemV2.problemV2.ProblemCrudServiceV2.getGeneratedTestCaseFile.Error[\\"body\\"]): MyApi.problemV2.problemV2.ProblemCrudServiceV2.getGeneratedTestCaseFile.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace getGeneratedTestCaseTemplateFile {
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.problemV2.problemV2.ProblemCrudServiceV2.getGeneratedTestCaseTemplateFile.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const getGeneratedTestCaseTemplateFile = {
-        Error: { _visit: <Result>(value: MyApi.problemV2.problemV2.ProblemCrudServiceV2.getGeneratedTestCaseTemplateFile.Error, visitor: MyApi.problemV2.problemV2.ProblemCrudServiceV2.getGeneratedTestCaseTemplateFile.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.problemV2.problemV2.ProblemCrudServiceV2.getGeneratedTestCaseTemplateFile.Error[\\"body\\"]): MyApi.problemV2.problemV2.ProblemCrudServiceV2.getGeneratedTestCaseTemplateFile.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 ",
                     "name": "ProblemCrudServiceV2.ts",
@@ -28906,7 +29162,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.problemV2.problemV2.ProblemInfoServicV2.getLightweightProblems.Error
+                error: MyApi.problemV2.problemV2.ProblemInfoServicV2.getLightweightProblems.Error._parse(response.body as MyApi.problemV2.problemV2.ProblemInfoServicV2.getLightweightProblems.Error[\\"body\\"])
             };
         }
     }
@@ -28926,7 +29182,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.problemV2.problemV2.ProblemInfoServicV2.getProblems.Error
+                error: MyApi.problemV2.problemV2.ProblemInfoServicV2.getProblems.Error._parse(response.body as MyApi.problemV2.problemV2.ProblemInfoServicV2.getProblems.Error[\\"body\\"])
             };
         }
     }
@@ -28946,7 +29202,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.problemV2.problemV2.ProblemInfoServicV2.getLatestProblem.Error
+                error: MyApi.problemV2.problemV2.ProblemInfoServicV2.getLatestProblem.Error._parse(response.body as MyApi.problemV2.problemV2.ProblemInfoServicV2.getLatestProblem.Error[\\"body\\"])
             };
         }
     }
@@ -28966,54 +29222,70 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.problemV2.problemV2.ProblemInfoServicV2.getProblemVersion.Error
+                error: MyApi.problemV2.problemV2.ProblemInfoServicV2.getProblemVersion.Error._parse(response.body as MyApi.problemV2.problemV2.ProblemInfoServicV2.getProblemVersion.Error[\\"body\\"])
             };
         }
     }
 }
 
 export namespace getLightweightProblems {
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.problemV2.problemV2.ProblemInfoServicV2.getLightweightProblems.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const getLightweightProblems = {
-        Error: { _visit: <Result>(value: MyApi.problemV2.problemV2.ProblemInfoServicV2.getLightweightProblems.Error, visitor: MyApi.problemV2.problemV2.ProblemInfoServicV2.getLightweightProblems.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.problemV2.problemV2.ProblemInfoServicV2.getLightweightProblems.Error[\\"body\\"]): MyApi.problemV2.problemV2.ProblemInfoServicV2.getLightweightProblems.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace getProblems {
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.problemV2.problemV2.ProblemInfoServicV2.getProblems.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const getProblems = {
-        Error: { _visit: <Result>(value: MyApi.problemV2.problemV2.ProblemInfoServicV2.getProblems.Error, visitor: MyApi.problemV2.problemV2.ProblemInfoServicV2.getProblems.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.problemV2.problemV2.ProblemInfoServicV2.getProblems.Error[\\"body\\"]): MyApi.problemV2.problemV2.ProblemInfoServicV2.getProblems.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace getLatestProblem {
@@ -29021,25 +29293,33 @@ export namespace getLatestProblem {
         problemId: MyApi.commons.ProblemId;
     }
 
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.problemV2.problemV2.ProblemInfoServicV2.getLatestProblem.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const getLatestProblem = {
-        Error: { _visit: <Result>(value: MyApi.problemV2.problemV2.ProblemInfoServicV2.getLatestProblem.Error, visitor: MyApi.problemV2.problemV2.ProblemInfoServicV2.getLatestProblem.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.problemV2.problemV2.ProblemInfoServicV2.getLatestProblem.Error[\\"body\\"]): MyApi.problemV2.problemV2.ProblemInfoServicV2.getLatestProblem.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace getProblemVersion {
@@ -29048,25 +29328,33 @@ export namespace getProblemVersion {
         problemVersion: number;
     }
 
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.problemV2.problemV2.ProblemInfoServicV2.getProblemVersion.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const getProblemVersion = {
-        Error: { _visit: <Result>(value: MyApi.problemV2.problemV2.ProblemInfoServicV2.getProblemVersion.Error, visitor: MyApi.problemV2.problemV2.ProblemInfoServicV2.getProblemVersion.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.problemV2.problemV2.ProblemInfoServicV2.getProblemVersion.Error[\\"body\\"]): MyApi.problemV2.problemV2.ProblemInfoServicV2.getProblemVersion.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 ",
                     "name": "ProblemInfoServicV2.ts",
@@ -29972,7 +30260,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.submission.ExecutionSesssionManagementService.createExecutionSession.Error
+                error: MyApi.submission.ExecutionSesssionManagementService.createExecutionSession.Error._parse(response.body as MyApi.submission.ExecutionSesssionManagementService.createExecutionSession.Error[\\"body\\"])
             };
         }
     }
@@ -29992,7 +30280,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.submission.ExecutionSesssionManagementService.getExecutionSession.Error
+                error: MyApi.submission.ExecutionSesssionManagementService.getExecutionSession.Error._parse(response.body as MyApi.submission.ExecutionSesssionManagementService.getExecutionSession.Error[\\"body\\"])
             };
         }
     }
@@ -30012,7 +30300,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.submission.ExecutionSesssionManagementService.stopExecutionSession.Error
+                error: MyApi.submission.ExecutionSesssionManagementService.stopExecutionSession.Error._parse(response.body as MyApi.submission.ExecutionSesssionManagementService.stopExecutionSession.Error[\\"body\\"])
             };
         }
     }
@@ -30032,7 +30320,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.submission.ExecutionSesssionManagementService.getExecutionSessionsState.Error
+                error: MyApi.submission.ExecutionSesssionManagementService.getExecutionSessionsState.Error._parse(response.body as MyApi.submission.ExecutionSesssionManagementService.getExecutionSessionsState.Error[\\"body\\"])
             };
         }
     }
@@ -30043,25 +30331,33 @@ export namespace createExecutionSession {
         language: MyApi.commons.Language;
     }
 
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.submission.ExecutionSesssionManagementService.createExecutionSession.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const createExecutionSession = {
-        Error: { _visit: <Result>(value: MyApi.submission.ExecutionSesssionManagementService.createExecutionSession.Error, visitor: MyApi.submission.ExecutionSesssionManagementService.createExecutionSession.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.submission.ExecutionSesssionManagementService.createExecutionSession.Error[\\"body\\"]): MyApi.submission.ExecutionSesssionManagementService.createExecutionSession.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace getExecutionSession {
@@ -30069,25 +30365,33 @@ export namespace getExecutionSession {
         sessionId: string;
     }
 
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.submission.ExecutionSesssionManagementService.getExecutionSession.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const getExecutionSession = {
-        Error: { _visit: <Result>(value: MyApi.submission.ExecutionSesssionManagementService.getExecutionSession.Error, visitor: MyApi.submission.ExecutionSesssionManagementService.getExecutionSession.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.submission.ExecutionSesssionManagementService.getExecutionSession.Error[\\"body\\"]): MyApi.submission.ExecutionSesssionManagementService.getExecutionSession.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace stopExecutionSession {
@@ -30095,47 +30399,63 @@ export namespace stopExecutionSession {
         sessionId: string;
     }
 
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.submission.ExecutionSesssionManagementService.stopExecutionSession.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const stopExecutionSession = {
-        Error: { _visit: <Result>(value: MyApi.submission.ExecutionSesssionManagementService.stopExecutionSession.Error, visitor: MyApi.submission.ExecutionSesssionManagementService.stopExecutionSession.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.submission.ExecutionSesssionManagementService.stopExecutionSession.Error[\\"body\\"]): MyApi.submission.ExecutionSesssionManagementService.stopExecutionSession.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace getExecutionSessionsState {
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.submission.ExecutionSesssionManagementService.getExecutionSessionsState.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const getExecutionSessionsState = {
-        Error: { _visit: <Result>(value: MyApi.submission.ExecutionSesssionManagementService.getExecutionSessionsState.Error, visitor: MyApi.submission.ExecutionSesssionManagementService.getExecutionSessionsState.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.submission.ExecutionSesssionManagementService.getExecutionSessionsState.Error[\\"body\\"]): MyApi.submission.ExecutionSesssionManagementService.getExecutionSessionsState.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 ",
                 "name": "ExecutionSesssionManagementService.ts",
@@ -30610,7 +30930,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.submission.SubmissionInfoService.getSubmissionState.Error
+                error: MyApi.submission.SubmissionInfoService.getSubmissionState.Error._parse(response.body as MyApi.submission.SubmissionInfoService.getSubmissionState.Error[\\"body\\"])
             };
         }
     }
@@ -30630,7 +30950,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.submission.SubmissionInfoService.getSubmissionStateV2.Error
+                error: MyApi.submission.SubmissionInfoService.getSubmissionStateV2.Error._parse(response.body as MyApi.submission.SubmissionInfoService.getSubmissionStateV2.Error[\\"body\\"])
             };
         }
     }
@@ -30651,7 +30971,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.submission.SubmissionInfoService.getTraceResponsesPage.Error
+                error: MyApi.submission.SubmissionInfoService.getTraceResponsesPage.Error._parse(response.body as MyApi.submission.SubmissionInfoService.getTraceResponsesPage.Error[\\"body\\"])
             };
         }
     }
@@ -30672,7 +30992,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.submission.SubmissionInfoService.getTraceResponsesV2Page.Error
+                error: MyApi.submission.SubmissionInfoService.getTraceResponsesV2Page.Error._parse(response.body as MyApi.submission.SubmissionInfoService.getTraceResponsesV2Page.Error[\\"body\\"])
             };
         }
     }
@@ -30693,7 +31013,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.submission.SubmissionInfoService.getTraceResponsesPageForWorkspace.Error
+                error: MyApi.submission.SubmissionInfoService.getTraceResponsesPageForWorkspace.Error._parse(response.body as MyApi.submission.SubmissionInfoService.getTraceResponsesPageForWorkspace.Error[\\"body\\"])
             };
         }
     }
@@ -30714,7 +31034,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.submission.SubmissionInfoService.getTraceResponsesV2PageForWorkspace.Error
+                error: MyApi.submission.SubmissionInfoService.getTraceResponsesV2PageForWorkspace.Error._parse(response.body as MyApi.submission.SubmissionInfoService.getTraceResponsesV2PageForWorkspace.Error[\\"body\\"])
             };
         }
     }
@@ -30725,25 +31045,33 @@ export namespace getSubmissionState {
         submissionId: MyApi.submission.SubmissionId;
     }
 
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.submission.SubmissionInfoService.getSubmissionState.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const getSubmissionState = {
-        Error: { _visit: <Result>(value: MyApi.submission.SubmissionInfoService.getSubmissionState.Error, visitor: MyApi.submission.SubmissionInfoService.getSubmissionState.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.submission.SubmissionInfoService.getSubmissionState.Error[\\"body\\"]): MyApi.submission.SubmissionInfoService.getSubmissionState.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace getSubmissionStateV2 {
@@ -30751,25 +31079,33 @@ export namespace getSubmissionStateV2 {
         submissionId: MyApi.submission.SubmissionId;
     }
 
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.submission.SubmissionInfoService.getSubmissionStateV2.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const getSubmissionStateV2 = {
-        Error: { _visit: <Result>(value: MyApi.submission.SubmissionInfoService.getSubmissionStateV2.Error, visitor: MyApi.submission.SubmissionInfoService.getSubmissionStateV2.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.submission.SubmissionInfoService.getSubmissionStateV2.Error[\\"body\\"]): MyApi.submission.SubmissionInfoService.getSubmissionStateV2.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace getTraceResponsesPage {
@@ -30779,25 +31115,33 @@ export namespace getTraceResponsesPage {
         body: MyApi.submission.GetTraceResponsesPageRequest;
     }
 
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.submission.SubmissionInfoService.getTraceResponsesPage.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const getTraceResponsesPage = {
-        Error: { _visit: <Result>(value: MyApi.submission.SubmissionInfoService.getTraceResponsesPage.Error, visitor: MyApi.submission.SubmissionInfoService.getTraceResponsesPage.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.submission.SubmissionInfoService.getTraceResponsesPage.Error[\\"body\\"]): MyApi.submission.SubmissionInfoService.getTraceResponsesPage.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace getTraceResponsesV2Page {
@@ -30807,25 +31151,33 @@ export namespace getTraceResponsesV2Page {
         body: MyApi.submission.GetTraceResponsesPageRequest;
     }
 
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.submission.SubmissionInfoService.getTraceResponsesV2Page.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const getTraceResponsesV2Page = {
-        Error: { _visit: <Result>(value: MyApi.submission.SubmissionInfoService.getTraceResponsesV2Page.Error, visitor: MyApi.submission.SubmissionInfoService.getTraceResponsesV2Page.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.submission.SubmissionInfoService.getTraceResponsesV2Page.Error[\\"body\\"]): MyApi.submission.SubmissionInfoService.getTraceResponsesV2Page.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace getTraceResponsesPageForWorkspace {
@@ -30834,25 +31186,33 @@ export namespace getTraceResponsesPageForWorkspace {
         body: MyApi.submission.GetTraceResponsesPageRequest;
     }
 
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.submission.SubmissionInfoService.getTraceResponsesPageForWorkspace.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const getTraceResponsesPageForWorkspace = {
-        Error: { _visit: <Result>(value: MyApi.submission.SubmissionInfoService.getTraceResponsesPageForWorkspace.Error, visitor: MyApi.submission.SubmissionInfoService.getTraceResponsesPageForWorkspace.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.submission.SubmissionInfoService.getTraceResponsesPageForWorkspace.Error[\\"body\\"]): MyApi.submission.SubmissionInfoService.getTraceResponsesPageForWorkspace.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace getTraceResponsesV2PageForWorkspace {
@@ -30861,25 +31221,33 @@ export namespace getTraceResponsesV2PageForWorkspace {
         body: MyApi.submission.GetTraceResponsesPageRequest;
     }
 
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.submission.SubmissionInfoService.getTraceResponsesV2PageForWorkspace.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const getTraceResponsesV2PageForWorkspace = {
-        Error: { _visit: <Result>(value: MyApi.submission.SubmissionInfoService.getTraceResponsesV2PageForWorkspace.Error, visitor: MyApi.submission.SubmissionInfoService.getTraceResponsesV2PageForWorkspace.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.submission.SubmissionInfoService.getTraceResponsesV2PageForWorkspace.Error[\\"body\\"]): MyApi.submission.SubmissionInfoService.getTraceResponsesV2PageForWorkspace.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 ",
                 "name": "SubmissionInfoService.ts",
@@ -31717,7 +32085,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.submission.WorkspaceInfoService.getWorkspaceStarterFiles.Error
+                error: MyApi.submission.WorkspaceInfoService.getWorkspaceStarterFiles.Error._parse(response.body as MyApi.submission.WorkspaceInfoService.getWorkspaceStarterFiles.Error[\\"body\\"])
             };
         }
     }
@@ -31737,54 +32105,70 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.submission.WorkspaceInfoService.getWorkspaceStarterFilesV2.Error
+                error: MyApi.submission.WorkspaceInfoService.getWorkspaceStarterFilesV2.Error._parse(response.body as MyApi.submission.WorkspaceInfoService.getWorkspaceStarterFilesV2.Error[\\"body\\"])
             };
         }
     }
 }
 
 export namespace getWorkspaceStarterFiles {
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.submission.WorkspaceInfoService.getWorkspaceStarterFiles.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const getWorkspaceStarterFiles = {
-        Error: { _visit: <Result>(value: MyApi.submission.WorkspaceInfoService.getWorkspaceStarterFiles.Error, visitor: MyApi.submission.WorkspaceInfoService.getWorkspaceStarterFiles.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.submission.WorkspaceInfoService.getWorkspaceStarterFiles.Error[\\"body\\"]): MyApi.submission.WorkspaceInfoService.getWorkspaceStarterFiles.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace getWorkspaceStarterFilesV2 {
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.submission.WorkspaceInfoService.getWorkspaceStarterFilesV2.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const getWorkspaceStarterFilesV2 = {
-        Error: { _visit: <Result>(value: MyApi.submission.WorkspaceInfoService.getWorkspaceStarterFilesV2.Error, visitor: MyApi.submission.WorkspaceInfoService.getWorkspaceStarterFilesV2.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.submission.WorkspaceInfoService.getWorkspaceStarterFilesV2.Error[\\"body\\"]): MyApi.submission.WorkspaceInfoService.getWorkspaceStarterFilesV2.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 ",
                 "name": "WorkspaceInfoService.ts",
@@ -32209,7 +32593,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.sysprop.SysPropCrudService.setNumWarmInstances.Error
+                error: MyApi.sysprop.SysPropCrudService.setNumWarmInstances.Error._parse(response.body as MyApi.sysprop.SysPropCrudService.setNumWarmInstances.Error[\\"body\\"])
             };
         }
     }
@@ -32229,7 +32613,7 @@ export class Client implements Client {
         else {
             return {
                 ok: false,
-                error: response.body as MyApi.sysprop.SysPropCrudService.getNumWarmInstances.Error
+                error: MyApi.sysprop.SysPropCrudService.getNumWarmInstances.Error._parse(response.body as MyApi.sysprop.SysPropCrudService.getNumWarmInstances.Error[\\"body\\"])
             };
         }
     }
@@ -32241,47 +32625,63 @@ export namespace setNumWarmInstances {
         numWarmInstances: number;
     }
 
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.sysprop.SysPropCrudService.setNumWarmInstances.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const setNumWarmInstances = {
-        Error: { _visit: <Result>(value: MyApi.sysprop.SysPropCrudService.setNumWarmInstances.Error, visitor: MyApi.sysprop.SysPropCrudService.setNumWarmInstances.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.sysprop.SysPropCrudService.setNumWarmInstances.Error[\\"body\\"]): MyApi.sysprop.SysPropCrudService.setNumWarmInstances.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 
 export namespace getNumWarmInstances {
-    export type Error = 
-        | _NetworkError
-        | _UnknownError;
+    export interface Error {
+        body: 
+            | _NetworkError
+            | _UnknownError;
+        _visit: <Result>(visitor: MyApi.sysprop.SysPropCrudService.getNumWarmInstances.ErrorVisitor<Result>) => Result;
+    }
 
-    export namespace Error {
-        export interface _Visitor<Result> {
-            _network: () => Result;
-            _unknown: () => Result;
-        }
+    export interface ErrorVisitor<Result> {
+        _network: () => Result;
+        _unknown: () => Result;
     }
 }
 
 export const getNumWarmInstances = {
-        Error: { _visit: <Result>(value: MyApi.sysprop.SysPropCrudService.getNumWarmInstances.Error, visitor: MyApi.sysprop.SysPropCrudService.getNumWarmInstances.Error._Visitor<Result>): Result => {
-                switch (value._error) {
-                    case \\"_network\\": return visitor._network();
-                    default: return visitor._unknown();
-                }
-            } }
+        Error: {
+            _parse: (body: MyApi.sysprop.SysPropCrudService.getNumWarmInstances.Error[\\"body\\"]): MyApi.sysprop.SysPropCrudService.getNumWarmInstances.Error => {
+                return {
+                    body,
+                    _visit: visitor => {
+                        switch (body._error) {
+                            case \\"_network\\": return visitor._network();
+                            default: return visitor._unknown();
+                        }
+                    }
+                };
+            }
+        }
     };
 ",
                 "name": "SysPropCrudService.ts",

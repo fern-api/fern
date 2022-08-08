@@ -1,7 +1,7 @@
 import { File } from "@fern-typescript/declaration-handler";
 import { ts } from "ts-morph";
 import { ClientConstants } from "../../../constants";
-import { ParsedClientEndpoint } from "../parse-endpoint/parseEndpoint";
+import { ParsedClientEndpoint } from "../parse-endpoint/ParsedClientEndpoint";
 
 export function generateReturnResponse({
     endpoint,
@@ -63,12 +63,14 @@ function generateReturnErrorResponse({ file, endpoint }: { endpoint: ParsedClien
                 ...getBaseResponseProperties({ ok: false, file }),
                 ts.factory.createPropertyAssignment(
                     file.externalDependencies.serviceUtils._Response.Failure.BODY_PROPERTY_NAME,
-                    ts.factory.createAsExpression(
-                        ts.factory.createPropertyAccessExpression(
-                            ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.RESPONSE),
-                            file.externalDependencies.serviceUtils.Fetcher.ReturnValue.BODY
-                        ),
-                        endpoint.referenceToError
+                    endpoint.error.generateParse(
+                        ts.factory.createAsExpression(
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.RESPONSE),
+                                file.externalDependencies.serviceUtils.Fetcher.ReturnValue.BODY
+                            ),
+                            endpoint.error.referenceToBody
+                        )
                     )
                 ),
             ],

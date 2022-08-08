@@ -1,7 +1,7 @@
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { OptionalKind, ParameterDeclarationStructure } from "ts-morph";
 import { ClientConstants } from "../../constants";
-import { ParsedClientEndpoint } from "./parse-endpoint/parseEndpoint";
+import { ParsedClientEndpoint } from "./parse-endpoint/ParsedClientEndpoint";
 
 export function getHttpRequestParameters(
     endpoint: ParsedClientEndpoint

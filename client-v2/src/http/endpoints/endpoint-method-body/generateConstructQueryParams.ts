@@ -2,7 +2,7 @@ import { QueryParameter } from "@fern-fern/ir-model/services";
 import { ts } from "ts-morph";
 import { ClientConstants } from "../../../constants";
 import { WrapperField } from "../parse-endpoint/constructRequestWrapper";
-import { ParsedClientEndpoint } from "../parse-endpoint/parseEndpoint";
+import { ParsedClientEndpoint } from "../parse-endpoint/ParsedClientEndpoint";
 
 export function generateConstructQueryParams(endpoint: ParsedClientEndpoint): ts.Statement[] {
     const statements: ts.Statement[] = [];

@@ -1,37 +1,12 @@
-import { HttpAuth, HttpEndpoint, HttpMethod, HttpPath, HttpService } from "@fern-fern/ir-model/services";
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { File } from "@fern-typescript/declaration-handler";
 import { camelCase } from "lodash-es";
 import { ModuleDeclaration, ts, VariableDeclarationKind } from "ts-morph";
 import { constructEndpointErrors } from "./constructEndpointErrors";
-import { constructRequestWrapper, RequestWrapper } from "./constructRequestWrapper";
+import { constructRequestWrapper } from "./constructRequestWrapper";
 import { getReferenceToMaybeVoidType } from "./getReferenceToMaybeVoidType";
-
-export interface ParsedClientEndpoint {
-    endpointMethodName: string;
-    path: HttpPath;
-    method: HttpMethod;
-    request: ClientEndpointRequest | undefined;
-    referenceToResponse: ts.TypeNode | undefined;
-    referenceToError: ts.TypeNode;
-}
-
-export type ClientEndpointRequest = ClientEndpointRequest.Wrapped | ClientEndpointRequest.NotWrapped;
-
-export declare namespace ClientEndpointRequest {
-    export interface Wrapped extends Base, RequestWrapper {
-        isWrapped: true;
-    }
-
-    export interface NotWrapped extends Base {
-        isWrapped: false;
-        referenceToBody: ts.TypeNode;
-    }
-
-    export interface Base {
-        auth: HttpAuth;
-    }
-}
+import { ClientEndpointRequest, ParsedClientEndpoint } from "./ParsedClientEndpoint";
 
 export function parseEndpoint({
     service,
@@ -57,7 +32,15 @@ export function parseEndpoint({
         method: endpoint.method,
         request: parseRequest({ service, endpoint, file, endpointModule }),
         referenceToResponse: getReferenceToMaybeVoidType(endpoint.response.type, file),
-        referenceToError: constructEndpointErrors({ service, endpoint, file, endpointModule, endpointUtils }),
+        error: constructEndpointErrors({
+            service,
+            endpoint,
+            file,
+            endpointModule,
+            addEndpointUtil: (util) => {
+                endpointUtils.push(util);
+            },
+        }),
     };
 
     file.sourceFile.addVariableStatement({
