@@ -12,7 +12,10 @@ export async function upgradeGeneratorsInWorkspace(commandLineWorkspaces: readon
         const workspaceConfiguration = await loadRawWorkspaceConfiguration(workspaceConfigurationFilePath);
         const updatedWorkspaceConfiguration = upgradeGeneratorsIfPresent({ workspaceConfiguration });
         if (updatedWorkspaceConfiguration.upgrades.length > 0) {
-            await writeFile(workspaceConfigurationFilePath, yaml.dump(updatedWorkspaceConfiguration));
+            await writeFile(
+                workspaceConfigurationFilePath,
+                yaml.dump(updatedWorkspaceConfiguration.updatedWorkspaceConfiguration)
+            );
             for (const upgradeInfo of updatedWorkspaceConfiguration.upgrades) {
                 console.log(
                     chalk.green(

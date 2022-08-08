@@ -22,6 +22,11 @@ export async function isFernCliUpgradeAvailable({
     packageVersion: string;
     packageName: string;
 }): Promise<FernCliUpgradeInfo> {
+    if (packageVersion === "0.0.0") {
+        return {
+            upgradeAvailable: false,
+        };
+    }
     const latestPackageVersion = await latestVersion(packageName);
     const diff = semverDiff(packageVersion, latestPackageVersion);
     if (diff != null) {
