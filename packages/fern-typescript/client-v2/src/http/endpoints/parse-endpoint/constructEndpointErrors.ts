@@ -126,7 +126,7 @@ function addParse({
             caseInSwitchStatement: ts.factory.createStringLiteral(error.discriminantValue),
             keyInVisitor: file.getErrorDeclaration(error.error).discriminantValue,
             visitorArgument: {
-                argument: ts.factory.createIdentifier(visitorUtils.VALUE_PARAMETER_NAME),
+                argument: ts.factory.createIdentifier(errorBodyProperty.getName()),
                 type: file.getReferenceToError(error.error),
             },
         })),
