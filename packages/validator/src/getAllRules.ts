@@ -1,8 +1,7 @@
 import { Rule } from "./Rule";
 import ImportFileExistsRule from "./rules/import-file-exists";
+import NoDuplicateDeclarationsRule from "./rules/no-duplicate-declarations";
 import NoDuplicateEnumValuesRule from "./rules/no-duplicate-enum-values";
-import NoDuplicateIdsRule from "./rules/no-duplicate-ids";
-import NoDuplicateServiceNamesRule from "./rules/no-duplicate-service-names";
 import NoUndefinedErrorReferenceRule from "./rules/no-undefined-error-reference";
 import NoUndefinedPathParametersRule from "./rules/no-undefined-path-parameters";
 import NoUndefinedTypeReferenceRule from "./rules/no-undefined-type-reference";
@@ -17,8 +16,7 @@ export function getAllRules(): Rule[] {
         ValidAuthInServiceRule,
         ValidEnumNameRule,
         ImportFileExistsRule,
-        NoDuplicateIdsRule,
+        NoDuplicateDeclarationsRule,
         NoUndefinedErrorReferenceRule,
-        NoDuplicateServiceNamesRule,
     ];
 }
