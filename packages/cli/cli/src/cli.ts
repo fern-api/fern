@@ -1,6 +1,5 @@
 import { initialize } from "@fern-api/init";
 import { initiateLogin } from "@fern-api/login";
-import execa from "execa";
 import inquirer, { InputQuestion } from "inquirer";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
@@ -52,15 +51,19 @@ async function runCli() {
 }
 
 async function printUpgradeMessage(packageInfo: PackageInfo): Promise<void> {
-    const { stdout: packageVersion } = await execa("fern", ["-v"]);
-    if (packageInfo.packageName != null) {
-        const upgradeMessage = await getFernCliUpgradeMessage({
-            packageVersion,
-            packageName: packageInfo.packageName,
-        });
-        if (upgradeMessage != null) {
-            console.error(upgradeMessage);
-        }
+    if (
+        packageInfo.packageVersion == null ||
+        packageInfo.packageName == null ||
+        packageInfo.packageVersion == "0.0.0"
+    ) {
+        return;
+    }
+    const upgradeMessage = await getFernCliUpgradeMessage({
+        packageVersion: packageInfo.packageVersion,
+        packageName: packageInfo.packageName,
+    });
+    if (upgradeMessage != null) {
+        console.error(upgradeMessage);
     }
 }
 
