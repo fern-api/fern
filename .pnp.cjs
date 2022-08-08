@@ -4372,7 +4372,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/model-context", "workspace:packages/fern-typescript/model-context"],\
             ["@fern-typescript/service-types", "workspace:packages/fern-typescript/service-types"],\
             ["@fern-typescript/testing-utils", "workspace:packages/fern-typescript/testing-utils"],\
-            ["@fern-typescript/types", "workspace:packages/fern-typescript/types"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/node", "npm:18.6.2"],\
             ["depcheck", "npm:1.4.3"],\

@@ -10,7 +10,6 @@
     { "path": "../model" },
     { "path": "../model-context" },
     { "path": "../service-types" },
-    { "path": "../testing-utils" },
-    { "path": "../types" }
+    { "path": "../testing-utils" }
   ]
 }
