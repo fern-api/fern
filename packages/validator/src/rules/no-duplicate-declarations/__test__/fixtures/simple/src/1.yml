@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
+ids:
+  - A
+  - C
+
+types:
+  TwoService:
+    properties: {}
+
+errors:
+  C: {}
+
 services:
   http:
     OneService:
