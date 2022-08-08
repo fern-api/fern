@@ -17,6 +17,7 @@ async function main() {
         define: {
             "process.env.CLI_NAME": JSON.stringify("fern-dev"),
             "process.env.PACKAGE_VERSION": getEnvironmentVariable("PACKAGE_VERSION"),
+            "process.env.PACKAGE_NAME": getEnvironmentVariable("PACKAGE_NAME"),
             "process.env.AUTH0_DOMAIN": getEnvironmentVariable("AUTH0_DOMAIN"),
             "process.env.AUTH0_CLIENT_ID": getEnvironmentVariable("AUTH0_CLIENT_ID"),
             "process.env.DEFAULT_FIDDLE_ORIGIN": getEnvironmentVariable("DEFAULT_FIDDLE_ORIGIN"),

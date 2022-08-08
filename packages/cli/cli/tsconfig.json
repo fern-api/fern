@@ -4,9 +4,9 @@
   "include": ["./src"],
   "references": [
     { "path": "../../commons/core-utils" },
-    { "path": "../../config-management/add-generator" },
     { "path": "../../config-management/config-management-commons" },
     { "path": "../../config-management/init" },
+    { "path": "../../config-management/manage-generator" },
     { "path": "../../config-management/project-configuration" },
     { "path": "../../config-management/workspace-configuration" },
     { "path": "../../generation/ir/ir-generator" },

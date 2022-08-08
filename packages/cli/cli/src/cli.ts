@@ -1,5 +1,6 @@
 import { initialize } from "@fern-api/init";
 import { initiateLogin } from "@fern-api/login";
+import execa from "execa";
 import inquirer, { InputQuestion } from "inquirer";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
@@ -8,10 +9,16 @@ import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorT
 import { convertOpenApiToFernApiDefinition } from "./commands/convert-openapi/convertOpenApi";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateWorkspaces } from "./commands/generate/generateWorkspaces";
+import { upgrade } from "./commands/upgrade/upgrade";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
-import { getUpgradeMessage } from "./upgradeNotifier";
+import { getFernCliUpgradeMessage } from "./upgradeNotifier";
 
 void runCli();
+
+export interface PackageInfo {
+    packageName: string | undefined;
+    packageVersion: string | undefined;
+}
 
 async function runCli() {
     const cli = yargs(hideBin(process.argv));
@@ -22,9 +29,12 @@ async function runCli() {
         .demandCommand()
         .recommendCommands();
 
-    const packageVersion = process.env.PACKAGE_VERSION;
-    if (packageVersion != null) {
-        cli.version(packageVersion);
+    const packageInfo = {
+        packageName: process.env.PACKAGE_NAME,
+        packageVersion: process.env.PACKAGE_VERSION,
+    };
+    if (packageInfo.packageVersion != null) {
+        cli.version(packageInfo.packageVersion);
     }
 
     addInitCommand(cli);
@@ -34,10 +44,20 @@ async function runCli() {
     addLoginCommand(cli);
     addGenerateIrCommand(cli);
     addValidateCommand(cli);
+    addUpgradeCommand(cli, packageInfo);
 
     await cli.parse();
-    if (packageVersion != null) {
-        const upgradeMessage = await getUpgradeMessage(packageVersion);
+
+    await printUpgradeMessage(packageInfo);
+}
+
+async function printUpgradeMessage(packageInfo: PackageInfo): Promise<void> {
+    const { stdout: packageVersion } = await execa("fern", ["-v"]);
+    if (packageInfo.packageName != null) {
+        const upgradeMessage = await getFernCliUpgradeMessage({
+            packageVersion,
+            packageName: packageInfo.packageName,
+        });
         if (upgradeMessage != null) {
             console.error(upgradeMessage);
         }
@@ -196,5 +216,22 @@ function addValidateCommand(cli: Argv) {
             validateWorkspaces({
                 commandLineWorkspaces: argv.workspaces ?? [],
             })
+    );
+}
+
+function addUpgradeCommand(cli: Argv, packageInfo: PackageInfo) {
+    cli.command(
+        "upgrade [workspaces...]",
+        "Upgrades generator versions in your workspace",
+        (yargs) =>
+            yargs.positional("workspaces", {
+                array: true,
+                type: "string",
+                description:
+                    "If omitted, every workspace specified in the project-level configuration (fern.config.json) will be processed.",
+            }),
+        async (argv) => {
+            await upgrade({ commandLineWorkspaces: argv.workspaces ?? [], packageInfo });
+        }
     );
 }

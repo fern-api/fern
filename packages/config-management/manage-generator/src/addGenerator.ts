@@ -1,44 +1,10 @@
 import { GeneratorInvocationSchema, WorkspaceConfigurationSchema } from "@fern-api/workspace-configuration";
-
-const JAVA_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
-    name: "fernapi/fern-java",
-    version: "0.0.84",
-    generate: true,
-    config: {
-        packagePrefix: "com",
-        mode: "client_and_server",
-    },
-};
-
-const TYPESCRIPT_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
-    name: "fernapi/fern-typescript",
-    version: "0.0.155",
-    generate: true,
-    config: {
-        mode: "client_and_server",
-    },
-};
-
-const POSTMAN_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
-    name: "fernapi/fern-postman",
-    version: "0.0.21",
-    generate: {
-        enabled: true,
-        output: "./generated-postman.json",
-    },
-};
-
-const OPENAPI_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
-    name: "fernapi/fern-openapi",
-    version: "0.0.4",
-    generate: {
-        enabled: true,
-        output: "./generated-openapi.yml",
-    },
-    config: {
-        format: "yaml",
-    },
-};
+import {
+    JAVA_GENERATOR_INVOCATION,
+    OPENAPI_GENERATOR_INVOCATION,
+    POSTMAN_GENERATOR_INVOCATION,
+    TYPESCRIPT_GENERATOR_INVOCATION,
+} from "./generatorInvocations";
 
 export function addOpenApiGenerator(
     workspaceConfiguration: WorkspaceConfigurationSchema
