@@ -96,6 +96,9 @@ jobs:
             yarn workspace @fern-api/cli dist:cli:dev
             cli_path="$(yarn workspace @fern-api/cli bin fern:dev)"
             alias fern="node $cli_path"
+            mkdir a
+            cd a
+            fern init --organization fern
             ./scripts/live-test.sh "$cli_path"
 
   publish-dev:
@@ -180,22 +183,22 @@ workflows:
   version: 2
   build:
     jobs:
-      - lint:
-          filters:
-            tags:
-              only: /.*/
+      # - lint:
+      #     filters:
+      #       tags:
+      #         only: /.*/
 
-      - compile-and-test:
-          filters:
-            tags:
-              only: /.*/
+      # - compile-and-test:
+      #     filters:
+      #       tags:
+      #         only: /.*/
 
-      - ete-tests:
-          filters:
-            tags:
-              only: /.*/
-          context:
-            - auth0-dev
+      # - ete-tests:
+      #     filters:
+      #       tags:
+      #         only: /.*/
+      #     context:
+      #       - auth0-dev
 
       - live-test-dev:
           filters:
