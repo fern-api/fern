@@ -2,34 +2,34 @@ import boxen from "boxen";
 import chalk from "chalk";
 import execa from "execa";
 import pupa from "pupa";
-import { PackageInfo } from "../../cli";
+import { parseRawCliEnvironmentOrThrow, RawCliEnvironment } from "../../cliEnvironment";
 import { isFernCliUpgradeAvailable } from "../../upgradeNotifier";
 import { upgradeGeneratorsInWorkspace } from "./upgradeGeneratorInWorkspace";
 
 export async function upgrade({
     commandLineWorkspaces,
-    packageInfo,
+    rawCliEnvironment,
 }: {
     commandLineWorkspaces: readonly string[];
-    packageInfo: PackageInfo;
+    rawCliEnvironment: RawCliEnvironment;
 }): Promise<void> {
-    if (packageInfo.packageVersion == null) {
-        throw new Error("Failed to upgrade because PACKAGE_VERSION is undefined");
-    } else if (packageInfo.packageName == null) {
-        throw new Error("Failed to upgrade because PACKAGE_NAME is undefined");
-    }
-    const fernCliUpgradeInfo = await isFernCliUpgradeAvailable({
-        packageName: packageInfo.packageName,
-        packageVersion: packageInfo.packageVersion,
-    });
+    const { cliName, packageName, packageVersion } = parseRawCliEnvironmentOrThrow(
+        rawCliEnvironment,
+        "Failed to upgrade."
+    );
+    const fernCliUpgradeInfo = await isFernCliUpgradeAvailable({ packageName, packageVersion });
     if (fernCliUpgradeInfo.upgradeAvailable) {
-        await execa("npm", ["install", "-g", packageInfo.packageName]);
+        await execa("npm", ["install", "-g", packageName]);
         const template =
-            "Upgraded from" + chalk.dim(" {currentVersion}") + chalk.reset(" → ") + chalk.green("{latestVersion}");
+            "Upgraded {cliName} from" +
+            chalk.dim(" {currentVersion}") +
+            chalk.reset(" → ") +
+            chalk.green("{latestVersion}");
         const message = boxen(
             pupa(template, {
-                packageName: packageInfo.packageName,
-                currentVersion: packageInfo.packageVersion,
+                cliName,
+                packageName,
+                currentVersion: packageVersion,
                 latestVersion: fernCliUpgradeInfo.version,
             }),
             {
@@ -41,7 +41,7 @@ export async function upgrade({
             }
         );
         console.log(message);
-        const { stdout } = await execa("fern", ["upgrade", `${commandLineWorkspaces.join(" ")}`]);
+        const { stdout } = await execa(cliName, ["upgrade", `${commandLineWorkspaces.join(" ")}`]);
         console.log(stdout);
     } else {
         await upgradeGeneratorsInWorkspace(commandLineWorkspaces);

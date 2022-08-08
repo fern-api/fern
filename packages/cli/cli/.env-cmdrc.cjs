@@ -7,6 +7,7 @@ module.exports = {
         PACKAGE_VERSION: packageJson.version,
         PACKAGE_NAME: "fern-api",
         DEFAULT_FIDDLE_ORIGIN: "https://fiddle-coordinator.buildwithfern.com",
+        CLI_NAME: "fern",
     },
     dev: {
         AUTH0_DOMAIN: "fern-dev.us.auth0.com",
@@ -14,5 +15,6 @@ module.exports = {
         PACKAGE_VERSION: packageJson.version,
         PACKAGE_NAME: "@fern-api/fern-api-dev",
         DEFAULT_FIDDLE_ORIGIN: "https://fiddle-coordinator-dev.buildwithfern.com",
+        CLI_NAME: "fern-dev",
     },
 };
