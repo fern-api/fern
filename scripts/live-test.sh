@@ -2,19 +2,17 @@
 
 set -e
 
-cli_path="$1"
-
 test_dir="$(mktemp -d)"
 cd "$test_dir"
 
 echo "Running Fern Commands!"
 set -x
-node "$cli_path" init --organization fern
-node "$cli_path" add java
-node "$cli_path" add typescript
-node "$cli_path" add postman
-node "$cli_path" add openapi
-node "$cli_path" generate
+fern init --organization fern
+fern add java
+fern add typescript
+fern add postman
+fern add openapi
+fern generate
 set +x
 
 rm -rf "$test_dir"

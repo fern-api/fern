@@ -1,6 +1,5 @@
 import { initialize } from "@fern-api/init";
 import { initiateLogin } from "@fern-api/login";
-import execa from "execa";
 import inquirer, { InputQuestion } from "inquirer";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
@@ -11,7 +10,6 @@ import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWor
 import { generateWorkspaces } from "./commands/generate/generateWorkspaces";
 import { upgrade } from "./commands/upgrade/upgrade";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
-import { getFernCliUpgradeMessage } from "./upgradeNotifier";
 
 void runCli();
 
@@ -51,17 +49,17 @@ async function runCli() {
     await printUpgradeMessage(packageInfo);
 }
 
-async function printUpgradeMessage(packageInfo: PackageInfo): Promise<void> {
-    const { stdout: packageVersion } = await execa("fern", ["-v"]);
-    if (packageInfo.packageName != null) {
-        const upgradeMessage = await getFernCliUpgradeMessage({
-            packageVersion,
-            packageName: packageInfo.packageName,
-        });
-        if (upgradeMessage != null) {
-            console.error(upgradeMessage);
-        }
-    }
+async function printUpgradeMessage(_packageInfo: PackageInfo): Promise<void> {
+    // const { stdout: packageVersion } = await execa("fern", ["-v"]);
+    // if (packageInfo.packageName != null) {
+    //     const upgradeMessage = await getFernCliUpgradeMessage({
+    //         packageVersion,
+    //         packageName: packageInfo.packageName,
+    //     });
+    //     if (upgradeMessage != null) {
+    //         console.error(upgradeMessage);
+    //     }
+    // }
 }
 
 function addInitCommand(cli: Argv) {
