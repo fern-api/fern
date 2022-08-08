@@ -1,6 +1,5 @@
 import { ContainerType, PrimitiveType, Type, TypeReference } from "@fern-fern/ir-model";
 import { ModelContext } from "@fern-typescript/model-context";
-import { ALIAS_UTILS_OF_KEY, shouldUseBrandedTypeForAlias } from "@fern-typescript/types";
 import { SourceFile, ts } from "ts-morph";
 
 export function convertParamValueForExpectedType({
@@ -77,28 +76,13 @@ export function convertParamValueForExpectedType({
             const typeDeclaration = modelContext.getTypeDeclarationFromName(typeName);
             return Type._visit(typeDeclaration, {
                 alias: (aliasTypeDeclaration) => {
-                    const valueForAliasedType = convertParamValueForExpectedType({
+                    return convertParamValueForExpectedType({
                         valueReference,
                         expectedType: aliasTypeDeclaration.aliasOf,
                         modelContext,
                         file,
                         isValueReferenceTypedAsString,
                     });
-                    if (shouldUseBrandedTypeForAlias(aliasTypeDeclaration)) {
-                        return ts.factory.createCallExpression(
-                            ts.factory.createPropertyAccessExpression(
-                                modelContext.getReferenceToTypeUtils({
-                                    typeName,
-                                    referencedIn: file,
-                                }),
-                                ts.factory.createIdentifier(ALIAS_UTILS_OF_KEY)
-                            ),
-                            undefined,
-                            [valueForAliasedType]
-                        );
-                    } else {
-                        return valueForAliasedType;
-                    }
                 },
                 enum: () =>
                     ts.factory.createAsExpression(
