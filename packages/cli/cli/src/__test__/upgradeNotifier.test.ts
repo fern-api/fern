@@ -5,6 +5,7 @@ describe("upgrade notifier test", () => {
         const upgradeMessage = await getFernCliUpgradeMessage({
             packageName: "fern-api",
             packageVersion: "0.0.10",
+            cliName: "fern",
         });
         expect(upgradeMessage).toContain("Update available");
     });

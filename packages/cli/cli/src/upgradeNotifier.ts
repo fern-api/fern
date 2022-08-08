@@ -3,6 +3,7 @@ import chalk from "chalk";
 import latestVersion from "latest-version";
 import pupa from "pupa";
 import semverDiff from "semver-diff";
+import { ParsedCliEnvironment } from "./cliEnvironment";
 
 export type FernCliUpgradeInfo = FernCliUpgradeAvailable | FernCliNoUpgradeAvailable;
 
@@ -43,10 +44,8 @@ export async function isFernCliUpgradeAvailable({
 export async function getFernCliUpgradeMessage({
     packageVersion,
     packageName,
-}: {
-    packageVersion: string;
-    packageName: string;
-}): Promise<string | undefined> {
+    cliName,
+}: ParsedCliEnvironment): Promise<string | undefined> {
     try {
         const upgradeInfo = await isFernCliUpgradeAvailable({ packageVersion, packageName });
         if (upgradeInfo.upgradeAvailable) {
@@ -63,7 +62,7 @@ export async function getFernCliUpgradeMessage({
                     packageName,
                     currentVersion: packageVersion,
                     latestVersion: upgradeInfo.version,
-                    updateCommand: "fern upgrade",
+                    updateCommand: `${cliName} upgrade`,
                 }),
                 {
                     padding: 1,
