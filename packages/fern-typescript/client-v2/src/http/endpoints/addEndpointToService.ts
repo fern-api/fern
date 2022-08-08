@@ -29,7 +29,7 @@ export function addEndpointToService({
                 parsedEndpoint.referenceToResponse != null
                     ? parsedEndpoint.referenceToResponse
                     : ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword),
-                parsedEndpoint.referenceToError
+                parsedEndpoint.error.reference
             ),
         ])
     );
