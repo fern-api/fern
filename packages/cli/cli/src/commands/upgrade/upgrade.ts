@@ -41,7 +41,9 @@ export async function upgrade({
             }
         );
         console.log(message);
-        const { stdout } = await execa(cliName, ["upgrade", `${commandLineWorkspaces.join(" ")}`]);
+        const { stdout } = await execa(cliName, ["upgrade", `${commandLineWorkspaces.join(" ")}`], {
+            cwd: process.cwd(),
+        });
         console.log(stdout);
     } else {
         await upgradeGeneratorsInWorkspace(commandLineWorkspaces);

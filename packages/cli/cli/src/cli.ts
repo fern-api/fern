@@ -18,13 +18,13 @@ void runCli();
 async function runCli() {
     const cli = yargs(hideBin(process.argv));
 
-    cli.scriptName(process.env.CLI_NAME ?? "fern")
+    const rawCliEnvironment = readRawCliEnvironment();
+    cli.scriptName(rawCliEnvironment.cliName ?? "fern")
         .strict()
         .alias("v", "version")
         .demandCommand()
         .recommendCommands();
 
-    const rawCliEnvironment = readRawCliEnvironment();
     if (rawCliEnvironment.packageVersion != null) {
         cli.version(rawCliEnvironment.packageVersion);
     }
