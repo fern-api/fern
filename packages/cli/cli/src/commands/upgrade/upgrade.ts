@@ -23,9 +23,9 @@ export async function upgrade({
         packageVersion: packageInfo.packageVersion,
     });
     if (fernCliUpgradeInfo.upgradeAvailable) {
-        await execa("npm", ["install", "-g", "fern-api"]);
+        await execa("npm", ["install", "-g", packageInfo.packageName]);
         const template =
-            "Upgraded fern from" + chalk.dim(" {currentVersion}") + chalk.reset(" → ") + chalk.green("{latestVersion}");
+            "Upgraded from" + chalk.dim(" {currentVersion}") + chalk.reset(" → ") + chalk.green("{latestVersion}");
         const message = boxen(
             pupa(template, {
                 packageName: packageInfo.packageName,
@@ -41,7 +41,8 @@ export async function upgrade({
             }
         );
         console.log(message);
-        await execa("fern", ["upgrade", `${commandLineWorkspaces.join(" ")}`]);
+        const { stdout } = await execa("fern", ["upgrade", `${commandLineWorkspaces.join(" ")}`]);
+        console.log(stdout);
     } else {
         await upgradeGeneratorsInWorkspace(commandLineWorkspaces);
     }
