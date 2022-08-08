@@ -98,7 +98,7 @@ jobs:
             alias fern="node $cli_path"
             mkdir a
             cd a
-            fern init --organization fern
+            $fern init --organization fern
             ./scripts/live-test.sh "$cli_path"
 
   publish-dev:
