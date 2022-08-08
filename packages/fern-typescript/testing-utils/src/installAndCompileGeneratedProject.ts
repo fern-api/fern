@@ -1,6 +1,6 @@
 import { BUILD_PROJECT_SCRIPT_NAME } from "@fern-typescript/commons";
 import execa from "execa";
-import { readdir, writeFile } from "fs/promises";
+import { readdir } from "fs/promises";
 import path from "path";
 
 export async function installAndCompileGeneratedProject(pathToDirectory: string): Promise<void> {
@@ -11,8 +11,8 @@ export async function installAndCompileGeneratedProject(pathToDirectory: string)
         });
     };
 
-    // write empty yarn.lock so yarn knows it's a standalone project
-    await writeFile(path.join(pathToDirectory, "yarn.lock"), "");
+    await runYarnCommand(["set", "version", "berry"]);
+    await runYarnCommand(["config", "set", "nodeLinker", "pnp"]);
     await runYarnCommand(["install"], {
         // set enableImmutableInstalls=false so we can modify yarn.lock, even when in CI
         YARN_ENABLE_IMMUTABLE_INSTALLS: "false",

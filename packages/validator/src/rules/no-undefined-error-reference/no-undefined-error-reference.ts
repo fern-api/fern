@@ -1,7 +1,6 @@
 import { parseReferenceToTypeName } from "@fern-api/ir-generator";
 import { Workspace } from "@fern-api/workspace-loader";
 import { visitFernYamlAst } from "@fern-api/yaml-schema";
-import path from "path";
 import { Rule } from "../../Rule";
 
 export const NoUndefinedErrorReferenceRule: Rule = {
@@ -21,7 +20,7 @@ export const NoUndefinedErrorReferenceRule: Rule = {
             errorReference: (errorReference, { relativeFilePath, contents }) => {
                 const parsedReference = parseReferenceToTypeName({
                     reference: errorReference,
-                    relativeFilePathOfDirectory: path.dirname(relativeFilePath),
+                    referencedIn: relativeFilePath,
                     imports: contents.imports ?? {},
                 });
 

@@ -19,7 +19,6 @@ export async function generatePackageJson({
 }): Promise<void> {
     let packageJson: IPackageJson = {
         name: packageName,
-        packageManager: "yarn@3.2.2",
     };
 
     if (packageVersion != null) {

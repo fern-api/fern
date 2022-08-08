@@ -3,9 +3,9 @@ import { SourceFile, ts } from "ts-morph";
 import { getRelativePathAsModuleSpecifierTo } from "../../getRelativePathAsModuleSpecifierTo";
 import { ImportDeclaration } from "../../imports-manager/ImportsManager";
 import { ModuleSpecifier } from "../../types";
-import { getEntityNameOfPackage } from "./getEntityNameOfPackage";
-import { getExpressionOfPackage } from "./getExpressionOfPackage";
-import { getFilepathForService } from "./getFilepathForService";
+import { getEntityNameOfContainingDirectory } from "./getEntityNameOfContainingDirectory";
+import { getExportedFilepathForService } from "./getExportedFilepathForService";
+import { getExpressionToContainingDirectory } from "./getExpressionToContainingDirectory";
 import { getGeneratedServiceName } from "./getGeneratedServiceName";
 
 export interface ServiceReference {
@@ -34,19 +34,19 @@ export function getReferenceToService({
     });
 
     const generatedServiceName = getGeneratedServiceName(serviceName);
-    const pathToServiceFile = getFilepathForService(serviceName);
+    const pathToServiceFile = getExportedFilepathForService(serviceName);
 
     return {
         entityName: ts.factory.createQualifiedName(
-            getEntityNameOfPackage({
-                pathToFileInPackage: pathToServiceFile,
+            getEntityNameOfContainingDirectory({
+                pathToFile: pathToServiceFile,
                 apiName,
             }),
             generatedServiceName
         ),
         expression: ts.factory.createPropertyAccessExpression(
-            getExpressionOfPackage({
-                pathToFileInPackage: pathToServiceFile,
+            getExpressionToContainingDirectory({
+                pathToFile: pathToServiceFile,
                 apiName,
             }),
             generatedServiceName

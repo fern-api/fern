@@ -1,8 +1,11 @@
 import path from "path";
-import { SourceFile } from "ts-morph";
+import { Directory, SourceFile } from "ts-morph";
 
-export function getRelativePathAsModuleSpecifierTo(from: SourceFile | string, to: SourceFile | string): string {
-    const parsedToFilePath = path.parse(typeof to === "string" ? to : to.getFilePath());
+export function getRelativePathAsModuleSpecifierTo(
+    from: Directory | SourceFile | string,
+    to: Directory | SourceFile | string
+): string {
+    const parsedToFilePath = path.parse(getPath(to));
     const toFilePathWithoutExtension = path.join(parsedToFilePath.dir, parsedToFilePath.name);
     let moduleSpecifier = path.relative(getDirectory(from), toFilePathWithoutExtension);
     if (!moduleSpecifier.startsWith(".")) {
@@ -14,9 +17,35 @@ export function getRelativePathAsModuleSpecifierTo(from: SourceFile | string, to
     return moduleSpecifier;
 }
 
-function getDirectory(fileOrDirectory: SourceFile | string): string {
-    if (typeof fileOrDirectory === "string" && path.extname(fileOrDirectory).length === 0) {
+function getPath(fileOrDirectory: Directory | SourceFile | string): string {
+    if (typeof fileOrDirectory === "string") {
         return fileOrDirectory;
     }
-    return path.dirname(typeof fileOrDirectory === "string" ? fileOrDirectory : fileOrDirectory.getFilePath());
+
+    if (isSourceFile(fileOrDirectory)) {
+        return fileOrDirectory.getFilePath();
+    }
+
+    return fileOrDirectory.getPath();
+}
+
+function getDirectory(fileOrDirectory: Directory | SourceFile | string): string {
+    if (typeof fileOrDirectory === "string") {
+        if (path.extname(fileOrDirectory).length === 0) {
+            return fileOrDirectory;
+        } else {
+            return fileOrDirectory;
+        }
+    }
+
+    if (isSourceFile(fileOrDirectory)) {
+        return path.dirname(fileOrDirectory.getFilePath());
+    }
+
+    return fileOrDirectory.getPath();
+}
+
+function isSourceFile(item: SourceFile | Directory): item is SourceFile {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    return (item as SourceFile).getFilePath != null;
 }

@@ -4,6 +4,7 @@
   "include": ["./src"],
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
+    { "path": "../../cli/cli" },
     { "path": "../../commons/core-utils" },
     { "path": "../../config-management/config-management-commons" },
     { "path": "../../generation/ir/ir-generator" },

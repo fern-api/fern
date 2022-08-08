@@ -1,8 +1,8 @@
+import { RelativeFilePath } from "@fern-api/config-management-commons";
 import { parseReferenceToTypeName } from "@fern-api/ir-generator";
 import { Workspace } from "@fern-api/workspace-loader";
 import { visitFernYamlAst, visitRawTypeReference } from "@fern-api/yaml-schema";
 import chalk from "chalk";
-import path from "path";
 import { Rule, RuleViolation } from "../../Rule";
 
 export const NoUndefinedTypeReferenceRule: Rule = {
@@ -68,7 +68,7 @@ interface ReferenceToTypeName {
     parsed:
         | {
               typeName: string;
-              relativeFilePath: string;
+              relativeFilePath: RelativeFilePath;
           }
         | undefined;
 }
@@ -79,7 +79,7 @@ function getAllNamedTypes({
     imports,
 }: {
     type: string;
-    relativeFilePath: string;
+    relativeFilePath: RelativeFilePath;
     imports: Record<string, string>;
 }): ReferenceToTypeName[] {
     return visitRawTypeReference<ReferenceToTypeName[]>(type, {
@@ -95,7 +95,7 @@ function getAllNamedTypes({
         named: (named) => {
             const reference = parseReferenceToTypeName({
                 reference: named,
-                relativeFilePathOfDirectory: path.dirname(relativeFilePath),
+                referencedIn: relativeFilePath,
                 imports,
             });
             return [

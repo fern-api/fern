@@ -2,6 +2,7 @@ import path from "path";
 import { Directory, SourceFile } from "ts-morph";
 import { getRelativePathAsModuleSpecifierTo } from "../getRelativePathAsModuleSpecifierTo";
 import { ModuleSpecifier } from "../types";
+import { convertExportedFilePathToFilePath, ExportedFilePath } from "./ExportedFilePath";
 
 export interface ExportDeclaration {
     exportAll?: boolean;
@@ -20,29 +21,50 @@ type PathToDirectory = string;
 export class ExportsManager {
     private exports: Record<PathToDirectory, Record<ModuleSpecifier, CombinedExportDeclarations>> = {};
 
-    constructor(private readonly root: string) {}
-
-    public addExport(from: SourceFile, exportDeclaration: ExportDeclaration): void {
-        const fromPath = from.getFilePath();
+    public addExport(from: SourceFile | string, exportDeclaration: ExportDeclaration): void {
+        const fromPath = typeof from === "string" ? from : from.getFilePath();
         if (path.extname(fromPath).length === 0) {
             throw new Error("Cannot export from directory: " + fromPath);
         }
 
         const pathToDirectory = path.dirname(fromPath);
-        const moduleSpecifierToExport = getRelativePathAsModuleSpecifierTo(pathToDirectory, fromPath);
 
-        this.addExportDeclarationForDirectory({ pathToDirectory, moduleSpecifierToExport, exportDeclaration });
+        this.addExportDeclarationForDirectory({
+            directory: pathToDirectory,
+            moduleSpecifierToExport: getRelativePathAsModuleSpecifierTo(pathToDirectory, fromPath),
+            exportDeclaration,
+        });
+    }
+
+    public addExportsForFilepath(filepath: ExportedFilePath): void {
+        let directoryFilepath = "/";
+        for (const part of filepath.directories) {
+            const nextDirectoryPath = path.join(directoryFilepath, part.nameOnDisk);
+            if (part.exportDeclaration != null) {
+                this.addExportDeclarationForDirectory({
+                    directory: directoryFilepath,
+                    moduleSpecifierToExport: getRelativePathAsModuleSpecifierTo(directoryFilepath, nextDirectoryPath),
+                    exportDeclaration: part.exportDeclaration,
+                });
+            }
+            directoryFilepath = nextDirectoryPath;
+        }
+
+        if (filepath.file.exportDeclaration != null) {
+            this.addExport(convertExportedFilePathToFilePath(filepath), filepath.file.exportDeclaration);
+        }
     }
 
     private addExportDeclarationForDirectory({
-        pathToDirectory,
+        directory,
         moduleSpecifierToExport,
         exportDeclaration,
     }: {
-        pathToDirectory: PathToDirectory;
+        directory: Directory | PathToDirectory;
         moduleSpecifierToExport: ModuleSpecifier;
         exportDeclaration: ExportDeclaration;
     }): void {
+        const pathToDirectory = typeof directory === "string" ? directory : directory.getPath();
         const exportsForDirectory = (this.exports[pathToDirectory] ??= {});
 
         const exportsForModuleSpecifier = (exportsForDirectory[moduleSpecifierToExport] ??= {
@@ -67,21 +89,6 @@ export class ExportsManager {
     }
 
     public writeExportsToProject(rootDirectory: Directory): void {
-        // first, make sure every directory is exported up to the root
-        for (let pathToExport of Object.keys(this.exports)) {
-            while (pathToExport !== this.root) {
-                const pathToParent = path.dirname(pathToExport);
-                this.addExportDeclarationForDirectory({
-                    pathToDirectory: pathToParent,
-                    moduleSpecifierToExport: getRelativePathAsModuleSpecifierTo(pathToParent, pathToExport),
-                    exportDeclaration: {
-                        namespaceExport: path.basename(pathToExport),
-                    },
-                });
-                pathToExport = pathToParent;
-            }
-        }
-
         for (const [pathToDirectory, moduleSpecifierToExports] of Object.entries(this.exports)) {
             for (const [moduleSpecifier, combinedExportDeclarations] of Object.entries(moduleSpecifierToExports)) {
                 const namespaceExports = [...combinedExportDeclarations.namespaceExports];

@@ -1,3 +1,4 @@
+import { parseAndValidateWorkspace } from "@fern-api/cli";
 import { getDirectoryContents } from "@fern-api/core-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { loadWorkspace } from "@fern-api/workspace-loader";
@@ -11,7 +12,7 @@ import { runGenerator } from "../generator/runGenerator";
 const FIXTURES = ["trace"];
 const FIXTURES_PATH = path.join(__dirname, "fixtures");
 
-const MODES = ["client", "client-v2", "server", "client_and_server"];
+const MODES = ["client-v2", "client", "server", "client_and_server"];
 
 describe("runGenerator", () => {
     for (const fixture of FIXTURES) {
@@ -23,6 +24,9 @@ describe("runGenerator", () => {
             const configJsonPath = path.join(fixturePath, "config.json");
 
             beforeAll(async () => {
+                await parseAndValidateWorkspace({
+                    absolutePathToWorkspaceConfiguration: path.join(fixturePath, ".fernrc.yml"),
+                });
                 const apiPath = path.join(fixturePath, "api");
 
                 const generatedDir = path.join(fixturePath, "generated");
