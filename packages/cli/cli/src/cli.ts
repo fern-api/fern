@@ -51,11 +51,7 @@ async function runCli() {
 }
 
 async function printUpgradeMessage(packageInfo: PackageInfo): Promise<void> {
-    if (
-        packageInfo.packageVersion == null ||
-        packageInfo.packageName == null ||
-        packageInfo.packageVersion == "0.0.0"
-    ) {
+    if (packageInfo.packageVersion == null || packageInfo.packageName == null) {
         return;
     }
     const upgradeMessage = await getFernCliUpgradeMessage({
