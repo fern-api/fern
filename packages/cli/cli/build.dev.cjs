@@ -1,7 +1,9 @@
 const { pnpPlugin } = require("@yarnpkg/esbuild-plugin-pnp");
 const { build } = require("esbuild");
 const path = require("path");
-const { chmod, writeFile } = require("fs/promises");
+const { chmod, writeFile, mkdir } = require("fs/promises");
+
+const packageJson = require("./package.json");
 
 main();
 
@@ -16,12 +18,11 @@ async function main() {
         plugins: [pnpPlugin()],
         define: {
             "process.env.CLI_NAME": JSON.stringify("fern-dev"),
-            "process.env.PACKAGE_VERSION": getEnvironmentVariable("PACKAGE_VERSION"),
-            "process.env.PACKAGE_NAME": getEnvironmentVariable("PACKAGE_NAME"),
+            "process.env.CLI_VERSION": JSON.stringify(packageJson.version),
+            "process.env.CLI_PACKAGE_NAME": JSON.stringify("@fern-api/fern-api-dev"),
             "process.env.AUTH0_DOMAIN": getEnvironmentVariable("AUTH0_DOMAIN"),
             "process.env.AUTH0_CLIENT_ID": getEnvironmentVariable("AUTH0_CLIENT_ID"),
             "process.env.DEFAULT_FIDDLE_ORIGIN": getEnvironmentVariable("DEFAULT_FIDDLE_ORIGIN"),
-            "process.env.CLI_NAME": getEnvironmentVariable("CLI_NAME"),
         },
     };
 
@@ -35,7 +36,7 @@ async function main() {
 
     await build(options).catch(() => process.exit(1));
 
-    process.chdir(path.join(__dirname, "dist/dev"));
+    process.chdir(path.join(__dirname, "dist"));
 
     // write cli executable
     await writeFile(
@@ -47,7 +48,6 @@ require("./bundle.cjs");`
     await chmod("cli.cjs", "755");
 
     // write cli's package.json
-    const packageJson = require("./package.json");
     await writeFile(
         "package.json",
         JSON.stringify(
