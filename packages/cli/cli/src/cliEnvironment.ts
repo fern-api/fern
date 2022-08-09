@@ -13,7 +13,7 @@ export interface ParsedCliEnvironment {
 export function readRawCliEnvironment(): RawCliEnvironment {
     return {
         packageName: process.env.CLI_PACKAGE_NAME,
-        packageVersion: process.env.CLI_PACKAGE_VERSION,
+        packageVersion: process.env.CLI_VERSION,
         cliName: process.env.CLI_NAME,
     };
 }
