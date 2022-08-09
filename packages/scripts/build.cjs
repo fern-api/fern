@@ -1,7 +1,9 @@
 const { pnpPlugin } = require("@yarnpkg/esbuild-plugin-pnp");
 const { build } = require("esbuild");
 const path = require("path");
-const { chmod, writeFile } = require("fs/promises");
+const { chmod, writeFile, mkdir } = require("fs/promises");
+
+const packageJson = require("./package.json");
 
 main();
 
@@ -16,6 +18,7 @@ async function main() {
         plugins: [pnpPlugin()],
         define: {
             "process.env.CLI_NAME": JSON.stringify("fern-scripts"),
+            "process.env.CLI_VERSION": JSON.stringify(packageJson.version),
         },
     };
 
