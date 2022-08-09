@@ -44,6 +44,7 @@ export async function upgrade({
         console.log(message);
         const { stdout } = await execa(cliName, hideBin(process.argv), {
             cwd: process.cwd(),
+            stdio: "inherit",
         });
         console.log(stdout);
     } else {
