@@ -242,6 +242,7 @@ function addUpgradeCommand({
             }),
         async (argv) => {
             await upgrade({ commandLineWorkspaces: argv.workspaces ?? [], rawCliEnvironment });
+            onRun();
         }
     );
 }
