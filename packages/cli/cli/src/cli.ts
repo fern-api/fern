@@ -18,6 +18,10 @@ void runCli();
 async function runCli() {
     const cli = yargs(hideBin(process.argv));
 
+    const cliContext = {
+        showUpgradeMessageIfAvailable: true,
+    };
+
     const rawCliEnvironment = readRawCliEnvironment();
     cli.scriptName(rawCliEnvironment.cliName ?? "fern")
         .strict()
@@ -36,11 +40,19 @@ async function runCli() {
     addLoginCommand(cli);
     addGenerateIrCommand(cli);
     addValidateCommand(cli);
-    addUpgradeCommand(cli, rawCliEnvironment);
+    addUpgradeCommand({
+        cli,
+        rawCliEnvironment,
+        onRun: () => {
+            cliContext.showUpgradeMessageIfAvailable = false;
+        },
+    });
 
     await cli.parse();
 
-    await printUpgradeMessage(rawCliEnvironment);
+    if (cliContext.showUpgradeMessageIfAvailable) {
+        await printUpgradeMessage(rawCliEnvironment);
+    }
 }
 
 async function printUpgradeMessage(rawCliEnvironment: RawCliEnvironment): Promise<void> {
@@ -209,7 +221,15 @@ function addValidateCommand(cli: Argv) {
     );
 }
 
-function addUpgradeCommand(cli: Argv, rawCliEnvironment: RawCliEnvironment) {
+function addUpgradeCommand({
+    cli,
+    rawCliEnvironment,
+    onRun,
+}: {
+    cli: Argv;
+    rawCliEnvironment: RawCliEnvironment;
+    onRun: () => void;
+}) {
     cli.command(
         "upgrade [workspaces...]",
         "Upgrades generator versions in your workspace",
