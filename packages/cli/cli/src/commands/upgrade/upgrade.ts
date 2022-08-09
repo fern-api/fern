@@ -2,6 +2,7 @@ import boxen from "boxen";
 import chalk from "chalk";
 import execa from "execa";
 import pupa from "pupa";
+import { hideBin } from "yargs/helpers";
 import { parseRawCliEnvironmentOrThrow, RawCliEnvironment } from "../../cliEnvironment";
 import { isFernCliUpgradeAvailable } from "../../upgradeNotifier";
 import { upgradeGeneratorsInWorkspace } from "./upgradeGeneratorInWorkspace";
@@ -41,7 +42,7 @@ export async function upgrade({
             }
         );
         console.log(message);
-        const { stdout } = await execa(cliName, ["upgrade", `${commandLineWorkspaces.join(" ")}`], {
+        const { stdout } = await execa(cliName, hideBin(process.argv), {
             cwd: process.cwd(),
         });
         console.log(stdout);
