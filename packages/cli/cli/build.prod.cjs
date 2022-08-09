@@ -36,7 +36,7 @@ async function main() {
 
     await build(options).catch(() => process.exit(1));
 
-    process.chdir(path.join(__dirname, "dist"));
+    process.chdir(path.join(__dirname, "dist/prod"));
 
     // write cli executable
     await writeFile(
