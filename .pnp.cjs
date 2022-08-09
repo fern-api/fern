@@ -3608,11 +3608,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/workspace-configuration", "workspace:packages/config-management/workspace-configuration"],\
             ["@fern-typescript/testing-utils", "workspace:packages/fern-typescript/testing-utils"],\
             ["@types/jest", "npm:28.1.6"],\
+            ["@types/js-yaml", "npm:4.0.5"],\
             ["@types/node", "npm:18.6.2"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.20.0"],\
             ["execa", "npm:5.1.1"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
+            ["js-yaml", "npm:4.1.0"],\
             ["prettier", "npm:2.7.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\

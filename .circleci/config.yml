@@ -35,7 +35,7 @@ jobs:
           command: yarn fern check
       - run:
           name: Ensure no changes to git-tracked files
-          command: git --no-pager diff
+          command: git --no-pager diff --exit-code
 
   compile-and-test:
     # this is machine because of the docker-utils tests
@@ -53,7 +53,7 @@ jobs:
           command: yarn test --ci
       - run:
           name: Ensure no changes to git-tracked files
-          command: git --no-pager diff
+          command: git --no-pager diff --exit-code
 
   ete-tests:
     machine:
@@ -67,7 +67,7 @@ jobs:
           command: yarn test:ete
       - run:
           name: Ensure no changes to git-tracked files
-          command: git --no-pager diff
+          command: git --no-pager diff --exit-code
 
   live-test:
     docker:

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`fern-upgrade-tests simple 1`] = `
+exports[`fern upgrade upgrades generators 1`] = `
 "name: api
 definition: src
 generators:
