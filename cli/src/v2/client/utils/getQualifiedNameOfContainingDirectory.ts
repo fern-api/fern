@@ -2,7 +2,7 @@ import { ExportedFilePath } from "../../exports-manager/ExportedFilePath";
 
 export declare namespace getQualifiedNameOfContainingDirectory {
     export interface Args<QualifiedName> {
-        apiName: QualifiedName;
+        convertToQualifiedName: (value: string) => QualifiedName;
         constructQualifiedName: (left: QualifiedName, right: string) => QualifiedName;
         pathToFile: ExportedFilePath;
     }
@@ -10,13 +10,23 @@ export declare namespace getQualifiedNameOfContainingDirectory {
 
 export function getQualifiedNameOfContainingDirectory<QualifiedName>({
     pathToFile,
+    convertToQualifiedName,
     constructQualifiedName,
-    apiName,
 }: getQualifiedNameOfContainingDirectory.Args<QualifiedName>): QualifiedName {
-    return pathToFile.directories.reduce<QualifiedName>((qualifiedReference, directory) => {
+    const [first, ...rest] = pathToFile.directories;
+    if (first == null) {
+        throw new Error("Cannot get qualified name because path is empty: " + pathToFile.file.nameOnDisk);
+    }
+    if (first.exportDeclaration?.namespaceExport == null) {
+        throw new Error(
+            "Cannot get qualified name because path is not namespace-exported: " + pathToFile.file.nameOnDisk
+        );
+    }
+
+    return rest.reduce<QualifiedName>((qualifiedReference, directory) => {
         if (directory.exportDeclaration?.namespaceExport != null) {
             return constructQualifiedName(qualifiedReference, directory.exportDeclaration.namespaceExport);
         }
         return qualifiedReference;
-    }, apiName);
+    }, convertToQualifiedName(first.exportDeclaration.namespaceExport));
 }

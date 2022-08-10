@@ -1,6 +1,6 @@
 imports:
   commons: commons.yml
-  problemV2: ./problem-v2/problemV2.yml
+  problemV2: ./v2/problem.yml
 types:
   SubmissionId:
     alias: string
@@ -465,78 +465,3 @@ services:
           method: GET
           path: /execution-sessions-state
           response: GetExecutionSessionStateResponse
-
-    SubmissionInfoService:
-      docs: Responsible for serving information about submissions
-      base-path: /submissions
-      auth: none
-      endpoints:
-        getSubmissionState:
-          docs: Returns information about the submission
-          method: GET
-          path: /{submissionId}
-          path-parameters:
-            submissionId: SubmissionId
-          response: GetSubmissionStateResponse
-
-        getSubmissionStateV2:
-          docs: Returns information about submission for problem V2
-          method: GET
-          path: /v2/{submissionId}
-          path-parameters:
-            submissionId: SubmissionId
-          response: GetSubmissionStateResponse
-
-        getTraceResponsesPage:
-          docs: Returns traces for the submission and test case
-          method: POST
-          path: /trace-respose/{submissionId}/testCase/{testCaseId}
-          path-parameters:
-            submissionId: SubmissionId
-            testCaseId: string
-          request: GetTraceResponsesPageRequest
-          response: TraceResponsesPage
-
-        getTraceResponsesV2Page:
-          docs: Returns traces for the submission and test case
-          method: POST
-          path: /trace-response-v2/{submissionId}/testCase/{testCaseId}
-          path-parameters:
-            submissionId: SubmissionId
-            testCaseId: problemV2.TestCaseId
-          request: GetTraceResponsesPageRequest
-          response: TraceResponsesPageV2
-
-        getTraceResponsesPageForWorkspace:
-          docs: Returns traces for the workspace
-          method: POST
-          path: /workspace-trace-response/{submissionId}
-          path-parameters:
-            submissionId: SubmissionId
-          request: GetTraceResponsesPageRequest
-          response: TraceResponsesPage
-
-        getTraceResponsesV2PageForWorkspace:
-          docs: Returns traces for the submission and test case
-          method: POST
-          path: /workspace-trace-response-v2/{submissionId}
-          path-parameters:
-            submissionId: SubmissionId
-          request: GetTraceResponsesPageRequest
-          response: TraceResponsesPageV2
-
-    WorkspaceInfoService:
-      base-path: /workspace
-      auth: none
-      endpoints:
-        getWorkspaceStarterFiles:
-          docs: Returns starter files for workspace
-          method: GET
-          path: /get-workspace-starter-files
-          response: WorkspaceStarterFilesResponse
-
-        getWorkspaceStarterFilesV2:
-          docs: Returns starter files for workspace
-          method: GET
-          path: /get-workspace-starter-files-v2
-          response: WorkspaceStarterFilesResponseV2
