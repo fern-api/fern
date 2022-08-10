@@ -5,6 +5,7 @@ import { isEqual } from "lodash-es";
 import { StringifiedFernFilepath, stringifyFernFilepath } from "./utils/stringifyFernFilepath";
 
 const ROOT_WRAPPER_NAME = "Client";
+const NON_ROOT_WRAPPER_NAME = ClientConstants.HttpService.SERVICE_NAME;
 
 export function constructWrapperDeclarations(
     intermediateRepresentation: IntermediateRepresentation
@@ -14,7 +15,7 @@ export function constructWrapperDeclarations(
     for (const service of intermediateRepresentation.services.http) {
         for (const [index, fernFilepathPart] of service.name.fernFilepath.entries()) {
             const wrapper: WrapperName = {
-                name: index === 0 ? ROOT_WRAPPER_NAME : ClientConstants.HttpService.SERVICE_NAME,
+                name: index === 0 ? ROOT_WRAPPER_NAME : NON_ROOT_WRAPPER_NAME,
                 fernFilepath: service.name.fernFilepath.slice(0, index),
             };
 
@@ -28,7 +29,7 @@ export function constructWrapperDeclarations(
                 declarationOfWrapper.wrappedServices.push(service.name);
             } else {
                 const wrapped: WrapperName = {
-                    name: ClientConstants.HttpService.SERVICE_NAME,
+                    name: NON_ROOT_WRAPPER_NAME,
                     fernFilepath: [...wrapper.fernFilepath, fernFilepathPart],
                 };
                 if (!declarationOfWrapper.wrappedWrappers.some((wrapper) => isEqual(wrapper, wrapped))) {
