@@ -24104,10 +24104,10 @@ export class Client {
         }));
     }
 
-    #v2: MyApi.v2.Client | undefined;
+    #v2: MyApi.v2._Client | undefined;
 
-    public get v2(): MyApi.v2.Client {
-        return (this.#v2 ??= new MyApi.v2.Client(this.options));
+    public get v2(): MyApi.v2._Client {
+        return (this.#v2 ??= new MyApi.v2._Client(this.options));
     }
 }
 ",
@@ -29079,14 +29079,14 @@ export const getNumWarmInstances = {
               Object {
                 "contents": "import { MyApi } from \\"../..\\";
 
-export namespace Client {
+export namespace _Client {
     export interface Options {
         origin: string;
     }
 }
 
-export class Client {
-    constructor(private readonly options: Client.Options) {
+export class _Client {
+    constructor(private readonly options: _Client.Options) {
     }
 
     #problem: MyApi.v2.problem._Client | undefined;
@@ -29097,20 +29097,20 @@ export class Client {
         }));
     }
 
-    #v3: MyApi.v2.v3.Client | undefined;
+    #v3: MyApi.v2.v3._Client | undefined;
 
-    public get v3(): MyApi.v2.v3.Client {
-        return (this.#v3 ??= new MyApi.v2.v3.Client(this.options));
+    public get v3(): MyApi.v2.v3._Client {
+        return (this.#v3 ??= new MyApi.v2.v3._Client(this.options));
     }
 }
 ",
-                "name": "Client.ts",
+                "name": "_Client.ts",
                 "type": "file",
               },
               Object {
                 "contents": "export * as problem from \\"./problem\\";
 export * as v3 from \\"./v3\\";
-export * from \\"./Client\\";
+export * from \\"./_Client\\";
 ",
                 "name": "index.ts",
                 "type": "file",
@@ -30101,14 +30101,14 @@ export * from \\"./_Client\\";
                   Object {
                     "contents": "import { MyApi } from \\"../../..\\";
 
-export namespace Client {
+export namespace _Client {
     export interface Options {
         origin: string;
     }
 }
 
-export class Client {
-    constructor(private readonly options: Client.Options) {
+export class _Client {
+    constructor(private readonly options: _Client.Options) {
     }
 
     #problem: MyApi.v2.v3.problem._Client | undefined;
@@ -30120,12 +30120,12 @@ export class Client {
     }
 }
 ",
-                    "name": "Client.ts",
+                    "name": "_Client.ts",
                     "type": "file",
                   },
                   Object {
                     "contents": "export * as problem from \\"./problem\\";
-export * from \\"./Client\\";
+export * from \\"./_Client\\";
 ",
                     "name": "index.ts",
                     "type": "file",
