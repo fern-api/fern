@@ -4,18 +4,16 @@ import { getQualifiedNameOfContainingDirectory } from "./getQualifiedNameOfConta
 
 export declare namespace getEntityNameOfContainingDirectory {
     export interface Args {
-        apiName: string;
         pathToFile: ExportedFilePath;
     }
 }
 
 export function getEntityNameOfContainingDirectory({
     pathToFile,
-    apiName,
 }: getEntityNameOfContainingDirectory.Args): ts.EntityName {
     return getQualifiedNameOfContainingDirectory<ts.EntityName>({
-        apiName: ts.factory.createIdentifier(apiName),
         pathToFile,
         constructQualifiedName: (left, right) => ts.factory.createQualifiedName(left, right),
+        convertToQualifiedName: (value) => ts.factory.createIdentifier(value),
     });
 }

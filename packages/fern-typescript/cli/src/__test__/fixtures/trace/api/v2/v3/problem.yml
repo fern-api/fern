@@ -1,6 +1,6 @@
 imports:
-  commons: ../commons.yml
-  problem: ../problem.yml
+  commons: ../../commons.yml
+  problem: ../../problem.yml
 
 ids:
   - TestCaseTemplateId
@@ -219,66 +219,3 @@ services:
             problemId: commons.ProblemId
             problemVersion: integer
           response: ProblemInfoV2
-
-    ProblemCrudServiceV2:
-      base-path: /problem-crud-v2
-      auth: none
-      endpoints:
-        createProblem:
-          docs: Creates a problem
-          method: POST
-          path: /create
-          request: CreateProblemRequestV2
-          response: problem.CreateProblemResponse
-
-        updateProblem:
-          docs: Updates a problem
-          method: POST
-          path: /update/{problemId}
-          path-parameters:
-            problemId: commons.ProblemId
-          request: CreateProblemRequestV2
-          response: problem.UpdateProblemResponse
-
-        deleteProblem:
-          docs: Soft deletes a problem
-          method: DELETE
-          path: /delete/{problemId}
-          path-parameters:
-            problemId: commons.ProblemId
-
-        getFunctionSignature:
-          docs: Get the generated function signature in every language
-          method: POST
-          path: /function-signature
-          request: GetFunctionSignatureRequest
-          response: GetFunctionSignatureResponse
-
-        getBasicSolutionFile:
-          docs: Returns solution file for basic starter files
-          method: POST
-          path: /basic-solution-file
-          request: GetBasicSolutionFileRequest
-          response: GetBasicSolutionFileResponse
-
-        getDefaultDirectoryForProblemFiles:
-          docs: Returns the default directory where a problem's files should live
-          method: GET
-          path: /default-problem-files-directory
-          response: map<commons.Language, string>
-
-        getGeneratedTestCaseFile:
-          docs: Returns the default directory where a problem's files should live
-          method: POST
-          path: /generated-test-case-file
-          request:
-            docs: Supply template if the test case relies on it
-            type: GetGeneratedTestCaseFileRequest
-          response: map<commons.Language, FileInfoV2>
-
-        getGeneratedTestCaseTemplateFile:
-          docs: Returns the default directory where a problem's files should live
-          method: POST
-          path: /generated-test-case-template-file
-          request: GetGeneratedTestCaseTemplateFileRequest
-          response: map<commons.Language, FileInfoV2>
