@@ -28,7 +28,6 @@ export function getReferenceToExportedType({
     });
     const qualifiedNameOfPackage = getEntityNameOfContainingDirectory({
         pathToFile: exportedFromPath,
-        apiName,
     });
     return ts.factory.createTypeReferenceNode(ts.factory.createQualifiedName(qualifiedNameOfPackage, typeName));
 }

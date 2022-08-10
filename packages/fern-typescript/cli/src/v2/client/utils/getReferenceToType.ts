@@ -27,7 +27,7 @@ export function getReferenceToType({
                 apiName,
                 referencedIn,
                 typeName: getGeneratedTypeName(typeName),
-                exportedFromPath: getExportedFilepathForType(typeName),
+                exportedFromPath: getExportedFilepathForType(typeName, apiName),
                 addImport,
             });
         },
