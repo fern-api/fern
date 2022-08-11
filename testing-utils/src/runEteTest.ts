@@ -36,8 +36,8 @@ export async function runEteTest({ testFile, pathToFixture, generateFiles }: run
     await deleteDirectory(pathToGenerated);
 
     const parseWorkspaceResult = await loadWorkspace({
-        name: undefined,
-        absolutePathToDefinition: path.join(absolutePathToFixture, "src"),
+        absolutePathToWorkspace: absolutePathToFixture,
+        version: 1,
     });
     if (!parseWorkspaceResult.didSucceed) {
         throw new Error(JSON.stringify(parseWorkspaceResult.failures));
