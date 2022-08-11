@@ -4,7 +4,6 @@ import glob from "glob-promise";
 import path from "path";
 import { FernFile } from "./types/FernFile";
 
-// TODO return errors, don't throw
 export async function listYamlFilesForWorkspace(absolutePathToDefinition: string): Promise<FernFile[]> {
     try {
         const stats = await lstat(absolutePathToDefinition);

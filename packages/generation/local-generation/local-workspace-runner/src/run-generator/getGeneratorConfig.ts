@@ -1,10 +1,8 @@
-import { GeneratorConfig, GeneratorHelpers } from "@fern-fern/ir-model/generators";
-import path from "path";
-import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_GENERATORS_DIRECTORY, DOCKER_PATH_TO_IR } from "./constants";
+import { GeneratorConfig } from "@fern-fern/ir-model/generators";
+import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_PATH_TO_IR } from "./constants";
 
 export declare namespace getGeneratorConfig {
     export interface Args {
-        helpers: GeneratorHelpers;
         workspaceName: string;
         organization: string;
         customConfig: unknown;
@@ -17,30 +15,11 @@ export declare namespace getGeneratorConfig {
 }
 
 export function getGeneratorConfig({
-    helpers,
     customConfig,
     workspaceName,
     organization,
 }: getGeneratorConfig.Args): getGeneratorConfig.Return {
     const binds: string[] = [];
-
-    // convert paths in helpers from host to docker
-    const convertedHelpers: GeneratorConfig["helpers"] = {
-        encodings: {},
-    };
-    for (const [encoding, helperForEncoding] of Object.entries(helpers.encodings)) {
-        const absolutePathOnDocker = path.join(
-            DOCKER_GENERATORS_DIRECTORY,
-            helperForEncoding.name,
-            helperForEncoding.version
-        );
-        convertedHelpers.encodings[encoding] = {
-            name: helperForEncoding.name,
-            version: helperForEncoding.version,
-            absolutePath: absolutePathOnDocker,
-        };
-        binds.push(`${helperForEncoding.absolutePath}:${absolutePathOnDocker}`);
-    }
 
     return {
         binds,
@@ -48,9 +27,10 @@ export function getGeneratorConfig({
             irFilepath: DOCKER_PATH_TO_IR,
             output: { path: DOCKER_CODEGEN_OUTPUT_DIRECTORY },
             publish: null,
-            // TODO delete this cast
-            customConfig: customConfig as Record<string, string>,
-            helpers: convertedHelpers,
+            customConfig,
+            helpers: {
+                encodings: {},
+            },
             workspaceName,
             organization,
             environment: { _type: "local" },

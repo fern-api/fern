@@ -3,24 +3,18 @@ import {
     loadProjectConfigFromFilepath,
     PROJECT_CONFIG_FILENAME,
 } from "@fern-api/project-configuration";
-import { WORKSPACE_CONFIGURATION_FILENAME } from "@fern-api/workspace-configuration";
+import { loadWorkspace, Workspace } from "@fern-api/workspace-loader";
 import { findUp } from "find-up";
 import { readdir } from "fs/promises";
 import path from "path";
+import { handleFailedWorkspaceParserResult } from "../../generate-ir/handleFailedWorkspaceParserResult";
 import { getWorkspaceConfigurationPaths } from "./getWorkspaceConfigurationPaths";
-import { WorkspaceConfigurationFilePath } from "./WorkspaceConfigurationFilePath";
 
 const FERN_DIRECTORY = ".fern";
 
 export interface Project {
     organization: string;
     workspaces: Workspace[];
-}
-
-export interface Workspace {
-    name: string;
-    absolutePath: string;
-    workspaceConfigurationFilePath: WorkspaceConfigurationFilePath;
 }
 
 export async function loadProject({
@@ -36,7 +30,11 @@ export async function loadProject({
     return project;
 }
 
-async function loadProjectV1({ commandLineWorkspaces }: { commandLineWorkspaces: readonly string[] }) {
+async function loadProjectV1({
+    commandLineWorkspaces,
+}: {
+    commandLineWorkspaces: readonly string[];
+}): Promise<Project> {
     const projectConfig = await loadProjectConfig();
 
     const workspaceConfigurationPaths = await getWorkspaceConfigurationPaths({
@@ -46,13 +44,19 @@ async function loadProjectV1({ commandLineWorkspaces }: { commandLineWorkspaces:
 
     return {
         organization: projectConfig.organization,
-        workspaces: workspaceConfigurationPaths.map((workspaceConfigurationPath): Workspace => {
-            return {
-                name: "Workspace",
-                absolutePath: path.dirname(workspaceConfigurationPath),
-                workspaceConfigurationFilePath: workspaceConfigurationPath,
-            };
-        }),
+        workspaces: await Promise.all(
+            workspaceConfigurationPaths.map(async (workspaceConfigurationPath) => {
+                const workspace = await loadWorkspace({
+                    absolutePathToWorkspace: path.dirname(workspaceConfigurationPath),
+                    version: 1,
+                });
+                if (!workspace.didSucceed) {
+                    handleFailedWorkspaceParserResult(workspace);
+                    throw new Error("Failed to parse workspace");
+                }
+                return workspace.workspace;
+            })
+        ),
     };
 }
 
@@ -77,7 +81,7 @@ async function loadProjectV2({
     let filteredWorkspaces: readonly string[] = allWorkspaces;
 
     if (commandLineWorkspaces.length > 0) {
-        filteredWorkspaces = commandLineWorkspaces;
+        filteredWorkspaces = commandLineWorkspaces.map((commandLineWorkspace) => path.resolve(commandLineWorkspace));
     } else {
         if (allWorkspaces.length > 1) {
             throw new Error("There are multiple workspaces. You must specify one with --api");
@@ -91,18 +95,19 @@ async function loadProjectV2({
         }
     }
 
-    const workspaces = filteredWorkspaces.map((commandLineWorkspace): Workspace => {
-        const absolutePath = path.join(fernDirectory, commandLineWorkspace);
-
-        return {
-            name: commandLineWorkspace,
-            absolutePath,
-            workspaceConfigurationFilePath: path.join(
-                absolutePath,
-                WORKSPACE_CONFIGURATION_FILENAME
-            ) as WorkspaceConfigurationFilePath,
-        };
-    });
+    const workspaces = await Promise.all(
+        filteredWorkspaces.map(async (absolutePathToWorkspace) => {
+            const workspace = await loadWorkspace({
+                absolutePathToWorkspace: path.join(fernDirectory, absolutePathToWorkspace),
+                version: 2,
+            });
+            if (!workspace.didSucceed) {
+                handleFailedWorkspaceParserResult(workspace);
+                throw new Error("Failed to parse workspace");
+            }
+            return workspace.workspace;
+        })
+    );
 
     const projectConfig = await loadProjectConfigFromFilepath(path.join(fernDirectory, PROJECT_CONFIG_FILENAME));
 

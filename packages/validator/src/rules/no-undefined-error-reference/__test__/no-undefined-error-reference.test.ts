@@ -6,12 +6,12 @@ describe("no-undefined-error-reference", () => {
     it("simple", async () => {
         const violations = await getViolationsForRule({
             rule: NoUndefinedErrorReferenceRule,
-            absolutePathToDefinition: path.join(__dirname, "fixtures", "simple"),
+            absolutePathToWorkspace: path.join(__dirname, "fixtures", "simple"),
         });
         expect(violations).toMatchObject([
             {
                 severity: "error",
-                relativeFilePath: "src/simple.yml",
+                relativeFilePath: "simple.yml",
                 nodePath: [
                     "services",
                     "http",
@@ -25,7 +25,7 @@ describe("no-undefined-error-reference", () => {
             },
             {
                 severity: "error",
-                relativeFilePath: "src/simple.yml",
+                relativeFilePath: "simple.yml",
                 nodePath: [
                     "services",
                     "http",

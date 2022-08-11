@@ -6,16 +6,16 @@ import { WorkspaceConfiguration } from "./WorkspaceConfiguration";
 // We should use a different word to refer to the .fernrc
 export function convertWorkspaceConfiguration({
     workspaceConfiguration,
-    absolutePathToDefinition,
+    absolutePathToConfiguration,
 }: {
     workspaceConfiguration: WorkspaceConfigurationSchema;
-    absolutePathToDefinition: string;
+    absolutePathToConfiguration: string;
 }): WorkspaceConfiguration {
-    const absolutePathToWorkspaceDir = path.dirname(absolutePathToDefinition);
+    const absolutePathToWorkspaceDir = path.dirname(absolutePathToConfiguration);
     return {
         _absolutePath: absolutePathToWorkspaceDir,
         name: workspaceConfiguration.name,
-        absolutePathToConfiguration: path.resolve(absolutePathToWorkspaceDir, workspaceConfiguration.definition),
+        absolutePathToDefinition: path.resolve(absolutePathToWorkspaceDir, workspaceConfiguration.definition),
         generators: workspaceConfiguration.generators.map((generatorInvocation) => {
             return {
                 name: generatorInvocation.name,

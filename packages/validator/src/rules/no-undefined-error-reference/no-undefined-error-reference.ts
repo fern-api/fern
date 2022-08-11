@@ -45,7 +45,7 @@ export const NoUndefinedErrorReferenceRule: Rule = {
 async function getErrorsByFilepath(workspace: Workspace) {
     const erorrsByFilepath: Record<string, Set<string>> = {};
 
-    for (const [relativeFilepath, file] of Object.entries(workspace.files)) {
+    for (const [relativeFilepath, file] of Object.entries(workspace.serviceFiles)) {
         const errorsForFile = new Set<string>();
         erorrsByFilepath[relativeFilepath] = errorsForFile;
 

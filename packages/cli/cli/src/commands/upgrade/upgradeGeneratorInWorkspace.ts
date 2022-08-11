@@ -9,11 +9,13 @@ export async function upgradeGeneratorsInWorkspace(commandLineWorkspaces: readon
     const { workspaces } = await loadProject({ commandLineWorkspaces });
 
     for (const workspace of workspaces) {
-        const workspaceConfiguration = await loadRawWorkspaceConfiguration(workspace.workspaceConfigurationFilePath);
+        const workspaceConfiguration = await loadRawWorkspaceConfiguration(
+            workspace.generatorsConfiguration.absolutePathToConfiguration
+        );
         const updatedWorkspaceConfiguration = upgradeGeneratorsIfPresent({ workspaceConfiguration });
         if (updatedWorkspaceConfiguration.upgrades.length > 0) {
             await writeFile(
-                workspace.workspaceConfigurationFilePath,
+                workspace.generatorsConfiguration.absolutePathToConfiguration,
                 yaml.dump(updatedWorkspaceConfiguration.updatedWorkspaceConfiguration)
             );
             for (const upgradeInfo of updatedWorkspaceConfiguration.upgrades) {

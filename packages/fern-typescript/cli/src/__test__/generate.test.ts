@@ -1,4 +1,4 @@
-import { parseAndValidateWorkspace } from "@fern-api/cli";
+import { validateWorkspaceAndLogIssues } from "@fern-api/cli";
 import { getDirectoryContents } from "@fern-api/core-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { loadWorkspace } from "@fern-api/workspace-loader";
@@ -24,22 +24,19 @@ describe("runGenerator", () => {
             const configJsonPath = path.join(fixturePath, "config.json");
 
             beforeAll(async () => {
-                await parseAndValidateWorkspace({
-                    absolutePathToWorkspaceConfiguration: path.join(fixturePath, ".fernrc.yml"),
-                });
-                const apiPath = path.join(fixturePath, "api");
-
                 const generatedDir = path.join(fixturePath, "generated");
                 await rm(generatedDir, { force: true, recursive: true });
                 await mkdir(generatedDir, { recursive: true });
 
                 const parseWorkspaceResult = await loadWorkspace({
-                    name: undefined,
-                    absolutePathToDefinition: apiPath,
+                    absolutePathToWorkspace: fixturePath,
+                    version: 1,
                 });
                 if (!parseWorkspaceResult.didSucceed) {
                     throw new Error(JSON.stringify(parseWorkspaceResult.failures));
                 }
+
+                await validateWorkspaceAndLogIssues(parseWorkspaceResult.workspace);
 
                 const intermediateRepresentation = generateIntermediateRepresentation(parseWorkspaceResult.workspace);
 

@@ -1,20 +1,20 @@
-import { WorkspaceConfiguration } from "@fern-api/workspace-configuration";
+import { Workspace } from "@fern-api/workspace-loader";
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
 import { createAndStartJob } from "./createAndStartJob";
 import { pollJobAndReportStatus } from "./pollJobAndReportStatus";
 
 export async function runRemoteGenerationForWorkspace({
     organization,
-    workspaceConfiguration,
+    workspace,
     intermediateRepresentation,
 }: {
     organization: string;
-    workspaceConfiguration: WorkspaceConfiguration;
+    workspace: Workspace;
     intermediateRepresentation: IntermediateRepresentation;
 }): Promise<void> {
-    if (workspaceConfiguration.generators.length === 0) {
+    if (workspace.generatorsConfiguration.generators.length === 0) {
         throw new Error("No generators specified.");
     }
-    const job = await createAndStartJob({ workspaceConfiguration, organization, intermediateRepresentation });
-    await pollJobAndReportStatus({ job, workspaceConfiguration });
+    const job = await createAndStartJob({ workspace, organization, intermediateRepresentation });
+    await pollJobAndReportStatus({ job, workspace });
 }
