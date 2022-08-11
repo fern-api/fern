@@ -1,26 +1,24 @@
-import { GeneratorInvocation, WorkspaceConfiguration } from "@fern-api/workspace-configuration";
+import { GeneratorInvocation } from "@fern-api/generators-configuration";
+import { Workspace } from "@fern-api/workspace-loader";
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
-import { CustomWireMessageEncoding } from "@fern-fern/ir-model/services";
 import { mkdir, rm, writeFile } from "fs/promises";
 import os from "os";
 import path from "path";
 import tmp, { DirectoryResult } from "tmp-promise";
-import { buildGeneratorHelpers } from "./buildGeneratorHelpers";
-import { downloadHelper } from "./downloadHelper";
 import { runGenerator } from "./run-generator/runGenerator";
 
 export async function runLocalGenerationForWorkspace({
     organization,
-    workspaceConfiguration,
+    workspace,
     intermediateRepresentation,
     keepDocker,
 }: {
     organization: string;
-    workspaceConfiguration: WorkspaceConfiguration;
+    workspace: Workspace;
     intermediateRepresentation: IntermediateRepresentation;
     keepDocker: boolean;
 }): Promise<void> {
-    if (workspaceConfiguration.generators.length === 0) {
+    if (workspace.generatorsConfiguration.generators.length === 0) {
         return;
     }
 
@@ -35,14 +33,13 @@ export async function runLocalGenerationForWorkspace({
     await writeFile(absolutePathToIr, JSON.stringify(intermediateRepresentation));
 
     await Promise.all(
-        workspaceConfiguration.generators.map(async (generatorInvocation) =>
+        workspace.generatorsConfiguration.generators.map(async (generatorInvocation) =>
             loadHelpersAndRunGenerator({
                 organization,
-                workspaceConfiguration,
+                workspace,
                 generatorInvocation,
                 workspaceTempDir,
                 absolutePathToIr,
-                nonStandardEncodings: intermediateRepresentation.services.nonStandardEncodings,
                 keepDocker,
             })
         )
@@ -51,19 +48,17 @@ export async function runLocalGenerationForWorkspace({
 
 async function loadHelpersAndRunGenerator({
     organization,
-    workspaceConfiguration,
+    workspace,
     generatorInvocation,
     workspaceTempDir,
     absolutePathToIr,
-    nonStandardEncodings,
     keepDocker,
 }: {
     organization: string;
-    workspaceConfiguration: WorkspaceConfiguration;
+    workspace: Workspace;
     generatorInvocation: GeneratorInvocation;
     workspaceTempDir: DirectoryResult;
     absolutePathToIr: string;
-    nonStandardEncodings: CustomWireMessageEncoding[];
     keepDocker: boolean;
 }): Promise<void> {
     const configJson = await tmp.file({
@@ -75,24 +70,13 @@ async function loadHelpersAndRunGenerator({
         await mkdir(generatorInvocation.generate.absolutePathToLocalOutput, { recursive: true });
     }
 
-    await Promise.all(
-        generatorInvocation.helpers.map((helper) =>
-            downloadHelper({ helper, absolutePathToWorkspaceTempDir: workspaceTempDir.path })
-        )
-    );
-
     await runGenerator({
         imageName: `${generatorInvocation.name}:${generatorInvocation.version}`,
         absolutePathToOutput: generatorInvocation.generate?.absolutePathToLocalOutput,
         absolutePathToIr,
         pathToWriteConfigJson: configJson.path,
-        helpers: buildGeneratorHelpers({
-            generatorInvocation,
-            nonStandardEncodings,
-            absolutePathToWorkspaceTempDir: workspaceTempDir.path,
-        }),
         customConfig: generatorInvocation.config,
-        workspaceName: workspaceConfiguration.name,
+        workspaceName: workspace.name,
         organization,
         keepDocker,
     });

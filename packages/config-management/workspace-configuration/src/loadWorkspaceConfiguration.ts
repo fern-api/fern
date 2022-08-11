@@ -9,17 +9,17 @@ import { WorkspaceConfiguration } from "./WorkspaceConfiguration";
 export const WORKSPACE_CONFIGURATION_FILENAME = ".fernrc.yml";
 
 export async function loadRawWorkspaceConfiguration(
-    absolutePathToDefinition: string
+    absolutePathToConfiguration: string
 ): Promise<WorkspaceConfigurationSchema> {
-    const contentsStr = await readFile(absolutePathToDefinition);
+    const contentsStr = await readFile(absolutePathToConfiguration);
     const contentsParsed = substituteEnvVariables(yaml.load(contentsStr.toString()));
     return await validateSchema<WorkspaceConfigurationSchema>(WorkspaceConfigurationSchema, contentsParsed);
 }
 
-export async function loadWorkspaceConfiguration(absolutePathToDefinition: string): Promise<WorkspaceConfiguration> {
-    const validated = await loadRawWorkspaceConfiguration(absolutePathToDefinition);
+export async function loadWorkspaceConfiguration(absolutePathToConfiguration: string): Promise<WorkspaceConfiguration> {
+    const validated = await loadRawWorkspaceConfiguration(absolutePathToConfiguration);
     return convertWorkspaceConfiguration({
         workspaceConfiguration: validated,
-        absolutePathToDefinition,
+        absolutePathToConfiguration,
     });
 }

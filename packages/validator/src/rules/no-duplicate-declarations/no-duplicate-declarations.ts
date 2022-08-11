@@ -53,7 +53,7 @@ export const NoDuplicateDeclarationsRule: Rule = {
 async function getDeclarations(workspace: Workspace): Promise<Declarations> {
     const declarations: Declarations = {};
 
-    for (const [relativeFilepath, file] of Object.entries(workspace.files)) {
+    for (const [relativeFilepath, file] of Object.entries(workspace.serviceFiles)) {
         const relativeDirectoryPath: RelativeDirectoryPath = path.dirname(relativeFilepath);
 
         const declarationsForDirectory = (declarations[relativeDirectoryPath] ??= {});

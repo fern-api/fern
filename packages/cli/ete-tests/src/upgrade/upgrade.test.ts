@@ -1,9 +1,11 @@
 import { ProjectConfigSchema, PROJECT_CONFIG_FILENAME } from "@fern-api/project-configuration";
 import { WorkspaceConfigurationSchema, WORKSPACE_CONFIGURATION_FILENAME } from "@fern-api/workspace-configuration";
-import { mkdir, readFile, writeFile } from "fs/promises";
+import { mkdir, readFile, rm, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 import { runFernCli } from "../utils/runFernCli";
+
+const RELATIVE_PATH_TO_DEFINITION = "src";
 
 const FERN_CONFIG_JSON: ProjectConfigSchema = {
     workspaces: ["**"],
@@ -12,7 +14,7 @@ const FERN_CONFIG_JSON: ProjectConfigSchema = {
 
 const FERN_RC: WorkspaceConfigurationSchema = {
     name: "api",
-    definition: "src",
+    definition: RELATIVE_PATH_TO_DEFINITION,
     generators: [
         {
             name: "fernapi/fern-postman",
@@ -57,7 +59,9 @@ describe("fern upgrade", () => {
     it("upgrades generators", async () => {
         // put in generated/ so it's git-ignored
         const workspacePath = path.join(__dirname, "generated");
+        await rm(workspacePath, { recursive: true, force: true });
         await mkdir(workspacePath, { recursive: true });
+        await mkdir(path.join(workspacePath, RELATIVE_PATH_TO_DEFINITION));
         await writeFile(
             path.join(workspacePath, PROJECT_CONFIG_FILENAME),
             JSON.stringify(FERN_CONFIG_JSON, undefined, 2)

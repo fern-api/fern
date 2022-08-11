@@ -16,17 +16,17 @@ const CHALK_ESCAPE_SEQUENCES_REGEX = new RegExp(`${CHALK_ESCAPE_SEQUENCES.join("
 export declare namespace getViolationsForRule {
     export interface Args {
         rule: Rule;
-        absolutePathToDefinition: string;
+        absolutePathToWorkspace: string;
     }
 }
 
 export async function getViolationsForRule({
     rule,
-    absolutePathToDefinition,
+    absolutePathToWorkspace,
 }: getViolationsForRule.Args): Promise<RuleViolation[]> {
     const parseResult = await loadWorkspace({
-        name: undefined,
-        absolutePathToDefinition,
+        absolutePathToWorkspace,
+        version: 1,
     });
     if (!parseResult.didSucceed) {
         throw new Error("Failed to parse workspace");
@@ -35,7 +35,7 @@ export async function getViolationsForRule({
     const ruleRunner = await rule.create({ workspace: parseResult.workspace });
     const violations: RuleViolation[] = [];
 
-    for (const [relativeFilePath, contents] of entries(parseResult.workspace.files)) {
+    for (const [relativeFilePath, contents] of entries(parseResult.workspace.serviceFiles)) {
         const visitor = createAstVisitorForRules({
             relativeFilePath,
             contents,

@@ -49,6 +49,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/config-management/config-management-commons"\
       },\
       {\
+        "name": "@fern-api/generators-configuration",\
+        "reference": "workspace:packages/config-management/generators-configuration"\
+      },\
+      {\
         "name": "@fern-api/init",\
         "reference": "workspace:packages/config-management/init"\
       },\
@@ -234,6 +238,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-api/core-utils", ["workspace:packages/commons/core-utils"]],\
       ["@fern-api/docker-utils", ["workspace:packages/generation/local-generation/docker-utils"]],\
       ["@fern-api/ete-tests", ["workspace:packages/cli/ete-tests"]],\
+      ["@fern-api/generators-configuration", ["workspace:packages/config-management/generators-configuration"]],\
       ["@fern-api/init", ["workspace:packages/config-management/init"]],\
       ["@fern-api/ir-generator", ["workspace:packages/generation/ir/ir-generator"]],\
       ["@fern-api/json-schema", ["workspace:packages/json-schema"]],\
@@ -3438,7 +3443,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.6.2"],\
             ["@types/pupa", "npm:2.0.0"],\
             ["@types/semver-diff", "npm:3.0.0"],\
-            ["@types/validate-npm-package-name", "npm:4.0.0"],\
             ["@types/yargs", "npm:17.0.10"],\
             ["@yarnpkg/esbuild-plugin-pnp", "virtual:e27057136cbc8d6604e8ad844644db08f7b9ebb1ee6412bdae58c0b53531f2ce21503c38b50a31a3b4d352bf8b1c84e4bd18636df76f7a5ae6b0b24714362ee9#npm:3.0.0-rc.14"],\
             ["boxen", "npm:7.0.0"],\
@@ -3459,7 +3463,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["pupa", "npm:3.1.0"],\
             ["semver-diff", "npm:4.0.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
-            ["validate-npm-package-name", "npm:4.0.0"],\
             ["yargs", "npm:17.5.1"],\
             ["zod", "npm:3.16.0"]\
           ],\
@@ -3479,6 +3482,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/docker-utils", "workspace:packages/generation/local-generation/docker-utils"],\
             ["@fern-api/ete-tests", "workspace:packages/cli/ete-tests"],\
+            ["@fern-api/generators-configuration", "workspace:packages/config-management/generators-configuration"],\
             ["@fern-api/init", "workspace:packages/config-management/init"],\
             ["@fern-api/ir-generator", "workspace:packages/generation/ir/ir-generator"],\
             ["@fern-api/json-schema", "workspace:packages/json-schema"],\
@@ -3622,6 +3626,31 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
+      ["@fern-api/generators-configuration", [\
+        ["workspace:packages/config-management/generators-configuration", {\
+          "packageLocation": "./packages/config-management/generators-configuration/",\
+          "packageDependencies": [\
+            ["@fern-api/generators-configuration", "workspace:packages/config-management/generators-configuration"],\
+            ["@babel/core", "npm:7.18.9"],\
+            ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.9"],\
+            ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
+            ["@fern-api/config-management-commons", "workspace:packages/config-management/config-management-commons"],\
+            ["@types/jest", "npm:28.1.6"],\
+            ["@types/js-yaml", "npm:4.0.5"],\
+            ["@types/lodash-es", "npm:4.17.6"],\
+            ["@types/node", "npm:18.6.2"],\
+            ["depcheck", "npm:1.4.3"],\
+            ["eslint", "npm:8.20.0"],\
+            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
+            ["js-yaml", "npm:4.1.0"],\
+            ["lodash-es", "npm:4.17.21"],\
+            ["prettier", "npm:2.7.1"],\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
+            ["zod", "npm:3.16.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
       ["@fern-api/init", [\
         ["workspace:packages/config-management/init", {\
           "packageLocation": "./packages/config-management/init/",\
@@ -3729,7 +3758,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.9"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-api/docker-utils", "workspace:packages/generation/local-generation/docker-utils"],\
+            ["@fern-api/generators-configuration", "workspace:packages/config-management/generators-configuration"],\
             ["@fern-api/workspace-configuration", "workspace:packages/config-management/workspace-configuration"],\
+            ["@fern-api/workspace-loader", "workspace:packages/workspace-loader"],\
             ["@fern-fern/ir-model", "npm:0.0.5"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/node", "npm:18.6.2"],\
@@ -3845,7 +3876,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.18.9"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.9"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
-            ["@fern-api/workspace-configuration", "workspace:packages/config-management/workspace-configuration"],\
+            ["@fern-api/generators-configuration", "workspace:packages/config-management/generators-configuration"],\
+            ["@fern-api/workspace-loader", "workspace:packages/workspace-loader"],\
             ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.45"],\
             ["@fern-fern/ir-model", "npm:0.0.5"],\
             ["@types/jest", "npm:28.1.6"],\
@@ -3909,12 +3941,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/yaml-schema", "workspace:packages/yaml-schema"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/node", "npm:18.6.2"],\
+            ["@types/validate-npm-package-name", "npm:4.0.0"],\
             ["chalk", "npm:5.0.1"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.20.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["prettier", "npm:2.7.1"],\
-            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
+            ["validate-npm-package-name", "npm:4.0.0"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -3954,6 +3988,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-api/config-management-commons", "workspace:packages/config-management/config-management-commons"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
+            ["@fern-api/generators-configuration", "workspace:packages/config-management/generators-configuration"],\
+            ["@fern-api/workspace-configuration", "workspace:packages/config-management/workspace-configuration"],\
             ["@fern-api/yaml-schema", "workspace:packages/yaml-schema"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/js-yaml", "npm:4.0.5"],\

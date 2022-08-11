@@ -1,12 +1,9 @@
 import { validateSchema } from "@fern-api/config-management-commons";
 import { findUp } from "find-up";
 import { readFile } from "fs/promises";
-import path from "path";
 import { ProjectConfigSchema } from "./schemas/ProjectConfigSchema";
 
 export interface ProjectConfig {
-    _absolutePath: string;
-
     workspaces: string[];
     organization: string;
 }
@@ -28,6 +25,5 @@ export async function loadProjectConfigFromFilepath(filepath: string): Promise<P
     return {
         workspaces: projectConfig.workspaces ?? [],
         organization: projectConfig.organization,
-        _absolutePath: path.resolve(filepath),
     };
 }

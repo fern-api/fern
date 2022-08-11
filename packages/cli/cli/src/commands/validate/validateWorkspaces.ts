@@ -1,5 +1,5 @@
 import { loadProject } from "../utils/load-project/loadProject";
-import { parseAndValidateWorkspace } from "./validateWorkspace";
+import { validateWorkspaceAndLogIssues } from "./validateWorkspaceAndLogIssues";
 
 export async function validateWorkspaces({
     commandLineWorkspaces,
@@ -10,11 +10,5 @@ export async function validateWorkspaces({
         commandLineWorkspaces,
     });
 
-    await Promise.all(
-        workspaces.map((workspace) =>
-            parseAndValidateWorkspace({
-                absolutePathToWorkspaceConfiguration: workspace.workspaceConfigurationFilePath,
-            })
-        )
-    );
+    await Promise.all(workspaces.map((workspace) => validateWorkspaceAndLogIssues(workspace)));
 }

@@ -16,13 +16,18 @@ export async function addGeneratorToWorkspaces(
     const { workspaces } = await loadProject({ commandLineWorkspaces });
 
     for (const workspace of workspaces) {
-        const workspaceConfiguration = await loadRawWorkspaceConfiguration(workspace.workspaceConfigurationFilePath);
+        const workspaceConfiguration = await loadRawWorkspaceConfiguration(
+            workspace.generatorsConfiguration.absolutePathToConfiguration
+        );
         const updatedWorkspaceConfiguration = addGeneratorToWorkspaceConfiguration(
             generatorName,
             workspaceConfiguration
         );
         if (updatedWorkspaceConfiguration !== workspaceConfiguration) {
-            await writeFile(workspace.workspaceConfigurationFilePath, yaml.dump(updatedWorkspaceConfiguration));
+            await writeFile(
+                workspace.generatorsConfiguration.absolutePathToConfiguration,
+                yaml.dump(updatedWorkspaceConfiguration)
+            );
         }
     }
 }

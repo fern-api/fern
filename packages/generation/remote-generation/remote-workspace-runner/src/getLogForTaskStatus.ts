@@ -1,4 +1,4 @@
-import { GeneratorInvocation } from "@fern-api/workspace-configuration";
+import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import {
     Package,
     PackageCoordinate,

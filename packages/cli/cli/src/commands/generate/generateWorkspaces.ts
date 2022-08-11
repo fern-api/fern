@@ -17,7 +17,7 @@ export async function generateWorkspaces({
     await Promise.all(
         workspaces.map((workspace) =>
             generateWorkspace({
-                absolutePathToWorkspaceConfiguration: workspace.workspaceConfigurationFilePath,
+                workspace,
                 runLocal,
                 keepDocker,
                 organization,

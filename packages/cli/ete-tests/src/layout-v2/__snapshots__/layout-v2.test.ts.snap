@@ -2,12 +2,12 @@
 
 exports[`layout-v2 simple 1`] = `
 "{
-    \\"workspaceName\\": \\"api\\",
+    \\"workspaceName\\": \\"workspace\\",
     \\"types\\": [
         {
             \\"name\\": {
                 \\"fernFilepath\\": [
-                    \\"api\\"
+                    \\"imdb\\"
                 ],
                 \\"name\\": \\"MovieId\\"
             },
@@ -22,7 +22,7 @@ exports[`layout-v2 simple 1`] = `
         {
             \\"name\\": {
                 \\"fernFilepath\\": [
-                    \\"api\\"
+                    \\"imdb\\"
                 ],
                 \\"name\\": \\"Movie\\"
             },
@@ -34,7 +34,7 @@ exports[`layout-v2 simple 1`] = `
                         \\"valueType\\": {
                             \\"name\\": \\"MovieId\\",
                             \\"fernFilepath\\": [
-                                \\"api\\"
+                                \\"imdb\\"
                             ],
                             \\"_type\\": \\"named\\"
                         }
@@ -60,7 +60,7 @@ exports[`layout-v2 simple 1`] = `
         {
             \\"name\\": {
                 \\"fernFilepath\\": [
-                    \\"api\\"
+                    \\"imdb\\"
                 ],
                 \\"name\\": \\"CreateMovieRequest\\"
             },
@@ -91,7 +91,7 @@ exports[`layout-v2 simple 1`] = `
             \\"name\\": {
                 \\"name\\": \\"NotFoundError\\",
                 \\"fernFilepath\\": [
-                    \\"api\\"
+                    \\"imdb\\"
                 ]
             },
             \\"discriminantValue\\": \\"NotFoundError\\",
@@ -112,7 +112,7 @@ exports[`layout-v2 simple 1`] = `
                 \\"name\\": {
                     \\"name\\": \\"MoviesService\\",
                     \\"fernFilepath\\": [
-                        \\"api\\"
+                        \\"imdb\\"
                     ]
                 },
                 \\"basePath\\": \\"/movies\\",
@@ -136,7 +136,7 @@ exports[`layout-v2 simple 1`] = `
                             \\"type\\": {
                                 \\"name\\": \\"CreateMovieRequest\\",
                                 \\"fernFilepath\\": [
-                                    \\"api\\"
+                                    \\"imdb\\"
                                 ],
                                 \\"_type\\": \\"named\\"
                             }
@@ -148,7 +148,7 @@ exports[`layout-v2 simple 1`] = `
                             \\"type\\": {
                                 \\"name\\": \\"MovieId\\",
                                 \\"fernFilepath\\": [
-                                    \\"api\\"
+                                    \\"imdb\\"
                                 ],
                                 \\"_type\\": \\"named\\"
                             }
@@ -174,7 +174,7 @@ exports[`layout-v2 simple 1`] = `
                                 \\"valueType\\": {
                                     \\"name\\": \\"MovieId\\",
                                     \\"fernFilepath\\": [
-                                        \\"api\\"
+                                        \\"imdb\\"
                                     ],
                                     \\"_type\\": \\"named\\"
                                 }
@@ -197,7 +197,7 @@ exports[`layout-v2 simple 1`] = `
                             \\"type\\": {
                                 \\"name\\": \\"Movie\\",
                                 \\"fernFilepath\\": [
-                                    \\"api\\"
+                                    \\"imdb\\"
                                 ],
                                 \\"_type\\": \\"named\\"
                             }
@@ -208,7 +208,7 @@ exports[`layout-v2 simple 1`] = `
                                 \\"error\\": {
                                     \\"name\\": \\"NotFoundError\\",
                                     \\"fernFilepath\\": [
-                                        \\"api\\"
+                                        \\"imdb\\"
                                     ]
                                 }
                             }

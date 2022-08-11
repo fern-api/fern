@@ -26,7 +26,9 @@
   },
   "dependencies": {
     "@fern-api/docker-utils": "workspace:*",
+    "@fern-api/generators-configuration": "workspace:*",
     "@fern-api/workspace-configuration": "workspace:*",
+    "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/ir-model": "0.0.5",
     "execa": "^5.1.1",
     "tar": "^6.1.11",

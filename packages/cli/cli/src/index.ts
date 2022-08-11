@@ -1,1 +1,1 @@
-export { parseAndValidateWorkspace } from "./commands/validate/validateWorkspace";
+export { validateWorkspaceAndLogIssues } from "./commands/validate/validateWorkspaceAndLogIssues";

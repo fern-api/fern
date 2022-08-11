@@ -26,7 +26,7 @@ export function generateIntermediateRepresentation(workspace: Workspace): Interm
         },
     };
 
-    for (const [filepath, schema] of Object.entries(workspace.files)) {
+    for (const [filepath, schema] of Object.entries(workspace.serviceFiles)) {
         const fernFilepath = convertToFernFilepath(filepath);
 
         const { imports = {} } = schema;

@@ -2,13 +2,16 @@ import { RelativeFilePath } from "@fern-api/config-management-commons";
 import { entries } from "@fern-api/core-utils";
 import { Workspace } from "@fern-api/workspace-loader";
 import { FernConfigurationSchema, visitFernYamlAst } from "@fern-api/yaml-schema";
+import validatePackageName from "validate-npm-package-name";
 import { createAstVisitorForRules } from "./createAstVisitorForRules";
 import { getAllRules } from "./getAllRules";
 import { ValidationViolation } from "./ValidationViolation";
 
-export async function validateFernDefinition(workspace: Workspace): Promise<ValidationViolation[]> {
+export async function validateWorkspace(workspace: Workspace): Promise<ValidationViolation[]> {
+    validateWorkspaceName(workspace.name);
+
     const violations: ValidationViolation[] = [];
-    for (const [relativeFilePath, contents] of entries(workspace.files)) {
+    for (const [relativeFilePath, contents] of entries(workspace.serviceFiles)) {
         const violationsForFile = await validateFernFile({
             workspace,
             relativeFilePath,
@@ -17,6 +20,13 @@ export async function validateFernDefinition(workspace: Workspace): Promise<Vali
         violations.push(...violationsForFile);
     }
     return violations;
+}
+
+function validateWorkspaceName(workspaceName: string) {
+    const { validForNewPackages } = validatePackageName(workspaceName);
+    if (!validForNewPackages) {
+        throw new Error(`Invalid workspace name: ${workspaceName}`);
+    }
 }
 
 async function validateFernFile({

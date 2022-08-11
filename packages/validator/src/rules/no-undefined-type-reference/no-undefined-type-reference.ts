@@ -46,7 +46,7 @@ export const NoUndefinedTypeReferenceRule: Rule = {
 async function getTypesByFilepath(workspace: Workspace) {
     const typesByFilepath: Record<string, Set<string>> = {};
 
-    for (const [relativeFilepath, file] of Object.entries(workspace.files)) {
+    for (const [relativeFilepath, file] of Object.entries(workspace.serviceFiles)) {
         const typesForFile = new Set<string>();
         typesByFilepath[relativeFilepath] = typesForFile;
 

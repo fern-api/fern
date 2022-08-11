@@ -1,4 +1,3 @@
-import { loadWorkspaceConfiguration } from "@fern-api/workspace-configuration";
 import { writeFile } from "fs/promises";
 import path from "path";
 import { loadProject } from "../utils/load-project/loadProject";
@@ -15,10 +14,7 @@ export async function generateIrForWorkspaces({
 
     await Promise.all(
         workspaces.map(async (workspace) => {
-            const workspaceConfiguration = await loadWorkspaceConfiguration(workspace.workspaceConfigurationFilePath);
-            const intermediateRepresentation = await generateIrForWorkspace({
-                workspaceConfiguration,
-            });
+            const intermediateRepresentation = await generateIrForWorkspace({ workspace });
             if (irFilepath != null) {
                 const irOutputFilePath = path.resolve(irFilepath);
                 await writeFile(irOutputFilePath, JSON.stringify(intermediateRepresentation, undefined, 4));

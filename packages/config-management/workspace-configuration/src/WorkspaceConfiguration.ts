@@ -3,7 +3,7 @@ export interface WorkspaceConfiguration {
     _absolutePath: string;
 
     name: string;
-    absolutePathToConfiguration: string;
+    absolutePathToDefinition: string;
     generators: GeneratorInvocation[];
 }
 

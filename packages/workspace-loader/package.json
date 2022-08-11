@@ -27,6 +27,8 @@
   "dependencies": {
     "@fern-api/config-management-commons": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
+    "@fern-api/generators-configuration": "workspace:*",
+    "@fern-api/workspace-configuration": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
     "glob": "^7.2.0",
     "glob-promise": "^4.2.2",
