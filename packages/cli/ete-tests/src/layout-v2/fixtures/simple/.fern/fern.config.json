@@ -1,0 +1,4 @@
+{
+  "workspaces": ["**"],
+  "organization": "fern"
+}

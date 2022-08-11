@@ -11,11 +11,11 @@ export async function generateIrForWorkspaces({
     commandLineWorkspaces: readonly string[];
     irFilepath: string | undefined;
 }): Promise<void> {
-    const { workspaceConfigurations } = await loadProject({ commandLineWorkspaces });
+    const { workspaces } = await loadProject({ commandLineWorkspaces });
 
     await Promise.all(
-        workspaceConfigurations.map(async (workspaceConfigurationFilePath) => {
-            const workspaceConfiguration = await loadWorkspaceConfiguration(workspaceConfigurationFilePath);
+        workspaces.map(async (workspace) => {
+            const workspaceConfiguration = await loadWorkspaceConfiguration(workspace.workspaceConfigurationFilePath);
             const intermediateRepresentation = await generateIrForWorkspace({
                 workspaceConfiguration,
             });

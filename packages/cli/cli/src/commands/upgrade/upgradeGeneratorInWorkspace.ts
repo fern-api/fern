@@ -6,14 +6,14 @@ import yaml from "js-yaml";
 import { loadProject } from "../utils/load-project/loadProject";
 
 export async function upgradeGeneratorsInWorkspace(commandLineWorkspaces: readonly string[]): Promise<void> {
-    const { workspaceConfigurations } = await loadProject({ commandLineWorkspaces });
+    const { workspaces } = await loadProject({ commandLineWorkspaces });
 
-    for (const workspaceConfigurationFilePath of workspaceConfigurations) {
-        const workspaceConfiguration = await loadRawWorkspaceConfiguration(workspaceConfigurationFilePath);
+    for (const workspace of workspaces) {
+        const workspaceConfiguration = await loadRawWorkspaceConfiguration(workspace.workspaceConfigurationFilePath);
         const updatedWorkspaceConfiguration = upgradeGeneratorsIfPresent({ workspaceConfiguration });
         if (updatedWorkspaceConfiguration.upgrades.length > 0) {
             await writeFile(
-                workspaceConfigurationFilePath,
+                workspace.workspaceConfigurationFilePath,
                 yaml.dump(updatedWorkspaceConfiguration.updatedWorkspaceConfiguration)
             );
             for (const upgradeInfo of updatedWorkspaceConfiguration.upgrades) {

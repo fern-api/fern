@@ -1,3 +1,4 @@
+import { noop } from "@fern-api/core-utils";
 import { initialize } from "@fern-api/init";
 import { initiateLogin } from "@fern-api/login";
 import inquirer, { InputQuestion } from "inquirer";
@@ -15,23 +16,24 @@ import { getFernCliUpgradeMessage } from "./upgradeNotifier";
 
 void runCli();
 
+interface GlobalCliOptions {
+    api: string | undefined;
+}
+
 async function runCli() {
-    const cli = yargs(hideBin(process.argv));
-
-    const cliContext = {
-        showUpgradeMessageIfAvailable: true,
-    };
-
     const rawCliEnvironment = readRawCliEnvironment();
-    cli.scriptName(rawCliEnvironment.cliName ?? "fern")
+
+    const cli: Argv<GlobalCliOptions> = yargs(hideBin(process.argv))
+        .scriptName(rawCliEnvironment.cliName ?? "fern")
+        .version(rawCliEnvironment.packageVersion ?? "<unknown>")
         .strict()
         .alias("v", "version")
         .demandCommand()
-        .recommendCommands();
-
-    if (rawCliEnvironment.packageVersion != null) {
-        cli.version(rawCliEnvironment.packageVersion);
-    }
+        .recommendCommands()
+        .option("api", {
+            string: true,
+            description: "Only run the command on the provided API",
+        });
 
     addInitCommand(cli);
     addAddCommand(cli);
@@ -40,6 +42,8 @@ async function runCli() {
     addLoginCommand(cli);
     addGenerateIrCommand(cli);
     addValidateCommand(cli);
+
+    const cliContext = { showUpgradeMessageIfAvailable: true };
     addUpgradeCommand({
         cli,
         rawCliEnvironment,
@@ -51,11 +55,11 @@ async function runCli() {
     await cli.parse();
 
     if (cliContext.showUpgradeMessageIfAvailable) {
-        await printUpgradeMessage(rawCliEnvironment);
+        await printUpgradeMessageIfUpgradeIsAvailable(rawCliEnvironment);
     }
 }
 
-async function printUpgradeMessage(rawCliEnvironment: RawCliEnvironment): Promise<void> {
+async function printUpgradeMessageIfUpgradeIsAvailable(rawCliEnvironment: RawCliEnvironment): Promise<void> {
     const parsedCliEnvironment = tryParseRawCliEnvironment(rawCliEnvironment);
     if (parsedCliEnvironment == null) {
         return;
@@ -66,7 +70,7 @@ async function printUpgradeMessage(rawCliEnvironment: RawCliEnvironment): Promis
     }
 }
 
-function addInitCommand(cli: Argv) {
+function addInitCommand(cli: Argv<GlobalCliOptions>) {
     cli.command(
         "init",
         "Initialize a Fern API",
@@ -93,31 +97,24 @@ async function askForOrganization() {
     return answers.organization;
 }
 
-function addAddCommand(cli: Argv) {
+function addAddCommand(cli: Argv<GlobalCliOptions>) {
     cli.command(
-        "add <generator> [workspaces...]",
+        "add <generator>",
         "Add a generator to .fernrc.yml",
         (yargs) =>
-            yargs
-                .positional("workspaces", {
-                    array: true,
-                    type: "string",
-                    description:
-                        "If omitted, every workspace specified in the project-level configuration (fern.config.json) will be processed.",
-                })
-                .positional("generator", {
-                    choices: ["typescript", "java", "postman", "openapi"] as const,
-                    demandOption: true,
-                }),
+            yargs.positional("generator", {
+                choices: ["typescript", "java", "postman", "openapi"] as const,
+                demandOption: true,
+            }),
         async (argv) => {
-            await addGeneratorToWorkspaces(argv.workspaces ?? [], argv.generator);
+            await addGeneratorToWorkspaces(argv.api != null ? [argv.api] : [], argv.generator);
         }
     );
 }
 
-function addGenerateCommand(cli: Argv) {
+function addGenerateCommand(cli: Argv<GlobalCliOptions>) {
     cli.command(
-        ["generate [workspaces...]", "gen"],
+        ["generate"],
         "Generate typesafe servers and clients",
         (yargs) =>
             yargs
@@ -131,16 +128,10 @@ function addGenerateCommand(cli: Argv) {
                     boolean: true,
                     default: false,
                     description: "If true, code is generated using Docker on this machine.",
-                })
-                .positional("workspaces", {
-                    array: true,
-                    type: "string",
-                    description:
-                        "If omitted, every workspace specified in the project-level configuration (fern.config.json) will be processed.",
                 }),
         async (argv) => {
             await generateWorkspaces({
-                commandLineWorkspaces: argv.workspaces ?? [],
+                commandLineWorkspaces: argv.api != null ? [argv.api] : [],
                 runLocal: argv.local,
                 keepDocker: argv.keepDocker,
             });
@@ -148,7 +139,7 @@ function addGenerateCommand(cli: Argv) {
     );
 }
 
-function addConvertCommand(cli: Argv) {
+function addConvertCommand(cli: Argv<GlobalCliOptions>) {
     cli.command(
         "convert <openapiPath> <fernDefinitionDir>",
         "Converts Open API to Fern API Definition.",
@@ -168,7 +159,7 @@ function addConvertCommand(cli: Argv) {
     );
 }
 
-function addLoginCommand(cli: Argv) {
+function addLoginCommand(cli: Argv<GlobalCliOptions>) {
     cli.command({
         command: "login",
         describe: "Authenticate with Fern",
@@ -178,46 +169,29 @@ function addLoginCommand(cli: Argv) {
     });
 }
 
-function addGenerateIrCommand(cli: Argv) {
+function addGenerateIrCommand(cli: Argv<GlobalCliOptions>) {
     cli.command(
-        "ir [workspaces...]",
+        "ir",
         "Compiles your Fern API Definition",
         (yargs) =>
-            yargs
-                .option("output", {
-                    type: "string",
-                    description: "Path to write intermediate representation (IR)",
-                    demandOption: true,
-                })
-                .positional("workspaces", {
-                    array: true,
-                    type: "string",
-                    description:
-                        "If omitted, every workspace specified in the project-level configuration (fern.config.json) will be processed.",
-                }),
+            yargs.option("output", {
+                type: "string",
+                description: "Path to write intermediate representation (IR)",
+                demandOption: true,
+            }),
         (argv) =>
             generateIrForWorkspaces({
-                commandLineWorkspaces: argv.workspaces ?? [],
+                commandLineWorkspaces: argv.api != null ? [argv.api] : [],
                 irFilepath: argv.output,
             })
     );
 }
 
-function addValidateCommand(cli: Argv) {
-    cli.command(
-        "check [workspaces...]",
-        "Validates your Fern API Definition",
-        (yargs) =>
-            yargs.positional("workspaces", {
-                array: true,
-                type: "string",
-                description:
-                    "If omitted, every workspace specified in the project-level configuration (fern.config.json) will be processed.",
-            }),
-        (argv) =>
-            validateWorkspaces({
-                commandLineWorkspaces: argv.workspaces ?? [],
-            })
+function addValidateCommand(cli: Argv<GlobalCliOptions>) {
+    cli.command("check", "Validates your Fern API Definition", noop, (argv) =>
+        validateWorkspaces({
+            commandLineWorkspaces: argv.api != null ? [argv.api] : [],
+        })
     );
 }
 
@@ -226,23 +200,12 @@ function addUpgradeCommand({
     rawCliEnvironment,
     onRun,
 }: {
-    cli: Argv;
+    cli: Argv<GlobalCliOptions>;
     rawCliEnvironment: RawCliEnvironment;
     onRun: () => void;
 }) {
-    cli.command(
-        "upgrade [workspaces...]",
-        "Upgrades generator versions in your workspace",
-        (yargs) =>
-            yargs.positional("workspaces", {
-                array: true,
-                type: "string",
-                description:
-                    "If omitted, every workspace specified in the project-level configuration (fern.config.json) will be processed.",
-            }),
-        async (argv) => {
-            await upgrade({ commandLineWorkspaces: argv.workspaces ?? [], rawCliEnvironment });
-            onRun();
-        }
-    );
+    cli.command("upgrade", "Upgrades generator versions in your workspace", noop, async (argv) => {
+        await upgrade({ commandLineWorkspaces: argv.api != null ? [argv.api] : [], rawCliEnvironment });
+        onRun();
+    });
 }

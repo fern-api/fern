@@ -13,16 +13,16 @@ export async function addGeneratorToWorkspaces(
     commandLineWorkspaces: readonly string[],
     generatorName: "java" | "typescript" | "postman" | "openapi"
 ): Promise<void> {
-    const { workspaceConfigurations } = await loadProject({ commandLineWorkspaces });
+    const { workspaces } = await loadProject({ commandLineWorkspaces });
 
-    for (const workspaceConfigurationFilePath of workspaceConfigurations) {
-        const workspaceConfiguration = await loadRawWorkspaceConfiguration(workspaceConfigurationFilePath);
+    for (const workspace of workspaces) {
+        const workspaceConfiguration = await loadRawWorkspaceConfiguration(workspace.workspaceConfigurationFilePath);
         const updatedWorkspaceConfiguration = addGeneratorToWorkspaceConfiguration(
             generatorName,
             workspaceConfiguration
         );
         if (updatedWorkspaceConfiguration !== workspaceConfiguration) {
-            await writeFile(workspaceConfigurationFilePath, yaml.dump(updatedWorkspaceConfiguration));
+            await writeFile(workspace.workspaceConfigurationFilePath, yaml.dump(updatedWorkspaceConfiguration));
         }
     }
 }

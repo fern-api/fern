@@ -19,7 +19,7 @@ function itFixture(fixtureName: string) {
             const outputPath = path.join(fixturePath, "generated");
             await rm(outputPath, { force: true, recursive: true });
 
-            await runFernCli(["generate", "--local", "--keepDocker", fixturePath], {
+            await runFernCli(["--api", fixturePath, "generate", "--local", "--keepDocker"], {
                 cwd: FIXTURES_DIR,
             });
 

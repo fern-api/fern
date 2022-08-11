@@ -10,17 +10,17 @@ export async function generateWorkspaces({
     runLocal: boolean;
     keepDocker: boolean;
 }): Promise<void> {
-    const { projectConfig, workspaceConfigurations } = await loadProject({
+    const { workspaces, organization } = await loadProject({
         commandLineWorkspaces,
     });
 
     await Promise.all(
-        workspaceConfigurations.map((workspaceConfigurationFilePath) =>
+        workspaces.map((workspace) =>
             generateWorkspace({
-                absolutePathToWorkspaceConfiguration: workspaceConfigurationFilePath,
+                absolutePathToWorkspaceConfiguration: workspace.workspaceConfigurationFilePath,
                 runLocal,
                 keepDocker,
-                organization: projectConfig.organization,
+                organization,
             })
         )
     );
