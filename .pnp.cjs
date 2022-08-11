@@ -3482,6 +3482,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/docker-utils", "workspace:packages/generation/local-generation/docker-utils"],\
             ["@fern-api/ete-tests", "workspace:packages/cli/ete-tests"],\
+            ["@fern-api/generators-configuration", "workspace:packages/config-management/generators-configuration"],\
             ["@fern-api/init", "workspace:packages/config-management/init"],\
             ["@fern-api/ir-generator", "workspace:packages/generation/ir/ir-generator"],\
             ["@fern-api/json-schema", "workspace:packages/json-schema"],\
