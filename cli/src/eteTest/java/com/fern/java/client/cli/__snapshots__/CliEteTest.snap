@@ -31,6 +31,47 @@ dependencies {
 ]
 
 
+basic[api/generated-java/blog-api-client/src/main/java/com/blog/client/BlogApiClient.java]=[
+package com.blog.client;
+
+import java.lang.String;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Supplier;
+
+public final class BlogApiClient {
+  private final Supplier<PostsServiceClient> postsServiceClient;
+
+  private final Supplier<DummyServiceClient> dummyServiceClient;
+
+  public BlogApiClient(String url) {
+    this.postsServiceClient = memoize(() -> PostsServiceClient.getClient(url));
+    this.dummyServiceClient = memoize(() -> DummyServiceClient.getClient(url));
+  }
+
+  public final PostsServiceClient postsService() {
+    return this.postsServiceClient.get();
+  }
+
+  public final DummyServiceClient dummyService() {
+    return this.dummyServiceClient.get();
+  }
+
+  private static <T> Supplier<T> memoize(Supplier<T> delegate) {
+    AtomicReference<T> value = new AtomicReference<>();
+    return () ->  {
+      T val = value.get();
+      if (val == null) {
+        val = value.updateAndGet(cur -> cur == null ? Objects.requireNonNull(delegate.get()) : cur);
+      }
+      return val;
+    } ;
+  }
+}
+
+]
+
+
 basic[api/generated-java/blog-api-client/src/main/java/com/blog/client/DummyServiceClient.java]=[
 package com.blog.client;
 

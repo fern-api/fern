@@ -16,6 +16,7 @@
 package com.fern.java.client.cli;
 
 import com.fern.codegen.GeneratedAbstractHttpServiceRegistry;
+import com.fern.codegen.GeneratedClientWrapper;
 import com.fern.codegen.GeneratedError;
 import com.fern.codegen.GeneratedFile;
 import com.fern.codegen.GeneratedHttpServiceClient;
@@ -23,6 +24,7 @@ import com.fern.codegen.GeneratedHttpServiceServer;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ObjectMappers;
 import com.fern.java.client.cli.CustomPluginConfig.ServerFramework;
+import com.fern.jersey.client.ClientWrapperGenerator;
 import com.fern.jersey.client.HttpServiceClientGenerator;
 import com.fern.jersey.server.AbstractHttpServiceRegistryGenerator;
 import com.fern.jersey.server.ErrorExceptionMapperGenerator;
@@ -60,8 +62,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class ClientGeneratorCli {
+
+    private static final Logger log = LoggerFactory.getLogger(ClientGeneratorCli.class);
 
     private static final String SRC_MAIN_JAVA = "src/main/java";
     private static final String BUILD_GRADLE = "build.gradle";
@@ -97,6 +103,7 @@ public final class ClientGeneratorCli {
 
             loggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful()));
         } catch (Exception e) {
+            log.error("Generator failed", e);
             loggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.error(
                     ErrorExitStatusUpdate.builder().message(e.getMessage()).build())));
         }
@@ -204,6 +211,13 @@ public final class ClientGeneratorCli {
                     return httpServiceClientGenerator.generate();
                 })
                 .collect(Collectors.toList());
+        ClientWrapperGenerator clientWrapperGenerator = new ClientWrapperGenerator(
+                generatorContext,
+                generatedHttpServiceClients,
+                ir.workspaceName().orElse("Untitled"));
+        GeneratedClientWrapper generatedClientWrapper = clientWrapperGenerator.generate();
+        resultBuilder.addClientFiles(generatedClientWrapper);
+        resultBuilder.addAllClientFiles(generatedClientWrapper.nestedClientWrappers());
         for (GeneratedHttpServiceClient generatedHttpServiceClient : generatedHttpServiceClients) {
             resultBuilder.addClientFiles(generatedHttpServiceClient);
             generatedHttpServiceClient.generatedErrorDecoder().ifPresent(resultBuilder::addClientFiles);

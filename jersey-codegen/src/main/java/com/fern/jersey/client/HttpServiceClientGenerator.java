@@ -60,7 +60,7 @@ public final class HttpServiceClientGenerator extends Generator {
 
     private static final String CLIENT_CLASS_NAME_SUFFIX = "client";
 
-    private static final String GET_CLIENT_METHOD_NAME = "getClient";
+    public static final String GET_CLIENT_METHOD_NAME = "getClient";
 
     private static final HttpAuthParameterSpecVisitor JERSEY_AUTH_PARAMATER_SPEC_VISITOR =
             new HttpAuthParameterSpecVisitor(HeaderParam.class);
