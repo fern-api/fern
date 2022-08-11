@@ -6,14 +6,14 @@ export async function validateWorkspaces({
 }: {
     commandLineWorkspaces: readonly string[];
 }): Promise<void> {
-    const { workspaceConfigurations } = await loadProject({
+    const { workspaces } = await loadProject({
         commandLineWorkspaces,
     });
 
     await Promise.all(
-        workspaceConfigurations.map((workspaceConfigurationFilePath) =>
+        workspaces.map((workspace) =>
             parseAndValidateWorkspace({
-                absolutePathToWorkspaceConfiguration: workspaceConfigurationFilePath,
+                absolutePathToWorkspaceConfiguration: workspace.workspaceConfigurationFilePath,
             })
         )
     );

@@ -25,7 +25,8 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "find-up": "^5.0.0",
+    "@fern-api/config-management-commons": "workspace:*",
+    "find-up": "^6.3.0",
     "zod": "^3.14.3"
   },
   "devDependencies": {

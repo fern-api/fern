@@ -4,6 +4,9 @@
   "rules": {
     "ts-config": {
       "exclude": ["./src/**/__test__/**/generated"]
+    },
+    "jest": {
+      "testMatch": ["**/*.test.ts"]
     }
   }
 }

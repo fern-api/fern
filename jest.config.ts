@@ -4,17 +4,11 @@ import { Config } from "jest";
 import { getAllPackages } from "./packages/scripts/src/getAllPackages";
 import defaultConfig from "./shared/jest.config.shared";
 
-const ETE_TESTS_PACKAGE_NAME = "@fern-api/ete-tests";
-
 export default async (): Promise<Config> => {
-    const packages = (
-        await getAllPackages({
-            // in PRs, only run tests on the changed packages
-            since: isBranchInCi(),
-        })
-    )
-        // ETE tests are run separately
-        .filter((p) => p.name !== ETE_TESTS_PACKAGE_NAME);
+    const packages = await getAllPackages({
+        // in PRs, only run tests on the changed packages
+        since: isBranchInCi(),
+    });
 
     return {
         ...defaultConfig,
