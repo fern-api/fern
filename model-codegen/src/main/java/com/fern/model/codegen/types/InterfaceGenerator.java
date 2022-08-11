@@ -17,7 +17,6 @@ package com.fern.model.codegen.types;
 
 import com.fern.codegen.GeneratedInterface;
 import com.fern.codegen.GeneratorContext;
-import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.model.codegen.Generator;
 import com.fern.types.DeclaredTypeName;
 import com.fern.types.ObjectProperty;
@@ -40,7 +39,7 @@ public final class InterfaceGenerator extends Generator {
             ObjectTypeDeclaration objectTypeDeclaration,
             DeclaredTypeName declaredTypeName,
             GeneratorContext generatorContext) {
-        super(generatorContext, PackageType.INTERFACES);
+        super(generatorContext);
         this.objectTypeDeclaration = objectTypeDeclaration;
         this.declaredTypeName = DeclaredTypeName.builder()
                 .fernFilepath(declaredTypeName.fernFilepath())
@@ -51,7 +50,7 @@ public final class InterfaceGenerator extends Generator {
     @Override
     public GeneratedInterface generate() {
         ClassName generatedInterfaceClassName =
-                generatorContext.getClassNameUtils().getClassNameFromDeclaredTypeName(declaredTypeName, packageType);
+                generatorContext.getClassNameUtils().getClassNameFromDeclaredTypeName(declaredTypeName);
         Map<ObjectProperty, MethodSpec> methodSpecsByProperties =
                 generatorContext.getImmutablesUtils().getOrderedImmutablesPropertyMethods(objectTypeDeclaration);
         TypeSpec interfaceTypeSpec = TypeSpec.interfaceBuilder(generatedInterfaceClassName.simpleName())

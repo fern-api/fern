@@ -24,7 +24,6 @@ import com.fern.types.ErrorName;
 import com.fern.types.FernConstants;
 import com.fern.types.TypeDeclaration;
 import java.util.Map;
-import java.util.Optional;
 
 public final class GeneratorContext {
 
@@ -36,7 +35,7 @@ public final class GeneratorContext {
     private final FernConstants fernConstants;
 
     public GeneratorContext(
-            Optional<String> packagePrefix,
+            String packagePrefix,
             Map<DeclaredTypeName, TypeDeclaration> typeDefinitionsByName,
             Map<ErrorName, ErrorDeclaration> errorDefinitionsByName,
             FernConstants fernConstants) {

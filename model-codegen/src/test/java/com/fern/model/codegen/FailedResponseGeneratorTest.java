@@ -41,7 +41,6 @@ import com.fern.types.services.ResponseErrors;
 import com.fern.types.services.ServiceName;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -80,7 +79,7 @@ public class FailedResponseGeneratorTest {
                         .error(noViewPermissionsErrorNamedType)
                         .build())));
         GeneratorContext generatorContext = new GeneratorContext(
-                Optional.of(TestConstants.PACKAGE_PREFIX),
+                TestConstants.PACKAGE_PREFIX,
                 Collections.emptyMap(),
                 Collections.singletonMap(
                         noViewPermissionsErrorNamedType,

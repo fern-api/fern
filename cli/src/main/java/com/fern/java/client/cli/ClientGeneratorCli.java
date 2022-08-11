@@ -143,8 +143,13 @@ public final class ClientGeneratorCli {
                 ir.types().stream().collect(Collectors.toUnmodifiableMap(TypeDeclaration::name, Function.identity()));
         Map<ErrorName, ErrorDeclaration> errorDefinitionsByName =
                 ir.errors().stream().collect(Collectors.toUnmodifiableMap(ErrorDeclaration::name, Function.identity()));
+        List<String> packagePrefixTokens = List.of(
+                "com",
+                fernPluginConfig.generatorConfig().organization(),
+                ir.workspaceName().orElse("api"));
+        String unreplacedPackagePrefix = String.join(".", packagePrefixTokens);
         GeneratorContext generatorContext = new GeneratorContext(
-                fernPluginConfig.customPluginConfig().packagePrefix(),
+                unreplacedPackagePrefix.replaceAll("[^a-zA-Z0-9]", "."),
                 typeDefinitionsByName,
                 errorDefinitionsByName,
                 ir.constants());

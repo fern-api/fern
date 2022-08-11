@@ -16,7 +16,6 @@
 package com.fern.model.codegen;
 
 import com.fern.codegen.GeneratedEnum;
-import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.java.test.TestConstants;
 import com.fern.model.codegen.types.EnumGenerator;
 import com.fern.types.DeclaredTypeName;
@@ -46,10 +45,7 @@ public class EnumGeneratorTest {
                 .shape(Type._enum(migrationStatusEnumDef))
                 .build();
         EnumGenerator enumGenerator = new EnumGenerator(
-                migrationStatusTypeDef.name(),
-                PackageType.TYPES,
-                migrationStatusEnumDef,
-                TestConstants.GENERATOR_CONTEXT);
+                migrationStatusTypeDef.name(), migrationStatusEnumDef, TestConstants.GENERATOR_CONTEXT);
         GeneratedEnum generatedEnum = enumGenerator.generate();
         System.out.println(generatedEnum.file().toString());
     }

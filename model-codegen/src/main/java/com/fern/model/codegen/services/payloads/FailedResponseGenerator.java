@@ -29,7 +29,6 @@ import com.fern.codegen.GeneratedEndpointError;
 import com.fern.codegen.GeneratedError;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameConstants;
-import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.codegen.utils.MethodNameUtils;
 import com.fern.java.exception.HttpException;
 import com.fern.model.codegen.Generator;
@@ -82,7 +81,7 @@ public final class FailedResponseGenerator extends Generator {
             HttpEndpoint httpEndpoint,
             GeneratorContext generatorContext,
             Map<ErrorName, GeneratedError> generatedErrors) {
-        super(generatorContext, PackageType.SERVICES);
+        super(generatorContext);
         this.responseErrors = httpEndpoint.errors();
         this.generatedErrors = generatedErrors;
         this.generatedEndpointErrorClassName = generatorContext
@@ -92,7 +91,6 @@ public final class FailedResponseGenerator extends Generator {
                                 .fernFilepath(httpService.name().fernFilepath())
                                 .name(httpEndpoint.endpointId().value())
                                 .build(),
-                        PackageType.SERVICES,
                         FAILED_RESPONSE_SUFFIX);
         this.internalValueClassNames = httpEndpoint.errors().value().stream()
                 .collect(Collectors.toMap(

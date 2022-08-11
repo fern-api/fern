@@ -31,8 +31,8 @@ dependencies {
 ]
 
 
-basic[api/generated-java/blog-api-client/src/main/java/com/blog/client/BlogApiClient.java]=[
-package com.blog.client;
+basic[api/generated-java/blog-api-client/src/main/java/com/fern/blog/api/BlogApiClient.java]=[
+package com.fern.blog.api;
 
 import java.lang.String;
 import java.util.Objects;
@@ -72,10 +72,9 @@ public final class BlogApiClient {
 ]
 
 
-basic[api/generated-java/blog-api-client/src/main/java/com/blog/client/DummyServiceClient.java]=[
-package com.blog.client;
+basic[api/generated-java/blog-api-client/src/main/java/com/fern/blog/api/DummyServiceClient.java]=[
+package com.fern.blog.api;
 
-import com.blog.types.DummyId;
 import com.fern.java.auth.BearerAuthHeader;
 import com.fern.java.jackson.ClientObjectMappers;
 import com.fern.java.jersey.contracts.OptionalAwareContract;
@@ -111,13 +110,9 @@ public interface DummyServiceClient {
 ]
 
 
-basic[api/generated-java/blog-api-client/src/main/java/com/blog/client/PostsServiceClient.java]=[
-package com.blog.client;
+basic[api/generated-java/blog-api-client/src/main/java/com/fern/blog/api/PostsServiceClient.java]=[
+package com.fern.blog.api;
 
-import com.blog.errors.PostNotFoundError;
-import com.blog.types.BlogPost;
-import com.blog.types.CreatePostRequest;
-import com.blog.types.PostId;
 import com.fern.java.exception.UnknownRemoteException;
 import com.fern.java.jackson.ClientObjectMappers;
 import com.fern.java.jersey.contracts.OptionalAwareContract;
@@ -159,10 +154,9 @@ public interface PostsServiceClient {
 ]
 
 
-basic[api/generated-java/blog-api-client/src/main/java/com/blog/client/PostsServiceErrorDecoder.java]=[
-package com.blog.client;
+basic[api/generated-java/blog-api-client/src/main/java/com/fern/blog/api/PostsServiceErrorDecoder.java]=[
+package com.fern.blog.api;
 
-import com.blog.services.GetPostFailedResponse;
 import com.fern.java.exception.UnknownRemoteException;
 import com.fern.java.jackson.ClientObjectMappers;
 import feign.Response;
@@ -224,201 +218,8 @@ dependencies {
 ]
 
 
-basic[api/generated-java/blog-api-model/src/main/java/com/blog/errors/PostNotFoundError.java]=[
-package com.blog.errors;
-
-import com.fern.java.exception.HttpException;
-import java.lang.Override;
-
-public final class PostNotFoundError extends HttpException {
-  PostNotFoundErrorBody body;
-
-  public PostNotFoundError(PostNotFoundErrorBody body) {
-    this.body = body;
-  }
-
-  public PostNotFoundErrorBody getBody() {
-    return body;
-  }
-
-  @Override
-  public int getStatusCode() {
-    return 400;
-  }
-}
-
-]
-
-
-basic[api/generated-java/blog-api-model/src/main/java/com/blog/errors/PostNotFoundErrorBody.java]=[
-package com.blog.errors;
-
-import com.blog.types.PostId;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import org.immutables.value.Value;
-
-@Value.Immutable
-@StagedBuilderImmutablesStyle
-@JsonDeserialize(
-    as = ImmutablePostNotFoundErrorBody.class
-)
-@JsonIgnoreProperties(
-    ignoreUnknown = true
-)
-public interface PostNotFoundErrorBody {
-  PostId id();
-
-  static ImmutablePostNotFoundErrorBody.IdBuildStage builder() {
-    return ImmutablePostNotFoundErrorBody.builder();
-  }
-}
-
-]
-
-
-basic[api/generated-java/blog-api-model/src/main/java/com/blog/errors/UnauthorizedError.java]=[
-package com.blog.errors;
-
-import com.fern.java.exception.HttpException;
-import java.lang.Override;
-
-public final class UnauthorizedError extends HttpException {
-  UnauthorizedErrorBody body;
-
-  public UnauthorizedError(UnauthorizedErrorBody body) {
-    this.body = body;
-  }
-
-  public UnauthorizedErrorBody getBody() {
-    return body;
-  }
-
-  @Override
-  public int getStatusCode() {
-    return 403;
-  }
-}
-
-]
-
-
-basic[api/generated-java/blog-api-model/src/main/java/com/blog/errors/UnauthorizedErrorBody.java]=[
-package com.blog.errors;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import java.lang.String;
-import org.immutables.value.Value;
-
-@Value.Immutable
-@StagedBuilderImmutablesStyle
-@JsonDeserialize(
-    as = ImmutableUnauthorizedErrorBody.class
-)
-@JsonIgnoreProperties(
-    ignoreUnknown = true
-)
-public interface UnauthorizedErrorBody {
-  String reason();
-
-  static ImmutableUnauthorizedErrorBody.ReasonBuildStage builder() {
-    return ImmutableUnauthorizedErrorBody.builder();
-  }
-}
-
-]
-
-
-basic[api/generated-java/blog-api-model/src/main/java/com/blog/services/GetPostFailedResponse.java]=[
-package com.blog.services;
-
-import com.blog.errors.PostNotFoundError;
-import com.blog.errors.PostNotFoundErrorBody;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fern.java.exception.HttpException;
-import java.lang.Exception;
-import java.lang.String;
-import org.immutables.value.Value;
-
-@Value.Enclosing
-public final class GetPostFailedResponse {
-  private final InternalValue value;
-
-  @JsonCreator(
-      mode = JsonCreator.Mode.DELEGATING
-  )
-  private GetPostFailedResponse(InternalValue value) {
-    this.value = value;
-  }
-
-  @JsonValue
-  InternalValue getInternalValue() {
-    return value;
-  }
-
-  public final Exception getException() {
-    return value.getException();
-  }
-
-  public static GetPostFailedResponse postNotFoundError(PostNotFoundError value) {
-    return new GetPostFailedResponse(InternalPostNotFoundErrorValue.of(value));
-  }
-
-  @JsonTypeInfo(
-      use = JsonTypeInfo.Id.NAME,
-      include = JsonTypeInfo.As.PROPERTY,
-      property = "_error",
-      visible = true
-  )
-  @JsonSubTypes(@JsonSubTypes.Type(value = InternalPostNotFoundErrorValue.class, name = "PostNotFoundError"))
-  @JsonIgnoreProperties(
-      ignoreUnknown = true
-  )
-  private interface InternalValue<T extends HttpException> {
-    @JsonIgnore
-    T getException();
-
-    @JsonProperty("_errorInstanceId")
-    default String getErrorInstanceId() {
-      return getException().getErrorInstanceId();
-    }
-  }
-
-  @Value.Immutable
-  @JsonTypeName("PostNotFoundError")
-  @JsonDeserialize(
-      as = GetPostFailedResponse.InternalPostNotFoundErrorValue.class
-  )
-  interface InternalPostNotFoundErrorValue extends InternalValue<PostNotFoundError> {
-    @Value.Derived
-    @JsonUnwrapped
-    default PostNotFoundErrorBody body() {
-      return getException().getBody();
-    }
-
-    static InternalPostNotFoundErrorValue of(PostNotFoundError value) {
-      return ImmutableGetPostFailedResponse.InternalPostNotFoundErrorValue.builder().exception(value).build();
-    }
-  }
-}
-
-]
-
-
-basic[api/generated-java/blog-api-model/src/main/java/com/blog/types/Age.java]=[
-package com.blog.types;
+basic[api/generated-java/blog-api-model/src/main/java/com/fern/blog/api/Age.java]=[
+package com.fern.blog.api;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -450,8 +251,8 @@ public abstract class Age {
 ]
 
 
-basic[api/generated-java/blog-api-model/src/main/java/com/blog/types/Author.java]=[
-package com.blog.types;
+basic[api/generated-java/blog-api-model/src/main/java/com/fern/blog/api/Author.java]=[
+package com.fern.blog.api;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -607,8 +408,8 @@ public final class Author {
 ]
 
 
-basic[api/generated-java/blog-api-model/src/main/java/com/blog/types/BlogPost.java]=[
-package com.blog.types;
+basic[api/generated-java/blog-api-model/src/main/java/com/fern/blog/api/BlogPost.java]=[
+package com.fern.blog.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -643,8 +444,8 @@ public interface BlogPost {
 ]
 
 
-basic[api/generated-java/blog-api-model/src/main/java/com/blog/types/CreatePostRequest.java]=[
-package com.blog.types;
+basic[api/generated-java/blog-api-model/src/main/java/com/fern/blog/api/CreatePostRequest.java]=[
+package com.fern.blog.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -681,8 +482,8 @@ public interface CreatePostRequest {
 ]
 
 
-basic[api/generated-java/blog-api-model/src/main/java/com/blog/types/DummyId.java]=[
-package com.blog.types;
+basic[api/generated-java/blog-api-model/src/main/java/com/fern/blog/api/DummyId.java]=[
+package com.fern.blog.api;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -713,8 +514,91 @@ public abstract class DummyId {
 ]
 
 
-basic[api/generated-java/blog-api-model/src/main/java/com/blog/types/PostId.java]=[
-package com.blog.types;
+basic[api/generated-java/blog-api-model/src/main/java/com/fern/blog/api/GetPostFailedResponse.java]=[
+package com.fern.blog.api;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fern.java.exception.HttpException;
+import java.lang.Exception;
+import java.lang.String;
+import org.immutables.value.Value;
+
+@Value.Enclosing
+public final class GetPostFailedResponse {
+  private final InternalValue value;
+
+  @JsonCreator(
+      mode = JsonCreator.Mode.DELEGATING
+  )
+  private GetPostFailedResponse(InternalValue value) {
+    this.value = value;
+  }
+
+  @JsonValue
+  InternalValue getInternalValue() {
+    return value;
+  }
+
+  public final Exception getException() {
+    return value.getException();
+  }
+
+  public static GetPostFailedResponse postNotFoundError(PostNotFoundError value) {
+    return new GetPostFailedResponse(InternalPostNotFoundErrorValue.of(value));
+  }
+
+  @JsonTypeInfo(
+      use = JsonTypeInfo.Id.NAME,
+      include = JsonTypeInfo.As.PROPERTY,
+      property = "_error",
+      visible = true
+  )
+  @JsonSubTypes(@JsonSubTypes.Type(value = InternalPostNotFoundErrorValue.class, name = "PostNotFoundError"))
+  @JsonIgnoreProperties(
+      ignoreUnknown = true
+  )
+  private interface InternalValue<T extends HttpException> {
+    @JsonIgnore
+    T getException();
+
+    @JsonProperty("_errorInstanceId")
+    default String getErrorInstanceId() {
+      return getException().getErrorInstanceId();
+    }
+  }
+
+  @Value.Immutable
+  @JsonTypeName("PostNotFoundError")
+  @JsonDeserialize(
+      as = GetPostFailedResponse.InternalPostNotFoundErrorValue.class
+  )
+  interface InternalPostNotFoundErrorValue extends InternalValue<PostNotFoundError> {
+    @Value.Derived
+    @JsonUnwrapped
+    default PostNotFoundErrorBody body() {
+      return getException().getBody();
+    }
+
+    static InternalPostNotFoundErrorValue of(PostNotFoundError value) {
+      return ImmutableGetPostFailedResponse.InternalPostNotFoundErrorValue.builder().exception(value).build();
+    }
+  }
+}
+
+]
+
+
+basic[api/generated-java/blog-api-model/src/main/java/com/fern/blog/api/PostId.java]=[
+package com.fern.blog.api;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -745,8 +629,61 @@ public abstract class PostId {
 ]
 
 
-basic[api/generated-java/blog-api-model/src/main/java/com/blog/types/PostType.java]=[
-package com.blog.types;
+basic[api/generated-java/blog-api-model/src/main/java/com/fern/blog/api/PostNotFoundError.java]=[
+package com.fern.blog.api;
+
+import com.fern.java.exception.HttpException;
+import java.lang.Override;
+
+public final class PostNotFoundError extends HttpException {
+  PostNotFoundErrorBody body;
+
+  public PostNotFoundError(PostNotFoundErrorBody body) {
+    this.body = body;
+  }
+
+  public PostNotFoundErrorBody getBody() {
+    return body;
+  }
+
+  @Override
+  public int getStatusCode() {
+    return 400;
+  }
+}
+
+]
+
+
+basic[api/generated-java/blog-api-model/src/main/java/com/fern/blog/api/PostNotFoundErrorBody.java]=[
+package com.fern.blog.api;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fern.java.immutables.StagedBuilderImmutablesStyle;
+import org.immutables.value.Value;
+
+@Value.Immutable
+@StagedBuilderImmutablesStyle
+@JsonDeserialize(
+    as = ImmutablePostNotFoundErrorBody.class
+)
+@JsonIgnoreProperties(
+    ignoreUnknown = true
+)
+public interface PostNotFoundErrorBody {
+  PostId id();
+
+  static ImmutablePostNotFoundErrorBody.IdBuildStage builder() {
+    return ImmutablePostNotFoundErrorBody.builder();
+  }
+}
+
+]
+
+
+basic[api/generated-java/blog-api-model/src/main/java/com/fern/blog/api/PostType.java]=[
+package com.fern.blog.api;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -848,6 +785,60 @@ public final class PostType {
 ]
 
 
+basic[api/generated-java/blog-api-model/src/main/java/com/fern/blog/api/UnauthorizedError.java]=[
+package com.fern.blog.api;
+
+import com.fern.java.exception.HttpException;
+import java.lang.Override;
+
+public final class UnauthorizedError extends HttpException {
+  UnauthorizedErrorBody body;
+
+  public UnauthorizedError(UnauthorizedErrorBody body) {
+    this.body = body;
+  }
+
+  public UnauthorizedErrorBody getBody() {
+    return body;
+  }
+
+  @Override
+  public int getStatusCode() {
+    return 403;
+  }
+}
+
+]
+
+
+basic[api/generated-java/blog-api-model/src/main/java/com/fern/blog/api/UnauthorizedErrorBody.java]=[
+package com.fern.blog.api;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fern.java.immutables.StagedBuilderImmutablesStyle;
+import java.lang.String;
+import org.immutables.value.Value;
+
+@Value.Immutable
+@StagedBuilderImmutablesStyle
+@JsonDeserialize(
+    as = ImmutableUnauthorizedErrorBody.class
+)
+@JsonIgnoreProperties(
+    ignoreUnknown = true
+)
+public interface UnauthorizedErrorBody {
+  String reason();
+
+  static ImmutableUnauthorizedErrorBody.ReasonBuildStage builder() {
+    return ImmutableUnauthorizedErrorBody.builder();
+  }
+}
+
+]
+
+
 basic[api/generated-java/blog-api-server-jersey/build.gradle]=[
 plugins {
     id 'java-library'
@@ -883,43 +874,9 @@ dependencies {
 ]
 
 
-basic[api/generated-java/blog-api-server-jersey/src/main/java/com/blog/errors/PostNotFoundErrorExceptionMapper.java]=[
-package com.blog.errors;
+basic[api/generated-java/blog-api-server-jersey/src/main/java/com/fern/blog/api/AbstractServiceRegistry.java]=[
+package com.fern.blog.api;
 
-import com.fern.java.jersey.ResourceInfoUtils;
-import java.lang.Override;
-import javax.ws.rs.container.ResourceInfo;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-public final class PostNotFoundErrorExceptionMapper implements ExceptionMapper<PostNotFoundError> {
-  private static final Logger log = LoggerFactory.getLogger(PostNotFoundErrorExceptionMapper.class);
-
-  @Context
-  ResourceInfo resourceInfo;
-
-  @Override
-  public Response toResponse(PostNotFoundError e) {
-    log.info("Error handling request. ErrorInstanceId= {}", e.getErrorInstanceId(), e);
-    if (ResourceInfoUtils.getInterfaceNames(resourceInfo).contains("PostsService")) {
-      if (ResourceInfoUtils.getMethodName(resourceInfo).contains("getPost")) {
-        return Response.status(e.getStatusCode()).entity(com.blog.services.GetPostFailedResponse.postNotFoundError(e)).build();
-      }
-    }
-    return null;
-  }
-}
-
-]
-
-
-basic[api/generated-java/blog-api-server-jersey/src/main/java/com/blog/server/AbstractServiceRegistry.java]=[
-package com.blog.server;
-
-import com.blog.errors.PostNotFoundErrorExceptionMapper;
 import org.glassfish.jersey.server.ResourceConfig;
 
 public abstract class AbstractServiceRegistry extends ResourceConfig {
@@ -938,8 +895,8 @@ public abstract class AbstractServiceRegistry extends ResourceConfig {
 ]
 
 
-basic[api/generated-java/blog-api-server-jersey/src/main/java/com/blog/server/DefaultExceptionMapper.java]=[
-package com.blog.server;
+basic[api/generated-java/blog-api-server-jersey/src/main/java/com/fern/blog/api/DefaultExceptionMapper.java]=[
+package com.fern.blog.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -989,10 +946,9 @@ public final class DefaultExceptionMapper implements ExceptionMapper<Exception> 
 ]
 
 
-basic[api/generated-java/blog-api-server-jersey/src/main/java/com/blog/server/DummyService.java]=[
-package com.blog.server;
+basic[api/generated-java/blog-api-server-jersey/src/main/java/com/fern/blog/api/DummyService.java]=[
+package com.fern.blog.api;
 
-import com.blog.types.DummyId;
 import com.fern.java.auth.BearerAuthHeader;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.HeaderParam;
@@ -1013,13 +969,42 @@ public interface DummyService {
 ]
 
 
-basic[api/generated-java/blog-api-server-jersey/src/main/java/com/blog/server/PostsService.java]=[
-package com.blog.server;
+basic[api/generated-java/blog-api-server-jersey/src/main/java/com/fern/blog/api/PostNotFoundErrorExceptionMapper.java]=[
+package com.fern.blog.api;
 
-import com.blog.errors.PostNotFoundError;
-import com.blog.types.BlogPost;
-import com.blog.types.CreatePostRequest;
-import com.blog.types.PostId;
+import com.fern.java.jersey.ResourceInfoUtils;
+import java.lang.Override;
+import javax.ws.rs.container.ResourceInfo;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ExceptionMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public final class PostNotFoundErrorExceptionMapper implements ExceptionMapper<PostNotFoundError> {
+  private static final Logger log = LoggerFactory.getLogger(PostNotFoundErrorExceptionMapper.class);
+
+  @Context
+  ResourceInfo resourceInfo;
+
+  @Override
+  public Response toResponse(PostNotFoundError e) {
+    log.info("Error handling request. ErrorInstanceId= {}", e.getErrorInstanceId(), e);
+    if (ResourceInfoUtils.getInterfaceNames(resourceInfo).contains("PostsService")) {
+      if (ResourceInfoUtils.getMethodName(resourceInfo).contains("getPost")) {
+        return Response.status(e.getStatusCode()).entity(com.fern.blog.api.GetPostFailedResponse.postNotFoundError(e)).build();
+      }
+    }
+    return null;
+  }
+}
+
+]
+
+
+basic[api/generated-java/blog-api-server-jersey/src/main/java/com/fern/blog/api/PostsService.java]=[
+package com.fern.blog.api;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -1077,45 +1062,8 @@ dependencies {
 ]
 
 
-basic[api/generated-java/blog-api-server-spring/src/main/java/com/blog/errors/PostNotFoundErrorExceptionMapper.java]=[
-package com.blog.errors;
-
-import com.blog.services.GetPostFailedResponse;
-import com.fern.java.spring.HandlerMethodUtils;
-import java.lang.Object;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
-@Order(Ordered.HIGHEST_PRECEDENCE)
-@ControllerAdvice
-public final class PostNotFoundErrorExceptionMapper extends ResponseEntityExceptionHandler {
-  private static final Logger log = LoggerFactory.getLogger(PostNotFoundErrorExceptionMapper.class);
-
-  @ExceptionHandler(PostNotFoundError.class)
-  public ResponseEntity<Object> handle(PostNotFoundError e, HandlerMethod handlerMethod) {
-    log.info("Error handling request. ErrorInstanceId= {}", e.getErrorInstanceId(), e);
-    if (HandlerMethodUtils.getInterfaceNames(handlerMethod).contains("PostsService")) {
-      if (HandlerMethodUtils.getMethodName(handlerMethod).contains("getPost")) {
-        return new ResponseEntity<>(GetPostFailedResponse.postNotFoundError(e), HttpStatus.valueOf(e.getStatusCode()));
-      }
-    }
-    return null;
-  }
-}
-
-]
-
-
-basic[api/generated-java/blog-api-server-spring/src/main/java/com/blog/server/DefaultExceptionMapper.java]=[
-package com.blog.server;
+basic[api/generated-java/blog-api-server-spring/src/main/java/com/fern/blog/api/DefaultExceptionMapper.java]=[
+package com.fern.blog.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -1169,10 +1117,9 @@ public final class DefaultExceptionMapper extends ResponseEntityExceptionHandler
 ]
 
 
-basic[api/generated-java/blog-api-server-spring/src/main/java/com/blog/server/DummyService.java]=[
-package com.blog.server;
+basic[api/generated-java/blog-api-server-spring/src/main/java/com/fern/blog/api/DummyService.java]=[
+package com.fern.blog.api;
 
-import com.blog.types.DummyId;
 import com.fern.java.auth.BearerAuthHeader;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -1193,13 +1140,45 @@ public interface DummyService {
 ]
 
 
-basic[api/generated-java/blog-api-server-spring/src/main/java/com/blog/server/PostsService.java]=[
-package com.blog.server;
+basic[api/generated-java/blog-api-server-spring/src/main/java/com/fern/blog/api/PostNotFoundErrorExceptionMapper.java]=[
+package com.fern.blog.api;
 
-import com.blog.errors.PostNotFoundError;
-import com.blog.types.BlogPost;
-import com.blog.types.CreatePostRequest;
-import com.blog.types.PostId;
+import com.fern.java.spring.HandlerMethodUtils;
+import java.lang.Object;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+@Order(Ordered.HIGHEST_PRECEDENCE)
+@ControllerAdvice
+public final class PostNotFoundErrorExceptionMapper extends ResponseEntityExceptionHandler {
+  private static final Logger log = LoggerFactory.getLogger(PostNotFoundErrorExceptionMapper.class);
+
+  @ExceptionHandler(PostNotFoundError.class)
+  public ResponseEntity<Object> handle(PostNotFoundError e, HandlerMethod handlerMethod) {
+    log.info("Error handling request. ErrorInstanceId= {}", e.getErrorInstanceId(), e);
+    if (HandlerMethodUtils.getInterfaceNames(handlerMethod).contains("PostsService")) {
+      if (HandlerMethodUtils.getMethodName(handlerMethod).contains("getPost")) {
+        return new ResponseEntity<>(GetPostFailedResponse.postNotFoundError(e), HttpStatus.valueOf(e.getStatusCode()));
+      }
+    }
+    return null;
+  }
+}
+
+]
+
+
+basic[api/generated-java/blog-api-server-spring/src/main/java/com/fern/blog/api/PostsService.java]=[
+package com.fern.blog.api;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;

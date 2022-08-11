@@ -19,7 +19,6 @@ import com.fern.codegen.GeneratedAbstractHttpServiceRegistry;
 import com.fern.codegen.GeneratedFile;
 import com.fern.codegen.GeneratedHttpServiceServer;
 import com.fern.codegen.GeneratorContext;
-import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.model.codegen.Generator;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -45,14 +44,10 @@ public final class AbstractHttpServiceRegistryGenerator extends Generator {
             GeneratorContext generatorContext,
             List<GeneratedHttpServiceServer> generatedHttpServiceServers,
             List<GeneratedFile> generatedExceptionMappers) {
-        super(generatorContext, PackageType.SERVER);
+        super(generatorContext);
         this.abstractServiceRegistryClassName = generatorContext
                 .getClassNameUtils()
-                .getClassName(
-                        ABSTRACT_SERVICE_REGISTRY_CLASSSNAME,
-                        Optional.empty(),
-                        Optional.of(packageType),
-                        Optional.empty());
+                .getClassName(ABSTRACT_SERVICE_REGISTRY_CLASSSNAME, Optional.empty(), Optional.empty());
         this.generatedHttpServiceServers = generatedHttpServiceServers;
         this.generatedExceptionMappers = generatedExceptionMappers;
         this.defaultExceptionMapperGenerator = new DefaultExceptionMapperGenerator(generatorContext);

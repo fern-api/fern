@@ -46,14 +46,13 @@ import com.fern.types.services.ResponseErrors;
 import com.fern.types.services.ServiceName;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
 public final class HttpServiceJerseyServerGeneratorTest {
 
     private static final String PACKAGE_PREFIX = "com";
     private static final GeneratorContext GENERATOR_CONTEXT = new GeneratorContext(
-            Optional.of(PACKAGE_PREFIX), Collections.emptyMap(), Collections.emptyMap(), TestConstants.FERN_CONSTANTS);
+            PACKAGE_PREFIX, Collections.emptyMap(), Collections.emptyMap(), TestConstants.FERN_CONSTANTS);
 
     @Test
     public void test_basic() {

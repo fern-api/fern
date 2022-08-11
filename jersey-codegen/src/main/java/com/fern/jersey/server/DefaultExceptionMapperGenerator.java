@@ -21,7 +21,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.codegen.GeneratedFile;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameConstants;
-import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.model.codegen.Generator;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
@@ -67,10 +66,10 @@ public final class DefaultExceptionMapperGenerator extends Generator {
     private final ClassName defaultExceptionBodyClassname;
 
     public DefaultExceptionMapperGenerator(GeneratorContext generatorContext) {
-        super(generatorContext, PackageType.SERVER);
+        super(generatorContext);
         this.defaultExceptionMapperClassName = generatorContext
                 .getClassNameUtils()
-                .getClassName(DEFAULT_EXCEPTION_MAPPER, Optional.empty(), Optional.of(packageType), Optional.empty());
+                .getClassName(DEFAULT_EXCEPTION_MAPPER, Optional.empty(), Optional.empty());
         this.defaultExceptionBodyClassname =
                 defaultExceptionMapperClassName.nestedClass(DEFAULT_EXCEPTION_BODY_CLASSNAME);
     }

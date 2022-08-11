@@ -28,7 +28,6 @@ import com.fern.codegen.ImmutableGeneratedEndpointModel;
 import com.fern.codegen.payload.Payload;
 import com.fern.codegen.payload.TypeNamePayload;
 import com.fern.codegen.payload.VoidPayload;
-import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.model.codegen.errors.ErrorGenerator;
 import com.fern.model.codegen.services.payloads.FailedResponseGenerator;
 import com.fern.model.codegen.types.InterfaceGenerator;
@@ -76,8 +75,7 @@ public final class ModelGenerator {
         typeDeclarations.forEach(typeDefinition -> {
             IGeneratedFile generatedFile = typeDefinition
                     .shape()
-                    .visit(new TypeDefinitionGenerator(
-                            typeDefinition, generatorContext, generatedInterfaces, PackageType.TYPES));
+                    .visit(new TypeDefinitionGenerator(typeDefinition, generatorContext, generatedInterfaces));
             if (generatedFile instanceof GeneratedObject) {
                 modelGeneratorResultBuilder.addObjects((GeneratedObject) generatedFile);
             } else if (generatedFile instanceof GeneratedUnion) {

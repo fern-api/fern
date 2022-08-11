@@ -17,7 +17,6 @@ package com.fern.model.codegen;
 
 import com.fern.codegen.GeneratedInterface;
 import com.fern.codegen.GeneratedObject;
-import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.java.test.TestConstants;
 import com.fern.model.codegen.types.InterfaceGenerator;
 import com.fern.model.codegen.types.ObjectGenerator;
@@ -59,7 +58,6 @@ public class ObjectGeneratorTest {
                         .fernFilepath(FernFilepath.valueOf(List.of("com", "fern")))
                         .name("WithDocs")
                         .build(),
-                PackageType.TYPES,
                 objectTypeDeclaration,
                 Collections.emptyList(),
                 Optional.empty(),
@@ -89,7 +87,6 @@ public class ObjectGeneratorTest {
         GeneratedInterface withDocsInterface = interfaceGenerator.generate();
         ObjectGenerator objectGenerator = new ObjectGenerator(
                 withDocsTypeDefinition.name(),
-                PackageType.TYPES,
                 withDocsObjectTypeDefinition,
                 Collections.emptyList(),
                 Optional.of(withDocsInterface),
@@ -116,7 +113,6 @@ public class ObjectGeneratorTest {
                 .build();
         ObjectGenerator objectGenerator = new ObjectGenerator(
                 typeDefinition.name(),
-                PackageType.TYPES,
                 objectTypeDefinition,
                 Collections.emptyList(),
                 Optional.empty(),
@@ -147,7 +143,6 @@ public class ObjectGeneratorTest {
                 .build();
         ObjectGenerator objectGenerator = new ObjectGenerator(
                 typeDefinition.name(),
-                PackageType.TYPES,
                 objectTypeDefinition,
                 Collections.emptyList(),
                 Optional.empty(),

@@ -18,7 +18,6 @@ package com.fern.model.codegen;
 import com.fern.codegen.GeneratedInterface;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.IGeneratedFile;
-import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.model.codegen.types.AliasGenerator;
 import com.fern.model.codegen.types.EnumGenerator;
 import com.fern.model.codegen.types.ObjectGenerator;
@@ -41,17 +40,14 @@ public final class TypeDefinitionGenerator implements Type.Visitor<IGeneratedFil
     private final TypeDeclaration typeDeclaration;
     private final GeneratorContext generatorContext;
     private final Map<DeclaredTypeName, GeneratedInterface> generatedInterfaces;
-    private final PackageType packageType;
 
     public TypeDefinitionGenerator(
             TypeDeclaration typeDeclaration,
             GeneratorContext generatorContext,
-            Map<DeclaredTypeName, GeneratedInterface> generatedInterfaces,
-            PackageType packageType) {
+            Map<DeclaredTypeName, GeneratedInterface> generatedInterfaces) {
         this.typeDeclaration = typeDeclaration;
         this.generatorContext = generatorContext;
         this.generatedInterfaces = generatedInterfaces;
-        this.packageType = packageType;
     }
 
     @Override
@@ -64,33 +60,27 @@ public final class TypeDefinitionGenerator implements Type.Visitor<IGeneratedFil
                         generatedInterface -> generatedInterface.className().simpleName()))
                 .collect(Collectors.toList());
         ObjectGenerator objectGenerator = new ObjectGenerator(
-                typeDeclaration.name(),
-                packageType,
-                objectTypeDefinition,
-                extendedInterfaces,
-                selfInterface,
-                generatorContext);
+                typeDeclaration.name(), objectTypeDefinition, extendedInterfaces, selfInterface, generatorContext);
         return objectGenerator.generate();
     }
 
     @Override
     public IGeneratedFile visitUnion(UnionTypeDeclaration unionTypeDeclaration) {
         UnionGenerator unionGenerator =
-                new UnionGenerator(typeDeclaration.name(), packageType, unionTypeDeclaration, generatorContext);
+                new UnionGenerator(typeDeclaration.name(), unionTypeDeclaration, generatorContext);
         return unionGenerator.generate();
     }
 
     @Override
     public IGeneratedFile visitAlias(AliasTypeDeclaration aliasTypeDeclaration) {
         AliasGenerator aliasGenerator =
-                new AliasGenerator(aliasTypeDeclaration, packageType, typeDeclaration.name(), generatorContext);
+                new AliasGenerator(aliasTypeDeclaration, typeDeclaration.name(), generatorContext);
         return aliasGenerator.generate();
     }
 
     @Override
     public IGeneratedFile visitEnum(EnumTypeDeclaration enumTypeDeclaration) {
-        EnumGenerator enumGenerator =
-                new EnumGenerator(typeDeclaration.name(), packageType, enumTypeDeclaration, generatorContext);
+        EnumGenerator enumGenerator = new EnumGenerator(typeDeclaration.name(), enumTypeDeclaration, generatorContext);
         return enumGenerator.generate();
     }
 

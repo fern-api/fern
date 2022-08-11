@@ -16,7 +16,6 @@
 package com.fern.model.codegen;
 
 import com.fern.codegen.GeneratedAlias;
-import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.java.test.TestConstants;
 import com.fern.model.codegen.types.AliasGenerator;
 import com.fern.types.AliasTypeDeclaration;
@@ -45,10 +44,7 @@ public final class AliasGeneratorTest {
                 .shape(Type.alias(aliasTypeDefinition))
                 .build();
         AliasGenerator aliasGenerator = new AliasGenerator(
-                aliasTypeDefinition,
-                PackageType.TYPES,
-                problemIdTypeDefinition.name(),
-                TestConstants.GENERATOR_CONTEXT);
+                aliasTypeDefinition, problemIdTypeDefinition.name(), TestConstants.GENERATOR_CONTEXT);
         GeneratedAlias generatedAlias = aliasGenerator.generate();
         System.out.println(generatedAlias.file().toString());
     }
@@ -66,10 +62,7 @@ public final class AliasGeneratorTest {
                 .shape(Type.alias(aliasTypeDefinition))
                 .build();
         AliasGenerator aliasGenerator = new AliasGenerator(
-                aliasTypeDefinition,
-                PackageType.TYPES,
-                problemIdTypeDefinition.name(),
-                TestConstants.GENERATOR_CONTEXT);
+                aliasTypeDefinition, problemIdTypeDefinition.name(), TestConstants.GENERATOR_CONTEXT);
         GeneratedAlias generatedAlias = aliasGenerator.generate();
         System.out.println(generatedAlias.file().toString());
     }

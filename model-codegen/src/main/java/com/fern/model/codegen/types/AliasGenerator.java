@@ -20,7 +20,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.codegen.GeneratedAlias;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameConstants;
-import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.java.immutables.AliasImmutablesStyle;
 import com.fern.model.codegen.Generator;
 import com.fern.types.AliasTypeDeclaration;
@@ -50,14 +49,13 @@ public final class AliasGenerator extends Generator {
 
     public AliasGenerator(
             AliasTypeDeclaration aliasTypeDeclaration,
-            PackageType packageType,
             DeclaredTypeName declaredTypeName,
             GeneratorContext generatorContext) {
-        super(generatorContext, packageType);
+        super(generatorContext);
         this.aliasTypeDeclaration = aliasTypeDeclaration;
         this.declaredTypeName = declaredTypeName;
         this.generatedAliasClassName =
-                generatorContext.getClassNameUtils().getClassNameFromDeclaredTypeName(declaredTypeName, packageType);
+                generatorContext.getClassNameUtils().getClassNameFromDeclaredTypeName(declaredTypeName);
         this.generatedAliasImmutablesClassName =
                 generatorContext.getImmutablesUtils().getImmutablesClassName(generatedAliasClassName);
     }

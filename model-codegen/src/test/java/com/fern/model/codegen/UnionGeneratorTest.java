@@ -17,7 +17,6 @@ package com.fern.model.codegen;
 
 import com.fern.codegen.GeneratedUnion;
 import com.fern.codegen.GeneratorContext;
-import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.java.test.TestConstants;
 import com.fern.model.codegen.types.UnionGenerator;
 import com.fern.types.ContainerType;
@@ -31,7 +30,6 @@ import com.fern.types.TypeReference;
 import com.fern.types.UnionTypeDeclaration;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
 public class UnionGeneratorTest {
@@ -77,12 +75,12 @@ public class UnionGeneratorTest {
                 .shape(Type.union(unionTypeDefinition))
                 .build();
         GeneratorContext generatorContext = new GeneratorContext(
-                Optional.of(TestConstants.PACKAGE_PREFIX),
+                TestConstants.PACKAGE_PREFIX,
                 Collections.singletonMap(variableValueTypeDefinition.name(), variableValueTypeDefinition),
                 Collections.emptyMap(),
                 TestConstants.FERN_CONSTANTS);
-        UnionGenerator unionGenerator = new UnionGenerator(
-                variableValueTypeDefinition.name(), PackageType.TYPES, unionTypeDefinition, generatorContext);
+        UnionGenerator unionGenerator =
+                new UnionGenerator(variableValueTypeDefinition.name(), unionTypeDefinition, generatorContext);
         GeneratedUnion generatedUnion = unionGenerator.generate();
         System.out.println(generatedUnion.file().toString());
     }
@@ -112,12 +110,12 @@ public class UnionGeneratorTest {
                 .shape(Type.union(unionTypeDefinition))
                 .build();
         GeneratorContext generatorContext = new GeneratorContext(
-                Optional.of(TestConstants.PACKAGE_PREFIX),
+                TestConstants.PACKAGE_PREFIX,
                 Collections.singletonMap(variableValueTypeDefinition.name(), variableValueTypeDefinition),
                 Collections.emptyMap(),
                 TestConstants.FERN_CONSTANTS);
-        UnionGenerator unionGenerator = new UnionGenerator(
-                variableValueTypeDefinition.name(), PackageType.TYPES, unionTypeDefinition, generatorContext);
+        UnionGenerator unionGenerator =
+                new UnionGenerator(variableValueTypeDefinition.name(), unionTypeDefinition, generatorContext);
         GeneratedUnion generatedUnion = unionGenerator.generate();
         System.out.println(generatedUnion.file().toString());
     }

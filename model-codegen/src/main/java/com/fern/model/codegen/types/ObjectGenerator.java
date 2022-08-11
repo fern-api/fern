@@ -21,7 +21,6 @@ import com.fern.codegen.GeneratedInterface;
 import com.fern.codegen.GeneratedObject;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.IGeneratedFile;
-import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.model.codegen.Generator;
 import com.fern.types.DeclaredTypeName;
@@ -59,18 +58,17 @@ public final class ObjectGenerator extends Generator {
 
     public ObjectGenerator(
             DeclaredTypeName declaredTypeName,
-            PackageType packageType,
             ObjectTypeDeclaration objectTypeDeclaration,
             List<GeneratedInterface> extendedInterfaces,
             Optional<GeneratedInterface> selfInterface,
             GeneratorContext generatorContext) {
-        super(generatorContext, packageType);
+        super(generatorContext);
         this.declaredTypeName = declaredTypeName;
         this.objectTypeDeclaration = objectTypeDeclaration;
         this.extendedInterfaces = extendedInterfaces;
         this.selfInterface = selfInterface;
         this.generatedObjectClassName =
-                generatorContext.getClassNameUtils().getClassNameFromDeclaredTypeName(declaredTypeName, packageType);
+                generatorContext.getClassNameUtils().getClassNameFromDeclaredTypeName(declaredTypeName);
         this.generatedObjectImmutablesClassName =
                 generatorContext.getImmutablesUtils().getImmutablesClassName(generatedObjectClassName);
     }

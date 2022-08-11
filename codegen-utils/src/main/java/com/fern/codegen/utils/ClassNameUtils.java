@@ -32,46 +32,30 @@ public final class ClassNameUtils {
     private final List<String> packagePrefixes;
     private final TypeReferenceUtils typeReferenceUtils;
 
-    public ClassNameUtils(Optional<String> maybePackagePrefix) {
-        String[] splitPackagePrefix = maybePackagePrefix
-                .map(packagePrefix -> packagePrefix.split("/"))
-                .orElseGet(() -> new String[0]);
+    public ClassNameUtils(String maybePackagePrefix) {
+        String[] splitPackagePrefix = maybePackagePrefix.split("/");
         this.packagePrefixes = Arrays.asList(splitPackagePrefix);
         this.typeReferenceUtils = new TypeReferenceUtils(this);
     }
 
-    public ClassName getClassNameFromServiceName(ServiceName serviceName, PackageType packageType, String suffix) {
-        return getClassName(
-                serviceName.name(),
-                Optional.of(suffix),
-                Optional.of(packageType),
-                Optional.of(serviceName.fernFilepath()));
+    public ClassName getClassNameFromServiceName(ServiceName serviceName, String suffix) {
+        return getClassName(serviceName.name(), Optional.of(suffix), Optional.of(serviceName.fernFilepath()));
     }
 
-    public ClassName getClassNameFromServiceName(ServiceName serviceName, PackageType packageType) {
-        return getClassName(
-                serviceName.name(),
-                Optional.empty(),
-                Optional.of(packageType),
-                Optional.of(serviceName.fernFilepath()));
+    public ClassName getClassNameFromServiceName(ServiceName serviceName) {
+        return getClassName(serviceName.name(), Optional.empty(), Optional.of(serviceName.fernFilepath()));
     }
 
-    public ClassName getClassNameFromDeclaredTypeName(DeclaredTypeName declaredTypeName, PackageType packageType) {
-        return getClassName(
-                declaredTypeName.name(),
-                Optional.empty(),
-                Optional.of(packageType),
-                Optional.of(declaredTypeName.fernFilepath()));
+    public ClassName getClassNameFromDeclaredTypeName(DeclaredTypeName declaredTypeName) {
+        return getClassName(declaredTypeName.name(), Optional.empty(), Optional.of(declaredTypeName.fernFilepath()));
     }
 
-    public ClassName getClassNameFromErrorName(ErrorName errorName, PackageType packageType) {
-        return getClassName(
-                errorName.name(), Optional.empty(), Optional.of(packageType), Optional.of(errorName.fernFilepath()));
+    public ClassName getClassNameFromErrorName(ErrorName errorName) {
+        return getClassName(errorName.name(), Optional.empty(), Optional.of(errorName.fernFilepath()));
     }
 
-    public ClassName getClassNameFromErrorName(ErrorName errorName, PackageType packageType, String suffix) {
-        return getClassName(
-                errorName.name(), Optional.of(suffix), Optional.of(packageType), Optional.of(errorName.fernFilepath()));
+    public ClassName getClassNameFromErrorName(ErrorName errorName, String suffix) {
+        return getClassName(errorName.name(), Optional.of(suffix), Optional.of(errorName.fernFilepath()));
     }
 
     public ClassName getNestedClassName(ClassName outerClassName, String nestedClassName) {
@@ -79,16 +63,12 @@ public final class ClassNameUtils {
         return outerClassName.nestedClass(compatibleNestedClassName);
     }
 
-    public ClassName getClassName(
-            String className,
-            Optional<String> maybeSuffix,
-            Optional<PackageType> generatedClassType,
-            Optional<FernFilepath> fernFilepath) {
+    public ClassName getClassName(String className, Optional<String> maybeSuffix, Optional<FernFilepath> fernFilepath) {
         String fullClassName = maybeSuffix
                 .map(suffix -> className + StringUtils.capitalize(suffix))
                 .orElse(className);
         String compatibleClassname = getCompatibleClassName(fullClassName);
-        String packageName = getPackage(generatedClassType, fernFilepath);
+        String packageName = getPackage(fernFilepath);
         return ClassName.get(packageName, compatibleClassname);
     }
 
@@ -121,37 +101,9 @@ public final class ClassNameUtils {
         return KeyWordUtils.getKeyWordCompatibleName(camelCasedClassName);
     }
 
-    private String getPackage(Optional<PackageType> generatedClassType, Optional<FernFilepath> filepath) {
+    private String getPackage(Optional<FernFilepath> filepath) {
         List<String> packageParts = new ArrayList<>(packagePrefixes);
-        generatedClassType.map(ClassNameUtils::getGeneratedClassPackageName).ifPresent(packageParts::add);
         filepath.ifPresent(fernFilepath -> packageParts.addAll(fernFilepath.value()));
         return String.join(".", packageParts);
-    }
-
-    private static String getGeneratedClassPackageName(PackageType packageType) {
-        switch (packageType) {
-            case TYPES:
-                return "types";
-            case INTERFACES:
-                return "interfaces";
-            case SERVER:
-                return "server";
-            case CLIENT:
-                return "client";
-            case SERVICES:
-                return "services";
-            case ERRORS:
-                return "errors";
-        }
-        throw new IllegalStateException("Encountered unknown PackageType: " + packageType);
-    }
-
-    public enum PackageType {
-        INTERFACES,
-        TYPES,
-        SERVER,
-        CLIENT,
-        SERVICES,
-        ERRORS,
     }
 }

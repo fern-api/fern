@@ -20,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.fern.codegen.GeneratedEnum;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameConstants;
-import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.codegen.utils.VisitorUtils;
 import com.fern.codegen.utils.VisitorUtils.GeneratedVisitor;
 import com.fern.model.codegen.Generator;
@@ -74,14 +73,13 @@ public final class EnumGenerator extends Generator {
 
     public EnumGenerator(
             DeclaredTypeName declaredTypeName,
-            PackageType packageType,
             EnumTypeDeclaration enumTypeDeclaration,
             GeneratorContext generatorContext) {
-        super(generatorContext, packageType);
+        super(generatorContext);
         this.declaredTypeName = declaredTypeName;
         this.enumTypeDeclaration = enumTypeDeclaration;
         this.generatedEnumClassName =
-                generatorContext.getClassNameUtils().getClassNameFromDeclaredTypeName(declaredTypeName, packageType);
+                generatorContext.getClassNameUtils().getClassNameFromDeclaredTypeName(declaredTypeName);
         this.valueFieldClassName = generatedEnumClassName.nestedClass(VALUE_TYPE_NAME);
     }
 

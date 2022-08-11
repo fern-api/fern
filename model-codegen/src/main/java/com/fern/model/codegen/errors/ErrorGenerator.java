@@ -19,7 +19,6 @@ import com.fern.codegen.GeneratedError;
 import com.fern.codegen.GeneratedInterface;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.IGeneratedFile;
-import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.java.exception.HttpException;
 import com.fern.model.codegen.Generator;
 import com.fern.model.codegen.TypeDefinitionGenerator;
@@ -50,12 +49,11 @@ public final class ErrorGenerator extends Generator {
             ErrorDeclaration errorDeclaration,
             GeneratorContext generatorContext,
             Map<DeclaredTypeName, GeneratedInterface> generatedInterfaces) {
-        super(generatorContext, PackageType.ERRORS);
+        super(generatorContext);
         this.errorDeclaration = errorDeclaration;
         this.generatorContext = generatorContext;
         this.generatedInterfaces = generatedInterfaces;
-        this.errorClassName =
-                generatorContext.getClassNameUtils().getClassNameFromErrorName(errorDeclaration.name(), packageType);
+        this.errorClassName = generatorContext.getClassNameUtils().getClassNameFromErrorName(errorDeclaration.name());
     }
 
     @Override
@@ -71,8 +69,7 @@ public final class ErrorGenerator extends Generator {
                                 .shape(errorDeclaration.type())
                                 .build(),
                         generatorContext,
-                        generatedInterfaces,
-                        PackageType.ERRORS));
+                        generatedInterfaces));
         ClassName bodyClassName = generatedBodyFile.className();
         TypeSpec.Builder errorTypeSpecBuilder = TypeSpec.classBuilder(errorClassName)
                 .superclass(ClassName.get(HttpException.class))

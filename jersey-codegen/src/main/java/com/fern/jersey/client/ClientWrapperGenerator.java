@@ -21,7 +21,6 @@ import com.fern.codegen.GeneratedFile;
 import com.fern.codegen.GeneratedHttpServiceClient;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.CasingUtils;
-import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.model.codegen.Generator;
 import com.fern.types.FernFilepath;
@@ -61,14 +60,13 @@ public final class ClientWrapperGenerator extends Generator {
             GeneratorContext generatorContext,
             List<GeneratedHttpServiceClient> generatedHttpServiceClients,
             String workspaceName) {
-        super(generatorContext, PackageType.CLIENT);
+        super(generatorContext);
         this.generatedHttpServiceClients = generatedHttpServiceClients;
         this.generatedClientWrapperClassName = generatorContext
                 .getClassNameUtils()
                 .getClassName(
                         CasingUtils.convertKebabCaseToUpperCamelCase(workspaceName),
                         Optional.of("Client"),
-                        Optional.of(packageType),
                         Optional.empty());
         List<GeneratedHttpServiceClient> clientsOrderedByDept = generatedHttpServiceClients.stream()
                 .sorted(Comparator.comparingInt(generatedClient -> generatedClient
@@ -216,9 +214,8 @@ public final class ClientWrapperGenerator extends Generator {
             }
         }
         KeyedStream.stream(nestedClients).forEach((prefix, prefixedClients) -> {
-            ClassName nestedClientClassName = generatorContext
-                    .getClassNameUtils()
-                    .getClassName(prefix, Optional.of("Client"), Optional.of(packageType), Optional.empty());
+            ClassName nestedClientClassName =
+                    generatorContext.getClassNameUtils().getClassName(prefix, Optional.of("Client"), Optional.empty());
             ClientConfig nestedClientConfig =
                     createClientConfig(prefixedClients, fernFilePathSize + 1, nestedClientClassName);
             clientConfigBuilder.putNestedClients(prefix, nestedClientConfig);

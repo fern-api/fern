@@ -20,7 +20,6 @@ import com.fern.codegen.GeneratedInterface;
 import com.fern.codegen.GeneratedObject;
 import com.fern.codegen.GeneratedUnion;
 import com.fern.codegen.GeneratorContext;
-import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.model.codegen.types.EnumGenerator;
 import com.fern.model.codegen.types.ObjectGenerator;
 import com.fern.model.codegen.types.UnionGenerator;
@@ -89,8 +88,8 @@ public final class RequestResponseGenerator {
 
         @Override
         public RequestResponseGeneratorResult visitEnum(EnumTypeDeclaration enumTypeDeclaration) {
-            EnumGenerator enumGenerator = new EnumGenerator(
-                    getDeclaredTypeName(), PackageType.SERVICES, enumTypeDeclaration, generatorContext);
+            EnumGenerator enumGenerator =
+                    new EnumGenerator(getDeclaredTypeName(), enumTypeDeclaration, generatorContext);
             GeneratedEnum generatedEnum = enumGenerator.generate();
             return RequestResponseGeneratorResult.builder()
                     .typeName(generatedEnum.className())
@@ -107,7 +106,6 @@ public final class RequestResponseGenerator {
                     .collect(Collectors.toList());
             ObjectGenerator objectGenerator = new ObjectGenerator(
                     getDeclaredTypeName(),
-                    PackageType.SERVICES,
                     objectTypeDeclaration,
                     extendedInterfaces,
                     Optional.empty(),
@@ -121,8 +119,8 @@ public final class RequestResponseGenerator {
 
         @Override
         public RequestResponseGeneratorResult visitUnion(UnionTypeDeclaration unionTypeDeclaration) {
-            UnionGenerator unionGenerator = new UnionGenerator(
-                    getDeclaredTypeName(), PackageType.SERVICES, unionTypeDeclaration, generatorContext);
+            UnionGenerator unionGenerator =
+                    new UnionGenerator(getDeclaredTypeName(), unionTypeDeclaration, generatorContext);
             GeneratedUnion generatedUnion = unionGenerator.generate();
             return RequestResponseGeneratorResult.builder()
                     .typeName(generatedUnion.className())
