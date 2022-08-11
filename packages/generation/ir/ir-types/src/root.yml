@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+types:
+  RootApiConfiguration:
+    properties:
+      auth: AuthSchemes
+  AuthSchemes:
+    properties:
+      schemes: list<AuthScheme>
+      requirement: AuthSchemeRequirement
+  AuthScheme:
+    union:
+      bearer: {}
+      header: AuthHeader
+  AuthHeader:
+    properties:
+      name: string
+      type: TypeReference
+  AuthSchemeRequirement:
+    enum:
+      - ALL
+      - ANY
