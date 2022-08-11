@@ -33,7 +33,7 @@ public final class HttpAuthParameterSpecVisitor implements HttpAuth.Visitor<Opti
     }
 
     @Override
-    public Optional<ParameterSpec> visitBASIC() {
+    public Optional<ParameterSpec> visitBasic() {
         return Optional.of(ParameterSpec.builder(BasicAuthHeader.class, "authHeader")
                 .addAnnotation(AnnotationSpec.builder(headerAnnotationClazz)
                         .addMember("value", "$S", AUTHORIZATION_HEADER_NAME)
@@ -42,7 +42,7 @@ public final class HttpAuthParameterSpecVisitor implements HttpAuth.Visitor<Opti
     }
 
     @Override
-    public Optional<ParameterSpec> visitBEARER() {
+    public Optional<ParameterSpec> visitBearer() {
         return Optional.of(ParameterSpec.builder(BearerAuthHeader.class, "authHeader")
                 .addAnnotation(AnnotationSpec.builder(headerAnnotationClazz)
                         .addMember("value", "$S", AUTHORIZATION_HEADER_NAME)
@@ -51,7 +51,7 @@ public final class HttpAuthParameterSpecVisitor implements HttpAuth.Visitor<Opti
     }
 
     @Override
-    public Optional<ParameterSpec> visitNONE() {
+    public Optional<ParameterSpec> visitNone() {
         return Optional.empty();
     }
 

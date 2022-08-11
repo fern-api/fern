@@ -103,15 +103,13 @@ public interface FernPluginConfig {
     }
 
     static FernPluginConfig create(GeneratorConfig generatorConfig, String version) {
+        Map<String, Object> customConfig =
+                (Map<String, Object>) generatorConfig.customConfig().get();
         return ImmutableFernPluginConfig.builder()
                 .generatorConfig(generatorConfig)
                 .customPluginConfig(CustomPluginConfig.builder()
-                        .mode(Mode.valueOf(
-                                generatorConfig.customConfig().get("mode").toUpperCase()))
-                        .packagePrefix(Optional.ofNullable(
-                                generatorConfig.customConfig().get("packagePrefix")))
-                        .serverFrameworks(Optional.ofNullable(
-                                generatorConfig.customConfig().get("serverFrameworks")))
+                        .mode(Mode.valueOf(((String) customConfig.get("mode")).toUpperCase()))
+                        .serverFrameworks(Optional.ofNullable((String) customConfig.get("serverFrameworks")))
                         .build())
                 .version(version)
                 .build();

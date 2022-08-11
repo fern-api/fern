@@ -28,8 +28,6 @@ import org.immutables.value.Value;
 @JsonDeserialize(as = ImmutableCustomPluginConfig.class)
 public interface CustomPluginConfig {
 
-    Optional<String> packagePrefix();
-
     Optional<String> serverFrameworks();
 
     default List<ServerFramework> getServerFrameworkEnums() {

@@ -28,27 +28,27 @@ public final class JerseyHttpMethodAnnotationVisitor implements HttpMethod.Visit
     public static final JerseyHttpMethodAnnotationVisitor INSTANCE = new JerseyHttpMethodAnnotationVisitor();
 
     @Override
-    public AnnotationSpec visitGET() {
+    public AnnotationSpec visitGet() {
         return AnnotationSpec.builder(GET.class).build();
     }
 
     @Override
-    public AnnotationSpec visitPOST() {
+    public AnnotationSpec visitPost() {
         return AnnotationSpec.builder(POST.class).build();
     }
 
     @Override
-    public AnnotationSpec visitPUT() {
+    public AnnotationSpec visitPut() {
         return AnnotationSpec.builder(PUT.class).build();
     }
 
     @Override
-    public AnnotationSpec visitDELETE() {
+    public AnnotationSpec visitDelete() {
         return AnnotationSpec.builder(DELETE.class).build();
     }
 
     @Override
-    public AnnotationSpec visitPATCH() {
+    public AnnotationSpec visitPatch() {
         return AnnotationSpec.builder(PATCH.class).build();
     }
 

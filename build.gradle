@@ -40,12 +40,7 @@ allprojects {
     repositories {
         mavenCentral()
         maven {
-            url "https://usebirch.jfrog.io/artifactory/default-maven-local"
-            name "usebirch-jfrog"
-            credentials {
-                username = "$System.env.JFROG_USERNAME"
-                password = "$System.env.JFROG_API_KEY"
-            }
+            url "https://maven.buildwithfern.com"
         }
         maven {
             url "https://maven-dev.buildwithfern.com"

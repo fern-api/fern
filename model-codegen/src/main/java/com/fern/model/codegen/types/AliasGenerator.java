@@ -143,37 +143,37 @@ public final class AliasGenerator extends Generator {
         private static final ToStringMethodSpecVisitor INSTANCE = new ToStringMethodSpecVisitor();
 
         @Override
-        public CodeBlock visitINTEGER() {
+        public CodeBlock visitInteger() {
             return CodeBlock.of("return $T.$L($L())", Integer.class, "toString", IMMUTABLES_VALUE_PROPERTY_NAME);
         }
 
         @Override
-        public CodeBlock visitDOUBLE() {
+        public CodeBlock visitDouble() {
             return CodeBlock.of("return $T.$L($L())", Double.class, "toString", IMMUTABLES_VALUE_PROPERTY_NAME);
         }
 
         @Override
-        public CodeBlock visitSTRING() {
+        public CodeBlock visitString() {
             return CodeBlock.of("return $L()", IMMUTABLES_VALUE_PROPERTY_NAME);
         }
 
         @Override
-        public CodeBlock visitBOOLEAN() {
+        public CodeBlock visitBoolean() {
             return CodeBlock.of("return $T.$L($L())", Boolean.class, "toString", IMMUTABLES_VALUE_PROPERTY_NAME);
         }
 
         @Override
-        public CodeBlock visitLONG() {
+        public CodeBlock visitLong() {
             return CodeBlock.of("return $T.$L($L())", Long.class, "toString", IMMUTABLES_VALUE_PROPERTY_NAME);
         }
 
         @Override
-        public CodeBlock visitDATE_TIME() {
+        public CodeBlock visitDateTime() {
             return CodeBlock.of("return $L()", IMMUTABLES_VALUE_PROPERTY_NAME);
         }
 
         @Override
-        public CodeBlock visitUUID() {
+        public CodeBlock visitUuid() {
             return CodeBlock.of("return $L().$L()", IMMUTABLES_VALUE_PROPERTY_NAME, "toString");
         }
 

@@ -100,7 +100,7 @@ class TypeReferenceUtils {
         }
 
         @Override
-        public TypeName visitINTEGER() {
+        public TypeName visitInteger() {
             if (primitiveAllowed) {
                 return TypeName.INT;
             }
@@ -108,7 +108,7 @@ class TypeReferenceUtils {
         }
 
         @Override
-        public TypeName visitDOUBLE() {
+        public TypeName visitDouble() {
             if (primitiveAllowed) {
                 return TypeName.DOUBLE;
             }
@@ -116,7 +116,7 @@ class TypeReferenceUtils {
         }
 
         @Override
-        public TypeName visitLONG() {
+        public TypeName visitLong() {
             if (primitiveAllowed) {
                 return TypeName.LONG;
             }
@@ -124,22 +124,22 @@ class TypeReferenceUtils {
         }
 
         @Override
-        public TypeName visitDATE_TIME() {
+        public TypeName visitDateTime() {
             return ClassName.get(String.class);
         }
 
         @Override
-        public TypeName visitUUID() {
+        public TypeName visitUuid() {
             return ClassName.get(UUID.class);
         }
 
         @Override
-        public TypeName visitSTRING() {
+        public TypeName visitString() {
             return ClassName.get(String.class);
         }
 
         @Override
-        public TypeName visitBOOLEAN() {
+        public TypeName visitBoolean() {
             if (primitiveAllowed) {
                 return TypeName.BOOLEAN;
             }

@@ -84,7 +84,7 @@ jobs:
       - restore_cache: { key: 'unit-test-gradle-cache-v2-{{ checksum "versions.props" }}-{{ checksum "build.gradle" }}' }
       - run:
           name: Install Fern
-          command: npm install -g fern-api@0.0.132
+          command: npm install -g fern-api@0.0.182
       - run: docker network prune -f
       - run: ./gradlew --parallel --stacktrace build -x test -x check
       - run:

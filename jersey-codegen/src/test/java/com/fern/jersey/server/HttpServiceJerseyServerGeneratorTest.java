@@ -131,6 +131,7 @@ public final class HttpServiceJerseyServerGeneratorTest {
                         .fernFilepath(FernFilepath.valueOf(List.of("fern")))
                         .name("PersonIdNotFound")
                         .build())
+                .discriminantValue("")
                 .type(Type._object(ObjectTypeDeclaration.builder()
                         .addProperties(ObjectProperty.builder()
                                 .key("personId")

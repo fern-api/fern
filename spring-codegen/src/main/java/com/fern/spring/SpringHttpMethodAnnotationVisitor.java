@@ -34,35 +34,35 @@ public final class SpringHttpMethodAnnotationVisitor implements HttpMethod.Visit
     }
 
     @Override
-    public AnnotationSpec visitGET() {
+    public AnnotationSpec visitGet() {
         return AnnotationSpec.builder(GetMapping.class)
                 .addMember("value", "$S", path)
                 .build();
     }
 
     @Override
-    public AnnotationSpec visitPOST() {
+    public AnnotationSpec visitPost() {
         return AnnotationSpec.builder(PostMapping.class)
                 .addMember("value", "$S", path)
                 .build();
     }
 
     @Override
-    public AnnotationSpec visitPUT() {
+    public AnnotationSpec visitPut() {
         return AnnotationSpec.builder(PutMapping.class)
                 .addMember("value", "$S", path)
                 .build();
     }
 
     @Override
-    public AnnotationSpec visitDELETE() {
+    public AnnotationSpec visitDelete() {
         return AnnotationSpec.builder(DeleteMapping.class)
                 .addMember("value", "$S", path)
                 .build();
     }
 
     @Override
-    public AnnotationSpec visitPATCH() {
+    public AnnotationSpec visitPatch() {
         return AnnotationSpec.builder(PatchMapping.class)
                 .addMember("value", "$S", path)
                 .build();

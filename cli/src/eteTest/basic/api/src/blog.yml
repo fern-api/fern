@@ -1,8 +1,5 @@
-imports:
-  menu: blog.yml
 ids:
   - PostId
-  - DummyId
 types:
   Age: integer
   BlogPost:
@@ -62,9 +59,3 @@ services:
           response: BlogPost
           errors:
             - PostNotFoundError
-
-    DummyService:
-      auth: bearer
-      endpoints:
-        getDummy:
-          request: DummyId

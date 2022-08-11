@@ -40,6 +40,7 @@ public class ErrorGeneratorTest {
                                 .fernFilepath(FernFilepath.valueOf(List.of("fern")))
                                 .name("NotFoundError")
                                 .build())
+                        .discriminantValue("")
                         .type(Type._object(ObjectTypeDeclaration.builder()
                                 .addProperties(ObjectProperty.builder()
                                         .key("a")

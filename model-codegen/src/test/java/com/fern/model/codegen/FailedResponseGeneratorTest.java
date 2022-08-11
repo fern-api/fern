@@ -69,6 +69,7 @@ public class FailedResponseGeneratorTest {
                 .build();
         ErrorDeclaration noViewPermissionsErrorDef = ErrorDeclaration.builder()
                 .name(noViewPermissionsErrorNamedType)
+                .discriminantValue("")
                 .type(Type.alias(AliasTypeDeclaration.builder()
                         .aliasOf(TypeReference.primitive(PrimitiveType.STRING))
                         .build()))
@@ -85,6 +86,7 @@ public class FailedResponseGeneratorTest {
                         noViewPermissionsErrorNamedType,
                         ErrorDeclaration.builder()
                                 .name(noViewPermissionsErrorNamedType)
+                                .discriminantValue("")
                                 .type(Type._object(ObjectTypeDeclaration.builder()
                                         .addProperties(ObjectProperty.builder()
                                                 .key("msg")
