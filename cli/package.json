@@ -38,7 +38,6 @@
     "@fern-typescript/commons-v2": "workspace:*",
     "@fern-typescript/declaration-handler": "workspace:*",
     "@fern-typescript/errors-v2": "workspace:*",
-    "@fern-typescript/helper-manager": "workspace:*",
     "@fern-typescript/model": "workspace:*",
     "@fern-typescript/resolvers": "workspace:*",
     "@fern-typescript/server": "workspace:*",

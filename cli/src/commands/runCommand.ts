@@ -2,7 +2,6 @@ import { model as GeneratorLoggingApiModel } from "@fern-fern/generator-logging-
 import { GeneratorUpdate } from "@fern-fern/generator-logging-api-client/model";
 import { BUILD_PROJECT_SCRIPT_NAME, FernTypescriptGeneratorConfig, writeVolumeToDisk } from "@fern-typescript/commons";
 import { createLogger, LogLevel } from "@fern-typescript/commons-v2";
-import { HelperManager } from "@fern-typescript/helper-manager";
 import execa from "execa";
 import { Volume } from "memfs/lib/volume";
 import path from "path";
@@ -49,7 +48,6 @@ export async function runCommand({
     await command.generate({
         intermediateRepresentation: await loadIntermediateRepresentation(config.irFilepath),
         apiName: upperCamelCase(config.workspaceName),
-        helperManager: new HelperManager(config.helpers),
         volume,
         context: generatorContext,
     });

@@ -15,7 +15,6 @@
     { "path": "../declaration-handler" },
     { "path": "../errors-v2" },
     { "path": "../fern-typescript-commons" },
-    { "path": "../helpers/helper-manager" },
     { "path": "../model" },
     { "path": "../resolvers" },
     { "path": "../server" },

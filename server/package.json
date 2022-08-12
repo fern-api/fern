@@ -26,8 +26,6 @@
   },
   "dependencies": {
     "@fern-typescript/commons": "workspace:*",
-    "@fern-typescript/encoders": "workspace:*",
-    "@fern-typescript/helper-manager": "workspace:*",
     "@fern-typescript/model": "workspace:*",
     "@fern-typescript/model-context": "workspace:*",
     "@fern-typescript/service-types": "workspace:*",

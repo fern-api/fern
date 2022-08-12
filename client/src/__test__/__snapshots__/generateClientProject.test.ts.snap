@@ -407,7 +407,7 @@ export * from \\"./_service-types\\";
         \\"build\\": \\"esbuild $(find . -name '*.ts' -not -path './node_modules/*') --format=cjs --sourcemap --outdir=. && tsc\\"
     },
     \\"dependencies\\": {
-        \\"@fern-typescript/service-utils\\": \\"0.0.155\\",
+        \\"@fern-typescript/service-utils\\": \\"0.0.184\\",
         \\"url-join\\": \\"4.0.1\\",
         \\"@types/url-join\\": \\"4.0.1\\"
     },
@@ -454,10 +454,9 @@ export class ServiceWithBasicAuth implements ServiceWithBasicAuth {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.auth.EndpointBErrorBody
+                error: encodedResponse.body as model.auth.EndpointBErrorBody
             };
         }
     }
@@ -501,10 +500,9 @@ export class ServiceWithBasicAuthWithOverride implements ServiceWithBasicAuthWit
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.auth.EndpointGErrorBody
+                error: encodedResponse.body as model.auth.EndpointGErrorBody
             };
         }
     }
@@ -522,10 +520,9 @@ export class ServiceWithBasicAuthWithOverride implements ServiceWithBasicAuthWit
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.auth.OverrideEndpointGErrorBody
+                error: encodedResponse.body as model.auth.OverrideEndpointGErrorBody
             };
         }
     }
@@ -568,10 +565,9 @@ export class ServiceWithBearerAuth implements ServiceWithBearerAuth {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.auth.EndpointCErrorBody
+                error: encodedResponse.body as model.auth.EndpointCErrorBody
             };
         }
     }
@@ -615,10 +611,9 @@ export class ServiceWithBearerAuthWithOverride implements ServiceWithBearerAuthW
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.auth.EndpointFErrorBody
+                error: encodedResponse.body as model.auth.EndpointFErrorBody
             };
         }
     }
@@ -636,10 +631,9 @@ export class ServiceWithBearerAuthWithOverride implements ServiceWithBearerAuthW
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.auth.OverrideEndpointFErrorBody
+                error: encodedResponse.body as model.auth.OverrideEndpointFErrorBody
             };
         }
     }
@@ -682,10 +676,9 @@ export class ServiceWithNoAuth implements ServiceWithNoAuth {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.auth.EndpointAErrorBody
+                error: encodedResponse.body as model.auth.EndpointAErrorBody
             };
         }
     }
@@ -729,10 +722,9 @@ export class ServiceWithNoAuthWithBasicOverride implements ServiceWithNoAuthWith
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.auth.EndpointEErrorBody
+                error: encodedResponse.body as model.auth.EndpointEErrorBody
             };
         }
     }
@@ -750,10 +742,9 @@ export class ServiceWithNoAuthWithBasicOverride implements ServiceWithNoAuthWith
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.auth.OverrideEndpointEErrorBody
+                error: encodedResponse.body as model.auth.OverrideEndpointEErrorBody
             };
         }
     }
@@ -797,10 +788,9 @@ export class ServiceWithNoAuthWithBearerOverride implements ServiceWithNoAuthWit
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.auth.EndpointDErrorBody
+                error: encodedResponse.body as model.auth.EndpointDErrorBody
             };
         }
     }
@@ -818,10 +808,9 @@ export class ServiceWithNoAuthWithBearerOverride implements ServiceWithNoAuthWit
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.auth.OverrideEndpointDErrorBody
+                error: encodedResponse.body as model.auth.OverrideEndpointDErrorBody
             };
         }
     }
@@ -1134,7 +1123,7 @@ export * from \\"./GetResponse\\";
         \\"build\\": \\"esbuild $(find . -name '*.ts' -not -path './node_modules/*') --format=cjs --sourcemap --outdir=. && tsc\\"
     },
     \\"dependencies\\": {
-        \\"@fern-typescript/service-utils\\": \\"0.0.155\\",
+        \\"@fern-typescript/service-utils\\": \\"0.0.184\\",
         \\"url-join\\": \\"4.0.1\\",
         \\"@types/url-join\\": \\"4.0.1\\"
     },
@@ -1181,10 +1170,9 @@ export class NoErrorsService implements NoErrorsService {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.api.GetErrorBody
+                error: encodedResponse.body as model.api.GetErrorBody
             };
         }
     }
@@ -1550,7 +1538,7 @@ export * from \\"./_service-types\\";
     \\"dependencies\\": {
         \\"uuid\\": \\"8.3.2\\",
         \\"@types/uuid\\": \\"8.3.4\\",
-        \\"@fern-typescript/service-utils\\": \\"0.0.155\\",
+        \\"@fern-typescript/service-utils\\": \\"0.0.184\\",
         \\"url-join\\": \\"4.0.1\\",
         \\"@types/url-join\\": \\"4.0.1\\"
     },
@@ -1604,24 +1592,19 @@ export class PostsService implements PostsService {
                 \\"X-Service-Header\\": await Supplier.get(this.headers[\\"X-Service-Header\\"]),
                 \\"X-Endpoint-Header\\": request[\\"X-Endpoint-Header\\"]
             },
-            body: {
-                content: JSON.stringify(request.body),
-                contentType: \\"application/json\\"
-            }
+            body: request.body
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.commons.PostId
+                body: encodedResponse.body as model.commons.PostId
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.posts.CreatePostErrorBody
+                error: encodedResponse.body as model.posts.CreatePostErrorBody
             };
         }
     }
@@ -1643,17 +1626,15 @@ export class PostsService implements PostsService {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.posts.Post
+                body: encodedResponse.body as model.posts.Post
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.posts.GetPostErrorBody
+                error: encodedResponse.body as model.posts.GetPostErrorBody
             };
         }
     }
@@ -1665,24 +1646,19 @@ export class PostsService implements PostsService {
             headers: {
                 \\"X-Service-Header\\": await Supplier.get(this.headers[\\"X-Service-Header\\"])
             },
-            body: {
-                content: JSON.stringify(request),
-                contentType: \\"application/json\\"
-            }
+            body: request
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.posts.Post
+                body: encodedResponse.body as model.posts.Post
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.posts.GetPostV2ErrorBody
+                error: encodedResponse.body as model.posts.GetPostV2ErrorBody
             };
         }
     }
@@ -1697,17 +1673,15 @@ export class PostsService implements PostsService {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.posts.Post[]
+                body: encodedResponse.body as model.posts.Post[]
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.posts.GetAllPostsErrorBody
+                error: encodedResponse.body as model.posts.GetAllPostsErrorBody
             };
         }
     }
