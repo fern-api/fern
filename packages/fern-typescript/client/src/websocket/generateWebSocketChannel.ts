@@ -7,7 +7,6 @@ import {
     getTextOfTsNode,
     maybeAddDocs,
 } from "@fern-typescript/commons";
-import { HelperManager } from "@fern-typescript/helper-manager";
 import { ModelContext } from "@fern-typescript/model-context";
 import {
     Directory,

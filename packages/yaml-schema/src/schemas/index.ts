@@ -14,7 +14,7 @@ export { HeaderAuthSchemeSchema } from "./HeaderAuthSchemeSchema";
 export { HttpEndpointSchema } from "./HttpEndpointSchema";
 export { HttpErrorConfigurationSchema } from "./HttpErrorConfigurationSchema";
 export { HttpHeaderSchema } from "./HttpHeaderSchema";
-export { HttpParameterSchema } from "./HttpParameterSchema";
+export { HttpPathParameterSchema } from "./HttpPathParameterSchema";
 export { HttpQueryParameterSchema } from "./HttpQueryParameterSchema";
 export { HttpRequestSchema } from "./HttpRequestSchema";
 export { HttpResponseSchema } from "./HttpResponseSchema";

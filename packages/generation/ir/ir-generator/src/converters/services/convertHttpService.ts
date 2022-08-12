@@ -1,14 +1,8 @@
 import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { FernFilepath } from "@fern-fern/ir-model";
-import {
-    CustomWireMessageEncoding,
-    EndpointId,
-    HttpEndpoint,
-    HttpMethod,
-    HttpService,
-} from "@fern-fern/ir-model/services";
-import kebabCase from "lodash-es/kebabCase";
+import { HttpEndpoint, HttpHeader, HttpMethod, HttpService } from "@fern-fern/ir-model/services";
+import { generateStringWithAllCasings, generateWireStringWithAllCasings } from "../../utils/generateCasings";
 import { getDocs } from "../../utils/getDocs";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { constructHttpPath } from "./constructHttpPath";
@@ -21,13 +15,11 @@ export function convertHttpService({
     serviceId,
     fernFilepath,
     imports,
-    nonStandardEncodings,
 }: {
     serviceDefinition: RawSchemas.HttpServiceSchema;
     serviceId: string;
     fernFilepath: FernFilepath;
     imports: Record<string, string>;
-    nonStandardEncodings: CustomWireMessageEncoding[];
 }): HttpService {
     const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
 
@@ -37,60 +29,60 @@ export function convertHttpService({
             name: serviceId,
             fernFilepath,
         },
-        basePath: convertBasePath({ serviceDefinition, serviceId }),
+        basePath: convertBasePath({ serviceDefinition }),
         headers:
             serviceDefinition.headers != null
-                ? Object.entries(serviceDefinition.headers).map(([header, headerType]) => ({
-                      header,
-                      valueType: parseTypeReference(headerType),
-                      docs: getDocs(headerType),
-                  }))
+                ? Object.entries(serviceDefinition.headers).map(([headerKey, header]) =>
+                      convertHttpHeader({ headerKey, header, fernFilepath, imports })
+                  )
                 : [],
         endpoints: Object.entries(serviceDefinition.endpoints).map(
-            ([endpointId, endpoint]): HttpEndpoint => ({
-                endpointId: EndpointId.of(endpointId),
+            ([endpointKey, endpoint]): HttpEndpoint => ({
+                name: generateStringWithAllCasings(endpointKey),
                 auth: endpoint.auth ?? serviceDefinition.auth,
                 docs: endpoint.docs,
                 method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
-                path: constructHttpPath(endpoint.path ?? kebabCase(endpointId)),
+                path: constructHttpPath(endpoint.path),
                 pathParameters:
                     endpoint["path-parameters"] != null
-                        ? Object.entries(endpoint["path-parameters"]).map(([parameterName, parameterType]) => ({
-                              docs: typeof parameterType !== "string" ? parameterType.docs : undefined,
-                              key: parameterName,
-                              valueType: parseTypeReference(parameterType),
+                        ? Object.entries(endpoint["path-parameters"]).map(([parameterName, parameter]) => ({
+                              docs: typeof parameter !== "string" ? parameter.docs : undefined,
+                              name: generateStringWithAllCasings(parameterName),
+                              valueType: parseTypeReference(parameter),
                           }))
                         : [],
                 queryParameters:
                     endpoint["query-parameters"] != null
-                        ? Object.entries(endpoint["query-parameters"]).map(([parameterName, parameterType]) => {
-                              const valueType = parseTypeReference(parameterType);
+                        ? Object.entries(endpoint["query-parameters"]).map(([parameterName, parameter]) => {
+                              const valueType = parseTypeReference(parameter);
                               return {
-                                  docs: typeof parameterType !== "string" ? parameterType.docs : undefined,
-                                  key: parameterName,
+                                  docs: typeof parameter !== "string" ? parameter.docs : undefined,
+                                  name: generateWireStringWithAllCasings({
+                                      wireValue: parameterName,
+                                      name:
+                                          typeof parameter !== "string" && parameter.name != null
+                                              ? parameter.name
+                                              : parameterName,
+                                  }),
                                   valueType,
                               };
                           })
                         : [],
                 headers:
                     endpoint.headers != null
-                        ? Object.entries(endpoint.headers).map(([header, headerType]) => ({
-                              header,
-                              valueType: parseTypeReference(headerType),
-                              docs: getDocs(headerType),
-                          }))
+                        ? Object.entries(endpoint.headers).map(([headerKey, header]) =>
+                              convertHttpHeader({ headerKey, header, fernFilepath, imports })
+                          )
                         : [],
                 request: convertHttpRequest({
                     request: endpoint.request,
                     fernFilepath,
                     imports,
-                    nonStandardEncodings,
                 }),
                 response: convertHttpResponse({
                     response: endpoint.response,
                     fernFilepath,
                     imports,
-                    nonStandardEncodings,
                 }),
                 errors: convertResponseErrors({
                     errors: endpoint.errors,
@@ -104,18 +96,11 @@ export function convertHttpService({
 
 function convertBasePath({
     serviceDefinition,
-    serviceId,
 }: {
     serviceDefinition: RawSchemas.HttpServiceSchema;
-    serviceId: string;
 }): string | undefined {
     const specifiedBasePath = serviceDefinition["base-path"];
-    // If base path is unspecified, default to kebab-case of serviceId
-    // If base path is "/" or empty, return undefined
-    // Otherwise return base path
-    if (specifiedBasePath == null) {
-        return kebabCase(serviceId);
-    } else if (specifiedBasePath === "/") {
+    if (specifiedBasePath === "/") {
         return undefined;
     }
     return specifiedBasePath;
@@ -136,4 +121,27 @@ function convertHttpMethod(method: Exclude<RawSchemas.HttpEndpointSchema["method
         default:
             assertNever(method);
     }
+}
+
+export function convertHttpHeader({
+    headerKey,
+    header,
+    fernFilepath,
+    imports,
+}: {
+    headerKey: string;
+    header: RawSchemas.HttpHeaderSchema;
+    fernFilepath: FernFilepath;
+    imports: Record<string, string>;
+}): HttpHeader {
+    const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
+
+    return {
+        name: generateWireStringWithAllCasings({
+            wireValue: headerKey,
+            name: typeof header !== "string" && header.name != null ? header.name : headerKey,
+        }),
+        valueType: parseTypeReference(header),
+        docs: getDocs(header),
+    };
 }

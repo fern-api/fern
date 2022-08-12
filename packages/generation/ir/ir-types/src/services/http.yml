@@ -4,8 +4,6 @@ imports:
   serviceCommons: ./commons.yml
   commons: ../commons.yml
   types: ../types.yml
-ids:
-  - EndpointId
 types:
   HttpService:
     extends: commons.WithDocs
@@ -45,7 +43,7 @@ types:
   HttpHeader:
     extends: commons.WithDocs
     properties:
-      name: commons.StringWithAllCasings
+      name: commons.WireStringWithAllCasings
       valueType: types.TypeReference
   PathParameter:
     extends: commons.WithDocs
@@ -55,7 +53,7 @@ types:
   QueryParameter:
     extends: commons.WithDocs
     properties:
-      name: commons.StringWithAllCasings
+      name: commons.WireStringWithAllCasings
       valueType: types.TypeReference
   HttpRequest:
     extends: commons.WithDocs

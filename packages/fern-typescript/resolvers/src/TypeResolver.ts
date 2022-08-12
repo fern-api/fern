@@ -112,5 +112,5 @@ export class TypeResolver {
 }
 
 function typeNameToString(typeName: DeclaredTypeName) {
-    return path.join(...typeName.fernFilepath, typeName.name);
+    return path.join(...typeName.fernFilepath.map((part) => part.originalValue), typeName.name);
 }

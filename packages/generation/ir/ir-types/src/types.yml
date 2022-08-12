@@ -12,7 +12,7 @@ types:
   DeclaredTypeName:
     properties:
       fernFilepath: commons.FernFilepath
-      name: commons.StringWithAllCasings
+      name: string
   Type:
     union:
       alias: AliasTypeDeclaration
@@ -30,7 +30,7 @@ types:
   EnumValue:
     extends: commons.WithDocs
     properties:
-      name: commons.StringWithAllCasings
+      name: commons.WireStringWithAllCasings
       value: string
 
   ObjectTypeDeclaration:
@@ -42,7 +42,7 @@ types:
   ObjectProperty:
     extends: commons.WithDocs
     properties:
-      name: commons.StringWithAllCasings
+      name: commons.WireStringWithAllCasings
       valueType: TypeReference
 
   UnionTypeDeclaration:
@@ -52,7 +52,7 @@ types:
   SingleUnionType:
     extends: commons.WithDocs
     properties:
-      discriminantValue: string
+      discriminantValue: commons.WireStringWithAllCasings
       valueType: TypeReference
 
   TypeReference:

@@ -1,12 +1,10 @@
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services";
 import { DependencyManager, getTextOfTsNode, invokeSupplier } from "@fern-typescript/commons";
-import { HelperManager } from "@fern-typescript/helper-manager";
 import { GeneratedHttpEndpointTypes } from "@fern-typescript/model-context";
 import { SourceFile, StatementStructures, StructureKind, ts, VariableDeclarationKind } from "ts-morph";
 import { ClientConstants } from "../../../constants";
 import { generateJoinUrlPathsCall } from "../../../utils/generateJoinPathsCall";
 import { convertPathToTemplateString } from "./convertPathToTemplateString";
-import { generateEncoderCall } from "./generateEncoderCall";
 
 export async function generateFetcherCall({
     serviceFile,

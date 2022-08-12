@@ -25,7 +25,7 @@ export function generateRequestTypes({
         ...[...endpoint.pathParameters, ...endpoint.queryParameters].map(
             (parameter) =>
                 (requestFile: SourceFile): OptionalKind<PropertySignatureStructure> => ({
-                    name: parameter.key,
+                    name: parameter.name.camelCase,
                     docs: parameter.docs != null ? [parameter.docs] : undefined,
                     type: getTextOfTsNode(
                         modelContext.getReferenceToType({
@@ -38,7 +38,7 @@ export function generateRequestTypes({
         ...getHeaders({ service, endpoint, mode }).map(
             (header) =>
                 (requestFile: SourceFile): OptionalKind<PropertySignatureStructure> => ({
-                    name: `"${header.header}"`,
+                    name: header.name.camelCase,
                     docs: header.docs != null ? [header.docs] : undefined,
                     type: getTextOfTsNode(
                         modelContext.getReferenceToType({

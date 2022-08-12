@@ -19,7 +19,7 @@ types:
   WebSocketOperation:
     extends: commons.WithDocs
     properties:
-      name: commons.StringWithAllCasings
+      name: commons.WireStringWithAllCasings
       request: WebSocketRequest
       response: WebSocketResponse
       errors: serviceCommons.ResponseErrors

@@ -5,8 +5,14 @@ types:
     properties:
       docs: optional<string>
   FernFilepath: list<StringWithAllCasings>
+  WireStringWithAllCasings:
+    extends: StringWithAllCasings
+    properties:
+      wireValue: string
   StringWithAllCasings:
     properties:
-      original: string
+      originalValue: string
       camelCase: string
+      pascalCase: string
       snakeCase: string
+      screamingSnakeCase: string

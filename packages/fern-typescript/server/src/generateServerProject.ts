@@ -5,8 +5,6 @@ import {
     GeneratedProjectSrcInfo,
     generateTypeScriptProject,
 } from "@fern-typescript/commons";
-import { generateEncoderFiles } from "@fern-typescript/encoders";
-import { HelperManager } from "@fern-typescript/helper-manager";
 import { generateModelFiles } from "@fern-typescript/model";
 import { Volume } from "memfs/lib/volume";
 import { Directory } from "ts-morph";

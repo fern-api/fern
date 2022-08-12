@@ -7,7 +7,7 @@ types:
   DeclaredServiceName:
     properties:
       fernFilepath: commons.FernFilepath
-      name: commons.StringWithAllCasings
+      name: string
   ResponseErrors: list<ResponseError>
   ResponseError:
     extends: commons.WithDocs

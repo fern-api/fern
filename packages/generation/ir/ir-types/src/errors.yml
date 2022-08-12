@@ -8,13 +8,13 @@ types:
     extends: commons.WithDocs
     properties:
       name: DeclaredErrorName
-      discriminantValue: string
+      discriminantValue: commons.WireStringWithAllCasings
       type: types.Type
       http: optional<HttpErrorConfiguration>
   DeclaredErrorName:
     properties:
       fernFilepath: commons.FernFilepath
-      name: commons.StringWithAllCasings
+      name: string
   HttpErrorConfiguration:
     properties:
       statusCode: integer

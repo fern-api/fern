@@ -1,5 +1,5 @@
 import { FernConstants } from "@fern-fern/ir-model";
-import { ServiceName, WebSocketOperation } from "@fern-fern/ir-model/services";
+import { DeclaredServiceName, WebSocketOperation } from "@fern-fern/ir-model/services";
 import { DependencyManager, getTextOfTsKeyword } from "@fern-typescript/commons";
 import { GeneratedWebSocketOperationTypes, ModelContext } from "@fern-typescript/model-context";
 import { ts } from "ts-morph";
@@ -9,7 +9,7 @@ import { createWebSocketChannelTypeFileWriter } from "./createWebSocketChannelTy
 
 export declare namespace generateResponseTypes {
     export interface Args {
-        channelName: ServiceName;
+        channelName: DeclaredServiceName;
         operation: WebSocketOperation;
         modelContext: ModelContext;
         dependencyManager: DependencyManager;

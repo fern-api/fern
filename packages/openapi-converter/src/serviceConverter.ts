@@ -127,12 +127,12 @@ function convertToFernType(
 }
 
 interface ConvertedParameters {
-    pathParameters: Record<string, RawSchemas.HttpParameterSchema>;
+    pathParameters: Record<string, RawSchemas.HttpPathParameterSchema>;
     queryParameters: Record<string, RawSchemas.HttpQueryParameterSchema>;
 }
 
 function getFernPathParameters(pathOperation: OpenAPIV3.OperationObject): ConvertedParameters {
-    const pathParameters: Record<string, RawSchemas.HttpParameterSchema> = {};
+    const pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {};
     const queryParameters: Record<string, RawSchemas.HttpQueryParameterSchema> = {};
     pathOperation.parameters?.forEach((parameter) => {
         if (isReferenceObject(parameter)) {

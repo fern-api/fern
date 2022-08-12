@@ -1,4 +1,4 @@
-import { TypeReference } from "@fern-fern/ir-model";
+import { TypeReference, WireStringWithAllCasings } from "@fern-fern/ir-model";
 import { ImportStrategy } from "@fern-typescript/commons";
 import { ModelContext, ResolvedType } from "@fern-typescript/model-context";
 import upperFirst from "lodash-es/upperFirst";
@@ -8,12 +8,12 @@ import { SourceFile, ts } from "ts-morph";
 export const UNION_TYPE_MODEL_IMPORT_STRATEGY = ImportStrategy.TOP_PACKAGE_IMPORT;
 
 export function getKeyForUnion({ discriminantValue }: ResolvedSingleUnionType): string {
-    return upperFirst(discriminantValue);
+    return upperFirst(discriminantValue.camelCase);
 }
 
 export interface ResolvedSingleUnionType {
     docs: string | null | undefined;
-    discriminantValue: string;
+    discriminantValue: WireStringWithAllCasings;
     valueType: ResolvedSingleUnionValueType | undefined;
 }
 

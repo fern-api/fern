@@ -1,8 +1,8 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { FernFilepath, TypeReference } from "@fern-fern/ir-model";
-import { CustomWireMessageEncoding, WebSocketChannel, WebSocketMessenger } from "@fern-fern/ir-model/services";
+import { WebSocketChannel, WebSocketMessenger } from "@fern-fern/ir-model/services";
+import { generateStringWithAllCasings } from "../../utils/generateCasings";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
-import { convertEncoding } from "./convertEncoding";
 import { convertResponseErrors } from "./convertResponseErrors";
 
 export function convertWebsocketChannel({
@@ -10,13 +10,11 @@ export function convertWebsocketChannel({
     fernFilepath,
     channelId,
     imports,
-    nonStandardEncodings,
 }: {
     channelId: string;
     channelDefinition: RawSchemas.WebSocketChannelSchema;
     fernFilepath: FernFilepath;
     imports: Record<string, string>;
-    nonStandardEncodings: CustomWireMessageEncoding[];
 }): WebSocketChannel {
     return {
         docs: channelDefinition.docs,
@@ -29,13 +27,11 @@ export function convertWebsocketChannel({
             messenger: channelDefinition.client,
             fernFilepath,
             imports,
-            nonStandardEncodings,
         }),
         server: convertWebSocketMessenger({
             messenger: channelDefinition.server,
             fernFilepath,
             imports,
-            nonStandardEncodings,
         }),
         operationProperties: {
             id: "id",
@@ -49,39 +45,28 @@ function convertWebSocketMessenger({
     messenger,
     fernFilepath,
     imports,
-    nonStandardEncodings,
 }: {
     messenger: RawSchemas.WebSocketMessengerSchema | null | undefined;
     fernFilepath: FernFilepath;
     imports: Record<string, string>;
-    nonStandardEncodings: CustomWireMessageEncoding[];
 }): WebSocketMessenger {
     const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
     return {
         operations:
             messenger?.operations != null
-                ? Object.entries(messenger.operations).map(([operationId, operation]) => {
+                ? Object.entries(messenger.operations).map(([operationKey, operation]) => {
                       return {
                           docs: operation.docs,
-                          operationId,
+                          name: generateStringWithAllCasings(operationKey),
                           request: {
                               docs: typeof operation.request !== "string" ? operation.request?.docs : undefined,
                               type:
                                   operation.request != null
                                       ? parseTypeReference(operation.request)
                                       : TypeReference.void(),
-                              encoding: convertEncoding({
-                                  rawEncoding:
-                                      typeof operation.request !== "string" ? operation.request?.encoding : undefined,
-                                  nonStandardEncodings,
-                              }),
                           },
                           response: {
                               docs: typeof operation.response !== "string" ? operation.response?.docs : undefined,
-                              encoding: convertEncoding({
-                                  rawEncoding: undefined,
-                                  nonStandardEncodings,
-                              }),
                               type:
                                   operation.response != null
                                       ? parseTypeReference(operation.response)

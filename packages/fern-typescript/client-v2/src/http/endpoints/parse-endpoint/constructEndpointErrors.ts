@@ -122,14 +122,17 @@ function addParse({
     file: File;
 }) {
     const visitableItems: VisitableItem[] = [
-        ...endpoint.errors.map((error) => ({
-            caseInSwitchStatement: ts.factory.createStringLiteral(error.discriminantValue),
-            keyInVisitor: file.getErrorDeclaration(error.error).discriminantValue,
-            visitorArgument: {
-                argument: ts.factory.createIdentifier(errorBodyProperty.getName()),
-                type: file.getReferenceToError(error.error),
-            },
-        })),
+        ...endpoint.errors.map((error) => {
+            const errorDeclaration = file.getErrorDeclaration(error.error);
+            return {
+                caseInSwitchStatement: ts.factory.createStringLiteral(errorDeclaration.discriminantValue.wireValue),
+                keyInVisitor: errorDeclaration.discriminantValue.camelCase,
+                visitorArgument: {
+                    argument: ts.factory.createIdentifier(errorBodyProperty.getName()),
+                    type: file.getReferenceToError(error.error),
+                },
+            };
+        }),
         {
             caseInSwitchStatement: ts.factory.createStringLiteral(
                 file.externalDependencies.serviceUtils.NetworkError.ERROR_NAME

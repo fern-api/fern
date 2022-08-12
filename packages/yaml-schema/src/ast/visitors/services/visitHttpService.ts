@@ -26,6 +26,7 @@ export async function visitHttpService({
                     await visitor.typeReference?.(header, nodePathForHeader);
                 } else {
                     await visitObject(header, {
+                        name: noop,
                         type: async (type) => {
                             await visitor.typeReference?.(type, nodePathForHeader);
                         },
@@ -85,6 +86,7 @@ async function visitEndpoint({
                     await visitor.typeReference?.(queryParameter, nodePathForQueryParameter);
                 } else {
                     await visitObject(queryParameter, {
+                        name: noop,
                         docs: createDocsVisitor(visitor, nodePathForQueryParameter),
                         type: async (type) => {
                             await visitor.typeReference?.(type, [...nodePathForQueryParameter, "type"]);

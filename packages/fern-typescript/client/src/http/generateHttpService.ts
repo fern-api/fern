@@ -8,7 +8,6 @@ import {
     getTextOfTsNode,
     maybeAddDocs,
 } from "@fern-typescript/commons";
-import { HelperManager } from "@fern-typescript/helper-manager";
 import { ModelContext } from "@fern-typescript/model-context";
 import { Directory, Scope, ts } from "ts-morph";
 import { ClientConstants } from "../constants";

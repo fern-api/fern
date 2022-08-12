@@ -2,13 +2,11 @@ import { model as GeneratorLoggingApiModel } from "@fern-fern/generator-logging-
 import { GeneratorUpdate } from "@fern-fern/generator-logging-api-client/model";
 import { BUILD_PROJECT_SCRIPT_NAME, FernTypescriptGeneratorConfig, writeVolumeToDisk } from "@fern-typescript/commons";
 import { createLogger, LogLevel } from "@fern-typescript/commons-v2";
-import { HelperManager } from "@fern-typescript/helper-manager";
 import execa from "execa";
 import { Volume } from "memfs/lib/volume";
 import path from "path";
 import { GeneratorNotificationService } from "../utils/GeneratorNotificationService";
 import { loadIntermediateRepresentation } from "../utils/loadIntermediateRepresentation";
-import { upperCamelCase } from "../utils/upperCamelCase";
 import { GeneratorContextImpl } from "../v2/generator-context/GeneratorContextImpl";
 import { Command } from "./Command";
 

@@ -1,6 +1,5 @@
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services";
 import { DependencyManager, getTextOfTsNode } from "@fern-typescript/commons";
-import { HelperManager } from "@fern-typescript/helper-manager";
 import { GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/model-context";
 import { SourceFile, StatementStructures, WriterFunction } from "ts-morph";
 import { generateConstructQueryParams } from "./generateConstructQueryParams";

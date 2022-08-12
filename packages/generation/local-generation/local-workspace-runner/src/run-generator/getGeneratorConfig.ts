@@ -28,9 +28,6 @@ export function getGeneratorConfig({
             output: { path: DOCKER_CODEGEN_OUTPUT_DIRECTORY },
             publish: null,
             customConfig,
-            helpers: {
-                encodings: {},
-            },
             workspaceName,
             organization,
             environment: { _type: "local" },

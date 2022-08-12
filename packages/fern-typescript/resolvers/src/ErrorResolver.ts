@@ -1,4 +1,4 @@
-import { ErrorDeclaration, ErrorName, IntermediateRepresentation } from "@fern-fern/ir-model";
+import { DeclaredErrorName, ErrorDeclaration, IntermediateRepresentation } from "@fern-fern/ir-model";
 import path from "path";
 import { StringifiedFernFilepath, stringifyFernFilepath } from "./stringify-fern-filepath";
 
@@ -14,7 +14,7 @@ export class ErrorResolver {
         }
     }
 
-    public getErrorDeclarationFromName(errorName: ErrorName): ErrorDeclaration {
+    public getErrorDeclarationFromName(errorName: DeclaredErrorName): ErrorDeclaration {
         const resolvedError = this.resolvedErrors[stringifyFernFilepath(errorName.fernFilepath)]?.[errorName.name];
         if (resolvedError == null) {
             throw new Error("Error not found: " + errorNameToString(errorName));
@@ -23,6 +23,6 @@ export class ErrorResolver {
     }
 }
 
-function errorNameToString(errorName: ErrorName) {
+function errorNameToString(errorName: DeclaredErrorName) {
     return path.join(stringifyFernFilepath(errorName.fernFilepath), errorName.name);
 }

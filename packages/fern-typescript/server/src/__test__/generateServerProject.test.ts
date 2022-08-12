@@ -1,4 +1,3 @@
-import { HelperManager } from "@fern-typescript/helper-manager";
 import { itFernETE } from "@fern-typescript/testing-utils";
 import path from "path";
 import { generateServerProject } from "../generateServerProject";

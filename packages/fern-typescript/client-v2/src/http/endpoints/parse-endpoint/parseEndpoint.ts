@@ -1,7 +1,6 @@
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { File } from "@fern-typescript/declaration-handler";
-import { camelCase } from "lodash-es";
 import { ModuleDeclaration, ts, VariableDeclarationKind } from "ts-morph";
 import { constructEndpointErrors } from "./constructEndpointErrors";
 import { constructRequestWrapper } from "./constructRequestWrapper";
@@ -17,17 +16,15 @@ export function parseEndpoint({
     endpoint: HttpEndpoint;
     file: File;
 }): ParsedClientEndpoint {
-    const endpointMethodName = camelCase(endpoint.endpointId);
-
     const endpointModule = file.sourceFile.addModule({
-        name: endpointMethodName,
+        name: endpoint.name.camelCase,
         isExported: true,
     });
 
     const endpointUtils: ts.ObjectLiteralElementLike[] = [];
 
     const parsedEndpoint = {
-        endpointMethodName,
+        endpointMethodName: endpointModule.getName(),
         path: endpoint.path,
         method: endpoint.method,
         request: parseRequest({ service, endpoint, file, endpointModule }),
@@ -46,7 +43,7 @@ export function parseEndpoint({
     file.sourceFile.addVariableStatement({
         declarations: [
             {
-                name: endpointMethodName,
+                name: endpointModule.getName(),
                 initializer: getTextOfTsNode(ts.factory.createObjectLiteralExpression(endpointUtils, true)),
             },
         ],

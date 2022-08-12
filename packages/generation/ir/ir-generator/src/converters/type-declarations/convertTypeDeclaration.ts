@@ -1,5 +1,6 @@
 import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
 import { FernFilepath, Type, TypeDeclaration, TypeReference } from "@fern-fern/ir-model";
+import { generateWireStringWithAllCasings } from "../../utils/generateCasings";
 import { getDocs } from "../../utils/getDocs";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { parseTypeName } from "../../utils/parseTypeName";
@@ -63,7 +64,13 @@ export function convertType({
                 properties:
                     object.properties != null
                         ? Object.entries(object.properties).map(([propertyName, propertyDefinition]) => ({
-                              key: propertyName,
+                              name: generateWireStringWithAllCasings({
+                                  wireValue: propertyName,
+                                  name:
+                                      typeof propertyDefinition !== "string" && propertyDefinition.name
+                                          ? propertyDefinition.name
+                                          : propertyName,
+                              }),
                               valueType: parseTypeReference(propertyDefinition),
                               docs: getDocs(propertyDefinition),
                           }))
@@ -72,8 +79,11 @@ export function convertType({
         union: (union) =>
             Type.union({
                 discriminant: union.discriminant ?? "_type",
-                types: Object.entries(union.union).map(([discriminantValue, unionedType]) => ({
-                    discriminantValue,
+                types: Object.entries(union.union).map(([unionKey, unionedType]) => ({
+                    discriminantValue: generateWireStringWithAllCasings({
+                        wireValue: unionKey,
+                        name: typeof unionedType !== "string" && unionedType.name != null ? unionedType.name : unionKey,
+                    }),
                     valueType:
                         typeof unionedType === "string"
                             ? parseTypeReference(unionedType)
@@ -89,7 +99,10 @@ export function convertType({
         enum: (_enum) =>
             Type.enum({
                 values: _enum.enum.map((value) => ({
-                    name: getEnumName(value).name,
+                    name: generateWireStringWithAllCasings({
+                        wireValue: typeof value === "string" ? value : value.value,
+                        name: getEnumName(value).name,
+                    }),
                     value: typeof value === "string" ? value : value.value,
                     docs: typeof value !== "string" ? value.docs : undefined,
                 })),

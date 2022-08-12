@@ -1,27 +1,26 @@
-import { HttpEndpoint, ServiceName } from "@fern-fern/ir-model/services";
+import { DeclaredServiceName, HttpEndpoint } from "@fern-fern/ir-model/services";
 import { HttpServiceTypeMetadata, ModelContext } from "@fern-typescript/model-context";
-import upperFirst from "lodash-es/upperFirst";
 import { ServiceTypeFileWriter } from "../commons/service-type-reference/generateServiceTypeReference";
 import { getServiceTypeName } from "../commons/service-type-reference/getServiceTypeName";
 
 export function createHttpServiceTypeFileWriter({
     modelContext,
     serviceName,
-    endpoint: { endpointId },
+    endpoint,
 }: {
     modelContext: ModelContext;
-    serviceName: ServiceName;
+    serviceName: DeclaredServiceName;
     endpoint: HttpEndpoint;
 }): ServiceTypeFileWriter<HttpServiceTypeMetadata> {
     return (typeName, withFile) => {
         const transformedTypeName = getServiceTypeName({
-            proposedName: `${upperFirst(endpointId)}${typeName}`,
+            proposedName: `${endpoint.name.camelCase}${typeName}`,
             fernFilepath: serviceName.fernFilepath,
             modelContext,
         });
         const metadata: HttpServiceTypeMetadata = {
             serviceName,
-            endpointId,
+            endpointId: endpoint.name.camelCase,
             typeName: transformedTypeName,
         };
         modelContext.addHttpServiceTypeDeclaration(metadata, (file) => withFile(file, transformedTypeName));

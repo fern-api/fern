@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { TypeReferenceWithDocsSchema } from "./TypeReferenceSchema";
+import { TypeReferenceWithDocsAndNameSchema } from "./TypeReferenceSchema";
 
-export const HttpHeaderSchema = TypeReferenceWithDocsSchema;
+export const HttpHeaderSchema = TypeReferenceWithDocsAndNameSchema;
 
 export type HttpHeaderSchema = z.infer<typeof HttpHeaderSchema>;

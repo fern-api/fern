@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { HttpHeaderSchema } from "./HttpHeaderSchema";
-import { HttpParameterSchema } from "./HttpParameterSchema";
+import { HttpPathParameterSchema } from "./HttpPathParameterSchema";
 import { HttpQueryParameterSchema } from "./HttpQueryParameterSchema";
 import { HttpRequestSchema } from "./HttpRequestSchema";
 import { HttpResponseSchema } from "./HttpResponseSchema";
@@ -9,8 +9,8 @@ import { WithDocsSchema } from "./WithDocsSchema";
 
 export const HttpEndpointSchema = WithDocsSchema.extend({
     method: z.optional(z.enum(["GET", "POST", "PUT", "PATCH", "DELETE"])),
-    path: z.optional(z.string()),
-    ["path-parameters"]: z.optional(z.record(HttpParameterSchema)),
+    path: z.string(),
+    ["path-parameters"]: z.optional(z.record(HttpPathParameterSchema)),
     ["query-parameters"]: z.optional(z.record(HttpQueryParameterSchema)),
     headers: z.optional(z.record(HttpHeaderSchema)),
     auth: z.optional(z.boolean()),
