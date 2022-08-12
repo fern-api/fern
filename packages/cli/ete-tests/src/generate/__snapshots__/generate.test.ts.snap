@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`fern generate tests simple-model 1`] = `
+exports[`fern generate simple-model 1`] = `
 Array [
   Object {
     "contents": "tsconfig.json

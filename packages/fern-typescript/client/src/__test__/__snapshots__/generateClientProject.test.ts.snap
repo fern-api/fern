@@ -417,7 +417,7 @@ export * from \\"./_service-types\\";
         \\"typescript\\": \\"4.6.4\\"
     }
 }",
-  "/services/auth/ServiceWithBasicAuth.ts": "import { isResponseOk, BasicAuth, Supplier, defaultFetcher, Fetcher } from \\"@fern-typescript/service-utils\\";
+  "/services/auth/ServiceWithBasicAuth.ts": "import { isResponseOk, defaultFetcher, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../../model\\";
 
@@ -429,28 +429,23 @@ export declare namespace ServiceWithBasicAuth {
     interface Init {
         origin: string;
         fetcher?: Fetcher;
-        credentials: Supplier<BasicAuth>;
     }
 }
 
 export class ServiceWithBasicAuth implements ServiceWithBasicAuth {
     private baseUrl: string;
     private fetcher: Fetcher;
-    private credentials: Supplier<BasicAuth>;
 
     constructor(args: ServiceWithBasicAuth.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
         this.baseUrl = urlJoin(args.origin, \\"service-with-basic-auth\\");
-        this.credentials = args.credentials;
     }
 
     public async endpointB(): Promise<model.auth.EndpointBResponse> {
-        const credentials = await Supplier.get(this.credentials);
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"endpoint-b\\"),
             method: \\"POST\\",
-            headers: {},
-            authHeader: BasicAuth.toAuthorizationHeader(credentials)
+            headers: {}
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -468,7 +463,7 @@ export class ServiceWithBasicAuth implements ServiceWithBasicAuth {
     }
 }
 ",
-  "/services/auth/ServiceWithBasicAuthWithOverride.ts": "import { isResponseOk, BasicAuth, Supplier, defaultFetcher, Fetcher } from \\"@fern-typescript/service-utils\\";
+  "/services/auth/ServiceWithBasicAuthWithOverride.ts": "import { isResponseOk, defaultFetcher, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../../model\\";
 
@@ -481,32 +476,23 @@ export declare namespace ServiceWithBasicAuthWithOverride {
     interface Init {
         origin: string;
         fetcher?: Fetcher;
-        credentials?: Supplier<BasicAuth | undefined>;
     }
 }
 
 export class ServiceWithBasicAuthWithOverride implements ServiceWithBasicAuthWithOverride {
     private baseUrl: string;
     private fetcher: Fetcher;
-    private credentials: Supplier<BasicAuth | undefined>;
 
     constructor(args: ServiceWithBasicAuthWithOverride.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
         this.baseUrl = urlJoin(args.origin, \\"service-with-basic-auth-with-override\\");
-        this.credentials = args.credentials;
     }
 
     public async endpointG(): Promise<model.auth.EndpointGResponse> {
-        const credentials = await Supplier.get(this.credentials);
-        if (credentials == null) {
-            throw new Error(\\"credentials is not defined.\\");
-        }
-
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"endpoint-g\\"),
             method: \\"POST\\",
-            headers: {},
-            authHeader: BasicAuth.toAuthorizationHeader(credentials)
+            headers: {}
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -545,7 +531,7 @@ export class ServiceWithBasicAuthWithOverride implements ServiceWithBasicAuthWit
     }
 }
 ",
-  "/services/auth/ServiceWithBearerAuth.ts": "import { isResponseOk, BearerToken, Supplier, defaultFetcher, Fetcher } from \\"@fern-typescript/service-utils\\";
+  "/services/auth/ServiceWithBearerAuth.ts": "import { isResponseOk, defaultFetcher, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../../model\\";
 
@@ -557,28 +543,23 @@ export declare namespace ServiceWithBearerAuth {
     interface Init {
         origin: string;
         fetcher?: Fetcher;
-        token: Supplier<BearerToken>;
     }
 }
 
 export class ServiceWithBearerAuth implements ServiceWithBearerAuth {
     private baseUrl: string;
     private fetcher: Fetcher;
-    private token: Supplier<BearerToken>;
 
     constructor(args: ServiceWithBearerAuth.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
         this.baseUrl = urlJoin(args.origin, \\"service-with-bearer-auth\\");
-        this.token = args.token;
     }
 
     public async endpointC(): Promise<model.auth.EndpointCResponse> {
-        const token = await Supplier.get(this.token);
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"endpoint-c\\"),
             method: \\"POST\\",
-            headers: {},
-            authHeader: BearerToken.toAuthorizationHeader(token)
+            headers: {}
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -596,7 +577,7 @@ export class ServiceWithBearerAuth implements ServiceWithBearerAuth {
     }
 }
 ",
-  "/services/auth/ServiceWithBearerAuthWithOverride.ts": "import { isResponseOk, BearerToken, Supplier, defaultFetcher, Fetcher } from \\"@fern-typescript/service-utils\\";
+  "/services/auth/ServiceWithBearerAuthWithOverride.ts": "import { isResponseOk, defaultFetcher, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../../model\\";
 
@@ -609,32 +590,23 @@ export declare namespace ServiceWithBearerAuthWithOverride {
     interface Init {
         origin: string;
         fetcher?: Fetcher;
-        token?: Supplier<BearerToken | undefined>;
     }
 }
 
 export class ServiceWithBearerAuthWithOverride implements ServiceWithBearerAuthWithOverride {
     private baseUrl: string;
     private fetcher: Fetcher;
-    private token: Supplier<BearerToken | undefined>;
 
     constructor(args: ServiceWithBearerAuthWithOverride.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
         this.baseUrl = urlJoin(args.origin, \\"service-with-bearer-auth-with-override\\");
-        this.token = args.token;
     }
 
     public async endpointF(): Promise<model.auth.EndpointFResponse> {
-        const token = await Supplier.get(this.token);
-        if (token == null) {
-            throw new Error(\\"token is not defined.\\");
-        }
-
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"endpoint-f\\"),
             method: \\"POST\\",
-            headers: {},
-            authHeader: BearerToken.toAuthorizationHeader(token)
+            headers: {}
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -719,7 +691,7 @@ export class ServiceWithNoAuth implements ServiceWithNoAuth {
     }
 }
 ",
-  "/services/auth/ServiceWithNoAuthWithBasicOverride.ts": "import { isResponseOk, BasicAuth, Supplier, defaultFetcher, Fetcher } from \\"@fern-typescript/service-utils\\";
+  "/services/auth/ServiceWithNoAuthWithBasicOverride.ts": "import { isResponseOk, defaultFetcher, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../../model\\";
 
@@ -732,19 +704,16 @@ export declare namespace ServiceWithNoAuthWithBasicOverride {
     interface Init {
         origin: string;
         fetcher?: Fetcher;
-        credentials?: Supplier<BasicAuth | undefined>;
     }
 }
 
 export class ServiceWithNoAuthWithBasicOverride implements ServiceWithNoAuthWithBasicOverride {
     private baseUrl: string;
     private fetcher: Fetcher;
-    private credentials: Supplier<BasicAuth | undefined>;
 
     constructor(args: ServiceWithNoAuthWithBasicOverride.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
         this.baseUrl = urlJoin(args.origin, \\"service-with-no-auth-with-basic-override\\");
-        this.credentials = args.credentials;
     }
 
     public async endpointE(): Promise<model.auth.EndpointEResponse> {
@@ -769,16 +738,10 @@ export class ServiceWithNoAuthWithBasicOverride implements ServiceWithNoAuthWith
     }
 
     public async overrideEndpointE(): Promise<model.auth.OverrideEndpointEResponse> {
-        const credentials = await Supplier.get(this.credentials);
-        if (credentials == null) {
-            throw new Error(\\"credentials is not defined.\\");
-        }
-
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"override-endpoint-e\\"),
             method: \\"POST\\",
-            headers: {},
-            authHeader: BasicAuth.toAuthorizationHeader(credentials)
+            headers: {}
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -796,7 +759,7 @@ export class ServiceWithNoAuthWithBasicOverride implements ServiceWithNoAuthWith
     }
 }
 ",
-  "/services/auth/ServiceWithNoAuthWithBearerOverride.ts": "import { isResponseOk, BearerToken, Supplier, defaultFetcher, Fetcher } from \\"@fern-typescript/service-utils\\";
+  "/services/auth/ServiceWithNoAuthWithBearerOverride.ts": "import { isResponseOk, defaultFetcher, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../../model\\";
 
@@ -809,19 +772,16 @@ export declare namespace ServiceWithNoAuthWithBearerOverride {
     interface Init {
         origin: string;
         fetcher?: Fetcher;
-        token?: Supplier<BearerToken | undefined>;
     }
 }
 
 export class ServiceWithNoAuthWithBearerOverride implements ServiceWithNoAuthWithBearerOverride {
     private baseUrl: string;
     private fetcher: Fetcher;
-    private token: Supplier<BearerToken | undefined>;
 
     constructor(args: ServiceWithNoAuthWithBearerOverride.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
         this.baseUrl = urlJoin(args.origin, \\"service-with-no-auth-with-bearer-override\\");
-        this.token = args.token;
     }
 
     public async endpointD(): Promise<model.auth.EndpointDResponse> {
@@ -846,16 +806,10 @@ export class ServiceWithNoAuthWithBearerOverride implements ServiceWithNoAuthWit
     }
 
     public async overrideEndpointD(): Promise<model.auth.OverrideEndpointDResponse> {
-        const token = await Supplier.get(this.token);
-        if (token == null) {
-            throw new Error(\\"token is not defined.\\");
-        }
-
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"override-endpoint-d\\"),
             method: \\"POST\\",
-            headers: {},
-            authHeader: BearerToken.toAuthorizationHeader(token)
+            headers: {}
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -1608,7 +1562,7 @@ export * from \\"./_service-types\\";
 }",
   "/services/index.ts": "export * as posts from \\"./posts\\";
 ",
-  "/services/posts/PostsService.ts": "import { isResponseOk, Supplier, BearerToken, defaultFetcher, Fetcher } from \\"@fern-typescript/service-utils\\";
+  "/services/posts/PostsService.ts": "import { isResponseOk, Supplier, defaultFetcher, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../../model\\";
 
@@ -1623,7 +1577,6 @@ export declare namespace PostsService {
     interface Init {
         origin: string;
         fetcher?: Fetcher;
-        token: Supplier<BearerToken>;
         headers: Headers;
     }
 
@@ -1635,18 +1588,15 @@ export declare namespace PostsService {
 export class PostsService implements PostsService {
     private baseUrl: string;
     private fetcher: Fetcher;
-    private token: Supplier<BearerToken>;
     private headers: PostsService.Headers;
 
     constructor(args: PostsService.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
         this.baseUrl = urlJoin(args.origin, \\"/posts\\");
-        this.token = args.token;
         this.headers = args.headers;
     }
 
     public async createPost(request: model.posts._CreatePostRequest): Promise<model.posts.CreatePostResponse> {
-        const token = await Supplier.get(this.token);
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/\\"),
             method: \\"POST\\",
@@ -1657,8 +1607,7 @@ export class PostsService implements PostsService {
             body: {
                 content: JSON.stringify(request.body),
                 contentType: \\"application/json\\"
-            },
-            authHeader: BearerToken.toAuthorizationHeader(token)
+            }
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -1678,7 +1627,6 @@ export class PostsService implements PostsService {
     }
 
     public async getPost(request: model.posts.GetPostRequest): Promise<model.posts.GetPostResponse> {
-        const token = await Supplier.get(this.token);
         const queryParameters = new URLSearchParams();
         if (request.page != null) {
             queryParameters.append(\\"page\\", request.page.toString());
@@ -1691,8 +1639,7 @@ export class PostsService implements PostsService {
             headers: {
                 \\"X-Service-Header\\": await Supplier.get(this.headers[\\"X-Service-Header\\"])
             },
-            queryParameters,
-            authHeader: BearerToken.toAuthorizationHeader(token)
+            queryParameters
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -1712,7 +1659,6 @@ export class PostsService implements PostsService {
     }
 
     public async getPostV2(request: model.commons.PostId): Promise<model.posts.GetPostV2Response> {
-        const token = await Supplier.get(this.token);
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/get\\"),
             method: \\"GET\\",
@@ -1722,8 +1668,7 @@ export class PostsService implements PostsService {
             body: {
                 content: JSON.stringify(request),
                 contentType: \\"application/json\\"
-            },
-            authHeader: BearerToken.toAuthorizationHeader(token)
+            }
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -1743,14 +1688,12 @@ export class PostsService implements PostsService {
     }
 
     public async getAllPosts(): Promise<model.posts.GetAllPostsResponse> {
-        const token = await Supplier.get(this.token);
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/get-all\\"),
             method: \\"GET\\",
             headers: {
                 \\"X-Service-Header\\": await Supplier.get(this.headers[\\"X-Service-Header\\"])
-            },
-            authHeader: BearerToken.toAuthorizationHeader(token)
+            }
         });
 
         if (isResponseOk(encodedResponse)) {

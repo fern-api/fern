@@ -45,7 +45,7 @@ errors:
 services:
   http:
     PostsService:
-      auth: none
+      auth: false
       base-path: /posts
       endpoints:
         getPost:

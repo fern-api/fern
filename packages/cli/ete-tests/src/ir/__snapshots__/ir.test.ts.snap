@@ -2,7 +2,14 @@
 
 exports[`fern-ir-tests simple 1`] = `
 "{
-    \\"workspaceName\\": \\"api\\",
+    \\"apiName\\": \\"api\\",
+    \\"auth\\": {
+        \\"declaredSchemes\\": [],
+        \\"enabledSchemes\\": {
+            \\"all\\": [],
+            \\"_type\\": \\"all\\"
+        }
+    },
     \\"types\\": [
         {
             \\"name\\": {
@@ -120,7 +127,7 @@ exports[`fern-ir-tests simple 1`] = `
                 \\"endpoints\\": [
                     {
                         \\"endpointId\\": \\"createMovie\\",
-                        \\"auth\\": \\"NONE\\",
+                        \\"auth\\": false,
                         \\"method\\": \\"POST\\",
                         \\"path\\": {
                             \\"head\\": \\"/\\",
@@ -157,7 +164,7 @@ exports[`fern-ir-tests simple 1`] = `
                     },
                     {
                         \\"endpointId\\": \\"getMovie\\",
-                        \\"auth\\": \\"NONE\\",
+                        \\"auth\\": false,
                         \\"method\\": \\"GET\\",
                         \\"path\\": {
                             \\"head\\": \\"/\\",

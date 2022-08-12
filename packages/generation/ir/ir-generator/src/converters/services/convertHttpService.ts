@@ -4,7 +4,6 @@ import { FernFilepath } from "@fern-fern/ir-model";
 import {
     CustomWireMessageEncoding,
     EndpointId,
-    HttpAuth,
     HttpEndpoint,
     HttpMethod,
     HttpService,
@@ -50,10 +49,7 @@ export function convertHttpService({
         endpoints: Object.entries(serviceDefinition.endpoints).map(
             ([endpointId, endpoint]): HttpEndpoint => ({
                 endpointId: EndpointId.of(endpointId),
-                auth:
-                    endpoint["auth-override"] != null
-                        ? convertHttpAuth(endpoint["auth-override"])
-                        : convertHttpAuth(serviceDefinition.auth),
+                auth: endpoint.auth ?? serviceDefinition.auth,
                 docs: endpoint.docs,
                 method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
                 path: constructHttpPath(endpoint.path ?? kebabCase(endpointId)),
@@ -139,18 +135,5 @@ function convertHttpMethod(method: Exclude<RawSchemas.HttpEndpointSchema["method
             return HttpMethod.Delete;
         default:
             assertNever(method);
-    }
-}
-
-function convertHttpAuth(auth: RawSchemas.AuthSchema): HttpAuth {
-    switch (auth) {
-        case "bearer":
-            return HttpAuth.Bearer;
-        case "none":
-            return HttpAuth.None;
-        case "basic":
-            return HttpAuth.Basic;
-        default:
-            assertNever(auth);
     }
 }

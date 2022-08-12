@@ -21,25 +21,9 @@ export function convertToFernService(
         });
     }
     return {
-        auth: convertToFernAuth(securitySchemes),
+        auth: securitySchemes != null,
         endpoints: fernEndpoints,
     };
-}
-
-function convertToFernAuth(securitySchemes: undefined | OpenApiSecuritySchemes) {
-    if (securitySchemes != null) {
-        for (const key of Object.keys(securitySchemes)) {
-            const securitySchemeValue = securitySchemes[key];
-            if (
-                securitySchemeValue != null &&
-                !isReferenceObject(securitySchemeValue) &&
-                (securitySchemeValue.type === "oauth2" || securitySchemeValue.type === "http")
-            ) {
-                return "bearer";
-            }
-        }
-    }
-    return "none";
 }
 
 function convertToFernEndpoint(

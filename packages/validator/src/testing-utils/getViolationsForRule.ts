@@ -29,7 +29,7 @@ export async function getViolationsForRule({
         version: 1,
     });
     if (!parseResult.didSucceed) {
-        throw new Error("Failed to parse workspace");
+        throw new Error("Failed to parse workspace: " + JSON.stringify(parseResult));
     }
 
     const ruleRunner = await rule.create({ workspace: parseResult.workspace });

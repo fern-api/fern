@@ -16,7 +16,7 @@ types:
 services:
   http:
     AdminService:
-      auth: none
+      auth: false
       base-path: /admin
       endpoints:
         updateTestSubmissionStatus:

@@ -1,7 +1,7 @@
 services:
   http:
     SimpleService:
-      auth: none
+      auth: false
       endpoints:
         noErrors:
           path: /path/{parameter}/to/endpoint

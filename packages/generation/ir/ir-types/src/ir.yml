@@ -3,6 +3,7 @@
 imports:
   types: types.yml
   errors: errors.yml
+  auth: auth.yml
   serviceCommons: services/commons.yml
   http: services/http.yml
   websocket: services/websocket.yml
@@ -10,7 +11,8 @@ types:
   IntermediateRepresentation:
     docs: "Complete representation of the API schema"
     properties:
-      workspaceName: optional<string>
+      apiName: string
+      auth: auth.ApiAuth
       types:
         docs: "The types described by this API"
         type: list<types.TypeDeclaration>

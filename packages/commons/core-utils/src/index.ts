@@ -4,6 +4,7 @@ export { withMinimumTime } from "./delay/withMinimumTime";
 export { doesPathExist } from "./fs-utils/doesPathExist";
 export { getDirectoryContents } from "./fs-utils/getDirectoryContents";
 export { noop } from "./noop";
+export { visitObject, type ObjectPropertiesVisitor } from "./ObjectPropertiesVisitor";
 export { entries, type Entries } from "./objects/entries";
 export { keys } from "./objects/keys";
 export { type Values } from "./objects/Values";

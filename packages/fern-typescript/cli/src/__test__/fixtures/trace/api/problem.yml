@@ -72,7 +72,7 @@ services:
   http:
     ProblemCrudService:
       base-path: /problem-crud
-      auth: none
+      auth: false
       endpoints:
         createProblem:
           docs: Creates a problem

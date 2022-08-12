@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/config-management-commons";
 import { Workspace } from "@fern-api/workspace-loader";
-import { FernAstNodeTypes, FernConfigurationSchema } from "@fern-api/yaml-schema";
+import { FernAstNodeTypes, ServiceFileSchema } from "@fern-api/yaml-schema";
 
 export interface Rule {
     name: string;
@@ -17,7 +17,7 @@ export type RuleRunner = {
 
 export interface RuleRunnerArgs {
     relativeFilePath: RelativeFilePath;
-    contents: FernConfigurationSchema;
+    contents: ServiceFileSchema;
 }
 export interface RuleViolation {
     severity: "warning" | "error";

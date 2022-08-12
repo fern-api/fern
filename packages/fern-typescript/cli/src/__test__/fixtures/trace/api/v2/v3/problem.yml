@@ -189,7 +189,7 @@ services:
   http:
     ProblemInfoServicV2:
       base-path: /problems-v2
-      auth: none
+      auth: false
       endpoints:
         getLightweightProblems:
           docs: Returns lightweight versions of all problems

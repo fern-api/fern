@@ -13,7 +13,7 @@ services:
   http:
     MigrationInfoService:
       base-path: /migration-info
-      auth: none
+      auth: false
       endpoints:
         getAttemptedMigrations:
           method: GET

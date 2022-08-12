@@ -14,11 +14,6 @@ types:
       basePath: optional<string>
       endpoints: list<HttpEndpoint>
       headers: list<HttpHeader>
-  HttpAuth:
-    enum:
-      - BASIC
-      - BEARER
-      - NONE
   HttpEndpoint:
     extends: commons.WithDocs
     properties:
@@ -31,7 +26,7 @@ types:
       request: HttpRequest
       response: HttpResponse
       errors: serviceCommons.ResponseErrors
-      auth: HttpAuth
+      auth: boolean
   HttpPath:
     properties:
       head: string

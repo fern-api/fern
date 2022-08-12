@@ -7312,7 +7312,7 @@ export class MigrationInfoService implements MigrationInfoService {
           Object {
             "contents": Array [
               Object {
-                "contents": "import { isResponseOk, BearerToken, Supplier, defaultFetcher, Fetcher } from \\"@fern-typescript/service-utils\\";
+                "contents": "import { isResponseOk, defaultFetcher, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../../model\\";
 
@@ -7328,27 +7328,19 @@ export declare namespace PlaylistCrudService {
     interface Init {
         origin: string;
         fetcher?: Fetcher;
-        token?: Supplier<BearerToken | undefined>;
     }
 }
 
 export class PlaylistCrudService implements PlaylistCrudService {
     private baseUrl: string;
     private fetcher: Fetcher;
-    private token: Supplier<BearerToken | undefined>;
 
     constructor(args: PlaylistCrudService.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
         this.baseUrl = urlJoin(args.origin, \\"/v2/playlist\\");
-        this.token = args.token;
     }
 
     public async createPlaylist(request: model.playlist.PlaylistCreateRequest): Promise<model.playlist.CreatePlaylistResponse> {
-        const token = await Supplier.get(this.token);
-        if (token == null) {
-            throw new Error(\\"token is not defined.\\");
-        }
-
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/create\\"),
             method: \\"POST\\",
@@ -7356,8 +7348,7 @@ export class PlaylistCrudService implements PlaylistCrudService {
             body: {
                 content: JSON.stringify(request),
                 contentType: \\"application/json\\"
-            },
-            authHeader: BearerToken.toAuthorizationHeader(token)
+            }
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -7377,16 +7368,10 @@ export class PlaylistCrudService implements PlaylistCrudService {
     }
 
     public async getPlaylists(): Promise<model.playlist.GetPlaylistsResponse> {
-        const token = await Supplier.get(this.token);
-        if (token == null) {
-            throw new Error(\\"token is not defined.\\");
-        }
-
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/all\\"),
             method: \\"GET\\",
-            headers: {},
-            authHeader: BearerToken.toAuthorizationHeader(token)
+            headers: {}
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -7429,11 +7414,6 @@ export class PlaylistCrudService implements PlaylistCrudService {
     }
 
     public async updatePlaylist(request: model.playlist._UpdatePlaylistRequest): Promise<model.playlist.UpdatePlaylistResponse> {
-        const token = await Supplier.get(this.token);
-        if (token == null) {
-            throw new Error(\\"token is not defined.\\");
-        }
-
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \`/\${request.playlistId}\`),
             method: \\"PUT\\",
@@ -7441,8 +7421,7 @@ export class PlaylistCrudService implements PlaylistCrudService {
             body: {
                 content: JSON.stringify(request.body),
                 contentType: \\"application/json\\"
-            },
-            authHeader: BearerToken.toAuthorizationHeader(token)
+            }
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -7462,16 +7441,10 @@ export class PlaylistCrudService implements PlaylistCrudService {
     }
 
     public async deletePlaylist(request: model.playlist.DeletePlaylistRequest): Promise<model.playlist.DeletePlaylistResponse> {
-        const token = await Supplier.get(this.token);
-        if (token == null) {
-            throw new Error(\\"token is not defined.\\");
-        }
-
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \`/\${request.playlistId}\`),
             method: \\"DELETE\\",
-            headers: {},
-            authHeader: BearerToken.toAuthorizationHeader(token)
+            headers: {}
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -15508,7 +15481,7 @@ export class MigrationInfoService implements MigrationInfoService {
           Object {
             "contents": Array [
               Object {
-                "contents": "import { isResponseOk, BearerToken, Supplier, defaultFetcher, Fetcher } from \\"@fern-typescript/service-utils\\";
+                "contents": "import { isResponseOk, defaultFetcher, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../../model\\";
 
@@ -15524,27 +15497,19 @@ export declare namespace PlaylistCrudService {
     interface Init {
         origin: string;
         fetcher?: Fetcher;
-        token?: Supplier<BearerToken | undefined>;
     }
 }
 
 export class PlaylistCrudService implements PlaylistCrudService {
     private baseUrl: string;
     private fetcher: Fetcher;
-    private token: Supplier<BearerToken | undefined>;
 
     constructor(args: PlaylistCrudService.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
         this.baseUrl = urlJoin(args.origin, \\"/v2/playlist\\");
-        this.token = args.token;
     }
 
     public async createPlaylist(request: model.playlist.PlaylistCreateRequest): Promise<model.playlist.CreatePlaylistResponse> {
-        const token = await Supplier.get(this.token);
-        if (token == null) {
-            throw new Error(\\"token is not defined.\\");
-        }
-
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/create\\"),
             method: \\"POST\\",
@@ -15552,8 +15517,7 @@ export class PlaylistCrudService implements PlaylistCrudService {
             body: {
                 content: JSON.stringify(request),
                 contentType: \\"application/json\\"
-            },
-            authHeader: BearerToken.toAuthorizationHeader(token)
+            }
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -15573,16 +15537,10 @@ export class PlaylistCrudService implements PlaylistCrudService {
     }
 
     public async getPlaylists(): Promise<model.playlist.GetPlaylistsResponse> {
-        const token = await Supplier.get(this.token);
-        if (token == null) {
-            throw new Error(\\"token is not defined.\\");
-        }
-
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/all\\"),
             method: \\"GET\\",
-            headers: {},
-            authHeader: BearerToken.toAuthorizationHeader(token)
+            headers: {}
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -15625,11 +15583,6 @@ export class PlaylistCrudService implements PlaylistCrudService {
     }
 
     public async updatePlaylist(request: model.playlist._UpdatePlaylistRequest): Promise<model.playlist.UpdatePlaylistResponse> {
-        const token = await Supplier.get(this.token);
-        if (token == null) {
-            throw new Error(\\"token is not defined.\\");
-        }
-
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \`/\${request.playlistId}\`),
             method: \\"PUT\\",
@@ -15637,8 +15590,7 @@ export class PlaylistCrudService implements PlaylistCrudService {
             body: {
                 content: JSON.stringify(request.body),
                 contentType: \\"application/json\\"
-            },
-            authHeader: BearerToken.toAuthorizationHeader(token)
+            }
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -15658,16 +15610,10 @@ export class PlaylistCrudService implements PlaylistCrudService {
     }
 
     public async deletePlaylist(request: model.playlist.DeletePlaylistRequest): Promise<model.playlist.DeletePlaylistResponse> {
-        const token = await Supplier.get(this.token);
-        if (token == null) {
-            throw new Error(\\"token is not defined.\\");
-        }
-
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \`/\${request.playlistId}\`),
             method: \\"DELETE\\",
-            headers: {},
-            authHeader: BearerToken.toAuthorizationHeader(token)
+            headers: {}
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -23267,8 +23213,7 @@ export * from \\"./_service-types\\";
     },
     \\"dependencies\\": {
         \\"express\\": \\"4.18.1\\",
-        \\"@types/express\\": \\"4.17.13\\",
-        \\"@fern-typescript/service-utils\\": \\"0.0.155\\"
+        \\"@types/express\\": \\"4.17.13\\"
     },
     \\"peerDependencies\\": {
         \\"express\\": \\"*\\",
@@ -23527,16 +23472,15 @@ export const MigrationInfoService = {
           Object {
             "contents": Array [
               Object {
-                "contents": "import { BearerToken } from \\"@fern-typescript/service-utils\\";
-import * as model from \\"../../model\\";
+                "contents": "import * as model from \\"../../model\\";
 import express, { Express } from \\"express\\";
 
 export interface PlaylistCrudService {
-    createPlaylist(token: BearerToken, request: model.playlist.PlaylistCreateRequest): model.playlist.CreatePlaylistResponse | Promise<model.playlist.CreatePlaylistResponse>;
-    getPlaylists(token: BearerToken): model.playlist.GetPlaylistsResponse | Promise<model.playlist.GetPlaylistsResponse>;
+    createPlaylist(request: model.playlist.PlaylistCreateRequest): model.playlist.CreatePlaylistResponse | Promise<model.playlist.CreatePlaylistResponse>;
+    getPlaylists(): model.playlist.GetPlaylistsResponse | Promise<model.playlist.GetPlaylistsResponse>;
     getPlaylist(request: model.playlist.GetPlaylistRequest): model.playlist.GetPlaylistResponse | Promise<model.playlist.GetPlaylistResponse>;
-    updatePlaylist(token: BearerToken, request: model.playlist._UpdatePlaylistRequest): model.playlist.UpdatePlaylistResponse | Promise<model.playlist.UpdatePlaylistResponse>;
-    deletePlaylist(token: BearerToken, request: model.playlist.DeletePlaylistRequest): model.playlist.DeletePlaylistResponse | Promise<model.playlist.DeletePlaylistResponse>;
+    updatePlaylist(request: model.playlist._UpdatePlaylistRequest): model.playlist.UpdatePlaylistResponse | Promise<model.playlist.UpdatePlaylistResponse>;
+    deletePlaylist(request: model.playlist.DeletePlaylistRequest): model.playlist.DeletePlaylistResponse | Promise<model.playlist.DeletePlaylistResponse>;
 }
 
 export const PlaylistCrudService = {
@@ -23544,7 +23488,7 @@ export const PlaylistCrudService = {
         const app = express();
         app.use(express.json());
         app.post(\\"/v2/playlist/create\\", async (request, response) => {
-            const result = await impl.createPlaylist(BearerToken.fromAuthorizationHeader(request.header(\\"Authorization\\")!), request.body);
+            const result = await impl.createPlaylist(request.body);
             if (result.ok) {
                 response.send(result.body);
             }
@@ -23552,8 +23496,8 @@ export const PlaylistCrudService = {
                 response.sendStatus(500);
             }
         });
-        app.get(\\"/v2/playlist/all\\", async (request, response) => {
-            const result = await impl.getPlaylists(BearerToken.fromAuthorizationHeader(request.header(\\"Authorization\\")!));
+        app.get(\\"/v2/playlist/all\\", async (_request, response) => {
+            const result = await impl.getPlaylists();
             if (result.ok) {
                 response.send(result.body);
             }
@@ -23573,7 +23517,7 @@ export const PlaylistCrudService = {
             }
         });
         app.put(\\"/v2/playlist/:playlistId\\", async (request, response) => {
-            const result = await impl.updatePlaylist(BearerToken.fromAuthorizationHeader(request.header(\\"Authorization\\")!), {
+            const result = await impl.updatePlaylist({
                 playlistId: request.params.playlistId,
                 body: request.body
             });
@@ -23585,7 +23529,7 @@ export const PlaylistCrudService = {
             }
         });
         app.delete(\\"/v2/playlist/:playlistId\\", async (request, response) => {
-            const result = await impl.deletePlaylist(BearerToken.fromAuthorizationHeader(request.header(\\"Authorization\\")!), {
+            const result = await impl.deletePlaylist({
                 playlistId: request.params.playlistId
             });
             if (result.ok) {
@@ -38057,8 +38001,7 @@ export * from \\"./_service-types\\";
     },
     \\"dependencies\\": {
         \\"express\\": \\"4.18.1\\",
-        \\"@types/express\\": \\"4.17.13\\",
-        \\"@fern-typescript/service-utils\\": \\"0.0.155\\"
+        \\"@types/express\\": \\"4.17.13\\"
     },
     \\"peerDependencies\\": {
         \\"express\\": \\"*\\",
@@ -38317,16 +38260,15 @@ export const MigrationInfoService = {
           Object {
             "contents": Array [
               Object {
-                "contents": "import { BearerToken } from \\"@fern-typescript/service-utils\\";
-import * as model from \\"../../model\\";
+                "contents": "import * as model from \\"../../model\\";
 import express, { Express } from \\"express\\";
 
 export interface PlaylistCrudService {
-    createPlaylist(token: BearerToken, request: model.playlist.PlaylistCreateRequest): model.playlist.CreatePlaylistResponse | Promise<model.playlist.CreatePlaylistResponse>;
-    getPlaylists(token: BearerToken): model.playlist.GetPlaylistsResponse | Promise<model.playlist.GetPlaylistsResponse>;
+    createPlaylist(request: model.playlist.PlaylistCreateRequest): model.playlist.CreatePlaylistResponse | Promise<model.playlist.CreatePlaylistResponse>;
+    getPlaylists(): model.playlist.GetPlaylistsResponse | Promise<model.playlist.GetPlaylistsResponse>;
     getPlaylist(request: model.playlist.GetPlaylistRequest): model.playlist.GetPlaylistResponse | Promise<model.playlist.GetPlaylistResponse>;
-    updatePlaylist(token: BearerToken, request: model.playlist._UpdatePlaylistRequest): model.playlist.UpdatePlaylistResponse | Promise<model.playlist.UpdatePlaylistResponse>;
-    deletePlaylist(token: BearerToken, request: model.playlist.DeletePlaylistRequest): model.playlist.DeletePlaylistResponse | Promise<model.playlist.DeletePlaylistResponse>;
+    updatePlaylist(request: model.playlist._UpdatePlaylistRequest): model.playlist.UpdatePlaylistResponse | Promise<model.playlist.UpdatePlaylistResponse>;
+    deletePlaylist(request: model.playlist.DeletePlaylistRequest): model.playlist.DeletePlaylistResponse | Promise<model.playlist.DeletePlaylistResponse>;
 }
 
 export const PlaylistCrudService = {
@@ -38334,7 +38276,7 @@ export const PlaylistCrudService = {
         const app = express();
         app.use(express.json());
         app.post(\\"/v2/playlist/create\\", async (request, response) => {
-            const result = await impl.createPlaylist(BearerToken.fromAuthorizationHeader(request.header(\\"Authorization\\")!), request.body);
+            const result = await impl.createPlaylist(request.body);
             if (result.ok) {
                 response.send(result.body);
             }
@@ -38342,8 +38284,8 @@ export const PlaylistCrudService = {
                 response.sendStatus(500);
             }
         });
-        app.get(\\"/v2/playlist/all\\", async (request, response) => {
-            const result = await impl.getPlaylists(BearerToken.fromAuthorizationHeader(request.header(\\"Authorization\\")!));
+        app.get(\\"/v2/playlist/all\\", async (_request, response) => {
+            const result = await impl.getPlaylists();
             if (result.ok) {
                 response.send(result.body);
             }
@@ -38363,7 +38305,7 @@ export const PlaylistCrudService = {
             }
         });
         app.put(\\"/v2/playlist/:playlistId\\", async (request, response) => {
-            const result = await impl.updatePlaylist(BearerToken.fromAuthorizationHeader(request.header(\\"Authorization\\")!), {
+            const result = await impl.updatePlaylist({
                 playlistId: request.params.playlistId,
                 body: request.body
             });
@@ -38375,7 +38317,7 @@ export const PlaylistCrudService = {
             }
         });
         app.delete(\\"/v2/playlist/:playlistId\\", async (request, response) => {
-            const result = await impl.deletePlaylist(BearerToken.fromAuthorizationHeader(request.header(\\"Authorization\\")!), {
+            const result = await impl.deletePlaylist({
                 playlistId: request.params.playlistId
             });
             if (result.ok) {

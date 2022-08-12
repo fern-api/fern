@@ -5,7 +5,6 @@ import { GeneratedHttpEndpointTypes } from "@fern-typescript/model-context";
 import { SourceFile, StatementStructures, StructureKind, ts, VariableDeclarationKind } from "ts-morph";
 import { ClientConstants } from "../../../constants";
 import { generateJoinUrlPathsCall } from "../../../utils/generateJoinPathsCall";
-import { doesServiceHaveHeaders } from "../../utils";
 import { convertPathToTemplateString } from "./convertPathToTemplateString";
 import { generateEncoderCall } from "./generateEncoderCall";
 
@@ -188,7 +187,7 @@ function getHeadersPropertyValue({
     serviceFile: SourceFile;
     dependencyManager: DependencyManager;
 }): ts.Expression {
-    if (!doesServiceHaveHeaders(service) && endpoint.headers.length === 0) {
+    if (service.headers.length === 0 && endpoint.headers.length === 0) {
         return ts.factory.createObjectLiteralExpression([]);
     }
 

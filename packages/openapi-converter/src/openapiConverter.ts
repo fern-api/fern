@@ -9,7 +9,7 @@ export declare namespace OpenApiConverter {
 
     interface SuccessfulResult {
         didSucceed: true;
-        fernConfiguration: RawSchemas.FernConfigurationSchema;
+        fernConfiguration: RawSchemas.ServiceFileSchema;
     }
 
     interface FailedResult {
@@ -31,7 +31,7 @@ export async function convertOpenApi(openapiFilepath: string): Promise<OpenApiCo
             failure: OpenApiConversionFailure.FAILED_TO_PARSE_OPENAPI,
         };
     }
-    const convertedFernConfiguration: Required<RawSchemas.FernConfigurationSchema> = {
+    const convertedFernConfiguration: Required<RawSchemas.ServiceFileSchema> = {
         errors: {},
         imports: {},
         ids: [],

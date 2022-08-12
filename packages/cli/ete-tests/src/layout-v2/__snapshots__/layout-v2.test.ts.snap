@@ -2,7 +2,31 @@
 
 exports[`layout-v2 simple 1`] = `
 "{
-    \\"workspaceName\\": \\"workspace\\",
+    \\"apiName\\": \\"my-api\\",
+    \\"auth\\": {
+        \\"declaredSchemes\\": [
+            {
+                \\"name\\": \\"MyAuth\\",
+                \\"definition\\": {
+                    \\"name\\": \\"My-Header\\",
+                    \\"type\\": {
+                        \\"primitive\\": \\"STRING\\",
+                        \\"_type\\": \\"primitive\\"
+                    },
+                    \\"_type\\": \\"header\\"
+                }
+            }
+        ],
+        \\"enabledSchemes\\": {
+            \\"all\\": [
+                {
+                    \\"name\\": \\"MyAuth\\",
+                    \\"_type\\": \\"named\\"
+                }
+            ],
+            \\"_type\\": \\"all\\"
+        }
+    },
     \\"types\\": [
         {
             \\"name\\": {
@@ -120,7 +144,7 @@ exports[`layout-v2 simple 1`] = `
                 \\"endpoints\\": [
                     {
                         \\"endpointId\\": \\"createMovie\\",
-                        \\"auth\\": \\"NONE\\",
+                        \\"auth\\": false,
                         \\"method\\": \\"POST\\",
                         \\"path\\": {
                             \\"head\\": \\"/\\",
@@ -157,7 +181,7 @@ exports[`layout-v2 simple 1`] = `
                     },
                     {
                         \\"endpointId\\": \\"getMovie\\",
-                        \\"auth\\": \\"NONE\\",
+                        \\"auth\\": false,
                         \\"method\\": \\"GET\\",
                         \\"path\\": {
                             \\"head\\": \\"/\\",
