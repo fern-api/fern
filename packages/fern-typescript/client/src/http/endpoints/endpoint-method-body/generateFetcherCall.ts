@@ -81,17 +81,7 @@ export async function generateFetcherCall({
                 ts.factory.createIdentifier(
                     ClientConstants.HttpService.ServiceUtils.Fetcher.Parameters.Body.PROPERTY_NAME
                 ),
-                ts.factory.createObjectLiteralExpression(
-                    [
-                        ts.factory.createPropertyAssignment(
-                            ts.factory.createIdentifier(
-                                ClientConstants.HttpService.ServiceUtils.Fetcher.Parameters.Body.Properties.CONTENT
-                            ),
-                            requestBodyReference
-                        ),
-                    ],
-                    true
-                )
+                requestBodyReference
             )
         );
     }

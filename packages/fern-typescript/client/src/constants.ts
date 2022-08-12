@@ -50,11 +50,6 @@ export const ClientConstants = {
 
                     Body: {
                         PROPERTY_NAME: "body",
-
-                        Properties: {
-                            CONTENT: "content",
-                            CONTENT_TYPE: "contentType",
-                        },
                     },
                 },
                 Response: {

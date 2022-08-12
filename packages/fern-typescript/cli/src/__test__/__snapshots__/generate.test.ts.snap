@@ -6879,7 +6879,7 @@ export * from \\"./_service-types\\";
         \\"build\\": \\"esbuild $(find . -name '*.ts' -not -path './node_modules/*') --format=cjs --sourcemap --outdir=. && tsc\\"
     },
     \\"dependencies\\": {
-        \\"@fern-typescript/service-utils\\": \\"0.0.155\\",
+        \\"@fern-typescript/service-utils\\": \\"0.0.184\\",
         \\"url-join\\": \\"4.0.1\\",
         \\"@types/url-join\\": \\"4.0.1\\"
     },
@@ -6933,9 +6933,7 @@ export class AdminService implements AdminService {
             url: urlJoin(this.baseUrl, \`/store-test-submission-status/\${request.submissionId}\`),
             method: \\"POST\\",
             headers: {},
-            body: {
-                content: request.body
-            }
+            body: request.body
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -6956,9 +6954,7 @@ export class AdminService implements AdminService {
             url: urlJoin(this.baseUrl, \`/store-test-submission-status-v2/\${request.submissionId}\`),
             method: \\"POST\\",
             headers: {},
-            body: {
-                content: request.body
-            }
+            body: request.body
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -6979,9 +6975,7 @@ export class AdminService implements AdminService {
             url: urlJoin(this.baseUrl, \`/store-workspace-submission-status/\${request.submissionId}\`),
             method: \\"POST\\",
             headers: {},
-            body: {
-                content: request.body
-            }
+            body: request.body
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -7002,9 +6996,7 @@ export class AdminService implements AdminService {
             url: urlJoin(this.baseUrl, \`/store-workspace-submission-status-v2/\${request.submissionId}\`),
             method: \\"POST\\",
             headers: {},
-            body: {
-                content: request.body
-            }
+            body: request.body
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -7025,9 +7017,7 @@ export class AdminService implements AdminService {
             url: urlJoin(this.baseUrl, \`/store-test-trace/submission/\${request.submissionId}/testCase/\${request.testCaseId}\`),
             method: \\"POST\\",
             headers: {},
-            body: {
-                content: request.body
-            }
+            body: request.body
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -7048,9 +7038,7 @@ export class AdminService implements AdminService {
             url: urlJoin(this.baseUrl, \`/store-test-trace-v2/submission/\${request.submissionId}/testCase/\${request.testCaseId}\`),
             method: \\"POST\\",
             headers: {},
-            body: {
-                content: request.body
-            }
+            body: request.body
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -7071,9 +7059,7 @@ export class AdminService implements AdminService {
             url: urlJoin(this.baseUrl, \`/store-workspace-trace/submission/\${request.submissionId}\`),
             method: \\"POST\\",
             headers: {},
-            body: {
-                content: request.body
-            }
+            body: request.body
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -7094,9 +7080,7 @@ export class AdminService implements AdminService {
             url: urlJoin(this.baseUrl, \`/store-workspace-trace-v2/submission/\${request.submissionId}\`),
             method: \\"POST\\",
             headers: {},
-            body: {
-                content: request.body
-            }
+            body: request.body
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -7180,9 +7164,7 @@ export class HomepageProblemService implements HomepageProblemService {
             url: urlJoin(this.baseUrl, \\"/\\"),
             method: \\"POST\\",
             headers: {},
-            body: {
-                content: request
-            }
+            body: request
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -7323,9 +7305,7 @@ export class PlaylistCrudService implements PlaylistCrudService {
             url: urlJoin(this.baseUrl, \\"/create\\"),
             method: \\"POST\\",
             headers: {},
-            body: {
-                content: request
-            }
+            body: request
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -7389,9 +7369,7 @@ export class PlaylistCrudService implements PlaylistCrudService {
             url: urlJoin(this.baseUrl, \`/\${request.playlistId}\`),
             method: \\"PUT\\",
             headers: {},
-            body: {
-                content: request.body
-            }
+            body: request.body
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -7477,9 +7455,7 @@ export class ProblemCrudService implements ProblemCrudService {
             url: urlJoin(this.baseUrl, \\"/create\\"),
             method: \\"POST\\",
             headers: {},
-            body: {
-                content: request
-            }
+            body: request
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -7501,9 +7477,7 @@ export class ProblemCrudService implements ProblemCrudService {
             url: urlJoin(this.baseUrl, \`/update/\${request.problemId}\`),
             method: \\"POST\\",
             headers: {},
-            body: {
-                content: request.body
-            }
+            body: request.body
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -7545,9 +7519,7 @@ export class ProblemCrudService implements ProblemCrudService {
             url: urlJoin(this.baseUrl, \\"/default-starter-files\\"),
             method: \\"POST\\",
             headers: {},
-            body: {
-                content: request
-            }
+            body: request
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -14979,7 +14951,7 @@ export * from \\"./_service-types\\";
         \\"build\\": \\"esbuild $(find . -name '*.ts' -not -path './node_modules/*') --format=cjs --sourcemap --outdir=. && tsc\\"
     },
     \\"dependencies\\": {
-        \\"@fern-typescript/service-utils\\": \\"0.0.155\\",
+        \\"@fern-typescript/service-utils\\": \\"0.0.184\\",
         \\"url-join\\": \\"4.0.1\\",
         \\"@types/url-join\\": \\"4.0.1\\"
     },
@@ -15033,9 +15005,7 @@ export class AdminService implements AdminService {
             url: urlJoin(this.baseUrl, \`/store-test-submission-status/\${request.submissionId}\`),
             method: \\"POST\\",
             headers: {},
-            body: {
-                content: request.body
-            }
+            body: request.body
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -15056,9 +15026,7 @@ export class AdminService implements AdminService {
             url: urlJoin(this.baseUrl, \`/store-test-submission-status-v2/\${request.submissionId}\`),
             method: \\"POST\\",
             headers: {},
-            body: {
-                content: request.body
-            }
+            body: request.body
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -15079,9 +15047,7 @@ export class AdminService implements AdminService {
             url: urlJoin(this.baseUrl, \`/store-workspace-submission-status/\${request.submissionId}\`),
             method: \\"POST\\",
             headers: {},
-            body: {
-                content: request.body
-            }
+            body: request.body
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -15102,9 +15068,7 @@ export class AdminService implements AdminService {
             url: urlJoin(this.baseUrl, \`/store-workspace-submission-status-v2/\${request.submissionId}\`),
             method: \\"POST\\",
             headers: {},
-            body: {
-                content: request.body
-            }
+            body: request.body
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -15125,9 +15089,7 @@ export class AdminService implements AdminService {
             url: urlJoin(this.baseUrl, \`/store-test-trace/submission/\${request.submissionId}/testCase/\${request.testCaseId}\`),
             method: \\"POST\\",
             headers: {},
-            body: {
-                content: request.body
-            }
+            body: request.body
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -15148,9 +15110,7 @@ export class AdminService implements AdminService {
             url: urlJoin(this.baseUrl, \`/store-test-trace-v2/submission/\${request.submissionId}/testCase/\${request.testCaseId}\`),
             method: \\"POST\\",
             headers: {},
-            body: {
-                content: request.body
-            }
+            body: request.body
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -15171,9 +15131,7 @@ export class AdminService implements AdminService {
             url: urlJoin(this.baseUrl, \`/store-workspace-trace/submission/\${request.submissionId}\`),
             method: \\"POST\\",
             headers: {},
-            body: {
-                content: request.body
-            }
+            body: request.body
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -15194,9 +15152,7 @@ export class AdminService implements AdminService {
             url: urlJoin(this.baseUrl, \`/store-workspace-trace-v2/submission/\${request.submissionId}\`),
             method: \\"POST\\",
             headers: {},
-            body: {
-                content: request.body
-            }
+            body: request.body
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -15280,9 +15236,7 @@ export class HomepageProblemService implements HomepageProblemService {
             url: urlJoin(this.baseUrl, \\"/\\"),
             method: \\"POST\\",
             headers: {},
-            body: {
-                content: request
-            }
+            body: request
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -15423,9 +15377,7 @@ export class PlaylistCrudService implements PlaylistCrudService {
             url: urlJoin(this.baseUrl, \\"/create\\"),
             method: \\"POST\\",
             headers: {},
-            body: {
-                content: request
-            }
+            body: request
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -15489,9 +15441,7 @@ export class PlaylistCrudService implements PlaylistCrudService {
             url: urlJoin(this.baseUrl, \`/\${request.playlistId}\`),
             method: \\"PUT\\",
             headers: {},
-            body: {
-                content: request.body
-            }
+            body: request.body
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -15577,9 +15527,7 @@ export class ProblemCrudService implements ProblemCrudService {
             url: urlJoin(this.baseUrl, \\"/create\\"),
             method: \\"POST\\",
             headers: {},
-            body: {
-                content: request
-            }
+            body: request
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -15601,9 +15549,7 @@ export class ProblemCrudService implements ProblemCrudService {
             url: urlJoin(this.baseUrl, \`/update/\${request.problemId}\`),
             method: \\"POST\\",
             headers: {},
-            body: {
-                content: request.body
-            }
+            body: request.body
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -15645,9 +15591,7 @@ export class ProblemCrudService implements ProblemCrudService {
             url: urlJoin(this.baseUrl, \\"/default-starter-files\\"),
             method: \\"POST\\",
             headers: {},
-            body: {
-                content: request
-            }
+            body: request
         });
 
         if (isResponseOk(encodedResponse)) {
