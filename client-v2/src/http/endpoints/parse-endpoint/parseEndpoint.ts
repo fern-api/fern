@@ -80,7 +80,6 @@ function parseRequest({
 
         return {
             isWrapped: false,
-            auth: endpoint.auth,
             referenceToBody,
         };
     }
@@ -89,7 +88,6 @@ function parseRequest({
 
     return {
         isWrapped: true,
-        auth: endpoint.auth,
         ...wrapper,
     };
 }

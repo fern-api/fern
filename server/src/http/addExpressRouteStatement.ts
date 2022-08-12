@@ -1,4 +1,4 @@
-import { HttpAuth, HttpEndpoint, HttpMethod, HttpPath, HttpService } from "@fern-fern/ir-model/services";
+import { HttpEndpoint, HttpMethod, HttpPath, HttpService } from "@fern-fern/ir-model/services";
 import { DependencyManager } from "@fern-typescript/commons";
 import { GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/model-context";
 import { ServiceTypesConstants } from "@fern-typescript/service-types";
@@ -84,15 +84,11 @@ export function getExpressRouteStatement({
 
 function getRequestParameterName({
     generatedEndpointTypes,
-    endpoint,
 }: {
     generatedEndpointTypes: GeneratedHttpEndpointTypes;
     endpoint: HttpEndpoint;
 }): ts.Identifier {
-    const isUnused =
-        generatedEndpointTypes.request.wrapper == null &&
-        generatedEndpointTypes.request.body == null &&
-        endpoint.auth === HttpAuth.None;
+    const isUnused = generatedEndpointTypes.request.wrapper == null && generatedEndpointTypes.request.body == null;
     const prefix = isUnused ? "_" : "";
     const name = `${prefix}${ServerConstants.Middleware.EndpointImplementation.Request.PARAMETER_NAME}`;
     return ts.factory.createIdentifier(name);

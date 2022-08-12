@@ -42,7 +42,7 @@ export async function runEteTest({ testFile, pathToFixture, generateFiles }: run
     if (!parseWorkspaceResult.didSucceed) {
         throw new Error(JSON.stringify(parseWorkspaceResult.failures));
     }
-    const intermediateRepresentation = generateIntermediateRepresentation(parseWorkspaceResult.workspace);
+    const intermediateRepresentation = await generateIntermediateRepresentation(parseWorkspaceResult.workspace);
 
     const volume = new Volume();
 

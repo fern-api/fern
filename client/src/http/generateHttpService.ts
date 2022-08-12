@@ -15,7 +15,6 @@ import { ClientConstants } from "../constants";
 import { addServiceConstructor } from "./addServiceConstructor";
 import { addServiceNamespace } from "./addServiceNamespace";
 import { addEndpointToService } from "./endpoints/addEndpointToService";
-import { doesServiceHaveBasicAuth, doesServiceHaveBearerAuth, doesServiceHaveHeaders } from "./utils";
 
 export async function generateHttpService({
     servicesDirectory,
@@ -61,63 +60,7 @@ export async function generateHttpService({
         ),
     });
 
-    const bearerAuthInfo = doesServiceHaveBearerAuth(service);
-    if (bearerAuthInfo.hasAuth) {
-        const referenceToBearerTokenType = getReferenceToFernServiceUtilsType({
-            type: "BearerToken",
-            dependencyManager,
-            referencedIn: serviceFile,
-        });
-        serviceClass.addProperty({
-            name: ClientConstants.HttpService.PrivateMembers.BEARER_TOKEN,
-            scope: Scope.Private,
-            type: getTextOfTsNode(
-                getReferenceToFernServiceUtilsType({
-                    type: "Supplier",
-                    dependencyManager,
-                    referencedIn: serviceFile,
-                    typeArguments: [
-                        bearerAuthInfo.isOptional
-                            ? ts.factory.createUnionTypeNode([
-                                  referenceToBearerTokenType,
-                                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
-                              ])
-                            : referenceToBearerTokenType,
-                    ],
-                })
-            ),
-        });
-    }
-
-    const basicAuthInfo = doesServiceHaveBasicAuth(service);
-    if (basicAuthInfo.hasAuth) {
-        const referenceToBasicAuthType = getReferenceToFernServiceUtilsType({
-            type: "BasicAuth",
-            dependencyManager,
-            referencedIn: serviceFile,
-        });
-        serviceClass.addProperty({
-            name: ClientConstants.HttpService.PrivateMembers.BASIC_AUTH,
-            scope: Scope.Private,
-            type: getTextOfTsNode(
-                getReferenceToFernServiceUtilsType({
-                    type: "Supplier",
-                    dependencyManager,
-                    referencedIn: serviceFile,
-                    typeArguments: [
-                        basicAuthInfo.isOptional
-                            ? ts.factory.createUnionTypeNode([
-                                  referenceToBasicAuthType,
-                                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
-                              ])
-                            : referenceToBasicAuthType,
-                    ],
-                })
-            ),
-        });
-    }
-
-    if (doesServiceHaveHeaders(service)) {
+    if (service.headers.length > 0) {
         serviceClass.addProperty({
             name: ClientConstants.HttpService.PrivateMembers.HEADERS,
             scope: Scope.Private,

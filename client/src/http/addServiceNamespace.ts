@@ -8,7 +8,6 @@ import {
 import { ModelContext } from "@fern-typescript/model-context";
 import { InterfaceDeclaration, ModuleDeclaration, SourceFile, ts } from "ts-morph";
 import { ClientConstants } from "../constants";
-import { doesServiceHaveBasicAuth, doesServiceHaveBearerAuth, doesServiceHaveHeaders } from "./utils";
 
 export function addServiceNamespace({
     serviceFile,
@@ -48,95 +47,7 @@ export function addServiceNamespace({
         ],
     });
 
-    maybeAddBasicAuthProperties({ service, dependencyManager, serviceFile, initInterface });
-    maybeAddBearerTokenProperty({ service, dependencyManager, serviceFile, initInterface });
     maybeAddHeaders({ service, initInterface, module, modelContext, dependencyManager });
-}
-
-function maybeAddBasicAuthProperties({
-    service,
-    dependencyManager,
-    serviceFile,
-    initInterface,
-}: {
-    service: HttpService;
-    dependencyManager: DependencyManager;
-    serviceFile: SourceFile;
-    initInterface: InterfaceDeclaration;
-}) {
-    const authInfo = doesServiceHaveBasicAuth(service);
-    if (!authInfo.hasAuth) {
-        return;
-    }
-
-    const referenceToBasicAuthType = getReferenceToFernServiceUtilsType({
-        type: "BasicAuth",
-        dependencyManager,
-        referencedIn: serviceFile,
-    });
-
-    initInterface.addProperty({
-        name: ClientConstants.HttpService.ServiceNamespace.Init.Properties.BASIC_AUTH,
-        hasQuestionToken: authInfo.isOptional,
-        type: getTextOfTsNode(
-            getReferenceToFernServiceUtilsType({
-                type: "Supplier",
-                typeArguments: [
-                    authInfo.isOptional
-                        ? ts.factory.createUnionTypeNode([
-                              referenceToBasicAuthType,
-                              ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
-                          ])
-                        : referenceToBasicAuthType,
-                ],
-                dependencyManager,
-                referencedIn: serviceFile,
-            })
-        ),
-    });
-}
-
-function maybeAddBearerTokenProperty({
-    service,
-    dependencyManager,
-    serviceFile,
-    initInterface,
-}: {
-    service: HttpService;
-    dependencyManager: DependencyManager;
-    serviceFile: SourceFile;
-    initInterface: InterfaceDeclaration;
-}) {
-    const authInfo = doesServiceHaveBearerAuth(service);
-    if (!authInfo.hasAuth) {
-        return;
-    }
-
-    const referenceToTokenType = getReferenceToFernServiceUtilsType({
-        type: "BearerToken",
-        dependencyManager,
-        referencedIn: serviceFile,
-    });
-
-    initInterface.addProperty({
-        name: ClientConstants.HttpService.ServiceNamespace.Init.Properties.BEARER_TOKEN,
-        hasQuestionToken: authInfo.isOptional,
-        type: getTextOfTsNode(
-            getReferenceToFernServiceUtilsType({
-                type: "Supplier",
-                typeArguments: [
-                    authInfo.isOptional
-                        ? ts.factory.createUnionTypeNode([
-                              referenceToTokenType,
-                              ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
-                          ])
-                        : referenceToTokenType,
-                ],
-                dependencyManager,
-                referencedIn: serviceFile,
-            })
-        ),
-    });
 }
 
 function maybeAddHeaders({
@@ -152,7 +63,7 @@ function maybeAddHeaders({
     modelContext: ModelContext;
     dependencyManager: DependencyManager;
 }) {
-    if (doesServiceHaveHeaders(service)) {
+    if (service.headers.length > 0) {
         initInterface.addProperty({
             name: ClientConstants.HttpService.ServiceNamespace.Init.Properties.HEADERS,
             type: ClientConstants.HttpService.ServiceNamespace.Headers.TYPE_NAME,

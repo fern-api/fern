@@ -5,7 +5,7 @@ services:
   http:
     HomepageProblemService:
       base-path: /homepage-problems
-      auth: none
+      auth: false
       endpoints:
         getHomepageProblems:
           method: GET

@@ -433,7 +433,6 @@ export * from \\"./_service-types\\";
     \\"dependencies\\": {
         \\"uuid\\": \\"8.3.2\\",
         \\"@types/uuid\\": \\"8.3.4\\",
-        \\"@fern-typescript/service-utils\\": \\"0.0.155\\",
         \\"express\\": \\"4.18.1\\",
         \\"@types/express\\": \\"4.17.13\\"
     },
@@ -450,15 +449,14 @@ export * from \\"./_service-types\\";
   "/services/index.ts": "export * as posts from \\"./posts\\";
 ",
   "/services/posts/PostsService.ts": "import * as model from \\"../../model\\";
-import { BearerToken } from \\"@fern-typescript/service-utils\\";
 import express, { Express } from \\"express\\";
 
 export interface PostsService {
     createPost(request: model.posts._CreatePostRequest): model.posts.CreatePostResponse | Promise<model.posts.CreatePostResponse>;
-    getPost(token: BearerToken, request: model.posts.GetPostRequest): model.posts.GetPostResponse | Promise<model.posts.GetPostResponse>;
-    getPostV2(token: BearerToken, request: model.posts.GetPostV2Request): model.posts.GetPostV2Response | Promise<model.posts.GetPostV2Response>;
-    deletePost(token: BearerToken, request: model.posts.DeletePostRequest): model.posts.DeletePostResponse | Promise<model.posts.DeletePostResponse>;
-    noopWithAuth(token: BearerToken, request: model.posts.NoopWithAuthRequest): model.posts.NoopWithAuthResponse | Promise<model.posts.NoopWithAuthResponse>;
+    getPost(request: model.posts.GetPostRequest): model.posts.GetPostResponse | Promise<model.posts.GetPostResponse>;
+    getPostV2(request: model.posts.GetPostV2Request): model.posts.GetPostV2Response | Promise<model.posts.GetPostV2Response>;
+    deletePost(request: model.posts.DeletePostRequest): model.posts.DeletePostResponse | Promise<model.posts.DeletePostResponse>;
+    noopWithAuth(request: model.posts.NoopWithAuthRequest): model.posts.NoopWithAuthResponse | Promise<model.posts.NoopWithAuthResponse>;
     noopWithoutAuth(request: model.posts.NoopWithoutAuthRequest): model.posts.NoopWithoutAuthResponse | Promise<model.posts.NoopWithoutAuthResponse>;
 }
 
@@ -480,7 +478,7 @@ export const PostsService = {
             }
         });
         app.get(\\"/posts/:postId\\", async (request, response) => {
-            const result = await impl.getPost(BearerToken.fromAuthorizationHeader(request.header(\\"Authorization\\")!), {
+            const result = await impl.getPost({
                 postId: request.params.postId,
                 page: request.query.page != null ? Number(request.query.page) : undefined,
                 otherParam: Number(request.query.otherParam),
@@ -498,7 +496,7 @@ export const PostsService = {
             }
         });
         app.get(\\"/posts/get\\", async (request, response) => {
-            const result = await impl.getPostV2(BearerToken.fromAuthorizationHeader(request.header(\\"Authorization\\")!), {
+            const result = await impl.getPostV2({
                 \\"X-Service-Header\\": request.header(\\"X-Service-Header\\")!,
                 body: request.body
             });
@@ -514,7 +512,7 @@ export const PostsService = {
             }
         });
         app.delete(\\"/posts/:postId\\", async (request, response) => {
-            const result = await impl.deletePost(BearerToken.fromAuthorizationHeader(request.header(\\"Authorization\\")!), {
+            const result = await impl.deletePost({
                 postId: request.params.postId,
                 \\"X-Service-Header\\": request.header(\\"X-Service-Header\\")!
             });
@@ -526,7 +524,7 @@ export const PostsService = {
             }
         });
         app.get(\\"/posts/\\", async (request, response) => {
-            const result = await impl.noopWithAuth(BearerToken.fromAuthorizationHeader(request.header(\\"Authorization\\")!), {
+            const result = await impl.noopWithAuth({
                 \\"X-Service-Header\\": request.header(\\"X-Service-Header\\")!
             });
             if (result.ok) {
