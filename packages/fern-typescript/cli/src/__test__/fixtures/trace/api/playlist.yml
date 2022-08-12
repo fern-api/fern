@@ -23,7 +23,7 @@ types:
 services:
   http:
     PlaylistCrudService:
-      auth: bearer
+      auth: true
       base-path: /v2/playlist
       endpoints:
         createPlaylist:
@@ -43,7 +43,7 @@ services:
           docs: Returns a playlist
           method: GET
           path: /{playlistId}
-          auth-override: none
+          auth: false
           path-parameters:
             playlistId: PlaylistId
           response: Playlist

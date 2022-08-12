@@ -436,7 +436,7 @@ services:
     ExecutionSesssionManagementService:
       docs: Responsible for spinning up and spinning down execution.
       base-path: /sessions
-      auth: none
+      auth: false
       endpoints:
         createExecutionSession:
           docs: Returns sessionId and execution server URL for session. Spins up server.

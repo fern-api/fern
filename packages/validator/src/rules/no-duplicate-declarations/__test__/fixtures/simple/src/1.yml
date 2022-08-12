@@ -14,5 +14,5 @@ errors:
 services:
   http:
     OneService:
-      auth: none
+      auth: false
       endpoints: {}

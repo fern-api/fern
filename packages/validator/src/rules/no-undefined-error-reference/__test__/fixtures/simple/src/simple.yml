@@ -6,7 +6,7 @@ imports:
 services:
   http:
     MyService:
-      auth: none
+      auth: false
       endpoints:
         referenceNonExistentError:
           errors:

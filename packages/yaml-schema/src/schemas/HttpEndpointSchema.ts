@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { AuthSchema } from "./AuthSchema";
 import { HttpHeaderSchema } from "./HttpHeaderSchema";
 import { HttpParameterSchema } from "./HttpParameterSchema";
 import { HttpQueryParameterSchema } from "./HttpQueryParameterSchema";
@@ -14,7 +13,7 @@ export const HttpEndpointSchema = WithDocsSchema.extend({
     ["path-parameters"]: z.optional(z.record(HttpParameterSchema)),
     ["query-parameters"]: z.optional(z.record(HttpQueryParameterSchema)),
     headers: z.optional(z.record(HttpHeaderSchema)),
-    "auth-override": z.optional(AuthSchema),
+    auth: z.optional(z.boolean()),
     request: z.optional(HttpRequestSchema),
     response: z.optional(HttpResponseSchema),
     errors: z.optional(ResponseErrorsSchema),

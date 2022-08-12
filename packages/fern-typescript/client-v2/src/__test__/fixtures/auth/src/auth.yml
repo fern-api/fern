@@ -3,44 +3,44 @@ types:
 services:
   http:
     ServiceWithNoAuth:
-      auth: none
+      auth: false
       endpoints:
         endpointA: {}
 
     ServiceWithBasicAuth:
-      auth: basic
+      auth: true
       endpoints:
         endpointB: {}
 
     ServiceWithBearerAuth:
-      auth: bearer
+      auth: true
       endpoints:
         endpointC: {}
 
     ServiceWithNoAuthWithBearerOverride:
-      auth: none
+      auth: false
       endpoints:
         endpointD: {}
         overrideEndpointD:
-          auth-override: bearer
+          auth: true
 
     ServiceWithNoAuthWithBasicOverride:
-      auth: none
+      auth: false
       endpoints:
         endpointE: {}
         overrideEndpointE:
-          auth-override: basic
+          auth: true
 
     ServiceWithBearerAuthWithOverride:
-      auth: bearer
+      auth: true
       endpoints:
         endpointF: {}
         overrideEndpointF:
-          auth-override: none
+          auth: false
 
     ServiceWithBasicAuthWithOverride:
-      auth: basic
+      auth: true
       endpoints:
         endpointG: {}
         overrideEndpointG:
-          auth-override: none
+          auth: false

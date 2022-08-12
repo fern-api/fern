@@ -1,11 +1,16 @@
 export { AliasSchema } from "./AliasSchema";
-export { AuthSchema } from "./AuthSchema";
+export { AllAuthSchemesSchema } from "./AllAuthSchemesSchema";
+export { AnyAuthSchemesSchema } from "./AnyAuthSchemesSchema";
+export { ApiAuthSchema } from "./ApiAuthSchema";
+export { AuthSchemeDeclarationSchema } from "./AuthSchemeDeclarationSchema";
+export { AuthSchemeReferenceSchema } from "./AuthSchemeReferenceSchema";
 export { BaseServiceSchema } from "./BaseServiceSchema";
 export { EnumSchema } from "./EnumSchema";
 export { EnumValueSchema } from "./EnumValueSchema";
 export { ErrorDeclarationSchema } from "./ErrorDeclarationSchema";
 export { ErrorReferenceSchema } from "./ErrorReferenceSchema";
-export { FernConfigurationSchema } from "./FernConfigurationSchema";
+export * from "./file-schemas";
+export { HeaderAuthSchemeSchema } from "./HeaderAuthSchemeSchema";
 export { HttpEndpointSchema } from "./HttpEndpointSchema";
 export { HttpErrorConfigurationSchema } from "./HttpErrorConfigurationSchema";
 export { HttpHeaderSchema } from "./HttpHeaderSchema";

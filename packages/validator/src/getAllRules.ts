@@ -5,7 +5,6 @@ import NoDuplicateEnumValuesRule from "./rules/no-duplicate-enum-values";
 import NoUndefinedErrorReferenceRule from "./rules/no-undefined-error-reference";
 import NoUndefinedPathParametersRule from "./rules/no-undefined-path-parameters";
 import NoUndefinedTypeReferenceRule from "./rules/no-undefined-type-reference";
-import ValidAuthInServiceRule from "./rules/valid-auth-in-service";
 import ValidEnumNameRule from "./rules/valid-enum-name";
 
 export function getAllRules(): Rule[] {
@@ -13,7 +12,6 @@ export function getAllRules(): Rule[] {
         NoUndefinedTypeReferenceRule,
         NoDuplicateEnumValuesRule,
         NoUndefinedPathParametersRule,
-        ValidAuthInServiceRule,
         ValidEnumNameRule,
         ImportFileExistsRule,
         NoDuplicateDeclarationsRule,

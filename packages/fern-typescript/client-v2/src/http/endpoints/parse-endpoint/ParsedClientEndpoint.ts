@@ -1,4 +1,4 @@
-import { HttpAuth, HttpMethod, HttpPath } from "@fern-fern/ir-model/services";
+import { HttpMethod, HttpPath } from "@fern-fern/ir-model/services";
 import { ts } from "ts-morph";
 import { RequestWrapper } from "./constructRequestWrapper";
 
@@ -23,9 +23,7 @@ export declare namespace ClientEndpointRequest {
         referenceToBody: ts.TypeNode;
     }
 
-    export interface Base {
-        auth: HttpAuth;
-    }
+    export interface Base {}
 }
 
 export interface ClientEndpointError {

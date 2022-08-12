@@ -5,7 +5,7 @@ import path from "path";
 import { SAMPLE_API } from "./sampleApi";
 
 const rawApi = yaml.load(SAMPLE_API);
-void RawSchemas.FernConfigurationSchema.parseAsync(rawApi);
+void RawSchemas.ServiceFileSchema.parseAsync(rawApi);
 
 export async function writeSampleApiToDirectory(dir: string): Promise<void> {
     await writeFile(path.join(dir, API_FILENAME), SAMPLE_API);

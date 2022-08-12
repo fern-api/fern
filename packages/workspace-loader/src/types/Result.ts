@@ -1,5 +1,5 @@
 import { RelativeFilePath } from "@fern-api/config-management-commons";
-import { FernConfigurationSchema } from "@fern-api/yaml-schema";
+import { ServiceFileSchema } from "@fern-api/yaml-schema";
 import { ZodError } from "zod";
 import { Workspace } from "./Workspace";
 
@@ -30,7 +30,7 @@ export declare namespace WorkspaceLoader {
 
     export interface StructureValidationFailure {
         type: WorkspaceLoaderFailureType.STRUCTURE_VALIDATION;
-        error: ZodError<FernConfigurationSchema>;
+        error: ZodError<ServiceFileSchema>;
     }
 }
 

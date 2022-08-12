@@ -1,0 +1,38 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  types: types.yml
+  commons: ./commons.yml
+types:
+  AuthSchemeName: string
+
+  ApiAuth:
+    extends: commons.WithDocs
+    properties:
+      declaredSchemes: list<AuthSchemeDeclaration>
+      enabledSchemes: EnabledAuthSchemes
+  AuthSchemeDeclaration:
+    extends: commons.WithDocs
+    properties:
+      name: AuthSchemeName
+      definition: AuthSchemeDefinition
+  AuthSchemeDefinition:
+    union:
+      header: HeaderAuthSchemeDeclaration
+  HeaderAuthSchemeDeclaration:
+    properties:
+      name: string
+      type: types.TypeReference
+  EnabledAuthSchemes:
+    union:
+      all: list<AuthSchemeReference>
+      any: list<AuthSchemeReference>
+  AuthSchemeReference:
+    union:
+      bearer: commons.WithDocs
+      basic: commons.WithDocs
+      named: NamedAuthSchemeReference
+  NamedAuthSchemeReference:
+    extends: commons.WithDocs
+    properties:
+      name: AuthSchemeName

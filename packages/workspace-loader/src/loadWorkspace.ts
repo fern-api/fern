@@ -1,8 +1,13 @@
+import { validateSchema } from "@fern-api/config-management-commons";
 import { loadGeneratorsConfiguration } from "@fern-api/generators-configuration";
 import { loadWorkspaceConfiguration, WORKSPACE_CONFIGURATION_FILENAME } from "@fern-api/workspace-configuration";
+import { RootApiFileSchema } from "@fern-api/yaml-schema";
+import { readFile } from "fs/promises";
+import yaml from "js-yaml";
 import path from "path";
+import { ROOT_API_FILENAME } from "./constants";
+import { listServiceFilesForWorkspace } from "./listServiceFilesForWorkspace";
 import { listYamlFilesForWorkspace } from "./listYamlFilesForWorkspace";
-import { listYamlFilesForWorkspaceV2 } from "./listYamlFilesForWorkspaceV2";
 import { parseYamlFiles } from "./parseYamlFiles";
 import { WorkspaceLoader } from "./types/Result";
 import { validateStructureOfYamlFiles } from "./validateStructureOfYamlFiles";
@@ -47,7 +52,9 @@ export async function loadWorkspace({
                     absolutePathToConfiguration: absolutePathToWorkspaceConfiguration,
                     generators: workspaceConfiguration.generators,
                 },
-                rootApiFile: {},
+                rootApiFile: {
+                    name: workspaceConfiguration.name,
+                },
                 serviceFiles: structuralValidationResult.validatedFiles,
             },
         };
@@ -55,9 +62,9 @@ export async function loadWorkspace({
 
     const generatorsConfiguration = await loadGeneratorsConfiguration({ absolutePathToWorkspace });
     const absolutePathToDefinition = path.resolve(absolutePathToWorkspace, DEFINITION_DIRECTORY);
-    const files = await listYamlFilesForWorkspaceV2(absolutePathToDefinition);
+    const serviceFiles = await listServiceFilesForWorkspace(absolutePathToDefinition);
 
-    const parseResult = await parseYamlFiles(files.serviceFiles);
+    const parseResult = await parseYamlFiles(serviceFiles);
     if (!parseResult.didSucceed) {
         return parseResult;
     }
@@ -67,14 +74,18 @@ export async function loadWorkspace({
         return structuralValidationResult;
     }
 
+    const rootApiFile = await readFile(path.join(absolutePathToDefinition, ROOT_API_FILENAME));
+    const parsedRootApiFile = yaml.load(rootApiFile.toString());
+    const validatedRootApiFile = await validateSchema(RootApiFileSchema, parsedRootApiFile);
+
     return {
         didSucceed: true,
         workspace: {
-            name: "workspace",
+            name: validatedRootApiFile.name,
             absolutePathToWorkspace,
             absolutePathToDefinition,
             generatorsConfiguration,
-            rootApiFile: {},
+            rootApiFile: validatedRootApiFile,
             serviceFiles: structuralValidationResult.validatedFiles,
         },
     };

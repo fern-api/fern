@@ -21,7 +21,7 @@ services:
   http:
   
     MoviesService:
-      auth: none
+      auth: false
       base-path: /movies
       endpoints:
 

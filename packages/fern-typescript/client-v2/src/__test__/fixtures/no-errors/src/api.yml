@@ -1,7 +1,7 @@
 services:
   http:
     NoErrorsService:
-      auth: none
+      auth: false
       endpoints:
         get:
           method: GET

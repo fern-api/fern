@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
-    "@fern-fern/ir-model": "0.0.5",
+    "@fern-fern/ir-model": "0.0.16",
     "@fern-typescript/commons": "workspace:*",
     "ts-morph": "^15.1.0",
     "typescript": "4.6.4"

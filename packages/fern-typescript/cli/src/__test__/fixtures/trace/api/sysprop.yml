@@ -5,7 +5,7 @@ services:
   http:
     SysPropCrudService:
       base-path: /sysprop
-      auth: none
+      auth: false
       endpoints:
         setNumWarmInstances:
           method: PUT

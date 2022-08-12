@@ -14,7 +14,6 @@ types:
       basePath: optional<string>
       endpoints: list<HttpEndpoint>
       headers: list<HttpHeader>
-      auth: boolean
   HttpEndpoint:
     extends: commons.WithDocs
     properties:

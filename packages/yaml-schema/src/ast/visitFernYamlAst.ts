@@ -1,16 +1,13 @@
-import { FernConfigurationSchema } from "../schemas";
+import { visitObject } from "@fern-api/core-utils";
+import { ServiceFileSchema } from "../schemas";
 import { FernAstVisitor } from "./FernAstVisitor";
 import { visitServices } from "./visitors/services/visitServices";
-import { visitObject } from "./visitors/utils/ObjectPropertiesVisitor";
 import { visitErrorDeclarations } from "./visitors/visitErrorDeclarations";
 import { visitIds } from "./visitors/visitIds";
 import { visitImports } from "./visitors/visitImports";
 import { visitTypeDeclarations } from "./visitors/visitTypeDeclarations";
 
-export async function visitFernYamlAst(
-    contents: FernConfigurationSchema,
-    visitor: Partial<FernAstVisitor>
-): Promise<void> {
+export async function visitFernYamlAst(contents: ServiceFileSchema, visitor: Partial<FernAstVisitor>): Promise<void> {
     await visitObject(contents, {
         imports: async (imports) => {
             await visitImports({ imports, visitor, nodePath: ["imports"] });

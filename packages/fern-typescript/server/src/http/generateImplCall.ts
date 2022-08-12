@@ -1,9 +1,5 @@
-import { HttpAuth, HttpEndpoint, HttpService } from "@fern-fern/ir-model/services";
-import {
-    DependencyManager,
-    getReferenceToFernServiceUtilsBasicAuthMethod,
-    getReferenceToFernServiceUtilsBearerTokenMethod,
-} from "@fern-typescript/commons";
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services";
+import { DependencyManager } from "@fern-typescript/commons";
 import { GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/model-context";
 import { SourceFile, ts } from "ts-morph";
 import { ServerConstants } from "../constants";
@@ -15,7 +11,6 @@ export function generateImplCall({
     generatedEndpointTypes,
     modelContext,
     file,
-    dependencyManager,
 }: {
     service: HttpService;
     endpoint: HttpEndpoint;
@@ -29,7 +24,6 @@ export function generateImplCall({
         endpoint,
         generatedEndpointTypes,
         modelContext,
-        dependencyManager,
         file,
     });
     return ts.factory.createAwaitExpression(
@@ -50,62 +44,14 @@ function generateImplCallArguments({
     generatedEndpointTypes,
     modelContext,
     file,
-    dependencyManager,
 }: {
     service: HttpService;
     endpoint: HttpEndpoint;
     generatedEndpointTypes: GeneratedHttpEndpointTypes;
     modelContext: ModelContext;
     file: SourceFile;
-    dependencyManager: DependencyManager;
 }): ts.Expression[] {
-    return [
-        ...generateImplAuthArguments({ endpoint, dependencyManager, file }),
-        ...generateImplRequestArguments({ service, endpoint, generatedEndpointTypes, modelContext, file }),
-    ];
-}
-
-function generateImplAuthArguments({
-    endpoint,
-    dependencyManager,
-    file,
-}: {
-    endpoint: HttpEndpoint;
-    dependencyManager: DependencyManager;
-    file: SourceFile;
-}): ts.Expression[] {
-    return HttpAuth._visit<ts.Expression[]>(endpoint.auth, {
-        bearer: () => {
-            return [
-                ts.factory.createCallExpression(
-                    getReferenceToFernServiceUtilsBearerTokenMethod({
-                        util: "fromAuthorizationHeader",
-                        dependencyManager,
-                        referencedIn: file,
-                    }),
-                    undefined,
-                    [ts.factory.createNonNullExpression(getRequestHeader("Authorization"))]
-                ),
-            ];
-        },
-        basic: () => {
-            return [
-                ts.factory.createCallExpression(
-                    getReferenceToFernServiceUtilsBasicAuthMethod({
-                        util: "fromAuthorizationHeader",
-                        dependencyManager,
-                        referencedIn: file,
-                    }),
-                    undefined,
-                    [ts.factory.createNonNullExpression(getRequestHeader("Authorization"))]
-                ),
-            ];
-        },
-        none: () => [],
-        _unknown: () => {
-            throw new Error("Unknown auth: " + endpoint.auth);
-        },
-    });
+    return [...generateImplRequestArguments({ service, endpoint, generatedEndpointTypes, modelContext, file })];
 }
 
 function generateImplRequestArguments({

@@ -1,9 +1,8 @@
-import { noop } from "@fern-api/core-utils";
+import { noop, visitObject } from "@fern-api/core-utils";
 import { HttpEndpointSchema, HttpServiceSchema } from "../../../schemas";
 import { FernAstVisitor } from "../../FernAstVisitor";
 import { NodePath } from "../../NodePath";
 import { createDocsVisitor } from "../utils/createDocsVisitor";
-import { visitObject } from "../utils/ObjectPropertiesVisitor";
 
 export async function visitHttpService({
     service,
@@ -95,7 +94,7 @@ async function visitEndpoint({
             }
         },
         method: noop,
-        "auth-override": noop,
+        auth: noop,
         headers: noop,
         request: async (request) => {
             if (request == null) {

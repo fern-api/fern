@@ -41,7 +41,7 @@ services:
   http:
     PostsService:
       base-path: /posts
-      auth: bearer
+      auth: true
       headers:
         X-Service-Header: string
       endpoints:

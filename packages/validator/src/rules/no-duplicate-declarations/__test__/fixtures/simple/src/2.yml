@@ -1,8 +1,8 @@
 services:
   http:
     OneService:
-      auth: none
+      auth: false
       endpoints: {}
     TwoService:
-      auth: bearer
+      auth: true
       endpoints: {}

@@ -21,7 +21,7 @@ services:
   websocket:
     ChatService:
       path: /chat
-      auth: none
+      auth: false
       client:
         operations:
           sendChat:
