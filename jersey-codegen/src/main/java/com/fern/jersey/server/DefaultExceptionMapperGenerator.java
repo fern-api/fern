@@ -18,6 +18,7 @@ package com.fern.jersey.server;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fern.codegen.GeneratedFile;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameConstants;
@@ -130,6 +131,9 @@ public final class DefaultExceptionMapperGenerator extends Generator {
                 .addAnnotation(Immutable.class)
                 .addAnnotation(ClassNameConstants.ALIAS_IMMUTABLES_STYLE_CLASSNAME)
                 .addAnnotation(AnnotationSpec.builder(JsonDeserialize.class)
+                        .addMember("as", "$T.class", defaultExceptionBodyImmutablesClassName)
+                        .build())
+                .addAnnotation(AnnotationSpec.builder(JsonSerialize.class)
                         .addMember("as", "$T.class", defaultExceptionBodyImmutablesClassName)
                         .build())
                 .addMethod(MethodSpec.methodBuilder("errorType")

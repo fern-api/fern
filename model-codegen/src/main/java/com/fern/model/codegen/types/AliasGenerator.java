@@ -17,6 +17,7 @@ package com.fern.model.codegen.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fern.codegen.GeneratedAlias;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameConstants;
@@ -93,6 +94,9 @@ public final class AliasGenerator extends Generator {
                 AnnotationSpec.builder(ClassName.get(AliasImmutablesStyle.class))
                         .build(),
                 AnnotationSpec.builder(JsonDeserialize.class)
+                        .addMember("as", "$T.class", generatedAliasImmutablesClassName)
+                        .build(),
+                AnnotationSpec.builder(JsonSerialize.class)
                         .addMember("as", "$T.class", generatedAliasImmutablesClassName)
                         .build());
     }

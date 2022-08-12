@@ -225,6 +225,7 @@ package com.fern.blog.api.blog;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fern.java.immutables.AliasImmutablesStyle;
 import java.lang.Integer;
 import java.lang.Override;
@@ -234,6 +235,9 @@ import org.immutables.value.Value;
 @Value.Immutable
 @AliasImmutablesStyle
 @JsonDeserialize(
+    as = ImmutableAge.class
+)
+@JsonSerialize(
     as = ImmutableAge.class
 )
 public abstract class Age {
@@ -415,6 +419,7 @@ package com.fern.blog.api.blog;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import java.lang.String;
 import org.immutables.value.Value;
@@ -422,6 +427,9 @@ import org.immutables.value.Value;
 @Value.Immutable
 @StagedBuilderImmutablesStyle
 @JsonDeserialize(
+    as = ImmutableBlogPost.class
+)
+@JsonSerialize(
     as = ImmutableBlogPost.class
 )
 @JsonIgnoreProperties(
@@ -452,6 +460,7 @@ package com.fern.blog.api.blog;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import java.lang.String;
 import org.immutables.value.Value;
@@ -459,6 +468,9 @@ import org.immutables.value.Value;
 @Value.Immutable
 @StagedBuilderImmutablesStyle
 @JsonDeserialize(
+    as = ImmutableCreatePostRequest.class
+)
+@JsonSerialize(
     as = ImmutableCreatePostRequest.class
 )
 @JsonIgnoreProperties(
@@ -572,6 +584,7 @@ package com.fern.blog.api.blog;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fern.java.immutables.AliasImmutablesStyle;
 import java.lang.Override;
 import java.lang.String;
@@ -580,6 +593,9 @@ import org.immutables.value.Value;
 @Value.Immutable
 @AliasImmutablesStyle
 @JsonDeserialize(
+    as = ImmutablePostId.class
+)
+@JsonSerialize(
     as = ImmutablePostId.class
 )
 public abstract class PostId {
@@ -630,12 +646,16 @@ package com.fern.blog.api.blog;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderImmutablesStyle
 @JsonDeserialize(
+    as = ImmutablePostNotFoundErrorBody.class
+)
+@JsonSerialize(
     as = ImmutablePostNotFoundErrorBody.class
 )
 @JsonIgnoreProperties(
@@ -786,6 +806,7 @@ package com.fern.blog.api.blog;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import java.lang.String;
 import org.immutables.value.Value;
@@ -793,6 +814,9 @@ import org.immutables.value.Value;
 @Value.Immutable
 @StagedBuilderImmutablesStyle
 @JsonDeserialize(
+    as = ImmutableUnauthorizedErrorBody.class
+)
+@JsonSerialize(
     as = ImmutableUnauthorizedErrorBody.class
 )
 @JsonIgnoreProperties(
@@ -814,6 +838,7 @@ package com.fern.blog.api.dummy;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fern.java.immutables.AliasImmutablesStyle;
 import java.lang.Override;
 import java.lang.String;
@@ -822,6 +847,9 @@ import org.immutables.value.Value;
 @Value.Immutable
 @AliasImmutablesStyle
 @JsonDeserialize(
+    as = ImmutableDummyId.class
+)
+@JsonSerialize(
     as = ImmutableDummyId.class
 )
 public abstract class DummyId {
@@ -905,6 +933,7 @@ package com.fern.blog.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fern.java.immutables.AliasImmutablesStyle;
 import java.lang.Exception;
 import java.lang.Override;
@@ -929,6 +958,9 @@ public final class DefaultExceptionMapper implements ExceptionMapper<Exception> 
   @Value.Immutable
   @AliasImmutablesStyle
   @JsonDeserialize(
+      as = ImmutableDefaultExceptionBody.class
+  )
+  @JsonSerialize(
       as = ImmutableDefaultExceptionBody.class
   )
   interface DefaultExceptionBody {

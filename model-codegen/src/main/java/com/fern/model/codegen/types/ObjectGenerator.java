@@ -17,6 +17,7 @@ package com.fern.model.codegen.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fern.codegen.GeneratedInterface;
 import com.fern.codegen.GeneratedObject;
 import com.fern.codegen.GeneratorContext;
@@ -103,6 +104,9 @@ public final class ObjectGenerator extends Generator {
         annotationSpecs.add(AnnotationSpec.builder(ClassName.get(StagedBuilderImmutablesStyle.class))
                 .build());
         annotationSpecs.add(AnnotationSpec.builder(JsonDeserialize.class)
+                .addMember("as", "$T.class", generatedObjectImmutablesClassName)
+                .build());
+        annotationSpecs.add(AnnotationSpec.builder(JsonSerialize.class)
                 .addMember("as", "$T.class", generatedObjectImmutablesClassName)
                 .build());
         annotationSpecs.add(AnnotationSpec.builder(JsonIgnoreProperties.class)
