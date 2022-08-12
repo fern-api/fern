@@ -2357,7 +2357,6 @@ __metadata:
     "@babel/core": ^7.18.9
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
-    "@fern-api/core-utils": "workspace:*"
     "@fern-fern/ir-model": 0.0.16
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/model": "workspace:*"
