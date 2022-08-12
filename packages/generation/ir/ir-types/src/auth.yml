@@ -2,9 +2,10 @@
 
 imports:
   types: types.yml
-  commons: ./commons.yml
+  commons: commons.yml
+  http: services/http.yml
 types:
-  AuthSchemeName: string
+  AuthSchemeName: commons.StringWithAllCasings
 
   ApiAuth:
     extends: commons.WithDocs
@@ -18,11 +19,7 @@ types:
       definition: AuthSchemeDefinition
   AuthSchemeDefinition:
     union:
-      header: HeaderAuthSchemeDeclaration
-  HeaderAuthSchemeDeclaration:
-    properties:
-      name: string
-      type: types.TypeReference
+      header: http.HttpHeader
   EnabledAuthSchemes:
     union:
       all: list<AuthSchemeReference>

@@ -7,13 +7,12 @@ types:
     docs: "A type, which is a name and a shape"
     extends: commons.WithDocs
     properties:
-      name: DeclaredTypeName
+      name: TypeName
       shape: Type
-  DeclaredTypeName:
+  TypeName:
     properties:
-      fernFilepath: FernFilepath
-      name: string
-  FernFilepath: list<string>
+      fernFilepath: commons.FernFilepath
+      name: commons.StringWithAllCasings
   Type:
     union:
       alias: AliasTypeDeclaration
@@ -31,21 +30,19 @@ types:
   EnumValue:
     extends: commons.WithDocs
     properties:
-      name:
-        type: string
-        docs: Name must start with an alphabet.
+      name: commons.StringWithAllCasings
       value: string
 
   ObjectTypeDeclaration:
     properties:
       extends:
         docs: "A list of other types to inherit from"
-        type: list<DeclaredTypeName>
+        type: list<TypeName>
       properties: list<ObjectProperty>
   ObjectProperty:
     extends: commons.WithDocs
     properties:
-      key: string
+      name: commons.StringWithAllCasings
       valueType: TypeReference
 
   UnionTypeDeclaration:
@@ -61,7 +58,7 @@ types:
   TypeReference:
     union:
       container: ContainerType
-      named: DeclaredTypeName
+      named: TypeName
       primitive: PrimitiveType
       unknown: {}
       void: {}

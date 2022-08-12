@@ -17,7 +17,7 @@ types:
   HttpEndpoint:
     extends: commons.WithDocs
     properties:
-      endpointId: EndpointId
+      name: commons.StringWithAllCasings
       method: HttpMethod
       headers: list<HttpHeader>
       path: HttpPath
@@ -45,25 +45,23 @@ types:
   HttpHeader:
     extends: commons.WithDocs
     properties:
-      header: string
+      name: commons.StringWithAllCasings
       valueType: types.TypeReference
   PathParameter:
     extends: commons.WithDocs
     properties:
-      key: string
+      name: commons.StringWithAllCasings
       valueType: types.TypeReference
   QueryParameter:
     extends: commons.WithDocs
     properties:
-      key: string
+      name: commons.StringWithAllCasings
       valueType: types.TypeReference
   HttpRequest:
     extends: commons.WithDocs
     properties:
-      encoding: serviceCommons.Encoding
       type: types.TypeReference
   HttpResponse:
     extends: commons.WithDocs
     properties:
-      encoding: serviceCommons.Encoding
       type: types.TypeReference

@@ -19,19 +19,17 @@ types:
   WebSocketOperation:
     extends: commons.WithDocs
     properties:
-      operationId: string
+      name: commons.StringWithAllCasings
       request: WebSocketRequest
       response: WebSocketResponse
       errors: serviceCommons.ResponseErrors
   WebSocketRequest:
     extends: commons.WithDocs
     properties:
-      encoding: serviceCommons.Encoding
       type: types.TypeReference
   WebSocketResponse:
     extends: commons.WithDocs
     properties:
-      encoding: serviceCommons.Encoding
       type: types.TypeReference
   WebSocketOperationProperties:
     properties:

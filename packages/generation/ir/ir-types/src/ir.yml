@@ -25,7 +25,6 @@ types:
     properties:
       http: list<http.HttpService>
       websocket: list<websocket.WebSocketChannel>
-      nonStandardEncodings: list<serviceCommons.CustomWireMessageEncoding>
   FernConstants:
     properties:
       errorDiscriminant: string

@@ -13,8 +13,8 @@ types:
       http: optional<HttpErrorConfiguration>
   ErrorName:
     properties:
-      fernFilepath: types.FernFilepath
-      name: string
+      fernFilepath: commons.FernFilepath
+      name: commons.StringWithAllCasings
   HttpErrorConfiguration:
     properties:
       statusCode: integer

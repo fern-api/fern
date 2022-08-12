@@ -4,3 +4,9 @@ types:
   WithDocs:
     properties:
       docs: optional<string>
+  FernFilepath: list<StringWithAllCasings>
+  StringWithAllCasings:
+    properties:
+      original: string
+      camelCase: string
+      snakeCase: string
