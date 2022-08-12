@@ -10,7 +10,7 @@ types:
   HttpService:
     extends: commons.WithDocs
     properties:
-      name: serviceCommons.ServiceName
+      name: serviceCommons.DeclaredServiceName
       basePath: optional<string>
       endpoints: list<HttpEndpoint>
       headers: list<HttpHeader>

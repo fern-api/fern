@@ -4,7 +4,7 @@ imports:
   commons: ../commons.yml
   errors: ../errors.yml
 types:
-  ServiceName:
+  DeclaredServiceName:
     properties:
       fernFilepath: commons.FernFilepath
       name: commons.StringWithAllCasings
@@ -12,4 +12,4 @@ types:
   ResponseError:
     extends: commons.WithDocs
     properties:
-      error: errors.ErrorName
+      error: errors.DeclaredErrorName

@@ -5,7 +5,7 @@ imports:
   commons: commons.yml
   http: services/http.yml
 types:
-  AuthSchemeName: commons.StringWithAllCasings
+  AuthSchemeName: string
 
   ApiAuth:
     extends: commons.WithDocs

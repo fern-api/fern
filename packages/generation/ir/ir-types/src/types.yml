@@ -7,9 +7,9 @@ types:
     docs: "A type, which is a name and a shape"
     extends: commons.WithDocs
     properties:
-      name: TypeName
+      name: DeclaredTypeName
       shape: Type
-  TypeName:
+  DeclaredTypeName:
     properties:
       fernFilepath: commons.FernFilepath
       name: commons.StringWithAllCasings
@@ -37,7 +37,7 @@ types:
     properties:
       extends:
         docs: "A list of other types to inherit from"
-        type: list<TypeName>
+        type: list<DeclaredTypeName>
       properties: list<ObjectProperty>
   ObjectProperty:
     extends: commons.WithDocs
@@ -58,7 +58,7 @@ types:
   TypeReference:
     union:
       container: ContainerType
-      named: TypeName
+      named: DeclaredTypeName
       primitive: PrimitiveType
       unknown: {}
       void: {}

@@ -7,11 +7,11 @@ types:
   ErrorDeclaration:
     extends: commons.WithDocs
     properties:
-      name: ErrorName
+      name: DeclaredErrorName
       discriminantValue: string
       type: types.Type
       http: optional<HttpErrorConfiguration>
-  ErrorName:
+  DeclaredErrorName:
     properties:
       fernFilepath: commons.FernFilepath
       name: commons.StringWithAllCasings
