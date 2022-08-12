@@ -11,7 +11,6 @@ export async function generateEndpointMethodBody({
     endpointTypes,
     serviceFile,
     serviceDefinition,
-    helperManager,
     modelContext,
     dependencyManager,
 }: {
@@ -19,7 +18,6 @@ export async function generateEndpointMethodBody({
     endpointTypes: GeneratedHttpEndpointTypes;
     serviceFile: SourceFile;
     serviceDefinition: HttpService;
-    helperManager: HelperManager;
     modelContext: ModelContext;
     dependencyManager: DependencyManager;
 }): Promise<(StatementStructures | WriterFunction | string)[]> {
@@ -43,7 +41,6 @@ export async function generateEndpointMethodBody({
             serviceFile,
             serviceDefinition,
             includeQueryParams: queryParameterStatements.length > 0,
-            helperManager,
             dependencyManager,
             referenceToAuthHeader: undefined,
         }),
@@ -55,9 +52,6 @@ export async function generateEndpointMethodBody({
                 endpointTypes,
                 serviceFile,
                 modelContext,
-                serviceDefinition,
-                endpoint,
-                helperManager,
                 dependencyManager,
             })
         )

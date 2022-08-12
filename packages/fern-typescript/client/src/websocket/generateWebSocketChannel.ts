@@ -31,9 +31,7 @@ export function generateWebSocketChannel({
 }: {
     servicesDirectory: Directory;
     modelContext: ModelContext;
-
     channel: WebSocketChannel;
-    helperManager: HelperManager;
     dependencyManager: DependencyManager;
 }): void {
     generateChannel({

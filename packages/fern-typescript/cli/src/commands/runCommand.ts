@@ -47,7 +47,6 @@ export async function runCommand({
     await command.generate({
         intermediateRepresentation: await loadIntermediateRepresentation(config.irFilepath),
         apiName: upperCamelCase(config.workspaceName),
-        helperManager: new HelperManager(config.helpers),
         volume,
         context: generatorContext,
     });

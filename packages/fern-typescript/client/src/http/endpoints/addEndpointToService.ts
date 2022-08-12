@@ -11,7 +11,6 @@ export async function addEndpointToService({
     serviceClass,
     serviceDefinition,
     modelContext,
-    helperManager,
     dependencyManager,
 }: {
     endpoint: HttpEndpoint;
@@ -19,7 +18,6 @@ export async function addEndpointToService({
     serviceClass: ClassDeclaration;
     serviceDefinition: HttpService;
     modelContext: ModelContext;
-    helperManager: HelperManager;
     dependencyManager: DependencyManager;
 }): Promise<void> {
     const serviceFile = serviceInterface.getSourceFile();
@@ -57,7 +55,6 @@ export async function addEndpointToService({
             endpointTypes: generatedEndpointTypes,
             serviceFile,
             serviceDefinition,
-            helperManager,
             modelContext,
             dependencyManager,
         }),

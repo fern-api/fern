@@ -21,9 +21,7 @@ export async function generateHttpService({
 }: {
     servicesDirectory: Directory;
     modelContext: ModelContext;
-
     service: HttpService;
-    helperManager: HelperManager;
     dependencyManager: DependencyManager;
 }): Promise<void> {
     const packageDirectory = createDirectoriesForFernFilepath(servicesDirectory, service.name.fernFilepath);

@@ -13,13 +13,11 @@ import { generateWebSocketChannel } from "./websocket/generateWebSocketChannel";
 
 export async function generateClientProject({
     intermediateRepresentation,
-    helperManager,
     packageName,
     packageVersion,
     volume,
 }: {
     intermediateRepresentation: IntermediateRepresentation;
-    helperManager: HelperManager;
     packageName: string;
     packageVersion: string | undefined;
     volume: Volume;
@@ -28,17 +26,15 @@ export async function generateClientProject({
         volume,
         packageName,
         packageVersion,
-        generateSrc: (directory) => generateClientFiles({ intermediateRepresentation, helperManager, directory }),
+        generateSrc: (directory) => generateClientFiles({ intermediateRepresentation, directory }),
     });
 }
 
 async function generateClientFiles({
     intermediateRepresentation,
-    helperManager,
     directory,
 }: {
     intermediateRepresentation: IntermediateRepresentation;
-    helperManager: HelperManager;
     directory: Directory;
 }): Promise<GeneratedProjectSrcInfo> {
     const dependencyManager = new DependencyManager();
@@ -56,7 +52,6 @@ async function generateClientFiles({
             service,
             servicesDirectory,
             modelContext,
-            helperManager,
             dependencyManager,
         });
     }
@@ -66,17 +61,9 @@ async function generateClientFiles({
             channel,
             servicesDirectory,
             modelContext,
-            helperManager,
             dependencyManager,
         });
     }
-
-    await generateEncoderFiles({
-        intermediateRepresentation,
-        modelContext,
-        servicesDirectory,
-        helperManager,
-    });
 
     return {
         dependencies: dependencyManager.getDependencies(),

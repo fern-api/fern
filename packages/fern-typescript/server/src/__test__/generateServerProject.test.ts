@@ -5,8 +5,6 @@ import { generateServerProject } from "../generateServerProject";
 const FIXTURES_DIR = "fixtures";
 const FIXTURES = ["posts"];
 
-const MOCK_HELPERS_MANAGERS = new HelperManager({ encodings: {} });
-
 describe("generateServerProject", () => {
     for (const fixture of FIXTURES) {
         itFernETE(fixture, {
@@ -18,7 +16,6 @@ describe("generateServerProject", () => {
                     packageVersion: "0.0.0",
                     volume,
                     intermediateRepresentation,
-                    helperManager: MOCK_HELPERS_MANAGERS,
                 });
             },
         });

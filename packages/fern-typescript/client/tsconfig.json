@@ -4,7 +4,6 @@
   "include": ["./src"],
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
-    { "path": "../../commons/core-utils" },
     { "path": "../fern-typescript-commons" },
     { "path": "../model" },
     { "path": "../model-context" },
