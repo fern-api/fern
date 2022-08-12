@@ -10,10 +10,9 @@ export function createServerCommand(generatorConfig: FernTypescriptGeneratorConf
     return {
         key: COMMAND_KEY,
         npmPackage,
-        generate: async ({ intermediateRepresentation, helperManager, volume }) => {
+        generate: async ({ intermediateRepresentation, volume }) => {
             await generateServerProject({
                 intermediateRepresentation,
-                helperManager,
                 packageName: npmPackage.packageName,
                 packageVersion: npmPackage.publishInfo?.packageCoordinate.version,
                 volume,

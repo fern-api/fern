@@ -4,9 +4,7 @@
   "include": ["./src"],
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
-    { "path": "../encoders" },
     { "path": "../fern-typescript-commons" },
-    { "path": "../helpers/helper-manager" },
     { "path": "../model" },
     { "path": "../model-context" },
     { "path": "../service-types" },

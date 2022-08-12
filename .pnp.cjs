@@ -89,10 +89,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/fern-typescript/declaration-handler"\
       },\
       {\
-        "name": "@fern-typescript/encoders",\
-        "reference": "workspace:packages/fern-typescript/encoders"\
-      },\
-      {\
         "name": "@fern-typescript/errors",\
         "reference": "workspace:packages/fern-typescript/errors"\
       },\
@@ -103,18 +99,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       {\
         "name": "@fern-typescript/commons",\
         "reference": "workspace:packages/fern-typescript/fern-typescript-commons"\
-      },\
-      {\
-        "name": "@fern-typescript/json-encoding-helper",\
-        "reference": "workspace:packages/fern-typescript/helpers/built-in/json-encoding-helper"\
-      },\
-      {\
-        "name": "@fern-typescript/helper-manager",\
-        "reference": "workspace:packages/fern-typescript/helpers/helper-manager"\
-      },\
-      {\
-        "name": "@fern-typescript/helper-utils",\
-        "reference": "workspace:packages/fern-typescript/helpers/utils"\
       },\
       {\
         "name": "@fern-typescript/model",\
@@ -259,12 +243,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-typescript/commons", ["workspace:packages/fern-typescript/fern-typescript-commons"]],\
       ["@fern-typescript/commons-v2", ["workspace:packages/fern-typescript/commons-v2"]],\
       ["@fern-typescript/declaration-handler", ["workspace:packages/fern-typescript/declaration-handler"]],\
-      ["@fern-typescript/encoders", ["workspace:packages/fern-typescript/encoders"]],\
       ["@fern-typescript/errors", ["workspace:packages/fern-typescript/errors"]],\
       ["@fern-typescript/errors-v2", ["workspace:packages/fern-typescript/errors-v2"]],\
-      ["@fern-typescript/helper-manager", ["workspace:packages/fern-typescript/helpers/helper-manager"]],\
-      ["@fern-typescript/helper-utils", ["workspace:packages/fern-typescript/helpers/utils"]],\
-      ["@fern-typescript/json-encoding-helper", ["workspace:packages/fern-typescript/helpers/built-in/json-encoding-helper"]],\
       ["@fern-typescript/model", ["workspace:packages/fern-typescript/model"]],\
       ["@fern-typescript/model-context", ["workspace:packages/fern-typescript/model-context"]],\
       ["@fern-typescript/resolvers", ["workspace:packages/fern-typescript/resolvers"]],\
@@ -3503,12 +3483,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/commons", "workspace:packages/fern-typescript/fern-typescript-commons"],\
             ["@fern-typescript/commons-v2", "workspace:packages/fern-typescript/commons-v2"],\
             ["@fern-typescript/declaration-handler", "workspace:packages/fern-typescript/declaration-handler"],\
-            ["@fern-typescript/encoders", "workspace:packages/fern-typescript/encoders"],\
             ["@fern-typescript/errors", "workspace:packages/fern-typescript/errors"],\
             ["@fern-typescript/errors-v2", "workspace:packages/fern-typescript/errors-v2"],\
-            ["@fern-typescript/helper-manager", "workspace:packages/fern-typescript/helpers/helper-manager"],\
-            ["@fern-typescript/helper-utils", "workspace:packages/fern-typescript/helpers/utils"],\
-            ["@fern-typescript/json-encoding-helper", "workspace:packages/fern-typescript/helpers/built-in/json-encoding-helper"],\
             ["@fern-typescript/model", "workspace:packages/fern-typescript/model"],\
             ["@fern-typescript/model-context", "workspace:packages/fern-typescript/model-context"],\
             ["@fern-typescript/resolvers", "workspace:packages/fern-typescript/resolvers"],\
@@ -4070,12 +4046,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.18.9"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.9"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
-            ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-fern/ir-model", "npm:0.0.16"],\
             ["@fern-typescript/commons", "workspace:packages/fern-typescript/fern-typescript-commons"],\
-            ["@fern-typescript/encoders", "workspace:packages/fern-typescript/encoders"],\
-            ["@fern-typescript/helper-manager", "workspace:packages/fern-typescript/helpers/helper-manager"],\
-            ["@fern-typescript/helper-utils", "workspace:packages/fern-typescript/helpers/utils"],\
             ["@fern-typescript/model", "workspace:packages/fern-typescript/model"],\
             ["@fern-typescript/model-context", "workspace:packages/fern-typescript/model-context"],\
             ["@fern-typescript/service-types", "workspace:packages/fern-typescript/service-types"],\
@@ -4192,29 +4164,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
-      ["@fern-typescript/encoders", [\
-        ["workspace:packages/fern-typescript/encoders", {\
-          "packageLocation": "./packages/fern-typescript/encoders/",\
-          "packageDependencies": [\
-            ["@fern-typescript/encoders", "workspace:packages/fern-typescript/encoders"],\
-            ["@babel/core", "npm:7.18.9"],\
-            ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.9"],\
-            ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
-            ["@fern-fern/ir-model", "npm:0.0.16"],\
-            ["@fern-typescript/helper-manager", "workspace:packages/fern-typescript/helpers/helper-manager"],\
-            ["@fern-typescript/model-context", "workspace:packages/fern-typescript/model-context"],\
-            ["@types/jest", "npm:28.1.6"],\
-            ["@types/node", "npm:18.6.2"],\
-            ["depcheck", "npm:1.4.3"],\
-            ["eslint", "npm:8.20.0"],\
-            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
-            ["prettier", "npm:2.7.1"],\
-            ["ts-morph", "npm:15.1.0"],\
-            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
-          ],\
-          "linkType": "SOFT"\
-        }]\
-      ]],\
       ["@fern-typescript/errors", [\
         ["workspace:packages/fern-typescript/errors", {\
           "packageLocation": "./packages/fern-typescript/errors/",\
@@ -4255,72 +4204,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["prettier", "npm:2.7.1"],\
             ["ts-morph", "npm:15.1.0"],\
-            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
-          ],\
-          "linkType": "SOFT"\
-        }]\
-      ]],\
-      ["@fern-typescript/helper-manager", [\
-        ["workspace:packages/fern-typescript/helpers/helper-manager", {\
-          "packageLocation": "./packages/fern-typescript/helpers/helper-manager/",\
-          "packageDependencies": [\
-            ["@fern-typescript/helper-manager", "workspace:packages/fern-typescript/helpers/helper-manager"],\
-            ["@babel/core", "npm:7.18.9"],\
-            ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.9"],\
-            ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
-            ["@fern-api/config-management-commons", "workspace:packages/config-management/config-management-commons"],\
-            ["@fern-fern/ir-model", "npm:0.0.16"],\
-            ["@fern-typescript/helper-utils", "workspace:packages/fern-typescript/helpers/utils"],\
-            ["@fern-typescript/json-encoding-helper", "workspace:packages/fern-typescript/helpers/built-in/json-encoding-helper"],\
-            ["@types/jest", "npm:28.1.6"],\
-            ["@types/node", "npm:18.6.2"],\
-            ["depcheck", "npm:1.4.3"],\
-            ["eslint", "npm:8.20.0"],\
-            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
-            ["prettier", "npm:2.7.1"],\
-            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
-            ["zod", "npm:3.16.0"]\
-          ],\
-          "linkType": "SOFT"\
-        }]\
-      ]],\
-      ["@fern-typescript/helper-utils", [\
-        ["workspace:packages/fern-typescript/helpers/utils", {\
-          "packageLocation": "./packages/fern-typescript/helpers/utils/",\
-          "packageDependencies": [\
-            ["@fern-typescript/helper-utils", "workspace:packages/fern-typescript/helpers/utils"],\
-            ["@babel/core", "npm:7.18.9"],\
-            ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.9"],\
-            ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
-            ["@fern-fern/ir-model", "npm:0.0.16"],\
-            ["@fern-typescript/model-context", "workspace:packages/fern-typescript/model-context"],\
-            ["@types/jest", "npm:28.1.6"],\
-            ["@types/node", "npm:18.6.2"],\
-            ["depcheck", "npm:1.4.3"],\
-            ["eslint", "npm:8.20.0"],\
-            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
-            ["prettier", "npm:2.7.1"],\
-            ["ts-morph", "npm:15.1.0"],\
-            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
-          ],\
-          "linkType": "SOFT"\
-        }]\
-      ]],\
-      ["@fern-typescript/json-encoding-helper", [\
-        ["workspace:packages/fern-typescript/helpers/built-in/json-encoding-helper", {\
-          "packageLocation": "./packages/fern-typescript/helpers/built-in/json-encoding-helper/",\
-          "packageDependencies": [\
-            ["@fern-typescript/json-encoding-helper", "workspace:packages/fern-typescript/helpers/built-in/json-encoding-helper"],\
-            ["@babel/core", "npm:7.18.9"],\
-            ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.9"],\
-            ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
-            ["@fern-typescript/helper-utils", "workspace:packages/fern-typescript/helpers/utils"],\
-            ["@types/jest", "npm:28.1.6"],\
-            ["@types/node", "npm:18.6.2"],\
-            ["depcheck", "npm:1.4.3"],\
-            ["eslint", "npm:8.20.0"],\
-            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
-            ["prettier", "npm:2.7.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
@@ -4408,8 +4291,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-fern/ir-model", "npm:0.0.16"],\
             ["@fern-typescript/commons", "workspace:packages/fern-typescript/fern-typescript-commons"],\
-            ["@fern-typescript/encoders", "workspace:packages/fern-typescript/encoders"],\
-            ["@fern-typescript/helper-manager", "workspace:packages/fern-typescript/helpers/helper-manager"],\
             ["@fern-typescript/model", "workspace:packages/fern-typescript/model"],\
             ["@fern-typescript/model-context", "workspace:packages/fern-typescript/model-context"],\
             ["@fern-typescript/service-types", "workspace:packages/fern-typescript/service-types"],\
@@ -10157,7 +10038,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/commons-v2", "workspace:packages/fern-typescript/commons-v2"],\
             ["@fern-typescript/declaration-handler", "workspace:packages/fern-typescript/declaration-handler"],\
             ["@fern-typescript/errors-v2", "workspace:packages/fern-typescript/errors-v2"],\
-            ["@fern-typescript/helper-manager", "workspace:packages/fern-typescript/helpers/helper-manager"],\
             ["@fern-typescript/model", "workspace:packages/fern-typescript/model"],\
             ["@fern-typescript/resolvers", "workspace:packages/fern-typescript/resolvers"],\
             ["@fern-typescript/server", "workspace:packages/fern-typescript/server"],\
