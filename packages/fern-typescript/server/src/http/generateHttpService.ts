@@ -5,7 +5,6 @@ import {
     DependencyManager,
     getTextOfTsNode,
 } from "@fern-typescript/commons";
-import { HelperManager } from "@fern-typescript/helper-manager";
 import { ModelContext } from "@fern-typescript/model-context";
 import { getHttpRequestParameters } from "@fern-typescript/service-types";
 import { Directory, InterfaceDeclaration, SourceFile, ts, VariableDeclarationKind } from "ts-morph";
@@ -22,9 +21,7 @@ export async function generateHttpService({
 }: {
     servicesDirectory: Directory;
     modelContext: ModelContext;
-
     service: HttpService;
-    helperManager: HelperManager;
     dependencyManager: DependencyManager;
 }): Promise<void> {
     const packageDirectory = createDirectoriesForFernFilepath(servicesDirectory, service.name.fernFilepath);

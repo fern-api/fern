@@ -454,10 +454,9 @@ export class ServiceWithBasicAuth implements ServiceWithBasicAuth {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.auth.EndpointBErrorBody
+                error: encodedResponse.body as model.auth.EndpointBErrorBody
             };
         }
     }
@@ -501,10 +500,9 @@ export class ServiceWithBasicAuthWithOverride implements ServiceWithBasicAuthWit
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.auth.EndpointGErrorBody
+                error: encodedResponse.body as model.auth.EndpointGErrorBody
             };
         }
     }
@@ -522,10 +520,9 @@ export class ServiceWithBasicAuthWithOverride implements ServiceWithBasicAuthWit
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.auth.OverrideEndpointGErrorBody
+                error: encodedResponse.body as model.auth.OverrideEndpointGErrorBody
             };
         }
     }
@@ -568,10 +565,9 @@ export class ServiceWithBearerAuth implements ServiceWithBearerAuth {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.auth.EndpointCErrorBody
+                error: encodedResponse.body as model.auth.EndpointCErrorBody
             };
         }
     }
@@ -615,10 +611,9 @@ export class ServiceWithBearerAuthWithOverride implements ServiceWithBearerAuthW
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.auth.EndpointFErrorBody
+                error: encodedResponse.body as model.auth.EndpointFErrorBody
             };
         }
     }
@@ -636,10 +631,9 @@ export class ServiceWithBearerAuthWithOverride implements ServiceWithBearerAuthW
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.auth.OverrideEndpointFErrorBody
+                error: encodedResponse.body as model.auth.OverrideEndpointFErrorBody
             };
         }
     }
@@ -682,10 +676,9 @@ export class ServiceWithNoAuth implements ServiceWithNoAuth {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.auth.EndpointAErrorBody
+                error: encodedResponse.body as model.auth.EndpointAErrorBody
             };
         }
     }
@@ -729,10 +722,9 @@ export class ServiceWithNoAuthWithBasicOverride implements ServiceWithNoAuthWith
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.auth.EndpointEErrorBody
+                error: encodedResponse.body as model.auth.EndpointEErrorBody
             };
         }
     }
@@ -750,10 +742,9 @@ export class ServiceWithNoAuthWithBasicOverride implements ServiceWithNoAuthWith
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.auth.OverrideEndpointEErrorBody
+                error: encodedResponse.body as model.auth.OverrideEndpointEErrorBody
             };
         }
     }
@@ -797,10 +788,9 @@ export class ServiceWithNoAuthWithBearerOverride implements ServiceWithNoAuthWit
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.auth.EndpointDErrorBody
+                error: encodedResponse.body as model.auth.EndpointDErrorBody
             };
         }
     }
@@ -818,10 +808,9 @@ export class ServiceWithNoAuthWithBearerOverride implements ServiceWithNoAuthWit
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.auth.OverrideEndpointDErrorBody
+                error: encodedResponse.body as model.auth.OverrideEndpointDErrorBody
             };
         }
     }
@@ -1181,10 +1170,9 @@ export class NoErrorsService implements NoErrorsService {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.api.GetErrorBody
+                error: encodedResponse.body as model.api.GetErrorBody
             };
         }
     }

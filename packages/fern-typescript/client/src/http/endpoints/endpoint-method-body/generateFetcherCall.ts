@@ -1,12 +1,10 @@
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services";
 import { DependencyManager, getTextOfTsNode, invokeSupplier } from "@fern-typescript/commons";
-import { HelperManager } from "@fern-typescript/helper-manager";
 import { GeneratedHttpEndpointTypes } from "@fern-typescript/model-context";
 import { SourceFile, StatementStructures, StructureKind, ts, VariableDeclarationKind } from "ts-morph";
 import { ClientConstants } from "../../../constants";
 import { generateJoinUrlPathsCall } from "../../../utils/generateJoinPathsCall";
 import { convertPathToTemplateString } from "./convertPathToTemplateString";
-import { generateEncoderCall } from "./generateEncoderCall";
 
 export async function generateFetcherCall({
     serviceFile,
@@ -14,7 +12,6 @@ export async function generateFetcherCall({
     endpoint,
     endpointTypes,
     includeQueryParams,
-    helperManager,
     dependencyManager,
     referenceToAuthHeader,
 }: {
@@ -23,7 +20,6 @@ export async function generateFetcherCall({
     endpoint: HttpEndpoint;
     endpointTypes: GeneratedHttpEndpointTypes;
     includeQueryParams: boolean;
-    helperManager: HelperManager;
     dependencyManager: DependencyManager;
     referenceToAuthHeader: ts.Expression | undefined;
 }): Promise<StatementStructures> {
@@ -80,27 +76,6 @@ export async function generateFetcherCall({
                       endpointTypes.request.wrapper.propertyName
                   )
                 : ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Signature.REQUEST_PARAMETER);
-
-        const encoder = await helperManager.getEncoderForEncoding(endpoint.request.encoding);
-        const encodedRequestBody = generateEncoderCall({
-            encoder,
-            method: "encode",
-            variableReference: endpointTypes.request.body.isInlined
-                ? {
-                      _type: "wireMessage",
-                      wireMessageType: "Request",
-                      serviceName: serviceDefinition.name.name,
-                      endpointId: endpoint.endpointId,
-                      variable: requestBodyReference,
-                  }
-                : {
-                      _type: "modelType",
-                      typeReference: endpointTypes.request.body.typeReference,
-                      variable: requestBodyReference,
-                  },
-            referencedIn: serviceFile,
-        });
-
         fetcherArgs.push(
             ts.factory.createPropertyAssignment(
                 ts.factory.createIdentifier(
@@ -112,13 +87,7 @@ export async function generateFetcherCall({
                             ts.factory.createIdentifier(
                                 ClientConstants.HttpService.ServiceUtils.Fetcher.Parameters.Body.Properties.CONTENT
                             ),
-                            encodedRequestBody
-                        ),
-                        ts.factory.createPropertyAssignment(
-                            ts.factory.createIdentifier(
-                                ClientConstants.HttpService.ServiceUtils.Fetcher.Parameters.Body.Properties.CONTENT_TYPE
-                            ),
-                            ts.factory.createStringLiteral(encoder.contentType)
+                            requestBodyReference
                         ),
                     ],
                     true

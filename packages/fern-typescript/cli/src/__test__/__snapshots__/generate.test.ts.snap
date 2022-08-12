@@ -6934,8 +6934,7 @@ export class AdminService implements AdminService {
             method: \\"POST\\",
             headers: {},
             body: {
-                content: JSON.stringify(request.body),
-                contentType: \\"application/json\\"
+                content: request.body
             }
         });
 
@@ -6945,10 +6944,9 @@ export class AdminService implements AdminService {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.admin.UpdateTestSubmissionStatusErrorBody
+                error: encodedResponse.body as model.admin.UpdateTestSubmissionStatusErrorBody
             };
         }
     }
@@ -6959,8 +6957,7 @@ export class AdminService implements AdminService {
             method: \\"POST\\",
             headers: {},
             body: {
-                content: JSON.stringify(request.body),
-                contentType: \\"application/json\\"
+                content: request.body
             }
         });
 
@@ -6970,10 +6967,9 @@ export class AdminService implements AdminService {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.admin.SendTestSubmissionUpdateErrorBody
+                error: encodedResponse.body as model.admin.SendTestSubmissionUpdateErrorBody
             };
         }
     }
@@ -6984,8 +6980,7 @@ export class AdminService implements AdminService {
             method: \\"POST\\",
             headers: {},
             body: {
-                content: JSON.stringify(request.body),
-                contentType: \\"application/json\\"
+                content: request.body
             }
         });
 
@@ -6995,10 +6990,9 @@ export class AdminService implements AdminService {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.admin.UpdateWorkspaceSubmissionStatusErrorBody
+                error: encodedResponse.body as model.admin.UpdateWorkspaceSubmissionStatusErrorBody
             };
         }
     }
@@ -7009,8 +7003,7 @@ export class AdminService implements AdminService {
             method: \\"POST\\",
             headers: {},
             body: {
-                content: JSON.stringify(request.body),
-                contentType: \\"application/json\\"
+                content: request.body
             }
         });
 
@@ -7020,10 +7013,9 @@ export class AdminService implements AdminService {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.admin.SendWorkspaceSubmissionUpdateErrorBody
+                error: encodedResponse.body as model.admin.SendWorkspaceSubmissionUpdateErrorBody
             };
         }
     }
@@ -7034,8 +7026,7 @@ export class AdminService implements AdminService {
             method: \\"POST\\",
             headers: {},
             body: {
-                content: JSON.stringify(request.body),
-                contentType: \\"application/json\\"
+                content: request.body
             }
         });
 
@@ -7045,10 +7036,9 @@ export class AdminService implements AdminService {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.admin.StoreTracedTestCaseErrorBody
+                error: encodedResponse.body as model.admin.StoreTracedTestCaseErrorBody
             };
         }
     }
@@ -7059,8 +7049,7 @@ export class AdminService implements AdminService {
             method: \\"POST\\",
             headers: {},
             body: {
-                content: JSON.stringify(request.body),
-                contentType: \\"application/json\\"
+                content: request.body
             }
         });
 
@@ -7070,10 +7059,9 @@ export class AdminService implements AdminService {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.admin.StoreTracedTestCaseV2ErrorBody
+                error: encodedResponse.body as model.admin.StoreTracedTestCaseV2ErrorBody
             };
         }
     }
@@ -7084,8 +7072,7 @@ export class AdminService implements AdminService {
             method: \\"POST\\",
             headers: {},
             body: {
-                content: JSON.stringify(request.body),
-                contentType: \\"application/json\\"
+                content: request.body
             }
         });
 
@@ -7095,10 +7082,9 @@ export class AdminService implements AdminService {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.admin.StoreTracedWorkspaceErrorBody
+                error: encodedResponse.body as model.admin.StoreTracedWorkspaceErrorBody
             };
         }
     }
@@ -7109,8 +7095,7 @@ export class AdminService implements AdminService {
             method: \\"POST\\",
             headers: {},
             body: {
-                content: JSON.stringify(request.body),
-                contentType: \\"application/json\\"
+                content: request.body
             }
         });
 
@@ -7120,10 +7105,9 @@ export class AdminService implements AdminService {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.admin.StoreTracedWorkspaceV2ErrorBody
+                error: encodedResponse.body as model.admin.StoreTracedWorkspaceV2ErrorBody
             };
         }
     }
@@ -7178,17 +7162,15 @@ export class HomepageProblemService implements HomepageProblemService {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.commons.ProblemId[]
+                body: encodedResponse.body as model.commons.ProblemId[]
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.homepage.GetHomepageProblemsErrorBody
+                error: encodedResponse.body as model.homepage.GetHomepageProblemsErrorBody
             };
         }
     }
@@ -7199,8 +7181,7 @@ export class HomepageProblemService implements HomepageProblemService {
             method: \\"POST\\",
             headers: {},
             body: {
-                content: JSON.stringify(request),
-                contentType: \\"application/json\\"
+                content: request
             }
         });
 
@@ -7210,10 +7191,9 @@ export class HomepageProblemService implements HomepageProblemService {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.homepage.SetHomepageProblemsErrorBody
+                error: encodedResponse.body as model.homepage.SetHomepageProblemsErrorBody
             };
         }
     }
@@ -7280,17 +7260,15 @@ export class MigrationInfoService implements MigrationInfoService {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.migration.Migration[]
+                body: encodedResponse.body as model.migration.Migration[]
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.migration.GetAttemptedMigrationsErrorBody
+                error: encodedResponse.body as model.migration.GetAttemptedMigrationsErrorBody
             };
         }
     }
@@ -7346,23 +7324,20 @@ export class PlaylistCrudService implements PlaylistCrudService {
             method: \\"POST\\",
             headers: {},
             body: {
-                content: JSON.stringify(request),
-                contentType: \\"application/json\\"
+                content: request
             }
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.playlist.Playlist
+                body: encodedResponse.body as model.playlist.Playlist
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.playlist.CreatePlaylistErrorBody
+                error: encodedResponse.body as model.playlist.CreatePlaylistErrorBody
             };
         }
     }
@@ -7375,17 +7350,15 @@ export class PlaylistCrudService implements PlaylistCrudService {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.playlist.Playlist[]
+                body: encodedResponse.body as model.playlist.Playlist[]
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.playlist.GetPlaylistsErrorBody
+                error: encodedResponse.body as model.playlist.GetPlaylistsErrorBody
             };
         }
     }
@@ -7398,17 +7371,15 @@ export class PlaylistCrudService implements PlaylistCrudService {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.playlist.Playlist
+                body: encodedResponse.body as model.playlist.Playlist
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.playlist.GetPlaylistErrorBody
+                error: encodedResponse.body as model.playlist.GetPlaylistErrorBody
             };
         }
     }
@@ -7419,23 +7390,20 @@ export class PlaylistCrudService implements PlaylistCrudService {
             method: \\"PUT\\",
             headers: {},
             body: {
-                content: JSON.stringify(request.body),
-                contentType: \\"application/json\\"
+                content: request.body
             }
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.playlist.Playlist
+                body: encodedResponse.body as model.playlist.Playlist
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.playlist.UpdatePlaylistErrorBody
+                error: encodedResponse.body as model.playlist.UpdatePlaylistErrorBody
             };
         }
     }
@@ -7453,10 +7421,9 @@ export class PlaylistCrudService implements PlaylistCrudService {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.playlist.DeletePlaylistErrorBody
+                error: encodedResponse.body as model.playlist.DeletePlaylistErrorBody
             };
         }
     }
@@ -7511,23 +7478,20 @@ export class ProblemCrudService implements ProblemCrudService {
             method: \\"POST\\",
             headers: {},
             body: {
-                content: JSON.stringify(request),
-                contentType: \\"application/json\\"
+                content: request
             }
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.problem.CreateProblemResponse
+                body: encodedResponse.body as model.problem.CreateProblemResponse
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.problem.CreateProblemErrorBody
+                error: encodedResponse.body as model.problem.CreateProblemErrorBody
             };
         }
     }
@@ -7538,23 +7502,20 @@ export class ProblemCrudService implements ProblemCrudService {
             method: \\"POST\\",
             headers: {},
             body: {
-                content: JSON.stringify(request.body),
-                contentType: \\"application/json\\"
+                content: request.body
             }
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.problem.UpdateProblemResponse
+                body: encodedResponse.body as model.problem.UpdateProblemResponse
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.problem.UpdateProblemErrorBody
+                error: encodedResponse.body as model.problem.UpdateProblemErrorBody
             };
         }
     }
@@ -7572,10 +7533,9 @@ export class ProblemCrudService implements ProblemCrudService {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.problem.DeleteProblemErrorBody
+                error: encodedResponse.body as model.problem.DeleteProblemErrorBody
             };
         }
     }
@@ -7586,23 +7546,20 @@ export class ProblemCrudService implements ProblemCrudService {
             method: \\"POST\\",
             headers: {},
             body: {
-                content: JSON.stringify(request),
-                contentType: \\"application/json\\"
+                content: request
             }
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.problem.GetDefaultStarterFilesResponse
+                body: encodedResponse.body as model.problem.GetDefaultStarterFilesResponse
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.problem.GetDefaultStarterFilesErrorBody
+                error: encodedResponse.body as model.problem.GetDefaultStarterFilesErrorBody
             };
         }
     }
@@ -7662,17 +7619,15 @@ export class ExecutionSesssionManagementService implements ExecutionSesssionMana
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.submission.ExecutionSessionResponse
+                body: encodedResponse.body as model.submission.ExecutionSessionResponse
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.submission.CreateExecutionSessionErrorBody
+                error: encodedResponse.body as model.submission.CreateExecutionSessionErrorBody
             };
         }
     }
@@ -7685,17 +7640,15 @@ export class ExecutionSesssionManagementService implements ExecutionSesssionMana
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.submission.ExecutionSessionResponse | null | undefined
+                body: encodedResponse.body as model.submission.ExecutionSessionResponse | null | undefined
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.submission.GetExecutionSessionErrorBody
+                error: encodedResponse.body as model.submission.GetExecutionSessionErrorBody
             };
         }
     }
@@ -7713,10 +7666,9 @@ export class ExecutionSesssionManagementService implements ExecutionSesssionMana
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.submission.StopExecutionSessionErrorBody
+                error: encodedResponse.body as model.submission.StopExecutionSessionErrorBody
             };
         }
     }
@@ -7729,17 +7681,15 @@ export class ExecutionSesssionManagementService implements ExecutionSesssionMana
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.submission.GetExecutionSessionStateResponse
+                body: encodedResponse.body as model.submission.GetExecutionSessionStateResponse
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.submission.GetExecutionSessionsStateErrorBody
+                error: encodedResponse.body as model.submission.GetExecutionSessionsStateErrorBody
             };
         }
     }
@@ -7799,10 +7749,9 @@ export class SysPropCrudService implements SysPropCrudService {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.sysprop.SetNumWarmInstancesErrorBody
+                error: encodedResponse.body as model.sysprop.SetNumWarmInstancesErrorBody
             };
         }
     }
@@ -7815,17 +7764,15 @@ export class SysPropCrudService implements SysPropCrudService {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as Record<model.commons.Language, number>
+                body: encodedResponse.body as Record<model.commons.Language, number>
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.sysprop.GetNumWarmInstancesErrorBody
+                error: encodedResponse.body as model.sysprop.GetNumWarmInstancesErrorBody
             };
         }
     }
@@ -7891,17 +7838,15 @@ export class ProblemInfoServicV2 implements ProblemInfoServicV2 {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.v2.problem.LightweightProblemInfoV2[]
+                body: encodedResponse.body as model.v2.problem.LightweightProblemInfoV2[]
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.v2.problem.GetLightweightProblemsErrorBody
+                error: encodedResponse.body as model.v2.problem.GetLightweightProblemsErrorBody
             };
         }
     }
@@ -7914,17 +7859,15 @@ export class ProblemInfoServicV2 implements ProblemInfoServicV2 {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.v2.problem.ProblemInfoV2[]
+                body: encodedResponse.body as model.v2.problem.ProblemInfoV2[]
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.v2.problem.GetProblemsErrorBody
+                error: encodedResponse.body as model.v2.problem.GetProblemsErrorBody
             };
         }
     }
@@ -7937,17 +7880,15 @@ export class ProblemInfoServicV2 implements ProblemInfoServicV2 {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.v2.problem.ProblemInfoV2
+                body: encodedResponse.body as model.v2.problem.ProblemInfoV2
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.v2.problem.GetLatestProblemErrorBody
+                error: encodedResponse.body as model.v2.problem.GetLatestProblemErrorBody
             };
         }
     }
@@ -7960,17 +7901,15 @@ export class ProblemInfoServicV2 implements ProblemInfoServicV2 {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.v2.problem.ProblemInfoV2
+                body: encodedResponse.body as model.v2.problem.ProblemInfoV2
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.v2.problem.GetProblemVersionErrorBody
+                error: encodedResponse.body as model.v2.problem.GetProblemVersionErrorBody
             };
         }
     }
@@ -8035,17 +7974,15 @@ export class ProblemInfoServicV2 implements ProblemInfoServicV2 {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.v2.v3.problem.LightweightProblemInfoV2[]
+                body: encodedResponse.body as model.v2.v3.problem.LightweightProblemInfoV2[]
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.v2.v3.problem.GetLightweightProblemsErrorBody
+                error: encodedResponse.body as model.v2.v3.problem.GetLightweightProblemsErrorBody
             };
         }
     }
@@ -8058,17 +7995,15 @@ export class ProblemInfoServicV2 implements ProblemInfoServicV2 {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.v2.v3.problem.ProblemInfoV2[]
+                body: encodedResponse.body as model.v2.v3.problem.ProblemInfoV2[]
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.v2.v3.problem.GetProblemsErrorBody
+                error: encodedResponse.body as model.v2.v3.problem.GetProblemsErrorBody
             };
         }
     }
@@ -8081,17 +8016,15 @@ export class ProblemInfoServicV2 implements ProblemInfoServicV2 {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.v2.v3.problem.ProblemInfoV2
+                body: encodedResponse.body as model.v2.v3.problem.ProblemInfoV2
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.v2.v3.problem.GetLatestProblemErrorBody
+                error: encodedResponse.body as model.v2.v3.problem.GetLatestProblemErrorBody
             };
         }
     }
@@ -8104,17 +8037,15 @@ export class ProblemInfoServicV2 implements ProblemInfoServicV2 {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.v2.v3.problem.ProblemInfoV2
+                body: encodedResponse.body as model.v2.v3.problem.ProblemInfoV2
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.v2.v3.problem.GetProblemVersionErrorBody
+                error: encodedResponse.body as model.v2.v3.problem.GetProblemVersionErrorBody
             };
         }
     }
@@ -15103,8 +15034,7 @@ export class AdminService implements AdminService {
             method: \\"POST\\",
             headers: {},
             body: {
-                content: JSON.stringify(request.body),
-                contentType: \\"application/json\\"
+                content: request.body
             }
         });
 
@@ -15114,10 +15044,9 @@ export class AdminService implements AdminService {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.admin.UpdateTestSubmissionStatusErrorBody
+                error: encodedResponse.body as model.admin.UpdateTestSubmissionStatusErrorBody
             };
         }
     }
@@ -15128,8 +15057,7 @@ export class AdminService implements AdminService {
             method: \\"POST\\",
             headers: {},
             body: {
-                content: JSON.stringify(request.body),
-                contentType: \\"application/json\\"
+                content: request.body
             }
         });
 
@@ -15139,10 +15067,9 @@ export class AdminService implements AdminService {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.admin.SendTestSubmissionUpdateErrorBody
+                error: encodedResponse.body as model.admin.SendTestSubmissionUpdateErrorBody
             };
         }
     }
@@ -15153,8 +15080,7 @@ export class AdminService implements AdminService {
             method: \\"POST\\",
             headers: {},
             body: {
-                content: JSON.stringify(request.body),
-                contentType: \\"application/json\\"
+                content: request.body
             }
         });
 
@@ -15164,10 +15090,9 @@ export class AdminService implements AdminService {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.admin.UpdateWorkspaceSubmissionStatusErrorBody
+                error: encodedResponse.body as model.admin.UpdateWorkspaceSubmissionStatusErrorBody
             };
         }
     }
@@ -15178,8 +15103,7 @@ export class AdminService implements AdminService {
             method: \\"POST\\",
             headers: {},
             body: {
-                content: JSON.stringify(request.body),
-                contentType: \\"application/json\\"
+                content: request.body
             }
         });
 
@@ -15189,10 +15113,9 @@ export class AdminService implements AdminService {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.admin.SendWorkspaceSubmissionUpdateErrorBody
+                error: encodedResponse.body as model.admin.SendWorkspaceSubmissionUpdateErrorBody
             };
         }
     }
@@ -15203,8 +15126,7 @@ export class AdminService implements AdminService {
             method: \\"POST\\",
             headers: {},
             body: {
-                content: JSON.stringify(request.body),
-                contentType: \\"application/json\\"
+                content: request.body
             }
         });
 
@@ -15214,10 +15136,9 @@ export class AdminService implements AdminService {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.admin.StoreTracedTestCaseErrorBody
+                error: encodedResponse.body as model.admin.StoreTracedTestCaseErrorBody
             };
         }
     }
@@ -15228,8 +15149,7 @@ export class AdminService implements AdminService {
             method: \\"POST\\",
             headers: {},
             body: {
-                content: JSON.stringify(request.body),
-                contentType: \\"application/json\\"
+                content: request.body
             }
         });
 
@@ -15239,10 +15159,9 @@ export class AdminService implements AdminService {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.admin.StoreTracedTestCaseV2ErrorBody
+                error: encodedResponse.body as model.admin.StoreTracedTestCaseV2ErrorBody
             };
         }
     }
@@ -15253,8 +15172,7 @@ export class AdminService implements AdminService {
             method: \\"POST\\",
             headers: {},
             body: {
-                content: JSON.stringify(request.body),
-                contentType: \\"application/json\\"
+                content: request.body
             }
         });
 
@@ -15264,10 +15182,9 @@ export class AdminService implements AdminService {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.admin.StoreTracedWorkspaceErrorBody
+                error: encodedResponse.body as model.admin.StoreTracedWorkspaceErrorBody
             };
         }
     }
@@ -15278,8 +15195,7 @@ export class AdminService implements AdminService {
             method: \\"POST\\",
             headers: {},
             body: {
-                content: JSON.stringify(request.body),
-                contentType: \\"application/json\\"
+                content: request.body
             }
         });
 
@@ -15289,10 +15205,9 @@ export class AdminService implements AdminService {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.admin.StoreTracedWorkspaceV2ErrorBody
+                error: encodedResponse.body as model.admin.StoreTracedWorkspaceV2ErrorBody
             };
         }
     }
@@ -15347,17 +15262,15 @@ export class HomepageProblemService implements HomepageProblemService {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.commons.ProblemId[]
+                body: encodedResponse.body as model.commons.ProblemId[]
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.homepage.GetHomepageProblemsErrorBody
+                error: encodedResponse.body as model.homepage.GetHomepageProblemsErrorBody
             };
         }
     }
@@ -15368,8 +15281,7 @@ export class HomepageProblemService implements HomepageProblemService {
             method: \\"POST\\",
             headers: {},
             body: {
-                content: JSON.stringify(request),
-                contentType: \\"application/json\\"
+                content: request
             }
         });
 
@@ -15379,10 +15291,9 @@ export class HomepageProblemService implements HomepageProblemService {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.homepage.SetHomepageProblemsErrorBody
+                error: encodedResponse.body as model.homepage.SetHomepageProblemsErrorBody
             };
         }
     }
@@ -15449,17 +15360,15 @@ export class MigrationInfoService implements MigrationInfoService {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.migration.Migration[]
+                body: encodedResponse.body as model.migration.Migration[]
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.migration.GetAttemptedMigrationsErrorBody
+                error: encodedResponse.body as model.migration.GetAttemptedMigrationsErrorBody
             };
         }
     }
@@ -15515,23 +15424,20 @@ export class PlaylistCrudService implements PlaylistCrudService {
             method: \\"POST\\",
             headers: {},
             body: {
-                content: JSON.stringify(request),
-                contentType: \\"application/json\\"
+                content: request
             }
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.playlist.Playlist
+                body: encodedResponse.body as model.playlist.Playlist
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.playlist.CreatePlaylistErrorBody
+                error: encodedResponse.body as model.playlist.CreatePlaylistErrorBody
             };
         }
     }
@@ -15544,17 +15450,15 @@ export class PlaylistCrudService implements PlaylistCrudService {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.playlist.Playlist[]
+                body: encodedResponse.body as model.playlist.Playlist[]
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.playlist.GetPlaylistsErrorBody
+                error: encodedResponse.body as model.playlist.GetPlaylistsErrorBody
             };
         }
     }
@@ -15567,17 +15471,15 @@ export class PlaylistCrudService implements PlaylistCrudService {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.playlist.Playlist
+                body: encodedResponse.body as model.playlist.Playlist
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.playlist.GetPlaylistErrorBody
+                error: encodedResponse.body as model.playlist.GetPlaylistErrorBody
             };
         }
     }
@@ -15588,23 +15490,20 @@ export class PlaylistCrudService implements PlaylistCrudService {
             method: \\"PUT\\",
             headers: {},
             body: {
-                content: JSON.stringify(request.body),
-                contentType: \\"application/json\\"
+                content: request.body
             }
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.playlist.Playlist
+                body: encodedResponse.body as model.playlist.Playlist
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.playlist.UpdatePlaylistErrorBody
+                error: encodedResponse.body as model.playlist.UpdatePlaylistErrorBody
             };
         }
     }
@@ -15622,10 +15521,9 @@ export class PlaylistCrudService implements PlaylistCrudService {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.playlist.DeletePlaylistErrorBody
+                error: encodedResponse.body as model.playlist.DeletePlaylistErrorBody
             };
         }
     }
@@ -15680,23 +15578,20 @@ export class ProblemCrudService implements ProblemCrudService {
             method: \\"POST\\",
             headers: {},
             body: {
-                content: JSON.stringify(request),
-                contentType: \\"application/json\\"
+                content: request
             }
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.problem.CreateProblemResponse
+                body: encodedResponse.body as model.problem.CreateProblemResponse
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.problem.CreateProblemErrorBody
+                error: encodedResponse.body as model.problem.CreateProblemErrorBody
             };
         }
     }
@@ -15707,23 +15602,20 @@ export class ProblemCrudService implements ProblemCrudService {
             method: \\"POST\\",
             headers: {},
             body: {
-                content: JSON.stringify(request.body),
-                contentType: \\"application/json\\"
+                content: request.body
             }
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.problem.UpdateProblemResponse
+                body: encodedResponse.body as model.problem.UpdateProblemResponse
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.problem.UpdateProblemErrorBody
+                error: encodedResponse.body as model.problem.UpdateProblemErrorBody
             };
         }
     }
@@ -15741,10 +15633,9 @@ export class ProblemCrudService implements ProblemCrudService {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.problem.DeleteProblemErrorBody
+                error: encodedResponse.body as model.problem.DeleteProblemErrorBody
             };
         }
     }
@@ -15755,23 +15646,20 @@ export class ProblemCrudService implements ProblemCrudService {
             method: \\"POST\\",
             headers: {},
             body: {
-                content: JSON.stringify(request),
-                contentType: \\"application/json\\"
+                content: request
             }
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.problem.GetDefaultStarterFilesResponse
+                body: encodedResponse.body as model.problem.GetDefaultStarterFilesResponse
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.problem.GetDefaultStarterFilesErrorBody
+                error: encodedResponse.body as model.problem.GetDefaultStarterFilesErrorBody
             };
         }
     }
@@ -15831,17 +15719,15 @@ export class ExecutionSesssionManagementService implements ExecutionSesssionMana
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.submission.ExecutionSessionResponse
+                body: encodedResponse.body as model.submission.ExecutionSessionResponse
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.submission.CreateExecutionSessionErrorBody
+                error: encodedResponse.body as model.submission.CreateExecutionSessionErrorBody
             };
         }
     }
@@ -15854,17 +15740,15 @@ export class ExecutionSesssionManagementService implements ExecutionSesssionMana
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.submission.ExecutionSessionResponse | null | undefined
+                body: encodedResponse.body as model.submission.ExecutionSessionResponse | null | undefined
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.submission.GetExecutionSessionErrorBody
+                error: encodedResponse.body as model.submission.GetExecutionSessionErrorBody
             };
         }
     }
@@ -15882,10 +15766,9 @@ export class ExecutionSesssionManagementService implements ExecutionSesssionMana
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.submission.StopExecutionSessionErrorBody
+                error: encodedResponse.body as model.submission.StopExecutionSessionErrorBody
             };
         }
     }
@@ -15898,17 +15781,15 @@ export class ExecutionSesssionManagementService implements ExecutionSesssionMana
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.submission.GetExecutionSessionStateResponse
+                body: encodedResponse.body as model.submission.GetExecutionSessionStateResponse
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.submission.GetExecutionSessionsStateErrorBody
+                error: encodedResponse.body as model.submission.GetExecutionSessionsStateErrorBody
             };
         }
     }
@@ -15968,10 +15849,9 @@ export class SysPropCrudService implements SysPropCrudService {
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.sysprop.SetNumWarmInstancesErrorBody
+                error: encodedResponse.body as model.sysprop.SetNumWarmInstancesErrorBody
             };
         }
     }
@@ -15984,17 +15864,15 @@ export class SysPropCrudService implements SysPropCrudService {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as Record<model.commons.Language, number>
+                body: encodedResponse.body as Record<model.commons.Language, number>
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.sysprop.GetNumWarmInstancesErrorBody
+                error: encodedResponse.body as model.sysprop.GetNumWarmInstancesErrorBody
             };
         }
     }
@@ -16060,17 +15938,15 @@ export class ProblemInfoServicV2 implements ProblemInfoServicV2 {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.v2.problem.LightweightProblemInfoV2[]
+                body: encodedResponse.body as model.v2.problem.LightweightProblemInfoV2[]
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.v2.problem.GetLightweightProblemsErrorBody
+                error: encodedResponse.body as model.v2.problem.GetLightweightProblemsErrorBody
             };
         }
     }
@@ -16083,17 +15959,15 @@ export class ProblemInfoServicV2 implements ProblemInfoServicV2 {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.v2.problem.ProblemInfoV2[]
+                body: encodedResponse.body as model.v2.problem.ProblemInfoV2[]
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.v2.problem.GetProblemsErrorBody
+                error: encodedResponse.body as model.v2.problem.GetProblemsErrorBody
             };
         }
     }
@@ -16106,17 +15980,15 @@ export class ProblemInfoServicV2 implements ProblemInfoServicV2 {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.v2.problem.ProblemInfoV2
+                body: encodedResponse.body as model.v2.problem.ProblemInfoV2
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.v2.problem.GetLatestProblemErrorBody
+                error: encodedResponse.body as model.v2.problem.GetLatestProblemErrorBody
             };
         }
     }
@@ -16129,17 +16001,15 @@ export class ProblemInfoServicV2 implements ProblemInfoServicV2 {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.v2.problem.ProblemInfoV2
+                body: encodedResponse.body as model.v2.problem.ProblemInfoV2
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.v2.problem.GetProblemVersionErrorBody
+                error: encodedResponse.body as model.v2.problem.GetProblemVersionErrorBody
             };
         }
     }
@@ -16204,17 +16074,15 @@ export class ProblemInfoServicV2 implements ProblemInfoServicV2 {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.v2.v3.problem.LightweightProblemInfoV2[]
+                body: encodedResponse.body as model.v2.v3.problem.LightweightProblemInfoV2[]
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.v2.v3.problem.GetLightweightProblemsErrorBody
+                error: encodedResponse.body as model.v2.v3.problem.GetLightweightProblemsErrorBody
             };
         }
     }
@@ -16227,17 +16095,15 @@ export class ProblemInfoServicV2 implements ProblemInfoServicV2 {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.v2.v3.problem.ProblemInfoV2[]
+                body: encodedResponse.body as model.v2.v3.problem.ProblemInfoV2[]
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.v2.v3.problem.GetProblemsErrorBody
+                error: encodedResponse.body as model.v2.v3.problem.GetProblemsErrorBody
             };
         }
     }
@@ -16250,17 +16116,15 @@ export class ProblemInfoServicV2 implements ProblemInfoServicV2 {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.v2.v3.problem.ProblemInfoV2
+                body: encodedResponse.body as model.v2.v3.problem.ProblemInfoV2
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.v2.v3.problem.GetLatestProblemErrorBody
+                error: encodedResponse.body as model.v2.v3.problem.GetLatestProblemErrorBody
             };
         }
     }
@@ -16273,17 +16137,15 @@ export class ProblemInfoServicV2 implements ProblemInfoServicV2 {
         });
 
         if (isResponseOk(encodedResponse)) {
-            const response = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: true,
-                body: response as model.v2.v3.problem.ProblemInfoV2
+                body: encodedResponse.body as model.v2.v3.problem.ProblemInfoV2
             };
         }
         else {
-            const error = JSON.parse(new TextDecoder().decode(encodedResponse.body));
             return {
                 ok: false,
-                error: error as model.v2.v3.problem.GetProblemVersionErrorBody
+                error: encodedResponse.body as model.v2.v3.problem.GetProblemVersionErrorBody
             };
         }
     }

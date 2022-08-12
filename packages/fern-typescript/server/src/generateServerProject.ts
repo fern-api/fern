@@ -5,8 +5,6 @@ import {
     GeneratedProjectSrcInfo,
     generateTypeScriptProject,
 } from "@fern-typescript/commons";
-import { generateEncoderFiles } from "@fern-typescript/encoders";
-import { HelperManager } from "@fern-typescript/helper-manager";
 import { generateModelFiles } from "@fern-typescript/model";
 import { Volume } from "memfs/lib/volume";
 import { Directory } from "ts-morph";
@@ -14,13 +12,11 @@ import { generateHttpService } from "./http/generateHttpService";
 
 export async function generateServerProject({
     intermediateRepresentation,
-    helperManager,
     packageName,
     packageVersion,
     volume,
 }: {
     intermediateRepresentation: IntermediateRepresentation;
-    helperManager: HelperManager;
     packageName: string;
     packageVersion: string | undefined;
     volume: Volume;
@@ -29,17 +25,15 @@ export async function generateServerProject({
         volume,
         packageName,
         packageVersion,
-        generateSrc: (directory) => generateServerFiles({ intermediateRepresentation, helperManager, directory }),
+        generateSrc: (directory) => generateServerFiles({ intermediateRepresentation, directory }),
     });
 }
 
 async function generateServerFiles({
     intermediateRepresentation,
-    helperManager,
     directory,
 }: {
     intermediateRepresentation: IntermediateRepresentation;
-    helperManager: HelperManager;
     directory: Directory;
 }): Promise<GeneratedProjectSrcInfo> {
     const dependencyManager = new DependencyManager();
@@ -57,17 +51,9 @@ async function generateServerFiles({
             service,
             servicesDirectory,
             modelContext,
-            helperManager,
             dependencyManager,
         });
     }
-
-    await generateEncoderFiles({
-        intermediateRepresentation,
-        modelContext,
-        servicesDirectory,
-        helperManager,
-    });
 
     return {
         dependencies: dependencyManager.getDependencies(),

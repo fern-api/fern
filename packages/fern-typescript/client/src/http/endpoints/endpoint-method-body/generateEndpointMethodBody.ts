@@ -1,6 +1,5 @@
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services";
 import { DependencyManager, getTextOfTsNode } from "@fern-typescript/commons";
-import { HelperManager } from "@fern-typescript/helper-manager";
 import { GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/model-context";
 import { SourceFile, StatementStructures, WriterFunction } from "ts-morph";
 import { generateConstructQueryParams } from "./generateConstructQueryParams";
@@ -12,7 +11,6 @@ export async function generateEndpointMethodBody({
     endpointTypes,
     serviceFile,
     serviceDefinition,
-    helperManager,
     modelContext,
     dependencyManager,
 }: {
@@ -20,7 +18,6 @@ export async function generateEndpointMethodBody({
     endpointTypes: GeneratedHttpEndpointTypes;
     serviceFile: SourceFile;
     serviceDefinition: HttpService;
-    helperManager: HelperManager;
     modelContext: ModelContext;
     dependencyManager: DependencyManager;
 }): Promise<(StatementStructures | WriterFunction | string)[]> {
@@ -44,7 +41,6 @@ export async function generateEndpointMethodBody({
             serviceFile,
             serviceDefinition,
             includeQueryParams: queryParameterStatements.length > 0,
-            helperManager,
             dependencyManager,
             referenceToAuthHeader: undefined,
         }),
@@ -56,9 +52,6 @@ export async function generateEndpointMethodBody({
                 endpointTypes,
                 serviceFile,
                 modelContext,
-                serviceDefinition,
-                endpoint,
-                helperManager,
                 dependencyManager,
             })
         )
