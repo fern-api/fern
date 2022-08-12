@@ -12,7 +12,7 @@ import { convertToFernFilepath } from "./utils/convertToFernFilepath";
 
 const ROOT_API_FILE_FERN_FILEPATH: FernFilepath = [];
 
-export function generateIntermediateRepresentation(workspace: Workspace): IntermediateRepresentation {
+export async function generateIntermediateRepresentation(workspace: Workspace): Promise<IntermediateRepresentation> {
     const intermediateRepresentation: IntermediateRepresentation = {
         apiName: workspace.name,
         auth: convertApiAuth({
@@ -34,10 +34,10 @@ export function generateIntermediateRepresentation(workspace: Workspace): Interm
         },
     };
 
-    const visitServiceFile = (fernFilepath: FernFilepath, schema: ServiceFileSchema) => {
+    const visitServiceFile = async (fernFilepath: FernFilepath, schema: ServiceFileSchema) => {
         const { imports = {} } = schema;
 
-        visitObject(schema, {
+        await visitObject(schema, {
             imports: noop,
 
             ids: (ids) => {
@@ -116,10 +116,10 @@ export function generateIntermediateRepresentation(workspace: Workspace): Interm
     };
 
     for (const [filepath, schema] of Object.entries(workspace.serviceFiles)) {
-        visitServiceFile(convertToFernFilepath(filepath), schema);
+        await visitServiceFile(convertToFernFilepath(filepath), schema);
     }
 
-    visitServiceFile(ROOT_API_FILE_FERN_FILEPATH, workspace.rootApiFile);
+    await visitServiceFile(ROOT_API_FILE_FERN_FILEPATH, workspace.rootApiFile);
 
     return intermediateRepresentation;
 }

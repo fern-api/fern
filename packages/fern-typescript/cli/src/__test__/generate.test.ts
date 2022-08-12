@@ -38,7 +38,9 @@ describe("runGenerator", () => {
 
                 await validateWorkspaceAndLogIssues(parseWorkspaceResult.workspace);
 
-                const intermediateRepresentation = generateIntermediateRepresentation(parseWorkspaceResult.workspace);
+                const intermediateRepresentation = await generateIntermediateRepresentation(
+                    parseWorkspaceResult.workspace
+                );
 
                 await writeFile(irPath, JSON.stringify(intermediateRepresentation, undefined, 4));
             });

@@ -12,7 +12,6 @@
   ],
   "type": "module",
   "source": "src/index.ts",
-  "module": "src/index.ts",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "sideEffects": false,
@@ -22,8 +21,6 @@
     "test": "yarn compile && jest --passWithNoTests",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore --fix",
-    "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
-    "lint:style:fix": "yarn lint:style --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck"

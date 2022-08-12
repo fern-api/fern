@@ -110,9 +110,137 @@ exports[`layout-v2 simple 1`] = `
             }
         }
     ],
-    \\"errors\\": [],
+    \\"errors\\": [
+        {
+            \\"name\\": {
+                \\"name\\": \\"NotFoundError\\",
+                \\"fernFilepath\\": [
+                    \\"imdb\\"
+                ]
+            },
+            \\"discriminantValue\\": \\"NotFoundError\\",
+            \\"http\\": {
+                \\"statusCode\\": 404
+            },
+            \\"type\\": {
+                \\"aliasOf\\": {
+                    \\"_type\\": \\"void\\"
+                },
+                \\"_type\\": \\"alias\\"
+            }
+        }
+    ],
     \\"services\\": {
-        \\"http\\": [],
+        \\"http\\": [
+            {
+                \\"name\\": {
+                    \\"name\\": \\"MoviesService\\",
+                    \\"fernFilepath\\": [
+                        \\"imdb\\"
+                    ]
+                },
+                \\"basePath\\": \\"/movies\\",
+                \\"headers\\": [],
+                \\"endpoints\\": [
+                    {
+                        \\"endpointId\\": \\"createMovie\\",
+                        \\"auth\\": false,
+                        \\"method\\": \\"POST\\",
+                        \\"path\\": {
+                            \\"head\\": \\"/\\",
+                            \\"parts\\": []
+                        },
+                        \\"pathParameters\\": [],
+                        \\"queryParameters\\": [],
+                        \\"headers\\": [],
+                        \\"request\\": {
+                            \\"encoding\\": {
+                                \\"_type\\": \\"json\\"
+                            },
+                            \\"type\\": {
+                                \\"name\\": \\"CreateMovieRequest\\",
+                                \\"fernFilepath\\": [
+                                    \\"imdb\\"
+                                ],
+                                \\"_type\\": \\"named\\"
+                            }
+                        },
+                        \\"response\\": {
+                            \\"encoding\\": {
+                                \\"_type\\": \\"json\\"
+                            },
+                            \\"type\\": {
+                                \\"name\\": \\"MovieId\\",
+                                \\"fernFilepath\\": [
+                                    \\"imdb\\"
+                                ],
+                                \\"_type\\": \\"named\\"
+                            }
+                        },
+                        \\"errors\\": []
+                    },
+                    {
+                        \\"endpointId\\": \\"getMovie\\",
+                        \\"auth\\": false,
+                        \\"method\\": \\"GET\\",
+                        \\"path\\": {
+                            \\"head\\": \\"/\\",
+                            \\"parts\\": [
+                                {
+                                    \\"pathParameter\\": \\"movieId\\",
+                                    \\"tail\\": \\"\\"
+                                }
+                            ]
+                        },
+                        \\"pathParameters\\": [
+                            {
+                                \\"key\\": \\"movieId\\",
+                                \\"valueType\\": {
+                                    \\"name\\": \\"MovieId\\",
+                                    \\"fernFilepath\\": [
+                                        \\"imdb\\"
+                                    ],
+                                    \\"_type\\": \\"named\\"
+                                }
+                            }
+                        ],
+                        \\"queryParameters\\": [],
+                        \\"headers\\": [],
+                        \\"request\\": {
+                            \\"encoding\\": {
+                                \\"_type\\": \\"json\\"
+                            },
+                            \\"type\\": {
+                                \\"_type\\": \\"void\\"
+                            }
+                        },
+                        \\"response\\": {
+                            \\"encoding\\": {
+                                \\"_type\\": \\"json\\"
+                            },
+                            \\"type\\": {
+                                \\"name\\": \\"Movie\\",
+                                \\"fernFilepath\\": [
+                                    \\"imdb\\"
+                                ],
+                                \\"_type\\": \\"named\\"
+                            }
+                        },
+                        \\"errors\\": [
+                            {
+                                \\"discriminantValue\\": \\"NotFoundError\\",
+                                \\"error\\": {
+                                    \\"name\\": \\"NotFoundError\\",
+                                    \\"fernFilepath\\": [
+                                        \\"imdb\\"
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
         \\"websocket\\": [],
         \\"nonStandardEncodings\\": []
     },

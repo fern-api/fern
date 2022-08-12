@@ -4,14 +4,6 @@ export type ObjectPropertiesVisitor<T, R> = {
     [K in keyof T]-?: (value: T[K]) => R;
 };
 
-export function visitObject<T extends Record<string, unknown>>(
-    object: T,
-    visitor: ObjectPropertiesVisitor<T, void>
-): void;
-export function visitObject<T extends Record<string, unknown>>(
-    object: T,
-    visitor: ObjectPropertiesVisitor<T, void | Promise<void>>
-): Promise<void>;
 export async function visitObject<T extends Record<string, unknown>>(
     object: T,
     visitor: ObjectPropertiesVisitor<T, void | Promise<void>>

@@ -22,12 +22,15 @@ export async function loadProject({
 }: {
     commandLineWorkspaces: readonly string[];
 }): Promise<Project> {
-    const project =
-        (await loadProjectV2({ commandLineWorkspaces })) ?? (await loadProjectV1({ commandLineWorkspaces }));
-    if (project.workspaces.length === 0) {
+    const v1Project = await loadProjectV1({ commandLineWorkspaces });
+    if (v1Project.workspaces.length > 0) {
+        return v1Project;
+    }
+    const v2Project = await loadProjectV2({ commandLineWorkspaces });
+    if (v2Project == null || v2Project.workspaces.length === 0) {
         throw new Error("No workspaces found");
     }
-    return project;
+    return v2Project;
 }
 
 async function loadProjectV1({

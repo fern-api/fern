@@ -6,7 +6,7 @@ import { runFernCli } from "../utils/runFernCli";
 
 const FIXTURES_DIR = path.join(__dirname, "fixtures");
 
-describe("fern generate tests", () => {
+describe("fern generate", () => {
     itFixture("simple-model");
 });
 

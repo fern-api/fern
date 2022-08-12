@@ -7,7 +7,7 @@ const OPEN_API_DEFINITION_FILENAME = "openapi.json";
 const FERN_API_DEFINITION_FILENAME = "fern.yml";
 const FIXTURES_DIR = path.join(__dirname, "fixtures");
 
-describe("fern generate tests", () => {
+describe("fern convert", () => {
     itFixture("direct-sales");
     itFixture("medplum");
 });
