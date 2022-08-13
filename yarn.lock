@@ -1845,9 +1845,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/config-management-commons@workspace:*, @fern-api/config-management-commons@workspace:packages/config-management/config-management-commons":
+"@fern-api/config-management-commons@workspace:*, @fern-api/config-management-commons@workspace:packages/config-management/commons":
   version: 0.0.0-use.local
-  resolution: "@fern-api/config-management-commons@workspace:packages/config-management/config-management-commons"
+  resolution: "@fern-api/config-management-commons@workspace:packages/config-management/commons"
   dependencies:
     "@babel/core": ^7.18.9
     "@babel/preset-env": ^7.18.9
@@ -2044,19 +2044,15 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/docker-utils": "workspace:*"
     "@fern-api/generators-configuration": "workspace:*"
-    "@fern-api/workspace-configuration": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/ir-model": 0.0.33
     "@types/jest": ^28.1.6
     "@types/node": ^18.6.2
-    "@types/tar": ^6.1.1
     "@types/tmp": ^0.2.3
     depcheck: ^1.4.3
     eslint: ^8.20.0
-    execa: ^5.1.1
     jest: ^28.1.3
     prettier: ^2.7.1
-    tar: ^6.1.11
     tmp-promise: ^3.0.3
     typescript: 4.6.4
   languageName: unknown
@@ -2338,12 +2334,10 @@ __metadata:
     "@fern-typescript/commons-v2": "workspace:*"
     "@fern-typescript/declaration-handler": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/lodash-es": ^4.17.6
     "@types/node": ^18.6.2
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
-    lodash-es: ^4.17.21
     prettier: ^2.7.1
     ts-morph: ^15.1.0
     typescript: 4.6.4
@@ -2393,9 +2387,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/commons@workspace:*, @fern-typescript/commons@workspace:packages/fern-typescript/fern-typescript-commons":
+"@fern-typescript/commons@workspace:*, @fern-typescript/commons@workspace:packages/fern-typescript/commons":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/commons@workspace:packages/fern-typescript/fern-typescript-commons"
+  resolution: "@fern-typescript/commons@workspace:packages/fern-typescript/commons"
   dependencies:
     "@babel/core": ^7.18.9
     "@babel/preset-env": ^7.18.9
@@ -2404,14 +2398,12 @@ __metadata:
     "@fern-fern/ir-model": 0.0.33
     "@types/esutils": ^2.0.0
     "@types/jest": ^28.1.6
-    "@types/lodash-es": ^4.17.6
     "@types/node": ^18.6.2
     depcheck: ^1.4.3
     eslint: ^8.20.0
     esutils: ^2.0.3
     immer: ^9.0.15
     jest: ^28.1.3
-    lodash-es: ^4.17.21
     memfs: ^3.4.1
     package-json-type: ^1.0.3
     prettier: ^2.7.1
@@ -2587,12 +2579,10 @@ __metadata:
     "@fern-typescript/model-context": "workspace:*"
     "@fern-typescript/types": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/lodash-es": ^4.17.6
     "@types/node": ^18.6.2
     depcheck: ^1.4.3
     eslint: ^8.20.0
     jest: ^28.1.3
-    lodash-es: ^4.17.21
     prettier: ^2.7.1
     ts-morph: ^15.1.0
     typescript: 4.6.4
@@ -3953,15 +3943,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/minipass@npm:*":
-  version: 3.1.2
-  resolution: "@types/minipass@npm:3.1.2"
-  dependencies:
-    "@types/node": "npm:*"
-  checksum: 0d01e11b5b959625385a482ad29ea16352be42506b459555b0f77fd82235e9c540946cc9c05a73fed1ae30b132914baaa4ccf257ed2cad20bc9773f0a06f4bac
-  languageName: node
-  linkType: hard
-
 "@types/node@npm:*, @types/node@npm:^18.0.3":
   version: 18.6.0
   resolution: "@types/node@npm:18.6.0"
@@ -4089,16 +4070,6 @@ __metadata:
   version: 2.0.1
   resolution: "@types/stack-utils@npm:2.0.1"
   checksum: 205fdbe3326b7046d7eaf5e494d8084f2659086a266f3f9cf00bccc549c8e36e407f88168ad4383c8b07099957ad669f75f2532ed4bc70be2b037330f7bae019
-  languageName: node
-  linkType: hard
-
-"@types/tar@npm:^6.1.1":
-  version: 6.1.1
-  resolution: "@types/tar@npm:6.1.1"
-  dependencies:
-    "@types/minipass": "npm:*"
-    "@types/node": "npm:*"
-  checksum: 06cfffc606525fab223f7e7cae74b88347a6c21de39454a9b85a56c61b4cab034e9cefacd6a053c7ac2a07e29bed71ce72bc4ca8bc101f61e2e5248950508b7d
   languageName: node
   linkType: hard
 

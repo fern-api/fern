@@ -4,7 +4,6 @@
   "include": ["./src"],
   "references": [
     { "path": "../../../config-management/generators-configuration" },
-    { "path": "../../../config-management/workspace-configuration" },
     { "path": "../../../workspace-loader" },
     { "path": "../docker-utils" }
   ]

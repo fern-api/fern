@@ -4,7 +4,7 @@
   "repository": {
     "type": "git",
     "url": "git@github.com:fern-api/fern.git",
-    "directory": "packages/fern-typescript/fern-typescript-commons"
+    "directory": "packages/fern-typescript/commons"
   },
   "files": [
     "lib"
@@ -29,7 +29,6 @@
     "@fern-fern/ir-model": "0.0.33",
     "esutils": "^2.0.3",
     "immer": "^9.0.15",
-    "lodash-es": "^4.17.21",
     "ts-morph": "^15.1.0",
     "typescript": "4.6.4",
     "zod": "^3.14.3"
@@ -40,7 +39,6 @@
     "@babel/preset-typescript": "^7.18.6",
     "@types/esutils": "^2.0.0",
     "@types/jest": "^28.1.6",
-    "@types/lodash-es": "^4.17.6",
     "@types/node": "^18.6.2",
     "depcheck": "^1.4.3",
     "eslint": "^8.20.0",
