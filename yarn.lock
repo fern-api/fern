@@ -7178,6 +7178,15 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"fern-api@npm:0.0.173":
+  version: 0.0.173
+  resolution: "fern-api@npm:0.0.173"
+  bin:
+    fern: cli.cjs
+  checksum: 603ba780c6055da930de58eef28b25ab76919061bb9c875b316beff35ef7409c6900d14bd32bad8b0684ec8d7e1925f8f24ca74621d7fa5962d997e743b1bdd1
+  languageName: node
+  linkType: hard
+
 "fern-typescript@workspace:*, fern-typescript@workspace:packages/fern-typescript/cli":
   version: 0.0.0-use.local
   resolution: "fern-typescript@workspace:packages/fern-typescript/cli"
@@ -7254,6 +7263,7 @@ env-cmd@toddbluhm/env-cmd:
     eslint-plugin-deprecation: ^1.3.2
     eslint-plugin-jest: ^26.5.3
     execa: ^5.1.1
+    fern-api: 0.0.173
     husky: ^7.0.4
     immer: ^9.0.15
     is-ci: ^3.0.1
