@@ -2,10 +2,10 @@ name: ir
 definition: ./src
 generators:
   - name: fernapi/fern-typescript
-    version: 0.0.144
+    version: 0.0.184-3-gab227ed7
     generate: true
     config:
-      mode: model
+      mode: client-v2
   - name: fernapi/fern-java
     version: 0.0.84
     generate: true

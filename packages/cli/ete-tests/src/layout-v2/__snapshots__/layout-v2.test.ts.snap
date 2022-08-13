@@ -4,35 +4,24 @@ exports[`layout-v2 simple 1`] = `
 "{
     \\"apiName\\": \\"my-api\\",
     \\"auth\\": {
-        \\"declaredSchemes\\": [
+        \\"requirement\\": \\"ALL\\",
+        \\"schemes\\": [
             {
-                \\"name\\": \\"MyAuth\\",
-                \\"definition\\": {
-                    \\"name\\": {
-                        \\"originalValue\\": \\"My-Header\\",
-                        \\"camelCase\\": \\"myHeader\\",
-                        \\"snakeCase\\": \\"my_header\\",
-                        \\"pascalCase\\": \\"MyHeader\\",
-                        \\"screamingSnakeCase\\": \\"MY_HEADER\\",
-                        \\"wireValue\\": \\"My-Header\\"
-                    },
-                    \\"valueType\\": {
-                        \\"primitive\\": \\"STRING\\",
-                        \\"_type\\": \\"primitive\\"
-                    },
-                    \\"_type\\": \\"header\\"
-                }
+                \\"name\\": {
+                    \\"originalValue\\": \\"My-Header\\",
+                    \\"camelCase\\": \\"myHeader\\",
+                    \\"snakeCase\\": \\"my_header\\",
+                    \\"pascalCase\\": \\"MyHeader\\",
+                    \\"screamingSnakeCase\\": \\"MY_HEADER\\",
+                    \\"wireValue\\": \\"My-Header\\"
+                },
+                \\"valueType\\": {
+                    \\"primitive\\": \\"STRING\\",
+                    \\"_type\\": \\"primitive\\"
+                },
+                \\"_type\\": \\"header\\"
             }
-        ],
-        \\"enabledSchemes\\": {
-            \\"all\\": [
-                {
-                    \\"name\\": \\"MyAuth\\",
-                    \\"_type\\": \\"named\\"
-                }
-            ],
-            \\"_type\\": \\"all\\"
-        }
+        ]
     },
     \\"types\\": [
         {
