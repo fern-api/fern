@@ -5,31 +5,17 @@ imports:
   commons: commons.yml
   http: services/http.yml
 types:
-  AuthSchemeName: string
-
   ApiAuth:
     extends: commons.WithDocs
     properties:
-      declaredSchemes: list<AuthSchemeDeclaration>
-      enabledSchemes: EnabledAuthSchemes
-  AuthSchemeDeclaration:
-    extends: commons.WithDocs
-    properties:
-      name: AuthSchemeName
-      definition: AuthSchemeDefinition
-  AuthSchemeDefinition:
-    union:
-      header: http.HttpHeader
-  EnabledAuthSchemes:
-    union:
-      all: list<AuthSchemeReference>
-      any: list<AuthSchemeReference>
-  AuthSchemeReference:
+      requirement: AuthSchemesRequirement
+      schemes: list<AuthScheme>
+  AuthSchemesRequirement:
+    enum:
+      - ALL
+      - ANY
+  AuthScheme:
     union:
       bearer: commons.WithDocs
       basic: commons.WithDocs
-      named: NamedAuthSchemeReference
-  NamedAuthSchemeReference:
-    extends: commons.WithDocs
-    properties:
-      name: AuthSchemeName
+      header: http.HttpHeader

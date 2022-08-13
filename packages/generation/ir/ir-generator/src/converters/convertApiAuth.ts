@@ -1,13 +1,6 @@
 import { RawSchemas, visitRawApiAuth, visitRawAuthSchemeDeclaration } from "@fern-api/yaml-schema";
-import {
-    ApiAuth,
-    AuthSchemeDeclaration,
-    AuthSchemeDefinition,
-    AuthSchemeName,
-    AuthSchemeReference,
-    EnabledAuthSchemes,
-    FernFilepath,
-} from "@fern-fern/ir-model";
+import { AuthSchemeDeclarationSchema } from "@fern-api/yaml-schema/src/schemas";
+import { ApiAuth, AuthScheme, AuthSchemesRequirement, FernFilepath } from "@fern-fern/ir-model";
 import { convertHttpHeader } from "./services/convertHttpService";
 
 export function convertApiAuth({
@@ -19,96 +12,105 @@ export function convertApiAuth({
     fernFilepath: FernFilepath;
     imports: Record<string, string>;
 }): ApiAuth {
-    return {
-        docs: undefined,
-        declaredSchemes:
-            rawApiFileSchema["auth-schemes"] != null
-                ? Object.entries(rawApiFileSchema["auth-schemes"]).map(([schemeName, rawSchemeDeclaration]) =>
-                      convertSchemeDeclaration({
-                          declarationName: schemeName,
-                          declaration: rawSchemeDeclaration,
-                          fernFilepath,
-                          imports,
-                      })
-                  )
-                : [],
-        enabledSchemes:
-            rawApiFileSchema.auth != null
-                ? visitRawApiAuth<EnabledAuthSchemes>(rawApiFileSchema.auth, {
-                      single: (authScheme) => EnabledAuthSchemes.all([convertSchemeReference(authScheme)]),
-                      all: ({ all }) =>
-                          EnabledAuthSchemes.all(all.map((schemeReference) => convertSchemeReference(schemeReference))),
-                      any: ({ any }) =>
-                          EnabledAuthSchemes.any(any.map((schemeReference) => convertSchemeReference(schemeReference))),
-                  })
-                : EnabledAuthSchemes.all([]),
-    };
-}
+    if (rawApiFileSchema.auth == null) {
+        return {
+            docs: undefined,
+            requirement: AuthSchemesRequirement.All,
+            schemes: [],
+        };
+    }
 
-function convertSchemeDeclaration({
-    declarationName,
-    declaration,
-    fernFilepath,
-    imports,
-}: {
-    declarationName: string;
-    declaration: RawSchemas.AuthSchemeDeclarationSchema;
-    fernFilepath: FernFilepath;
-    imports: Record<string, string>;
-}): AuthSchemeDeclaration {
-    return {
-        docs: declaration.docs,
-        name: AuthSchemeName.of(declarationName),
-        definition: convertAuthSchemeDefinition(declaration, fernFilepath, imports),
-    };
-}
-
-function convertAuthSchemeDefinition(
-    rawDefinition: RawSchemas.AuthSchemeDeclarationSchema,
-    fernFilepath: FernFilepath,
-    imports: Record<string, string>
-): AuthSchemeDefinition {
-    return visitRawAuthSchemeDeclaration(rawDefinition, {
-        header: () =>
-            AuthSchemeDefinition.header(
-                convertHttpHeader({
-                    headerKey: rawDefinition.header,
-                    header: {
-                        docs: rawDefinition.docs,
-                        name: rawDefinition.name,
-                        type: rawDefinition.type ?? "string",
-                    },
+    const docs = typeof rawApiFileSchema.auth !== "string" ? rawApiFileSchema.auth.docs : undefined;
+    return visitRawApiAuth<ApiAuth>(rawApiFileSchema.auth, {
+        single: (authScheme) => ({
+            docs,
+            requirement: AuthSchemesRequirement.All,
+            schemes: [
+                convertSchemeReference({
+                    reference: authScheme,
+                    authSchemeDeclarations: rawApiFileSchema["auth-schemes"],
+                    fernFilepath,
+                    imports,
+                }),
+            ],
+        }),
+        all: ({ all }) => ({
+            docs,
+            requirement: AuthSchemesRequirement.All,
+            schemes: all.map((schemeReference) =>
+                convertSchemeReference({
+                    reference: schemeReference,
+                    authSchemeDeclarations: rawApiFileSchema["auth-schemes"],
                     fernFilepath,
                     imports,
                 })
             ),
+        }),
+        any: ({ any }) => ({
+            docs,
+            requirement: AuthSchemesRequirement.Any,
+            schemes: any.map((schemeReference) =>
+                convertSchemeReference({
+                    reference: schemeReference,
+                    authSchemeDeclarations: rawApiFileSchema["auth-schemes"],
+                    fernFilepath,
+                    imports,
+                })
+            ),
+        }),
     });
 }
 
-function convertSchemeReference(reference: RawSchemas.AuthSchemeReferenceSchema | string): AuthSchemeReference {
+function convertSchemeReference({
+    reference,
+    authSchemeDeclarations,
+    fernFilepath,
+    imports,
+}: {
+    reference: RawSchemas.AuthSchemeReferenceSchema | string;
+    authSchemeDeclarations: Record<string, AuthSchemeDeclarationSchema> | undefined;
+    fernFilepath: FernFilepath;
+    imports: Record<string, string>;
+}): AuthScheme {
+    const convertNamedAuthSchemeReference = (reference: string, docs: string | undefined) => {
+        const declaration = authSchemeDeclarations?.[reference];
+        if (declaration == null) {
+            throw new Error("Unknown auth scheme: " + reference);
+        }
+        return visitRawAuthSchemeDeclaration(declaration, {
+            header: (rawHeader) =>
+                AuthScheme.header(
+                    convertHttpHeader({
+                        headerKey: rawHeader.header,
+                        header: {
+                            docs,
+                            name: rawHeader.name,
+                            type: rawHeader.type ?? "string",
+                        },
+                        fernFilepath,
+                        imports,
+                    })
+                ),
+        });
+    };
+
     if (typeof reference === "string") {
         switch (reference) {
             case "bearer":
-                return AuthSchemeReference.bearer({ docs: undefined });
+                return AuthScheme.bearer({ docs: undefined });
             case "basic":
-                return AuthSchemeReference.basic({ docs: undefined });
+                return AuthScheme.basic({ docs: undefined });
             default:
-                return AuthSchemeReference.named({
-                    docs: undefined,
-                    name: AuthSchemeName.of(reference),
-                });
+                return convertNamedAuthSchemeReference(reference, undefined);
         }
     }
 
     switch (reference.scheme) {
         case "bearer":
-            return AuthSchemeReference.bearer({ docs: reference.docs });
+            return AuthScheme.bearer({ docs: reference.docs });
         case "basic":
-            return AuthSchemeReference.basic({ docs: reference.docs });
+            return AuthScheme.basic({ docs: reference.docs });
         default:
-            return AuthSchemeReference.named({
-                docs: reference.docs,
-                name: AuthSchemeName.of(reference.scheme),
-            });
+            return convertNamedAuthSchemeReference(reference.scheme, reference.docs);
     }
 }

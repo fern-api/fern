@@ -29,8 +29,8 @@ describe("runGenerator", () => {
                 await mkdir(generatedDir, { recursive: true });
 
                 const parseWorkspaceResult = await loadWorkspace({
-                    absolutePathToWorkspace: fixturePath,
-                    version: 1,
+                    absolutePathToWorkspace: path.join(fixturePath, ".fern", "api"),
+                    version: 2,
                 });
                 if (!parseWorkspaceResult.didSucceed) {
                     throw new Error(JSON.stringify(parseWorkspaceResult.failures));

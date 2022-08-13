@@ -28,7 +28,7 @@
     "@fern-api/docker-utils": "workspace:*",
     "@fern-api/generators-configuration": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-fern/ir-model": "0.0.33",
+    "@fern-fern/ir-model": "0.0.38",
     "tmp-promise": "^3.0.3"
   },
   "devDependencies": {

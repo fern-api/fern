@@ -28,7 +28,7 @@
     "@fern-api/generators-configuration": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/fiddle-coordinator-api-client": "^0.0.45",
-    "@fern-fern/ir-model": "0.0.33",
+    "@fern-fern/ir-model": "0.0.38",
     "axios": "^0.27.2",
     "chalk": "^5.0.1",
     "form-data": "^4.0.0",

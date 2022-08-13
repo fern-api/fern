@@ -44,4 +44,18 @@ export interface FernServiceUtils {
     UnknownError: {
         _getReferenceToType: () => ts.TypeNode;
     };
+
+    BearerToken: {
+        _getReferenceToType: () => ts.TypeNode;
+
+        toAuthorizationHeader: (token: ts.Expression) => ts.Expression;
+        fromAuthorizationHeader: (header: ts.Expression) => ts.Expression;
+    };
+
+    BasicAuth: {
+        _getReferenceToType: () => ts.TypeNode;
+
+        toAuthorizationHeader: (basicAuth: ts.Expression) => ts.Expression;
+        fromAuthorizationHeader: (header: ts.Expression) => ts.Expression;
+    };
 }
