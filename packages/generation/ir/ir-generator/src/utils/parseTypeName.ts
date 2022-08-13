@@ -15,7 +15,7 @@ export function parseTypeName({
 }): DeclaredTypeName {
     const reference = parseReferenceToTypeName({
         reference: typeName,
-        referencedIn: fernFilepath.join(path.sep) as RelativeFilePath,
+        referencedIn: fernFilepath.map((part) => part.originalValue).join(path.sep) as RelativeFilePath,
         imports,
     });
     if (reference == null) {

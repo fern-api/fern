@@ -110,7 +110,7 @@ function generatePromiseBody({
         ),
         ts.factory.createPropertyAssignment(
             ts.factory.createIdentifier(ServiceTypesConstants.WebsocketChannel.Request.Properties.OPERATION),
-            ts.factory.createStringLiteral(operation.operationId)
+            ts.factory.createStringLiteral(operation.name.wireValue)
         ),
     ];
     if (operationTypes.request.body != null) {

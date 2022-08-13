@@ -158,12 +158,12 @@ function getHeadersPropertyValue({
                 ts.factory.createThis(),
                 ts.factory.createIdentifier(ClientConstants.HttpService.PrivateMembers.HEADERS)
             ),
-            ts.factory.createStringLiteral(header.header)
+            ts.factory.createStringLiteral(header.name.camelCase)
         );
 
         properties.push(
             ts.factory.createPropertyAssignment(
-                ts.factory.createStringLiteral(header.header),
+                ts.factory.createStringLiteral(header.name.wireValue),
                 invokeSupplier({ supplier: referenceToHeader, dependencyManager, referencedIn: serviceFile })
             )
         );
@@ -172,10 +172,10 @@ function getHeadersPropertyValue({
     for (const header of endpoint.headers) {
         properties.push(
             ts.factory.createPropertyAssignment(
-                ts.factory.createStringLiteral(header.header),
+                ts.factory.createStringLiteral(header.name.wireValue),
                 ts.factory.createElementAccessExpression(
                     ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Signature.REQUEST_PARAMETER),
-                    ts.factory.createStringLiteral(header.header)
+                    ts.factory.createStringLiteral(header.name.camelCase)
                 )
             )
         );

@@ -2,7 +2,9 @@ services:
   http:
     OneService:
       auth: false
+      base-path: /
       endpoints: {}
     TwoService:
       auth: true
+      base-path: /
       endpoints: {}

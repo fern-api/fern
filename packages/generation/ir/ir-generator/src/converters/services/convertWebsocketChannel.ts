@@ -1,7 +1,7 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { FernFilepath, TypeReference } from "@fern-fern/ir-model";
 import { WebSocketChannel, WebSocketMessenger } from "@fern-fern/ir-model/services";
-import { generateStringWithAllCasings } from "../../utils/generateCasings";
+import { generateWireStringWithAllCasings } from "../../utils/generateCasings";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { convertResponseErrors } from "./convertResponseErrors";
 
@@ -57,7 +57,10 @@ function convertWebSocketMessenger({
                 ? Object.entries(messenger.operations).map(([operationKey, operation]) => {
                       return {
                           docs: operation.docs,
-                          name: generateStringWithAllCasings(operationKey),
+                          name: generateWireStringWithAllCasings({
+                              wireValue: operationKey,
+                              name: operation.name ?? operationKey,
+                          }),
                           request: {
                               docs: typeof operation.request !== "string" ? operation.request?.docs : undefined,
                               type:

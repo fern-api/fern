@@ -73,7 +73,11 @@ function convertAuthSchemeDefinition(
             AuthSchemeDefinition.header(
                 convertHttpHeader({
                     headerKey: rawDefinition.header,
-                    header: rawDefinition,
+                    header: {
+                        docs: rawDefinition.docs,
+                        name: rawDefinition.name,
+                        type: rawDefinition.type ?? "string",
+                    },
                     fernFilepath,
                     imports,
                 })

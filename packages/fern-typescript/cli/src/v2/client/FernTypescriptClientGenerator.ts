@@ -1,4 +1,4 @@
-import { DeclaredTypeName, ErrorName, IntermediateRepresentation } from "@fern-fern/ir-model";
+import { DeclaredErrorName, DeclaredTypeName, IntermediateRepresentation } from "@fern-fern/ir-model";
 import { ServiceDeclarationHandler, WrapperDeclarationHandler } from "@fern-typescript/client-v2";
 import { File, GeneratorContext } from "@fern-typescript/declaration-handler";
 import { ErrorDeclarationHandler } from "@fern-typescript/errors-v2";
@@ -98,7 +98,7 @@ export class FernTypescriptClientGenerator {
     }
 
     private async withTypeDeclartionFile(
-        typeDeclarationName: DeclaredTypeName | ErrorName,
+        typeDeclarationName: DeclaredTypeName | DeclaredErrorName,
         run: (file: File) => void | Promise<void>
     ) {
         return this.withFile({

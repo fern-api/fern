@@ -15,4 +15,5 @@ services:
   http:
     OneService:
       auth: false
+      base-path: /
       endpoints: {}

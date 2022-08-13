@@ -39,7 +39,7 @@ export function addClientOperationToChannel({
 
     const generatedOperationTypes = modelContext.getGeneratedWebSocketChannelTypes({
         channelName: channel.name,
-        operationId: operation.operationId,
+        operationId: operation.name.camelCase,
     });
 
     const parameters: OptionalKind<ParameterDeclarationStructure>[] =
@@ -67,13 +67,13 @@ export function addClientOperationToChannel({
     );
 
     channelInterface.addMethod({
-        name: operation.operationId,
+        name: operation.name.camelCase,
         parameters,
         returnType,
     });
 
     channelClass.addMethod({
-        name: operation.operationId,
+        name: operation.name.camelCase,
         scope: Scope.Public,
         isAsync: true,
         parameters,

@@ -29,7 +29,7 @@ export function convertHttpService({
             name: serviceId,
             fernFilepath,
         },
-        basePath: convertBasePath({ serviceDefinition }),
+        basePath: serviceDefinition["base-path"],
         headers:
             serviceDefinition.headers != null
                 ? Object.entries(serviceDefinition.headers).map(([headerKey, header]) =>
@@ -92,18 +92,6 @@ export function convertHttpService({
             })
         ),
     };
-}
-
-function convertBasePath({
-    serviceDefinition,
-}: {
-    serviceDefinition: RawSchemas.HttpServiceSchema;
-}): string | undefined {
-    const specifiedBasePath = serviceDefinition["base-path"];
-    if (specifiedBasePath === "/") {
-        return undefined;
-    }
-    return specifiedBasePath;
 }
 
 function convertHttpMethod(method: Exclude<RawSchemas.HttpEndpointSchema["method"], null | undefined>): HttpMethod {

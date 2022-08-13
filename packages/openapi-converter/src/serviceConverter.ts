@@ -22,6 +22,7 @@ export function convertToFernService(
     }
     return {
         auth: securitySchemes != null,
+        "base-path": "/",
         endpoints: fernEndpoints,
     };
 }
