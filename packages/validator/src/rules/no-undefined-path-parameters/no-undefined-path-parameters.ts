@@ -10,20 +10,16 @@ export const NoUndefinedPathParametersRule: Rule = {
                 const errors: RuleViolation[] = [];
 
                 const urlPathParameters = new Set();
-                if (endpoint.path != null) {
-                    const httpPath = constructHttpPath(endpoint.path);
-                    httpPath.parts.forEach((part) => {
-                        if (urlPathParameters.has(part.pathParameter)) {
-                            errors.push({
-                                severity: "error",
-                                message: `Endpoint path has duplicate path parameter: ${chalk.bold(
-                                    part.pathParameter
-                                )}.`,
-                            });
-                        }
-                        urlPathParameters.add(part.pathParameter);
-                    });
-                }
+                const httpPath = constructHttpPath(endpoint.path);
+                httpPath.parts.forEach((part) => {
+                    if (urlPathParameters.has(part.pathParameter)) {
+                        errors.push({
+                            severity: "error",
+                            message: `Endpoint path has duplicate path parameter: ${chalk.bold(part.pathParameter)}.`,
+                        });
+                    }
+                    urlPathParameters.add(part.pathParameter);
+                });
 
                 const definedPathParameters = new Set(Object.keys(endpoint["path-parameters"] ?? {}));
 
