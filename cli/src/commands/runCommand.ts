@@ -59,13 +59,21 @@ export async function runCommand({
     }
 
     if (command.npmPackage.publishInfo != null) {
-        const runNpmCommandInOutputDirectory = async (...args: string[]): Promise<void> => {
-            const command = execa("npm", args, {
+        const runCommandInOutputDirectory = async (executable: string, ...args: string[]): Promise<void> => {
+            const command = execa(executable, args, {
                 cwd: outputPath,
             });
             command.stdout?.pipe(process.stdout);
             command.stderr?.pipe(process.stderr);
             await command;
+        };
+
+        const runNpmCommandInOutputDirectory = async (...args: string[]): Promise<void> => {
+            await runCommandInOutputDirectory("npm", ...args);
+        };
+
+        const runBunCommandInOutputDirectory = async (...args: string[]): Promise<void> => {
+            await runCommandInOutputDirectory("bun", ...args);
         };
 
         await generatorNotificationService.sendUpdate(
@@ -89,8 +97,8 @@ export async function runCommand({
             token
             // intentionally not writing this to the project config, so the token isn't persisted
         );
-        await runNpmCommandInOutputDirectory("install", "--no-save");
-        await runNpmCommandInOutputDirectory("run", BUILD_PROJECT_SCRIPT_NAME);
+        await runBunCommandInOutputDirectory("install");
+        await runBunCommandInOutputDirectory("run", BUILD_PROJECT_SCRIPT_NAME);
         await runNpmCommandInOutputDirectory("publish");
 
         await generatorNotificationService.sendUpdate(
