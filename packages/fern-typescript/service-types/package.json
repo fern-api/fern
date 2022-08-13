@@ -29,16 +29,14 @@
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/model-context": "workspace:*",
     "@fern-typescript/types": "workspace:*",
-    "lodash-es": "^4.17.21",
     "ts-morph": "^15.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.9",
     "@babel/preset-env": "^7.18.9",
     "@babel/preset-typescript": "^7.18.6",
-    "@fern-fern/ir-model": "0.0.16",
+    "@fern-fern/ir-model": "0.0.33",
     "@types/jest": "^28.1.6",
-    "@types/lodash-es": "^4.17.6",
     "@types/node": "^18.6.2",
     "depcheck": "^1.4.3",
     "eslint": "^8.20.0",

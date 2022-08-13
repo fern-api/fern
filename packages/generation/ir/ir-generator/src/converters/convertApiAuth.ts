@@ -1,5 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
-import { RawSchemas, visitRawApiAuth } from "@fern-api/yaml-schema";
+import { RawSchemas, visitRawApiAuth, visitRawAuthSchemeDeclaration } from "@fern-api/yaml-schema";
 import {
     ApiAuth,
     AuthSchemeDeclaration,
@@ -8,10 +7,8 @@ import {
     AuthSchemeReference,
     EnabledAuthSchemes,
     FernFilepath,
-    PrimitiveType,
-    TypeReference,
 } from "@fern-fern/ir-model";
-import { createTypeReferenceParser } from "../utils/parseInlineType";
+import { convertHttpHeader } from "./services/convertHttpService";
 
 export function convertApiAuth({
     rawApiFileSchema,
@@ -71,20 +68,21 @@ function convertAuthSchemeDefinition(
     fernFilepath: FernFilepath,
     imports: Record<string, string>
 ): AuthSchemeDefinition {
-    const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
-
-    switch (rawDefinition.scheme) {
-        case "header":
-            return AuthSchemeDefinition.header({
-                name: rawDefinition.name,
-                type:
-                    rawDefinition.type != null
-                        ? parseTypeReference(rawDefinition.type)
-                        : TypeReference.primitive(PrimitiveType.String),
-            });
-        default:
-            assertNever(rawDefinition.scheme);
-    }
+    return visitRawAuthSchemeDeclaration(rawDefinition, {
+        header: () =>
+            AuthSchemeDefinition.header(
+                convertHttpHeader({
+                    headerKey: rawDefinition.header,
+                    header: {
+                        docs: rawDefinition.docs,
+                        name: rawDefinition.name,
+                        type: rawDefinition.type ?? "string",
+                    },
+                    fernFilepath,
+                    imports,
+                })
+            ),
+    });
 }
 
 function convertSchemeReference(reference: RawSchemas.AuthSchemeReferenceSchema | string): AuthSchemeReference {

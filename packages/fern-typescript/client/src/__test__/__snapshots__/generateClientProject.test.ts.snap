@@ -438,12 +438,12 @@ export class ServiceWithBasicAuth implements ServiceWithBasicAuth {
 
     constructor(args: ServiceWithBasicAuth.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
-        this.baseUrl = urlJoin(args.origin, \\"service-with-basic-auth\\");
+        this.baseUrl = urlJoin(args.origin, \\"/\\");
     }
 
     public async endpointB(): Promise<model.auth.EndpointBResponse> {
         const encodedResponse = await this.fetcher({
-            url: urlJoin(this.baseUrl, \\"endpoint-b\\"),
+            url: urlJoin(this.baseUrl, \\"/b\\"),
             method: \\"POST\\",
             headers: {}
         });
@@ -484,12 +484,12 @@ export class ServiceWithBasicAuthWithOverride implements ServiceWithBasicAuthWit
 
     constructor(args: ServiceWithBasicAuthWithOverride.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
-        this.baseUrl = urlJoin(args.origin, \\"service-with-basic-auth-with-override\\");
+        this.baseUrl = urlJoin(args.origin, \\"/\\");
     }
 
     public async endpointG(): Promise<model.auth.EndpointGResponse> {
         const encodedResponse = await this.fetcher({
-            url: urlJoin(this.baseUrl, \\"endpoint-g\\"),
+            url: urlJoin(this.baseUrl, \\"/g\\"),
             method: \\"POST\\",
             headers: {}
         });
@@ -509,7 +509,7 @@ export class ServiceWithBasicAuthWithOverride implements ServiceWithBasicAuthWit
 
     public async overrideEndpointG(): Promise<model.auth.OverrideEndpointGResponse> {
         const encodedResponse = await this.fetcher({
-            url: urlJoin(this.baseUrl, \\"override-endpoint-g\\"),
+            url: urlJoin(this.baseUrl, \\"/g-override\\"),
             method: \\"POST\\",
             headers: {}
         });
@@ -549,12 +549,12 @@ export class ServiceWithBearerAuth implements ServiceWithBearerAuth {
 
     constructor(args: ServiceWithBearerAuth.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
-        this.baseUrl = urlJoin(args.origin, \\"service-with-bearer-auth\\");
+        this.baseUrl = urlJoin(args.origin, \\"/\\");
     }
 
     public async endpointC(): Promise<model.auth.EndpointCResponse> {
         const encodedResponse = await this.fetcher({
-            url: urlJoin(this.baseUrl, \\"endpoint-c\\"),
+            url: urlJoin(this.baseUrl, \\"/c\\"),
             method: \\"POST\\",
             headers: {}
         });
@@ -595,12 +595,12 @@ export class ServiceWithBearerAuthWithOverride implements ServiceWithBearerAuthW
 
     constructor(args: ServiceWithBearerAuthWithOverride.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
-        this.baseUrl = urlJoin(args.origin, \\"service-with-bearer-auth-with-override\\");
+        this.baseUrl = urlJoin(args.origin, \\"/\\");
     }
 
     public async endpointF(): Promise<model.auth.EndpointFResponse> {
         const encodedResponse = await this.fetcher({
-            url: urlJoin(this.baseUrl, \\"endpoint-f\\"),
+            url: urlJoin(this.baseUrl, \\"/f\\"),
             method: \\"POST\\",
             headers: {}
         });
@@ -620,7 +620,7 @@ export class ServiceWithBearerAuthWithOverride implements ServiceWithBearerAuthW
 
     public async overrideEndpointF(): Promise<model.auth.OverrideEndpointFResponse> {
         const encodedResponse = await this.fetcher({
-            url: urlJoin(this.baseUrl, \\"override-endpoint-f\\"),
+            url: urlJoin(this.baseUrl, \\"/f-override\\"),
             method: \\"POST\\",
             headers: {}
         });
@@ -660,12 +660,12 @@ export class ServiceWithNoAuth implements ServiceWithNoAuth {
 
     constructor(args: ServiceWithNoAuth.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
-        this.baseUrl = urlJoin(args.origin, \\"service-with-no-auth\\");
+        this.baseUrl = urlJoin(args.origin, \\"/\\");
     }
 
     public async endpointA(): Promise<model.auth.EndpointAResponse> {
         const encodedResponse = await this.fetcher({
-            url: urlJoin(this.baseUrl, \\"endpoint-a\\"),
+            url: urlJoin(this.baseUrl, \\"/a\\"),
             method: \\"POST\\",
             headers: {}
         });
@@ -706,12 +706,12 @@ export class ServiceWithNoAuthWithBasicOverride implements ServiceWithNoAuthWith
 
     constructor(args: ServiceWithNoAuthWithBasicOverride.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
-        this.baseUrl = urlJoin(args.origin, \\"service-with-no-auth-with-basic-override\\");
+        this.baseUrl = urlJoin(args.origin, \\"/\\");
     }
 
     public async endpointE(): Promise<model.auth.EndpointEResponse> {
         const encodedResponse = await this.fetcher({
-            url: urlJoin(this.baseUrl, \\"endpoint-e\\"),
+            url: urlJoin(this.baseUrl, \\"/e\\"),
             method: \\"POST\\",
             headers: {}
         });
@@ -731,7 +731,7 @@ export class ServiceWithNoAuthWithBasicOverride implements ServiceWithNoAuthWith
 
     public async overrideEndpointE(): Promise<model.auth.OverrideEndpointEResponse> {
         const encodedResponse = await this.fetcher({
-            url: urlJoin(this.baseUrl, \\"override-endpoint-e\\"),
+            url: urlJoin(this.baseUrl, \\"/e-override\\"),
             method: \\"POST\\",
             headers: {}
         });
@@ -772,12 +772,12 @@ export class ServiceWithNoAuthWithBearerOverride implements ServiceWithNoAuthWit
 
     constructor(args: ServiceWithNoAuthWithBearerOverride.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
-        this.baseUrl = urlJoin(args.origin, \\"service-with-no-auth-with-bearer-override\\");
+        this.baseUrl = urlJoin(args.origin, \\"/\\");
     }
 
     public async endpointD(): Promise<model.auth.EndpointDResponse> {
         const encodedResponse = await this.fetcher({
-            url: urlJoin(this.baseUrl, \\"endpoint-d\\"),
+            url: urlJoin(this.baseUrl, \\"/d\\"),
             method: \\"POST\\",
             headers: {}
         });
@@ -797,7 +797,7 @@ export class ServiceWithNoAuthWithBearerOverride implements ServiceWithNoAuthWit
 
     public async overrideEndpointD(): Promise<model.auth.OverrideEndpointDResponse> {
         const encodedResponse = await this.fetcher({
-            url: urlJoin(this.baseUrl, \\"override-endpoint-d\\"),
+            url: urlJoin(this.baseUrl, \\"/d-override\\"),
             method: \\"POST\\",
             headers: {}
         });
@@ -877,7 +877,7 @@ export declare namespace SendChatErrorBody {
 }
 
 export const SendChatErrorBody = {
-    GenericMessage: (value: chat.GenericMessage): SendChatErrorBody.GenericMessage => ({
+    genericMessage: (value: chat.GenericMessage): SendChatErrorBody.GenericMessage => ({
         GenericMessage: value,
         _error: \\"GenericMessage\\",
         _errorInstanceId: uuid.v4()
@@ -1154,7 +1154,7 @@ export class NoErrorsService implements NoErrorsService {
 
     constructor(args: NoErrorsService.Init) {
         this.fetcher = args.fetcher ?? defaultFetcher;
-        this.baseUrl = urlJoin(args.origin, \\"no-errors-service\\");
+        this.baseUrl = urlJoin(args.origin, \\"/\\");
     }
 
     public async get(): Promise<model.api.GetResponse> {
@@ -1312,7 +1312,7 @@ export declare namespace GetPostErrorBody {
 }
 
 export const GetPostErrorBody = {
-    PostNotFoundError: (value: posts.PostNotFoundError): GetPostErrorBody.PostNotFoundError => ({
+    postNotFoundError: (value: posts.PostNotFoundError): GetPostErrorBody.PostNotFoundError => ({
         ...value,
         _error: \\"PostNotFoundError\\",
         _errorInstanceId: uuid.v4()
@@ -1371,7 +1371,7 @@ export declare namespace GetPostV2ErrorBody {
 }
 
 export const GetPostV2ErrorBody = {
-    PostNotFoundError: (value: posts.PostNotFoundError): GetPostV2ErrorBody.PostNotFoundError => ({
+    postNotFoundError: (value: posts.PostNotFoundError): GetPostV2ErrorBody.PostNotFoundError => ({
         ...value,
         _error: \\"PostNotFoundError\\",
         _errorInstanceId: uuid.v4()
@@ -1406,7 +1406,7 @@ export declare namespace GetPostV2Response {
   "/model/posts/_service-types/PostsService/_CreatePostRequest.ts": "import * as model from \\"../../..\\";
 
 export interface _CreatePostRequest {
-    \\"X-Endpoint-Header\\": string;
+    xEndpointHeader: string;
     body: model.posts.CreatePostRequest;
 }
 ",
@@ -1569,7 +1569,7 @@ export declare namespace PostsService {
     }
 
     interface Headers {
-        \\"X-Service-Header\\": Supplier<string>;
+        xServiceHeader: Supplier<string>;
     }
 }
 
@@ -1589,8 +1589,8 @@ export class PostsService implements PostsService {
             url: urlJoin(this.baseUrl, \\"/\\"),
             method: \\"POST\\",
             headers: {
-                \\"X-Service-Header\\": await Supplier.get(this.headers[\\"X-Service-Header\\"]),
-                \\"X-Endpoint-Header\\": request[\\"X-Endpoint-Header\\"]
+                \\"X-Service-Header\\": await Supplier.get(this.headers[\\"xServiceHeader\\"]),
+                \\"X-Endpoint-Header\\": request[\\"xEndpointHeader\\"]
             },
             body: request.body
         });
@@ -1620,7 +1620,7 @@ export class PostsService implements PostsService {
             url: urlJoin(this.baseUrl, \`/\${request.postId}\`),
             method: \\"GET\\",
             headers: {
-                \\"X-Service-Header\\": await Supplier.get(this.headers[\\"X-Service-Header\\"])
+                \\"X-Service-Header\\": await Supplier.get(this.headers[\\"xServiceHeader\\"])
             },
             queryParameters
         });
@@ -1644,7 +1644,7 @@ export class PostsService implements PostsService {
             url: urlJoin(this.baseUrl, \\"/get\\"),
             method: \\"GET\\",
             headers: {
-                \\"X-Service-Header\\": await Supplier.get(this.headers[\\"X-Service-Header\\"])
+                \\"X-Service-Header\\": await Supplier.get(this.headers[\\"xServiceHeader\\"])
             },
             body: request
         });
@@ -1668,7 +1668,7 @@ export class PostsService implements PostsService {
             url: urlJoin(this.baseUrl, \\"/get-all\\"),
             method: \\"GET\\",
             headers: {
-                \\"X-Service-Header\\": await Supplier.get(this.headers[\\"X-Service-Header\\"])
+                \\"X-Service-Header\\": await Supplier.get(this.headers[\\"xServiceHeader\\"])
             }
         });
 

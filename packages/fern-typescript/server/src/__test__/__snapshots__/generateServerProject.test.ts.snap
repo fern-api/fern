@@ -83,7 +83,7 @@ export const DeletePostErrorBody = {
 
 export interface DeletePostRequest {
     postId: model.commons.PostId;
-    \\"X-Service-Header\\": string;
+    xServiceHeader: string;
 }
 ",
   "/model/posts/_service-types/PostsService/DeletePostResponse.ts": "import * as model from \\"../../..\\";
@@ -120,7 +120,7 @@ export declare namespace GetPostErrorBody {
 }
 
 export const GetPostErrorBody = {
-    PostNotFoundError: (value: posts.PostNotFoundError): GetPostErrorBody.PostNotFoundError => ({
+    postNotFoundError: (value: posts.PostNotFoundError): GetPostErrorBody.PostNotFoundError => ({
         ...value,
         _error: \\"PostNotFoundError\\",
         _errorInstanceId: uuid.v4()
@@ -142,7 +142,7 @@ export interface GetPostRequest {
     postId: model.commons.PostId;
     page: number | null | undefined;
     otherParam: number;
-    \\"X-Service-Header\\": string;
+    xServiceHeader: string;
 }
 ",
   "/model/posts/_service-types/PostsService/GetPostResponse.ts": "import * as model from \\"../../..\\";
@@ -180,7 +180,7 @@ export declare namespace GetPostV2ErrorBody {
 }
 
 export const GetPostV2ErrorBody = {
-    PostNotFoundError: (value: posts.PostNotFoundError): GetPostV2ErrorBody.PostNotFoundError => ({
+    postNotFoundError: (value: posts.PostNotFoundError): GetPostV2ErrorBody.PostNotFoundError => ({
         ...value,
         _error: \\"PostNotFoundError\\",
         _errorInstanceId: uuid.v4()
@@ -199,7 +199,7 @@ export const GetPostV2ErrorBody = {
   "/model/posts/_service-types/PostsService/GetPostV2Request.ts": "import * as model from \\"../../..\\";
 
 export interface GetPostV2Request {
-    \\"X-Service-Header\\": string;
+    xServiceHeader: string;
     body: model.commons.PostId;
 }
 ",
@@ -236,7 +236,7 @@ export const NoopWithAuthErrorBody = {
 } as const;
 ",
   "/model/posts/_service-types/PostsService/NoopWithAuthRequest.ts": "export interface NoopWithAuthRequest {
-    \\"X-Service-Header\\": string;
+    xServiceHeader: string;
 }
 ",
   "/model/posts/_service-types/PostsService/NoopWithAuthResponse.ts": "import * as model from \\"../../..\\";
@@ -271,7 +271,7 @@ export const NoopWithoutAuthErrorBody = {
 } as const;
 ",
   "/model/posts/_service-types/PostsService/NoopWithoutAuthRequest.ts": "export interface NoopWithoutAuthRequest {
-    \\"X-Service-Header\\": string;
+    xServiceHeader: string;
 }
 ",
   "/model/posts/_service-types/PostsService/NoopWithoutAuthResponse.ts": "import * as model from \\"../../..\\";
@@ -292,8 +292,8 @@ export declare namespace NoopWithoutAuthResponse {
   "/model/posts/_service-types/PostsService/_CreatePostRequest.ts": "import * as model from \\"../../..\\";
 
 export interface _CreatePostRequest {
-    \\"X-Service-Header\\": string;
-    \\"X-Endpoint-Header\\": string;
+    xServiceHeader: string;
+    xEndpointHeader: string;
     body: model.posts.CreatePostRequest;
 }
 ",
@@ -466,8 +466,8 @@ export const PostsService = {
         app.use(express.json());
         app.post(\\"/posts/\\", async (request, response) => {
             const result = await impl.createPost({
-                \\"X-Service-Header\\": request.header(\\"X-Service-Header\\")!,
-                \\"X-Endpoint-Header\\": request.header(\\"X-Endpoint-Header\\")!,
+                \\"xServiceHeader\\": request.header(\\"X-Service-Header\\")!,
+                \\"xEndpointHeader\\": request.header(\\"X-Endpoint-Header\\")!,
                 body: request.body
             });
             if (result.ok) {
@@ -482,7 +482,7 @@ export const PostsService = {
                 postId: request.params.postId,
                 page: request.query.page != null ? Number(request.query.page) : undefined,
                 otherParam: Number(request.query.otherParam),
-                \\"X-Service-Header\\": request.header(\\"X-Service-Header\\")!
+                \\"xServiceHeader\\": request.header(\\"X-Service-Header\\")!
             });
             if (result.ok) {
                 response.send(result.body);
@@ -497,7 +497,7 @@ export const PostsService = {
         });
         app.get(\\"/posts/get\\", async (request, response) => {
             const result = await impl.getPostV2({
-                \\"X-Service-Header\\": request.header(\\"X-Service-Header\\")!,
+                \\"xServiceHeader\\": request.header(\\"X-Service-Header\\")!,
                 body: request.body
             });
             if (result.ok) {
@@ -514,7 +514,7 @@ export const PostsService = {
         app.delete(\\"/posts/:postId\\", async (request, response) => {
             const result = await impl.deletePost({
                 postId: request.params.postId,
-                \\"X-Service-Header\\": request.header(\\"X-Service-Header\\")!
+                \\"xServiceHeader\\": request.header(\\"X-Service-Header\\")!
             });
             if (result.ok) {
                 response.end();
@@ -525,7 +525,7 @@ export const PostsService = {
         });
         app.get(\\"/posts/\\", async (request, response) => {
             const result = await impl.noopWithAuth({
-                \\"X-Service-Header\\": request.header(\\"X-Service-Header\\")!
+                \\"xServiceHeader\\": request.header(\\"X-Service-Header\\")!
             });
             if (result.ok) {
                 response.end();
@@ -536,7 +536,7 @@ export const PostsService = {
         });
         app.get(\\"/posts/\\", async (request, response) => {
             const result = await impl.noopWithoutAuth({
-                \\"X-Service-Header\\": request.header(\\"X-Service-Header\\")!
+                \\"xServiceHeader\\": request.header(\\"X-Service-Header\\")!
             });
             if (result.ok) {
                 response.end();

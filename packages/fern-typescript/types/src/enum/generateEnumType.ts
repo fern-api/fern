@@ -8,7 +8,7 @@ import {
 } from "@fern-typescript/commons";
 import lowerFirst from "lodash-es/lowerFirst";
 import { SourceFile, ts, VariableDeclarationKind, WriterFunction } from "ts-morph";
-import { getKeyForEnum } from "./utils";
+import { getKeyForEnum } from "./getKeyForEnum";
 
 export const ENUM_VALUES_PROPERTY_KEY = "_values";
 

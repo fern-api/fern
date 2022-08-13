@@ -72,7 +72,7 @@ function maybeAddHeaders({
         module.addInterface({
             name: ClientConstants.HttpService.ServiceNamespace.Headers.TYPE_NAME,
             properties: service.headers.map((header) => ({
-                name: `"${header.header}"`,
+                name: header.name.camelCase,
                 type: getTextOfTsNode(
                     getReferenceToFernServiceUtilsType({
                         type: "Supplier",

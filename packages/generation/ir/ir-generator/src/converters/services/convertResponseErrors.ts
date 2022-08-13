@@ -2,7 +2,6 @@ import { RawSchemas } from "@fern-api/yaml-schema";
 import { FernFilepath } from "@fern-fern/ir-model";
 import { ResponseErrors } from "@fern-fern/ir-model/services";
 import { parseTypeName } from "../../utils/parseTypeName";
-import { getErrorDiscriminantValue } from "../convertErrorDeclaration";
 
 export function convertResponseErrors({
     errors,
@@ -24,7 +23,6 @@ export function convertResponseErrors({
               });
               return {
                   docs: typeof errorReference !== "string" ? errorReference.docs : undefined,
-                  discriminantValue: getErrorDiscriminantValue(parsedErrorTypeName.name),
                   error: parsedErrorTypeName,
               };
           });

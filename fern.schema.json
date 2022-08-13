@@ -47,7 +47,8 @@
                               "type": "object",
                               "properties": {
                                 "type": { "type": "string" },
-                                "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" }
+                                "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
+                                "name": { "type": "string" }
                               },
                               "required": ["type"],
                               "additionalProperties": false
@@ -91,6 +92,7 @@
                           "type": "object",
                           "properties": {
                             "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
+                            "name": { "type": "string" },
                             "type": { "type": "string" }
                           },
                           "additionalProperties": false
@@ -168,7 +170,18 @@
                         "path-parameters": {
                           "type": "object",
                           "additionalProperties": {
-                            "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
+                            "anyOf": [
+                              { "type": "string" },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "type": { "type": "string" },
+                                  "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" }
+                                },
+                                "required": ["type"],
+                                "additionalProperties": false
+                              }
+                            ]
                           }
                         },
                         "query-parameters": {
@@ -231,11 +244,12 @@
                           }
                         }
                       },
+                      "required": ["path"],
                       "additionalProperties": false
                     }
                   }
                 },
-                "required": ["auth", "endpoints"],
+                "required": ["auth", "base-path", "endpoints"],
                 "additionalProperties": false
               }
             },
@@ -256,6 +270,7 @@
                           "type": "object",
                           "properties": {
                             "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
+                            "name": { "type": "string" },
                             "request": {
                               "anyOf": [
                                 { "type": "string" },
@@ -319,6 +334,7 @@
                     "type": "object",
                     "properties": {
                       "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
+                      "name": { "type": "string" },
                       "statusCode": { "type": "number" }
                     },
                     "required": ["statusCode"],

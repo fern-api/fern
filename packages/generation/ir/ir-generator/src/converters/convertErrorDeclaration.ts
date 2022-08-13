@@ -1,5 +1,6 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { ErrorDeclaration, FernFilepath, Type } from "@fern-fern/ir-model";
+import { generateWireStringWithAllCasings } from "../utils/generateCasings";
 import { createTypeReferenceParser } from "../utils/parseInlineType";
 import { convertType } from "./type-declarations/convertTypeDeclaration";
 
@@ -21,7 +22,10 @@ export function convertErrorDeclaration({
             name: errorName,
             fernFilepath,
         },
-        discriminantValue: getErrorDiscriminantValue(errorName),
+        discriminantValue: generateWireStringWithAllCasings({
+            wireValue: errorName,
+            name: errorName,
+        }),
         docs: typeof errorDeclaration !== "string" ? errorDeclaration.docs : undefined,
         http:
             typeof errorDeclaration !== "string" && errorDeclaration.http != null
@@ -36,8 +40,4 @@ export function convertErrorDeclaration({
                   })
                 : convertType({ typeDeclaration: errorDeclaration.type, fernFilepath, imports }),
     };
-}
-
-export function getErrorDiscriminantValue(errorName: string): string {
-    return errorName;
 }

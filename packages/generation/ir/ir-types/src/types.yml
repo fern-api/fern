@@ -11,9 +11,8 @@ types:
       shape: Type
   DeclaredTypeName:
     properties:
-      fernFilepath: FernFilepath
+      fernFilepath: commons.FernFilepath
       name: string
-  FernFilepath: list<string>
   Type:
     union:
       alias: AliasTypeDeclaration
@@ -31,9 +30,7 @@ types:
   EnumValue:
     extends: commons.WithDocs
     properties:
-      name:
-        type: string
-        docs: Name must start with an alphabet.
+      name: commons.WireStringWithAllCasings
       value: string
 
   ObjectTypeDeclaration:
@@ -45,7 +42,7 @@ types:
   ObjectProperty:
     extends: commons.WithDocs
     properties:
-      key: string
+      name: commons.WireStringWithAllCasings
       valueType: TypeReference
 
   UnionTypeDeclaration:
@@ -55,7 +52,7 @@ types:
   SingleUnionType:
     extends: commons.WithDocs
     properties:
-      discriminantValue: string
+      discriminantValue: commons.WireStringWithAllCasings
       valueType: TypeReference
 
   TypeReference:

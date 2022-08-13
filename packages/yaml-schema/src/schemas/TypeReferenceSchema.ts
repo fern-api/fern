@@ -19,3 +19,10 @@ export type TypeReferenceSchema = z.infer<typeof TypeReferenceSchema>;
 
 export const TypeReferenceWithDocsSchema = extendTypeReferenceSchema(WithDocsSchema.shape);
 export type TypeReferenceWithDocsSchema = z.infer<typeof TypeReferenceWithDocsSchema>;
+
+export const TypeReferenceWithDocsAndNameSchema = extendTypeReferenceSchema(
+    WithDocsSchema.extend({
+        name: z.optional(z.string()),
+    }).shape
+);
+export type TypeReferenceWithDocsAndNameSchema = z.infer<typeof TypeReferenceWithDocsAndNameSchema>;

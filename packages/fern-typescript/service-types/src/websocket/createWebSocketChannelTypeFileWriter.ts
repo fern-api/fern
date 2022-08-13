@@ -1,27 +1,26 @@
-import { ServiceName, WebSocketOperation } from "@fern-fern/ir-model/services";
+import { DeclaredServiceName, WebSocketOperation } from "@fern-fern/ir-model/services";
 import { ModelContext, WebSocketChannelTypeMetadata } from "@fern-typescript/model-context";
-import upperFirst from "lodash-es/upperFirst";
 import { ServiceTypeFileWriter } from "../commons/service-type-reference/generateServiceTypeReference";
 import { getServiceTypeName } from "../commons/service-type-reference/getServiceTypeName";
 
 export function createWebSocketChannelTypeFileWriter({
     modelContext,
     channelName,
-    operation: { operationId },
+    operation,
 }: {
     modelContext: ModelContext;
-    channelName: ServiceName;
+    channelName: DeclaredServiceName;
     operation: WebSocketOperation;
 }): ServiceTypeFileWriter<WebSocketChannelTypeMetadata> {
     return (typeName, withFile) => {
         const transformedTypeName = getServiceTypeName({
-            proposedName: `${upperFirst(operationId)}${typeName}`,
+            proposedName: `${operation.name.pascalCase}${typeName}`,
             fernFilepath: channelName.fernFilepath,
             modelContext,
         });
         const metadata: WebSocketChannelTypeMetadata = {
             channelName,
-            operationId,
+            operationId: operation.name.camelCase,
             typeName: transformedTypeName,
         };
         modelContext.addWebSocketChannelTypeDeclaration(metadata, (file) => withFile(file, transformedTypeName));

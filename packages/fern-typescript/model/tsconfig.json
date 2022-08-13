@@ -5,8 +5,8 @@
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
     { "path": "../../commons/core-utils" },
+    { "path": "../commons" },
     { "path": "../errors" },
-    { "path": "../fern-typescript-commons" },
     { "path": "../model-context" },
     { "path": "../service-types" },
     { "path": "../testing-utils" },

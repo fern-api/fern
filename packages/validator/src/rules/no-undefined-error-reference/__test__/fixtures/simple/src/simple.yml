@@ -6,21 +6,26 @@ imports:
 services:
   http:
     MyService:
+      base-path: /
       auth: false
       endpoints:
         referenceNonExistentError:
+          path: /a
           errors:
             - NonExistentError
 
         referenceNonExistentImportedError:
+          path: /b
           errors:
             - other.NonExistentError
 
         referenceError:
+          path: /c
           errors:
             - GenericError
 
         referenceImportedError:
+          path: /d
           errors:
             - other.OtherError
 

@@ -1,5 +1,6 @@
 import { ErrorDeclaration, Type, TypeReference } from "@fern-fern/ir-model";
 import { convertErrorDeclaration } from "../converters/convertErrorDeclaration";
+import { convertToFernFilepath } from "../utils/convertToFernFilepath";
 
 describe("convertErrorDeclaration", () => {
     it("reference to a type in another file", () => {
@@ -12,7 +13,7 @@ describe("convertErrorDeclaration", () => {
                     },
                 },
             },
-            fernFilepath: ["path", "to", "other"],
+            fernFilepath: convertToFernFilepath("path/to/other"),
             imports: {
                 commons: "./commons",
             },
@@ -22,18 +23,32 @@ describe("convertErrorDeclaration", () => {
             docs: undefined,
             name: {
                 name: "UnauthorizedError",
-                fernFilepath: ["path", "to", "other"],
+                fernFilepath: convertToFernFilepath("path/to/other"),
             },
-            discriminantValue: "UnauthorizedError",
+            discriminantValue: {
+                wireValue: "UnauthorizedError",
+                originalValue: "UnauthorizedError",
+                camelCase: "unauthorizedError",
+                pascalCase: "UnauthorizedError",
+                snakeCase: "unauthorized_error",
+                screamingSnakeCase: "UNAUTHORIZED_ERROR",
+            },
             http: undefined,
             type: Type.object({
                 extends: [],
                 properties: [
                     {
                         docs: undefined,
-                        key: "postId",
+                        name: {
+                            wireValue: "postId",
+                            originalValue: "postId",
+                            camelCase: "postId",
+                            pascalCase: "PostId",
+                            snakeCase: "post_id",
+                            screamingSnakeCase: "POST_ID",
+                        },
                         valueType: TypeReference.named({
-                            fernFilepath: ["path", "to", "commons"],
+                            fernFilepath: convertToFernFilepath("path/to/commons"),
                             name: "PostId",
                         }),
                     },

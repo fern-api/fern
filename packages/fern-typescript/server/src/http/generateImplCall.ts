@@ -30,7 +30,7 @@ export function generateImplCall({
         ts.factory.createCallExpression(
             ts.factory.createPropertyAccessExpression(
                 ts.factory.createIdentifier(ServerConstants.Middleware.PARAMETER_NAME),
-                ts.factory.createIdentifier(endpoint.endpointId)
+                ts.factory.createIdentifier(endpoint.name.camelCase)
             ),
             undefined,
             args
@@ -71,7 +71,7 @@ function generateImplRequestArguments({
         const properties: ts.ObjectLiteralElementLike[] = [
             ...endpoint.pathParameters.map((pathParameter) =>
                 ts.factory.createPropertyAssignment(
-                    ts.factory.createIdentifier(pathParameter.key),
+                    ts.factory.createIdentifier(pathParameter.name.camelCase),
                     convertParamValueForExpectedType({
                         valueReference: ts.factory.createPropertyAccessExpression(
                             ts.factory.createPropertyAccessExpression(
@@ -80,7 +80,7 @@ function generateImplRequestArguments({
                                 ),
                                 ts.factory.createIdentifier(ServerConstants.Express.RequestProperties.PARAMS)
                             ),
-                            ts.factory.createIdentifier(pathParameter.key)
+                            ts.factory.createIdentifier(pathParameter.name.camelCase)
                         ),
                         // express path params are typed as string
                         isValueReferenceTypedAsString: true,
@@ -92,7 +92,7 @@ function generateImplRequestArguments({
             ),
             ...endpoint.queryParameters.map((queryParameter) =>
                 ts.factory.createPropertyAssignment(
-                    ts.factory.createIdentifier(queryParameter.key),
+                    ts.factory.createIdentifier(queryParameter.name.camelCase),
                     convertParamValueForExpectedType({
                         valueReference: ts.factory.createPropertyAccessExpression(
                             ts.factory.createPropertyAccessExpression(
@@ -101,7 +101,7 @@ function generateImplRequestArguments({
                                 ),
                                 ts.factory.createIdentifier(ServerConstants.Express.RequestProperties.QUERY_PARAMS)
                             ),
-                            ts.factory.createIdentifier(queryParameter.key)
+                            ts.factory.createIdentifier(queryParameter.name.wireValue)
                         ),
                         // express query params aren't typed as string
                         isValueReferenceTypedAsString: false,
@@ -113,9 +113,9 @@ function generateImplRequestArguments({
             ),
             ...[...service.headers, ...endpoint.headers].map((header) =>
                 ts.factory.createPropertyAssignment(
-                    ts.factory.createStringLiteral(header.header),
+                    ts.factory.createStringLiteral(header.name.camelCase),
                     convertParamValueForExpectedType({
-                        valueReference: ts.factory.createNonNullExpression(getRequestHeader(header.header)),
+                        valueReference: ts.factory.createNonNullExpression(getRequestHeader(header.name.wireValue)),
                         isValueReferenceTypedAsString: true,
                         modelContext,
                         expectedType: header.valueType,

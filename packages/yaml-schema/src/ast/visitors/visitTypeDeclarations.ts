@@ -69,6 +69,7 @@ export async function visitTypeDeclaration({
                             await visitor.typeReference?.(property, nodePathForProperty);
                         } else {
                             await visitObject(property, {
+                                name: noop,
                                 docs: createDocsVisitor(visitor, nodePathForProperty),
                                 type: async (type) => {
                                     await visitor.typeReference?.(type, [...nodePathForProperty, "type"]);
@@ -91,6 +92,7 @@ export async function visitTypeDeclaration({
                         } else {
                             await visitObject(unionType, {
                                 docs: createDocsVisitor(visitor, nodePathForUnionType),
+                                name: noop,
                                 type: async (type) => {
                                     if (type != null) {
                                         await visitor.typeReference?.(type, [...nodePathForType, "type"]);

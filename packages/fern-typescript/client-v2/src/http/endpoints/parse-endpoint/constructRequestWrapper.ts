@@ -57,7 +57,7 @@ export function constructRequestWrapper({
         file,
         wrapperInterface,
         getInfo: (pathParameter) => ({
-            key: pathParameter.key,
+            key: pathParameter.name.camelCase,
             typeReference: pathParameter.valueType,
             docs: pathParameter.docs,
         }),
@@ -68,7 +68,7 @@ export function constructRequestWrapper({
         file,
         wrapperInterface,
         getInfo: (queryParameter) => ({
-            key: queryParameter.key,
+            key: queryParameter.name.camelCase,
             typeReference: queryParameter.valueType,
             docs: queryParameter.docs,
         }),
@@ -79,7 +79,7 @@ export function constructRequestWrapper({
         file,
         wrapperInterface,
         getInfo: (header) => ({
-            key: header.header,
+            key: header.name.camelCase,
             typeReference: header.valueType,
             docs: header.docs,
         }),

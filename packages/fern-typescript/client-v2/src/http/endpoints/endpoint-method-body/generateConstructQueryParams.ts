@@ -38,7 +38,7 @@ export function generateConstructQueryParams(endpoint: ParsedClientEndpoint): ts
                     ts.factory.createIdentifier("append")
                 ),
                 undefined,
-                [ts.factory.createStringLiteral(queryParameter.originalData.key), queryParameterReference]
+                [ts.factory.createStringLiteral(queryParameter.originalData.name.wireValue), queryParameterReference]
             )
         );
 

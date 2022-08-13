@@ -8,8 +8,15 @@ exports[`layout-v2 simple 1`] = `
             {
                 \\"name\\": \\"MyAuth\\",
                 \\"definition\\": {
-                    \\"name\\": \\"My-Header\\",
-                    \\"type\\": {
+                    \\"name\\": {
+                        \\"originalValue\\": \\"My-Header\\",
+                        \\"camelCase\\": \\"myHeader\\",
+                        \\"snakeCase\\": \\"my_header\\",
+                        \\"pascalCase\\": \\"MyHeader\\",
+                        \\"screamingSnakeCase\\": \\"MY_HEADER\\",
+                        \\"wireValue\\": \\"My-Header\\"
+                    },
+                    \\"valueType\\": {
                         \\"primitive\\": \\"STRING\\",
                         \\"_type\\": \\"primitive\\"
                     },
@@ -31,7 +38,13 @@ exports[`layout-v2 simple 1`] = `
         {
             \\"name\\": {
                 \\"fernFilepath\\": [
-                    \\"imdb\\"
+                    {
+                        \\"originalValue\\": \\"imdb\\",
+                        \\"camelCase\\": \\"imdb\\",
+                        \\"snakeCase\\": \\"imdb\\",
+                        \\"pascalCase\\": \\"Imdb\\",
+                        \\"screamingSnakeCase\\": \\"IMDB\\"
+                    }
                 ],
                 \\"name\\": \\"MovieId\\"
             },
@@ -46,7 +59,13 @@ exports[`layout-v2 simple 1`] = `
         {
             \\"name\\": {
                 \\"fernFilepath\\": [
-                    \\"imdb\\"
+                    {
+                        \\"originalValue\\": \\"imdb\\",
+                        \\"camelCase\\": \\"imdb\\",
+                        \\"snakeCase\\": \\"imdb\\",
+                        \\"pascalCase\\": \\"Imdb\\",
+                        \\"screamingSnakeCase\\": \\"IMDB\\"
+                    }
                 ],
                 \\"name\\": \\"Movie\\"
             },
@@ -54,24 +73,51 @@ exports[`layout-v2 simple 1`] = `
                 \\"extends\\": [],
                 \\"properties\\": [
                     {
-                        \\"key\\": \\"id\\",
+                        \\"name\\": {
+                            \\"originalValue\\": \\"id\\",
+                            \\"camelCase\\": \\"id\\",
+                            \\"snakeCase\\": \\"id\\",
+                            \\"pascalCase\\": \\"Id\\",
+                            \\"screamingSnakeCase\\": \\"ID\\",
+                            \\"wireValue\\": \\"id\\"
+                        },
                         \\"valueType\\": {
                             \\"name\\": \\"MovieId\\",
                             \\"fernFilepath\\": [
-                                \\"imdb\\"
+                                {
+                                    \\"originalValue\\": \\"imdb\\",
+                                    \\"camelCase\\": \\"imdb\\",
+                                    \\"snakeCase\\": \\"imdb\\",
+                                    \\"pascalCase\\": \\"Imdb\\",
+                                    \\"screamingSnakeCase\\": \\"IMDB\\"
+                                }
                             ],
                             \\"_type\\": \\"named\\"
                         }
                     },
                     {
-                        \\"key\\": \\"title\\",
+                        \\"name\\": {
+                            \\"originalValue\\": \\"title\\",
+                            \\"camelCase\\": \\"title\\",
+                            \\"snakeCase\\": \\"title\\",
+                            \\"pascalCase\\": \\"Title\\",
+                            \\"screamingSnakeCase\\": \\"TITLE\\",
+                            \\"wireValue\\": \\"title\\"
+                        },
                         \\"valueType\\": {
                             \\"primitive\\": \\"STRING\\",
                             \\"_type\\": \\"primitive\\"
                         }
                     },
                     {
-                        \\"key\\": \\"rating\\",
+                        \\"name\\": {
+                            \\"originalValue\\": \\"rating\\",
+                            \\"camelCase\\": \\"rating\\",
+                            \\"snakeCase\\": \\"rating\\",
+                            \\"pascalCase\\": \\"Rating\\",
+                            \\"screamingSnakeCase\\": \\"RATING\\",
+                            \\"wireValue\\": \\"rating\\"
+                        },
                         \\"valueType\\": {
                             \\"primitive\\": \\"DOUBLE\\",
                             \\"_type\\": \\"primitive\\"
@@ -84,7 +130,13 @@ exports[`layout-v2 simple 1`] = `
         {
             \\"name\\": {
                 \\"fernFilepath\\": [
-                    \\"imdb\\"
+                    {
+                        \\"originalValue\\": \\"imdb\\",
+                        \\"camelCase\\": \\"imdb\\",
+                        \\"snakeCase\\": \\"imdb\\",
+                        \\"pascalCase\\": \\"Imdb\\",
+                        \\"screamingSnakeCase\\": \\"IMDB\\"
+                    }
                 ],
                 \\"name\\": \\"CreateMovieRequest\\"
             },
@@ -92,14 +144,28 @@ exports[`layout-v2 simple 1`] = `
                 \\"extends\\": [],
                 \\"properties\\": [
                     {
-                        \\"key\\": \\"title\\",
+                        \\"name\\": {
+                            \\"originalValue\\": \\"title\\",
+                            \\"camelCase\\": \\"title\\",
+                            \\"snakeCase\\": \\"title\\",
+                            \\"pascalCase\\": \\"Title\\",
+                            \\"screamingSnakeCase\\": \\"TITLE\\",
+                            \\"wireValue\\": \\"title\\"
+                        },
                         \\"valueType\\": {
                             \\"primitive\\": \\"STRING\\",
                             \\"_type\\": \\"primitive\\"
                         }
                     },
                     {
-                        \\"key\\": \\"rating\\",
+                        \\"name\\": {
+                            \\"originalValue\\": \\"rating\\",
+                            \\"camelCase\\": \\"rating\\",
+                            \\"snakeCase\\": \\"rating\\",
+                            \\"pascalCase\\": \\"Rating\\",
+                            \\"screamingSnakeCase\\": \\"RATING\\",
+                            \\"wireValue\\": \\"rating\\"
+                        },
                         \\"valueType\\": {
                             \\"primitive\\": \\"DOUBLE\\",
                             \\"_type\\": \\"primitive\\"
@@ -115,10 +181,23 @@ exports[`layout-v2 simple 1`] = `
             \\"name\\": {
                 \\"name\\": \\"NotFoundError\\",
                 \\"fernFilepath\\": [
-                    \\"imdb\\"
+                    {
+                        \\"originalValue\\": \\"imdb\\",
+                        \\"camelCase\\": \\"imdb\\",
+                        \\"snakeCase\\": \\"imdb\\",
+                        \\"pascalCase\\": \\"Imdb\\",
+                        \\"screamingSnakeCase\\": \\"IMDB\\"
+                    }
                 ]
             },
-            \\"discriminantValue\\": \\"NotFoundError\\",
+            \\"discriminantValue\\": {
+                \\"originalValue\\": \\"NotFoundError\\",
+                \\"camelCase\\": \\"notFoundError\\",
+                \\"snakeCase\\": \\"not_found_error\\",
+                \\"pascalCase\\": \\"NotFoundError\\",
+                \\"screamingSnakeCase\\": \\"NOT_FOUND_ERROR\\",
+                \\"wireValue\\": \\"NotFoundError\\"
+            },
             \\"http\\": {
                 \\"statusCode\\": 404
             },
@@ -136,14 +215,26 @@ exports[`layout-v2 simple 1`] = `
                 \\"name\\": {
                     \\"name\\": \\"MoviesService\\",
                     \\"fernFilepath\\": [
-                        \\"imdb\\"
+                        {
+                            \\"originalValue\\": \\"imdb\\",
+                            \\"camelCase\\": \\"imdb\\",
+                            \\"snakeCase\\": \\"imdb\\",
+                            \\"pascalCase\\": \\"Imdb\\",
+                            \\"screamingSnakeCase\\": \\"IMDB\\"
+                        }
                     ]
                 },
                 \\"basePath\\": \\"/movies\\",
                 \\"headers\\": [],
                 \\"endpoints\\": [
                     {
-                        \\"endpointId\\": \\"createMovie\\",
+                        \\"name\\": {
+                            \\"originalValue\\": \\"createMovie\\",
+                            \\"camelCase\\": \\"createMovie\\",
+                            \\"snakeCase\\": \\"create_movie\\",
+                            \\"pascalCase\\": \\"CreateMovie\\",
+                            \\"screamingSnakeCase\\": \\"CREATE_MOVIE\\"
+                        },
                         \\"auth\\": false,
                         \\"method\\": \\"POST\\",
                         \\"path\\": {
@@ -154,25 +245,31 @@ exports[`layout-v2 simple 1`] = `
                         \\"queryParameters\\": [],
                         \\"headers\\": [],
                         \\"request\\": {
-                            \\"encoding\\": {
-                                \\"_type\\": \\"json\\"
-                            },
                             \\"type\\": {
                                 \\"name\\": \\"CreateMovieRequest\\",
                                 \\"fernFilepath\\": [
-                                    \\"imdb\\"
+                                    {
+                                        \\"originalValue\\": \\"imdb\\",
+                                        \\"camelCase\\": \\"imdb\\",
+                                        \\"snakeCase\\": \\"imdb\\",
+                                        \\"pascalCase\\": \\"Imdb\\",
+                                        \\"screamingSnakeCase\\": \\"IMDB\\"
+                                    }
                                 ],
                                 \\"_type\\": \\"named\\"
                             }
                         },
                         \\"response\\": {
-                            \\"encoding\\": {
-                                \\"_type\\": \\"json\\"
-                            },
                             \\"type\\": {
                                 \\"name\\": \\"MovieId\\",
                                 \\"fernFilepath\\": [
-                                    \\"imdb\\"
+                                    {
+                                        \\"originalValue\\": \\"imdb\\",
+                                        \\"camelCase\\": \\"imdb\\",
+                                        \\"snakeCase\\": \\"imdb\\",
+                                        \\"pascalCase\\": \\"Imdb\\",
+                                        \\"screamingSnakeCase\\": \\"IMDB\\"
+                                    }
                                 ],
                                 \\"_type\\": \\"named\\"
                             }
@@ -180,7 +277,13 @@ exports[`layout-v2 simple 1`] = `
                         \\"errors\\": []
                     },
                     {
-                        \\"endpointId\\": \\"getMovie\\",
+                        \\"name\\": {
+                            \\"originalValue\\": \\"getMovie\\",
+                            \\"camelCase\\": \\"getMovie\\",
+                            \\"snakeCase\\": \\"get_movie\\",
+                            \\"pascalCase\\": \\"GetMovie\\",
+                            \\"screamingSnakeCase\\": \\"GET_MOVIE\\"
+                        },
                         \\"auth\\": false,
                         \\"method\\": \\"GET\\",
                         \\"path\\": {
@@ -194,11 +297,23 @@ exports[`layout-v2 simple 1`] = `
                         },
                         \\"pathParameters\\": [
                             {
-                                \\"key\\": \\"movieId\\",
+                                \\"name\\": {
+                                    \\"originalValue\\": \\"movieId\\",
+                                    \\"camelCase\\": \\"movieId\\",
+                                    \\"snakeCase\\": \\"movie_id\\",
+                                    \\"pascalCase\\": \\"MovieId\\",
+                                    \\"screamingSnakeCase\\": \\"MOVIE_ID\\"
+                                },
                                 \\"valueType\\": {
                                     \\"name\\": \\"MovieId\\",
                                     \\"fernFilepath\\": [
-                                        \\"imdb\\"
+                                        {
+                                            \\"originalValue\\": \\"imdb\\",
+                                            \\"camelCase\\": \\"imdb\\",
+                                            \\"snakeCase\\": \\"imdb\\",
+                                            \\"pascalCase\\": \\"Imdb\\",
+                                            \\"screamingSnakeCase\\": \\"IMDB\\"
+                                        }
                                     ],
                                     \\"_type\\": \\"named\\"
                                 }
@@ -207,32 +322,37 @@ exports[`layout-v2 simple 1`] = `
                         \\"queryParameters\\": [],
                         \\"headers\\": [],
                         \\"request\\": {
-                            \\"encoding\\": {
-                                \\"_type\\": \\"json\\"
-                            },
                             \\"type\\": {
                                 \\"_type\\": \\"void\\"
                             }
                         },
                         \\"response\\": {
-                            \\"encoding\\": {
-                                \\"_type\\": \\"json\\"
-                            },
                             \\"type\\": {
                                 \\"name\\": \\"Movie\\",
                                 \\"fernFilepath\\": [
-                                    \\"imdb\\"
+                                    {
+                                        \\"originalValue\\": \\"imdb\\",
+                                        \\"camelCase\\": \\"imdb\\",
+                                        \\"snakeCase\\": \\"imdb\\",
+                                        \\"pascalCase\\": \\"Imdb\\",
+                                        \\"screamingSnakeCase\\": \\"IMDB\\"
+                                    }
                                 ],
                                 \\"_type\\": \\"named\\"
                             }
                         },
                         \\"errors\\": [
                             {
-                                \\"discriminantValue\\": \\"NotFoundError\\",
                                 \\"error\\": {
                                     \\"name\\": \\"NotFoundError\\",
                                     \\"fernFilepath\\": [
-                                        \\"imdb\\"
+                                        {
+                                            \\"originalValue\\": \\"imdb\\",
+                                            \\"camelCase\\": \\"imdb\\",
+                                            \\"snakeCase\\": \\"imdb\\",
+                                            \\"pascalCase\\": \\"Imdb\\",
+                                            \\"screamingSnakeCase\\": \\"IMDB\\"
+                                        }
                                     ]
                                 }
                             }
@@ -241,8 +361,7 @@ exports[`layout-v2 simple 1`] = `
                 ]
             }
         ],
-        \\"websocket\\": [],
-        \\"nonStandardEncodings\\": []
+        \\"websocket\\": []
     },
     \\"constants\\": {
         \\"errorDiscriminant\\": \\"_error\\",

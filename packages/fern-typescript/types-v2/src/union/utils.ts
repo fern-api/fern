@@ -1,20 +1,19 @@
-import { TypeReference } from "@fern-fern/ir-model";
+import { TypeReference, WireStringWithAllCasings } from "@fern-fern/ir-model";
 import { ImportStrategy } from "@fern-typescript/commons";
 import { File } from "@fern-typescript/declaration-handler";
 import { ResolvedType } from "@fern-typescript/resolvers";
-import upperFirst from "lodash-es/upperFirst";
 import { ts } from "ts-morph";
 
 // don't used named imports for type reference to prevent clashing with union subtypes
 export const UNION_TYPE_MODEL_IMPORT_STRATEGY = ImportStrategy.TOP_PACKAGE_IMPORT;
 
 export function getKeyForUnion({ discriminantValue }: ResolvedSingleUnionType): string {
-    return upperFirst(discriminantValue);
+    return discriminantValue.pascalCase;
 }
 
 export interface ResolvedSingleUnionType {
     docs: string | null | undefined;
-    discriminantValue: string;
+    discriminantValue: WireStringWithAllCasings;
     valueType: ResolvedSingleUnionValueType | undefined;
 }
 

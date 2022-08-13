@@ -56,7 +56,7 @@ export function generateWrapper({ wrapper, file }: { wrapper: WrapperDeclaration
             )
         );
 
-        const publicPropertyName = serviceName.fernFilepath[serviceName.fernFilepath.length - 1];
+        const publicPropertyName = serviceName.fernFilepath[serviceName.fernFilepath.length - 1]?.camelCase;
         if (publicPropertyName == null) {
             throw new Error("FernFilepath is empty for service " + serviceName.name);
         }
@@ -124,7 +124,7 @@ export function generateWrapper({ wrapper, file }: { wrapper: WrapperDeclaration
         const referenceToWrapped = file.getReferenceToWrapper(wrapped);
         const referenceToWrappedType = ts.factory.createTypeReferenceNode(referenceToWrapped.entityName);
 
-        const publicPropertyName = wrapped.fernFilepath[wrapped.fernFilepath.length - 1];
+        const publicPropertyName = wrapped.fernFilepath[wrapped.fernFilepath.length - 1]?.camelCase;
         if (publicPropertyName == null) {
             throw new Error("FernFilepath is empty for tree node.");
         }

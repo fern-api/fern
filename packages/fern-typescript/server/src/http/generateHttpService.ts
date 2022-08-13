@@ -68,11 +68,11 @@ function addEndpointToService({
 }) {
     const generatedEndpointTypes = modelContext.getGeneratedHttpServiceTypes({
         serviceName: service.name,
-        endpointId: endpoint.endpointId,
+        endpointId: endpoint.name.camelCase,
     });
 
     serviceInterface.addMethod({
-        name: endpoint.endpointId,
+        name: endpoint.name.camelCase,
         parameters: [
             ...getHttpRequestParameters({
                 generatedEndpointTypes,

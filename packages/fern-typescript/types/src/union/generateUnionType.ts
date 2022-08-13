@@ -107,8 +107,8 @@ export function generateUnionType({
 
     const visitorItems: visitorUtils.VisitableItem[] = resolvedTypes.map((resolvedType) => {
         return {
-            caseInSwitchStatement: ts.factory.createStringLiteral(resolvedType.discriminantValue),
-            keyInVisitor: resolvedType.discriminantValue,
+            caseInSwitchStatement: ts.factory.createStringLiteral(resolvedType.discriminantValue.wireValue),
+            keyInVisitor: resolvedType.discriminantValue.wireValue,
             visitorArgument:
                 resolvedType.valueType != null
                     ? resolvedType.valueType.isExtendable
@@ -120,7 +120,7 @@ export function generateUnionType({
                               type: resolvedType.valueType.type,
                               argument: ts.factory.createPropertyAccessExpression(
                                   ts.factory.createIdentifier(visitorUtils.VALUE_PARAMETER_NAME),
-                                  ts.factory.createIdentifier(resolvedType.discriminantValue)
+                                  ts.factory.createIdentifier(resolvedType.discriminantValue.wireValue)
                               ),
                           }
                     : undefined,
@@ -160,7 +160,7 @@ function generateDiscriminatedSingleUnionTypeInterface({
         properties: [
             {
                 name: discriminant,
-                type: getTextOfTsNode(ts.factory.createStringLiteral(resolvedType.discriminantValue)),
+                type: getTextOfTsNode(ts.factory.createStringLiteral(resolvedType.discriminantValue.wireValue)),
             },
         ],
     };
@@ -176,7 +176,7 @@ function addNonExtendableProperty({
     resolvedValueType: ResolvedSingleUnionValueType;
 }) {
     interfaceNode.addProperty({
-        name: resolvedSingleUnionType.discriminantValue,
+        name: resolvedSingleUnionType.discriminantValue.wireValue,
         type: getTextOfTsNode(resolvedValueType.type),
     });
 }
@@ -200,7 +200,7 @@ function createUtils({
 
     for (const singleUnionType of types) {
         writer.addProperty({
-            key: singleUnionType.discriminantValue,
+            key: singleUnionType.discriminantValue.camelCase,
             value: getTextOfTsNode(
                 generateCreator({
                     typeName,
@@ -245,7 +245,7 @@ function createUtils({
                 ),
                 undefined,
                 ts.factory.createArrayLiteralExpression(
-                    types.map((type) => ts.factory.createStringLiteral(type.discriminantValue))
+                    types.map((type) => ts.factory.createStringLiteral(type.discriminantValue.wireValue))
                 )
             )
         ),
@@ -290,7 +290,7 @@ function generateCreator({
                 ? [ts.factory.createSpreadAssignment(ts.factory.createIdentifier(VALUE_PARAMETER_NAME))]
                 : [
                       ts.factory.createPropertyAssignment(
-                          ts.factory.createIdentifier(singleUnionType.discriminantValue),
+                          ts.factory.createIdentifier(singleUnionType.discriminantValue.wireValue),
                           ts.factory.createIdentifier(VALUE_PARAMETER_NAME)
                       ),
                   ]
@@ -308,7 +308,7 @@ function generateCreator({
                     ...maybeValueAssignment,
                     ts.factory.createPropertyAssignment(
                         ts.factory.createIdentifier(discriminant),
-                        ts.factory.createStringLiteral(singleUnionType.discriminantValue)
+                        ts.factory.createStringLiteral(singleUnionType.discriminantValue.wireValue)
                     ),
                     ...additionalPropertiesForEveryType.map((additionalProperty) =>
                         ts.factory.createPropertyAssignment(

@@ -4,20 +4,18 @@ imports:
   serviceCommons: ./commons.yml
   commons: ../commons.yml
   types: ../types.yml
-ids:
-  - EndpointId
 types:
   HttpService:
     extends: commons.WithDocs
     properties:
-      name: serviceCommons.ServiceName
+      name: serviceCommons.DeclaredServiceName
       basePath: optional<string>
       endpoints: list<HttpEndpoint>
       headers: list<HttpHeader>
   HttpEndpoint:
     extends: commons.WithDocs
     properties:
-      endpointId: EndpointId
+      name: commons.StringWithAllCasings
       method: HttpMethod
       headers: list<HttpHeader>
       path: HttpPath
@@ -45,25 +43,23 @@ types:
   HttpHeader:
     extends: commons.WithDocs
     properties:
-      header: string
+      name: commons.WireStringWithAllCasings
       valueType: types.TypeReference
   PathParameter:
     extends: commons.WithDocs
     properties:
-      key: string
+      name: commons.StringWithAllCasings
       valueType: types.TypeReference
   QueryParameter:
     extends: commons.WithDocs
     properties:
-      key: string
+      name: commons.WireStringWithAllCasings
       valueType: types.TypeReference
   HttpRequest:
     extends: commons.WithDocs
     properties:
-      encoding: serviceCommons.Encoding
       type: types.TypeReference
   HttpResponse:
     extends: commons.WithDocs
     properties:
-      encoding: serviceCommons.Encoding
       type: types.TypeReference

@@ -7,13 +7,13 @@ types:
   ErrorDeclaration:
     extends: commons.WithDocs
     properties:
-      name: ErrorName
-      discriminantValue: string
+      name: DeclaredErrorName
+      discriminantValue: commons.WireStringWithAllCasings
       type: types.Type
       http: optional<HttpErrorConfiguration>
-  ErrorName:
+  DeclaredErrorName:
     properties:
-      fernFilepath: types.FernFilepath
+      fernFilepath: commons.FernFilepath
       name: string
   HttpErrorConfiguration:
     properties:

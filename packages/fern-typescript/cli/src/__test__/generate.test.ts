@@ -63,9 +63,6 @@ describe("runGenerator", () => {
                                 path: outputPath,
                             },
                             publish: null,
-                            helpers: {
-                                encodings: {},
-                            },
                             customConfig: {
                                 mode,
                             },

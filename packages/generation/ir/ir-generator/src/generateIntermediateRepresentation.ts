@@ -25,7 +25,6 @@ export async function generateIntermediateRepresentation(workspace: Workspace): 
         services: {
             http: [],
             websocket: [],
-            nonStandardEncodings: [],
         },
         constants: {
             errorDiscriminant: "_error",
@@ -92,7 +91,6 @@ export async function generateIntermediateRepresentation(workspace: Workspace): 
                                 serviceId,
                                 fernFilepath,
                                 imports,
-                                nonStandardEncodings: intermediateRepresentation.services.nonStandardEncodings,
                             })
                         );
                     }
@@ -106,7 +104,6 @@ export async function generateIntermediateRepresentation(workspace: Workspace): 
                                 channelDefinition,
                                 fernFilepath,
                                 imports,
-                                nonStandardEncodings: intermediateRepresentation.services.nonStandardEncodings,
                             })
                         );
                     }

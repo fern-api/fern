@@ -28,7 +28,7 @@ export function generateObjectType({
             .map(getTextOfTsNode),
         properties: shape.properties.map((field) => {
             const property = {
-                name: field.key,
+                name: field.name.wireValue,
                 type: getTextOfTsNode(
                     modelContext.getReferenceToType({
                         reference: field.valueType,

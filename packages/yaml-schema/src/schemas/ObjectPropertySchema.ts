@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { TypeReferenceWithDocsSchema } from "./TypeReferenceSchema";
+import { TypeReferenceWithDocsAndNameSchema } from "./TypeReferenceSchema";
 
-export const ObjectPropertySchema = TypeReferenceWithDocsSchema;
+export const ObjectPropertySchema = TypeReferenceWithDocsAndNameSchema;
 
 export type ObjectPropertySchema = z.infer<typeof ObjectPropertySchema>;

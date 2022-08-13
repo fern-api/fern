@@ -4,7 +4,7 @@ import { HttpEndpointSchema } from "./HttpEndpointSchema";
 import { HttpHeaderSchema } from "./HttpHeaderSchema";
 
 export const HttpServiceSchema = BaseServiceSchema.extend({
-    "base-path": z.optional(z.string()),
+    "base-path": z.string(),
     headers: z.optional(z.record(HttpHeaderSchema)),
     endpoints: z.record(HttpEndpointSchema),
 });

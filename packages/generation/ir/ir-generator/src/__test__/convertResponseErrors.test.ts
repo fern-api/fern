@@ -1,11 +1,12 @@
 import { ResponseErrors } from "@fern-fern/ir-model/services";
 import { convertResponseErrors } from "../converters/services/convertResponseErrors";
+import { convertToFernFilepath } from "../utils/convertToFernFilepath";
 
 describe("convertResponseErrors", () => {
     it("reference to an error in another file", () => {
         const actualResponseErrors = convertResponseErrors({
             errors: ["commons.UnauthorizedError"],
-            fernFilepath: ["path", "to", "other"],
+            fernFilepath: convertToFernFilepath("path/to/other"),
             imports: {
                 commons: "./commons",
             },
@@ -13,10 +14,9 @@ describe("convertResponseErrors", () => {
 
         const expectedResponseErrors: ResponseErrors = [
             {
-                discriminantValue: "UnauthorizedError",
                 docs: undefined,
                 error: {
-                    fernFilepath: ["path", "to", "commons"],
+                    fernFilepath: convertToFernFilepath("path/to/commons"),
                     name: "UnauthorizedError",
                 },
             },

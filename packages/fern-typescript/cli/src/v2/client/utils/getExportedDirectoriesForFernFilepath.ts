@@ -1,5 +1,4 @@
 import { FernFilepath } from "@fern-fern/ir-model";
-import { camelCase } from "lodash-es";
 import { ExportedFilePathPart } from "../../exports-manager/ExportedFilePath";
 
 export const ROOT_API_DIRECTORY = "/api";
@@ -14,8 +13,8 @@ export function getExportedDirectoriesForFernFilepath(
             exportDeclaration: { namespaceExport: apiName },
         },
         ...fernFilepath.map((fernFilepathPart) => ({
-            nameOnDisk: fernFilepathPart,
-            exportDeclaration: { namespaceExport: camelCase(fernFilepathPart) },
+            nameOnDisk: fernFilepathPart.originalValue,
+            exportDeclaration: { namespaceExport: fernFilepathPart.camelCase },
         })),
     ];
 }

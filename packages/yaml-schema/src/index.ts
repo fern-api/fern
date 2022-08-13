@@ -13,10 +13,16 @@ export {
     type RawApiAuthVisitor,
 } from "./utils/visitRawApiAuth";
 export {
+    isHeaderAuthScheme,
+    visitRawAuthSchemeDeclaration,
+    type AuthSchemeDeclarationVisitor,
+} from "./utils/visitRawAuthSchemeDeclaration";
+export {
     isRawAliasDefinition,
     isRawEnumDefinition,
     isRawObjectDefinition,
     isRawUnionDefinition,
     visitRawTypeDeclaration,
+    type RawTypeDeclarationVisitor,
 } from "./utils/visitRawTypeDeclaration";
 export { visitRawTypeReference } from "./utils/visitRawTypeReference";

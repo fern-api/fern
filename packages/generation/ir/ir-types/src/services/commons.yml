@@ -2,25 +2,14 @@
 
 imports:
   commons: ../commons.yml
-  types: ../types.yml
   errors: ../errors.yml
 types:
-  ServiceName:
+  DeclaredServiceName:
     properties:
-      fernFilepath: types.FernFilepath
+      fernFilepath: commons.FernFilepath
       name: string
-  Encoding:
-    union:
-      json: {}
-      custom: CustomWireMessageEncoding
-  CustomWireMessageEncoding:
-    properties:
-      encoding: string
   ResponseErrors: list<ResponseError>
   ResponseError:
     extends: commons.WithDocs
     properties:
-      discriminantValue:
-        docs: This field is deprecated. Use ErrorDeclaration.discriminantValue
-        type: string
-      error: errors.ErrorName
+      error: errors.DeclaredErrorName

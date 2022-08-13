@@ -8,7 +8,7 @@ types:
   WebSocketChannel:
     extends: commons.WithDocs
     properties:
-      name: serviceCommons.ServiceName
+      name: serviceCommons.DeclaredServiceName
       path: string
       client: WebSocketMessenger
       server: WebSocketMessenger
@@ -19,19 +19,17 @@ types:
   WebSocketOperation:
     extends: commons.WithDocs
     properties:
-      operationId: string
+      name: commons.WireStringWithAllCasings
       request: WebSocketRequest
       response: WebSocketResponse
       errors: serviceCommons.ResponseErrors
   WebSocketRequest:
     extends: commons.WithDocs
     properties:
-      encoding: serviceCommons.Encoding
       type: types.TypeReference
   WebSocketResponse:
     extends: commons.WithDocs
     properties:
-      encoding: serviceCommons.Encoding
       type: types.TypeReference
   WebSocketOperationProperties:
     properties:

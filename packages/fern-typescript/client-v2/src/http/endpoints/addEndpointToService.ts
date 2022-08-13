@@ -34,14 +34,14 @@ export function addEndpointToService({
         ])
     );
 
-    serviceInterface.addMethod({
-        name: endpoint.endpointId,
+    const methodDeclaration = serviceInterface.addMethod({
+        name: parsedEndpoint.endpointMethodName,
         parameters,
         returnType,
     });
 
     serviceClass.addMethod({
-        name: endpoint.endpointId,
+        name: methodDeclaration.getName(),
         scope: Scope.Public,
         isAsync: true,
         parameters,

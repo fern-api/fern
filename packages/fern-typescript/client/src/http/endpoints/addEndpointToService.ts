@@ -24,7 +24,7 @@ export async function addEndpointToService({
 
     const generatedEndpointTypes = modelContext.getGeneratedHttpServiceTypes({
         serviceName: serviceDefinition.name,
-        endpointId: endpoint.endpointId,
+        endpointId: endpoint.name.camelCase,
     });
 
     const parameters = getHttpRequestParameters({ generatedEndpointTypes, modelContext, file: serviceFile });
@@ -39,13 +39,13 @@ export async function addEndpointToService({
     );
 
     serviceInterface.addMethod({
-        name: endpoint.endpointId,
+        name: endpoint.name.camelCase,
         parameters,
         returnType,
     });
 
     serviceClass.addMethod({
-        name: endpoint.endpointId,
+        name: endpoint.name.camelCase,
         scope: Scope.Public,
         isAsync: true,
         parameters,
