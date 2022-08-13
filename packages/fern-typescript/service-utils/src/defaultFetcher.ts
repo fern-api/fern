@@ -3,7 +3,7 @@ import { Fetcher } from "./Fetcher";
 
 export const defaultFetcher: Fetcher = async (args) => {
     const headers: Record<string, string> = {
-        "Content-Type": args.body?.contentType ?? "application/json",
+        "Content-Type": "application/json",
     };
     for (const [key, value] of Object.entries(args.headers)) {
         if (value != null) {
@@ -19,12 +19,11 @@ export const defaultFetcher: Fetcher = async (args) => {
         params: args.queryParameters,
         method: args.method,
         headers,
-        data: args.body?.content,
-        responseType: "arraybuffer",
+        data: args.body,
     });
 
     return {
         statusCode: response.status,
-        body: new Uint8Array(response.data),
+        body: response.data,
     };
 };
