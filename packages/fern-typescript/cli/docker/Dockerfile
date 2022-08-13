@@ -1,3 +1,4 @@
+FROM ubuntu:latest
 FROM jarredsumner/bun:edge
 WORKDIR ~
 RUN mkdir -p .bun/cache
