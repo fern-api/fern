@@ -11,11 +11,11 @@ export class FernServiceUtilsImpl extends ExternalDependency implements FernServ
 
     public readonly Supplier = this.withNamedImport(
         "Supplier",
-        (addImport, supplierType) =>
+        (addImport, Supplier) =>
             ({
                 _getReferenceToType: (typeArgument: ts.TypeNode) => {
                     addImport();
-                    return ts.factory.createTypeReferenceNode(supplierType, [typeArgument]);
+                    return ts.factory.createTypeReferenceNode(Supplier, [typeArgument]);
                 },
 
                 get: (supplierExpression: ts.Expression) => {
@@ -23,7 +23,7 @@ export class FernServiceUtilsImpl extends ExternalDependency implements FernServ
                     return ts.factory.createAwaitExpression(
                         ts.factory.createCallExpression(
                             ts.factory.createPropertyAccessExpression(
-                                ts.factory.createIdentifier(supplierType),
+                                ts.factory.createIdentifier(Supplier),
                                 ts.factory.createIdentifier("get")
                             ),
                             undefined,
@@ -36,11 +36,11 @@ export class FernServiceUtilsImpl extends ExternalDependency implements FernServ
 
     public readonly _Response = this.withNamedImport(
         "_Response",
-        (addImport, responseType) =>
+        (addImport, _Response) =>
             ({
                 _getReferenceToType: (successType: ts.TypeNode, failureType: ts.TypeNode) => {
                     addImport();
-                    return ts.factory.createTypeReferenceNode(responseType, [successType, failureType]);
+                    return ts.factory.createTypeReferenceNode(_Response, [successType, failureType]);
                 },
 
                 OK_DISCRIMINANT: "ok",
@@ -88,19 +88,89 @@ export class FernServiceUtilsImpl extends ExternalDependency implements FernServ
         }
     );
 
-    public readonly NetworkError = this.withNamedImport("_NetworkError", (addImport, networkErrorType) => ({
+    public readonly NetworkError = this.withNamedImport("_NetworkError", (addImport, _NetworkError) => ({
         ERROR_NAME: "_network",
 
         _getReferenceToType: () => {
             addImport();
-            return ts.factory.createTypeReferenceNode(networkErrorType);
+            return ts.factory.createTypeReferenceNode(_NetworkError);
         },
     }));
 
-    public readonly UnknownError = this.withNamedImport("_UnknownError", (addImport, unknownErrorType) => ({
+    public readonly UnknownError = this.withNamedImport("_UnknownError", (addImport, _UnknownError) => ({
         _getReferenceToType: () => {
             addImport();
-            return ts.factory.createTypeReferenceNode(unknownErrorType);
+            return ts.factory.createTypeReferenceNode(_UnknownError);
         },
     }));
+
+    public readonly BearerToken = this.withNamedImport(
+        "BearerToken",
+        (addImport, BearerToken) =>
+            ({
+                _getReferenceToType: () => {
+                    addImport();
+                    return ts.factory.createTypeReferenceNode(BearerToken);
+                },
+
+                toAuthorizationHeader: (token: ts.Expression) => {
+                    addImport();
+                    return ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier(BearerToken),
+                            ts.factory.createIdentifier("toAuthorizationHeader")
+                        ),
+                        undefined,
+                        [token]
+                    );
+                },
+
+                fromAuthorizationHeader: (header: ts.Expression) => {
+                    addImport();
+                    return ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier(BearerToken),
+                            ts.factory.createIdentifier("fromAuthorizationHeader")
+                        ),
+                        undefined,
+                        [header]
+                    );
+                },
+            } as const)
+    );
+
+    public readonly BasicAuth = this.withNamedImport(
+        "BasicAuth",
+        (addImport, BasicAuth) =>
+            ({
+                _getReferenceToType: () => {
+                    addImport();
+                    return ts.factory.createTypeReferenceNode(BasicAuth);
+                },
+
+                toAuthorizationHeader: (token: ts.Expression) => {
+                    addImport();
+                    return ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier(BasicAuth),
+                            ts.factory.createIdentifier("toAuthorizationHeader")
+                        ),
+                        undefined,
+                        [token]
+                    );
+                },
+
+                fromAuthorizationHeader: (header: ts.Expression) => {
+                    addImport();
+                    return ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier(BasicAuth),
+                            ts.factory.createIdentifier("fromAuthorizationHeader")
+                        ),
+                        undefined,
+                        [header]
+                    );
+                },
+            } as const)
+    );
 }
