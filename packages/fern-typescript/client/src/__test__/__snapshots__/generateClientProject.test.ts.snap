@@ -11,375 +11,375 @@ yarn.lock
   "/index.ts": "export * as model from \\"./model\\";
 export * as services from \\"./services\\";
 ",
-  "/model/auth/_service-types/ServiceWithBasicAuth/endpointBErrorBody.ts": "export type endpointBErrorBody = never;
+  "/model/auth/_service-types/ServiceWithBasicAuth/EndpointBErrorBody.ts": "export type EndpointBErrorBody = never;
 
-export declare namespace endpointBErrorBody {
+export declare namespace EndpointBErrorBody {
     export interface _Visitor<Result> {
         _unknown: () => Result;
     }
 }
 
-export const endpointBErrorBody = {
-    _visit: <Result>(_value: endpointBErrorBody, visitor: endpointBErrorBody._Visitor<Result>): Result => {
+export const EndpointBErrorBody = {
+    _visit: <Result>(_value: EndpointBErrorBody, visitor: EndpointBErrorBody._Visitor<Result>): Result => {
         return visitor._unknown();
     },
 
-    _types: (): endpointBErrorBody[\\"_error\\"][] => [],
+    _types: (): EndpointBErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
-  "/model/auth/_service-types/ServiceWithBasicAuth/endpointBResponse.ts": "import * as model from \\"../../..\\";
+  "/model/auth/_service-types/ServiceWithBasicAuth/EndpointBResponse.ts": "import * as model from \\"../../..\\";
 
-export type endpointBResponse = endpointBResponse.SuccessResponse | endpointBResponse.ErrorResponse;
+export type EndpointBResponse = EndpointBResponse.SuccessResponse | EndpointBResponse.ErrorResponse;
 
-export declare namespace endpointBResponse {
+export declare namespace EndpointBResponse {
     export interface SuccessResponse {
         ok: true;
     }
 
     export interface ErrorResponse {
         ok: false;
-        error: model.auth.endpointBErrorBody;
+        error: model.auth.EndpointBErrorBody;
     }
 }
 ",
-  "/model/auth/_service-types/ServiceWithBasicAuth/index.ts": "export * from \\"./endpointBErrorBody\\";
-export * from \\"./endpointBResponse\\";
+  "/model/auth/_service-types/ServiceWithBasicAuth/index.ts": "export * from \\"./EndpointBErrorBody\\";
+export * from \\"./EndpointBResponse\\";
 ",
-  "/model/auth/_service-types/ServiceWithBasicAuthWithOverride/endpointGErrorBody.ts": "export type endpointGErrorBody = never;
+  "/model/auth/_service-types/ServiceWithBasicAuthWithOverride/EndpointGErrorBody.ts": "export type EndpointGErrorBody = never;
 
-export declare namespace endpointGErrorBody {
+export declare namespace EndpointGErrorBody {
     export interface _Visitor<Result> {
         _unknown: () => Result;
     }
 }
 
-export const endpointGErrorBody = {
-    _visit: <Result>(_value: endpointGErrorBody, visitor: endpointGErrorBody._Visitor<Result>): Result => {
+export const EndpointGErrorBody = {
+    _visit: <Result>(_value: EndpointGErrorBody, visitor: EndpointGErrorBody._Visitor<Result>): Result => {
         return visitor._unknown();
     },
 
-    _types: (): endpointGErrorBody[\\"_error\\"][] => [],
+    _types: (): EndpointGErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
-  "/model/auth/_service-types/ServiceWithBasicAuthWithOverride/endpointGResponse.ts": "import * as model from \\"../../..\\";
+  "/model/auth/_service-types/ServiceWithBasicAuthWithOverride/EndpointGResponse.ts": "import * as model from \\"../../..\\";
 
-export type endpointGResponse = endpointGResponse.SuccessResponse | endpointGResponse.ErrorResponse;
+export type EndpointGResponse = EndpointGResponse.SuccessResponse | EndpointGResponse.ErrorResponse;
 
-export declare namespace endpointGResponse {
+export declare namespace EndpointGResponse {
     export interface SuccessResponse {
         ok: true;
     }
 
     export interface ErrorResponse {
         ok: false;
-        error: model.auth.endpointGErrorBody;
+        error: model.auth.EndpointGErrorBody;
     }
 }
 ",
-  "/model/auth/_service-types/ServiceWithBasicAuthWithOverride/index.ts": "export * from \\"./endpointGErrorBody\\";
-export * from \\"./endpointGResponse\\";
-export * from \\"./overrideEndpointGErrorBody\\";
-export * from \\"./overrideEndpointGResponse\\";
-",
-  "/model/auth/_service-types/ServiceWithBasicAuthWithOverride/overrideEndpointGErrorBody.ts": "export type overrideEndpointGErrorBody = never;
+  "/model/auth/_service-types/ServiceWithBasicAuthWithOverride/OverrideEndpointGErrorBody.ts": "export type OverrideEndpointGErrorBody = never;
 
-export declare namespace overrideEndpointGErrorBody {
+export declare namespace OverrideEndpointGErrorBody {
     export interface _Visitor<Result> {
         _unknown: () => Result;
     }
 }
 
-export const overrideEndpointGErrorBody = {
-    _visit: <Result>(_value: overrideEndpointGErrorBody, visitor: overrideEndpointGErrorBody._Visitor<Result>): Result => {
+export const OverrideEndpointGErrorBody = {
+    _visit: <Result>(_value: OverrideEndpointGErrorBody, visitor: OverrideEndpointGErrorBody._Visitor<Result>): Result => {
         return visitor._unknown();
     },
 
-    _types: (): overrideEndpointGErrorBody[\\"_error\\"][] => [],
+    _types: (): OverrideEndpointGErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
-  "/model/auth/_service-types/ServiceWithBasicAuthWithOverride/overrideEndpointGResponse.ts": "import * as model from \\"../../..\\";
+  "/model/auth/_service-types/ServiceWithBasicAuthWithOverride/OverrideEndpointGResponse.ts": "import * as model from \\"../../..\\";
 
-export type overrideEndpointGResponse = overrideEndpointGResponse.SuccessResponse | overrideEndpointGResponse.ErrorResponse;
+export type OverrideEndpointGResponse = OverrideEndpointGResponse.SuccessResponse | OverrideEndpointGResponse.ErrorResponse;
 
-export declare namespace overrideEndpointGResponse {
+export declare namespace OverrideEndpointGResponse {
     export interface SuccessResponse {
         ok: true;
     }
 
     export interface ErrorResponse {
         ok: false;
-        error: model.auth.overrideEndpointGErrorBody;
+        error: model.auth.OverrideEndpointGErrorBody;
     }
 }
 ",
-  "/model/auth/_service-types/ServiceWithBearerAuth/endpointCErrorBody.ts": "export type endpointCErrorBody = never;
+  "/model/auth/_service-types/ServiceWithBasicAuthWithOverride/index.ts": "export * from \\"./EndpointGErrorBody\\";
+export * from \\"./EndpointGResponse\\";
+export * from \\"./OverrideEndpointGErrorBody\\";
+export * from \\"./OverrideEndpointGResponse\\";
+",
+  "/model/auth/_service-types/ServiceWithBearerAuth/EndpointCErrorBody.ts": "export type EndpointCErrorBody = never;
 
-export declare namespace endpointCErrorBody {
+export declare namespace EndpointCErrorBody {
     export interface _Visitor<Result> {
         _unknown: () => Result;
     }
 }
 
-export const endpointCErrorBody = {
-    _visit: <Result>(_value: endpointCErrorBody, visitor: endpointCErrorBody._Visitor<Result>): Result => {
+export const EndpointCErrorBody = {
+    _visit: <Result>(_value: EndpointCErrorBody, visitor: EndpointCErrorBody._Visitor<Result>): Result => {
         return visitor._unknown();
     },
 
-    _types: (): endpointCErrorBody[\\"_error\\"][] => [],
+    _types: (): EndpointCErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
-  "/model/auth/_service-types/ServiceWithBearerAuth/endpointCResponse.ts": "import * as model from \\"../../..\\";
+  "/model/auth/_service-types/ServiceWithBearerAuth/EndpointCResponse.ts": "import * as model from \\"../../..\\";
 
-export type endpointCResponse = endpointCResponse.SuccessResponse | endpointCResponse.ErrorResponse;
+export type EndpointCResponse = EndpointCResponse.SuccessResponse | EndpointCResponse.ErrorResponse;
 
-export declare namespace endpointCResponse {
+export declare namespace EndpointCResponse {
     export interface SuccessResponse {
         ok: true;
     }
 
     export interface ErrorResponse {
         ok: false;
-        error: model.auth.endpointCErrorBody;
+        error: model.auth.EndpointCErrorBody;
     }
 }
 ",
-  "/model/auth/_service-types/ServiceWithBearerAuth/index.ts": "export * from \\"./endpointCErrorBody\\";
-export * from \\"./endpointCResponse\\";
+  "/model/auth/_service-types/ServiceWithBearerAuth/index.ts": "export * from \\"./EndpointCErrorBody\\";
+export * from \\"./EndpointCResponse\\";
 ",
-  "/model/auth/_service-types/ServiceWithBearerAuthWithOverride/endpointFErrorBody.ts": "export type endpointFErrorBody = never;
+  "/model/auth/_service-types/ServiceWithBearerAuthWithOverride/EndpointFErrorBody.ts": "export type EndpointFErrorBody = never;
 
-export declare namespace endpointFErrorBody {
+export declare namespace EndpointFErrorBody {
     export interface _Visitor<Result> {
         _unknown: () => Result;
     }
 }
 
-export const endpointFErrorBody = {
-    _visit: <Result>(_value: endpointFErrorBody, visitor: endpointFErrorBody._Visitor<Result>): Result => {
+export const EndpointFErrorBody = {
+    _visit: <Result>(_value: EndpointFErrorBody, visitor: EndpointFErrorBody._Visitor<Result>): Result => {
         return visitor._unknown();
     },
 
-    _types: (): endpointFErrorBody[\\"_error\\"][] => [],
+    _types: (): EndpointFErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
-  "/model/auth/_service-types/ServiceWithBearerAuthWithOverride/endpointFResponse.ts": "import * as model from \\"../../..\\";
+  "/model/auth/_service-types/ServiceWithBearerAuthWithOverride/EndpointFResponse.ts": "import * as model from \\"../../..\\";
 
-export type endpointFResponse = endpointFResponse.SuccessResponse | endpointFResponse.ErrorResponse;
+export type EndpointFResponse = EndpointFResponse.SuccessResponse | EndpointFResponse.ErrorResponse;
 
-export declare namespace endpointFResponse {
+export declare namespace EndpointFResponse {
     export interface SuccessResponse {
         ok: true;
     }
 
     export interface ErrorResponse {
         ok: false;
-        error: model.auth.endpointFErrorBody;
+        error: model.auth.EndpointFErrorBody;
     }
 }
 ",
-  "/model/auth/_service-types/ServiceWithBearerAuthWithOverride/index.ts": "export * from \\"./endpointFErrorBody\\";
-export * from \\"./endpointFResponse\\";
-export * from \\"./overrideEndpointFErrorBody\\";
-export * from \\"./overrideEndpointFResponse\\";
-",
-  "/model/auth/_service-types/ServiceWithBearerAuthWithOverride/overrideEndpointFErrorBody.ts": "export type overrideEndpointFErrorBody = never;
+  "/model/auth/_service-types/ServiceWithBearerAuthWithOverride/OverrideEndpointFErrorBody.ts": "export type OverrideEndpointFErrorBody = never;
 
-export declare namespace overrideEndpointFErrorBody {
+export declare namespace OverrideEndpointFErrorBody {
     export interface _Visitor<Result> {
         _unknown: () => Result;
     }
 }
 
-export const overrideEndpointFErrorBody = {
-    _visit: <Result>(_value: overrideEndpointFErrorBody, visitor: overrideEndpointFErrorBody._Visitor<Result>): Result => {
+export const OverrideEndpointFErrorBody = {
+    _visit: <Result>(_value: OverrideEndpointFErrorBody, visitor: OverrideEndpointFErrorBody._Visitor<Result>): Result => {
         return visitor._unknown();
     },
 
-    _types: (): overrideEndpointFErrorBody[\\"_error\\"][] => [],
+    _types: (): OverrideEndpointFErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
-  "/model/auth/_service-types/ServiceWithBearerAuthWithOverride/overrideEndpointFResponse.ts": "import * as model from \\"../../..\\";
+  "/model/auth/_service-types/ServiceWithBearerAuthWithOverride/OverrideEndpointFResponse.ts": "import * as model from \\"../../..\\";
 
-export type overrideEndpointFResponse = overrideEndpointFResponse.SuccessResponse | overrideEndpointFResponse.ErrorResponse;
+export type OverrideEndpointFResponse = OverrideEndpointFResponse.SuccessResponse | OverrideEndpointFResponse.ErrorResponse;
 
-export declare namespace overrideEndpointFResponse {
+export declare namespace OverrideEndpointFResponse {
     export interface SuccessResponse {
         ok: true;
     }
 
     export interface ErrorResponse {
         ok: false;
-        error: model.auth.overrideEndpointFErrorBody;
+        error: model.auth.OverrideEndpointFErrorBody;
     }
 }
 ",
-  "/model/auth/_service-types/ServiceWithNoAuth/endpointAErrorBody.ts": "export type endpointAErrorBody = never;
+  "/model/auth/_service-types/ServiceWithBearerAuthWithOverride/index.ts": "export * from \\"./EndpointFErrorBody\\";
+export * from \\"./EndpointFResponse\\";
+export * from \\"./OverrideEndpointFErrorBody\\";
+export * from \\"./OverrideEndpointFResponse\\";
+",
+  "/model/auth/_service-types/ServiceWithNoAuth/EndpointAErrorBody.ts": "export type EndpointAErrorBody = never;
 
-export declare namespace endpointAErrorBody {
+export declare namespace EndpointAErrorBody {
     export interface _Visitor<Result> {
         _unknown: () => Result;
     }
 }
 
-export const endpointAErrorBody = {
-    _visit: <Result>(_value: endpointAErrorBody, visitor: endpointAErrorBody._Visitor<Result>): Result => {
+export const EndpointAErrorBody = {
+    _visit: <Result>(_value: EndpointAErrorBody, visitor: EndpointAErrorBody._Visitor<Result>): Result => {
         return visitor._unknown();
     },
 
-    _types: (): endpointAErrorBody[\\"_error\\"][] => [],
+    _types: (): EndpointAErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
-  "/model/auth/_service-types/ServiceWithNoAuth/endpointAResponse.ts": "import * as model from \\"../../..\\";
+  "/model/auth/_service-types/ServiceWithNoAuth/EndpointAResponse.ts": "import * as model from \\"../../..\\";
 
-export type endpointAResponse = endpointAResponse.SuccessResponse | endpointAResponse.ErrorResponse;
+export type EndpointAResponse = EndpointAResponse.SuccessResponse | EndpointAResponse.ErrorResponse;
 
-export declare namespace endpointAResponse {
+export declare namespace EndpointAResponse {
     export interface SuccessResponse {
         ok: true;
     }
 
     export interface ErrorResponse {
         ok: false;
-        error: model.auth.endpointAErrorBody;
+        error: model.auth.EndpointAErrorBody;
     }
 }
 ",
-  "/model/auth/_service-types/ServiceWithNoAuth/index.ts": "export * from \\"./endpointAErrorBody\\";
-export * from \\"./endpointAResponse\\";
+  "/model/auth/_service-types/ServiceWithNoAuth/index.ts": "export * from \\"./EndpointAErrorBody\\";
+export * from \\"./EndpointAResponse\\";
 ",
-  "/model/auth/_service-types/ServiceWithNoAuthWithBasicOverride/endpointEErrorBody.ts": "export type endpointEErrorBody = never;
+  "/model/auth/_service-types/ServiceWithNoAuthWithBasicOverride/EndpointEErrorBody.ts": "export type EndpointEErrorBody = never;
 
-export declare namespace endpointEErrorBody {
+export declare namespace EndpointEErrorBody {
     export interface _Visitor<Result> {
         _unknown: () => Result;
     }
 }
 
-export const endpointEErrorBody = {
-    _visit: <Result>(_value: endpointEErrorBody, visitor: endpointEErrorBody._Visitor<Result>): Result => {
+export const EndpointEErrorBody = {
+    _visit: <Result>(_value: EndpointEErrorBody, visitor: EndpointEErrorBody._Visitor<Result>): Result => {
         return visitor._unknown();
     },
 
-    _types: (): endpointEErrorBody[\\"_error\\"][] => [],
+    _types: (): EndpointEErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
-  "/model/auth/_service-types/ServiceWithNoAuthWithBasicOverride/endpointEResponse.ts": "import * as model from \\"../../..\\";
+  "/model/auth/_service-types/ServiceWithNoAuthWithBasicOverride/EndpointEResponse.ts": "import * as model from \\"../../..\\";
 
-export type endpointEResponse = endpointEResponse.SuccessResponse | endpointEResponse.ErrorResponse;
+export type EndpointEResponse = EndpointEResponse.SuccessResponse | EndpointEResponse.ErrorResponse;
 
-export declare namespace endpointEResponse {
+export declare namespace EndpointEResponse {
     export interface SuccessResponse {
         ok: true;
     }
 
     export interface ErrorResponse {
         ok: false;
-        error: model.auth.endpointEErrorBody;
+        error: model.auth.EndpointEErrorBody;
     }
 }
 ",
-  "/model/auth/_service-types/ServiceWithNoAuthWithBasicOverride/index.ts": "export * from \\"./endpointEErrorBody\\";
-export * from \\"./endpointEResponse\\";
-export * from \\"./overrideEndpointEErrorBody\\";
-export * from \\"./overrideEndpointEResponse\\";
-",
-  "/model/auth/_service-types/ServiceWithNoAuthWithBasicOverride/overrideEndpointEErrorBody.ts": "export type overrideEndpointEErrorBody = never;
+  "/model/auth/_service-types/ServiceWithNoAuthWithBasicOverride/OverrideEndpointEErrorBody.ts": "export type OverrideEndpointEErrorBody = never;
 
-export declare namespace overrideEndpointEErrorBody {
+export declare namespace OverrideEndpointEErrorBody {
     export interface _Visitor<Result> {
         _unknown: () => Result;
     }
 }
 
-export const overrideEndpointEErrorBody = {
-    _visit: <Result>(_value: overrideEndpointEErrorBody, visitor: overrideEndpointEErrorBody._Visitor<Result>): Result => {
+export const OverrideEndpointEErrorBody = {
+    _visit: <Result>(_value: OverrideEndpointEErrorBody, visitor: OverrideEndpointEErrorBody._Visitor<Result>): Result => {
         return visitor._unknown();
     },
 
-    _types: (): overrideEndpointEErrorBody[\\"_error\\"][] => [],
+    _types: (): OverrideEndpointEErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
-  "/model/auth/_service-types/ServiceWithNoAuthWithBasicOverride/overrideEndpointEResponse.ts": "import * as model from \\"../../..\\";
+  "/model/auth/_service-types/ServiceWithNoAuthWithBasicOverride/OverrideEndpointEResponse.ts": "import * as model from \\"../../..\\";
 
-export type overrideEndpointEResponse = overrideEndpointEResponse.SuccessResponse | overrideEndpointEResponse.ErrorResponse;
+export type OverrideEndpointEResponse = OverrideEndpointEResponse.SuccessResponse | OverrideEndpointEResponse.ErrorResponse;
 
-export declare namespace overrideEndpointEResponse {
+export declare namespace OverrideEndpointEResponse {
     export interface SuccessResponse {
         ok: true;
     }
 
     export interface ErrorResponse {
         ok: false;
-        error: model.auth.overrideEndpointEErrorBody;
+        error: model.auth.OverrideEndpointEErrorBody;
     }
 }
 ",
-  "/model/auth/_service-types/ServiceWithNoAuthWithBearerOverride/endpointDErrorBody.ts": "export type endpointDErrorBody = never;
+  "/model/auth/_service-types/ServiceWithNoAuthWithBasicOverride/index.ts": "export * from \\"./EndpointEErrorBody\\";
+export * from \\"./EndpointEResponse\\";
+export * from \\"./OverrideEndpointEErrorBody\\";
+export * from \\"./OverrideEndpointEResponse\\";
+",
+  "/model/auth/_service-types/ServiceWithNoAuthWithBearerOverride/EndpointDErrorBody.ts": "export type EndpointDErrorBody = never;
 
-export declare namespace endpointDErrorBody {
+export declare namespace EndpointDErrorBody {
     export interface _Visitor<Result> {
         _unknown: () => Result;
     }
 }
 
-export const endpointDErrorBody = {
-    _visit: <Result>(_value: endpointDErrorBody, visitor: endpointDErrorBody._Visitor<Result>): Result => {
+export const EndpointDErrorBody = {
+    _visit: <Result>(_value: EndpointDErrorBody, visitor: EndpointDErrorBody._Visitor<Result>): Result => {
         return visitor._unknown();
     },
 
-    _types: (): endpointDErrorBody[\\"_error\\"][] => [],
+    _types: (): EndpointDErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
-  "/model/auth/_service-types/ServiceWithNoAuthWithBearerOverride/endpointDResponse.ts": "import * as model from \\"../../..\\";
+  "/model/auth/_service-types/ServiceWithNoAuthWithBearerOverride/EndpointDResponse.ts": "import * as model from \\"../../..\\";
 
-export type endpointDResponse = endpointDResponse.SuccessResponse | endpointDResponse.ErrorResponse;
+export type EndpointDResponse = EndpointDResponse.SuccessResponse | EndpointDResponse.ErrorResponse;
 
-export declare namespace endpointDResponse {
+export declare namespace EndpointDResponse {
     export interface SuccessResponse {
         ok: true;
     }
 
     export interface ErrorResponse {
         ok: false;
-        error: model.auth.endpointDErrorBody;
+        error: model.auth.EndpointDErrorBody;
     }
 }
 ",
-  "/model/auth/_service-types/ServiceWithNoAuthWithBearerOverride/index.ts": "export * from \\"./endpointDErrorBody\\";
-export * from \\"./endpointDResponse\\";
-export * from \\"./overrideEndpointDErrorBody\\";
-export * from \\"./overrideEndpointDResponse\\";
-",
-  "/model/auth/_service-types/ServiceWithNoAuthWithBearerOverride/overrideEndpointDErrorBody.ts": "export type overrideEndpointDErrorBody = never;
+  "/model/auth/_service-types/ServiceWithNoAuthWithBearerOverride/OverrideEndpointDErrorBody.ts": "export type OverrideEndpointDErrorBody = never;
 
-export declare namespace overrideEndpointDErrorBody {
+export declare namespace OverrideEndpointDErrorBody {
     export interface _Visitor<Result> {
         _unknown: () => Result;
     }
 }
 
-export const overrideEndpointDErrorBody = {
-    _visit: <Result>(_value: overrideEndpointDErrorBody, visitor: overrideEndpointDErrorBody._Visitor<Result>): Result => {
+export const OverrideEndpointDErrorBody = {
+    _visit: <Result>(_value: OverrideEndpointDErrorBody, visitor: OverrideEndpointDErrorBody._Visitor<Result>): Result => {
         return visitor._unknown();
     },
 
-    _types: (): overrideEndpointDErrorBody[\\"_error\\"][] => [],
+    _types: (): OverrideEndpointDErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
-  "/model/auth/_service-types/ServiceWithNoAuthWithBearerOverride/overrideEndpointDResponse.ts": "import * as model from \\"../../..\\";
+  "/model/auth/_service-types/ServiceWithNoAuthWithBearerOverride/OverrideEndpointDResponse.ts": "import * as model from \\"../../..\\";
 
-export type overrideEndpointDResponse = overrideEndpointDResponse.SuccessResponse | overrideEndpointDResponse.ErrorResponse;
+export type OverrideEndpointDResponse = OverrideEndpointDResponse.SuccessResponse | OverrideEndpointDResponse.ErrorResponse;
 
-export declare namespace overrideEndpointDResponse {
+export declare namespace OverrideEndpointDResponse {
     export interface SuccessResponse {
         ok: true;
     }
 
     export interface ErrorResponse {
         ok: false;
-        error: model.auth.overrideEndpointDErrorBody;
+        error: model.auth.OverrideEndpointDErrorBody;
     }
 }
+",
+  "/model/auth/_service-types/ServiceWithNoAuthWithBearerOverride/index.ts": "export * from \\"./EndpointDErrorBody\\";
+export * from \\"./EndpointDResponse\\";
+export * from \\"./OverrideEndpointDErrorBody\\";
+export * from \\"./OverrideEndpointDResponse\\";
 ",
   "/model/auth/_service-types/index.ts": "export * from \\"./ServiceWithNoAuth\\";
 export * from \\"./ServiceWithBasicAuth\\";
@@ -422,7 +422,7 @@ import urlJoin from \\"url-join\\";
 import * as model from \\"../../model\\";
 
 export interface ServiceWithBasicAuth {
-    endpointB(): Promise<model.auth.endpointBResponse>;
+    endpointB(): Promise<model.auth.EndpointBResponse>;
 }
 
 export declare namespace ServiceWithBasicAuth {
@@ -441,7 +441,7 @@ export class ServiceWithBasicAuth implements ServiceWithBasicAuth {
         this.baseUrl = urlJoin(args.origin, \\"/\\");
     }
 
-    public async endpointB(): Promise<model.auth.endpointBResponse> {
+    public async endpointB(): Promise<model.auth.EndpointBResponse> {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/b\\"),
             method: \\"POST\\",
@@ -456,7 +456,7 @@ export class ServiceWithBasicAuth implements ServiceWithBasicAuth {
         else {
             return {
                 ok: false,
-                error: encodedResponse.body as model.auth.endpointBErrorBody
+                error: encodedResponse.body as model.auth.EndpointBErrorBody
             };
         }
     }
@@ -467,8 +467,8 @@ import urlJoin from \\"url-join\\";
 import * as model from \\"../../model\\";
 
 export interface ServiceWithBasicAuthWithOverride {
-    endpointG(): Promise<model.auth.endpointGResponse>;
-    overrideEndpointG(): Promise<model.auth.overrideEndpointGResponse>;
+    endpointG(): Promise<model.auth.EndpointGResponse>;
+    overrideEndpointG(): Promise<model.auth.OverrideEndpointGResponse>;
 }
 
 export declare namespace ServiceWithBasicAuthWithOverride {
@@ -487,7 +487,7 @@ export class ServiceWithBasicAuthWithOverride implements ServiceWithBasicAuthWit
         this.baseUrl = urlJoin(args.origin, \\"/\\");
     }
 
-    public async endpointG(): Promise<model.auth.endpointGResponse> {
+    public async endpointG(): Promise<model.auth.EndpointGResponse> {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/g\\"),
             method: \\"POST\\",
@@ -502,12 +502,12 @@ export class ServiceWithBasicAuthWithOverride implements ServiceWithBasicAuthWit
         else {
             return {
                 ok: false,
-                error: encodedResponse.body as model.auth.endpointGErrorBody
+                error: encodedResponse.body as model.auth.EndpointGErrorBody
             };
         }
     }
 
-    public async overrideEndpointG(): Promise<model.auth.overrideEndpointGResponse> {
+    public async overrideEndpointG(): Promise<model.auth.OverrideEndpointGResponse> {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/g-override\\"),
             method: \\"POST\\",
@@ -522,7 +522,7 @@ export class ServiceWithBasicAuthWithOverride implements ServiceWithBasicAuthWit
         else {
             return {
                 ok: false,
-                error: encodedResponse.body as model.auth.overrideEndpointGErrorBody
+                error: encodedResponse.body as model.auth.OverrideEndpointGErrorBody
             };
         }
     }
@@ -533,7 +533,7 @@ import urlJoin from \\"url-join\\";
 import * as model from \\"../../model\\";
 
 export interface ServiceWithBearerAuth {
-    endpointC(): Promise<model.auth.endpointCResponse>;
+    endpointC(): Promise<model.auth.EndpointCResponse>;
 }
 
 export declare namespace ServiceWithBearerAuth {
@@ -552,7 +552,7 @@ export class ServiceWithBearerAuth implements ServiceWithBearerAuth {
         this.baseUrl = urlJoin(args.origin, \\"/\\");
     }
 
-    public async endpointC(): Promise<model.auth.endpointCResponse> {
+    public async endpointC(): Promise<model.auth.EndpointCResponse> {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/c\\"),
             method: \\"POST\\",
@@ -567,7 +567,7 @@ export class ServiceWithBearerAuth implements ServiceWithBearerAuth {
         else {
             return {
                 ok: false,
-                error: encodedResponse.body as model.auth.endpointCErrorBody
+                error: encodedResponse.body as model.auth.EndpointCErrorBody
             };
         }
     }
@@ -578,8 +578,8 @@ import urlJoin from \\"url-join\\";
 import * as model from \\"../../model\\";
 
 export interface ServiceWithBearerAuthWithOverride {
-    endpointF(): Promise<model.auth.endpointFResponse>;
-    overrideEndpointF(): Promise<model.auth.overrideEndpointFResponse>;
+    endpointF(): Promise<model.auth.EndpointFResponse>;
+    overrideEndpointF(): Promise<model.auth.OverrideEndpointFResponse>;
 }
 
 export declare namespace ServiceWithBearerAuthWithOverride {
@@ -598,7 +598,7 @@ export class ServiceWithBearerAuthWithOverride implements ServiceWithBearerAuthW
         this.baseUrl = urlJoin(args.origin, \\"/\\");
     }
 
-    public async endpointF(): Promise<model.auth.endpointFResponse> {
+    public async endpointF(): Promise<model.auth.EndpointFResponse> {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/f\\"),
             method: \\"POST\\",
@@ -613,12 +613,12 @@ export class ServiceWithBearerAuthWithOverride implements ServiceWithBearerAuthW
         else {
             return {
                 ok: false,
-                error: encodedResponse.body as model.auth.endpointFErrorBody
+                error: encodedResponse.body as model.auth.EndpointFErrorBody
             };
         }
     }
 
-    public async overrideEndpointF(): Promise<model.auth.overrideEndpointFResponse> {
+    public async overrideEndpointF(): Promise<model.auth.OverrideEndpointFResponse> {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/f-override\\"),
             method: \\"POST\\",
@@ -633,7 +633,7 @@ export class ServiceWithBearerAuthWithOverride implements ServiceWithBearerAuthW
         else {
             return {
                 ok: false,
-                error: encodedResponse.body as model.auth.overrideEndpointFErrorBody
+                error: encodedResponse.body as model.auth.OverrideEndpointFErrorBody
             };
         }
     }
@@ -644,7 +644,7 @@ import urlJoin from \\"url-join\\";
 import * as model from \\"../../model\\";
 
 export interface ServiceWithNoAuth {
-    endpointA(): Promise<model.auth.endpointAResponse>;
+    endpointA(): Promise<model.auth.EndpointAResponse>;
 }
 
 export declare namespace ServiceWithNoAuth {
@@ -663,7 +663,7 @@ export class ServiceWithNoAuth implements ServiceWithNoAuth {
         this.baseUrl = urlJoin(args.origin, \\"/\\");
     }
 
-    public async endpointA(): Promise<model.auth.endpointAResponse> {
+    public async endpointA(): Promise<model.auth.EndpointAResponse> {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/a\\"),
             method: \\"POST\\",
@@ -678,7 +678,7 @@ export class ServiceWithNoAuth implements ServiceWithNoAuth {
         else {
             return {
                 ok: false,
-                error: encodedResponse.body as model.auth.endpointAErrorBody
+                error: encodedResponse.body as model.auth.EndpointAErrorBody
             };
         }
     }
@@ -689,8 +689,8 @@ import urlJoin from \\"url-join\\";
 import * as model from \\"../../model\\";
 
 export interface ServiceWithNoAuthWithBasicOverride {
-    endpointE(): Promise<model.auth.endpointEResponse>;
-    overrideEndpointE(): Promise<model.auth.overrideEndpointEResponse>;
+    endpointE(): Promise<model.auth.EndpointEResponse>;
+    overrideEndpointE(): Promise<model.auth.OverrideEndpointEResponse>;
 }
 
 export declare namespace ServiceWithNoAuthWithBasicOverride {
@@ -709,7 +709,7 @@ export class ServiceWithNoAuthWithBasicOverride implements ServiceWithNoAuthWith
         this.baseUrl = urlJoin(args.origin, \\"/\\");
     }
 
-    public async endpointE(): Promise<model.auth.endpointEResponse> {
+    public async endpointE(): Promise<model.auth.EndpointEResponse> {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/e\\"),
             method: \\"POST\\",
@@ -724,12 +724,12 @@ export class ServiceWithNoAuthWithBasicOverride implements ServiceWithNoAuthWith
         else {
             return {
                 ok: false,
-                error: encodedResponse.body as model.auth.endpointEErrorBody
+                error: encodedResponse.body as model.auth.EndpointEErrorBody
             };
         }
     }
 
-    public async overrideEndpointE(): Promise<model.auth.overrideEndpointEResponse> {
+    public async overrideEndpointE(): Promise<model.auth.OverrideEndpointEResponse> {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/e-override\\"),
             method: \\"POST\\",
@@ -744,7 +744,7 @@ export class ServiceWithNoAuthWithBasicOverride implements ServiceWithNoAuthWith
         else {
             return {
                 ok: false,
-                error: encodedResponse.body as model.auth.overrideEndpointEErrorBody
+                error: encodedResponse.body as model.auth.OverrideEndpointEErrorBody
             };
         }
     }
@@ -755,8 +755,8 @@ import urlJoin from \\"url-join\\";
 import * as model from \\"../../model\\";
 
 export interface ServiceWithNoAuthWithBearerOverride {
-    endpointD(): Promise<model.auth.endpointDResponse>;
-    overrideEndpointD(): Promise<model.auth.overrideEndpointDResponse>;
+    endpointD(): Promise<model.auth.EndpointDResponse>;
+    overrideEndpointD(): Promise<model.auth.OverrideEndpointDResponse>;
 }
 
 export declare namespace ServiceWithNoAuthWithBearerOverride {
@@ -775,7 +775,7 @@ export class ServiceWithNoAuthWithBearerOverride implements ServiceWithNoAuthWit
         this.baseUrl = urlJoin(args.origin, \\"/\\");
     }
 
-    public async endpointD(): Promise<model.auth.endpointDResponse> {
+    public async endpointD(): Promise<model.auth.EndpointDResponse> {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/d\\"),
             method: \\"POST\\",
@@ -790,12 +790,12 @@ export class ServiceWithNoAuthWithBearerOverride implements ServiceWithNoAuthWit
         else {
             return {
                 ok: false,
-                error: encodedResponse.body as model.auth.endpointDErrorBody
+                error: encodedResponse.body as model.auth.EndpointDErrorBody
             };
         }
     }
 
-    public async overrideEndpointD(): Promise<model.auth.overrideEndpointDResponse> {
+    public async overrideEndpointD(): Promise<model.auth.OverrideEndpointDResponse> {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/d-override\\"),
             method: \\"POST\\",
@@ -810,7 +810,7 @@ export class ServiceWithNoAuthWithBearerOverride implements ServiceWithNoAuthWit
         else {
             return {
                 ok: false,
-                error: encodedResponse.body as model.auth.overrideEndpointDErrorBody
+                error: encodedResponse.body as model.auth.OverrideEndpointDErrorBody
             };
         }
     }
@@ -857,17 +857,13 @@ export * as services from \\"./services\\";
 ",
   "/model/chat/_errors/index.ts": "export * from \\"./GenericMessage\\";
 ",
-  "/model/chat/_service-types/ChatService/index.ts": "export * from \\"./sendChatRequest\\";
-export * from \\"./sendChatErrorBody\\";
-export * from \\"./sendChatResponse\\";
-",
-  "/model/chat/_service-types/ChatService/sendChatErrorBody.ts": "import { chat } from \\"../../..\\";
+  "/model/chat/_service-types/ChatService/SendChatErrorBody.ts": "import { chat } from \\"../../..\\";
 import * as uuid from \\"uuid\\";
 
-export type sendChatErrorBody =
-    | sendChatErrorBody.GenericMessage;
+export type SendChatErrorBody =
+    | SendChatErrorBody.GenericMessage;
 
-export declare namespace sendChatErrorBody {
+export declare namespace SendChatErrorBody {
     interface GenericMessage {
         _error: \\"GenericMessage\\";
         _errorInstanceId: string;
@@ -880,36 +876,28 @@ export declare namespace sendChatErrorBody {
     }
 }
 
-export const sendChatErrorBody = {
-    genericMessage: (value: chat.GenericMessage): sendChatErrorBody.GenericMessage => ({
+export const SendChatErrorBody = {
+    genericMessage: (value: chat.GenericMessage): SendChatErrorBody.GenericMessage => ({
         GenericMessage: value,
         _error: \\"GenericMessage\\",
         _errorInstanceId: uuid.v4()
     }),
 
-    _visit: <Result>(value: sendChatErrorBody, visitor: sendChatErrorBody._Visitor<Result>): Result => {
+    _visit: <Result>(value: SendChatErrorBody, visitor: SendChatErrorBody._Visitor<Result>): Result => {
         switch (value._error) {
             case \\"GenericMessage\\": return visitor.GenericMessage(value.GenericMessage);
             default: return visitor._unknown();
         }
     },
 
-    _types: (): sendChatErrorBody[\\"_error\\"][] => [\\"GenericMessage\\"],
+    _types: (): SendChatErrorBody[\\"_error\\"][] => [\\"GenericMessage\\"],
 } as const;
 ",
-  "/model/chat/_service-types/ChatService/sendChatRequest.ts": "import * as model from \\"../../..\\";
+  "/model/chat/_service-types/ChatService/SendChatResponse.ts": "import * as model from \\"../../..\\";
 
-export interface sendChatRequest {
-    id: string;
-    operation: \\"sendChat\\";
-    body: model.chat.SendChatRequest;
-}
-",
-  "/model/chat/_service-types/ChatService/sendChatResponse.ts": "import * as model from \\"../../..\\";
+export type SendChatResponse = SendChatResponse.SuccessResponse | SendChatResponse.ErrorResponse;
 
-export type sendChatResponse = sendChatResponse.SuccessResponse | sendChatResponse.ErrorResponse;
-
-export declare namespace sendChatResponse {
+export declare namespace SendChatResponse {
     export interface SuccessResponse {
         ok: true;
         id: string;
@@ -921,9 +909,21 @@ export declare namespace sendChatResponse {
         ok: false;
         id: string;
         replyTo: string;
-        error: model.chat.sendChatErrorBody;
+        error: model.chat.SendChatErrorBody;
     }
 }
+",
+  "/model/chat/_service-types/ChatService/_SendChatRequest.ts": "import * as model from \\"../../..\\";
+
+export interface _SendChatRequest {
+    id: string;
+    operation: \\"sendChat\\";
+    body: model.chat.SendChatRequest;
+}
+",
+  "/model/chat/_service-types/ChatService/index.ts": "export * from \\"./_SendChatRequest\\";
+export * from \\"./SendChatErrorBody\\";
+export * from \\"./SendChatResponse\\";
 ",
   "/model/chat/_service-types/index.ts": "export * from \\"./ChatService\\";
 ",
@@ -981,11 +981,11 @@ export declare namespace ChatService {
         origin: string;
     }
 
-    type ServerMessage = model.chat.sendChatResponse;
+    type ServerMessage = model.chat.SendChatResponse;
 }
 
 export interface ChatService {
-    sendChat(request: model.chat.SendChatRequest): Promise<model.chat.sendChatResponse>;
+    sendChat(request: model.chat.SendChatRequest): Promise<model.chat.SendChatResponse>;
 }
 
 export class ChatService implements ChatService {
@@ -1002,11 +1002,11 @@ export class ChatService implements ChatService {
         });
     }
 
-    public async sendChat(request: model.chat.SendChatRequest): Promise<model.chat.sendChatResponse> {
+    public async sendChat(request: model.chat.SendChatRequest): Promise<model.chat.SendChatResponse> {
         const socket = await this.socket;
 
         return new Promise(resolve => {
-            const message: model.chat.sendChatRequest = {
+            const message: model.chat._SendChatRequest = {
                 id: uuid.v4(),
                 operation: \\"sendChat\\",
                 body: request
@@ -1074,39 +1074,39 @@ yarn.lock
   "/index.ts": "export * as model from \\"./model\\";
 export * as services from \\"./services\\";
 ",
-  "/model/api/_service-types/NoErrorsService/getErrorBody.ts": "export type getErrorBody = never;
+  "/model/api/_service-types/NoErrorsService/GetErrorBody.ts": "export type GetErrorBody = never;
 
-export declare namespace getErrorBody {
+export declare namespace GetErrorBody {
     export interface _Visitor<Result> {
         _unknown: () => Result;
     }
 }
 
-export const getErrorBody = {
-    _visit: <Result>(_value: getErrorBody, visitor: getErrorBody._Visitor<Result>): Result => {
+export const GetErrorBody = {
+    _visit: <Result>(_value: GetErrorBody, visitor: GetErrorBody._Visitor<Result>): Result => {
         return visitor._unknown();
     },
 
-    _types: (): getErrorBody[\\"_error\\"][] => [],
+    _types: (): GetErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
-  "/model/api/_service-types/NoErrorsService/getResponse.ts": "import * as model from \\"../../..\\";
+  "/model/api/_service-types/NoErrorsService/GetResponse.ts": "import * as model from \\"../../..\\";
 
-export type getResponse = getResponse.SuccessResponse | getResponse.ErrorResponse;
+export type GetResponse = GetResponse.SuccessResponse | GetResponse.ErrorResponse;
 
-export declare namespace getResponse {
+export declare namespace GetResponse {
     export interface SuccessResponse {
         ok: true;
     }
 
     export interface ErrorResponse {
         ok: false;
-        error: model.api.getErrorBody;
+        error: model.api.GetErrorBody;
     }
 }
 ",
-  "/model/api/_service-types/NoErrorsService/index.ts": "export * from \\"./getErrorBody\\";
-export * from \\"./getResponse\\";
+  "/model/api/_service-types/NoErrorsService/index.ts": "export * from \\"./GetErrorBody\\";
+export * from \\"./GetResponse\\";
 ",
   "/model/api/_service-types/index.ts": "export * from \\"./NoErrorsService\\";
 ",
@@ -1138,7 +1138,7 @@ import urlJoin from \\"url-join\\";
 import * as model from \\"../../model\\";
 
 export interface NoErrorsService {
-    get(): Promise<model.api.getResponse>;
+    get(): Promise<model.api.GetResponse>;
 }
 
 export declare namespace NoErrorsService {
@@ -1157,7 +1157,7 @@ export class NoErrorsService implements NoErrorsService {
         this.baseUrl = urlJoin(args.origin, \\"/\\");
     }
 
-    public async get(): Promise<model.api.getResponse> {
+    public async get(): Promise<model.api.GetResponse> {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/\\"),
             method: \\"GET\\",
@@ -1172,7 +1172,7 @@ export class NoErrorsService implements NoErrorsService {
         else {
             return {
                 ok: false,
-                error: encodedResponse.body as model.api.getErrorBody
+                error: encodedResponse.body as model.api.GetErrorBody
             };
         }
     }
@@ -1229,34 +1229,27 @@ export interface PostNotFoundError {
 ",
   "/model/posts/_errors/index.ts": "export * from \\"./PostNotFoundError\\";
 ",
-  "/model/posts/_service-types/PostsService/createPostErrorBody.ts": "export type createPostErrorBody = never;
+  "/model/posts/_service-types/PostsService/CreatePostErrorBody.ts": "export type CreatePostErrorBody = never;
 
-export declare namespace createPostErrorBody {
+export declare namespace CreatePostErrorBody {
     export interface _Visitor<Result> {
         _unknown: () => Result;
     }
 }
 
-export const createPostErrorBody = {
-    _visit: <Result>(_value: createPostErrorBody, visitor: createPostErrorBody._Visitor<Result>): Result => {
+export const CreatePostErrorBody = {
+    _visit: <Result>(_value: CreatePostErrorBody, visitor: CreatePostErrorBody._Visitor<Result>): Result => {
         return visitor._unknown();
     },
 
-    _types: (): createPostErrorBody[\\"_error\\"][] => [],
+    _types: (): CreatePostErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
-  "/model/posts/_service-types/PostsService/createPostRequest.ts": "import * as model from \\"../../..\\";
+  "/model/posts/_service-types/PostsService/CreatePostResponse.ts": "import * as model from \\"../../..\\";
 
-export interface createPostRequest {
-    xEndpointHeader: string;
-    body: model.posts.CreatePostRequest;
-}
-",
-  "/model/posts/_service-types/PostsService/createPostResponse.ts": "import * as model from \\"../../..\\";
+export type CreatePostResponse = CreatePostResponse.SuccessResponse | CreatePostResponse.ErrorResponse;
 
-export type createPostResponse = createPostResponse.SuccessResponse | createPostResponse.ErrorResponse;
-
-export declare namespace createPostResponse {
+export declare namespace CreatePostResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.commons.PostId;
@@ -1264,31 +1257,31 @@ export declare namespace createPostResponse {
 
     export interface ErrorResponse {
         ok: false;
-        error: model.posts.createPostErrorBody;
+        error: model.posts.CreatePostErrorBody;
     }
 }
 ",
-  "/model/posts/_service-types/PostsService/getAllPostsErrorBody.ts": "export type getAllPostsErrorBody = never;
+  "/model/posts/_service-types/PostsService/GetAllPostsErrorBody.ts": "export type GetAllPostsErrorBody = never;
 
-export declare namespace getAllPostsErrorBody {
+export declare namespace GetAllPostsErrorBody {
     export interface _Visitor<Result> {
         _unknown: () => Result;
     }
 }
 
-export const getAllPostsErrorBody = {
-    _visit: <Result>(_value: getAllPostsErrorBody, visitor: getAllPostsErrorBody._Visitor<Result>): Result => {
+export const GetAllPostsErrorBody = {
+    _visit: <Result>(_value: GetAllPostsErrorBody, visitor: GetAllPostsErrorBody._Visitor<Result>): Result => {
         return visitor._unknown();
     },
 
-    _types: (): getAllPostsErrorBody[\\"_error\\"][] => [],
+    _types: (): GetAllPostsErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
-  "/model/posts/_service-types/PostsService/getAllPostsResponse.ts": "import * as model from \\"../../..\\";
+  "/model/posts/_service-types/PostsService/GetAllPostsResponse.ts": "import * as model from \\"../../..\\";
 
-export type getAllPostsResponse = getAllPostsResponse.SuccessResponse | getAllPostsResponse.ErrorResponse;
+export type GetAllPostsResponse = GetAllPostsResponse.SuccessResponse | GetAllPostsResponse.ErrorResponse;
 
-export declare namespace getAllPostsResponse {
+export declare namespace GetAllPostsResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.posts.Post[];
@@ -1296,17 +1289,17 @@ export declare namespace getAllPostsResponse {
 
     export interface ErrorResponse {
         ok: false;
-        error: model.posts.getAllPostsErrorBody;
+        error: model.posts.GetAllPostsErrorBody;
     }
 }
 ",
-  "/model/posts/_service-types/PostsService/getPostErrorBody.ts": "import { posts } from \\"../../..\\";
+  "/model/posts/_service-types/PostsService/GetPostErrorBody.ts": "import { posts } from \\"../../..\\";
 import * as uuid from \\"uuid\\";
 
-export type getPostErrorBody =
-    | getPostErrorBody.PostNotFoundError;
+export type GetPostErrorBody =
+    | GetPostErrorBody.PostNotFoundError;
 
-export declare namespace getPostErrorBody {
+export declare namespace GetPostErrorBody {
     interface PostNotFoundError extends posts.PostNotFoundError {
         _error: \\"PostNotFoundError\\";
         _errorInstanceId: string;
@@ -1318,36 +1311,36 @@ export declare namespace getPostErrorBody {
     }
 }
 
-export const getPostErrorBody = {
-    postNotFoundError: (value: posts.PostNotFoundError): getPostErrorBody.PostNotFoundError => ({
+export const GetPostErrorBody = {
+    postNotFoundError: (value: posts.PostNotFoundError): GetPostErrorBody.PostNotFoundError => ({
         ...value,
         _error: \\"PostNotFoundError\\",
         _errorInstanceId: uuid.v4()
     }),
 
-    _visit: <Result>(value: getPostErrorBody, visitor: getPostErrorBody._Visitor<Result>): Result => {
+    _visit: <Result>(value: GetPostErrorBody, visitor: GetPostErrorBody._Visitor<Result>): Result => {
         switch (value._error) {
             case \\"PostNotFoundError\\": return visitor.PostNotFoundError(value);
             default: return visitor._unknown();
         }
     },
 
-    _types: (): getPostErrorBody[\\"_error\\"][] => [\\"PostNotFoundError\\"],
+    _types: (): GetPostErrorBody[\\"_error\\"][] => [\\"PostNotFoundError\\"],
 } as const;
 ",
-  "/model/posts/_service-types/PostsService/getPostRequest.ts": "import * as model from \\"../../..\\";
+  "/model/posts/_service-types/PostsService/GetPostRequest.ts": "import * as model from \\"../../..\\";
 
-export interface getPostRequest {
+export interface GetPostRequest {
     postId: model.commons.PostId;
     page: number | null | undefined;
     otherParam: number;
 }
 ",
-  "/model/posts/_service-types/PostsService/getPostResponse.ts": "import * as model from \\"../../..\\";
+  "/model/posts/_service-types/PostsService/GetPostResponse.ts": "import * as model from \\"../../..\\";
 
-export type getPostResponse = getPostResponse.SuccessResponse | getPostResponse.ErrorResponse;
+export type GetPostResponse = GetPostResponse.SuccessResponse | GetPostResponse.ErrorResponse;
 
-export declare namespace getPostResponse {
+export declare namespace GetPostResponse {
     export interface SuccessResponse {
         ok: true;
         body: model.posts.Post;
@@ -1355,17 +1348,17 @@ export declare namespace getPostResponse {
 
     export interface ErrorResponse {
         ok: false;
-        error: model.posts.getPostErrorBody;
+        error: model.posts.GetPostErrorBody;
     }
 }
 ",
-  "/model/posts/_service-types/PostsService/getPostV2ErrorBody.ts": "import { posts } from \\"../../..\\";
+  "/model/posts/_service-types/PostsService/GetPostV2ErrorBody.ts": "import { posts } from \\"../../..\\";
 import * as uuid from \\"uuid\\";
 
-export type getPostV2ErrorBody =
-    | getPostV2ErrorBody.PostNotFoundError;
+export type GetPostV2ErrorBody =
+    | GetPostV2ErrorBody.PostNotFoundError;
 
-export declare namespace getPostV2ErrorBody {
+export declare namespace GetPostV2ErrorBody {
     interface PostNotFoundError extends posts.PostNotFoundError {
         _error: \\"PostNotFoundError\\";
         _errorInstanceId: string;
@@ -1377,28 +1370,28 @@ export declare namespace getPostV2ErrorBody {
     }
 }
 
-export const getPostV2ErrorBody = {
-    postNotFoundError: (value: posts.PostNotFoundError): getPostV2ErrorBody.PostNotFoundError => ({
+export const GetPostV2ErrorBody = {
+    postNotFoundError: (value: posts.PostNotFoundError): GetPostV2ErrorBody.PostNotFoundError => ({
         ...value,
         _error: \\"PostNotFoundError\\",
         _errorInstanceId: uuid.v4()
     }),
 
-    _visit: <Result>(value: getPostV2ErrorBody, visitor: getPostV2ErrorBody._Visitor<Result>): Result => {
+    _visit: <Result>(value: GetPostV2ErrorBody, visitor: GetPostV2ErrorBody._Visitor<Result>): Result => {
         switch (value._error) {
             case \\"PostNotFoundError\\": return visitor.PostNotFoundError(value);
             default: return visitor._unknown();
         }
     },
 
-    _types: (): getPostV2ErrorBody[\\"_error\\"][] => [\\"PostNotFoundError\\"],
+    _types: (): GetPostV2ErrorBody[\\"_error\\"][] => [\\"PostNotFoundError\\"],
 } as const;
 ",
-  "/model/posts/_service-types/PostsService/getPostV2Response.ts": "import * as model from \\"../../..\\";
+  "/model/posts/_service-types/PostsService/GetPostV2Response.ts": "import * as model from \\"../../..\\";
 
-export type getPostV2Response = getPostV2Response.SuccessResponse | getPostV2Response.ErrorResponse;
+export type GetPostV2Response = GetPostV2Response.SuccessResponse | GetPostV2Response.ErrorResponse;
 
-export declare namespace getPostV2Response {
+export declare namespace GetPostV2Response {
     export interface SuccessResponse {
         ok: true;
         body: model.posts.Post;
@@ -1406,20 +1399,27 @@ export declare namespace getPostV2Response {
 
     export interface ErrorResponse {
         ok: false;
-        error: model.posts.getPostV2ErrorBody;
+        error: model.posts.GetPostV2ErrorBody;
     }
 }
 ",
-  "/model/posts/_service-types/PostsService/index.ts": "export * from \\"./createPostRequest\\";
-export * from \\"./createPostErrorBody\\";
-export * from \\"./createPostResponse\\";
-export * from \\"./getPostRequest\\";
-export * from \\"./getPostErrorBody\\";
-export * from \\"./getPostResponse\\";
-export * from \\"./getPostV2ErrorBody\\";
-export * from \\"./getPostV2Response\\";
-export * from \\"./getAllPostsErrorBody\\";
-export * from \\"./getAllPostsResponse\\";
+  "/model/posts/_service-types/PostsService/_CreatePostRequest.ts": "import * as model from \\"../../..\\";
+
+export interface _CreatePostRequest {
+    xEndpointHeader: string;
+    body: model.posts.CreatePostRequest;
+}
+",
+  "/model/posts/_service-types/PostsService/index.ts": "export * from \\"./_CreatePostRequest\\";
+export * from \\"./CreatePostErrorBody\\";
+export * from \\"./CreatePostResponse\\";
+export * from \\"./GetPostRequest\\";
+export * from \\"./GetPostErrorBody\\";
+export * from \\"./GetPostResponse\\";
+export * from \\"./GetPostV2ErrorBody\\";
+export * from \\"./GetPostV2Response\\";
+export * from \\"./GetAllPostsErrorBody\\";
+export * from \\"./GetAllPostsResponse\\";
 ",
   "/model/posts/_service-types/index.ts": "export * from \\"./PostsService\\";
 ",
@@ -1555,10 +1555,10 @@ import urlJoin from \\"url-join\\";
 import * as model from \\"../../model\\";
 
 export interface PostsService {
-    createPost(request: model.posts.createPostRequest): Promise<model.posts.createPostResponse>;
-    getPost(request: model.posts.getPostRequest): Promise<model.posts.getPostResponse>;
-    getPostV2(request: model.commons.PostId): Promise<model.posts.getPostV2Response>;
-    getAllPosts(): Promise<model.posts.getAllPostsResponse>;
+    createPost(request: model.posts._CreatePostRequest): Promise<model.posts.CreatePostResponse>;
+    getPost(request: model.posts.GetPostRequest): Promise<model.posts.GetPostResponse>;
+    getPostV2(request: model.commons.PostId): Promise<model.posts.GetPostV2Response>;
+    getAllPosts(): Promise<model.posts.GetAllPostsResponse>;
 }
 
 export declare namespace PostsService {
@@ -1584,7 +1584,7 @@ export class PostsService implements PostsService {
         this.headers = args.headers;
     }
 
-    public async createPost(request: model.posts.createPostRequest): Promise<model.posts.createPostResponse> {
+    public async createPost(request: model.posts._CreatePostRequest): Promise<model.posts.CreatePostResponse> {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/\\"),
             method: \\"POST\\",
@@ -1604,12 +1604,12 @@ export class PostsService implements PostsService {
         else {
             return {
                 ok: false,
-                error: encodedResponse.body as model.posts.createPostErrorBody
+                error: encodedResponse.body as model.posts.CreatePostErrorBody
             };
         }
     }
 
-    public async getPost(request: model.posts.getPostRequest): Promise<model.posts.getPostResponse> {
+    public async getPost(request: model.posts.GetPostRequest): Promise<model.posts.GetPostResponse> {
         const queryParameters = new URLSearchParams();
         if (request.page != null) {
             queryParameters.append(\\"page\\", request.page.toString());
@@ -1634,12 +1634,12 @@ export class PostsService implements PostsService {
         else {
             return {
                 ok: false,
-                error: encodedResponse.body as model.posts.getPostErrorBody
+                error: encodedResponse.body as model.posts.GetPostErrorBody
             };
         }
     }
 
-    public async getPostV2(request: model.commons.PostId): Promise<model.posts.getPostV2Response> {
+    public async getPostV2(request: model.commons.PostId): Promise<model.posts.GetPostV2Response> {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/get\\"),
             method: \\"GET\\",
@@ -1658,12 +1658,12 @@ export class PostsService implements PostsService {
         else {
             return {
                 ok: false,
-                error: encodedResponse.body as model.posts.getPostV2ErrorBody
+                error: encodedResponse.body as model.posts.GetPostV2ErrorBody
             };
         }
     }
 
-    public async getAllPosts(): Promise<model.posts.getAllPostsResponse> {
+    public async getAllPosts(): Promise<model.posts.GetAllPostsResponse> {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/get-all\\"),
             method: \\"GET\\",
@@ -1681,7 +1681,7 @@ export class PostsService implements PostsService {
         else {
             return {
                 ok: false,
-                error: encodedResponse.body as model.posts.getAllPostsErrorBody
+                error: encodedResponse.body as model.posts.GetAllPostsErrorBody
             };
         }
     }

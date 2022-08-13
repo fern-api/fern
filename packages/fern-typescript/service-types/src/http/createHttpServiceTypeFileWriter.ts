@@ -14,7 +14,7 @@ export function createHttpServiceTypeFileWriter({
 }): ServiceTypeFileWriter<HttpServiceTypeMetadata> {
     return (typeName, withFile) => {
         const transformedTypeName = getServiceTypeName({
-            proposedName: `${endpoint.name.camelCase}${typeName}`,
+            proposedName: `${endpoint.name.pascalCase}${typeName}`,
             fernFilepath: serviceName.fernFilepath,
             modelContext,
         });

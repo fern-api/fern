@@ -14,7 +14,7 @@ export function createWebSocketChannelTypeFileWriter({
 }): ServiceTypeFileWriter<WebSocketChannelTypeMetadata> {
     return (typeName, withFile) => {
         const transformedTypeName = getServiceTypeName({
-            proposedName: `${operation.name.camelCase}${typeName}`,
+            proposedName: `${operation.name.pascalCase}${typeName}`,
             fernFilepath: channelName.fernFilepath,
             modelContext,
         });
