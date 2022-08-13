@@ -4,6 +4,7 @@ import { WrapperName } from "@fern-typescript/commons-v2";
 import { ResolvedType } from "@fern-typescript/resolvers";
 import { SourceFile, ts } from "ts-morph";
 import { ExternalDependencies } from "./external-dependencies/ExternalDependencies";
+import { ParsedAuthSchemes } from "./ParsedAuthSchemes";
 import { ServiceReference } from "./ServiceReference";
 import { WrapperReference } from "./WrapperReference";
 
@@ -17,5 +18,6 @@ export interface File {
     getReferenceToService: (serviceName: DeclaredServiceName) => ServiceReference;
     getReferenceToWrapper: (wrapperName: WrapperName) => WrapperReference;
     externalDependencies: ExternalDependencies;
+    authSchemes: ParsedAuthSchemes;
     fernConstants: FernConstants;
 }

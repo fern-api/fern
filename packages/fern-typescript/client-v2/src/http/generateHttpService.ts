@@ -1,10 +1,8 @@
 import { HttpService } from "@fern-fern/ir-model/services";
-import { getTextOfTsKeyword, maybeAddDocs } from "@fern-typescript/commons";
+import { getTextOfTsKeyword, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { File } from "@fern-typescript/declaration-handler";
 import { Scope, ts } from "ts-morph";
 import { ClientConstants } from "../constants";
-import { addServiceConstructor } from "./addServiceConstructor";
-import { addServiceNamespace } from "./addServiceNamespace";
 import { addEndpointToService } from "./endpoints/addEndpointToService";
 
 export function generateHttpService({ service, file }: { service: HttpService; file: File }): void {
@@ -13,10 +11,23 @@ export function generateHttpService({ service, file }: { service: HttpService; f
         isExported: true,
     });
 
-    const serviceModule = addServiceNamespace({
-        moduleName: serviceInterface.getName(),
-        file,
+    const serviceModule = file.sourceFile.addModule({
+        name: serviceInterface.getName(),
+        isExported: true,
+        hasDeclareKeyword: true,
     });
+
+    const optionsInterface = serviceModule.addInterface({
+        name: ClientConstants.HttpService.ServiceNamespace.Options.TYPE_NAME,
+        properties: [
+            {
+                name: ClientConstants.HttpService.ServiceNamespace.Options.Properties.BASE_PATH,
+                type: getTextOfTsKeyword(ts.SyntaxKind.StringKeyword),
+            },
+        ],
+    });
+
+    optionsInterface.addProperties(file.authSchemes.getProperties());
 
     const serviceClass = file.sourceFile.addClass({
         name: serviceInterface.getName(),
@@ -25,13 +36,23 @@ export function generateHttpService({ service, file }: { service: HttpService; f
     });
     maybeAddDocs(serviceClass, service.docs);
 
-    serviceClass.addProperty({
-        name: ClientConstants.HttpService.PrivateMembers.BASE_URL,
-        scope: Scope.Private,
-        type: getTextOfTsKeyword(ts.SyntaxKind.StringKeyword),
+    serviceClass.addConstructor({
+        parameters: [
+            {
+                name: ClientConstants.HttpService.PrivateMembers.OPTIONS,
+                isReadonly: true,
+                scope: Scope.Private,
+                type: getTextOfTsNode(
+                    ts.factory.createTypeReferenceNode(
+                        ts.factory.createQualifiedName(
+                            ts.factory.createIdentifier(serviceModule.getName()),
+                            ts.factory.createIdentifier(optionsInterface.getName())
+                        )
+                    )
+                ),
+            },
+        ],
     });
-
-    addServiceConstructor({ serviceClass, serviceModule, serviceDefinition: service, file });
 
     for (const endpoint of service.endpoints) {
         addEndpointToService({

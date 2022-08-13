@@ -23786,11 +23786,15 @@ yarn.lock
       Object {
         "contents": Array [
           Object {
-            "contents": "import { MyApi } from \\"..\\";
+            "contents": "import { BasicAuth, BearerToken } from \\"@fern-typescript/service-utils\\";
+import { MyApi } from \\"..\\";
 
 export namespace Client {
     export interface Options {
-        origin: string;
+        _origin: string;
+        _token?: BearerToken;
+        _credentials?: BasicAuth;
+        xApiKey?: string;
     }
 }
 
@@ -23802,7 +23806,10 @@ export class Client {
 
     public get admin(): MyApi.admin._Client {
         return (this.#admin ??= new MyApi.admin._Client({
-            basePath: this.options.origin
+            _basePath: this.options._origin,
+            _token: this.options._token,
+            _credentials: this.options._credentials,
+            xApiKey: this.options.xApiKey
         }));
     }
 
@@ -23810,7 +23817,10 @@ export class Client {
 
     public get homepage(): MyApi.homepage._Client {
         return (this.#homepage ??= new MyApi.homepage._Client({
-            basePath: this.options.origin
+            _basePath: this.options._origin,
+            _token: this.options._token,
+            _credentials: this.options._credentials,
+            xApiKey: this.options.xApiKey
         }));
     }
 
@@ -23818,7 +23828,10 @@ export class Client {
 
     public get migration(): MyApi.migration._Client {
         return (this.#migration ??= new MyApi.migration._Client({
-            basePath: this.options.origin
+            _basePath: this.options._origin,
+            _token: this.options._token,
+            _credentials: this.options._credentials,
+            xApiKey: this.options.xApiKey
         }));
     }
 
@@ -23826,7 +23839,10 @@ export class Client {
 
     public get playlist(): MyApi.playlist._Client {
         return (this.#playlist ??= new MyApi.playlist._Client({
-            basePath: this.options.origin
+            _basePath: this.options._origin,
+            _token: this.options._token,
+            _credentials: this.options._credentials,
+            xApiKey: this.options.xApiKey
         }));
     }
 
@@ -23834,7 +23850,10 @@ export class Client {
 
     public get problem(): MyApi.problem._Client {
         return (this.#problem ??= new MyApi.problem._Client({
-            basePath: this.options.origin
+            _basePath: this.options._origin,
+            _token: this.options._token,
+            _credentials: this.options._credentials,
+            xApiKey: this.options.xApiKey
         }));
     }
 
@@ -23842,7 +23861,10 @@ export class Client {
 
     public get submission(): MyApi.submission._Client {
         return (this.#submission ??= new MyApi.submission._Client({
-            basePath: this.options.origin
+            _basePath: this.options._origin,
+            _token: this.options._token,
+            _credentials: this.options._credentials,
+            xApiKey: this.options.xApiKey
         }));
     }
 
@@ -23850,7 +23872,10 @@ export class Client {
 
     public get sysprop(): MyApi.sysprop._Client {
         return (this.#sysprop ??= new MyApi.sysprop._Client({
-            basePath: this.options.origin
+            _basePath: this.options._origin,
+            _token: this.options._token,
+            _credentials: this.options._credentials,
+            xApiKey: this.options.xApiKey
         }));
     }
 
@@ -23889,9 +23914,9 @@ export interface StoreTracedWorkspaceRequest {
                 "type": "file",
               },
               Object {
-                "contents": "import urlJoin from \\"url-join\\";
+                "contents": "import { BasicAuth, BearerToken, _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
 import { MyApi } from \\"../..\\";
-import { _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
+import urlJoin from \\"url-join\\";
 
 export interface _Client {
     updateTestSubmissionStatus(request: MyApi.admin.updateTestSubmissionStatus.Request): Promise<_Response<void, MyApi.admin.updateTestSubmissionStatus.Error>>;
@@ -23905,22 +23930,26 @@ export interface _Client {
 }
 
 export declare namespace _Client {
-    interface Init {
-        basePath: string;
+    interface Options {
+        _basePath: string;
+        _token?: BearerToken;
+        _credentials?: BasicAuth;
+        xApiKey?: string;
     }
 }
 
 export class _Client implements _Client {
-    private baseUrl: string;
-
-    constructor(args: _Client.Init) {
-        this.baseUrl = urlJoin(args.basePath, \\"/admin\\");
+    constructor(private readonly options: _Client.Options) {
     }
 
     public async updateTestSubmissionStatus(request: MyApi.admin.updateTestSubmissionStatus.Request): Promise<_Response<void, MyApi.admin.updateTestSubmissionStatus.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \`/store-test-submission-status/\${request.submissionId}\`),
+                url: urlJoin(this.options._basePath, \`/store-test-submission-status/\${request.submissionId}\`),
                 method: \\"POST\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                },
                 body: request.body
             });
 
@@ -23940,8 +23969,12 @@ export class _Client implements _Client {
 
     public async sendTestSubmissionUpdate(request: MyApi.admin.sendTestSubmissionUpdate.Request): Promise<_Response<void, MyApi.admin.sendTestSubmissionUpdate.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \`/store-test-submission-status-v2/\${request.submissionId}\`),
+                url: urlJoin(this.options._basePath, \`/store-test-submission-status-v2/\${request.submissionId}\`),
                 method: \\"POST\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                },
                 body: request.body
             });
 
@@ -23961,8 +23994,12 @@ export class _Client implements _Client {
 
     public async updateWorkspaceSubmissionStatus(request: MyApi.admin.updateWorkspaceSubmissionStatus.Request): Promise<_Response<void, MyApi.admin.updateWorkspaceSubmissionStatus.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \`/store-workspace-submission-status/\${request.submissionId}\`),
+                url: urlJoin(this.options._basePath, \`/store-workspace-submission-status/\${request.submissionId}\`),
                 method: \\"POST\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                },
                 body: request.body
             });
 
@@ -23982,8 +24019,12 @@ export class _Client implements _Client {
 
     public async sendWorkspaceSubmissionUpdate(request: MyApi.admin.sendWorkspaceSubmissionUpdate.Request): Promise<_Response<void, MyApi.admin.sendWorkspaceSubmissionUpdate.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \`/store-workspace-submission-status-v2/\${request.submissionId}\`),
+                url: urlJoin(this.options._basePath, \`/store-workspace-submission-status-v2/\${request.submissionId}\`),
                 method: \\"POST\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                },
                 body: request.body
             });
 
@@ -24003,8 +24044,12 @@ export class _Client implements _Client {
 
     public async storeTracedTestCase(request: MyApi.admin.storeTracedTestCase.Request): Promise<_Response<void, MyApi.admin.storeTracedTestCase.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \`/store-test-trace/submission/\${request.submissionId}/testCase/\${request.testCaseId}\`),
+                url: urlJoin(this.options._basePath, \`/store-test-trace/submission/\${request.submissionId}/testCase/\${request.testCaseId}\`),
                 method: \\"POST\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                },
                 body: request.body
             });
 
@@ -24024,8 +24069,12 @@ export class _Client implements _Client {
 
     public async storeTracedTestCaseV2(request: MyApi.admin.storeTracedTestCaseV2.Request): Promise<_Response<void, MyApi.admin.storeTracedTestCaseV2.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \`/store-test-trace-v2/submission/\${request.submissionId}/testCase/\${request.testCaseId}\`),
+                url: urlJoin(this.options._basePath, \`/store-test-trace-v2/submission/\${request.submissionId}/testCase/\${request.testCaseId}\`),
                 method: \\"POST\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                },
                 body: request.body
             });
 
@@ -24045,8 +24094,12 @@ export class _Client implements _Client {
 
     public async storeTracedWorkspace(request: MyApi.admin.storeTracedWorkspace.Request): Promise<_Response<void, MyApi.admin.storeTracedWorkspace.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \`/store-workspace-trace/submission/\${request.submissionId}\`),
+                url: urlJoin(this.options._basePath, \`/store-workspace-trace/submission/\${request.submissionId}\`),
                 method: \\"POST\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                },
                 body: request.body
             });
 
@@ -24066,8 +24119,12 @@ export class _Client implements _Client {
 
     public async storeTracedWorkspaceV2(request: MyApi.admin.storeTracedWorkspaceV2.Request): Promise<_Response<void, MyApi.admin.storeTracedWorkspaceV2.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \`/store-workspace-trace-v2/submission/\${request.submissionId}\`),
+                url: urlJoin(this.options._basePath, \`/store-workspace-trace-v2/submission/\${request.submissionId}\`),
                 method: \\"POST\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                },
                 body: request.body
             });
 
@@ -25170,9 +25227,9 @@ export * from \\"./Language\\";
           Object {
             "contents": Array [
               Object {
-                "contents": "import urlJoin from \\"url-join\\";
+                "contents": "import { BasicAuth, BearerToken, _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
 import { MyApi } from \\"../..\\";
-import { _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
+import urlJoin from \\"url-join\\";
 
 export interface _Client {
     getHomepageProblems(): Promise<_Response<MyApi.commons.ProblemId[], MyApi.homepage.getHomepageProblems.Error>>;
@@ -25180,22 +25237,26 @@ export interface _Client {
 }
 
 export declare namespace _Client {
-    interface Init {
-        basePath: string;
+    interface Options {
+        _basePath: string;
+        _token?: BearerToken;
+        _credentials?: BasicAuth;
+        xApiKey?: string;
     }
 }
 
 export class _Client implements _Client {
-    private baseUrl: string;
-
-    constructor(args: _Client.Init) {
-        this.baseUrl = urlJoin(args.basePath, \\"/homepage-problems\\");
+    constructor(private readonly options: _Client.Options) {
     }
 
     public async getHomepageProblems(): Promise<_Response<MyApi.commons.ProblemId[], MyApi.homepage.getHomepageProblems.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \\"/\\"),
-                method: \\"GET\\"
+                url: urlJoin(this.options._basePath, \\"/\\"),
+                method: \\"GET\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                }
             });
 
         if (response.ok) {
@@ -25214,8 +25275,12 @@ export class _Client implements _Client {
 
     public async setHomepageProblems(request: MyApi.commons.ProblemId[]): Promise<_Response<void, MyApi.homepage.setHomepageProblems.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \\"/\\"),
+                url: urlJoin(this.options._basePath, \\"/\\"),
                 method: \\"POST\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                },
                 body: request
             });
 
@@ -25405,31 +25470,35 @@ export declare namespace MigrationStatus {
                 "type": "file",
               },
               Object {
-                "contents": "import urlJoin from \\"url-join\\";
+                "contents": "import { BasicAuth, BearerToken, _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
 import { MyApi } from \\"../..\\";
-import { _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
+import urlJoin from \\"url-join\\";
 
 export interface _Client {
     getAttemptedMigrations(): Promise<_Response<MyApi.migration.Migration[], MyApi.migration.getAttemptedMigrations.Error>>;
 }
 
 export declare namespace _Client {
-    interface Init {
-        basePath: string;
+    interface Options {
+        _basePath: string;
+        _token?: BearerToken;
+        _credentials?: BasicAuth;
+        xApiKey?: string;
     }
 }
 
 export class _Client implements _Client {
-    private baseUrl: string;
-
-    constructor(args: _Client.Init) {
-        this.baseUrl = urlJoin(args.basePath, \\"/migration-info\\");
+    constructor(private readonly options: _Client.Options) {
     }
 
     public async getAttemptedMigrations(): Promise<_Response<MyApi.migration.Migration[], MyApi.migration.getAttemptedMigrations.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \\"/all\\"),
-                method: \\"GET\\"
+                url: urlJoin(this.options._basePath, \\"/all\\"),
+                method: \\"GET\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                }
             });
 
         if (response.ok) {
@@ -25536,9 +25605,9 @@ export interface UpdatePlaylistRequest {
                 "type": "file",
               },
               Object {
-                "contents": "import urlJoin from \\"url-join\\";
+                "contents": "import { BasicAuth, BearerToken, _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
 import { MyApi } from \\"../..\\";
-import { _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
+import urlJoin from \\"url-join\\";
 
 export interface _Client {
     createPlaylist(request: MyApi.playlist.PlaylistCreateRequest): Promise<_Response<MyApi.playlist.Playlist, MyApi.playlist.createPlaylist.Error>>;
@@ -25549,22 +25618,26 @@ export interface _Client {
 }
 
 export declare namespace _Client {
-    interface Init {
-        basePath: string;
+    interface Options {
+        _basePath: string;
+        _token?: BearerToken;
+        _credentials?: BasicAuth;
+        xApiKey?: string;
     }
 }
 
 export class _Client implements _Client {
-    private baseUrl: string;
-
-    constructor(args: _Client.Init) {
-        this.baseUrl = urlJoin(args.basePath, \\"/v2/playlist\\");
+    constructor(private readonly options: _Client.Options) {
     }
 
     public async createPlaylist(request: MyApi.playlist.PlaylistCreateRequest): Promise<_Response<MyApi.playlist.Playlist, MyApi.playlist.createPlaylist.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \\"/create\\"),
+                url: urlJoin(this.options._basePath, \\"/create\\"),
                 method: \\"POST\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                },
                 body: request
             });
 
@@ -25584,8 +25657,12 @@ export class _Client implements _Client {
 
     public async getPlaylists(): Promise<_Response<MyApi.playlist.Playlist[], MyApi.playlist.getPlaylists.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \\"/all\\"),
-                method: \\"GET\\"
+                url: urlJoin(this.options._basePath, \\"/all\\"),
+                method: \\"GET\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                }
             });
 
         if (response.ok) {
@@ -25604,8 +25681,12 @@ export class _Client implements _Client {
 
     public async getPlaylist(request: MyApi.playlist.getPlaylist.Request): Promise<_Response<MyApi.playlist.Playlist, MyApi.playlist.getPlaylist.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \`/\${request.playlistId}\`),
-                method: \\"GET\\"
+                url: urlJoin(this.options._basePath, \`/\${request.playlistId}\`),
+                method: \\"GET\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                }
             });
 
         if (response.ok) {
@@ -25624,8 +25705,12 @@ export class _Client implements _Client {
 
     public async updatePlaylist(request: MyApi.playlist.updatePlaylist.Request): Promise<_Response<MyApi.playlist.Playlist, MyApi.playlist.updatePlaylist.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \`/\${request.playlistId}\`),
+                url: urlJoin(this.options._basePath, \`/\${request.playlistId}\`),
                 method: \\"PUT\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                },
                 body: request.body
             });
 
@@ -25645,8 +25730,12 @@ export class _Client implements _Client {
 
     public async deletePlaylist(request: MyApi.playlist.deletePlaylist.Request): Promise<_Response<void, MyApi.playlist.deletePlaylist.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \`/\${request.playlistId}\`),
-                method: \\"DELETE\\"
+                url: urlJoin(this.options._basePath, \`/\${request.playlistId}\`),
+                method: \\"DELETE\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                }
             });
 
         if (response.ok) {
@@ -26103,9 +26192,9 @@ export interface VariableTypeAndName {
                 "type": "file",
               },
               Object {
-                "contents": "import urlJoin from \\"url-join\\";
+                "contents": "import { BasicAuth, BearerToken, _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
 import { MyApi } from \\"../..\\";
-import { _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
+import urlJoin from \\"url-join\\";
 
 export interface _Client {
     createProblem(request: MyApi.problem.CreateProblemRequest): Promise<_Response<MyApi.problem.CreateProblemResponse, MyApi.problem.createProblem.Error>>;
@@ -26115,22 +26204,26 @@ export interface _Client {
 }
 
 export declare namespace _Client {
-    interface Init {
-        basePath: string;
+    interface Options {
+        _basePath: string;
+        _token?: BearerToken;
+        _credentials?: BasicAuth;
+        xApiKey?: string;
     }
 }
 
 export class _Client implements _Client {
-    private baseUrl: string;
-
-    constructor(args: _Client.Init) {
-        this.baseUrl = urlJoin(args.basePath, \\"/problem-crud\\");
+    constructor(private readonly options: _Client.Options) {
     }
 
     public async createProblem(request: MyApi.problem.CreateProblemRequest): Promise<_Response<MyApi.problem.CreateProblemResponse, MyApi.problem.createProblem.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \\"/create\\"),
+                url: urlJoin(this.options._basePath, \\"/create\\"),
                 method: \\"POST\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                },
                 body: request
             });
 
@@ -26150,8 +26243,12 @@ export class _Client implements _Client {
 
     public async updateProblem(request: MyApi.problem.updateProblem.Request): Promise<_Response<MyApi.problem.UpdateProblemResponse, MyApi.problem.updateProblem.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \`/update/\${request.problemId}\`),
+                url: urlJoin(this.options._basePath, \`/update/\${request.problemId}\`),
                 method: \\"POST\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                },
                 body: request.body
             });
 
@@ -26171,8 +26268,12 @@ export class _Client implements _Client {
 
     public async deleteProblem(request: MyApi.problem.deleteProblem.Request): Promise<_Response<void, MyApi.problem.deleteProblem.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \`/delete/\${request.problemId}\`),
-                method: \\"DELETE\\"
+                url: urlJoin(this.options._basePath, \`/delete/\${request.problemId}\`),
+                method: \\"DELETE\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                }
             });
 
         if (response.ok) {
@@ -26191,8 +26292,12 @@ export class _Client implements _Client {
 
     public async getDefaultStarterFiles(request: MyApi.problem.GetDefaultStarterFilesRequest): Promise<_Response<MyApi.problem.GetDefaultStarterFilesResponse, MyApi.problem.getDefaultStarterFiles.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \\"/default-starter-files\\"),
+                url: urlJoin(this.options._basePath, \\"/default-starter-files\\"),
                 method: \\"POST\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                },
                 body: request
             });
 
@@ -28347,9 +28452,9 @@ export interface WorkspaceSubmitRequest {
                 "type": "file",
               },
               Object {
-                "contents": "import urlJoin from \\"url-join\\";
+                "contents": "import { BasicAuth, BearerToken, _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
 import { MyApi } from \\"../..\\";
-import { _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
+import urlJoin from \\"url-join\\";
 
 export interface _Client {
     createExecutionSession(request: MyApi.submission.createExecutionSession.Request): Promise<_Response<MyApi.submission.ExecutionSessionResponse, MyApi.submission.createExecutionSession.Error>>;
@@ -28359,8 +28464,11 @@ export interface _Client {
 }
 
 export declare namespace _Client {
-    interface Init {
-        basePath: string;
+    interface Options {
+        _basePath: string;
+        _token?: BearerToken;
+        _credentials?: BasicAuth;
+        xApiKey?: string;
     }
 }
 
@@ -28368,16 +28476,17 @@ export declare namespace _Client {
  * Responsible for spinning up and spinning down execution.
  */
 export class _Client implements _Client {
-    private baseUrl: string;
-
-    constructor(args: _Client.Init) {
-        this.baseUrl = urlJoin(args.basePath, \\"/sessions\\");
+    constructor(private readonly options: _Client.Options) {
     }
 
     public async createExecutionSession(request: MyApi.submission.createExecutionSession.Request): Promise<_Response<MyApi.submission.ExecutionSessionResponse, MyApi.submission.createExecutionSession.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \`/create-session/\${request.language}\`),
-                method: \\"POST\\"
+                url: urlJoin(this.options._basePath, \`/create-session/\${request.language}\`),
+                method: \\"POST\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                }
             });
 
         if (response.ok) {
@@ -28396,8 +28505,12 @@ export class _Client implements _Client {
 
     public async getExecutionSession(request: MyApi.submission.getExecutionSession.Request): Promise<_Response<MyApi.submission.ExecutionSessionResponse | undefined, MyApi.submission.getExecutionSession.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \`/\${request.sessionId}\`),
-                method: \\"GET\\"
+                url: urlJoin(this.options._basePath, \`/\${request.sessionId}\`),
+                method: \\"GET\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                }
             });
 
         if (response.ok) {
@@ -28416,8 +28529,12 @@ export class _Client implements _Client {
 
     public async stopExecutionSession(request: MyApi.submission.stopExecutionSession.Request): Promise<_Response<void, MyApi.submission.stopExecutionSession.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \`/stop/\${request.sessionId}\`),
-                method: \\"DELETE\\"
+                url: urlJoin(this.options._basePath, \`/stop/\${request.sessionId}\`),
+                method: \\"DELETE\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                }
             });
 
         if (response.ok) {
@@ -28436,8 +28553,12 @@ export class _Client implements _Client {
 
     public async getExecutionSessionsState(): Promise<_Response<MyApi.submission.GetExecutionSessionStateResponse, MyApi.submission.getExecutionSessionsState.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \\"/execution-sessions-state\\"),
-                method: \\"GET\\"
+                url: urlJoin(this.options._basePath, \\"/execution-sessions-state\\"),
+                method: \\"GET\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                }
             });
 
         if (response.ok) {
@@ -28683,9 +28804,9 @@ export * from \\"./_Client\\";
           Object {
             "contents": Array [
               Object {
-                "contents": "import urlJoin from \\"url-join\\";
+                "contents": "import { BasicAuth, BearerToken, _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
 import { MyApi } from \\"../..\\";
-import { _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
+import urlJoin from \\"url-join\\";
 
 export interface _Client {
     setNumWarmInstances(request: MyApi.sysprop.setNumWarmInstances.Request): Promise<_Response<void, MyApi.sysprop.setNumWarmInstances.Error>>;
@@ -28693,22 +28814,26 @@ export interface _Client {
 }
 
 export declare namespace _Client {
-    interface Init {
-        basePath: string;
+    interface Options {
+        _basePath: string;
+        _token?: BearerToken;
+        _credentials?: BasicAuth;
+        xApiKey?: string;
     }
 }
 
 export class _Client implements _Client {
-    private baseUrl: string;
-
-    constructor(args: _Client.Init) {
-        this.baseUrl = urlJoin(args.basePath, \\"/sysprop\\");
+    constructor(private readonly options: _Client.Options) {
     }
 
     public async setNumWarmInstances(request: MyApi.sysprop.setNumWarmInstances.Request): Promise<_Response<void, MyApi.sysprop.setNumWarmInstances.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \`/num-warm-instances/\${request.language}/\${request.numWarmInstances}\`),
-                method: \\"PUT\\"
+                url: urlJoin(this.options._basePath, \`/num-warm-instances/\${request.language}/\${request.numWarmInstances}\`),
+                method: \\"PUT\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                }
             });
 
         if (response.ok) {
@@ -28727,8 +28852,12 @@ export class _Client implements _Client {
 
     public async getNumWarmInstances(): Promise<_Response<Record<MyApi.commons.Language, number>, MyApi.sysprop.getNumWarmInstances.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \\"/num-warm-instances\\"),
-                method: \\"GET\\"
+                url: urlJoin(this.options._basePath, \\"/num-warm-instances\\"),
+                method: \\"GET\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                }
             });
 
         if (response.ok) {
@@ -28827,11 +28956,15 @@ export const getNumWarmInstances = {
           Object {
             "contents": Array [
               Object {
-                "contents": "import { MyApi } from \\"../..\\";
+                "contents": "import { BasicAuth, BearerToken } from \\"@fern-typescript/service-utils\\";
+import { MyApi } from \\"../..\\";
 
 export namespace _Client {
     export interface Options {
-        origin: string;
+        _origin: string;
+        _token?: BearerToken;
+        _credentials?: BasicAuth;
+        xApiKey?: string;
     }
 }
 
@@ -28843,7 +28976,10 @@ export class _Client {
 
     public get problem(): MyApi.v2.problem._Client {
         return (this.#problem ??= new MyApi.v2.problem._Client({
-            basePath: this.options.origin
+            _basePath: this.options._origin,
+            _token: this.options._token,
+            _credentials: this.options._credentials,
+            xApiKey: this.options.xApiKey
         }));
     }
 
@@ -29558,9 +29694,9 @@ export interface VoidFunctionSignatureThatTakesActualResult {
                     "type": "file",
                   },
                   Object {
-                    "contents": "import urlJoin from \\"url-join\\";
+                    "contents": "import { BasicAuth, BearerToken, _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
 import { MyApi } from \\"../../..\\";
-import { _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
+import urlJoin from \\"url-join\\";
 
 export interface _Client {
     getLightweightProblems(): Promise<_Response<MyApi.v2.problem.LightweightProblemInfoV2[], MyApi.v2.problem.getLightweightProblems.Error>>;
@@ -29570,22 +29706,26 @@ export interface _Client {
 }
 
 export declare namespace _Client {
-    interface Init {
-        basePath: string;
+    interface Options {
+        _basePath: string;
+        _token?: BearerToken;
+        _credentials?: BasicAuth;
+        xApiKey?: string;
     }
 }
 
 export class _Client implements _Client {
-    private baseUrl: string;
-
-    constructor(args: _Client.Init) {
-        this.baseUrl = urlJoin(args.basePath, \\"/problems-v2\\");
+    constructor(private readonly options: _Client.Options) {
     }
 
     public async getLightweightProblems(): Promise<_Response<MyApi.v2.problem.LightweightProblemInfoV2[], MyApi.v2.problem.getLightweightProblems.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \\"/lightweight-problem-info\\"),
-                method: \\"GET\\"
+                url: urlJoin(this.options._basePath, \\"/lightweight-problem-info\\"),
+                method: \\"GET\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                }
             });
 
         if (response.ok) {
@@ -29604,8 +29744,12 @@ export class _Client implements _Client {
 
     public async getProblems(): Promise<_Response<MyApi.v2.problem.ProblemInfoV2[], MyApi.v2.problem.getProblems.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \\"/problem-info\\"),
-                method: \\"GET\\"
+                url: urlJoin(this.options._basePath, \\"/problem-info\\"),
+                method: \\"GET\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                }
             });
 
         if (response.ok) {
@@ -29624,8 +29768,12 @@ export class _Client implements _Client {
 
     public async getLatestProblem(request: MyApi.v2.problem.getLatestProblem.Request): Promise<_Response<MyApi.v2.problem.ProblemInfoV2, MyApi.v2.problem.getLatestProblem.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \`/problem-info/\${request.problemId}\`),
-                method: \\"GET\\"
+                url: urlJoin(this.options._basePath, \`/problem-info/\${request.problemId}\`),
+                method: \\"GET\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                }
             });
 
         if (response.ok) {
@@ -29644,8 +29792,12 @@ export class _Client implements _Client {
 
     public async getProblemVersion(request: MyApi.v2.problem.getProblemVersion.Request): Promise<_Response<MyApi.v2.problem.ProblemInfoV2, MyApi.v2.problem.getProblemVersion.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \`/problem-info/\${request.problemId}/version/\${request.problemVersion}\`),
-                method: \\"GET\\"
+                url: urlJoin(this.options._basePath, \`/problem-info/\${request.problemId}/version/\${request.problemVersion}\`),
+                method: \\"GET\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                }
             });
 
         if (response.ok) {
@@ -29849,11 +30001,15 @@ export * from \\"./_Client\\";
               Object {
                 "contents": Array [
                   Object {
-                    "contents": "import { MyApi } from \\"../../..\\";
+                    "contents": "import { BasicAuth, BearerToken } from \\"@fern-typescript/service-utils\\";
+import { MyApi } from \\"../../..\\";
 
 export namespace _Client {
     export interface Options {
-        origin: string;
+        _origin: string;
+        _token?: BearerToken;
+        _credentials?: BasicAuth;
+        xApiKey?: string;
     }
 }
 
@@ -29865,7 +30021,10 @@ export class _Client {
 
     public get problem(): MyApi.v2.v3.problem._Client {
         return (this.#problem ??= new MyApi.v2.v3.problem._Client({
-            basePath: this.options.origin
+            _basePath: this.options._origin,
+            _token: this.options._token,
+            _credentials: this.options._credentials,
+            xApiKey: this.options.xApiKey
         }));
     }
 }
@@ -30573,9 +30732,9 @@ export interface VoidFunctionSignatureThatTakesActualResult {
                         "type": "file",
                       },
                       Object {
-                        "contents": "import urlJoin from \\"url-join\\";
+                        "contents": "import { BasicAuth, BearerToken, _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
 import { MyApi } from \\"../../../..\\";
-import { _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
+import urlJoin from \\"url-join\\";
 
 export interface _Client {
     getLightweightProblems(): Promise<_Response<MyApi.v2.v3.problem.LightweightProblemInfoV2[], MyApi.v2.v3.problem.getLightweightProblems.Error>>;
@@ -30585,22 +30744,26 @@ export interface _Client {
 }
 
 export declare namespace _Client {
-    interface Init {
-        basePath: string;
+    interface Options {
+        _basePath: string;
+        _token?: BearerToken;
+        _credentials?: BasicAuth;
+        xApiKey?: string;
     }
 }
 
 export class _Client implements _Client {
-    private baseUrl: string;
-
-    constructor(args: _Client.Init) {
-        this.baseUrl = urlJoin(args.basePath, \\"/problems-v2\\");
+    constructor(private readonly options: _Client.Options) {
     }
 
     public async getLightweightProblems(): Promise<_Response<MyApi.v2.v3.problem.LightweightProblemInfoV2[], MyApi.v2.v3.problem.getLightweightProblems.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \\"/lightweight-problem-info\\"),
-                method: \\"GET\\"
+                url: urlJoin(this.options._basePath, \\"/lightweight-problem-info\\"),
+                method: \\"GET\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                }
             });
 
         if (response.ok) {
@@ -30619,8 +30782,12 @@ export class _Client implements _Client {
 
     public async getProblems(): Promise<_Response<MyApi.v2.v3.problem.ProblemInfoV2[], MyApi.v2.v3.problem.getProblems.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \\"/problem-info\\"),
-                method: \\"GET\\"
+                url: urlJoin(this.options._basePath, \\"/problem-info\\"),
+                method: \\"GET\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                }
             });
 
         if (response.ok) {
@@ -30639,8 +30806,12 @@ export class _Client implements _Client {
 
     public async getLatestProblem(request: MyApi.v2.v3.problem.getLatestProblem.Request): Promise<_Response<MyApi.v2.v3.problem.ProblemInfoV2, MyApi.v2.v3.problem.getLatestProblem.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \`/problem-info/\${request.problemId}\`),
-                method: \\"GET\\"
+                url: urlJoin(this.options._basePath, \`/problem-info/\${request.problemId}\`),
+                method: \\"GET\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                }
             });
 
         if (response.ok) {
@@ -30659,8 +30830,12 @@ export class _Client implements _Client {
 
     public async getProblemVersion(request: MyApi.v2.v3.problem.getProblemVersion.Request): Promise<_Response<MyApi.v2.v3.problem.ProblemInfoV2, MyApi.v2.v3.problem.getProblemVersion.Error>> {
         const response = await defaultFetcherV2({
-                url: urlJoin(this.baseUrl, \`/problem-info/\${request.problemId}/version/\${request.problemVersion}\`),
-                method: \\"GET\\"
+                url: urlJoin(this.options._basePath, \`/problem-info/\${request.problemId}/version/\${request.problemVersion}\`),
+                method: \\"GET\\",
+                headers: {
+                    \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
+                    \\"X-API-Key\\": this.options.xApiKey
+                }
             });
 
         if (response.ok) {
@@ -30888,9 +31063,9 @@ export * from \\"./_Client\\";
         \\"build\\": \\"esbuild $(find . -name '*.ts' -not -path './node_modules/*') --format=cjs --sourcemap --outdir=. && tsc\\"
     },
     \\"dependencies\\": {
+        \\"@fern-typescript/service-utils\\": \\"0.0.173-7-ge9345cba\\",
         \\"url-join\\": \\"4.0.1\\",
-        \\"@types/url-join\\": \\"4.0.1\\",
-        \\"@fern-typescript/service-utils\\": \\"0.0.173-7-ge9345cba\\"
+        \\"@types/url-join\\": \\"4.0.1\\"
     },
     \\"devDependencies\\": {
         \\"@types/node\\": \\"17.0.33\\",

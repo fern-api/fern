@@ -1,4 +1,4 @@
-import { DeclaredErrorName, DeclaredTypeName, IntermediateRepresentation } from "@fern-fern/ir-model";
+import { DeclaredErrorName, DeclaredTypeName, IntermediateRepresentation, TypeReference } from "@fern-fern/ir-model";
 import { ServiceDeclarationHandler, WrapperDeclarationHandler } from "@fern-typescript/client-v2";
 import { File, GeneratorContext } from "@fern-typescript/declaration-handler";
 import { ErrorDeclarationHandler } from "@fern-typescript/errors-v2";
@@ -13,6 +13,7 @@ import { createExternalDependencies } from "../external-dependencies/ExternalDep
 import { generateTypeScriptProject } from "../generate-ts-project/generateTypeScriptProject";
 import { ImportsManager } from "../imports-manager/ImportsManager";
 import { constructWrapperDeclarations } from "./constructWrapperDeclarations";
+import { parseAuthSchemes } from "./parseAuthSchemes";
 import { getExportedFilepathForService } from "./utils/getExportedFilepathForService";
 import { getExportedFilepathForType } from "./utils/getExportedFilepathForType";
 import { getExportedFilepathForWrapper } from "./utils/getExportedFilepathForWrapper";
@@ -159,21 +160,29 @@ export class FernTypescriptClientGenerator {
 
         const sourceFile = this.rootDirectory.createSourceFile(filepathStr);
 
+        const getReferenceToTypeForFile = (typeReference: TypeReference) =>
+            getReferenceToType({
+                apiName: this.apiName,
+                referencedIn: sourceFile,
+                typeReference,
+                addImport: (moduleSpecifier, importDeclaration) =>
+                    importsManager.addImport(moduleSpecifier, importDeclaration),
+            });
+
         const importsManager = new ImportsManager();
         const addDependency = (name: string, version: string, options?: { preferPeer?: boolean }) => {
             this.dependencyManager.addDependency(name, version, options);
         };
 
+        const externalDependencies = createExternalDependencies({
+            addDependency,
+            addImport: (moduleSpecifier, importDeclaration) =>
+                importsManager.addImport(moduleSpecifier, importDeclaration),
+        });
+
         const file: File = {
             sourceFile,
-            getReferenceToType: (typeReference) =>
-                getReferenceToType({
-                    apiName: this.apiName,
-                    referencedIn: sourceFile,
-                    typeReference,
-                    addImport: (moduleSpecifier, importDeclaration) =>
-                        importsManager.addImport(moduleSpecifier, importDeclaration),
-                }),
+            getReferenceToType: getReferenceToTypeForFile,
             getReferenceToService: (serviceName) =>
                 getReferenceToService({
                     referencedIn: sourceFile,
@@ -201,12 +210,13 @@ export class FernTypescriptClientGenerator {
                     addImport: (moduleSpecifier, importDeclaration) =>
                         importsManager.addImport(moduleSpecifier, importDeclaration),
                 }),
-            externalDependencies: createExternalDependencies({
-                addDependency,
-                addImport: (moduleSpecifier, importDeclaration) =>
-                    importsManager.addImport(moduleSpecifier, importDeclaration),
-            }),
+            externalDependencies,
             addDependency,
+            authSchemes: parseAuthSchemes({
+                apiAuth: this.intermediateRepresentation.auth,
+                externalDependencies,
+                getReferenceToType: getReferenceToTypeForFile,
+            }),
             fernConstants: this.intermediateRepresentation.constants,
         };
 

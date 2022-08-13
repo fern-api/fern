@@ -5,9 +5,9 @@ import { Scope, ts } from "ts-morph";
 import { ClientConstants } from "./constants";
 
 export const WrapperDeclarationHandler: DeclarationHandler<WrapperDeclaration> = {
-    run: async (wrapperDeclaration, { withFile }) => {
+    run: async (wrapper, { withFile }) => {
         await withFile((file) => {
-            generateWrapper({ wrapper: wrapperDeclaration, file });
+            generateWrapper({ wrapper, file });
         });
     },
 };
@@ -24,9 +24,12 @@ export function generateWrapper({ wrapper, file }: { wrapper: WrapperDeclaration
     });
 
     const originProperty = optionsInterface.addProperty({
-        name: "origin",
+        name: "_origin",
         type: getTextOfTsKeyword(ts.SyntaxKind.StringKeyword),
     });
+
+    const authSchemeProperties = file.authSchemes.getProperties();
+    optionsInterface.addProperties(authSchemeProperties);
 
     const apiClass = file.sourceFile.addClass({
         name: apiModule.getName(),
@@ -96,7 +99,7 @@ export function generateWrapper({ wrapper, file }: { wrapper: WrapperDeclaration
                                             [
                                                 ts.factory.createPropertyAssignment(
                                                     ts.factory.createIdentifier(
-                                                        ClientConstants.HttpService.ServiceNamespace.Init.Properties
+                                                        ClientConstants.HttpService.ServiceNamespace.Options.Properties
                                                             .BASE_PATH
                                                     ),
                                                     ts.factory.createPropertyAccessExpression(
@@ -105,6 +108,18 @@ export function generateWrapper({ wrapper, file }: { wrapper: WrapperDeclaration
                                                             ts.factory.createIdentifier(optionsMember.getName())
                                                         ),
                                                         originProperty.getName()
+                                                    )
+                                                ),
+                                                ...authSchemeProperties.map(({ name: propertyName }) =>
+                                                    ts.factory.createPropertyAssignment(
+                                                        propertyName,
+                                                        ts.factory.createPropertyAccessExpression(
+                                                            ts.factory.createPropertyAccessExpression(
+                                                                ts.factory.createThis(),
+                                                                ts.factory.createIdentifier(optionsMember.getName())
+                                                            ),
+                                                            propertyName
+                                                        )
                                                     )
                                                 ),
                                             ],

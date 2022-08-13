@@ -6,15 +6,15 @@ export const ClientConstants = {
             ENDPOINTS_DIRECTORY_NAME: "endpoints",
         },
         ServiceNamespace: {
-            Init: {
-                TYPE_NAME: "Init",
+            Options: {
+                TYPE_NAME: "Options",
                 Properties: {
-                    BASE_PATH: "basePath",
+                    BASE_PATH: "_basePath",
                 },
             },
         },
         PrivateMembers: {
-            BASE_URL: "baseUrl",
+            OPTIONS: "options",
         },
         Endpoint: {
             Signature: {

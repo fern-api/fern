@@ -4,11 +4,8 @@ exports[`fern-ir-tests simple 1`] = `
 "{
     \\"apiName\\": \\"api\\",
     \\"auth\\": {
-        \\"declaredSchemes\\": [],
-        \\"enabledSchemes\\": {
-            \\"all\\": [],
-            \\"_type\\": \\"all\\"
-        }
+        \\"requirement\\": \\"ALL\\",
+        \\"schemes\\": []
     },
     \\"types\\": [
         {
