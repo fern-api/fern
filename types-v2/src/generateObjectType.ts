@@ -28,7 +28,7 @@ export function generateObjectType({
             })),
             ...shape.properties.map((field) => {
                 const property = {
-                    name: field.key,
+                    name: field.name.wireValue,
                     type: getTextOfTsNode(file.getReferenceToType(field.valueType)),
                     docs: field.docs != null ? [{ description: field.docs }] : undefined,
                 };

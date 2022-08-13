@@ -1,8 +1,8 @@
-import { ServiceName } from "@fern-fern/ir-model/services";
+import { DeclaredServiceName } from "@fern-fern/ir-model/services";
 import { WrapperName } from "./WrapperName";
 
 export interface WrapperDeclaration {
     name: WrapperName;
-    wrappedServices: ServiceName[];
+    wrappedServices: DeclaredServiceName[];
     wrappedWrappers: WrapperName[];
 }

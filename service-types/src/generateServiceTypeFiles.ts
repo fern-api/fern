@@ -31,7 +31,7 @@ export function generateServiceTypeFiles({
             });
             modelContext.registerGeneratedHttpServiceTypes({
                 serviceName: service.name,
-                endpointId: endpoint.endpointId,
+                endpointId: endpoint.name.camelCase,
                 generatedTypes,
             });
         }
@@ -78,7 +78,7 @@ function registerOperations({
         });
         modelContext.registerGeneratedWebSocketChannelTypes({
             channelName: channel.name,
-            operationId: operation.operationId,
+            operationId: operation.name.camelCase,
             generatedTypes,
         });
     }

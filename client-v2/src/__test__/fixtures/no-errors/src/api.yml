@@ -2,6 +2,7 @@ services:
   http:
     NoErrorsService:
       auth: false
+      base-path: /
       endpoints:
         get:
           method: GET

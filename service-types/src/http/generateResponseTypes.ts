@@ -1,5 +1,5 @@
 import { FernConstants } from "@fern-fern/ir-model";
-import { HttpEndpoint, ServiceName } from "@fern-fern/ir-model/services";
+import { DeclaredServiceName, HttpEndpoint } from "@fern-fern/ir-model/services";
 import { DependencyManager } from "@fern-typescript/commons";
 import { GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/model-context";
 import { generateResponse } from "../commons/generate-response/generateResponse";
@@ -7,7 +7,7 @@ import { createHttpServiceTypeFileWriter } from "./createHttpServiceTypeFileWrit
 
 export declare namespace generateResponseTypes {
     export interface Args {
-        serviceName: ServiceName;
+        serviceName: DeclaredServiceName;
         endpoint: HttpEndpoint;
         modelContext: ModelContext;
         dependencyManager: DependencyManager;

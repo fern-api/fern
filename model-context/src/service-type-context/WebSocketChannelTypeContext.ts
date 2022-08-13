@@ -1,4 +1,4 @@
-import { ServiceName } from "@fern-fern/ir-model/services";
+import { DeclaredServiceName } from "@fern-fern/ir-model/services";
 import { ImportStrategy } from "@fern-typescript/commons";
 import { SourceFile, ts } from "ts-morph";
 import { StringifiedFernFilepath, stringifyFernFilepath } from "../stringifyFernFilepath";
@@ -21,7 +21,7 @@ type NonQualifiedChannelName = string;
 type OperationId = string;
 
 export interface WebSocketChannelTypeMetadata {
-    channelName: ServiceName;
+    channelName: DeclaredServiceName;
     operationId: OperationId;
     typeName: string;
 }
@@ -37,7 +37,7 @@ export declare namespace WebSocketChannelTypeContext {
 
     namespace registerGeneratedTypes {
         interface Args {
-            channelName: ServiceName;
+            channelName: DeclaredServiceName;
             operationId: OperationId;
             generatedTypes: GeneratedWebSocketOperationTypes;
         }
@@ -45,7 +45,7 @@ export declare namespace WebSocketChannelTypeContext {
 
     namespace getGeneratedTypes {
         interface Args {
-            channelName: ServiceName;
+            channelName: DeclaredServiceName;
             operationId: OperationId;
         }
     }

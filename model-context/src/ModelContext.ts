@@ -1,7 +1,7 @@
 import {
+    DeclaredErrorName,
     DeclaredTypeName,
     ErrorDeclaration,
-    ErrorName,
     IntermediateRepresentation,
     Type,
     TypeReference,
@@ -84,7 +84,7 @@ export class ModelContext {
      * ERRORS
      */
 
-    public addErrorDeclaration(errorName: ErrorName, withFile: (file: SourceFile) => void): void {
+    public addErrorDeclaration(errorName: DeclaredErrorName, withFile: (file: SourceFile) => void): void {
         this.errorContext.addErrorDeclaration(errorName, withFile);
     }
 
@@ -96,7 +96,7 @@ export class ModelContext {
         return this.errorContext.getReferenceToErrorUtils(args);
     }
 
-    public getErrorDeclarationFromName(errorName: ErrorName): ErrorDeclaration {
+    public getErrorDeclarationFromName(errorName: DeclaredErrorName): ErrorDeclaration {
         return this.errorContext.getErrorDeclarationFromName(errorName);
     }
 

@@ -1,5 +1,4 @@
 import { FernFilepath } from "@fern-fern/ir-model";
-import camelCase from "lodash-es/camelCase";
 
 export type PackagePath = PackagePathPart[];
 
@@ -10,7 +9,7 @@ export interface PackagePathPart {
 
 export function getPackagePath(fernFilepath: FernFilepath): PackagePath {
     return fernFilepath.map((part) => ({
-        directoryName: part,
-        namespaceExport: camelCase(part),
+        directoryName: part.originalValue,
+        namespaceExport: part.camelCase,
     }));
 }

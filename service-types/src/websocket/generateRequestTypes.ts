@@ -1,4 +1,4 @@
-import { ServiceName, WebSocketOperation } from "@fern-fern/ir-model/services";
+import { DeclaredServiceName, WebSocketOperation } from "@fern-fern/ir-model/services";
 import { getTextOfTsKeyword, getTextOfTsNode } from "@fern-typescript/commons";
 import { ModelContext, WebSocketChannelTypeMetadata } from "@fern-typescript/model-context";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
@@ -8,7 +8,7 @@ import { createWebSocketChannelTypeFileWriter } from "./createWebSocketChannelTy
 
 export declare namespace generateRequestTypes {
     export interface Args {
-        channelName: ServiceName;
+        channelName: DeclaredServiceName;
         operation: WebSocketOperation;
         modelContext: ModelContext;
     }
@@ -27,7 +27,7 @@ export function generateRequestTypes({
         {
             name: ServiceTypesConstants.WebsocketChannel.Request.Properties.OPERATION,
             type: getTextOfTsNode(
-                ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(operation.operationId))
+                ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(operation.name.wireValue))
             ),
         },
     ];

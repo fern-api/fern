@@ -1,4 +1,4 @@
-import { ServiceName } from "@fern-fern/ir-model/services";
+import { DeclaredServiceName } from "@fern-fern/ir-model/services";
 import { ServiceReference } from "@fern-typescript/declaration-handler";
 import { SourceFile } from "ts-morph";
 import { getRelativePathAsModuleSpecifierTo } from "../../getRelativePathAsModuleSpecifierTo";
@@ -13,7 +13,7 @@ export declare namespace getReferenceToService {
         apiName: string;
         referencedIn: SourceFile;
         addImport: (moduleSpecifier: ModuleSpecifier, importDeclaration: ImportDeclaration) => void;
-        serviceName: ServiceName;
+        serviceName: DeclaredServiceName;
     }
 }
 

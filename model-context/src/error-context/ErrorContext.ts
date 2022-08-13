@@ -1,4 +1,4 @@
-import { ErrorDeclaration, ErrorName, IntermediateRepresentation } from "@fern-fern/ir-model";
+import { DeclaredErrorName, ErrorDeclaration, IntermediateRepresentation } from "@fern-fern/ir-model";
 import { ImportStrategy } from "@fern-typescript/commons";
 import { Directory, SourceFile, ts } from "ts-morph";
 import { BaseModelContext } from "../base-model-context/BaseModelContext";
@@ -7,7 +7,7 @@ import { ErrorResolver } from "./ErrorResolver";
 export declare namespace ErrorContext {
     namespace getReferenceToError {
         interface Args {
-            errorName: ErrorName;
+            errorName: DeclaredErrorName;
             referencedIn: SourceFile;
             importStrategy?: ImportStrategy;
         }
@@ -15,7 +15,7 @@ export declare namespace ErrorContext {
 
     namespace getReferenceToErrorUtils {
         interface Args {
-            errorName: ErrorName;
+            errorName: DeclaredErrorName;
             referencedIn: SourceFile;
             importStrategy?: ImportStrategy;
         }
@@ -38,7 +38,7 @@ export class ErrorContext extends BaseModelContext {
         });
         this.errorResolver = new ErrorResolver(intermediateRepresentation);
     }
-    public addErrorDeclaration(errorName: ErrorName, withFile: (file: SourceFile) => void): void {
+    public addErrorDeclaration(errorName: DeclaredErrorName, withFile: (file: SourceFile) => void): void {
         this.addFile({
             item: {
                 typeName: errorName.name,
@@ -78,7 +78,7 @@ export class ErrorContext extends BaseModelContext {
         });
     }
 
-    public getErrorDeclarationFromName(errorName: ErrorName): ErrorDeclaration {
+    public getErrorDeclarationFromName(errorName: DeclaredErrorName): ErrorDeclaration {
         return this.errorResolver.getErrorDeclarationFromName(errorName);
     }
 }

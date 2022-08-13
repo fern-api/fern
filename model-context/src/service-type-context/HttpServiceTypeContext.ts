@@ -1,4 +1,4 @@
-import { EndpointId, ServiceName } from "@fern-fern/ir-model/services";
+import { DeclaredServiceName } from "@fern-fern/ir-model/services";
 import { ImportStrategy } from "@fern-typescript/commons";
 import { SourceFile, ts } from "ts-morph";
 import { StringifiedFernFilepath, stringifyFernFilepath } from "../stringifyFernFilepath";
@@ -18,8 +18,8 @@ export interface GeneratedHttpEndpointTypes {
 }
 
 export interface HttpServiceTypeMetadata {
-    serviceName: ServiceName;
-    endpointId: EndpointId;
+    serviceName: DeclaredServiceName;
+    endpointId: string;
     typeName: string;
 }
 
@@ -44,16 +44,16 @@ export declare namespace HttpServiceTypeContext {
 
     namespace registerGeneratedTypes {
         interface Args {
-            serviceName: ServiceName;
-            endpointId: EndpointId;
+            serviceName: DeclaredServiceName;
+            endpointId: string;
             generatedTypes: GeneratedHttpEndpointTypes;
         }
     }
 
     namespace getGeneratedTypes {
         interface Args {
-            serviceName: ServiceName;
-            endpointId: EndpointId;
+            serviceName: DeclaredServiceName;
+            endpointId: string;
         }
     }
 }
@@ -61,7 +61,7 @@ export declare namespace HttpServiceTypeContext {
 export class HttpServiceTypeContext extends BaseServiceTypeContext {
     private generatedTypes: Record<
         StringifiedFernFilepath,
-        Record<NonQualifiedServiceName, Record<EndpointId, GeneratedHttpEndpointTypes>>
+        Record<NonQualifiedServiceName, Record<string, GeneratedHttpEndpointTypes>>
     > = {};
 
     public addHttpServiceTypeDeclaration(

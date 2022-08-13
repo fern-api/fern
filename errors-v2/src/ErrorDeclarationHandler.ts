@@ -13,7 +13,7 @@ export const ErrorDeclarationHandler: DeclarationHandler<ErrorDeclaration> = {
                 shape: getErrorShapeWithoutAdditionalProperties(errorDeclaration, file),
                 additionalProperties: {
                     [file.fernConstants.errorDiscriminant]: ts.factory.createLiteralTypeNode(
-                        ts.factory.createStringLiteral(errorDeclaration.discriminantValue)
+                        ts.factory.createStringLiteral(errorDeclaration.discriminantValue.wireValue)
                     ),
                 },
             });

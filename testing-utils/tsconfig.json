@@ -5,6 +5,6 @@
   "references": [
     { "path": "../../generation/ir/ir-generator" },
     { "path": "../../workspace-loader" },
-    { "path": "../fern-typescript-commons" }
+    { "path": "../commons" }
   ]
 }

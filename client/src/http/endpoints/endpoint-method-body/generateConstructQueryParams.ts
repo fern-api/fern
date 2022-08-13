@@ -45,7 +45,7 @@ export function generateConstructQueryParams({
                 ),
                 undefined,
                 [
-                    ts.factory.createStringLiteral(queryParameter.key),
+                    ts.factory.createStringLiteral(queryParameter.name.wireValue),
                     getStringVersionOfQueryParameter({ queryParameter, queryParameterReference, modelContext }),
                 ]
             )
@@ -142,6 +142,6 @@ function isPrimitiveStringLike(primitive: PrimitiveType): boolean {
 function getQueryParameterReference(queryParameter: QueryParameter): ts.PropertyAccessExpression {
     return ts.factory.createPropertyAccessExpression(
         ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Signature.REQUEST_PARAMETER),
-        ts.factory.createIdentifier(queryParameter.key)
+        ts.factory.createIdentifier(queryParameter.name.wireValue)
     );
 }

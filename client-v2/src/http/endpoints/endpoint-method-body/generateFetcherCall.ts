@@ -97,7 +97,7 @@ function getHeadersPropertyAssignment({
 function getHeadersPropertyValue(request: ClientEndpointRequest.Wrapped): ts.Expression {
     const properties = request.headers.map((header) =>
         ts.factory.createPropertyAssignment(
-            ts.factory.createStringLiteral(header.originalData.header),
+            ts.factory.createStringLiteral(header.originalData.name.wireValue),
             ts.factory.createElementAccessExpression(
                 ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Signature.REQUEST_PARAMETER),
                 ts.factory.createStringLiteral(header.key)

@@ -3,11 +3,11 @@ import { GeneratorUpdate } from "@fern-fern/generator-logging-api-client/model";
 import { BUILD_PROJECT_SCRIPT_NAME, FernTypescriptGeneratorConfig, writeVolumeToDisk } from "@fern-typescript/commons";
 import { createLogger, LogLevel } from "@fern-typescript/commons-v2";
 import execa from "execa";
+import { camelCase, upperFirst } from "lodash-es";
 import { Volume } from "memfs/lib/volume";
 import path from "path";
 import { GeneratorNotificationService } from "../utils/GeneratorNotificationService";
 import { loadIntermediateRepresentation } from "../utils/loadIntermediateRepresentation";
-import { upperCamelCase } from "../utils/upperCamelCase";
 import { GeneratorContextImpl } from "../v2/generator-context/GeneratorContextImpl";
 import { Command } from "./Command";
 
@@ -47,7 +47,7 @@ export async function runCommand({
     const volume = new Volume();
     await command.generate({
         intermediateRepresentation: await loadIntermediateRepresentation(config.irFilepath),
-        apiName: upperCamelCase(config.workspaceName),
+        apiName: upperFirst(camelCase(config.workspaceName)),
         volume,
         context: generatorContext,
     });
