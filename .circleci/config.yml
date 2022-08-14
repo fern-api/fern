@@ -97,7 +97,7 @@ jobs:
             cli_path="$(yarn workspace @fern-api/cli bin fern:dev)"
             ./scripts/live-test.sh "$cli_path"
 
-  publish-dev:
+  publish-fern-dev:
     docker:
       - image: cimg/node:current
     steps:
@@ -137,12 +137,12 @@ jobs:
       - run:
           name: Publish fern-typescript Docker
           command: |
-            projectVersion=$(./scripts/git-version.sh)
+            projectVersion=${CIRCLE_TAG%"-fern-typescript"}
             yarn workspace fern-typescript dockerTagVersion "$projectVersion"
             echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
             docker push fernapi/fern-typescript:"$projectVersion"
 
-  publish:
+  publish-fern:
     docker:
       - image: cimg/node:current
     steps:
@@ -150,14 +150,10 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
-          name: Print version
+          name: Print version and add to package.json
           command: |
-            git_version="$(./scripts/git-version.sh)"
+            git_version=${CIRCLE_TAG%"-fern"}
             echo Publishing version: "${git_version}"
-      - run:
-          name: Add version to package.json's
-          command: |
-            git_version="$(./scripts/git-version.sh)"
             yarn mrlint version "$git_version"
       - run:
           name: Update yarn.lock with new versions
@@ -166,7 +162,7 @@ jobs:
           name: Compile
           command: yarn compile
       - run:
-          name: Publish all packages
+          name: Publish all packages # TODO can we exclude service-utils?
           command: yarn run publish
       - run:
           name: Publish fern-api-dev CLI
@@ -235,7 +231,7 @@ workflows:
           context:
             - auth0-dev
 
-      - publish-dev:
+      - publish-fern-dev:
           filters:
             branches:
               only: main
@@ -252,7 +248,7 @@ workflows:
             branches:
               only: main
             tags:
-              only: /.*/
+              only: (.*)-fern-typescript$
           requires:
             - lint
             - compile-and-test
@@ -261,12 +257,12 @@ workflows:
             - docker-hub
             - auth0-dev
 
-      - publish:
+      - publish-fern:
           filters:
             branches:
               ignore: /.*/
             tags:
-              only: /.*/
+              only: (.*)-fern$
           requires:
             - lint
             - compile-and-test
