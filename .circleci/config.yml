@@ -175,6 +175,29 @@ jobs:
           name: Publish fern-api CLI
           command: yarn workspace @fern-api/cli publish:cli:prod
 
+  publish-service-utils:
+    docker:
+      - image: cimg/node:current
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn-berry
+      - run:
+          name: Print version and add to package.json
+          command: |
+            git_version=${CIRCLE_TAG%"-service-utils"}
+            echo Publishing version: "${git_version}"
+            yarn mrlint version "$git_version"
+      - run:
+          name: Update yarn.lock with new versions
+          command: yarn
+      - run:
+          name: Compile @fern-typescript/service-utils
+          command: yarn workspace @fern-typescript/service-utils compile
+      - run:
+          name: Publish @fern-typescript/service-utils packages
+          command: yarn workspace @fern-typescript/service-utils run publish
+
 workflows:
   version: 2
   build:
@@ -249,6 +272,19 @@ workflows:
             - compile-and-test
             - ete-tests
             - live-test
+          context:
+            - npm
+            - auth0-dev
+
+      - publish-service-utils:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: (.*)-service-utils$
+          requires:
+            - lint
+            - compile-and-test
           context:
             - npm
             - auth0-dev
