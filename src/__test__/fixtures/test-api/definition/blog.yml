@@ -35,9 +35,10 @@ errors:
 services:
   http:
     PostsService:
-      auth: none
+      auth: true
       headers:
         x-service-header: string
+      base-path: /
       endpoints:
         createPost:
           docs: Creates a blog post and returns blog post id.
@@ -52,6 +53,7 @@ services:
         getPost:
           docs: Gets a blog post.
           method: GET
+          auth: false
           path: /{postId}
           path-parameters:
             postId: PostId

@@ -2,11 +2,11 @@ import { ExitStatusUpdate, GeneratorUpdate } from "@fern-fern/generator-logging-
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
 import { GeneratorConfig } from "@fern-fern/ir-model/generators";
 import { readFile, writeFile } from "fs/promises";
+import yaml from "js-yaml";
 import path from "path";
 import { convertToOpenApi } from "./convertToOpenApi";
 import { getCustomConfig } from "./customConfig";
 import { GeneratorLoggingWrapper } from "./generatorLoggingWrapper";
-import yaml from "js-yaml";
 
 const OPENAPI_JSON_FILENAME = "openapi.json";
 const OPENAPI_YML_FILENAME = "openapi.yml";
@@ -15,10 +15,6 @@ export async function writeOpenApi(pathToConfig: string): Promise<void> {
     const configStr = await readFile(pathToConfig);
     const config = JSON.parse(configStr.toString()) as GeneratorConfig;
     const customConfig = getCustomConfig(config);
-
-    if (config.output == null) {
-        throw new Error("Output directory is not specified.");
-    }
 
     const generatorLoggingClient = new GeneratorLoggingWrapper(config);
 
@@ -30,7 +26,11 @@ export async function writeOpenApi(pathToConfig: string): Promise<void> {
         );
 
         const ir = await loadIntermediateRepresentation(config.irFilepath);
-        const openApiDefinition = convertToOpenApi(config.workspaceName, config.publish?.version ?? "", ir);
+        const openApiDefinition = convertToOpenApi({
+            apiName: config.workspaceName,
+            apiVersion: config.publish?.version ?? "",
+            ir,
+        });
         if (customConfig.format === "json") {
             await writeFile(
                 path.join(config.output.path, OPENAPI_JSON_FILENAME),

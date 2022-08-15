@@ -1,1 +1,0 @@
-export { convertToOpenApi } from "./convertToOpenApi";

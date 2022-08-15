@@ -5,4 +5,4 @@ if (pathToJson == null) {
     throw new Error("No argument for config filepath.");
 }
 
-writeOpenApi(pathToJson);
+void writeOpenApi(pathToJson);

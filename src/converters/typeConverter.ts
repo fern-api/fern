@@ -1,17 +1,16 @@
-import { OpenAPIV3 } from "openapi-types";
 import {
-    TypeDeclaration,
-    Type,
-    TypeReference,
-    PrimitiveType,
-    ContainerType,
-    ObjectTypeDeclaration,
-    DeclaredTypeName,
     AliasTypeDeclaration,
+    ContainerType,
+    DeclaredTypeName,
     EnumTypeDeclaration,
+    ObjectTypeDeclaration,
+    PrimitiveType,
+    Type,
+    TypeDeclaration,
+    TypeReference,
     UnionTypeDeclaration,
 } from "@fern-fern/ir-model";
-import * as _ from "lodash";
+import { OpenAPIV3 } from "openapi-types";
 
 export interface ConvertedType {
     openApiSchema: OpenApiComponentSchema;
@@ -37,7 +36,7 @@ export function convertType(typeDeclaration: TypeDeclaration): ConvertedType {
             return convertUnion({ unionTypeDeclaration, docs });
         },
         _unknown: () => {
-            throw new Error("Encountered unknown type: " + shape);
+            throw new Error("Encountered unknown type: " + shape._type);
         },
     });
     return {
@@ -87,14 +86,14 @@ export function convertObject({
     const required: string[] = [];
     objectTypeDeclaration.properties.forEach((objectProperty) => {
         const convertedObjectProperty = convertTypeReference(objectProperty.valueType);
-        properties[objectProperty.key] = {
+        properties[objectProperty.name.wireValue] = {
             ...convertedObjectProperty,
             description: objectProperty.docs ?? undefined,
         };
         const isOptionalProperty =
             objectProperty.valueType._type === "container" && objectProperty.valueType.container._type === "optional";
         if (!isOptionalProperty) {
-            required.push(objectProperty.key);
+            required.push(objectProperty.name.wireValue);
         }
     });
     const convertedSchemaObject: OpenAPIV3.SchemaObject = {
@@ -126,7 +125,7 @@ export function convertUnion({
         const valueType = singleUnionType.valueType;
         const convertedValueType = convertTypeReference(valueType);
         if (valueType._type === "named") {
-            let properties = {};
+            const properties = {};
             properties[unionTypeDeclaration.discriminant] = {
                 type: "string",
                 enum: [singleUnionType.discriminantValue],
@@ -144,7 +143,7 @@ export function convertUnion({
                 ],
             };
         } else {
-            let properties = {};
+            const properties = {};
             properties[unionTypeDeclaration.discriminant] = {
                 type: "string",
                 enum: [singleUnionType.discriminantValue],
@@ -182,7 +181,7 @@ export function convertTypeReference(typeReference: TypeReference): OpenApiCompo
             return {};
         },
         _unknown: () => {
-            throw new Error("Encountered unknown typeReference: " + typeReference);
+            throw new Error("Encountered unknown typeReference: " + typeReference._type);
         },
     });
 }
@@ -254,17 +253,15 @@ function convertContainerType(containerType: ContainerType): OpenApiComponentSch
             return convertTypeReference(optionalType);
         },
         _unknown: () => {
-            throw new Error("Encountered unknown containerType: " + containerType);
+            throw new Error("Encountered unknown containerType: " + containerType._type);
         },
     });
 }
 
-export function getReferenceFromDeclaredTypeName(declaredTypeName: DeclaredTypeName) {
+export function getReferenceFromDeclaredTypeName(declaredTypeName: DeclaredTypeName): string {
     return `#/components/schemas/${getNameFromDeclaredTypeName(declaredTypeName)}`;
 }
 
-export function getNameFromDeclaredTypeName(declaredTypeName: DeclaredTypeName) {
-    const nameTokens: string[] = [...declaredTypeName.fernFilepath];
-    nameTokens.push(declaredTypeName.name);
-    return _.upperFirst(_.camelCase(nameTokens.join(" ")));
+export function getNameFromDeclaredTypeName(declaredTypeName: DeclaredTypeName): string {
+    return [...declaredTypeName.fernFilepath.map((part) => part.pascalCase), declaredTypeName.name].join("");
 }

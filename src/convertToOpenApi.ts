@@ -3,15 +3,20 @@ import { OpenAPIV3 } from "openapi-types";
 import { convertError } from "./converters/errorConverter";
 import { convertServices } from "./converters/servicesConverter";
 import { convertType } from "./converters/typeConverter";
+import { constructEndpointSecurity, constructSecuritySchemes } from "./security";
 
-export function convertToOpenApi(
-    apiName: string,
-    apiVersion: string,
-    ir: IntermediateRepresentation
-): OpenAPIV3.Document<{}> | undefined {
-    let schemas: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject> = {};
+export function convertToOpenApi({
+    apiName,
+    apiVersion,
+    ir,
+}: {
+    apiName: string;
+    apiVersion: string;
+    ir: IntermediateRepresentation;
+}): OpenAPIV3.Document | undefined {
+    const schemas: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject> = {};
 
-    let typesByName: Record<string, TypeDeclaration> = {};
+    const typesByName: Record<string, TypeDeclaration> = {};
     ir.types.forEach((typeDeclaration) => {
         // convert type to open api schema
         const convertedType = convertType(typeDeclaration);
@@ -20,7 +25,7 @@ export function convertToOpenApi(
         typesByName[getDeclaredTypeNameKey(typeDeclaration.name)] = typeDeclaration;
     });
 
-    let errorsByName: Record<string, ErrorDeclaration> = {};
+    const errorsByName: Record<string, ErrorDeclaration> = {};
     ir.errors.forEach((errorDeclaration) => {
         // convert error to open api schema
         const convertedError = convertError(errorDeclaration);
@@ -29,7 +34,15 @@ export function convertToOpenApi(
         errorsByName[getDeclaredTypeNameKey(errorDeclaration.name)] = errorDeclaration;
     });
 
-    const paths = convertServices(ir.services.http, typesByName, errorsByName, ir.constants);
+    const security = constructEndpointSecurity(ir.auth);
+
+    const paths = convertServices({
+        httpServices: ir.services.http,
+        typesByName,
+        errorsByName,
+        fernConstants: ir.constants,
+        security,
+    });
     return {
         openapi: "3.0.1",
         info: {
@@ -39,6 +52,7 @@ export function convertToOpenApi(
         paths,
         components: {
             schemas,
+            securitySchemes: constructSecuritySchemes(ir.auth),
         },
     };
 }

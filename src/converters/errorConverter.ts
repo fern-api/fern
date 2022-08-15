@@ -24,7 +24,7 @@ export function convertError(errorDeclaration: ErrorDeclaration): ConvertedType 
             return convertUnion({ unionTypeDeclaration, docs });
         },
         _unknown: () => {
-            throw new Error("Encountered unknown type: " + errorDeclaration.type);
+            throw new Error("Encountered unknown type: " + errorDeclaration.type._type);
         },
     });
     return {
