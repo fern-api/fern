@@ -1,5 +1,5 @@
 import { Workspace } from "@fern-api/workspace-loader";
-import { CreateJobErrorBody, CreateJobResponse } from "@fern-fern/fiddle-coordinator-api-client/model";
+import { CreateJobErrorBody, CreateJobResponse } from "@fern-fern/fiddle-coordinator-api-client/model/remoteGen";
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
 import axios from "axios";
 import FormData from "form-data";

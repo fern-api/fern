@@ -1,4 +1,4 @@
-import { RemoteGenerationService } from "@fern-fern/fiddle-coordinator-api-client/services";
+import { RemoteGenerationService } from "@fern-fern/fiddle-coordinator-api-client/services/remoteGen";
 import urlJoin from "url-join";
 
 const FIDDLE_ORIGIN =

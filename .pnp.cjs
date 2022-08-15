@@ -3848,7 +3848,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-api/generators-configuration", "workspace:packages/config-management/generators-configuration"],\
             ["@fern-api/workspace-loader", "workspace:packages/workspace-loader"],\
-            ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.45"],\
+            ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.7"],\
             ["@fern-fern/ir-model", "npm:0.0.38"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/node", "npm:18.6.2"],\
@@ -4000,10 +4000,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/fiddle-coordinator-api-client", [\
-        ["npm:0.0.45", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-fiddle-coordinator-api-client-npm-0.0.45-e802dfb9fd-2266a311ca.zip/node_modules/@fern-fern/fiddle-coordinator-api-client/",\
+        ["npm:0.0.7", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-fiddle-coordinator-api-client-npm-0.0.7-d592de3fa2-62959e887d.zip/node_modules/@fern-fern/fiddle-coordinator-api-client/",\
           "packageDependencies": [\
-            ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.45"],\
+            ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.7"],\
             ["@fern-typescript/service-utils", "npm:0.0.124"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["@types/uuid", "npm:8.3.4"],\
@@ -4014,10 +4014,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/generator-logging-api-client", [\
-        ["npm:0.0.25", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-generator-logging-api-client-npm-0.0.25-95c34ba5f7-b353718e91.zip/node_modules/@fern-fern/generator-logging-api-client/",\
+        ["npm:0.0.6", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-generator-logging-api-client-npm-0.0.6-7d9344b55d-b4ef1e1ddc.zip/node_modules/@fern-fern/generator-logging-api-client/",\
           "packageDependencies": [\
-            ["@fern-fern/generator-logging-api-client", "npm:0.0.25"],\
+            ["@fern-fern/generator-logging-api-client", "npm:0.0.6"],\
             ["@fern-typescript/service-utils", "npm:0.0.124"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["url-join", "npm:4.0.1"]\
@@ -9999,7 +9999,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/ir-generator", "workspace:packages/generation/ir/ir-generator"],\
             ["@fern-api/workspace-loader", "workspace:packages/workspace-loader"],\
-            ["@fern-fern/generator-logging-api-client", "npm:0.0.25"],\
+            ["@fern-fern/generator-logging-api-client", "npm:0.0.6"],\
             ["@fern-fern/ir-model", "npm:0.0.38"],\
             ["@fern-typescript/client", "workspace:packages/fern-typescript/client"],\
             ["@fern-typescript/client-v2", "workspace:packages/fern-typescript/client-v2"],\

@@ -6,7 +6,7 @@ import {
     RemoteGenTaskId,
     Task,
     TaskStatus,
-} from "@fern-fern/fiddle-coordinator-api-client/model";
+} from "@fern-fern/fiddle-coordinator-api-client/model/remoteGen";
 import chalk from "chalk";
 import { SPINNER } from "./spinner";
 import { GeneratorInvocationWithTaskId } from "./types";

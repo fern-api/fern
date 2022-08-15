@@ -1,5 +1,5 @@
-import { model as GeneratorLoggingApiModel } from "@fern-fern/generator-logging-api-client";
-import { GeneratorUpdate } from "@fern-fern/generator-logging-api-client/model";
+import * as GeneratorLoggingApiModel from "@fern-fern/generator-logging-api-client/model/generatorLogging";
+import { GeneratorUpdate } from "@fern-fern/generator-logging-api-client/model/generatorLogging";
 import { BUILD_PROJECT_SCRIPT_NAME, FernTypescriptGeneratorConfig, writeVolumeToDisk } from "@fern-typescript/commons";
 import { createLogger, LogLevel } from "@fern-typescript/commons-v2";
 import execa from "execa";

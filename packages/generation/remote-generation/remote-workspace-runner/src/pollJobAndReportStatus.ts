@@ -1,5 +1,10 @@
 import { Workspace } from "@fern-api/workspace-loader";
-import { CreateJobResponse, RemoteGenTaskId, Task, TaskStatus } from "@fern-fern/fiddle-coordinator-api-client/model";
+import {
+    CreateJobResponse,
+    RemoteGenTaskId,
+    Task,
+    TaskStatus,
+} from "@fern-fern/fiddle-coordinator-api-client/model/remoteGen";
 import logUpdate from "log-update";
 import { getLogForTaskStatuses } from "./getLogForTaskStatus";
 import { processFinishedTask } from "./processFinishedTask";
