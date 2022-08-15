@@ -1,7 +1,0 @@
-types:
-  Post:
-    docs: A blog post
-    properties:
-      id: string
-      title: string
-      content: string

@@ -127,21 +127,6 @@ jobs:
           name: Publish fern-api-dev CLI
           command: yarn workspace @fern-api/cli publish:cli:dev --access restricted
 
-  publish-fern-typescript:
-    machine:
-      image: ubuntu-2004:current
-    steps:
-      - checkout
-      - node/install-packages:
-          pkg-manager: yarn-berry
-      - run:
-          name: Publish fern-typescript Docker
-          command: |
-            projectVersion=$(./scripts/git-version.sh)
-            yarn workspace fern-typescript dockerTagVersion "$projectVersion"
-            echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
-            docker push fernapi/fern-typescript:"$projectVersion"
-
   publish:
     docker:
       - image: cimg/node:current
@@ -222,20 +207,6 @@ workflows:
             - ete-tests
           context:
             - npm
-            - auth0-dev
-
-      - publish-fern-typescript:
-          filters:
-            branches:
-              only: main
-            tags:
-              only: /.*/
-          requires:
-            - lint
-            - compile-and-test
-            - ete-tests
-          context:
-            - docker-hub
             - auth0-dev
 
       - publish:
