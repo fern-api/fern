@@ -4,7 +4,7 @@ import {
     RemoteGenJobId,
     RemoteGenTaskId,
     Task,
-} from "@fern-fern/fiddle-coordinator-api-client/model";
+} from "@fern-fern/fiddle-coordinator-api-client/model/remoteGen";
 import axios, { AxiosError } from "axios";
 import chalk from "chalk";
 import { createWriteStream } from "fs";
