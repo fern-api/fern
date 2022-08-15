@@ -6,8 +6,8 @@
   "author": "Deep Singhvi <deep@buildwithfern.com>",
   "license": "MIT",
   "scripts": {
-    "clean": "tsc --build --clean",
-    "compile": "tsc --build",
+    "clean": "tsc",
+    "compile": "tsc",
     "test": "jest --passWithNoTests",
     "depcheck": "depcheck",
     "lint": "eslint --max-warnings 0",
