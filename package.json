@@ -14,7 +14,7 @@
     "clean": "yarn workspaces foreach --verbose --parallel run clean",
     "compile": "yarn workspace @fern-api/compile-root run compile",
     "test": "yarn compile && jest --passWithNoTests",
-    "test:ete": "yarn workspace @fern-api/cli dist:cli:prod && yarn workspace fern-typescript dockerTagLocal && yarn workspace @fern-api/ete-tests test",
+    "test:ete": "yarn workspace @fern-api/cli dist:cli:prod && yarn workspace @fern-api/ete-tests test",
     "lint:eslint": "eslint --max-warnings 0 .",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "lint:monorepo": "mrlint lint",
