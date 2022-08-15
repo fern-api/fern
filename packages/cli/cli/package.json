@@ -48,7 +48,7 @@
     "@fern-api/validator": "workspace:*",
     "@fern-api/workspace-configuration": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-fern/ir-model": "0.0.38",
+    "@fern-fern/ir-model": "0.0.46",
     "boxen": "^7.0.0",
     "chalk": "^5.0.1",
     "execa": "^5.1.1",

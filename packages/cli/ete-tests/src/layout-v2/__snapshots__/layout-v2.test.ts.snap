@@ -217,6 +217,7 @@ exports[`layout-v2 simple 1`] = `
                 \\"headers\\": [],
                 \\"endpoints\\": [
                     {
+                        \\"id\\": \\"createMovie\\",
                         \\"name\\": {
                             \\"originalValue\\": \\"createMovie\\",
                             \\"camelCase\\": \\"createMovie\\",
@@ -266,6 +267,7 @@ exports[`layout-v2 simple 1`] = `
                         \\"errors\\": []
                     },
                     {
+                        \\"id\\": \\"getMovie\\",
                         \\"name\\": {
                             \\"originalValue\\": \\"getMovie\\",
                             \\"camelCase\\": \\"getMovie\\",

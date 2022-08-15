@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { FernFilepath } from "@fern-fern/ir-model";
-import { HttpEndpoint, HttpHeader, HttpMethod, HttpService } from "@fern-fern/ir-model/services";
+import { HttpEndpoint, HttpEndpointId, HttpHeader, HttpMethod, HttpService } from "@fern-fern/ir-model/services";
 import { generateStringWithAllCasings, generateWireStringWithAllCasings } from "../../utils/generateCasings";
 import { getDocs } from "../../utils/getDocs";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
@@ -38,6 +38,7 @@ export function convertHttpService({
                 : [],
         endpoints: Object.entries(serviceDefinition.endpoints).map(
             ([endpointKey, endpoint]): HttpEndpoint => ({
+                id: HttpEndpointId.of(endpointKey),
                 name: generateStringWithAllCasings(endpointKey),
                 auth: endpoint.auth ?? serviceDefinition.auth,
                 docs: endpoint.docs,
