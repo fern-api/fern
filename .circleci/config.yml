@@ -13,9 +13,6 @@ jobs:
           name: lint:monorepo
           command: yarn lint:monorepo
       - run:
-          name: Check root package
-          command: yarn root-package:check
-      - run:
           name: Format
           command: yarn format:check
       - run:
@@ -24,9 +21,6 @@ jobs:
       - run:
           name: lint:eslint
           command: yarn lint:eslint
-      - run:
-          name: lint:style
-          command: yarn lint:style
       - run:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff --exit-code

@@ -1,8 +1,14 @@
-import IS_CI from "is-ci";
 // eslint-disable-next-line jest/no-jest-import
+import execa from "execa";
+import IS_CI from "is-ci";
 import { Config } from "jest";
-import { getAllPackages } from "./packages/scripts/src/getAllPackages";
+import path from "path";
 import defaultConfig from "./shared/jest.config.shared";
+
+interface YarnPackage {
+    name: string;
+    location: string;
+}
 
 export default async (): Promise<Config> => {
     const packages = await getAllPackages({
@@ -40,4 +46,29 @@ function isBranchInCi() {
     }
 
     return true;
+}
+
+async function getAllPackages({ since = false }: { since?: boolean } = {}): Promise<YarnPackage[]> {
+    const args = ["workspaces", "list", "--json"];
+    if (since) {
+        args.push("--since", "--recursive");
+    }
+
+    const { stdout } = await execa("yarn", args);
+    const trimmedStdout = stdout.trim();
+
+    if (trimmedStdout === "") {
+        return [];
+    }
+
+    return trimmedStdout.split("\n").reduce<YarnPackage[]>((packages, line) => {
+        const parsed = JSON.parse(line) as YarnPackage;
+        if (parsed.location !== ".") {
+            packages.push({
+                name: parsed.name,
+                location: path.resolve(__dirname, parsed.location),
+            });
+        }
+        return packages;
+    }, []);
 }

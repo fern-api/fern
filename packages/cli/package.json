@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "repository": {
     "type": "git",
-    "url": "git@github.com:fern-api/fern.git",
-    "directory": "packages/fern-typescript/cli"
+    "url": "git@github.com:fern-api/fern-typescript.git",
+    "directory": "packages/cli"
   },
   "files": [
     "lib"
@@ -18,20 +18,20 @@
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
     "test": "yarn compile && jest --passWithNoTests",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
-    "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore --fix",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
+    "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore --fix",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck",
     "dockerTagLocal": "./docker/create_docker.sh local",
     "dockerTagVersion": "./docker/create_docker.sh"
   },
   "dependencies": {
-    "@fern-api/config-management-commons": "workspace:*",
-    "@fern-api/core-utils": "workspace:*",
-    "@fern-api/ir-generator": "workspace:*",
-    "@fern-api/workspace-loader": "workspace:*",
-    "@fern-fern/generator-logging-api-client": "^0.0.25",
+    "@fern-api/config-management-commons": "0.0.184-8-ga3b271c4",
+    "@fern-api/core-utils": "0.0.184-8-ga3b271c4",
+    "@fern-api/ir-generator": "0.0.184-8-ga3b271c4",
+    "@fern-api/workspace-loader": "0.0.184-8-ga3b271c4",
+    "@fern-fern/generator-logging-api-client": "^0.0.5",
     "@fern-typescript/client": "workspace:*",
     "@fern-typescript/client-v2": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
@@ -53,7 +53,7 @@
     "@babel/core": "^7.18.9",
     "@babel/preset-env": "^7.18.9",
     "@babel/preset-typescript": "^7.18.6",
-    "@fern-api/cli": "workspace:*",
+    "@fern-api/cli": "0.0.184-8-ga3b271c4",
     "@fern-fern/ir-model": "0.0.38",
     "@fern-typescript/testing-utils": "workspace:*",
     "@ts-morph/common": "^0.16.0",

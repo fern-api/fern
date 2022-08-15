@@ -1,11 +1,1 @@
-{
-  "extends": "../../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src"],
-  "references": [
-    { "path": "../../commons/core-utils" },
-    { "path": "../commons" },
-    { "path": "../model-context" },
-    { "path": "../types" }
-  ]
-}
+{"extends":"../../shared/tsconfig.shared.json","compilerOptions":{"composite":true,"outDir":"lib","rootDir":"src"},"include":["./src"],"references":[{"path":"../commons"},{"path":"../model-context"},{"path":"../types"}]}
