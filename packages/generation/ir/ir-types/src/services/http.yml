@@ -12,9 +12,11 @@ types:
       basePath: optional<string>
       endpoints: list<HttpEndpoint>
       headers: list<HttpHeader>
+  HttpEndpointId: string
   HttpEndpoint:
     extends: commons.WithDocs
     properties:
+      id: HttpEndpointId
       name: commons.StringWithAllCasings
       method: HttpMethod
       headers: list<HttpHeader>

@@ -201,6 +201,7 @@ exports[`fern-ir-tests simple 1`] = `
                 \\"headers\\": [],
                 \\"endpoints\\": [
                     {
+                        \\"id\\": \\"createMovie\\",
                         \\"name\\": {
                             \\"originalValue\\": \\"createMovie\\",
                             \\"camelCase\\": \\"createMovie\\",
@@ -250,6 +251,7 @@ exports[`fern-ir-tests simple 1`] = `
                         \\"errors\\": []
                     },
                     {
+                        \\"id\\": \\"getMovie\\",
                         \\"name\\": {
                             \\"originalValue\\": \\"getMovie\\",
                             \\"camelCase\\": \\"getMovie\\",
