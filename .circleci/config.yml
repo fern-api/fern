@@ -1,0 +1,174 @@
+version: 2.1
+orbs:
+  node: circleci/node@5.0.1
+jobs:
+  lint:
+    docker:
+      - image: cimg/node:current
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn-berry
+      - run:
+          name: lint:monorepo
+          command: yarn lint:monorepo
+      - run:
+          name: Check root package
+          command: yarn root-package:check
+      - run:
+          name: Format
+          command: yarn format:check
+      - run:
+          name: Check dependencies
+          command: yarn depcheck
+      - run:
+          name: lint:eslint
+          command: yarn lint:eslint
+      - run:
+          name: lint:style
+          command: yarn lint:style
+      - run:
+          name: Ensure no changes to git-tracked files
+          command: git --no-pager diff --exit-code
+
+  compile-and-test:
+    # this is machine because of the docker-utils tests
+    machine:
+      image: ubuntu-2004:current
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn-berry
+      - run:
+          name: Compile
+          command: yarn compile
+      - run:
+          name: Run tests
+          command: yarn test --ci
+      - run:
+          name: Ensure no changes to git-tracked files
+          command: git --no-pager diff --exit-code
+
+  publish-dev:
+    docker:
+      - image: cimg/node:current
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn-berry
+      - run:
+          name: Print version
+          command: |
+            git_version="$(./scripts/git-version.sh)"
+            echo Publishing version: "${git_version}"
+      - run:
+          name: Add version to package.json's
+          command: |
+            git_version="$(./scripts/git-version.sh)"
+            yarn mrlint version "$git_version"
+      - run:
+          name: Update yarn.lock with new versions
+          command: yarn
+      - run:
+          name: Compile
+          command: yarn compile
+      - run:
+          name: Publish all packages
+          command: yarn run publish --tag next
+
+  publish-docker:
+    machine:
+      image: ubuntu-2004:current
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn-berry
+      - run:
+          name: Publish fern-typescript Docker
+          command: |
+            projectVersion=$(./scripts/git-version.sh)
+            yarn workspace fern-typescript dockerTagVersion "$projectVersion"
+            echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
+            docker push fernapi/fern-typescript:"$projectVersion"
+
+  publish:
+    docker:
+      - image: cimg/node:current
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn-berry
+      - run:
+          name: Print version
+          command: |
+            git_version="$(./scripts/git-version.sh)"
+            echo Publishing version: "${git_version}"
+      - run:
+          name: Add version to package.json's
+          command: |
+            git_version="$(./scripts/git-version.sh)"
+            yarn mrlint version "$git_version"
+      - run:
+          name: Update yarn.lock with new versions
+          command: yarn
+      - run:
+          name: Compile
+          command: yarn compile
+      - run:
+          name: Publish all packages
+          command: yarn run publish
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - lint:
+          filters:
+            tags:
+              only: /.*/
+
+      - compile-and-test:
+          filters:
+            tags:
+              only: /.*/
+
+      - publish-dev:
+          filters:
+            branches:
+              only: main
+          requires:
+            - lint
+            - compile-and-test
+            - ete-tests
+          context:
+            - npm
+            - auth0-dev
+
+      - publish-docker:
+          filters:
+            branches:
+              only: main
+            tags:
+              only: /.*/
+          requires:
+            - lint
+            - compile-and-test
+            - ete-tests
+          context:
+            - docker-hub
+            - auth0-dev
+
+      - publish:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
+          requires:
+            - lint
+            - compile-and-test
+            - ete-tests
+            - live-test
+          context:
+            - npm
+            - auth0-dev
