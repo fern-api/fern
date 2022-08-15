@@ -1,1 +1,19 @@
-{"extends":"../../shared/tsconfig.shared.json","compilerOptions":{"composite":true,"outDir":"lib","rootDir":"src"},"include":["./src"],"exclude":["./src/**/__test__/**/generated"],"references":[{"path":"../client"},{"path":"../client-v2"},{"path":"../commons"},{"path":"../commons-v2"},{"path":"../declaration-handler"},{"path":"../errors-v2"},{"path":"../model"},{"path":"../resolvers"},{"path":"../server"},{"path":"../testing-utils"},{"path":"../types-v2"}]}
+{
+  "extends": "../../shared/tsconfig.shared.json",
+  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
+  "include": ["./src"],
+  "exclude": ["./src/**/__test__/**/generated"],
+  "references": [
+    { "path": "../client" },
+    { "path": "../client-v2" },
+    { "path": "../commons" },
+    { "path": "../commons-v2" },
+    { "path": "../declaration-handler" },
+    { "path": "../errors-v2" },
+    { "path": "../model" },
+    { "path": "../resolvers" },
+    { "path": "../server" },
+    { "path": "../testing-utils" },
+    { "path": "../types-v2" }
+  ]
+}

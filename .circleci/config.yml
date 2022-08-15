@@ -133,7 +133,6 @@ workflows:
           requires:
             - lint
             - compile-and-test
-            - ete-tests
           context:
             - npm
             - auth0-dev
@@ -147,7 +146,6 @@ workflows:
           requires:
             - lint
             - compile-and-test
-            - ete-tests
           context:
             - docker-hub
             - auth0-dev
@@ -161,7 +159,6 @@ workflows:
           requires:
             - lint
             - compile-and-test
-            - ete-tests
             - live-test
           context:
             - npm

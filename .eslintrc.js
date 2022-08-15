@@ -10,7 +10,6 @@ module.exports = {
         "plugin:@typescript-eslint/strict",
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:jest/recommended",
-        "plugin:@blueprintjs/recommended",
     ],
     settings: {
         react: {

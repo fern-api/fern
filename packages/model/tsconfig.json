@@ -1,1 +1,14 @@
-{"extends":"../../shared/tsconfig.shared.json","compilerOptions":{"composite":true,"outDir":"lib","rootDir":"src"},"include":["./src"],"exclude":["./src/**/__test__/**/generated"],"references":[{"path":"../commons"},{"path":"../errors"},{"path":"../model-context"},{"path":"../service-types"},{"path":"../testing-utils"},{"path":"../types"}]}
+{
+  "extends": "../../shared/tsconfig.shared.json",
+  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
+  "include": ["./src"],
+  "exclude": ["./src/**/__test__/**/generated"],
+  "references": [
+    { "path": "../commons" },
+    { "path": "../errors" },
+    { "path": "../model-context" },
+    { "path": "../service-types" },
+    { "path": "../testing-utils" },
+    { "path": "../types" }
+  ]
+}
