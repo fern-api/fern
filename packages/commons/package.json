@@ -1,0 +1,50 @@
+{
+  "name": "@fern-typescript/commons",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:fern-api/fern.git",
+    "directory": "packages/fern-typescript/commons"
+  },
+  "files": [
+    "lib"
+  ],
+  "type": "module",
+  "source": "src/index.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "sideEffects": false,
+  "scripts": {
+    "clean": "rm -rf ./lib && tsc --build --clean",
+    "compile": "tsc --build",
+    "test": "yarn compile && jest --passWithNoTests",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
+    "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore --fix",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "depcheck": "depcheck"
+  },
+  "dependencies": {
+    "@fern-api/core-utils": "workspace:*",
+    "@fern-fern/ir-model": "0.0.38",
+    "esutils": "^2.0.3",
+    "immer": "^9.0.15",
+    "ts-morph": "^15.1.0",
+    "typescript": "4.6.4",
+    "zod": "^3.14.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.18.9",
+    "@babel/preset-env": "^7.18.9",
+    "@babel/preset-typescript": "^7.18.6",
+    "@types/esutils": "^2.0.0",
+    "@types/jest": "^28.1.6",
+    "@types/node": "^18.6.2",
+    "depcheck": "^1.4.3",
+    "eslint": "^8.20.0",
+    "jest": "^28.1.3",
+    "memfs": "^3.4.1",
+    "package-json-type": "^1.0.3",
+    "prettier": "^2.7.1"
+  }
+}

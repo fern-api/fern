@@ -1,0 +1,64 @@
+types:
+  SomeType: string
+services:
+  http:
+    ServiceWithNoAuth:
+      auth: false
+      base-path: /
+      endpoints:
+        endpointA:
+          path: /a
+
+    ServiceWithBasicAuth:
+      auth: true
+      base-path: /
+      endpoints:
+        endpointB:
+          path: /b
+
+    ServiceWithBearerAuth:
+      auth: true
+      base-path: /
+      endpoints:
+        endpointC:
+          path: /c
+
+    ServiceWithNoAuthWithBearerOverride:
+      auth: false
+      base-path: /
+      endpoints:
+        endpointD:
+          path: /d
+        overrideEndpointD:
+          path: /d-override
+          auth: true
+
+    ServiceWithNoAuthWithBasicOverride:
+      auth: false
+      base-path: /
+      endpoints:
+        endpointE:
+          path: /e
+        overrideEndpointE:
+          path: /e-override
+          auth: true
+
+    ServiceWithBearerAuthWithOverride:
+      auth: true
+      base-path: /
+      endpoints:
+        endpointF:
+          path: /f
+        overrideEndpointF:
+          path: /f-override
+          auth: false
+
+    ServiceWithBasicAuthWithOverride:
+      auth: true
+      base-path: /
+      endpoints:
+        endpointG:
+          path: /g
+        overrideEndpointG:
+          path: /g-override
+          auth: false

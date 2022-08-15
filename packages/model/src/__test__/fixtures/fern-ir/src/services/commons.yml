@@ -1,0 +1,30 @@
+imports:
+  commons: ../commons.yml
+  types: ../types.yml
+  errors: ../errors.yml
+types:
+  ServiceName:
+    properties:
+      fernFilepath: types.FernFilepath
+      name: string
+  Encoding:
+    union:
+      json: {}
+      custom: CustomWireMessageEncoding
+  CustomWireMessageEncoding:
+    properties:
+      encoding: string
+  FailedResponse:
+    extends: commons.WithDocs
+    properties:
+      discriminant: string
+      errorProperties: ResponseErrorProperties
+      errors: list<ResponseError>
+  ResponseErrorProperties:
+    properties:
+      errorInstanceId: string
+  ResponseError:
+    extends: commons.WithDocs
+    properties:
+      discriminantValue: string
+      error: errors.ErrorName

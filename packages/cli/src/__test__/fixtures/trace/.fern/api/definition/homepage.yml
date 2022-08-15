@@ -1,0 +1,18 @@
+imports:
+  commons: commons.yml
+
+services:
+  http:
+    HomepageProblemService:
+      base-path: /homepage-problems
+      auth: false
+      endpoints:
+        getHomepageProblems:
+          method: GET
+          path: /
+          response: list<commons.ProblemId>
+
+        setHomepageProblems:
+          method: POST
+          path: /
+          request: list<commons.ProblemId>
