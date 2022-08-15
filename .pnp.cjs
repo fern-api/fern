@@ -3848,7 +3848,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-api/generators-configuration", "workspace:packages/config-management/generators-configuration"],\
             ["@fern-api/workspace-loader", "workspace:packages/workspace-loader"],\
-            ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.45"],\
+            ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.6"],\
             ["@fern-fern/ir-model", "npm:0.0.38"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/node", "npm:18.6.2"],\
@@ -4000,10 +4000,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/fiddle-coordinator-api-client", [\
-        ["npm:0.0.45", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-fiddle-coordinator-api-client-npm-0.0.45-e802dfb9fd-2266a311ca.zip/node_modules/@fern-fern/fiddle-coordinator-api-client/",\
+        ["npm:0.0.6", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-fiddle-coordinator-api-client-npm-0.0.6-83b638df8d-1c51279a30.zip/node_modules/@fern-fern/fiddle-coordinator-api-client/",\
           "packageDependencies": [\
-            ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.45"],\
+            ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.6"],\
             ["@fern-typescript/service-utils", "npm:0.0.124"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["@types/uuid", "npm:8.3.4"],\
