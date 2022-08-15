@@ -1,6 +1,6 @@
-// eslint-disable-next-line jest/no-jest-import
 import execa from "execa";
 import IS_CI from "is-ci";
+// eslint-disable-next-line jest/no-jest-import
 import { Config } from "jest";
 import path from "path";
 import defaultConfig from "./shared/jest.config.shared";
