@@ -19,6 +19,7 @@ import com.fern.codegen.GeneratedEndpointError;
 import com.fern.codegen.GeneratedErrorDecoder;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameConstants;
+import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.java.exception.UnknownRemoteException;
 import com.fern.model.codegen.Generator;
 import com.fern.model.codegen.services.payloads.FailedResponseGenerator;
@@ -67,7 +68,7 @@ public final class ServiceErrorDecoderGenerator extends Generator {
         this.httpService = httpService;
         this.errorDecoderClassName = generatorContext
                 .getClassNameUtils()
-                .getClassNameFromServiceName(httpService.name(), ERROR_DECODER_CLASSNAME_SUFFIX);
+                .getClassNameFromServiceName(httpService.name(), ERROR_DECODER_CLASSNAME_SUFFIX, PackageType.CLIENT);
         this.generatedEndpointErrorFiles = generatedEndpointErrorFiles;
     }
 

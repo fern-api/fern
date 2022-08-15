@@ -21,6 +21,7 @@ import com.fern.codegen.GeneratedFile;
 import com.fern.codegen.GeneratedHttpServiceClient;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.CasingUtils;
+import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.model.codegen.Generator;
 import com.fern.types.FernFilepath;
@@ -67,9 +68,11 @@ public final class ClientWrapperGenerator extends Generator {
                 .getClassName(
                         CasingUtils.convertKebabCaseToUpperCamelCase(workspaceName),
                         Optional.of("Client"),
-                        Optional.empty());
+                        Optional.empty(),
+                        PackageType.CLIENT);
         List<GeneratedHttpServiceClient> clientsOrderedByDept = generatedHttpServiceClients.stream()
                 .sorted(Comparator.comparingInt(generatedClient -> generatedClient
+                        .serviceInterface()
                         .httpService()
                         .name()
                         .fernFilepath()
@@ -113,11 +116,15 @@ public final class ClientWrapperGenerator extends Generator {
                     Modifier.FINAL);
             supplierFields.put(fieldName, httpServiceClient);
 
-            FernFilepath fernFilepath = httpServiceClient.httpService().name().fernFilepath();
+            FernFilepath fernFilepath =
+                    httpServiceClient.serviceInterface().httpService().name().fernFilepath();
             String methodName;
             if (fernFilepath.value().isEmpty()) {
-                methodName = StringUtils.uncapitalize(
-                        httpServiceClient.httpService().name().name());
+                methodName = StringUtils.uncapitalize(httpServiceClient
+                        .serviceInterface()
+                        .httpService()
+                        .name()
+                        .name());
             } else {
                 methodName = fernFilepath.value().get(fernFilepath.value().size() - 1);
             }
@@ -155,11 +162,10 @@ public final class ClientWrapperGenerator extends Generator {
                 .addParameter(String.class, URL_PARAMETER_NAME);
         KeyedStream.stream(supplierFields).forEach((fieldName, httpClient) -> {
             constructorBuilder.addStatement(
-                    "this.$L = $L(() -> $T.$L($L))",
+                    "this.$L = $L(() -> new $T($L))",
                     fieldName,
                     MEMOIZE_METHOD_NAME,
                     httpClient.className(),
-                    HttpServiceClientGenerator.GET_CLIENT_METHOD_NAME,
                     URL_PARAMETER_NAME);
         });
         KeyedStream.stream(nestedClientFields).forEach((fieldName, nestedClientCLassName) -> {
@@ -198,8 +204,11 @@ public final class ClientWrapperGenerator extends Generator {
                 ClientConfig.builder().className(wrapperClassName);
         Map<String, List<GeneratedHttpServiceClient>> nestedClients = new HashMap<>();
         for (GeneratedHttpServiceClient generatedHttpServiceClient : serviceClients) {
-            FernFilepath fernFilepath =
-                    generatedHttpServiceClient.httpService().name().fernFilepath();
+            FernFilepath fernFilepath = generatedHttpServiceClient
+                    .serviceInterface()
+                    .httpService()
+                    .name()
+                    .fernFilepath();
             if (fernFilepath.value().size() <= fernFilePathSize) {
                 clientConfigBuilder.addHttpServiceClient(generatedHttpServiceClient);
             } else {
@@ -214,8 +223,9 @@ public final class ClientWrapperGenerator extends Generator {
             }
         }
         KeyedStream.stream(nestedClients).forEach((prefix, prefixedClients) -> {
-            ClassName nestedClientClassName =
-                    generatorContext.getClassNameUtils().getClassName(prefix, Optional.of("Client"), Optional.empty());
+            ClassName nestedClientClassName = generatorContext
+                    .getClassNameUtils()
+                    .getClassName(prefix, Optional.of("Client"), Optional.empty(), PackageType.CLIENT);
             ClientConfig nestedClientConfig =
                     createClientConfig(prefixedClients, fernFilePathSize + 1, nestedClientClassName);
             clientConfigBuilder.putNestedClients(prefix, nestedClientConfig);

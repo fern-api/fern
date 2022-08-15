@@ -19,6 +19,7 @@ import com.fern.codegen.GeneratedError;
 import com.fern.codegen.GeneratedInterface;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.IGeneratedFile;
+import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.java.exception.HttpException;
 import com.fern.model.codegen.Generator;
 import com.fern.model.codegen.TypeDefinitionGenerator;
@@ -53,7 +54,9 @@ public final class ErrorGenerator extends Generator {
         this.errorDeclaration = errorDeclaration;
         this.generatorContext = generatorContext;
         this.generatedInterfaces = generatedInterfaces;
-        this.errorClassName = generatorContext.getClassNameUtils().getClassNameFromErrorName(errorDeclaration.name());
+        this.errorClassName = generatorContext
+                .getClassNameUtils()
+                .getClassNameFromErrorName(errorDeclaration.name(), PackageType.MODEL);
     }
 
     @Override

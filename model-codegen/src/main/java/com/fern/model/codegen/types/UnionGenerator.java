@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.codegen.GeneratedUnion;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameConstants;
+import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.codegen.utils.KeyWordUtils;
 import com.fern.codegen.utils.VisitorUtils;
 import com.fern.codegen.utils.VisitorUtils.GeneratedVisitor;
@@ -90,8 +91,9 @@ public final class UnionGenerator extends Generator {
         this.declaredTypeName = declaredTypeName;
         this.unionTypeDeclaration = unionTypeDeclaration;
         this.typeDefinitionsByName = generatorContext.getTypeDefinitionsByName();
-        this.generatedUnionClassName =
-                generatorContext.getClassNameUtils().getClassNameFromDeclaredTypeName(declaredTypeName);
+        this.generatedUnionClassName = generatorContext
+                .getClassNameUtils()
+                .getClassNameFromDeclaredTypeName(declaredTypeName, PackageType.MODEL);
         this.generatedUnionImmutablesClassName =
                 generatorContext.getImmutablesUtils().getImmutablesClassName(generatedUnionClassName);
         this.internalValueClassNames = unionTypeDeclaration.types().stream()

@@ -17,18 +17,34 @@
 package com.fern.codegen;
 
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
+import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.TypeSpec;
 import java.util.List;
 import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderImmutablesStyle
-public interface GeneratedHttpServiceClient extends IGeneratedFile {
+public interface GeneratedEndpointClient extends IGeneratedFile {
 
-    GeneratedHttpServiceInterface serviceInterface();
+    GeneratedRequestInfo generatedRequestInfo();
 
-    List<IGeneratedFile> endpointFiles();
+    static ImmutableGeneratedEndpointClient.FileBuildStage builder() {
+        return ImmutableGeneratedEndpointClient.builder();
+    }
 
-    static ImmutableGeneratedHttpServiceClient.FileBuildStage builder() {
-        return ImmutableGeneratedHttpServiceClient.builder();
+    @Value.Immutable
+    @StagedBuilderImmutablesStyle
+    interface GeneratedRequestInfo {
+
+        TypeSpec requestTypeSpec();
+
+        ClassName requestClassName();
+
+        List<MethodSpec> propertyMethodSpecs();
+
+        static ImmutableGeneratedRequestInfo.RequestTypeSpecBuildStage builder() {
+            return ImmutableGeneratedRequestInfo.builder();
+        }
     }
 }

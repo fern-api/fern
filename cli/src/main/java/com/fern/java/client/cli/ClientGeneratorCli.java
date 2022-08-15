@@ -210,9 +210,9 @@ public final class ClientGeneratorCli {
                 .map(httpService -> {
                     HttpServiceClientGenerator httpServiceClientGenerator = new HttpServiceClientGenerator(
                             generatorContext,
+                            httpService,
                             modelGeneratorResult.endpointModels().get(httpService),
-                            modelGeneratorResult.errors(),
-                            httpService);
+                            modelGeneratorResult.errors());
                     return httpServiceClientGenerator.generate();
                 })
                 .collect(Collectors.toList());
@@ -225,7 +225,12 @@ public final class ClientGeneratorCli {
         resultBuilder.addAllClientFiles(generatedClientWrapper.nestedClientWrappers());
         for (GeneratedHttpServiceClient generatedHttpServiceClient : generatedHttpServiceClients) {
             resultBuilder.addClientFiles(generatedHttpServiceClient);
-            generatedHttpServiceClient.generatedErrorDecoder().ifPresent(resultBuilder::addClientFiles);
+            resultBuilder.addClientFiles(generatedHttpServiceClient.serviceInterface());
+            resultBuilder.addAllClientFiles(generatedHttpServiceClient.endpointFiles());
+            generatedHttpServiceClient
+                    .serviceInterface()
+                    .generatedErrorDecoder()
+                    .ifPresent(resultBuilder::addClientFiles);
         }
     }
 

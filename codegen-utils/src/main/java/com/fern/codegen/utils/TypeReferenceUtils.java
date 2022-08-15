@@ -15,6 +15,7 @@
  */
 package com.fern.codegen.utils;
 
+import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.types.ContainerType;
 import com.fern.types.DeclaredTypeName;
 import com.fern.types.MapType;
@@ -54,7 +55,7 @@ class TypeReferenceUtils {
 
         @Override
         public TypeName visitNamed(DeclaredTypeName declaredTypeName) {
-            return classNameUtils.getClassNameFromDeclaredTypeName(declaredTypeName);
+            return classNameUtils.getClassNameFromDeclaredTypeName(declaredTypeName, PackageType.MODEL);
         }
 
         @Override

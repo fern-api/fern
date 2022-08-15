@@ -19,6 +19,7 @@ import com.fern.codegen.GeneratedEndpointModel;
 import com.fern.codegen.GeneratedError;
 import com.fern.codegen.GeneratedHttpServiceServer;
 import com.fern.codegen.GeneratorContext;
+import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.codegen.utils.server.HttpAuthParameterSpecVisitor;
 import com.fern.codegen.utils.server.HttpPathUtils;
 import com.fern.jersey.JerseyHttpMethodAnnotationVisitor;
@@ -66,8 +67,9 @@ public final class HttpServiceJerseyServerGenerator extends Generator {
         super(generatorContext);
         this.httpService = httpService;
         this.generatedErrors = generatedErrors;
-        this.generatedServiceClassName =
-                generatorContext.getClassNameUtils().getClassNameFromServiceName(httpService.name());
+        this.generatedServiceClassName = generatorContext
+                .getClassNameUtils()
+                .getClassNameFromServiceName(httpService.name(), PackageType.SERVER);
         this.jerseyServiceGeneratorUtils = new JerseyServiceGeneratorUtils(generatorContext);
         this.generatedEndpointModels = generatedEndpointModels;
     }

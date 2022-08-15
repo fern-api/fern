@@ -23,6 +23,7 @@ import com.fern.codegen.GeneratedFile;
 import com.fern.codegen.GeneratedHttpServiceServer;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameConstants;
+import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.java.spring.HandlerMethodUtils;
 import com.fern.model.codegen.Generator;
 import com.fern.model.codegen.errors.ErrorGenerator;
@@ -80,7 +81,8 @@ public final class ErrorExceptionHandlerGenerator extends Generator {
                 .getClassName(
                         generatedError.className().simpleName(),
                         Optional.of(EXCEPTION_MAPPER_CLASSNAME_SUFFIX),
-                        Optional.of(generatedError.errorDeclaration().name().fernFilepath()));
+                        Optional.of(generatedError.errorDeclaration().name().fernFilepath()),
+                        PackageType.MODEL);
     }
 
     @Override

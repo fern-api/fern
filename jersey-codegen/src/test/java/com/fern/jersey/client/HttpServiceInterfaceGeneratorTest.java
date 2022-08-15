@@ -15,7 +15,7 @@
  */
 package com.fern.jersey.client;
 
-import com.fern.codegen.GeneratedHttpServiceClient;
+import com.fern.codegen.GeneratedHttpServiceInterface;
 import com.fern.codegen.GeneratorContext;
 import com.fern.java.test.TestConstants;
 import com.fern.model.codegen.ModelGenerator;
@@ -49,7 +49,7 @@ import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public final class HttpServiceClientGeneratorTest {
+public final class HttpServiceInterfaceGeneratorTest {
 
     private static final String PACKAGE_PREFIX = "com";
     private static final GeneratorContext GENERATOR_CONTEXT = new GeneratorContext(
@@ -116,12 +116,12 @@ public final class HttpServiceClientGeneratorTest {
                 Collections.emptyList(),
                 GENERATOR_CONTEXT);
         ModelGeneratorResult modelGeneratorResult = modelGenerator.generate();
-        HttpServiceClientGenerator httpServiceClientGenerator = new HttpServiceClientGenerator(
+        HttpServiceInterfaceGenerator httpServiceInterfaceGenerator = new HttpServiceInterfaceGenerator(
                 GENERATOR_CONTEXT,
                 modelGeneratorResult.endpointModels().get(testHttpService),
                 Collections.emptyMap(),
                 testHttpService);
-        GeneratedHttpServiceClient generatedHttpServiceClient = httpServiceClientGenerator.generate();
+        GeneratedHttpServiceInterface generatedHttpServiceClient = httpServiceInterfaceGenerator.generate();
         System.out.println(generatedHttpServiceClient.file().toString());
         Assertions.assertThat(generatedHttpServiceClient.generatedErrorDecoder())
                 .isEmpty();
@@ -205,12 +205,12 @@ public final class HttpServiceClientGeneratorTest {
                 Collections.singletonList(personIdNotFound),
                 GENERATOR_CONTEXT);
         ModelGeneratorResult modelGeneratorResult = modelGenerator.generate();
-        HttpServiceClientGenerator httpServiceClientGenerator = new HttpServiceClientGenerator(
+        HttpServiceInterfaceGenerator httpServiceInterfaceGenerator = new HttpServiceInterfaceGenerator(
                 GENERATOR_CONTEXT,
                 modelGeneratorResult.endpointModels().get(testHttpService),
                 modelGeneratorResult.errors(),
                 testHttpService);
-        GeneratedHttpServiceClient generatedHttpServiceClient = httpServiceClientGenerator.generate();
+        GeneratedHttpServiceInterface generatedHttpServiceClient = httpServiceInterfaceGenerator.generate();
         System.out.println(generatedHttpServiceClient.file().toString());
         Assertions.assertThat(generatedHttpServiceClient.generatedErrorDecoder())
                 .isPresent();

@@ -1,4 +1,4 @@
-name: blog-api
+name: basic
 definition: src
 generators:
   - name: fern-java
@@ -7,6 +7,5 @@ generators:
       enabled: true
       output: ./generated-java
     config:
-      packagePrefix: com.blog
       mode: client_and_server
       serverFrameworks: spring,jersey

@@ -19,6 +19,7 @@ import com.fern.codegen.GeneratedEndpointModel;
 import com.fern.codegen.GeneratedError;
 import com.fern.codegen.GeneratedHttpServiceServer;
 import com.fern.codegen.GeneratorContext;
+import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.codegen.utils.server.HttpAuthParameterSpecVisitor;
 import com.fern.model.codegen.Generator;
 import com.fern.spring.SpringHttpMethodAnnotationVisitor;
@@ -63,8 +64,9 @@ public final class HttpServiceSpringServerGenerator extends Generator {
         super(generatorContext);
         this.httpService = httpService;
         this.generatedErrors = generatedErrors;
-        this.generatedServiceClassName =
-                generatorContext.getClassNameUtils().getClassNameFromServiceName(httpService.name());
+        this.generatedServiceClassName = generatorContext
+                .getClassNameUtils()
+                .getClassNameFromServiceName(httpService.name(), PackageType.SERVER);
         this.springServiceGeneratorUtils = new SpringServiceGeneratorUtils(generatorContext);
         this.generatedEndpointModels = generatedEndpointModels;
     }
