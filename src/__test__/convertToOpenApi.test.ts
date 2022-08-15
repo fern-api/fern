@@ -18,12 +18,12 @@ describe("convertToOpenApi", () => {
                 throw new Error(JSON.stringify(maybeLoadedWorkspace.failures));
             }
             const intermediateRepresentation = await generateIntermediateRepresentation(maybeLoadedWorkspace.workspace);
-            const postmanCollection = convertToOpenApi({
+            const openApi = convertToOpenApi({
                 apiName: "BlogPost API",
                 apiVersion: "0.0.0",
                 ir: intermediateRepresentation,
             });
-            expect(postmanCollection).toMatchSnapshot();
+            expect(openApi).toMatchSnapshot();
         });
     }
 });
