@@ -159,7 +159,6 @@ workflows:
           requires:
             - lint
             - compile-and-test
-            - live-test
           context:
             - npm
             - auth0-dev
