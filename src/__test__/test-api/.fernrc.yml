@@ -1,6 +1,0 @@
-name: Blog API
-input: ./src
-plugins:
-  - name: fern-postman
-    version: local
-    output: ./fern-postman/generated

@@ -5,6 +5,7 @@ types:
     properties:
       info: PostmanCollectionInfo
       item: list<PostmanCollectionServiceItem>
+      auth: optional<PostmanRequestAuth>
       variable: list<PostmanVariable>
 
   PostmanVariable:
@@ -34,6 +35,13 @@ types:
       raw: string
       host: list<string>
       path: list<string>
+      query: list<PostmanQueryParameter>
+
+  PostmanQueryParameter:
+    properties:
+      key: string
+      value: string
+      description: optional<string>
 
   PostmanRequest:
     properties:
@@ -47,9 +55,15 @@ types:
   PostmanRequestAuth:
     discriminant: type
     union:
-      basic: {}
-      bearer: {}
-
+      basic: list<PostmanAuthParam>
+      bearer: list<PostmanAuthParam>
+  
+  PostmanAuthParam:
+    properties:
+      key: string
+      value: string
+      type: string
+  
   PostmanExampleResponse:
     properties:
       description: optional<string>
