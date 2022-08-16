@@ -2842,7 +2842,7 @@ __metadata:
     prettier: ^2.7.1
     pupa: ^3.1.0
     semver-diff: ^4.0.0
-    typescript: ^4.7.4
+    typescript: 4.6.4
     yargs: ^17.4.1
     zod: ^3.14.3
   bin:
@@ -2895,7 +2895,7 @@ __metadata:
     eslint: ^8.22.0
     jest: ^28.1.3
     prettier: ^2.7.1
-    typescript: ^4.7.4
+    typescript: 4.6.4
   languageName: unknown
   linkType: soft
 
@@ -2912,7 +2912,7 @@ __metadata:
     eslint: ^8.22.0
     jest: ^28.1.3
     prettier: ^2.7.1
-    typescript: ^4.7.4
+    typescript: 4.6.4
     zod: ^3.14.3
   languageName: unknown
   linkType: soft
@@ -2930,7 +2930,7 @@ __metadata:
     eslint: ^8.22.0
     jest: ^28.1.3
     prettier: ^2.7.1
-    typescript: ^4.7.4
+    typescript: 4.6.4
   languageName: unknown
   linkType: soft
 
@@ -2950,7 +2950,7 @@ __metadata:
     eslint: ^8.22.0
     jest: ^28.1.3
     prettier: ^2.7.1
-    typescript: ^4.7.4
+    typescript: 4.6.4
   languageName: unknown
   linkType: soft
 
@@ -2988,7 +2988,7 @@ __metadata:
     jest: ^28.1.3
     js-yaml: ^4.1.0
     prettier: ^2.7.1
-    typescript: ^4.7.4
+    typescript: 4.6.4
   languageName: unknown
   linkType: soft
 
@@ -3010,7 +3010,7 @@ __metadata:
     js-yaml: ^4.1.0
     lodash-es: ^4.17.21
     prettier: ^2.7.1
-    typescript: ^4.7.4
+    typescript: 4.6.4
     zod: ^3.14.3
   languageName: unknown
   linkType: soft
@@ -3034,7 +3034,7 @@ __metadata:
     jest: ^28.1.3
     js-yaml: ^4.1.0
     prettier: ^2.7.1
-    typescript: ^4.7.4
+    typescript: 4.6.4
   languageName: unknown
   linkType: soft
 
@@ -3058,7 +3058,7 @@ __metadata:
     jest: ^28.1.3
     lodash-es: ^4.17.21
     prettier: ^2.7.1
-    typescript: ^4.7.4
+    typescript: 4.6.4
   languageName: unknown
   linkType: soft
 
@@ -3077,7 +3077,7 @@ __metadata:
     eslint: ^8.22.0
     jest: ^28.1.3
     prettier: ^2.7.1
-    typescript: ^4.7.4
+    typescript: 4.6.4
     zod: ^3.14.3
     zod-to-json-schema: 3.14.1
   languageName: unknown
@@ -3099,7 +3099,7 @@ __metadata:
     jest: ^28.1.3
     prettier: ^2.7.1
     react: ^18.2.0
-    typescript: ^4.7.4
+    typescript: 4.6.4
   languageName: unknown
   linkType: soft
 
@@ -3122,7 +3122,7 @@ __metadata:
     jest: ^28.1.3
     prettier: ^2.7.1
     tmp-promise: ^3.0.3
-    typescript: ^4.7.4
+    typescript: 4.6.4
   languageName: unknown
   linkType: soft
 
@@ -3141,7 +3141,7 @@ __metadata:
     jest: ^28.1.3
     open: ^8.4.0
     prettier: ^2.7.1
-    typescript: ^4.7.4
+    typescript: 4.6.4
   languageName: unknown
   linkType: soft
 
@@ -3160,7 +3160,7 @@ __metadata:
     jest: ^28.1.3
     prettier: ^2.7.1
     semver-diff: ^4.0.0
-    typescript: ^4.7.4
+    typescript: 4.6.4
   languageName: unknown
   linkType: soft
 
@@ -3184,7 +3184,7 @@ __metadata:
     lodash-es: ^4.17.21
     openapi-types: ^12.0.0
     prettier: ^2.7.1
-    typescript: ^4.7.4
+    typescript: 4.6.4
   languageName: unknown
   linkType: soft
 
@@ -3203,7 +3203,7 @@ __metadata:
     find-up: ^6.3.0
     jest: ^28.1.3
     prettier: ^2.7.1
-    typescript: ^4.7.4
+    typescript: 4.6.4
     zod: ^3.14.3
   languageName: unknown
   linkType: soft
@@ -3230,7 +3230,7 @@ __metadata:
     log-update: ^5.0.1
     ora: ^6.1.2
     prettier: ^2.7.1
-    typescript: ^4.7.4
+    typescript: 4.6.4
     url-join: ^5.0.0
   languageName: unknown
   linkType: soft
@@ -3257,7 +3257,7 @@ __metadata:
     jest: ^28.1.3
     lodash-es: ^4.17.21
     prettier: ^2.7.1
-    typescript: ^4.7.4
+    typescript: 4.6.4
     yargs: ^17.4.1
   bin:
     fern-scripts: ./dist/bundle.cjs
@@ -3284,7 +3284,7 @@ __metadata:
     eslint: ^8.22.0
     jest: ^28.1.3
     prettier: ^2.7.1
-    typescript: ^4.7.4
+    typescript: 4.6.4
     validate-npm-package-name: ^4.0.0
   languageName: unknown
   linkType: soft
@@ -3307,7 +3307,7 @@ __metadata:
     js-yaml: ^4.1.0
     lodash-es: ^4.17.21
     prettier: ^2.7.1
-    typescript: ^4.7.4
+    typescript: 4.6.4
     zod: ^3.14.3
   languageName: unknown
   linkType: soft
@@ -3334,7 +3334,7 @@ __metadata:
     jest: ^28.1.3
     js-yaml: ^4.1.0
     prettier: ^2.7.1
-    typescript: ^4.7.4
+    typescript: 4.6.4
     zod: ^3.14.3
   languageName: unknown
   linkType: soft
@@ -3354,7 +3354,7 @@ __metadata:
     eslint: ^8.22.0
     jest: ^28.1.3
     prettier: ^2.7.1
-    typescript: ^4.7.4
+    typescript: 4.6.4
     zod: ^3.14.3
   languageName: unknown
   linkType: soft
@@ -3415,7 +3415,7 @@ __metadata:
     react-dom: ^18.2.0
     sass: ^1.54.0
     stylelint: ^14.9.1
-    typescript: ^4.7.4
+    typescript: 4.6.4
     vite: ^3.0.3
   languageName: unknown
   linkType: soft
@@ -3439,7 +3439,7 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
     stylelint: ^14.9.1
-    typescript: ^4.7.4
+    typescript: 4.6.4
     vite: ^3.0.3
   languageName: unknown
   linkType: soft
@@ -3467,7 +3467,7 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
     stylelint: ^14.9.1
-    typescript: ^4.7.4
+    typescript: 4.6.4
     vite: ^3.0.3
   languageName: unknown
   linkType: soft
@@ -3499,7 +3499,7 @@ __metadata:
     react-dom: ^18.2.0
     sass: ^1.54.0
     stylelint: ^14.9.1
-    typescript: ^4.7.4
+    typescript: 4.6.4
     vite: ^3.0.3
     vite-plugin-checker: ^0.4.9
   languageName: unknown
@@ -3521,7 +3521,7 @@ __metadata:
     prettier: ^2.7.1
     react: ^18.2.0
     stylelint: ^14.9.1
-    typescript: ^4.7.4
+    typescript: 4.6.4
     vite: ^3.0.3
   languageName: unknown
   linkType: soft
@@ -3544,7 +3544,7 @@ __metadata:
     react: ^18.2.0
     react-query: ^3.34.12
     stylelint: ^14.9.1
-    typescript: ^4.7.4
+    typescript: 4.6.4
     vite: ^3.0.3
   languageName: unknown
   linkType: soft
@@ -3569,7 +3569,7 @@ __metadata:
     react-dom: ^18.2.0
     react-router-dom: ^6.2.1
     stylelint: ^14.9.1
-    typescript: ^4.7.4
+    typescript: 4.6.4
     vite: ^3.0.3
   languageName: unknown
   linkType: soft
@@ -3593,7 +3593,7 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
     stylelint: ^14.9.1
-    typescript: ^4.7.4
+    typescript: 4.6.4
     vite: ^3.0.3
   languageName: unknown
   linkType: soft
@@ -3616,7 +3616,7 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
     stylelint: ^14.9.1
-    typescript: ^4.7.4
+    typescript: 4.6.4
     vite: ^3.0.3
   languageName: unknown
   linkType: soft
@@ -16972,16 +16972,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.7.4":
-  version: 4.7.4
-  resolution: "typescript@npm:4.7.4"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 5750181b1cd7e6482c4195825547e70f944114fb47e58e4aa7553e62f11b3f3173766aef9c281783edfd881f7b8299cf35e3ca8caebe73d8464528c907a164df
-  languageName: node
-  linkType: hard
-
 "typescript@patch:typescript@4.6.4#~builtin<compat/typescript>":
   version: 4.6.4
   resolution: "typescript@patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"
@@ -16989,16 +16979,6 @@ env-cmd@toddbluhm/env-cmd:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 1cb434fbc637d347be90e3a0c6cd05e33c38f941713c8786d3031faf1842c2c148ba91d2fac01e7276b0ae3249b8633f1660e32686cc7a8c6a8fd5361dc52c66
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@^4.7.4#~builtin<compat/typescript>":
-  version: 4.7.4
-  resolution: "typescript@patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=f456af"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 9096d8f6c16cb80ef3bf96fcbbd055bf1c4a43bd14f3b7be45a9fbe7ada46ec977f604d5feed3263b4f2aa7d4c7477ce5f9cd87de0d6feedec69a983f3a4f93e
   languageName: node
   linkType: hard
 
