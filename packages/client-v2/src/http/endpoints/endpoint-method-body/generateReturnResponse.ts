@@ -13,15 +13,33 @@ export function generateReturnResponse({
     return ts.factory.createIfStatement(
         ts.factory.createPropertyAccessExpression(
             ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.RESPONSE),
-            ts.factory.createIdentifier(file.externalDependencies.serviceUtils.Fetcher.ReturnValue.OK)
+            ts.factory.createIdentifier(file.externalDependencies.serviceUtils.Fetcher.Response.OK)
         ),
         ts.factory.createBlock([generateReturnSuccessResponse({ endpoint, file })]),
-        ts.factory.createBlock([
-            generateReturnErrorResponse({
-                endpoint,
-                file,
-            }),
-        ])
+        ts.factory.createIfStatement(
+            ts.factory.createBinaryExpression(
+                ts.factory.createPropertyAccessExpression(
+                    ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.RESPONSE),
+                    ts.factory.createIdentifier(file.externalDependencies.serviceUtils.Fetcher.Response.DISCRIMINANT)
+                ),
+                ts.factory.createToken(ts.SyntaxKind.EqualsEqualsEqualsToken),
+                ts.factory.createStringLiteral(
+                    file.externalDependencies.serviceUtils.Fetcher.NetworkError.DISCRIMINANT_VALUE
+                )
+            ),
+            ts.factory.createBlock([
+                generateReturnNetworkErrorResponse({
+                    file,
+                    endpoint,
+                }),
+            ]),
+            ts.factory.createBlock([
+                generateReturnServerErrorResponse({
+                    endpoint,
+                    file,
+                }),
+            ])
+        )
     );
 }
 
@@ -44,7 +62,7 @@ function generateReturnSuccessResponse({
                         ? ts.factory.createAsExpression(
                               ts.factory.createPropertyAccessExpression(
                                   ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.RESPONSE),
-                                  file.externalDependencies.serviceUtils.Fetcher.ReturnValue.BODY
+                                  file.externalDependencies.serviceUtils.Fetcher.Response.BODY
                               ),
                               endpoint.referenceToResponse
                           )
@@ -56,22 +74,41 @@ function generateReturnSuccessResponse({
     );
 }
 
-function generateReturnErrorResponse({ file, endpoint }: { endpoint: ParsedClientEndpoint; file: File }): ts.Statement {
+function generateReturnNetworkErrorResponse({
+    file,
+    endpoint,
+}: {
+    file: File;
+    endpoint: ParsedClientEndpoint;
+}): ts.Statement {
     return ts.factory.createReturnStatement(
         ts.factory.createObjectLiteralExpression(
             [
                 ...getBaseResponseProperties({ ok: false, file }),
                 ts.factory.createPropertyAssignment(
                     file.externalDependencies.serviceUtils._Response.Failure.BODY_PROPERTY_NAME,
-                    endpoint.error.generateParse(
-                        ts.factory.createAsExpression(
-                            ts.factory.createPropertyAccessExpression(
-                                ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.RESPONSE),
-                                file.externalDependencies.serviceUtils.Fetcher.ReturnValue.BODY
-                            ),
-                            endpoint.error.referenceToBody
-                        )
-                    )
+                    endpoint.error.generateConstructNetworkErrorBody()
+                ),
+            ],
+            true
+        )
+    );
+}
+
+function generateReturnServerErrorResponse({
+    file,
+    endpoint,
+}: {
+    endpoint: ParsedClientEndpoint;
+    file: File;
+}): ts.Statement {
+    return ts.factory.createReturnStatement(
+        ts.factory.createObjectLiteralExpression(
+            [
+                ...getBaseResponseProperties({ ok: false, file }),
+                ts.factory.createPropertyAssignment(
+                    file.externalDependencies.serviceUtils._Response.Failure.BODY_PROPERTY_NAME,
+                    endpoint.error.generateConstructServerErrorBody()
                 ),
             ],
             true

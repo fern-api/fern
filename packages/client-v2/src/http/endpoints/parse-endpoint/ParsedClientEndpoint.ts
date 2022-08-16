@@ -29,5 +29,6 @@ export declare namespace ClientEndpointRequest {
 export interface ClientEndpointError {
     reference: ts.TypeNode;
     referenceToBody: ts.TypeNode;
-    generateParse: (body: ts.Expression) => ts.Expression;
+    generateConstructNetworkErrorBody: () => ts.Expression;
+    generateConstructServerErrorBody: () => ts.Expression;
 }

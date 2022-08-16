@@ -1,15 +1,21 @@
 import { InterfaceDeclarationStructure, OptionalKind, ts } from "ts-morph";
 import { getTextOfTsNode } from "./getTextOfTsNode";
 
+export interface VisitableItems {
+    items: VisitableItem[];
+    unknownArgument: Argument | undefined;
+}
+
 export interface VisitableItem {
     caseInSwitchStatement: ts.Expression;
     keyInVisitor: string;
-    visitorArgument: VisitorArgument | undefined;
+    visitorArgument: Argument | undefined;
 }
 
-export interface VisitorArgument {
+export interface Argument {
     argument: ts.Expression;
     type: ts.TypeNode;
+    name?: string;
 }
 
 export const VISITOR_RESULT_TYPE_PARAMETER = "Result";
@@ -26,7 +32,7 @@ export function generateVisitMethod({
 }: {
     typeName: ts.EntityName | string;
     switchOn: ts.Expression;
-    items: readonly VisitableItem[];
+    items: VisitableItems;
 }): ts.ArrowFunction {
     return ts.factory.createArrowFunction(
         undefined,
@@ -43,7 +49,7 @@ export function generateVisitMethod({
                 undefined,
                 undefined,
                 undefined,
-                ts.factory.createIdentifier(items.length > 0 ? VALUE_PARAMETER_NAME : `_${VALUE_PARAMETER_NAME}`),
+                ts.factory.createIdentifier(items.items.length > 0 ? VALUE_PARAMETER_NAME : `_${VALUE_PARAMETER_NAME}`),
                 undefined,
                 ts.factory.createTypeReferenceNode(
                     typeof typeName === "string" ? ts.factory.createIdentifier(typeName) : typeName,
@@ -74,17 +80,17 @@ export function generateVisitMethod({
         ],
         ts.factory.createTypeReferenceNode(ts.factory.createIdentifier(VISITOR_RESULT_TYPE_PARAMETER), undefined),
         undefined,
-        generateVisitSwitchStatement({ items, switchOn })
+        ts.factory.createBlock([generateVisitSwitchStatement({ items, switchOn })], true)
     );
 }
 
 export function generateVisitSwitchStatement({
-    items,
+    items: { items, unknownArgument },
     switchOn,
 }: {
-    items: readonly VisitableItem[];
+    items: VisitableItems;
     switchOn: ts.Expression;
-}): ts.ConciseBody {
+}): ts.Statement {
     const returnUnknown = ts.factory.createReturnStatement(
         ts.factory.createCallExpression(
             ts.factory.createPropertyAccessExpression(
@@ -92,36 +98,33 @@ export function generateVisitSwitchStatement({
                 ts.factory.createIdentifier(UNKNOWN_PROPERY_NAME)
             ),
             undefined,
-            undefined
+            unknownArgument != null ? [unknownArgument.argument] : undefined
         )
     );
 
-    return ts.factory.createBlock(
-        [
-            items.length > 0
-                ? ts.factory.createSwitchStatement(
-                      switchOn,
-                      ts.factory.createCaseBlock([
-                          ...items.map((item) =>
-                              ts.factory.createCaseClause(item.caseInSwitchStatement, [
-                                  ts.factory.createReturnStatement(
-                                      ts.factory.createCallExpression(
-                                          ts.factory.createPropertyAccessExpression(
-                                              ts.factory.createIdentifier(VISITOR_PARAMETER_NAME),
-                                              ts.factory.createIdentifier(item.keyInVisitor)
-                                          ),
-                                          undefined,
-                                          item.visitorArgument != null ? [item.visitorArgument.argument] : []
-                                      )
-                                  ),
-                              ])
-                          ),
-                          ts.factory.createDefaultClause([returnUnknown]),
-                      ])
-                  )
-                : returnUnknown,
-        ],
-        true
+    if (items.length === 0) {
+        return returnUnknown;
+    }
+
+    return ts.factory.createSwitchStatement(
+        switchOn,
+        ts.factory.createCaseBlock([
+            ...items.map((item) =>
+                ts.factory.createCaseClause(item.caseInSwitchStatement, [
+                    ts.factory.createReturnStatement(
+                        ts.factory.createCallExpression(
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createIdentifier(VISITOR_PARAMETER_NAME),
+                                ts.factory.createIdentifier(item.keyInVisitor)
+                            ),
+                            undefined,
+                            item.visitorArgument != null ? [item.visitorArgument.argument] : []
+                        )
+                    ),
+                ])
+            ),
+            ts.factory.createDefaultClause([returnUnknown]),
+        ])
     );
 }
 
@@ -159,7 +162,7 @@ export function generateVisitorInterface({
     items,
     name = VISITOR_INTERFACE_NAME,
 }: {
-    items: readonly VisitableItem[];
+    items: VisitableItems;
     name?: string;
 }): OptionalKind<InterfaceDeclarationStructure> {
     return {
@@ -167,7 +170,7 @@ export function generateVisitorInterface({
         isExported: true,
         typeParameters: [VISITOR_RESULT_TYPE_PARAMETER],
         properties: [
-            ...items.map((item) => {
+            ...items.items.map((item) => {
                 return {
                     name: item.keyInVisitor,
                     type: getTextOfTsNode(
@@ -179,7 +182,9 @@ export function generateVisitorInterface({
                                           undefined,
                                           undefined,
                                           undefined,
-                                          ts.factory.createIdentifier(VALUE_PARAMETER_NAME),
+                                          ts.factory.createIdentifier(
+                                              item.visitorArgument.name ?? VALUE_PARAMETER_NAME
+                                          ),
                                           undefined,
                                           item.visitorArgument.type,
                                           undefined
@@ -199,7 +204,18 @@ export function generateVisitorInterface({
                 type: getTextOfTsNode(
                     ts.factory.createFunctionTypeNode(
                         undefined,
-                        [],
+                        items.unknownArgument != null
+                            ? [
+                                  ts.factory.createParameterDeclaration(
+                                      undefined,
+                                      undefined,
+                                      undefined,
+                                      items.unknownArgument.name ?? VALUE_PARAMETER_NAME,
+                                      undefined,
+                                      items.unknownArgument.type
+                                  ),
+                              ]
+                            : [],
                         ts.factory.createTypeReferenceNode(
                             ts.factory.createIdentifier(VISITOR_RESULT_TYPE_PARAMETER),
                             undefined

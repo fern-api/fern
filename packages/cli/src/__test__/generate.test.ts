@@ -15,6 +15,9 @@ const FIXTURES_PATH = path.join(__dirname, "fixtures");
 const MODES = ["client-v2", "client", "server", "client_and_server"];
 
 describe("runGenerator", () => {
+    // mock generator version
+    process.env.GENERATOR_VERSION = "0.0.0";
+
     for (const fixture of FIXTURES) {
         // eslint-disable-next-line jest/valid-title
         describe(fixture, () => {

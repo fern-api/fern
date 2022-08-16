@@ -16,6 +16,7 @@ if [[ "$TAG" == "local" ]]; then
 	webpack_mode="development"
 fi
 
+export GENERATOR_VERSION="$TAG"
 yarn node $(yarn bin webpack) --config "$WEBPACK_CONFIG" --mode "$webpack_mode"
 
 docker build -f "$DOCKER_DIR/Dockerfile" -t "$DOCKER_NAME" "$DOCKER_DIR"

@@ -44,7 +44,12 @@ module.exports = async (_env, { mode = "production" }) => {
             path: path.join(__dirname, "dist"),
             filename: "bundle.js",
         },
-        plugins: [new SimpleProgressWebpackPlugin({})],
+        plugins: [
+            new SimpleProgressWebpackPlugin({}),
+            new webpack.DefinePlugin({
+                "process.env.GENERATOR_VERSION": JSON.stringify(process.env.GENERATOR_VERSION),
+            }),
+        ],
         optimization: {
             minimize: false,
         },

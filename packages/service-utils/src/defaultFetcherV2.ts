@@ -1,6 +1,5 @@
 import axios from "axios";
 import { FetcherV2 } from "./FetcherV2";
-import { _NetworkError } from "./NetworkError";
 
 export const defaultFetcherV2: FetcherV2 = async (args) => {
     const headers: Record<string, string> = {
@@ -29,14 +28,16 @@ export const defaultFetcherV2: FetcherV2 = async (args) => {
         });
 
         return {
+            type: "server",
             ok: response.status >= 200 && response.status < 300,
+            statusCode: response.status,
             body: response.data,
         };
     } catch (e) {
-        const error: _NetworkError = { _error: "_NetworkError" };
         return {
+            type: "networkError",
             ok: false,
-            body: error,
+            body: undefined,
         };
     }
 };

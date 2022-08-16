@@ -10,8 +10,18 @@ export declare namespace FetcherV2 {
         body?: unknown;
     }
 
-    export interface Response {
+    export type Response = ServerResponse | NetworkError;
+
+    export interface ServerResponse {
+        type: "server";
         ok: boolean;
+        statusCode: number;
         body: unknown;
+    }
+
+    export interface NetworkError {
+        type: "networkError";
+        ok: false;
+        body: void;
     }
 }

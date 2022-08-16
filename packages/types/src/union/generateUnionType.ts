@@ -105,27 +105,30 @@ export function generateUnionType({
         }
     }
 
-    const visitorItems: visitorUtils.VisitableItem[] = resolvedTypes.map((resolvedType) => {
-        return {
-            caseInSwitchStatement: ts.factory.createStringLiteral(resolvedType.discriminantValue.wireValue),
-            keyInVisitor: resolvedType.discriminantValue.wireValue,
-            visitorArgument:
-                resolvedType.valueType != null
-                    ? resolvedType.valueType.isExtendable
-                        ? {
-                              type: resolvedType.valueType.type,
-                              argument: ts.factory.createIdentifier(visitorUtils.VALUE_PARAMETER_NAME),
-                          }
-                        : {
-                              type: resolvedType.valueType.type,
-                              argument: ts.factory.createPropertyAccessExpression(
-                                  ts.factory.createIdentifier(visitorUtils.VALUE_PARAMETER_NAME),
-                                  ts.factory.createIdentifier(resolvedType.discriminantValue.wireValue)
-                              ),
-                          }
-                    : undefined,
-        };
-    });
+    const visitorItems: visitorUtils.VisitableItems = {
+        items: resolvedTypes.map((resolvedType) => {
+            return {
+                caseInSwitchStatement: ts.factory.createStringLiteral(resolvedType.discriminantValue.wireValue),
+                keyInVisitor: resolvedType.discriminantValue.wireValue,
+                visitorArgument:
+                    resolvedType.valueType != null
+                        ? resolvedType.valueType.isExtendable
+                            ? {
+                                  type: resolvedType.valueType.type,
+                                  argument: ts.factory.createIdentifier(visitorUtils.VALUE_PARAMETER_NAME),
+                              }
+                            : {
+                                  type: resolvedType.valueType.type,
+                                  argument: ts.factory.createPropertyAccessExpression(
+                                      ts.factory.createIdentifier(visitorUtils.VALUE_PARAMETER_NAME),
+                                      ts.factory.createIdentifier(resolvedType.discriminantValue.wireValue)
+                                  ),
+                              }
+                        : undefined,
+            };
+        }),
+        unknownArgument: undefined,
+    };
 
     module.addInterface(visitorUtils.generateVisitorInterface({ items: visitorItems }));
 
@@ -191,7 +194,7 @@ function createUtils({
 }: {
     typeName: string;
     types: ResolvedSingleUnionType[];
-    visitorItems: readonly visitorUtils.VisitableItem[];
+    visitorItems: visitorUtils.VisitableItems;
     additionalPropertiesForEveryType: generateUnionType.ObjectProperty[];
     discriminant: string;
     file: SourceFile;

@@ -1,3 +1,4 @@
+import { getGeneratorVersion } from "@fern-typescript/commons-v2";
 import { FernServiceUtils } from "@fern-typescript/declaration-handler";
 import { ts } from "ts-morph";
 import { ExternalDependency } from "../ExternalDependency";
@@ -5,7 +6,7 @@ import { ExternalDependency } from "../ExternalDependency";
 export class FernServiceUtilsImpl extends ExternalDependency implements FernServiceUtils {
     protected PACKAGE = {
         name: "@fern-typescript/service-utils",
-        version: "0.0.173-7-ge9345cba",
+        version: getGeneratorVersion(),
     };
     protected TYPES_PACKAGE = undefined;
 
@@ -71,9 +72,19 @@ export class FernServiceUtilsImpl extends ExternalDependency implements FernServ
                     BODY: "body",
                 },
 
-                ReturnValue: {
+                Response: {
+                    DISCRIMINANT: "type",
                     OK: "ok",
                     BODY: "body",
+                },
+
+                ServerResponse: {
+                    DISCRIMINANT_VALUE: "server",
+                    STATUS_CODE: "statusCode",
+                },
+
+                NetworkError: {
+                    DISCRIMINANT_VALUE: "networkError",
                 },
             } as const)
     );
@@ -89,7 +100,7 @@ export class FernServiceUtilsImpl extends ExternalDependency implements FernServ
     );
 
     public readonly NetworkError = this.withNamedImport("_NetworkError", (addImport, _NetworkError) => ({
-        ERROR_NAME: "_network",
+        ERROR_NAME: "_NetworkError",
 
         _getReferenceToType: () => {
             addImport();
@@ -102,6 +113,15 @@ export class FernServiceUtilsImpl extends ExternalDependency implements FernServ
             addImport();
             return ts.factory.createTypeReferenceNode(_UnknownError);
         },
+    }));
+
+    public readonly ErrorDetails = this.withNamedImport("ErrorDetails", (addImport, ErrorDetails) => ({
+        _getReferenceToType: () => {
+            addImport();
+            return ts.factory.createTypeReferenceNode(ErrorDetails);
+        },
+
+        STATUS_CODE: "statusCode",
     }));
 
     public readonly BearerToken = this.withNamedImport(

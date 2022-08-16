@@ -36,11 +36,14 @@ export function generateEnumType({
     });
     maybeAddDocs(typeAlias, docs);
 
-    const visitorItems: visitorUtils.VisitableItem[] = shape.values.map((value) => ({
-        caseInSwitchStatement: getEnumValueReference({ typeName, enumValue: value }),
-        keyInVisitor: lowerFirst(getKeyForEnum(value)),
-        visitorArgument: undefined,
-    }));
+    const visitorItems: visitorUtils.VisitableItems = {
+        items: shape.values.map((value) => ({
+            caseInSwitchStatement: getEnumValueReference({ typeName, enumValue: value }),
+            keyInVisitor: lowerFirst(getKeyForEnum(value)),
+            visitorArgument: undefined,
+        })),
+        unknownArgument: undefined,
+    };
 
     file.sourceFile.addVariableStatement({
         declarationKind: VariableDeclarationKind.Const,
@@ -76,7 +79,7 @@ function createUtils({
 }: {
     shape: EnumTypeDeclaration;
     typeName: string;
-    visitorItems: readonly visitorUtils.VisitableItem[];
+    visitorItems: visitorUtils.VisitableItems;
 }): WriterFunction {
     const writer = FernWriters.object.writer({ asConst: true });
 

@@ -23914,7 +23914,7 @@ export interface StoreTracedWorkspaceRequest {
                 "type": "file",
               },
               Object {
-                "contents": "import { BasicAuth, BearerToken, _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
+                "contents": "import { BasicAuth, BearerToken, ErrorDetails, _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
 import { MyApi } from \\"../..\\";
 import urlJoin from \\"url-join\\";
 
@@ -23959,10 +23959,24 @@ export class _Client implements _Client {
                 body: undefined
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.admin.updateTestSubmissionStatus.Error._parse(response.body as MyApi.admin.updateTestSubmissionStatus.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.admin.updateTestSubmissionStatus.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -23984,10 +23998,24 @@ export class _Client implements _Client {
                 body: undefined
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.admin.sendTestSubmissionUpdate.Error._parse(response.body as MyApi.admin.sendTestSubmissionUpdate.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.admin.sendTestSubmissionUpdate.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -24009,10 +24037,24 @@ export class _Client implements _Client {
                 body: undefined
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.admin.updateWorkspaceSubmissionStatus.Error._parse(response.body as MyApi.admin.updateWorkspaceSubmissionStatus.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.admin.updateWorkspaceSubmissionStatus.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -24034,10 +24076,24 @@ export class _Client implements _Client {
                 body: undefined
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.admin.sendWorkspaceSubmissionUpdate.Error._parse(response.body as MyApi.admin.sendWorkspaceSubmissionUpdate.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.admin.sendWorkspaceSubmissionUpdate.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -24059,10 +24115,24 @@ export class _Client implements _Client {
                 body: undefined
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.admin.storeTracedTestCase.Error._parse(response.body as MyApi.admin.storeTracedTestCase.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.admin.storeTracedTestCase.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -24084,10 +24154,24 @@ export class _Client implements _Client {
                 body: undefined
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.admin.storeTracedTestCaseV2.Error._parse(response.body as MyApi.admin.storeTracedTestCaseV2.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.admin.storeTracedTestCaseV2.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -24109,10 +24193,24 @@ export class _Client implements _Client {
                 body: undefined
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.admin.storeTracedWorkspace.Error._parse(response.body as MyApi.admin.storeTracedWorkspace.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.admin.storeTracedWorkspace.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -24134,10 +24232,24 @@ export class _Client implements _Client {
                 body: undefined
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.admin.storeTracedWorkspaceV2.Error._parse(response.body as MyApi.admin.storeTracedWorkspaceV2.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.admin.storeTracedWorkspaceV2.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -24150,33 +24262,19 @@ export namespace updateTestSubmissionStatus {
     }
 
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.admin.updateTestSubmissionStatus.ErrorBody;
         _visit: <Result>(visitor: MyApi.admin.updateTestSubmissionStatus.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const updateTestSubmissionStatus = {
-        Error: {
-            _parse: (body: MyApi.admin.updateTestSubmissionStatus.Error[\\"body\\"]): MyApi.admin.updateTestSubmissionStatus.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 
 export namespace sendTestSubmissionUpdate {
     export interface Request {
@@ -24185,33 +24283,19 @@ export namespace sendTestSubmissionUpdate {
     }
 
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.admin.sendTestSubmissionUpdate.ErrorBody;
         _visit: <Result>(visitor: MyApi.admin.sendTestSubmissionUpdate.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const sendTestSubmissionUpdate = {
-        Error: {
-            _parse: (body: MyApi.admin.sendTestSubmissionUpdate.Error[\\"body\\"]): MyApi.admin.sendTestSubmissionUpdate.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 
 export namespace updateWorkspaceSubmissionStatus {
     export interface Request {
@@ -24220,33 +24304,19 @@ export namespace updateWorkspaceSubmissionStatus {
     }
 
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.admin.updateWorkspaceSubmissionStatus.ErrorBody;
         _visit: <Result>(visitor: MyApi.admin.updateWorkspaceSubmissionStatus.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const updateWorkspaceSubmissionStatus = {
-        Error: {
-            _parse: (body: MyApi.admin.updateWorkspaceSubmissionStatus.Error[\\"body\\"]): MyApi.admin.updateWorkspaceSubmissionStatus.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 
 export namespace sendWorkspaceSubmissionUpdate {
     export interface Request {
@@ -24255,33 +24325,19 @@ export namespace sendWorkspaceSubmissionUpdate {
     }
 
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.admin.sendWorkspaceSubmissionUpdate.ErrorBody;
         _visit: <Result>(visitor: MyApi.admin.sendWorkspaceSubmissionUpdate.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const sendWorkspaceSubmissionUpdate = {
-        Error: {
-            _parse: (body: MyApi.admin.sendWorkspaceSubmissionUpdate.Error[\\"body\\"]): MyApi.admin.sendWorkspaceSubmissionUpdate.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 
 export namespace storeTracedTestCase {
     export interface Request {
@@ -24291,33 +24347,19 @@ export namespace storeTracedTestCase {
     }
 
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.admin.storeTracedTestCase.ErrorBody;
         _visit: <Result>(visitor: MyApi.admin.storeTracedTestCase.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const storeTracedTestCase = {
-        Error: {
-            _parse: (body: MyApi.admin.storeTracedTestCase.Error[\\"body\\"]): MyApi.admin.storeTracedTestCase.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 
 export namespace storeTracedTestCaseV2 {
     export interface Request {
@@ -24327,33 +24369,19 @@ export namespace storeTracedTestCaseV2 {
     }
 
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.admin.storeTracedTestCaseV2.ErrorBody;
         _visit: <Result>(visitor: MyApi.admin.storeTracedTestCaseV2.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const storeTracedTestCaseV2 = {
-        Error: {
-            _parse: (body: MyApi.admin.storeTracedTestCaseV2.Error[\\"body\\"]): MyApi.admin.storeTracedTestCaseV2.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 
 export namespace storeTracedWorkspace {
     export interface Request {
@@ -24362,33 +24390,19 @@ export namespace storeTracedWorkspace {
     }
 
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.admin.storeTracedWorkspace.ErrorBody;
         _visit: <Result>(visitor: MyApi.admin.storeTracedWorkspace.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const storeTracedWorkspace = {
-        Error: {
-            _parse: (body: MyApi.admin.storeTracedWorkspace.Error[\\"body\\"]): MyApi.admin.storeTracedWorkspace.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 
 export namespace storeTracedWorkspaceV2 {
     export interface Request {
@@ -24397,33 +24411,19 @@ export namespace storeTracedWorkspaceV2 {
     }
 
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.admin.storeTracedWorkspaceV2.ErrorBody;
         _visit: <Result>(visitor: MyApi.admin.storeTracedWorkspaceV2.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const storeTracedWorkspaceV2 = {
-        Error: {
-            _parse: (body: MyApi.admin.storeTracedWorkspaceV2.Error[\\"body\\"]): MyApi.admin.storeTracedWorkspaceV2.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 ",
                 "name": "_Client.ts",
                 "type": "file",
@@ -25227,7 +25227,7 @@ export * from \\"./Language\\";
           Object {
             "contents": Array [
               Object {
-                "contents": "import { BasicAuth, BearerToken, _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
+                "contents": "import { BasicAuth, BearerToken, ErrorDetails, _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
 import { MyApi } from \\"../..\\";
 import urlJoin from \\"url-join\\";
 
@@ -25265,10 +25265,24 @@ export class _Client implements _Client {
                 body: response.body as MyApi.commons.ProblemId[]
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.homepage.getHomepageProblems.Error._parse(response.body as MyApi.homepage.getHomepageProblems.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.homepage.getHomepageProblems.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -25290,10 +25304,24 @@ export class _Client implements _Client {
                 body: undefined
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.homepage.setHomepageProblems.Error._parse(response.body as MyApi.homepage.setHomepageProblems.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.homepage.setHomepageProblems.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -25301,63 +25329,35 @@ export class _Client implements _Client {
 
 export namespace getHomepageProblems {
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.homepage.getHomepageProblems.ErrorBody;
         _visit: <Result>(visitor: MyApi.homepage.getHomepageProblems.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const getHomepageProblems = {
-        Error: {
-            _parse: (body: MyApi.homepage.getHomepageProblems.Error[\\"body\\"]): MyApi.homepage.getHomepageProblems.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 
 export namespace setHomepageProblems {
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.homepage.setHomepageProblems.ErrorBody;
         _visit: <Result>(visitor: MyApi.homepage.setHomepageProblems.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const setHomepageProblems = {
-        Error: {
-            _parse: (body: MyApi.homepage.setHomepageProblems.Error[\\"body\\"]): MyApi.homepage.setHomepageProblems.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 ",
                 "name": "_Client.ts",
                 "type": "file",
@@ -25470,7 +25470,7 @@ export declare namespace MigrationStatus {
                 "type": "file",
               },
               Object {
-                "contents": "import { BasicAuth, BearerToken, _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
+                "contents": "import { BasicAuth, BearerToken, ErrorDetails, _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
 import { MyApi } from \\"../..\\";
 import urlJoin from \\"url-join\\";
 
@@ -25507,10 +25507,24 @@ export class _Client implements _Client {
                 body: response.body as MyApi.migration.Migration[]
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.migration.getAttemptedMigrations.Error._parse(response.body as MyApi.migration.getAttemptedMigrations.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.migration.getAttemptedMigrations.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -25518,33 +25532,19 @@ export class _Client implements _Client {
 
 export namespace getAttemptedMigrations {
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.migration.getAttemptedMigrations.ErrorBody;
         _visit: <Result>(visitor: MyApi.migration.getAttemptedMigrations.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const getAttemptedMigrations = {
-        Error: {
-            _parse: (body: MyApi.migration.getAttemptedMigrations.Error[\\"body\\"]): MyApi.migration.getAttemptedMigrations.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 ",
                 "name": "_Client.ts",
                 "type": "file",
@@ -25605,7 +25605,7 @@ export interface UpdatePlaylistRequest {
                 "type": "file",
               },
               Object {
-                "contents": "import { BasicAuth, BearerToken, _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
+                "contents": "import { BasicAuth, BearerToken, ErrorDetails, _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
 import { MyApi } from \\"../..\\";
 import urlJoin from \\"url-join\\";
 
@@ -25647,10 +25647,24 @@ export class _Client implements _Client {
                 body: response.body as MyApi.playlist.Playlist
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.playlist.createPlaylist.Error._parse(response.body as MyApi.playlist.createPlaylist.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.playlist.createPlaylist.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -25671,10 +25685,24 @@ export class _Client implements _Client {
                 body: response.body as MyApi.playlist.Playlist[]
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.playlist.getPlaylists.Error._parse(response.body as MyApi.playlist.getPlaylists.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.playlist.getPlaylists.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -25695,10 +25723,24 @@ export class _Client implements _Client {
                 body: response.body as MyApi.playlist.Playlist
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.playlist.getPlaylist.Error._parse(response.body as MyApi.playlist.getPlaylist.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.playlist.getPlaylist.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -25720,10 +25762,24 @@ export class _Client implements _Client {
                 body: response.body as MyApi.playlist.Playlist
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.playlist.updatePlaylist.Error._parse(response.body as MyApi.playlist.updatePlaylist.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.playlist.updatePlaylist.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -25744,10 +25800,24 @@ export class _Client implements _Client {
                 body: undefined
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.playlist.deletePlaylist.Error._parse(response.body as MyApi.playlist.deletePlaylist.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.playlist.deletePlaylist.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -25755,63 +25825,35 @@ export class _Client implements _Client {
 
 export namespace createPlaylist {
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.playlist.createPlaylist.ErrorBody;
         _visit: <Result>(visitor: MyApi.playlist.createPlaylist.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const createPlaylist = {
-        Error: {
-            _parse: (body: MyApi.playlist.createPlaylist.Error[\\"body\\"]): MyApi.playlist.createPlaylist.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 
 export namespace getPlaylists {
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.playlist.getPlaylists.ErrorBody;
         _visit: <Result>(visitor: MyApi.playlist.getPlaylists.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const getPlaylists = {
-        Error: {
-            _parse: (body: MyApi.playlist.getPlaylists.Error[\\"body\\"]): MyApi.playlist.getPlaylists.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 
 export namespace getPlaylist {
     export interface Request {
@@ -25819,33 +25861,19 @@ export namespace getPlaylist {
     }
 
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.playlist.getPlaylist.ErrorBody;
         _visit: <Result>(visitor: MyApi.playlist.getPlaylist.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const getPlaylist = {
-        Error: {
-            _parse: (body: MyApi.playlist.getPlaylist.Error[\\"body\\"]): MyApi.playlist.getPlaylist.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 
 export namespace updatePlaylist {
     export interface Request {
@@ -25854,33 +25882,19 @@ export namespace updatePlaylist {
     }
 
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.playlist.updatePlaylist.ErrorBody;
         _visit: <Result>(visitor: MyApi.playlist.updatePlaylist.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const updatePlaylist = {
-        Error: {
-            _parse: (body: MyApi.playlist.updatePlaylist.Error[\\"body\\"]): MyApi.playlist.updatePlaylist.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 
 export namespace deletePlaylist {
     export interface Request {
@@ -25888,33 +25902,19 @@ export namespace deletePlaylist {
     }
 
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.playlist.deletePlaylist.ErrorBody;
         _visit: <Result>(visitor: MyApi.playlist.deletePlaylist.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const deletePlaylist = {
-        Error: {
-            _parse: (body: MyApi.playlist.deletePlaylist.Error[\\"body\\"]): MyApi.playlist.deletePlaylist.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 ",
                 "name": "_Client.ts",
                 "type": "file",
@@ -26192,7 +26192,7 @@ export interface VariableTypeAndName {
                 "type": "file",
               },
               Object {
-                "contents": "import { BasicAuth, BearerToken, _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
+                "contents": "import { BasicAuth, BearerToken, ErrorDetails, _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
 import { MyApi } from \\"../..\\";
 import urlJoin from \\"url-join\\";
 
@@ -26233,10 +26233,24 @@ export class _Client implements _Client {
                 body: response.body as MyApi.problem.CreateProblemResponse
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.problem.createProblem.Error._parse(response.body as MyApi.problem.createProblem.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.problem.createProblem.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -26258,10 +26272,24 @@ export class _Client implements _Client {
                 body: response.body as MyApi.problem.UpdateProblemResponse
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.problem.updateProblem.Error._parse(response.body as MyApi.problem.updateProblem.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.problem.updateProblem.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -26282,10 +26310,24 @@ export class _Client implements _Client {
                 body: undefined
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.problem.deleteProblem.Error._parse(response.body as MyApi.problem.deleteProblem.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.problem.deleteProblem.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -26307,10 +26349,24 @@ export class _Client implements _Client {
                 body: response.body as MyApi.problem.GetDefaultStarterFilesResponse
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.problem.getDefaultStarterFiles.Error._parse(response.body as MyApi.problem.getDefaultStarterFiles.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.problem.getDefaultStarterFiles.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -26318,33 +26374,19 @@ export class _Client implements _Client {
 
 export namespace createProblem {
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.problem.createProblem.ErrorBody;
         _visit: <Result>(visitor: MyApi.problem.createProblem.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const createProblem = {
-        Error: {
-            _parse: (body: MyApi.problem.createProblem.Error[\\"body\\"]): MyApi.problem.createProblem.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 
 export namespace updateProblem {
     export interface Request {
@@ -26353,33 +26395,19 @@ export namespace updateProblem {
     }
 
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.problem.updateProblem.ErrorBody;
         _visit: <Result>(visitor: MyApi.problem.updateProblem.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const updateProblem = {
-        Error: {
-            _parse: (body: MyApi.problem.updateProblem.Error[\\"body\\"]): MyApi.problem.updateProblem.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 
 export namespace deleteProblem {
     export interface Request {
@@ -26387,63 +26415,35 @@ export namespace deleteProblem {
     }
 
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.problem.deleteProblem.ErrorBody;
         _visit: <Result>(visitor: MyApi.problem.deleteProblem.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const deleteProblem = {
-        Error: {
-            _parse: (body: MyApi.problem.deleteProblem.Error[\\"body\\"]): MyApi.problem.deleteProblem.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 
 export namespace getDefaultStarterFiles {
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.problem.getDefaultStarterFiles.ErrorBody;
         _visit: <Result>(visitor: MyApi.problem.getDefaultStarterFiles.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const getDefaultStarterFiles = {
-        Error: {
-            _parse: (body: MyApi.problem.getDefaultStarterFiles.Error[\\"body\\"]): MyApi.problem.getDefaultStarterFiles.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 ",
                 "name": "_Client.ts",
                 "type": "file",
@@ -28452,7 +28452,7 @@ export interface WorkspaceSubmitRequest {
                 "type": "file",
               },
               Object {
-                "contents": "import { BasicAuth, BearerToken, _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
+                "contents": "import { BasicAuth, BearerToken, ErrorDetails, _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
 import { MyApi } from \\"../..\\";
 import urlJoin from \\"url-join\\";
 
@@ -28495,10 +28495,24 @@ export class _Client implements _Client {
                 body: response.body as MyApi.submission.ExecutionSessionResponse
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.submission.createExecutionSession.Error._parse(response.body as MyApi.submission.createExecutionSession.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.submission.createExecutionSession.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -28519,10 +28533,24 @@ export class _Client implements _Client {
                 body: response.body as MyApi.submission.ExecutionSessionResponse | undefined
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.submission.getExecutionSession.Error._parse(response.body as MyApi.submission.getExecutionSession.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.submission.getExecutionSession.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -28543,10 +28571,24 @@ export class _Client implements _Client {
                 body: undefined
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.submission.stopExecutionSession.Error._parse(response.body as MyApi.submission.stopExecutionSession.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.submission.stopExecutionSession.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -28567,10 +28609,24 @@ export class _Client implements _Client {
                 body: response.body as MyApi.submission.GetExecutionSessionStateResponse
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.submission.getExecutionSessionsState.Error._parse(response.body as MyApi.submission.getExecutionSessionsState.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.submission.getExecutionSessionsState.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -28582,33 +28638,19 @@ export namespace createExecutionSession {
     }
 
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.submission.createExecutionSession.ErrorBody;
         _visit: <Result>(visitor: MyApi.submission.createExecutionSession.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const createExecutionSession = {
-        Error: {
-            _parse: (body: MyApi.submission.createExecutionSession.Error[\\"body\\"]): MyApi.submission.createExecutionSession.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 
 export namespace getExecutionSession {
     export interface Request {
@@ -28616,33 +28658,19 @@ export namespace getExecutionSession {
     }
 
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.submission.getExecutionSession.ErrorBody;
         _visit: <Result>(visitor: MyApi.submission.getExecutionSession.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const getExecutionSession = {
-        Error: {
-            _parse: (body: MyApi.submission.getExecutionSession.Error[\\"body\\"]): MyApi.submission.getExecutionSession.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 
 export namespace stopExecutionSession {
     export interface Request {
@@ -28650,63 +28678,35 @@ export namespace stopExecutionSession {
     }
 
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.submission.stopExecutionSession.ErrorBody;
         _visit: <Result>(visitor: MyApi.submission.stopExecutionSession.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const stopExecutionSession = {
-        Error: {
-            _parse: (body: MyApi.submission.stopExecutionSession.Error[\\"body\\"]): MyApi.submission.stopExecutionSession.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 
 export namespace getExecutionSessionsState {
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.submission.getExecutionSessionsState.ErrorBody;
         _visit: <Result>(visitor: MyApi.submission.getExecutionSessionsState.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const getExecutionSessionsState = {
-        Error: {
-            _parse: (body: MyApi.submission.getExecutionSessionsState.Error[\\"body\\"]): MyApi.submission.getExecutionSessionsState.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 ",
                 "name": "_Client.ts",
                 "type": "file",
@@ -28804,7 +28804,7 @@ export * from \\"./_Client\\";
           Object {
             "contents": Array [
               Object {
-                "contents": "import { BasicAuth, BearerToken, _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
+                "contents": "import { BasicAuth, BearerToken, ErrorDetails, _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
 import { MyApi } from \\"../..\\";
 import urlJoin from \\"url-join\\";
 
@@ -28842,10 +28842,24 @@ export class _Client implements _Client {
                 body: undefined
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.sysprop.setNumWarmInstances.Error._parse(response.body as MyApi.sysprop.setNumWarmInstances.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.sysprop.setNumWarmInstances.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -28866,10 +28880,24 @@ export class _Client implements _Client {
                 body: response.body as Record<MyApi.commons.Language, number>
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.sysprop.getNumWarmInstances.Error._parse(response.body as MyApi.sysprop.getNumWarmInstances.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.sysprop.getNumWarmInstances.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -28882,63 +28910,35 @@ export namespace setNumWarmInstances {
     }
 
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.sysprop.setNumWarmInstances.ErrorBody;
         _visit: <Result>(visitor: MyApi.sysprop.setNumWarmInstances.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const setNumWarmInstances = {
-        Error: {
-            _parse: (body: MyApi.sysprop.setNumWarmInstances.Error[\\"body\\"]): MyApi.sysprop.setNumWarmInstances.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 
 export namespace getNumWarmInstances {
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.sysprop.getNumWarmInstances.ErrorBody;
         _visit: <Result>(visitor: MyApi.sysprop.getNumWarmInstances.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const getNumWarmInstances = {
-        Error: {
-            _parse: (body: MyApi.sysprop.getNumWarmInstances.Error[\\"body\\"]): MyApi.sysprop.getNumWarmInstances.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 ",
                 "name": "_Client.ts",
                 "type": "file",
@@ -29694,7 +29694,7 @@ export interface VoidFunctionSignatureThatTakesActualResult {
                     "type": "file",
                   },
                   Object {
-                    "contents": "import { BasicAuth, BearerToken, _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
+                    "contents": "import { BasicAuth, BearerToken, ErrorDetails, _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
 import { MyApi } from \\"../../..\\";
 import urlJoin from \\"url-join\\";
 
@@ -29734,10 +29734,24 @@ export class _Client implements _Client {
                 body: response.body as MyApi.v2.problem.LightweightProblemInfoV2[]
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.v2.problem.getLightweightProblems.Error._parse(response.body as MyApi.v2.problem.getLightweightProblems.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.v2.problem.getLightweightProblems.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -29758,10 +29772,24 @@ export class _Client implements _Client {
                 body: response.body as MyApi.v2.problem.ProblemInfoV2[]
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.v2.problem.getProblems.Error._parse(response.body as MyApi.v2.problem.getProblems.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.v2.problem.getProblems.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -29782,10 +29810,24 @@ export class _Client implements _Client {
                 body: response.body as MyApi.v2.problem.ProblemInfoV2
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.v2.problem.getLatestProblem.Error._parse(response.body as MyApi.v2.problem.getLatestProblem.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.v2.problem.getLatestProblem.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -29806,10 +29848,24 @@ export class _Client implements _Client {
                 body: response.body as MyApi.v2.problem.ProblemInfoV2
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.v2.problem.getProblemVersion.Error._parse(response.body as MyApi.v2.problem.getProblemVersion.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.v2.problem.getProblemVersion.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -29817,63 +29873,35 @@ export class _Client implements _Client {
 
 export namespace getLightweightProblems {
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.v2.problem.getLightweightProblems.ErrorBody;
         _visit: <Result>(visitor: MyApi.v2.problem.getLightweightProblems.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const getLightweightProblems = {
-        Error: {
-            _parse: (body: MyApi.v2.problem.getLightweightProblems.Error[\\"body\\"]): MyApi.v2.problem.getLightweightProblems.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 
 export namespace getProblems {
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.v2.problem.getProblems.ErrorBody;
         _visit: <Result>(visitor: MyApi.v2.problem.getProblems.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const getProblems = {
-        Error: {
-            _parse: (body: MyApi.v2.problem.getProblems.Error[\\"body\\"]): MyApi.v2.problem.getProblems.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 
 export namespace getLatestProblem {
     export interface Request {
@@ -29881,33 +29909,19 @@ export namespace getLatestProblem {
     }
 
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.v2.problem.getLatestProblem.ErrorBody;
         _visit: <Result>(visitor: MyApi.v2.problem.getLatestProblem.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const getLatestProblem = {
-        Error: {
-            _parse: (body: MyApi.v2.problem.getLatestProblem.Error[\\"body\\"]): MyApi.v2.problem.getLatestProblem.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 
 export namespace getProblemVersion {
     export interface Request {
@@ -29916,33 +29930,19 @@ export namespace getProblemVersion {
     }
 
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.v2.problem.getProblemVersion.ErrorBody;
         _visit: <Result>(visitor: MyApi.v2.problem.getProblemVersion.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const getProblemVersion = {
-        Error: {
-            _parse: (body: MyApi.v2.problem.getProblemVersion.Error[\\"body\\"]): MyApi.v2.problem.getProblemVersion.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 ",
                     "name": "_Client.ts",
                     "type": "file",
@@ -30732,7 +30732,7 @@ export interface VoidFunctionSignatureThatTakesActualResult {
                         "type": "file",
                       },
                       Object {
-                        "contents": "import { BasicAuth, BearerToken, _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
+                        "contents": "import { BasicAuth, BearerToken, ErrorDetails, _NetworkError, _Response, _UnknownError, defaultFetcherV2 } from \\"@fern-typescript/service-utils\\";
 import { MyApi } from \\"../../../..\\";
 import urlJoin from \\"url-join\\";
 
@@ -30772,10 +30772,24 @@ export class _Client implements _Client {
                 body: response.body as MyApi.v2.v3.problem.LightweightProblemInfoV2[]
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.v2.v3.problem.getLightweightProblems.Error._parse(response.body as MyApi.v2.v3.problem.getLightweightProblems.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.v2.v3.problem.getLightweightProblems.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -30796,10 +30810,24 @@ export class _Client implements _Client {
                 body: response.body as MyApi.v2.v3.problem.ProblemInfoV2[]
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.v2.v3.problem.getProblems.Error._parse(response.body as MyApi.v2.v3.problem.getProblems.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.v2.v3.problem.getProblems.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -30820,10 +30848,24 @@ export class _Client implements _Client {
                 body: response.body as MyApi.v2.v3.problem.ProblemInfoV2
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.v2.v3.problem.getLatestProblem.Error._parse(response.body as MyApi.v2.v3.problem.getLatestProblem.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.v2.v3.problem.getLatestProblem.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -30844,10 +30886,24 @@ export class _Client implements _Client {
                 body: response.body as MyApi.v2.v3.problem.ProblemInfoV2
             };
         }
+        else if (response.type === \\"networkError\\") {
+            return {
+                ok: false,
+                error: {
+                    body: { _error: \\"_NetworkError\\" },
+                    _visit: visitor => visitor._network()
+                }
+            };
+        }
         else {
             return {
                 ok: false,
-                error: MyApi.v2.v3.problem.getProblemVersion.Error._parse(response.body as MyApi.v2.v3.problem.getProblemVersion.Error[\\"body\\"])
+                error: {
+                    body: response.body as MyApi.v2.v3.problem.getProblemVersion.ErrorBody,
+                    _visit: visitor => {
+                        return visitor._unknown({ statusCode: response.statusCode });
+                    }
+                }
             };
         }
     }
@@ -30855,63 +30911,35 @@ export class _Client implements _Client {
 
 export namespace getLightweightProblems {
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.v2.v3.problem.getLightweightProblems.ErrorBody;
         _visit: <Result>(visitor: MyApi.v2.v3.problem.getLightweightProblems.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const getLightweightProblems = {
-        Error: {
-            _parse: (body: MyApi.v2.v3.problem.getLightweightProblems.Error[\\"body\\"]): MyApi.v2.v3.problem.getLightweightProblems.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 
 export namespace getProblems {
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.v2.v3.problem.getProblems.ErrorBody;
         _visit: <Result>(visitor: MyApi.v2.v3.problem.getProblems.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const getProblems = {
-        Error: {
-            _parse: (body: MyApi.v2.v3.problem.getProblems.Error[\\"body\\"]): MyApi.v2.v3.problem.getProblems.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 
 export namespace getLatestProblem {
     export interface Request {
@@ -30919,33 +30947,19 @@ export namespace getLatestProblem {
     }
 
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.v2.v3.problem.getLatestProblem.ErrorBody;
         _visit: <Result>(visitor: MyApi.v2.v3.problem.getLatestProblem.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const getLatestProblem = {
-        Error: {
-            _parse: (body: MyApi.v2.v3.problem.getLatestProblem.Error[\\"body\\"]): MyApi.v2.v3.problem.getLatestProblem.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 
 export namespace getProblemVersion {
     export interface Request {
@@ -30954,33 +30968,19 @@ export namespace getProblemVersion {
     }
 
     export interface Error {
-        body: 
-            | _NetworkError
-            | _UnknownError;
+        body: MyApi.v2.v3.problem.getProblemVersion.ErrorBody;
         _visit: <Result>(visitor: MyApi.v2.v3.problem.getProblemVersion.ErrorVisitor<Result>) => Result;
     }
 
+    export type ErrorBody = 
+        | _NetworkError
+        | _UnknownError;
+
     export interface ErrorVisitor<Result> {
         _network: () => Result;
-        _unknown: () => Result;
+        _unknown: (details: ErrorDetails) => Result;
     }
 }
-
-export const getProblemVersion = {
-        Error: {
-            _parse: (body: MyApi.v2.v3.problem.getProblemVersion.Error[\\"body\\"]): MyApi.v2.v3.problem.getProblemVersion.Error => {
-                return {
-                    body,
-                    _visit: visitor => {
-                        switch (body._error) {
-                            case \\"_network\\": return visitor._network();
-                            default: return visitor._unknown();
-                        }
-                    }
-                };
-            }
-        }
-    };
 ",
                         "name": "_Client.ts",
                         "type": "file",
@@ -31063,7 +31063,7 @@ export * from \\"./_Client\\";
         \\"build\\": \\"esbuild $(find . -name '*.ts' -not -path './node_modules/*') --format=cjs --sourcemap --outdir=. && tsc\\"
     },
     \\"dependencies\\": {
-        \\"@fern-typescript/service-utils\\": \\"0.0.173-7-ge9345cba\\",
+        \\"@fern-typescript/service-utils\\": \\"0.0.0\\",
         \\"url-join\\": \\"4.0.1\\",
         \\"@types/url-join\\": \\"4.0.1\\"
     },

@@ -1,7 +1,6 @@
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services";
-import { getTextOfTsNode } from "@fern-typescript/commons";
 import { File } from "@fern-typescript/declaration-handler";
-import { ModuleDeclaration, ts, VariableDeclarationKind } from "ts-morph";
+import { ModuleDeclaration } from "ts-morph";
 import { constructEndpointErrors } from "./constructEndpointErrors";
 import { constructRequestWrapper } from "./constructRequestWrapper";
 import { getReferenceToMaybeVoidType } from "./getReferenceToMaybeVoidType";
@@ -21,9 +20,7 @@ export function parseEndpoint({
         isExported: true,
     });
 
-    const endpointUtils: ts.ObjectLiteralElementLike[] = [];
-
-    const parsedEndpoint = {
+    return {
         endpointMethodName: endpointModule.getName(),
         path: endpoint.path,
         method: endpoint.method,
@@ -34,24 +31,8 @@ export function parseEndpoint({
             endpoint,
             file,
             endpointModule,
-            addEndpointUtil: (util) => {
-                endpointUtils.push(util);
-            },
         }),
     };
-
-    file.sourceFile.addVariableStatement({
-        declarations: [
-            {
-                name: endpointModule.getName(),
-                initializer: getTextOfTsNode(ts.factory.createObjectLiteralExpression(endpointUtils, true)),
-            },
-        ],
-        declarationKind: VariableDeclarationKind.Const,
-        isExported: true,
-    });
-
-    return parsedEndpoint;
 }
 
 function parseRequest({

@@ -7,6 +7,7 @@ const config: Config = {
         "\\.[jt]sx?$": ["babel-jest", { rootMode: "upward" }],
     },
     transformIgnorePatterns: ["<rootDir>/node_modules/(?!lodash-es)"],
+    modulePathIgnorePatterns: ["<rootDir>/(?:.+/)?__test__/.*/generated"],
 };
 
 export default config;
