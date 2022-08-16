@@ -9,6 +9,10 @@ packages/**/lib
 packages/**/dist
 packages/**/tsconfig*tsbuildinfo
 
+# docusaurus
+.docusaurus
+.cache-loader
+
 # environment
 .env.local
 
