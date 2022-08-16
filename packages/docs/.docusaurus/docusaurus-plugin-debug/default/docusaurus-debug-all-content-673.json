@@ -183,7 +183,7 @@
               "unversionedId": "reference/comparison-with-openapi",
               "id": "reference/comparison-with-openapi",
               "title": "Comparison with OpenAPI",
-              "description": "* Higher-quality code generation: Fern is more restrictive in what you can model, enabling idiomatic, easy-to-use code generation.",
+              "description": "- Higher-quality code generation: Fern is more restrictive in what you can model, enabling idiomatic, easy-to-use code generation.",
               "source": "@site/docs/reference/comparison-with-openapi.md",
               "sourceDirName": "reference",
               "slug": "/reference/comparison-with-openapi",

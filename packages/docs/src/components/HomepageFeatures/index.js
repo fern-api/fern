@@ -1,5 +1,5 @@
-import React from "react";
 import clsx from "clsx";
+import React from "react";
 import styles from "./styles.module.css";
 
 const FeatureList = [
@@ -7,7 +7,7 @@ const FeatureList = [
         title: "Fern let us expand our backend libraries way faster than manually building them",
         fullName: "Andrew Israel",
         job: "Founder of PropelAuth",
-        profileImg: require("@site/static/img/profile.png").default,
+        profileImg: require("@site/static/img/andrew.jpeg").default,
     },
 ];
 
