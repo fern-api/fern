@@ -1,0 +1,360 @@
+{
+  "docusaurus-plugin-content-docs": {
+    "default": {
+      "loadedVersions": [
+        {
+          "versionName": "current",
+          "label": "Next",
+          "banner": null,
+          "badge": false,
+          "className": "docs-version-current",
+          "path": "/docs",
+          "tagsPath": "/docs/tags",
+          "editUrl": "https://github.com/fern-api/fern/tree/main/docs/docs",
+          "editUrlLocalized": "https://github.com/fern-api/fern/tree/main/docs/i18n/en/docusaurus-plugin-content-docs/current",
+          "isLast": true,
+          "routePriority": -1,
+          "sidebarFilePath": "/Users/dsheridan/Coding/fern/packages/docs/sidebars.js",
+          "contentPath": "/Users/dsheridan/Coding/fern/packages/docs/docs",
+          "contentPathLocalized": "/Users/dsheridan/Coding/fern/packages/docs/i18n/en/docusaurus-plugin-content-docs/current",
+          "docs": [
+            {
+              "unversionedId": "concepts/API Definition/index",
+              "id": "concepts/API Definition/index",
+              "title": "API Definition",
+              "description": "A Fern API Definition is a set of files (.yml or .ts) that describe your API. Each file may define:",
+              "source": "@site/docs/concepts/API Definition/index.md",
+              "sourceDirName": "concepts/API Definition",
+              "slug": "/concepts/API Definition/",
+              "permalink": "/docs/concepts/API Definition/",
+              "draft": false,
+              "editUrl": "https://github.com/fern-api/fern/tree/main/docs/docs/concepts/API Definition/index.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {
+                "title": "API Definition"
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Concepts",
+                "permalink": "/docs/category/concepts"
+              },
+              "next": {
+                "title": "Types",
+                "permalink": "/docs/concepts/API Definition/types"
+              }
+            },
+            {
+              "unversionedId": "concepts/API Definition/services",
+              "id": "concepts/API Definition/services",
+              "title": "services",
+              "description": "",
+              "source": "@site/docs/concepts/API Definition/services.md",
+              "sourceDirName": "concepts/API Definition",
+              "slug": "/concepts/API Definition/services",
+              "permalink": "/docs/concepts/API Definition/services",
+              "draft": false,
+              "editUrl": "https://github.com/fern-api/fern/tree/main/docs/docs/concepts/API Definition/services.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 6,
+              "frontMatter": {
+                "sidebar_position": 6,
+                "sidebar_label": "Services"
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Types",
+                "permalink": "/docs/concepts/API Definition/types"
+              },
+              "next": {
+                "title": "Generators",
+                "permalink": "/docs/concepts/generators"
+              }
+            },
+            {
+              "unversionedId": "concepts/API Definition/types",
+              "id": "concepts/API Definition/types",
+              "title": "types",
+              "description": "",
+              "source": "@site/docs/concepts/API Definition/types.md",
+              "sourceDirName": "concepts/API Definition",
+              "slug": "/concepts/API Definition/types",
+              "permalink": "/docs/concepts/API Definition/types",
+              "draft": false,
+              "editUrl": "https://github.com/fern-api/fern/tree/main/docs/docs/concepts/API Definition/types.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 5,
+              "frontMatter": {
+                "sidebar_position": 5,
+                "sidebar_label": "Types"
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "API Definition",
+                "permalink": "/docs/concepts/API Definition/"
+              },
+              "next": {
+                "title": "Services",
+                "permalink": "/docs/concepts/API Definition/services"
+              }
+            },
+            {
+              "unversionedId": "concepts/generators",
+              "id": "concepts/generators",
+              "title": "Generators",
+              "description": "Generators convert your API Definition into code.",
+              "source": "@site/docs/concepts/generators.md",
+              "sourceDirName": "concepts",
+              "slug": "/concepts/generators",
+              "permalink": "/docs/concepts/generators",
+              "draft": false,
+              "editUrl": "https://github.com/fern-api/fern/tree/main/docs/docs/concepts/generators.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 7,
+              "frontMatter": {
+                "sidebar_position": 7
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Services",
+                "permalink": "/docs/concepts/API Definition/services"
+              },
+              "next": {
+                "title": "Fern CLI",
+                "permalink": "/docs/reference/fern-cli"
+              }
+            },
+            {
+              "unversionedId": "getting-started",
+              "id": "getting-started",
+              "title": "Getting started",
+              "description": "This guide uses an example API for IMDb (the International Movie Database) that introduces you to using Fern. We'll generate a TypeScript server and a Postman Collection to implement and test our API.",
+              "source": "@site/docs/getting-started.md",
+              "sourceDirName": ".",
+              "slug": "/getting-started",
+              "permalink": "/docs/getting-started",
+              "draft": false,
+              "editUrl": "https://github.com/fern-api/fern/tree/main/docs/docs/getting-started.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 2,
+              "frontMatter": {
+                "title": "Getting started",
+                "sidebar_label": "Getting Started: IMDb Tutorial",
+                "sidebar_position": 2
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Introduction",
+                "permalink": "/docs/intro"
+              },
+              "next": {
+                "title": "Concepts",
+                "permalink": "/docs/category/concepts"
+              }
+            },
+            {
+              "unversionedId": "intro",
+              "id": "intro",
+              "title": "Introduction",
+              "description": "What is Fern?",
+              "source": "@site/docs/intro.md",
+              "sourceDirName": ".",
+              "slug": "/intro",
+              "permalink": "/docs/intro",
+              "draft": false,
+              "editUrl": "https://github.com/fern-api/fern/tree/main/docs/docs/intro.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 1,
+              "frontMatter": {
+                "sidebar_position": 1
+              },
+              "sidebar": "tutorialSidebar",
+              "next": {
+                "title": "Getting Started: IMDb Tutorial",
+                "permalink": "/docs/getting-started"
+              }
+            },
+            {
+              "unversionedId": "reference/comparison-with-openapi",
+              "id": "reference/comparison-with-openapi",
+              "title": "Comparison with OpenAPI",
+              "description": "* Higher-quality code generation: Fern is more restrictive in what you can model, enabling idiomatic, easy-to-use code generation.",
+              "source": "@site/docs/reference/comparison-with-openapi.md",
+              "sourceDirName": "reference",
+              "slug": "/reference/comparison-with-openapi",
+              "permalink": "/docs/reference/comparison-with-openapi",
+              "draft": false,
+              "editUrl": "https://github.com/fern-api/fern/tree/main/docs/docs/reference/comparison-with-openapi.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 11,
+              "frontMatter": {
+                "sidebar_position": 11,
+                "title": "Comparison with OpenAPI"
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Showcase",
+                "permalink": "/docs/reference/showcase"
+              }
+            },
+            {
+              "unversionedId": "reference/fern-cli",
+              "id": "reference/fern-cli",
+              "title": "Fern CLI",
+              "description": "Commands",
+              "source": "@site/docs/reference/fern-cli.md",
+              "sourceDirName": "reference",
+              "slug": "/reference/fern-cli",
+              "permalink": "/docs/reference/fern-cli",
+              "draft": false,
+              "editUrl": "https://github.com/fern-api/fern/tree/main/docs/docs/reference/fern-cli.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 9,
+              "frontMatter": {
+                "sidebar_position": 9,
+                "title": "Fern CLI"
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Generators",
+                "permalink": "/docs/concepts/generators"
+              },
+              "next": {
+                "title": "Showcase",
+                "permalink": "/docs/reference/showcase"
+              }
+            },
+            {
+              "unversionedId": "reference/showcase",
+              "id": "reference/showcase",
+              "title": "Showcase",
+              "description": "Connect Earth helps embed sustainability into financial products.",
+              "source": "@site/docs/reference/showcase.md",
+              "sourceDirName": "reference",
+              "slug": "/reference/showcase",
+              "permalink": "/docs/reference/showcase",
+              "draft": false,
+              "editUrl": "https://github.com/fern-api/fern/tree/main/docs/docs/reference/showcase.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 10,
+              "frontMatter": {
+                "sidebar_position": 10,
+                "title": "Showcase"
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Fern CLI",
+                "permalink": "/docs/reference/fern-cli"
+              },
+              "next": {
+                "title": "Comparison with OpenAPI",
+                "permalink": "/docs/reference/comparison-with-openapi"
+              }
+            }
+          ],
+          "drafts": [],
+          "sidebars": {
+            "tutorialSidebar": [
+              {
+                "type": "doc",
+                "id": "intro"
+              },
+              {
+                "type": "doc",
+                "id": "getting-started",
+                "label": "Getting Started: IMDb Tutorial"
+              },
+              {
+                "type": "category",
+                "label": "Concepts",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "category",
+                    "label": "API Definition",
+                    "collapsible": true,
+                    "collapsed": true,
+                    "items": [
+                      {
+                        "type": "doc",
+                        "id": "concepts/API Definition/types",
+                        "label": "Types"
+                      },
+                      {
+                        "type": "doc",
+                        "id": "concepts/API Definition/services",
+                        "label": "Services"
+                      }
+                    ],
+                    "link": {
+                      "type": "doc",
+                      "id": "concepts/API Definition/index"
+                    }
+                  },
+                  {
+                    "type": "doc",
+                    "id": "concepts/generators"
+                  }
+                ],
+                "link": {
+                  "type": "generated-index",
+                  "description": "Key ideas when using Fern.",
+                  "slug": "/category/concepts",
+                  "permalink": "/docs/category/concepts"
+                }
+              },
+              {
+                "type": "category",
+                "label": "Reference",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "reference/fern-cli"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "reference/showcase"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "reference/comparison-with-openapi"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "docusaurus-plugin-content-pages": {
+    "default": [
+      {
+        "type": "jsx",
+        "permalink": "/",
+        "source": "@site/src/pages/index.js"
+      },
+      {
+        "type": "jsx",
+        "permalink": "/pricing",
+        "source": "@site/src/pages/pricing.jsx"
+      }
+    ]
+  },
+  "docusaurus-plugin-debug": {},
+  "docusaurus-theme-classic": {},
+  "docusaurus-theme-search-algolia": {},
+  "docusaurus-bootstrap-plugin": {},
+  "docusaurus-mdx-fallback-plugin": {}
+}

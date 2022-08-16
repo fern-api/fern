@@ -1,0 +1,16 @@
+{
+  "title": "Concepts",
+  "description": "Key ideas when using Fern.",
+  "slug": "/category/concepts",
+  "permalink": "/docs/category/concepts",
+  "navigation": {
+    "previous": {
+      "title": "Getting Started: IMDb Tutorial",
+      "permalink": "/docs/getting-started"
+    },
+    "next": {
+      "title": "API Definition",
+      "permalink": "/docs/concepts/API Definition/"
+    }
+  }
+}

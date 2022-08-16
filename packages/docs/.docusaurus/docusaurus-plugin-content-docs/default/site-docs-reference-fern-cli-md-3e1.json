@@ -1,0 +1,28 @@
+{
+  "unversionedId": "reference/fern-cli",
+  "id": "reference/fern-cli",
+  "title": "Fern CLI",
+  "description": "Commands",
+  "source": "@site/docs/reference/fern-cli.md",
+  "sourceDirName": "reference",
+  "slug": "/reference/fern-cli",
+  "permalink": "/docs/reference/fern-cli",
+  "draft": false,
+  "editUrl": "https://github.com/fern-api/fern/tree/main/docs/docs/reference/fern-cli.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 9,
+  "frontMatter": {
+    "sidebar_position": 9,
+    "title": "Fern CLI"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Generators",
+    "permalink": "/docs/concepts/generators"
+  },
+  "next": {
+    "title": "Showcase",
+    "permalink": "/docs/reference/showcase"
+  }
+}
