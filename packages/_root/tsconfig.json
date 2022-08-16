@@ -14,6 +14,7 @@
     { "path": "../config-management/manage-generator" },
     { "path": "../config-management/project-configuration" },
     { "path": "../config-management/workspace-configuration" },
+    { "path": "../docs" },
     { "path": "../generation/ir/ir-generator" },
     { "path": "../generation/local-generation/docker-utils" },
     { "path": "../generation/local-generation/local-workspace-runner" },
