@@ -1,5 +1,6 @@
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { loadWorkspace } from "@fern-api/workspace-loader";
+import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 import { convertToOpenApi } from "../convertToOpenApi";
 
@@ -9,9 +10,9 @@ describe("convertToOpenApi", () => {
     for (const fixture of FIXTURES) {
         // eslint-disable-next-line jest/valid-title
         it(fixture, async () => {
-            const testApiDir = path.join(__dirname, "fixtures", fixture);
+            const fixtureDir = path.join(__dirname, "fixtures", fixture);
             const maybeLoadedWorkspace = await loadWorkspace({
-                absolutePathToWorkspace: testApiDir,
+                absolutePathToWorkspace: fixtureDir,
                 version: 2,
             });
             if (!maybeLoadedWorkspace.didSucceed) {
@@ -23,6 +24,11 @@ describe("convertToOpenApi", () => {
                 apiVersion: "0.0.0",
                 ir: intermediateRepresentation,
             });
+
+            const generatedDir = path.join(fixtureDir, "generated");
+            await mkdir(generatedDir, { recursive: true });
+            await writeFile(path.join(generatedDir, "openapi.json"), JSON.stringify(openApi, undefined, 4));
+
             expect(openApi).toMatchSnapshot();
         });
     }
