@@ -1,5 +1,4 @@
-import { RelativeFilePath } from "@fern-api/config-management-commons";
-import { entries } from "@fern-api/core-utils";
+import { entries, RelativeFilePath } from "@fern-api/core-utils";
 import { ServiceFileSchema } from "@fern-api/yaml-schema";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
 

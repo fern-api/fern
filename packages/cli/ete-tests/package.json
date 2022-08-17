@@ -26,6 +26,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
+    "@fern-api/core-utils": "workspace:*",
     "@fern-api/project-configuration": "workspace:*",
     "@fern-api/workspace-configuration": "workspace:*",
     "execa": "^5.1.1",

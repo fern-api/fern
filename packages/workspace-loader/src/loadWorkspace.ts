@@ -1,4 +1,5 @@
 import { validateSchema } from "@fern-api/config-management-commons";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
 import { loadGeneratorsConfiguration } from "@fern-api/generators-configuration";
 import { loadWorkspaceConfiguration, WORKSPACE_CONFIGURATION_FILENAME } from "@fern-api/workspace-configuration";
 import { RootApiFileSchema } from "@fern-api/yaml-schema";
@@ -18,19 +19,17 @@ export async function loadWorkspace({
     absolutePathToWorkspace,
     version,
 }: {
-    absolutePathToWorkspace: string;
+    absolutePathToWorkspace: AbsoluteFilePath;
     version: 1 | 2;
 }): Promise<WorkspaceLoader.Result> {
     if (version === 1) {
-        const absolutePathToWorkspaceConfiguration = path.join(
+        const absolutePathToWorkspaceConfiguration = join(
             absolutePathToWorkspace,
-            WORKSPACE_CONFIGURATION_FILENAME
+            RelativeFilePath.of(WORKSPACE_CONFIGURATION_FILENAME)
         );
         const workspaceConfiguration = await loadWorkspaceConfiguration(absolutePathToWorkspaceConfiguration);
 
-        const files = await listYamlFilesForWorkspace(
-            path.resolve(absolutePathToWorkspace, workspaceConfiguration.absolutePathToDefinition)
-        );
+        const files = await listYamlFilesForWorkspace(workspaceConfiguration.absolutePathToDefinition);
 
         const parseResult = await parseYamlFiles(files);
         if (!parseResult.didSucceed) {
@@ -61,7 +60,7 @@ export async function loadWorkspace({
     }
 
     const generatorsConfiguration = await loadGeneratorsConfiguration({ absolutePathToWorkspace });
-    const absolutePathToDefinition = path.resolve(absolutePathToWorkspace, DEFINITION_DIRECTORY);
+    const absolutePathToDefinition = join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY));
     const serviceFiles = await listServiceFilesForWorkspace(absolutePathToDefinition);
 
     const parseResult = await parseYamlFiles(serviceFiles);

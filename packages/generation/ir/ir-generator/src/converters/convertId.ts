@@ -1,3 +1,4 @@
+import { RelativeFilePath } from "@fern-api/core-utils";
 import { RawSchemas, RAW_DEFAULT_ID_TYPE } from "@fern-api/yaml-schema";
 import { FernFilepath, Type, TypeDeclaration } from "@fern-fern/ir-model";
 import { getDocs } from "../utils/getDocs";
@@ -10,7 +11,7 @@ export function convertId({
 }: {
     id: RawSchemas.IdSchema;
     fernFilepath: FernFilepath;
-    imports: Record<string, string>;
+    imports: Record<string, RelativeFilePath>;
 }): TypeDeclaration {
     const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
 

@@ -1,3 +1,4 @@
+import { AbsoluteFilePath } from "@fern-api/core-utils";
 import { runDocker } from "@fern-api/docker-utils";
 import { writeFile } from "fs/promises";
 import path from "path";
@@ -15,9 +16,9 @@ export declare namespace runGenerator {
         workspaceName: string;
         organization: string;
 
-        absolutePathToIr: string;
-        absolutePathToOutput: string | undefined;
-        pathToWriteConfigJson: string;
+        absolutePathToIr: AbsoluteFilePath;
+        absolutePathToOutput: AbsoluteFilePath | undefined;
+        absolutePathToWriteConfigJson: AbsoluteFilePath;
 
         keepDocker: boolean;
     }
@@ -29,12 +30,12 @@ export async function runGenerator({
     organization,
     absolutePathToOutput,
     absolutePathToIr,
-    pathToWriteConfigJson,
+    absolutePathToWriteConfigJson,
     customConfig,
     keepDocker,
 }: runGenerator.Args): Promise<void> {
     const binds = [
-        `${pathToWriteConfigJson}:${DOCKER_GENERATOR_CONFIG_PATH}:ro`,
+        `${absolutePathToWriteConfigJson}:${DOCKER_GENERATOR_CONFIG_PATH}:ro`,
         `${absolutePathToIr}:${DOCKER_PATH_TO_IR}:ro`,
     ];
 
@@ -49,7 +50,7 @@ export async function runGenerator({
     });
     binds.push(...bindsForGenerators);
 
-    await writeFile(pathToWriteConfigJson, JSON.stringify(config, undefined, 4));
+    await writeFile(absolutePathToWriteConfigJson, JSON.stringify(config, undefined, 4));
 
     await runDocker({
         imageName,

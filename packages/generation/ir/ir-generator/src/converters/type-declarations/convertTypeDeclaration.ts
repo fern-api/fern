@@ -1,3 +1,4 @@
+import { RelativeFilePath } from "@fern-api/core-utils";
 import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
 import { FernFilepath, Type, TypeDeclaration, TypeReference } from "@fern-fern/ir-model";
 import { generateWireStringWithAllCasings } from "../../utils/generateCasings";
@@ -14,7 +15,7 @@ export function convertTypeDeclaration({
     typeName: string;
     typeDeclaration: RawSchemas.TypeDeclarationSchema | string;
     fernFilepath: FernFilepath;
-    imports: Record<string, string>;
+    imports: Record<string, RelativeFilePath>;
 }): TypeDeclaration {
     return {
         docs: getDocs(typeDeclaration),
@@ -33,7 +34,7 @@ export function convertType({
 }: {
     typeDeclaration: RawSchemas.TypeDeclarationSchema | string | null | undefined;
     fernFilepath: FernFilepath;
-    imports: Record<string, string>;
+    imports: Record<string, RelativeFilePath>;
 }): Type {
     if (typeDeclaration == null) {
         return Type.alias({ aliasOf: TypeReference.void() });

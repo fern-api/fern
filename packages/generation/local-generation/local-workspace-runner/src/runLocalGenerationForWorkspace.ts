@@ -1,3 +1,4 @@
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
 import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { Workspace } from "@fern-api/workspace-loader";
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
@@ -29,7 +30,7 @@ export async function runLocalGenerationForWorkspace({
         prefix: "fern",
     });
 
-    const absolutePathToIr = path.join(workspaceTempDir.path, "ir.json");
+    const absolutePathToIr = join(AbsoluteFilePath.of(workspaceTempDir.path), RelativeFilePath.of("ir.json"));
     await writeFile(absolutePathToIr, JSON.stringify(intermediateRepresentation));
 
     await Promise.all(
@@ -58,12 +59,13 @@ async function loadHelpersAndRunGenerator({
     workspace: Workspace;
     generatorInvocation: GeneratorInvocation;
     workspaceTempDir: DirectoryResult;
-    absolutePathToIr: string;
+    absolutePathToIr: AbsoluteFilePath;
     keepDocker: boolean;
 }): Promise<void> {
     const configJson = await tmp.file({
         tmpdir: workspaceTempDir.path,
     });
+    const absolutePathToWriteConfigJson = AbsoluteFilePath.of(configJson.path);
 
     if (generatorInvocation.generate?.absolutePathToLocalOutput != null) {
         await rm(generatorInvocation.generate.absolutePathToLocalOutput, { force: true, recursive: true });
@@ -74,7 +76,7 @@ async function loadHelpersAndRunGenerator({
         imageName: `${generatorInvocation.name}:${generatorInvocation.version}`,
         absolutePathToOutput: generatorInvocation.generate?.absolutePathToLocalOutput,
         absolutePathToIr,
-        pathToWriteConfigJson: configJson.path,
+        absolutePathToWriteConfigJson,
         customConfig: generatorInvocation.config,
         workspaceName: workspace.name,
         organization,

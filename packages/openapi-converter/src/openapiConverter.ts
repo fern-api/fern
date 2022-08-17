@@ -1,4 +1,5 @@
 import SwaggerParser from "@apidevtools/swagger-parser";
+import { AbsoluteFilePath } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { OpenAPI, OpenAPIV3 } from "openapi-types";
 import { convertToFernService } from "./serviceConverter";
@@ -23,7 +24,7 @@ export enum OpenApiConversionFailure {
     OTHER,
 }
 
-export async function convertOpenApi(openapiFilepath: string): Promise<OpenApiConverter.Result> {
+export async function convertOpenApi(openapiFilepath: AbsoluteFilePath): Promise<OpenApiConverter.Result> {
     const openApi = await SwaggerParser.parse(openapiFilepath);
     if (!isOpenApiV3(openApi)) {
         return {

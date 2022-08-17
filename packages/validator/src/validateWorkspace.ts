@@ -1,5 +1,4 @@
-import { RelativeFilePath } from "@fern-api/config-management-commons";
-import { entries } from "@fern-api/core-utils";
+import { entries, RelativeFilePath } from "@fern-api/core-utils";
 import { Workspace } from "@fern-api/workspace-loader";
 import { ServiceFileSchema, visitFernYamlAst } from "@fern-api/yaml-schema";
 import validatePackageName from "validate-npm-package-name";

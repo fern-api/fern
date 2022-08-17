@@ -1,3 +1,4 @@
+import { RelativeFilePath } from "@fern-api/core-utils";
 import { GeneratorInvocationSchema } from "@fern-api/workspace-configuration";
 
 export const JAVA_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
@@ -24,7 +25,7 @@ export const POSTMAN_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
     version: "0.0.22",
     generate: {
         enabled: true,
-        output: "./generated-postman.json",
+        output: RelativeFilePath.of("./generated-postman.json"),
     },
 };
 
@@ -33,7 +34,7 @@ export const OPENAPI_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
     version: "0.0.5",
     generate: {
         enabled: true,
-        output: "./generated-openapi.yml",
+        output: RelativeFilePath.of("./generated-openapi.yml"),
     },
     config: {
         format: "yaml",

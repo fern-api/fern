@@ -23,8 +23,6 @@ function itFixture(fixtureName: string) {
 
             const irContents = await readFile(irOutputPath);
             expect(irContents.toString()).toMatchSnapshot();
-
-            await rm(irOutputPath, { force: true, recursive: true });
         },
         90_000
     );

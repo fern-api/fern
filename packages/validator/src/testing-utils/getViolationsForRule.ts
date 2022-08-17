@@ -1,4 +1,4 @@
-import { entries } from "@fern-api/core-utils";
+import { AbsoluteFilePath, entries } from "@fern-api/core-utils";
 import { loadWorkspace } from "@fern-api/workspace-loader";
 import { visitFernYamlAst } from "@fern-api/yaml-schema";
 import { createAstVisitorForRules } from "../createAstVisitorForRules";
@@ -16,7 +16,7 @@ const CHALK_ESCAPE_SEQUENCES_REGEX = new RegExp(`${CHALK_ESCAPE_SEQUENCES.join("
 export declare namespace getViolationsForRule {
     export interface Args {
         rule: Rule;
-        absolutePathToWorkspace: string;
+        absolutePathToWorkspace: AbsoluteFilePath;
     }
 }
 

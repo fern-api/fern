@@ -1,8 +1,7 @@
 export { assertNever } from "./assertNever";
 export { delay } from "./delay/delay";
 export { withMinimumTime } from "./delay/withMinimumTime";
-export { doesPathExist } from "./fs-utils/doesPathExist";
-export { getDirectoryContents } from "./fs-utils/getDirectoryContents";
+export * from "./fs-utils";
 export { noop } from "./noop";
 export { visitObject, type ObjectPropertiesVisitor } from "./ObjectPropertiesVisitor";
 export { entries, type Entries } from "./objects/entries";

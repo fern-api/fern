@@ -1,9 +1,11 @@
+import { AbsoluteFilePath } from "@fern-api/core-utils";
+
 export interface WorkspaceConfiguration {
     // path to the workspace directory
-    _absolutePath: string;
+    _absolutePath: AbsoluteFilePath;
 
     name: string;
-    absolutePathToDefinition: string;
+    absolutePathToDefinition: AbsoluteFilePath;
     generators: GeneratorInvocation[];
 }
 
@@ -16,11 +18,11 @@ export interface GeneratorInvocation {
 }
 
 export interface GenerateConfig {
-    absolutePathToLocalOutput: string | undefined;
+    absolutePathToLocalOutput: AbsoluteFilePath | undefined;
 }
 
 export interface GeneratorHelper {
     name: string;
     version: string;
-    absoluteLocationOnDisk: string | undefined;
+    absoluteLocationOnDisk: AbsoluteFilePath | undefined;
 }

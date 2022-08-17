@@ -4,6 +4,7 @@
   "include": ["./src"],
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
+    { "path": "../../commons/core-utils" },
     { "path": "../../config-management/project-configuration" },
     { "path": "../../config-management/workspace-configuration" }
   ]

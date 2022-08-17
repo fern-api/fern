@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/config-management-commons";
+import { RelativeFilePath } from "@fern-api/core-utils";
 import { DeclaredTypeName, FernFilepath } from "@fern-fern/ir-model";
 import path from "path";
 import { convertToFernFilepath } from "./convertToFernFilepath";
@@ -11,11 +11,11 @@ export function parseTypeName({
 }: {
     typeName: string;
     fernFilepath: FernFilepath;
-    imports: Record<string, string>;
+    imports: Record<string, RelativeFilePath>;
 }): DeclaredTypeName {
     const reference = parseReferenceToTypeName({
         reference: typeName,
-        referencedIn: fernFilepath.map((part) => part.originalValue).join(path.sep) as RelativeFilePath,
+        referencedIn: RelativeFilePath.of(fernFilepath.map((part) => part.originalValue).join(path.sep)),
         imports,
     });
     if (reference == null) {

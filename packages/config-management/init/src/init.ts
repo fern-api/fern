@@ -1,4 +1,4 @@
-import { doesPathExist } from "@fern-api/core-utils";
+import { cwd, doesPathExist, join, RelativeFilePath } from "@fern-api/core-utils";
 import { ProjectConfigSchema, PROJECT_CONFIG_FILENAME } from "@fern-api/project-configuration";
 import { WorkspaceConfigurationSchema, WORKSPACE_CONFIGURATION_FILENAME } from "@fern-api/workspace-configuration";
 import { mkdir, writeFile } from "fs/promises";
@@ -11,9 +11,11 @@ export async function initialize({ organization }: { organization: string }): Pr
     await writeApiSubDirectoryIfNotExists();
 }
 
-const API_DIRECTORY = "api";
-const SRC_DIRECTORY = "src";
-const API_SRC_DIRECTORY = path.join(API_DIRECTORY, SRC_DIRECTORY);
+const API_DIRECTORY = join(cwd(), RelativeFilePath.of("api"));
+const SRC_DIRECTORY = RelativeFilePath.of("src");
+const API_SRC_DIRECTORY = join(API_DIRECTORY, SRC_DIRECTORY);
+
+const PROJECT_CONFIG_PATH = join(cwd(), RelativeFilePath.of(PROJECT_CONFIG_FILENAME));
 
 async function writeApiSubDirectoryIfNotExists(): Promise<void> {
     const apiSubDirectoryExists = await doesPathExist(API_DIRECTORY);
@@ -36,12 +38,12 @@ async function writeWorkspaceConfiguration(dir: string): Promise<void> {
 }
 
 async function writeProjectConfigIfNotExists({ organization }: { organization: string }): Promise<void> {
-    const projectConfigExists = await doesPathExist(PROJECT_CONFIG_FILENAME);
+    const projectConfigExists = await doesPathExist(PROJECT_CONFIG_PATH);
     if (!projectConfigExists) {
         const projectConfig: ProjectConfigSchema = {
             workspaces: ["**"],
             organization,
         };
-        await writeFile(PROJECT_CONFIG_FILENAME, JSON.stringify(projectConfig, undefined, 4));
+        await writeFile(PROJECT_CONFIG_PATH, JSON.stringify(projectConfig, undefined, 4));
     }
 }

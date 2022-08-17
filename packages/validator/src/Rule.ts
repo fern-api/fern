@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/config-management-commons";
+import { RelativeFilePath } from "@fern-api/core-utils";
 import { Workspace } from "@fern-api/workspace-loader";
 import { FernAstNodeTypes, ServiceFileSchema } from "@fern-api/yaml-schema";
 
@@ -10,7 +10,6 @@ export interface Rule {
 export interface RuleContext {
     workspace: Workspace;
 }
-
 export type RuleRunner = {
     [K in keyof FernAstNodeTypes]?: (node: FernAstNodeTypes[K], args: RuleRunnerArgs) => MaybePromise<RuleViolation[]>;
 };

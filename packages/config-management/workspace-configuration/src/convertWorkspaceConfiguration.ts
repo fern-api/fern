@@ -1,4 +1,4 @@
-import path from "path";
+import { AbsoluteFilePath, dirname, resolve } from "@fern-api/core-utils";
 import { WorkspaceConfigurationSchema } from "./schemas/WorkspaceConfigurationSchema";
 import { WorkspaceConfiguration } from "./WorkspaceConfiguration";
 
@@ -9,13 +9,13 @@ export function convertWorkspaceConfiguration({
     absolutePathToConfiguration,
 }: {
     workspaceConfiguration: WorkspaceConfigurationSchema;
-    absolutePathToConfiguration: string;
+    absolutePathToConfiguration: AbsoluteFilePath;
 }): WorkspaceConfiguration {
-    const absolutePathToWorkspaceDir = path.dirname(absolutePathToConfiguration);
+    const absolutePathToWorkspaceDir = dirname(absolutePathToConfiguration);
     return {
         _absolutePath: absolutePathToWorkspaceDir,
         name: workspaceConfiguration.name,
-        absolutePathToDefinition: path.resolve(absolutePathToWorkspaceDir, workspaceConfiguration.definition),
+        absolutePathToDefinition: resolve(absolutePathToWorkspaceDir, workspaceConfiguration.definition),
         generators: workspaceConfiguration.generators.map((generatorInvocation) => {
             return {
                 name: generatorInvocation.name,
@@ -25,7 +25,7 @@ export function convertWorkspaceConfiguration({
                         ? {
                               absolutePathToLocalOutput:
                                   generatorInvocation.generate !== true && generatorInvocation.generate.output != null
-                                      ? path.resolve(absolutePathToWorkspaceDir, generatorInvocation.generate.output)
+                                      ? resolve(absolutePathToWorkspaceDir, generatorInvocation.generate.output)
                                       : undefined,
                           }
                         : undefined,
@@ -37,7 +37,7 @@ export function convertWorkspaceConfiguration({
                               version: helper.version,
                               absoluteLocationOnDisk:
                                   helper.locationOnDisk != null
-                                      ? path.resolve(absolutePathToWorkspaceDir, helper.locationOnDisk)
+                                      ? resolve(absolutePathToWorkspaceDir, helper.locationOnDisk)
                                       : undefined,
                           }))
                         : [],

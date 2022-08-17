@@ -1,4 +1,4 @@
-import { noop, visitObject } from "@fern-api/core-utils";
+import { entries, noop, visitObject } from "@fern-api/core-utils";
 import { Workspace } from "@fern-api/workspace-loader";
 import { ServiceFileSchema } from "@fern-api/yaml-schema";
 import { FernFilepath, IntermediateRepresentation } from "@fern-fern/ir-model";
@@ -112,7 +112,7 @@ export async function generateIntermediateRepresentation(workspace: Workspace): 
         });
     };
 
-    for (const [filepath, schema] of Object.entries(workspace.serviceFiles)) {
+    for (const [filepath, schema] of entries(workspace.serviceFiles)) {
         await visitServiceFile(convertToFernFilepath(filepath), schema);
     }
 

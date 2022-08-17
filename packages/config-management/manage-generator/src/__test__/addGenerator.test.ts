@@ -1,3 +1,4 @@
+import { RelativeFilePath } from "@fern-api/core-utils";
 import { WorkspaceConfigurationSchema } from "@fern-api/workspace-configuration";
 import { addJavaGenerator, addTypescriptGenerator } from "../addGenerator";
 
@@ -5,7 +6,7 @@ describe("addGenerator", () => {
     it("adds generator if not present", () => {
         const workspaceConfiguration: WorkspaceConfigurationSchema = {
             name: "my-definition",
-            definition: "./src",
+            definition: RelativeFilePath.of("./src"),
             generators: [],
         };
         const updatedWorkspaceConfiguration = addJavaGenerator(workspaceConfiguration);
@@ -15,7 +16,7 @@ describe("addGenerator", () => {
     it("skip if present", () => {
         const workspaceConfiguration: WorkspaceConfigurationSchema = {
             name: "my-definition",
-            definition: "./src",
+            definition: RelativeFilePath.of("./src"),
             generators: [
                 {
                     name: "fernapi/fern-typescript",

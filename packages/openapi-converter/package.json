@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@apidevtools/swagger-parser": "^10.1.0",
+    "@fern-api/core-utils": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
     "js-yaml": "^4.1.0",
     "lodash-es": "^4.17.21",

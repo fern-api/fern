@@ -1,4 +1,4 @@
-import path from "path";
+import { AbsoluteFilePath, dirname, resolve } from "@fern-api/core-utils";
 import { GeneratorsConfiguration } from "./GeneratorsConfiguration";
 import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfigurationSchema";
 
@@ -6,7 +6,7 @@ export function convertGeneratorsConfiguration({
     absolutePathToGeneratorsConfiguration,
     rawGeneratorsConfiguration,
 }: {
-    absolutePathToGeneratorsConfiguration: string;
+    absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     rawGeneratorsConfiguration: GeneratorsConfigurationSchema;
 }): GeneratorsConfiguration {
     return {
@@ -20,8 +20,8 @@ export function convertGeneratorsConfiguration({
                         ? {
                               absolutePathToLocalOutput:
                                   generatorInvocation.generate !== true && generatorInvocation.generate.output != null
-                                      ? path.resolve(
-                                            path.dirname(absolutePathToGeneratorsConfiguration),
+                                      ? resolve(
+                                            dirname(absolutePathToGeneratorsConfiguration),
                                             generatorInvocation.generate.output
                                         )
                                       : undefined,

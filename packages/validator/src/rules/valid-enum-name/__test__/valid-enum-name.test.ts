@@ -1,4 +1,4 @@
-import path from "path";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
 import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
 import { ValidEnumNameRule } from "../valid-enum-name";
 
@@ -6,7 +6,11 @@ describe("valid-enum-name", () => {
     it("simple", async () => {
         const violations = await getViolationsForRule({
             rule: ValidEnumNameRule,
-            absolutePathToWorkspace: path.join(__dirname, "fixtures", "simple"),
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("simple")
+            ),
         });
 
         expect(violations).toEqual([

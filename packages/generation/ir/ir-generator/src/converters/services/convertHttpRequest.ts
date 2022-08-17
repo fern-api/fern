@@ -1,3 +1,4 @@
+import { RelativeFilePath } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { FernFilepath, TypeReference } from "@fern-fern/ir-model";
 import { HttpRequest } from "@fern-fern/ir-model/services";
@@ -10,7 +11,7 @@ export function convertHttpRequest({
 }: {
     request: RawSchemas.HttpRequestSchema | null | undefined;
     fernFilepath: FernFilepath;
-    imports: Record<string, string>;
+    imports: Record<string, RelativeFilePath>;
 }): HttpRequest {
     const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
     return {

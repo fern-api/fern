@@ -1,3 +1,4 @@
+import { RelativeFilePath } from "@fern-api/core-utils";
 import { convertWorkspaceConfiguration } from "../convertWorkspaceConfiguration";
 
 describe("convertWorkspaceConfiguration", () => {
@@ -5,7 +6,7 @@ describe("convertWorkspaceConfiguration", () => {
         const result = convertWorkspaceConfiguration({
             workspaceConfiguration: {
                 name: "my-definition",
-                definition: "my/definition",
+                definition: RelativeFilePath.of("my/definition"),
                 generators: [],
             },
             absolutePathToConfiguration: "/path/to/definition/.fernrc.yml",

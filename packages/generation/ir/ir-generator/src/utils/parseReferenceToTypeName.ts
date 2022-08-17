@@ -1,5 +1,4 @@
-import { RelativeFilePath } from "@fern-api/config-management-commons";
-import path from "path";
+import { dirname, join, RelativeFilePath } from "@fern-api/core-utils";
 
 export interface ReferenceToTypeName {
     typeName: string;
@@ -14,7 +13,7 @@ export function parseReferenceToTypeName({
 }: {
     reference: string;
     referencedIn: RelativeFilePath;
-    imports: Record<string, string>;
+    imports: Record<string, RelativeFilePath>;
 }): ReferenceToTypeName | undefined {
     const [firstPart, secondPart, ...rest] = reference.split(".");
 
@@ -36,7 +35,7 @@ export function parseReferenceToTypeName({
     }
 
     return {
-        relativeFilePath: path.join(path.dirname(referencedIn), importPath) as RelativeFilePath,
+        relativeFilePath: join(dirname(referencedIn), importPath),
         typeName: secondPart,
     };
 }

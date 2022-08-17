@@ -1,4 +1,5 @@
-import { RelativeFilePath } from "@fern-api/config-management-commons";
+import { RelativeFilePath } from "@fern-api/core-utils";
+
 export interface FernFile {
     filepath: RelativeFilePath;
     fileContents: string;

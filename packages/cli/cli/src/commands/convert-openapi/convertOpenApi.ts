@@ -1,8 +1,12 @@
+import { AbsoluteFilePath } from "@fern-api/core-utils";
 import { convertOpenApi, OpenApiConversionFailure } from "@fern-api/openapi-converter";
 import { mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 
-export async function convertOpenApiToFernApiDefinition(openApiPath: string, fernDefinitionDir: string): Promise<void> {
+export async function convertOpenApiToFernApiDefinition(
+    openApiPath: AbsoluteFilePath,
+    fernDefinitionDir: AbsoluteFilePath
+): Promise<void> {
     const conversionResult = await convertOpenApi(openApiPath);
     if (conversionResult.didSucceed) {
         await mkdir(fernDefinitionDir, { recursive: true });
