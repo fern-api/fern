@@ -101,7 +101,7 @@ async function loadProjectV2({
     const workspaces = await Promise.all(
         filteredWorkspaces.map(async (absolutePathToWorkspace) => {
             const workspace = await loadWorkspace({
-                absolutePathToWorkspace: path.join(fernDirectory, absolutePathToWorkspace),
+                absolutePathToWorkspace,
                 version: 2,
             });
             if (!workspace.didSucceed) {
