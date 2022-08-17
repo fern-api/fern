@@ -76,7 +76,7 @@ async function loadProjectV2({
     const fernDirectoryContents = await readdir(fernDirectory, { withFileTypes: true });
     const allWorkspaces = fernDirectoryContents.reduce<string[]>((all, item) => {
         if (item.isDirectory()) {
-            all.push(item.name);
+            all.push(path.resolve(fernDirectory, item.name));
         }
         return all;
     }, []);
@@ -101,7 +101,7 @@ async function loadProjectV2({
     const workspaces = await Promise.all(
         filteredWorkspaces.map(async (absolutePathToWorkspace) => {
             const workspace = await loadWorkspace({
-                absolutePathToWorkspace: path.join(fernDirectory, absolutePathToWorkspace),
+                absolutePathToWorkspace,
                 version: 2,
             });
             if (!workspace.didSucceed) {
