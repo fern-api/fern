@@ -120,7 +120,7 @@ public final class BasicAuthGenerator extends Generator {
                         .addAnnotation(Override.class)
                         .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                         .returns(String.class)
-                        .addStatement("return $S + $L()", "Basic", GET_TOKEN_METHOD_NAME)
+                        .addStatement("return $S + $L()", "Basic ", GET_TOKEN_METHOD_NAME)
                         .build())
                 .addMethod(MethodSpec.methodBuilder("of")
                         .addModifiers(Modifier.PUBLIC, Modifier.STATIC)

@@ -73,7 +73,7 @@ public final class BearerAuthGenerator extends Generator {
                         .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                         .returns(String.class)
                         .addAnnotation(Override.class)
-                        .addStatement("return $S + $L()", "Bearer", GET_TOKEN_METHOD_NAME)
+                        .addStatement("return $S + $L()", "Bearer ", GET_TOKEN_METHOD_NAME)
                         .build())
                 .addMethod(MethodSpec.methodBuilder("of")
                         .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
