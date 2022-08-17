@@ -2,7 +2,7 @@ import { GeneratorInvocationSchema } from "@fern-api/workspace-configuration";
 
 export const JAVA_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
     name: "fernapi/fern-java",
-    version: "0.0.87",
+    version: "0.0.92",
     generate: true,
     config: {
         packagePrefix: "com",
