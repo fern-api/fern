@@ -37,6 +37,9 @@ jobs:
           name: Compile
           command: yarn compile
       - run:
+          name: Build docker
+          command: yarn workspace fern-typescript dockerTagLocal
+      - run:
           name: Run tests
           command: yarn test --ci
       - run:
