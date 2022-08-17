@@ -50,7 +50,7 @@ public abstract class BearerAuth {
 
   @Override
   public final String toString() {
-    return "Bearer" + getToken();
+    return "Bearer " + getToken();
   }
 
   public static BearerAuth of(String token) {
@@ -1105,7 +1105,7 @@ public abstract class BearerAuth {
 
   @Override
   public final String toString() {
-    return "Bearer" + getToken();
+    return "Bearer " + getToken();
   }
 
   public static BearerAuth of(String token) {
@@ -1348,7 +1348,7 @@ public abstract class BearerAuth {
 
   @Override
   public final String toString() {
-    return "Bearer" + getToken();
+    return "Bearer " + getToken();
   }
 
   public static BearerAuth of(String token) {
