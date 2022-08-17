@@ -1,10 +1,7 @@
-import React from "react";
-import clsx from "clsx";
-import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
-import Layout from "@theme/Layout";
 import HomepageFeatures from "@site/src/components/HomepageFeatures";
-
+import Layout from "@theme/Layout";
+import React from "react";
 import styles from "./index.module.css";
 
 function HomepageHeader() {
@@ -12,10 +9,9 @@ function HomepageHeader() {
     return (
         <header className={styles.heroBanner}>
             <div className="container" style={{ textAlign: "left" }}>
-                <h1 className={styles.hero_title}>Define your API once. Keep your server, SDKs, and docs in sync.</h1>
+                <h1 className={styles.hero_title}>Define your API once.</h1>
                 <p className="hero__subtitle" style={{ color: "black" }}>
-                    Fern is the single source of truth for your API that ensures type safety between your server,
-                    clients, and documentation.
+                    Keep your server, SDKs, and docs in sync.
                 </p>
                 <div className={styles.buttons}>
                     <button

@@ -7,7 +7,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 /** @type {import('@docusaurus/types').Config} */
 const config = {
     title: "Fern",
-    tagline: "Define your API once. Keep your server, SDKs, and docs in sync.",
+    tagline: "Define your API once.",
     url: "https://buildwithfern.com",
     baseUrl: "/",
     onBrokenLinks: "throw",
@@ -117,16 +117,12 @@ const config = {
                         title: "Company",
                         items: [
                             {
-                                label: "About",
-                                to: "/",
-                            },
-                            {
-                                label: "Careers",
-                                to: "/",
+                                label: "Github",
+                                to: "https://github.com/fern-api/fern/",
                             },
                             {
                                 label: "Stay updated",
-                                to: "/",
+                                to: "mailto:team@buildwithfern.com?subject=Keep%20me%20updated&body=Howdy%20team-%0A%0APlease%20keep%20me%20updated%20as%20functionality%20is%20released%20and%20you%20share%20business%20updates.",
                             },
                         ],
                     },
@@ -135,20 +131,20 @@ const config = {
                         items: [
                             {
                                 label: "Privacy Policy",
-                                href: "/",
+                                to: "/docs/legal/privacy",
                             },
                             {
                                 label: "TOS",
-                                href: "/",
+                                to: "/docs/legal/terms",
                             },
                             {
                                 label: "Cookie Policy",
-                                href: "/",
+                                to: "/docs/legal/cookie",
                             },
                         ],
                     },
                 ],
-                copyright: `Copyright © ${new Date().getFullYear()} Fern Inc.<br/><span>Fern is open source software licensed under the <a href="https://github.com/fern-api/fern/blob/main/LICENSE">MIT License</a></span>`,
+                copyright: `Copyright © ${new Date().getFullYear()} Birch Solutions, Inc.<br/><span>Fern is open source software licensed under the <a href="https://github.com/fern-api/fern/blob/main/LICENSE">MIT License</a></span>`,
             },
             prism: {
                 theme: lightCodeTheme,

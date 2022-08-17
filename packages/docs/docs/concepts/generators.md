@@ -62,8 +62,8 @@ Here's what the Postman Generator configuration could look like:
 
 ### How does generating clients work?
 
-![client generators](assets)
+![client generators](../../static/img/diagrams/frontend-diagram-dark.png)
 
 ### How does generating servers work?
 
-![server generators](assets/diagrams/backend-diagram.png)
+![server generators](../../static/img/diagrams/backend-diagram-dark.png)
