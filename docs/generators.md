@@ -58,8 +58,8 @@ Here's what the Postman Generator configuration could look like:
 
 ### Generating clients
 
-![client generators](assets/diagrams/frontend-diagram.png)
+![client generators](../packages/docs/static/img/diagrams/frontend-diagram-dark.png)
 
 ### Generating servers
 
-![server generators](assets/diagrams/backend-diagram.png)
+![server generators](../packages/docs/static/img/diagrams/backend-diagram-dark.png)
