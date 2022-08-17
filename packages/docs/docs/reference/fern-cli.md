@@ -3,167 +3,80 @@ sidebar_position: 9
 title: Fern CLI
 ---
 
+<!-- markdownlint-disable MD033 -->
+
+# CLI
+
+Fern provides a set of command-line commands to help you generate clients, servers, documentation, and more. To install the Fern CLI run:
+
+```bash
+npm install -g fern-api
+```
+
+---
+
 ## Commands
 
-<!-- commands -->
+### `fern init`
 
-- [`matano autocomplete [SHELL]`](#matano-autocomplete-shell)
-- [`matano bootstrap`](#matano-bootstrap)
-- [`matano deploy`](#matano-deploy)
-- [`matano generate:matano-dir DIRECTORY-NAME`](#matano-generatematano-dir-directory-name)
-- [`matano help [COMMAND]`](#matano-help-command)
-- [`matano refresh-context`](#matano-refresh-context)
+Initializes Fern which adds the following content:
 
-## `matano autocomplete [SHELL]`
-
-display autocomplete installation instructions
-
-```
-USAGE
-  $ matano autocomplete [SHELL] [-r]
-
-ARGUMENTS
-  SHELL  shell type
-
-FLAGS
-  -r, --refresh-cache  Refresh cache (ignores displaying instructions)
-
-DESCRIPTION
-  display autocomplete installation instructions
-
-EXAMPLES
-  $ matano autocomplete
-
-  $ matano autocomplete bash
-
-  $ matano autocomplete zsh
-
-  $ matano autocomplete --refresh-cache
+```yml
+api/
+├── src
+│   ├── api.yml
+└── .fernrc.yml
+fern.config.json
 ```
 
-_See code: [@oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplete/blob/v1.3.0/src/commands/autocomplete/index.ts)_
+- [`api.yml`](../concepts/api/definition.md) is an example Fern API Definition for IMDb.
+- [`.fernrc.yml`](fernrc) is a configuration file local to a single API in your repo.
+- [`fern.config.json`](fern-config-json) is a configuration file that applies to all APIs in your repo.
 
-## `matano bootstrap`
+---
 
-Creates initial resources for Matano deployment.
+### `fern add <generator>`
 
-```
-USAGE
-  $ matano bootstrap [-p <value>] [--user-directory <value>]
+Adds a generator to `.fernrc.yml`. Check out a [list of generators](../concepts/generators.md) you can use. As an example, let's look how we add the TypeScript and Postman generators.
 
-FLAGS
-  -p, --profile=<value>     AWS Profile to use for credentials.
-  --user-directory=<value>  Matano user directory to use.
+#### fern add typescript
 
-DESCRIPTION
-  Creates initial resources for Matano deployment.
-
-EXAMPLES
-  $ matano bootstrap
-
-  $ matano bootstrap --profile prod
-
-  $ matano bootstrap --profile prod --user-directory my-matano-directory
-```
-
-_See code: [dist/commands/bootstrap.ts](https://github.com/matanolabs/matano/blob/main/cli/src/commands/bootstrap.ts)_
-
-## `matano deploy`
-
-Deploys matano.
-
-```
-USAGE
-  $ matano deploy [-p <value>] [-a <value>] [-r <value>] [--user-directory <value>]
-
-FLAGS
-  -a, --account=<value>     AWS Account to deploy to.
-  -p, --profile=<value>     AWS Profile to use for credentials.
-  -r, --region=<value>      AWS Region to deploy to.
-  --user-directory=<value>  Matano user directory to use.
-
-DESCRIPTION
-  Deploys matano.
-
-EXAMPLES
-  $ matano deploy
-
-  $ matano deploy --profile prod
-
-  $ matano deploy --profile prod --user-directory matano-directory
-
-  $ matano deploy --profile prod --region eu-central-1 --account 12345678901
+```diff
+ name: api
+ definition: src
+-generators: []
++generators:
++  - name: fernapi/fern-typescript
++    version: 0.0.101
++    generate: true
++    config:
++      mode: server
 ```
 
-_See code: [dist/commands/deploy.ts](https://github.com/matanolabs/matano/blob/main/cli/src/commands/deploy.ts)_
+#### fern add postman
 
-## `matano generate:matano-dir DIRECTORY-NAME`
-
-Generates a sample Matano directory to get started.
-
-```
-USAGE
-  $ matano generate:matano-dir [DIRECTORY-NAME]
-
-ARGUMENTS
-  DIRECTORY-NAME  The name of the directory to create
-
-DESCRIPTION
-  Generates a sample Matano directory to get started.
-
-EXAMPLES
-  $ matano generate:matano-dir
+```diff
+ name: api
+ definition: src
+-generators: []
++generators:
++  - name: fernapi/fern-postman
++    version: 0.0.6
++    generate:
++      enabled: true
++      output: ./generated-postman.json
 ```
 
-_See code: [dist/commands/generate/matano-dir.ts](https://github.com/matanolabs/matano/blob/main/cli/src/commands/generate/matano-dir.ts)_
+---
 
-## `matano help [COMMAND]`
+### `fern generate`
 
-Display help for matano.
+Takes the API Definition location described in `.fernrc.yml` and runs the listed generators remotely.
 
-```
-USAGE
-  $ matano help [COMMAND] [-n]
+---
 
-ARGUMENTS
-  COMMAND  Command to show help for.
+### `fern check`
 
-FLAGS
-  -n, --nested-commands  Include all nested commands in the output.
+Runs validation rules to your Fern API Definition locally.
 
-DESCRIPTION
-  Display help for matano.
-```
-
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.1.12/src/commands/help.ts)_
-
-## `matano refresh-context`
-
-Refreshes Matano context.
-
-```
-USAGE
-  $ matano refresh-context [-p <value>] [-a <value>] [-r <value>] [--user-directory <value>]
-
-FLAGS
-  -a, --account=<value>     AWS Account to deploy to.
-  -p, --profile=<value>     AWS Profile to use for credentials.
-  -r, --region=<value>      AWS Region to deploy to.
-  --user-directory=<value>  Matano user directory to use.
-
-DESCRIPTION
-  Refreshes Matano context.
-
-EXAMPLES
-  $ matano refresh-context
-
-  $ matano refresh-context --profile prod
-
-  $ matano refresh-context --profile prod --user-directory my-matano-directory
-
-  $ matano refresh-context --profile prod --region eu-central-1 --account 12345678901
-```
-
-_See code: [dist/commands/refresh-context.ts](https://github.com/matanolabs/matano/blob/main/cli/src/commands/refresh-context.ts)_
-
-<!-- commandsstop -->
+---

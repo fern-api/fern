@@ -1,10 +1,8 @@
 ---
-sidebar_position: 7
+sidebar_position: 9
 ---
 
-# Generators
-
-Generators convert your API Definition into code.
+# Fern Generators
 
 |  **Name**  |                                       **Description**                                        |   **CLI Command**   |                                            **Library**                                             |
 | :--------: | :------------------------------------------------------------------------------------------: | :-----------------: | :------------------------------------------------------------------------------------------------: |
@@ -24,7 +22,7 @@ Generators convert your API Definition into code.
 
 Code generators run remotely in the cloud. They take a set of Fern API Definition YAML files, run the generators listed in `.fernrc.yml, and produce generated files as an output. Files can output locally (i.e., seen in the file system of your IDE) or remotely (i.e., in a package manager like NPM, Maven, or PyPI).
 
-## How can I automatically update my Postman Collection?
+## How can I automatically update my Postman Collection? (Instructions in 2 steps.)
 
 ### Get your Postman Workspace ID
 
@@ -32,7 +30,7 @@ Login to Postman and then pick an existing Workspace (or create a new one.) Navi
 
 ### Get your Postman API Key
 
-Generate a Postman API Key [here](https://learning.postman.com/docs/developer/intro-api/#generating-a-postman-api-key).
+Generate a Postman API Key [here](Postman API Keys page).
 
 ### Save your variables in your local environment
 
@@ -62,10 +60,10 @@ Here's what the Postman Generator configuration could look like:
     workspace-id: ${POSTMAN_WORKSPACE_ID}
 ```
 
-### Generating clients
+### How does generating clients work?
 
-![client generators](../../static/img/docs/diagrams/frontend-diagram.png)
+![client generators](../../static/img/diagrams/frontend-diagram-dark.png)
 
-### Generating servers
+### How does generating servers work?
 
-![server generators](../../static/img/docs/diagrams/backend-diagram.png)
+![server generators](../../static/img/diagrams/backend-diagram-dark.png)

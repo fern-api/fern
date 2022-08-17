@@ -159,11 +159,11 @@ Open Postman and File -> Import `api/generated-postman.json`.
 
 Select the `createMovie` endpoint and hit `Send`. You should get **`iron-man-3`** back from your server.
 
-![createMovie-postman](../static/img/docs/tutorial/createMovie-postman.png)
+![createMovie-postman](../static/img/tutorial/createMovie-postman.png)
 
 Select the `getMovie` endpoint and hit `Send`. As expected, we get a 404 response back.
 
-![getMovie-postman](../static/img/docs/tutorial/getMovie-postman.png)
+![getMovie-postman](../static/img/tutorial/getMovie-postman.png)
 
 ## Step 9: Celebrate 🎉
 
