@@ -31,13 +31,13 @@ fern.config.json
 
 - [`api.yml`](../concepts/api/definition.md) is an example Fern API Definition for IMDb.
 - [`.fernrc.yml`](fernrc) is a configuration file local to a single API in your repo.
-- [`fern.config.json`](fern-config-json.) is a configuration file that applies to all APIs in your repo.
+- [`fern.config.json`](fern-config-json) is a configuration file that applies to all APIs in your repo.
 
 ---
 
 ### `fern add <generator>`
 
-Adds a generator to `.fernrc.yml`. Check out a [list of generators](generators.md) you can use. As an example, let's look how we add the TypeScript and Postman generators.
+Adds a generator to `.fernrc.yml`. Check out a [list of generators](../concepts/generators.md) you can use. As an example, let's look how we add the TypeScript and Postman generators.
 
 #### fern add typescript
 
