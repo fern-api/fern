@@ -76,7 +76,7 @@ async function loadProjectV2({
     const fernDirectoryContents = await readdir(fernDirectory, { withFileTypes: true });
     const allWorkspaces = fernDirectoryContents.reduce<string[]>((all, item) => {
         if (item.isDirectory()) {
-            all.push(item.name);
+            all.push(path.resolve(fernDirectory, item.name));
         }
         return all;
     }, []);
