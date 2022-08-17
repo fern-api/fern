@@ -14,11 +14,6 @@ const config = {
     onBrokenMarkdownLinks: "warn",
     favicon: "img/favicon.ico",
 
-    // GitHub pages deployment config.
-    // If you aren't using GitHub pages, you don't need these.
-    organizationName: "fern", // Usually your GitHub org/user name.
-    projectName: "fern-api", // Usually your repo name.
-
     // Even if you don't use internalization, you can use this field to set useful
     // metadata like html lang. For example, if your site is Chinese, you may want
     // to replace "en" with "zh-Hans".
@@ -77,11 +72,6 @@ const config = {
                         position: "left",
                     },
                     {
-                        type: "html",
-                        position: "right",
-                        value: '<iframe class="ghButton_pHgp" src="https://ghbtns.com/github-btn.html?user=fern-api&amp;repo=fern&amp;type=star&amp;count=true&amp;size=large" frameborder="0" scrolling="0" width="150" height="30" title="GitHub"></iframe>',
-                    },
-                    {
                         href: "https://github.com/fern-api/fern/",
                         label: "GitHub",
                         position: "right",
@@ -95,7 +85,7 @@ const config = {
             announcementBar: {
                 id: "support_us",
                 content:
-                    '<strong>Star us <a target="_blank" rel="noopener noreferrer" href="https://github.com/fern-api/fern">on GitHub</a></strong>',
+                    '<strong>⭐ Star us <a target="_blank" rel="noopener noreferrer" href="https://github.com/fern-api/fern">on GitHub</a></strong>',
                 backgroundColor: "#4276e7",
                 textColor: "#fff4f9",
                 isCloseable: true,
@@ -107,11 +97,6 @@ const config = {
             },
             footer: {
                 style: "dark",
-                logo: {
-                    alt: "Fern",
-                    src: "img/logo.svg",
-                    style: { height: "30px" },
-                },
                 links: [
                     {
                         title: "Company",
@@ -144,7 +129,6 @@ const config = {
                         ],
                     },
                 ],
-                copyright: `Copyright © ${new Date().getFullYear()} Birch Solutions, Inc.<br/><span>Fern is open source software licensed under the <a href="https://github.com/fern-api/fern/blob/main/LICENSE">MIT License</a></span>`,
             },
             prism: {
                 theme: lightCodeTheme,
