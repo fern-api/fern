@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/config-management-commons";
+import { RelativeFilePath } from "@fern-api/core-utils";
 import { parseReferenceToTypeName } from "@fern-api/ir-generator";
 import { Workspace } from "@fern-api/workspace-loader";
 import { visitFernYamlAst, visitRawTypeReference } from "@fern-api/yaml-schema";
@@ -80,7 +80,7 @@ function getAllNamedTypes({
 }: {
     type: string;
     relativeFilePath: RelativeFilePath;
-    imports: Record<string, string>;
+    imports: Record<string, RelativeFilePath>;
 }): ReferenceToTypeName[] {
     return visitRawTypeReference<ReferenceToTypeName[]>(type, {
         primitive: () => [],

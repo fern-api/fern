@@ -1,3 +1,4 @@
+import { RelativeFilePath } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { ErrorDeclaration, FernFilepath, Type } from "@fern-fern/ir-model";
 import { generateWireStringWithAllCasings } from "../utils/generateCasings";
@@ -13,7 +14,7 @@ export function convertErrorDeclaration({
     errorName: string;
     fernFilepath: FernFilepath;
     errorDeclaration: RawSchemas.ErrorDeclarationSchema | string;
-    imports: Record<string, string>;
+    imports: Record<string, RelativeFilePath>;
 }): ErrorDeclaration {
     const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
 

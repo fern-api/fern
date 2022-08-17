@@ -3,6 +3,7 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
   "references": [
+    { "path": "../../../commons/core-utils" },
     { "path": "../../../config-management/generators-configuration" },
     { "path": "../../../workspace-loader" },
     { "path": "../docker-utils" }

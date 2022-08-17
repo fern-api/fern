@@ -1,3 +1,4 @@
+import { RelativeFilePath } from "@fern-api/core-utils";
 import { ErrorDeclaration, Type, TypeReference } from "@fern-fern/ir-model";
 import { convertErrorDeclaration } from "../converters/convertErrorDeclaration";
 import { convertToFernFilepath } from "../utils/convertToFernFilepath";
@@ -13,9 +14,9 @@ describe("convertErrorDeclaration", () => {
                     },
                 },
             },
-            fernFilepath: convertToFernFilepath("path/to/other"),
+            fernFilepath: convertToFernFilepath(RelativeFilePath.of("path/to/other")),
             imports: {
-                commons: "./commons",
+                commons: RelativeFilePath.of("./commons"),
             },
         });
 
@@ -23,7 +24,7 @@ describe("convertErrorDeclaration", () => {
             docs: undefined,
             name: {
                 name: "UnauthorizedError",
-                fernFilepath: convertToFernFilepath("path/to/other"),
+                fernFilepath: convertToFernFilepath(RelativeFilePath.of("path/to/other")),
             },
             discriminantValue: {
                 wireValue: "UnauthorizedError",
@@ -48,7 +49,7 @@ describe("convertErrorDeclaration", () => {
                             screamingSnakeCase: "POST_ID",
                         },
                         valueType: TypeReference.named({
-                            fernFilepath: convertToFernFilepath("path/to/commons"),
+                            fernFilepath: convertToFernFilepath(RelativeFilePath.of("path/to/commons")),
                             name: "PostId",
                         }),
                     },

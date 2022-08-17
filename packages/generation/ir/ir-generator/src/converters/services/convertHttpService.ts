@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, RelativeFilePath } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { FernFilepath } from "@fern-fern/ir-model";
 import { HttpEndpoint, HttpEndpointId, HttpHeader, HttpMethod, HttpService } from "@fern-fern/ir-model/services";
@@ -19,7 +19,7 @@ export function convertHttpService({
     serviceDefinition: RawSchemas.HttpServiceSchema;
     serviceId: string;
     fernFilepath: FernFilepath;
-    imports: Record<string, string>;
+    imports: Record<string, RelativeFilePath>;
 }): HttpService {
     const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
 
@@ -121,7 +121,7 @@ export function convertHttpHeader({
     headerKey: string;
     header: RawSchemas.HttpHeaderSchema;
     fernFilepath: FernFilepath;
-    imports: Record<string, string>;
+    imports: Record<string, RelativeFilePath>;
 }): HttpHeader {
     const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
 

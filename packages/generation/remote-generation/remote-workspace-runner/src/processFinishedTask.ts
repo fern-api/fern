@@ -1,3 +1,4 @@
+import { AbsoluteFilePath } from "@fern-api/core-utils";
 import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import {
     CreateJobResponse,
@@ -44,7 +45,7 @@ async function downloadFilesForTask({
 }: {
     jobId: RemoteGenJobId;
     taskId: RemoteGenTaskId;
-    absolutePathToLocalOutput: string;
+    absolutePathToLocalOutput: AbsoluteFilePath;
 }) {
     const writer = createWriteStream(absolutePathToLocalOutput);
     await axios

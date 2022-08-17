@@ -1,3 +1,4 @@
+import { RelativeFilePath } from "@fern-api/core-utils";
 import { RawSchemas, visitRawApiAuth, visitRawAuthSchemeDeclaration } from "@fern-api/yaml-schema";
 import { AuthSchemeDeclarationSchema } from "@fern-api/yaml-schema/src/schemas";
 import { ApiAuth, AuthScheme, AuthSchemesRequirement, FernFilepath } from "@fern-fern/ir-model";
@@ -10,7 +11,7 @@ export function convertApiAuth({
 }: {
     rawApiFileSchema: RawSchemas.RootApiFileSchema;
     fernFilepath: FernFilepath;
-    imports: Record<string, string>;
+    imports: Record<string, RelativeFilePath>;
 }): ApiAuth {
     if (rawApiFileSchema.auth == null) {
         return {
@@ -70,7 +71,7 @@ function convertSchemeReference({
     reference: RawSchemas.AuthSchemeReferenceSchema | string;
     authSchemeDeclarations: Record<string, AuthSchemeDeclarationSchema> | undefined;
     fernFilepath: FernFilepath;
-    imports: Record<string, string>;
+    imports: Record<string, RelativeFilePath>;
 }): AuthScheme {
     const convertNamedAuthSchemeReference = (reference: string, docs: string | undefined) => {
         const declaration = authSchemeDeclarations?.[reference];

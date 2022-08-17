@@ -1,3 +1,4 @@
+import { AbsoluteFilePath } from "@fern-api/core-utils";
 import { writeFile } from "fs/promises";
 import path from "path";
 import { loadProject } from "../utils/load-project/loadProject";
@@ -8,7 +9,7 @@ export async function generateIrForWorkspaces({
     irFilepath,
 }: {
     commandLineWorkspaces: readonly string[];
-    irFilepath: string | undefined;
+    irFilepath: AbsoluteFilePath | undefined;
 }): Promise<void> {
     const { workspaces } = await loadProject({ commandLineWorkspaces });
 

@@ -25,6 +25,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
+    "@fern-api/core-utils": "workspace:*",
     "@fern-api/docker-utils": "workspace:*",
     "@fern-api/generators-configuration": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",

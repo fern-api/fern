@@ -1,3 +1,4 @@
+import { RelativeFilePath } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { FernFilepath, TypeReference } from "@fern-fern/ir-model";
 import { WebSocketChannel, WebSocketMessenger } from "@fern-fern/ir-model/services";
@@ -14,7 +15,7 @@ export function convertWebsocketChannel({
     channelId: string;
     channelDefinition: RawSchemas.WebSocketChannelSchema;
     fernFilepath: FernFilepath;
-    imports: Record<string, string>;
+    imports: Record<string, RelativeFilePath>;
 }): WebSocketChannel {
     return {
         docs: channelDefinition.docs,
@@ -48,7 +49,7 @@ function convertWebSocketMessenger({
 }: {
     messenger: RawSchemas.WebSocketMessengerSchema | null | undefined;
     fernFilepath: FernFilepath;
-    imports: Record<string, string>;
+    imports: Record<string, RelativeFilePath>;
 }): WebSocketMessenger {
     const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
     return {

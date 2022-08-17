@@ -1,4 +1,4 @@
-import { noop } from "@fern-api/core-utils";
+import { cwd, FilePath, noop, resolve } from "@fern-api/core-utils";
 import { initialize } from "@fern-api/init";
 import { initiateLogin } from "@fern-api/login";
 import inquirer, { InputQuestion } from "inquirer";
@@ -155,7 +155,11 @@ function addConvertCommand(cli: Argv<GlobalCliOptions>) {
                     demandOption: true,
                     description: "Output directory for your Fern API definition",
                 }),
-        (argv) => convertOpenApiToFernApiDefinition(argv.openapiPath, argv.fernDefinitionDir)
+        (argv) =>
+            convertOpenApiToFernApiDefinition(
+                resolve(cwd(), FilePath.of(argv.openapiPath)),
+                resolve(cwd(), FilePath.of(argv.fernDefinitionDir))
+            )
     );
 }
 
@@ -182,7 +186,7 @@ function addGenerateIrCommand(cli: Argv<GlobalCliOptions>) {
         (argv) =>
             generateIrForWorkspaces({
                 commandLineWorkspaces: argv.api != null ? [argv.api] : [],
-                irFilepath: argv.output,
+                irFilepath: resolve(cwd(), FilePath.of(argv.output)),
             })
     );
 }

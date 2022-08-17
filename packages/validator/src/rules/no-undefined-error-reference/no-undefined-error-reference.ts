@@ -1,3 +1,4 @@
+import { RelativeFilePath } from "@fern-api/core-utils";
 import { parseReferenceToTypeName } from "@fern-api/ir-generator";
 import { Workspace } from "@fern-api/workspace-loader";
 import { visitFernYamlAst } from "@fern-api/yaml-schema";
@@ -8,7 +9,7 @@ export const NoUndefinedErrorReferenceRule: Rule = {
     create: async ({ workspace }) => {
         const errorsByFilepath = await getErrorsByFilepath(workspace);
 
-        function doesErrorExist(errorName: string, relativeFilePath: string) {
+        function doesErrorExist(errorName: string, relativeFilePath: RelativeFilePath) {
             const errorsForFilepath = errorsByFilepath[relativeFilePath];
             if (errorsForFilepath == null) {
                 return false;

@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/config-management-commons";
+import { RelativeFilePath } from "@fern-api/core-utils";
 import { FernAstNodeTypes, NodePath, ServiceFileSchema } from "@fern-api/yaml-schema";
 import { FernAstNodeVisitor, FernAstVisitor } from "@fern-api/yaml-schema/src/ast/FernAstVisitor";
 import { RuleRunner } from "./Rule";

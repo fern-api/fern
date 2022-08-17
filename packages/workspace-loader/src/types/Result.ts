@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/config-management-commons";
+import { RelativeFilePath } from "@fern-api/core-utils";
 import { ServiceFileSchema } from "@fern-api/yaml-schema";
 import { ZodError } from "zod";
 import { Workspace } from "./Workspace";

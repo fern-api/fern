@@ -1,24 +1,23 @@
-import { doesPathExist } from "@fern-api/core-utils";
+import { dirname, doesPathExist, join } from "@fern-api/core-utils";
 import chalk from "chalk";
-import path from "path";
 import { Rule, RuleViolation } from "../../Rule";
 
 export const ImportFileExistsRule: Rule = {
     name: "import-file-exists",
     create: ({ workspace }) => {
         return {
-            import: async ({ importKey, importPath }, { relativeFilePath }) => {
+            import: async ({ importedAs, importPath }, { relativeFilePath }) => {
                 const violations: RuleViolation[] = [];
-                const importedFilePath = path.join(
+                const importedFilePath = join(
                     workspace.absolutePathToDefinition,
-                    path.dirname(relativeFilePath),
+                    dirname(relativeFilePath),
                     importPath
                 );
                 const fileExists = await doesPathExist(importedFilePath);
                 if (!fileExists) {
                     violations.push({
                         severity: "error",
-                        message: `Import ${chalk.bold(importKey)} points to non-existent path ${chalk.bold(
+                        message: `Import ${chalk.bold(importedAs)} points to non-existent path ${chalk.bold(
                             importPath
                         )}.`,
                     });

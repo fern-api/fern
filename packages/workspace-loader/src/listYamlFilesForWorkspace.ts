@@ -1,17 +1,16 @@
-import { RelativeFilePath } from "@fern-api/config-management-commons";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
 import { lstat, readFile } from "fs/promises";
 import glob from "glob-promise";
 import path from "path";
 import { FernFile } from "./types/FernFile";
 
-export async function listYamlFilesForWorkspace(absolutePathToDefinition: string): Promise<FernFile[]> {
+export async function listYamlFilesForWorkspace(absolutePathToDefinition: AbsoluteFilePath): Promise<FernFile[]> {
     try {
         const stats = await lstat(absolutePathToDefinition);
         if (stats.isFile()) {
-            const relativeFilepath = path.basename(absolutePathToDefinition) as RelativeFilePath;
             return [
                 await createFernFile({
-                    relativeFilepath,
+                    relativeFilepath: RelativeFilePath.of(path.basename(absolutePathToDefinition)),
                     absoluteFilepath: absolutePathToDefinition,
                 }),
             ];
@@ -24,16 +23,18 @@ export async function listYamlFilesForWorkspace(absolutePathToDefinition: string
 
     const files: FernFile[] = [];
 
-    const filepaths = await glob("**/*.yml", {
-        cwd: absolutePathToDefinition,
-    });
+    const filepaths = (
+        await glob("**/*.yml", {
+            cwd: absolutePathToDefinition,
+        })
+    ).map(RelativeFilePath.of);
 
     for (const filepath of filepaths) {
         try {
             files.push(
                 await createFernFile({
-                    relativeFilepath: filepath as RelativeFilePath,
-                    absoluteFilepath: path.join(absolutePathToDefinition, filepath),
+                    relativeFilepath: filepath,
+                    absoluteFilepath: join(absolutePathToDefinition, filepath),
                 })
             );
         } catch (e) {
@@ -49,7 +50,7 @@ async function createFernFile({
     absoluteFilepath,
 }: {
     relativeFilepath: RelativeFilePath;
-    absoluteFilepath: string;
+    absoluteFilepath: AbsoluteFilePath;
 }): Promise<FernFile> {
     return {
         filepath: relativeFilepath,

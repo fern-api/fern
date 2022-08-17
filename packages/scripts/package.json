@@ -31,6 +31,7 @@
     "publish:cli": "yarn dist:cli && cd dist && yarn npm publish"
   },
   "dependencies": {
+    "@fern-api/core-utils": "workspace:*",
     "@fern-api/json-schema": "workspace:*",
     "chalk": "^5.0.1",
     "execa": "^5.1.1",

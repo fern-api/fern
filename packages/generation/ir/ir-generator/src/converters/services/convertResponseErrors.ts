@@ -1,3 +1,4 @@
+import { RelativeFilePath } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { FernFilepath } from "@fern-fern/ir-model";
 import { ResponseErrors } from "@fern-fern/ir-model/services";
@@ -10,7 +11,7 @@ export function convertResponseErrors({
 }: {
     errors: RawSchemas.ResponseErrorsSchema | undefined;
     fernFilepath: FernFilepath;
-    imports: Record<string, string>;
+    imports: Record<string, RelativeFilePath>;
 }): ResponseErrors {
     return errors == null
         ? []

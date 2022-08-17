@@ -1,3 +1,4 @@
+import { RelativeFilePath } from "@fern-api/core-utils";
 import { ProjectConfigSchema, PROJECT_CONFIG_FILENAME } from "@fern-api/project-configuration";
 import { WorkspaceConfigurationSchema, WORKSPACE_CONFIGURATION_FILENAME } from "@fern-api/workspace-configuration";
 import { mkdir, readFile, rm, writeFile } from "fs/promises";
@@ -5,7 +6,7 @@ import yaml from "js-yaml";
 import path from "path";
 import { runFernCli } from "../utils/runFernCli";
 
-const RELATIVE_PATH_TO_DEFINITION = "src";
+const RELATIVE_PATH_TO_DEFINITION = RelativeFilePath.of("src");
 
 const FERN_CONFIG_JSON: ProjectConfigSchema = {
     workspaces: ["**"],
@@ -21,7 +22,7 @@ const FERN_RC: WorkspaceConfigurationSchema = {
             version: "0.0.20",
             generate: {
                 enabled: true,
-                output: "./generated-postman.json",
+                output: RelativeFilePath.of("./generated-postman.json"),
             },
         },
         {
@@ -29,7 +30,7 @@ const FERN_RC: WorkspaceConfigurationSchema = {
             version: "0.0.2",
             generate: {
                 enabled: true,
-                output: "./generated-openapi.yml",
+                output: RelativeFilePath.of("./generated-openapi.yml"),
             },
             config: {
                 format: "yaml",

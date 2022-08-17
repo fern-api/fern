@@ -1,5 +1,8 @@
 import { readdir, readFile } from "fs/promises";
 import path from "path";
+import { AbsoluteFilePath } from "./AbsoluteFilePath";
+import { join } from "./join";
+import { RelativeFilePath } from "./RelativeFilePath";
 
 export type FileOrDirectory = File | Directory;
 
@@ -15,7 +18,7 @@ export interface Directory {
     contents: FileOrDirectory[];
 }
 
-export async function getDirectoryContents(absolutePath: string): Promise<FileOrDirectory[]> {
+export async function getDirectoryContents(absolutePath: AbsoluteFilePath): Promise<FileOrDirectory[]> {
     const items = await readdir(absolutePath, { withFileTypes: true });
     return Promise.all(
         items.map(async (item) =>
@@ -23,7 +26,7 @@ export async function getDirectoryContents(absolutePath: string): Promise<FileOr
                 ? {
                       type: "directory",
                       name: item.name,
-                      contents: await getDirectoryContents(path.join(absolutePath, item.name)),
+                      contents: await getDirectoryContents(join(absolutePath, item.name as RelativeFilePath)),
                   }
                 : {
                       type: "file",
