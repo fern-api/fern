@@ -72,10 +72,6 @@ export async function runCommand({
             await runCommandInOutputDirectory("npm", ...args);
         };
 
-        const runBunCommandInOutputDirectory = async (...args: string[]): Promise<void> => {
-            await runCommandInOutputDirectory("bun", ...args);
-        };
-
         await generatorNotificationService.sendUpdate(
             GeneratorUpdate.publishing(command.npmPackage.publishInfo.packageCoordinate)
         );
@@ -97,8 +93,8 @@ export async function runCommand({
             token
             // intentionally not writing this to the project config, so the token isn't persisted
         );
-        await runBunCommandInOutputDirectory("install");
-        await runBunCommandInOutputDirectory("run", BUILD_PROJECT_SCRIPT_NAME);
+        await runNpmCommandInOutputDirectory("install");
+        await runNpmCommandInOutputDirectory("run", BUILD_PROJECT_SCRIPT_NAME);
         await runNpmCommandInOutputDirectory("publish");
 
         await generatorNotificationService.sendUpdate(
