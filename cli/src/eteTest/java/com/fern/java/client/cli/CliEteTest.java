@@ -42,6 +42,7 @@ public class CliEteTest {
     @SnapshotName("basic")
     @Test
     public void test_basic() throws IOException {
+
         Path currentPath = Paths.get("").toAbsolutePath();
         Path dotFernProjectPath = currentPath.endsWith("cli")
                 ? currentPath.resolve(Paths.get("src/eteTest/.fern"))

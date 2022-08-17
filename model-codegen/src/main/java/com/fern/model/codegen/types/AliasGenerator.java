@@ -15,15 +15,13 @@
  */
 package com.fern.model.codegen.types;
 
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fern.codegen.GeneratedAlias;
 import com.fern.codegen.Generator;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameConstants;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
-import com.fern.java.immutables.AliasImmutablesStyle;
 import com.fern.types.AliasTypeDeclaration;
 import com.fern.types.DeclaredTypeName;
 import com.fern.types.PrimitiveType;
@@ -34,20 +32,17 @@ import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
-import java.util.List;
 import javax.lang.model.element.Modifier;
-import org.immutables.value.Value;
 
 public final class AliasGenerator extends Generator {
 
-    private static final String IMMUTABLES_VALUE_PROPERTY_NAME = "value";
+    private static final String VALUE_FIELD_NAME = "value";
 
     private static final String OF_METHOD_NAME = "of";
 
     private final AliasTypeDeclaration aliasTypeDeclaration;
     private final DeclaredTypeName declaredTypeName;
     private final ClassName generatedAliasClassName;
-    private final ClassName generatedAliasImmutablesClassName;
 
     public AliasGenerator(
             AliasTypeDeclaration aliasTypeDeclaration,
@@ -59,25 +54,28 @@ public final class AliasGenerator extends Generator {
         this.generatedAliasClassName = generatorContext
                 .getClassNameUtils()
                 .getClassNameFromDeclaredTypeName(declaredTypeName, PackageType.MODEL);
-        this.generatedAliasImmutablesClassName =
-                generatorContext.getImmutablesUtils().getImmutablesClassName(generatedAliasClassName);
     }
 
     @Override
     public GeneratedAlias generate() {
-        TypeSpec.Builder aliasTypeSpecBuilder = TypeSpec.classBuilder(generatedAliasClassName)
-                .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
-                .addAnnotations(getAnnotationSpecs());
+        TypeSpec.Builder aliasTypeSpecBuilder =
+                TypeSpec.classBuilder(generatedAliasClassName).addModifiers(Modifier.PUBLIC, Modifier.FINAL);
         TypeSpec aliasTypeSpec;
         if (aliasTypeDeclaration.aliasOf().isVoid()) {
-            aliasTypeSpec = aliasTypeSpecBuilder.addMethod(getOfMethodName()).build();
+            aliasTypeSpec = aliasTypeSpecBuilder
+                    .addMethod(getConstructor())
+                    .addMethod(getOfMethodName())
+                    .build();
         } else {
             TypeName aliasTypeName = generatorContext
                     .getClassNameUtils()
                     .getTypeNameFromTypeReference(true, aliasTypeDeclaration.aliasOf());
             aliasTypeSpec = aliasTypeSpecBuilder
-                    .addMethod(getImmutablesValueProperty(aliasTypeName))
+                    .addField(aliasTypeName, VALUE_FIELD_NAME, Modifier.PRIVATE, Modifier.FINAL)
+                    .addMethod(getConstructor(aliasTypeName))
                     .addMethod(getOfMethodName(aliasTypeName))
+                    .addMethod(getEqualsMethod(aliasTypeName))
+                    .addMethod(getHashCodeMethod())
                     .addMethod(getToStringMethod())
                     .build();
         }
@@ -90,32 +88,31 @@ public final class AliasGenerator extends Generator {
                 .build();
     }
 
-    private List<AnnotationSpec> getAnnotationSpecs() {
-        return List.of(
-                AnnotationSpec.builder(Value.Immutable.class).build(),
-                AnnotationSpec.builder(ClassName.get(AliasImmutablesStyle.class))
-                        .build(),
-                AnnotationSpec.builder(JsonDeserialize.class)
-                        .addMember("as", "$T.class", generatedAliasImmutablesClassName)
-                        .build(),
-                AnnotationSpec.builder(JsonSerialize.class)
-                        .addMember("as", "$T.class", generatedAliasImmutablesClassName)
-                        .build());
+    private MethodSpec getConstructor(TypeName aliasTypeName) {
+        return MethodSpec.constructorBuilder()
+                .addModifiers(Modifier.PRIVATE)
+                .addParameter(aliasTypeName, VALUE_FIELD_NAME)
+                .addStatement("this.value = value")
+                .build();
     }
 
-    private MethodSpec getImmutablesValueProperty(TypeName aliasTypeName) {
-        return MethodSpec.methodBuilder(IMMUTABLES_VALUE_PROPERTY_NAME)
-                .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
-                .addAnnotation(JsonValue.class)
-                .returns(aliasTypeName)
-                .build();
+    private MethodSpec getConstructor() {
+        return MethodSpec.constructorBuilder().addModifiers(Modifier.PRIVATE).build();
     }
 
     private MethodSpec getOfMethodName(TypeName aliasTypeName) {
         return MethodSpec.methodBuilder(OF_METHOD_NAME)
+                .addAnnotation(AnnotationSpec.builder(JsonCreator.class)
+                        .addMember(
+                                "mode",
+                                "$T.$L.$L",
+                                JsonCreator.class,
+                                JsonCreator.Mode.class.getSimpleName(),
+                                Mode.DELEGATING.name())
+                        .build())
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .addParameter(aliasTypeName, "value")
-                .addStatement("return $T.of($L)", generatedAliasImmutablesClassName, "value")
+                .addStatement("return new $T($L)", generatedAliasClassName, "value")
                 .returns(generatedAliasClassName)
                 .build();
     }
@@ -123,8 +120,38 @@ public final class AliasGenerator extends Generator {
     private MethodSpec getOfMethodName() {
         return MethodSpec.methodBuilder(OF_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                .addStatement("return $T.of()", generatedAliasImmutablesClassName)
+                .addStatement("return new $T()", generatedAliasClassName)
                 .returns(generatedAliasClassName)
+                .build();
+    }
+
+    private MethodSpec getEqualsMethod(TypeName aliasTypeName) {
+        boolean isPrimitive = aliasTypeName.isPrimitive();
+        String impl = isPrimitive
+                ? "return this == other || (other instanceof $T && this.$L == (($T) other).value)"
+                : "return this == other || (other instanceof $T && this.$L.equals((($T) other).value))";
+        return MethodSpec.methodBuilder("equals")
+                .addAnnotation(Override.class)
+                .addModifiers(Modifier.PUBLIC)
+                .returns(boolean.class)
+                .addParameter(Object.class, "other")
+                .addStatement(impl, generatedAliasClassName, VALUE_FIELD_NAME, generatedAliasClassName)
+                .build();
+    }
+
+    private MethodSpec getHashCodeMethod() {
+        CodeBlock hashCodeMethodBlock;
+        if (aliasTypeDeclaration.aliasOf().isPrimitive()) {
+            hashCodeMethodBlock =
+                    aliasTypeDeclaration.aliasOf().getPrimitive().get().visit(HashcodeMethodSpecVisitor.INSTANCE);
+        } else {
+            hashCodeMethodBlock = CodeBlock.of("return $L().$L()", VALUE_FIELD_NAME, "toString");
+        }
+        return MethodSpec.methodBuilder("hashCode")
+                .addAnnotation(Override.class)
+                .addModifiers(Modifier.PUBLIC)
+                .returns(int.class)
+                .addStatement(hashCodeMethodBlock)
                 .build();
     }
 
@@ -134,7 +161,7 @@ public final class AliasGenerator extends Generator {
             toStringMethodCodeBlock =
                     aliasTypeDeclaration.aliasOf().getPrimitive().get().visit(ToStringMethodSpecVisitor.INSTANCE);
         } else {
-            toStringMethodCodeBlock = CodeBlock.of("return $L().$L()", IMMUTABLES_VALUE_PROPERTY_NAME, "toString");
+            toStringMethodCodeBlock = CodeBlock.of("return $L().$L()", VALUE_FIELD_NAME, "toString");
         }
         return MethodSpec.methodBuilder("toString")
                 .addModifiers(Modifier.PUBLIC)
@@ -150,37 +177,82 @@ public final class AliasGenerator extends Generator {
 
         @Override
         public CodeBlock visitInteger() {
-            return CodeBlock.of("return $T.$L($L())", Integer.class, "toString", IMMUTABLES_VALUE_PROPERTY_NAME);
+            return CodeBlock.of("return $T.$L($L)", Integer.class, "toString", VALUE_FIELD_NAME);
         }
 
         @Override
         public CodeBlock visitDouble() {
-            return CodeBlock.of("return $T.$L($L())", Double.class, "toString", IMMUTABLES_VALUE_PROPERTY_NAME);
+            return CodeBlock.of("return $T.$L($L)", Double.class, "toString", VALUE_FIELD_NAME);
         }
 
         @Override
         public CodeBlock visitString() {
-            return CodeBlock.of("return $L()", IMMUTABLES_VALUE_PROPERTY_NAME);
+            return CodeBlock.of("return $L", VALUE_FIELD_NAME);
         }
 
         @Override
         public CodeBlock visitBoolean() {
-            return CodeBlock.of("return $T.$L($L())", Boolean.class, "toString", IMMUTABLES_VALUE_PROPERTY_NAME);
+            return CodeBlock.of("return $T.$L($L())", Boolean.class, "toString", VALUE_FIELD_NAME);
         }
 
         @Override
         public CodeBlock visitLong() {
-            return CodeBlock.of("return $T.$L($L())", Long.class, "toString", IMMUTABLES_VALUE_PROPERTY_NAME);
+            return CodeBlock.of("return $T.$L($L)", Long.class, "toString", VALUE_FIELD_NAME);
         }
 
         @Override
         public CodeBlock visitDateTime() {
-            return CodeBlock.of("return $L()", IMMUTABLES_VALUE_PROPERTY_NAME);
+            return CodeBlock.of("return $L", VALUE_FIELD_NAME);
         }
 
         @Override
         public CodeBlock visitUuid() {
-            return CodeBlock.of("return $L().$L()", IMMUTABLES_VALUE_PROPERTY_NAME, "toString");
+            return CodeBlock.of("return $L.$L()", VALUE_FIELD_NAME, "toString");
+        }
+
+        @Override
+        public CodeBlock visitUnknown(String unknown) {
+            throw new RuntimeException("Encountered unknown primitive type: " + unknown);
+        }
+    }
+
+    private static final class HashcodeMethodSpecVisitor implements PrimitiveType.Visitor<CodeBlock> {
+
+        private static final HashcodeMethodSpecVisitor INSTANCE = new HashcodeMethodSpecVisitor();
+
+        @Override
+        public CodeBlock visitInteger() {
+            return CodeBlock.of("return $T.hashCode($L)", Integer.class, VALUE_FIELD_NAME);
+        }
+
+        @Override
+        public CodeBlock visitDouble() {
+            return CodeBlock.of("return $T.hashCode($L)", Double.class, VALUE_FIELD_NAME);
+        }
+
+        @Override
+        public CodeBlock visitString() {
+            return CodeBlock.of("return $L.hashCode()", VALUE_FIELD_NAME);
+        }
+
+        @Override
+        public CodeBlock visitBoolean() {
+            return CodeBlock.of("return $T.hashCode($L)", Boolean.class, VALUE_FIELD_NAME);
+        }
+
+        @Override
+        public CodeBlock visitLong() {
+            return CodeBlock.of("return $L.hashCode()", VALUE_FIELD_NAME);
+        }
+
+        @Override
+        public CodeBlock visitDateTime() {
+            return CodeBlock.of("return $L.hashCode()", VALUE_FIELD_NAME);
+        }
+
+        @Override
+        public CodeBlock visitUuid() {
+            return CodeBlock.of("return $L.hashCode()", VALUE_FIELD_NAME);
         }
 
         @Override

@@ -365,34 +365,39 @@ dependencies {
 basic[basic/generated-java/basic-model/src/main/java/com/fern/basic/model/blog/Age.java]=[
 package com.fern.basic.model.blog;
 
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fern.java.immutables.AliasImmutablesStyle;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import java.lang.Integer;
+import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
-import org.immutables.value.Value;
 
-@Value.Immutable
-@AliasImmutablesStyle
-@JsonDeserialize(
-    as = ImmutableAge.class
-)
-@JsonSerialize(
-    as = ImmutableAge.class
-)
-public abstract class Age {
-  @JsonValue
-  public abstract int value();
+public final class Age {
+  private final int value;
 
+  private Age(int value) {
+    this.value = value;
+  }
+
+  @JsonCreator(
+      mode = JsonCreator.Mode.DELEGATING
+  )
   public static Age of(int value) {
-    return ImmutableAge.of(value);
+    return new Age(value);
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    return this == other || (other instanceof Age && this.value == ((Age) other).value);
+  }
+
+  @Override
+  public int hashCode() {
+    return Integer.hashCode(value);
   }
 
   @Override
   public String toString() {
-    return Integer.toString(value());
+    return Integer.toString(value);
   }
 }
 
@@ -736,33 +741,38 @@ public final class GetPostFailedResponse {
 basic[basic/generated-java/basic-model/src/main/java/com/fern/basic/model/blog/PostId.java]=[
 package com.fern.basic.model.blog;
 
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fern.java.immutables.AliasImmutablesStyle;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
-import org.immutables.value.Value;
 
-@Value.Immutable
-@AliasImmutablesStyle
-@JsonDeserialize(
-    as = ImmutablePostId.class
-)
-@JsonSerialize(
-    as = ImmutablePostId.class
-)
-public abstract class PostId {
-  @JsonValue
-  public abstract String value();
+public final class PostId {
+  private final String value;
 
+  private PostId(String value) {
+    this.value = value;
+  }
+
+  @JsonCreator(
+      mode = JsonCreator.Mode.DELEGATING
+  )
   public static PostId of(String value) {
-    return ImmutablePostId.of(value);
+    return new PostId(value);
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    return this == other || (other instanceof PostId && this.value.equals(((PostId) other).value));
+  }
+
+  @Override
+  public int hashCode() {
+    return value.hashCode();
   }
 
   @Override
   public String toString() {
-    return value();
+    return value;
   }
 }
 
@@ -994,33 +1004,38 @@ public interface UnauthorizedErrorBody {
 basic[basic/generated-java/basic-model/src/main/java/com/fern/basic/model/dummy/DummyId.java]=[
 package com.fern.basic.model.dummy;
 
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fern.java.immutables.AliasImmutablesStyle;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
-import org.immutables.value.Value;
 
-@Value.Immutable
-@AliasImmutablesStyle
-@JsonDeserialize(
-    as = ImmutableDummyId.class
-)
-@JsonSerialize(
-    as = ImmutableDummyId.class
-)
-public abstract class DummyId {
-  @JsonValue
-  public abstract String value();
+public final class DummyId {
+  private final String value;
 
+  private DummyId(String value) {
+    this.value = value;
+  }
+
+  @JsonCreator(
+      mode = JsonCreator.Mode.DELEGATING
+  )
   public static DummyId of(String value) {
-    return ImmutableDummyId.of(value);
+    return new DummyId(value);
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    return this == other || (other instanceof DummyId && this.value.equals(((DummyId) other).value));
+  }
+
+  @Override
+  public int hashCode() {
+    return value.hashCode();
   }
 
   @Override
   public String toString() {
-    return value();
+    return value;
   }
 }
 
