@@ -13,21 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fern.codegen;
+package com.fern.codegen.utils;
 
-import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import com.fern.types.DeclaredErrorName;
-import com.squareup.javapoet.MethodSpec;
-import java.util.Map;
-import org.immutables.value.Value;
+import com.fern.types.services.HttpPath;
+import com.fern.types.services.HttpPathPart;
 
-@Value.Immutable
-@StagedBuilderImmutablesStyle
-public interface GeneratedEndpointError extends IGeneratedFile {
+public class HttpPathUtils {
 
-    Map<DeclaredErrorName, MethodSpec> constructorsByResponseError();
+    private HttpPathUtils() {}
 
-    static ImmutableGeneratedEndpointError.FileBuildStage builder() {
-        return ImmutableGeneratedEndpointError.builder();
+    public static String getPathWithCurlyBracedPathParams(HttpPath httpPath) {
+        String result = httpPath.head();
+        for (HttpPathPart httpPathPart : httpPath.parts()) {
+            result += "{" + httpPathPart.pathParameter() + "}" + httpPathPart.tail();
+        }
+        return result;
     }
 }

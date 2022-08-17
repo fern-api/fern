@@ -19,11 +19,11 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fern.codegen.GeneratedAlias;
+import com.fern.codegen.Generator;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameConstants;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.java.immutables.AliasImmutablesStyle;
-import com.fern.model.codegen.Generator;
 import com.fern.types.AliasTypeDeclaration;
 import com.fern.types.DeclaredTypeName;
 import com.fern.types.PrimitiveType;
@@ -42,7 +42,7 @@ public final class AliasGenerator extends Generator {
 
     private static final String IMMUTABLES_VALUE_PROPERTY_NAME = "value";
 
-    private static final String VALUE_OF_METHOD_NAME = "valueOf";
+    private static final String OF_METHOD_NAME = "of";
 
     private final AliasTypeDeclaration aliasTypeDeclaration;
     private final DeclaredTypeName declaredTypeName;
@@ -70,14 +70,14 @@ public final class AliasGenerator extends Generator {
                 .addAnnotations(getAnnotationSpecs());
         TypeSpec aliasTypeSpec;
         if (aliasTypeDeclaration.aliasOf().isVoid()) {
-            aliasTypeSpec = aliasTypeSpecBuilder.addMethod(getValueOfMethod()).build();
+            aliasTypeSpec = aliasTypeSpecBuilder.addMethod(getOfMethodName()).build();
         } else {
             TypeName aliasTypeName = generatorContext
                     .getClassNameUtils()
                     .getTypeNameFromTypeReference(true, aliasTypeDeclaration.aliasOf());
             aliasTypeSpec = aliasTypeSpecBuilder
                     .addMethod(getImmutablesValueProperty(aliasTypeName))
-                    .addMethod(getValueOfMethod(aliasTypeName))
+                    .addMethod(getOfMethodName(aliasTypeName))
                     .addMethod(getToStringMethod())
                     .build();
         }
@@ -111,8 +111,8 @@ public final class AliasGenerator extends Generator {
                 .build();
     }
 
-    private MethodSpec getValueOfMethod(TypeName aliasTypeName) {
-        return MethodSpec.methodBuilder(VALUE_OF_METHOD_NAME)
+    private MethodSpec getOfMethodName(TypeName aliasTypeName) {
+        return MethodSpec.methodBuilder(OF_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .addParameter(aliasTypeName, "value")
                 .addStatement("return $T.of($L)", generatedAliasImmutablesClassName, "value")
@@ -120,8 +120,8 @@ public final class AliasGenerator extends Generator {
                 .build();
     }
 
-    private MethodSpec getValueOfMethod() {
-        return MethodSpec.methodBuilder(VALUE_OF_METHOD_NAME)
+    private MethodSpec getOfMethodName() {
+        return MethodSpec.methodBuilder(OF_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .addStatement("return $T.of()", generatedAliasImmutablesClassName)
                 .returns(generatedAliasClassName)

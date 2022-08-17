@@ -15,19 +15,14 @@
  */
 package com.fern.codegen;
 
-import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import com.fern.types.DeclaredErrorName;
-import com.squareup.javapoet.MethodSpec;
-import java.util.Map;
-import org.immutables.value.Value;
+public abstract class Generator {
 
-@Value.Immutable
-@StagedBuilderImmutablesStyle
-public interface GeneratedEndpointError extends IGeneratedFile {
+    @SuppressWarnings("VisibilityModifier")
+    protected final GeneratorContext generatorContext;
 
-    Map<DeclaredErrorName, MethodSpec> constructorsByResponseError();
-
-    static ImmutableGeneratedEndpointError.FileBuildStage builder() {
-        return ImmutableGeneratedEndpointError.builder();
+    public Generator(GeneratorContext generatorContext) {
+        this.generatorContext = generatorContext;
     }
+
+    public abstract IGeneratedFile generate();
 }

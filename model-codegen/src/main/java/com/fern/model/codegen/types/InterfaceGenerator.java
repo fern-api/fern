@@ -16,9 +16,9 @@
 package com.fern.model.codegen.types;
 
 import com.fern.codegen.GeneratedInterface;
+import com.fern.codegen.Generator;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
-import com.fern.model.codegen.Generator;
 import com.fern.types.DeclaredTypeName;
 import com.fern.types.ObjectProperty;
 import com.fern.types.ObjectTypeDeclaration;

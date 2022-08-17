@@ -16,14 +16,15 @@
 
 package com.fern.jersey.client;
 
+import com.fern.codegen.GeneratedAuthSchemes;
 import com.fern.codegen.GeneratedClientWrapper;
 import com.fern.codegen.GeneratedFile;
 import com.fern.codegen.GeneratedHttpServiceClient;
+import com.fern.codegen.Generator;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.CasingUtils;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import com.fern.model.codegen.Generator;
 import com.fern.types.FernFilepath;
 import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.ClassName;
@@ -53,14 +54,17 @@ public final class ClientWrapperGenerator extends Generator {
 
     private static final String MEMOIZE_METHOD_NAME = "memoize";
     private static final String URL_PARAMETER_NAME = "url";
+    private static final String AUTH_PARAMETER_NAME = "auth";
     private final List<GeneratedHttpServiceClient> generatedHttpServiceClients;
     private final ClassName generatedClientWrapperClassName;
     private final ClientConfig rootClientConfig;
+    private final Optional<GeneratedAuthSchemes> maybeGeneratedAuthSchemes;
 
     public ClientWrapperGenerator(
             GeneratorContext generatorContext,
             List<GeneratedHttpServiceClient> generatedHttpServiceClients,
-            String workspaceName) {
+            String workspaceName,
+            Optional<GeneratedAuthSchemes> maybeGeneratedAuthSchemes) {
         super(generatorContext);
         this.generatedHttpServiceClients = generatedHttpServiceClients;
         this.generatedClientWrapperClassName = generatorContext
@@ -80,6 +84,7 @@ public final class ClientWrapperGenerator extends Generator {
                         .size()))
                 .collect(Collectors.toList());
         this.rootClientConfig = createClientConfig(clientsOrderedByDept, 1, generatedClientWrapperClassName);
+        this.maybeGeneratedAuthSchemes = maybeGeneratedAuthSchemes;
     }
 
     @Override
@@ -126,7 +131,10 @@ public final class ClientWrapperGenerator extends Generator {
                         .name()
                         .name());
             } else {
-                methodName = fernFilepath.value().get(fernFilepath.value().size() - 1);
+                methodName = fernFilepath
+                        .value()
+                        .get(fernFilepath.value().size() - 1)
+                        .originalValue();
             }
             clientWrapperBuilder.addMethod(MethodSpec.methodBuilder(methodName)
                     .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
@@ -143,7 +151,10 @@ public final class ClientWrapperGenerator extends Generator {
                     .addStatement("return this.$L", prefix)
                     .build());
         });
-        clientWrapperBuilder.addMethod(createConstructor(supplierFields, nestedClientFields));
+        clientWrapperBuilder.addMethod(createUrlOnlyConstructor(supplierFields, nestedClientFields));
+        maybeGeneratedAuthSchemes.ifPresent(generatedAuthSchemes -> clientWrapperBuilder.addMethod(
+                createUrlAndAuthConstructor(supplierFields, nestedClientFields, generatedAuthSchemes)));
+
         TypeSpec clientWrapperTypeSpec =
                 clientWrapperBuilder.addMethod(createMemoizeMethod()).build();
         JavaFile clientWrapperJavaFile = JavaFile.builder(
@@ -155,7 +166,7 @@ public final class ClientWrapperGenerator extends Generator {
                 .build();
     }
 
-    private MethodSpec createConstructor(
+    private MethodSpec createUrlOnlyConstructor(
             Map<String, GeneratedHttpServiceClient> supplierFields, Map<String, ClassName> nestedClientFields) {
         MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PUBLIC)
@@ -171,6 +182,34 @@ public final class ClientWrapperGenerator extends Generator {
         KeyedStream.stream(nestedClientFields).forEach((fieldName, nestedClientCLassName) -> {
             constructorBuilder.addStatement(
                     "this.$L = new $T($L)", fieldName, nestedClientCLassName, URL_PARAMETER_NAME);
+        });
+        return constructorBuilder.build();
+    }
+
+    private MethodSpec createUrlAndAuthConstructor(
+            Map<String, GeneratedHttpServiceClient> supplierFields,
+            Map<String, ClassName> nestedClientFields,
+            GeneratedAuthSchemes generatedAuthSchemes) {
+        MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(String.class, URL_PARAMETER_NAME)
+                .addParameter(generatedAuthSchemes.className(), AUTH_PARAMETER_NAME);
+        KeyedStream.stream(supplierFields).forEach((fieldName, httpClient) -> {
+            constructorBuilder.addStatement(
+                    "this.$L = $L(() -> new $T($L, $L))",
+                    fieldName,
+                    MEMOIZE_METHOD_NAME,
+                    httpClient.className(),
+                    URL_PARAMETER_NAME,
+                    AUTH_PARAMETER_NAME);
+        });
+        KeyedStream.stream(nestedClientFields).forEach((fieldName, nestedClientCLassName) -> {
+            constructorBuilder.addStatement(
+                    "this.$L = new $T($L, $L)",
+                    fieldName,
+                    nestedClientCLassName,
+                    URL_PARAMETER_NAME,
+                    AUTH_PARAMETER_NAME);
         });
         return constructorBuilder.build();
     }
@@ -212,7 +251,7 @@ public final class ClientWrapperGenerator extends Generator {
             if (fernFilepath.value().size() <= fernFilePathSize) {
                 clientConfigBuilder.addHttpServiceClient(generatedHttpServiceClient);
             } else {
-                String prefix = fernFilepath.value().get(fernFilePathSize);
+                String prefix = fernFilepath.value().get(fernFilePathSize).originalValue();
                 if (nestedClients.containsKey(prefix)) {
                     nestedClients.get(prefix).add(generatedHttpServiceClient);
                 } else {

@@ -1,6 +1,5 @@
 dependencies {
     api project(':runtime-utils:immutables-utils')
-    implementation project(':runtime-utils:auth-utils')
     implementation project(':runtime-utils:jackson-utils')
     implementation project(':runtime-utils:jersey-utils')
     implementation project(':runtime-utils:exception-utils')

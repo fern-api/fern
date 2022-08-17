@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.codegen.GeneratedUnion;
+import com.fern.codegen.Generator;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameConstants;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
@@ -30,7 +31,6 @@ import com.fern.codegen.utils.KeyWordUtils;
 import com.fern.codegen.utils.VisitorUtils;
 import com.fern.codegen.utils.VisitorUtils.GeneratedVisitor;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import com.fern.model.codegen.Generator;
 import com.fern.types.DeclaredTypeName;
 import com.fern.types.SingleUnionType;
 import com.fern.types.TypeDeclaration;
@@ -100,7 +100,8 @@ public final class UnionGenerator extends Generator {
                 .collect(Collectors.toMap(
                         Function.identity(),
                         singleUnionType -> generatedUnionClassName.nestedClass(INTERNAL_CLASS_NAME_PREFIX
-                                + StringUtils.capitalize(singleUnionType.discriminantValue())
+                                + StringUtils.capitalize(
+                                        singleUnionType.discriminantValue().wireValue())
                                 + INTERNAL_CLASS_NAME_SUFFIX),
                         (u, v) -> {
                             throw new IllegalStateException(String.format("Duplicate key %s", u));
@@ -218,8 +219,8 @@ public final class UnionGenerator extends Generator {
     private List<MethodSpec> getStaticBuilderMethods() {
         return unionTypeDeclaration.types().stream()
                 .map(singleUnionType -> {
-                    String keyWordCompatibleName =
-                            KeyWordUtils.getKeyWordCompatibleName(singleUnionType.discriminantValue());
+                    String keyWordCompatibleName = KeyWordUtils.getKeyWordCompatibleName(
+                            singleUnionType.discriminantValue().wireValue());
                     MethodSpec.Builder staticBuilder = MethodSpec.methodBuilder(keyWordCompatibleName)
                             .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                             .returns(generatedUnionClassName);
@@ -253,7 +254,9 @@ public final class UnionGenerator extends Generator {
                 .collect(Collectors.toMap(
                         Function.identity(),
                         singleUnionType -> MethodSpec.methodBuilder(IS_METHOD_NAME_PREFIX
-                                        + StringUtils.capitalize(singleUnionType.discriminantValue()))
+                                        + StringUtils.capitalize(singleUnionType
+                                                .discriminantValue()
+                                                .wireValue()))
                                 .addModifiers(Modifier.PUBLIC)
                                 .returns(boolean.class)
                                 .addStatement(
@@ -278,7 +281,8 @@ public final class UnionGenerator extends Generator {
                     TypeName singleUnionTypeName = generatorContext
                             .getClassNameUtils()
                             .getTypeNameFromTypeReference(false, singleUnionType.valueType());
-                    String capitalizedDiscriminantValue = StringUtils.capitalize(singleUnionType.discriminantValue());
+                    String capitalizedDiscriminantValue = StringUtils.capitalize(
+                            singleUnionType.discriminantValue().wireValue());
                     return MethodSpec.methodBuilder("get" + capitalizedDiscriminantValue)
                             .addModifiers(Modifier.PUBLIC)
                             .returns(ParameterizedTypeName.get(
@@ -321,12 +325,12 @@ public final class UnionGenerator extends Generator {
         if (singleUnionType.valueType().isVoid()) {
             return VisitorUtils.VisitMethodArgs.<SingleUnionType>builder()
                     .key(singleUnionType)
-                    .keyName(singleUnionType.discriminantValue())
+                    .keyName(singleUnionType.discriminantValue().wireValue())
                     .build();
         } else {
             return VisitorUtils.VisitMethodArgs.<SingleUnionType>builder()
                     .key(singleUnionType)
-                    .keyName(singleUnionType.discriminantValue())
+                    .keyName(singleUnionType.discriminantValue().wireValue())
                     .visitorType(generatorContext
                             .getClassNameUtils()
                             .getTypeNameFromTypeReference(true, singleUnionType.valueType()))
@@ -394,7 +398,8 @@ public final class UnionGenerator extends Generator {
             GeneratedVisitor<SingleUnionType> generatedVisitor) {
         Map<SingleUnionType, GeneratedInternalValueTypeSpec> result = new LinkedHashMap<>();
         unionTypeDeclaration.types().forEach(singleUnionType -> {
-            String capitalizedDiscriminantValue = StringUtils.capitalize(singleUnionType.discriminantValue());
+            String capitalizedDiscriminantValue =
+                    StringUtils.capitalize(singleUnionType.discriminantValue().wireValue());
             ClassName internalValueClassName = internalValueClassNames.get(singleUnionType);
             MethodSpec visitorMethodName =
                     generatedVisitor.visitMethodsByKeyName().get(singleUnionType);
@@ -523,7 +528,8 @@ public final class UnionGenerator extends Generator {
                 generatorContext.getClassNameUtils().getTypeNameFromTypeReference(true, singleUnionType.valueType());
         MethodSpec internalValueImmutablesProperty = generatorContext
                 .getImmutablesUtils()
-                .getKeyWordCompatibleImmutablesPropertyMethod(singleUnionType.discriminantValue(), returnTypeName);
+                .getKeyWordCompatibleImmutablesPropertyMethod(
+                        singleUnionType.discriminantValue().wireValue(), returnTypeName);
         // Add @JsonValue annotation on object type reference because properties are collapsed one level
         if (isTypeReferenceAnObject(singleUnionType.valueType())) {
             return MethodSpec.methodBuilder(internalValueImmutablesProperty.name)

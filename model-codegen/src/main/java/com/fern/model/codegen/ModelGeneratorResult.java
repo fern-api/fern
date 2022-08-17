@@ -23,9 +23,9 @@ import com.fern.codegen.GeneratedInterface;
 import com.fern.codegen.GeneratedObject;
 import com.fern.codegen.GeneratedUnion;
 import com.fern.codegen.IGeneratedFile;
+import com.fern.types.DeclaredErrorName;
 import com.fern.types.DeclaredTypeName;
-import com.fern.types.ErrorName;
-import com.fern.types.services.EndpointId;
+import com.fern.types.services.HttpEndpointId;
 import com.fern.types.services.HttpService;
 import java.util.List;
 import java.util.Map;
@@ -46,9 +46,9 @@ public interface ModelGeneratorResult {
 
     List<GeneratedUnion> unions();
 
-    Map<ErrorName, GeneratedError> errors();
+    Map<DeclaredErrorName, GeneratedError> errors();
 
-    Map<HttpService, Map<EndpointId, GeneratedEndpointModel>> endpointModels();
+    Map<HttpService, Map<HttpEndpointId, GeneratedEndpointModel>> endpointModels();
 
     default List<IGeneratedFile> endpointModelFiles() {
         return endpointModels().values().stream()

@@ -17,14 +17,14 @@ package com.fern.jersey.client;
 
 import com.fern.codegen.GeneratedEndpointError;
 import com.fern.codegen.GeneratedErrorDecoder;
+import com.fern.codegen.Generator;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameConstants;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.java.exception.UnknownRemoteException;
-import com.fern.model.codegen.Generator;
 import com.fern.model.codegen.services.payloads.FailedResponseGenerator;
-import com.fern.types.services.EndpointId;
 import com.fern.types.services.HttpEndpoint;
+import com.fern.types.services.HttpEndpointId;
 import com.fern.types.services.HttpService;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
@@ -58,12 +58,12 @@ public final class ServiceErrorDecoderGenerator extends Generator {
 
     private final HttpService httpService;
     private final ClassName errorDecoderClassName;
-    private final Map<EndpointId, Optional<GeneratedEndpointError>> generatedEndpointErrorFiles;
+    private final Map<HttpEndpointId, Optional<GeneratedEndpointError>> generatedEndpointErrorFiles;
 
     public ServiceErrorDecoderGenerator(
             GeneratorContext generatorContext,
             HttpService httpService,
-            Map<EndpointId, Optional<GeneratedEndpointError>> generatedEndpointErrorFiles) {
+            Map<HttpEndpointId, Optional<GeneratedEndpointError>> generatedEndpointErrorFiles) {
         super(generatorContext);
         this.httpService = httpService;
         this.errorDecoderClassName = generatorContext
@@ -99,7 +99,7 @@ public final class ServiceErrorDecoderGenerator extends Generator {
         boolean ifStatementStarted = false;
         for (HttpEndpoint httpEndpoint : httpService.endpoints()) {
             Optional<GeneratedEndpointError> maybeGeneratedEndpointErrorFile =
-                    generatedEndpointErrorFiles.get(httpEndpoint.endpointId());
+                    generatedEndpointErrorFiles.get(httpEndpoint.id());
             if (maybeGeneratedEndpointErrorFile == null || maybeGeneratedEndpointErrorFile.isEmpty()) {
                 continue;
             }
@@ -108,7 +108,7 @@ public final class ServiceErrorDecoderGenerator extends Generator {
                             "$L ($L.contains($S))",
                             ifStatementStarted ? "else if" : "if",
                             DECODE_METHOD_KEY_PARAMETER_NAME,
-                            httpEndpoint.endpointId())
+                            httpEndpoint.id())
                     .addStatement(
                             "return $L($L, $T.class, $T::$L)",
                             DECODE_EXCEPTION_METHOD_NAME,

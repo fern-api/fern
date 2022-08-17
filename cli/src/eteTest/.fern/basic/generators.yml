@@ -1,0 +1,9 @@
+generators:
+  - name: fern-java
+    version: latest
+    generate:
+      enabled: true
+      output: ./generated-java
+    config:
+      mode: client_and_server
+      serverFrameworks: spring,jersey

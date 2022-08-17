@@ -21,6 +21,7 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 import java.util.List;
+import java.util.Optional;
 import org.immutables.value.Value;
 
 @Value.Immutable
@@ -42,6 +43,8 @@ public interface GeneratedEndpointClient extends IGeneratedFile {
         ClassName requestClassName();
 
         List<MethodSpec> propertyMethodSpecs();
+
+        Optional<MethodSpec> authMethodSpec();
 
         static ImmutableGeneratedRequestInfo.RequestTypeSpecBuildStage builder() {
             return ImmutableGeneratedRequestInfo.builder();

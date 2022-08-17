@@ -1,9 +1,0 @@
-ids:
-  - DummyId
-services:
-  http:
-    DummyService:
-      auth: bearer
-      endpoints:
-        getDummy:
-          request: DummyId

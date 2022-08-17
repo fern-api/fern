@@ -31,14 +31,14 @@ import com.fern.codegen.payload.VoidPayload;
 import com.fern.model.codegen.errors.ErrorGenerator;
 import com.fern.model.codegen.services.payloads.FailedResponseGenerator;
 import com.fern.model.codegen.types.InterfaceGenerator;
+import com.fern.types.DeclaredErrorName;
 import com.fern.types.DeclaredTypeName;
 import com.fern.types.ErrorDeclaration;
-import com.fern.types.ErrorName;
 import com.fern.types.ObjectTypeDeclaration;
 import com.fern.types.Type;
 import com.fern.types.TypeDeclaration;
 import com.fern.types.TypeReference;
-import com.fern.types.services.EndpointId;
+import com.fern.types.services.HttpEndpointId;
 import com.fern.types.services.HttpService;
 import com.squareup.javapoet.TypeName;
 import java.util.List;
@@ -52,18 +52,18 @@ public final class ModelGenerator {
 
     private final List<HttpService> httpServices;
     private final List<TypeDeclaration> typeDeclarations;
-    private final List<ErrorDeclaration> errroDeclarations;
+    private final List<ErrorDeclaration> errorDeclarations;
     private final Map<DeclaredTypeName, TypeDeclaration> typeDeclarationsByName;
     private final GeneratorContext generatorContext;
 
     public ModelGenerator(
             List<HttpService> httpServices,
             List<TypeDeclaration> typeDeclarations,
-            List<ErrorDeclaration> errroDeclarations,
+            List<ErrorDeclaration> errorDeclarations,
             GeneratorContext generatorContext) {
         this.httpServices = httpServices;
         this.typeDeclarations = typeDeclarations;
-        this.errroDeclarations = errroDeclarations;
+        this.errorDeclarations = errorDeclarations;
         this.typeDeclarationsByName = generatorContext.getTypeDefinitionsByName();
         this.generatorContext = generatorContext;
     }
@@ -89,7 +89,7 @@ public final class ModelGenerator {
                         "Encountered unknown model generator result type: " + generatedFile.className());
             }
         });
-        Map<ErrorName, GeneratedError> generatedErrors = errroDeclarations.stream()
+        Map<DeclaredErrorName, GeneratedError> generatedErrors = errorDeclarations.stream()
                 .collect(Collectors.toMap(ErrorDeclaration::name, errorDefinition -> {
                     ErrorGenerator errorGenerator =
                             new ErrorGenerator(errorDefinition, generatorContext, generatedInterfaces);
@@ -98,7 +98,7 @@ public final class ModelGenerator {
         modelGeneratorResultBuilder.putAllErrors(generatedErrors);
 
         httpServices.forEach(httpService -> {
-            Map<EndpointId, GeneratedEndpointModel> generatedEndpointModels =
+            Map<HttpEndpointId, GeneratedEndpointModel> generatedEndpointModels =
                     getGeneratedEndpointModels(httpService, generatedInterfaces, generatedErrors);
             modelGeneratorResultBuilder.putEndpointModels(httpService, generatedEndpointModels);
         });
@@ -128,10 +128,10 @@ public final class ModelGenerator {
         }));
     }
 
-    private Map<EndpointId, GeneratedEndpointModel> getGeneratedEndpointModels(
+    private Map<HttpEndpointId, GeneratedEndpointModel> getGeneratedEndpointModels(
             HttpService httpService,
             Map<DeclaredTypeName, GeneratedInterface> generatedInterfaces,
-            Map<ErrorName, GeneratedError> generatedErrors) {
+            Map<DeclaredErrorName, GeneratedError> generatedErrors) {
         return httpService.endpoints().stream()
                 .map(httpEndpoint -> {
                     ImmutableGeneratedEndpointModel.Builder generatedEndpointModel =
@@ -154,7 +154,7 @@ public final class ModelGenerator {
                 })
                 .collect(Collectors.toMap(
                         generatedEndpointModel ->
-                                generatedEndpointModel.httpEndpoint().endpointId(),
+                                generatedEndpointModel.httpEndpoint().id(),
                         Function.identity()));
     }
 

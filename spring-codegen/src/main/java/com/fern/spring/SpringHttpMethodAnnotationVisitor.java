@@ -15,7 +15,7 @@
  */
 package com.fern.spring;
 
-import com.fern.codegen.utils.server.HttpPathUtils;
+import com.fern.codegen.utils.HttpPathUtils;
 import com.fern.types.services.HttpEndpoint;
 import com.fern.types.services.HttpMethod;
 import com.squareup.javapoet.AnnotationSpec;

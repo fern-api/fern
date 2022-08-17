@@ -43,19 +43,25 @@ public final class SpringServiceGeneratorUtils {
     public ParameterSpec getHeaderParameterSpec(HttpHeader header) {
         return getParameterSpec(
                 RequestHeader.class,
-                header.header(),
+                header.name().originalValue(),
                 VariableNameUtils.getVariableNameFromHeader(header),
                 header.valueType());
     }
 
     public ParameterSpec getPathParameterSpec(PathParameter pathParameter) {
         return getParameterSpec(
-                PathVariable.class, pathParameter.key(), pathParameter.key(), pathParameter.valueType());
+                PathVariable.class,
+                pathParameter.name().originalValue(),
+                pathParameter.name().originalValue(),
+                pathParameter.valueType());
     }
 
     public ParameterSpec getQueryParameterSpec(QueryParameter queryParameter) {
         return getParameterSpec(
-                RequestParam.class, queryParameter.key(), queryParameter.key(), queryParameter.valueType());
+                RequestParam.class,
+                queryParameter.name().originalValue(),
+                queryParameter.name().originalValue(),
+                queryParameter.valueType());
     }
 
     private <T> ParameterSpec getParameterSpec(

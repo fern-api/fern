@@ -47,7 +47,8 @@ public final class ImmutablesUtils {
                         objectField -> {
                             TypeName returnType =
                                     classNameUtils.getTypeNameFromTypeReference(true, objectField.valueType());
-                            return getKeyWordCompatibleImmutablesPropertyMethod(objectField.key(), returnType);
+                            return getKeyWordCompatibleImmutablesPropertyMethod(
+                                    objectField.name().originalValue(), returnType);
                         },
                         (u, _v) -> {
                             throw new IllegalStateException(String.format("Duplicate key %s", u));

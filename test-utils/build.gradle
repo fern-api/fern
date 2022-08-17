@@ -1,4 +1,0 @@
-dependencies {
-    implementation project(":codegen-utils")
-    implementation 'com.fern.fern:ir-model'
-}

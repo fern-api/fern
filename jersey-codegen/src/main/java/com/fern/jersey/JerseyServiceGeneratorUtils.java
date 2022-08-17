@@ -43,18 +43,25 @@ public final class JerseyServiceGeneratorUtils {
     public ParameterSpec getHeaderParameterSpec(HttpHeader header) {
         return getParameterSpec(
                 HeaderParam.class,
-                header.header(),
+                header.name().wireValue(),
                 VariableNameUtils.getVariableNameFromHeader(header),
                 header.valueType());
     }
 
     public ParameterSpec getPathParameterSpec(PathParameter pathParameter) {
-        return getParameterSpec(PathParam.class, pathParameter.key(), pathParameter.key(), pathParameter.valueType());
+        return getParameterSpec(
+                PathParam.class,
+                pathParameter.name().originalValue(),
+                pathParameter.name().originalValue(),
+                pathParameter.valueType());
     }
 
     public ParameterSpec getQueryParameterSpec(QueryParameter queryParameter) {
         return getParameterSpec(
-                QueryParam.class, queryParameter.key(), queryParameter.key(), queryParameter.valueType());
+                QueryParam.class,
+                queryParameter.name().originalValue(),
+                queryParameter.name().originalValue(),
+                queryParameter.valueType());
     }
 
     private <T> ParameterSpec getParameterSpec(

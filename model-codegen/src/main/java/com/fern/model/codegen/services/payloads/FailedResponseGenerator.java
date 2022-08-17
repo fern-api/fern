@@ -27,19 +27,20 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.codegen.GeneratedEndpointError;
 import com.fern.codegen.GeneratedError;
+import com.fern.codegen.Generator;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameConstants;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.codegen.utils.MethodNameUtils;
 import com.fern.java.exception.HttpException;
-import com.fern.model.codegen.Generator;
 import com.fern.model.codegen.errors.ErrorGenerator;
-import com.fern.types.ErrorName;
+import com.fern.types.DeclaredErrorName;
+import com.fern.types.ErrorDeclaration;
+import com.fern.types.services.DeclaredServiceName;
 import com.fern.types.services.HttpEndpoint;
 import com.fern.types.services.HttpService;
 import com.fern.types.services.ResponseError;
 import com.fern.types.services.ResponseErrors;
-import com.fern.types.services.ServiceName;
 import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
@@ -53,7 +54,6 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
-import org.apache.commons.lang3.StringUtils;
 import org.immutables.value.Value;
 
 public final class FailedResponseGenerator extends Generator {
@@ -72,7 +72,7 @@ public final class FailedResponseGenerator extends Generator {
     private static final String VALUE_FIELD_NAME = "value";
 
     private final ResponseErrors responseErrors;
-    private final Map<ErrorName, GeneratedError> generatedErrors;
+    private final Map<DeclaredErrorName, GeneratedError> generatedErrors;
     private final ClassName generatedEndpointErrorClassName;
     private final Map<ResponseError, ClassName> internalValueClassNames;
     private final ClassName internalValueInterfaceClassName;
@@ -81,32 +81,31 @@ public final class FailedResponseGenerator extends Generator {
             HttpService httpService,
             HttpEndpoint httpEndpoint,
             GeneratorContext generatorContext,
-            Map<ErrorName, GeneratedError> generatedErrors) {
+            Map<DeclaredErrorName, GeneratedError> generatedErrors) {
         super(generatorContext);
         this.responseErrors = httpEndpoint.errors();
         this.generatedErrors = generatedErrors;
         this.generatedEndpointErrorClassName = generatorContext
                 .getClassNameUtils()
                 .getClassNameFromServiceName(
-                        ServiceName.builder()
+                        DeclaredServiceName.builder()
                                 .fernFilepath(httpService.name().fernFilepath())
-                                .name(httpEndpoint.endpointId().value())
+                                .name(httpEndpoint.id().value())
                                 .build(),
                         FAILED_RESPONSE_SUFFIX,
                         PackageType.MODEL);
         this.internalValueClassNames = httpEndpoint.errors().value().stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
-                        error -> generatedEndpointErrorClassName.nestedClass(INTERNAL_CLASS_NAME_PREFIX
-                                + StringUtils.capitalize(error.discriminantValue())
-                                + INTERNAL_CLASS_NAME_SUFFIX)));
+                        error -> generatedEndpointErrorClassName.nestedClass(
+                                INTERNAL_CLASS_NAME_PREFIX + error.error().name() + INTERNAL_CLASS_NAME_SUFFIX)));
         this.internalValueInterfaceClassName =
                 generatedEndpointErrorClassName.nestedClass(INTERNAL_VALUE_INTERFACE_NAME);
     }
 
     @Override
     public GeneratedEndpointError generate() {
-        Map<ErrorName, MethodSpec> errorNameToMethodSpec = getStaticBuilderMethods();
+        Map<DeclaredErrorName, MethodSpec> errorNameToMethodSpec = getStaticBuilderMethods();
         TypeSpec endpointErrorTypeSpec = TypeSpec.classBuilder(generatedEndpointErrorClassName)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addAnnotation(Value.Enclosing.class)
@@ -160,9 +159,12 @@ public final class FailedResponseGenerator extends Generator {
                 .build();
     }
 
-    private Map<ErrorName, MethodSpec> getStaticBuilderMethods() {
+    private Map<DeclaredErrorName, MethodSpec> getStaticBuilderMethods() {
         return responseErrors.value().stream().collect(Collectors.toMap(ResponseError::error, errorResponse -> {
-            String methodName = MethodNameUtils.getCompatibleMethodName(errorResponse.discriminantValue());
+            ErrorDeclaration errorDeclaration =
+                    generatorContext.getErrorDefinitionsByName().get(errorResponse.error());
+            String methodName = MethodNameUtils.getCompatibleMethodName(
+                    errorDeclaration.discriminantValue().wireValue());
             MethodSpec.Builder staticBuilder = MethodSpec.methodBuilder(methodName)
                     .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                     .returns(generatedEndpointErrorClassName);
@@ -231,9 +233,12 @@ public final class FailedResponseGenerator extends Generator {
                         .build());
         AnnotationSpec.Builder jsonSubTypeAnnotationBuilder = AnnotationSpec.builder(JsonSubTypes.class);
         KeyedStream.stream(internalValueClassNames).forEach((singleUnionType, unionTypeClassName) -> {
+            ErrorDeclaration errorDeclaration =
+                    generatorContext.getErrorDefinitionsByName().get(singleUnionType.error());
             AnnotationSpec subTypeAnnotation = AnnotationSpec.builder(JsonSubTypes.Type.class)
                     .addMember("value", "$T.class", unionTypeClassName)
-                    .addMember("name", "$S", singleUnionType.discriminantValue())
+                    .addMember(
+                            "name", "$S", errorDeclaration.discriminantValue().wireValue())
                     .build();
             jsonSubTypeAnnotationBuilder.addMember("value", "$L", subTypeAnnotation);
         });
@@ -247,12 +252,17 @@ public final class FailedResponseGenerator extends Generator {
 
     private Map<ResponseError, TypeSpec> getInternalValueTypeSpecs() {
         return responseErrors.value().stream().collect(Collectors.toMap(Function.identity(), responseError -> {
+            ErrorDeclaration errorDeclaration =
+                    generatorContext.getErrorDefinitionsByName().get(responseError.error());
             GeneratedError generatedError = generatedErrors.get(responseError.error());
             ClassName internalValueClassName = internalValueClassNames.get(responseError);
             TypeSpec.Builder typeSpecBuilder = TypeSpec.interfaceBuilder(internalValueClassName)
                     .addAnnotation(Value.Immutable.class)
                     .addAnnotation(AnnotationSpec.builder(JsonTypeName.class)
-                            .addMember("value", "$S", responseError.discriminantValue())
+                            .addMember(
+                                    "value",
+                                    "$S",
+                                    errorDeclaration.discriminantValue().wireValue())
                             .build())
                     .addAnnotation(AnnotationSpec.builder(JsonDeserialize.class)
                             .addMember(

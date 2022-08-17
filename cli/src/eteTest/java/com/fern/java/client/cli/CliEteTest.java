@@ -43,11 +43,11 @@ public class CliEteTest {
     @Test
     public void test_basic() throws IOException {
         Path currentPath = Paths.get("").toAbsolutePath();
-        Path basicFernProjectPath = currentPath.endsWith("cli")
-                ? currentPath.resolve(Paths.get("src/eteTest/basic"))
-                : currentPath.resolve(Paths.get("cli/src/eteTest/basic"));
-        runCommand(basicFernProjectPath, new String[] {"fern", "generate", "--local", "--keepDocker"});
-        List<Path> paths = Files.walk(basicFernProjectPath.resolve(Paths.get("api/generated-java")))
+        Path dotFernProjectPath = currentPath.endsWith("cli")
+                ? currentPath.resolve(Paths.get("src/eteTest/.fern"))
+                : currentPath.resolve(Paths.get("cli/src/eteTest/.fern"));
+        runCommand(dotFernProjectPath, new String[] {"fern-dev", "generate", "--local", "--keepDocker"});
+        List<Path> paths = Files.walk(dotFernProjectPath.resolve(Paths.get("basic/generated-java")))
                 .collect(Collectors.toList());
         boolean filesGenerated = false;
         for (Path path : paths) {
@@ -55,7 +55,7 @@ public class CliEteTest {
                 continue;
             }
             try {
-                Path relativizedPath = basicFernProjectPath.relativize(path);
+                Path relativizedPath = dotFernProjectPath.relativize(path);
                 filesGenerated = true;
                 if (relativizedPath.getFileName().toString().endsWith("jar")) {
                     expect.scenario(relativizedPath.toString()).toMatchSnapshot(relativizedPath.toString());
@@ -72,10 +72,10 @@ public class CliEteTest {
             throw new RuntimeException("Failed to generate any files!");
         }
 
-        Path apiPath = basicFernProjectPath.resolve("api");
-        Path generatedJavaPath = apiPath.resolve("generated-java");
-        runCommand(apiPath, new String[] {"cp", "gradlew", "generated-java/"});
-        runCommand(apiPath, new String[] {"cp", "-R", "gradle-wrapper/.", "generated-java/"});
+        Path basicApiPath = dotFernProjectPath.resolve("basic");
+        Path generatedJavaPath = basicApiPath.resolve("generated-java");
+        runCommand(basicApiPath, new String[] {"cp", "gradlew", "generated-java/"});
+        runCommand(basicApiPath, new String[] {"cp", "-R", "gradle-wrapper/.", "generated-java/"});
         runCommand(generatedJavaPath, new String[] {"./gradlew", "compileJava"});
     }
 

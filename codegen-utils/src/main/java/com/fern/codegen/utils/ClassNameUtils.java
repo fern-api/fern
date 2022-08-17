@@ -15,18 +15,20 @@
  */
 package com.fern.codegen.utils;
 
+import com.fern.interfaces.IStringWithAllCasings;
+import com.fern.types.DeclaredErrorName;
 import com.fern.types.DeclaredTypeName;
-import com.fern.types.ErrorName;
 import com.fern.types.FernFilepath;
 import com.fern.types.TypeReference;
-import com.fern.types.services.EndpointId;
-import com.fern.types.services.ServiceName;
+import com.fern.types.services.DeclaredServiceName;
+import com.fern.types.services.HttpEndpointId;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeName;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 
 public final class ClassNameUtils {
@@ -40,16 +42,17 @@ public final class ClassNameUtils {
     }
 
     public ClassName getClassNameFromEndpointId(
-            ServiceName serviceName, EndpointId endpointId, PackageType packageType) {
+            DeclaredServiceName serviceName, HttpEndpointId endpointId, PackageType packageType) {
         return getClassName(endpointId.value(), Optional.empty(), Optional.of(serviceName.fernFilepath()), packageType);
     }
 
-    public ClassName getClassNameFromServiceName(ServiceName serviceName, String suffix, PackageType packageType) {
+    public ClassName getClassNameFromServiceName(
+            DeclaredServiceName serviceName, String suffix, PackageType packageType) {
         return getClassName(
                 serviceName.name(), Optional.of(suffix), Optional.of(serviceName.fernFilepath()), packageType);
     }
 
-    public ClassName getClassNameFromServiceName(ServiceName serviceName, PackageType packageType) {
+    public ClassName getClassNameFromServiceName(DeclaredServiceName serviceName, PackageType packageType) {
         return getClassName(serviceName.name(), Optional.empty(), Optional.of(serviceName.fernFilepath()), packageType);
     }
 
@@ -58,11 +61,11 @@ public final class ClassNameUtils {
                 declaredTypeName.name(), Optional.empty(), Optional.of(declaredTypeName.fernFilepath()), packageType);
     }
 
-    public ClassName getClassNameFromErrorName(ErrorName errorName, PackageType packageType) {
+    public ClassName getClassNameFromErrorName(DeclaredErrorName errorName, PackageType packageType) {
         return getClassName(errorName.name(), Optional.empty(), Optional.of(errorName.fernFilepath()), packageType);
     }
 
-    public ClassName getClassNameFromErrorName(ErrorName errorName, String suffix, PackageType packageType) {
+    public ClassName getClassNameFromErrorName(DeclaredErrorName errorName, String suffix, PackageType packageType) {
         return getClassName(errorName.name(), Optional.of(suffix), Optional.of(errorName.fernFilepath()), packageType);
     }
 
@@ -116,7 +119,10 @@ public final class ClassNameUtils {
     private String getPackage(Optional<FernFilepath> filepath, PackageType packageType) {
         List<String> packageParts = new ArrayList<>(packagePrefixes);
         packageParts.add(getPackageFromType(packageType));
-        filepath.ifPresent(fernFilepath -> packageParts.addAll(fernFilepath.value()));
+        filepath.ifPresent(fernFilepath -> packageParts.addAll(fernFilepath.value().stream()
+                .map(IStringWithAllCasings::snakeCase)
+                .map(snakeCase -> snakeCase.replaceAll("_", "."))
+                .collect(Collectors.toList())));
         return String.join(".", packageParts);
     }
 

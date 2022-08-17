@@ -13,27 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.fern.codegen;
 
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import com.fern.types.services.HttpEndpointId;
-import com.fern.types.services.HttpService;
-import com.squareup.javapoet.MethodSpec;
+import com.fern.types.AuthScheme;
 import java.util.Map;
-import java.util.Optional;
 import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderImmutablesStyle
-public interface GeneratedHttpServiceInterface extends IGeneratedFile {
+public interface GeneratedAuthSchemes extends IGeneratedFile {
 
-    HttpService httpService();
+    Map<AuthScheme, GeneratedFile> generatedAuthSchemes();
 
-    Map<HttpEndpointId, MethodSpec> endpointMethods();
-
-    Optional<GeneratedErrorDecoder> generatedErrorDecoder();
-
-    static ImmutableGeneratedHttpServiceInterface.FileBuildStage builder() {
-        return ImmutableGeneratedHttpServiceInterface.builder();
+    static ImmutableGeneratedAuthSchemes.FileBuildStage builder() {
+        return ImmutableGeneratedAuthSchemes.builder();
     }
 }

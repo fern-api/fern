@@ -83,8 +83,11 @@ jobs:
       - restore_cache: { key: 'gradle-wrapper-v2-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}' }
       - restore_cache: { key: 'unit-test-gradle-cache-v2-{{ checksum "versions.props" }}-{{ checksum "build.gradle" }}' }
       - run:
-          name: Install Fern
-          command: npm install -g fern-api@0.0.182
+          name: Install Fern Dev
+          command: |
+            npm config set @fern-api:registry https://registry.npmjs.org
+            npm config set registry.npmjs.org/:_authToken ${YARN_NPM_AUTH_TOKEN}
+            npm install -g @fern-api/fern-api-dev@0.0.184-12-gdba76681
       - run: docker network prune -f
       - run: ./gradlew --parallel --stacktrace build -x test -x check
       - run:
@@ -149,7 +152,9 @@ workflows:
       - build:
           requires: [ compile ]
           filters: { tags: { only: /.*/ } }
-          context: jfrog
+          context:
+            - jfrog
+            - npm
 
       - publish-docker:
           requires: [ check, unit-test, build ]

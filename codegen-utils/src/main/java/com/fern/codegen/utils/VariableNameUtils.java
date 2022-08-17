@@ -27,7 +27,7 @@ public final class VariableNameUtils {
     private VariableNameUtils() {}
 
     public static String getVariableNameFromHeader(HttpHeader httpHeader) {
-        String unprefixedHeader = httpHeader.header();
+        String unprefixedHeader = httpHeader.name().originalValue();
         for (String prefix : COMMON_REMOVABLE_HTTP_HEADERS) {
             if (unprefixedHeader.startsWith(prefix)) {
                 unprefixedHeader = unprefixedHeader.substring(prefix.length());

@@ -21,14 +21,14 @@ import com.fern.codegen.GeneratedEndpointModel;
 import com.fern.codegen.GeneratedError;
 import com.fern.codegen.GeneratedFile;
 import com.fern.codegen.GeneratedHttpServiceServer;
+import com.fern.codegen.Generator;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameConstants;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.java.spring.HandlerMethodUtils;
-import com.fern.model.codegen.Generator;
 import com.fern.model.codegen.errors.ErrorGenerator;
-import com.fern.types.services.EndpointId;
 import com.fern.types.services.HttpEndpoint;
+import com.fern.types.services.HttpEndpointId;
 import com.fern.types.services.HttpService;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
@@ -60,7 +60,7 @@ public final class ErrorExceptionHandlerGenerator extends Generator {
     private static final String HANDLER_METHOD_PARAMETER_NAME = "handlerMethod";
 
     private final Map<HttpService, List<HttpEndpoint>> endpointsThrowingError;
-    private final Map<HttpService, Map<EndpointId, GeneratedEndpointModel>> generatedEndpointModels;
+    private final Map<HttpService, Map<HttpEndpointId, GeneratedEndpointModel>> generatedEndpointModels;
     private final Map<HttpService, GeneratedHttpServiceServer> generatedHttpServers;
     private final GeneratedError generatedError;
     private final ClassName generatedExceptionMapperClassname;
@@ -70,7 +70,7 @@ public final class ErrorExceptionHandlerGenerator extends Generator {
             GeneratedError generatedError,
             Map<HttpService, List<HttpEndpoint>> endpointsThrowingError,
             Map<HttpService, GeneratedHttpServiceServer> generatedHttpServers,
-            Map<HttpService, Map<EndpointId, GeneratedEndpointModel>> generatedEndpointModels) {
+            Map<HttpService, Map<HttpEndpointId, GeneratedEndpointModel>> generatedEndpointModels) {
         super(generatorContext);
         this.generatedError = generatedError;
         this.generatedHttpServers = generatedHttpServers;
@@ -148,7 +148,7 @@ public final class ErrorExceptionHandlerGenerator extends Generator {
 
             boolean firstEndpointCondition = true;
             for (HttpEndpoint httpEndpoint : entry.getValue()) {
-                EndpointId endpointId = httpEndpoint.endpointId();
+                HttpEndpointId endpointId = httpEndpoint.id();
                 MethodSpec endpointMethodSpec =
                         generatedHttpServiceServer.methodsByEndpointId().get(endpointId);
                 toResponseMethodBuilder.beginControlFlow(

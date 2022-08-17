@@ -16,12 +16,15 @@
 package com.fern.java.client.cli;
 
 import com.fern.codegen.GeneratedAbstractHttpServiceRegistry;
+import com.fern.codegen.GeneratedAuthSchemes;
 import com.fern.codegen.GeneratedClientWrapper;
 import com.fern.codegen.GeneratedError;
 import com.fern.codegen.GeneratedFile;
 import com.fern.codegen.GeneratedHttpServiceClient;
 import com.fern.codegen.GeneratedHttpServiceServer;
 import com.fern.codegen.GeneratorContext;
+import com.fern.codegen.generator.AuthGenerator;
+import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.codegen.utils.ObjectMappers;
 import com.fern.java.client.cli.CustomPluginConfig.ServerFramework;
 import com.fern.jersey.client.ClientWrapperGenerator;
@@ -34,9 +37,10 @@ import com.fern.model.codegen.ModelGeneratorResult;
 import com.fern.spring.server.DefaultExceptionHandlerGenerator;
 import com.fern.spring.server.ErrorExceptionHandlerGenerator;
 import com.fern.spring.server.HttpServiceSpringServerGenerator;
+import com.fern.types.AuthScheme;
+import com.fern.types.DeclaredErrorName;
 import com.fern.types.DeclaredTypeName;
 import com.fern.types.ErrorDeclaration;
-import com.fern.types.ErrorName;
 import com.fern.types.IntermediateRepresentation;
 import com.fern.types.TypeDeclaration;
 import com.fern.types.generators.GeneratorConfig;
@@ -56,10 +60,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
@@ -141,17 +147,16 @@ public final class ClientGeneratorCli {
         ImmutableCodeGenerationResult.Builder resultBuilder = CodeGenerationResult.builder();
         Map<DeclaredTypeName, TypeDeclaration> typeDefinitionsByName =
                 ir.types().stream().collect(Collectors.toUnmodifiableMap(TypeDeclaration::name, Function.identity()));
-        Map<ErrorName, ErrorDeclaration> errorDefinitionsByName =
+        Map<DeclaredErrorName, ErrorDeclaration> errorDefinitionsByName =
                 ir.errors().stream().collect(Collectors.toUnmodifiableMap(ErrorDeclaration::name, Function.identity()));
-        List<String> packagePrefixTokens = List.of(
-                "com",
-                fernPluginConfig.generatorConfig().organization(),
-                ir.workspaceName().orElse("api"));
+        List<String> packagePrefixTokens =
+                List.of("com", fernPluginConfig.generatorConfig().organization(), ir.apiName());
         String unreplacedPackagePrefix = String.join(".", packagePrefixTokens);
         GeneratorContext generatorContext = new GeneratorContext(
                 unreplacedPackagePrefix.replaceAll("[^a-zA-Z0-9]", "."),
                 typeDefinitionsByName,
                 errorDefinitionsByName,
+                ir.auth(),
                 ir.constants());
 
         ModelGeneratorResult modelGeneratorResult = addModelFiles(ir, generatorContext, resultBuilder);
@@ -206,21 +211,27 @@ public final class ClientGeneratorCli {
             GeneratorContext generatorContext,
             ModelGeneratorResult modelGeneratorResult,
             ImmutableCodeGenerationResult.Builder resultBuilder) {
+        AuthGenerator authGenerator = new AuthGenerator(ir.auth(), generatorContext, ir.apiName(), PackageType.CLIENT);
+        Optional<GeneratedAuthSchemes> maybeGeneratedAuthSchemes = authGenerator.generate();
         List<GeneratedHttpServiceClient> generatedHttpServiceClients = ir.services().http().stream()
                 .map(httpService -> {
                     HttpServiceClientGenerator httpServiceClientGenerator = new HttpServiceClientGenerator(
                             generatorContext,
                             httpService,
                             modelGeneratorResult.endpointModels().get(httpService),
-                            modelGeneratorResult.errors());
+                            modelGeneratorResult.errors(),
+                            maybeGeneratedAuthSchemes);
                     return httpServiceClientGenerator.generate();
                 })
                 .collect(Collectors.toList());
         ClientWrapperGenerator clientWrapperGenerator = new ClientWrapperGenerator(
-                generatorContext,
-                generatedHttpServiceClients,
-                ir.workspaceName().orElse("Untitled"));
+                generatorContext, generatedHttpServiceClients, ir.apiName(), maybeGeneratedAuthSchemes);
         GeneratedClientWrapper generatedClientWrapper = clientWrapperGenerator.generate();
+        maybeGeneratedAuthSchemes.ifPresent(generatedAuthSchemes -> {
+            resultBuilder.addAllClientFiles(
+                    generatedAuthSchemes.generatedAuthSchemes().values());
+            resultBuilder.addClientFiles(generatedAuthSchemes);
+        });
         resultBuilder.addClientFiles(generatedClientWrapper);
         resultBuilder.addAllClientFiles(generatedClientWrapper.nestedClientWrappers());
         for (GeneratedHttpServiceClient generatedHttpServiceClient : generatedHttpServiceClients) {
@@ -240,11 +251,22 @@ public final class ClientGeneratorCli {
             GeneratorContext generatorContext,
             ModelGeneratorResult modelGeneratorResult,
             ImmutableCodeGenerationResult.Builder resultBuilder) {
+        AuthGenerator authGenerator = new AuthGenerator(ir.auth(), generatorContext, ir.apiName(), PackageType.SERVER);
+        Optional<GeneratedAuthSchemes> maybeGeneratedAuthSchemes = authGenerator.generate();
+        Map<AuthScheme, GeneratedFile> generatedAuthSchemes = maybeGeneratedAuthSchemes
+                .map(GeneratedAuthSchemes::generatedAuthSchemes)
+                .orElseGet(Collections::emptyMap);
         if (fernPluginConfig.customPluginConfig().getServerFrameworkEnums().contains(ServerFramework.JERSEY)) {
-            addJerseyServerFiles(ir, generatorContext, modelGeneratorResult, resultBuilder);
+            resultBuilder.addAllJerseyServerFiles(generatedAuthSchemes.values());
+            addJerseyServerFiles(ir, generatorContext, modelGeneratorResult, generatedAuthSchemes, resultBuilder);
+            resultBuilder.addAllJerseyServerFiles(generatedAuthSchemes.values());
+            maybeGeneratedAuthSchemes.ifPresent(resultBuilder::addJerseyServerFiles);
         }
         if (fernPluginConfig.customPluginConfig().getServerFrameworkEnums().contains(ServerFramework.SPRING)) {
-            addSpringServerFiles(ir, generatorContext, modelGeneratorResult, resultBuilder);
+            resultBuilder.addAllSpringServerFiles(generatedAuthSchemes.values());
+            addSpringServerFiles(ir, generatorContext, modelGeneratorResult, generatedAuthSchemes, resultBuilder);
+            resultBuilder.addAllSpringServerFiles(generatedAuthSchemes.values());
+            maybeGeneratedAuthSchemes.ifPresent(resultBuilder::addSpringServerFiles);
         }
     }
 
@@ -252,15 +274,16 @@ public final class ClientGeneratorCli {
             IntermediateRepresentation ir,
             GeneratorContext generatorContext,
             ModelGeneratorResult modelGeneratorResult,
+            Map<AuthScheme, GeneratedFile> generatedAuthSchemes,
             ImmutableCodeGenerationResult.Builder resultBuilder) {
         Map<HttpService, GeneratedHttpServiceServer> generatedHttpServiceServers = new LinkedHashMap<>();
-        Map<ErrorName, Map<HttpService, List<HttpEndpoint>>> errorMap = new LinkedHashMap<>();
+        Map<DeclaredErrorName, Map<HttpService, List<HttpEndpoint>>> errorMap = new LinkedHashMap<>();
         ir.services().http().forEach(httpService -> {
             httpService.endpoints().forEach(httpEndpoint -> {
                 buildErrorMap(httpService, httpEndpoint, errorMap);
             });
-            GeneratedHttpServiceServer generatedHttpServiceServer =
-                    generateJerseyHttpServiceServer(httpService, generatorContext, modelGeneratorResult);
+            GeneratedHttpServiceServer generatedHttpServiceServer = generateJerseyHttpServiceServer(
+                    httpService, generatorContext, modelGeneratorResult, generatedAuthSchemes);
             generatedHttpServiceServers.put(httpService, generatedHttpServiceServer);
         });
         resultBuilder.addAllJerseyServerFiles(generatedHttpServiceServers.values());
@@ -291,15 +314,16 @@ public final class ClientGeneratorCli {
             IntermediateRepresentation ir,
             GeneratorContext generatorContext,
             ModelGeneratorResult modelGeneratorResult,
+            Map<AuthScheme, GeneratedFile> generatedAuthSchemes,
             ImmutableCodeGenerationResult.Builder resultBuilder) {
         Map<HttpService, GeneratedHttpServiceServer> generatedHttpServiceServers = new LinkedHashMap<>();
-        Map<ErrorName, Map<HttpService, List<HttpEndpoint>>> errorMap = new LinkedHashMap<>();
+        Map<DeclaredErrorName, Map<HttpService, List<HttpEndpoint>>> errorMap = new LinkedHashMap<>();
         ir.services().http().forEach(httpService -> {
             httpService.endpoints().forEach(httpEndpoint -> {
                 buildErrorMap(httpService, httpEndpoint, errorMap);
             });
-            GeneratedHttpServiceServer generatedHttpServiceServer =
-                    generateSpringHttpServiceServer(httpService, generatorContext, modelGeneratorResult);
+            GeneratedHttpServiceServer generatedHttpServiceServer = generateSpringHttpServiceServer(
+                    httpService, generatorContext, modelGeneratorResult, generatedAuthSchemes);
             generatedHttpServiceServers.put(httpService, generatedHttpServiceServer);
         });
         resultBuilder.addAllSpringServerFiles(generatedHttpServiceServers.values());
@@ -321,21 +345,29 @@ public final class ClientGeneratorCli {
     }
 
     private static GeneratedHttpServiceServer generateSpringHttpServiceServer(
-            HttpService httpService, GeneratorContext generatorContext, ModelGeneratorResult modelGeneratorResult) {
+            HttpService httpService,
+            GeneratorContext generatorContext,
+            ModelGeneratorResult modelGeneratorResult,
+            Map<AuthScheme, GeneratedFile> generatedAuthSchemes) {
         HttpServiceSpringServerGenerator httpServiceSpringServerGenerator = new HttpServiceSpringServerGenerator(
                 generatorContext,
                 modelGeneratorResult.errors(),
                 modelGeneratorResult.endpointModels().get(httpService),
+                generatedAuthSchemes,
                 httpService);
         return httpServiceSpringServerGenerator.generate();
     }
 
     private static GeneratedHttpServiceServer generateJerseyHttpServiceServer(
-            HttpService httpService, GeneratorContext generatorContext, ModelGeneratorResult modelGeneratorResult) {
+            HttpService httpService,
+            GeneratorContext generatorContext,
+            ModelGeneratorResult modelGeneratorResult,
+            Map<AuthScheme, GeneratedFile> generatedAuthSchemes) {
         HttpServiceJerseyServerGenerator httpServiceJerseyServerGenerator = new HttpServiceJerseyServerGenerator(
                 generatorContext,
                 modelGeneratorResult.errors(),
                 modelGeneratorResult.endpointModels().get(httpService),
+                generatedAuthSchemes,
                 httpService);
         return httpServiceJerseyServerGenerator.generate();
     }
@@ -343,9 +375,9 @@ public final class ClientGeneratorCli {
     private static void buildErrorMap(
             HttpService httpService,
             HttpEndpoint httpEndpoint,
-            Map<ErrorName, Map<HttpService, List<HttpEndpoint>>> errorMap) {
+            Map<DeclaredErrorName, Map<HttpService, List<HttpEndpoint>>> errorMap) {
         httpEndpoint.errors().value().forEach(responseError -> {
-            ErrorName errorName = responseError.error();
+            DeclaredErrorName errorName = responseError.error();
             Map<HttpService, List<HttpEndpoint>> containingEndpoints;
             if (errorMap.containsKey(errorName)) {
                 containingEndpoints = errorMap.get(errorName);
