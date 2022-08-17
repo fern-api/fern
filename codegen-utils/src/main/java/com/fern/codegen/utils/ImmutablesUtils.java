@@ -18,6 +18,7 @@ package com.fern.codegen.utils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fern.types.ObjectProperty;
 import com.fern.types.ObjectTypeDeclaration;
+import com.fern.types.WireStringWithAllCasings;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
@@ -47,8 +48,7 @@ public final class ImmutablesUtils {
                         objectField -> {
                             TypeName returnType =
                                     classNameUtils.getTypeNameFromTypeReference(true, objectField.valueType());
-                            return getKeyWordCompatibleImmutablesPropertyMethod(
-                                    objectField.name().originalValue(), returnType);
+                            return getKeyWordCompatibleImmutablesPropertyMethod(objectField.name(), returnType);
                         },
                         (u, _v) -> {
                             throw new IllegalStateException(String.format("Duplicate key %s", u));
@@ -71,18 +71,17 @@ public final class ImmutablesUtils {
     //                     LinkedHashMap::new));
     // }
 
-    public MethodSpec getKeyWordCompatibleImmutablesPropertyMethod(String methodName, TypeName returnType) {
+    public MethodSpec getKeyWordCompatibleImmutablesPropertyMethod(
+            WireStringWithAllCasings property, TypeName returnType) {
         MethodSpec.Builder methodBuilder;
-        if (KeyWordUtils.isReserved(methodName)) {
-            methodBuilder = MethodSpec.methodBuilder("_" + methodName)
-                    .addAnnotation(AnnotationSpec.builder(JsonProperty.class)
-                            .addMember("value", "$S", methodName)
-                            .build());
-
-        } else {
-            methodBuilder = MethodSpec.methodBuilder(methodName);
+        String prefix = "";
+        if (KeyWordUtils.isReserved(property.camelCase())) {
+            prefix = "_";
         }
-        return methodBuilder
+        return MethodSpec.methodBuilder(prefix + property.camelCase())
+                .addAnnotation(AnnotationSpec.builder(JsonProperty.class)
+                        .addMember("value", "$S", property.wireValue())
+                        .build())
                 .returns(returnType)
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                 .build();

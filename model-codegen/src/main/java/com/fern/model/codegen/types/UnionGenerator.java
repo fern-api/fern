@@ -528,8 +528,7 @@ public final class UnionGenerator extends Generator {
                 generatorContext.getClassNameUtils().getTypeNameFromTypeReference(true, singleUnionType.valueType());
         MethodSpec internalValueImmutablesProperty = generatorContext
                 .getImmutablesUtils()
-                .getKeyWordCompatibleImmutablesPropertyMethod(
-                        singleUnionType.discriminantValue().wireValue(), returnTypeName);
+                .getKeyWordCompatibleImmutablesPropertyMethod(singleUnionType.discriminantValue(), returnTypeName);
         // Add @JsonValue annotation on object type reference because properties are collapsed one level
         if (isTypeReferenceAnObject(singleUnionType.valueType())) {
             return MethodSpec.methodBuilder(internalValueImmutablesProperty.name)
