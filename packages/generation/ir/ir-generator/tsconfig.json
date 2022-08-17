@@ -4,7 +4,6 @@
   "include": ["./src"],
   "references": [
     { "path": "../../../commons/core-utils" },
-    { "path": "../../../config-management/commons" },
     { "path": "../../../workspace-loader" },
     { "path": "../../../yaml-schema" }
   ]

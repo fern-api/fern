@@ -1,5 +1,5 @@
 import { AbsoluteFilePath } from "./AbsoluteFilePath";
 
 export function cwd(): AbsoluteFilePath {
-    return cwd();
+    return AbsoluteFilePath.of(process.cwd());
 }
