@@ -164,13 +164,13 @@ public final class ClientGeneratorCli {
             case MODEL:
                 break;
             case CLIENT:
-                addClientFiles(ir, generatorContext, modelGeneratorResult, resultBuilder);
+                addClientFiles(fernPluginConfig, ir, generatorContext, modelGeneratorResult, resultBuilder);
                 break;
             case SERVER:
                 addServerFiles(fernPluginConfig, ir, generatorContext, modelGeneratorResult, resultBuilder);
                 break;
             case CLIENT_AND_SERVER:
-                addClientFiles(ir, generatorContext, modelGeneratorResult, resultBuilder);
+                addClientFiles(fernPluginConfig, ir, generatorContext, modelGeneratorResult, resultBuilder);
                 addServerFiles(fernPluginConfig, ir, generatorContext, modelGeneratorResult, resultBuilder);
                 break;
         }
@@ -207,6 +207,7 @@ public final class ClientGeneratorCli {
     }
 
     private static void addClientFiles(
+            FernPluginConfig fernPluginConfig,
             IntermediateRepresentation ir,
             GeneratorContext generatorContext,
             ModelGeneratorResult modelGeneratorResult,
@@ -225,7 +226,11 @@ public final class ClientGeneratorCli {
                 })
                 .collect(Collectors.toList());
         ClientWrapperGenerator clientWrapperGenerator = new ClientWrapperGenerator(
-                generatorContext, generatedHttpServiceClients, ir.apiName(), maybeGeneratedAuthSchemes);
+                generatorContext,
+                generatedHttpServiceClients,
+                fernPluginConfig.generatorConfig().organization(),
+                ir.apiName(),
+                maybeGeneratedAuthSchemes);
         GeneratedClientWrapper generatedClientWrapper = clientWrapperGenerator.generate();
         maybeGeneratedAuthSchemes.ifPresent(generatedAuthSchemes -> {
             resultBuilder.addAllClientFiles(

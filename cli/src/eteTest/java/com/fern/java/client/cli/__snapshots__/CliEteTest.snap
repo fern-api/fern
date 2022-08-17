@@ -30,54 +30,6 @@ dependencies {
 ]
 
 
-basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/BasicClient.java]=[
-package com.fern.basic.client;
-
-import com.fern.basic.client.blog.PostsServiceClient;
-import com.fern.basic.client.dummy.DummyServiceClient;
-import java.lang.String;
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Supplier;
-
-public final class BasicClient {
-  private final Supplier<PostsServiceClient> postsServiceClient;
-
-  private final Supplier<DummyServiceClient> dummyServiceClient;
-
-  public BasicClient(String url) {
-    this.postsServiceClient = memoize(() -> new PostsServiceClient(url));
-    this.dummyServiceClient = memoize(() -> new DummyServiceClient(url));
-  }
-
-  public BasicClient(String url, BearerAuth auth) {
-    this.postsServiceClient = memoize(() -> new PostsServiceClient(url, auth));
-    this.dummyServiceClient = memoize(() -> new DummyServiceClient(url, auth));
-  }
-
-  public final PostsServiceClient blog() {
-    return this.postsServiceClient.get();
-  }
-
-  public final DummyServiceClient dummy() {
-    return this.dummyServiceClient.get();
-  }
-
-  private static <T> Supplier<T> memoize(Supplier<T> delegate) {
-    AtomicReference<T> value = new AtomicReference<>();
-    return () ->  {
-      T val = value.get();
-      if (val == null) {
-        val = value.updateAndGet(cur -> cur == null ? Objects.requireNonNull(delegate.get()) : cur);
-      }
-      return val;
-    } ;
-  }
-}
-
-]
-
-
 basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/BearerAuth.java]=[
 package com.fern.basic.client;
 
@@ -103,6 +55,54 @@ public abstract class BearerAuth {
 
   public static BearerAuth of(String token) {
     return ImmutableBearerAuth.of(token.startsWith("Bearer ") ? token.substring(7) : token);
+  }
+}
+
+]
+
+
+basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/FernBasicClient.java]=[
+package com.fern.basic.client;
+
+import com.fern.basic.client.blog.PostsServiceClient;
+import com.fern.basic.client.dummy.DummyServiceClient;
+import java.lang.String;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Supplier;
+
+public final class FernBasicClient {
+  private final Supplier<PostsServiceClient> postsServiceClient;
+
+  private final Supplier<DummyServiceClient> dummyServiceClient;
+
+  public FernBasicClient(String url) {
+    this.postsServiceClient = memoize(() -> new PostsServiceClient(url));
+    this.dummyServiceClient = memoize(() -> new DummyServiceClient(url));
+  }
+
+  public FernBasicClient(String url, BearerAuth auth) {
+    this.postsServiceClient = memoize(() -> new PostsServiceClient(url, auth));
+    this.dummyServiceClient = memoize(() -> new DummyServiceClient(url, auth));
+  }
+
+  public final PostsServiceClient blog() {
+    return this.postsServiceClient.get();
+  }
+
+  public final DummyServiceClient dummy() {
+    return this.dummyServiceClient.get();
+  }
+
+  private static <T> Supplier<T> memoize(Supplier<T> delegate) {
+    AtomicReference<T> value = new AtomicReference<>();
+    return () ->  {
+      T val = value.get();
+      if (val == null) {
+        val = value.updateAndGet(cur -> cur == null ? Objects.requireNonNull(delegate.get()) : cur);
+      }
+      return val;
+    } ;
   }
 }
 

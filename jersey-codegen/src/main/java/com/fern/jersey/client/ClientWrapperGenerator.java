@@ -63,6 +63,7 @@ public final class ClientWrapperGenerator extends Generator {
     public ClientWrapperGenerator(
             GeneratorContext generatorContext,
             List<GeneratedHttpServiceClient> generatedHttpServiceClients,
+            String organization,
             String workspaceName,
             Optional<GeneratedAuthSchemes> maybeGeneratedAuthSchemes) {
         super(generatorContext);
@@ -70,7 +71,8 @@ public final class ClientWrapperGenerator extends Generator {
         this.generatedClientWrapperClassName = generatorContext
                 .getClassNameUtils()
                 .getClassName(
-                        CasingUtils.convertKebabCaseToUpperCamelCase(workspaceName),
+                        CasingUtils.convertKebabCaseToUpperCamelCase(organization)
+                                + CasingUtils.convertKebabCaseToUpperCamelCase(workspaceName),
                         Optional.of("Client"),
                         Optional.empty(),
                         PackageType.CLIENT);

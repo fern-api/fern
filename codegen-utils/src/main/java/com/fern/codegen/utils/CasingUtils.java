@@ -17,6 +17,7 @@
 package com.fern.codegen.utils;
 
 import java.util.regex.Pattern;
+import org.apache.commons.lang3.StringUtils;
 
 public final class CasingUtils {
 
@@ -25,6 +26,7 @@ public final class CasingUtils {
     private CasingUtils() {}
 
     public static String convertKebabCaseToUpperCamelCase(String kebab) {
-        return KEBAB_CASE_PATTERN.matcher(kebab).replaceAll(mr -> mr.group(1).toUpperCase());
+        return StringUtils.capitalize(
+                KEBAB_CASE_PATTERN.matcher(kebab).replaceAll(mr -> mr.group(1).toUpperCase()));
     }
 }
