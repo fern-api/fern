@@ -26,7 +26,7 @@ public final class AuthSchemeUtils {
     private AuthSchemeUtils() {}
 
     public static String getAuthSchemeCamelCaseName(AuthScheme authScheme) {
-        return StringUtils.capitalize(authScheme.visit(AuthSchemeCamelCaseName.INSTANCE));
+        return authScheme.visit(AuthSchemeCamelCaseName.INSTANCE);
     }
 
     public static String getAuthSchemePascalCaseName(AuthScheme authScheme) {

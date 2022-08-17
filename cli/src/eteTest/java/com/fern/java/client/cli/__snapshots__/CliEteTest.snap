@@ -260,7 +260,7 @@ import javax.ws.rs.core.MediaType;
 interface DummyService {
   @GET
   @Path("/")
-  void getDummy(@HeaderParam("Authorization") BearerAuth Bearer, DummyId body);
+  void getDummy(@HeaderParam("Authorization") BearerAuth bearer, DummyId body);
 
   static DummyService getClient(String url) {
     return Feign.builder()
@@ -298,7 +298,7 @@ public final class DummyServiceClient {
   }
 
   public void getDummy(GetDummy.Request request) {
-    BearerAuth authValue = request.auth().orElse(this.auth.orElseThrow(() -> new RuntimeException("Auth is required for getDummy")));
+    BearerAuth authValue = request.authOverride().orElse(this.auth.orElseThrow(() -> new RuntimeException("Auth is required for getDummy")));
     this.service.getDummy(authValue, request.body());
   }
 }
@@ -323,7 +323,7 @@ public final class GetDummy {
   @Value.Immutable
   @StagedBuilderImmutablesStyle
   interface Request {
-    Optional<BearerAuth> auth();
+    Optional<BearerAuth> authOverride();
 
     DummyId body();
 
@@ -1254,7 +1254,7 @@ import javax.ws.rs.core.MediaType;
 public interface DummyService {
   @GET
   @Path("/")
-  void getDummy(@HeaderParam("Authorization") BearerAuth Bearer, DummyId request);
+  void getDummy(@HeaderParam("Authorization") BearerAuth bearer, DummyId request);
 }
 
 ]
@@ -1460,7 +1460,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 )
 public interface DummyService {
   @GetMapping("/")
-  void getDummy(@RequestHeader("Authorization") BearerAuth Bearer, @RequestBody DummyId request);
+  void getDummy(@RequestHeader("Authorization") BearerAuth bearer, @RequestBody DummyId request);
 }
 
 ]

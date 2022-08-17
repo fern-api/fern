@@ -60,7 +60,7 @@ public final class HttpServiceClientGenerator extends Generator {
     private static final String CLIENT_SUFFIX = "Client";
     private static final String REQUEST_CLASS_NAME = "Request";
     private static final String REQUEST_PARAMETER_NAME = "request";
-    private static final String AUTH_REQUEST_PARAMETER = "auth";
+    private static final String AUTH_REQUEST_PARAMETER = "authOverride";
 
     private final HttpService httpService;
     private final ClassName generatedServiceClientClassName;
@@ -181,6 +181,7 @@ public final class HttpServiceClientGenerator extends Generator {
     private void generateCallWithNoWrappedRequest(
             HttpEndpoint httpEndpoint, MethodSpec interfaceMethod, MethodSpec.Builder endpointMethodBuilder) {
         List<ParameterSpec> parameters = new ArrayList<>();
+        List<String> args = new ArrayList<>();
         if (httpEndpoint.auth() && maybeGeneratedAuthSchemes.isPresent()) {
             parameters.add(ParameterSpec.builder(
                             ParameterizedTypeName.get(
@@ -188,16 +189,23 @@ public final class HttpServiceClientGenerator extends Generator {
                                     maybeGeneratedAuthSchemes.get().className()),
                             AUTH_REQUEST_PARAMETER)
                     .build());
+            endpointMethodBuilder.addStatement(
+                    "$T authValue = $L.orElse(this.$L.orElseThrow(() -> new $T($S)))",
+                    maybeGeneratedAuthSchemes.get().className(),
+                    AUTH_REQUEST_PARAMETER,
+                    AUTH_FIELD_NAME,
+                    RuntimeException.class,
+                    "Auth is required for " + httpEndpoint.id().value());
+            args.add("authValue");
         } else {
-            interfaceMethod.parameters.stream().forEach(interfaceParameter -> {
+            interfaceMethod.parameters.forEach(interfaceParameter -> {
                 parameters.add(ParameterSpec.builder(interfaceParameter.type, interfaceParameter.name)
                         .build());
+                args.add(interfaceParameter.name);
             });
         }
         endpointMethodBuilder.addParameters(parameters);
-        String joinedParameters = interfaceMethod.parameters.stream()
-                .map(parameterSpec -> parameterSpec.name)
-                .collect(Collectors.joining(", "));
+        String joinedParameters = String.join(", ", args);
         String codeBlockFormat = "this.$L.$L(" + joinedParameters + ")";
         if (interfaceMethod.returnType.equals(TypeName.VOID)) {
             endpointMethodBuilder.addStatement(codeBlockFormat, SERVICE_FIELD_NAME, interfaceMethod.name);
