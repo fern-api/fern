@@ -319,6 +319,7 @@ public final class HttpServiceClientGenerator extends Generator {
                         .build())
                 .collect(Collectors.toList());
         TypeSpec typeSpec = TypeSpec.interfaceBuilder(requestClassName)
+                .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(Value.Immutable.class)
                 .addAnnotation(StagedBuilderImmutablesStyle.class)
                 .addMethods(parameterImmutablesMethods)
