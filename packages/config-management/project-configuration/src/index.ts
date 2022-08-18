@@ -1,4 +1,9 @@
-export { DEFINITION_DIRECTORY, FERN_DIRECTORY, ROOT_API_FILENAME } from "./constants";
+export {
+    DEFINITION_DIRECTORY,
+    FERN_DIRECTORY,
+    GENERATORS_CONFIGURATION_FILENAME,
+    ROOT_API_FILENAME,
+} from "./constants";
 export { getFernDirectory } from "./getFernDirectory";
 export {
     loadProjectConfig,

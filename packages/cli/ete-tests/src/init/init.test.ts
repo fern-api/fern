@@ -2,6 +2,7 @@ import { AbsoluteFilePath, getDirectoryContents, join, RelativeFilePath } from "
 import { FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { mkdir, rm } from "fs/promises";
 import { runFernCli } from "../utils/runFernCli";
+import { init } from "./init";
 
 const GENERATED_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("generated"));
 
@@ -9,9 +10,7 @@ it("fern init", async () => {
     await rm(GENERATED_DIR, { force: true, recursive: true });
     await mkdir(GENERATED_DIR);
 
-    await runFernCli(["init", "--organization", "fern"], {
-        cwd: GENERATED_DIR,
-    });
+    await init(GENERATED_DIR);
 
     await runFernCli(["check"], {
         cwd: GENERATED_DIR,

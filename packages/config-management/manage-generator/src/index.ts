@@ -5,4 +5,4 @@ export {
     addTypescriptGenerator,
     type GeneratorAddResult,
 } from "./addGenerator";
-export { upgradeGeneratorsIfPresent } from "./upgradeGenerator";
+export { upgradeGenerators } from "./upgradeGenerators";
