@@ -7,7 +7,6 @@
     { "path": "../config-management/commons" },
     { "path": "../config-management/generators-configuration" },
     { "path": "../config-management/project-configuration" },
-    { "path": "../config-management/workspace-configuration" },
     { "path": "../yaml-schema" }
   ]
 }

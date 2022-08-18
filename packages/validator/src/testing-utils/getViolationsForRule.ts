@@ -26,7 +26,6 @@ export async function getViolationsForRule({
 }: getViolationsForRule.Args): Promise<RuleViolation[]> {
     const parseResult = await loadWorkspace({
         absolutePathToWorkspace,
-        version: 1,
     });
     if (!parseResult.didSucceed) {
         throw new Error("Failed to parse workspace: " + JSON.stringify(parseResult));

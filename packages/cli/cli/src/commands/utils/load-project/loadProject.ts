@@ -36,7 +36,6 @@ export async function loadProject({
         allWorkspaceDirectoryNames.map(async (workspaceDirectoryName) => {
             const workspace = await loadWorkspace({
                 absolutePathToWorkspace: join(fernDirectory, RelativeFilePath.of(workspaceDirectoryName)),
-                version: 2,
             });
             if (!workspace.didSucceed) {
                 handleFailedWorkspaceParserResult(workspace);

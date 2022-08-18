@@ -2,62 +2,20 @@ import { validateSchema } from "@fern-api/config-management-commons";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
 import { loadGeneratorsConfiguration } from "@fern-api/generators-configuration";
 import { DEFINITION_DIRECTORY, ROOT_API_FILENAME } from "@fern-api/project-configuration";
-import { loadWorkspaceConfiguration, WORKSPACE_CONFIGURATION_FILENAME } from "@fern-api/workspace-configuration";
 import { RootApiFileSchema } from "@fern-api/yaml-schema";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 import { listServiceFilesForWorkspace } from "./listServiceFilesForWorkspace";
-import { listYamlFilesForWorkspace } from "./listYamlFilesForWorkspace";
 import { parseYamlFiles } from "./parseYamlFiles";
 import { WorkspaceLoader } from "./types/Result";
 import { validateStructureOfYamlFiles } from "./validateStructureOfYamlFiles";
 
 export async function loadWorkspace({
     absolutePathToWorkspace,
-    version,
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
-    version: 1 | 2;
 }): Promise<WorkspaceLoader.Result> {
-    if (version === 1) {
-        const absolutePathToWorkspaceConfiguration = join(
-            absolutePathToWorkspace,
-            RelativeFilePath.of(WORKSPACE_CONFIGURATION_FILENAME)
-        );
-        const workspaceConfiguration = await loadWorkspaceConfiguration(absolutePathToWorkspaceConfiguration);
-
-        const files = await listYamlFilesForWorkspace(workspaceConfiguration.absolutePathToDefinition);
-
-        const parseResult = await parseYamlFiles(files);
-        if (!parseResult.didSucceed) {
-            return parseResult;
-        }
-
-        const structuralValidationResult = validateStructureOfYamlFiles(parseResult.files);
-        if (!structuralValidationResult.didSucceed) {
-            return structuralValidationResult;
-        }
-
-        return {
-            didSucceed: true,
-            workspace: {
-                name: workspaceConfiguration.name,
-                absolutePathToWorkspace,
-                absolutePathToDefinition: workspaceConfiguration.absolutePathToDefinition,
-                generatorsConfiguration: {
-                    absolutePathToConfiguration: absolutePathToWorkspaceConfiguration,
-                    rawConfiguration: undefined!,
-                    generators: workspaceConfiguration.generators,
-                },
-                rootApiFile: {
-                    name: workspaceConfiguration.name,
-                },
-                serviceFiles: structuralValidationResult.validatedFiles,
-            },
-        };
-    }
-
     const generatorsConfiguration = await loadGeneratorsConfiguration({ absolutePathToWorkspace });
     const absolutePathToDefinition = join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY));
     const serviceFiles = await listServiceFilesForWorkspace(absolutePathToDefinition);
