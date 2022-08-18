@@ -66,7 +66,6 @@ export function constructEndpointErrors({
     };
 
     const visitableItemsForServerErrors = constructVisitableItemsForServerErrors({
-        errorBodyProperty,
         endpoint,
         file,
     });
@@ -112,11 +111,9 @@ export function constructEndpointErrors({
 }
 
 function constructVisitableItemsForServerErrors({
-    errorBodyProperty,
     endpoint,
     file,
 }: {
-    errorBodyProperty: PropertySignature;
     endpoint: HttpEndpoint;
     file: File;
 }): visitorUtils.VisitableItems {
@@ -124,12 +121,19 @@ function constructVisitableItemsForServerErrors({
         items: [
             ...endpoint.errors.map((error) => {
                 const errorDeclaration = file.getErrorDeclaration(error.error);
+                const referenceToErrorBodyType = file.getReferenceToError(error.error);
                 return {
                     caseInSwitchStatement: ts.factory.createStringLiteral(errorDeclaration.discriminantValue.wireValue),
                     keyInVisitor: errorDeclaration.discriminantValue.camelCase,
                     visitorArgument: {
-                        argument: ts.factory.createIdentifier(errorBodyProperty.getName()),
-                        type: file.getReferenceToError(error.error),
+                        argument: ts.factory.createAsExpression(
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.RESPONSE),
+                                file.externalDependencies.serviceUtils.Fetcher.Response.BODY
+                            ),
+                            referenceToErrorBodyType
+                        ),
+                        type: referenceToErrorBodyType,
                     },
                 };
             }),

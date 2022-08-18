@@ -4,6 +4,7 @@
   "rules": {
     "package-json": {
       "scripts": {
+        "test": "yarn compile && yarn workspace @fern-typescript/service-utils compile && jest --passWithNoTests",
         "dockerTagLocal": "./docker/create_docker.sh local",
         "dockerTagVersion": "./docker/create_docker.sh"
       }

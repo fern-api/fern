@@ -1636,6 +1636,28 @@ export * from \\"./_service-types\\";
               Object {
                 "contents": Array [
                   Object {
+                    "contents": "import * as model from \\"../..\\";
+
+export interface PlaylistIdNotFoundError {
+    playlistId: model.playlist.PlaylistId;
+}
+",
+                    "name": "PlaylistIdNotFoundError.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export * from \\"./PlaylistIdNotFoundError\\";
+",
+                    "name": "index.ts",
+                    "type": "file",
+                  },
+                ],
+                "name": "_errors",
+                "type": "directory",
+              },
+              Object {
+                "contents": Array [
+                  Object {
                     "contents": Array [
                       Object {
                         "contents": "export type CreatePlaylistErrorBody = never;
@@ -1701,7 +1723,7 @@ export const DeletePlaylistErrorBody = {
                         "contents": "import * as model from \\"../../..\\";
 
 export interface DeletePlaylistRequest {
-    playlistId: model.playlist.PlaylistId;
+    playlist_id: model.playlist.PlaylistId;
 }
 ",
                         "name": "DeletePlaylistRequest.ts",
@@ -1817,20 +1839,39 @@ export declare namespace GetPlaylistsResponse {
                         "type": "file",
                       },
                       Object {
-                        "contents": "export type UpdatePlaylistErrorBody = never;
+                        "contents": "import { playlist } from \\"../../..\\";
+import * as uuid from \\"uuid\\";
+
+export type UpdatePlaylistErrorBody =
+    | UpdatePlaylistErrorBody.PlaylistIdNotFoundError;
 
 export declare namespace UpdatePlaylistErrorBody {
+    interface PlaylistIdNotFoundError extends playlist.PlaylistIdNotFoundError {
+        _error: \\"PlaylistIdNotFoundError\\";
+        _errorInstanceId: string;
+    }
+
     export interface _Visitor<Result> {
+        PlaylistIdNotFoundError: (value: playlist.PlaylistIdNotFoundError) => Result;
         _unknown: () => Result;
     }
 }
 
 export const UpdatePlaylistErrorBody = {
-    _visit: <Result>(_value: UpdatePlaylistErrorBody, visitor: UpdatePlaylistErrorBody._Visitor<Result>): Result => {
-        return visitor._unknown();
+    playlistIdNotFoundError: (value: playlist.PlaylistIdNotFoundError): UpdatePlaylistErrorBody.PlaylistIdNotFoundError => ({
+        ...value,
+        _error: \\"PlaylistIdNotFoundError\\",
+        _errorInstanceId: uuid.v4()
+    }),
+
+    _visit: <Result>(value: UpdatePlaylistErrorBody, visitor: UpdatePlaylistErrorBody._Visitor<Result>): Result => {
+        switch (value._error) {
+            case \\"PlaylistIdNotFoundError\\": return visitor.PlaylistIdNotFoundError(value);
+            default: return visitor._unknown();
+        }
     },
 
-    _types: (): UpdatePlaylistErrorBody[\\"_error\\"][] => [],
+    _types: (): UpdatePlaylistErrorBody[\\"_error\\"][] => [\\"PlaylistIdNotFoundError\\"],
 } as const;
 ",
                         "name": "UpdatePlaylistErrorBody.ts",
@@ -1905,7 +1946,7 @@ export * from \\"./DeletePlaylistResponse\\";
                     "contents": "import * as model from \\"../..\\";
 
 export interface Playlist {
-    playlistId: model.playlist.PlaylistId;
+    playlist_id: model.playlist.PlaylistId;
     name: string;
     problems: model.commons.ProblemId[];
     ownerId: model.commons.UserId;
@@ -1957,6 +1998,7 @@ export * from \\"./UpdatePlaylistRequest\\";
               },
               Object {
                 "contents": "export * from \\"./_types\\";
+export * from \\"./_errors\\";
 export * from \\"./_service-types\\";
 ",
                 "name": "index.ts",
@@ -6879,6 +6921,8 @@ export * from \\"./_service-types\\";
         \\"build\\": \\"esbuild $(find . -name '*.ts' -not -path './node_modules/*') --format=cjs --sourcemap --outdir=. && tsc\\"
     },
     \\"dependencies\\": {
+        \\"uuid\\": \\"8.3.2\\",
+        \\"@types/uuid\\": \\"8.3.4\\",
         \\"@fern-typescript/service-utils\\": \\"0.0.184\\",
         \\"url-join\\": \\"4.0.1\\",
         \\"@types/url-join\\": \\"4.0.1\\"
@@ -7388,7 +7432,7 @@ export class PlaylistCrudService implements PlaylistCrudService {
 
     public async deletePlaylist(request: model.playlist.DeletePlaylistRequest): Promise<model.playlist.DeletePlaylistResponse> {
         const encodedResponse = await this.fetcher({
-            url: urlJoin(this.baseUrl, \`/\${request.playlistId}\`),
+            url: urlJoin(this.baseUrl, \`/\${request.playlist_id}\`),
             method: \\"DELETE\\",
             headers: {}
         });
@@ -9708,6 +9752,28 @@ export * from \\"./_service-types\\";
               Object {
                 "contents": Array [
                   Object {
+                    "contents": "import * as model from \\"../..\\";
+
+export interface PlaylistIdNotFoundError {
+    playlistId: model.playlist.PlaylistId;
+}
+",
+                    "name": "PlaylistIdNotFoundError.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export * from \\"./PlaylistIdNotFoundError\\";
+",
+                    "name": "index.ts",
+                    "type": "file",
+                  },
+                ],
+                "name": "_errors",
+                "type": "directory",
+              },
+              Object {
+                "contents": Array [
+                  Object {
                     "contents": Array [
                       Object {
                         "contents": "export type CreatePlaylistErrorBody = never;
@@ -9773,7 +9839,7 @@ export const DeletePlaylistErrorBody = {
                         "contents": "import * as model from \\"../../..\\";
 
 export interface DeletePlaylistRequest {
-    playlistId: model.playlist.PlaylistId;
+    playlist_id: model.playlist.PlaylistId;
 }
 ",
                         "name": "DeletePlaylistRequest.ts",
@@ -9889,20 +9955,39 @@ export declare namespace GetPlaylistsResponse {
                         "type": "file",
                       },
                       Object {
-                        "contents": "export type UpdatePlaylistErrorBody = never;
+                        "contents": "import { playlist } from \\"../../..\\";
+import * as uuid from \\"uuid\\";
+
+export type UpdatePlaylistErrorBody =
+    | UpdatePlaylistErrorBody.PlaylistIdNotFoundError;
 
 export declare namespace UpdatePlaylistErrorBody {
+    interface PlaylistIdNotFoundError extends playlist.PlaylistIdNotFoundError {
+        _error: \\"PlaylistIdNotFoundError\\";
+        _errorInstanceId: string;
+    }
+
     export interface _Visitor<Result> {
+        PlaylistIdNotFoundError: (value: playlist.PlaylistIdNotFoundError) => Result;
         _unknown: () => Result;
     }
 }
 
 export const UpdatePlaylistErrorBody = {
-    _visit: <Result>(_value: UpdatePlaylistErrorBody, visitor: UpdatePlaylistErrorBody._Visitor<Result>): Result => {
-        return visitor._unknown();
+    playlistIdNotFoundError: (value: playlist.PlaylistIdNotFoundError): UpdatePlaylistErrorBody.PlaylistIdNotFoundError => ({
+        ...value,
+        _error: \\"PlaylistIdNotFoundError\\",
+        _errorInstanceId: uuid.v4()
+    }),
+
+    _visit: <Result>(value: UpdatePlaylistErrorBody, visitor: UpdatePlaylistErrorBody._Visitor<Result>): Result => {
+        switch (value._error) {
+            case \\"PlaylistIdNotFoundError\\": return visitor.PlaylistIdNotFoundError(value);
+            default: return visitor._unknown();
+        }
     },
 
-    _types: (): UpdatePlaylistErrorBody[\\"_error\\"][] => [],
+    _types: (): UpdatePlaylistErrorBody[\\"_error\\"][] => [\\"PlaylistIdNotFoundError\\"],
 } as const;
 ",
                         "name": "UpdatePlaylistErrorBody.ts",
@@ -9977,7 +10062,7 @@ export * from \\"./DeletePlaylistResponse\\";
                     "contents": "import * as model from \\"../..\\";
 
 export interface Playlist {
-    playlistId: model.playlist.PlaylistId;
+    playlist_id: model.playlist.PlaylistId;
     name: string;
     problems: model.commons.ProblemId[];
     ownerId: model.commons.UserId;
@@ -10029,6 +10114,7 @@ export * from \\"./UpdatePlaylistRequest\\";
               },
               Object {
                 "contents": "export * from \\"./_types\\";
+export * from \\"./_errors\\";
 export * from \\"./_service-types\\";
 ",
                 "name": "index.ts",
@@ -14951,6 +15037,8 @@ export * from \\"./_service-types\\";
         \\"build\\": \\"esbuild $(find . -name '*.ts' -not -path './node_modules/*') --format=cjs --sourcemap --outdir=. && tsc\\"
     },
     \\"dependencies\\": {
+        \\"uuid\\": \\"8.3.2\\",
+        \\"@types/uuid\\": \\"8.3.4\\",
         \\"@fern-typescript/service-utils\\": \\"0.0.184\\",
         \\"url-join\\": \\"4.0.1\\",
         \\"@types/url-join\\": \\"4.0.1\\"
@@ -15460,7 +15548,7 @@ export class PlaylistCrudService implements PlaylistCrudService {
 
     public async deletePlaylist(request: model.playlist.DeletePlaylistRequest): Promise<model.playlist.DeletePlaylistResponse> {
         const encodedResponse = await this.fetcher({
-            url: urlJoin(this.baseUrl, \`/\${request.playlistId}\`),
+            url: urlJoin(this.baseUrl, \`/\${request.playlist_id}\`),
             method: \\"DELETE\\",
             headers: {}
         });
@@ -17775,6 +17863,28 @@ export * from \\"./_service-types\\";
               Object {
                 "contents": Array [
                   Object {
+                    "contents": "import * as model from \\"../..\\";
+
+export interface PlaylistIdNotFoundError {
+    playlistId: model.playlist.PlaylistId;
+}
+",
+                    "name": "PlaylistIdNotFoundError.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export * from \\"./PlaylistIdNotFoundError\\";
+",
+                    "name": "index.ts",
+                    "type": "file",
+                  },
+                ],
+                "name": "_errors",
+                "type": "directory",
+              },
+              Object {
+                "contents": Array [
+                  Object {
                     "contents": Array [
                       Object {
                         "contents": "export type CreatePlaylistErrorBody = never;
@@ -17840,7 +17950,7 @@ export const DeletePlaylistErrorBody = {
                         "contents": "import * as model from \\"../../..\\";
 
 export interface DeletePlaylistRequest {
-    playlistId: model.playlist.PlaylistId;
+    playlist_id: model.playlist.PlaylistId;
 }
 ",
                         "name": "DeletePlaylistRequest.ts",
@@ -17956,20 +18066,39 @@ export declare namespace GetPlaylistsResponse {
                         "type": "file",
                       },
                       Object {
-                        "contents": "export type UpdatePlaylistErrorBody = never;
+                        "contents": "import { playlist } from \\"../../..\\";
+import * as uuid from \\"uuid\\";
+
+export type UpdatePlaylistErrorBody =
+    | UpdatePlaylistErrorBody.PlaylistIdNotFoundError;
 
 export declare namespace UpdatePlaylistErrorBody {
+    interface PlaylistIdNotFoundError extends playlist.PlaylistIdNotFoundError {
+        _error: \\"PlaylistIdNotFoundError\\";
+        _errorInstanceId: string;
+    }
+
     export interface _Visitor<Result> {
+        PlaylistIdNotFoundError: (value: playlist.PlaylistIdNotFoundError) => Result;
         _unknown: () => Result;
     }
 }
 
 export const UpdatePlaylistErrorBody = {
-    _visit: <Result>(_value: UpdatePlaylistErrorBody, visitor: UpdatePlaylistErrorBody._Visitor<Result>): Result => {
-        return visitor._unknown();
+    playlistIdNotFoundError: (value: playlist.PlaylistIdNotFoundError): UpdatePlaylistErrorBody.PlaylistIdNotFoundError => ({
+        ...value,
+        _error: \\"PlaylistIdNotFoundError\\",
+        _errorInstanceId: uuid.v4()
+    }),
+
+    _visit: <Result>(value: UpdatePlaylistErrorBody, visitor: UpdatePlaylistErrorBody._Visitor<Result>): Result => {
+        switch (value._error) {
+            case \\"PlaylistIdNotFoundError\\": return visitor.PlaylistIdNotFoundError(value);
+            default: return visitor._unknown();
+        }
     },
 
-    _types: (): UpdatePlaylistErrorBody[\\"_error\\"][] => [],
+    _types: (): UpdatePlaylistErrorBody[\\"_error\\"][] => [\\"PlaylistIdNotFoundError\\"],
 } as const;
 ",
                         "name": "UpdatePlaylistErrorBody.ts",
@@ -18044,7 +18173,7 @@ export * from \\"./DeletePlaylistResponse\\";
                     "contents": "import * as model from \\"../..\\";
 
 export interface Playlist {
-    playlistId: model.playlist.PlaylistId;
+    playlist_id: model.playlist.PlaylistId;
     name: string;
     problems: model.commons.ProblemId[];
     ownerId: model.commons.UserId;
@@ -18096,6 +18225,7 @@ export * from \\"./UpdatePlaylistRequest\\";
               },
               Object {
                 "contents": "export * from \\"./_types\\";
+export * from \\"./_errors\\";
 export * from \\"./_service-types\\";
 ",
                 "name": "index.ts",
@@ -23018,6 +23148,8 @@ export * from \\"./_service-types\\";
         \\"build\\": \\"esbuild $(find . -name '*.ts' -not -path './node_modules/*') --format=cjs --sourcemap --outdir=. && tsc\\"
     },
     \\"dependencies\\": {
+        \\"uuid\\": \\"8.3.2\\",
+        \\"@types/uuid\\": \\"8.3.4\\",
         \\"express\\": \\"4.18.1\\",
         \\"@types/express\\": \\"4.17.13\\"
     },
@@ -23331,12 +23463,16 @@ export const PlaylistCrudService = {
                 response.send(result.body);
             }
             else {
-                response.sendStatus(500);
+                const statusCode = model.playlist.UpdatePlaylistErrorBody._visit(result.error, {
+                    PlaylistIdNotFoundError: () => 404,
+                    _unknown: () => 500
+                });
+                response.status(statusCode).send(result.error);
             }
         });
-        app.delete(\\"/v2/playlist/:playlistId\\", async (request, response) => {
+        app.delete(\\"/v2/playlist/:playlist_id\\", async (request, response) => {
             const result = await impl.deletePlaylist({
-                playlistId: request.params.playlistId
+                playlist_id: request.params.playlist_id
             });
             if (result.ok) {
                 response.end();
@@ -25567,7 +25703,7 @@ export * from \\"./_Client\\";
                 "contents": "import { MyApi } from \\"../..\\";
 
 export interface Playlist {
-    playlistId: MyApi.playlist.PlaylistId;
+    playlist_id: MyApi.playlist.PlaylistId;
     name: string;
     problems: MyApi.commons.ProblemId[];
     ownerId: MyApi.commons.UserId;
@@ -25591,6 +25727,17 @@ export interface PlaylistCreateRequest {
                 "contents": "export type PlaylistId = string;
 ",
                 "name": "PlaylistId.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "import { MyApi } from \\"../..\\";
+
+export interface PlaylistIdNotFoundError {
+    _error: \\"PlaylistIdNotFoundError\\";
+    playlistId: MyApi.playlist.PlaylistId;
+}
+",
+                "name": "PlaylistIdNotFoundError.ts",
                 "type": "file",
               },
               Object {
@@ -25777,7 +25924,10 @@ export class _Client implements _Client {
                 error: {
                     body: response.body as MyApi.playlist.updatePlaylist.ErrorBody,
                     _visit: visitor => {
-                        return visitor._unknown({ statusCode: response.statusCode });
+                        switch ((response.body as any)?._error) {
+                            case \\"PlaylistIdNotFoundError\\": return visitor.playlistIdNotFoundError(response.body as MyApi.playlist.PlaylistIdNotFoundError);
+                            default: return visitor._unknown({ statusCode: response.statusCode });
+                        }
                     }
                 }
             };
@@ -25887,10 +26037,12 @@ export namespace updatePlaylist {
     }
 
     export type ErrorBody = 
+        | MyApi.playlist.PlaylistIdNotFoundError
         | _NetworkError
         | _UnknownError;
 
     export interface ErrorVisitor<Result> {
+        playlistIdNotFoundError: (value: MyApi.playlist.PlaylistIdNotFoundError) => Result;
         _network: () => Result;
         _unknown: (details: ErrorDetails) => Result;
     }
@@ -25924,6 +26076,7 @@ export namespace deletePlaylist {
 export * from \\"./Playlist\\";
 export * from \\"./PlaylistCreateRequest\\";
 export * from \\"./UpdatePlaylistRequest\\";
+export * from \\"./PlaylistIdNotFoundError\\";
 export * from \\"./_Client\\";
 ",
                 "name": "index.ts",
@@ -32738,6 +32891,28 @@ export * from \\"./_service-types\\";
               Object {
                 "contents": Array [
                   Object {
+                    "contents": "import * as model from \\"../..\\";
+
+export interface PlaylistIdNotFoundError {
+    playlistId: model.playlist.PlaylistId;
+}
+",
+                    "name": "PlaylistIdNotFoundError.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export * from \\"./PlaylistIdNotFoundError\\";
+",
+                    "name": "index.ts",
+                    "type": "file",
+                  },
+                ],
+                "name": "_errors",
+                "type": "directory",
+              },
+              Object {
+                "contents": Array [
+                  Object {
                     "contents": Array [
                       Object {
                         "contents": "export type CreatePlaylistErrorBody = never;
@@ -32803,7 +32978,7 @@ export const DeletePlaylistErrorBody = {
                         "contents": "import * as model from \\"../../..\\";
 
 export interface DeletePlaylistRequest {
-    playlistId: model.playlist.PlaylistId;
+    playlist_id: model.playlist.PlaylistId;
 }
 ",
                         "name": "DeletePlaylistRequest.ts",
@@ -32919,20 +33094,39 @@ export declare namespace GetPlaylistsResponse {
                         "type": "file",
                       },
                       Object {
-                        "contents": "export type UpdatePlaylistErrorBody = never;
+                        "contents": "import { playlist } from \\"../../..\\";
+import * as uuid from \\"uuid\\";
+
+export type UpdatePlaylistErrorBody =
+    | UpdatePlaylistErrorBody.PlaylistIdNotFoundError;
 
 export declare namespace UpdatePlaylistErrorBody {
+    interface PlaylistIdNotFoundError extends playlist.PlaylistIdNotFoundError {
+        _error: \\"PlaylistIdNotFoundError\\";
+        _errorInstanceId: string;
+    }
+
     export interface _Visitor<Result> {
+        PlaylistIdNotFoundError: (value: playlist.PlaylistIdNotFoundError) => Result;
         _unknown: () => Result;
     }
 }
 
 export const UpdatePlaylistErrorBody = {
-    _visit: <Result>(_value: UpdatePlaylistErrorBody, visitor: UpdatePlaylistErrorBody._Visitor<Result>): Result => {
-        return visitor._unknown();
+    playlistIdNotFoundError: (value: playlist.PlaylistIdNotFoundError): UpdatePlaylistErrorBody.PlaylistIdNotFoundError => ({
+        ...value,
+        _error: \\"PlaylistIdNotFoundError\\",
+        _errorInstanceId: uuid.v4()
+    }),
+
+    _visit: <Result>(value: UpdatePlaylistErrorBody, visitor: UpdatePlaylistErrorBody._Visitor<Result>): Result => {
+        switch (value._error) {
+            case \\"PlaylistIdNotFoundError\\": return visitor.PlaylistIdNotFoundError(value);
+            default: return visitor._unknown();
+        }
     },
 
-    _types: (): UpdatePlaylistErrorBody[\\"_error\\"][] => [],
+    _types: (): UpdatePlaylistErrorBody[\\"_error\\"][] => [\\"PlaylistIdNotFoundError\\"],
 } as const;
 ",
                         "name": "UpdatePlaylistErrorBody.ts",
@@ -33007,7 +33201,7 @@ export * from \\"./DeletePlaylistResponse\\";
                     "contents": "import * as model from \\"../..\\";
 
 export interface Playlist {
-    playlistId: model.playlist.PlaylistId;
+    playlist_id: model.playlist.PlaylistId;
     name: string;
     problems: model.commons.ProblemId[];
     ownerId: model.commons.UserId;
@@ -33059,6 +33253,7 @@ export * from \\"./UpdatePlaylistRequest\\";
               },
               Object {
                 "contents": "export * from \\"./_types\\";
+export * from \\"./_errors\\";
 export * from \\"./_service-types\\";
 ",
                 "name": "index.ts",
@@ -37981,6 +38176,8 @@ export * from \\"./_service-types\\";
         \\"build\\": \\"esbuild $(find . -name '*.ts' -not -path './node_modules/*') --format=cjs --sourcemap --outdir=. && tsc\\"
     },
     \\"dependencies\\": {
+        \\"uuid\\": \\"8.3.2\\",
+        \\"@types/uuid\\": \\"8.3.4\\",
         \\"express\\": \\"4.18.1\\",
         \\"@types/express\\": \\"4.17.13\\"
     },
@@ -38294,12 +38491,16 @@ export const PlaylistCrudService = {
                 response.send(result.body);
             }
             else {
-                response.sendStatus(500);
+                const statusCode = model.playlist.UpdatePlaylistErrorBody._visit(result.error, {
+                    PlaylistIdNotFoundError: () => 404,
+                    _unknown: () => 500
+                });
+                response.status(statusCode).send(result.error);
             }
         });
-        app.delete(\\"/v2/playlist/:playlistId\\", async (request, response) => {
+        app.delete(\\"/v2/playlist/:playlist_id\\", async (request, response) => {
             const result = await impl.deletePlaylist({
-                playlistId: request.params.playlistId
+                playlist_id: request.params.playlist_id
             });
             if (result.ok) {
                 response.end();

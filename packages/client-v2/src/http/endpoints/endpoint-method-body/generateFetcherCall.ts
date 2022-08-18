@@ -23,7 +23,7 @@ export function generateFetcherCall({
                     ),
                     ClientConstants.HttpService.ServiceNamespace.Options.Properties.BASE_PATH
                 ),
-                convertPathToTemplateString(endpoint.path),
+                convertPathToTemplateString(endpoint),
             ])
         ),
         ts.factory.createPropertyAssignment(

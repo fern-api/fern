@@ -71,7 +71,7 @@ function generateImplRequestArguments({
         const properties: ts.ObjectLiteralElementLike[] = [
             ...endpoint.pathParameters.map((pathParameter) =>
                 ts.factory.createPropertyAssignment(
-                    ts.factory.createIdentifier(pathParameter.name.camelCase),
+                    ts.factory.createIdentifier(pathParameter.name.originalValue),
                     convertParamValueForExpectedType({
                         valueReference: ts.factory.createPropertyAccessExpression(
                             ts.factory.createPropertyAccessExpression(
@@ -80,7 +80,7 @@ function generateImplRequestArguments({
                                 ),
                                 ts.factory.createIdentifier(ServerConstants.Express.RequestProperties.PARAMS)
                             ),
-                            ts.factory.createIdentifier(pathParameter.name.camelCase)
+                            ts.factory.createIdentifier(pathParameter.name.originalValue)
                         ),
                         // express path params are typed as string
                         isValueReferenceTypedAsString: true,

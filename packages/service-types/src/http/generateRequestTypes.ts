@@ -25,7 +25,7 @@ export function generateRequestTypes({
         ...[...endpoint.pathParameters, ...endpoint.queryParameters].map(
             (parameter) =>
                 (requestFile: SourceFile): OptionalKind<PropertySignatureStructure> => ({
-                    name: parameter.name.camelCase,
+                    name: parameter.name.originalValue,
                     docs: parameter.docs != null ? [parameter.docs] : undefined,
                     type: getTextOfTsNode(
                         modelContext.getReferenceToType({
