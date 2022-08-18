@@ -13,7 +13,7 @@ export const JAVA_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
 
 export const TYPESCRIPT_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
     name: "fernapi/fern-typescript",
-    version: "0.0.188",
+    version: "0.0.189",
     generate: true,
     config: {
         mode: "client_and_server",
