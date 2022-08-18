@@ -13,7 +13,6 @@
     { "path": "../config-management/init" },
     { "path": "../config-management/manage-generator" },
     { "path": "../config-management/project-configuration" },
-    { "path": "../config-management/workspace-configuration" },
     { "path": "../docs" },
     { "path": "../generation/ir/ir-generator" },
     { "path": "../generation/local-generation/docker-utils" },
