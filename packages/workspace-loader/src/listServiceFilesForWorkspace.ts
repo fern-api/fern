@@ -1,8 +1,11 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
+import { ROOT_API_FILENAME } from "@fern-api/project-configuration";
 import { readFile } from "fs/promises";
 import glob from "glob-promise";
-import { ROOT_API_FILE_BASENAME } from "./constants";
+import path from "path";
 import { FernFile } from "./types/FernFile";
+
+const ROOT_API_FILE_BASENAME = path.basename(ROOT_API_FILENAME, path.extname(ROOT_API_FILENAME));
 
 export async function listServiceFilesForWorkspace(absolutePathToDefinition: AbsoluteFilePath): Promise<FernFile[]> {
     const files: FernFile[] = [];

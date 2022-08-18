@@ -1,19 +1,17 @@
 import { validateSchema } from "@fern-api/config-management-commons";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
 import { loadGeneratorsConfiguration } from "@fern-api/generators-configuration";
+import { DEFINITION_DIRECTORY, ROOT_API_FILENAME } from "@fern-api/project-configuration";
 import { loadWorkspaceConfiguration, WORKSPACE_CONFIGURATION_FILENAME } from "@fern-api/workspace-configuration";
 import { RootApiFileSchema } from "@fern-api/yaml-schema";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
-import { ROOT_API_FILENAME } from "./constants";
 import { listServiceFilesForWorkspace } from "./listServiceFilesForWorkspace";
 import { listYamlFilesForWorkspace } from "./listYamlFilesForWorkspace";
 import { parseYamlFiles } from "./parseYamlFiles";
 import { WorkspaceLoader } from "./types/Result";
 import { validateStructureOfYamlFiles } from "./validateStructureOfYamlFiles";
-
-const DEFINITION_DIRECTORY = "definition";
 
 export async function loadWorkspace({
     absolutePathToWorkspace,

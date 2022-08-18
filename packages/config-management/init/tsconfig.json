@@ -5,6 +5,8 @@
   "references": [
     { "path": "../../commons/core-utils" },
     { "path": "../../yaml-schema" },
+    { "path": "../commons" },
+    { "path": "../generators-configuration" },
     { "path": "../project-configuration" },
     { "path": "../workspace-configuration" }
   ]

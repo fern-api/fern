@@ -1,16 +1,14 @@
-import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/core-utils";
+import { dirname, join, RelativeFilePath } from "@fern-api/core-utils";
 import {
+    getFernDirectory,
     loadProjectConfig,
     loadProjectConfigFromFilepath,
     PROJECT_CONFIG_FILENAME,
 } from "@fern-api/project-configuration";
 import { loadWorkspace, Workspace } from "@fern-api/workspace-loader";
-import { findUp } from "find-up";
 import { readdir } from "fs/promises";
 import { handleFailedWorkspaceParserResult } from "../../generate-ir/handleFailedWorkspaceParserResult";
 import { getWorkspaceConfigurationPaths } from "./getWorkspaceConfigurationPaths";
-
-const FERN_DIRECTORY = ".fern";
 
 export interface Project {
     organization: string;
@@ -67,11 +65,10 @@ async function loadProjectV2({
 }: {
     commandLineWorkspaces: readonly string[];
 }): Promise<Project | undefined> {
-    const fernDirectoryStr = await findUp(FERN_DIRECTORY, { type: "directory" });
-    if (fernDirectoryStr == null) {
+    const fernDirectory = await getFernDirectory();
+    if (fernDirectory == null) {
         return undefined;
     }
-    const fernDirectory = AbsoluteFilePath.of(fernDirectoryStr);
 
     const fernDirectoryContents = await readdir(fernDirectory, { withFileTypes: true });
     const allWorkspaceDirectoryNames = fernDirectoryContents.reduce<string[]>((all, item) => {

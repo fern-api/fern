@@ -35,6 +35,7 @@
     "publish:cli:prod": "yarn dist:cli:prod && cd dist/prod && yarn npm publish"
   },
   "dependencies": {
+    "@fern-api/config-management-commons": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/init": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
