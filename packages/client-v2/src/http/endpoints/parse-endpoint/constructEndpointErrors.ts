@@ -1,5 +1,6 @@
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services";
 import { getTextOfTsNode, getWriterForMultiLineUnionType, visitorUtils } from "@fern-typescript/commons";
+import { createPropertyAssignment } from "@fern-typescript/commons-v2";
 import { File } from "@fern-typescript/declaration-handler";
 import { ModuleDeclaration, PropertySignature, ts } from "ts-morph";
 import { ClientConstants } from "../../../constants";
@@ -143,7 +144,7 @@ function constructVisitableItemsForServerErrors({
             type: file.externalDependencies.serviceUtils.ErrorDetails._getReferenceToType(),
             argument: ts.factory.createObjectLiteralExpression(
                 [
-                    ts.factory.createPropertyAssignment(
+                    createPropertyAssignment(
                         file.externalDependencies.serviceUtils.ErrorDetails.STATUS_CODE,
                         ts.factory.createPropertyAccessExpression(
                             ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.RESPONSE),
@@ -170,16 +171,16 @@ function generateConstructNetworkErrorBody({
 }) {
     return ts.factory.createObjectLiteralExpression(
         [
-            ts.factory.createPropertyAssignment(
+            createPropertyAssignment(
                 errorBodyProperty.getName(),
                 ts.factory.createObjectLiteralExpression([
-                    ts.factory.createPropertyAssignment(
+                    createPropertyAssignment(
                         ts.factory.createIdentifier(file.fernConstants.errorDiscriminant),
                         ts.factory.createStringLiteral(file.externalDependencies.serviceUtils.NetworkError.ERROR_NAME)
                     ),
                 ])
             ),
-            ts.factory.createPropertyAssignment(
+            createPropertyAssignment(
                 visitProperty.getName(),
                 ts.factory.createArrowFunction(
                     undefined,
@@ -227,7 +228,7 @@ function generateConstructServerErrorBody({
 }) {
     return ts.factory.createObjectLiteralExpression(
         [
-            ts.factory.createPropertyAssignment(
+            createPropertyAssignment(
                 errorBodyProperty.getName(),
                 ts.factory.createAsExpression(
                     ts.factory.createPropertyAccessExpression(
@@ -237,7 +238,7 @@ function generateConstructServerErrorBody({
                     referenceToErrorBodyType
                 )
             ),
-            ts.factory.createPropertyAssignment(
+            createPropertyAssignment(
                 ts.factory.createIdentifier(visitProperty.getName()),
                 ts.factory.createArrowFunction(
                     undefined,

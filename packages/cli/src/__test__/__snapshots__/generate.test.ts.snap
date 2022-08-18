@@ -1819,6 +1819,14 @@ export const GetPlaylistsErrorBody = {
                         "type": "file",
                       },
                       Object {
+                        "contents": "export interface GetPlaylistsRequest {
+    limit: number | null | undefined;
+}
+",
+                        "name": "GetPlaylistsRequest.ts",
+                        "type": "file",
+                      },
+                      Object {
                         "contents": "import * as model from \\"../../..\\";
 
 export type GetPlaylistsResponse = GetPlaylistsResponse.SuccessResponse | GetPlaylistsResponse.ErrorResponse;
@@ -1911,6 +1919,7 @@ export interface _UpdatePlaylistRequest {
                       Object {
                         "contents": "export * from \\"./CreatePlaylistErrorBody\\";
 export * from \\"./CreatePlaylistResponse\\";
+export * from \\"./GetPlaylistsRequest\\";
 export * from \\"./GetPlaylistsErrorBody\\";
 export * from \\"./GetPlaylistsResponse\\";
 export * from \\"./GetPlaylistRequest\\";
@@ -7322,7 +7331,7 @@ import * as model from \\"../../model\\";
 
 export interface PlaylistCrudService {
     createPlaylist(request: model.playlist.PlaylistCreateRequest): Promise<model.playlist.CreatePlaylistResponse>;
-    getPlaylists(): Promise<model.playlist.GetPlaylistsResponse>;
+    getPlaylists(request: model.playlist.GetPlaylistsRequest): Promise<model.playlist.GetPlaylistsResponse>;
     getPlaylist(request: model.playlist.GetPlaylistRequest): Promise<model.playlist.GetPlaylistResponse>;
     updatePlaylist(request: model.playlist._UpdatePlaylistRequest): Promise<model.playlist.UpdatePlaylistResponse>;
     deletePlaylist(request: model.playlist.DeletePlaylistRequest): Promise<model.playlist.DeletePlaylistResponse>;
@@ -7366,11 +7375,17 @@ export class PlaylistCrudService implements PlaylistCrudService {
         }
     }
 
-    public async getPlaylists(): Promise<model.playlist.GetPlaylistsResponse> {
+    public async getPlaylists(request: model.playlist.GetPlaylistsRequest): Promise<model.playlist.GetPlaylistsResponse> {
+        const queryParameters = new URLSearchParams();
+        if (request.limit != null) {
+            queryParameters.append(\\"limit\\", request.limit.toString());
+        }
+
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/all\\"),
             method: \\"GET\\",
-            headers: {}
+            headers: {},
+            queryParameters
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -9935,6 +9950,14 @@ export const GetPlaylistsErrorBody = {
                         "type": "file",
                       },
                       Object {
+                        "contents": "export interface GetPlaylistsRequest {
+    limit: number | null | undefined;
+}
+",
+                        "name": "GetPlaylistsRequest.ts",
+                        "type": "file",
+                      },
+                      Object {
                         "contents": "import * as model from \\"../../..\\";
 
 export type GetPlaylistsResponse = GetPlaylistsResponse.SuccessResponse | GetPlaylistsResponse.ErrorResponse;
@@ -10027,6 +10050,7 @@ export interface _UpdatePlaylistRequest {
                       Object {
                         "contents": "export * from \\"./CreatePlaylistErrorBody\\";
 export * from \\"./CreatePlaylistResponse\\";
+export * from \\"./GetPlaylistsRequest\\";
 export * from \\"./GetPlaylistsErrorBody\\";
 export * from \\"./GetPlaylistsResponse\\";
 export * from \\"./GetPlaylistRequest\\";
@@ -15438,7 +15462,7 @@ import * as model from \\"../../model\\";
 
 export interface PlaylistCrudService {
     createPlaylist(request: model.playlist.PlaylistCreateRequest): Promise<model.playlist.CreatePlaylistResponse>;
-    getPlaylists(): Promise<model.playlist.GetPlaylistsResponse>;
+    getPlaylists(request: model.playlist.GetPlaylistsRequest): Promise<model.playlist.GetPlaylistsResponse>;
     getPlaylist(request: model.playlist.GetPlaylistRequest): Promise<model.playlist.GetPlaylistResponse>;
     updatePlaylist(request: model.playlist._UpdatePlaylistRequest): Promise<model.playlist.UpdatePlaylistResponse>;
     deletePlaylist(request: model.playlist.DeletePlaylistRequest): Promise<model.playlist.DeletePlaylistResponse>;
@@ -15482,11 +15506,17 @@ export class PlaylistCrudService implements PlaylistCrudService {
         }
     }
 
-    public async getPlaylists(): Promise<model.playlist.GetPlaylistsResponse> {
+    public async getPlaylists(request: model.playlist.GetPlaylistsRequest): Promise<model.playlist.GetPlaylistsResponse> {
+        const queryParameters = new URLSearchParams();
+        if (request.limit != null) {
+            queryParameters.append(\\"limit\\", request.limit.toString());
+        }
+
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/all\\"),
             method: \\"GET\\",
-            headers: {}
+            headers: {},
+            queryParameters
         });
 
         if (isResponseOk(encodedResponse)) {
@@ -18046,6 +18076,14 @@ export const GetPlaylistsErrorBody = {
                         "type": "file",
                       },
                       Object {
+                        "contents": "export interface GetPlaylistsRequest {
+    limit: number | null | undefined;
+}
+",
+                        "name": "GetPlaylistsRequest.ts",
+                        "type": "file",
+                      },
+                      Object {
                         "contents": "import * as model from \\"../../..\\";
 
 export type GetPlaylistsResponse = GetPlaylistsResponse.SuccessResponse | GetPlaylistsResponse.ErrorResponse;
@@ -18138,6 +18176,7 @@ export interface _UpdatePlaylistRequest {
                       Object {
                         "contents": "export * from \\"./CreatePlaylistErrorBody\\";
 export * from \\"./CreatePlaylistResponse\\";
+export * from \\"./GetPlaylistsRequest\\";
 export * from \\"./GetPlaylistsErrorBody\\";
 export * from \\"./GetPlaylistsResponse\\";
 export * from \\"./GetPlaylistRequest\\";
@@ -23415,7 +23454,7 @@ import express, { Express } from \\"express\\";
 
 export interface PlaylistCrudService {
     createPlaylist(request: model.playlist.PlaylistCreateRequest): model.playlist.CreatePlaylistResponse | Promise<model.playlist.CreatePlaylistResponse>;
-    getPlaylists(): model.playlist.GetPlaylistsResponse | Promise<model.playlist.GetPlaylistsResponse>;
+    getPlaylists(request: model.playlist.GetPlaylistsRequest): model.playlist.GetPlaylistsResponse | Promise<model.playlist.GetPlaylistsResponse>;
     getPlaylist(request: model.playlist.GetPlaylistRequest): model.playlist.GetPlaylistResponse | Promise<model.playlist.GetPlaylistResponse>;
     updatePlaylist(request: model.playlist._UpdatePlaylistRequest): model.playlist.UpdatePlaylistResponse | Promise<model.playlist.UpdatePlaylistResponse>;
     deletePlaylist(request: model.playlist.DeletePlaylistRequest): model.playlist.DeletePlaylistResponse | Promise<model.playlist.DeletePlaylistResponse>;
@@ -23434,8 +23473,10 @@ export const PlaylistCrudService = {
                 response.sendStatus(500);
             }
         });
-        app.get(\\"/v2/playlist/all\\", async (_request, response) => {
-            const result = await impl.getPlaylists();
+        app.get(\\"/v2/playlist/all\\", async (request, response) => {
+            const result = await impl.getPlaylists({
+                limit: request.query.limit != null ? Number(request.query.limit) : undefined
+            });
             if (result.ok) {
                 response.send(result.body);
             }
@@ -25758,7 +25799,7 @@ import urlJoin from \\"url-join\\";
 
 export interface _Client {
     createPlaylist(request: MyApi.playlist.PlaylistCreateRequest): Promise<_Response<MyApi.playlist.Playlist, MyApi.playlist.createPlaylist.Error>>;
-    getPlaylists(): Promise<_Response<MyApi.playlist.Playlist[], MyApi.playlist.getPlaylists.Error>>;
+    getPlaylists(request: MyApi.playlist.getPlaylists.Request): Promise<_Response<MyApi.playlist.Playlist[], MyApi.playlist.getPlaylists.Error>>;
     getPlaylist(request: MyApi.playlist.getPlaylist.Request): Promise<_Response<MyApi.playlist.Playlist, MyApi.playlist.getPlaylist.Error>>;
     updatePlaylist(request: MyApi.playlist.updatePlaylist.Request): Promise<_Response<MyApi.playlist.Playlist, MyApi.playlist.updatePlaylist.Error>>;
     deletePlaylist(request: MyApi.playlist.deletePlaylist.Request): Promise<_Response<void, MyApi.playlist.deletePlaylist.Error>>;
@@ -25816,14 +25857,20 @@ export class _Client implements _Client {
         }
     }
 
-    public async getPlaylists(): Promise<_Response<MyApi.playlist.Playlist[], MyApi.playlist.getPlaylists.Error>> {
+    public async getPlaylists(request: MyApi.playlist.getPlaylists.Request): Promise<_Response<MyApi.playlist.Playlist[], MyApi.playlist.getPlaylists.Error>> {
+        const queryParameters = new URLSearchParams();
+        if (request.limit != null) {
+            queryParameters.append(\\"limit\\", request.limit.toString());
+        }
+
         const response = await defaultFetcherV2({
                 url: urlJoin(this.options._basePath, \\"/all\\"),
                 method: \\"GET\\",
                 headers: {
                     \\"Authorization\\": this.options._token != null ? BearerToken.toAuthorizationHeader(this.options._token) : this.options._credentials != null ? BasicAuth.toAuthorizationHeader(this.options._credentials) : undefined,
                     \\"X-API-Key\\": this.options.xApiKey
-                }
+                },
+                queryParameters
             });
 
         if (response.ok) {
@@ -25990,6 +26037,10 @@ export namespace createPlaylist {
 }
 
 export namespace getPlaylists {
+    export interface Request {
+        limit: number | undefined;
+    }
+
     export interface Error {
         body: MyApi.playlist.getPlaylists.ErrorBody;
         _visit: <Result>(visitor: MyApi.playlist.getPlaylists.ErrorVisitor<Result>) => Result;
@@ -26658,7 +26709,7 @@ export declare namespace ActualResult {
 
 export const ActualResult = {
         value: (value: MyApi.commons.VariableValue): ActualResult.Value => ({
-            value: value,
+            value,
             _type: \\"value\\"
         }),
 
@@ -33074,6 +33125,14 @@ export const GetPlaylistsErrorBody = {
                         "type": "file",
                       },
                       Object {
+                        "contents": "export interface GetPlaylistsRequest {
+    limit: number | null | undefined;
+}
+",
+                        "name": "GetPlaylistsRequest.ts",
+                        "type": "file",
+                      },
+                      Object {
                         "contents": "import * as model from \\"../../..\\";
 
 export type GetPlaylistsResponse = GetPlaylistsResponse.SuccessResponse | GetPlaylistsResponse.ErrorResponse;
@@ -33166,6 +33225,7 @@ export interface _UpdatePlaylistRequest {
                       Object {
                         "contents": "export * from \\"./CreatePlaylistErrorBody\\";
 export * from \\"./CreatePlaylistResponse\\";
+export * from \\"./GetPlaylistsRequest\\";
 export * from \\"./GetPlaylistsErrorBody\\";
 export * from \\"./GetPlaylistsResponse\\";
 export * from \\"./GetPlaylistRequest\\";
@@ -38443,7 +38503,7 @@ import express, { Express } from \\"express\\";
 
 export interface PlaylistCrudService {
     createPlaylist(request: model.playlist.PlaylistCreateRequest): model.playlist.CreatePlaylistResponse | Promise<model.playlist.CreatePlaylistResponse>;
-    getPlaylists(): model.playlist.GetPlaylistsResponse | Promise<model.playlist.GetPlaylistsResponse>;
+    getPlaylists(request: model.playlist.GetPlaylistsRequest): model.playlist.GetPlaylistsResponse | Promise<model.playlist.GetPlaylistsResponse>;
     getPlaylist(request: model.playlist.GetPlaylistRequest): model.playlist.GetPlaylistResponse | Promise<model.playlist.GetPlaylistResponse>;
     updatePlaylist(request: model.playlist._UpdatePlaylistRequest): model.playlist.UpdatePlaylistResponse | Promise<model.playlist.UpdatePlaylistResponse>;
     deletePlaylist(request: model.playlist.DeletePlaylistRequest): model.playlist.DeletePlaylistResponse | Promise<model.playlist.DeletePlaylistResponse>;
@@ -38462,8 +38522,10 @@ export const PlaylistCrudService = {
                 response.sendStatus(500);
             }
         });
-        app.get(\\"/v2/playlist/all\\", async (_request, response) => {
-            const result = await impl.getPlaylists();
+        app.get(\\"/v2/playlist/all\\", async (request, response) => {
+            const result = await impl.getPlaylists({
+                limit: request.query.limit != null ? Number(request.query.limit) : undefined
+            });
             if (result.ok) {
                 response.send(result.body);
             }

@@ -1,3 +1,3 @@
 export { ErrorResolver } from "./ErrorResolver";
-export { type ResolvedType } from "./ResolvedType";
+export { ResolvedType } from "./ResolvedType";
 export { TypeResolver } from "./TypeResolver";

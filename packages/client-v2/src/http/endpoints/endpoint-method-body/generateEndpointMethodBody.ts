@@ -13,7 +13,7 @@ export function generateEndpointMethodBody({
     endpoint: ParsedClientEndpoint;
     file: File;
 }): (StatementStructures | WriterFunction | string)[] {
-    const queryParameterStatements = generateConstructQueryParams(endpoint);
+    const queryParameterStatements = generateConstructQueryParams({ endpoint, file });
 
     const statements: (StatementStructures | WriterFunction | string)[] = [];
 

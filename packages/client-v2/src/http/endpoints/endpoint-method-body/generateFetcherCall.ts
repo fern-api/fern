@@ -1,4 +1,5 @@
 import { getTextOfTsNode } from "@fern-typescript/commons";
+import { createPropertyAssignment } from "@fern-typescript/commons-v2";
 import { File } from "@fern-typescript/declaration-handler";
 import { StatementStructures, StructureKind, ts, VariableDeclarationKind } from "ts-morph";
 import { ClientConstants } from "../../../constants";
@@ -13,7 +14,7 @@ export function generateFetcherCall({
     file: File;
 }): StatementStructures {
     const fetcherArgs: ts.ObjectLiteralElementLike[] = [
-        ts.factory.createPropertyAssignment(
+        createPropertyAssignment(
             ts.factory.createIdentifier(file.externalDependencies.serviceUtils.Fetcher.Parameters.URL),
             file.externalDependencies.urlJoin.invoke([
                 ts.factory.createPropertyAccessExpression(
@@ -26,11 +27,11 @@ export function generateFetcherCall({
                 convertPathToTemplateString(endpoint),
             ])
         ),
-        ts.factory.createPropertyAssignment(
+        createPropertyAssignment(
             ts.factory.createIdentifier(file.externalDependencies.serviceUtils.Fetcher.Parameters.METHOD),
             ts.factory.createStringLiteral(endpoint.method)
         ),
-        ts.factory.createPropertyAssignment(
+        createPropertyAssignment(
             ts.factory.createIdentifier(file.externalDependencies.serviceUtils.Fetcher.Parameters.HEADERS),
             ts.factory.createObjectLiteralExpression(
                 [
@@ -49,7 +50,7 @@ export function generateFetcherCall({
 
     if (endpoint.request != null && endpoint.request.isWrapped && endpoint.request.queryParameters.length > 0) {
         fetcherArgs.push(
-            ts.factory.createPropertyAssignment(
+            createPropertyAssignment(
                 ts.factory.createIdentifier(file.externalDependencies.serviceUtils.Fetcher.Parameters.QUERY_PARAMS),
                 ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.QUERY_PARAMETERS)
             )
@@ -70,7 +71,7 @@ export function generateFetcherCall({
 
     if (referenceToBody != null) {
         fetcherArgs.push(
-            ts.factory.createPropertyAssignment(
+            createPropertyAssignment(
                 ts.factory.createIdentifier(file.externalDependencies.serviceUtils.Fetcher.Parameters.BODY),
                 referenceToBody
             )
@@ -100,7 +101,7 @@ function getHeadersFromRequest(request: ClientEndpointRequest | undefined): ts.O
         return [];
     }
     return request.headers.map((header) =>
-        ts.factory.createPropertyAssignment(
+        createPropertyAssignment(
             ts.factory.createStringLiteral(header.originalData.name.wireValue),
             ts.factory.createElementAccessExpression(
                 ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Signature.REQUEST_PARAMETER),

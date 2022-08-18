@@ -6,6 +6,7 @@ import {
     maybeAddDocs,
     visitorUtils,
 } from "@fern-typescript/commons";
+import { createPropertyAssignment } from "@fern-typescript/commons-v2";
 import { File } from "@fern-typescript/declaration-handler";
 import {
     InterfaceDeclaration,
@@ -279,7 +280,7 @@ function generateCreator({
             ? parameterType.isExtendable
                 ? [ts.factory.createSpreadAssignment(ts.factory.createIdentifier(VALUE_PARAMETER_NAME))]
                 : [
-                      ts.factory.createPropertyAssignment(
+                      createPropertyAssignment(
                           ts.factory.createIdentifier(singleUnionType.discriminantValue.wireValue),
                           ts.factory.createIdentifier(VALUE_PARAMETER_NAME)
                       ),
@@ -296,12 +297,12 @@ function generateCreator({
             ts.factory.createObjectLiteralExpression(
                 [
                     ...maybeValueAssignment,
-                    ts.factory.createPropertyAssignment(
+                    createPropertyAssignment(
                         ts.factory.createIdentifier(discriminant),
                         ts.factory.createStringLiteral(singleUnionType.discriminantValue.wireValue)
                     ),
                     ...additionalPropertiesForEveryType.map((additionalProperty) =>
-                        ts.factory.createPropertyAssignment(
+                        createPropertyAssignment(
                             ts.factory.createIdentifier(additionalProperty.key),
                             additionalProperty.generateValueCreator({ file })
                         )

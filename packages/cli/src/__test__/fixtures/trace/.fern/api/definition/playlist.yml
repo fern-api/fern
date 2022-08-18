@@ -37,6 +37,8 @@ services:
           docs: Returns the user's playlists
           method: GET
           path: /all
+          query-parameters:
+            limit: optional<integer>
           response: list<Playlist>
 
         getPlaylist:

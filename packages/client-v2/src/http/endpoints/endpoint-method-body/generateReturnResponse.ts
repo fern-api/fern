@@ -1,3 +1,4 @@
+import { createPropertyAssignment } from "@fern-typescript/commons-v2";
 import { File } from "@fern-typescript/declaration-handler";
 import { ts } from "ts-morph";
 import { ClientConstants } from "../../../constants";
@@ -54,7 +55,7 @@ function generateReturnSuccessResponse({
         ts.factory.createObjectLiteralExpression(
             [
                 ...getBaseResponseProperties({ ok: true, file }),
-                ts.factory.createPropertyAssignment(
+                createPropertyAssignment(
                     ts.factory.createIdentifier(
                         file.externalDependencies.serviceUtils._Response.Success.BODY_PROPERTY_NAME
                     ),
@@ -85,7 +86,7 @@ function generateReturnNetworkErrorResponse({
         ts.factory.createObjectLiteralExpression(
             [
                 ...getBaseResponseProperties({ ok: false, file }),
-                ts.factory.createPropertyAssignment(
+                createPropertyAssignment(
                     file.externalDependencies.serviceUtils._Response.Failure.BODY_PROPERTY_NAME,
                     endpoint.error.generateConstructNetworkErrorBody()
                 ),
@@ -106,7 +107,7 @@ function generateReturnServerErrorResponse({
         ts.factory.createObjectLiteralExpression(
             [
                 ...getBaseResponseProperties({ ok: false, file }),
-                ts.factory.createPropertyAssignment(
+                createPropertyAssignment(
                     file.externalDependencies.serviceUtils._Response.Failure.BODY_PROPERTY_NAME,
                     endpoint.error.generateConstructServerErrorBody()
                 ),
@@ -118,7 +119,7 @@ function generateReturnServerErrorResponse({
 
 function getBaseResponseProperties({ ok, file }: { ok: boolean; file: File }): ts.ObjectLiteralElementLike[] {
     return [
-        ts.factory.createPropertyAssignment(
+        createPropertyAssignment(
             ts.factory.createIdentifier(file.externalDependencies.serviceUtils._Response.OK_DISCRIMINANT),
             ok ? ts.factory.createTrue() : ts.factory.createFalse()
         ),

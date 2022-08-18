@@ -1,10 +1,17 @@
-import { QueryParameter } from "@fern-fern/ir-model/services";
+import { ContainerType, PrimitiveType, TypeReference } from "@fern-fern/ir-model";
+import { File } from "@fern-typescript/declaration-handler";
+import { ResolvedType } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
 import { ClientConstants } from "../../../constants";
-import { WrapperField } from "../parse-endpoint/constructRequestWrapper";
 import { ParsedClientEndpoint } from "../parse-endpoint/ParsedClientEndpoint";
 
-export function generateConstructQueryParams(endpoint: ParsedClientEndpoint): ts.Statement[] {
+export function generateConstructQueryParams({
+    endpoint,
+    file,
+}: {
+    endpoint: ParsedClientEndpoint;
+    file: File;
+}): ts.Statement[] {
     const statements: ts.Statement[] = [];
     if (endpoint.request == null || !endpoint.request.isWrapped || endpoint.request.queryParameters.length === 0) {
         return statements;
@@ -29,7 +36,10 @@ export function generateConstructQueryParams(endpoint: ParsedClientEndpoint): ts
     );
 
     for (const queryParameter of endpoint.request.queryParameters) {
-        const queryParameterReference = getQueryParameterReference({ queryParameter });
+        const queryParameterReference = ts.factory.createPropertyAccessExpression(
+            ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Signature.REQUEST_PARAMETER),
+            ts.factory.createIdentifier(queryParameter.key)
+        );
 
         const appendStatement = ts.factory.createExpressionStatement(
             ts.factory.createCallExpression(
@@ -38,7 +48,14 @@ export function generateConstructQueryParams(endpoint: ParsedClientEndpoint): ts
                     ts.factory.createIdentifier("append")
                 ),
                 undefined,
-                [ts.factory.createStringLiteral(queryParameter.originalData.name.wireValue), queryParameterReference]
+                [
+                    ts.factory.createStringLiteral(queryParameter.originalData.name.wireValue),
+                    getValueAsString({
+                        value: queryParameterReference,
+                        type: queryParameter.originalData.valueType,
+                        file,
+                    }),
+                ]
             )
         );
 
@@ -64,13 +81,69 @@ export function generateConstructQueryParams(endpoint: ParsedClientEndpoint): ts
     return statements;
 }
 
-function getQueryParameterReference({
-    queryParameter,
+/**
+ * this will ignore optional wrappers
+ * e.g.
+ *      type: optional<number>
+ *      returns: value.toString()
+ */
+function getValueAsString({
+    value,
+    type,
+    file,
 }: {
-    queryParameter: WrapperField<QueryParameter>;
-}): ts.PropertyAccessExpression {
-    return ts.factory.createPropertyAccessExpression(
-        ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Signature.REQUEST_PARAMETER),
-        ts.factory.createIdentifier(queryParameter.key)
+    value: ts.Expression;
+    type: TypeReference;
+    file: File;
+}): ts.Expression {
+    const resolvedType = file.resolveTypeReference(type);
+
+    function throwNotSupported(): never {
+        throw new Error("Type cannot be converted to string: " + resolvedType._type);
+    }
+
+    return ResolvedType._visit<ts.Expression>(resolvedType, {
+        primitive: (primitive) => {
+            return PrimitiveType._visit(primitive, {
+                integer: () => getNumberAsString(value),
+                double: () => getNumberAsString(value),
+                string: () => value,
+                boolean: () =>
+                    ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(value, "toString"),
+                        undefined,
+                        undefined
+                    ),
+                long: () => getNumberAsString(value),
+                dateTime: () => value,
+                uuid: () => value,
+                _unknown: () => {
+                    throw new Error("Unkown primitive type: " + primitive);
+                },
+            });
+        },
+        container: (container) =>
+            ContainerType._visit<ts.Expression>(container, {
+                optional: (wrappedType) => getValueAsString({ value, type: wrappedType, file }),
+                list: throwNotSupported,
+                map: throwNotSupported,
+                set: throwNotSupported,
+                _unknown: () => {
+                    throw new Error("Unkown container type: " + container);
+                },
+            }),
+        object: throwNotSupported,
+        union: throwNotSupported,
+        enum: () => value,
+        unknown: () => ts.factory.createAsExpression(value, ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)),
+        void: throwNotSupported,
+    });
+}
+
+function getNumberAsString(value: ts.Expression) {
+    return ts.factory.createCallExpression(
+        ts.factory.createPropertyAccessExpression(value, "toString"),
+        undefined,
+        undefined
     );
 }

@@ -1,5 +1,6 @@
 import { ApiAuth, AuthScheme, TypeReference } from "@fern-fern/ir-model";
 import { getTextOfTsNode } from "@fern-typescript/commons";
+import { createPropertyAssignment } from "@fern-typescript/commons-v2";
 import { ExternalDependencies, ParsedAuthSchemes } from "@fern-typescript/declaration-handler";
 import { ts } from "ts-morph";
 
@@ -111,7 +112,7 @@ export function parseAuthSchemes({
 
         getHeaders: (nodeWithAuthProperties) => {
             return Object.entries(headerNameToAuthSchemes).map(([headerName, authSchemesForHeader]) => {
-                return ts.factory.createPropertyAssignment(
+                return createPropertyAssignment(
                     ts.factory.createStringLiteral(headerName),
                     getValueForHeader({ nodeWithAuthProperties, authSchemesForHeader })
                 );

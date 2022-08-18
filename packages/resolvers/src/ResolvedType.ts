@@ -54,7 +54,6 @@ export declare namespace ResolvedType {
         primitive: (value: PrimitiveType) => Result;
         unknown: () => Result;
         void: () => Result;
-        _unknown: () => Result;
     }
 }
 
@@ -108,8 +107,6 @@ export const ResolvedType = {
                 return visitor.unknown();
             case "void":
                 return visitor.void();
-            default:
-                return visitor._unknown();
         }
     },
 };
