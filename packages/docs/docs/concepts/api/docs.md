@@ -1,4 +1,8 @@
-# Docs
+---
+title: Docs
+sidebar_position: 10
+sidebar_label: Docs
+---
 
 Add descriptions that help document your API. Docs are intended for readers of your API Definition as well as for populating your docs website.
 

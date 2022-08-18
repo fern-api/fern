@@ -1,11 +1,9 @@
 ---
-sidebar_position: 9
 title: Fern CLI
+sidebar_position: 11
 ---
 
 <!-- markdownlint-disable MD033 -->
-
-# CLI
 
 Fern provides a set of command-line commands to help you generate clients, servers, documentation, and more. To install the Fern CLI run:
 

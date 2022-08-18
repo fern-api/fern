@@ -1,9 +1,8 @@
 ---
+title: Imports
 sidebar_position: 8
 sidebar_label: Imports
 ---
-
-# Imports
 
 Imports allow you to reference types, errors, and ids from other Fern API Definitions.
 

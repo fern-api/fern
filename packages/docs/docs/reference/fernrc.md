@@ -1,4 +1,7 @@
-# fernrc
+---
+title: fernrc
+sidebar_position: 13
+---
 
 `.fernrc.yml` contains three fields:
 

@@ -1,11 +1,10 @@
 ---
+title: Services
 sidebar_position: 6
 sidebar_label: Services
 ---
 
-# Defining a service
-
-This page is about defining a REST service, which communicates over HTTP.
+This page describes how to define a REST service, which communicates over HTTP.
 
 A service consists of **endpoints**. Each endpoint has a path and an associated HTTP method (e.g. `GET`, `POST`).
 

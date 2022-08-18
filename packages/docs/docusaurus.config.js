@@ -92,8 +92,8 @@ const config = {
             },
             algolia: {
                 appId: "AMYYWZFEK5",
-                apiKey: "00a381cfdddce6ccd637aea674a93282",
-                indexName: "buildwithfern",
+                apiKey: "100c54cd18374a562311359d03e8c812",
+                indexName: "fern-docs",
             },
             prism: {
                 theme: lightCodeTheme,

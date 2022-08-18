@@ -4,6 +4,8 @@ sidebar_position: 9
 
 # Fern Generators
 
+Code generators run remotely in the cloud. The input is a of API Definition file (YAML) and the output is auto generated code. Specify the generators you'd like to use in `generators.yml`.
+
 |  **Name**  |                                       **Description**                                        |   **CLI Command**   |                                            **Library**                                             |
 | :--------: | :------------------------------------------------------------------------------------------: | :-----------------: | :------------------------------------------------------------------------------------------------: |
 |            |                                                                                              |
@@ -18,11 +20,7 @@ sidebar_position: 9
 |  OpenAPI   |   converts a Fern Definition to an [OpenAPI Spec](https://swagger.io/resources/open-api/)    |  fern add openapi   | <!-- markdown-link-check-disable-line --> [fern-openapi](https://github.com/fern-api/fern-openapi) |
 |            |                                                                                              |
 
-## How does remote code generation work?
-
-Code generators run remotely in the cloud. They take a set of Fern API Definition YAML files, run the generators listed in `.fernrc.yml, and produce generated files as an output. Files can output locally (i.e., seen in the file system of your IDE) or remotely (i.e., in a package manager like NPM, Maven, or PyPI).
-
-## How can I automatically update my Postman Collection? (Instructions in 2 steps.)
+## How can I automatically update my Postman Collection?
 
 ### Get your Postman Workspace ID
 

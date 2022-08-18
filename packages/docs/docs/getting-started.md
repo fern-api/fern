@@ -6,8 +6,6 @@ sidebar_position: 2
 
 <!-- markdownlint-disable MD033 MD025 -->
 
-# TypeScript Server Tutorial: IMDb
-
 This guide uses an example API for IMDb (the International Movie Database) that introduces you to using Fern. We'll generate a TypeScript server and a Postman Collection to implement and test our API.
 
 <a href="https://www.loom.com/share/c892f4a9fc674c4bb42fb31d395d9ebf">
