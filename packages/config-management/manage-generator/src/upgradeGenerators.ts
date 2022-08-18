@@ -27,6 +27,7 @@ export function upgradeGenerators({
         return generatorConfig;
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!didUpgrade) {
         console.log("No upgrades found");
     }
