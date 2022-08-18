@@ -4,7 +4,8 @@
  */
 
 .heroBanner {
-    padding: 4rem 0 4rem 0;
+    display: flex;
+    align-items: center;
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -12,6 +13,8 @@
     background-image: url(../../static/img/background.svg);
     background-size: cover;
     width: 100%;
+    min-height: 75vh;
+
     /* z-index: -1; */
 }
 
@@ -36,13 +39,14 @@
     z-index: 1;
     transition: 0.3s;
 }
+
 .hero_button:hover {
     background-color: blue;
     text-decoration: underline;
 }
 
 .hero_button_git {
-    margin: 0 10px 0 10px;
+    margin: 0 10px;
     background: none;
     border-color: #2d67e4;
     display: inline-block;
@@ -57,6 +61,7 @@
     width: 170px;
     z-index: 1;
 }
+
 .hero_button_git:hover {
     background-color: rgb(223, 223, 253);
     text-decoration: underline;
@@ -65,10 +70,10 @@
 .pricingList {
     display: flex;
     background-color: #1e2029;
-    margin: 2rem 1rem 3rem 1rem;
+    margin: 2rem 1rem 3rem;
     padding: 2rem 1rem;
     border-radius: 10px;
-    box-shadow: rgb(0 0 0 / 8%) 0px 2px 4px, rgb(0 0 0 / 6%) 0px 2px 12px;
+    box-shadow: rgb(0 0 0 / 8%) 0 2px 4px, rgb(0 0 0 / 6%) 0 2px 12px;
     justify-content: center;
     width: calc(3 / 12 * 100%);
 }
@@ -80,6 +85,7 @@
     justify-content: space-between;
     text-align: center;
 }
+
 .pricingBox > p {
     width: 70%;
     text-align: center;
@@ -88,7 +94,7 @@
 .buy_button {
     display: inline-block;
     padding: 15px 20px;
-    margin: 20px 0 10px 0;
+    margin: 20px 0 10px;
     font-size: 20px;
     cursor: pointer;
     text-align: center;
@@ -108,9 +114,11 @@
         padding: 2rem;
         position: relative;
     }
+
     .hero_title {
         font-size: 2rem;
     }
+
     .pricingList {
         width: auto;
     }
@@ -120,4 +128,13 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
+}
+
+.legalFooter {
+    flex: 1;
+    justify-content: flex-end;
+    display: flex;
+    gap: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
 }

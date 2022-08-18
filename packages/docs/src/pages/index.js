@@ -44,6 +44,17 @@ export default function Home() {
             <main>
                 <HomepageFeatures />
             </main>
+            <div className={styles.legalFooter}>
+                <a target="_blank" rel="noopener noreferrer" href="/docs/legal/privacy">
+                    Privacy Policy
+                </a>
+                <a target="_blank" rel="noopener noreferrer" href="/docs/legal/cookie">
+                    Cookie Policy
+                </a>
+                <a target="_blank" rel="noopener noreferrer" href="/docs/legal/terms">
+                    Terms of Service
+                </a>
+            </div>
         </Layout>
     );
 }
