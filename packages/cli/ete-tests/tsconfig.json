@@ -5,7 +5,7 @@
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
     { "path": "../../commons/core-utils" },
-    { "path": "../../config-management/project-configuration" },
-    { "path": "../../config-management/workspace-configuration" }
+    { "path": "../../config-management/generators-configuration" },
+    { "path": "../../config-management/project-configuration" }
   ]
 }

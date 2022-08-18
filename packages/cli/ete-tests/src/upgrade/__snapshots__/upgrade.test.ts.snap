@@ -1,9 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`fern upgrade upgrades generators 1`] = `
-"name: api
-definition: src
-generators:
+"generators:
   - name: fernapi/fern-postman
     version: 0.0.22
     generate:

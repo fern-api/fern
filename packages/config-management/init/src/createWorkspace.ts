@@ -1,6 +1,10 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
-import { GeneratorsConfigurationSchema, GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/generators-configuration";
-import { DEFINITION_DIRECTORY, ROOT_API_FILENAME } from "@fern-api/project-configuration";
+import { GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
+import {
+    DEFINITION_DIRECTORY,
+    GENERATORS_CONFIGURATION_FILENAME,
+    ROOT_API_FILENAME,
+} from "@fern-api/project-configuration";
 import { RootApiFileSchema } from "@fern-api/yaml-schema";
 import { mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";

@@ -11,6 +11,7 @@ export function convertGeneratorsConfiguration({
 }): GeneratorsConfiguration {
     return {
         absolutePathToConfiguration: absolutePathToGeneratorsConfiguration,
+        rawConfiguration: rawGeneratorsConfiguration,
         generators: rawGeneratorsConfiguration.generators.map((generatorInvocation) => {
             return {
                 name: generatorInvocation.name,
