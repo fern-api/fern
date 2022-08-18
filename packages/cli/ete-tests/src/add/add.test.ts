@@ -13,7 +13,7 @@ it("fern add", async () => {
     await add("postman");
     await add("openapi");
 
-    expect(getDirectoryContents(GENERATED_DIR)).toMatchSnapshot();
+    expect(await getDirectoryContents(GENERATED_DIR)).toMatchSnapshot();
 }, 60_000);
 
 async function init() {
