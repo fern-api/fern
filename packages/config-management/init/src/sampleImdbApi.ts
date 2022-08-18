@@ -1,5 +1,4 @@
-// Whenever the json schema is updated, this link will need to get bumped.
-export const SAMPLE_API = `# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+export const SAMPLE_IMDB_API = `# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 types:
   MovieId: string

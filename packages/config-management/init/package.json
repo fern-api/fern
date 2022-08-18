@@ -26,8 +26,8 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
+    "@fern-api/generators-configuration": "workspace:*",
     "@fern-api/project-configuration": "workspace:*",
-    "@fern-api/workspace-configuration": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
     "js-yaml": "^4.1.0"
   },

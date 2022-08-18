@@ -2802,6 +2802,7 @@ __metadata:
     "@babel/preset-env": ^7.18.10
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
+    "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/init": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/local-workspace-runner": "workspace:*"
@@ -2831,7 +2832,6 @@ __metadata:
     esbuild: ^0.14.50
     eslint: ^8.22.0
     execa: ^5.1.1
-    find-up: ^6.3.0
     glob: ^7.2.0
     glob-promise: ^4.2.2
     inquirer: ^9.0.0
@@ -3024,8 +3024,8 @@ __metadata:
     "@babel/preset-env": ^7.18.10
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
+    "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
-    "@fern-api/workspace-configuration": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^28.1.7
     "@types/js-yaml": ^4.0.5
@@ -3155,6 +3155,7 @@ __metadata:
     "@babel/preset-env": ^7.18.10
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
+    "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/workspace-configuration": "workspace:*"
     "@types/jest": ^28.1.7
     "@types/node": ^18.7.6
@@ -3329,6 +3330,7 @@ __metadata:
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/generators-configuration": "workspace:*"
+    "@fern-api/project-configuration": "workspace:*"
     "@fern-api/workspace-configuration": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^28.1.7

@@ -1,10 +1,8 @@
-import { WORKSPACE_CONFIGURATION_FILENAME } from "@fern-api/workspace-configuration";
-import { mkdir, readFile, rm } from "fs/promises";
-import path from "path";
+import { AbsoluteFilePath, getDirectoryContents, join, RelativeFilePath } from "@fern-api/core-utils";
+import { mkdir, rm } from "fs/promises";
 import { runFernCli } from "../utils/runFernCli";
 
-const GENERATED_DIR = path.join(__dirname, "generated");
-const GENERATED_API_DIR = path.join(GENERATED_DIR, "api");
+const GENERATED_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("generated"));
 
 it("fern add", async () => {
     await rm(GENERATED_DIR, { force: true, recursive: true });
@@ -14,8 +12,8 @@ it("fern add", async () => {
     await add("typescript");
     await add("postman");
     await add("openapi");
-    const fileContents = await readFile(path.join(GENERATED_API_DIR, WORKSPACE_CONFIGURATION_FILENAME));
-    expect(fileContents.toString()).toMatchSnapshot();
+
+    expect(await getDirectoryContents(GENERATED_DIR)).toMatchSnapshot();
 }, 60_000);
 
 async function init() {

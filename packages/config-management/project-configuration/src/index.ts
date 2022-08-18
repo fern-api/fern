@@ -1,3 +1,5 @@
+export { DEFINITION_DIRECTORY, FERN_DIRECTORY, ROOT_API_FILENAME } from "./constants";
+export { getFernDirectory } from "./getFernDirectory";
 export {
     loadProjectConfig,
     loadProjectConfigFromFilepath,

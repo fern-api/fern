@@ -1,23 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`fern init 1`] = `
-"{
-    \\"workspaces\\": [
-        \\"**\\"
-    ],
-    \\"organization\\": \\"fern\\"
-}"
-`;
-
-exports[`fern init 2`] = `
-"name: api
-definition: src
-generators: []
-"
-`;
-
-exports[`fern init 3`] = `
-"# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+Array [
+  Object {
+    "contents": Array [
+      Object {
+        "contents": Array [
+          Object {
+            "contents": "name: api
+",
+            "name": "api.yml",
+            "type": "file",
+          },
+          Object {
+            "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 types:
   MovieId: string
@@ -63,5 +59,33 @@ services:
 errors:
   NotFoundError:
     http:
-      statusCode: 404"
+      statusCode: 404",
+            "name": "imdb.yml",
+            "type": "file",
+          },
+        ],
+        "name": "definition",
+        "type": "directory",
+      },
+      Object {
+        "contents": "generators: []
+",
+        "name": "generators.yml",
+        "type": "file",
+      },
+    ],
+    "name": "api",
+    "type": "directory",
+  },
+  Object {
+    "contents": "{
+    \\"workspaces\\": [
+        \\"**\\"
+    ],
+    \\"organization\\": \\"fern\\"
+}",
+    "name": "fern.config.json",
+    "type": "file",
+  },
+]
 `;
