@@ -1,8 +1,8 @@
 ---
 title: API Definition
+sidebar_position: 10
+sidebar_label: API Definition
 ---
-
-# API Definition
 
 In Fern, an **API Definition** is a set of YAML files that describe your API. Each file may define:
 

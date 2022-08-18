@@ -1,9 +1,8 @@
 ---
+title: Errors
 sidebar_position: 7
 sidebar_label: Errors
 ---
-
-# Errors
 
 Endpoints can throw errors on failure. An endpoint can have multiple errors. Errors have the following properties:
 

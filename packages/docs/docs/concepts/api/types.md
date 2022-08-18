@@ -1,11 +1,10 @@
 ---
+title: Types
 sidebar_position: 5
 sidebar_label: Types
 ---
 
 <!-- markdownlint-disable MD036 -->
-
-# Types
 
 Types describe the data model of your API. You can use built-in types or create your own.
 

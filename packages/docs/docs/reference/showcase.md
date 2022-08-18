@@ -5,7 +5,7 @@ title: Showcase
 
 ### Connect Earth helps embed sustainability into financial products.
 
-```
+```yaml
 imports:
   transaction: transaction.yml
 
@@ -62,7 +62,7 @@ services:
 
 ### Telematica is a unified API for electric vehicles.
 
-```
+```yaml
 ids:
   - name: VehicleId
     docs: |
