@@ -1,21 +1,19 @@
-import { RelativeFilePath } from "@fern-api/core-utils";
-import { ProjectConfigSchema, PROJECT_CONFIG_FILENAME } from "@fern-api/project-configuration";
-import { WorkspaceConfigurationSchema, WORKSPACE_CONFIGURATION_FILENAME } from "@fern-api/workspace-configuration";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
+import { GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
+import { FERN_DIRECTORY, GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/project-configuration";
 import { mkdir, readFile, rm, writeFile } from "fs/promises";
-import yaml from "js-yaml";
-import path from "path";
+import { init } from "../init/init";
 import { runFernCli } from "../utils/runFernCli";
 
-const RELATIVE_PATH_TO_DEFINITION = RelativeFilePath.of("src");
+const GENERATED_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("generated"));
+const GENERATORS_CONFIGURATION_FILEPATH = join(
+    GENERATED_DIR,
+    RelativeFilePath.of(FERN_DIRECTORY),
+    RelativeFilePath.of("api"),
+    RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)
+);
 
-const FERN_CONFIG_JSON: ProjectConfigSchema = {
-    workspaces: ["**"],
-    organization: "fern",
-};
-
-const FERN_RC: WorkspaceConfigurationSchema = {
-    name: "api",
-    definition: RELATIVE_PATH_TO_DEFINITION,
+const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {
     generators: [
         {
             name: "fernapi/fern-postman",
@@ -58,20 +56,14 @@ const FERN_RC: WorkspaceConfigurationSchema = {
 
 describe("fern upgrade", () => {
     it("upgrades generators", async () => {
-        // put in generated/ so it's git-ignored
-        const workspacePath = path.join(__dirname, "generated");
-        await rm(workspacePath, { recursive: true, force: true });
-        await mkdir(workspacePath, { recursive: true });
-        await mkdir(path.join(workspacePath, RELATIVE_PATH_TO_DEFINITION));
-        await writeFile(
-            path.join(workspacePath, PROJECT_CONFIG_FILENAME),
-            JSON.stringify(FERN_CONFIG_JSON, undefined, 2)
-        );
-        await writeFile(path.join(workspacePath, WORKSPACE_CONFIGURATION_FILENAME), yaml.dump(FERN_RC));
+        await rm(GENERATED_DIR, { force: true, recursive: true });
+        await mkdir(GENERATED_DIR);
+        await init(GENERATED_DIR);
+        await writeFile(GENERATORS_CONFIGURATION_FILEPATH, JSON.stringify(GENERATORS_CONFIGURATION, undefined, 4));
         await runFernCli(["upgrade"], {
-            cwd: workspacePath,
+            cwd: GENERATED_DIR,
         });
-        const newFernRc = await readFile(path.join(workspacePath, WORKSPACE_CONFIGURATION_FILENAME));
-        expect(newFernRc.toString()).toMatchSnapshot();
+        const generatorsConfiguration = (await readFile(GENERATORS_CONFIGURATION_FILEPATH)).toString();
+        expect(generatorsConfiguration).toMatchSnapshot();
     });
 });

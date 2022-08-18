@@ -1,13 +1,12 @@
 import { validateSchema } from "@fern-api/config-management-commons";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
+import { GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/project-configuration";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { convertGeneratorsConfiguration } from "./convertGeneratorsConfiguration";
 import { GeneratorsConfiguration } from "./GeneratorsConfiguration";
 import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfigurationSchema";
 import { substituteEnvVariables } from "./substituteEnvVariables";
-
-export const GENERATORS_CONFIGURATION_FILENAME = "generators.yml";
 
 export async function loadRawGeneratorsConfiguration({
     absolutePathToWorkspace,

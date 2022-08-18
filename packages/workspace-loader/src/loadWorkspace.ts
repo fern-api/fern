@@ -47,6 +47,7 @@ export async function loadWorkspace({
                 absolutePathToDefinition: workspaceConfiguration.absolutePathToDefinition,
                 generatorsConfiguration: {
                     absolutePathToConfiguration: absolutePathToWorkspaceConfiguration,
+                    rawConfiguration: undefined!,
                     generators: workspaceConfiguration.generators,
                 },
                 rootApiFile: {
