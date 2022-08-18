@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
+    "@fern-api/generators-configuration": "workspace:*",
     "@fern-api/init": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/local-workspace-runner": "workspace:*",
