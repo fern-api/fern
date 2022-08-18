@@ -1,5 +1,5 @@
 import { RelativeFilePath } from "@fern-api/core-utils";
-import { GeneratorInvocationSchema } from "@fern-api/workspace-configuration";
+import { GeneratorInvocationSchema } from "@fern-api/generators-configuration";
 
 export const JAVA_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
     name: "fernapi/fern-java",

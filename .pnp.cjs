@@ -6271,6 +6271,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:0b23579dc28901a059730423db0f57d57deedf4cfa606bd378c6a67ad1ee749d20c1b601d69521d3a05e31f66a7c76178afab05faf48920cdaed13474d7cba5a#npm:7.18.6"],\
             ["@fern-api/config-management-commons", "workspace:packages/config-management/commons"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
+            ["@fern-api/generators-configuration", "workspace:packages/config-management/generators-configuration"],\
             ["@fern-api/init", "workspace:packages/config-management/init"],\
             ["@fern-api/ir-generator", "workspace:packages/generation/ir/ir-generator"],\
             ["@fern-api/local-workspace-runner", "workspace:packages/generation/local-generation/local-workspace-runner"],\
@@ -6651,6 +6652,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-env", "virtual:0b23579dc28901a059730423db0f57d57deedf4cfa606bd378c6a67ad1ee749d20c1b601d69521d3a05e31f66a7c76178afab05faf48920cdaed13474d7cba5a#npm:7.18.10"],\
             ["@babel/preset-typescript", "virtual:0b23579dc28901a059730423db0f57d57deedf4cfa606bd378c6a67ad1ee749d20c1b601d69521d3a05e31f66a7c76178afab05faf48920cdaed13474d7cba5a#npm:7.18.6"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
+            ["@fern-api/generators-configuration", "workspace:packages/config-management/generators-configuration"],\
             ["@fern-api/workspace-configuration", "workspace:packages/config-management/workspace-configuration"],\
             ["@types/jest", "npm:28.1.7"],\
             ["@types/node", "npm:18.7.6"],\

@@ -9,8 +9,9 @@ describe("addGenerator", () => {
             definition: RelativeFilePath.of("./src"),
             generators: [],
         };
-        const updatedWorkspaceConfiguration = addJavaGenerator(workspaceConfiguration);
-        expect(updatedWorkspaceConfiguration.generators.length).toEqual(1);
+        const addGeneratorResult = addJavaGenerator(workspaceConfiguration);
+        expect(addGeneratorResult).toBeDefined();
+        expect(addGeneratorResult?.updatedGeneratorsConfiguration.generators.length).toEqual(1);
     });
 
     it("skip if present", () => {
@@ -24,7 +25,7 @@ describe("addGenerator", () => {
                 },
             ],
         };
-        const updatedWorkspaceConfiguration = addTypescriptGenerator(workspaceConfiguration);
-        expect(updatedWorkspaceConfiguration).toEqual(workspaceConfiguration);
+        const addGeneratorResult = addTypescriptGenerator(workspaceConfiguration);
+        expect(addGeneratorResult).toEqual(undefined);
     });
 });

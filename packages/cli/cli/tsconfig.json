@@ -5,6 +5,7 @@
   "references": [
     { "path": "../../commons/core-utils" },
     { "path": "../../config-management/commons" },
+    { "path": "../../config-management/generators-configuration" },
     { "path": "../../config-management/init" },
     { "path": "../../config-management/manage-generator" },
     { "path": "../../config-management/project-configuration" },

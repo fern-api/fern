@@ -1,4 +1,4 @@
-import { GeneratorInvocationSchema, WorkspaceConfigurationSchema } from "@fern-api/workspace-configuration";
+import { GeneratorInvocationSchema, GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
 import {
     JAVA_GENERATOR_INVOCATION,
     OPENAPI_GENERATOR_INVOCATION,
@@ -6,55 +6,58 @@ import {
     TYPESCRIPT_GENERATOR_INVOCATION,
 } from "./generatorInvocations";
 
-export function addOpenApiGenerator(
-    workspaceConfiguration: WorkspaceConfigurationSchema
-): WorkspaceConfigurationSchema {
+export type GeneratorAddResult = GeneratorAddedResult | undefined;
+
+export interface GeneratorAddedResult {
+    updatedGeneratorsConfiguration: GeneratorsConfigurationSchema;
+    addedInvocation: GeneratorInvocationSchema;
+}
+
+export function addOpenApiGenerator(generatorsConfiguration: GeneratorsConfigurationSchema): GeneratorAddResult {
     return addGeneratorIfNotPresent({
-        workspaceConfiguration,
+        generatorsConfiguration,
         invocation: OPENAPI_GENERATOR_INVOCATION,
     });
 }
 
-export function addJavaGenerator(workspaceConfiguration: WorkspaceConfigurationSchema): WorkspaceConfigurationSchema {
+export function addJavaGenerator(generatorsConfiguration: GeneratorsConfigurationSchema): GeneratorAddResult {
     return addGeneratorIfNotPresent({
-        workspaceConfiguration,
+        generatorsConfiguration,
         invocation: JAVA_GENERATOR_INVOCATION,
     });
 }
 
-export function addTypescriptGenerator(
-    workspaceConfiguration: WorkspaceConfigurationSchema
-): WorkspaceConfigurationSchema {
+export function addTypescriptGenerator(generatorsConfiguration: GeneratorsConfigurationSchema): GeneratorAddResult {
     return addGeneratorIfNotPresent({
-        workspaceConfiguration,
+        generatorsConfiguration,
         invocation: TYPESCRIPT_GENERATOR_INVOCATION,
     });
 }
 
-export function addPostmanGenerator(
-    workspaceConfiguration: WorkspaceConfigurationSchema
-): WorkspaceConfigurationSchema {
+export function addPostmanGenerator(generatorsConfiguration: GeneratorsConfigurationSchema): GeneratorAddResult {
     return addGeneratorIfNotPresent({
-        workspaceConfiguration,
+        generatorsConfiguration,
         invocation: POSTMAN_GENERATOR_INVOCATION,
     });
 }
 
 function addGeneratorIfNotPresent({
-    workspaceConfiguration,
+    generatorsConfiguration,
     invocation,
 }: {
-    workspaceConfiguration: WorkspaceConfigurationSchema;
+    generatorsConfiguration: GeneratorsConfigurationSchema;
     invocation: GeneratorInvocationSchema;
-}): WorkspaceConfigurationSchema {
-    const isAlreadyInstalled = workspaceConfiguration.generators.some(
+}): GeneratorAddResult {
+    const isAlreadyInstalled = generatorsConfiguration.generators.some(
         (otherInvocation) => otherInvocation.name === invocation.name
     );
     if (isAlreadyInstalled) {
-        return workspaceConfiguration;
+        return undefined;
     }
     return {
-        ...workspaceConfiguration,
-        generators: [...workspaceConfiguration.generators, invocation],
+        updatedGeneratorsConfiguration: {
+            generators: [...generatorsConfiguration.generators, invocation],
+        },
+        addedInvocation: invocation,
     };
 }

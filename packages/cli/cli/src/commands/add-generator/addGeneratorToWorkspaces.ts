@@ -1,10 +1,12 @@
+import { GeneratorsConfigurationSchema, loadRawGeneratorsConfiguration } from "@fern-api/generators-configuration";
 import {
     addJavaGenerator,
     addOpenApiGenerator,
     addPostmanGenerator,
     addTypescriptGenerator,
+    GeneratorAddResult,
 } from "@fern-api/manage-generator";
-import { loadRawWorkspaceConfiguration, WorkspaceConfigurationSchema } from "@fern-api/workspace-configuration";
+import chalk from "chalk";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { loadProject } from "../utils/load-project/loadProject";
@@ -16,17 +18,21 @@ export async function addGeneratorToWorkspaces(
     const { workspaces } = await loadProject({ commandLineWorkspaces });
 
     for (const workspace of workspaces) {
-        const workspaceConfiguration = await loadRawWorkspaceConfiguration(
-            workspace.generatorsConfiguration.absolutePathToConfiguration
-        );
-        const updatedWorkspaceConfiguration = addGeneratorToWorkspaceConfiguration(
-            generatorName,
-            workspaceConfiguration
-        );
-        if (updatedWorkspaceConfiguration !== workspaceConfiguration) {
+        const generatorsConfiguration = await loadRawGeneratorsConfiguration({
+            absolutePathToWorkspace: workspace.absolutePathToWorkspace,
+        });
+        const addGeneratorResult = addGeneratorToWorkspaceConfiguration(generatorName, generatorsConfiguration);
+        if (addGeneratorResult === undefined) {
+            console.log(chalk.yellow(`Generator ${generatorName} already exists`));
+        } else {
             await writeFile(
                 workspace.generatorsConfiguration.absolutePathToConfiguration,
-                yaml.dump(updatedWorkspaceConfiguration)
+                yaml.dump(addGeneratorResult.updatedGeneratorsConfiguration)
+            );
+            console.log(
+                chalk.green(
+                    `Added generator ${addGeneratorResult.addedInvocation.name}@${addGeneratorResult.addedInvocation.version}`
+                )
             );
         }
     }
@@ -34,16 +40,16 @@ export async function addGeneratorToWorkspaces(
 
 function addGeneratorToWorkspaceConfiguration(
     generatorName: "java" | "typescript" | "postman" | "openapi",
-    workspaceConfiguration: WorkspaceConfigurationSchema
-): WorkspaceConfigurationSchema {
+    generatorsConfiguration: GeneratorsConfigurationSchema
+): GeneratorAddResult {
     switch (generatorName) {
         case "java":
-            return addJavaGenerator(workspaceConfiguration);
+            return addJavaGenerator(generatorsConfiguration);
         case "typescript":
-            return addTypescriptGenerator(workspaceConfiguration);
+            return addTypescriptGenerator(generatorsConfiguration);
         case "postman":
-            return addPostmanGenerator(workspaceConfiguration);
+            return addPostmanGenerator(generatorsConfiguration);
         case "openapi":
-            return addOpenApiGenerator(workspaceConfiguration);
+            return addOpenApiGenerator(generatorsConfiguration);
     }
 }
