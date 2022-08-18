@@ -95,41 +95,6 @@ const config = {
                 apiKey: "00a381cfdddce6ccd637aea674a93282",
                 indexName: "buildwithfern",
             },
-            footer: {
-                style: "dark",
-                links: [
-                    {
-                        title: "Company",
-                        items: [
-                            {
-                                label: "Github",
-                                to: "https://github.com/fern-api/fern/",
-                            },
-                            {
-                                label: "Stay updated",
-                                to: "mailto:team@buildwithfern.com?subject=Keep%20me%20updated&body=Howdy%20team-%0A%0APlease%20keep%20me%20updated%20as%20functionality%20is%20released%20and%20you%20share%20business%20updates.",
-                            },
-                        ],
-                    },
-                    {
-                        title: "Legal",
-                        items: [
-                            {
-                                label: "Privacy Policy",
-                                to: "/docs/legal/privacy",
-                            },
-                            {
-                                label: "TOS",
-                                to: "/docs/legal/terms",
-                            },
-                            {
-                                label: "Cookie Policy",
-                                to: "/docs/legal/cookie",
-                            },
-                        ],
-                    },
-                ],
-            },
             prism: {
                 theme: lightCodeTheme,
                 darkTheme: darkCodeTheme,
