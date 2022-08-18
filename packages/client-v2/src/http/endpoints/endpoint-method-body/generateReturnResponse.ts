@@ -3,6 +3,8 @@ import { File } from "@fern-typescript/declaration-handler";
 import { ts } from "ts-morph";
 import { ClientConstants } from "../../../constants";
 import { ParsedClientEndpoint } from "../parse-endpoint/ParsedClientEndpoint";
+import { generateReturnErrorResponse } from "./generateReturnErrorResponse";
+import { getBaseResponseProperties } from "./getBaseResponseProperties";
 
 export function generateReturnResponse({
     endpoint,
@@ -10,13 +12,15 @@ export function generateReturnResponse({
 }: {
     endpoint: ParsedClientEndpoint;
     file: File;
-}): ts.Statement {
-    return ts.factory.createIfStatement(
-        ts.factory.createPropertyAccessExpression(
-            ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.RESPONSE),
-            ts.factory.createIdentifier(file.externalDependencies.serviceUtils.Fetcher.Response.OK)
+}): ts.Statement[] {
+    return [
+        ts.factory.createIfStatement(
+            ts.factory.createPropertyAccessExpression(
+                ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.RESPONSE),
+                ts.factory.createIdentifier(file.externalDependencies.serviceUtils.Fetcher.Response.OK)
+            ),
+            ts.factory.createBlock([generateReturnSuccessResponse({ endpoint, file })])
         ),
-        ts.factory.createBlock([generateReturnSuccessResponse({ endpoint, file })]),
         ts.factory.createIfStatement(
             ts.factory.createBinaryExpression(
                 ts.factory.createPropertyAccessExpression(
@@ -29,19 +33,14 @@ export function generateReturnResponse({
                 )
             ),
             ts.factory.createBlock([
-                generateReturnNetworkErrorResponse({
+                generateReturnErrorResponse({
                     file,
-                    endpoint,
-                }),
-            ]),
-            ts.factory.createBlock([
-                generateReturnServerErrorResponse({
-                    endpoint,
-                    file,
+                    body: endpoint.error.generateConstructNetworkErrorBody(),
                 }),
             ])
-        )
-    );
+        ),
+        endpoint.error.generateConstructServerErrorStatements(),
+    ];
 }
 
 function generateReturnSuccessResponse({
@@ -73,55 +72,4 @@ function generateReturnSuccessResponse({
             true
         )
     );
-}
-
-function generateReturnNetworkErrorResponse({
-    file,
-    endpoint,
-}: {
-    file: File;
-    endpoint: ParsedClientEndpoint;
-}): ts.Statement {
-    return ts.factory.createReturnStatement(
-        ts.factory.createObjectLiteralExpression(
-            [
-                ...getBaseResponseProperties({ ok: false, file }),
-                createPropertyAssignment(
-                    file.externalDependencies.serviceUtils._Response.Failure.BODY_PROPERTY_NAME,
-                    endpoint.error.generateConstructNetworkErrorBody()
-                ),
-            ],
-            true
-        )
-    );
-}
-
-function generateReturnServerErrorResponse({
-    file,
-    endpoint,
-}: {
-    endpoint: ParsedClientEndpoint;
-    file: File;
-}): ts.Statement {
-    return ts.factory.createReturnStatement(
-        ts.factory.createObjectLiteralExpression(
-            [
-                ...getBaseResponseProperties({ ok: false, file }),
-                createPropertyAssignment(
-                    file.externalDependencies.serviceUtils._Response.Failure.BODY_PROPERTY_NAME,
-                    endpoint.error.generateConstructServerErrorBody()
-                ),
-            ],
-            true
-        )
-    );
-}
-
-function getBaseResponseProperties({ ok, file }: { ok: boolean; file: File }): ts.ObjectLiteralElementLike[] {
-    return [
-        createPropertyAssignment(
-            ts.factory.createIdentifier(file.externalDependencies.serviceUtils._Response.OK_DISCRIMINANT),
-            ok ? ts.factory.createTrue() : ts.factory.createFalse()
-        ),
-    ];
 }

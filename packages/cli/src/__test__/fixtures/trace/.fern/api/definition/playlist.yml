@@ -49,6 +49,9 @@ services:
           path-parameters:
             playlistId: PlaylistId
           response: Playlist
+          errors:
+            - PlaylistIdNotFoundError
+            - UnauthorizedError
 
         updatePlaylist:
           docs: Updates a playlist
@@ -75,3 +78,6 @@ errors:
     type:
       properties:
         playlistId: PlaylistId
+  UnauthorizedError:
+    http:
+      statusCode: 401

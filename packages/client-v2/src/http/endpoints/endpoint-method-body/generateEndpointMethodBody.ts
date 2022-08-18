@@ -34,7 +34,7 @@ export function generateEndpointMethodBody({
         (writer) => {
             writer.newLine();
         },
-        getTextOfTsNode(generateReturnResponse({ endpoint, file }))
+        ...generateReturnResponse({ endpoint, file }).map(getTextOfTsNode)
     );
 
     return statements;

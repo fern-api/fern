@@ -1,21 +1,37 @@
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services";
+import { ErrorDeclaration } from "@fern-fern/ir-model";
+import { HttpEndpoint, HttpService, ResponseError } from "@fern-fern/ir-model/services";
 import { getTextOfTsNode, getWriterForMultiLineUnionType, visitorUtils } from "@fern-typescript/commons";
 import { createPropertyAssignment } from "@fern-typescript/commons-v2";
+import { TsNodeMaybeWithDocs } from "@fern-typescript/commons/src/writers/getWriterForMultiLineUnionType";
 import { File } from "@fern-typescript/declaration-handler";
-import { ModuleDeclaration, PropertySignature, ts } from "ts-morph";
+import { ModuleDeclaration, OptionalKind, PropertySignature, PropertySignatureStructure, ts } from "ts-morph";
 import { ClientConstants } from "../../../constants";
+import { generateReturnErrorResponse } from "../endpoint-method-body/generateReturnErrorResponse";
 import { ClientEndpointError } from "./ParsedClientEndpoint";
+
+interface ServerErrors {
+    errors: ServerError[];
+    referenceToErrorBodyType: ts.TypeReferenceNode;
+}
+
+interface ServerError {
+    responseError: ResponseError;
+    declaration: ErrorDeclaration;
+    visitableItem: visitorUtils.VisitableItem;
+}
 
 export function constructEndpointErrors({
     service,
     endpoint,
     file,
     endpointModule,
+    addEndpointUtil,
 }: {
     service: HttpService;
     endpoint: HttpEndpoint;
     file: File;
     endpointModule: ModuleDeclaration;
+    addEndpointUtil: (util: ts.ObjectLiteralElementLike) => void;
 }): ClientEndpointError {
     const referenceToService = file.getReferenceToService(service.name);
     const referenceToEndpointModule = ts.factory.createQualifiedName(
@@ -28,35 +44,20 @@ export function constructEndpointErrors({
         isExported: true,
     });
 
-    const referenceToErrorType = ts.factory.createQualifiedName(referenceToEndpointModule, errorType.getName());
-
-    const errorBodyType = endpointModule.addTypeAlias({
-        name: "ErrorBody",
-        isExported: true,
-        type: getWriterForMultiLineUnionType([
-            ...endpoint.errors.map((error) => ({
-                node: file.getReferenceToError(error.error),
-                docs: error.docs,
-            })),
-            {
-                docs: undefined,
-                node: file.externalDependencies.serviceUtils.NetworkError._getReferenceToType(),
-            },
-            {
-                docs: undefined,
-                node: file.externalDependencies.serviceUtils.UnknownError._getReferenceToType(),
-            },
-        ]),
-    });
-
-    const referenceToErrorBodyType = ts.factory.createTypeReferenceNode(
-        ts.factory.createQualifiedName(referenceToEndpointModule, errorBodyType.getName())
+    const referenceToErrorType = ts.factory.createTypeReferenceNode(
+        ts.factory.createQualifiedName(referenceToEndpointModule, errorType.getName())
     );
 
-    const errorBodyProperty = errorType.addProperty({
-        name: "body",
-        type: getTextOfTsNode(referenceToErrorBodyType),
+    const serverErrors = parseServerErrors({
+        endpoint,
+        file,
+        endpointModule,
+        referenceToEndpointModule,
     });
+
+    const errorBodyProperty = errorType.addProperty(
+        getErrorBodyProperty({ referenceToErrorBodyType: serverErrors?.referenceToErrorBodyType, file })
+    );
 
     const networkErrorVisitableItem: visitorUtils.VisitableItem = {
         caseInSwitchStatement: ts.factory.createStringLiteral(
@@ -66,16 +67,33 @@ export function constructEndpointErrors({
         visitorArgument: undefined,
     };
 
-    const visitableItemsForServerErrors = constructVisitableItemsForServerErrors({
-        endpoint,
-        file,
-    });
+    const unknownVisitorArgument: visitorUtils.Argument = {
+        name: "details",
+        type: file.externalDependencies.serviceUtils.ErrorDetails._getReferenceToType(),
+        argument: ts.factory.createObjectLiteralExpression(
+            [
+                createPropertyAssignment(
+                    file.externalDependencies.serviceUtils.ErrorDetails.STATUS_CODE,
+                    ts.factory.createPropertyAccessExpression(
+                        ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.RESPONSE),
+                        file.externalDependencies.serviceUtils.Fetcher.ServerResponse.STATUS_CODE
+                    )
+                ),
+            ],
+            false
+        ),
+    };
 
+    const visitableItemsForServerErrors: visitorUtils.VisitableItem[] = [];
+    if (serverErrors != null) {
+        visitableItemsForServerErrors.push(...serverErrors.errors.map((error) => error.visitableItem));
+    }
+    visitableItemsForServerErrors.push(networkErrorVisitableItem);
     const visitorInterface = endpointModule.addInterface(
         visitorUtils.generateVisitorInterface({
             items: {
-                ...visitableItemsForServerErrors,
-                items: [...visitableItemsForServerErrors.items, networkErrorVisitableItem],
+                items: visitableItemsForServerErrors,
+                unknownArgument: unknownVisitorArgument,
             },
             name: `${errorType.getName()}Visitor`,
         })
@@ -90,16 +108,37 @@ export function constructEndpointErrors({
         ),
     });
 
+    if (serverErrors != null) {
+        addEndpointUtil(
+            createPropertyAssignment(
+                ClientConstants.HttpService.Endpoint.Utils.ERROR_PARSER,
+                constructErrorParser({
+                    file,
+                    serverErrors,
+                    errorBodyProperty,
+                    referenceToErrorType,
+                })
+            )
+        );
+    }
+
+    const referenceToErrorParser = ts.factory.createPropertyAccessExpression(
+        ts.factory.createPropertyAccessExpression(
+            referenceToService.expression,
+            ts.factory.createIdentifier(endpointModule.getName())
+        ),
+        ClientConstants.HttpService.Endpoint.Utils.ERROR_PARSER
+    );
+
     return {
-        reference: ts.factory.createTypeReferenceNode(referenceToErrorType),
-        referenceToBody: referenceToErrorBodyType,
-        generateConstructServerErrorBody: () =>
-            generateConstructServerErrorBody({
+        reference: referenceToErrorType,
+        generateConstructServerErrorStatements: () =>
+            generateConstructServerErrorStatements({
                 file,
+                referenceToErrorParser,
+                serverErrors,
+                unknownVisitorArgument,
                 errorBodyProperty,
-                visitProperty,
-                referenceToErrorBodyType,
-                visitableItemsForServerErrors,
             }),
         generateConstructNetworkErrorBody: () =>
             generateConstructNetworkErrorBody({
@@ -111,51 +150,164 @@ export function constructEndpointErrors({
     };
 }
 
-function constructVisitableItemsForServerErrors({
+function parseServerErrors({
     endpoint,
     file,
+    endpointModule,
+    referenceToEndpointModule,
 }: {
     endpoint: HttpEndpoint;
     file: File;
-}): visitorUtils.VisitableItems {
+    endpointModule: ModuleDeclaration;
+    referenceToEndpointModule: ts.QualifiedName;
+}): ServerErrors | undefined {
+    const serverErrors = endpoint.errors.map((error) => {
+        const errorDeclaration = file.getErrorDeclaration(error.error);
+        const referenceToErrorBodyType = file.getReferenceToError(error.error);
+        return {
+            responseError: error,
+            declaration: errorDeclaration,
+            visitableItem: {
+                caseInSwitchStatement: ts.factory.createStringLiteral(errorDeclaration.discriminantValue.wireValue),
+                keyInVisitor: errorDeclaration.discriminantValue.camelCase,
+                visitorArgument: {
+                    argument: ts.factory.createAsExpression(
+                        ts.factory.createIdentifier(visitorUtils.VALUE_PARAMETER_NAME),
+                        referenceToErrorBodyType
+                    ),
+                    type: referenceToErrorBodyType,
+                },
+            },
+        };
+    });
+
+    if (serverErrors.length === 0) {
+        return undefined;
+    }
+
+    const errorBodyType = endpointModule.addTypeAlias({
+        name: "ErrorBody",
+        isExported: true,
+        type: getWriterForMultiLineUnionType(
+            endpoint.errors.map((error) => ({
+                node: file.getReferenceToError(error.error),
+                docs: error.docs,
+            }))
+        ),
+    });
+
     return {
-        items: [
-            ...endpoint.errors.map((error) => {
-                const errorDeclaration = file.getErrorDeclaration(error.error);
-                const referenceToErrorBodyType = file.getReferenceToError(error.error);
-                return {
-                    caseInSwitchStatement: ts.factory.createStringLiteral(errorDeclaration.discriminantValue.wireValue),
-                    keyInVisitor: errorDeclaration.discriminantValue.camelCase,
-                    visitorArgument: {
-                        argument: ts.factory.createAsExpression(
-                            ts.factory.createPropertyAccessExpression(
-                                ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.RESPONSE),
-                                file.externalDependencies.serviceUtils.Fetcher.Response.BODY
-                            ),
-                            referenceToErrorBodyType
-                        ),
-                        type: referenceToErrorBodyType,
-                    },
-                };
-            }),
+        errors: serverErrors,
+        referenceToErrorBodyType: ts.factory.createTypeReferenceNode(
+            ts.factory.createQualifiedName(referenceToEndpointModule, errorBodyType.getName())
+        ),
+    };
+}
+
+function getErrorBodyProperty({
+    referenceToErrorBodyType,
+    file,
+}: {
+    referenceToErrorBodyType: ts.TypeNode | undefined;
+    file: File;
+}): OptionalKind<PropertySignatureStructure> {
+    const errorBodySubTypes: TsNodeMaybeWithDocs[] = [];
+    if (referenceToErrorBodyType != null) {
+        errorBodySubTypes.push({
+            docs: undefined,
+            node: referenceToErrorBodyType,
+        });
+    }
+    errorBodySubTypes.push(
+        {
+            docs: undefined,
+            node: file.externalDependencies.serviceUtils.NetworkError._getReferenceToType(),
+        },
+        {
+            docs: undefined,
+            node: file.externalDependencies.serviceUtils.UnknownError._getReferenceToType(),
+        }
+    );
+    return {
+        name: "body",
+        type: getWriterForMultiLineUnionType(errorBodySubTypes),
+    };
+}
+
+function constructErrorParser({
+    file,
+    serverErrors,
+    errorBodyProperty,
+    referenceToErrorType,
+}: {
+    file: File;
+    serverErrors: ServerErrors;
+    errorBodyProperty: PropertySignature;
+    referenceToErrorType: ts.TypeReferenceNode;
+}): ts.Expression {
+    return ts.factory.createArrowFunction(
+        undefined,
+        undefined,
+        [
+            ts.factory.createParameterDeclaration(
+                undefined,
+                undefined,
+                undefined,
+                visitorUtils.VALUE_PARAMETER_NAME,
+                undefined,
+                serverErrors.referenceToErrorBodyType
+            ),
         ],
-        unknownArgument: {
-            name: "details",
-            type: file.externalDependencies.serviceUtils.ErrorDetails._getReferenceToType(),
-            argument: ts.factory.createObjectLiteralExpression(
+        referenceToErrorType,
+        undefined,
+        ts.factory.createParenthesizedExpression(
+            ts.factory.createObjectLiteralExpression(
                 [
                     createPropertyAssignment(
-                        file.externalDependencies.serviceUtils.ErrorDetails.STATUS_CODE,
-                        ts.factory.createPropertyAccessExpression(
-                            ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.RESPONSE),
-                            file.externalDependencies.serviceUtils.Fetcher.ServerResponse.STATUS_CODE
+                        errorBodyProperty.getName(),
+                        ts.factory.createIdentifier(visitorUtils.VALUE_PARAMETER_NAME)
+                    ),
+                    createPropertyAssignment(
+                        visitorUtils.VISIT_PROPERTY_NAME,
+                        ts.factory.createArrowFunction(
+                            undefined,
+                            undefined,
+                            [
+                                ts.factory.createParameterDeclaration(
+                                    undefined,
+                                    undefined,
+                                    undefined,
+                                    visitorUtils.VISITOR_PARAMETER_NAME,
+                                    undefined,
+                                    undefined,
+                                    undefined
+                                ),
+                            ],
+                            undefined,
+                            undefined,
+                            ts.factory.createBlock(
+                                [
+                                    ts.factory.createSwitchStatement(
+                                        ts.factory.createPropertyAccessExpression(
+                                            ts.factory.createIdentifier(visitorUtils.VALUE_PARAMETER_NAME),
+                                            file.fernConstants.errorDiscriminant
+                                        ),
+                                        ts.factory.createCaseBlock(
+                                            visitorUtils.generateVisitSwitchCaseClauses(
+                                                serverErrors.errors.map((error) => error.visitableItem)
+                                            )
+                                        )
+                                    ),
+                                ],
+                                true
+                            )
                         )
                     ),
                 ],
-                false
-            ),
-        },
-    };
+                true
+            )
+        )
+    );
 }
 
 function generateConstructNetworkErrorBody({
@@ -213,73 +365,125 @@ function generateConstructNetworkErrorBody({
     );
 }
 
-function generateConstructServerErrorBody({
+function generateConstructServerErrorStatements({
     file,
+    referenceToErrorParser,
+    serverErrors,
+    unknownVisitorArgument,
     errorBodyProperty,
-    visitProperty,
-    referenceToErrorBodyType,
-    visitableItemsForServerErrors,
 }: {
     file: File;
+    referenceToErrorParser: ts.Expression;
+    serverErrors: ServerErrors | undefined;
+    unknownVisitorArgument: visitorUtils.Argument;
     errorBodyProperty: PropertySignature;
-    visitProperty: PropertySignature;
-    referenceToErrorBodyType: ts.TypeNode;
-    visitableItemsForServerErrors: visitorUtils.VisitableItems;
 }) {
-    return ts.factory.createObjectLiteralExpression(
-        [
-            createPropertyAssignment(
-                errorBodyProperty.getName(),
+    const returnUnknownError = generateReturnErrorResponse({
+        file,
+        body: ts.factory.createObjectLiteralExpression(
+            [
+                ts.factory.createPropertyAssignment(
+                    errorBodyProperty.getName(),
+                    ts.factory.createAsExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.RESPONSE),
+                            file.externalDependencies.serviceUtils.Fetcher.Response.BODY
+                        ),
+                        file.externalDependencies.serviceUtils.UnknownError._getReferenceToType()
+                    )
+                ),
+                ts.factory.createPropertyAssignment(
+                    ts.factory.createIdentifier(visitorUtils.VISIT_PROPERTY_NAME),
+                    ts.factory.createArrowFunction(
+                        undefined,
+                        undefined,
+                        [
+                            ts.factory.createParameterDeclaration(
+                                undefined,
+                                undefined,
+                                undefined,
+                                visitorUtils.VISITOR_PARAMETER_NAME,
+                                undefined,
+                                undefined,
+                                undefined
+                            ),
+                        ],
+                        undefined,
+                        ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                        ts.factory.createCallExpression(
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createIdentifier(visitorUtils.VISITOR_PARAMETER_NAME),
+                                ts.factory.createIdentifier(visitorUtils.UNKNOWN_PROPERY_NAME)
+                            ),
+                            undefined,
+                            [unknownVisitorArgument.argument]
+                        )
+                    )
+                ),
+            ],
+            true
+        ),
+    });
+
+    if (serverErrors == null) {
+        return returnUnknownError;
+    }
+
+    return ts.factory.createSwitchStatement(
+        ts.factory.createPropertyAccessChain(
+            ts.factory.createParenthesizedExpression(
                 ts.factory.createAsExpression(
                     ts.factory.createPropertyAccessExpression(
                         ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.RESPONSE),
                         file.externalDependencies.serviceUtils.Fetcher.Response.BODY
                     ),
-                    referenceToErrorBodyType
+                    serverErrors.referenceToErrorBodyType
                 )
             ),
-            createPropertyAssignment(
-                ts.factory.createIdentifier(visitProperty.getName()),
-                ts.factory.createArrowFunction(
-                    undefined,
-                    undefined,
-                    [
-                        ts.factory.createParameterDeclaration(
-                            undefined,
-                            undefined,
-                            undefined,
-                            visitorUtils.VISITOR_PARAMETER_NAME,
-                            undefined,
-                            undefined,
-                            undefined
-                        ),
-                    ],
-                    undefined,
-                    ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-                    ts.factory.createBlock(
-                        [
-                            visitorUtils.generateVisitSwitchStatement({
-                                items: visitableItemsForServerErrors,
-                                switchOn: ts.factory.createPropertyAccessChain(
-                                    ts.factory.createAsExpression(
-                                        ts.factory.createPropertyAccessExpression(
-                                            ts.factory.createIdentifier(
-                                                ClientConstants.HttpService.Endpoint.Variables.RESPONSE
-                                            ),
-                                            file.externalDependencies.serviceUtils.Fetcher.Response.BODY
-                                        ),
-                                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
-                                    ),
-                                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                    file.fernConstants.errorDiscriminant
-                                ),
-                            }),
-                        ],
-                        true
-                    )
-                )
-            ),
-        ],
-        true
+            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+            file.fernConstants.errorDiscriminant
+        ),
+        ts.factory.createCaseBlock([
+            ...getServerErrorCaseStatements({
+                serverErrors,
+                referenceToErrorParser,
+                file,
+            }),
+            ts.factory.createDefaultClause([returnUnknownError]),
+        ])
     );
+}
+
+function getServerErrorCaseStatements({
+    serverErrors,
+    referenceToErrorParser,
+    file,
+}: {
+    serverErrors: ServerErrors;
+    referenceToErrorParser: ts.Expression;
+    file: File;
+}): ts.CaseClause[] {
+    const lastServerError = serverErrors.errors[serverErrors.errors.length - 1];
+    if (lastServerError == null) {
+        return [];
+    }
+    return [
+        ...serverErrors.errors
+            .slice(0, -1)
+            .map((error) => ts.factory.createCaseClause(error.visitableItem.caseInSwitchStatement, [])),
+        ts.factory.createCaseClause(lastServerError.visitableItem.caseInSwitchStatement, [
+            generateReturnErrorResponse({
+                file,
+                body: ts.factory.createCallExpression(referenceToErrorParser, undefined, [
+                    ts.factory.createAsExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.RESPONSE),
+                            file.externalDependencies.serviceUtils.Fetcher.Response.BODY
+                        ),
+                        serverErrors.referenceToErrorBodyType
+                    ),
+                ]),
+            }),
+        ]),
+    ];
 }

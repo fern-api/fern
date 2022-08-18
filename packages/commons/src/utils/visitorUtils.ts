@@ -80,16 +80,27 @@ export function generateVisitMethod({
         ],
         ts.factory.createTypeReferenceNode(ts.factory.createIdentifier(VISITOR_RESULT_TYPE_PARAMETER), undefined),
         undefined,
-        ts.factory.createBlock([generateVisitSwitchStatement({ items, switchOn })], true)
+        ts.factory.createBlock(
+            [
+                generateVisitSwitchStatement({
+                    unknownArgument: items.unknownArgument,
+                    switchOn,
+                    caseStatements: generateVisitSwitchCaseClauses(items.items),
+                }),
+            ],
+            true
+        )
     );
 }
 
 export function generateVisitSwitchStatement({
-    items: { items, unknownArgument },
+    unknownArgument,
     switchOn,
+    caseStatements,
 }: {
-    items: VisitableItems;
+    unknownArgument: Argument | undefined;
     switchOn: ts.Expression;
+    caseStatements: ts.CaseClause[];
 }): ts.Statement {
     const returnUnknown = ts.factory.createReturnStatement(
         ts.factory.createCallExpression(
@@ -102,28 +113,29 @@ export function generateVisitSwitchStatement({
         )
     );
 
-    if (items.length === 0) {
+    if (caseStatements.length === 0) {
         return returnUnknown;
     }
 
     return ts.factory.createSwitchStatement(
         switchOn,
-        ts.factory.createCaseBlock([
-            ...items.map((item) =>
-                ts.factory.createCaseClause(item.caseInSwitchStatement, [
-                    ts.factory.createReturnStatement(
-                        ts.factory.createCallExpression(
-                            ts.factory.createPropertyAccessExpression(
-                                ts.factory.createIdentifier(VISITOR_PARAMETER_NAME),
-                                ts.factory.createIdentifier(item.keyInVisitor)
-                            ),
-                            undefined,
-                            item.visitorArgument != null ? [item.visitorArgument.argument] : []
-                        )
+        ts.factory.createCaseBlock([...caseStatements, ts.factory.createDefaultClause([returnUnknown])])
+    );
+}
+
+export function generateVisitSwitchCaseClauses(items: VisitableItem[]): ts.CaseClause[] {
+    return items.map((item) =>
+        ts.factory.createCaseClause(item.caseInSwitchStatement, [
+            ts.factory.createReturnStatement(
+                ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(
+                        ts.factory.createIdentifier(VISITOR_PARAMETER_NAME),
+                        ts.factory.createIdentifier(item.keyInVisitor)
                     ),
-                ])
+                    undefined,
+                    item.visitorArgument != null ? [item.visitorArgument.argument] : []
+                )
             ),
-            ts.factory.createDefaultClause([returnUnknown]),
         ])
     );
 }
