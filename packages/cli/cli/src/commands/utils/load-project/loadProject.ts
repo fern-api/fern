@@ -1,14 +1,13 @@
-import { dirname, join, RelativeFilePath } from "@fern-api/core-utils";
+import { join, RelativeFilePath } from "@fern-api/core-utils";
 import {
+    FERN_DIRECTORY,
     getFernDirectory,
-    loadProjectConfig,
     loadProjectConfigFromFilepath,
     PROJECT_CONFIG_FILENAME,
 } from "@fern-api/project-configuration";
 import { loadWorkspace, Workspace } from "@fern-api/workspace-loader";
 import { readdir } from "fs/promises";
 import { handleFailedWorkspaceParserResult } from "../../generate-ir/handleFailedWorkspaceParserResult";
-import { getWorkspaceConfigurationPaths } from "./getWorkspaceConfigurationPaths";
 
 export interface Project {
     organization: string;
@@ -20,54 +19,9 @@ export async function loadProject({
 }: {
     commandLineWorkspaces: readonly string[];
 }): Promise<Project> {
-    const v2Project = await loadProjectV2({ commandLineWorkspaces });
-    if (v2Project != null) {
-        if (v2Project.workspaces.length === 0) {
-            throw new Error("No workspaces found");
-        }
-        return v2Project;
-    }
-    return loadProjectV1({ commandLineWorkspaces });
-}
-
-async function loadProjectV1({
-    commandLineWorkspaces,
-}: {
-    commandLineWorkspaces: readonly string[];
-}): Promise<Project> {
-    const projectConfig = await loadProjectConfig();
-
-    const workspaceConfigurationPaths = await getWorkspaceConfigurationPaths({
-        commandLineWorkspaces,
-        projectConfig,
-    });
-
-    return {
-        organization: projectConfig.organization,
-        workspaces: await Promise.all(
-            workspaceConfigurationPaths.map(async (workspaceConfigurationPath) => {
-                const workspace = await loadWorkspace({
-                    absolutePathToWorkspace: dirname(workspaceConfigurationPath),
-                    version: 1,
-                });
-                if (!workspace.didSucceed) {
-                    handleFailedWorkspaceParserResult(workspace);
-                    throw new Error("Failed to parse workspace");
-                }
-                return workspace.workspace;
-            })
-        ),
-    };
-}
-
-async function loadProjectV2({
-    commandLineWorkspaces,
-}: {
-    commandLineWorkspaces: readonly string[];
-}): Promise<Project | undefined> {
     const fernDirectory = await getFernDirectory();
     if (fernDirectory == null) {
-        return undefined;
+        throw new Error(`No ${FERN_DIRECTORY} directory found.`);
     }
 
     const fernDirectoryContents = await readdir(fernDirectory, { withFileTypes: true });
@@ -91,6 +45,10 @@ async function loadProjectV2({
             return workspace.workspace;
         })
     );
+
+    if (allWorkspaces.length === 0) {
+        throw new Error("No workspaces found.");
+    }
 
     const { organization } = await loadProjectConfigFromFilepath(
         join(fernDirectory, RelativeFilePath.of(PROJECT_CONFIG_FILENAME))
