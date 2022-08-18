@@ -1,5 +1,0 @@
-name: my-api
-auth: MyAuth
-auth-schemes:
-  MyAuth:
-    header: My-Header
