@@ -4,18 +4,11 @@ import produce from "immer";
 import semverDiff from "semver-diff";
 import { GENERATOR_INVOCATIONS } from "./generatorInvocations";
 
-export declare namespace upgradeGenerators {
-    export interface Return {
-        updatedGeneratorsConfiguration: GeneratorsConfigurationSchema;
-        didUpgrade: boolean;
-    }
-}
-
 export function upgradeGenerators({
     generatorsConfiguration,
 }: {
     readonly generatorsConfiguration: GeneratorsConfigurationSchema;
-}): upgradeGenerators.Return {
+}): GeneratorsConfigurationSchema {
     let didUpgrade = false;
 
     const updatedGenerators = generatorsConfiguration.generators.map((generatorConfig) => {
@@ -34,10 +27,11 @@ export function upgradeGenerators({
         return generatorConfig;
     });
 
-    return {
-        updatedGeneratorsConfiguration: { generators: updatedGenerators },
-        didUpgrade,
-    };
+    if (!didUpgrade) {
+        console.log("No upgrades found");
+    }
+
+    return { generators: updatedGenerators };
 }
 
 /**

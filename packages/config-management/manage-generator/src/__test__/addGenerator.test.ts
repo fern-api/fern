@@ -1,23 +1,18 @@
-import { RelativeFilePath } from "@fern-api/core-utils";
-import { WorkspaceConfigurationSchema } from "@fern-api/workspace-configuration";
+import { GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
 import { addJavaGenerator, addTypescriptGenerator } from "../addGenerator";
 
 describe("addGenerator", () => {
     it("adds generator if not present", () => {
-        const workspaceConfiguration: WorkspaceConfigurationSchema = {
-            name: "my-definition",
-            definition: RelativeFilePath.of("./src"),
+        const generatorsConfiguration: GeneratorsConfigurationSchema = {
             generators: [],
         };
-        const addGeneratorResult = addJavaGenerator(workspaceConfiguration);
+        const addGeneratorResult = addJavaGenerator(generatorsConfiguration);
         expect(addGeneratorResult).toBeDefined();
         expect(addGeneratorResult?.updatedGeneratorsConfiguration.generators.length).toEqual(1);
     });
 
     it("skip if present", () => {
-        const workspaceConfiguration: WorkspaceConfigurationSchema = {
-            name: "my-definition",
-            definition: RelativeFilePath.of("./src"),
+        const generatorsConfiguration: GeneratorsConfigurationSchema = {
             generators: [
                 {
                     name: "fernapi/fern-typescript",
@@ -25,7 +20,7 @@ describe("addGenerator", () => {
                 },
             ],
         };
-        const addGeneratorResult = addTypescriptGenerator(workspaceConfiguration);
+        const addGeneratorResult = addTypescriptGenerator(generatorsConfiguration);
         expect(addGeneratorResult).toEqual(undefined);
     });
 });
