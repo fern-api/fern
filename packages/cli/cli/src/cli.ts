@@ -1,13 +1,11 @@
 import { cwd, FilePath, noop, resolve } from "@fern-api/core-utils";
 import { initialize } from "@fern-api/init";
-import { initiateLogin } from "@fern-api/login";
 import { getFernDirectory, loadProjectConfig } from "@fern-api/project-configuration";
 import inquirer, { InputQuestion } from "inquirer";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
-import { convertOpenApiToFernApiDefinition } from "./commands/convert-openapi/convertOpenApi";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateWorkspaces } from "./commands/generate/generateWorkspaces";
 import { upgrade } from "./commands/upgrade/upgrade";
@@ -153,40 +151,6 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>) {
             });
         }
     );
-}
-
-function addConvertCommand(cli: Argv<GlobalCliOptions>) {
-    cli.command(
-        "convert <openapiPath> <fernDefinitionDir>",
-        "Converts Open API to Fern API Definition.",
-        (yargs) =>
-            yargs
-                .positional("openapiPath", {
-                    type: "string",
-                    demandOption: true,
-                    description: "Path to your Open API definition",
-                })
-                .positional("fernDefinitionDir", {
-                    type: "string",
-                    demandOption: true,
-                    description: "Output directory for your Fern API definition",
-                }),
-        (argv) =>
-            convertOpenApiToFernApiDefinition(
-                resolve(cwd(), FilePath.of(argv.openapiPath)),
-                resolve(cwd(), FilePath.of(argv.fernDefinitionDir))
-            )
-    );
-}
-
-function addLoginCommand(cli: Argv<GlobalCliOptions>) {
-    cli.command({
-        command: "login",
-        describe: "Authenticate with Fern",
-        handler: async () => {
-            await initiateLogin();
-        },
-    });
 }
 
 function addGenerateIrCommand(cli: Argv<GlobalCliOptions>) {
