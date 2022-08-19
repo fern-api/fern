@@ -56,8 +56,8 @@ jobs:
           command: git --no-pager diff --exit-code
 
   ete-tests:
-    machine:
-      image: ubuntu-2004:current
+    docker:
+      - image: cimg/node:current
     steps:
       - checkout
       - node/install-packages:
