@@ -65,7 +65,7 @@ basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/Fern
 package com.fern.basic.client;
 
 import com.fern.basic.client.blog.PostsServiceClient;
-import com.fern.basic.client.dummy.DummyServiceClient;
+import com.fern.basic.client.dummy.service.DummyServiceClient;
 import java.lang.String;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
@@ -90,7 +90,7 @@ public final class FernBasicClient {
     return this.postsServiceClient.get();
   }
 
-  public final DummyServiceClient dummy() {
+  public final DummyServiceClient dummyService() {
     return this.dummyServiceClient.get();
   }
 
@@ -235,11 +235,11 @@ final class PostsServiceErrorDecoder implements ErrorDecoder {
 ]
 
 
-basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/dummy/DummyService.java]=[
-package com.fern.basic.client.dummy;
+basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/dummy/service/DummyService.java]=[
+package com.fern.basic.client.dummy.service;
 
 import com.fern.basic.client.BearerAuth;
-import com.fern.basic.model.dummy.DummyId;
+import com.fern.basic.model.dummy.service.DummyId;
 import com.fern.java.jackson.ClientObjectMappers;
 import com.fern.java.jersey.contracts.OptionalAwareContract;
 import feign.Feign;
@@ -274,8 +274,8 @@ interface DummyService {
 ]
 
 
-basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/dummy/DummyServiceClient.java]=[
-package com.fern.basic.client.dummy;
+basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/dummy/service/DummyServiceClient.java]=[
+package com.fern.basic.client.dummy.service;
 
 import com.fern.basic.client.BearerAuth;
 import java.lang.RuntimeException;
@@ -306,11 +306,11 @@ public final class DummyServiceClient {
 ]
 
 
-basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/dummy/GetDummy.java]=[
-package com.fern.basic.client.dummy;
+basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/dummy/service/GetDummy.java]=[
+package com.fern.basic.client.dummy.service;
 
 import com.fern.basic.client.BearerAuth;
-import com.fern.basic.model.dummy.DummyId;
+import com.fern.basic.model.dummy.service.DummyId;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import java.util.Optional;
 import org.immutables.value.Value;
@@ -1001,8 +1001,8 @@ public interface UnauthorizedErrorBody {
 ]
 
 
-basic[basic/generated-java/basic-model/src/main/java/com/fern/basic/model/dummy/DummyId.java]=[
-package com.fern.basic.model.dummy;
+basic[basic/generated-java/basic-model/src/main/java/com/fern/basic/model/dummy/service/DummyId.java]=[
+package com.fern.basic.model.dummy.service;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import java.lang.Object;
@@ -1081,7 +1081,7 @@ package com.fern.basic.server;
 
 import com.fern.basic.server.blog.PostNotFoundErrorExceptionMapper;
 import com.fern.basic.server.blog.PostsService;
-import com.fern.basic.server.dummy.DummyService;
+import com.fern.basic.server.dummy.service.DummyService;
 import org.glassfish.jersey.server.ResourceConfig;
 
 public abstract class AbstractServiceRegistry extends ResourceConfig {
@@ -1251,10 +1251,10 @@ public interface PostsService {
 ]
 
 
-basic[basic/generated-java/basic-server-jersey/src/main/java/com/fern/basic/server/dummy/DummyService.java]=[
-package com.fern.basic.server.dummy;
+basic[basic/generated-java/basic-server-jersey/src/main/java/com/fern/basic/server/dummy/service/DummyService.java]=[
+package com.fern.basic.server.dummy.service;
 
-import com.fern.basic.model.dummy.DummyId;
+import com.fern.basic.model.dummy.service.DummyId;
 import com.fern.basic.server.BearerAuth;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -1458,10 +1458,10 @@ public interface PostsService {
 ]
 
 
-basic[basic/generated-java/basic-server-spring/src/main/java/com/fern/basic/server/dummy/DummyService.java]=[
-package com.fern.basic.server.dummy;
+basic[basic/generated-java/basic-server-spring/src/main/java/com/fern/basic/server/dummy/service/DummyService.java]=[
+package com.fern.basic.server.dummy.service;
 
-import com.fern.basic.model.dummy.DummyId;
+import com.fern.basic.model.dummy.service.DummyId;
 import com.fern.basic.server.BearerAuth;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;

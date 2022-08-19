@@ -136,7 +136,7 @@ public final class ClientWrapperGenerator extends Generator {
                 methodName = fernFilepath
                         .value()
                         .get(fernFilepath.value().size() - 1)
-                        .originalValue();
+                        .camelCase();
             }
             clientWrapperBuilder.addMethod(MethodSpec.methodBuilder(methodName)
                     .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
