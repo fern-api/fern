@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
-import esutils from "esutils";
 import { CodeBlockWriter, WriterFunction, WriterFunctionOrValue } from "ts-morph";
+import { getPropertyKey } from "../utils/getPropertyKey";
 
 export declare namespace ObjectWriter {
     export interface Init {
@@ -93,11 +93,7 @@ export class ObjectWriter {
     }
 
     private writeProperty(writer: CodeBlockWriter, property: ObjectWriter.Property) {
-        if (esutils.keyword.isIdentifierNameES6(property.key)) {
-            writer.write(property.key);
-        } else {
-            writer.write(`"${property.key}"`);
-        }
+        writer.write(getPropertyKey(property.key));
         writer.write(": ");
         writeValue(writer, property.value);
         writer.write(",");

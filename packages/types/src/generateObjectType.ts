@@ -1,5 +1,5 @@
 import { ObjectTypeDeclaration, TypeReference } from "@fern-fern/ir-model";
-import { getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
+import { getPropertyKey, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { ModelContext } from "@fern-typescript/model-context";
 import { SourceFile } from "ts-morph";
 
@@ -28,7 +28,7 @@ export function generateObjectType({
             .map(getTextOfTsNode),
         properties: shape.properties.map((field) => {
             const property = {
-                name: field.name.wireValue,
+                name: getPropertyKey(field.name.wireValue),
                 type: getTextOfTsNode(
                     modelContext.getReferenceToType({
                         reference: field.valueType,

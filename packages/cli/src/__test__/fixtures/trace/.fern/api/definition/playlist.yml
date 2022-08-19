@@ -8,7 +8,7 @@ types:
       playlist_id: PlaylistId
       name: string
       problems: list<commons.ProblemId>
-      ownerId: commons.UserId
+      owner-id: commons.UserId
 
   PlaylistCreateRequest:
     properties:

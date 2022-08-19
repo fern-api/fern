@@ -34,6 +34,7 @@ export {
 } from "./generator-config/FernTypescriptGeneratorMode";
 export { exportFromModule } from "./import-export/exportFromModule";
 export { ImportStrategy } from "./import-export/ImportStrategy";
+export { getPropertyKey } from "./utils/getPropertyKey";
 export { getRelativePathAsModuleSpecifierTo } from "./utils/getRelativePathAsModuleSpecifierTo";
 export { getTextOfTsKeyword } from "./utils/getTextOfTsKeyword";
 export { getTextOfTsNode } from "./utils/getTextOfTsNode";

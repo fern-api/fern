@@ -1997,7 +1997,7 @@ export interface Playlist {
     playlist_id: model.playlist.PlaylistId;
     name: string;
     problems: model.commons.ProblemId[];
-    ownerId: model.commons.UserId;
+    \\"owner-id\\": model.commons.UserId;
 }
 ",
                     "name": "Playlist.ts",
@@ -10167,7 +10167,7 @@ export interface Playlist {
     playlist_id: model.playlist.PlaylistId;
     name: string;
     problems: model.commons.ProblemId[];
-    ownerId: model.commons.UserId;
+    \\"owner-id\\": model.commons.UserId;
 }
 ",
                     "name": "Playlist.ts",
@@ -18332,7 +18332,7 @@ export interface Playlist {
     playlist_id: model.playlist.PlaylistId;
     name: string;
     problems: model.commons.ProblemId[];
-    ownerId: model.commons.UserId;
+    \\"owner-id\\": model.commons.UserId;
 }
 ",
                     "name": "Playlist.ts",
@@ -25825,7 +25825,7 @@ export interface Playlist {
     playlist_id: MyApi.playlist.PlaylistId;
     name: string;
     problems: MyApi.commons.ProblemId[];
-    ownerId: MyApi.commons.UserId;
+    \\"owner-id\\": MyApi.commons.UserId;
 }
 ",
                 "name": "Playlist.ts",
@@ -33341,7 +33341,7 @@ export interface Playlist {
     playlist_id: model.playlist.PlaylistId;
     name: string;
     problems: model.commons.ProblemId[];
-    ownerId: model.commons.UserId;
+    \\"owner-id\\": model.commons.UserId;
 }
 ",
                     "name": "Playlist.ts",
