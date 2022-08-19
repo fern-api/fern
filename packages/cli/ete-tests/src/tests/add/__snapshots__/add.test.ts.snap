@@ -111,7 +111,7 @@ errors:
         "type": "file",
       },
     ],
-    "name": ".fern",
+    "name": "fern",
     "type": "directory",
   },
 ]
