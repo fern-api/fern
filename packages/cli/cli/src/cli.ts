@@ -12,7 +12,7 @@ import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWor
 import { generateWorkspaces } from "./commands/generate/generateWorkspaces";
 import { upgrade } from "./commands/upgrade/upgrade";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
-import { createProjectLoader, ProjectLoader } from "./createProjectLoader";
+import { loadProject } from "./createProjectLoader";
 import { CliEnvironment, readCliEnvironment } from "./readCliEnvironment";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 import { getFernCliUpgradeMessage } from "./upgrade-utils/getFernCliUpgradeMessage";
@@ -28,19 +28,17 @@ async function runCli() {
     const cliEnvironment = readCliEnvironment();
 
     const fernDirectory = await getFernDirectory();
-    const projectConfig = await loadProjectConfig({ directory: fernDirectory });
-    if (cliEnvironment.packageVersion !== projectConfig.version) {
+    const versionOfCliToRun =
+        fernDirectory != null
+            ? (await loadProjectConfig({ directory: fernDirectory })).version
+            : await getLatestVersionOfCli(cliEnvironment);
+    if (cliEnvironment.packageVersion !== versionOfCliToRun) {
         await rerunFernCliAtVersion({
-            version: projectConfig.version,
+            version: versionOfCliToRun,
             cliEnvironment,
         });
         return;
     }
-
-    const projectLoader = createProjectLoader({
-        fernDirectory,
-        projectConfig,
-    });
 
     const cli: Argv<GlobalCliOptions> = yargs(hideBin(process.argv))
         .scriptName(cliEnvironment.cliName)
@@ -55,18 +53,17 @@ async function runCli() {
         });
 
     addInitCommand(cli, cliEnvironment);
-    addAddCommand(cli, projectLoader);
+    addAddCommand(cli);
     addConvertCommand(cli);
-    addGenerateCommand(cli, projectLoader);
+    addGenerateCommand(cli);
     addLoginCommand(cli);
-    addGenerateIrCommand(cli, projectLoader);
-    addValidateCommand(cli, projectLoader);
+    addGenerateIrCommand(cli);
+    addValidateCommand(cli);
 
     const cliContext = { showUpgradeMessageIfAvailable: true };
     addUpgradeCommand({
         cli,
         cliEnvironment,
-        projectLoader,
         onRun: () => {
             cliContext.showUpgradeMessageIfAvailable = false;
         },
@@ -116,7 +113,7 @@ async function askForOrganization() {
     return answers.organization;
 }
 
-function addAddCommand(cli: Argv<GlobalCliOptions>, projectLoader: ProjectLoader) {
+function addAddCommand(cli: Argv<GlobalCliOptions>) {
     cli.command(
         "add <generator>",
         "Add a generator to .fernrc.yml",
@@ -126,12 +123,12 @@ function addAddCommand(cli: Argv<GlobalCliOptions>, projectLoader: ProjectLoader
                 demandOption: true,
             }),
         async (argv) => {
-            await addGeneratorToWorkspaces(await projectLoader({ commandLineWorkspace: argv.api }), argv.generator);
+            await addGeneratorToWorkspaces(await loadProject({ commandLineWorkspace: argv.api }), argv.generator);
         }
     );
 }
 
-function addGenerateCommand(cli: Argv<GlobalCliOptions>, projectLoader: ProjectLoader) {
+function addGenerateCommand(cli: Argv<GlobalCliOptions>) {
     cli.command(
         ["generate"],
         "Generate typesafe servers and clients",
@@ -150,7 +147,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, projectLoader: ProjectL
                 }),
         async (argv) => {
             await generateWorkspaces({
-                project: await projectLoader({ commandLineWorkspace: argv.api }),
+                project: await loadProject({ commandLineWorkspace: argv.api }),
                 runLocal: argv.local,
                 keepDocker: argv.keepDocker,
             });
@@ -192,7 +189,7 @@ function addLoginCommand(cli: Argv<GlobalCliOptions>) {
     });
 }
 
-function addGenerateIrCommand(cli: Argv<GlobalCliOptions>, projectLoader: ProjectLoader) {
+function addGenerateIrCommand(cli: Argv<GlobalCliOptions>) {
     cli.command(
         "ir",
         "Compiles your Fern API Definition",
@@ -204,16 +201,16 @@ function addGenerateIrCommand(cli: Argv<GlobalCliOptions>, projectLoader: Projec
             }),
         async (argv) =>
             generateIrForWorkspaces({
-                project: await projectLoader({ commandLineWorkspace: argv.api }),
+                project: await loadProject({ commandLineWorkspace: argv.api }),
                 irFilepath: resolve(cwd(), FilePath.of(argv.output)),
             })
     );
 }
 
-function addValidateCommand(cli: Argv<GlobalCliOptions>, projectLoader: ProjectLoader) {
+function addValidateCommand(cli: Argv<GlobalCliOptions>) {
     cli.command("check", "Validates your Fern API Definition", noop, async (argv) =>
         validateWorkspaces({
-            project: await projectLoader({ commandLineWorkspace: argv.api }),
+            project: await loadProject({ commandLineWorkspace: argv.api }),
         })
     );
 }
@@ -221,18 +218,16 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, projectLoader: ProjectL
 function addUpgradeCommand({
     cli,
     cliEnvironment,
-    projectLoader,
     onRun,
 }: {
     cli: Argv<GlobalCliOptions>;
     cliEnvironment: CliEnvironment;
-    projectLoader: ProjectLoader;
     onRun: () => void;
 }) {
     cli.command("upgrade", "Upgrades generator versions in your workspace", noop, async (argv) => {
         await upgrade({
             cliEnvironment,
-            project: await projectLoader({ commandLineWorkspace: argv.api }),
+            project: await loadProject({ commandLineWorkspace: argv.api }),
         });
         onRun();
     });

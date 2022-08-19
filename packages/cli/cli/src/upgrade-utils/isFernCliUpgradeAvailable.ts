@@ -14,11 +14,6 @@ export interface FernCliNoUpgradeAvailable {
 }
 
 export async function isFernCliUpgradeAvailable(cliEnvironment: CliEnvironment): Promise<FernCliUpgradeInfo> {
-    if (cliEnvironment.packageVersion === "0.0.0") {
-        return {
-            upgradeAvailable: false,
-        };
-    }
     const latestPackageVersion = await getLatestVersionOfCli(cliEnvironment);
     const diff = semverDiff(cliEnvironment.packageVersion, latestPackageVersion);
     if (diff != null) {

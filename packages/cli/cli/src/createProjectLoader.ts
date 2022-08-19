@@ -1,5 +1,5 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
-import { ProjectConfig } from "@fern-api/project-configuration";
+import { join, RelativeFilePath } from "@fern-api/core-utils";
+import { getFernDirectoryOrThrow, loadProjectConfig, ProjectConfig } from "@fern-api/project-configuration";
 import { loadWorkspace, Workspace } from "@fern-api/workspace-loader";
 import { readdir } from "fs/promises";
 import { handleFailedWorkspaceParserResult } from "./commands/generate-ir/handleFailedWorkspaceParserResult";
@@ -9,51 +9,42 @@ export interface Project {
     workspaces: Workspace[];
 }
 
-export type ProjectLoader = (args: ProjectLoader.Args) => Promise<Project>;
-
-export declare namespace ProjectLoader {
+export declare namespace loadProject {
     export interface Args {
         commandLineWorkspace: string | undefined;
     }
 }
 
-export function createProjectLoader({
-    projectConfig,
-    fernDirectory,
-}: {
-    projectConfig: ProjectConfig;
-    fernDirectory: AbsoluteFilePath;
-}): ProjectLoader {
-    return async ({ commandLineWorkspace }) => {
-        const fernDirectoryContents = await readdir(fernDirectory, { withFileTypes: true });
-        const allWorkspaceDirectoryNames = fernDirectoryContents.reduce<string[]>((all, item) => {
-            if (item.isDirectory()) {
-                all.push(item.name);
-            }
-            return all;
-        }, []);
-
-        const allWorkspaces = await Promise.all(
-            allWorkspaceDirectoryNames.map(async (workspaceDirectoryName) => {
-                const workspace = await loadWorkspace({
-                    absolutePathToWorkspace: join(fernDirectory, RelativeFilePath.of(workspaceDirectoryName)),
-                });
-                if (!workspace.didSucceed) {
-                    handleFailedWorkspaceParserResult(workspace);
-                    throw new Error("Failed to parse workspace");
-                }
-                return workspace.workspace;
-            })
-        );
-
-        if (allWorkspaces.length === 0) {
-            throw new Error("No workspaces found.");
+export async function loadProject({ commandLineWorkspace }: loadProject.Args): Promise<Project> {
+    const fernDirectory = await getFernDirectoryOrThrow();
+    const fernDirectoryContents = await readdir(fernDirectory, { withFileTypes: true });
+    const allWorkspaceDirectoryNames = fernDirectoryContents.reduce<string[]>((all, item) => {
+        if (item.isDirectory()) {
+            all.push(item.name);
         }
+        return all;
+    }, []);
 
-        return {
-            config: projectConfig,
-            workspaces: maybeFilterWorkspaces({ allWorkspaces, commandLineWorkspace }),
-        };
+    const allWorkspaces = await Promise.all(
+        allWorkspaceDirectoryNames.map(async (workspaceDirectoryName) => {
+            const workspace = await loadWorkspace({
+                absolutePathToWorkspace: join(fernDirectory, RelativeFilePath.of(workspaceDirectoryName)),
+            });
+            if (!workspace.didSucceed) {
+                handleFailedWorkspaceParserResult(workspace);
+                throw new Error("Failed to parse workspace");
+            }
+            return workspace.workspace;
+        })
+    );
+
+    if (allWorkspaces.length === 0) {
+        throw new Error("No workspaces found.");
+    }
+
+    return {
+        config: await loadProjectConfig({ directory: fernDirectory }),
+        workspaces: maybeFilterWorkspaces({ allWorkspaces, commandLineWorkspace }),
     };
 }
 

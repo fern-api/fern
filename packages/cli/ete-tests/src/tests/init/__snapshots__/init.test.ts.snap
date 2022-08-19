@@ -79,10 +79,8 @@ errors:
   },
   Object {
     "contents": "{
-    \\"workspaces\\": [
-        \\"**\\"
-    ],
-    \\"organization\\": \\"fern\\"
+    \\"organization\\": \\"fern\\",
+    \\"version\\": \\"0.0.0\\"
 }",
     "name": "fern.config.json",
     "type": "file",
