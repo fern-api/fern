@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@fern-api/cli": "workspace:*",
+    "@fern-api/cli-context": "workspace:*",
     "@fern-api/config-management-commons": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/docker-utils": "workspace:*",
@@ -62,7 +63,7 @@
     "@babel/preset-env": "^7.18.10",
     "@babel/preset-typescript": "^7.18.6",
     "@types/jest": "^28.1.7",
-    "@types/node": "^18.7.6",
+    "@types/node": "^18.7.7",
     "depcheck": "^1.4.3",
     "eslint": "^8.22.0",
     "jest": "^28.1.3",

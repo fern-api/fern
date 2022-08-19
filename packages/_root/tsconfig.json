@@ -4,6 +4,7 @@
   "include": ["./src"],
   "references": [
     { "path": "../cli/cli" },
+    { "path": "../cli/cli-context" },
     { "path": "../cli/config-management/commons" },
     { "path": "../cli/config-management/generators-configuration" },
     { "path": "../cli/config-management/manage-generator" },

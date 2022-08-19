@@ -39,7 +39,7 @@
     "@types/jest": "^28.1.7",
     "@types/js-yaml": "^4.0.5",
     "@types/lodash-es": "^4.17.6",
-    "@types/node": "^18.7.6",
+    "@types/node": "^18.7.7",
     "depcheck": "^1.4.3",
     "eslint": "^8.22.0",
     "jest": "^28.1.3",
