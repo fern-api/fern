@@ -8,7 +8,7 @@
     { "path": "../../config-management/init" },
     { "path": "../../config-management/manage-generator" },
     { "path": "../../config-management/project-configuration" },
-    { "path": "../../generation/ir/ir-generator" },
+    { "path": "../../generation/ir-generator" },
     { "path": "../../generation/local-generation/local-workspace-runner" },
     { "path": "../../generation/remote-generation/remote-workspace-runner" },
     { "path": "../../openapi-converter" },

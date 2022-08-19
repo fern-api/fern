@@ -1,7 +1,7 @@
 import { upgradeGenerators } from "@fern-api/manage-generator";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
-import { Project } from "../../createProjectLoader";
+import { Project } from "../../loadProject";
 
 export async function upgradeGeneratorsInWorkspaces(project: Project): Promise<void> {
     for (const workspace of project.workspaces) {

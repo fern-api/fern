@@ -1,5 +1,4 @@
 import execa from "execa";
-import { hideBin } from "yargs/helpers";
 import { CliEnvironment } from "./readCliEnvironment";
 
 export async function rerunFernCliAtVersion({
@@ -9,7 +8,7 @@ export async function rerunFernCliAtVersion({
     version: string;
     cliEnvironment: CliEnvironment;
 }): Promise<void> {
-    const npxProcess = execa("npx", [`${cliEnvironment.packageName}@${version}`, ...hideBin(process.argv)], {
+    const npxProcess = execa("npx", [`${cliEnvironment.packageName}@${version}`, ...process.argv.slice(2)], {
         stdio: "inherit",
     });
     npxProcess.stdout?.pipe(process.stdout);
