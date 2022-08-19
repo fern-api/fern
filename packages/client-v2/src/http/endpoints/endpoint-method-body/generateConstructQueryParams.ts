@@ -129,7 +129,7 @@ function getValueAsString({
                 map: throwNotSupported,
                 set: throwNotSupported,
                 _unknown: () => {
-                    throw new Error("Unkown container type: " + container);
+                    throw new Error("Unkown container type: " + container._type);
                 },
             }),
         object: throwNotSupported,
