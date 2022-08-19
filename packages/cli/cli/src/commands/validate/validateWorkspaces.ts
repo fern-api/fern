@@ -1,14 +1,6 @@
-import { loadProject } from "../utils/load-project/loadProject";
+import { Project } from "../../createProjectLoader";
 import { validateWorkspaceAndLogIssues } from "./validateWorkspaceAndLogIssues";
 
-export async function validateWorkspaces({
-    commandLineWorkspaces,
-}: {
-    commandLineWorkspaces: readonly string[];
-}): Promise<void> {
-    const { workspaces } = await loadProject({
-        commandLineWorkspaces,
-    });
-
-    await Promise.all(workspaces.map((workspace) => validateWorkspaceAndLogIssues(workspace)));
+export async function validateWorkspaces({ project }: { project: Project }): Promise<void> {
+    await Promise.all(project.workspaces.map((workspace) => validateWorkspaceAndLogIssues(workspace)));
 }

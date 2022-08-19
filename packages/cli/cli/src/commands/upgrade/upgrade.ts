@@ -1,53 +1,36 @@
-import boxen from "boxen";
 import chalk from "chalk";
-import execa from "execa";
-import pupa from "pupa";
-import { hideBin } from "yargs/helpers";
-import { parseRawCliEnvironmentOrThrow, RawCliEnvironment } from "../../cliEnvironment";
-import { isFernCliUpgradeAvailable } from "../../upgradeNotifier";
-import { upgradeGeneratorsInWorkspace } from "./upgradeGeneratorInWorkspace";
+import { writeFile } from "fs/promises";
+import produce from "immer";
+import { Project } from "../../createProjectLoader";
+import { CliEnvironment } from "../../readCliEnvironment";
+import { rerunFernCliAtVersion } from "../../rerunFernCliAtVersion";
+import { isFernCliUpgradeAvailable } from "../../upgrade-utils/isFernCliUpgradeAvailable";
+import { upgradeGeneratorsInWorkspaces } from "./upgradeGeneratorsInWorkspaces";
 
 export async function upgrade({
-    commandLineWorkspaces,
-    rawCliEnvironment,
+    project,
+    cliEnvironment,
 }: {
-    commandLineWorkspaces: readonly string[];
-    rawCliEnvironment: RawCliEnvironment;
+    project: Project;
+    cliEnvironment: CliEnvironment;
 }): Promise<void> {
-    const { cliName, packageName, packageVersion } = parseRawCliEnvironmentOrThrow(
-        rawCliEnvironment,
-        "Failed to upgrade."
-    );
-    const fernCliUpgradeInfo = await isFernCliUpgradeAvailable({ packageName, packageVersion });
-    if (fernCliUpgradeInfo.upgradeAvailable) {
-        await execa("npm", ["install", "-g", packageName]);
-        const template =
+    const fernCliUpgradeInfo = await isFernCliUpgradeAvailable(cliEnvironment);
+    if (!fernCliUpgradeInfo.upgradeAvailable) {
+        await upgradeGeneratorsInWorkspaces(project);
+    } else {
+        const newProjectConfig = produce(project.config, (draft) => {
+            draft.version = fernCliUpgradeInfo.latestVersion;
+        });
+        await writeFile(project.config._absolutePath, JSON.stringify(newProjectConfig, undefined, 2));
+        const message =
             "Upgraded {cliName} from" +
             chalk.dim(" {currentVersion}") +
             chalk.reset(" → ") +
             chalk.green("{latestVersion}");
-        const message = boxen(
-            pupa(template, {
-                cliName,
-                packageName,
-                currentVersion: packageVersion,
-                latestVersion: fernCliUpgradeInfo.version,
-            }),
-            {
-                padding: 1,
-                margin: 1,
-                textAlignment: "center",
-                borderColor: "yellow",
-                borderStyle: "round",
-            }
-        );
         console.log(message);
-        const { stdout } = await execa(cliName, hideBin(process.argv), {
-            cwd: process.cwd(),
-            stdio: "inherit",
+        await rerunFernCliAtVersion({
+            version: fernCliUpgradeInfo.latestVersion,
+            cliEnvironment,
         });
-        console.log(stdout);
-    } else {
-        await upgradeGeneratorsInWorkspace(commandLineWorkspaces);
     }
 }

@@ -9,14 +9,12 @@ import {
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
-import { loadProject } from "../utils/load-project/loadProject";
+import { Project } from "../../createProjectLoader";
 
 export async function addGeneratorToWorkspaces(
-    commandLineWorkspaces: readonly string[],
+    { workspaces }: Project,
     generatorName: "java" | "typescript" | "postman" | "openapi"
 ): Promise<void> {
-    const { workspaces } = await loadProject({ commandLineWorkspaces });
-
     for (const workspace of workspaces) {
         const generatorsConfiguration = await loadRawGeneratorsConfiguration({
             absolutePathToWorkspace: workspace.absolutePathToWorkspace,

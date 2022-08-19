@@ -6294,6 +6294,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["esbuild", "npm:0.14.50"],\
             ["eslint", "npm:8.22.0"],\
             ["execa", "npm:5.1.1"],\
+            ["immer", "npm:9.0.15"],\
             ["inquirer", "npm:9.0.2"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["js-yaml", "npm:4.1.0"],\
