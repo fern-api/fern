@@ -1,7 +1,6 @@
 import { RelativeFilePath } from "@fern-api/core-utils";
 import { RawSchemas, visitRawApiAuth, visitRawAuthSchemeDeclaration } from "@fern-api/yaml-schema";
 import { ApiAuth, AuthScheme, AuthSchemesRequirement, FernFilepath } from "@fern-fern/ir-model";
-import { AuthSchemeDeclarationSchema } from "fern/packages/cli/yaml/yaml-schema/src/schemas";
 import { convertHttpHeader } from "./services/convertHttpService";
 
 export function convertApiAuth({
@@ -69,7 +68,7 @@ function convertSchemeReference({
     imports,
 }: {
     reference: RawSchemas.AuthSchemeReferenceSchema | string;
-    authSchemeDeclarations: Record<string, AuthSchemeDeclarationSchema> | undefined;
+    authSchemeDeclarations: Record<string, RawSchemas.AuthSchemeDeclarationSchema> | undefined;
     fernFilepath: FernFilepath;
     imports: Record<string, RelativeFilePath>;
 }): AuthScheme {
