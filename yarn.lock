@@ -2893,9 +2893,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/config-management-commons@workspace:*, @fern-api/config-management-commons@workspace:packages/config-management/commons":
+"@fern-api/config-management-commons@workspace:*, @fern-api/config-management-commons@workspace:packages/cli/config-management/commons":
   version: 0.0.0-use.local
-  resolution: "@fern-api/config-management-commons@workspace:packages/config-management/commons"
+  resolution: "@fern-api/config-management-commons@workspace:packages/cli/config-management/commons"
   dependencies:
     "@babel/core": ^7.18.10
     "@babel/preset-env": ^7.18.10
@@ -2928,9 +2928,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/docker-utils@workspace:*, @fern-api/docker-utils@workspace:packages/generation/local-generation/docker-utils":
+"@fern-api/docker-utils@workspace:*, @fern-api/docker-utils@workspace:packages/cli/generation/local-generation/docker-utils":
   version: 0.0.0-use.local
-  resolution: "@fern-api/docker-utils@workspace:packages/generation/local-generation/docker-utils"
+  resolution: "@fern-api/docker-utils@workspace:packages/cli/generation/local-generation/docker-utils"
   dependencies:
     "@babel/core": ^7.18.10
     "@babel/preset-env": ^7.18.10
@@ -2986,9 +2986,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/generators-configuration@workspace:*, @fern-api/generators-configuration@workspace:packages/config-management/generators-configuration":
+"@fern-api/generators-configuration@workspace:*, @fern-api/generators-configuration@workspace:packages/cli/config-management/generators-configuration":
   version: 0.0.0-use.local
-  resolution: "@fern-api/generators-configuration@workspace:packages/config-management/generators-configuration"
+  resolution: "@fern-api/generators-configuration@workspace:packages/cli/config-management/generators-configuration"
   dependencies:
     "@babel/core": ^7.18.10
     "@babel/preset-env": ^7.18.10
@@ -3011,9 +3011,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/init@workspace:*, @fern-api/init@workspace:packages/config-management/init":
+"@fern-api/init@workspace:*, @fern-api/init@workspace:packages/cli/init":
   version: 0.0.0-use.local
-  resolution: "@fern-api/init@workspace:packages/config-management/init"
+  resolution: "@fern-api/init@workspace:packages/cli/init"
   dependencies:
     "@babel/core": ^7.18.10
     "@babel/preset-env": ^7.18.10
@@ -3034,9 +3034,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/ir-generator@workspace:*, @fern-api/ir-generator@workspace:packages/generation/ir-generator":
+"@fern-api/ir-generator@workspace:*, @fern-api/ir-generator@workspace:packages/cli/generation/ir-generator":
   version: 0.0.0-use.local
-  resolution: "@fern-api/ir-generator@workspace:packages/generation/ir-generator"
+  resolution: "@fern-api/ir-generator@workspace:packages/cli/generation/ir-generator"
   dependencies:
     "@babel/core": ^7.18.10
     "@babel/preset-env": ^7.18.10
@@ -3057,9 +3057,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/json-schema@workspace:*, @fern-api/json-schema@workspace:packages/json-schema":
+"@fern-api/json-schema@workspace:*, @fern-api/json-schema@workspace:packages/cli/yaml/json-schema":
   version: 0.0.0-use.local
-  resolution: "@fern-api/json-schema@workspace:packages/json-schema"
+  resolution: "@fern-api/json-schema@workspace:packages/cli/yaml/json-schema"
   dependencies:
     "@babel/core": ^7.18.10
     "@babel/preset-env": ^7.18.10
@@ -3099,9 +3099,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/local-workspace-runner@workspace:*, @fern-api/local-workspace-runner@workspace:packages/generation/local-generation/local-workspace-runner":
+"@fern-api/local-workspace-runner@workspace:*, @fern-api/local-workspace-runner@workspace:packages/cli/generation/local-generation/local-workspace-runner":
   version: 0.0.0-use.local
-  resolution: "@fern-api/local-workspace-runner@workspace:packages/generation/local-generation/local-workspace-runner"
+  resolution: "@fern-api/local-workspace-runner@workspace:packages/cli/generation/local-generation/local-workspace-runner"
   dependencies:
     "@babel/core": ^7.18.10
     "@babel/preset-env": ^7.18.10
@@ -3142,9 +3142,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/manage-generator@workspace:*, @fern-api/manage-generator@workspace:packages/config-management/manage-generator":
+"@fern-api/manage-generator@workspace:*, @fern-api/manage-generator@workspace:packages/cli/config-management/manage-generator":
   version: 0.0.0-use.local
-  resolution: "@fern-api/manage-generator@workspace:packages/config-management/manage-generator"
+  resolution: "@fern-api/manage-generator@workspace:packages/cli/config-management/manage-generator"
   dependencies:
     "@babel/core": ^7.18.10
     "@babel/preset-env": ^7.18.10
@@ -3189,9 +3189,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/project-configuration@workspace:*, @fern-api/project-configuration@workspace:packages/config-management/project-configuration":
+"@fern-api/project-configuration@workspace:*, @fern-api/project-configuration@workspace:packages/cli/config-management/project-configuration":
   version: 0.0.0-use.local
-  resolution: "@fern-api/project-configuration@workspace:packages/config-management/project-configuration"
+  resolution: "@fern-api/project-configuration@workspace:packages/cli/config-management/project-configuration"
   dependencies:
     "@babel/core": ^7.18.10
     "@babel/preset-env": ^7.18.10
@@ -3210,9 +3210,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/remote-workspace-runner@workspace:*, @fern-api/remote-workspace-runner@workspace:packages/generation/remote-generation/remote-workspace-runner":
+"@fern-api/remote-workspace-runner@workspace:*, @fern-api/remote-workspace-runner@workspace:packages/cli/generation/remote-generation/remote-workspace-runner":
   version: 0.0.0-use.local
-  resolution: "@fern-api/remote-workspace-runner@workspace:packages/generation/remote-generation/remote-workspace-runner"
+  resolution: "@fern-api/remote-workspace-runner@workspace:packages/cli/generation/remote-generation/remote-workspace-runner"
   dependencies:
     "@babel/core": ^7.18.10
     "@babel/preset-env": ^7.18.10
@@ -3268,9 +3268,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/validator@workspace:*, @fern-api/validator@workspace:packages/validator":
+"@fern-api/validator@workspace:*, @fern-api/validator@workspace:packages/cli/yaml/validator":
   version: 0.0.0-use.local
-  resolution: "@fern-api/validator@workspace:packages/validator"
+  resolution: "@fern-api/validator@workspace:packages/cli/yaml/validator"
   dependencies:
     "@babel/core": ^7.18.10
     "@babel/preset-env": ^7.18.10
@@ -3292,9 +3292,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/workspace-loader@workspace:*, @fern-api/workspace-loader@workspace:packages/workspace-loader":
+"@fern-api/workspace-loader@workspace:*, @fern-api/workspace-loader@workspace:packages/cli/workspace-loader":
   version: 0.0.0-use.local
-  resolution: "@fern-api/workspace-loader@workspace:packages/workspace-loader"
+  resolution: "@fern-api/workspace-loader@workspace:packages/cli/workspace-loader"
   dependencies:
     "@babel/core": ^7.18.10
     "@babel/preset-env": ^7.18.10
@@ -3319,9 +3319,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/yaml-schema@workspace:*, @fern-api/yaml-schema@workspace:packages/yaml-schema":
+"@fern-api/yaml-schema@workspace:*, @fern-api/yaml-schema@workspace:packages/cli/yaml/yaml-schema":
   version: 0.0.0-use.local
-  resolution: "@fern-api/yaml-schema@workspace:packages/yaml-schema"
+  resolution: "@fern-api/yaml-schema@workspace:packages/cli/yaml/yaml-schema"
   dependencies:
     "@babel/core": ^7.18.10
     "@babel/preset-env": ^7.18.10

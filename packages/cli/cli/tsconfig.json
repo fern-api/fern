@@ -4,16 +4,16 @@
   "include": ["./src"],
   "references": [
     { "path": "../../commons/core-utils" },
-    { "path": "../../config-management/generators-configuration" },
-    { "path": "../../config-management/init" },
-    { "path": "../../config-management/manage-generator" },
-    { "path": "../../config-management/project-configuration" },
-    { "path": "../../generation/ir-generator" },
-    { "path": "../../generation/local-generation/local-workspace-runner" },
-    { "path": "../../generation/remote-generation/remote-workspace-runner" },
     { "path": "../../openapi-converter" },
-    { "path": "../../validator" },
-    { "path": "../../workspace-loader" },
-    { "path": "../login" }
+    { "path": "../config-management/generators-configuration" },
+    { "path": "../config-management/manage-generator" },
+    { "path": "../config-management/project-configuration" },
+    { "path": "../generation/ir-generator" },
+    { "path": "../generation/local-generation/local-workspace-runner" },
+    { "path": "../generation/remote-generation/remote-workspace-runner" },
+    { "path": "../init" },
+    { "path": "../login" },
+    { "path": "../workspace-loader" },
+    { "path": "../yaml/validator" }
   ]
 }
