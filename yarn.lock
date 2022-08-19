@@ -3033,9 +3033,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/ir-generator@workspace:*, @fern-api/ir-generator@workspace:packages/generation/ir/ir-generator":
+"@fern-api/ir-generator@workspace:*, @fern-api/ir-generator@workspace:packages/generation/ir-generator":
   version: 0.0.0-use.local
-  resolution: "@fern-api/ir-generator@workspace:packages/generation/ir/ir-generator"
+  resolution: "@fern-api/ir-generator@workspace:packages/generation/ir-generator"
   dependencies:
     "@babel/core": ^7.18.10
     "@babel/preset-env": ^7.18.10

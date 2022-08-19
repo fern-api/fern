@@ -70,7 +70,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       },\
       {\
         "name": "@fern-api/ir-generator",\
-        "reference": "workspace:packages/generation/ir/ir-generator"\
+        "reference": "workspace:packages/generation/ir-generator"\
       },\
       {\
         "name": "@fern-api/docker-utils",\
@@ -157,7 +157,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-api/ete-tests", ["workspace:packages/cli/ete-tests"]],\
       ["@fern-api/generators-configuration", ["workspace:packages/config-management/generators-configuration"]],\
       ["@fern-api/init", ["workspace:packages/config-management/init"]],\
-      ["@fern-api/ir-generator", ["workspace:packages/generation/ir/ir-generator"]],\
+      ["@fern-api/ir-generator", ["workspace:packages/generation/ir-generator"]],\
       ["@fern-api/json-schema", ["workspace:packages/json-schema"]],\
       ["@fern-api/loadable", ["workspace:packages/commons/loadable"]],\
       ["@fern-api/local-workspace-runner", ["workspace:packages/generation/local-generation/local-workspace-runner"]],\
@@ -6267,7 +6267,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/generators-configuration", "workspace:packages/config-management/generators-configuration"],\
             ["@fern-api/init", "workspace:packages/config-management/init"],\
-            ["@fern-api/ir-generator", "workspace:packages/generation/ir/ir-generator"],\
+            ["@fern-api/ir-generator", "workspace:packages/generation/ir-generator"],\
             ["@fern-api/local-workspace-runner", "workspace:packages/generation/local-generation/local-workspace-runner"],\
             ["@fern-api/login", "workspace:packages/cli/login"],\
             ["@fern-api/manage-generator", "workspace:packages/config-management/manage-generator"],\
@@ -6323,7 +6323,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/ete-tests", "workspace:packages/cli/ete-tests"],\
             ["@fern-api/generators-configuration", "workspace:packages/config-management/generators-configuration"],\
             ["@fern-api/init", "workspace:packages/config-management/init"],\
-            ["@fern-api/ir-generator", "workspace:packages/generation/ir/ir-generator"],\
+            ["@fern-api/ir-generator", "workspace:packages/generation/ir-generator"],\
             ["@fern-api/json-schema", "workspace:packages/json-schema"],\
             ["@fern-api/loadable", "workspace:packages/commons/loadable"],\
             ["@fern-api/local-workspace-runner", "workspace:packages/generation/local-generation/local-workspace-runner"],\
@@ -6511,10 +6511,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-api/ir-generator", [\
-        ["workspace:packages/generation/ir/ir-generator", {\
-          "packageLocation": "./packages/generation/ir/ir-generator/",\
+        ["workspace:packages/generation/ir-generator", {\
+          "packageLocation": "./packages/generation/ir-generator/",\
           "packageDependencies": [\
-            ["@fern-api/ir-generator", "workspace:packages/generation/ir/ir-generator"],\
+            ["@fern-api/ir-generator", "workspace:packages/generation/ir-generator"],\
             ["@babel/core", "npm:7.18.10"],\
             ["@babel/preset-env", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:7.18.10"],\
             ["@babel/preset-typescript", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:7.18.6"],\
@@ -6771,7 +6771,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-env", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:7.18.10"],\
             ["@babel/preset-typescript", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:7.18.6"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-api/ir-generator", "workspace:packages/generation/ir/ir-generator"],\
+            ["@fern-api/ir-generator", "workspace:packages/generation/ir-generator"],\
             ["@fern-api/workspace-loader", "workspace:packages/workspace-loader"],\
             ["@fern-api/yaml-schema", "workspace:packages/yaml-schema"],\
             ["@types/jest", "npm:28.1.7"],\
