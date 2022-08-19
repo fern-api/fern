@@ -1,8 +1,12 @@
 import { AbsoluteFilePath } from "@fern-api/core-utils";
+import tmp from "tmp-promise";
 import { runFernCli } from "../../utils/runFernCli";
 
-export async function init(cwd: AbsoluteFilePath): Promise<void> {
+export async function init(): Promise<AbsoluteFilePath> {
+    const directory = await tmp.dir();
+    const pathOfDirectory = AbsoluteFilePath.of(directory.path);
     await runFernCli(["init", "--organization", "fern"], {
-        cwd,
+        cwd: pathOfDirectory,
     });
+    return pathOfDirectory;
 }

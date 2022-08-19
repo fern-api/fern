@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
 import produce from "immer";
-import { Project } from "../../createProjectLoader";
+import { Project } from "../../loadProject";
 import { CliEnvironment } from "../../readCliEnvironment";
 import { rerunFernCliAtVersion } from "../../rerunFernCliAtVersion";
 import { isFernCliUpgradeAvailable } from "../../upgrade-utils/isFernCliUpgradeAvailable";

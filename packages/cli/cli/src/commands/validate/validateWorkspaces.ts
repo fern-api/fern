@@ -1,4 +1,4 @@
-import { Project } from "../../createProjectLoader";
+import { Project } from "../../loadProject";
 import { validateWorkspaceAndLogIssues } from "./validateWorkspaceAndLogIssues";
 
 export async function validateWorkspaces({ project }: { project: Project }): Promise<void> {

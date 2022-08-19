@@ -1,7 +1,7 @@
 import { AbsoluteFilePath } from "@fern-api/core-utils";
 import { writeFile } from "fs/promises";
 import path from "path";
-import { Project } from "../../createProjectLoader";
+import { Project } from "../../loadProject";
 import { generateIrForWorkspace } from "./generateIrForWorkspace";
 
 export async function generateIrForWorkspaces({

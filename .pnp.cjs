@@ -70,7 +70,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       },\
       {\
         "name": "@fern-api/ir-generator",\
-        "reference": "workspace:packages/generation/ir/ir-generator"\
+        "reference": "workspace:packages/generation/ir-generator"\
       },\
       {\
         "name": "@fern-api/docker-utils",\
@@ -157,7 +157,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-api/ete-tests", ["workspace:packages/cli/ete-tests"]],\
       ["@fern-api/generators-configuration", ["workspace:packages/config-management/generators-configuration"]],\
       ["@fern-api/init", ["workspace:packages/config-management/init"]],\
-      ["@fern-api/ir-generator", ["workspace:packages/generation/ir/ir-generator"]],\
+      ["@fern-api/ir-generator", ["workspace:packages/generation/ir-generator"]],\
       ["@fern-api/json-schema", ["workspace:packages/json-schema"]],\
       ["@fern-api/loadable", ["workspace:packages/commons/loadable"]],\
       ["@fern-api/local-workspace-runner", ["workspace:packages/generation/local-generation/local-workspace-runner"]],\
@@ -206,7 +206,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-deprecation", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:1.3.2"],\
             ["eslint-plugin-jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:26.5.3"],\
             ["execa", "npm:5.1.1"],\
-            ["fern-api", "npm:0.0.173"],\
             ["husky", "npm:7.0.4"],\
             ["immer", "npm:9.0.15"],\
             ["is-ci", "npm:3.0.1"],\
@@ -6267,7 +6266,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/generators-configuration", "workspace:packages/config-management/generators-configuration"],\
             ["@fern-api/init", "workspace:packages/config-management/init"],\
-            ["@fern-api/ir-generator", "workspace:packages/generation/ir/ir-generator"],\
+            ["@fern-api/ir-generator", "workspace:packages/generation/ir-generator"],\
             ["@fern-api/local-workspace-runner", "workspace:packages/generation/local-generation/local-workspace-runner"],\
             ["@fern-api/login", "workspace:packages/cli/login"],\
             ["@fern-api/manage-generator", "workspace:packages/config-management/manage-generator"],\
@@ -6323,7 +6322,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/ete-tests", "workspace:packages/cli/ete-tests"],\
             ["@fern-api/generators-configuration", "workspace:packages/config-management/generators-configuration"],\
             ["@fern-api/init", "workspace:packages/config-management/init"],\
-            ["@fern-api/ir-generator", "workspace:packages/generation/ir/ir-generator"],\
+            ["@fern-api/ir-generator", "workspace:packages/generation/ir-generator"],\
             ["@fern-api/json-schema", "workspace:packages/json-schema"],\
             ["@fern-api/loadable", "workspace:packages/commons/loadable"],\
             ["@fern-api/local-workspace-runner", "workspace:packages/generation/local-generation/local-workspace-runner"],\
@@ -6453,6 +6452,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["execa", "npm:5.1.1"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["prettier", "npm:2.7.1"],\
+            ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
@@ -6511,10 +6511,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-api/ir-generator", [\
-        ["workspace:packages/generation/ir/ir-generator", {\
-          "packageLocation": "./packages/generation/ir/ir-generator/",\
+        ["workspace:packages/generation/ir-generator", {\
+          "packageLocation": "./packages/generation/ir-generator/",\
           "packageDependencies": [\
-            ["@fern-api/ir-generator", "workspace:packages/generation/ir/ir-generator"],\
+            ["@fern-api/ir-generator", "workspace:packages/generation/ir-generator"],\
             ["@babel/core", "npm:7.18.10"],\
             ["@babel/preset-env", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:7.18.10"],\
             ["@babel/preset-typescript", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:7.18.6"],\
@@ -6771,7 +6771,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-env", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:7.18.10"],\
             ["@babel/preset-typescript", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:7.18.6"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-api/ir-generator", "workspace:packages/generation/ir/ir-generator"],\
+            ["@fern-api/ir-generator", "workspace:packages/generation/ir-generator"],\
             ["@fern-api/workspace-loader", "workspace:packages/workspace-loader"],\
             ["@fern-api/yaml-schema", "workspace:packages/yaml-schema"],\
             ["@types/jest", "npm:28.1.7"],\
@@ -14558,7 +14558,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-deprecation", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:1.3.2"],\
             ["eslint-plugin-jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:26.5.3"],\
             ["execa", "npm:5.1.1"],\
-            ["fern-api", "npm:0.0.173"],\
             ["husky", "npm:7.0.4"],\
             ["immer", "npm:9.0.15"],\
             ["is-ci", "npm:3.0.1"],\
@@ -14574,15 +14573,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
-        }]\
-      ]],\
-      ["fern-api", [\
-        ["npm:0.0.173", {\
-          "packageLocation": "./.yarn/cache/fern-api-npm-0.0.173-01668be4ef-603ba780c6.zip/node_modules/fern-api/",\
-          "packageDependencies": [\
-            ["fern-api", "npm:0.0.173"]\
-          ],\
-          "linkType": "HARD"\
         }]\
       ]],\
       ["figlet", [\

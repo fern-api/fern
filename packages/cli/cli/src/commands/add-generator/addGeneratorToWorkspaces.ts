@@ -9,7 +9,7 @@ import {
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
-import { Project } from "../../createProjectLoader";
+import { Project } from "../../loadProject";
 
 export async function addGeneratorToWorkspaces(
     { workspaces }: Project,

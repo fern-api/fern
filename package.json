@@ -74,8 +74,5 @@
     "vite": {
       "unplugged": true
     }
-  },
-  "dependencies": {
-    "fern-api": "0.0.173"
   }
 }

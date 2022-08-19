@@ -12,7 +12,7 @@ import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWor
 import { generateWorkspaces } from "./commands/generate/generateWorkspaces";
 import { upgrade } from "./commands/upgrade/upgrade";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
-import { loadProject } from "./createProjectLoader";
+import { loadProject } from "./loadProject";
 import { CliEnvironment, readCliEnvironment } from "./readCliEnvironment";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 import { getFernCliUpgradeMessage } from "./upgrade-utils/getFernCliUpgradeMessage";

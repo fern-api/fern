@@ -1,4 +1,4 @@
-import { Project } from "../../createProjectLoader";
+import { Project } from "../../loadProject";
 import { generateWorkspace } from "./generateWorkspace";
 
 export async function generateWorkspaces({
