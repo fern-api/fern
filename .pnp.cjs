@@ -6448,7 +6448,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/project-configuration", "workspace:packages/config-management/project-configuration"],\
             ["@types/jest", "npm:28.1.7"],\
             ["@types/node", "npm:18.7.6"],\
-            ["@types/tmp", "npm:0.2.3"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.22.0"],\
             ["execa", "npm:5.1.1"],\
