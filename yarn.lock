@@ -4281,20 +4281,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pkgr/utils@npm:^2.3.0":
-  version: 2.3.0
-  resolution: "@pkgr/utils@npm:2.3.0"
-  dependencies:
-    cross-spawn: ^7.0.3
-    is-glob: ^4.0.3
-    open: ^8.4.0
-    picocolors: ^1.0.0
-    tiny-glob: ^0.2.9
-    tslib: ^2.4.0
-  checksum: d2fe95c51d548497425182b284dea8155d9e80bb36fa744c670174d7deae53743b13aa9f63a8bfaa8b31dcf7c53dc279a99372f2c2c35ff9fcebf91c5c5c8190
-  languageName: node
-  linkType: hard
-
 "@pnpm/network.ca-file@npm:^1.0.1":
   version: 1.0.1
   resolution: "@pnpm/network.ca-file@npm:1.0.1"
@@ -9036,24 +9022,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"eslint-import-resolver-typescript@npm:^3.4.2":
-  version: 3.4.2
-  resolution: "eslint-import-resolver-typescript@npm:3.4.2"
-  dependencies:
-    debug: ^4.3.4
-    enhanced-resolve: ^5.10.0
-    get-tsconfig: ^4.2.0
-    globby: ^13.1.2
-    is-core-module: ^2.9.0
-    is-glob: ^4.0.3
-    synckit: ^0.8.3
-  peerDependencies:
-    eslint: "*"
-    eslint-plugin-import: "*"
-  checksum: e54d8c02542cc85fc9703a064111a25585a7189b61445a209792ae50b718d273e5522be44c61f149f59292570eef6a08036d988c8477da9f6d8f3c6177801319
-  languageName: node
-  linkType: hard
-
 "eslint-module-utils@npm:^2.7.3":
   version: 2.7.4
   resolution: "eslint-module-utils@npm:2.7.4"
@@ -9623,7 +9591,6 @@ env-cmd@toddbluhm/env-cmd:
     depcheck: ^1.4.3
     docsify-cli: ^4.4.4
     eslint: ^8.19.0
-    eslint-import-resolver-typescript: ^3.4.2
     eslint-plugin-deprecation: ^1.3.2
     eslint-plugin-import: ^2.26.0
     eslint-plugin-jest: ^26.5.3
@@ -10117,13 +10084,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"get-tsconfig@npm:^4.2.0":
-  version: 4.2.0
-  resolution: "get-tsconfig@npm:4.2.0"
-  checksum: dfae3520bee20b71a651fdc93fd29901013dfc4df9fb41a423cf3efb4468c79087ef9d3bc3d0625b6486397730991d2a749eed4985d8ab411f481319c3e931e5
-  languageName: node
-  linkType: hard
-
 "github-slugger@npm:^1.4.0":
   version: 1.4.0
   resolution: "github-slugger@npm:1.4.0"
@@ -10248,13 +10208,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"globalyzer@npm:0.1.0":
-  version: 0.1.0
-  resolution: "globalyzer@npm:0.1.0"
-  checksum: 419a0f95ba542534fac0842964d31b3dc2936a479b2b1a8a62bad7e8b61054faa9b0a06ad9f2e12593396b9b2621cac93358d9b3071d33723fb1778608d358a1
-  languageName: node
-  linkType: hard
-
 "globby@npm:^11.0.1, globby@npm:^11.0.4, globby@npm:^11.1.0":
   version: 11.1.0
   resolution: "globby@npm:11.1.0"
@@ -10269,7 +10222,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"globby@npm:^13.1.1, globby@npm:^13.1.2":
+"globby@npm:^13.1.1":
   version: 13.1.2
   resolution: "globby@npm:13.1.2"
   dependencies:
@@ -10286,13 +10239,6 @@ env-cmd@toddbluhm/env-cmd:
   version: 0.1.4
   resolution: "globjoin@npm:0.1.4"
   checksum: 0a47d88d566122d9e42da946453ee38b398e0021515ac6a95d13f980ba8c1e42954e05ee26cfcbffce1ac1ee094d0524b16ce1dd874ca52408d6db5c6d39985b
-  languageName: node
-  linkType: hard
-
-"globrex@npm:^0.1.2":
-  version: 0.1.2
-  resolution: "globrex@npm:0.1.2"
-  checksum: adca162494a176ce9ecf4dd232f7b802956bb1966b37f60c15e49d2e7d961b66c60826366dc2649093cad5a0d69970cfa8875bd1695b5a1a2f33dcd2aa88da3c
   languageName: node
   linkType: hard
 
@@ -16845,16 +16791,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"synckit@npm:^0.8.3":
-  version: 0.8.3
-  resolution: "synckit@npm:0.8.3"
-  dependencies:
-    "@pkgr/utils": ^2.3.0
-    tslib: ^2.4.0
-  checksum: ba6baa7c32e69b38eebb322a8eb1712a117f7f1eaa42e75623c7d6da43f0e61d3ac33fa962c2c58a8b37742f1e0ae9d21f04c9da0dbf34d618a8780055e9e1fa
-  languageName: node
-  linkType: hard
-
 "table@npm:^6.8.0":
   version: 6.8.0
   resolution: "table@npm:6.8.0"
@@ -17003,16 +16939,6 @@ env-cmd@toddbluhm/env-cmd:
   version: 1.1.0
   resolution: "thunky@npm:1.1.0"
   checksum: 993096c472b6b8f30e29dc777a8d17720e4cab448375041f20c0cb802a09a7fb2217f2a3e8cdc11851faa71c957e2db309357367fc9d7af3cb7a4d00f4b66034
-  languageName: node
-  linkType: hard
-
-"tiny-glob@npm:^0.2.9":
-  version: 0.2.9
-  resolution: "tiny-glob@npm:0.2.9"
-  dependencies:
-    globalyzer: 0.1.0
-    globrex: ^0.1.2
-  checksum: aea5801eb6663ddf77ebb74900b8f8bd9dfcfc9b6a1cc8018cb7421590c00bf446109ff45e4b64a98e6c95ddb1255a337a5d488fb6311930e2a95334151ec9c6
   languageName: node
   linkType: hard
 
