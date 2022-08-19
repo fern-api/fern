@@ -1,20 +1,18 @@
 import { AbsoluteFilePath } from "@fern-api/core-utils";
 import { writeFile } from "fs/promises";
 import path from "path";
-import { loadProject } from "../utils/load-project/loadProject";
+import { Project } from "../../createProjectLoader";
 import { generateIrForWorkspace } from "./generateIrForWorkspace";
 
 export async function generateIrForWorkspaces({
-    commandLineWorkspaces,
+    project,
     irFilepath,
 }: {
-    commandLineWorkspaces: readonly string[];
+    project: Project;
     irFilepath: AbsoluteFilePath | undefined;
 }): Promise<void> {
-    const { workspaces } = await loadProject({ commandLineWorkspaces });
-
     await Promise.all(
-        workspaces.map(async (workspace) => {
+        project.workspaces.map(async (workspace) => {
             const intermediateRepresentation = await generateIrForWorkspace({ workspace });
             if (irFilepath != null) {
                 const irOutputFilePath = path.resolve(irFilepath);

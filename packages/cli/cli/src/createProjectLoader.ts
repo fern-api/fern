@@ -1,29 +1,22 @@
 import { join, RelativeFilePath } from "@fern-api/core-utils";
-import {
-    FERN_DIRECTORY,
-    getFernDirectory,
-    loadProjectConfigFromFilepath,
-    PROJECT_CONFIG_FILENAME,
-} from "@fern-api/project-configuration";
+import { getFernDirectoryOrThrow, loadProjectConfig, ProjectConfig } from "@fern-api/project-configuration";
 import { loadWorkspace, Workspace } from "@fern-api/workspace-loader";
 import { readdir } from "fs/promises";
-import { handleFailedWorkspaceParserResult } from "../../generate-ir/handleFailedWorkspaceParserResult";
+import { handleFailedWorkspaceParserResult } from "./commands/generate-ir/handleFailedWorkspaceParserResult";
 
 export interface Project {
-    organization: string;
+    config: ProjectConfig;
     workspaces: Workspace[];
 }
 
-export async function loadProject({
-    commandLineWorkspaces,
-}: {
-    commandLineWorkspaces: readonly string[];
-}): Promise<Project> {
-    const fernDirectory = await getFernDirectory();
-    if (fernDirectory == null) {
-        throw new Error(`No ${FERN_DIRECTORY} directory found.`);
+export declare namespace loadProject {
+    export interface Args {
+        commandLineWorkspace: string | undefined;
     }
+}
 
+export async function loadProject({ commandLineWorkspace }: loadProject.Args): Promise<Project> {
+    const fernDirectory = await getFernDirectoryOrThrow();
     const fernDirectoryContents = await readdir(fernDirectory, { withFileTypes: true });
     const allWorkspaceDirectoryNames = fernDirectoryContents.reduce<string[]>((all, item) => {
         if (item.isDirectory()) {
@@ -49,31 +42,27 @@ export async function loadProject({
         throw new Error("No workspaces found.");
     }
 
-    const { organization } = await loadProjectConfigFromFilepath(
-        join(fernDirectory, RelativeFilePath.of(PROJECT_CONFIG_FILENAME))
-    );
-
     return {
-        workspaces: maybeFilterWorkspaces({ allWorkspaces, commandLineWorkspaces }),
-        organization,
+        config: await loadProjectConfig({ directory: fernDirectory }),
+        workspaces: maybeFilterWorkspaces({ allWorkspaces, commandLineWorkspace }),
     };
 }
 
 function maybeFilterWorkspaces({
     allWorkspaces,
-    commandLineWorkspaces,
+    commandLineWorkspace,
 }: {
     allWorkspaces: readonly Workspace[];
-    commandLineWorkspaces: readonly string[];
+    commandLineWorkspace: string | undefined;
 }): Workspace[] {
-    if (commandLineWorkspaces.length === 0) {
+    if (commandLineWorkspace == null) {
         if (allWorkspaces.length > 1) {
             throw new Error("There are multiple workspaces. You must specify one with --api");
         }
         return [...allWorkspaces];
     }
 
-    return commandLineWorkspaces.reduce<Workspace[]>((all, workspaceName) => {
+    return [commandLineWorkspace].reduce<Workspace[]>((all, workspaceName) => {
         const workspace = allWorkspaces.find((workspace) => workspace.name === workspaceName);
         if (workspace == null) {
             throw new Error(`Workspace ${workspaceName} not found`);

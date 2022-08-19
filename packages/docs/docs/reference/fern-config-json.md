@@ -11,7 +11,7 @@ Example:
 
 ```json
 {
-  "workspaces": ["**"],
+  "version": "0.0.0",
   "org": "imdb"
 }
 ```

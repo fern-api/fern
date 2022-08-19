@@ -6283,7 +6283,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/js-yaml", "npm:4.0.5"],\
             ["@types/latest-version", "npm:4.0.1"],\
             ["@types/node", "npm:18.7.6"],\
-            ["@types/pupa", "npm:2.0.0"],\
             ["@types/semver-diff", "npm:3.0.0"],\
             ["@types/yargs", "npm:17.0.10"],\
             ["@yarnpkg/esbuild-plugin-pnp", "virtual:e27057136cbc8d6604e8ad844644db08f7b9ebb1ee6412bdae58c0b53531f2ce21503c38b50a31a3b4d352bf8b1c84e4bd18636df76f7a5ae6b0b24714362ee9#npm:3.0.0-rc.14"],\
@@ -6294,12 +6293,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["esbuild", "npm:0.14.50"],\
             ["eslint", "npm:8.22.0"],\
             ["execa", "npm:5.1.1"],\
+            ["immer", "npm:9.0.15"],\
             ["inquirer", "npm:9.0.2"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["js-yaml", "npm:4.1.0"],\
             ["latest-version", "npm:7.0.0"],\
             ["prettier", "npm:2.7.1"],\
-            ["pupa", "npm:3.1.0"],\
             ["semver-diff", "npm:4.0.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
             ["yargs", "npm:17.5.1"],\
@@ -9002,16 +9001,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-prop-types-npm-15.7.5-2aa48aa177-5b43b8b154.zip/node_modules/@types/prop-types/",\
           "packageDependencies": [\
             ["@types/prop-types", "npm:15.7.5"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@types/pupa", [\
-        ["npm:2.0.0", {\
-          "packageLocation": "./.yarn/cache/@types-pupa-npm-2.0.0-f299e5fccd-3b38f9ebfd.zip/node_modules/@types/pupa/",\
-          "packageDependencies": [\
-            ["@types/pupa", "npm:2.0.0"],\
-            ["pupa", "npm:3.1.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -13891,13 +13880,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/escape-goat-npm-2.1.1-2e437cf3fe-ce05c70c20.zip/node_modules/escape-goat/",\
           "packageDependencies": [\
             ["escape-goat", "npm:2.1.1"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:4.0.0", {\
-          "packageLocation": "./.yarn/cache/escape-goat-npm-4.0.0-31eb65b6cc-7034e0025e.zip/node_modules/escape-goat/",\
-          "packageDependencies": [\
-            ["escape-goat", "npm:4.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -21086,14 +21068,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["pupa", "npm:2.1.1"],\
             ["escape-goat", "npm:2.1.1"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:3.1.0", {\
-          "packageLocation": "./.yarn/cache/pupa-npm-3.1.0-8d0c9815fb-0e4f4ab6bb.zip/node_modules/pupa/",\
-          "packageDependencies": [\
-            ["pupa", "npm:3.1.0"],\
-            ["escape-goat", "npm:4.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\
