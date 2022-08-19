@@ -2820,7 +2820,6 @@ __metadata:
     "@types/js-yaml": ^4.0.5
     "@types/latest-version": ^4.0.1
     "@types/node": ^18.7.6
-    "@types/pupa": ^2.0.0
     "@types/semver-diff": ^3.0.0
     "@types/yargs": ^17.0.10
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
@@ -2837,7 +2836,6 @@ __metadata:
     js-yaml: ^4.1.0
     latest-version: ^7.0.0
     prettier: ^2.7.1
-    pupa: ^3.1.0
     semver-diff: ^4.0.0
     typescript: 4.6.4
     yargs: ^17.4.1
@@ -5046,15 +5044,6 @@ __metadata:
   version: 15.7.5
   resolution: "@types/prop-types@npm:15.7.5"
   checksum: 5b43b8b15415e1f298243165f1d44390403bb2bd42e662bca3b5b5633fdd39c938e91b7fce3a9483699db0f7a715d08cef220c121f723a634972fdf596aec980
-  languageName: node
-  linkType: hard
-
-"@types/pupa@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "@types/pupa@npm:2.0.0"
-  dependencies:
-    pupa: "*"
-  checksum: 3b38f9ebfd848213570a31cec2d8df061d601482eb6f5207525a9838154cbcb4cc895fa283f6c8acb998bec768f222fc982d9fe9f9bf85b44fe6bd5ea08220b7
   languageName: node
   linkType: hard
 
@@ -8883,13 +8872,6 @@ env-cmd@toddbluhm/env-cmd:
   version: 2.1.1
   resolution: "escape-goat@npm:2.1.1"
   checksum: ce05c70c20dd7007b60d2d644b625da5412325fdb57acf671ba06cb2ab3cd6789e2087026921a05b665b0a03fadee2955e7fc0b9a67da15a6551a980b260eba7
-  languageName: node
-  linkType: hard
-
-"escape-goat@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "escape-goat@npm:4.0.0"
-  checksum: 7034e0025eec7b751074b837f10312c5b768493265bdad046347c0aadbc1e652776f7e5df94766473fecb5d3681169cc188fe9ccc1e22be53318c18be1671cc0
   languageName: node
   linkType: hard
 
@@ -14381,15 +14363,6 @@ env-cmd@toddbluhm/env-cmd:
   version: 2.1.1
   resolution: "punycode@npm:2.1.1"
   checksum: 823bf443c6dd14f669984dea25757b37993f67e8d94698996064035edd43bed8a5a17a9f12e439c2b35df1078c6bec05a6c86e336209eb1061e8025c481168e8
-  languageName: node
-  linkType: hard
-
-"pupa@npm:*, pupa@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "pupa@npm:3.1.0"
-  dependencies:
-    escape-goat: ^4.0.0
-  checksum: 0e4f4ab6bbdce600fa6d23b1833f1af57b2641246ff4cbe10f9d66e4e5479b0de2864a88d5bd629eef59524eda3c6680726acd7f3f873d9ed46b7f095d0bb5f6
   languageName: node
   linkType: hard
 
