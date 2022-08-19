@@ -58,14 +58,16 @@ function maybeFilterWorkspaces({
 }): Workspace[] {
     if (commandLineWorkspace == null) {
         if (allWorkspaces.length > 1) {
-            let message = `There are multiple workspaces. You must specify one with ${chalk.bold("--api")}\n`;
+            let message = chalk.red("There are multiple workspaces. You must specify one with --api:\n");
             const longestWorkspaceName = Math.max(...allWorkspaces.map((workspace) => workspace.name.length));
-            message += allWorkspaces.map((workspace) => {
-                const suggestedCommand = `${process.argv.slice(0, 2).join(" ")} --api ${workspace.name} ${process.argv
-                    .slice(2)
-                    .join(" ")}`;
-                return `${chalk.bold(workspace.name.padEnd(longestWorkspaceName))}  ${chalk.dim(suggestedCommand)}`;
-            });
+            message += allWorkspaces
+                .map((workspace) => {
+                    const suggestedCommand = `fern --api ${workspace.name} ${process.argv.slice(2).join(" ")}`;
+                    return ` › ${chalk.bold(workspace.name.padEnd(longestWorkspaceName))}  ${chalk.dim(
+                        suggestedCommand
+                    )}`;
+                })
+                .join("\n");
             console.log(message);
             throw new Error("There are multiple workspaces. You must specify one with --api");
         }
