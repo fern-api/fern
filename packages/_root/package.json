@@ -27,7 +27,6 @@
   },
   "dependencies": {
     "@fern-api/cli": "workspace:*",
-    "@fern-api/cli-context": "workspace:*",
     "@fern-api/config-management-commons": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/docker-utils": "workspace:*",
@@ -45,6 +44,7 @@
     "@fern-api/project-configuration": "workspace:*",
     "@fern-api/remote-workspace-runner": "workspace:*",
     "@fern-api/scripts": "workspace:*",
+    "@fern-api/task-context": "workspace:*",
     "@fern-api/validator": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",

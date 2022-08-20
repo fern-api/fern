@@ -1,6 +1,6 @@
 import boxen from "boxen";
 import chalk from "chalk";
-import { CliEnvironment } from "../readCliEnvironment";
+import { CliEnvironment } from "../CliEnvironment";
 import { isFernCliUpgradeAvailable } from "./isFernCliUpgradeAvailable";
 
 export async function getFernCliUpgradeMessage(cliEnvironment: CliEnvironment): Promise<string | undefined> {

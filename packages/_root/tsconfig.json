@@ -4,7 +4,6 @@
   "include": ["./src"],
   "references": [
     { "path": "../cli/cli" },
-    { "path": "../cli/cli-context" },
     { "path": "../cli/config-management/commons" },
     { "path": "../cli/config-management/generators-configuration" },
     { "path": "../cli/config-management/manage-generator" },
@@ -16,6 +15,7 @@
     { "path": "../cli/generation/remote-generation/remote-workspace-runner" },
     { "path": "../cli/init" },
     { "path": "../cli/login" },
+    { "path": "../cli/task-context" },
     { "path": "../cli/workspace-loader" },
     { "path": "../cli/yaml/json-schema" },
     { "path": "../cli/yaml/validator" },

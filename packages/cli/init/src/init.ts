@@ -10,10 +10,10 @@ import { createWorkspace } from "./createWorkspace";
 
 export async function initialize({
     organization,
-    latestVersionOfCli,
+    versionOfCli,
 }: {
     organization: string;
-    latestVersionOfCli: string;
+    versionOfCli: string;
 }): Promise<void> {
     const existingFernDirectory = await getFernDirectory();
     if (existingFernDirectory != null) {
@@ -25,7 +25,7 @@ export async function initialize({
     await writeProjectConfig({
         filepath: join(fernDirectory, RelativeFilePath.of(PROJECT_CONFIG_FILENAME)),
         organization,
-        latestVersionOfCli,
+        versionOfCli,
     });
     await createWorkspace({
         directoryOfWorkspace: join(fernDirectory, RelativeFilePath.of("api")),
@@ -35,15 +35,15 @@ export async function initialize({
 async function writeProjectConfig({
     organization,
     filepath,
-    latestVersionOfCli,
+    versionOfCli,
 }: {
     organization: string;
     filepath: AbsoluteFilePath;
-    latestVersionOfCli: string;
+    versionOfCli: string;
 }): Promise<void> {
     const projectConfig: ProjectConfigSchema = {
         organization,
-        version: latestVersionOfCli,
+        version: versionOfCli,
     };
     await writeFile(filepath, JSON.stringify(projectConfig, undefined, 4));
 }

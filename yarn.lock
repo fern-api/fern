@@ -2794,23 +2794,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/cli-context@workspace:*, @fern-api/cli-context@workspace:packages/cli/cli-context":
-  version: 0.0.0-use.local
-  resolution: "@fern-api/cli-context@workspace:packages/cli/cli-context"
-  dependencies:
-    "@babel/core": ^7.18.10
-    "@babel/preset-env": ^7.18.10
-    "@babel/preset-typescript": ^7.18.6
-    "@types/jest": ^28.1.7
-    "@types/node": ^18.7.7
-    depcheck: ^1.4.3
-    eslint: ^8.22.0
-    jest: ^28.1.3
-    prettier: ^2.7.1
-    typescript: 4.6.4
-  languageName: unknown
-  linkType: soft
-
 "@fern-api/cli@workspace:*, @fern-api/cli@workspace:packages/cli/cli":
   version: 0.0.0-use.local
   resolution: "@fern-api/cli@workspace:packages/cli/cli"
@@ -2828,6 +2811,7 @@ __metadata:
     "@fern-api/openapi-converter": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/remote-workspace-runner": "workspace:*"
+    "@fern-api/task-context": "workspace:*"
     "@fern-api/validator": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/ir-model": 0.0.46
@@ -2840,6 +2824,7 @@ __metadata:
     "@types/semver-diff": ^3.0.0
     "@types/yargs": ^17.0.10
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
+    ansi-escapes: ^5.0.0
     boxen: ^7.0.0
     chalk: ^5.0.1
     depcheck: ^1.4.3
@@ -2852,6 +2837,7 @@ __metadata:
     jest: ^28.1.3
     js-yaml: ^4.1.0
     latest-version: ^7.0.0
+    ora: ^6.1.2
     prettier: ^2.7.1
     semver-diff: ^4.0.0
     typescript: 4.6.4
@@ -2871,7 +2857,6 @@ __metadata:
     "@babel/preset-env": ^7.18.10
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/cli": "workspace:*"
-    "@fern-api/cli-context": "workspace:*"
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/docker-utils": "workspace:*"
@@ -2889,6 +2874,7 @@ __metadata:
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/remote-workspace-runner": "workspace:*"
     "@fern-api/scripts": "workspace:*"
+    "@fern-api/task-context": "workspace:*"
     "@fern-api/validator": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
@@ -3283,6 +3269,23 @@ __metadata:
     yargs: ^17.4.1
   bin:
     fern-scripts: ./dist/bundle.cjs
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/task-context@workspace:*, @fern-api/task-context@workspace:packages/cli/task-context":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/task-context@workspace:packages/cli/task-context"
+  dependencies:
+    "@babel/core": ^7.18.10
+    "@babel/preset-env": ^7.18.10
+    "@babel/preset-typescript": ^7.18.6
+    "@types/jest": ^28.1.7
+    "@types/node": ^18.7.7
+    depcheck: ^1.4.3
+    eslint: ^8.22.0
+    jest: ^28.1.3
+    prettier: ^2.7.1
+    typescript: 4.6.4
   languageName: unknown
   linkType: soft
 
