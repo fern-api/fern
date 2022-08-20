@@ -55,8 +55,8 @@ export class CliContext {
     }
 
     private longestWorkspaceNameLength = 0;
-    public registerWorkspaceNames(workspaceNames: readonly string[]): void {
-        this.longestWorkspaceNameLength = Math.max(...workspaceNames.map((name) => name.length));
+    public registerWorkspaces(workspaces: readonly Workspace[]): void {
+        this.longestWorkspaceNameLength = Math.max(...workspaces.map((workspace) => workspace.name.length));
     }
 
     public async runTaskForWorkspace(

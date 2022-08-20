@@ -51,7 +51,7 @@ export async function loadProject({
         await cliContext.failAndExit();
     }
 
-    cliContext.registerWorkspaceNames(allWorkspaces.map((workspace) => workspace.name));
+    cliContext.registerWorkspaces(allWorkspaces);
     const filteredWorkspaces = await maybeFilterWorkspaces({
         allWorkspaces,
         commandLineWorkspace,
