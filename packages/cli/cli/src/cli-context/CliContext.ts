@@ -35,6 +35,7 @@ export class CliContext {
                 console.log(upgradeMessage);
             }
         }
+        this.interactiveTasks.finish();
         process.exit(this.didSucceed ? 0 : 1);
     }
 

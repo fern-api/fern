@@ -22,12 +22,12 @@ export class InteractiveTasks {
         this.tasks.push(task);
     }
 
-    public repaint(): void {
-        this.stream.write(this.clear() + this.paint());
-    }
-
     public prependAndRepaint(content: string): void {
         this.stream.write(this.clear() + content + "\n" + this.lastPaint);
+    }
+
+    private repaint(): void {
+        this.stream.write(this.clear() + this.paint());
     }
 
     private clear(): string {
