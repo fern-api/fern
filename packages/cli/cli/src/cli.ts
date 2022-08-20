@@ -17,10 +17,6 @@ import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 
 void runCli();
 
-interface GlobalCliOptions {
-    api: string | undefined;
-}
-
 async function runCli() {
     const cliContext = new CliContext();
 
@@ -37,17 +33,13 @@ async function runCli() {
         return;
     }
 
-    const cli: Argv<GlobalCliOptions> = yargs(hideBin(process.argv))
+    const cli = yargs(hideBin(process.argv))
         .scriptName(cliContext.environment.cliName)
         .version(cliContext.environment.packageVersion)
         .strict()
         .alias("v", "version")
         .demandCommand()
-        .recommendCommands()
-        .option("api", {
-            string: true,
-            description: "Only run the command on the provided API",
-        });
+        .recommendCommands();
 
     addInitCommand(cli, cliContext);
     addAddCommand(cli);
@@ -67,7 +59,7 @@ async function runCli() {
     await cliContext.exit();
 }
 
-function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+function addInitCommand(cli: Argv, cliContext: CliContext) {
     cli.command(
         "init",
         "Initialize a Fern API",
@@ -97,22 +89,33 @@ async function askForOrganization() {
     return answers.organization;
 }
 
-function addAddCommand(cli: Argv<GlobalCliOptions>) {
+function addAddCommand(cli: Argv) {
     cli.command(
         "add <generator>",
         "Add a generator to .fernrc.yml",
         (yargs) =>
-            yargs.positional("generator", {
-                choices: ["typescript", "java", "postman", "openapi"] as const,
-                demandOption: true,
-            }),
+            yargs
+                .positional("generator", {
+                    choices: ["typescript", "java", "postman", "openapi"] as const,
+                    demandOption: true,
+                })
+                .option("api", {
+                    string: true,
+                    description: "Only run the command on the provided API",
+                }),
         async (argv) => {
-            await addGeneratorToWorkspaces(await loadProject({ commandLineWorkspace: argv.api }), argv.generator);
+            await addGeneratorToWorkspaces(
+                await loadProject({
+                    commandLineWorkspace: argv.api,
+                    defaultToAllWorkspaces: false,
+                }),
+                argv.generator
+            );
         }
     );
 }
 
-function addGenerateCommand(cli: Argv<GlobalCliOptions>) {
+function addGenerateCommand(cli: Argv) {
     cli.command(
         ["generate"],
         "Generate typesafe servers and clients",
@@ -128,10 +131,22 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>) {
                     boolean: true,
                     default: false,
                     description: "If true, code is generated using Docker on this machine.",
+                })
+                .option("api", {
+                    string: true,
+                    description: "Only run the command on the provided API",
+                })
+                .option("all", {
+                    boolean: true,
+                    default: false,
+                    descriptoin: "Include all APIs",
                 }),
         async (argv) => {
             await generateWorkspaces({
-                project: await loadProject({ commandLineWorkspace: argv.api }),
+                project: await loadProject({
+                    commandLineWorkspace: argv.all ? undefined : argv.api,
+                    defaultToAllWorkspaces: argv.all,
+                }),
                 runLocal: argv.local,
                 keepDocker: argv.keepDocker,
             });
@@ -139,46 +154,60 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>) {
     );
 }
 
-function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+function addIrCommand(cli: Argv, cliContext: CliContext) {
     cli.command(
         "ir",
         "Compiles your Fern API Definition",
         (yargs) =>
-            yargs.option("output", {
-                type: "string",
-                description: "Path to write intermediate representation (IR)",
-                demandOption: true,
-            }),
+            yargs
+                .option("output", {
+                    type: "string",
+                    description: "Path to write intermediate representation (IR)",
+                    demandOption: true,
+                })
+                .option("api", {
+                    string: true,
+                    description: "Only run the command on the provided API",
+                }),
         async (argv) =>
             generateIrForWorkspaces({
-                project: await loadProject({ commandLineWorkspace: argv.api }),
+                project: await loadProject({
+                    commandLineWorkspace: argv.api,
+                    defaultToAllWorkspaces: false,
+                }),
                 irFilepath: resolve(cwd(), FilePath.of(argv.output)),
                 cliContext,
             })
     );
 }
 
-function addValidateCommand(cli: Argv<GlobalCliOptions>) {
-    cli.command("check", "Validates your Fern API Definition", noop, async (argv) =>
-        validateWorkspaces({
-            project: await loadProject({ commandLineWorkspace: argv.api }),
-        })
+function addValidateCommand(cli: Argv) {
+    cli.command(
+        "check",
+        "Validates your Fern API Definition",
+        (yargs) =>
+            yargs.option("api", {
+                string: true,
+                description: "Only run the command on the provided API",
+            }),
+        async (argv) =>
+            validateWorkspaces({
+                project: await loadProject({
+                    commandLineWorkspace: argv.api,
+                    defaultToAllWorkspaces: true,
+                }),
+            })
     );
 }
 
-function addUpgradeCommand({
-    cli,
-    cliContext,
-    onRun,
-}: {
-    cli: Argv<GlobalCliOptions>;
-    cliContext: CliContext;
-    onRun: () => void;
-}) {
-    cli.command("upgrade", "Upgrades generator versions in your workspace", noop, async (argv) => {
+function addUpgradeCommand({ cli, cliContext, onRun }: { cli: Argv; cliContext: CliContext; onRun: () => void }) {
+    cli.command("upgrade", "Upgrades generator versions in your workspace", noop, async () => {
         await upgrade({
             cliContext,
-            project: await loadProject({ commandLineWorkspace: argv.api }),
+            project: await loadProject({
+                commandLineWorkspace: undefined,
+                defaultToAllWorkspaces: true,
+            }),
         });
         onRun();
     });
