@@ -45,13 +45,13 @@ export async function loadProject({
         allWorkspaceDirectoryNames,
         cliContext,
     });
+    cliContext.registerWorkspaces(allWorkspaces);
 
     if (allWorkspaces.length === 0) {
         cliContext.logger.error(chalk.red("No APIs found."));
         await cliContext.failAndExit();
     }
 
-    cliContext.registerWorkspaces(allWorkspaces);
     const filteredWorkspaces = await maybeFilterWorkspaces({
         allWorkspaces,
         commandLineWorkspace,
