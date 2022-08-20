@@ -2807,6 +2807,7 @@ __metadata:
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/local-workspace-runner": "workspace:*"
     "@fern-api/manage-generator": "workspace:*"
+    "@fern-api/openapi-converter": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/remote-workspace-runner": "workspace:*"
     "@fern-api/task-context": "workspace:*"
