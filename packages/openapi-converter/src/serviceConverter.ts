@@ -167,18 +167,18 @@ function convertToFernParameter(parameter: OpenAPIV3.ParameterObject): string {
 }
 
 function convertSchemaToFernParameter(schemaObject: OpenAPIV3.SchemaObject, parameterName: string): string {
-    if (schemaObject.type == undefined) {
+    if (schemaObject.type === undefined) {
         throw new Error("Expected parameter schemas to have type. Parameter=" + parameterName);
     }
     if (schemaObject.type === "array") {
         throw new Error("List parameters are unsupported. Parameter=" + parameterName);
-    } else if (schemaObject.type == "boolean") {
+    } else if (schemaObject.type === "boolean") {
         return "boolean";
-    } else if (schemaObject.type == "integer") {
+    } else if (schemaObject.type === "integer") {
         return "integer";
-    } else if (schemaObject.type == "number") {
+    } else if (schemaObject.type === "number") {
         return "double";
-    } else if (schemaObject.type == "string") {
+    } else if (schemaObject.type === "string") {
         return "string";
     }
     throw new Error("Failed to convert parameter. Parameter=" + parameterName);

@@ -1,20 +1,14 @@
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
 import produce from "immer";
+import { CliContext } from "../../cli-context/CliContext";
+import { isFernCliUpgradeAvailable } from "../../cli-context/upgrade-utils/isFernCliUpgradeAvailable";
 import { Project } from "../../loadProject";
-import { CliEnvironment } from "../../readCliEnvironment";
 import { rerunFernCliAtVersion } from "../../rerunFernCliAtVersion";
-import { isFernCliUpgradeAvailable } from "../../upgrade-utils/isFernCliUpgradeAvailable";
 import { upgradeGeneratorsInWorkspaces } from "./upgradeGeneratorsInWorkspaces";
 
-export async function upgrade({
-    project,
-    cliEnvironment,
-}: {
-    project: Project;
-    cliEnvironment: CliEnvironment;
-}): Promise<void> {
-    const fernCliUpgradeInfo = await isFernCliUpgradeAvailable(cliEnvironment);
+export async function upgrade({ project, cliContext }: { project: Project; cliContext: CliContext }): Promise<void> {
+    const fernCliUpgradeInfo = await isFernCliUpgradeAvailable(cliContext.environment);
     if (!fernCliUpgradeInfo.upgradeAvailable) {
         await upgradeGeneratorsInWorkspaces(project);
     } else {
@@ -30,7 +24,7 @@ export async function upgrade({
         console.log(message);
         await rerunFernCliAtVersion({
             version: fernCliUpgradeInfo.latestVersion,
-            cliEnvironment,
+            cliEnvironment: cliContext.environment,
         });
     }
 }

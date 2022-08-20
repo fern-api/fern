@@ -60,12 +60,12 @@ const config = {
                         position: "left",
                         label: "Docs",
                     },
-                    {
-                        docId: "intro",
-                        position: "left",
-                        label: "Pricing",
-                        to: "/pricing",
-                    },
+                    // {
+                    //     docId: "intro",
+                    //     position: "left",
+                    //     label: "Pricing",
+                    //     to: "/pricing",
+                    // },
                     {
                         to: "https://discord.gg/JkkXumPzcG",
                         label: "Discord",

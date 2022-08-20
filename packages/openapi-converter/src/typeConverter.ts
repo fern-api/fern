@@ -33,15 +33,15 @@ export function convertToFernType(typeName: string, schemaObject: OpenAPIV3.Sche
         conversionResult.typeDeclarations[typeName] = {
             enum: schemaObject.enum.filter((value) => typeof value === "string"),
         };
-    } else if (schemaObject.type == "boolean") {
+    } else if (schemaObject.type === "boolean") {
         conversionResult.typeDeclarations[typeName] = "boolean";
-    } else if (schemaObject.type == "integer") {
+    } else if (schemaObject.type === "integer") {
         conversionResult.typeDeclarations[typeName] = "integer";
-    } else if (schemaObject.type == "number") {
+    } else if (schemaObject.type === "number") {
         conversionResult.typeDeclarations[typeName] = "double";
-    } else if (schemaObject.type == "string") {
+    } else if (schemaObject.type === "string") {
         conversionResult.typeDeclarations[typeName] = "string";
-    } else if (schemaObject.type == "object" || schemaObject.properties != null) {
+    } else if (schemaObject.type === "object" || schemaObject.properties != null) {
         const requiredProperties = new Set();
         if (schemaObject.required != null) {
             schemaObject.required.forEach((requiredProperty) => requiredProperties.add(requiredProperty));
@@ -118,13 +118,13 @@ function convertToFernTypeNested(
                     },
                 };
             }
-        } else if (schemaObject.type == "boolean") {
+        } else if (schemaObject.type === "boolean") {
             return { convertedTypeName: "boolean" };
-        } else if (schemaObject.type == "integer") {
+        } else if (schemaObject.type === "integer") {
             return { convertedTypeName: "integer" };
-        } else if (schemaObject.type == "number") {
+        } else if (schemaObject.type === "number") {
             return { convertedTypeName: "double" };
-        } else if (schemaObject.type == "string") {
+        } else if (schemaObject.type === "string") {
             return { convertedTypeName: "string" };
         }
     }
