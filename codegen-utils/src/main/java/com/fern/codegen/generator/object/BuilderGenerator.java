@@ -52,10 +52,14 @@ public final class BuilderGenerator {
     private final ClassName nestedBuilderClassName;
     private final List<EnrichedObjectProperty> objectPropertyWithFields;
 
-    public BuilderGenerator(ClassName objectClassName, List<EnrichedObjectProperty> objectPropertyWithFields) {
+    private final boolean isSerialized;
+
+    public BuilderGenerator(
+            ClassName objectClassName, List<EnrichedObjectProperty> objectPropertyWithFields, boolean isSerialized) {
         this.objectClassName = objectClassName;
         this.objectPropertyWithFields = objectPropertyWithFields;
         this.nestedBuilderClassName = objectClassName.nestedClass(NESTED_BUILDER_CLASS_NAME);
+        this.isSerialized = isSerialized;
     }
 
     public Optional<ObjectBuilder> generate() {
@@ -94,12 +98,14 @@ public final class BuilderGenerator {
     private List<PoetTypeWithClassName> getStagedBuilderImplementation(StagedBuilderConfig stagedBuilderConfig) {
         TypeSpec.Builder builderImplTypeSpec = TypeSpec.classBuilder(nestedBuilderClassName)
                 .addModifiers(Modifier.STATIC, Modifier.FINAL)
-                .addAnnotation(AnnotationSpec.builder(JsonIgnoreProperties.class)
-                        .addMember("ignoreUnknown", "true")
-                        .build())
                 .addMethod(MethodSpec.constructorBuilder()
                         .addModifiers(Modifier.PRIVATE)
                         .build());
+        if (isSerialized) {
+            builderImplTypeSpec.addAnnotation(AnnotationSpec.builder(JsonIgnoreProperties.class)
+                    .addMember("ignoreUnknown", "true")
+                    .build());
+        }
         ImmutableBuilderImplBuilder.Builder builderImpl = ImmutableBuilderImplBuilder.builder();
 
         List<PoetTypeWithClassName> interfaces = buildStagedBuilder(stagedBuilderConfig, builderImpl);
@@ -118,12 +124,15 @@ public final class BuilderGenerator {
     private PoetTypeWithClassName getDefaultBuilderImplementation(DefaultBuilderConfig defaultBuilderConfig) {
         TypeSpec.Builder builderImplTypeSpec = TypeSpec.classBuilder(nestedBuilderClassName)
                 .addModifiers(Modifier.STATIC, Modifier.FINAL)
-                .addAnnotation(AnnotationSpec.builder(JsonIgnoreProperties.class)
-                        .addMember("ignoreUnknown", "true")
-                        .build())
                 .addMethod(MethodSpec.constructorBuilder()
                         .addModifiers(Modifier.PRIVATE)
                         .build());
+
+        if (isSerialized) {
+            builderImplTypeSpec.addAnnotation(AnnotationSpec.builder(JsonIgnoreProperties.class)
+                    .addMember("ignoreUnknown", "true")
+                    .build());
+        }
 
         MethodSpec.Builder fromSetterImpl = getFromSetter();
         objectPropertyWithFields.forEach(objectProperty -> {
@@ -191,17 +200,8 @@ public final class BuilderGenerator {
                             enrichedObjectProperty.fieldSpec().name,
                             Modifier.PRIVATE)
                     .build());
-            builderImpl.addReversedMethods(getRequiredFieldSetter(enrichedObjectProperty, previousStage.className())
-                    .addAnnotation(Override.class)
-                    .addAnnotation(AnnotationSpec.builder(JsonSetter.class)
-                            .addMember("value", "$S", enrichedObjectProperty.wireKey())
-                            .build())
-                    .addStatement(
-                            "this.$L = $L",
-                            enrichedObjectProperty.fieldSpec().name,
-                            enrichedObjectProperty.fieldSpec().name)
-                    .addStatement("return this")
-                    .build());
+            builderImpl.addReversedMethods(
+                    getRequiredFieldSetterWithImpl(enrichedObjectProperty, previousStage.className()));
 
             if (i == 0) {
                 stageInterfaceBuilder.addMethod(
@@ -224,6 +224,23 @@ public final class BuilderGenerator {
                     PoetTypeWithClassName.of(stageInterfaceClassName, stageInterfaceBuilder.build()));
         }
         return reverse(reverseStageInterfaces);
+    }
+
+    private MethodSpec getRequiredFieldSetterWithImpl(
+            EnrichedObjectProperty enrichedObjectProperty, ClassName returnClass) {
+        MethodSpec.Builder methodBuilder = getRequiredFieldSetter(enrichedObjectProperty, returnClass)
+                .addAnnotation(Override.class)
+                .addStatement(
+                        "this.$L = $L",
+                        enrichedObjectProperty.fieldSpec().name,
+                        enrichedObjectProperty.fieldSpec().name)
+                .addStatement("return this");
+        if (enrichedObjectProperty.wireKey().isPresent()) {
+            methodBuilder.addAnnotation(AnnotationSpec.builder(JsonSetter.class)
+                    .addMember("value", "$S", enrichedObjectProperty.wireKey().get())
+                    .build());
+        }
+        return methodBuilder.build();
     }
 
     private MethodSpec.Builder getRequiredFieldSetter(
@@ -289,13 +306,26 @@ public final class BuilderGenerator {
                 .returns(objectClassName);
     }
 
+    private MethodSpec.Builder getDefaultSetterForImpl(
+            EnrichedObjectProperty enrichedObjectProperty, ClassName returnClass) {
+        MethodSpec.Builder methodBuilder =
+                getDefaultSetter(enrichedObjectProperty, returnClass).addAnnotation(Override.class);
+        if (enrichedObjectProperty.wireKey().isPresent()) {
+            methodBuilder.addAnnotation(AnnotationSpec.builder(JsonSetter.class)
+                    .addMember("value", "$S", enrichedObjectProperty.wireKey().get())
+                    .addMember("nulls", "$T.$L", Nulls.class, Nulls.SKIP.name())
+                    .build());
+        }
+        return methodBuilder;
+    }
+
     private MethodSpec.Builder getDefaultSetter(EnrichedObjectProperty enrichedProperty, ClassName returnClass) {
         TypeName poetTypeName = enrichedProperty.poetTypeName();
         FieldSpec fieldSpec = enrichedProperty.fieldSpec();
         return MethodSpec.methodBuilder(fieldSpec.name)
                 .addParameter(
                         ParameterSpec.builder(poetTypeName, fieldSpec.name).build())
-                .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+                .addModifiers(Modifier.PUBLIC)
                 .returns(returnClass);
     }
 
@@ -312,12 +342,8 @@ public final class BuilderGenerator {
         interfaceSetterConsumer.accept(getDefaultSetter(enrichedObjectProperty, finalStageClassName)
                 .addModifiers(Modifier.ABSTRACT)
                 .build());
-        MethodSpec.Builder defaultMethodImplBuilder = getDefaultSetter(enrichedObjectProperty, finalStageClassName)
-                .addAnnotation(Override.class)
-                .addAnnotation(AnnotationSpec.builder(JsonSetter.class)
-                        .addMember("value", "$S", fieldSpec.name)
-                        .addMember("nulls", "$T.$L", Nulls.class, Nulls.SKIP.name())
-                        .build());
+        MethodSpec.Builder defaultMethodImplBuilder =
+                getDefaultSetterForImpl(enrichedObjectProperty, finalStageClassName);
 
         if (isEqual(propertyTypeName, ClassName.get(Optional.class))) {
             interfaceSetterConsumer.accept(

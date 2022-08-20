@@ -43,7 +43,7 @@ public final class GeneratorContext {
             ApiAuth apiAuth,
             FernConstants fernConstants) {
         this.classNameUtils = new ClassNameUtils(packagePrefix);
-        this.immutablesUtils = new ImmutablesUtils(classNameUtils);
+        this.immutablesUtils = new ImmutablesUtils();
         this.visitorUtils = new VisitorUtils();
         this.typeDefinitionsByName = typeDefinitionsByName;
         this.errorDefinitionsByName = errorDefinitionsByName;

@@ -37,17 +37,31 @@ public final class GenericObjectGenerator {
     private final ClassName objectClassName;
     private final List<EnrichedObjectProperty> allEnrichedProperties = new ArrayList<>();
     private final List<ImplementsInterface> interfaces;
+    private final boolean isSerialized;
+    private final Optional<ClassName> enclosingClass;
 
     public GenericObjectGenerator(
             ClassName objectClassName,
             List<EnrichedObjectProperty> enrichedObjectProperties,
-            List<ImplementsInterface> interfaces) {
+            List<ImplementsInterface> interfaces,
+            boolean isSerialized,
+            Optional<ClassName> enclosingClass) {
         this.objectClassName = objectClassName;
         this.interfaces = interfaces;
         for (ImplementsInterface implementsInterface : interfaces) {
             allEnrichedProperties.addAll(implementsInterface.interfaceProperties());
         }
         allEnrichedProperties.addAll(enrichedObjectProperties);
+        this.isSerialized = isSerialized;
+        this.enclosingClass = enclosingClass;
+    }
+
+    public GenericObjectGenerator(
+            ClassName objectClassName,
+            List<EnrichedObjectProperty> enrichedObjectProperties,
+            List<ImplementsInterface> interfaces,
+            boolean isSerialized) {
+        this(objectClassName, enrichedObjectProperties, interfaces, isSerialized, Optional.empty());
     }
 
     public TypeSpec generate() {
@@ -76,9 +90,14 @@ public final class GenericObjectGenerator {
             typeSpecBuilder.addTypes(objectBuilder.getGeneratedTypes().stream()
                     .map(PoetTypeWithClassName::typeSpec)
                     .collect(Collectors.toList()));
-            typeSpecBuilder.addAnnotation(AnnotationSpec.builder(JsonDeserialize.class)
-                    .addMember("builder", "$T.class", objectBuilder.getBuilderImplClassName())
-                    .build());
+            if (isSerialized) {
+                typeSpecBuilder.addAnnotation(AnnotationSpec.builder(JsonDeserialize.class)
+                        .addMember("builder", "$T.class", objectBuilder.getBuilderImplClassName())
+                        .build());
+            }
+        }
+        if (enclosingClass.isPresent()) {
+            typeSpecBuilder.addModifiers(Modifier.STATIC);
         }
         return typeSpecBuilder.build();
     }
@@ -158,7 +177,13 @@ public final class GenericObjectGenerator {
     }
 
     private MethodSpec generateToString() {
-        StringBuilder codeBlock = new StringBuilder("\"" + objectClassName.simpleName() + "{\"");
+        StringBuilder codeBlock;
+        if (enclosingClass.isPresent()) {
+            codeBlock = new StringBuilder(
+                    "\"" + enclosingClass.get().simpleName() + "." + objectClassName.simpleName() + "{\"");
+        } else {
+            codeBlock = new StringBuilder("\"" + objectClassName.simpleName() + "{\"");
+        }
         for (int i = 0; i < allEnrichedProperties.size(); ++i) {
             FieldSpec fieldSpec = allEnrichedProperties.get(i).fieldSpec();
             if (i == 0) {
@@ -185,7 +210,7 @@ public final class GenericObjectGenerator {
     }
 
     private Optional<ObjectBuilder> generateBuilder() {
-        BuilderGenerator builderGenerator = new BuilderGenerator(objectClassName, allEnrichedProperties);
+        BuilderGenerator builderGenerator = new BuilderGenerator(objectClassName, allEnrichedProperties, isSerialized);
         return builderGenerator.generate();
     }
 

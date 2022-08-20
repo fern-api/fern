@@ -26,15 +26,15 @@ import com.fern.codegen.GeneratedHttpServiceInterface;
 import com.fern.codegen.Generator;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.generator.auth.AnyAuthGenerator;
+import com.fern.codegen.generator.object.EnrichedObjectProperty;
+import com.fern.codegen.generator.object.GenericObjectGenerator;
 import com.fern.codegen.utils.AuthSchemeUtils;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
-import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.types.AuthSchemesRequirement;
 import com.fern.types.DeclaredErrorName;
 import com.fern.types.services.HttpEndpoint;
 import com.fern.types.services.HttpEndpointId;
 import com.fern.types.services.HttpService;
-import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
@@ -50,11 +50,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
-import org.immutables.value.Value;
+import org.apache.commons.lang3.StringUtils;
 
 public final class HttpServiceClientGenerator extends Generator {
-
-    private static final String STATIC_BUILDER_METHOD_NAME = "builder";
     private static final String SERVICE_FIELD_NAME = "service";
     private static final String AUTH_FIELD_NAME = "auth";
     private static final String CLIENT_SUFFIX = "Client";
@@ -253,19 +251,21 @@ public final class HttpServiceClientGenerator extends Generator {
                     i
                             < generatedEndpointFile
                                     .generatedRequestInfo()
-                                    .propertyMethodSpecs()
+                                    .enrichedObjectProperty()
                                     .size();
                     ++i) {
                 MethodSpec propertyMethodSpec = generatedEndpointFile
                         .generatedRequestInfo()
-                        .propertyMethodSpecs()
-                        .get(i);
+                        .enrichedObjectProperty()
+                        .get(i)
+                        .getterProperty();
                 argTokens.add(REQUEST_PARAMETER_NAME + "." + propertyMethodSpec.name + "()");
             }
             args = argTokens.stream().collect(Collectors.joining(", "));
         } else {
-            args = generatedEndpointFile.generatedRequestInfo().propertyMethodSpecs().stream()
-                    .map(requestMethodSpec -> REQUEST_PARAMETER_NAME + "." + requestMethodSpec.name + "()")
+            args = generatedEndpointFile.generatedRequestInfo().enrichedObjectProperty().stream()
+                    .map(enrichedObjectProperty ->
+                            REQUEST_PARAMETER_NAME + "." + enrichedObjectProperty.getterProperty().name + "()")
                     .collect(Collectors.joining(", "));
         }
         String codeBlockFormat = "this.$L.$L(" + args + ")";
@@ -281,16 +281,12 @@ public final class HttpServiceClientGenerator extends Generator {
         ClassName endpointClassName = generatorContext
                 .getClassNameUtils()
                 .getClassNameFromEndpointId(httpService.name(), httpEndpoint.id(), PackageType.CLIENT);
-        ClassName immutablesEndpointClassName =
-                generatorContext.getImmutablesUtils().getImmutablesClassName(endpointClassName);
         TypeSpec.Builder endpointTypeSpecBuilder = TypeSpec.classBuilder(endpointClassName)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                .addAnnotation(AnnotationSpec.builder(Value.Enclosing.class).build())
                 .addMethod(MethodSpec.constructorBuilder()
                         .addModifiers(Modifier.PRIVATE)
                         .build());
-        GeneratedRequestInfo generatedRequestInfo =
-                generateRequestType(httpEndpoint, endpointClassName, immutablesEndpointClassName);
+        GeneratedRequestInfo generatedRequestInfo = generateRequestType(httpEndpoint, endpointClassName);
         endpointTypeSpecBuilder.addType(generatedRequestInfo.requestTypeSpec());
         TypeSpec endpointTypeSpec = endpointTypeSpecBuilder.build();
         JavaFile endpointJavaFile = JavaFile.builder(endpointClassName.packageName(), endpointTypeSpec)
@@ -302,39 +298,36 @@ public final class HttpServiceClientGenerator extends Generator {
                 .build();
     }
 
-    private GeneratedRequestInfo generateRequestType(
-            HttpEndpoint httpEndpoint, ClassName endpointClassName, ClassName immutablesEndpointClassName) {
-        ClassName requestClassName = generatorContext
-                .getClassNameUtils()
-                .getClassName(
-                        REQUEST_CLASS_NAME,
-                        Optional.empty(),
-                        Optional.of(httpService.name().fernFilepath()),
-                        PackageType.CLIENT);
+    private GeneratedRequestInfo generateRequestType(HttpEndpoint httpEndpoint, ClassName endpointClassName) {
+        ClassName requestClassName = endpointClassName.nestedClass(REQUEST_CLASS_NAME);
         List<ParameterSpec> requestParameters = getRequestParameters(httpEndpoint);
-        List<MethodSpec> parameterImmutablesMethods = requestParameters.stream()
-                .map(endpointParameter -> MethodSpec.methodBuilder(endpointParameter.name)
-                        .returns(endpointParameter.type)
-                        .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+
+        List<EnrichedObjectProperty> enrichedObjectProperties = requestParameters.stream()
+                .map(parameterSpec -> EnrichedObjectProperty.builder()
+                        .camelCaseKey(parameterSpec.name)
+                        .pascalCaseKey(StringUtils.capitalize(parameterSpec.name))
+                        .poetTypeName(parameterSpec.type)
+                        .fromInterface(false)
                         .build())
                 .collect(Collectors.toList());
-        TypeSpec typeSpec = TypeSpec.interfaceBuilder(requestClassName)
-                .addModifiers(Modifier.PUBLIC)
-                .addAnnotation(Value.Immutable.class)
-                .addAnnotation(StagedBuilderImmutablesStyle.class)
-                .addMethods(parameterImmutablesMethods)
-                .addMethod(generateStaticBuilder(immutablesEndpointClassName))
-                .build();
+
+        GenericObjectGenerator genericObjectGenerator = new GenericObjectGenerator(
+                requestClassName,
+                enrichedObjectProperties,
+                Collections.emptyList(),
+                false,
+                Optional.of(endpointClassName));
+        TypeSpec requestTypeSpec = genericObjectGenerator.generate();
 
         Optional<MethodSpec> authMethodSpec = Optional.empty();
         if (httpEndpoint.auth() && maybeGeneratedAuthSchemes.isPresent()) {
-            authMethodSpec = Optional.of(parameterImmutablesMethods.get(0));
+            authMethodSpec = Optional.of(enrichedObjectProperties.get(0).getterProperty());
         }
         return GeneratedRequestInfo.builder()
-                .requestTypeSpec(typeSpec)
-                .requestClassName(endpointClassName.nestedClass(REQUEST_CLASS_NAME))
+                .requestTypeSpec(requestTypeSpec)
+                .requestClassName(requestClassName)
                 .authMethodSpec(authMethodSpec)
-                .addAllPropertyMethodSpecs(parameterImmutablesMethods)
+                .addAllEnrichedObjectProperty(enrichedObjectProperties)
                 .build();
     }
 
@@ -363,15 +356,5 @@ public final class HttpServiceClientGenerator extends Generator {
             requestParameters.addAll(interfaceEndpointParameters);
         }
         return requestParameters;
-    }
-
-    private MethodSpec generateStaticBuilder(ClassName immutablesEndpointClassName) {
-        ClassName builderClassName =
-                immutablesEndpointClassName.nestedClass(REQUEST_CLASS_NAME).nestedClass("Builder");
-        return MethodSpec.methodBuilder(STATIC_BUILDER_METHOD_NAME)
-                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                .returns(builderClassName)
-                .addCode("return $T.builder();", immutablesEndpointClassName.nestedClass(REQUEST_CLASS_NAME))
-                .build();
     }
 }

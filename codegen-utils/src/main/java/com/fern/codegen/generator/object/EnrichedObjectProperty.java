@@ -25,6 +25,7 @@ import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
+import java.util.Optional;
 import javax.lang.model.element.Modifier;
 import org.immutables.value.Value;
 
@@ -32,7 +33,7 @@ import org.immutables.value.Value;
 @StagedBuilderImmutablesStyle
 public interface EnrichedObjectProperty {
 
-    String wireKey();
+    Optional<String> wireKey();
 
     String camelCaseKey();
 
@@ -55,19 +56,21 @@ public interface EnrichedObjectProperty {
     @Value.Lazy
     default MethodSpec getterProperty() {
         MethodSpec.Builder getterBuilder = MethodSpec.methodBuilder("get" + pascalCaseKey())
-                .addAnnotation(AnnotationSpec.builder(JsonProperty.class)
-                        .addMember("value", "$S", wireKey())
-                        .build())
                 .addModifiers(Modifier.PUBLIC)
                 .returns(fieldSpec().type)
                 .addStatement("return $L", fieldSpec().name);
+        if (wireKey().isPresent()) {
+            getterBuilder.addAnnotation(AnnotationSpec.builder(JsonProperty.class)
+                    .addMember("value", "$S", wireKey().get())
+                    .build());
+        }
         if (fromInterface()) {
             getterBuilder.addAnnotation(Override.class);
         }
         return getterBuilder.build();
     }
 
-    private static ImmutableEnrichedObjectProperty.WireKeyBuildStage builder() {
+    static ImmutableEnrichedObjectProperty.CamelCaseKeyBuildStage builder() {
         return ImmutableEnrichedObjectProperty.builder();
     }
 
@@ -75,11 +78,11 @@ public interface EnrichedObjectProperty {
             ObjectProperty objectProperty, boolean fromInterface, ClassNameUtils classNameUtils) {
         TypeName poetTypeName = classNameUtils.getTypeNameFromTypeReference(true, objectProperty.valueType());
         return EnrichedObjectProperty.builder()
-                .wireKey(objectProperty.name().wireValue())
                 .camelCaseKey(objectProperty.name().camelCase())
                 .pascalCaseKey(objectProperty.name().pascalCase())
                 .poetTypeName(poetTypeName)
                 .fromInterface(fromInterface)
+                .wireKey(objectProperty.name().wireValue())
                 .build();
     }
 }

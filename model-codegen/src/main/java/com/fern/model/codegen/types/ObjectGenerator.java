@@ -77,8 +77,8 @@ public final class ObjectGenerator extends Generator {
                                 .collect(Collectors.toList()))
                         .build())
                 .collect(Collectors.toList());
-        GenericObjectGenerator genericObjectGenerator =
-                new GenericObjectGenerator(generatedObjectClassName, enrichedObjectProperties, implementsInterfaces);
+        GenericObjectGenerator genericObjectGenerator = new GenericObjectGenerator(
+                generatedObjectClassName, enrichedObjectProperties, implementsInterfaces, true);
         TypeSpec objectTypeSpec = genericObjectGenerator.generate();
         JavaFile objectFile = JavaFile.builder(generatedObjectClassName.packageName(), objectTypeSpec)
                 .build();

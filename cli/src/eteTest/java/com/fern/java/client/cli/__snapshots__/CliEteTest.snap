@@ -298,8 +298,8 @@ public final class DummyServiceClient {
   }
 
   public void getDummy(GetDummy.Request request) {
-    BearerAuth authValue = request.authOverride().orElse(this.auth.orElseThrow(() -> new RuntimeException("Auth is required for getDummy")));
-    this.service.getDummy(authValue, request.body());
+    BearerAuth authValue = request.getAuthOverride().orElse(this.auth.orElseThrow(() -> new RuntimeException("Auth is required for getDummy")));
+    this.service.getDummy(authValue, request.getBody());
   }
 }
 
@@ -311,24 +311,114 @@ package com.fern.basic.client.dummy.service;
 
 import com.fern.basic.client.BearerAuth;
 import com.fern.basic.model.dummy.service.DummyId;
-import com.fern.java.immutables.StagedBuilderImmutablesStyle;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Objects;
 import java.util.Optional;
-import org.immutables.value.Value;
 
-@Value.Enclosing
 public final class GetDummy {
   private GetDummy() {
   }
 
-  @Value.Immutable
-  @StagedBuilderImmutablesStyle
-  public interface Request {
-    Optional<BearerAuth> authOverride();
+  public static final class Request {
+    private final Optional<BearerAuth> authOverride;
 
-    DummyId body();
+    private final DummyId body;
 
-    static ImmutableGetDummy.Request.Builder builder() {
-      return ImmutableGetDummy.Request.builder();
+    private int _cachedHashCode;
+
+    Request(Optional<BearerAuth> authOverride, DummyId body) {
+      this.authOverride = authOverride;
+      this.body = body;
+    }
+
+    public Optional<BearerAuth> getAuthOverride() {
+      return authOverride;
+    }
+
+    public DummyId getBody() {
+      return body;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+      if (this == other) return true;
+      return other instanceof Request && equalTo((Request) other);
+    }
+
+    private boolean equalTo(Request other) {
+      return authOverride.equals(other.authOverride) && body.equals(other.body);
+    }
+
+    @Override
+    public int hashCode() {
+      if (_cachedHashCode == 0) {
+        _cachedHashCode = Objects.hash(this.authOverride, this.body);
+      }
+      return _cachedHashCode;
+    }
+
+    @Override
+    public String toString() {
+      return "GetDummy.Request{" + "authOverride: " + authOverride + ", body: " + body + "}";
+    }
+
+    public static BodyStage builder() {
+      return new Builder();
+    }
+
+    public interface BodyStage {
+      _FinalStage body(DummyId body);
+
+      Builder from(Request other);
+    }
+
+    public interface _FinalStage {
+      Request build();
+
+      _FinalStage authOverride(Optional<BearerAuth> authOverride);
+
+      _FinalStage authOverride(BearerAuth authOverride);
+    }
+
+    static final class Builder implements BodyStage, _FinalStage {
+      private DummyId body;
+
+      private Optional<BearerAuth> authOverride = Optional.empty();
+
+      private Builder() {
+      }
+
+      @Override
+      public Builder from(Request other) {
+        authOverride(other.getAuthOverride());
+        body(other.getBody());
+        return this;
+      }
+
+      @Override
+      public _FinalStage body(DummyId body) {
+        this.body = body;
+        return this;
+      }
+
+      @Override
+      public _FinalStage authOverride(BearerAuth authOverride) {
+        this.authOverride = Optional.of(authOverride);
+        return this;
+      }
+
+      @Override
+      public _FinalStage authOverride(Optional<BearerAuth> authOverride) {
+        this.authOverride = authOverride;
+        return this;
+      }
+
+      @Override
+      public Request build() {
+        return new Request(authOverride, body);
+      }
     }
   }
 }

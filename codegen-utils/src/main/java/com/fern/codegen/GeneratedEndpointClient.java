@@ -16,6 +16,7 @@
 
 package com.fern.codegen;
 
+import com.fern.codegen.generator.object.EnrichedObjectProperty;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
@@ -42,7 +43,7 @@ public interface GeneratedEndpointClient extends IGeneratedFile {
 
         ClassName requestClassName();
 
-        List<MethodSpec> propertyMethodSpecs();
+        List<EnrichedObjectProperty> enrichedObjectProperty();
 
         Optional<MethodSpec> authMethodSpec();
 
