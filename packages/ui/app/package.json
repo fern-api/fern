@@ -46,7 +46,7 @@
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@types/jest": "^28.1.7",
-    "@types/node": "^18.7.6",
+    "@types/node": "^18.7.7",
     "@types/react": "^18.0.15",
     "depcheck": "^1.4.3",
     "eslint": "^8.22.0",

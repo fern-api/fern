@@ -15,6 +15,7 @@
     { "path": "../cli/generation/remote-generation/remote-workspace-runner" },
     { "path": "../cli/init" },
     { "path": "../cli/login" },
+    { "path": "../cli/task-context" },
     { "path": "../cli/workspace-loader" },
     { "path": "../cli/yaml/json-schema" },
     { "path": "../cli/yaml/validator" },

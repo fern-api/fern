@@ -1,5 +1,5 @@
 import execa from "execa";
-import { CliEnvironment } from "./readCliEnvironment";
+import { CliEnvironment } from "./cli-context/CliEnvironment";
 
 export async function rerunFernCliAtVersion({
     version,

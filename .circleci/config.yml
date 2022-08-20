@@ -22,6 +22,11 @@ jobs:
           name: Check dependencies
           command: yarn depcheck
       - run:
+          # compilation is needed for some typescript-eslint rules,
+          # so we do it before the eslint check
+          name: compile
+          command: yarn compile
+      - run:
           name: lint:eslint
           command: yarn lint:eslint
       - run:
@@ -37,7 +42,7 @@ jobs:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff --exit-code
 
-  compile-and-test:
+  test:
     # this is machine because of the docker-utils tests
     machine:
       image: ubuntu-2004:current
@@ -169,7 +174,7 @@ workflows:
             tags:
               only: /.*/
 
-      - compile-and-test:
+      - test:
           filters:
             tags:
               only: /.*/
@@ -203,7 +208,7 @@ workflows:
               only: main
           requires:
             - lint
-            - compile-and-test
+            - test
             - ete-tests
           context:
             - npm
@@ -217,7 +222,7 @@ workflows:
               only: /.*/
           requires:
             - lint
-            - compile-and-test
+            - test
             - ete-tests
             - live-test
           context:

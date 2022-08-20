@@ -1,4 +1,4 @@
-import { getFernCliUpgradeMessage } from "../upgrade-utils/getFernCliUpgradeMessage";
+import { getFernCliUpgradeMessage } from "../cli-context/upgrade-utils/getFernCliUpgradeMessage";
 
 describe("upgrade notifier test", () => {
     it("upgrade message", async () => {
