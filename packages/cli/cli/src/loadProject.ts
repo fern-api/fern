@@ -1,8 +1,9 @@
-import { join, RelativeFilePath } from "@fern-api/core-utils";
-import { getFernDirectoryOrThrow, loadProjectConfig, ProjectConfig } from "@fern-api/project-configuration";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
+import { getFernDirectory, loadProjectConfig, ProjectConfig } from "@fern-api/project-configuration";
 import { loadWorkspace, Workspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { readdir } from "fs/promises";
+import { CliContext } from "./cli-context/CliContext";
 import { handleFailedWorkspaceParserResult } from "./commands/generate-ir/handleFailedWorkspaceParserResult";
 
 export interface Project {
@@ -15,17 +16,22 @@ export declare namespace loadProject {
         commandLineWorkspace: string | undefined;
         /**
          * if false and commandLineWorkspace it not defined,
-         * loadProject will throw and error
+         * loadProject will cause the CLI to fail
          */
         defaultToAllWorkspaces: boolean;
+        cliContext: CliContext;
     }
 }
 
 export async function loadProject({
     commandLineWorkspace,
     defaultToAllWorkspaces,
+    cliContext,
 }: loadProject.Args): Promise<Project> {
-    const fernDirectory = await getFernDirectoryOrThrow();
+    const fernDirectory = await getFernDirectory();
+    if (fernDirectory == null) {
+        return cliContext.failAndExit();
+    }
     const fernDirectoryContents = await readdir(fernDirectory, { withFileTypes: true });
     const allWorkspaceDirectoryNames = fernDirectoryContents.reduce<string[]>((all, item) => {
         if (item.isDirectory()) {
@@ -34,38 +40,69 @@ export async function loadProject({
         return all;
     }, []);
 
-    const allWorkspaces = await Promise.all(
+    const allWorkspaces = await loadAllWorkspaces({
+        fernDirectory,
+        allWorkspaceDirectoryNames,
+        cliContext,
+    });
+
+    if (allWorkspaces.length === 0) {
+        cliContext.logger.error(chalk.red("No APIs found."));
+        await cliContext.failAndExit();
+    }
+
+    cliContext.registerWorkspaceNames(allWorkspaces.map((workspace) => workspace.name));
+    const filteredWorkspaces = await maybeFilterWorkspaces({
+        allWorkspaces,
+        commandLineWorkspace,
+        defaultToAllWorkspaces,
+        cliContext,
+    });
+
+    return {
+        config: await loadProjectConfig({ directory: fernDirectory }),
+        workspaces: filteredWorkspaces,
+    };
+}
+
+async function loadAllWorkspaces({
+    fernDirectory,
+    allWorkspaceDirectoryNames,
+    cliContext,
+}: {
+    fernDirectory: AbsoluteFilePath;
+    allWorkspaceDirectoryNames: string[];
+    cliContext: CliContext;
+}): Promise<Workspace[]> {
+    const allWorkspaces: Workspace[] = [];
+    await Promise.all(
         allWorkspaceDirectoryNames.map(async (workspaceDirectoryName) => {
             const workspace = await loadWorkspace({
                 absolutePathToWorkspace: join(fernDirectory, RelativeFilePath.of(workspaceDirectoryName)),
             });
-            if (!workspace.didSucceed) {
-                handleFailedWorkspaceParserResult(workspace);
-                throw new Error("Failed to parse workspace");
+            if (workspace.didSucceed) {
+                allWorkspaces.push(workspace.workspace);
+            } else {
+                cliContext.fail();
+                handleFailedWorkspaceParserResult(workspace, cliContext.logger);
             }
-            return workspace.workspace;
         })
     );
-
-    if (allWorkspaces.length === 0) {
-        throw new Error("No workspaces found.");
-    }
-
-    return {
-        config: await loadProjectConfig({ directory: fernDirectory }),
-        workspaces: maybeFilterWorkspaces({ allWorkspaces, commandLineWorkspace, defaultToAllWorkspaces }),
-    };
+    await cliContext.exitIfFailed();
+    return allWorkspaces;
 }
 
-function maybeFilterWorkspaces({
+async function maybeFilterWorkspaces({
     allWorkspaces,
     commandLineWorkspace,
     defaultToAllWorkspaces,
+    cliContext,
 }: {
     allWorkspaces: Workspace[];
     commandLineWorkspace: string | undefined;
     defaultToAllWorkspaces: boolean;
-}): Workspace[] {
+    cliContext: CliContext;
+}): Promise<Workspace[]> {
     if (commandLineWorkspace == null) {
         if (allWorkspaces.length > 1 && !defaultToAllWorkspaces) {
             let message = chalk.red("There are multiple workspaces. You must specify one with --api:\n");
@@ -78,17 +115,23 @@ function maybeFilterWorkspaces({
                     )}`;
                 })
                 .join("\n");
-            console.log(message);
-            throw new Error("There are multiple workspaces. You must specify one with --api");
+            cliContext.logger.error(message);
+            cliContext.fail();
         }
         return [...allWorkspaces];
     }
 
-    return [commandLineWorkspace].reduce<Workspace[]>((all, workspaceName) => {
+    const filteredWorkspaces = [commandLineWorkspace].reduce<Workspace[]>((acc, workspaceName) => {
         const workspace = allWorkspaces.find((workspace) => workspace.name === workspaceName);
         if (workspace == null) {
-            throw new Error(`Workspace ${workspaceName} not found`);
+            cliContext.logger.error(chalk.red(`Workspace ${workspaceName} not found`));
+            cliContext.fail();
+            return acc;
         }
-        return [...all, workspace];
+        return [...acc, workspace];
     }, []);
+
+    await cliContext.exitIfFailed();
+
+    return filteredWorkspaces;
 }

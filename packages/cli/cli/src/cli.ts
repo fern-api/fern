@@ -42,10 +42,10 @@ async function runCli() {
         .recommendCommands();
 
     addInitCommand(cli, cliContext);
-    addAddCommand(cli);
-    addGenerateCommand(cli);
+    addAddCommand(cli, cliContext);
+    addGenerateCommand(cli, cliContext);
     addIrCommand(cli, cliContext);
-    addValidateCommand(cli);
+    addValidateCommand(cli, cliContext);
 
     addUpgradeCommand({
         cli,
@@ -89,7 +89,7 @@ async function askForOrganization() {
     return answers.organization;
 }
 
-function addAddCommand(cli: Argv) {
+function addAddCommand(cli: Argv, cliContext: CliContext) {
     cli.command(
         "add <generator>",
         "Add a generator to .fernrc.yml",
@@ -108,6 +108,7 @@ function addAddCommand(cli: Argv) {
                 await loadProject({
                     commandLineWorkspace: argv.api,
                     defaultToAllWorkspaces: false,
+                    cliContext,
                 }),
                 argv.generator
             );
@@ -115,7 +116,7 @@ function addAddCommand(cli: Argv) {
     );
 }
 
-function addGenerateCommand(cli: Argv) {
+function addGenerateCommand(cli: Argv, cliContext: CliContext) {
     cli.command(
         ["generate"],
         "Generate typesafe servers and clients",
@@ -146,9 +147,11 @@ function addGenerateCommand(cli: Argv) {
                 project: await loadProject({
                     commandLineWorkspace: argv.all ? undefined : argv.api,
                     defaultToAllWorkspaces: argv.all,
+                    cliContext,
                 }),
                 runLocal: argv.local,
                 keepDocker: argv.keepDocker,
+                cliContext,
             });
         }
     );
@@ -174,6 +177,7 @@ function addIrCommand(cli: Argv, cliContext: CliContext) {
                 project: await loadProject({
                     commandLineWorkspace: argv.api,
                     defaultToAllWorkspaces: false,
+                    cliContext,
                 }),
                 irFilepath: resolve(cwd(), FilePath.of(argv.output)),
                 cliContext,
@@ -181,7 +185,7 @@ function addIrCommand(cli: Argv, cliContext: CliContext) {
     );
 }
 
-function addValidateCommand(cli: Argv) {
+function addValidateCommand(cli: Argv, cliContext: CliContext) {
     cli.command(
         "check",
         "Validates your Fern API Definition",
@@ -195,7 +199,9 @@ function addValidateCommand(cli: Argv) {
                 project: await loadProject({
                     commandLineWorkspace: argv.api,
                     defaultToAllWorkspaces: true,
+                    cliContext,
                 }),
+                cliContext,
             })
     );
 }
@@ -207,6 +213,7 @@ function addUpgradeCommand({ cli, cliContext, onRun }: { cli: Argv; cliContext: 
             project: await loadProject({
                 commandLineWorkspace: undefined,
                 defaultToAllWorkspaces: true,
+                cliContext,
             }),
         });
         onRun();

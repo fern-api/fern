@@ -18,7 +18,7 @@ export async function generateIrForWorkspaces({
     await Promise.all(
         project.workspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (task) => {
-                const intermediateRepresentation = await generateIrForWorkspace({ workspace });
+                const intermediateRepresentation = await generateIrForWorkspace({ workspace, cliContext });
                 const irOutputFilePath = path.resolve(irFilepath);
                 await writeFile(irOutputFilePath, JSON.stringify(intermediateRepresentation, undefined, 4));
                 task.logger.info(`Wrote IR to ${irOutputFilePath}`);
