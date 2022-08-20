@@ -1,10 +1,9 @@
-import { InteractiveTaskContext, TaskContext, TaskResult } from "@fern-api/task-context";
+import { InteractiveTaskContext, Logger, TaskContext, TaskResult } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { CliEnvironment } from "./CliEnvironment";
 import { InteractiveTaskContextImpl } from "./InteractiveTaskContextImpl";
 import { InteractiveTasks } from "./InteractiveTasks";
-import { getLogWithColor } from "./LogWithLevel";
 import { TaskContextImpl } from "./TaskContextImpl";
 import { getFernCliUpgradeMessage } from "./upgrade-utils/getFernCliUpgradeMessage";
 
@@ -28,15 +27,36 @@ export class CliContext {
         };
     }
 
-    public async exit(): Promise<void> {
+    public fail(): this {
+        this.didSucceed = false;
+        return this;
+    }
+
+    public async failAndExit(): Promise<never> {
+        this.fail();
+        return this.exit();
+    }
+
+    public async exitIfFailed(): Promise<void> {
+        if (!this.didSucceed) {
+            await this.exit();
+        }
+    }
+
+    public async exit(): Promise<never> {
+        this.interactiveTasks.finish();
         if (!this.suppressUpgradeMessage) {
             const upgradeMessage = await getFernCliUpgradeMessage(this.environment);
             if (upgradeMessage != null) {
                 console.log(upgradeMessage);
             }
         }
-        this.interactiveTasks.finish();
         process.exit(this.didSucceed ? 0 : 1);
+    }
+
+    private longestWorkspaceNameLength = 0;
+    public registerWorkspaces(workspaces: readonly Workspace[]): void {
+        this.longestWorkspaceNameLength = Math.max(...workspaces.map((workspace) => workspace.name.length));
     }
 
     public async runTaskForWorkspace(
@@ -62,6 +82,26 @@ export class CliContext {
         await this.handleFinishedTask({ workspace, task, result });
     }
 
+    get logger(): Logger {
+        return {
+            debug: (content) => {
+                this.log(content);
+            },
+            info: (content) => {
+                this.log(content);
+            },
+            warn: (content) => {
+                this.log(content);
+            },
+            error: (content) => {
+                this.log(content);
+            },
+            log: (content) => {
+                this.log(content);
+            },
+        };
+    }
+
     private async handleFinishedTask({
         workspace,
         task,
@@ -74,15 +114,22 @@ export class CliContext {
         if (result === TaskResult.Failure) {
             this.didSucceed = false;
         }
+        const prefix = wrapWorkspaceNameForPrefix(workspace.name).padEnd(
+            wrapWorkspaceNameForPrefix("X".repeat(this.longestWorkspaceNameLength)).length
+        );
         const colorForWorkspace = WORKSPACE_NAME_COLORS[this.numTasks++ % WORKSPACE_NAME_COLORS.length]!;
-        const prefix = chalk.hex(colorForWorkspace)(`[${workspace.name}]:`);
+        const prefixWithColor = chalk.hex(colorForWorkspace)(prefix);
         const logStr = task
             .getLogs()
-            .map((log) => {
-                return [prefix, getLogWithColor(log)].join(" ");
+            .flatMap((log) => {
+                return `${prefixWithColor}${log.content.replaceAll("\n", `\n${" ".repeat(prefix.length)}`)}`;
             })
             .join("\n");
-        this.interactiveTasks.prependAndRepaint(logStr);
+        this.log(logStr + "\n");
+    }
+
+    private log(content: string): void {
+        this.interactiveTasks.prependAndRepaint(content);
     }
 }
 
@@ -105,4 +152,8 @@ function getCliName() {
         throw new Error("CLI_NAME is not defined");
     }
     return process.env.CLI_NAME;
+}
+
+function wrapWorkspaceNameForPrefix(workspaceName: string): string {
+    return `[${workspaceName}]: `;
 }

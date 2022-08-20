@@ -16,7 +16,7 @@ export class TaskContextImpl implements TaskContext {
         this.logs.push({ content, level });
     }
 
-    get logger(): Logger {
+    public get logger(): Logger {
         return {
             debug: (content) => {
                 this.addLog(content, LogLevel.Debug);
