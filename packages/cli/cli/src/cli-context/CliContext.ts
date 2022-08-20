@@ -15,7 +15,7 @@ export class CliContext {
 
     public suppressUpgradeMessage = false;
 
-    private didSucceed = false;
+    private didSucceed = true;
 
     private numTasks = 0;
     private interactiveTasks = new InteractiveTasks(process.stdout);
@@ -70,7 +70,7 @@ export class CliContext {
         task: TaskContextImpl;
         result: TaskResult;
     }): Promise<void> {
-        if (result == TaskResult.Failure) {
+        if (result === TaskResult.Failure) {
             this.didSucceed = false;
         }
         const colorForWorkspace = WORKSPACE_NAME_COLORS[this.numTasks++ % WORKSPACE_NAME_COLORS.length]!;
