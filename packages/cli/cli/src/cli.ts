@@ -51,9 +51,7 @@ async function runCli() {
 
     addInitCommand(cli, cliContext);
     addAddCommand(cli);
-    addConvertCommand(cli);
     addGenerateCommand(cli);
-    addLoginCommand(cli);
     addIrCommand(cli, cliContext);
     addValidateCommand(cli);
 
