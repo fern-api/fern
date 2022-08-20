@@ -25,7 +25,7 @@ import com.fern.codegen.GeneratedHttpServiceClient;
 import com.fern.codegen.GeneratedHttpServiceInterface;
 import com.fern.codegen.Generator;
 import com.fern.codegen.GeneratorContext;
-import com.fern.codegen.generator.AnyAuthGenerator;
+import com.fern.codegen.generator.auth.AnyAuthGenerator;
 import com.fern.codegen.utils.AuthSchemeUtils;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fern.codegen.generator;
+package com.fern.codegen.generator.auth;
 
 import com.fern.codegen.GeneratedAuthSchemes;
 import com.fern.codegen.GeneratedFile;

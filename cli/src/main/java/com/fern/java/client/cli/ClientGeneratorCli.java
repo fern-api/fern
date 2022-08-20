@@ -23,7 +23,7 @@ import com.fern.codegen.GeneratedFile;
 import com.fern.codegen.GeneratedHttpServiceClient;
 import com.fern.codegen.GeneratedHttpServiceServer;
 import com.fern.codegen.GeneratorContext;
-import com.fern.codegen.generator.AuthGenerator;
+import com.fern.codegen.generator.auth.AuthGenerator;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.codegen.utils.ObjectMappers;
 import com.fern.java.client.cli.CustomPluginConfig.ServerFramework;

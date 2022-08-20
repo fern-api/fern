@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package com.fern.codegen.generator;
+package com.fern.codegen.generator.auth;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fern.codegen.GeneratedFile;
 import com.fern.codegen.Generator;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
+import com.fern.types.services.HttpHeader;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -31,25 +32,23 @@ import javax.lang.model.element.Modifier;
 import org.immutables.value.Value;
 import org.immutables.value.Value.Style.ImplementationVisibility;
 
-public final class BearerAuthGenerator extends Generator {
-
-    private static final String CLASS_NAME = "BearerAuth";
-    private static final String GET_TOKEN_METHOD_NAME = "getToken";
+public class HeaderAuthGenerator extends Generator {
+    private static final String VALUE_METHOD_NAME = "value";
 
     private final ClassName generatedClassName;
     private final ClassName generatedImmutablesClassName;
 
-    public BearerAuthGenerator(GeneratorContext generatorContext, PackageType packageType) {
+    public HeaderAuthGenerator(GeneratorContext generatorContext, PackageType packageType, HttpHeader httpHeader) {
         super(generatorContext);
         this.generatedClassName = generatorContext
                 .getClassNameUtils()
-                .getClassName(CLASS_NAME, Optional.empty(), Optional.empty(), packageType);
+                .getClassName(httpHeader.name().pascalCase(), Optional.of("Auth"), Optional.empty(), packageType);
         this.generatedImmutablesClassName =
                 generatorContext.getImmutablesUtils().getImmutablesClassName(generatedClassName);
     }
 
     @Override
-    public GeneratedFile generate() {
+    public final GeneratedFile generate() {
         TypeSpec authHeaderTypeSpec = TypeSpec.classBuilder(generatedClassName)
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                 .addAnnotation(Value.Immutable.class)
@@ -63,7 +62,7 @@ public final class BearerAuthGenerator extends Generator {
                                 ImplementationVisibility.PACKAGE.name())
                         .addMember("jdkOnly", "$L", true)
                         .build())
-                .addMethod(MethodSpec.methodBuilder(GET_TOKEN_METHOD_NAME)
+                .addMethod(MethodSpec.methodBuilder(VALUE_METHOD_NAME)
                         .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                         .returns(String.class)
                         .addAnnotation(Value.Parameter.class)
@@ -73,18 +72,13 @@ public final class BearerAuthGenerator extends Generator {
                         .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                         .returns(String.class)
                         .addAnnotation(Override.class)
-                        .addStatement("return $S + $L()", "Bearer ", GET_TOKEN_METHOD_NAME)
+                        .addStatement("return $L()", VALUE_METHOD_NAME)
                         .build())
                 .addMethod(MethodSpec.methodBuilder("of")
                         .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                        .addParameter(String.class, "token")
+                        .addParameter(String.class, "value")
                         .returns(generatedClassName)
-                        .addStatement(
-                                "return $T.of($L.startsWith($S) ? $L.substring(7) : token)",
-                                generatedImmutablesClassName,
-                                "token",
-                                "Bearer ",
-                                "token")
+                        .addStatement("$T.of($L)", generatedImmutablesClassName, "value")
                         .build())
                 .build();
         JavaFile authHeaderFile = JavaFile.builder(generatedClassName.packageName(), authHeaderTypeSpec)

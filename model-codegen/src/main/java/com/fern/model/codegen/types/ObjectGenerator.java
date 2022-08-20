@@ -15,34 +15,24 @@
  */
 package com.fern.model.codegen.types;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fern.codegen.GeneratedInterface;
 import com.fern.codegen.GeneratedObject;
 import com.fern.codegen.Generator;
 import com.fern.codegen.GeneratorContext;
-import com.fern.codegen.IGeneratedFile;
+import com.fern.codegen.generator.object.EnrichedObjectProperty;
+import com.fern.codegen.generator.object.GenericObjectGenerator;
+import com.fern.codegen.generator.object.ImplementsInterface;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
-import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.types.DeclaredTypeName;
-import com.fern.types.ObjectProperty;
 import com.fern.types.ObjectTypeDeclaration;
-import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
-import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
-import org.apache.commons.lang3.StringUtils;
-import org.immutables.value.Value;
 
 public final class ObjectGenerator extends Generator {
 
@@ -53,10 +43,8 @@ public final class ObjectGenerator extends Generator {
 
     private final DeclaredTypeName declaredTypeName;
     private final ObjectTypeDeclaration objectTypeDeclaration;
-    private final List<GeneratedInterface> extendedInterfaces;
-    private final Optional<GeneratedInterface> selfInterface;
+    private final List<GeneratedInterface> extendedInterfaces = new ArrayList<>();
     private final ClassName generatedObjectClassName;
-    private final ClassName generatedObjectImmutablesClassName;
 
     public ObjectGenerator(
             DeclaredTypeName declaredTypeName,
@@ -67,30 +55,31 @@ public final class ObjectGenerator extends Generator {
         super(generatorContext);
         this.declaredTypeName = declaredTypeName;
         this.objectTypeDeclaration = objectTypeDeclaration;
-        this.extendedInterfaces = extendedInterfaces;
-        this.selfInterface = selfInterface;
+        this.extendedInterfaces.addAll(extendedInterfaces);
+        selfInterface.ifPresent(extendedInterfaces::add);
         this.generatedObjectClassName = generatorContext
                 .getClassNameUtils()
                 .getClassNameFromDeclaredTypeName(declaredTypeName, PackageType.MODEL);
-        this.generatedObjectImmutablesClassName =
-                generatorContext.getImmutablesUtils().getImmutablesClassName(generatedObjectClassName);
     }
 
     @Override
     public GeneratedObject generate() {
-        TypeSpec.Builder objectTypeSpecBuilder = TypeSpec.interfaceBuilder(generatedObjectClassName)
-                .addModifiers(OBJECT_INTERFACE_MODIFIERS)
-                .addAnnotations(getAnnotations())
-                .addSuperinterfaces(getSuperInterfaces());
-        Map<ObjectProperty, MethodSpec> methodSpecsByProperty = Collections.emptyMap();
-        if (selfInterface.isEmpty()) {
-            methodSpecsByProperty =
-                    generatorContext.getImmutablesUtils().getOrderedImmutablesPropertyMethods(objectTypeDeclaration);
-        }
-        objectTypeSpecBuilder
-                .addMethods(methodSpecsByProperty.values())
-                .addMethod(generateStaticBuilder(methodSpecsByProperty));
-        TypeSpec objectTypeSpec = objectTypeSpecBuilder.build();
+        List<EnrichedObjectProperty> enrichedObjectProperties = objectTypeDeclaration.properties().stream()
+                .map(objectProperty ->
+                        EnrichedObjectProperty.of(objectProperty, false, generatorContext.getClassNameUtils()))
+                .collect(Collectors.toList());
+        List<ImplementsInterface> implementsInterfaces = extendedInterfaces.stream()
+                .map(generatedInterface -> ImplementsInterface.builder()
+                        .interfaceClassName(generatedInterface.className())
+                        .addAllInterfaceProperties(generatedInterface.objectTypeDeclaration().properties().stream()
+                                .map(objectProperty -> EnrichedObjectProperty.of(
+                                        objectProperty, true, generatorContext.getClassNameUtils()))
+                                .collect(Collectors.toList()))
+                        .build())
+                .collect(Collectors.toList());
+        GenericObjectGenerator genericObjectGenerator =
+                new GenericObjectGenerator(generatedObjectClassName, enrichedObjectProperties, implementsInterfaces);
+        TypeSpec objectTypeSpec = genericObjectGenerator.generate();
         JavaFile objectFile = JavaFile.builder(generatedObjectClassName.packageName(), objectTypeSpec)
                 .build();
         return GeneratedObject.builder()
@@ -98,72 +87,5 @@ public final class ObjectGenerator extends Generator {
                 .className(generatedObjectClassName)
                 .objectTypeDeclaration(objectTypeDeclaration)
                 .build();
-    }
-
-    private List<AnnotationSpec> getAnnotations() {
-        List<AnnotationSpec> annotationSpecs = new ArrayList<>();
-        annotationSpecs.add(AnnotationSpec.builder(Value.Immutable.class).build());
-        annotationSpecs.add(AnnotationSpec.builder(ClassName.get(StagedBuilderImmutablesStyle.class))
-                .build());
-        annotationSpecs.add(AnnotationSpec.builder(JsonDeserialize.class)
-                .addMember("as", "$T.class", generatedObjectImmutablesClassName)
-                .build());
-        annotationSpecs.add(AnnotationSpec.builder(JsonSerialize.class)
-                .addMember("as", "$T.class", generatedObjectImmutablesClassName)
-                .build());
-        annotationSpecs.add(AnnotationSpec.builder(JsonIgnoreProperties.class)
-                .addMember("ignoreUnknown", "$L", Boolean.TRUE.toString())
-                .build());
-        return annotationSpecs;
-    }
-
-    private List<TypeName> getSuperInterfaces() {
-        List<TypeName> superInterfaces = new ArrayList<>();
-        superInterfaces.addAll(
-                extendedInterfaces.stream().map(IGeneratedFile::className).collect(Collectors.toList()));
-        selfInterface.ifPresent(generatedInterface -> superInterfaces.add(generatedInterface.className()));
-        return superInterfaces;
-    }
-
-    private MethodSpec generateStaticBuilder(Map<ObjectProperty, MethodSpec> methodSpecsByProperty) {
-        Optional<String> firstMandatoryFieldName =
-                getFirstRequiredFieldName(extendedInterfaces, selfInterface, methodSpecsByProperty);
-        ClassName builderClassName = firstMandatoryFieldName.isEmpty()
-                ? generatedObjectImmutablesClassName.nestedClass("Builder")
-                : generatedObjectImmutablesClassName.nestedClass(
-                        StringUtils.capitalize(firstMandatoryFieldName.get()) + BUILD_STAGE_SUFFIX);
-        return MethodSpec.methodBuilder(STATIC_BUILDER_METHOD_NAME)
-                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                .returns(builderClassName)
-                .addCode("return $T.builder();", generatedObjectImmutablesClassName)
-                .build();
-    }
-
-    private static Optional<String> getFirstRequiredFieldName(
-            List<GeneratedInterface> superInterfaces,
-            Optional<GeneratedInterface> selfInterface,
-            Map<ObjectProperty, MethodSpec> methodSpecsByProperty) {
-        // Required field from super interfaces take priority
-        for (GeneratedInterface superInterface : superInterfaces) {
-            Optional<String> firstMandatoryFieldName =
-                    getFirstRequiredFieldName(superInterface.methodSpecsByProperties());
-            if (firstMandatoryFieldName.isPresent()) {
-                return firstMandatoryFieldName;
-            }
-        }
-        if (selfInterface.isPresent()) {
-            return getFirstRequiredFieldName(selfInterface.get().methodSpecsByProperties());
-        }
-        return getFirstRequiredFieldName(methodSpecsByProperty);
-    }
-
-    private static Optional<String> getFirstRequiredFieldName(Map<ObjectProperty, MethodSpec> methodSpecsByProperty) {
-        for (Map.Entry<ObjectProperty, MethodSpec> entry : methodSpecsByProperty.entrySet()) {
-            ObjectProperty property = entry.getKey();
-            if (property.valueType().isPrimitive() || property.valueType().isNamed()) {
-                return Optional.of(entry.getValue().name);
-            }
-        }
-        return Optional.empty();
     }
 }

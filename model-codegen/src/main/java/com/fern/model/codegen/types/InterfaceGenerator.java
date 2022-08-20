@@ -25,8 +25,12 @@ import com.fern.types.ObjectTypeDeclaration;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 
 public final class InterfaceGenerator extends Generator {
@@ -53,8 +57,7 @@ public final class InterfaceGenerator extends Generator {
         ClassName generatedInterfaceClassName = generatorContext
                 .getClassNameUtils()
                 .getClassNameFromDeclaredTypeName(declaredTypeName, PackageType.MODEL);
-        Map<ObjectProperty, MethodSpec> methodSpecsByProperties =
-                generatorContext.getImmutablesUtils().getOrderedImmutablesPropertyMethods(objectTypeDeclaration);
+        Map<ObjectProperty, MethodSpec> methodSpecsByProperties = getPropertyGetters();
         TypeSpec interfaceTypeSpec = TypeSpec.interfaceBuilder(generatedInterfaceClassName.simpleName())
                 .addModifiers(Modifier.PUBLIC)
                 .addMethods(methodSpecsByProperties.values())
@@ -67,5 +70,25 @@ public final class InterfaceGenerator extends Generator {
                 .objectTypeDeclaration(objectTypeDeclaration)
                 .putAllMethodSpecsByProperties(methodSpecsByProperties)
                 .build();
+    }
+
+    private Map<ObjectProperty, MethodSpec> getPropertyGetters() {
+        return objectTypeDeclaration.properties().stream()
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        objectProperty -> {
+                            TypeName poetTypeName = generatorContext
+                                    .getClassNameUtils()
+                                    .getTypeNameFromTypeReference(true, objectProperty.valueType());
+                            return MethodSpec.methodBuilder(
+                                            "get" + objectProperty.name().pascalCase())
+                                    .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+                                    .returns(poetTypeName)
+                                    .build();
+                        },
+                        (u, _v) -> {
+                            throw new IllegalStateException(String.format("Duplicate key %s", u));
+                        },
+                        LinkedHashMap::new));
     }
 }
