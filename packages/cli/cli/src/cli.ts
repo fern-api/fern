@@ -1,6 +1,5 @@
 import { cwd, FilePath, noop, resolve } from "@fern-api/core-utils";
 import { initialize } from "@fern-api/init";
-import { initiateLogin } from "@fern-api/login";
 import { getFernDirectory, loadProjectConfig } from "@fern-api/project-configuration";
 import inquirer, { InputQuestion } from "inquirer";
 import { Argv } from "yargs";
@@ -9,7 +8,6 @@ import yargs from "yargs/yargs";
 import { CliContext } from "./cli-context/CliContext";
 import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
-import { convertOpenApiToFernApiDefinition } from "./commands/convert-openapi/convertOpenApi";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateWorkspaces } from "./commands/generate/generateWorkspaces";
 import { upgrade } from "./commands/upgrade/upgrade";
@@ -45,9 +43,7 @@ async function runCli() {
 
     addInitCommand(cli, cliContext);
     addAddCommand(cli);
-    addConvertCommand(cli);
     addGenerateCommand(cli);
-    addLoginCommand(cli);
     addIrCommand(cli, cliContext);
     addValidateCommand(cli);
 
@@ -156,40 +152,6 @@ function addGenerateCommand(cli: Argv) {
             });
         }
     );
-}
-
-function addConvertCommand(cli: Argv) {
-    cli.command(
-        "convert <openapiPath> <fernDefinitionDir>",
-        "Converts Open API to Fern API Definition.",
-        (yargs) =>
-            yargs
-                .positional("openapiPath", {
-                    type: "string",
-                    demandOption: true,
-                    description: "Path to your Open API definition",
-                })
-                .positional("fernDefinitionDir", {
-                    type: "string",
-                    demandOption: true,
-                    description: "Output directory for your Fern API definition",
-                }),
-        (argv) =>
-            convertOpenApiToFernApiDefinition(
-                resolve(cwd(), FilePath.of(argv.openapiPath)),
-                resolve(cwd(), FilePath.of(argv.fernDefinitionDir))
-            )
-    );
-}
-
-function addLoginCommand(cli: Argv) {
-    cli.command({
-        command: "login",
-        describe: "Authenticate with Fern",
-        handler: async () => {
-            await initiateLogin();
-        },
-    });
 }
 
 function addIrCommand(cli: Argv, cliContext: CliContext) {

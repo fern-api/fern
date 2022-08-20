@@ -12,7 +12,6 @@
     { "path": "../generation/local-generation/local-workspace-runner" },
     { "path": "../generation/remote-generation/remote-workspace-runner" },
     { "path": "../init" },
-    { "path": "../login" },
     { "path": "../task-context" },
     { "path": "../workspace-loader" },
     { "path": "../yaml/validator" }
