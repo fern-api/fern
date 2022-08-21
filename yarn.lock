@@ -2868,6 +2868,7 @@ __metadata:
     "@fern-api/json-schema": "workspace:*"
     "@fern-api/loadable": "workspace:*"
     "@fern-api/local-workspace-runner": "workspace:*"
+    "@fern-api/logger": "workspace:*"
     "@fern-api/login": "workspace:*"
     "@fern-api/manage-generator": "workspace:*"
     "@fern-api/openapi-converter": "workspace:*"
