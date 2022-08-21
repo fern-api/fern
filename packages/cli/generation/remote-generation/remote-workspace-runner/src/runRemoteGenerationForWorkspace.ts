@@ -28,7 +28,7 @@ export async function runRemoteGenerationForWorkspace({
                 context.fail();
             } else {
                 await context.addInteractiveTask({
-                    name: generator?.name,
+                    name: generator.name,
                     run: async (taskContext) => {
                         await pollJobAndReportStatus({ job, taskId, workspace, context: taskContext });
                     },
