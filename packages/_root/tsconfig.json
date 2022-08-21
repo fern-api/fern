@@ -14,6 +14,7 @@
     { "path": "../cli/generation/local-generation/local-workspace-runner" },
     { "path": "../cli/generation/remote-generation/remote-workspace-runner" },
     { "path": "../cli/init" },
+    { "path": "../cli/logger" },
     { "path": "../cli/login" },
     { "path": "../cli/task-context" },
     { "path": "../cli/workspace-loader" },

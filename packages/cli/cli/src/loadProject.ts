@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
-import { getFernDirectory, loadProjectConfig, ProjectConfig } from "@fern-api/project-configuration";
+import { FERN_DIRECTORY, getFernDirectory, loadProjectConfig, ProjectConfig } from "@fern-api/project-configuration";
 import { loadWorkspace, Workspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { readdir } from "fs/promises";
@@ -30,6 +30,7 @@ export async function loadProject({
 }: loadProject.Args): Promise<Project> {
     const fernDirectory = await getFernDirectory();
     if (fernDirectory == null) {
+        cliContext.logger.error(chalk.red(`Directory ${FERN_DIRECTORY} not found.`));
         return cliContext.failAndExit();
     }
     const fernDirectoryContents = await readdir(fernDirectory, { withFileTypes: true });

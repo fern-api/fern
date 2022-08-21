@@ -1,5 +1,5 @@
 import { RelativeFilePath } from "@fern-api/core-utils";
-import { Logger } from "@fern-api/task-context";
+import { Logger } from "@fern-api/logger";
 import chalk from "chalk";
 
 type Severity = "error" | "warning";

@@ -56,7 +56,7 @@ async function runCli() {
     });
 
     await cli.parse();
-    await cliContext.exit();
+    await cliContext.finish();
 }
 
 function addInitCommand(cli: Argv, cliContext: CliContext) {
@@ -71,10 +71,13 @@ function addInitCommand(cli: Argv, cliContext: CliContext) {
             }),
         async (argv) => {
             const organization = argv.organization ?? (await askForOrganization());
-            await initialize({
-                organization,
-                versionOfCli: await getLatestVersionOfCli(cliContext.environment),
-            });
+            await cliContext.runTask(async (task) =>
+                initialize({
+                    organization,
+                    versionOfCli: await getLatestVersionOfCli(cliContext.environment),
+                    task,
+                })
+            );
         }
     );
 }
