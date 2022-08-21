@@ -1,5 +1,6 @@
 import { rm } from "fs/promises";
 import path from "path";
+import stripAnsi from "strip-ansi";
 import { runFernCli } from "../../utils/runFernCli";
 
 const FIXTURES_DIR = path.join(__dirname, "fixtures");
@@ -21,7 +22,7 @@ function itFixture(fixtureName: string) {
                 cwd: fixturePath,
                 reject: false,
             });
-            expect(stdout).toMatchSnapshot();
+            expect(stripAnsi(stdout)).toContain("Type MissingType is not defined");
         },
         90_000
     );
