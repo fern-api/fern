@@ -1,9 +1,18 @@
 import stripAnsi from "strip-ansi";
 
-/**
- * adds a prefix to a log, and indents all other lines by the length of the prefix
- */
-export function addPrefixToLog({ prefix, content }: { prefix: string; content: string }): string {
+export function addPrefixToLog({
+    prefix,
+    content,
+    includePrefixOnAllLines,
+}: {
+    prefix: string;
+    content: string;
+    /**
+     * if true, the prefix is included on all lines.
+     * if false, all lines after the first are indented by the length of the prefix
+     */
+    includePrefixOnAllLines?: boolean;
+}): string {
     const prefixLength = stripAnsi(prefix).length;
-    return `${prefix}${content.replaceAll("\n", `\n${" ".repeat(prefixLength)}`)}`;
+    return `${prefix}${content.replaceAll("\n", `\n${includePrefixOnAllLines ? prefix : " ".repeat(prefixLength)}`)}`;
 }

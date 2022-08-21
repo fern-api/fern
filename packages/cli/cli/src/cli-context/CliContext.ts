@@ -1,10 +1,9 @@
 import { Logger } from "@fern-api/logger";
-import { InteractiveTaskContext, TaskContext, TaskResult } from "@fern-api/task-context";
+import { TaskContext, TaskResult } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { CliEnvironment } from "./CliEnvironment";
-import { InteractiveTaskContextImpl } from "./InteractiveTaskContextImpl";
-import { InteractiveTasks } from "./InteractiveTasks";
+import { InteractiveTaskManager } from "./InteractiveTaskManager";
 import { TaskContextImpl } from "./TaskContextImpl";
 import { getFernCliUpgradeMessage } from "./upgrade-utils/getFernCliUpgradeMessage";
 
@@ -18,7 +17,8 @@ export class CliContext {
     private didSucceed = true;
 
     private numTasks = 0;
-    private interactiveTasks = new InteractiveTasks(process.stdout);
+    private stream = process.stdout;
+    private interactiveTaskManager = new InteractiveTaskManager(this.stream);
 
     constructor() {
         const packageName = this.getPackageName();
@@ -72,11 +72,11 @@ export class CliContext {
     }
 
     public async finish(): Promise<never> {
-        this.interactiveTasks.finish();
+        this.interactiveTaskManager.finish();
         if (!this.suppressUpgradeMessage) {
             const upgradeMessage = await getFernCliUpgradeMessage(this.environment);
             if (upgradeMessage != null) {
-                console.log(upgradeMessage);
+                this.stream.write(upgradeMessage);
             }
         }
         this.exit();
@@ -104,22 +104,8 @@ export class CliContext {
         run: (context: TaskContext) => void | Promise<void>
     ): Promise<void> {
         const context = new TaskContextImpl(this.constructTaskInitForWorkspace(workspace));
+        this.interactiveTaskManager.registerTask(context);
         await run(context);
-        await this.handleFinishedTask(context);
-    }
-
-    public async runInteractiveTaskForWorkspace(
-        workspace: Workspace,
-        run: (context: InteractiveTaskContext) => void | Promise<void>
-    ): Promise<void> {
-        const context = new InteractiveTaskContextImpl({
-            ...this.constructTaskInitForWorkspace(workspace),
-            name: workspace.name,
-            subtitle: undefined,
-        });
-        this.interactiveTasks.addTask(context);
-        await run(context);
-        context.finish();
         await this.handleFinishedTask(context);
     }
 
@@ -166,7 +152,7 @@ export class CliContext {
         if (content.length > 0 && !content.endsWith("\n")) {
             content += "\n";
         }
-        this.interactiveTasks.repaint({
+        this.interactiveTaskManager.repaint({
             contentAbove: content,
         });
     }

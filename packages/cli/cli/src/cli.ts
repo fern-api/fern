@@ -1,6 +1,7 @@
 import { cwd, FilePath, noop, resolve } from "@fern-api/core-utils";
 import { initialize } from "@fern-api/init";
 import { getFernDirectory, loadProjectConfig } from "@fern-api/project-configuration";
+import ansiEscapes from "ansi-escapes";
 import inquirer, { InputQuestion } from "inquirer";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
@@ -55,8 +56,13 @@ async function runCli() {
         },
     });
 
-    await cli.parse();
-    await cliContext.finish();
+    try {
+        process.stdout.write(ansiEscapes.cursorHide);
+        await cli.parse();
+        await cliContext.finish();
+    } finally {
+        process.stdout.write(ansiEscapes.cursorShow);
+    }
 }
 
 function addInitCommand(cli: Argv, cliContext: CliContext) {
