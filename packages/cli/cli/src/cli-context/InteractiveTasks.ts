@@ -23,12 +23,8 @@ export class InteractiveTasks {
         this.tasks.push(context);
     }
 
-    public prependAndRepaint(content: string): void {
-        this.stream.write(this.clear() + content + "\n" + this.lastPaint);
-    }
-
-    private repaint(): void {
-        this.stream.write(this.clear() + this.paint());
+    public repaint({ contentAbove = "" }: { contentAbove?: string } = {}): void {
+        this.stream.write(this.clear() + contentAbove + this.paint());
     }
 
     private clear(): string {

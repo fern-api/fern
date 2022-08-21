@@ -2,6 +2,14 @@ import { CreateInteractiveTaskParams, InteractiveTaskContext, TaskResult } from 
 import chalk from "chalk";
 import { TaskContextImpl } from "./TaskContextImpl";
 
+export declare namespace InteractiveTaskContextImpl {
+    export interface Init extends TaskContextImpl.Init {
+        name: string;
+        subtitle: string | undefined;
+        depth: number;
+    }
+}
+
 export class InteractiveTaskContextImpl extends TaskContextImpl implements InteractiveTaskContext {
     private name: string;
     private subtitle: string | undefined;
@@ -9,8 +17,8 @@ export class InteractiveTaskContextImpl extends TaskContextImpl implements Inter
     private subtasks: InteractiveTaskContextImpl[] = [];
     private isRunning = true;
 
-    constructor({ name, subtitle, depth }: { name: string; subtitle: string | undefined; depth: number }) {
-        super();
+    constructor({ name, subtitle, depth, ...superArgs }: InteractiveTaskContextImpl.Init) {
+        super(superArgs);
         this.name = name;
         this.subtitle = subtitle;
         this.depth = depth;
@@ -25,9 +33,12 @@ export class InteractiveTaskContextImpl extends TaskContextImpl implements Inter
             name,
             subtitle,
             depth: this.depth + 1,
+            log: (content) => this.log(content),
+            logPrefix: `${this.logPrefix}${chalk.dim(`[${name}]`)} `,
         });
         this.subtasks.push(subtask);
         await run(subtask);
+        subtask.printLogs();
         subtask.finish();
     }
 
