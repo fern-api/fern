@@ -1,23 +1,23 @@
-import { TaskContext, TaskResult } from "@fern-api/task-context";
+import { TaskContext } from "@fern-api/task-context";
 import { validateWorkspace } from "@fern-api/validator";
 import { Workspace } from "@fern-api/workspace-loader";
+import validatePackageName from "validate-npm-package-name";
 import { logIssueInYaml } from "../../utils/logIssueInYaml";
 
-export async function validateWorkspaceAndLogIssues(workspace: Workspace, task: TaskContext): Promise<TaskResult> {
-    const violations = await validateWorkspace(workspace);
-    if (violations.length === 0) {
-        return TaskResult.Success;
+export async function validateWorkspaceAndLogIssues(workspace: Workspace, context: TaskContext): Promise<void> {
+    if (!validatePackageName(workspace.name).validForNewPackages) {
+        context.logger.error("Workspace name is not valid.");
+        context.fail();
     }
 
+    const violations = await validateWorkspace(workspace, context);
     for (const violation of violations) {
         logIssueInYaml({
             severity: violation.severity,
             relativeFilePath: violation.relativeFilePath,
             breadcrumbs: violation.nodePath,
             title: violation.message,
-            logger: task.logger,
+            logger: context.logger,
         });
     }
-
-    return TaskResult.Failure;
 }

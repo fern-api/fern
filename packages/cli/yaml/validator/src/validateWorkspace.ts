@@ -1,44 +1,40 @@
 import { entries, RelativeFilePath } from "@fern-api/core-utils";
+import { TaskContext } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import { ServiceFileSchema, visitFernYamlAst } from "@fern-api/yaml-schema";
-import validatePackageName from "validate-npm-package-name";
 import { createAstVisitorForRules } from "./createAstVisitorForRules";
 import { getAllRules } from "./getAllRules";
 import { ValidationViolation } from "./ValidationViolation";
 
-export async function validateWorkspace(workspace: Workspace): Promise<ValidationViolation[]> {
-    validateWorkspaceName(workspace.name);
-
+export async function validateWorkspace(workspace: Workspace, context: TaskContext): Promise<ValidationViolation[]> {
     const violations: ValidationViolation[] = [];
     for (const [relativeFilePath, contents] of entries(workspace.serviceFiles)) {
         const violationsForFile = await validateFernFile({
             workspace,
             relativeFilePath,
             contents,
+            context,
         });
         violations.push(...violationsForFile);
     }
     return violations;
 }
 
-function validateWorkspaceName(workspaceName: string) {
-    const { validForNewPackages } = validatePackageName(workspaceName);
-    if (!validForNewPackages) {
-        throw new Error(`Invalid workspace name: ${workspaceName}`);
-    }
-}
-
 async function validateFernFile({
     workspace,
     relativeFilePath,
     contents,
+    context,
 }: {
     workspace: Workspace;
     relativeFilePath: RelativeFilePath;
     contents: ServiceFileSchema;
+    context: TaskContext;
 }): Promise<ValidationViolation[]> {
     const violations: ValidationViolation[] = [];
-    const ruleRunners = await Promise.all(getAllRules().map((rule) => rule.create({ workspace })));
+    const ruleRunners = await Promise.all(
+        getAllRules().map((rule) => rule.create({ workspace, logger: context.logger }))
+    );
 
     const astVisitor = createAstVisitorForRules({
         relativeFilePath,

@@ -18,8 +18,8 @@ export class InteractiveTasks {
         clearInterval(this.interval);
     }
 
-    public addTask(task: InteractiveTaskContextImpl): void {
-        this.tasks.push(task);
+    public addTask(context: InteractiveTaskContextImpl): void {
+        this.tasks.push(context);
     }
 
     public prependAndRepaint(content: string): void {

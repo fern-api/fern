@@ -1,4 +1,5 @@
 import { AbsoluteFilePath, entries } from "@fern-api/core-utils";
+import { NOOP_LOGGER } from "@fern-api/logger";
 import { loadWorkspace } from "@fern-api/workspace-loader";
 import { visitFernYamlAst } from "@fern-api/yaml-schema";
 import { createAstVisitorForRules } from "../createAstVisitorForRules";
@@ -31,7 +32,7 @@ export async function getViolationsForRule({
         throw new Error("Failed to parse workspace: " + JSON.stringify(parseResult));
     }
 
-    const ruleRunner = await rule.create({ workspace: parseResult.workspace });
+    const ruleRunner = await rule.create({ workspace: parseResult.workspace, logger: NOOP_LOGGER });
     const violations: RuleViolation[] = [];
 
     for (const [relativeFilePath, contents] of entries(parseResult.workspace.serviceFiles)) {

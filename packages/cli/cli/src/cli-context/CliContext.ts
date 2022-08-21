@@ -92,33 +92,33 @@ export class CliContext {
         this.longestWorkspaceNameLength = Math.max(...workspaces.map((workspace) => workspace.name.length));
     }
 
-    public async runTask(run: (task: TaskContext) => TaskResult | Promise<TaskResult>): Promise<void> {
-        const task = new TaskContextImpl();
-        const result = await run(task);
-        await this.handleFinishedTask({ logs: task.getLogs(), result });
+    public async runTask(run: (context: TaskContext) => void | Promise<void>): Promise<void> {
+        const context = new TaskContextImpl();
+        await run(context);
+        await this.handleFinishedTask({ logs: context.getLogs(), result: context.getResult() });
     }
 
     public async runTaskForWorkspace(
         workspace: Workspace,
-        run: (task: TaskContext) => TaskResult | Promise<TaskResult>
+        run: (context: TaskContext) => void | Promise<void>
     ): Promise<void> {
-        const task = new TaskContextImpl();
-        const result = await run(task);
-        await this.handleFinishedWorkspaceTask({ workspace, task, result });
+        const context = new TaskContextImpl();
+        await run(context);
+        await this.handleFinishedWorkspaceTask({ workspace, context });
     }
 
     public async runInteractiveTaskForWorkspace(
         workspace: Workspace,
-        run: (task: InteractiveTaskContext) => TaskResult | Promise<TaskResult>
+        run: (context: InteractiveTaskContext) => void | Promise<void>
     ): Promise<void> {
-        const task = new InteractiveTaskContextImpl({
+        const context = new InteractiveTaskContextImpl({
             name: workspace.name,
             subtitle: undefined,
             depth: 0,
         });
-        this.interactiveTasks.addTask(task);
-        const result = await run(task);
-        await this.handleFinishedWorkspaceTask({ workspace, task, result });
+        this.interactiveTasks.addTask(context);
+        await run(context);
+        await this.handleFinishedWorkspaceTask({ workspace, context });
     }
 
     get logger(): Logger {
@@ -151,12 +151,10 @@ export class CliContext {
 
     private async handleFinishedWorkspaceTask({
         workspace,
-        task,
-        result,
+        context,
     }: {
         workspace: Workspace;
-        task: TaskContextImpl;
-        result: TaskResult;
+        context: TaskContextImpl;
     }): Promise<void> {
         const prefix = wrapWorkspaceNameForPrefix(workspace.name).padEnd(
             wrapWorkspaceNameForPrefix("X".repeat(this.longestWorkspaceNameLength)).length
@@ -164,11 +162,11 @@ export class CliContext {
         const colorForWorkspace = WORKSPACE_NAME_COLORS[this.numTasks++ % WORKSPACE_NAME_COLORS.length]!;
         const prefixWithColor = chalk.hex(colorForWorkspace)(prefix);
         await this.handleFinishedTask({
-            logs: task.getLogs().map((log) => ({
+            logs: context.getLogs().map((log) => ({
                 content: `${prefixWithColor}${log.content.replaceAll("\n", `\n${" ".repeat(prefix.length)}`)}`,
                 level: log.level,
             })),
-            result,
+            result: context.getResult(),
         });
     }
 

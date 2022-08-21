@@ -11,8 +11,8 @@ export async function validateWorkspaces({
 }): Promise<void> {
     await Promise.all(
         project.workspaces.map(async (workspace) => {
-            await cliContext.runTaskForWorkspace(workspace, async (task) => {
-                return validateWorkspaceAndLogIssues(workspace, task);
+            await cliContext.runTaskForWorkspace(workspace, async (context) => {
+                await validateWorkspaceAndLogIssues(workspace, context);
             });
         })
     );
