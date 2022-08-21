@@ -46,7 +46,6 @@ export async function loadProject({
         allWorkspaceDirectoryNames,
         cliContext,
     });
-    cliContext.registerWorkspaces(allWorkspaces);
 
     if (allWorkspaces.length === 0) {
         cliContext.logger.error(chalk.red("No APIs found."));
@@ -59,6 +58,8 @@ export async function loadProject({
         defaultToAllWorkspaces,
         cliContext,
     });
+
+    cliContext.registerWorkspaces(filteredWorkspaces);
 
     return {
         config: await loadProjectConfig({ directory: fernDirectory }),
@@ -117,8 +118,9 @@ async function maybeFilterWorkspaces({
                 })
                 .join("\n");
             cliContext.logger.error(message);
-            cliContext.fail();
+            await cliContext.failAndExit();
         }
+
         return [...allWorkspaces];
     }
 

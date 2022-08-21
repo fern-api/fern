@@ -5,7 +5,6 @@ import chalk from "chalk";
 import { CliEnvironment } from "./CliEnvironment";
 import { InteractiveTaskContextImpl } from "./InteractiveTaskContextImpl";
 import { InteractiveTasks } from "./InteractiveTasks";
-import { LogWithLevel } from "./LogWithLevel";
 import { TaskContextImpl } from "./TaskContextImpl";
 import { getFernCliUpgradeMessage } from "./upgrade-utils/getFernCliUpgradeMessage";
 
@@ -93,18 +92,20 @@ export class CliContext {
     }
 
     public async runTask(run: (context: TaskContext) => void | Promise<void>): Promise<void> {
-        const context = new TaskContextImpl();
+        const context = new TaskContextImpl({
+            log: (content) => this.log(content),
+        });
         await run(context);
-        await this.handleFinishedTask({ logs: context.getLogs(), result: context.getResult() });
+        await this.handleFinishedTask(context);
     }
 
     public async runTaskForWorkspace(
         workspace: Workspace,
         run: (context: TaskContext) => void | Promise<void>
     ): Promise<void> {
-        const context = new TaskContextImpl();
+        const context = new TaskContextImpl(this.constructTaskInitForWorkspace(workspace));
         await run(context);
-        await this.handleFinishedWorkspaceTask({ workspace, context });
+        await this.handleFinishedTask(context);
     }
 
     public async runInteractiveTaskForWorkspace(
@@ -112,13 +113,15 @@ export class CliContext {
         run: (context: InteractiveTaskContext) => void | Promise<void>
     ): Promise<void> {
         const context = new InteractiveTaskContextImpl({
+            ...this.constructTaskInitForWorkspace(workspace),
             name: workspace.name,
             subtitle: undefined,
             depth: 0,
         });
         this.interactiveTasks.addTask(context);
         await run(context);
-        await this.handleFinishedWorkspaceTask({ workspace, context });
+        context.finish();
+        await this.handleFinishedTask(context);
     }
 
     get logger(): Logger {
@@ -141,37 +144,32 @@ export class CliContext {
         };
     }
 
-    private async handleFinishedTask({ logs, result }: { logs: LogWithLevel[]; result: TaskResult }): Promise<void> {
-        if (result === TaskResult.Failure) {
+    private async handleFinishedTask(context: TaskContextImpl): Promise<void> {
+        if (context.getResult() === TaskResult.Failure) {
             this.didSucceed = false;
         }
-        const logStr = logs.map((log) => log.content).join("\n");
-        this.log(logStr + "\n");
+        context.printLogs();
     }
 
-    private async handleFinishedWorkspaceTask({
-        workspace,
-        context,
-    }: {
-        workspace: Workspace;
-        context: TaskContextImpl;
-    }): Promise<void> {
+    private constructTaskInitForWorkspace(workspace: Workspace): TaskContextImpl.Init {
         const prefix = wrapWorkspaceNameForPrefix(workspace.name).padEnd(
             wrapWorkspaceNameForPrefix("X".repeat(this.longestWorkspaceNameLength)).length
         );
         const colorForWorkspace = WORKSPACE_NAME_COLORS[this.numTasks++ % WORKSPACE_NAME_COLORS.length]!;
         const prefixWithColor = chalk.hex(colorForWorkspace)(prefix);
-        await this.handleFinishedTask({
-            logs: context.getLogs().map((log) => ({
-                content: `${prefixWithColor}${log.content.replaceAll("\n", `\n${" ".repeat(prefix.length)}`)}`,
-                level: log.level,
-            })),
-            result: context.getResult(),
-        });
+        return {
+            log: (content) => this.log(content),
+            logPrefix: prefixWithColor,
+        };
     }
 
     private log(content: string): void {
-        this.interactiveTasks.prependAndRepaint(content);
+        if (content.length > 0 && !content.endsWith("\n")) {
+            content += "\n";
+        }
+        this.interactiveTasks.repaint({
+            contentAbove: content,
+        });
     }
 }
 

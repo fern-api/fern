@@ -5,6 +5,8 @@
   "references": [
     { "path": "../../../../commons/core-utils" },
     { "path": "../../../config-management/generators-configuration" },
+    { "path": "../../../logger" },
+    { "path": "../../../task-context" },
     { "path": "../../../workspace-loader" }
   ]
 }

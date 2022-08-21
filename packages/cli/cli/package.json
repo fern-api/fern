@@ -59,6 +59,7 @@
     "latest-version": "^7.0.0",
     "ora": "^6.1.2",
     "semver-diff": "^4.0.0",
+    "strip-ansi": "^7.0.1",
     "validate-npm-package-name": "^4.0.0",
     "yargs": "^17.4.1",
     "zod": "^3.14.3"

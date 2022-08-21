@@ -16,18 +16,15 @@ export class InteractiveTasks {
 
     public finish(): void {
         clearInterval(this.interval);
+        this.repaint();
     }
 
     public addTask(context: InteractiveTaskContextImpl): void {
         this.tasks.push(context);
     }
 
-    public prependAndRepaint(content: string): void {
-        this.stream.write(this.clear() + content + "\n" + this.lastPaint);
-    }
-
-    private repaint(): void {
-        this.stream.write(this.clear() + this.paint());
+    public repaint({ contentAbove = "" }: { contentAbove?: string } = {}): void {
+        this.stream.write(this.clear() + contentAbove + this.paint());
     }
 
     private clear(): string {

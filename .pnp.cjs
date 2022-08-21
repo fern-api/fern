@@ -6314,6 +6314,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["ora", "npm:6.1.2"],\
             ["prettier", "npm:2.7.1"],\
             ["semver-diff", "npm:4.0.0"],\
+            ["strip-ansi", "npm:7.0.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
             ["validate-npm-package-name", "npm:4.0.0"],\
             ["yargs", "npm:17.5.1"],\
@@ -6753,6 +6754,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:7.18.6"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/generators-configuration", "workspace:packages/cli/config-management/generators-configuration"],\
+            ["@fern-api/logger", "workspace:packages/cli/logger"],\
+            ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.7"],\
             ["@fern-fern/ir-model", "npm:0.0.46"],\
@@ -6764,8 +6767,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.22.0"],\
             ["form-data", "npm:4.0.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
-            ["log-update", "npm:5.0.1"],\
-            ["ora", "npm:6.1.2"],\
             ["prettier", "npm:2.7.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
             ["url-join", "npm:5.0.0"]\
@@ -18175,18 +18176,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["cli-cursor", "npm:3.1.0"],\
             ["slice-ansi", "npm:4.0.0"],\
             ["wrap-ansi", "npm:6.2.0"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:5.0.1", {\
-          "packageLocation": "./.yarn/cache/log-update-npm-5.0.1-1e016d7086-2c6b47dcce.zip/node_modules/log-update/",\
-          "packageDependencies": [\
-            ["log-update", "npm:5.0.1"],\
-            ["ansi-escapes", "npm:5.0.0"],\
-            ["cli-cursor", "npm:4.0.0"],\
-            ["slice-ansi", "npm:5.0.0"],\
-            ["strip-ansi", "npm:7.0.1"],\
-            ["wrap-ansi", "npm:8.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\
