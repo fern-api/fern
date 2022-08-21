@@ -1,17 +1,10 @@
 import { AbsoluteFilePath, entries } from "@fern-api/core-utils";
+import { NOOP_LOGGER } from "@fern-api/logger";
 import { loadWorkspace } from "@fern-api/workspace-loader";
 import { visitFernYamlAst } from "@fern-api/yaml-schema";
+import stripAnsi from "strip-ansi";
 import { createAstVisitorForRules } from "../createAstVisitorForRules";
 import { Rule, RuleViolation } from "../Rule";
-
-const CHALK_ESCAPE_SEQUENCES = [
-    // bold:open
-    "\x1B\\[1m",
-    // bold:close
-    "\x1B\\[22m",
-];
-
-const CHALK_ESCAPE_SEQUENCES_REGEX = new RegExp(`${CHALK_ESCAPE_SEQUENCES.join("|")}`, "g");
 
 export declare namespace getViolationsForRule {
     export interface Args {
@@ -31,7 +24,7 @@ export async function getViolationsForRule({
         throw new Error("Failed to parse workspace: " + JSON.stringify(parseResult));
     }
 
-    const ruleRunner = await rule.create({ workspace: parseResult.workspace });
+    const ruleRunner = await rule.create({ workspace: parseResult.workspace, logger: NOOP_LOGGER });
     const violations: RuleViolation[] = [];
 
     for (const [relativeFilePath, contents] of entries(parseResult.workspace.serviceFiles)) {
@@ -48,6 +41,6 @@ export async function getViolationsForRule({
 
     return violations.map((violation) => ({
         ...violation,
-        message: violation.message.replaceAll(CHALK_ESCAPE_SEQUENCES_REGEX, ""),
+        message: stripAnsi(violation.message),
     }));
 }

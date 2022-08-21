@@ -5,19 +5,30 @@ import {
     ProjectConfigSchema,
     PROJECT_CONFIG_FILENAME,
 } from "@fern-api/project-configuration";
+import { TaskContext } from "@fern-api/task-context";
+import chalk from "chalk";
 import { mkdir, writeFile } from "fs/promises";
 import { createWorkspace } from "./createWorkspace";
 
 export async function initialize({
     organization,
-    latestVersionOfCli,
+    versionOfCli,
+    context,
 }: {
     organization: string;
-    latestVersionOfCli: string;
+    versionOfCli: string;
+    context: TaskContext;
 }): Promise<void> {
     const existingFernDirectory = await getFernDirectory();
     if (existingFernDirectory != null) {
-        throw new Error("Could not initialize fern because a .fern directory already exists: " + existingFernDirectory);
+        context.logger.error(
+            chalk.red(
+                `Could not initialize fern because a ${FERN_DIRECTORY} directory already exists: ` +
+                    existingFernDirectory
+            )
+        );
+        context.fail();
+        return;
     }
 
     const fernDirectory = join(cwd(), RelativeFilePath.of(FERN_DIRECTORY));
@@ -25,7 +36,7 @@ export async function initialize({
     await writeProjectConfig({
         filepath: join(fernDirectory, RelativeFilePath.of(PROJECT_CONFIG_FILENAME)),
         organization,
-        latestVersionOfCli,
+        versionOfCli,
     });
     await createWorkspace({
         directoryOfWorkspace: join(fernDirectory, RelativeFilePath.of("api")),
@@ -35,15 +46,15 @@ export async function initialize({
 async function writeProjectConfig({
     organization,
     filepath,
-    latestVersionOfCli,
+    versionOfCli,
 }: {
     organization: string;
     filepath: AbsoluteFilePath;
-    latestVersionOfCli: string;
+    versionOfCli: string;
 }): Promise<void> {
     const projectConfig: ProjectConfigSchema = {
         organization,
-        version: latestVersionOfCli,
+        version: versionOfCli,
     };
     await writeFile(filepath, JSON.stringify(projectConfig, undefined, 4));
 }

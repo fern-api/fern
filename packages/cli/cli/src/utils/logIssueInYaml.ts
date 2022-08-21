@@ -1,4 +1,5 @@
 import { RelativeFilePath } from "@fern-api/core-utils";
+import { Logger } from "@fern-api/logger";
 import chalk from "chalk";
 
 type Severity = "error" | "warning";
@@ -10,6 +11,7 @@ export declare namespace logIssueInYaml {
         breadcrumbs?: readonly (string | number)[];
         title: string;
         subtitle?: string;
+        logger: Logger;
     }
 }
 
@@ -19,14 +21,15 @@ export function logIssueInYaml({
     breadcrumbs = [],
     title,
     subtitle,
+    logger,
 }: logIssueInYaml.Args): void {
-    console.group(chalk[getColorForSeverity(severity)](title));
+    let str = "";
+    str += chalk[getColorForSeverity(severity)](title);
     if (subtitle != null) {
-        console.log(subtitle);
+        str += "\n" + chalk.dim(subtitle);
     }
-    console.log(chalk.blue([relativeFilePath, ...breadcrumbs].join(" -> ")));
-    console.log();
-    console.groupEnd();
+    str += "\n" + chalk.blue([relativeFilePath, ...breadcrumbs].join(" -> "));
+    logger.error(str);
 }
 
 function getColorForSeverity(severity: Severity) {

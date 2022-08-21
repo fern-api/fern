@@ -1,6 +1,19 @@
+import { CliContext } from "../../cli-context/CliContext";
 import { Project } from "../../loadProject";
 import { validateWorkspaceAndLogIssues } from "./validateWorkspaceAndLogIssues";
 
-export async function validateWorkspaces({ project }: { project: Project }): Promise<void> {
-    await Promise.all(project.workspaces.map((workspace) => validateWorkspaceAndLogIssues(workspace)));
+export async function validateWorkspaces({
+    project,
+    cliContext,
+}: {
+    project: Project;
+    cliContext: CliContext;
+}): Promise<void> {
+    await Promise.all(
+        project.workspaces.map(async (workspace) => {
+            await cliContext.runTaskForWorkspace(workspace, async (context) => {
+                await validateWorkspaceAndLogIssues(workspace, context);
+            });
+        })
+    );
 }

@@ -1,22 +1,25 @@
 import { assertNever, entries, RelativeFilePath } from "@fern-api/core-utils";
+import { Logger } from "@fern-api/logger";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { YAMLException } from "js-yaml";
 import { ZodIssue, ZodIssueCode } from "zod";
-import { logIssueInYaml } from "../../logger/logIssueInYaml";
+import { logIssueInYaml } from "../../utils/logIssueInYaml";
 
-export function handleFailedWorkspaceParserResult(result: WorkspaceLoader.FailedResult): void {
+export function handleFailedWorkspaceParserResult(result: WorkspaceLoader.FailedResult, logger: Logger): void {
     for (const [relativeFilePath, failure] of entries(result.failures)) {
-        handleWorkspaceParserFailureForFile({ relativeFilePath, failure });
+        handleWorkspaceParserFailureForFile({ relativeFilePath, failure, logger });
     }
 }
 
 function handleWorkspaceParserFailureForFile({
     relativeFilePath,
     failure,
+    logger,
 }: {
     relativeFilePath: RelativeFilePath;
     failure: WorkspaceLoader.Failure;
+    logger: Logger;
 }): void {
     switch (failure.type) {
         case WorkspaceLoaderFailureType.FILE_READ:
@@ -29,6 +32,7 @@ function handleWorkspaceParserFailureForFile({
                     relativeFilePath,
                     title: `Failed to parse YAML: ${failure.error.reason}`,
                     subtitle: failure.error.mark.snippet,
+                    logger,
                 });
             } else {
                 console.error("Failed to parse file", relativeFilePath);
@@ -43,6 +47,7 @@ function handleWorkspaceParserFailureForFile({
                         breadcrumbs: issue.path,
                         title,
                         subtitle,
+                        logger,
                     });
                 }
             }

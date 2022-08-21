@@ -87,5 +87,13 @@ module.exports = {
                 forbid: ["@fern-api/*/**"],
             },
         ],
+        "@typescript-eslint/no-base-to-string": "error",
+        eqeqeq: [
+            "error",
+            "always",
+            {
+                null: "never",
+            },
+        ],
     },
 };

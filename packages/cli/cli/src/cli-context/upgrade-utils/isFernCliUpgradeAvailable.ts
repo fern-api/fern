@@ -1,5 +1,5 @@
 import semverDiff from "semver-diff";
-import { CliEnvironment } from "../readCliEnvironment";
+import { CliEnvironment } from "../CliEnvironment";
 import { getLatestVersionOfCli } from "./getLatestVersionOfCli";
 
 export type FernCliUpgradeInfo = FernCliUpgradeAvailable | FernCliNoUpgradeAvailable;
