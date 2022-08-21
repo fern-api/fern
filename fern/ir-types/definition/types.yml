@@ -1,0 +1,84 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+types:
+  TypeDeclaration:
+    docs: "A type, which is a name and a shape"
+    extends: commons.WithDocs
+    properties:
+      name: DeclaredTypeName
+      shape: Type
+  DeclaredTypeName:
+    properties:
+      fernFilepath: commons.FernFilepath
+      name: string
+  Type:
+    union:
+      alias: AliasTypeDeclaration
+      enum: EnumTypeDeclaration
+      object: ObjectTypeDeclaration
+      union: UnionTypeDeclaration
+
+  AliasTypeDeclaration:
+    properties:
+      aliasOf: TypeReference
+
+  EnumTypeDeclaration:
+    properties:
+      values: list<EnumValue>
+  EnumValue:
+    extends: commons.WithDocs
+    properties:
+      name: commons.WireStringWithAllCasings
+      value: string
+
+  ObjectTypeDeclaration:
+    properties:
+      extends:
+        docs: "A list of other types to inherit from"
+        type: list<DeclaredTypeName>
+      properties: list<ObjectProperty>
+  ObjectProperty:
+    extends: commons.WithDocs
+    properties:
+      name: commons.WireStringWithAllCasings
+      valueType: TypeReference
+
+  UnionTypeDeclaration:
+    properties:
+      discriminant: string
+      types: list<SingleUnionType>
+  SingleUnionType:
+    extends: commons.WithDocs
+    properties:
+      discriminantValue: commons.WireStringWithAllCasings
+      valueType: TypeReference
+
+  TypeReference:
+    union:
+      container: ContainerType
+      named: DeclaredTypeName
+      primitive: PrimitiveType
+      unknown: {}
+      void: {}
+  ContainerType:
+    union:
+      list: TypeReference
+      map: MapType
+      optional: TypeReference
+      set: TypeReference
+  MapType:
+    properties:
+      keyType: TypeReference
+      valueType: TypeReference
+  PrimitiveType:
+    enum:
+      - INTEGER
+      - DOUBLE
+      - STRING
+      - BOOLEAN
+      - value: LONG
+        docs: "Within the range -2^53 to 2^53"
+      - DATE_TIME
+      - UUID

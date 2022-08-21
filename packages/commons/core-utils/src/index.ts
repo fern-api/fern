@@ -1,4 +1,4 @@
-export { assertNever } from "./assertNever";
+export { assertNever, assertNeverNoThrow } from "./assertNever";
 export { delay } from "./delay/delay";
 export { withMinimumTime } from "./delay/withMinimumTime";
 export * from "./fs-utils";

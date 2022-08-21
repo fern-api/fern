@@ -5,10 +5,11 @@ import { InteractiveTaskContextImpl } from "./InteractiveTaskContextImpl";
 export class InteractiveTasks {
     private tasks: InteractiveTaskContextImpl[] = [];
     private lastPaint = "";
-    private spinner = ora();
+    private spinner = ora({ spinner: "dots11" });
     private interval: NodeJS.Timeout;
 
     constructor(private readonly stream: NodeJS.WriteStream) {
+        this.paint();
         this.interval = setInterval(() => {
             this.repaint();
         }, getSpinnerInterval(this.spinner));
@@ -28,7 +29,7 @@ export class InteractiveTasks {
     }
 
     private clear(): string {
-        return ansiEscapes.eraseLines(this.lastPaint.length > 0 ? this.lastPaint.split("\n").length : 0);
+        return ansiEscapes.eraseLines(this.lastPaint.length > 0 ? countLines(this.lastPaint) : 0);
     }
 
     private paint(): string {
@@ -48,4 +49,8 @@ function getSpinnerInterval(spinner: Ora) {
     } else {
         return 100;
     }
+}
+
+function countLines(str: string): number {
+    return [...str].filter((char) => char === "\n").length + 1;
 }

@@ -1,64 +1,87 @@
-import { CreateInteractiveTaskParams, InteractiveTaskContext, TaskResult } from "@fern-api/task-context";
+import {
+    CreateInteractiveTaskParams,
+    FinishableInteractiveTaskContext,
+    InteractiveTaskContext,
+    TaskResult,
+} from "@fern-api/task-context";
 import chalk from "chalk";
+import { addPrefixToLog } from "./addPrefixToLog";
 import { TaskContextImpl } from "./TaskContextImpl";
 
 export declare namespace InteractiveTaskContextImpl {
     export interface Init extends TaskContextImpl.Init {
         name: string;
         subtitle: string | undefined;
-        depth: number;
     }
 }
 
-export class InteractiveTaskContextImpl extends TaskContextImpl implements InteractiveTaskContext {
+export class InteractiveTaskContextImpl extends TaskContextImpl implements FinishableInteractiveTaskContext {
     private name: string;
     private subtitle: string | undefined;
-    private depth: number;
     private subtasks: InteractiveTaskContextImpl[] = [];
     private isRunning = true;
 
-    constructor({ name, subtitle, depth, ...superArgs }: InteractiveTaskContextImpl.Init) {
+    constructor({ name, subtitle, ...superArgs }: InteractiveTaskContextImpl.Init) {
         super(superArgs);
         this.name = name;
         this.subtitle = subtitle;
-        this.depth = depth;
     }
 
     public setSubtitle(subtitle: string | undefined): void {
         this.subtitle = subtitle;
     }
 
-    public async addInteractiveTask({ name, subtitle, run }: CreateInteractiveTaskParams): Promise<void> {
+    public addInteractiveTask({ name, subtitle }: CreateInteractiveTaskParams): FinishableInteractiveTaskContext {
         const subtask = new InteractiveTaskContextImpl({
             name,
             subtitle,
-            depth: this.depth + 1,
             log: (content) => this.log(content),
             logPrefix: `${this.logPrefix}${chalk.dim(`[${name}]`)} `,
         });
         this.subtasks.push(subtask);
+        return subtask;
+    }
+
+    public finish(): void {
+        this.printLogs();
+        this.isRunning = false;
+    }
+
+    public isFinished(): boolean {
+        return !this.isRunning;
+    }
+
+    public async runInteractiveTask(
+        params: CreateInteractiveTaskParams,
+        run: (context: InteractiveTaskContext) => void | Promise<void>
+    ): Promise<void> {
+        const subtask = this.addInteractiveTask(params);
         await run(subtask);
-        subtask.printLogs();
         subtask.finish();
     }
 
     public print({ spinner }: { spinner: string }): string {
-        const headerParts = [" ".repeat(this.depth * 2), this.getIcon({ spinner }), this.name];
+        const lines = [this.name];
         if (this.subtitle != null) {
-            headerParts.push(chalk.dim(this.subtitle));
+            lines.push(chalk.dim(this.subtitle));
         }
-        return [headerParts.join(" "), ...this.subtasks.map((subtask) => subtask.print({ spinner }))].join("\n");
+        lines.push(...this.subtasks.map((subtask) => subtask.print({ spinner })));
+
+        return addPrefixToLog({
+            prefix: `${this.getIcon({ spinner }).padEnd(spinner.length)} `,
+            content: lines.join("\n"),
+        });
     }
 
     private getIcon({ spinner }: { spinner: string }): string {
-        if (this.isRunning) {
+        if (!this.isFinished()) {
             return spinner;
         }
         switch (this.getResult()) {
             case TaskResult.Success:
-                return "✅";
+                return chalk.green("✓");
             case TaskResult.Failure:
-                return "❌";
+                return chalk.red("x");
         }
     }
 
@@ -72,9 +95,5 @@ export class InteractiveTaskContextImpl extends TaskContextImpl implements Inter
             }
         }
         return TaskResult.Success;
-    }
-
-    public finish(): void {
-        this.isRunning = false;
     }
 }

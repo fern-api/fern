@@ -1,6 +1,6 @@
 import { Logger, LogLevel } from "@fern-api/logger";
 import { TaskContext, TaskResult } from "@fern-api/task-context";
-import stripAnsi from "strip-ansi";
+import { addPrefixToLog } from "./addPrefixToLog";
 import { LogWithLevel } from "./LogWithLevel";
 
 export declare namespace TaskContextImpl {
@@ -30,11 +30,13 @@ export class TaskContextImpl implements TaskContext {
     }
 
     public printLogs(): void {
-        const prefixLength = stripAnsi(this.logPrefix).length;
         const str = this.logs
             .map((log) => {
                 return {
-                    content: `${this.logPrefix}${log.content.replaceAll("\n", `\n${" ".repeat(prefixLength)}`)}`,
+                    content: addPrefixToLog({
+                        prefix: this.logPrefix,
+                        content: log.content,
+                    }),
                     level: log.level,
                 };
             })

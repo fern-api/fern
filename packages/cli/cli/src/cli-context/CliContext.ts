@@ -116,7 +116,6 @@ export class CliContext {
             ...this.constructTaskInitForWorkspace(workspace),
             name: workspace.name,
             subtitle: undefined,
-            depth: 0,
         });
         this.interactiveTasks.addTask(context);
         await run(context);

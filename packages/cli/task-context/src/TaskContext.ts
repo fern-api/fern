@@ -7,13 +7,21 @@ export interface TaskContext {
 
 export interface InteractiveTaskContext extends TaskContext {
     readonly setSubtitle: (subtitle: string | undefined) => void;
-    readonly addInteractiveTask: (params: CreateInteractiveTaskParams) => Promise<void>;
+    readonly addInteractiveTask: (params: CreateInteractiveTaskParams) => FinishableInteractiveTaskContext;
+    readonly runInteractiveTask: (
+        params: CreateInteractiveTaskParams,
+        run: (context: InteractiveTaskContext) => void | Promise<void>
+    ) => Promise<void>;
+}
+
+export interface FinishableInteractiveTaskContext extends InteractiveTaskContext {
+    finish: () => void;
+    isFinished: () => boolean;
 }
 
 export interface CreateInteractiveTaskParams {
     name: string;
     subtitle?: string;
-    run: (context: InteractiveTaskContext) => void | Promise<void>;
 }
 
 export enum TaskResult {
