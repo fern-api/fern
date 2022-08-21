@@ -1,4 +1,4 @@
-export { type FernAstNodeTypes } from "./ast/FernAstVisitor";
+export { type FernAstNodeTypes, type FernAstNodeVisitor, type FernAstVisitor } from "./ast/FernAstVisitor";
 export { type NodePath } from "./ast/NodePath";
 export { visitFernYamlAst } from "./ast/visitFernYamlAst";
 export { RAW_DEFAULT_ID_TYPE } from "./ast/visitors/visitIds";

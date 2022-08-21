@@ -4,7 +4,7 @@ module.exports = {
         browser: true,
         es2021: true,
     },
-    plugins: ["@typescript-eslint", "jest", "@blueprintjs", "deprecation"],
+    plugins: ["@typescript-eslint", "jest", "@blueprintjs", "deprecation", "import"],
     extends: [
         "eslint:recommended",
         "plugin:@typescript-eslint/strict",
@@ -81,6 +81,12 @@ module.exports = {
         "@typescript-eslint/no-unused-vars": "off",
         "@typescript-eslint/prefer-optional-chain": "off",
         "deprecation/deprecation": "error",
+        "import/no-internal-modules": [
+            "error",
+            {
+                forbid: ["@fern-api/*/**"],
+            },
+        ],
         "@typescript-eslint/no-base-to-string": "error",
         eqeqeq: [
             "error",
