@@ -1,5 +1,5 @@
 import { entries } from "@fern-api/core-utils";
-import { InteractiveTaskContext } from "@fern-api/task-context";
+import { TaskContext } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import { CreateJobResponse, RemoteGenTaskId } from "@fern-fern/fiddle-coordinator-api-client/model/remoteGen";
 import { RemoteTaskHandler } from "./RemoteTaskHandler";
@@ -14,7 +14,7 @@ export function pollJobAndReportStatus({
 }: {
     job: CreateJobResponse;
     workspace: Workspace;
-    context: InteractiveTaskContext;
+    context: TaskContext;
 }): Promise<void> {
     let numConsecutiveFailed = 0;
     const taskHandlers = job.taskIds.reduce<Record<RemoteGenTaskId, RemoteTaskHandler>>((acc, taskId, index) => {

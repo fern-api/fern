@@ -1,14 +1,16 @@
 import ansiEscapes from "ansi-escapes";
 import ora, { Ora } from "ora";
-import { InteractiveTaskContextImpl } from "./InteractiveTaskContextImpl";
+import { addPrefixToLog } from "./addPrefixToLog";
+import { TaskContextImpl } from "./TaskContextImpl";
 
-export class InteractiveTasks {
-    private tasks: InteractiveTaskContextImpl[] = [];
+export class InteractiveTaskManager {
+    private tasks: TaskContextImpl[] = [];
     private lastPaint = "";
     private spinner = ora({ spinner: "dots11" });
     private interval: NodeJS.Timeout;
 
     constructor(private readonly stream: NodeJS.WriteStream) {
+        stream.write(ansiEscapes.cursorHide);
         this.paint();
         this.interval = setInterval(() => {
             this.repaint();
@@ -18,9 +20,10 @@ export class InteractiveTasks {
     public finish(): void {
         clearInterval(this.interval);
         this.repaint();
+        this.stream.write(ansiEscapes.cursorShow);
     }
 
-    public addTask(context: InteractiveTaskContextImpl): void {
+    public registerTask(context: TaskContextImpl): void {
         this.tasks.push(context);
     }
 
@@ -34,10 +37,27 @@ export class InteractiveTasks {
 
     private paint(): string {
         const spinnerFrame = this.spinner.frame();
-        let paint = "";
+
+        const taskLines = [];
         for (const task of this.tasks) {
-            paint += task.print({ spinner: spinnerFrame }) + "\n";
+            const paintForTask = task.printInteractiveTasks({ spinner: spinnerFrame });
+            if (paintForTask.length > 0) {
+                taskLines.push(paintForTask);
+            }
         }
+
+        if (taskLines.length === 0) {
+            return "";
+        }
+
+        const paint =
+            [
+                "┌─",
+                ...taskLines.map((taskLine) =>
+                    addPrefixToLog({ content: taskLine, prefix: "│ ", includePrefixOnAllLines: true })
+                ),
+                "└─",
+            ].join("\n") + "\n";
         this.lastPaint = paint;
         return paint;
     }

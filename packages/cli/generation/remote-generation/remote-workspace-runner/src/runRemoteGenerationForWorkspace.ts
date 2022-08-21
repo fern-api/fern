@@ -1,4 +1,4 @@
-import { InteractiveTaskContext } from "@fern-api/task-context";
+import { TaskContext } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
 import { createAndStartJob } from "./createAndStartJob";
@@ -13,7 +13,7 @@ export async function runRemoteGenerationForWorkspace({
     organization: string;
     workspace: Workspace;
     intermediateRepresentation: IntermediateRepresentation;
-    context: InteractiveTaskContext;
+    context: TaskContext;
 }): Promise<void> {
     if (workspace.generatorsConfiguration.generators.length === 0) {
         context.logger.warn("No generators specified.");

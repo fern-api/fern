@@ -17,10 +17,12 @@ export async function generateIrForWorkspaces({
     await Promise.all(
         project.workspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                const intermediateRepresentation = await generateIrForWorkspace({ workspace, cliContext });
-                const irOutputFilePath = path.resolve(irFilepath);
-                await writeFile(irOutputFilePath, JSON.stringify(intermediateRepresentation, undefined, 4));
-                context.logger.info(`Wrote IR to ${irOutputFilePath}`);
+                const intermediateRepresentation = await generateIrForWorkspace({ workspace, context });
+                if (intermediateRepresentation != null) {
+                    const irOutputFilePath = path.resolve(irFilepath);
+                    await writeFile(irOutputFilePath, JSON.stringify(intermediateRepresentation, undefined, 4));
+                    context.logger.info(`Wrote IR to ${irOutputFilePath}`);
+                }
             });
         })
     );
