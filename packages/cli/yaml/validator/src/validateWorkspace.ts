@@ -41,6 +41,9 @@ async function validateFernFile({
         contents,
         ruleRunners,
         addViolations: (newViolations: ValidationViolation[]) => {
+            if (newViolations.length > 0) {
+                context.fail();
+            }
             violations.push(...newViolations);
         },
     });
