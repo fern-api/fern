@@ -27,6 +27,8 @@
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/generators-configuration": "workspace:*",
+    "@fern-api/logger": "workspace:*",
+    "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/fiddle-coordinator-api-client": "^0.0.7",
     "@fern-fern/ir-model": "0.0.46",

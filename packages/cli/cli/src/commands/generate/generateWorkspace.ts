@@ -18,6 +18,7 @@ export async function generateWorkspace({
     cliContext: CliContext;
 }): Promise<void> {
     const intermediateRepresentation = await generateIrForWorkspace({ workspace, cliContext });
+    await cliContext.exitIfFailed();
     if (runLocal) {
         await runLocalGenerationForWorkspace({
             organization,
@@ -26,10 +27,13 @@ export async function generateWorkspace({
             keepDocker,
         });
     } else {
-        await runRemoteGenerationForWorkspace({
-            workspace,
-            intermediateRepresentation,
-            organization,
+        await cliContext.runInteractiveTaskForWorkspace(workspace, async (context) => {
+            await runRemoteGenerationForWorkspace({
+                workspace,
+                intermediateRepresentation,
+                organization,
+                context,
+            });
         });
     }
 }

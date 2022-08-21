@@ -117,8 +117,9 @@ async function maybeFilterWorkspaces({
                 })
                 .join("\n");
             cliContext.logger.error(message);
-            cliContext.fail();
+            await cliContext.failAndExit();
         }
+
         return [...allWorkspaces];
     }
 

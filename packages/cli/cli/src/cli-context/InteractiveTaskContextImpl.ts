@@ -1,4 +1,4 @@
-import { CreateInteractiveTaskParams, InteractiveTaskContext } from "@fern-api/task-context";
+import { CreateInteractiveTaskParams, InteractiveTaskContext, TaskResult } from "@fern-api/task-context";
 import chalk from "chalk";
 import { TaskContextImpl } from "./TaskContextImpl";
 
@@ -7,6 +7,7 @@ export class InteractiveTaskContextImpl extends TaskContextImpl implements Inter
     private subtitle: string | undefined;
     private depth: number;
     private subtasks: InteractiveTaskContextImpl[] = [];
+    private isRunning = true;
 
     constructor({ name, subtitle, depth }: { name: string; subtitle: string | undefined; depth: number }) {
         super();
@@ -27,12 +28,42 @@ export class InteractiveTaskContextImpl extends TaskContextImpl implements Inter
         });
         this.subtasks.push(subtask);
         await run(subtask);
+        subtask.finish();
     }
 
     public print({ spinner }: { spinner: string }): string {
-        return [
-            `${spinner} ${this.name} ${chalk.dim(this.subtitle)}`.padStart(this.depth * 2),
-            ...this.subtasks.map((subtask) => subtask.print({ spinner })),
-        ].join("\n");
+        const headerParts = [" ".repeat(this.depth * 2), this.getIcon({ spinner }), this.name];
+        if (this.subtitle != null) {
+            headerParts.push(chalk.dim(this.subtitle));
+        }
+        return [headerParts.join(" "), ...this.subtasks.map((subtask) => subtask.print({ spinner }))].join("\n");
+    }
+
+    private getIcon({ spinner }: { spinner: string }): string {
+        if (this.isRunning) {
+            return spinner;
+        }
+        switch (this.getResult()) {
+            case TaskResult.Success:
+                return "✅";
+            case TaskResult.Failure:
+                return "❌";
+        }
+    }
+
+    public getResult(): TaskResult {
+        if (this.result === TaskResult.Failure) {
+            return TaskResult.Failure;
+        }
+        for (const subtask of this.subtasks) {
+            if (subtask.getResult() === TaskResult.Failure) {
+                return TaskResult.Failure;
+            }
+        }
+        return TaskResult.Success;
+    }
+
+    public finish(): void {
+        this.isRunning = false;
     }
 }

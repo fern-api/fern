@@ -16,6 +16,7 @@ export class InteractiveTasks {
 
     public finish(): void {
         clearInterval(this.interval);
+        this.repaint();
     }
 
     public addTask(context: InteractiveTaskContextImpl): void {

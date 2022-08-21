@@ -3,7 +3,7 @@ import { TaskContext, TaskResult } from "@fern-api/task-context";
 import { LogWithLevel } from "./LogWithLevel";
 
 export class TaskContextImpl implements TaskContext {
-    private result = TaskResult.Success;
+    protected result = TaskResult.Success;
 
     public fail(): void {
         this.result = TaskResult.Failure;

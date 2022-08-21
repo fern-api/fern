@@ -118,6 +118,7 @@ export class CliContext {
         });
         this.interactiveTasks.addTask(context);
         await run(context);
+        context.finish();
         await this.handleFinishedWorkspaceTask({ workspace, context });
     }
 
