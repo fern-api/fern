@@ -71,11 +71,11 @@ function addInitCommand(cli: Argv, cliContext: CliContext) {
             }),
         async (argv) => {
             const organization = argv.organization ?? (await askForOrganization());
-            await cliContext.runTask(async (task) =>
+            await cliContext.runTask(async (context) =>
                 initialize({
                     organization,
                     versionOfCli: await getLatestVersionOfCli(cliContext.environment),
-                    task,
+                    context,
                 })
             );
         }

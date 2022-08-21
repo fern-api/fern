@@ -1,13 +1,18 @@
 import { Logger, LogLevel } from "@fern-api/logger";
-import { TaskContext } from "@fern-api/task-context";
-import { InteractiveTaskContextImpl } from "./InteractiveTaskContextImpl";
+import { TaskContext, TaskResult } from "@fern-api/task-context";
 import { LogWithLevel } from "./LogWithLevel";
 
-export type Subtask =
-    | { isInteractive: false; task: TaskContextImpl }
-    | { isInteractive: true; task: InteractiveTaskContextImpl };
-
 export class TaskContextImpl implements TaskContext {
+    private result = TaskResult.Success;
+
+    public fail(): void {
+        this.result = TaskResult.Failure;
+    }
+
+    public getResult(): TaskResult {
+        return this.result;
+    }
+
     private logs: LogWithLevel[] = [];
     public getLogs(): LogWithLevel[] {
         return this.logs;

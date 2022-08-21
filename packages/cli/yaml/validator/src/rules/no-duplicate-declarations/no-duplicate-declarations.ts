@@ -11,7 +11,7 @@ type Declarations = Record<RelativeDirectoryPath, Record<DeclaredName, RelativeF
 
 export const NoDuplicateDeclarationsRule: Rule = {
     name: "no-duplicate-declarations",
-    create: async ({ workspace }) => {
+    create: async ({ workspace, logger }) => {
         const declarations = await getDeclarations(workspace);
 
         const getRuleViolations = ({
@@ -24,9 +24,10 @@ export const NoDuplicateDeclarationsRule: Rule = {
             const relativeDirectoryPath: RelativeDirectoryPath = path.dirname(relativeFilePath);
             const declarationsForName = declarations[relativeDirectoryPath]?.[declaredName];
             if (declarationsForName == null) {
-                throw new Error(
+                logger.error(
                     `Could not find declarations for name: ${declaredName}. This is an error in the Fern validator.`
                 );
+                return [];
             }
 
             const indexOfThisDeclarations = declarationsForName.indexOf(relativeFilePath);
