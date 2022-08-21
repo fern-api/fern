@@ -1,4 +1,5 @@
-import { Logger, LogLevel, TaskContext } from "@fern-api/task-context";
+import { Logger, LogLevel } from "@fern-api/logger";
+import { TaskContext } from "@fern-api/task-context";
 import { InteractiveTaskContextImpl } from "./InteractiveTaskContextImpl";
 import { LogWithLevel } from "./LogWithLevel";
 

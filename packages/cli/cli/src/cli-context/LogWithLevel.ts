@@ -1,4 +1,4 @@
-import { LogLevel } from "@fern-api/task-context";
+import { LogLevel } from "@fern-api/logger";
 
 export interface LogWithLevel {
     content: string;

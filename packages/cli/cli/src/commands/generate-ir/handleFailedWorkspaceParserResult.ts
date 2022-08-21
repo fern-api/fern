@@ -1,5 +1,5 @@
 import { assertNever, entries, RelativeFilePath } from "@fern-api/core-utils";
-import { Logger } from "@fern-api/task-context";
+import { Logger } from "@fern-api/logger";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { YAMLException } from "js-yaml";
