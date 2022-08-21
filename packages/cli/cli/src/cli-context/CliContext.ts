@@ -17,7 +17,8 @@ export class CliContext {
     private didSucceed = true;
 
     private numTasks = 0;
-    private interactiveTaskManager = new InteractiveTaskManager(process.stdout);
+    private stream = process.stdout;
+    private interactiveTaskManager = new InteractiveTaskManager(this.stream);
 
     constructor() {
         const packageName = this.getPackageName();
@@ -75,7 +76,7 @@ export class CliContext {
         if (!this.suppressUpgradeMessage) {
             const upgradeMessage = await getFernCliUpgradeMessage(this.environment);
             if (upgradeMessage != null) {
-                console.log(upgradeMessage);
+                this.stream.write(upgradeMessage);
             }
         }
         this.exit();
