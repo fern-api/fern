@@ -10,7 +10,6 @@ export class InteractiveTaskManager {
     private interval: NodeJS.Timeout;
 
     constructor(private readonly stream: NodeJS.WriteStream) {
-        stream.write(ansiEscapes.cursorHide);
         this.paint();
         this.interval = setInterval(() => {
             this.repaint();
@@ -20,7 +19,6 @@ export class InteractiveTaskManager {
     public finish(): void {
         clearInterval(this.interval);
         this.repaint();
-        this.stream.write(ansiEscapes.cursorShow);
     }
 
     public registerTask(context: TaskContextImpl): void {
