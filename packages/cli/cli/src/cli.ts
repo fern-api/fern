@@ -16,9 +16,9 @@ import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
 import { loadProject } from "./loadProject";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 
-void runCli();
+void tryRunCli();
 
-async function runCli() {
+async function tryRunCli() {
     const cliContext = new CliContext();
 
     process.stdout.write(ansiEscapes.cursorHide);
@@ -28,6 +28,16 @@ async function runCli() {
     };
     process.on("SIGINT", exit);
 
+    try {
+        await runCli(cliContext);
+    } catch (error) {
+        cliContext.fail(error instanceof Error ? error.stack ?? error.message : JSON.stringify(error));
+    } finally {
+        await exit();
+    }
+}
+
+async function runCli(cliContext: CliContext) {
     const fernDirectory = await getFernDirectory();
     const versionOfCliToRun =
         fernDirectory != null
@@ -63,11 +73,7 @@ async function runCli() {
         },
     });
 
-    try {
-        await cli.parse();
-    } finally {
-        await exit();
-    }
+    await cli.parse();
 }
 
 function addInitCommand(cli: Argv, cliContext: CliContext) {
