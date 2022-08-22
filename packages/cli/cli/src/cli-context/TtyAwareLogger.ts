@@ -38,12 +38,10 @@ export class TtyAwareLogger {
 
     public log(logs: Log[]): void {
         for (const { content, omitOnTTY } of logs) {
-            if (this.isTTY) {
-                if (!omitOnTTY) {
-                    this.stream.write(this.clear() + content + this.lastPaint);
-                }
-            } else {
+            if (!this.isTTY) {
                 this.stream.write(content);
+            } else if (!omitOnTTY) {
+                this.stream.write(this.clear() + content + this.lastPaint);
             }
         }
     }
