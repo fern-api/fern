@@ -1,7 +1,8 @@
-import { Logger, LogLevel } from "@fern-api/logger";
+import { Logger, LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import { TaskContext, TaskResult, TASK_FAILURE } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
+import { ArgumentsCamelCase } from "yargs";
 import { CliEnvironment } from "./CliEnvironment";
 import { InteractiveTaskManager } from "./InteractiveTaskManager";
 import { LogWithLevel } from "./LogWithLevel";
@@ -9,6 +10,10 @@ import { TaskContextImpl } from "./TaskContextImpl";
 import { getFernCliUpgradeMessage } from "./upgrade-utils/getFernCliUpgradeMessage";
 
 const WORKSPACE_NAME_COLORS = ["#2E86AB", "#A23B72", "#F18F01", "#C73E1D", "#CCE2A3"];
+
+export interface GlobalCliOptions {
+    "log-level": LogLevel;
+}
 
 export class CliContext {
     public readonly environment: CliEnvironment;
@@ -20,6 +25,8 @@ export class CliContext {
     private numTasks = 0;
     private stream = process.stdout;
     private interactiveTaskManager = new InteractiveTaskManager(this.stream);
+
+    private logLevel: LogLevel = LogLevel.Info;
 
     constructor() {
         const packageName = this.getPackageName();
@@ -54,6 +61,10 @@ export class CliContext {
             this.logger.error("CLI_NAME is not defined");
         }
         return process.env.CLI_NAME;
+    }
+
+    public processArgv(argv: ArgumentsCamelCase<GlobalCliOptions>): void {
+        this.logLevel = argv.logLevel;
     }
 
     public fail(message?: string): TASK_FAILURE {
@@ -178,20 +189,27 @@ export class CliContext {
         if (logs.length === 0) {
             return;
         }
-        const str = logs
-            .map(({ content, level }) => {
-                const trimmed = content.trim() + "\n";
-                switch (level) {
-                    case LogLevel.Error:
-                        return chalk.red(trimmed);
-                    case LogLevel.Warn:
-                        return chalk.hex("FFA500")(trimmed);
-                    case LogLevel.Debug:
-                    case LogLevel.Info:
-                        return trimmed;
-                }
-            })
-            .join("\n");
+        const str =
+            logs
+                .reduce<string[]>((filtered, { content, level }) => {
+                    const shouldIncludeLogLevel = LOG_LEVELS.indexOf(level) >= LOG_LEVELS.indexOf(this.logLevel);
+                    if (shouldIncludeLogLevel) {
+                        const trimmed = content.trim();
+                        switch (level) {
+                            case LogLevel.Error:
+                                filtered.push(chalk.red(trimmed));
+                                break;
+                            case LogLevel.Warn:
+                                filtered.push(chalk.hex("FFA500")(trimmed));
+                                break;
+                            case LogLevel.Debug:
+                            case LogLevel.Info:
+                                filtered.push(trimmed);
+                        }
+                    }
+                    return filtered;
+                }, [])
+                .join("\n") + "\n";
 
         this.interactiveTaskManager.repaint({
             contentAbove: str,
