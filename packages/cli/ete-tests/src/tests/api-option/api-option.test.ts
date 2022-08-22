@@ -21,12 +21,21 @@ function testFixture(fixtureName: string) {
             expect(stdout).toContain("There are multiple workspaces. You must specify one with --api");
         }, 90_000);
 
-        // eslint-disable-next-line jest/expect-expect
         it("Succeeds if API is specified", async () => {
             const fixturePath = path.join(FIXTURES_DIR, fixtureName);
-            await runFernCli(["--api", "my-api-1", "ir", "--output", (await tmp.file()).path], {
+            const { exitCode } = await runFernCli(["--api", "api1", "ir", "--output", (await tmp.file()).path], {
                 cwd: fixturePath,
             });
+            expect(exitCode).toBe(0);
+        }, 90_000);
+
+        it("Fail if API does not exist", async () => {
+            const fixturePath = path.join(FIXTURES_DIR, fixtureName);
+            const { exitCode } = await runFernCli(["--api", "api3", "ir", "--output", (await tmp.file()).path], {
+                cwd: fixturePath,
+                reject: false,
+            });
+            expect(exitCode).not.toBe(0);
         }, 90_000);
     });
 }
