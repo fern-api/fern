@@ -23,7 +23,7 @@ function handleWorkspaceParserFailureForFile({
 }): void {
     switch (failure.type) {
         case WorkspaceLoaderFailureType.FILE_READ:
-            console.error("Failed to open file", relativeFilePath);
+            logger.error("Failed to open file: " + relativeFilePath);
             break;
         case WorkspaceLoaderFailureType.FILE_PARSE:
             if (failure.error instanceof YAMLException) {
@@ -35,7 +35,7 @@ function handleWorkspaceParserFailureForFile({
                     logger,
                 });
             } else {
-                console.error("Failed to parse file", relativeFilePath);
+                logger.error("Failed to parse file: " + relativeFilePath);
             }
             break;
         case WorkspaceLoaderFailureType.STRUCTURE_VALIDATION:

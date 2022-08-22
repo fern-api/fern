@@ -10,7 +10,7 @@ import {
     RemoteGenTaskId,
     Task,
 } from "@fern-fern/fiddle-coordinator-api-client/model/remoteGen";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import chalk from "chalk";
 import { createWriteStream } from "fs";
 import urlJoin from "url-join";
@@ -113,6 +113,7 @@ export class RemoteTaskHandler {
                     jobId: this.job.jobId,
                     taskId: this.taskId,
                     absolutePathToLocalOutput: this.generatorInvocation.generate.absolutePathToLocalOutput,
+                    context: this.context,
                 });
                 this.context.finish();
             } catch {
@@ -126,10 +127,12 @@ async function downloadFilesForTask({
     jobId,
     taskId,
     absolutePathToLocalOutput,
+    context,
 }: {
     jobId: RemoteGenJobId;
     taskId: RemoteGenTaskId;
     absolutePathToLocalOutput: AbsoluteFilePath;
+    context: FinishableInteractiveTaskContext;
 }) {
     const writer = createWriteStream(absolutePathToLocalOutput);
     await axios
@@ -138,13 +141,9 @@ async function downloadFilesForTask({
         })
         .then((response) => {
             response.data.pipe(writer);
-            console.log("Downloaded Postman collection to: " + chalk.bold(absolutePathToLocalOutput));
+            context.logger.info(chalk.green("Downloaded: " + absolutePathToLocalOutput));
         })
-        .catch((error) => {
-            console.error(
-                "Failed to download.",
-                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                (error as AxiosError).message ?? "<unknown error>"
-            );
+        .catch(() => {
+            context.fail("Failed to download: " + absolutePathToLocalOutput);
         });
 }

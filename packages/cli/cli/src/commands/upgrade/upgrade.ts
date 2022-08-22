@@ -21,7 +21,7 @@ export async function upgrade({ project, cliContext }: { project: Project; cliCo
             chalk.dim(" {currentVersion}") +
             chalk.reset(" → ") +
             chalk.green("{latestVersion}");
-        console.log(message);
+        cliContext.logger.info(message);
         await rerunFernCliAtVersion({
             version: fernCliUpgradeInfo.latestVersion,
             cliEnvironment: cliContext.environment,
