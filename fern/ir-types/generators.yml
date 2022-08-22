@@ -1,0 +1,6 @@
+generators:
+  - name: fernapi/fern-typescript
+    version: 0.0.193
+    generate: true
+    config:
+      mode: client-v2
