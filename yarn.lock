@@ -3035,7 +3035,6 @@ __metadata:
     "@types/jest": ^28.1.7
     "@types/js-yaml": ^4.0.5
     "@types/node": ^18.7.7
-    chalk: ^5.0.1
     depcheck: ^1.4.3
     eslint: ^8.22.0
     jest: ^28.1.3
