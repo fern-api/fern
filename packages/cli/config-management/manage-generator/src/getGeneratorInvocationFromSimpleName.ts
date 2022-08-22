@@ -1,17 +1,10 @@
-import { GeneratorInvocationSchema, GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
+import { GeneratorInvocationSchema } from "@fern-api/generators-configuration";
 import {
     JAVA_GENERATOR_INVOCATION,
     OPENAPI_GENERATOR_INVOCATION,
     POSTMAN_GENERATOR_INVOCATION,
     TYPESCRIPT_GENERATOR_INVOCATION,
 } from "./generatorInvocations";
-
-export type GeneratorAddResult = GeneratorAddedResult | undefined;
-
-export interface GeneratorAddedResult {
-    updatedGeneratorsConfiguration: GeneratorsConfigurationSchema;
-    addedInvocation: GeneratorInvocationSchema;
-}
 
 export type SimpleGeneratorName = "java" | "typescript" | "postman" | "openapi";
 

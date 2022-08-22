@@ -1,5 +1,5 @@
 import { GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
-import { addJavaGenerator, addTypescriptGenerator } from "../addGenerator";
+import { addJavaGenerator, addTypescriptGenerator } from "../getGeneratorInvocationFromSimpleName";
 
 describe("addGenerator", () => {
     it("adds generator if not present", () => {
