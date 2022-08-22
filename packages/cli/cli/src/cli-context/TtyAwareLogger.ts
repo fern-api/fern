@@ -1,5 +1,6 @@
 import { noop } from "@fern-api/core-utils";
 import ansiEscapes from "ansi-escapes";
+import IS_CI from "is-ci";
 import ora, { Ora } from "ora";
 import { addPrefixToLog } from "./addPrefixToLog";
 import { TaskContextImpl } from "./TaskContextImpl";
@@ -12,9 +13,10 @@ export class TtyAwareLogger {
     public finish: () => void;
 
     constructor(private readonly stream: NodeJS.WriteStream) {
-        if (!stream.isTTY) {
+        if (!this.isTTY) {
             this.finish = noop;
         } else {
+            stream.write(ansiEscapes.cursorHide);
             stream.write(this.paint());
 
             const interval = setInterval(() => {
@@ -24,6 +26,7 @@ export class TtyAwareLogger {
             this.finish = () => {
                 clearInterval(interval);
                 this.repaint();
+                stream.write(ansiEscapes.cursorShow);
             };
         }
     }
@@ -33,7 +36,7 @@ export class TtyAwareLogger {
     }
 
     public log(content: string): void {
-        if (this.stream.isTTY) {
+        if (this.isTTY) {
             this.stream.write(this.clear() + content + this.lastPaint);
         } else {
             this.stream.write(content);
@@ -73,6 +76,10 @@ export class TtyAwareLogger {
             ].join("\n") + "\n";
         this.lastPaint = paint;
         return paint;
+    }
+
+    private get isTTY() {
+        return this.stream.isTTY && !IS_CI;
     }
 }
 
