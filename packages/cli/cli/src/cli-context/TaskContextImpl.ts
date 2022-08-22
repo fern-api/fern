@@ -27,7 +27,16 @@ export class TaskContextImpl implements TaskContext {
     private logs: LogWithLevel[] = [];
 
     public constructor({ log, logPrefix }: TaskContextImpl.Init) {
-        this.log = log;
+        this.log = (logs) =>
+            log(
+                logs.map((log) => ({
+                    ...log,
+                    content: addPrefixToLog({
+                        prefix: `${this.logPrefix} `,
+                        content: log.content,
+                    }),
+                }))
+            );
         this.logPrefix = logPrefix ?? "";
     }
 
@@ -48,13 +57,7 @@ export class TaskContextImpl implements TaskContext {
     }
 
     protected bufferLog(log: LogWithLevel): void {
-        this.logs.push({
-            ...log,
-            content: addPrefixToLog({
-                prefix: `${this.logPrefix} `,
-                content: log.content,
-            }),
-        });
+        this.logs.push(log);
     }
 
     public get logger(): Logger {
