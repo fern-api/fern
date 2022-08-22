@@ -143,7 +143,7 @@ async function maybeFilterWorkspaces({
                     )}`;
                 })
                 .join("\n");
-            cliContext.logger.error(message);
+            cliContext.fail(message);
             return TASK_FAILURE;
         }
 
