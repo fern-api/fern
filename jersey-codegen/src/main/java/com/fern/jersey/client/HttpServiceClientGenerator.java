@@ -65,6 +65,7 @@ public final class HttpServiceClientGenerator extends Generator {
     private final Map<HttpEndpointId, GeneratedEndpointModel> generatedEndpointModels;
     private final Map<DeclaredErrorName, GeneratedError> generatedErrors;
     private final Optional<GeneratedAuthSchemes> maybeGeneratedAuthSchemes;
+    private final ClientClassNameUtils clientClassNameUtils;
 
     public HttpServiceClientGenerator(
             GeneratorContext generatorContext,
@@ -80,6 +81,8 @@ public final class HttpServiceClientGenerator extends Generator {
                 .getClassNameFromServiceName(httpService.name(), CLIENT_SUFFIX, PackageType.CLIENT);
         this.generatedErrors = generatedErrors;
         this.maybeGeneratedAuthSchemes = maybeGeneratedAuthSchemes;
+        this.clientClassNameUtils =
+                new ClientClassNameUtils(generatorContext.getIr(), generatorContext.getOrganization());
     }
 
     @Override
@@ -278,9 +281,7 @@ public final class HttpServiceClientGenerator extends Generator {
     }
 
     private GeneratedEndpointClient generateEndpointFile(HttpEndpoint httpEndpoint) {
-        ClassName endpointClassName = generatorContext
-                .getClassNameUtils()
-                .getClassNameFromEndpointId(httpService.name(), httpEndpoint.id(), PackageType.CLIENT);
+        ClassName endpointClassName = clientClassNameUtils.getClassName(httpService.name(), httpEndpoint.id());
         TypeSpec.Builder endpointTypeSpecBuilder = TypeSpec.classBuilder(endpointClassName)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addMethod(MethodSpec.constructorBuilder()

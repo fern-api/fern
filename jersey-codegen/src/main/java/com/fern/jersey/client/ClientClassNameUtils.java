@@ -20,12 +20,15 @@ import com.fern.interfaces.IStringWithAllCasings;
 import com.fern.types.ErrorDeclaration;
 import com.fern.types.FernFilepath;
 import com.fern.types.IntermediateRepresentation;
+import com.fern.types.services.DeclaredServiceName;
+import com.fern.types.services.HttpEndpointId;
 import com.squareup.javapoet.ClassName;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.apache.commons.lang3.StringUtils;
 
 public final class ClientClassNameUtils {
 
@@ -40,6 +43,11 @@ public final class ClientClassNameUtils {
     public ClassName getClassName(ErrorDeclaration errorDeclaration) {
         String packageName = getErrorsPackageName(errorDeclaration.name().fernFilepath());
         return ClassName.get(packageName, errorDeclaration.name().name());
+    }
+
+    public ClassName getClassName(DeclaredServiceName declaredServiceName, HttpEndpointId endpointId) {
+        String packageName = getEndpointsPackageName(declaredServiceName.fernFilepath());
+        return ClassName.get(packageName, StringUtils.capitalize(endpointId.value()));
     }
 
     private String getPackageName() {

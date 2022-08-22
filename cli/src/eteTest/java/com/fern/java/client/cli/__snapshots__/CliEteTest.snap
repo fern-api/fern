@@ -475,6 +475,7 @@ basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/dumm
 package com.fern.basic.client.dummy.service;
 
 import com.fern.basic.client.BearerAuth;
+import com.fern.basic.client.dummy.service.endpoints.GetDummy;
 import java.lang.RuntimeException;
 import java.lang.String;
 import java.util.Optional;
@@ -503,8 +504,8 @@ public final class DummyServiceClient {
 ]
 
 
-basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/dummy/service/GetDummy.java]=[
-package com.fern.basic.client.dummy.service;
+basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/dummy/service/endpoints/GetDummy.java]=[
+package com.fern.basic.client.dummy.service.endpoints;
 
 import com.fern.basic.client.BearerAuth;
 import com.fern.basic.model.dummy.service.DummyId;
