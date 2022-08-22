@@ -1,0 +1,67 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  serviceCommons: ./commons.yml
+  commons: ../commons.yml
+  types: ../types.yml
+types:
+  HttpService:
+    extends: commons.WithDocs
+    properties:
+      name: serviceCommons.DeclaredServiceName
+      basePath: optional<string>
+      endpoints: list<HttpEndpoint>
+      headers: list<HttpHeader>
+  HttpEndpointId: string
+  HttpEndpoint:
+    extends: commons.WithDocs
+    properties:
+      id: HttpEndpointId
+      name: commons.StringWithAllCasings
+      method: HttpMethod
+      headers: list<HttpHeader>
+      path: HttpPath
+      pathParameters: list<PathParameter>
+      queryParameters: list<QueryParameter>
+      request: HttpRequest
+      response: HttpResponse
+      errors: serviceCommons.ResponseErrors
+      auth: boolean
+  HttpPath:
+    properties:
+      head: string
+      parts: list<HttpPathPart>
+  HttpPathPart:
+    properties:
+      pathParameter: string
+      tail: string
+  HttpMethod:
+    enum:
+      - GET
+      - POST
+      - PUT
+      - PATCH
+      - DELETE
+  HttpHeader:
+    extends: commons.WithDocs
+    properties:
+      name: commons.WireStringWithAllCasings
+      valueType: types.TypeReference
+  PathParameter:
+    extends: commons.WithDocs
+    properties:
+      name: commons.StringWithAllCasings
+      valueType: types.TypeReference
+  QueryParameter:
+    extends: commons.WithDocs
+    properties:
+      name: commons.WireStringWithAllCasings
+      valueType: types.TypeReference
+  HttpRequest:
+    extends: commons.WithDocs
+    properties:
+      type: types.TypeReference
+  HttpResponse:
+    extends: commons.WithDocs
+    properties:
+      type: types.TypeReference

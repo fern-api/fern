@@ -115,11 +115,11 @@ export class RemoteTaskHandler {
                     absolutePathToLocalOutput: this.generatorInvocation.generate.absolutePathToLocalOutput,
                     context: this.context,
                 });
-                this.context.finish();
             } catch {
                 this.context.fail(`Failed to download ${this.generatorInvocation.generate.absolutePathToLocalOutput}`);
             }
         }
+        this.context.finish();
     }
 }
 
