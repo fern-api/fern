@@ -21,6 +21,13 @@ void runCli();
 async function runCli() {
     const cliContext = new CliContext();
 
+    process.stdout.write(ansiEscapes.cursorHide);
+    const exit = async () => {
+        process.stdout.write(ansiEscapes.cursorShow);
+        await cliContext.exit();
+    };
+    process.on("SIGINT", exit);
+
     const fernDirectory = await getFernDirectory();
     const versionOfCliToRun =
         fernDirectory != null
@@ -56,12 +63,10 @@ async function runCli() {
         },
     });
 
-    process.stdout.write(ansiEscapes.cursorHide);
     try {
         await cli.parse();
     } finally {
-        process.stdout.write(ansiEscapes.cursorShow);
-        await cliContext.exit();
+        await exit();
     }
 }
 
