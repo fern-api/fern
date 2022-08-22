@@ -208,5 +208,5 @@ export class CliContext {
 }
 
 function wrapWorkspaceNameForPrefix(workspaceName: string): string {
-    return `[${workspaceName}]: `;
+    return `[${workspaceName}]:`;
 }

@@ -44,7 +44,7 @@ export class TaskContextImpl implements TaskContext {
     private addLog(content: string, level: LogLevel): void {
         this.logs.push({
             content: addPrefixToLog({
-                prefix: this.logPrefix,
+                prefix: `${this.logPrefix} `,
                 content,
             }),
             level,
@@ -76,7 +76,7 @@ export class TaskContextImpl implements TaskContext {
             name,
             subtitle,
             log: (content) => this.log(content),
-            logPrefix: `${this.logPrefix}${chalk.dim(`[${name}]`)} `,
+            logPrefix: `${this.logPrefix} ${chalk.blackBright(name)}`,
         });
         this.subtasks.push(subtask);
         return subtask;

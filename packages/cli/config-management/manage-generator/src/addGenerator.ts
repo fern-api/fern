@@ -13,51 +13,21 @@ export interface GeneratorAddedResult {
     addedInvocation: GeneratorInvocationSchema;
 }
 
-export function addOpenApiGenerator(generatorsConfiguration: GeneratorsConfigurationSchema): GeneratorAddResult {
-    return addGeneratorIfNotPresent({
-        generatorsConfiguration,
-        invocation: OPENAPI_GENERATOR_INVOCATION,
-    });
-}
+export type SimpleGeneratorName = "java" | "typescript" | "postman" | "openapi";
 
-export function addJavaGenerator(generatorsConfiguration: GeneratorsConfigurationSchema): GeneratorAddResult {
-    return addGeneratorIfNotPresent({
-        generatorsConfiguration,
-        invocation: JAVA_GENERATOR_INVOCATION,
-    });
-}
-
-export function addTypescriptGenerator(generatorsConfiguration: GeneratorsConfigurationSchema): GeneratorAddResult {
-    return addGeneratorIfNotPresent({
-        generatorsConfiguration,
-        invocation: TYPESCRIPT_GENERATOR_INVOCATION,
-    });
-}
-
-export function addPostmanGenerator(generatorsConfiguration: GeneratorsConfigurationSchema): GeneratorAddResult {
-    return addGeneratorIfNotPresent({
-        generatorsConfiguration,
-        invocation: POSTMAN_GENERATOR_INVOCATION,
-    });
-}
-
-function addGeneratorIfNotPresent({
-    generatorsConfiguration,
-    invocation,
+export function getGeneratorInvocationFromSimpleName({
+    simpleName,
 }: {
-    generatorsConfiguration: GeneratorsConfigurationSchema;
-    invocation: GeneratorInvocationSchema;
-}): GeneratorAddResult {
-    const isAlreadyInstalled = generatorsConfiguration.generators.some(
-        (otherInvocation) => otherInvocation.name === invocation.name
-    );
-    if (isAlreadyInstalled) {
-        return undefined;
+    simpleName: SimpleGeneratorName;
+}): GeneratorInvocationSchema {
+    switch (simpleName) {
+        case "java":
+            return JAVA_GENERATOR_INVOCATION;
+        case "typescript":
+            return TYPESCRIPT_GENERATOR_INVOCATION;
+        case "postman":
+            return POSTMAN_GENERATOR_INVOCATION;
+        case "openapi":
+            return OPENAPI_GENERATOR_INVOCATION;
     }
-    return {
-        updatedGeneratorsConfiguration: {
-            generators: [...generatorsConfiguration.generators, invocation],
-        },
-        addedInvocation: invocation,
-    };
 }

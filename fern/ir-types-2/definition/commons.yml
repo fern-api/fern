@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  WithDocs:
+    properties:
+      docs: optional<string>
+  FernFilepath: list<StringWithAllCasings>
+  WireStringWithAllCasings:
+    extends: StringWithAllCasings
+    properties:
+      wireValue: string
+  StringWithAllCasings:
+    properties:
+      originalValue: string
+      camelCase: string
+      pascalCase: string
+      snakeCase: string
+      screamingSnakeCase: string
