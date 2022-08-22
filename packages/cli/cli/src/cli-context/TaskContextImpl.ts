@@ -5,6 +5,7 @@ import {
     InteractiveTaskContext,
     TaskContext,
     TaskResult,
+    TASK_FAILURE,
 } from "@fern-api/task-context";
 import chalk from "chalk";
 import { addPrefixToLog } from "./addPrefixToLog";
@@ -29,8 +30,12 @@ export class TaskContextImpl implements TaskContext {
         this.logPrefix = logPrefix ?? "";
     }
 
-    public fail(): void {
+    public fail(message?: string): TASK_FAILURE {
+        if (message != null) {
+            this.logger.error(message);
+        }
         this.result = TaskResult.Failure;
+        return TASK_FAILURE;
     }
 
     public getResult(): TaskResult {

@@ -1,5 +1,5 @@
 import { Logger, LogLevel } from "@fern-api/logger";
-import { TaskContext, TaskResult } from "@fern-api/task-context";
+import { TaskContext, TaskResult, TASK_FAILURE } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { CliEnvironment } from "./CliEnvironment";
@@ -56,20 +56,12 @@ export class CliContext {
         return process.env.CLI_NAME;
     }
 
-    public fail(): this {
+    public fail(message?: string): TASK_FAILURE {
         this.didSucceed = false;
-        return this;
-    }
-
-    public async failAndExit(): Promise<never> {
-        this.fail();
-        return this.exit();
-    }
-
-    public async exitIfFailed(): Promise<void> {
-        if (!this.didSucceed) {
-            await this.exit();
+        if (message != null) {
+            this.logger.error(message);
         }
+        return TASK_FAILURE;
     }
 
     public async exit(): Promise<never> {

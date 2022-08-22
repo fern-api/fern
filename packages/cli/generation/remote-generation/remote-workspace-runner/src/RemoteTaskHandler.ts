@@ -41,8 +41,7 @@ export class RemoteTaskHandler {
 
     public processUpdate(remoteTask: Task | undefined): void {
         if (remoteTask == null) {
-            this.context.logger.error("Task is missing on job status");
-            this.context.fail();
+            this.context.fail("Task is missing on job status");
             this.context.finish();
             return;
         }
@@ -84,8 +83,7 @@ export class RemoteTaskHandler {
             case "running":
                 break;
             case "failed":
-                this.context.fail();
-                this.context.logger.error(remoteTask.status.message);
+                this.context.fail(remoteTask.status.message);
                 this.context.finish();
                 break;
             case "finished":
@@ -118,10 +116,7 @@ export class RemoteTaskHandler {
                 });
                 this.context.finish();
             } catch {
-                this.context.logger.error(
-                    `Failed to download ${this.generatorInvocation.generate.absolutePathToLocalOutput}`
-                );
-                this.context.fail();
+                this.context.fail(`Failed to download ${this.generatorInvocation.generate.absolutePathToLocalOutput}`);
             }
         }
     }

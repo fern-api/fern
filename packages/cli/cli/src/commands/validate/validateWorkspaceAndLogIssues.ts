@@ -6,11 +6,14 @@ import { logIssueInYaml } from "../../utils/logIssueInYaml";
 
 export async function validateWorkspaceAndLogIssues(workspace: Workspace, context: TaskContext): Promise<void> {
     if (!validatePackageName(workspace.name).validForNewPackages) {
-        context.logger.error("Workspace name is not valid.");
+        context.fail("Workspace name is not valid.");
+    }
+
+    const violations = await validateWorkspace(workspace, context.logger);
+    if (violations.length > 0) {
         context.fail();
     }
 
-    const violations = await validateWorkspace(workspace, context);
     for (const violation of violations) {
         logIssueInYaml({
             severity: violation.severity,
