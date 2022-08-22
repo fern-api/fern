@@ -137,7 +137,9 @@ async function maybeFilterWorkspaces({
             const longestWorkspaceName = Math.max(...allWorkspaces.map((workspace) => workspace.name.length));
             message += allWorkspaces
                 .map((workspace) => {
-                    const suggestedCommand = `fern --api ${workspace.name} ${process.argv.slice(2).join(" ")}`;
+                    const suggestedCommand = `${cliContext.environment.cliName} --api ${workspace.name} ${process.argv
+                        .slice(2)
+                        .join(" ")}`;
                     return ` › ${chalk.bold(workspace.name.padEnd(longestWorkspaceName))}  ${chalk.dim(
                         suggestedCommand
                     )}`;
