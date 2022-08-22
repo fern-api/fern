@@ -1,5 +1,5 @@
 import { RelativeFilePath } from "@fern-api/core-utils";
-import { Logger } from "@fern-api/logger";
+import { Logger, LogLevel } from "@fern-api/logger";
 import chalk from "chalk";
 
 type Severity = "error" | "warning";
@@ -23,20 +23,19 @@ export function logIssueInYaml({
     subtitle,
     logger,
 }: logIssueInYaml.Args): void {
-    let str = "";
-    str += chalk[getColorForSeverity(severity)](title);
+    let str = title;
     if (subtitle != null) {
         str += "\n" + chalk.dim(subtitle);
     }
     str += "\n" + chalk.blue([relativeFilePath, ...breadcrumbs].join(" -> "));
-    logger.error(str);
+    logger.log(str, getLogLevelForSeverity(severity));
 }
 
-function getColorForSeverity(severity: Severity) {
+function getLogLevelForSeverity(severity: Severity) {
     switch (severity) {
         case "error":
-            return "red";
+            return LogLevel.Error;
         case "warning":
-            return "yellow";
+            return LogLevel.Warn;
     }
 }

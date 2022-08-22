@@ -12,14 +12,14 @@ import { LogWithLevel } from "./LogWithLevel";
 
 export declare namespace TaskContextImpl {
     export interface Init {
-        log: (content: string) => void;
+        log: (logs: LogWithLevel[]) => void;
         logPrefix?: string;
     }
 }
 
 export class TaskContextImpl implements TaskContext {
     protected result = TaskResult.Success;
-    protected log: (content: string) => void;
+    protected log: (logs: LogWithLevel[]) => void;
     protected logPrefix: string;
     protected subtasks: InteractiveTaskContextImpl[] = [];
     private logs: LogWithLevel[] = [];
@@ -37,24 +37,18 @@ export class TaskContextImpl implements TaskContext {
         return this.result;
     }
 
-    public printLogs(): void {
-        const str = this.logs
-            .map((log) => {
-                return {
-                    content: addPrefixToLog({
-                        prefix: this.logPrefix,
-                        content: log.content,
-                    }),
-                    level: log.level,
-                };
-            })
-            .map((log) => log.content)
-            .join("\n");
-        this.log(str);
+    public finish(): void {
+        this.log(this.logs);
     }
 
     private addLog(content: string, level: LogLevel): void {
-        this.logs.push({ content, level });
+        this.logs.push({
+            content: addPrefixToLog({
+                prefix: this.logPrefix,
+                content,
+            }),
+            level,
+        });
     }
 
     public get logger(): Logger {
@@ -130,7 +124,7 @@ export class InteractiveTaskContextImpl extends TaskContextImpl implements Finis
     }
 
     public finish(): void {
-        this.printLogs();
+        super.finish();
         this.isRunning = false;
     }
 

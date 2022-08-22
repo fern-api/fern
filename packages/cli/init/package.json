@@ -30,7 +30,6 @@
     "@fern-api/project-configuration": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
-    "chalk": "^5.0.1",
     "js-yaml": "^4.1.0"
   },
   "devDependencies": {

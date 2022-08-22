@@ -1,9 +1,10 @@
-import { Logger } from "@fern-api/logger";
+import { Logger, LogLevel } from "@fern-api/logger";
 import { TaskContext, TaskResult } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { CliEnvironment } from "./CliEnvironment";
 import { InteractiveTaskManager } from "./InteractiveTaskManager";
+import { LogWithLevel } from "./LogWithLevel";
 import { TaskContextImpl } from "./TaskContextImpl";
 import { getFernCliUpgradeMessage } from "./upgrade-utils/getFernCliUpgradeMessage";
 
@@ -25,7 +26,7 @@ export class CliContext {
         const packageVersion = this.getPackageVersion();
         const cliName = this.getCliName();
         if (packageName == null || packageVersion == null || cliName == null) {
-            this.exit();
+            this.exitProgram();
         }
         this.environment = {
             packageName,
@@ -62,16 +63,16 @@ export class CliContext {
 
     public async failAndExit(): Promise<never> {
         this.fail();
-        return this.finish();
+        return this.exit();
     }
 
     public async exitIfFailed(): Promise<void> {
         if (!this.didSucceed) {
-            await this.finish();
+            await this.exit();
         }
     }
 
-    public async finish(): Promise<never> {
+    public async exit(): Promise<never> {
         this.interactiveTaskManager.finish();
         if (!this.suppressUpgradeMessage) {
             const upgradeMessage = await getFernCliUpgradeMessage(this.environment);
@@ -79,10 +80,10 @@ export class CliContext {
                 this.stream.write(upgradeMessage);
             }
         }
-        this.exit();
+        this.exitProgram();
     }
 
-    private exit(): never {
+    private exitProgram(): never {
         process.exit(this.didSucceed ? 0 : 1);
     }
 
@@ -92,18 +93,26 @@ export class CliContext {
     }
 
     public async runTask(run: (context: TaskContext) => void | Promise<void>): Promise<void> {
-        const context = new TaskContextImpl({
-            log: (content) => this.log(content),
-        });
-        await run(context);
-        await this.handleFinishedTask(context);
+        await this.runTaskWithInit(
+            {
+                log: (logs) => this.log(logs),
+            },
+            run
+        );
     }
 
     public async runTaskForWorkspace(
         workspace: Workspace,
         run: (context: TaskContext) => void | Promise<void>
     ): Promise<void> {
-        const context = new TaskContextImpl(this.constructTaskInitForWorkspace(workspace));
+        await this.runTaskWithInit(this.constructTaskInitForWorkspace(workspace), run);
+    }
+
+    private async runTaskWithInit(
+        init: TaskContextImpl.Init,
+        run: (context: TaskContext) => void | Promise<void>
+    ): Promise<void> {
+        const context = new TaskContextImpl(init);
         this.interactiveTaskManager.registerTask(context);
         await run(context);
         await this.handleFinishedTask(context);
@@ -112,19 +121,44 @@ export class CliContext {
     get logger(): Logger {
         return {
             debug: (content) => {
-                this.log(content);
+                this.log([
+                    {
+                        content,
+                        level: LogLevel.Debug,
+                    },
+                ]);
             },
             info: (content) => {
-                this.log(content);
+                this.log([
+                    {
+                        content,
+                        level: LogLevel.Info,
+                    },
+                ]);
             },
             warn: (content) => {
-                this.log(content);
+                this.log([
+                    {
+                        content,
+                        level: LogLevel.Warn,
+                    },
+                ]);
             },
             error: (content) => {
-                this.log(content);
+                this.log([
+                    {
+                        content,
+                        level: LogLevel.Error,
+                    },
+                ]);
             },
-            log: (content) => {
-                this.log(content);
+            log: (content, level) => {
+                this.log([
+                    {
+                        content,
+                        level,
+                    },
+                ]);
             },
         };
     }
@@ -133,7 +167,7 @@ export class CliContext {
         if (context.getResult() === TaskResult.Failure) {
             this.didSucceed = false;
         }
-        context.printLogs();
+        context.finish();
     }
 
     private constructTaskInitForWorkspace(workspace: Workspace): TaskContextImpl.Init {
@@ -148,12 +182,27 @@ export class CliContext {
         };
     }
 
-    private log(content: string): void {
-        if (content.length > 0 && !content.endsWith("\n")) {
-            content += "\n";
+    private log(logs: LogWithLevel[]): void {
+        if (logs.length === 0) {
+            return;
         }
+        const str = logs
+            .map(({ content, level }) => {
+                const trimmed = content.trim() + "\n";
+                switch (level) {
+                    case LogLevel.Error:
+                        return chalk.red(trimmed);
+                    case LogLevel.Warn:
+                        return chalk.hex("FFA500")(trimmed);
+                    case LogLevel.Debug:
+                    case LogLevel.Info:
+                        return trimmed;
+                }
+            })
+            .join("\n");
+
         this.interactiveTaskManager.repaint({
-            contentAbove: content,
+            contentAbove: str,
         });
     }
 }

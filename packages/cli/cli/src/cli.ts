@@ -56,12 +56,12 @@ async function runCli() {
         },
     });
 
+    process.stdout.write(ansiEscapes.cursorHide);
     try {
-        process.stdout.write(ansiEscapes.cursorHide);
         await cli.parse();
-        await cliContext.finish();
     } finally {
         process.stdout.write(ansiEscapes.cursorShow);
+        await cliContext.exit();
     }
 }
 

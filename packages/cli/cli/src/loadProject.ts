@@ -30,7 +30,7 @@ export async function loadProject({
 }: loadProject.Args): Promise<Project> {
     const fernDirectory = await getFernDirectory();
     if (fernDirectory == null) {
-        cliContext.logger.error(chalk.red(`Directory ${FERN_DIRECTORY} not found.`));
+        cliContext.logger.error(`Directory ${FERN_DIRECTORY} not found.`);
         return cliContext.failAndExit();
     }
     const fernDirectoryContents = await readdir(fernDirectory, { withFileTypes: true });
@@ -48,7 +48,7 @@ export async function loadProject({
     });
 
     if (allWorkspaces.length === 0) {
-        cliContext.logger.error(chalk.red("No APIs found."));
+        cliContext.logger.error("No APIs found.");
         await cliContext.failAndExit();
     }
 
@@ -107,7 +107,7 @@ async function maybeFilterWorkspaces({
 }): Promise<Workspace[]> {
     if (commandLineWorkspace == null) {
         if (allWorkspaces.length > 1 && !defaultToAllWorkspaces) {
-            let message = chalk.red("There are multiple workspaces. You must specify one with --api:\n");
+            let message = "There are multiple workspaces. You must specify one with --api:\n";
             const longestWorkspaceName = Math.max(...allWorkspaces.map((workspace) => workspace.name.length));
             message += allWorkspaces
                 .map((workspace) => {
@@ -127,7 +127,7 @@ async function maybeFilterWorkspaces({
     const filteredWorkspaces = [commandLineWorkspace].reduce<Workspace[]>((acc, workspaceName) => {
         const workspace = allWorkspaces.find((workspace) => workspace.name === workspaceName);
         if (workspace == null) {
-            cliContext.logger.error(chalk.red(`Workspace ${workspaceName} not found`));
+            cliContext.logger.error(`Workspace ${workspaceName} not found`);
             cliContext.fail();
             return acc;
         }

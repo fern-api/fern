@@ -26,7 +26,7 @@ export class InteractiveTaskManager {
     }
 
     public repaint({ contentAbove = "" }: { contentAbove?: string } = {}): void {
-        this.stream.write(this.clear() + contentAbove + this.paint());
+        this.stream.write(this.clear() + contentAbove + "\n" + this.paint());
     }
 
     private clear(): string {
