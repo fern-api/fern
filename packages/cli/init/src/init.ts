@@ -6,7 +6,6 @@ import {
     PROJECT_CONFIG_FILENAME,
 } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
-import chalk from "chalk";
 import { mkdir, writeFile } from "fs/promises";
 import { createWorkspace } from "./createWorkspace";
 
@@ -22,10 +21,7 @@ export async function initialize({
     const existingFernDirectory = await getFernDirectory();
     if (existingFernDirectory != null) {
         context.logger.error(
-            chalk.red(
-                `Could not initialize fern because a ${FERN_DIRECTORY} directory already exists: ` +
-                    existingFernDirectory
-            )
+            `Could not initialize fern because a ${FERN_DIRECTORY} directory already exists: ` + existingFernDirectory
         );
         context.fail();
         return;
