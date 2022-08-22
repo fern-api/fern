@@ -183,9 +183,6 @@ export class CliContext {
     }
 
     private log(logs: LogWithLevel[]): void {
-        if (logs.length === 0) {
-            return;
-        }
         const formatted = logs
             .filter((log) => LOG_LEVELS.indexOf(log.level) >= LOG_LEVELS.indexOf(this.logLevel))
             .map(
@@ -203,7 +200,7 @@ function wrapWorkspaceNameForPrefix(workspaceName: string): string {
 }
 
 function formatLog(log: LogWithLevel): string {
-    const trimmed = log.content.trim();
+    const trimmed = log.content.trim() + "\n";
     switch (log.level) {
         case LogLevel.Error:
             return chalk.red(trimmed);
