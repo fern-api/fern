@@ -47,7 +47,7 @@ export class TaskContextImpl implements TaskContext {
         this.log(this.logs);
     }
 
-    protected addLog(log: LogWithLevel): void {
+    protected bufferLog(log: LogWithLevel): void {
         this.logs.push({
             ...log,
             content: addPrefixToLog({
@@ -60,19 +60,19 @@ export class TaskContextImpl implements TaskContext {
     public get logger(): Logger {
         return {
             debug: (content) => {
-                this.addLog({ content, level: LogLevel.Debug });
+                this.bufferLog({ content, level: LogLevel.Debug });
             },
             info: (content) => {
-                this.addLog({ content, level: LogLevel.Info });
+                this.bufferLog({ content, level: LogLevel.Info });
             },
             warn: (content) => {
-                this.addLog({ content, level: LogLevel.Warn });
+                this.bufferLog({ content, level: LogLevel.Warn });
             },
             error: (content) => {
-                this.addLog({ content, level: LogLevel.Error });
+                this.bufferLog({ content, level: LogLevel.Error });
             },
             log: (content, level) => {
-                this.addLog({ content, level });
+                this.bufferLog({ content, level });
             },
         };
     }
@@ -134,11 +134,13 @@ export class InteractiveTaskContextImpl
 
     public start(): FinishableInteractiveTaskContext {
         this.status = "running";
-        this.addLog({
-            content: "Started.",
-            level: LogLevel.Info,
-            omitOnTTY: true,
-        });
+        this.log([
+            {
+                content: "Started.",
+                level: LogLevel.Info,
+                omitOnTTY: true,
+            },
+        ]);
         return this;
     }
 
@@ -148,13 +150,13 @@ export class InteractiveTaskContextImpl
 
     public finish(): void {
         if (this.result === TaskResult.Success) {
-            this.addLog({
+            this.bufferLog({
                 content: "Finished.",
                 level: LogLevel.Info,
                 omitOnTTY: true,
             });
         } else {
-            this.addLog({
+            this.bufferLog({
                 content: "Failed.",
                 level: LogLevel.Error,
                 omitOnTTY: true,
