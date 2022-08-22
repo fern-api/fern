@@ -19,12 +19,19 @@ import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 
 void tryRunCli();
 
-async function tryRunCli() {
-    const cliContext = new CliContext();
+const STREAM = process.stdout;
 
-    process.stdout.write(ansiEscapes.cursorHide);
+async function tryRunCli() {
+    const cliContext = new CliContext(STREAM);
+
+    if (STREAM.isTTY) {
+        process.stdout.write(ansiEscapes.cursorHide);
+    }
+
     const exit = async () => {
-        process.stdout.write(ansiEscapes.cursorShow);
+        if (STREAM.isTTY) {
+            process.stdout.write(ansiEscapes.cursorShow);
+        }
         await cliContext.exit();
     };
     process.on("SIGINT", exit);

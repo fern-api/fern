@@ -4,9 +4,9 @@ import { Workspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { ArgumentsCamelCase } from "yargs";
 import { CliEnvironment } from "./CliEnvironment";
-import { InteractiveTaskManager } from "./InteractiveTaskManager";
-import { LogWithLevel } from "./LogWithLevel";
+import { Log } from "./Log";
 import { TaskContextImpl } from "./TaskContextImpl";
+import { TtyAwareLogger } from "./TtyAwareLogger";
 import { getFernCliUpgradeMessage } from "./upgrade-utils/getFernCliUpgradeMessage";
 
 const WORKSPACE_NAME_COLORS = ["#2E86AB", "#A23B72", "#F18F01", "#C73E1D", "#CCE2A3"];
@@ -23,12 +23,13 @@ export class CliContext {
     private didSucceed = true;
 
     private numTasks = 0;
-    private stream = process.stdout;
-    private interactiveTaskManager = new InteractiveTaskManager(this.stream);
+    private ttyAwareLogger: TtyAwareLogger;
 
     private logLevel: LogLevel = LogLevel.Info;
 
-    constructor() {
+    constructor(private readonly stream: NodeJS.WriteStream) {
+        this.ttyAwareLogger = new TtyAwareLogger(stream);
+
         const packageName = this.getPackageName();
         const packageVersion = this.getPackageVersion();
         const cliName = this.getCliName();
@@ -76,7 +77,7 @@ export class CliContext {
     }
 
     public async exit(): Promise<never> {
-        this.interactiveTaskManager.finish();
+        this.ttyAwareLogger.finish();
         if (!this.suppressUpgradeMessage) {
             const upgradeMessage = await getFernCliUpgradeMessage(this.environment);
             if (upgradeMessage != null) {
@@ -116,9 +117,12 @@ export class CliContext {
         run: (context: TaskContext) => void | Promise<void>
     ): Promise<void> {
         const context = new TaskContextImpl(init);
-        this.interactiveTaskManager.registerTask(context);
+        this.ttyAwareLogger.registerTask(context);
         await run(context);
-        await this.handleFinishedTask(context);
+        if (context.getResult() === TaskResult.Failure) {
+            this.didSucceed = false;
+        }
+        context.finish();
     }
 
     get logger(): Logger {
@@ -166,13 +170,6 @@ export class CliContext {
         };
     }
 
-    private async handleFinishedTask(context: TaskContextImpl): Promise<void> {
-        if (context.getResult() === TaskResult.Failure) {
-            this.didSucceed = false;
-        }
-        context.finish();
-    }
-
     private constructTaskInitForWorkspace(workspace: Workspace): TaskContextImpl.Init {
         const prefix = wrapWorkspaceNameForPrefix(workspace.name).padEnd(
             wrapWorkspaceNameForPrefix("X".repeat(this.longestWorkspaceNameLength)).length
@@ -185,17 +182,16 @@ export class CliContext {
         };
     }
 
-    private log(logs: LogWithLevel[]): void {
+    private log(logs: Log[]): void {
         if (logs.length === 0) {
             return;
         }
         const str =
             logs
-                .reduce<string[]>((filtered, { content, level }) => {
-                    const shouldIncludeLogLevel = LOG_LEVELS.indexOf(level) >= LOG_LEVELS.indexOf(this.logLevel);
-                    if (shouldIncludeLogLevel) {
-                        const trimmed = content.trim();
-                        switch (level) {
+                .reduce<string[]>((filtered, log) => {
+                    if (this.shouldIncludeLog(log)) {
+                        const trimmed = log.content.trim();
+                        switch (log.level) {
                             case LogLevel.Error:
                                 filtered.push(chalk.red(trimmed));
                                 break;
@@ -211,9 +207,14 @@ export class CliContext {
                 }, [])
                 .join("\n") + "\n";
 
-        this.interactiveTaskManager.repaint({
-            contentAbove: str,
-        });
+        this.ttyAwareLogger.log(str);
+    }
+
+    private shouldIncludeLog({ level, omitOnTTY = false }: Log): boolean {
+        if (this.stream.isTTY && omitOnTTY) {
+            return false;
+        }
+        return LOG_LEVELS.indexOf(level) >= LOG_LEVELS.indexOf(this.logLevel);
     }
 }
 

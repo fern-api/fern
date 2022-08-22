@@ -5,5 +5,6 @@ export {
     type CreateInteractiveTaskParams,
     type FinishableInteractiveTaskContext,
     type InteractiveTaskContext,
+    type StartableInteractiveTaskContext,
     type TaskContext,
 } from "./TaskContext";

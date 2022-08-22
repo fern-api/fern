@@ -1,32 +1,47 @@
+import { noop } from "@fern-api/core-utils";
 import ansiEscapes from "ansi-escapes";
 import ora, { Ora } from "ora";
 import { addPrefixToLog } from "./addPrefixToLog";
 import { TaskContextImpl } from "./TaskContextImpl";
 
-export class InteractiveTaskManager {
+export class TtyAwareLogger {
     private tasks: TaskContextImpl[] = [];
     private lastPaint = "";
     private spinner = ora({ spinner: "dots11" });
-    private interval: NodeJS.Timeout;
+
+    public finish: () => void;
 
     constructor(private readonly stream: NodeJS.WriteStream) {
-        this.paint();
-        this.interval = setInterval(() => {
-            this.repaint();
-        }, getSpinnerInterval(this.spinner));
-    }
+        if (!stream.isTTY) {
+            this.finish = noop;
+        } else {
+            stream.write(this.paint());
 
-    public finish(): void {
-        clearInterval(this.interval);
-        this.repaint();
+            const interval = setInterval(() => {
+                this.repaint();
+            }, getSpinnerInterval(this.spinner));
+
+            this.finish = () => {
+                clearInterval(interval);
+                this.repaint();
+            };
+        }
     }
 
     public registerTask(context: TaskContextImpl): void {
         this.tasks.push(context);
     }
 
-    public repaint({ contentAbove = "" }: { contentAbove?: string } = {}): void {
-        this.stream.write(this.clear() + contentAbove + this.paint());
+    public log(content: string): void {
+        if (this.stream.isTTY) {
+            this.stream.write(this.clear() + content + this.lastPaint);
+        } else {
+            this.stream.write(content);
+        }
+    }
+
+    private repaint(): void {
+        this.stream.write(this.clear() + this.paint());
     }
 
     private clear(): string {
