@@ -1,5 +1,6 @@
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { runRemoteGenerationForWorkspace } from "@fern-api/remote-workspace-runner";
+import { TASK_FAILURE } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import { CliContext } from "../../cli-context/CliContext";
 import { generateIrForWorkspace } from "../generate-ir/generateIrForWorkspace";
@@ -19,7 +20,7 @@ export async function generateWorkspace({
 }): Promise<void> {
     await cliContext.runTaskForWorkspace(workspace, async (context) => {
         const intermediateRepresentation = await generateIrForWorkspace({ workspace, context });
-        if (intermediateRepresentation == null) {
+        if (intermediateRepresentation === TASK_FAILURE) {
             return;
         }
         if (runLocal) {

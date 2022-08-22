@@ -119,7 +119,8 @@ function addAddCommand(cli: Argv, cliContext: CliContext) {
                     defaultToAllWorkspaces: false,
                     cliContext,
                 }),
-                argv.generator
+                argv.generator,
+                cliContext
             );
         }
     );

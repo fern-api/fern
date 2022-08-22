@@ -5,6 +5,7 @@ import {
     InteractiveTaskContext,
     TaskContext,
     TaskResult,
+    TASK_FAILURE,
 } from "@fern-api/task-context";
 import chalk from "chalk";
 import { addPrefixToLog } from "./addPrefixToLog";
@@ -29,8 +30,12 @@ export class TaskContextImpl implements TaskContext {
         this.logPrefix = logPrefix ?? "";
     }
 
-    public fail(): void {
+    public fail(message?: string): TASK_FAILURE {
+        if (message != null) {
+            this.logger.error(message);
+        }
         this.result = TaskResult.Failure;
+        return TASK_FAILURE;
     }
 
     public getResult(): TaskResult {
@@ -44,7 +49,7 @@ export class TaskContextImpl implements TaskContext {
     private addLog(content: string, level: LogLevel): void {
         this.logs.push({
             content: addPrefixToLog({
-                prefix: this.logPrefix,
+                prefix: `${this.logPrefix} `,
                 content,
             }),
             level,
@@ -76,7 +81,7 @@ export class TaskContextImpl implements TaskContext {
             name,
             subtitle,
             log: (content) => this.log(content),
-            logPrefix: `${this.logPrefix}${chalk.dim(`[${name}]`)} `,
+            logPrefix: `${this.logPrefix} ${chalk.blackBright(name)}`,
         });
         this.subtasks.push(subtask);
         return subtask;

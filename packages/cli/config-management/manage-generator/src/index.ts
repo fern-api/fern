@@ -1,8 +1,3 @@
-export {
-    addJavaGenerator,
-    addOpenApiGenerator,
-    addPostmanGenerator,
-    addTypescriptGenerator,
-    type GeneratorAddResult,
-} from "./addGenerator";
+export { addGenerator } from "./addGenerator";
+export { type SimpleGeneratorName } from "./getGeneratorInvocationFromSimpleName";
 export { upgradeGenerators } from "./upgradeGenerators";

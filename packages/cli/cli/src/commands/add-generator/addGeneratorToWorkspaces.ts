@@ -1,53 +1,32 @@
-import { GeneratorsConfigurationSchema, loadRawGeneratorsConfiguration } from "@fern-api/generators-configuration";
-import {
-    addJavaGenerator,
-    addOpenApiGenerator,
-    addPostmanGenerator,
-    addTypescriptGenerator,
-    GeneratorAddResult,
-} from "@fern-api/manage-generator";
+import { loadRawGeneratorsConfiguration } from "@fern-api/generators-configuration";
+import { addGenerator, SimpleGeneratorName } from "@fern-api/manage-generator";
+import { TASK_FAILURE } from "@fern-api/task-context";
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
+import { CliContext } from "../../cli-context/CliContext";
 import { Project } from "../../loadProject";
 
 export async function addGeneratorToWorkspaces(
     { workspaces }: Project,
-    generatorName: "java" | "typescript" | "postman" | "openapi"
+    generatorName: SimpleGeneratorName,
+    cliContext: CliContext
 ): Promise<void> {
-    for (const workspace of workspaces) {
-        const generatorsConfiguration = await loadRawGeneratorsConfiguration({
-            absolutePathToWorkspace: workspace.absolutePathToWorkspace,
-        });
-        const addGeneratorResult = addGeneratorToWorkspaceConfiguration(generatorName, generatorsConfiguration);
-        if (addGeneratorResult === undefined) {
-            console.log(chalk.yellow(`Generator ${generatorName} already exists`));
-        } else {
-            await writeFile(
-                workspace.generatorsConfiguration.absolutePathToConfiguration,
-                yaml.dump(addGeneratorResult.updatedGeneratorsConfiguration)
-            );
-            console.log(
-                chalk.green(
-                    `Added generator ${addGeneratorResult.addedInvocation.name}@${addGeneratorResult.addedInvocation.version}`
-                )
-            );
-        }
-    }
-}
-
-function addGeneratorToWorkspaceConfiguration(
-    generatorName: "java" | "typescript" | "postman" | "openapi",
-    generatorsConfiguration: GeneratorsConfigurationSchema
-): GeneratorAddResult {
-    switch (generatorName) {
-        case "java":
-            return addJavaGenerator(generatorsConfiguration);
-        case "typescript":
-            return addTypescriptGenerator(generatorsConfiguration);
-        case "postman":
-            return addPostmanGenerator(generatorsConfiguration);
-        case "openapi":
-            return addOpenApiGenerator(generatorsConfiguration);
-    }
+    await Promise.all(
+        workspaces.map(async (workspace) => {
+            await cliContext.runTaskForWorkspace(workspace, async (context) => {
+                const generatorsConfiguration = await loadRawGeneratorsConfiguration({
+                    absolutePathToWorkspace: workspace.absolutePathToWorkspace,
+                });
+                const newConfiguration = await addGenerator({ generatorName, generatorsConfiguration, context });
+                if (newConfiguration !== TASK_FAILURE) {
+                    await writeFile(
+                        workspace.generatorsConfiguration.absolutePathToConfiguration,
+                        yaml.dump(newConfiguration)
+                    );
+                    context.logger.info(chalk.green(`Added ${generatorName} generator`));
+                }
+            });
+        })
+    );
 }

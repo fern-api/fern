@@ -27,6 +27,7 @@
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/generators-configuration": "workspace:*",
+    "@fern-api/task-context": "workspace:*",
     "chalk": "^5.0.1",
     "immer": "^9.0.15",
     "semver-diff": "^4.0.0"

@@ -10,7 +10,7 @@ import { upgradeGeneratorsInWorkspaces } from "./upgradeGeneratorsInWorkspaces";
 export async function upgrade({ project, cliContext }: { project: Project; cliContext: CliContext }): Promise<void> {
     const fernCliUpgradeInfo = await isFernCliUpgradeAvailable(cliContext.environment);
     if (!fernCliUpgradeInfo.upgradeAvailable) {
-        await upgradeGeneratorsInWorkspaces(project);
+        await upgradeGeneratorsInWorkspaces(project, cliContext);
     } else {
         const newProjectConfig = produce(project.config, (draft) => {
             draft.version = fernCliUpgradeInfo.latestVersion;

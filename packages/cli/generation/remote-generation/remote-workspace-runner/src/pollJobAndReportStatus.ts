@@ -20,8 +20,7 @@ export function pollJobAndReportStatus({
     const taskHandlers = job.taskIds.reduce<Record<RemoteGenTaskId, RemoteTaskHandler>>((acc, taskId, index) => {
         const generatorInvocation = workspace.generatorsConfiguration.generators[index];
         if (generatorInvocation == null) {
-            context.logger.error("Task IDs list is longer than generators list.");
-            context.fail();
+            context.fail("Task IDs list is longer than generators list.");
         } else {
             acc[taskId] = new RemoteTaskHandler({
                 job,
@@ -43,8 +42,7 @@ export function pollJobAndReportStatus({
             if (response == null || !response.ok) {
                 numConsecutiveFailed++;
                 if (numConsecutiveFailed === MAX_UNSUCCESSFUL_ATTEMPTS) {
-                    context.logger.error("Failed to poll task status.");
-                    context.fail();
+                    context.fail("Failed to poll task status.");
                     return resolve();
                 }
             } else {

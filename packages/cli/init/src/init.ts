@@ -20,10 +20,9 @@ export async function initialize({
 }): Promise<void> {
     const existingFernDirectory = await getFernDirectory();
     if (existingFernDirectory != null) {
-        context.logger.error(
+        context.fail(
             `Could not initialize fern because a ${FERN_DIRECTORY} directory already exists: ` + existingFernDirectory
         );
-        context.fail();
         return;
     }
 
