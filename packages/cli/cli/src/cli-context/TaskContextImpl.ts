@@ -27,16 +27,7 @@ export class TaskContextImpl implements TaskContext {
     private logs: LogWithLevel[] = [];
 
     public constructor({ log, logPrefix }: TaskContextImpl.Init) {
-        this.log = (logs) =>
-            log(
-                logs.map((log) => ({
-                    ...log,
-                    content: addPrefixToLog({
-                        prefix: `${this.logPrefix} `,
-                        content: log.content,
-                    }),
-                }))
-            );
+        this.log = log;
         this.logPrefix = logPrefix ?? "";
     }
 
@@ -53,11 +44,21 @@ export class TaskContextImpl implements TaskContext {
     }
 
     public finish(): void {
-        this.log(this.logs);
+        this.flushLogs();
     }
 
     protected bufferLog(log: LogWithLevel): void {
-        this.logs.push(log);
+        this.logs.push({
+            ...log,
+            content: addPrefixToLog({
+                prefix: `${this.logPrefix} `,
+                content: log.content,
+            }),
+        });
+    }
+
+    protected flushLogs(): void {
+        this.log(this.logs);
     }
 
     public get logger(): Logger {
@@ -137,13 +138,12 @@ export class InteractiveTaskContextImpl
 
     public start(): FinishableInteractiveTaskContext {
         this.status = "running";
-        this.log([
-            {
-                content: "Started.",
-                level: LogLevel.Info,
-                omitOnTTY: true,
-            },
-        ]);
+        this.bufferLog({
+            content: "Started.",
+            level: LogLevel.Info,
+            omitOnTTY: true,
+        });
+        this.flushLogs();
         return this;
     }
 
