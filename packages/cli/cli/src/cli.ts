@@ -19,17 +19,16 @@ import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 
 void tryRunCli();
 
-const STREAM = process.stdout;
-
 async function tryRunCli() {
-    const cliContext = new CliContext(STREAM);
+    const stream = process.stdout;
+    const cliContext = new CliContext(stream);
 
-    if (STREAM.isTTY) {
+    if (stream.isTTY) {
         process.stdout.write(ansiEscapes.cursorHide);
     }
 
     const exit = async () => {
-        if (STREAM.isTTY) {
+        if (stream.isTTY) {
             process.stdout.write(ansiEscapes.cursorShow);
         }
         await cliContext.exit();
