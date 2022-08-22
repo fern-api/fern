@@ -4,7 +4,7 @@ import { Workspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { ArgumentsCamelCase } from "yargs";
 import { CliEnvironment } from "./CliEnvironment";
-import { Log } from "./Log";
+import { Log, LogWithLevel } from "./Log";
 import { TaskContextImpl } from "./TaskContextImpl";
 import { TtyAwareLogger } from "./TtyAwareLogger";
 import { getFernCliUpgradeMessage } from "./upgrade-utils/getFernCliUpgradeMessage";
@@ -182,42 +182,35 @@ export class CliContext {
         };
     }
 
-    private log(logs: Log[]): void {
+    private log(logs: LogWithLevel[]): void {
         if (logs.length === 0) {
             return;
         }
-        const str =
-            logs
-                .reduce<string[]>((filtered, log) => {
-                    if (this.shouldIncludeLog(log)) {
-                        const trimmed = log.content.trim();
-                        switch (log.level) {
-                            case LogLevel.Error:
-                                filtered.push(chalk.red(trimmed));
-                                break;
-                            case LogLevel.Warn:
-                                filtered.push(chalk.hex("FFA500")(trimmed));
-                                break;
-                            case LogLevel.Debug:
-                            case LogLevel.Info:
-                                filtered.push(trimmed);
-                        }
-                    }
-                    return filtered;
-                }, [])
-                .join("\n") + "\n";
-
-        this.ttyAwareLogger.log(str);
-    }
-
-    private shouldIncludeLog({ level, omitOnTTY = false }: Log): boolean {
-        if (this.stream.isTTY && omitOnTTY) {
-            return false;
-        }
-        return LOG_LEVELS.indexOf(level) >= LOG_LEVELS.indexOf(this.logLevel);
+        const formatted = logs
+            .filter((log) => LOG_LEVELS.indexOf(log.level) >= LOG_LEVELS.indexOf(this.logLevel))
+            .map(
+                (log): Log => ({
+                    omitOnTTY: log.omitOnTTY,
+                    content: formatLog(log),
+                })
+            );
+        this.ttyAwareLogger.log(formatted);
     }
 }
 
 function wrapWorkspaceNameForPrefix(workspaceName: string): string {
     return `[${workspaceName}]:`;
+}
+
+function formatLog(log: LogWithLevel): string {
+    const trimmed = log.content.trim();
+    switch (log.level) {
+        case LogLevel.Error:
+            return chalk.red(trimmed);
+        case LogLevel.Warn:
+            return chalk.hex("FFA500")(trimmed);
+        case LogLevel.Debug:
+        case LogLevel.Info:
+            return trimmed;
+    }
 }

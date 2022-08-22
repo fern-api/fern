@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+  types: types.yml
+types:
+  ErrorDeclaration:
+    extends: commons.WithDocs
+    properties:
+      name: DeclaredErrorName
+      discriminantValue: commons.WireStringWithAllCasings
+      type: types.Type
+      http: optional<HttpErrorConfiguration>
+  DeclaredErrorName:
+    properties:
+      fernFilepath: commons.FernFilepath
+      name: string
+  HttpErrorConfiguration:
+    properties:
+      statusCode: integer

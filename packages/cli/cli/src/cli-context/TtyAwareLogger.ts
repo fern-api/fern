@@ -3,6 +3,7 @@ import ansiEscapes from "ansi-escapes";
 import IS_CI from "is-ci";
 import ora, { Ora } from "ora";
 import { addPrefixToLog } from "./addPrefixToLog";
+import { Log } from "./Log";
 import { TaskContextImpl } from "./TaskContextImpl";
 
 export class TtyAwareLogger {
@@ -35,11 +36,15 @@ export class TtyAwareLogger {
         this.tasks.push(context);
     }
 
-    public log(content: string): void {
-        if (this.isTTY) {
-            this.stream.write(this.clear() + content + this.lastPaint);
-        } else {
-            this.stream.write(content);
+    public log(logs: Log[]): void {
+        for (const { content, omitOnTTY } of logs) {
+            if (this.isTTY) {
+                if (!omitOnTTY) {
+                    this.stream.write(this.clear() + content + this.lastPaint);
+                }
+            } else {
+                this.stream.write(content);
+            }
         }
     }
 

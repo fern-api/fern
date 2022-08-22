@@ -10,21 +10,21 @@ import {
 } from "@fern-api/task-context";
 import chalk from "chalk";
 import { addPrefixToLog } from "./addPrefixToLog";
-import { Log } from "./Log";
+import { LogWithLevel } from "./Log";
 
 export declare namespace TaskContextImpl {
     export interface Init {
-        log: (logs: Log[]) => void;
+        log: (logs: LogWithLevel[]) => void;
         logPrefix?: string;
     }
 }
 
 export class TaskContextImpl implements TaskContext {
     protected result = TaskResult.Success;
-    protected log: (logs: Log[]) => void;
+    protected log: (logs: LogWithLevel[]) => void;
     protected logPrefix: string;
     protected subtasks: InteractiveTaskContextImpl[] = [];
-    private logs: Log[] = [];
+    private logs: LogWithLevel[] = [];
 
     public constructor({ log, logPrefix }: TaskContextImpl.Init) {
         this.log = log;
@@ -47,7 +47,7 @@ export class TaskContextImpl implements TaskContext {
         this.log(this.logs);
     }
 
-    protected addLog(log: Log): void {
+    protected addLog(log: LogWithLevel): void {
         this.logs.push({
             ...log,
             content: addPrefixToLog({
