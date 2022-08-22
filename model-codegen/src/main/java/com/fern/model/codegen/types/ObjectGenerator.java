@@ -22,7 +22,6 @@ import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.generator.object.EnrichedObjectProperty;
 import com.fern.codegen.generator.object.GenericObjectGenerator;
 import com.fern.codegen.generator.object.ImplementsInterface;
-import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.types.DeclaredTypeName;
 import com.fern.types.ObjectTypeDeclaration;
 import com.squareup.javapoet.ClassName;
@@ -51,15 +50,14 @@ public final class ObjectGenerator extends Generator {
             ObjectTypeDeclaration objectTypeDeclaration,
             List<GeneratedInterface> extendedInterfaces,
             Optional<GeneratedInterface> selfInterface,
-            GeneratorContext generatorContext) {
+            GeneratorContext generatorContext,
+            ClassName objectClassName) {
         super(generatorContext);
         this.declaredTypeName = declaredTypeName;
         this.objectTypeDeclaration = objectTypeDeclaration;
         this.extendedInterfaces.addAll(extendedInterfaces);
         selfInterface.ifPresent(extendedInterfaces::add);
-        this.generatedObjectClassName = generatorContext
-                .getClassNameUtils()
-                .getClassNameFromDeclaredTypeName(declaredTypeName, PackageType.MODEL);
+        this.generatedObjectClassName = objectClassName;
     }
 
     @Override

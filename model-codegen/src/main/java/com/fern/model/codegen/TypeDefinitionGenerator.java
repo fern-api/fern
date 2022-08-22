@@ -29,6 +29,7 @@ import com.fern.types.ObjectTypeDeclaration;
 import com.fern.types.Type;
 import com.fern.types.TypeDeclaration;
 import com.fern.types.UnionTypeDeclaration;
+import com.squareup.javapoet.ClassName;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -40,14 +41,17 @@ public final class TypeDefinitionGenerator implements Type.Visitor<IGeneratedFil
     private final TypeDeclaration typeDeclaration;
     private final GeneratorContext generatorContext;
     private final Map<DeclaredTypeName, GeneratedInterface> generatedInterfaces;
+    private final ClassName generatedClassName;
 
     public TypeDefinitionGenerator(
             TypeDeclaration typeDeclaration,
             GeneratorContext generatorContext,
-            Map<DeclaredTypeName, GeneratedInterface> generatedInterfaces) {
+            Map<DeclaredTypeName, GeneratedInterface> generatedInterfaces,
+            ClassName generatedClassName) {
         this.typeDeclaration = typeDeclaration;
         this.generatorContext = generatorContext;
         this.generatedInterfaces = generatedInterfaces;
+        this.generatedClassName = generatedClassName;
     }
 
     @Override
@@ -60,27 +64,32 @@ public final class TypeDefinitionGenerator implements Type.Visitor<IGeneratedFil
                         generatedInterface -> generatedInterface.className().simpleName()))
                 .collect(Collectors.toList());
         ObjectGenerator objectGenerator = new ObjectGenerator(
-                typeDeclaration.name(), objectTypeDefinition, extendedInterfaces, selfInterface, generatorContext);
+                typeDeclaration.name(),
+                objectTypeDefinition,
+                extendedInterfaces,
+                selfInterface,
+                generatorContext,
+                generatedClassName);
         return objectGenerator.generate();
     }
 
     @Override
     public IGeneratedFile visitUnion(UnionTypeDeclaration unionTypeDeclaration) {
         UnionGenerator unionGenerator =
-                new UnionGenerator(typeDeclaration.name(), unionTypeDeclaration, generatorContext);
+                new UnionGenerator(typeDeclaration.name(), unionTypeDeclaration, generatedClassName, generatorContext);
         return unionGenerator.generate();
     }
 
     @Override
     public IGeneratedFile visitAlias(AliasTypeDeclaration aliasTypeDeclaration) {
-        AliasGenerator aliasGenerator =
-                new AliasGenerator(aliasTypeDeclaration, typeDeclaration.name(), generatorContext);
+        AliasGenerator aliasGenerator = new AliasGenerator(aliasTypeDeclaration, generatorContext, generatedClassName);
         return aliasGenerator.generate();
     }
 
     @Override
     public IGeneratedFile visitEnum(EnumTypeDeclaration enumTypeDeclaration) {
-        EnumGenerator enumGenerator = new EnumGenerator(typeDeclaration.name(), enumTypeDeclaration, generatorContext);
+        EnumGenerator enumGenerator =
+                new EnumGenerator(typeDeclaration.name(), enumTypeDeclaration, generatorContext, generatedClassName);
         return enumGenerator.generate();
     }
 

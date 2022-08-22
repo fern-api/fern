@@ -36,11 +36,9 @@ import javax.lang.model.element.Modifier;
 
 public final class ErrorGenerator extends Generator {
     public static final String GET_STATUS_CODE_METHOD_NAME = "getStatusCode";
-
     public static final String GET_ERROR_BODY_METHOD_NAME = "getBody";
     private static final String BODY_SUFFIX = "Body";
     private static final String BODY_FIELD_NAME = "body";
-
     private final ErrorDeclaration errorDeclaration;
     private final ClassName errorClassName;
     private final GeneratorContext generatorContext;
@@ -61,18 +59,23 @@ public final class ErrorGenerator extends Generator {
 
     @Override
     public GeneratedError generate() {
+        DeclaredTypeName declaredTypeName = DeclaredTypeName.builder()
+                .fernFilepath(errorDeclaration.name().fernFilepath())
+                .name(errorClassName.simpleName() + BODY_SUFFIX)
+                .build();
+        ClassName className = generatorContext
+                .getClassNameUtils()
+                .getClassNameFromDeclaredTypeName(declaredTypeName, PackageType.MODEL);
         IGeneratedFile generatedBodyFile = errorDeclaration
                 .type()
                 .visit(new TypeDefinitionGenerator(
                         TypeDeclaration.builder()
-                                .name(DeclaredTypeName.builder()
-                                        .fernFilepath(errorDeclaration.name().fernFilepath())
-                                        .name(errorClassName.simpleName() + BODY_SUFFIX)
-                                        .build())
+                                .name(declaredTypeName)
                                 .shape(errorDeclaration.type())
                                 .build(),
                         generatorContext,
-                        generatedInterfaces));
+                        generatedInterfaces,
+                        className));
         ClassName bodyClassName = generatedBodyFile.className();
         TypeSpec.Builder errorTypeSpecBuilder = TypeSpec.classBuilder(errorClassName)
                 .superclass(ClassName.get(HttpException.class))

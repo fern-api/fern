@@ -21,9 +21,7 @@ import com.fern.codegen.GeneratedAlias;
 import com.fern.codegen.Generator;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameConstants;
-import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.types.AliasTypeDeclaration;
-import com.fern.types.DeclaredTypeName;
 import com.fern.types.PrimitiveType;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
@@ -37,23 +35,15 @@ import javax.lang.model.element.Modifier;
 public final class AliasGenerator extends Generator {
 
     private static final String VALUE_FIELD_NAME = "value";
-
     private static final String OF_METHOD_NAME = "of";
-
     private final AliasTypeDeclaration aliasTypeDeclaration;
-    private final DeclaredTypeName declaredTypeName;
     private final ClassName generatedAliasClassName;
 
     public AliasGenerator(
-            AliasTypeDeclaration aliasTypeDeclaration,
-            DeclaredTypeName declaredTypeName,
-            GeneratorContext generatorContext) {
+            AliasTypeDeclaration aliasTypeDeclaration, GeneratorContext generatorContext, ClassName aliasClassName) {
         super(generatorContext);
         this.aliasTypeDeclaration = aliasTypeDeclaration;
-        this.declaredTypeName = declaredTypeName;
-        this.generatedAliasClassName = generatorContext
-                .getClassNameUtils()
-                .getClassNameFromDeclaredTypeName(declaredTypeName, PackageType.MODEL);
+        this.generatedAliasClassName = aliasClassName;
     }
 
     @Override

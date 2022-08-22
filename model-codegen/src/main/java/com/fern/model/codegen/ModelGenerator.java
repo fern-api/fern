@@ -28,6 +28,7 @@ import com.fern.codegen.ImmutableGeneratedEndpointModel;
 import com.fern.codegen.payload.Payload;
 import com.fern.codegen.payload.TypeNamePayload;
 import com.fern.codegen.payload.VoidPayload;
+import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.model.codegen.errors.ErrorGenerator;
 import com.fern.model.codegen.services.payloads.FailedResponseGenerator;
 import com.fern.model.codegen.types.InterfaceGenerator;
@@ -40,6 +41,7 @@ import com.fern.types.TypeDeclaration;
 import com.fern.types.TypeReference;
 import com.fern.types.services.HttpEndpointId;
 import com.fern.types.services.HttpService;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeName;
 import java.util.List;
 import java.util.Map;
@@ -73,9 +75,13 @@ public final class ModelGenerator {
         Map<DeclaredTypeName, GeneratedInterface> generatedInterfaces = getGeneratedInterfaces();
         modelGeneratorResultBuilder.putAllInterfaces(generatedInterfaces);
         typeDeclarations.forEach(typeDefinition -> {
+            ClassName className = generatorContext
+                    .getClassNameUtils()
+                    .getClassNameFromDeclaredTypeName(typeDefinition.name(), PackageType.MODEL);
             IGeneratedFile generatedFile = typeDefinition
                     .shape()
-                    .visit(new TypeDefinitionGenerator(typeDefinition, generatorContext, generatedInterfaces));
+                    .visit(new TypeDefinitionGenerator(
+                            typeDefinition, generatorContext, generatedInterfaces, className));
             if (generatedFile instanceof GeneratedObject) {
                 modelGeneratorResultBuilder.addObjects((GeneratedObject) generatedFile);
             } else if (generatedFile instanceof GeneratedUnion) {

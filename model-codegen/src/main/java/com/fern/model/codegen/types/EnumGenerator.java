@@ -21,7 +21,6 @@ import com.fern.codegen.GeneratedEnum;
 import com.fern.codegen.Generator;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameConstants;
-import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.codegen.utils.VisitorUtils;
 import com.fern.codegen.utils.VisitorUtils.GeneratedVisitor;
 import com.fern.types.DeclaredTypeName;
@@ -75,13 +74,12 @@ public final class EnumGenerator extends Generator {
     public EnumGenerator(
             DeclaredTypeName declaredTypeName,
             EnumTypeDeclaration enumTypeDeclaration,
-            GeneratorContext generatorContext) {
+            GeneratorContext generatorContext,
+            ClassName enumClassName) {
         super(generatorContext);
         this.declaredTypeName = declaredTypeName;
         this.enumTypeDeclaration = enumTypeDeclaration;
-        this.generatedEnumClassName = generatorContext
-                .getClassNameUtils()
-                .getClassNameFromDeclaredTypeName(declaredTypeName, PackageType.MODEL);
+        this.generatedEnumClassName = enumClassName;
         this.valueFieldClassName = generatedEnumClassName.nestedClass(VALUE_TYPE_NAME);
     }
 

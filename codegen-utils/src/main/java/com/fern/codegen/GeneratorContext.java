@@ -23,6 +23,7 @@ import com.fern.types.DeclaredErrorName;
 import com.fern.types.DeclaredTypeName;
 import com.fern.types.ErrorDeclaration;
 import com.fern.types.FernConstants;
+import com.fern.types.IntermediateRepresentation;
 import com.fern.types.TypeDeclaration;
 import java.util.Map;
 
@@ -35,13 +36,18 @@ public final class GeneratorContext {
     private final Map<DeclaredErrorName, ErrorDeclaration> errorDefinitionsByName;
     private final FernConstants fernConstants;
     private final ApiAuth apiAuth;
+    private final IntermediateRepresentation ir;
+    private final String organization;
 
     public GeneratorContext(
+            IntermediateRepresentation ir,
+            String organization,
             String packagePrefix,
             Map<DeclaredTypeName, TypeDeclaration> typeDefinitionsByName,
             Map<DeclaredErrorName, ErrorDeclaration> errorDefinitionsByName,
             ApiAuth apiAuth,
             FernConstants fernConstants) {
+        this.ir = ir;
         this.classNameUtils = new ClassNameUtils(packagePrefix);
         this.immutablesUtils = new ImmutablesUtils();
         this.visitorUtils = new VisitorUtils();
@@ -49,6 +55,7 @@ public final class GeneratorContext {
         this.errorDefinitionsByName = errorDefinitionsByName;
         this.apiAuth = apiAuth;
         this.fernConstants = fernConstants;
+        this.organization = organization;
     }
 
     public FernConstants getFernConstants() {
@@ -77,5 +84,13 @@ public final class GeneratorContext {
 
     public ApiAuth getApiAuth() {
         return apiAuth;
+    }
+
+    public IntermediateRepresentation getIr() {
+        return ir;
+    }
+
+    public String getOrganization() {
+        return organization;
     }
 }

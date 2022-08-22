@@ -23,10 +23,12 @@ import com.fern.codegen.GeneratedFile;
 import com.fern.codegen.GeneratedHttpServiceClient;
 import com.fern.codegen.GeneratedHttpServiceServer;
 import com.fern.codegen.GeneratorContext;
+import com.fern.codegen.IGeneratedFile;
 import com.fern.codegen.generator.auth.AuthGenerator;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.codegen.utils.ObjectMappers;
 import com.fern.java.client.cli.CustomPluginConfig.ServerFramework;
+import com.fern.jersey.client.ClientErrorGenerator;
 import com.fern.jersey.client.ClientWrapperGenerator;
 import com.fern.jersey.client.HttpServiceClientGenerator;
 import com.fern.jersey.server.AbstractHttpServiceRegistryGenerator;
@@ -153,6 +155,8 @@ public final class ClientGeneratorCli {
                 List.of("com", fernPluginConfig.generatorConfig().organization(), ir.apiName());
         String unreplacedPackagePrefix = String.join(".", packagePrefixTokens);
         GeneratorContext generatorContext = new GeneratorContext(
+                ir,
+                fernPluginConfig.generatorConfig().organization(),
                 unreplacedPackagePrefix.replaceAll("[^a-zA-Z0-9]", "."),
                 typeDefinitionsByName,
                 errorDefinitionsByName,
@@ -248,6 +252,13 @@ public final class ClientGeneratorCli {
                     .generatedErrorDecoder()
                     .ifPresent(resultBuilder::addClientFiles);
         }
+        Map<DeclaredErrorName, IGeneratedFile> generatedErrors = ir.errors().stream()
+                .collect(Collectors.toMap(ErrorDeclaration::name, errorDefinition -> {
+                    ClientErrorGenerator clientErrorGenerator = new ClientErrorGenerator(
+                            errorDefinition, generatorContext, modelGeneratorResult.interfaces());
+                    return clientErrorGenerator.generate();
+                }));
+        resultBuilder.addAllClientFiles(generatedErrors.values());
     }
 
     private static void addServerFiles(
