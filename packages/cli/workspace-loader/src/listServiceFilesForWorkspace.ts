@@ -17,16 +17,12 @@ export async function listServiceFilesForWorkspace(absolutePathToDefinition: Abs
     ).map(RelativeFilePath.of);
 
     for (const filepath of filepaths) {
-        try {
-            files.push(
-                await createFernFile({
-                    relativeFilepath: filepath,
-                    absoluteFilepath: join(absolutePathToDefinition, filepath),
-                })
-            );
-        } catch (e) {
-            console.error(`Failed to read file: ${filepath}`, e);
-        }
+        files.push(
+            await createFernFile({
+                relativeFilepath: filepath,
+                absoluteFilepath: join(absolutePathToDefinition, filepath),
+            })
+        );
     }
 
     return files;
