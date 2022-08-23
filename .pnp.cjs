@@ -7656,6 +7656,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/migrations", "workspace:packages/cli/migrations"],\
             ["@fern-api/openapi-converter", "workspace:packages/openapi-converter"],\
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
+            ["@fern-api/project-loader", "workspace:packages/cli/project-loader"],\
             ["@fern-api/remote-workspace-runner", "workspace:packages/cli/generation/remote-generation/remote-workspace-runner"],\
             ["@fern-api/scripts", "workspace:packages/scripts"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\

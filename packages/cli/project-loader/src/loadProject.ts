@@ -51,7 +51,7 @@ export async function loadProject({
         );
         message += allWorkspaceDirectoryNames
             .map((workspaceName) => {
-                const suggestedCommand = `${cliName} --api ${workspaceName} ${process.argv.slice(2).join(" ")}`;
+                const suggestedCommand = `${cliName} ${process.argv.slice(2).join(" ")} --api ${workspaceName}`;
                 return ` › ${chalk.bold(workspaceName.padEnd(longestWorkspaceName))}  ${chalk.dim(suggestedCommand)}`;
             })
             .join("\n");
