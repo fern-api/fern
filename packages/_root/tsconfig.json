@@ -17,6 +17,7 @@
     { "path": "../cli/init" },
     { "path": "../cli/logger" },
     { "path": "../cli/login" },
+    { "path": "../cli/migrations" },
     { "path": "../cli/task-context" },
     { "path": "../cli/workspace-loader" },
     { "path": "../cli/yaml/json-schema" },

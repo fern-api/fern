@@ -5,6 +5,7 @@ export type TASK_FAILURE = typeof TASK_FAILURE;
 
 export interface TaskContext {
     readonly logger: Logger;
+    readonly takeOverTerminal: (run: () => void | Promise<void>) => Promise<void>;
     readonly fail: (message?: string) => TASK_FAILURE;
     readonly getResult: () => TaskResult;
     readonly addInteractiveTask: (params: CreateInteractiveTaskParams) => StartableInteractiveTaskContext;
@@ -33,6 +34,7 @@ export interface CreateInteractiveTaskParams {
     subtitle?: string;
 }
 
+// TODO change to boolean representation
 export enum TaskResult {
     Success,
     Failure,

@@ -1,6 +1,6 @@
 import stripAnsi from "strip-ansi";
 
-export function addPrefixToLog({
+export function addPrefixToString({
     prefix,
     content,
     includePrefixOnAllLines,

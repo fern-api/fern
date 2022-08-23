@@ -2,6 +2,7 @@ import { join, RelativeFilePath } from "@fern-api/core-utils";
 import { GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
 import { FERN_DIRECTORY, GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/project-configuration";
 import { readFile, writeFile } from "fs/promises";
+import yaml from "js-yaml";
 import { runFernCli } from "../../utils/runFernCli";
 import { init } from "../init/init";
 
@@ -55,9 +56,13 @@ describe("fern upgrade", () => {
             RelativeFilePath.of("api"),
             RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)
         );
-        await writeFile(generatorsConfigurationFilepath, JSON.stringify(GENERATORS_CONFIGURATION, undefined, 4));
+        await writeFile(generatorsConfigurationFilepath, yaml.dump(GENERATORS_CONFIGURATION));
         await runFernCli(["upgrade"], {
             cwd: directory,
+            env: {
+                // needed so the CLI thinks we're mid-upgrade
+                FERN_PRE_UPGRADE_VERSION: "0.0.0",
+            },
         });
         const generatorsConfiguration = (await readFile(generatorsConfigurationFilepath)).toString();
         expect(generatorsConfiguration).toMatchSnapshot();

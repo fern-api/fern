@@ -1,3 +1,4 @@
+export { addPrefixToString } from "./addPrefixToString";
 export { assertNever, assertNeverNoThrow } from "./assertNever";
 export { delay } from "./delay/delay";
 export { withMinimumTime } from "./delay/withMinimumTime";
