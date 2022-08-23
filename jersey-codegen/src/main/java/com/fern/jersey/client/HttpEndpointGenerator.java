@@ -22,14 +22,9 @@ import com.fern.codegen.GeneratedEndpointClient.GeneratedRequestInfo;
 import com.fern.codegen.Generator;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.IGeneratedFile;
-import com.fern.codegen.PoetTypeWithClassName;
 import com.fern.codegen.generator.object.EnrichedObjectProperty;
 import com.fern.codegen.generator.object.GenericObjectGenerator;
-import com.fern.codegen.generator.union.client.ClientErrorUnionGenerator;
-import com.fern.codegen.generator.union.client.ClientErrorUnionOtherSubType;
-import com.fern.codegen.generator.union.client.ClientErrorUnionSubType;
 import com.fern.types.DeclaredErrorName;
-import com.fern.types.ErrorDeclaration;
 import com.fern.types.services.HttpEndpoint;
 import com.fern.types.services.HttpService;
 import com.squareup.javapoet.ClassName;
@@ -81,21 +76,15 @@ public final class HttpEndpointGenerator extends Generator {
                 .addMethod(MethodSpec.constructorBuilder()
                         .addModifiers(Modifier.PRIVATE)
                         .build());
-        Optional<GeneratedRequestInfo> maybeGeneratedRequest = serviceInterfaceMethodParameters.size() == 1
-                ? Optional.empty()
-                : Optional.of(generateNestedRequestType());
-        maybeGeneratedRequest.ifPresent(
-                generatedRequestInfo -> endpointTypeSpecBuilder.addType(generatedRequestInfo.requestTypeSpec()));
-        PoetTypeWithClassName generatedNestedError = generateNestedError();
-        endpointTypeSpecBuilder.addType(generatedNestedError.typeSpec());
+        GeneratedRequestInfo generatedRequestInfo = generateNestedRequestType();
+        endpointTypeSpecBuilder.addType(generatedRequestInfo.requestTypeSpec());
         TypeSpec endpointTypeSpec = endpointTypeSpecBuilder.build();
         JavaFile endpointJavaFile = JavaFile.builder(endpointClassName.packageName(), endpointTypeSpec)
                 .build();
         return GeneratedEndpointClient.builder()
                 .file(endpointJavaFile)
                 .className(endpointClassName)
-                .generatedNestedError(generatedNestedError)
-                .generatedNestedRequest(maybeGeneratedRequest)
+                .generatedNestedRequest(generatedRequestInfo)
                 .build();
     }
 
@@ -145,25 +134,5 @@ public final class HttpEndpointGenerator extends Generator {
             requestParameters.addAll(serviceInterfaceMethodParameters);
         }
         return requestParameters;
-    }
-
-    private PoetTypeWithClassName generateNestedError() {
-        ClassName errorClassName = endpointClassName.nestedClass(ERROR_CLASS_NAME);
-        List<ClientErrorUnionSubType> clientErrorSubTypes = httpEndpoint.errors().value().stream()
-                .map(responseError -> {
-                    ErrorDeclaration errorDeclaration =
-                            generatorContext.getErrorDefinitionsByName().get(responseError.error());
-                    IGeneratedFile generatedClientError = generatedClientErrors.get(responseError.error());
-                    return new ClientErrorUnionSubType(
-                            errorClassName,
-                            errorDeclaration,
-                            generatedClientError,
-                            generatorContext.getFernConstants());
-                })
-                .collect(Collectors.toList());
-        ClientErrorUnionOtherSubType clientErrorUnionOtherSubType = new ClientErrorUnionOtherSubType(errorClassName);
-        ClientErrorUnionGenerator clientErrorUnionGenerator = new ClientErrorUnionGenerator(
-                errorClassName, clientErrorSubTypes, clientErrorUnionOtherSubType, generatorContext.getFernConstants());
-        return PoetTypeWithClassName.of(errorClassName, clientErrorUnionGenerator.generateErrorUnion());
     }
 }

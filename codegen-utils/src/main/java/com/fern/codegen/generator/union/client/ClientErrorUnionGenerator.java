@@ -57,7 +57,7 @@ public final class ClientErrorUnionGenerator extends GenericUnionGenerator {
     @Override
     public TypeSpec build(TypeSpec.Builder unionBuilder) {
         return unionBuilder
-                .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
+                .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addType(getCustomDeserializer())
                 .addAnnotation(AnnotationSpec.builder(JsonDeserialize.class)
                         .addMember("using", "$T.class", deserializerClassName)
@@ -68,7 +68,7 @@ public final class ClientErrorUnionGenerator extends GenericUnionGenerator {
 
     private TypeSpec getCustomDeserializer() {
         return TypeSpec.classBuilder(deserializerClassName)
-                .addModifiers(Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL)
+                .addModifiers(Modifier.STATIC, Modifier.FINAL)
                 .superclass(ParameterizedTypeName.get(ClassName.get(JsonDeserializer.class), getUnionClassName()))
                 .addMethod(MethodSpec.methodBuilder("deserialize")
                         .addModifiers(Modifier.PUBLIC)

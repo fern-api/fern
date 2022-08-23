@@ -52,9 +52,7 @@ public final class HttpServiceClientGenerator extends Generator {
     private static final String SERVICE_FIELD_NAME = "service";
     private static final String AUTH_FIELD_NAME = "auth";
     private static final String CLIENT_SUFFIX = "Client";
-    private static final String REQUEST_CLASS_NAME = "Request";
     private static final String REQUEST_PARAMETER_NAME = "request";
-    private static final String AUTH_REQUEST_PARAMETER = "authOverride";
 
     private final HttpService httpService;
     private final ClassName generatedServiceClientClassName;
@@ -112,14 +110,8 @@ public final class HttpServiceClientGenerator extends Generator {
             MethodSpec.Builder endpointMethodBuilder =
                     MethodSpec.methodBuilder(httpEndpoint.id().value()).addModifiers(Modifier.PUBLIC);
 
-            if (endpointFile.generatedNestedRequest().isEmpty()) {
-                generateCallWithNoWrappedRequest(httpEndpoint, interfaceMethod, endpointMethodBuilder);
-            } else {
-                GeneratedRequestInfo generatedRequestInfo =
-                        endpointFile.generatedNestedRequest().get();
-                generateCallWithWrappedRequest(
-                        httpEndpoint, interfaceMethod, generatedRequestInfo, endpointMethodBuilder);
-            }
+            GeneratedRequestInfo generatedRequestInfo = endpointFile.generatedNestedRequest();
+            generateCallWithWrappedRequest(httpEndpoint, interfaceMethod, generatedRequestInfo, endpointMethodBuilder);
 
             endpointMethodBuilder.addExceptions(interfaceMethod.exceptions);
             endpointMethodBuilder.returns(interfaceMethod.returnType);
@@ -168,42 +160,6 @@ public final class HttpServiceClientGenerator extends Generator {
                         "url")
                 .addStatement("this.$L = $T.of($L)", AUTH_FIELD_NAME, Optional.class, AUTH_FIELD_NAME)
                 .build();
-    }
-
-    private void generateCallWithNoWrappedRequest(
-            HttpEndpoint httpEndpoint, MethodSpec interfaceMethod, MethodSpec.Builder endpointMethodBuilder) {
-        List<ParameterSpec> parameters = new ArrayList<>();
-        List<String> args = new ArrayList<>();
-        if (httpEndpoint.auth() && maybeGeneratedAuthSchemes.isPresent()) {
-            parameters.add(ParameterSpec.builder(
-                            ParameterizedTypeName.get(
-                                    ClassName.get(Optional.class),
-                                    maybeGeneratedAuthSchemes.get().className()),
-                            AUTH_REQUEST_PARAMETER)
-                    .build());
-            endpointMethodBuilder.addStatement(
-                    "$T authValue = $L.orElse(this.$L.orElseThrow(() -> new $T($S)))",
-                    maybeGeneratedAuthSchemes.get().className(),
-                    AUTH_REQUEST_PARAMETER,
-                    AUTH_FIELD_NAME,
-                    RuntimeException.class,
-                    "Auth is required for " + httpEndpoint.id().value());
-            args.add("authValue");
-        } else {
-            interfaceMethod.parameters.forEach(interfaceParameter -> {
-                parameters.add(ParameterSpec.builder(interfaceParameter.type, interfaceParameter.name)
-                        .build());
-                args.add(interfaceParameter.name);
-            });
-        }
-        endpointMethodBuilder.addParameters(parameters);
-        String joinedParameters = String.join(", ", args);
-        String codeBlockFormat = "this.$L.$L(" + joinedParameters + ")";
-        if (interfaceMethod.returnType.equals(TypeName.VOID)) {
-            endpointMethodBuilder.addStatement(codeBlockFormat, SERVICE_FIELD_NAME, interfaceMethod.name);
-        } else {
-            endpointMethodBuilder.addStatement("return " + codeBlockFormat, SERVICE_FIELD_NAME, interfaceMethod.name);
-        }
     }
 
     private void generateCallWithWrappedRequest(

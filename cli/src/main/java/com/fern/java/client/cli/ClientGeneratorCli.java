@@ -259,6 +259,10 @@ public final class ClientGeneratorCli {
                     .serviceInterface()
                     .endpointFiles()
                     .values());
+            resultBuilder.addAllClientFiles(generatedHttpServiceClient
+                    .serviceInterface()
+                    .endpointExceptions()
+                    .values());
             generatedHttpServiceClient
                     .serviceInterface()
                     .generatedErrorDecoder()

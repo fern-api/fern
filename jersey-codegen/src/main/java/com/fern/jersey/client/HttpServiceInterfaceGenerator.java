@@ -115,7 +115,10 @@ public final class HttpServiceInterfaceGenerator extends Generator {
         Map<HttpEndpointId, GeneratedEndpointClient> endpointFiles = KeyedStream.stream(httpEndpointInfos)
                 .map(MethodSpecAndEndpointClient::endpointClient)
                 .collectToMap();
-        GeneratedErrorDecoder maybeGeneratedErrorDecoder = getGeneratedErrorDecoder(endpointFiles);
+        Map<HttpEndpointId, IGeneratedFile> endpointExceptions = KeyedStream.stream(httpEndpointInfos)
+                .map(MethodSpecAndEndpointClient::endpointException)
+                .collectToMap();
+        GeneratedErrorDecoder maybeGeneratedErrorDecoder = getGeneratedErrorDecoder(endpointExceptions);
         TypeSpec jerseyServiceTypeSpec = jerseyServiceBuilder
                 .addMethods(httpEndpointMethods.values())
                 .addMethod(getStaticClientBuilderMethod(maybeGeneratedErrorDecoder))
@@ -130,6 +133,7 @@ public final class HttpServiceInterfaceGenerator extends Generator {
                 .generatedErrorDecoder(maybeGeneratedErrorDecoder)
                 .putAllEndpointFiles(endpointFiles)
                 .putAllEndpointMethods(httpEndpointMethods)
+                .putAllEndpointExceptions(endpointExceptions)
                 .build();
     }
 
@@ -159,12 +163,14 @@ public final class HttpServiceInterfaceGenerator extends Generator {
 
         GeneratedEndpointClient generatedEndpointClient =
                 generateEndpointFile(httpEndpoint, endpointMethodBuilder.parameters);
+        IGeneratedFile generateEndpointException = generateEndpointException(httpEndpoint);
         MethodSpec serviceInterfaceMethodSpec = endpointMethodBuilder
-                .addException(generatedEndpointClient.generatedNestedError().className())
+                .addException(generateEndpointException.className())
                 .build();
         return MethodSpecAndEndpointClient.builder()
                 .methodSpec(serviceInterfaceMethodSpec)
                 .endpointClient(generatedEndpointClient)
+                .endpointException(generateEndpointException)
                 .build();
     }
 
@@ -181,9 +187,15 @@ public final class HttpServiceInterfaceGenerator extends Generator {
         return httpEndpointGenerator.generate();
     }
 
-    private GeneratedErrorDecoder getGeneratedErrorDecoder(Map<HttpEndpointId, GeneratedEndpointClient> endpointFiles) {
+    private IGeneratedFile generateEndpointException(HttpEndpoint httpEndpoint) {
+        HttpEndpointExceptionGenerator httpEndpointExceptionGenerator =
+                new HttpEndpointExceptionGenerator(generatorContext, httpService, httpEndpoint, generatedErrors);
+        return httpEndpointExceptionGenerator.generate();
+    }
+
+    private GeneratedErrorDecoder getGeneratedErrorDecoder(Map<HttpEndpointId, IGeneratedFile> endpointExceptions) {
         ServiceErrorDecoderGenerator serviceErrorDecoderGenerator =
-                new ServiceErrorDecoderGenerator(generatorContext, httpService, endpointFiles);
+                new ServiceErrorDecoderGenerator(generatorContext, httpService, endpointExceptions);
         return serviceErrorDecoderGenerator.generate();
     }
 
@@ -219,6 +231,8 @@ public final class HttpServiceInterfaceGenerator extends Generator {
         MethodSpec methodSpec();
 
         GeneratedEndpointClient endpointClient();
+
+        IGeneratedFile endpointException();
 
         static ImmutableMethodSpecAndEndpointClient.Builder builder() {
             return ImmutableMethodSpecAndEndpointClient.builder();

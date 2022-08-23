@@ -21,6 +21,7 @@ import com.fern.types.ErrorDeclaration;
 import com.fern.types.FernFilepath;
 import com.fern.types.IntermediateRepresentation;
 import com.fern.types.services.DeclaredServiceName;
+import com.fern.types.services.HttpEndpoint;
 import com.fern.types.services.HttpEndpointId;
 import com.squareup.javapoet.ClassName;
 import java.util.ArrayList;
@@ -31,6 +32,8 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 
 public final class ClientClassNameUtils {
+
+    private static final String EXCEPTION_SUFFIX_NAME = "Exception";
 
     private final List<String> packagePrefixTokens = new ArrayList<>();
 
@@ -48,6 +51,11 @@ public final class ClientClassNameUtils {
     public ClassName getClassName(DeclaredServiceName declaredServiceName, HttpEndpointId endpointId) {
         String packageName = getEndpointsPackageName(declaredServiceName.fernFilepath());
         return ClassName.get(packageName, StringUtils.capitalize(endpointId.value()));
+    }
+
+    public ClassName getExceptionClassName(DeclaredServiceName declaredServiceName, HttpEndpoint httpEndpoint) {
+        String packageName = getExceptionsPackageName(declaredServiceName.fernFilepath());
+        return ClassName.get(packageName, httpEndpoint.name().pascalCase() + EXCEPTION_SUFFIX_NAME);
     }
 
     private String getPackageName() {
@@ -68,6 +76,10 @@ public final class ClientClassNameUtils {
 
     private String getErrorsPackageName(FernFilepath fernFilepath) {
         return getPackage(Optional.of(fernFilepath), Optional.of("errors"));
+    }
+
+    private String getExceptionsPackageName(FernFilepath fernFilepath) {
+        return getPackage(Optional.of(fernFilepath), Optional.of("exceptions"));
     }
 
     private String getPackage(Optional<FernFilepath> fernFilepath, Optional<String> suffix) {

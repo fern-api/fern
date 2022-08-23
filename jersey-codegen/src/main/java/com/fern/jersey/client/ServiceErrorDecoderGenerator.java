@@ -15,10 +15,10 @@
  */
 package com.fern.jersey.client;
 
-import com.fern.codegen.GeneratedEndpointClient;
 import com.fern.codegen.GeneratedErrorDecoder;
 import com.fern.codegen.Generator;
 import com.fern.codegen.GeneratorContext;
+import com.fern.codegen.IGeneratedFile;
 import com.fern.codegen.utils.ClassNameConstants;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.types.services.HttpEndpoint;
@@ -53,18 +53,18 @@ public final class ServiceErrorDecoderGenerator extends Generator {
 
     private final HttpService httpService;
     private final ClassName errorDecoderClassName;
-    private final Map<HttpEndpointId, GeneratedEndpointClient> generatedEndpointFiles;
+    private final Map<HttpEndpointId, IGeneratedFile> generatedEndpointExceptions;
 
     public ServiceErrorDecoderGenerator(
             GeneratorContext generatorContext,
             HttpService httpService,
-            Map<HttpEndpointId, GeneratedEndpointClient> generatedEndpointFiles) {
+            Map<HttpEndpointId, IGeneratedFile> generatedEndpointExceptions) {
         super(generatorContext);
         this.httpService = httpService;
         this.errorDecoderClassName = generatorContext
                 .getClassNameUtils()
                 .getClassNameFromServiceName(httpService.name(), ERROR_DECODER_CLASSNAME_SUFFIX, PackageType.CLIENT);
-        this.generatedEndpointFiles = generatedEndpointFiles;
+        this.generatedEndpointExceptions = generatedEndpointExceptions;
     }
 
     @Override
@@ -93,7 +93,7 @@ public final class ServiceErrorDecoderGenerator extends Generator {
         CodeBlock.Builder codeBlockBuilder = CodeBlock.builder().beginControlFlow("try");
         boolean ifStatementStarted = false;
         for (HttpEndpoint httpEndpoint : httpService.endpoints()) {
-            GeneratedEndpointClient generatedEndpointClient = generatedEndpointFiles.get(httpEndpoint.id());
+            IGeneratedFile endpointException = generatedEndpointExceptions.get(httpEndpoint.id());
             codeBlockBuilder
                     .beginControlFlow(
                             "$L ($L.contains($S))",
@@ -104,7 +104,7 @@ public final class ServiceErrorDecoderGenerator extends Generator {
                             "return $L($L, $T.class)",
                             DECODE_EXCEPTION_METHOD_NAME,
                             DECODE_METHOD_RESPONSE_PARAMETER_NAME,
-                            generatedEndpointClient.generatedNestedError().className())
+                            endpointException.className())
                     .endControlFlow();
         }
         codeBlockBuilder
