@@ -112,11 +112,11 @@ public final class FernBasicClient {
 basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/blog/PostsService.java]=[
 package com.fern.basic.client.blog;
 
+import com.fern.basic.client.blog.endpoints.CreatePost;
+import com.fern.basic.client.blog.endpoints.GetPost;
 import com.fern.basic.model.blog.BlogPost;
 import com.fern.basic.model.blog.CreatePostRequest;
 import com.fern.basic.model.blog.PostId;
-import com.fern.basic.model.blog.PostNotFoundError;
-import com.fern.java.exception.UnknownRemoteException;
 import com.fern.java.jackson.ClientObjectMappers;
 import com.fern.java.jersey.contracts.OptionalAwareContract;
 import feign.Feign;
@@ -138,12 +138,11 @@ import javax.ws.rs.core.MediaType;
 interface PostsService {
   @POST
   @Path("/create")
-  void createPost(CreatePostRequest body);
+  void createPost(CreatePostRequest body) throws CreatePost.Error;
 
   @GET
   @Path("/{postId}")
-  BlogPost getPost(@PathParam("postId") PostId postId) throws PostNotFoundError,
-      UnknownRemoteException;
+  BlogPost getPost(@PathParam("postId") PostId postId) throws GetPost.Error;
 
   static PostsService getClient(String url) {
     return Feign.builder()
@@ -161,11 +160,11 @@ basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/blog
 package com.fern.basic.client.blog;
 
 import com.fern.basic.client.BearerAuth;
+import com.fern.basic.client.blog.endpoints.CreatePost;
+import com.fern.basic.client.blog.endpoints.GetPost;
 import com.fern.basic.model.blog.BlogPost;
 import com.fern.basic.model.blog.CreatePostRequest;
 import com.fern.basic.model.blog.PostId;
-import com.fern.basic.model.blog.PostNotFoundError;
-import com.fern.java.exception.UnknownRemoteException;
 import java.lang.String;
 import java.util.Optional;
 
@@ -184,11 +183,11 @@ public final class PostsServiceClient {
     this.auth = Optional.of(auth);
   }
 
-  public void createPost(CreatePostRequest body) {
+  public void createPost(CreatePostRequest body) throws CreatePost.Error {
     this.service.createPost(body);
   }
 
-  public BlogPost getPost(PostId postId) throws PostNotFoundError, UnknownRemoteException {
+  public BlogPost getPost(PostId postId) throws GetPost.Error {
     return this.service.getPost(postId);
   }
 }
@@ -199,8 +198,8 @@ public final class PostsServiceClient {
 basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/blog/PostsServiceErrorDecoder.java]=[
 package com.fern.basic.client.blog;
 
-import com.fern.basic.model.blog.GetPostFailedResponse;
-import com.fern.java.exception.UnknownRemoteException;
+import com.fern.basic.client.blog.endpoints.CreatePost;
+import com.fern.basic.client.blog.endpoints.GetPost;
 import com.fern.java.jackson.ClientObjectMappers;
 import feign.Response;
 import feign.codec.ErrorDecoder;
@@ -208,26 +207,339 @@ import java.io.IOException;
 import java.lang.Class;
 import java.lang.Exception;
 import java.lang.Override;
+import java.lang.RuntimeException;
 import java.lang.String;
-import java.util.function.Function;
 
 final class PostsServiceErrorDecoder implements ErrorDecoder {
   @Override
   public Exception decode(String methodKey, Response response) {
-    if (methodKey.contains("getPost")) {
-      return decodeException(response, GetPostFailedResponse.class, GetPostFailedResponse::getException);
-    }
-    return new UnknownRemoteException("Encountered exception for unknown method: " + methodKey);
-  }
-
-  private static <T> Exception decodeException(Response response, Class<T> clazz,
-      Function<T, Exception> exceptionRetriever) {
     try {
-      T value = ClientObjectMappers.JSON_MAPPER.readValue(response.body().asInputStream(), clazz);
-      return exceptionRetriever.apply(value);
+      if (methodKey.contains("createPost")) {
+        return decodeException(response, CreatePost.Error.class);
+      }
+      if (methodKey.contains("getPost")) {
+        return decodeException(response, GetPost.Error.class);
+      }
     }
     catch (IOException e) {
-      return new UnknownRemoteException("Failed to read error body");
+    }
+    return new RuntimeException("Failed to read response body. Received status " + response.status() + " for method " + methodKey);
+  }
+
+  private static <T extends Exception> Exception decodeException(Response response, Class<T> clazz)
+      throws IOException {
+    return ClientObjectMappers.JSON_MAPPER.reader().withAttribute("statusCode", response.status()).readValue(response.body().asInputStream(), clazz);
+  }
+}
+
+]
+
+
+basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/blog/endpoints/CreatePost.java]=[
+package com.fern.basic.client.blog.endpoints;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.io.IOException;
+import java.lang.Exception;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Objects;
+import java.util.Optional;
+
+public final class CreatePost {
+  private CreatePost() {
+  }
+
+  @JsonDeserialize(
+      using = Error.Deserializer.class
+  )
+  public static final class Error extends Exception {
+    private final Value value;
+
+    private int statusCode;
+
+    private Error(Value value, int statusCode) {
+      this.value = value;
+      this.statusCode = statusCode;
+    }
+
+    public static Error other(Object unknownValue, int statusCode) {
+      return new Error(new UnknownErrorValue(unknownValue), statusCode);
+    }
+
+    public boolean isOther() {
+      return value instanceof UnknownErrorValue;
+    }
+
+    public Optional<Object> getOther() {
+      if (isOther()) {
+        return Optional.of(((UnknownErrorValue) value).unknownValue);
+      }
+      return Optional.empty();
+    }
+
+    <T> T visit(Visitor<T> visitor) {
+      return value.visit(visitor);
+    }
+
+    public interface Visitor<T> {
+      T visitOtherError(Object errorBody);
+    }
+
+    @JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        property = "_error",
+        visible = true,
+        defaultImpl = UnknownErrorValue.class
+    )
+    @JsonIgnoreProperties(
+        ignoreUnknown = true
+    )
+    private interface Value {
+      <T> T visit(Visitor<T> visitor);
+    }
+
+    private static final class UnknownErrorValue implements Value {
+      private Object unknownValue;
+
+      @JsonCreator(
+          mode = JsonCreator.Mode.DELEGATING
+      )
+      UnknownErrorValue(@JsonProperty("unknownValue") Object unknownValue) {
+        this.unknownValue = unknownValue;
+      }
+
+      @Override
+      public <T> T visit(Visitor<T> visitor) {
+        return visitor.visitOtherError(unknownValue);
+      }
+
+      @Override
+      public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof UnknownErrorValue && equalTo((UnknownErrorValue) other);
+      }
+
+      private boolean equalTo(UnknownErrorValue other) {
+        return unknownValue.equals(other.unknownValue);
+      }
+
+      @Override
+      public int hashCode() {
+        return Objects.hash(this.unknownValue);
+      }
+
+      @Override
+      public String toString() {
+        return "CreatePost.Error{" + "unknownValue: " + unknownValue + "}";
+      }
+    }
+
+    private static final class Deserializer extends JsonDeserializer<Error> {
+      @Override
+      public Error deserialize(JsonParser p, DeserializationContext ctx) throws IOException {
+        Value value = ctx.readValue(p, Value.class);
+        int statusCode = (int) ctx.getAttribute("statusCode");
+        return new Error(value, statusCode);
+      }
+    }
+  }
+}
+
+]
+
+
+basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/blog/endpoints/GetPost.java]=[
+package com.fern.basic.client.blog.endpoints;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fern.basic.client.blog.errors.PostNotFoundError;
+import java.io.IOException;
+import java.lang.Exception;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
+
+public final class GetPost {
+  private GetPost() {
+  }
+
+  @JsonDeserialize(
+      using = Error.Deserializer.class
+  )
+  public static final class Error extends Exception {
+    private final Value value;
+
+    private int statusCode;
+
+    private Error(Value value, int statusCode) {
+      this.value = value;
+      this.statusCode = statusCode;
+    }
+
+    public static Error postNotFoundError(PostNotFoundError value) {
+      return new Error(new PostNotFoundErrorValue(value), 400);
+    }
+
+    public static Error other(Object unknownValue, int statusCode) {
+      return new Error(new UnknownErrorValue(unknownValue), statusCode);
+    }
+
+    public boolean isPostNotFoundError() {
+      return value instanceof PostNotFoundErrorValue;
+    }
+
+    public boolean isOther() {
+      return value instanceof UnknownErrorValue;
+    }
+
+    public Optional<PostNotFoundError> getPostNotFoundError() {
+      if (isPostNotFoundError()) {
+        return Optional.of(((PostNotFoundErrorValue) value).value);
+      }
+      return Optional.empty();
+    }
+
+    public Optional<Object> getOther() {
+      if (isOther()) {
+        return Optional.of(((UnknownErrorValue) value).unknownValue);
+      }
+      return Optional.empty();
+    }
+
+    <T> T visit(Visitor<T> visitor) {
+      return value.visit(visitor);
+    }
+
+    public interface Visitor<T> {
+      T visitPostNotFoundError(PostNotFoundError postNotFoundError);
+
+      T visitOtherError(Object errorBody);
+    }
+
+    @JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        property = "_error",
+        visible = true,
+        defaultImpl = UnknownErrorValue.class
+    )
+    @JsonSubTypes(@JsonSubTypes.Type(PostNotFoundErrorValue.class))
+    @JsonIgnoreProperties(
+        ignoreUnknown = true
+    )
+    private interface Value {
+      <T> T visit(Visitor<T> visitor);
+    }
+
+    @JsonTypeName("Optional[PostNotFoundError]")
+    private static final class PostNotFoundErrorValue implements Value {
+      @JsonUnwrapped
+      private PostNotFoundError value;
+
+      private String errorInstanceId;
+
+      @JsonCreator(
+          mode = JsonCreator.Mode.PROPERTIES
+      )
+      private PostNotFoundErrorValue(@JsonProperty("_errorInstanceId") String errorInstanceId) {
+        this.errorInstanceId = errorInstanceId;
+      }
+
+      private PostNotFoundErrorValue(PostNotFoundError value) {
+        this.value = value;
+        this.errorInstanceId = UUID.randomUUID().toString();
+      }
+
+      @Override
+      public <T> T visit(Visitor<T> visitor) {
+        return visitor.visitPostNotFoundError(value);
+      }
+
+      @Override
+      public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof PostNotFoundErrorValue && equalTo((PostNotFoundErrorValue) other);
+      }
+
+      private boolean equalTo(PostNotFoundErrorValue other) {
+        return value.equals(other.value) && errorInstanceId.equals(other.errorInstanceId);
+      }
+
+      @Override
+      public int hashCode() {
+        return Objects.hash(this.value, this.errorInstanceId);
+      }
+
+      @Override
+      public String toString() {
+        return "GetPost.Error{" + "value: " + value + ", errorInstanceId: " + errorInstanceId + "}";
+      }
+    }
+
+    private static final class UnknownErrorValue implements Value {
+      private Object unknownValue;
+
+      @JsonCreator(
+          mode = JsonCreator.Mode.DELEGATING
+      )
+      UnknownErrorValue(@JsonProperty("unknownValue") Object unknownValue) {
+        this.unknownValue = unknownValue;
+      }
+
+      @Override
+      public <T> T visit(Visitor<T> visitor) {
+        return visitor.visitOtherError(unknownValue);
+      }
+
+      @Override
+      public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof UnknownErrorValue && equalTo((UnknownErrorValue) other);
+      }
+
+      private boolean equalTo(UnknownErrorValue other) {
+        return unknownValue.equals(other.unknownValue);
+      }
+
+      @Override
+      public int hashCode() {
+        return Objects.hash(this.unknownValue);
+      }
+
+      @Override
+      public String toString() {
+        return "GetPost.Error{" + "unknownValue: " + unknownValue + "}";
+      }
+    }
+
+    private static final class Deserializer extends JsonDeserializer<Error> {
+      @Override
+      public Error deserialize(JsonParser p, DeserializationContext ctx) throws IOException {
+        Value value = ctx.readValue(p, Value.class);
+        int statusCode = (int) ctx.getAttribute("statusCode");
+        return new Error(value, statusCode);
+      }
     }
   }
 }
@@ -436,6 +748,7 @@ basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/dumm
 package com.fern.basic.client.dummy.service;
 
 import com.fern.basic.client.BearerAuth;
+import com.fern.basic.client.dummy.service.endpoints.GetDummy;
 import com.fern.basic.model.dummy.service.DummyId;
 import com.fern.java.jackson.ClientObjectMappers;
 import com.fern.java.jersey.contracts.OptionalAwareContract;
@@ -457,14 +770,15 @@ import javax.ws.rs.core.MediaType;
 interface DummyService {
   @GET
   @Path("/")
-  void getDummy(@HeaderParam("Authorization") BearerAuth bearer, DummyId body);
+  void getDummy(@HeaderParam("Authorization") BearerAuth bearer, DummyId body) throws
+      GetDummy.Error;
 
   static DummyService getClient(String url) {
     return Feign.builder()
         .contract(new OptionalAwareContract(new JAXRSContract()))
         .decoder(new JacksonDecoder(ClientObjectMappers.JSON_MAPPER))
         .encoder(new JacksonEncoder(ClientObjectMappers.JSON_MAPPER))
-        .target(DummyService.class, url);
+        .errorDecoder(new DummyServiceErrorDecoder()).target(DummyService.class, url);
   }
 }
 
@@ -495,9 +809,45 @@ public final class DummyServiceClient {
     this.auth = Optional.of(auth);
   }
 
-  public void getDummy(GetDummy.Request request) {
+  public void getDummy(GetDummy.Request request) throws GetDummy.Error {
     BearerAuth authValue = request.getAuthOverride().orElse(this.auth.orElseThrow(() -> new RuntimeException("Auth is required for getDummy")));
     this.service.getDummy(authValue, request.getBody());
+  }
+}
+
+]
+
+
+basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/dummy/service/DummyServiceErrorDecoder.java]=[
+package com.fern.basic.client.dummy.service;
+
+import com.fern.basic.client.dummy.service.endpoints.GetDummy;
+import com.fern.java.jackson.ClientObjectMappers;
+import feign.Response;
+import feign.codec.ErrorDecoder;
+import java.io.IOException;
+import java.lang.Class;
+import java.lang.Exception;
+import java.lang.Override;
+import java.lang.RuntimeException;
+import java.lang.String;
+
+final class DummyServiceErrorDecoder implements ErrorDecoder {
+  @Override
+  public Exception decode(String methodKey, Response response) {
+    try {
+      if (methodKey.contains("getDummy")) {
+        return decodeException(response, GetDummy.Error.class);
+      }
+    }
+    catch (IOException e) {
+    }
+    return new RuntimeException("Failed to read response body. Received status " + response.status() + " for method " + methodKey);
+  }
+
+  private static <T extends Exception> Exception decodeException(Response response, Class<T> clazz)
+      throws IOException {
+    return ClientObjectMappers.JSON_MAPPER.reader().withAttribute("statusCode", response.status()).readValue(response.body().asInputStream(), clazz);
   }
 }
 
@@ -507,8 +857,18 @@ public final class DummyServiceClient {
 basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/dummy/service/endpoints/GetDummy.java]=[
 package com.fern.basic.client.dummy.service.endpoints;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.basic.client.BearerAuth;
 import com.fern.basic.model.dummy.service.DummyId;
+import java.io.IOException;
+import java.lang.Exception;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -616,6 +976,101 @@ public final class GetDummy {
       @Override
       public Request build() {
         return new Request(authOverride, body);
+      }
+    }
+  }
+
+  @JsonDeserialize(
+      using = Error.Deserializer.class
+  )
+  public static final class Error extends Exception {
+    private final Value value;
+
+    private int statusCode;
+
+    private Error(Value value, int statusCode) {
+      this.value = value;
+      this.statusCode = statusCode;
+    }
+
+    public static Error other(Object unknownValue, int statusCode) {
+      return new Error(new UnknownErrorValue(unknownValue), statusCode);
+    }
+
+    public boolean isOther() {
+      return value instanceof UnknownErrorValue;
+    }
+
+    public Optional<Object> getOther() {
+      if (isOther()) {
+        return Optional.of(((UnknownErrorValue) value).unknownValue);
+      }
+      return Optional.empty();
+    }
+
+    <T> T visit(Visitor<T> visitor) {
+      return value.visit(visitor);
+    }
+
+    public interface Visitor<T> {
+      T visitOtherError(Object errorBody);
+    }
+
+    @JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        property = "_error",
+        visible = true,
+        defaultImpl = UnknownErrorValue.class
+    )
+    @JsonIgnoreProperties(
+        ignoreUnknown = true
+    )
+    private interface Value {
+      <T> T visit(Visitor<T> visitor);
+    }
+
+    private static final class UnknownErrorValue implements Value {
+      private Object unknownValue;
+
+      @JsonCreator(
+          mode = JsonCreator.Mode.DELEGATING
+      )
+      UnknownErrorValue(@JsonProperty("unknownValue") Object unknownValue) {
+        this.unknownValue = unknownValue;
+      }
+
+      @Override
+      public <T> T visit(Visitor<T> visitor) {
+        return visitor.visitOtherError(unknownValue);
+      }
+
+      @Override
+      public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof UnknownErrorValue && equalTo((UnknownErrorValue) other);
+      }
+
+      private boolean equalTo(UnknownErrorValue other) {
+        return unknownValue.equals(other.unknownValue);
+      }
+
+      @Override
+      public int hashCode() {
+        return Objects.hash(this.unknownValue);
+      }
+
+      @Override
+      public String toString() {
+        return "GetDummy.Error{" + "unknownValue: " + unknownValue + "}";
+      }
+    }
+
+    private static final class Deserializer extends JsonDeserializer<Error> {
+      @Override
+      public Error deserialize(JsonParser p, DeserializationContext ctx) throws IOException {
+        Value value = ctx.readValue(p, Value.class);
+        int statusCode = (int) ctx.getAttribute("statusCode");
+        return new Error(value, statusCode);
       }
     }
   }

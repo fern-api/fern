@@ -15,14 +15,12 @@
  */
 package com.fern.jersey.client;
 
-import com.fern.codegen.GeneratedEndpointError;
+import com.fern.codegen.GeneratedEndpointClient;
 import com.fern.codegen.GeneratedErrorDecoder;
 import com.fern.codegen.Generator;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameConstants;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
-import com.fern.java.exception.UnknownRemoteException;
-import com.fern.model.codegen.services.payloads.FailedResponseGenerator;
 import com.fern.types.services.HttpEndpoint;
 import com.fern.types.services.HttpEndpointId;
 import com.fern.types.services.HttpService;
@@ -37,8 +35,6 @@ import feign.Response;
 import feign.codec.ErrorDecoder;
 import java.io.IOException;
 import java.util.Map;
-import java.util.Optional;
-import java.util.function.Function;
 import javax.lang.model.element.Modifier;
 
 public final class ServiceErrorDecoderGenerator extends Generator {
@@ -54,22 +50,21 @@ public final class ServiceErrorDecoderGenerator extends Generator {
     private static final String DECODE_EXCEPTION_METHOD_NAME = "decodeException";
     private static final String DECODE_EXCEPTION_RESPONSE_PARAMETER_NAME = "response";
     private static final String DECODE_EXCEPTION_CLAZZ_PARAMETER_NAME = "clazz";
-    private static final String DECODE_EXCEPTION_RETRIEVER_PARAMETER_NAME = "exceptionRetriever";
 
     private final HttpService httpService;
     private final ClassName errorDecoderClassName;
-    private final Map<HttpEndpointId, Optional<GeneratedEndpointError>> generatedEndpointErrorFiles;
+    private final Map<HttpEndpointId, GeneratedEndpointClient> generatedEndpointFiles;
 
     public ServiceErrorDecoderGenerator(
             GeneratorContext generatorContext,
             HttpService httpService,
-            Map<HttpEndpointId, Optional<GeneratedEndpointError>> generatedEndpointErrorFiles) {
+            Map<HttpEndpointId, GeneratedEndpointClient> generatedEndpointFiles) {
         super(generatorContext);
         this.httpService = httpService;
         this.errorDecoderClassName = generatorContext
                 .getClassNameUtils()
                 .getClassNameFromServiceName(httpService.name(), ERROR_DECODER_CLASSNAME_SUFFIX, PackageType.CLIENT);
-        this.generatedEndpointErrorFiles = generatedEndpointErrorFiles;
+        this.generatedEndpointFiles = generatedEndpointFiles;
     }
 
     @Override
@@ -95,14 +90,10 @@ public final class ServiceErrorDecoderGenerator extends Generator {
                 .returns(Exception.class)
                 .addParameter(ClassNameConstants.STRING_CLASS_NAME, DECODE_METHOD_KEY_PARAMETER_NAME)
                 .addParameter(FEIGN_RESPONSE_PARAMETER_TYPE, DECODE_METHOD_RESPONSE_PARAMETER_NAME);
-        CodeBlock.Builder codeBlockBuilder = CodeBlock.builder();
+        CodeBlock.Builder codeBlockBuilder = CodeBlock.builder().beginControlFlow("try");
         boolean ifStatementStarted = false;
         for (HttpEndpoint httpEndpoint : httpService.endpoints()) {
-            Optional<GeneratedEndpointError> maybeGeneratedEndpointErrorFile =
-                    generatedEndpointErrorFiles.get(httpEndpoint.id());
-            if (maybeGeneratedEndpointErrorFile == null || maybeGeneratedEndpointErrorFile.isEmpty()) {
-                continue;
-            }
+            GeneratedEndpointClient generatedEndpointClient = generatedEndpointFiles.get(httpEndpoint.id());
             codeBlockBuilder
                     .beginControlFlow(
                             "$L ($L.contains($S))",
@@ -110,24 +101,26 @@ public final class ServiceErrorDecoderGenerator extends Generator {
                             DECODE_METHOD_KEY_PARAMETER_NAME,
                             httpEndpoint.id())
                     .addStatement(
-                            "return $L($L, $T.class, $T::$L)",
+                            "return $L($L, $T.class)",
                             DECODE_EXCEPTION_METHOD_NAME,
                             DECODE_METHOD_RESPONSE_PARAMETER_NAME,
-                            maybeGeneratedEndpointErrorFile.get().className(),
-                            maybeGeneratedEndpointErrorFile.get().className(),
-                            FailedResponseGenerator.GET_EXCEPTION_METHOD_NAME)
+                            generatedEndpointClient.generatedNestedError().className())
                     .endControlFlow();
         }
+        codeBlockBuilder
+                .endControlFlow()
+                .beginControlFlow("catch ($T e)", IOException.class)
+                .endControlFlow();
         codeBlockBuilder.addStatement(
-                "return new $T($S + $L)",
-                ClassName.get(UnknownRemoteException.class),
-                "Encountered exception for unknown method: ",
-                DECODE_METHOD_KEY_PARAMETER_NAME);
+                "return new $T($L)",
+                RuntimeException.class,
+                "\"Failed to read response body. Received status \" "
+                        + "+ response.status() + \" for method \" + methodKey");
         return decodeMethodSpecBuilder.addCode(codeBlockBuilder.build()).build();
     }
 
     private MethodSpec getDecodeExceptionMethodSpec() {
-        TypeVariableName genericReturnType = TypeVariableName.get("T");
+        TypeVariableName genericReturnType = TypeVariableName.get("T", Exception.class);
         return MethodSpec.methodBuilder(DECODE_EXCEPTION_METHOD_NAME)
                 .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
                 .addTypeVariable(genericReturnType)
@@ -136,26 +129,16 @@ public final class ServiceErrorDecoderGenerator extends Generator {
                 .addParameter(
                         ParameterizedTypeName.get(ClassName.get(Class.class), genericReturnType),
                         DECODE_EXCEPTION_CLAZZ_PARAMETER_NAME)
-                .addParameter(
-                        ParameterizedTypeName.get(
-                                ClassName.get(Function.class),
-                                genericReturnType,
-                                ClassNameConstants.EXCEPTION_CLASS_NAME),
-                        DECODE_EXCEPTION_RETRIEVER_PARAMETER_NAME)
-                .beginControlFlow("try")
+                .addException(IOException.class)
                 .addStatement(
-                        "$T value = $T.$L.readValue($L.body().asInputStream(), $L)",
-                        genericReturnType,
+                        "return $T.$L.reader().withAttribute($S, $L.status())"
+                                + ".readValue($L.body().asInputStream(), $L)",
                         ClassNameConstants.CLIENT_OBJECT_MAPPERS_CLASS_NAME,
                         ClassNameConstants.CLIENT_OBJECT_MAPPERS_JSON_MAPPER_FIELD_NAME,
+                        "statusCode",
+                        DECODE_EXCEPTION_RESPONSE_PARAMETER_NAME,
                         DECODE_EXCEPTION_RESPONSE_PARAMETER_NAME,
                         DECODE_EXCEPTION_CLAZZ_PARAMETER_NAME)
-                .addStatement("return $L.apply(value)", DECODE_EXCEPTION_RETRIEVER_PARAMETER_NAME)
-                .endControlFlow()
-                .beginControlFlow("catch ($T e)", ClassName.get(IOException.class))
-                .addStatement(
-                        "return new $T($S)", ClassName.get(UnknownRemoteException.class), "Failed to read error body")
-                .endControlFlow()
                 .build();
     }
 }

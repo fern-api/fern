@@ -29,7 +29,9 @@ import org.immutables.value.Value;
 @StagedBuilderImmutablesStyle
 public interface GeneratedEndpointClient extends IGeneratedFile {
 
-    GeneratedRequestInfo generatedRequestInfo();
+    Optional<GeneratedRequestInfo> generatedNestedRequest();
+
+    PoetTypeWithClassName generatedNestedError();
 
     static ImmutableGeneratedEndpointClient.FileBuildStage builder() {
         return ImmutableGeneratedEndpointClient.builder();

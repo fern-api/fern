@@ -218,13 +218,22 @@ public final class ClientGeneratorCli {
             ImmutableCodeGenerationResult.Builder resultBuilder) {
         AuthGenerator authGenerator = new AuthGenerator(ir.auth(), generatorContext, ir.apiName(), PackageType.CLIENT);
         Optional<GeneratedAuthSchemes> maybeGeneratedAuthSchemes = authGenerator.generate();
+
+        Map<DeclaredErrorName, IGeneratedFile> generatedErrors = ir.errors().stream()
+                .collect(Collectors.toMap(ErrorDeclaration::name, errorDefinition -> {
+                    ClientErrorGenerator clientErrorGenerator = new ClientErrorGenerator(
+                            errorDefinition, generatorContext, modelGeneratorResult.interfaces());
+                    return clientErrorGenerator.generate();
+                }));
+        resultBuilder.addAllClientFiles(generatedErrors.values());
+
         List<GeneratedHttpServiceClient> generatedHttpServiceClients = ir.services().http().stream()
                 .map(httpService -> {
                     HttpServiceClientGenerator httpServiceClientGenerator = new HttpServiceClientGenerator(
                             generatorContext,
                             httpService,
                             modelGeneratorResult.endpointModels().get(httpService),
-                            modelGeneratorResult.errors(),
+                            generatedErrors,
                             maybeGeneratedAuthSchemes);
                     return httpServiceClientGenerator.generate();
                 })
@@ -246,19 +255,15 @@ public final class ClientGeneratorCli {
         for (GeneratedHttpServiceClient generatedHttpServiceClient : generatedHttpServiceClients) {
             resultBuilder.addClientFiles(generatedHttpServiceClient);
             resultBuilder.addClientFiles(generatedHttpServiceClient.serviceInterface());
-            resultBuilder.addAllClientFiles(generatedHttpServiceClient.endpointFiles());
+            resultBuilder.addAllClientFiles(generatedHttpServiceClient
+                    .serviceInterface()
+                    .endpointFiles()
+                    .values());
             generatedHttpServiceClient
                     .serviceInterface()
                     .generatedErrorDecoder()
                     .ifPresent(resultBuilder::addClientFiles);
         }
-        Map<DeclaredErrorName, IGeneratedFile> generatedErrors = ir.errors().stream()
-                .collect(Collectors.toMap(ErrorDeclaration::name, errorDefinition -> {
-                    ClientErrorGenerator clientErrorGenerator = new ClientErrorGenerator(
-                            errorDefinition, generatorContext, modelGeneratorResult.interfaces());
-                    return clientErrorGenerator.generate();
-                }));
-        resultBuilder.addAllClientFiles(generatedErrors.values());
     }
 
     private static void addServerFiles(

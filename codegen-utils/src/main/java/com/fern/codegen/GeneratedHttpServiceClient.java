@@ -17,7 +17,6 @@
 package com.fern.codegen;
 
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import java.util.List;
 import org.immutables.value.Value;
 
 @Value.Immutable
@@ -25,8 +24,6 @@ import org.immutables.value.Value;
 public interface GeneratedHttpServiceClient extends IGeneratedFile {
 
     GeneratedHttpServiceInterface serviceInterface();
-
-    List<IGeneratedFile> endpointFiles();
 
     static ImmutableGeneratedHttpServiceClient.FileBuildStage builder() {
         return ImmutableGeneratedHttpServiceClient.builder();

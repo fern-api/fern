@@ -31,6 +31,8 @@ public interface GeneratedHttpServiceInterface extends IGeneratedFile {
 
     Map<HttpEndpointId, MethodSpec> endpointMethods();
 
+    Map<HttpEndpointId, GeneratedEndpointClient> endpointFiles();
+
     Optional<GeneratedErrorDecoder> generatedErrorDecoder();
 
     static ImmutableGeneratedHttpServiceInterface.FileBuildStage builder() {

@@ -18,16 +18,14 @@ package com.fern.codegen.generator.object;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.codegen.PoetTypeWithClassName;
+import com.fern.codegen.generator.DefaultMethodGenerators;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
-import com.squareup.javapoet.CodeBlock;
-import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
@@ -114,99 +112,32 @@ public final class GenericObjectGenerator {
     }
 
     private MethodSpec generateEqualToMethod() {
-        MethodSpec.Builder equalToMethodBuilder = MethodSpec.methodBuilder(EqualsConstants.EQUAL_TO_METHOD_NAME)
-                .addModifiers(Modifier.PRIVATE)
-                .returns(boolean.class)
-                .addParameter(objectClassName, EqualsConstants.OTHER_PARAMETER);
-        String expression = allEnrichedProperties.stream()
-                .map(enrichedObjectProperty -> {
-                    FieldSpec fieldSpec = enrichedObjectProperty.fieldSpec();
-                    if (fieldSpec.type.isPrimitive()) {
-                        return CodeBlock.builder()
-                                .add("$L == $L.$L", fieldSpec.name, EqualsConstants.OTHER_PARAMETER, fieldSpec.name)
-                                .build();
-                    } else {
-                        return CodeBlock.builder()
-                                .add(
-                                        "$L.equals($L.$L)",
-                                        fieldSpec.name,
-                                        EqualsConstants.OTHER_PARAMETER,
-                                        fieldSpec.name)
-                                .build();
-                    }
-                })
-                .map(CodeBlock::toString)
-                .collect(Collectors.joining(" && "));
-        return equalToMethodBuilder.addStatement("return " + expression).build();
+        return DefaultMethodGenerators.generateEqualToMethod(
+                objectClassName,
+                allEnrichedProperties.stream()
+                        .map(EnrichedObjectProperty::fieldSpec)
+                        .collect(Collectors.toList()));
     }
 
     private MethodSpec generateEqualsMethod(MethodSpec equalToMethod) {
-        return MethodSpec.methodBuilder(EqualsConstants.EQUALS_METHOD_NAME)
-                .addAnnotation(Override.class)
-                .addModifiers(Modifier.PUBLIC)
-                .returns(boolean.class)
-                .addParameter(Object.class, EqualsConstants.OTHER_PARAMETER)
-                .addStatement("if (this == $L) return true", EqualsConstants.OTHER_PARAMETER)
-                .addStatement(
-                        "return $L instanceof $T && $N(($T) $L)",
-                        EqualsConstants.OTHER_PARAMETER,
-                        objectClassName,
-                        equalToMethod,
-                        objectClassName,
-                        EqualsConstants.OTHER_PARAMETER)
-                .build();
+        return DefaultMethodGenerators.generateEqualsMethod(objectClassName, equalToMethod);
     }
 
     private MethodSpec generateHashCode() {
-        String commaDelimitedFields = allEnrichedProperties.stream()
-                .map(enrichedObjectProperty -> "this." + enrichedObjectProperty.fieldSpec().name)
-                .collect(Collectors.joining(", "));
-        return MethodSpec.methodBuilder(HashCodeConstants.HASHCODE_METHOD_NAME)
-                .addAnnotation(Override.class)
-                .addModifiers(Modifier.PUBLIC)
-                .returns(int.class)
-                .beginControlFlow("if ($L == 0)", HashCodeConstants.CACHED_HASH_CODE_FIELD_NAME)
-                .addStatement(
-                        "$L = $T.hash($L)",
-                        HashCodeConstants.CACHED_HASH_CODE_FIELD_NAME,
-                        Objects.class,
-                        commaDelimitedFields)
-                .endControlFlow()
-                .addStatement("return $L", HashCodeConstants.CACHED_HASH_CODE_FIELD_NAME)
-                .build();
+        return DefaultMethodGenerators.generateHashCode(
+                allEnrichedProperties.stream()
+                        .map(EnrichedObjectProperty::fieldSpec)
+                        .collect(Collectors.toList()),
+                true);
     }
 
     private MethodSpec generateToString() {
-        StringBuilder codeBlock;
-        if (enclosingClass.isPresent()) {
-            codeBlock = new StringBuilder(
-                    "\"" + enclosingClass.get().simpleName() + "." + objectClassName.simpleName() + "{\"");
-        } else {
-            codeBlock = new StringBuilder("\"" + objectClassName.simpleName() + "{\"");
-        }
-        for (int i = 0; i < allEnrichedProperties.size(); ++i) {
-            FieldSpec fieldSpec = allEnrichedProperties.get(i).fieldSpec();
-            if (i == 0) {
-                codeBlock
-                        .append(" + \"")
-                        .append(fieldSpec.name)
-                        .append(": \" + ")
-                        .append(fieldSpec.name);
-            } else {
-                codeBlock
-                        .append(" + \", ")
-                        .append(fieldSpec.name)
-                        .append(": \" + ")
-                        .append(fieldSpec.name);
-            }
-        }
-        codeBlock.append(" + \"}\"");
-        return MethodSpec.methodBuilder(ToStringConstants.TO_STRING_METHOD_NAME)
-                .addAnnotation(Override.class)
-                .addModifiers(Modifier.PUBLIC)
-                .returns(String.class)
-                .addStatement("return " + codeBlock)
-                .build();
+        return DefaultMethodGenerators.generateToString(
+                enclosingClass,
+                objectClassName,
+                allEnrichedProperties.stream()
+                        .map(EnrichedObjectProperty::fieldSpec)
+                        .collect(Collectors.toList()));
     }
 
     private Optional<ObjectBuilder> generateBuilder() {
@@ -214,19 +145,7 @@ public final class GenericObjectGenerator {
         return builderGenerator.generate();
     }
 
-    private static final class EqualsConstants {
-        private static final String EQUALS_METHOD_NAME = "equals";
-        private static final String EQUAL_TO_METHOD_NAME = "equalTo";
-        private static final String OTHER_PARAMETER = "other";
-    }
-
     private static final class HashCodeConstants {
-        private static final String HASHCODE_METHOD_NAME = "hashCode";
-
         private static final String CACHED_HASH_CODE_FIELD_NAME = "_cachedHashCode";
-    }
-
-    private static final class ToStringConstants {
-        private static final String TO_STRING_METHOD_NAME = "toString";
     }
 }
