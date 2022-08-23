@@ -8,7 +8,7 @@ Define your API once. Keep your server, SDKs, and docs in sync.
 
 ### Goals
 
-**1. High quality code generation.**
+**1. High quality code generation.**xxx
 
 Generators can be written in any language, for any language. Generated servers and clients are idoimatic and easy to use.
 
