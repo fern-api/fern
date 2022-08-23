@@ -77,15 +77,26 @@ public abstract class GenericUnionGenerator {
                 .addField(getValueFieldSpec())
                 .addFields(getAdditionalFieldSpecs())
                 .addMethod(getConstructor())
-                .addMethods(getStaticConstructors())
-                .addMethods(getIsSubTypeMethods())
-                .addMethods(getSubTypeMethods())
                 .addMethod(MethodSpec.methodBuilder("visit")
+                        .addModifiers(Modifier.PUBLIC)
                         .addTypeVariable(VISITOR_RETURN_TYPE)
                         .returns(VISITOR_RETURN_TYPE)
                         .addParameter(visitorInterfaceClassName, "visitor")
                         .addStatement("return $L.$L($L)", getValueFieldName(), "visit", "visitor")
-                        .build())
+                        .build());
+
+        getAdditionalFieldSpecs().forEach(fieldSpec -> {
+            errorUnionBuilder.addMethod(MethodSpec.methodBuilder("get" + StringUtils.capitalize(fieldSpec.name))
+                    .addModifiers(Modifier.PUBLIC)
+                    .returns(fieldSpec.type)
+                    .addStatement("return this.$L", fieldSpec.name)
+                    .build());
+        });
+
+        errorUnionBuilder
+                .addMethods(getStaticConstructors())
+                .addMethods(getIsSubTypeMethods())
+                .addMethods(getSubTypeMethods())
                 .addType(generateVisitorInterface())
                 .addType(generateValueInterface())
                 .addTypes(subTypes.stream()

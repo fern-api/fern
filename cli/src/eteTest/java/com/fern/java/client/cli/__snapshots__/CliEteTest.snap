@@ -271,6 +271,14 @@ public final class CreatePost {
       this.statusCode = statusCode;
     }
 
+    public <T> T visit(Visitor<T> visitor) {
+      return value.visit(visitor);
+    }
+
+    public int getStatusCode() {
+      return this.statusCode;
+    }
+
     public static Error other(Object unknownValue, int statusCode) {
       return new Error(new UnknownErrorValue(unknownValue), statusCode);
     }
@@ -284,10 +292,6 @@ public final class CreatePost {
         return Optional.of(((UnknownErrorValue) value).unknownValue);
       }
       return Optional.empty();
-    }
-
-    <T> T visit(Visitor<T> visitor) {
-      return value.visit(visitor);
     }
 
     public interface Visitor<T> {
@@ -398,6 +402,14 @@ public final class GetPost {
       this.statusCode = statusCode;
     }
 
+    public <T> T visit(Visitor<T> visitor) {
+      return value.visit(visitor);
+    }
+
+    public int getStatusCode() {
+      return this.statusCode;
+    }
+
     public static Error postNotFoundError(PostNotFoundError value) {
       return new Error(new PostNotFoundErrorValue(value), 400);
     }
@@ -426,10 +438,6 @@ public final class GetPost {
         return Optional.of(((UnknownErrorValue) value).unknownValue);
       }
       return Optional.empty();
-    }
-
-    <T> T visit(Visitor<T> visitor) {
-      return value.visit(visitor);
     }
 
     public interface Visitor<T> {
@@ -993,6 +1001,14 @@ public final class GetDummy {
       this.statusCode = statusCode;
     }
 
+    public <T> T visit(Visitor<T> visitor) {
+      return value.visit(visitor);
+    }
+
+    public int getStatusCode() {
+      return this.statusCode;
+    }
+
     public static Error other(Object unknownValue, int statusCode) {
       return new Error(new UnknownErrorValue(unknownValue), statusCode);
     }
@@ -1006,10 +1022,6 @@ public final class GetDummy {
         return Optional.of(((UnknownErrorValue) value).unknownValue);
       }
       return Optional.empty();
-    }
-
-    <T> T visit(Visitor<T> visitor) {
-      return value.visit(visitor);
     }
 
     public interface Visitor<T> {
