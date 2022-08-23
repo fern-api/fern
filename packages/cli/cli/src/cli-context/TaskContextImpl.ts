@@ -1,3 +1,4 @@
+import { addPrefixToString } from "@fern-api/core-utils";
 import { Logger, LogLevel } from "@fern-api/logger";
 import {
     CreateInteractiveTaskParams,
@@ -9,12 +10,12 @@ import {
     TASK_FAILURE,
 } from "@fern-api/task-context";
 import chalk from "chalk";
-import { addPrefixToLog } from "./addPrefixToLog";
 import { LogWithLevel } from "./Log";
 
 export declare namespace TaskContextImpl {
     export interface Init {
         log: (logs: LogWithLevel[]) => void;
+        takeOverTerminal: (run: () => void | Promise<void>) => Promise<void>;
         logPrefix?: string;
     }
 }
@@ -26,10 +27,13 @@ export class TaskContextImpl implements TaskContext {
     protected subtasks: InteractiveTaskContextImpl[] = [];
     private logs: LogWithLevel[] = [];
 
-    public constructor({ log, logPrefix }: TaskContextImpl.Init) {
+    public constructor({ log, logPrefix, takeOverTerminal }: TaskContextImpl.Init) {
         this.log = log;
         this.logPrefix = logPrefix ?? "";
+        this.takeOverTerminal = takeOverTerminal;
     }
+
+    public takeOverTerminal: (run: () => void | Promise<void>) => Promise<void>;
 
     public fail(message?: string): TASK_FAILURE {
         if (message != null) {
@@ -50,7 +54,7 @@ export class TaskContextImpl implements TaskContext {
     protected bufferLog(log: LogWithLevel): void {
         this.logs.push({
             ...log,
-            content: addPrefixToLog({
+            content: addPrefixToString({
                 prefix: `${this.logPrefix} `,
                 content: log.content,
             }),
@@ -87,6 +91,7 @@ export class TaskContextImpl implements TaskContext {
             subtitle,
             log: (content) => this.log(content),
             logPrefix: `${this.logPrefix} ${chalk.blackBright(name)}`,
+            takeOverTerminal: this.takeOverTerminal,
         });
         this.subtasks.push(subtask);
         return subtask;
@@ -180,7 +185,7 @@ export class InteractiveTaskContextImpl
         }
         lines.push(...this.subtasks.map((subtask) => subtask.print({ spinner })));
 
-        return addPrefixToLog({
+        return addPrefixToString({
             prefix: `${this.getIcon({ spinner }).padEnd(spinner.length)} `,
             content: lines.join("\n"),
         });
@@ -191,14 +196,18 @@ export class InteractiveTaskContextImpl
     }
 
     private getIcon({ spinner }: { spinner: string }): string {
-        if (!this.isFinished()) {
-            return spinner;
-        }
-        switch (this.getResult()) {
-            case TaskResult.Success:
-                return chalk.green("✓");
-            case TaskResult.Failure:
-                return chalk.red("x");
+        switch (this.status) {
+            case "notStarted":
+                return chalk.dim("◦");
+            case "running":
+                return spinner;
+            case "finished":
+                switch (this.getResult()) {
+                    case TaskResult.Success:
+                        return chalk.green("✓");
+                    case TaskResult.Failure:
+                        return chalk.red("x");
+                }
         }
     }
 

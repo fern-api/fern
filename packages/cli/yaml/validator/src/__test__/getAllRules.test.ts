@@ -1,18 +1,18 @@
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
 import { readdir } from "fs/promises";
-import path from "path";
 import { getAllRules } from "../getAllRules";
 import { Rule } from "../Rule";
 
-const RULES_DIRECTORY = path.join(__dirname, "../rules");
+const RULES_DIRECTORY = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("../rules"));
 
 describe("getAllRules", () => {
     it("ensure all rules are registered", async () => {
         const allRulesPromises = (await readdir(RULES_DIRECTORY, { withFileTypes: true }))
             .filter((item) => item.isDirectory())
-            .map(async (item): Promise<Rule> => {
-                const fullPath = path.join(RULES_DIRECTORY, item.name);
+            .map(async (item) => {
+                const fullPath = join(RULES_DIRECTORY, RelativeFilePath.of(item.name));
                 const imported = await import(fullPath);
-                return imported.default;
+                return imported.default as Rule;
             });
         const allRules: Rule[] = await Promise.all(allRulesPromises);
 

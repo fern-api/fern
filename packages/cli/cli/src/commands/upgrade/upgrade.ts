@@ -1,3 +1,4 @@
+import { runMigrations } from "@fern-api/migrations";
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
 import produce from "immer";
@@ -7,9 +8,25 @@ import { Project } from "../../loadProject";
 import { rerunFernCliAtVersion } from "../../rerunFernCliAtVersion";
 import { upgradeGeneratorsInWorkspaces } from "./upgradeGeneratorsInWorkspaces";
 
+const PREVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION";
+
 export async function upgrade({ project, cliContext }: { project: Project; cliContext: CliContext }): Promise<void> {
     const fernCliUpgradeInfo = await isFernCliUpgradeAvailable(cliContext.environment);
     if (!fernCliUpgradeInfo.upgradeAvailable) {
+        const previousVersion = process.env[PREVIOUS_VERSION_ENV_VAR];
+        if (previousVersion == null) {
+            cliContext.logger.info("No upgrade available.");
+            return;
+        } else {
+            await cliContext.runTask(async (context) => {
+                await runMigrations({
+                    fromVersion: previousVersion,
+                    toVersion: fernCliUpgradeInfo.latestVersion,
+                    context,
+                });
+            });
+            await cliContext.exitIfFailed();
+        }
         await upgradeGeneratorsInWorkspaces(project, cliContext);
     } else {
         const newProjectConfig = produce(project.config, (draft) => {

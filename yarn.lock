@@ -2880,6 +2880,7 @@ __metadata:
     "@fern-api/local-workspace-runner": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/manage-generator": "workspace:*"
+    "@fern-api/migrations": "workspace:*"
     "@fern-api/openapi-converter": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/remote-workspace-runner": "workspace:*"
@@ -2888,7 +2889,7 @@ __metadata:
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/ir-model": 0.0.46
     "@types/boxen": ^3.0.1
-    "@types/inquirer": ^8.2.1
+    "@types/inquirer": ^9.0.1
     "@types/is-ci": ^3.0.0
     "@types/jest": ^28.1.7
     "@types/js-yaml": ^4.0.5
@@ -2907,7 +2908,7 @@ __metadata:
     eslint: ^8.22.0
     execa: ^5.1.1
     immer: ^9.0.15
-    inquirer: ^9.0.0
+    inquirer: ^9.1.0
     is-ci: ^3.0.1
     jest: ^28.1.3
     js-yaml: ^4.1.0
@@ -2915,7 +2916,6 @@ __metadata:
     ora: ^6.1.2
     prettier: ^2.7.1
     semver-diff: ^4.0.0
-    strip-ansi: ^7.0.1
     typescript: 4.6.4
     validate-npm-package-name: ^4.0.0
     yargs: ^17.4.1
@@ -3007,6 +3007,7 @@ __metadata:
     eslint: ^8.22.0
     jest: ^28.1.3
     prettier: ^2.7.1
+    strip-ansi: ^7.0.1
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -3286,6 +3287,29 @@ __metadata:
     depcheck: ^1.4.3
     eslint: ^8.22.0
     immer: ^9.0.15
+    jest: ^28.1.3
+    prettier: ^2.7.1
+    semver-diff: ^4.0.0
+    typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/migrations@workspace:*, @fern-api/migrations@workspace:packages/cli/migrations":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/migrations@workspace:packages/cli/migrations"
+  dependencies:
+    "@babel/core": ^7.18.13
+    "@babel/preset-env": ^7.18.10
+    "@babel/preset-typescript": ^7.18.6
+    "@fern-api/core-utils": "workspace:*"
+    "@fern-api/task-context": "workspace:*"
+    "@types/inquirer": ^9.0.1
+    "@types/jest": ^28.1.7
+    "@types/node": ^18.7.11
+    chalk: ^5.0.1
+    depcheck: ^1.4.3
+    eslint: ^8.22.0
+    inquirer: ^9.1.0
     jest: ^28.1.3
     prettier: ^2.7.1
     semver-diff: ^4.0.0
@@ -4990,13 +5014,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/inquirer@npm:^8.2.1":
-  version: 8.2.1
-  resolution: "@types/inquirer@npm:8.2.1"
+"@types/inquirer@npm:^9.0.1":
+  version: 9.0.1
+  resolution: "@types/inquirer@npm:9.0.1"
   dependencies:
-    "@types/through": "npm:*"
-    rxjs: "npm:^7.2.0"
-  checksum: 5362d0b1cbec3887c9d5a671a0b19c58cf54066456c8967dd7ee799dfcc242cc8cd8959440c0f2fe7768becaf721b45fd30c222e6b9bcca378f45c68af43bab5
+    "@types/through": "*"
+    rxjs: ^7.2.0
+  checksum: 105c51f3ef0ff8ae8b454ea6076de0fd8907586948ebc638778c504056a2277485ba624de0bf11898bb9bfa5c79f49fdbb7423d273a7e2dfa2dddad6d2a73efe
   languageName: node
   linkType: hard
 
@@ -9748,7 +9772,7 @@ env-cmd@toddbluhm/env-cmd:
     jest: ^28.1.3
     lint-staged: ^12.3.7
     lodash-es: ^4.17.21
-    mrlint: ^0.0.101
+    mrlint: ^0.0.102
     prettier: ^2.7.1
     stylelint: ^14.9.1
     stylelint-config-prettier-scss: ^0.0.1
@@ -11119,9 +11143,9 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"inquirer@npm:^9.0.0":
-  version: 9.0.2
-  resolution: "inquirer@npm:9.0.2"
+"inquirer@npm:^9.1.0":
+  version: 9.1.0
+  resolution: "inquirer@npm:9.1.0"
   dependencies:
     ansi-escapes: ^5.0.0
     chalk: ^5.0.1
@@ -11138,7 +11162,7 @@ env-cmd@toddbluhm/env-cmd:
     strip-ansi: ^7.0.1
     through: ^2.3.6
     wrap-ansi: ^8.0.1
-  checksum: 59dceecd4560374e9b8a8ca766320e6a60379f256fc66636ad0bf14ffb22391719ed3dec0bca066e11ba077ba29e899426aef5caa19e406161006a3700ab269a
+  checksum: dec2a062c0710396e14712bff6e08c0f150ab1021754ab9f66d600dd828abea4263b49ddbf8d100173843cb14cbe790abb8d5d5b2ae9e11b222324638c9674f2
   languageName: node
   linkType: hard
 
@@ -12983,23 +13007,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"migrations@workspace:packages/cli/migrations":
-  version: 0.0.0-use.local
-  resolution: "migrations@workspace:packages/cli/migrations"
-  dependencies:
-    "@babel/core": ^7.18.13
-    "@babel/preset-env": ^7.18.10
-    "@babel/preset-typescript": ^7.18.6
-    "@types/jest": ^28.1.7
-    "@types/node": ^18.7.11
-    depcheck: ^1.4.3
-    eslint: ^8.22.0
-    jest: ^28.1.3
-    prettier: ^2.7.1
-    typescript: 4.6.4
-  languageName: unknown
-  linkType: soft
-
 "mime-db@npm:1.52.0, mime-db@npm:>= 1.43.0 < 2":
   version: 1.52.0
   resolution: "mime-db@npm:1.52.0"
@@ -13231,12 +13238,12 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"mrlint@npm:^0.0.101":
-  version: 0.0.101
-  resolution: "mrlint@npm:0.0.101"
+"mrlint@npm:^0.0.102":
+  version: 0.0.102
+  resolution: "mrlint@npm:0.0.102"
   bin:
     mrlint: cli.cjs
-  checksum: 7b568534c92ad7559231b0abeaceca1893b1aae77107c09f00cfe974cd5d7af20c9a6861f28c6584c68d2c6328b7a0c68c6d985bd1ba84b66b3bfc46500d3487
+  checksum: c40877ffc74a5197d69f4411f86a9f38ef2f0ceb4115276a126a7ef5d4e76bdfbe5a15d7b29778ad999da1a21e972cc99c5d4635259232e15ce04f0685afdfcb
   languageName: node
   linkType: hard
 

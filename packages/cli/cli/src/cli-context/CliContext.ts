@@ -87,6 +87,12 @@ export class CliContext {
         this.exitProgram();
     }
 
+    public async exitIfFailed(): Promise<void> {
+        if (!this.didSucceed) {
+            await this.exit();
+        }
+    }
+
     private exitProgram(): never {
         process.exit(this.didSucceed ? 0 : 1);
     }
@@ -97,12 +103,7 @@ export class CliContext {
     }
 
     public async runTask(run: (context: TaskContext) => void | Promise<void>): Promise<void> {
-        await this.runTaskWithInit(
-            {
-                log: (logs) => this.log(logs),
-            },
-            run
-        );
+        await this.runTaskWithInit(this.constructTaskInit(), run);
     }
 
     public async runTaskForWorkspace(
@@ -177,8 +178,15 @@ export class CliContext {
         const colorForWorkspace = WORKSPACE_NAME_COLORS[this.numTasks++ % WORKSPACE_NAME_COLORS.length]!;
         const prefixWithColor = chalk.hex(colorForWorkspace)(prefix);
         return {
-            log: (content) => this.log(content),
+            ...this.constructTaskInit(),
             logPrefix: prefixWithColor,
+        };
+    }
+
+    private constructTaskInit(): TaskContextImpl.Init {
+        return {
+            log: (content) => this.log(content),
+            takeOverTerminal: (run) => this.ttyAwareLogger.takeOverTerminal(run),
         };
     }
 
