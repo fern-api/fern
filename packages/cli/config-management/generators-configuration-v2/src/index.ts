@@ -1,6 +1,6 @@
 export {
     type DraftGeneratorInvocation,
-    type GeneratorOutput,
+    type GeneratorOutputs,
     type GeneratorsConfiguration,
     type GithubGeneratorOutput,
     type MavenGeneratorOutput,
