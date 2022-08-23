@@ -2,7 +2,6 @@ import { cwd, FilePath, noop, resolve } from "@fern-api/core-utils";
 import { initialize } from "@fern-api/init";
 import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import { getFernDirectory, loadProjectConfig } from "@fern-api/project-configuration";
-import ansiEscapes from "ansi-escapes";
 import inquirer, { InputQuestion } from "inquirer";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
@@ -20,11 +19,9 @@ import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 void tryRunCli();
 
 async function tryRunCli() {
-    const cliContext = new CliContext();
+    const cliContext = new CliContext(process.stdout);
 
-    process.stdout.write(ansiEscapes.cursorHide);
     const exit = async () => {
-        process.stdout.write(ansiEscapes.cursorShow);
         await cliContext.exit();
     };
     process.on("SIGINT", exit);

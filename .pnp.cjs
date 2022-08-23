@@ -6290,6 +6290,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/ir-model", "npm:0.0.46"],\
             ["@types/boxen", "npm:3.0.1"],\
             ["@types/inquirer", "npm:8.2.1"],\
+            ["@types/is-ci", "npm:3.0.0"],\
             ["@types/jest", "npm:28.1.7"],\
             ["@types/js-yaml", "npm:4.0.5"],\
             ["@types/latest-version", "npm:4.0.1"],\
@@ -6308,6 +6309,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["execa", "npm:5.1.1"],\
             ["immer", "npm:9.0.15"],\
             ["inquirer", "npm:9.0.2"],\
+            ["is-ci", "npm:3.0.1"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["js-yaml", "npm:4.1.0"],\
             ["latest-version", "npm:7.0.0"],\

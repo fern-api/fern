@@ -7,7 +7,7 @@ export interface TaskContext {
     readonly logger: Logger;
     readonly fail: (message?: string) => TASK_FAILURE;
     readonly getResult: () => TaskResult;
-    readonly addInteractiveTask: (params: CreateInteractiveTaskParams) => FinishableInteractiveTaskContext;
+    readonly addInteractiveTask: (params: CreateInteractiveTaskParams) => StartableInteractiveTaskContext;
     readonly runInteractiveTask: (
         params: CreateInteractiveTaskParams,
         run: (context: InteractiveTaskContext) => void | Promise<void>
@@ -16,6 +16,11 @@ export interface TaskContext {
 
 export interface InteractiveTaskContext extends TaskContext {
     readonly setSubtitle: (subtitle: string | undefined) => void;
+}
+
+export interface StartableInteractiveTaskContext extends InteractiveTaskContext {
+    readonly start: () => FinishableInteractiveTaskContext;
+    readonly isStarted: () => boolean;
 }
 
 export interface FinishableInteractiveTaskContext extends InteractiveTaskContext {

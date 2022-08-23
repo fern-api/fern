@@ -4,9 +4,9 @@ import { Workspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { ArgumentsCamelCase } from "yargs";
 import { CliEnvironment } from "./CliEnvironment";
-import { InteractiveTaskManager } from "./InteractiveTaskManager";
-import { LogWithLevel } from "./LogWithLevel";
+import { Log, LogWithLevel } from "./Log";
 import { TaskContextImpl } from "./TaskContextImpl";
+import { TtyAwareLogger } from "./TtyAwareLogger";
 import { getFernCliUpgradeMessage } from "./upgrade-utils/getFernCliUpgradeMessage";
 
 const WORKSPACE_NAME_COLORS = ["#2E86AB", "#A23B72", "#F18F01", "#C73E1D", "#CCE2A3"];
@@ -23,12 +23,13 @@ export class CliContext {
     private didSucceed = true;
 
     private numTasks = 0;
-    private stream = process.stdout;
-    private interactiveTaskManager = new InteractiveTaskManager(this.stream);
+    private ttyAwareLogger: TtyAwareLogger;
 
     private logLevel: LogLevel = LogLevel.Info;
 
-    constructor() {
+    constructor(private readonly stream: NodeJS.WriteStream) {
+        this.ttyAwareLogger = new TtyAwareLogger(stream);
+
         const packageName = this.getPackageName();
         const packageVersion = this.getPackageVersion();
         const cliName = this.getCliName();
@@ -76,7 +77,7 @@ export class CliContext {
     }
 
     public async exit(): Promise<never> {
-        this.interactiveTaskManager.finish();
+        this.ttyAwareLogger.finish();
         if (!this.suppressUpgradeMessage) {
             const upgradeMessage = await getFernCliUpgradeMessage(this.environment);
             if (upgradeMessage != null) {
@@ -116,9 +117,12 @@ export class CliContext {
         run: (context: TaskContext) => void | Promise<void>
     ): Promise<void> {
         const context = new TaskContextImpl(init);
-        this.interactiveTaskManager.registerTask(context);
+        this.ttyAwareLogger.registerTask(context);
         await run(context);
-        await this.handleFinishedTask(context);
+        if (context.getResult() === TaskResult.Failure) {
+            this.didSucceed = false;
+        }
+        context.finish();
     }
 
     get logger(): Logger {
@@ -166,13 +170,6 @@ export class CliContext {
         };
     }
 
-    private async handleFinishedTask(context: TaskContextImpl): Promise<void> {
-        if (context.getResult() === TaskResult.Failure) {
-            this.didSucceed = false;
-        }
-        context.finish();
-    }
-
     private constructTaskInitForWorkspace(workspace: Workspace): TaskContextImpl.Init {
         const prefix = wrapWorkspaceNameForPrefix(workspace.name).padEnd(
             wrapWorkspaceNameForPrefix("X".repeat(this.longestWorkspaceNameLength)).length
@@ -186,37 +183,31 @@ export class CliContext {
     }
 
     private log(logs: LogWithLevel[]): void {
-        if (logs.length === 0) {
-            return;
-        }
-        const str =
-            logs
-                .reduce<string[]>((filtered, { content, level }) => {
-                    const shouldIncludeLogLevel = LOG_LEVELS.indexOf(level) >= LOG_LEVELS.indexOf(this.logLevel);
-                    if (shouldIncludeLogLevel) {
-                        const trimmed = content.trim();
-                        switch (level) {
-                            case LogLevel.Error:
-                                filtered.push(chalk.red(trimmed));
-                                break;
-                            case LogLevel.Warn:
-                                filtered.push(chalk.hex("FFA500")(trimmed));
-                                break;
-                            case LogLevel.Debug:
-                            case LogLevel.Info:
-                                filtered.push(trimmed);
-                        }
-                    }
-                    return filtered;
-                }, [])
-                .join("\n") + "\n";
-
-        this.interactiveTaskManager.repaint({
-            contentAbove: str,
-        });
+        const formatted = logs
+            .filter((log) => LOG_LEVELS.indexOf(log.level) >= LOG_LEVELS.indexOf(this.logLevel))
+            .map(
+                (log): Log => ({
+                    omitOnTTY: log.omitOnTTY,
+                    content: formatLog(log),
+                })
+            );
+        this.ttyAwareLogger.log(formatted);
     }
 }
 
 function wrapWorkspaceNameForPrefix(workspaceName: string): string {
     return `[${workspaceName}]:`;
+}
+
+function formatLog(log: LogWithLevel): string {
+    const trimmed = log.content.trim() + "\n";
+    switch (log.level) {
+        case LogLevel.Error:
+            return chalk.red(trimmed);
+        case LogLevel.Warn:
+            return chalk.hex("FFA500")(trimmed);
+        case LogLevel.Debug:
+        case LogLevel.Info:
+            return trimmed;
+    }
 }

@@ -3,13 +3,14 @@ import {
     CreateInteractiveTaskParams,
     FinishableInteractiveTaskContext,
     InteractiveTaskContext,
+    StartableInteractiveTaskContext,
     TaskContext,
     TaskResult,
     TASK_FAILURE,
 } from "@fern-api/task-context";
 import chalk from "chalk";
 import { addPrefixToLog } from "./addPrefixToLog";
-import { LogWithLevel } from "./LogWithLevel";
+import { LogWithLevel } from "./Log";
 
 export declare namespace TaskContextImpl {
     export interface Init {
@@ -43,40 +44,44 @@ export class TaskContextImpl implements TaskContext {
     }
 
     public finish(): void {
-        this.log(this.logs);
+        this.flushLogs();
     }
 
-    private addLog(content: string, level: LogLevel): void {
+    protected bufferLog(log: LogWithLevel): void {
         this.logs.push({
+            ...log,
             content: addPrefixToLog({
                 prefix: `${this.logPrefix} `,
-                content,
+                content: log.content,
             }),
-            level,
         });
+    }
+
+    protected flushLogs(): void {
+        this.log(this.logs);
     }
 
     public get logger(): Logger {
         return {
             debug: (content) => {
-                this.addLog(content, LogLevel.Debug);
+                this.bufferLog({ content, level: LogLevel.Debug });
             },
             info: (content) => {
-                this.addLog(content, LogLevel.Info);
+                this.bufferLog({ content, level: LogLevel.Info });
             },
             warn: (content) => {
-                this.addLog(content, LogLevel.Warn);
+                this.bufferLog({ content, level: LogLevel.Warn });
             },
             error: (content) => {
-                this.addLog(content, LogLevel.Error);
+                this.bufferLog({ content, level: LogLevel.Error });
             },
             log: (content, level) => {
-                this.addLog(content, level);
+                this.bufferLog({ content, level });
             },
         };
     }
 
-    public addInteractiveTask({ name, subtitle }: CreateInteractiveTaskParams): FinishableInteractiveTaskContext {
+    public addInteractiveTask({ name, subtitle }: CreateInteractiveTaskParams): StartableInteractiveTaskContext {
         const subtask = new InteractiveTaskContextImpl({
             name,
             subtitle,
@@ -91,7 +96,7 @@ export class TaskContextImpl implements TaskContext {
         params: CreateInteractiveTaskParams,
         run: (context: InteractiveTaskContext) => void | Promise<void>
     ): Promise<void> {
-        const subtask = this.addInteractiveTask(params);
+        const subtask = this.addInteractiveTask(params).start();
         await run(subtask);
         subtask.finish();
     }
@@ -113,10 +118,13 @@ export declare namespace InteractiveTaskContextImpl {
     }
 }
 
-export class InteractiveTaskContextImpl extends TaskContextImpl implements FinishableInteractiveTaskContext {
+export class InteractiveTaskContextImpl
+    extends TaskContextImpl
+    implements StartableInteractiveTaskContext, FinishableInteractiveTaskContext
+{
     private name: string;
     private subtitle: string | undefined;
-    private isRunning = true;
+    private status: "notStarted" | "running" | "finished" = "notStarted";
 
     constructor({ name, subtitle, ...superArgs }: InteractiveTaskContextImpl.Init) {
         super(superArgs);
@@ -128,13 +136,41 @@ export class InteractiveTaskContextImpl extends TaskContextImpl implements Finis
         this.subtitle = subtitle;
     }
 
+    public start(): FinishableInteractiveTaskContext {
+        this.status = "running";
+        this.bufferLog({
+            content: "Started.",
+            level: LogLevel.Info,
+            omitOnTTY: true,
+        });
+        this.flushLogs();
+        return this;
+    }
+
+    public isStarted(): boolean {
+        return this.status !== "notStarted";
+    }
+
     public finish(): void {
+        if (this.result === TaskResult.Success) {
+            this.bufferLog({
+                content: "Finished.",
+                level: LogLevel.Info,
+                omitOnTTY: true,
+            });
+        } else {
+            this.bufferLog({
+                content: "Failed.",
+                level: LogLevel.Error,
+                omitOnTTY: true,
+            });
+        }
+        this.status = "finished";
         super.finish();
-        this.isRunning = false;
     }
 
     public isFinished(): boolean {
-        return !this.isRunning;
+        return this.status === "finished";
     }
 
     public print({ spinner }: { spinner: string }): string {

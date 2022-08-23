@@ -1,32 +1,53 @@
+import { noop } from "@fern-api/core-utils";
 import ansiEscapes from "ansi-escapes";
+import IS_CI from "is-ci";
 import ora, { Ora } from "ora";
 import { addPrefixToLog } from "./addPrefixToLog";
+import { Log } from "./Log";
 import { TaskContextImpl } from "./TaskContextImpl";
 
-export class InteractiveTaskManager {
+export class TtyAwareLogger {
     private tasks: TaskContextImpl[] = [];
     private lastPaint = "";
     private spinner = ora({ spinner: "dots11" });
-    private interval: NodeJS.Timeout;
+
+    public finish: () => void;
 
     constructor(private readonly stream: NodeJS.WriteStream) {
-        this.paint();
-        this.interval = setInterval(() => {
-            this.repaint();
-        }, getSpinnerInterval(this.spinner));
-    }
+        if (!this.isTTY) {
+            this.finish = noop;
+        } else {
+            stream.write(ansiEscapes.cursorHide);
+            stream.write(this.paint());
 
-    public finish(): void {
-        clearInterval(this.interval);
-        this.repaint();
+            const interval = setInterval(() => {
+                this.repaint();
+            }, getSpinnerInterval(this.spinner));
+
+            this.finish = () => {
+                clearInterval(interval);
+                this.repaint();
+                stream.write(ansiEscapes.cursorShow);
+            };
+        }
     }
 
     public registerTask(context: TaskContextImpl): void {
         this.tasks.push(context);
     }
 
-    public repaint({ contentAbove = "" }: { contentAbove?: string } = {}): void {
-        this.stream.write(this.clear() + contentAbove + this.paint());
+    public log(logs: Log[]): void {
+        for (const { content, omitOnTTY } of logs) {
+            if (!this.isTTY) {
+                this.stream.write(content);
+            } else if (!omitOnTTY) {
+                this.stream.write(this.clear() + content + this.lastPaint);
+            }
+        }
+    }
+
+    private repaint(): void {
+        this.stream.write(this.clear() + this.paint());
     }
 
     private clear(): string {
@@ -58,6 +79,10 @@ export class InteractiveTaskManager {
             ].join("\n") + "\n";
         this.lastPaint = paint;
         return paint;
+    }
+
+    private get isTTY() {
+        return this.stream.isTTY && !IS_CI;
     }
 }
 

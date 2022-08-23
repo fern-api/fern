@@ -26,9 +26,11 @@ export function pollJobAndReportStatus({
                 job,
                 taskId,
                 generatorInvocation,
-                interactiveTaskContext: context.addInteractiveTask({
-                    name: generatorInvocation.name,
-                }),
+                interactiveTaskContext: context
+                    .addInteractiveTask({
+                        name: generatorInvocation.name,
+                    })
+                    .start(),
             });
         }
         return acc;
