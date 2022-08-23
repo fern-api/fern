@@ -33,6 +33,7 @@
     "@fern-api/docs": "workspace:*",
     "@fern-api/ete-tests": "workspace:*",
     "@fern-api/generators-configuration": "workspace:*",
+    "@fern-api/generators-configuration-v2": "workspace:*",
     "@fern-api/init": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/json-schema": "workspace:*",

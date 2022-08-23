@@ -2868,6 +2868,7 @@ __metadata:
     "@fern-api/docs": "workspace:*"
     "@fern-api/ete-tests": "workspace:*"
     "@fern-api/generators-configuration": "workspace:*"
+    "@fern-api/generators-configuration-v2": "workspace:*"
     "@fern-api/init": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/json-schema": "workspace:*"
@@ -2994,6 +2995,31 @@ __metadata:
     strip-ansi: ^7.0.1
     tmp-promise: ^3.0.3
     typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/generators-configuration-v2@workspace:*, @fern-api/generators-configuration-v2@workspace:packages/cli/config-management/generators-configuration-v2":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/generators-configuration-v2@workspace:packages/cli/config-management/generators-configuration-v2"
+  dependencies:
+    "@babel/core": ^7.18.10
+    "@babel/preset-env": ^7.18.10
+    "@babel/preset-typescript": ^7.18.6
+    "@fern-api/config-management-commons": "workspace:*"
+    "@fern-api/core-utils": "workspace:*"
+    "@fern-api/project-configuration": "workspace:*"
+    "@types/jest": ^28.1.7
+    "@types/js-yaml": ^4.0.5
+    "@types/lodash-es": ^4.17.6
+    "@types/node": ^18.7.7
+    depcheck: ^1.4.3
+    eslint: ^8.22.0
+    jest: ^28.1.3
+    js-yaml: ^4.1.0
+    lodash-es: ^4.17.21
+    prettier: ^2.7.1
+    typescript: 4.6.4
+    zod: ^3.14.3
   languageName: unknown
   linkType: soft
 
