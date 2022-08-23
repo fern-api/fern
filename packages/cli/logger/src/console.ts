@@ -1,4 +1,5 @@
-import { Logger, LogLevel } from "./Logger";
+import { Logger } from "./Logger";
+import { LogLevel } from "./LogLevel";
 
 export const CONSOLE_LOGGER: Logger = {
     debug: console.debug,

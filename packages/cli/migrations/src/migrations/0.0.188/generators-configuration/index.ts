@@ -1,1 +1,1 @@
-export { GeneratorsConfigurationMigration as default } from "./GeneratorsConfigurationMigration";
+export { GeneratorsConfigurationMigration as default } from "./generators-configuration";

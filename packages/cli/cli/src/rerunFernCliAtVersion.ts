@@ -1,4 +1,4 @@
-import execa from "execa";
+import execa, { ExecaChildProcess } from "execa";
 import { CliEnvironment } from "./cli-context/CliEnvironment";
 
 export async function rerunFernCliAtVersion({
@@ -7,15 +7,16 @@ export async function rerunFernCliAtVersion({
 }: {
     version: string;
     cliEnvironment: CliEnvironment;
-}): Promise<void> {
+}): Promise<ExecaChildProcess> {
     const npxProcess = execa(
         "npx",
         ["--quiet", "--yes", `${cliEnvironment.packageName}@${version}`, ...process.argv.slice(2)],
         {
             stdio: "inherit",
+            reject: false,
         }
     );
     npxProcess.stdout?.pipe(process.stdout);
     npxProcess.stderr?.pipe(process.stderr);
-    await npxProcess;
+    return npxProcess;
 }

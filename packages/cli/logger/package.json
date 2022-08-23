@@ -25,7 +25,8 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/core-utils": "workspace:*"
+    "@fern-api/core-utils": "workspace:*",
+    "chalk": "^5.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",

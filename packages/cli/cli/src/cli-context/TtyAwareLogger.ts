@@ -42,7 +42,7 @@ export class TtyAwareLogger {
     }
 
     private shouldBuffer = false;
-    private buffer: string = "";
+    private buffer = "";
     private write(content: string) {
         if (this.shouldBuffer) {
             this.buffer += content;

@@ -1,10 +1,10 @@
 import { runMigrations } from "@fern-api/migrations";
+import { Project } from "@fern-api/project-loader";
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
 import produce from "immer";
 import { CliContext } from "../../cli-context/CliContext";
 import { isFernCliUpgradeAvailable } from "../../cli-context/upgrade-utils/isFernCliUpgradeAvailable";
-import { Project } from "../../loadProject";
 import { rerunFernCliAtVersion } from "../../rerunFernCliAtVersion";
 import { upgradeGeneratorsInWorkspaces } from "./upgradeGeneratorsInWorkspaces";
 
@@ -23,6 +23,7 @@ export async function upgrade({ project, cliContext }: { project: Project; cliCo
                     fromVersion: previousVersion,
                     toVersion: fernCliUpgradeInfo.latestVersion,
                     context,
+                    project,
                 });
             });
             await cliContext.exitIfFailed();
@@ -33,15 +34,20 @@ export async function upgrade({ project, cliContext }: { project: Project; cliCo
             draft.version = fernCliUpgradeInfo.latestVersion;
         });
         await writeFile(project.config._absolutePath, JSON.stringify(newProjectConfig, undefined, 2));
+
         const message =
             "Upgraded {cliName} from" +
             chalk.dim(" {currentVersion}") +
             chalk.reset(" → ") +
             chalk.green("{latestVersion}");
         cliContext.logger.info(message);
-        await rerunFernCliAtVersion({
+
+        const { failed } = await rerunFernCliAtVersion({
             version: fernCliUpgradeInfo.latestVersion,
             cliEnvironment: cliContext.environment,
         });
+        if (failed) {
+            cliContext.fail();
+        }
     }
 }

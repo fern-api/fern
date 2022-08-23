@@ -8,4 +8,5 @@ export {
     type ReleaseGeneratorInvocation,
 } from "./GeneratorsConfiguration";
 export { loadGeneratorsConfiguration, loadRawGeneratorsConfiguration } from "./loadGeneratorsConfiguration";
+export { type DraftGeneratorInvocationSchema } from "./schemas/DraftGeneratorInvocationSchema";
 export { type GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfigurationSchema";

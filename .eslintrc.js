@@ -7,6 +7,7 @@ module.exports = {
     plugins: ["@typescript-eslint", "jest", "@blueprintjs", "deprecation", "import"],
     extends: [
         "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/strict",
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:jest/recommended",

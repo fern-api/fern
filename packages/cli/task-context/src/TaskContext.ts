@@ -4,29 +4,20 @@ export const TASK_FAILURE = Symbol();
 export type TASK_FAILURE = typeof TASK_FAILURE;
 
 export interface TaskContext {
-    readonly logger: Logger;
-    readonly takeOverTerminal: (run: () => void | Promise<void>) => Promise<void>;
-    readonly fail: (message?: string) => TASK_FAILURE;
-    readonly getResult: () => TaskResult;
-    readonly addInteractiveTask: (params: CreateInteractiveTaskParams) => StartableInteractiveTaskContext;
-    readonly runInteractiveTask: (
+    logger: Logger;
+    takeOverTerminal: (run: () => void | Promise<void>) => Promise<void>;
+    fail(message?: string, error?: unknown): TASK_FAILURE;
+    fail(error: unknown): TASK_FAILURE;
+    getResult: () => TaskResult;
+    addInteractiveTask: (params: CreateInteractiveTaskParams) => Startable<InteractiveTaskContext>;
+    runInteractiveTask: (
         params: CreateInteractiveTaskParams,
         run: (context: InteractiveTaskContext) => void | Promise<void>
     ) => Promise<void>;
 }
 
 export interface InteractiveTaskContext extends TaskContext {
-    readonly setSubtitle: (subtitle: string | undefined) => void;
-}
-
-export interface StartableInteractiveTaskContext extends InteractiveTaskContext {
-    readonly start: () => FinishableInteractiveTaskContext;
-    readonly isStarted: () => boolean;
-}
-
-export interface FinishableInteractiveTaskContext extends InteractiveTaskContext {
-    readonly finish: () => void;
-    readonly isFinished: () => boolean;
+    setSubtitle: (subtitle: string | undefined) => void;
 }
 
 export interface CreateInteractiveTaskParams {
@@ -38,4 +29,14 @@ export interface CreateInteractiveTaskParams {
 export enum TaskResult {
     Success,
     Failure,
+}
+
+export interface Startable<T> {
+    start: () => T & Finishable;
+    isStarted: () => boolean;
+}
+
+export interface Finishable {
+    finish: () => void;
+    isFinished: () => boolean;
 }

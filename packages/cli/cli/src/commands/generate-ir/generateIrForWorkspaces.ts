@@ -1,9 +1,9 @@
 import { AbsoluteFilePath } from "@fern-api/core-utils";
+import { Project } from "@fern-api/project-loader";
 import { TASK_FAILURE } from "@fern-api/task-context";
 import { writeFile } from "fs/promises";
 import path from "path";
 import { CliContext } from "../../cli-context/CliContext";
-import { Project } from "../../loadProject";
 import { generateIrForWorkspace } from "./generateIrForWorkspace";
 
 export async function generateIrForWorkspaces({

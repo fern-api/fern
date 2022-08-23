@@ -2,14 +2,15 @@ import { addPrefixToString } from "@fern-api/core-utils";
 import { Logger, LogLevel } from "@fern-api/logger";
 import {
     CreateInteractiveTaskParams,
-    FinishableInteractiveTaskContext,
+    Finishable,
     InteractiveTaskContext,
-    StartableInteractiveTaskContext,
+    Startable,
     TaskContext,
     TaskResult,
     TASK_FAILURE,
 } from "@fern-api/task-context";
 import chalk from "chalk";
+import { constructErrorMessage } from "./constructErrorMessage";
 import { LogWithLevel } from "./Log";
 
 export declare namespace TaskContextImpl {
@@ -20,12 +21,13 @@ export declare namespace TaskContextImpl {
     }
 }
 
-export class TaskContextImpl implements TaskContext {
+export class TaskContextImpl implements Startable<TaskContext>, Finishable, TaskContext {
     protected result = TaskResult.Success;
     protected log: (logs: LogWithLevel[]) => void;
     protected logPrefix: string;
     protected subtasks: InteractiveTaskContextImpl[] = [];
     private logs: LogWithLevel[] = [];
+    protected status: "notStarted" | "running" | "finished" = "notStarted";
 
     public constructor({ log, logPrefix, takeOverTerminal }: TaskContextImpl.Init) {
         this.log = log;
@@ -33,11 +35,30 @@ export class TaskContextImpl implements TaskContext {
         this.takeOverTerminal = takeOverTerminal;
     }
 
+    public start(): Finishable & TaskContext {
+        this.status = "running";
+        return this;
+    }
+
+    public isStarted(): boolean {
+        return this.status !== "notStarted";
+    }
+
+    public finish(): void {
+        this.status = "finished";
+        this.flushLogs();
+    }
+
+    public isFinished(): boolean {
+        return this.status === "finished";
+    }
+
     public takeOverTerminal: (run: () => void | Promise<void>) => Promise<void>;
 
-    public fail(message?: string): TASK_FAILURE {
-        if (message != null) {
-            this.logger.error(message);
+    public fail(messageOrError?: unknown, error?: unknown): TASK_FAILURE {
+        const errorMessage = constructErrorMessage({ messageOrError, error });
+        if (errorMessage != null) {
+            this.logger.error(errorMessage);
         }
         this.result = TaskResult.Failure;
         return TASK_FAILURE;
@@ -45,10 +66,6 @@ export class TaskContextImpl implements TaskContext {
 
     public getResult(): TaskResult {
         return this.result;
-    }
-
-    public finish(): void {
-        this.flushLogs();
     }
 
     protected bufferLog(log: LogWithLevel): void {
@@ -85,7 +102,7 @@ export class TaskContextImpl implements TaskContext {
         };
     }
 
-    public addInteractiveTask({ name, subtitle }: CreateInteractiveTaskParams): StartableInteractiveTaskContext {
+    public addInteractiveTask({ name, subtitle }: CreateInteractiveTaskParams): Startable<InteractiveTaskContext> {
         const subtask = new InteractiveTaskContextImpl({
             name,
             subtitle,
@@ -125,11 +142,10 @@ export declare namespace InteractiveTaskContextImpl {
 
 export class InteractiveTaskContextImpl
     extends TaskContextImpl
-    implements StartableInteractiveTaskContext, FinishableInteractiveTaskContext
+    implements Startable<InteractiveTaskContext>, Finishable, InteractiveTaskContext
 {
     private name: string;
     private subtitle: string | undefined;
-    private status: "notStarted" | "running" | "finished" = "notStarted";
 
     constructor({ name, subtitle, ...superArgs }: InteractiveTaskContextImpl.Init) {
         super(superArgs);
@@ -137,12 +153,8 @@ export class InteractiveTaskContextImpl
         this.subtitle = subtitle;
     }
 
-    public setSubtitle(subtitle: string | undefined): void {
-        this.subtitle = subtitle;
-    }
-
-    public start(): FinishableInteractiveTaskContext {
-        this.status = "running";
+    public start(): Finishable & InteractiveTaskContext {
+        super.start();
         this.bufferLog({
             content: "Started.",
             level: LogLevel.Info,
@@ -170,12 +182,11 @@ export class InteractiveTaskContextImpl
                 omitOnTTY: true,
             });
         }
-        this.status = "finished";
         super.finish();
     }
 
-    public isFinished(): boolean {
-        return this.status === "finished";
+    public setSubtitle(subtitle: string | undefined): void {
+        this.subtitle = subtitle;
     }
 
     public print({ spinner }: { spinner: string }): string {

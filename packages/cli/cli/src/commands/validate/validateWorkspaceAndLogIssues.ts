@@ -1,8 +1,8 @@
+import { formatLog, LogLevel } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
 import { validateWorkspace } from "@fern-api/validator";
 import { Workspace } from "@fern-api/workspace-loader";
 import validatePackageName from "validate-npm-package-name";
-import { logIssueInYaml } from "../../utils/logIssueInYaml";
 
 export async function validateWorkspaceAndLogIssues(workspace: Workspace, context: TaskContext): Promise<void> {
     if (!validatePackageName(workspace.name).validForNewPackages) {
@@ -15,12 +15,21 @@ export async function validateWorkspaceAndLogIssues(workspace: Workspace, contex
     }
 
     for (const violation of violations) {
-        logIssueInYaml({
-            severity: violation.severity,
-            relativeFilePath: violation.relativeFilePath,
-            breadcrumbs: violation.nodePath,
-            title: violation.message,
-            logger: context.logger,
-        });
+        context.logger.log(
+            formatLog({
+                breadcrumbs: [violation.relativeFilePath, ...violation.nodePath],
+                title: violation.message,
+            }),
+            getLogLevelForSeverity(violation.severity)
+        );
+    }
+}
+
+function getLogLevelForSeverity(severity: "error" | "warning") {
+    switch (severity) {
+        case "error":
+            return LogLevel.Error;
+        case "warning":
+            return LogLevel.Warn;
     }
 }

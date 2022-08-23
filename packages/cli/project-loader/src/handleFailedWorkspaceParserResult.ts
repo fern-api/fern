@@ -1,10 +1,9 @@
 import { assertNever, entries, RelativeFilePath } from "@fern-api/core-utils";
-import { Logger } from "@fern-api/logger";
+import { formatLog, Logger } from "@fern-api/logger";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { YAMLException } from "js-yaml";
 import { ZodIssue, ZodIssueCode } from "zod";
-import { logIssueInYaml } from "../../utils/logIssueInYaml";
 
 export function handleFailedWorkspaceParserResult(result: WorkspaceLoader.FailedResult, logger: Logger): void {
     for (const [relativeFilePath, failure] of entries(result.failures)) {
@@ -27,13 +26,12 @@ function handleWorkspaceParserFailureForFile({
             break;
         case WorkspaceLoaderFailureType.FILE_PARSE:
             if (failure.error instanceof YAMLException) {
-                logIssueInYaml({
-                    severity: "error",
-                    relativeFilePath,
-                    title: `Failed to parse YAML: ${failure.error.reason}`,
-                    subtitle: failure.error.mark.snippet,
-                    logger,
-                });
+                logger.error(
+                    formatLog({
+                        title: `Failed to parse YAML: ${failure.error.reason}`,
+                        subtitle: failure.error.mark.snippet,
+                    })
+                );
             } else {
                 logger.error("Failed to parse file: " + relativeFilePath);
             }
@@ -41,14 +39,13 @@ function handleWorkspaceParserFailureForFile({
         case WorkspaceLoaderFailureType.STRUCTURE_VALIDATION:
             for (const issue of failure.error.issues) {
                 for (const { title, subtitle } of parseIssue(issue)) {
-                    logIssueInYaml({
-                        severity: "error",
-                        relativeFilePath,
-                        breadcrumbs: issue.path,
-                        title,
-                        subtitle,
-                        logger,
-                    });
+                    logger.error(
+                        formatLog({
+                            title,
+                            subtitle,
+                            breadcrumbs: issue.path,
+                        })
+                    );
                 }
             }
             break;

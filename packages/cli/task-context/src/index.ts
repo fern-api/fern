@@ -3,8 +3,8 @@ export {
     TaskResult,
     TASK_FAILURE,
     type CreateInteractiveTaskParams,
-    type FinishableInteractiveTaskContext,
+    type Finishable,
     type InteractiveTaskContext,
-    type StartableInteractiveTaskContext,
+    type Startable,
     type TaskContext,
 } from "./TaskContext";

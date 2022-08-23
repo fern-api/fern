@@ -2883,6 +2883,7 @@ __metadata:
     "@fern-api/migrations": "workspace:*"
     "@fern-api/openapi-converter": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
+    "@fern-api/project-loader": "workspace:*"
     "@fern-api/remote-workspace-runner": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/validator": "workspace:*"
@@ -3247,6 +3248,7 @@ __metadata:
     "@fern-api/core-utils": "workspace:*"
     "@types/jest": ^28.1.7
     "@types/node": ^18.7.11
+    chalk: ^5.0.1
     depcheck: ^1.4.3
     eslint: ^8.22.0
     jest: ^28.1.3
@@ -3304,19 +3306,27 @@ __metadata:
     "@babel/core": ^7.18.13
     "@babel/preset-env": ^7.18.10
     "@babel/preset-typescript": ^7.18.6
+    "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
+    "@fern-api/generators-configuration-v2": "workspace:*"
+    "@fern-api/project-loader": "workspace:*"
     "@fern-api/task-context": "workspace:*"
+    "@fern-api/workspace-loader": "workspace:*"
     "@types/inquirer": ^9.0.1
     "@types/jest": ^28.1.7
+    "@types/js-yaml": ^4.0.5
     "@types/node": ^18.7.11
     chalk: ^5.0.1
     depcheck: ^1.4.3
     eslint: ^8.22.0
     inquirer: ^9.1.0
     jest: ^28.1.3
+    js-yaml: ^4.1.0
     prettier: ^2.7.1
     semver-diff: ^4.0.0
+    tmp-promise: ^3.0.3
     typescript: 4.6.4
+    zod: ^3.14.3
   languageName: unknown
   linkType: soft
 
@@ -3360,6 +3370,32 @@ __metadata:
     eslint: ^8.22.0
     find-up: ^6.3.0
     jest: ^28.1.3
+    prettier: ^2.7.1
+    typescript: 4.6.4
+    zod: ^3.14.3
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/project-loader@workspace:*, @fern-api/project-loader@workspace:packages/cli/project-loader":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/project-loader@workspace:packages/cli/project-loader"
+  dependencies:
+    "@babel/core": ^7.18.13
+    "@babel/preset-env": ^7.18.10
+    "@babel/preset-typescript": ^7.18.6
+    "@fern-api/core-utils": "workspace:*"
+    "@fern-api/logger": "workspace:*"
+    "@fern-api/project-configuration": "workspace:*"
+    "@fern-api/task-context": "workspace:*"
+    "@fern-api/workspace-loader": "workspace:*"
+    "@types/jest": ^28.1.7
+    "@types/js-yaml": ^4.0.5
+    "@types/node": ^18.7.11
+    chalk: ^5.0.1
+    depcheck: ^1.4.3
+    eslint: ^8.22.0
+    jest: ^28.1.3
+    js-yaml: ^4.1.0
     prettier: ^2.7.1
     typescript: 4.6.4
     zod: ^3.14.3

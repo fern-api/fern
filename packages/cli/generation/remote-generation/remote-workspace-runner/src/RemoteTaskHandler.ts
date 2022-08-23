@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, assertNeverNoThrow } from "@fern-api/core-utils";
 import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { LogLevel } from "@fern-api/logger";
-import { FinishableInteractiveTaskContext } from "@fern-api/task-context";
+import { Finishable, InteractiveTaskContext } from "@fern-api/task-context";
 import {
     CreateJobResponse,
     LogLevel as FiddleLogLevel,
@@ -20,7 +20,7 @@ export declare namespace RemoteTaskHandler {
     export interface Init {
         job: CreateJobResponse;
         taskId: RemoteGenTaskId;
-        interactiveTaskContext: FinishableInteractiveTaskContext;
+        interactiveTaskContext: Finishable & InteractiveTaskContext;
         generatorInvocation: GeneratorInvocation;
     }
 }
@@ -28,7 +28,7 @@ export declare namespace RemoteTaskHandler {
 export class RemoteTaskHandler {
     private job: CreateJobResponse;
     private taskId: RemoteGenTaskId;
-    private context: FinishableInteractiveTaskContext;
+    private context: Finishable & InteractiveTaskContext;
     private generatorInvocation: GeneratorInvocation;
     private lengthOfLastLogs = 0;
 
@@ -132,7 +132,7 @@ async function downloadFilesForTask({
     jobId: RemoteGenJobId;
     taskId: RemoteGenTaskId;
     absolutePathToLocalOutput: AbsoluteFilePath;
-    context: FinishableInteractiveTaskContext;
+    context: Finishable & InteractiveTaskContext;
 }) {
     const writer = createWriteStream(absolutePathToLocalOutput);
     await axios

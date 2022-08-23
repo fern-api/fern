@@ -2,5 +2,12 @@
   "extends": "../../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
-  "references": [{ "path": "../../commons/core-utils" }, { "path": "../task-context" }]
+  "references": [
+    { "path": "../../commons/core-utils" },
+    { "path": "../config-management/commons" },
+    { "path": "../config-management/generators-configuration-v2" },
+    { "path": "../project-loader" },
+    { "path": "../task-context" },
+    { "path": "../workspace-loader" }
+  ]
 }

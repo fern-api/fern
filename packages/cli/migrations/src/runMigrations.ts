@@ -1,5 +1,6 @@
 import { addPrefixToString } from "@fern-api/core-utils";
-import { StartableInteractiveTaskContext, TaskContext, TaskResult } from "@fern-api/task-context";
+import { Project } from "@fern-api/project-loader";
+import { InteractiveTaskContext, Startable, TaskContext, TaskResult } from "@fern-api/task-context";
 import chalk from "chalk";
 import inquirer from "inquirer";
 import { isVersionBehind } from "./isVersionBehind";
@@ -9,18 +10,19 @@ import { VersionMigrations } from "./types/VersionMigrations";
 
 interface MigrationWithTaskContext {
     migration: Migration;
-    context: StartableInteractiveTaskContext;
+    context: Startable<InteractiveTaskContext>;
 }
 
 export declare namespace runMigrations {
     export interface Args {
         fromVersion: string;
         toVersion: string;
+        project: Project;
         context: TaskContext;
     }
 }
 
-export async function runMigrations({ fromVersion, toVersion, context }: runMigrations.Args): Promise<void> {
+export async function runMigrations({ fromVersion, toVersion, context, project }: runMigrations.Args): Promise<void> {
     const migrationsToRun = ALL_MIGRATIONS.slice(
         getIndexOfFirstMigrationForVersion(fromVersion),
         getIndexOfFirstMigrationForVersion(toVersion)
@@ -52,9 +54,10 @@ export async function runMigrations({ fromVersion, toVersion, context }: runMigr
         const finishableContext = contextForMigration.start();
         await migration.run({
             context: finishableContext,
+            project,
         });
         finishableContext.finish();
-        if (contextForMigration.getResult() === TaskResult.Failure) {
+        if (finishableContext.getResult() === TaskResult.Failure) {
             context.logger.error("Failed to run migrations. You may need to undo changes to files.");
             return;
         }

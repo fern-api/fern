@@ -14,6 +14,7 @@
     { "path": "../init" },
     { "path": "../logger" },
     { "path": "../migrations" },
+    { "path": "../project-loader" },
     { "path": "../task-context" },
     { "path": "../workspace-loader" },
     { "path": "../yaml/validator" }

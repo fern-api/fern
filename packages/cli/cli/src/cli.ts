@@ -2,6 +2,8 @@ import { cwd, FilePath, noop, resolve } from "@fern-api/core-utils";
 import { initialize } from "@fern-api/init";
 import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import { getFernDirectory, loadProjectConfig } from "@fern-api/project-configuration";
+import { loadProject, Project } from "@fern-api/project-loader";
+import { TASK_FAILURE } from "@fern-api/task-context";
 import inquirer, { InputQuestion } from "inquirer";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
@@ -13,7 +15,6 @@ import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWor
 import { generateWorkspaces } from "./commands/generate/generateWorkspaces";
 import { upgrade } from "./commands/upgrade/upgrade";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
-import { loadProject } from "./loadProject";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 
 void tryRunCli();
@@ -29,7 +30,7 @@ async function tryRunCli() {
     try {
         await runCli(cliContext);
     } catch (error) {
-        cliContext.fail(error instanceof Error ? error.stack ?? error.message : JSON.stringify(error));
+        cliContext.fail(error);
     } finally {
         await exit();
     }
@@ -38,10 +39,13 @@ async function tryRunCli() {
 async function runCli(cliContext: CliContext) {
     const versionOfCliToRun = await getIntendedVersionOfCli(cliContext);
     if (cliContext.environment.packageVersion !== versionOfCliToRun) {
-        await rerunFernCliAtVersion({
+        const { failed } = await rerunFernCliAtVersion({
             version: versionOfCliToRun,
             cliEnvironment: cliContext.environment,
         });
+        if (failed) {
+            cliContext.fail();
+        }
         return;
     }
 
@@ -135,10 +139,9 @@ function addAddCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         async (argv) => {
             cliContext.processArgv(argv);
             await addGeneratorToWorkspaces(
-                await loadProject({
+                await loadProjectOrExit(cliContext, {
                     commandLineWorkspace: argv.api,
                     defaultToAllWorkspaces: false,
-                    cliContext,
                 }),
                 argv.generator,
                 cliContext
@@ -176,10 +179,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
         async (argv) => {
             cliContext.processArgv(argv);
             await generateWorkspaces({
-                project: await loadProject({
+                project: await loadProjectOrExit(cliContext, {
                     commandLineWorkspace: argv.all ? undefined : argv.api,
                     defaultToAllWorkspaces: argv.all,
-                    cliContext,
                 }),
                 runLocal: argv.local,
                 keepDocker: argv.keepDocker,
@@ -207,10 +209,9 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         async (argv) => {
             cliContext.processArgv(argv);
             await generateIrForWorkspaces({
-                project: await loadProject({
+                project: await loadProjectOrExit(cliContext, {
                     commandLineWorkspace: argv.api,
                     defaultToAllWorkspaces: false,
-                    cliContext,
                 }),
                 irFilepath: resolve(cwd(), FilePath.of(argv.output)),
                 cliContext,
@@ -231,10 +232,9 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
         async (argv) => {
             cliContext.processArgv(argv);
             await validateWorkspaces({
-                project: await loadProject({
+                project: await loadProjectOrExit(cliContext, {
                     commandLineWorkspace: argv.api,
                     defaultToAllWorkspaces: true,
-                    cliContext,
                 }),
                 cliContext,
             });
@@ -255,12 +255,29 @@ function addUpgradeCommand({
         cliContext.processArgv(argv);
         await upgrade({
             cliContext,
-            project: await loadProject({
+            project: await loadProjectOrExit(cliContext, {
                 commandLineWorkspace: undefined,
                 defaultToAllWorkspaces: true,
-                cliContext,
             }),
         });
         onRun();
     });
+}
+
+async function loadProjectOrExit(
+    cliContext: CliContext,
+    args: Omit<loadProject.Args, "context" | "cliName">
+): Promise<Project> {
+    const context = cliContext.addTask().start();
+    const project = await loadProject({
+        ...args,
+        cliName: cliContext.environment.cliName,
+        context,
+    });
+    context.finish();
+    if (project === TASK_FAILURE) {
+        return cliContext.exit();
+    }
+    cliContext.registerWorkspaces(project.workspaces);
+    return project;
 }

@@ -1,9 +1,10 @@
 import { Logger, LogLevel, LOG_LEVELS } from "@fern-api/logger";
-import { TaskContext, TaskResult, TASK_FAILURE } from "@fern-api/task-context";
+import { Finishable, Startable, TaskContext, TaskResult, TASK_FAILURE } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { ArgumentsCamelCase } from "yargs";
 import { CliEnvironment } from "./CliEnvironment";
+import { constructErrorMessage } from "./constructErrorMessage";
 import { Log, LogWithLevel } from "./Log";
 import { TaskContextImpl } from "./TaskContextImpl";
 import { TtyAwareLogger } from "./TtyAwareLogger";
@@ -68,10 +69,13 @@ export class CliContext {
         this.logLevel = argv.logLevel;
     }
 
-    public fail(message?: string): TASK_FAILURE {
+    public fail(message?: string, error?: unknown): TASK_FAILURE;
+    public fail(error: unknown): TASK_FAILURE;
+    public fail(messageOrError?: unknown, error?: unknown): TASK_FAILURE {
         this.didSucceed = false;
-        if (message != null) {
-            this.logger.error(message);
+        const errorMessage = constructErrorMessage({ messageOrError, error });
+        if (errorMessage != null) {
+            this.logger.error(errorMessage);
         }
         return TASK_FAILURE;
     }
@@ -106,6 +110,10 @@ export class CliContext {
         await this.runTaskWithInit(this.constructTaskInit(), run);
     }
 
+    public addTask(): Startable<TaskContext & Finishable> {
+        return this.addTaskWithInit(this.constructTaskInit());
+    }
+
     public async runTaskForWorkspace(
         workspace: Workspace,
         run: (context: TaskContext) => void | Promise<void>
@@ -113,12 +121,17 @@ export class CliContext {
         await this.runTaskWithInit(this.constructTaskInitForWorkspace(workspace), run);
     }
 
+    private addTaskWithInit(init: TaskContextImpl.Init): Startable<TaskContext & Finishable> {
+        const context = new TaskContextImpl(init);
+        this.ttyAwareLogger.registerTask(context);
+        return context;
+    }
+
     private async runTaskWithInit(
         init: TaskContextImpl.Init,
         run: (context: TaskContext) => void | Promise<void>
     ): Promise<void> {
-        const context = new TaskContextImpl(init);
-        this.ttyAwareLogger.registerTask(context);
+        const context = this.addTaskWithInit(init).start();
         await run(context);
         if (context.getResult() === TaskResult.Failure) {
             this.didSucceed = false;
@@ -175,6 +188,7 @@ export class CliContext {
         const prefix = wrapWorkspaceNameForPrefix(workspace.name).padEnd(
             wrapWorkspaceNameForPrefix("X".repeat(this.longestWorkspaceNameLength)).length
         );
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const colorForWorkspace = WORKSPACE_NAME_COLORS[this.numTasks++ % WORKSPACE_NAME_COLORS.length]!;
         const prefixWithColor = chalk.hex(colorForWorkspace)(prefix);
         return {
