@@ -142,10 +142,7 @@ public final class BuilderGenerator {
                     StageBuilderConstants.FROM_METHOD_OTHER_PARAMETER_NAME,
                     objectProperty.getterProperty());
         });
-        builderImplTypeSpec.addMethod(fromSetterImpl
-                .addAnnotation(Override.class)
-                .addStatement("return this")
-                .build());
+        builderImplTypeSpec.addMethod(fromSetterImpl.addStatement("return this").build());
 
         for (EnrichedObjectProperty enrichedProperty : defaultBuilderConfig.properties()) {
             TypeName poetTypeName = enrichedProperty.poetTypeName();
@@ -156,7 +153,8 @@ public final class BuilderGenerator {
                         nestedBuilderClassName,
                         (_unused) -> {},
                         builderImplTypeSpec::addField,
-                        builderImplTypeSpec::addMethod);
+                        builderImplTypeSpec::addMethod,
+                        false);
             } else {
                 throw new RuntimeException("Encountered final stage property that is not a ParameterizedTypeName: "
                         + poetTypeName.getClass().getSimpleName());
@@ -264,7 +262,6 @@ public final class BuilderGenerator {
 
     private PoetTypeWithClassName buildFinal(
             StagedBuilderConfig stagedBuilderConfig, ImmutableBuilderImplBuilder.Builder builderImpl) {
-
         builderImpl.addReversedMethods(getBaseBuildMethod()
                 .addAnnotation(Override.class)
                 .addStatement(
@@ -291,7 +288,8 @@ public final class BuilderGenerator {
                         finalStageClassName,
                         finalStageBuilder::addMethod,
                         builderImpl::addReversedFields,
-                        builderImpl::addReversedMethods);
+                        builderImpl::addReversedMethods,
+                        true);
             } else {
                 throw new RuntimeException("Encountered final stage property that is not a ParameterizedTypeName: "
                         + poetTypeName.toString());
@@ -307,9 +305,8 @@ public final class BuilderGenerator {
     }
 
     private MethodSpec.Builder getDefaultSetterForImpl(
-            EnrichedObjectProperty enrichedObjectProperty, ClassName returnClass) {
-        MethodSpec.Builder methodBuilder =
-                getDefaultSetter(enrichedObjectProperty, returnClass).addAnnotation(Override.class);
+            EnrichedObjectProperty enrichedObjectProperty, ClassName returnClass, boolean isOverriden) {
+        MethodSpec.Builder methodBuilder = getDefaultSetter(enrichedObjectProperty, returnClass, isOverriden);
         if (enrichedObjectProperty.wireKey().isPresent()) {
             methodBuilder.addAnnotation(AnnotationSpec.builder(JsonSetter.class)
                     .addMember("value", "$S", enrichedObjectProperty.wireKey().get())
@@ -319,14 +316,19 @@ public final class BuilderGenerator {
         return methodBuilder;
     }
 
-    private MethodSpec.Builder getDefaultSetter(EnrichedObjectProperty enrichedProperty, ClassName returnClass) {
+    private MethodSpec.Builder getDefaultSetter(
+            EnrichedObjectProperty enrichedProperty, ClassName returnClass, boolean isOverriden) {
         TypeName poetTypeName = enrichedProperty.poetTypeName();
         FieldSpec fieldSpec = enrichedProperty.fieldSpec();
-        return MethodSpec.methodBuilder(fieldSpec.name)
+        MethodSpec.Builder setter = MethodSpec.methodBuilder(fieldSpec.name)
                 .addParameter(
                         ParameterSpec.builder(poetTypeName, fieldSpec.name).build())
                 .addModifiers(Modifier.PUBLIC)
                 .returns(returnClass);
+        if (isOverriden) {
+            setter.addAnnotation(Override.class);
+        }
+        return setter;
     }
 
     private void addAdditionalSetters(
@@ -335,15 +337,16 @@ public final class BuilderGenerator {
             ClassName finalStageClassName,
             Consumer<MethodSpec> interfaceSetterConsumer,
             Consumer<FieldSpec> implFieldConsumer,
-            Consumer<MethodSpec> implSetterConsumer) {
+            Consumer<MethodSpec> implSetterConsumer,
+            boolean implsOverride) {
         FieldSpec fieldSpec = enrichedObjectProperty.fieldSpec();
         FieldSpec.Builder implFieldSpecBuilder = FieldSpec.builder(fieldSpec.type, fieldSpec.name, Modifier.PRIVATE);
 
-        interfaceSetterConsumer.accept(getDefaultSetter(enrichedObjectProperty, finalStageClassName)
+        interfaceSetterConsumer.accept(getDefaultSetter(enrichedObjectProperty, finalStageClassName, false)
                 .addModifiers(Modifier.ABSTRACT)
                 .build());
         MethodSpec.Builder defaultMethodImplBuilder =
-                getDefaultSetterForImpl(enrichedObjectProperty, finalStageClassName);
+                getDefaultSetterForImpl(enrichedObjectProperty, finalStageClassName, implsOverride);
 
         if (isEqual(propertyTypeName, ClassName.get(Optional.class))) {
             interfaceSetterConsumer.accept(
@@ -358,12 +361,11 @@ public final class BuilderGenerator {
                     .addStatement("this.$L = $L", fieldSpec.name, fieldSpec.name)
                     .addStatement("return this")
                     .build());
-            implSetterConsumer.accept(
-                    createOptionalItemTypeNameSetter(enrichedObjectProperty, propertyTypeName, finalStageClassName)
-                            .addAnnotation(Override.class)
-                            .addStatement("this.$L = $T.of($L)", fieldSpec.name, Optional.class, fieldSpec.name)
-                            .addStatement("return this")
-                            .build());
+            implSetterConsumer.accept(createOptionalItemTypeNameSetter(
+                            enrichedObjectProperty, propertyTypeName, finalStageClassName, implsOverride)
+                    .addStatement("this.$L = $T.of($L)", fieldSpec.name, Optional.class, fieldSpec.name)
+                    .addStatement("return this")
+                    .build());
         } else if (isEqual(propertyTypeName, ClassName.get(Map.class))) {
             interfaceSetterConsumer.accept(
                     createMapPutAllSetter(enrichedObjectProperty, propertyTypeName, finalStageClassName)
@@ -378,20 +380,17 @@ public final class BuilderGenerator {
                     .initializer("new $T<>()", LinkedHashMap.class)
                     .build());
             implSetterConsumer.accept(defaultMethodImplBuilder
-                    .addAnnotation(Override.class)
                     .addStatement("this.$L.clear()", fieldSpec.name)
                     .addStatement("this.$L.putAll($L)", fieldSpec.name, fieldSpec.name)
                     .addStatement("return this")
                     .build());
             implSetterConsumer.accept(
-                    createMapPutAllSetter(enrichedObjectProperty, propertyTypeName, finalStageClassName)
-                            .addAnnotation(Override.class)
+                    createMapPutAllSetter(enrichedObjectProperty, propertyTypeName, finalStageClassName, implsOverride)
                             .addStatement("this.$L.putAll($L, $L)", fieldSpec.name, fieldSpec.name)
                             .addStatement("return this")
                             .build());
             implSetterConsumer.accept(
-                    createMapEntryAppender(enrichedObjectProperty, propertyTypeName, finalStageClassName)
-                            .addAnnotation(Override.class)
+                    createMapEntryAppender(enrichedObjectProperty, propertyTypeName, finalStageClassName, implsOverride)
                             .addStatement(
                                     "this.$L.put($L, $L)",
                                     fieldSpec.name,
@@ -413,23 +412,20 @@ public final class BuilderGenerator {
                     .initializer("new $T<>()", ArrayList.class)
                     .build());
             implSetterConsumer.accept(defaultMethodImplBuilder
-                    .addAnnotation(Override.class)
                     .addStatement("this.$L.clear()", fieldSpec.name)
                     .addStatement("this.$L.addAll($L)", fieldSpec.name, fieldSpec.name)
                     .addStatement("return this")
                     .build());
-            implSetterConsumer.accept(
-                    createCollectionItemAppender(enrichedObjectProperty, propertyTypeName, finalStageClassName)
-                            .addAnnotation(Override.class)
-                            .addStatement("this.$L.addAll($L)", fieldSpec.name, fieldSpec.name)
-                            .addStatement("return this")
-                            .build());
-            implSetterConsumer.accept(
-                    createCollectionAddAllSetter(enrichedObjectProperty, propertyTypeName, finalStageClassName)
-                            .addAnnotation(Override.class)
-                            .addStatement("this.$L.add($L)", fieldSpec.name, fieldSpec.name)
-                            .addStatement("return this")
-                            .build());
+            implSetterConsumer.accept(createCollectionItemAppender(
+                            enrichedObjectProperty, propertyTypeName, finalStageClassName, implsOverride)
+                    .addStatement("this.$L.add($L)", fieldSpec.name, fieldSpec.name)
+                    .addStatement("return this")
+                    .build());
+            implSetterConsumer.accept(createCollectionAddAllSetter(
+                            enrichedObjectProperty, propertyTypeName, finalStageClassName, implsOverride)
+                    .addStatement("this.$L.addAll($L)", fieldSpec.name, fieldSpec.name)
+                    .addStatement("return this")
+                    .build());
         } else if (isEqual(propertyTypeName, ClassName.get(Set.class))) {
             interfaceSetterConsumer.accept(
                     createCollectionItemAppender(enrichedObjectProperty, propertyTypeName, finalStageClassName)
@@ -444,74 +440,131 @@ public final class BuilderGenerator {
                     .initializer("new $T<>()", LinkedHashSet.class)
                     .build());
             implSetterConsumer.accept(defaultMethodImplBuilder
-                    .addAnnotation(Override.class)
                     .addStatement("this.$L.clear()", fieldSpec.name)
                     .addStatement("this.$L.addAll($L)", fieldSpec.name, fieldSpec.name)
                     .addStatement("return this")
                     .build());
-            implSetterConsumer.accept(
-                    createCollectionItemAppender(enrichedObjectProperty, propertyTypeName, finalStageClassName)
-                            .addAnnotation(Override.class)
-                            .addStatement("this.$L.addAll($L)", fieldSpec.name, fieldSpec.name)
-                            .addStatement("return this")
-                            .build());
-            implSetterConsumer.accept(
-                    createCollectionAddAllSetter(enrichedObjectProperty, propertyTypeName, finalStageClassName)
-                            .addAnnotation(Override.class)
-                            .addStatement("this.$L.add($L)", fieldSpec.name, fieldSpec.name)
-                            .addStatement("return this")
-                            .build());
+            implSetterConsumer.accept(createCollectionItemAppender(
+                            enrichedObjectProperty, propertyTypeName, finalStageClassName, implsOverride)
+                    .addStatement("this.$L.addAll($L)", fieldSpec.name, fieldSpec.name)
+                    .addStatement("return this")
+                    .build());
+            implSetterConsumer.accept(createCollectionAddAllSetter(
+                            enrichedObjectProperty, propertyTypeName, finalStageClassName, implsOverride)
+                    .addStatement("this.$L.add($L)", fieldSpec.name, fieldSpec.name)
+                    .addStatement("return this")
+                    .build());
         }
     }
 
     private static MethodSpec.Builder createMapEntryAppender(
             EnrichedObjectProperty enrichedObjectProperty, ParameterizedTypeName mapTypeName, ClassName returnClass) {
+        return createMapEntryAppender(enrichedObjectProperty, mapTypeName, returnClass, false);
+    }
+
+    private static MethodSpec.Builder createMapEntryAppender(
+            EnrichedObjectProperty enrichedObjectProperty,
+            ParameterizedTypeName mapTypeName,
+            ClassName returnClass,
+            boolean isOverriden) {
         String fieldName = enrichedObjectProperty.fieldSpec().name;
         TypeName keyTypeName = getIndexedTypeArgumentOrThrow(mapTypeName, 0);
         TypeName valueTypeName = getIndexedTypeArgumentOrThrow(mapTypeName, 1);
-        return defaultSetter(fieldName, returnClass)
+        MethodSpec.Builder setter = defaultSetter(fieldName, returnClass)
                 .addParameter(keyTypeName, StageBuilderConstants.MAP_ITEM_APPENDER_KEY_PARAMETER_NAME)
                 .addParameter(valueTypeName, StageBuilderConstants.MAP_ITEM_APPENDER_VALUE_PARAMETER_NAME);
+        if (isOverriden) {
+            setter.addAnnotation(Override.class);
+        }
+        return setter;
     }
 
     private static MethodSpec.Builder createMapPutAllSetter(
             EnrichedObjectProperty enrichedObjectProperty,
             ParameterizedTypeName collectionTypeName,
             ClassName returnClass) {
+        return createMapPutAllSetter(enrichedObjectProperty, collectionTypeName, returnClass, false);
+    }
+
+    private static MethodSpec.Builder createMapPutAllSetter(
+            EnrichedObjectProperty enrichedObjectProperty,
+            ParameterizedTypeName collectionTypeName,
+            ClassName returnClass,
+            boolean isOverriden) {
         String fieldName = enrichedObjectProperty.fieldSpec().name;
-        return defaultSetter(
+        MethodSpec.Builder setter = defaultSetter(
                         StageBuilderConstants.PUT_ALL_METHOD_PREFIX + enrichedObjectProperty.pascalCaseKey(),
                         returnClass)
                 .addParameter(collectionTypeName, fieldName);
+        if (isOverriden) {
+            setter.addAnnotation(Override.class);
+        }
+        return setter;
     }
 
     private static MethodSpec.Builder createCollectionItemAppender(
             EnrichedObjectProperty enrichedObjectProperty,
             ParameterizedTypeName collectionTypeName,
             ClassName returnClass) {
+        return createCollectionItemAppender(enrichedObjectProperty, collectionTypeName, returnClass, false);
+    }
+
+    private static MethodSpec.Builder createCollectionItemAppender(
+            EnrichedObjectProperty enrichedObjectProperty,
+            ParameterizedTypeName collectionTypeName,
+            ClassName returnClass,
+            boolean isOverridden) {
         String fieldName = enrichedObjectProperty.fieldSpec().name;
         TypeName itemTypeName = getOnlyTypeArgumentOrThrow(collectionTypeName);
-        return defaultSetter(fieldName, returnClass).addParameter(itemTypeName, fieldName);
+        MethodSpec.Builder setter = defaultSetter(fieldName, returnClass).addParameter(itemTypeName, fieldName);
+        if (isOverridden) {
+            setter.addAnnotation(Override.class);
+        }
+        return setter;
     }
 
     private static MethodSpec.Builder createCollectionAddAllSetter(
             EnrichedObjectProperty enrichedObjectProperty,
             ParameterizedTypeName collectionTypeName,
             ClassName returnClass) {
+        return createCollectionAddAllSetter(enrichedObjectProperty, collectionTypeName, returnClass, false);
+    }
+
+    private static MethodSpec.Builder createCollectionAddAllSetter(
+            EnrichedObjectProperty enrichedObjectProperty,
+            ParameterizedTypeName collectionTypeName,
+            ClassName returnClass,
+            boolean isOverridden) {
         String fieldName = enrichedObjectProperty.fieldSpec().name;
-        return defaultSetter(
+        MethodSpec.Builder setter = defaultSetter(
                         StageBuilderConstants.ADD_ALL_METHOD_PREFIX + enrichedObjectProperty.pascalCaseKey(),
                         returnClass)
                 .addParameter(collectionTypeName, fieldName);
+        if (isOverridden) {
+            setter.addAnnotation(Override.class);
+        }
+        return setter;
     }
 
     private static MethodSpec.Builder createOptionalItemTypeNameSetter(
             EnrichedObjectProperty enrichedObjectProperty,
             ParameterizedTypeName optionalTypeName,
             ClassName returnClass) {
+        return createOptionalItemTypeNameSetter(enrichedObjectProperty, optionalTypeName, returnClass, false);
+    }
+
+    private static MethodSpec.Builder createOptionalItemTypeNameSetter(
+            EnrichedObjectProperty enrichedObjectProperty,
+            ParameterizedTypeName optionalTypeName,
+            ClassName returnClass,
+            boolean isOverridden) {
         String fieldName = enrichedObjectProperty.fieldSpec().name;
         TypeName itemTypeName = getOnlyTypeArgumentOrThrow(optionalTypeName);
-        return defaultSetter(fieldName, returnClass).addParameter(itemTypeName, fieldName);
+        MethodSpec.Builder setter = defaultSetter(fieldName, returnClass).addParameter(itemTypeName, fieldName);
+        if (isOverridden) {
+            setter.addAnnotation(Override.class);
+        }
+        return setter;
     }
 
     private static MethodSpec.Builder defaultSetter(String methodName, ClassName returnClass) {
