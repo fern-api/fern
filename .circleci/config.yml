@@ -37,7 +37,7 @@ jobs:
           command: yarn generate-json-schema
       - run:
           name: fern check
-          command: npx fern-api check
+          command: npx fern-api@0.0.187 check
       - run:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff --exit-code
@@ -187,9 +187,9 @@ workflows:
             - auth0-dev
 
       - live-test-dev:
-          # filters:
-          #   branches:
-          #     only: main
+          filters:
+            branches:
+              only: main
           context:
             - auth0-dev
 
