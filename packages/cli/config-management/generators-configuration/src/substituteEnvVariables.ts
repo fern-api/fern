@@ -7,6 +7,7 @@ export function substituteEnvVariables(yaml: unknown): unknown {
     return processedYaml;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function substituteEnvVariablesHelper(target: Record<string, any>, value: any, key?: string): unknown {
     if ((isPlainObject(value) || Array.isArray(value)) && Object.keys(value).length > 0) {
         for (const [subKey, subVal] of Object.entries(value)) {
