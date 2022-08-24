@@ -4,9 +4,11 @@ import { CliEnvironment } from "./cli-context/CliEnvironment";
 export async function rerunFernCliAtVersion({
     version,
     cliEnvironment,
+    env,
 }: {
     version: string;
     cliEnvironment: CliEnvironment;
+    env?: Record<string, string>;
 }): Promise<ExecaChildProcess> {
     const npxProcess = execa(
         "npx",
@@ -14,6 +16,7 @@ export async function rerunFernCliAtVersion({
         {
             stdio: "inherit",
             reject: false,
+            env,
         }
     );
     npxProcess.stdout?.pipe(process.stdout);

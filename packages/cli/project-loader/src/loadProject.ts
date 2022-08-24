@@ -28,7 +28,7 @@ export async function loadProject({
 }: loadProject.Args): Promise<Project | TASK_FAILURE> {
     const fernDirectory = await getFernDirectory();
     if (fernDirectory == null) {
-        return context.fail(`Directory ${FERN_DIRECTORY} not found.`);
+        return context.fail(`Directory "${FERN_DIRECTORY}" not found.`);
     }
     const fernDirectoryContents = await readdir(fernDirectory, { withFileTypes: true });
     const allWorkspaceDirectoryNames = fernDirectoryContents.reduce<string[]>((all, item) => {
