@@ -7623,8 +7623,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["semver-diff", "npm:4.0.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
             ["validate-npm-package-name", "npm:4.0.0"],\
-            ["yargs", "npm:17.5.1"],\
-            ["zod", "npm:3.16.0"]\
+            ["yargs", "npm:17.5.1"]\
           ],\
           "linkType": "SOFT"\
         }]\

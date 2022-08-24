@@ -63,8 +63,7 @@
     "ora": "^6.1.2",
     "semver-diff": "^4.0.0",
     "validate-npm-package-name": "^4.0.0",
-    "yargs": "^17.4.1",
-    "zod": "^3.14.3"
+    "yargs": "^17.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",
