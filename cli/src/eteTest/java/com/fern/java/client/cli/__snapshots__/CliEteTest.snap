@@ -436,13 +436,6 @@ public final class GeneratorsDoNotExistError {
     this.value = value;
   }
 
-  @JsonCreator(
-      mode = JsonCreator.Mode.DELEGATING
-  )
-  public static GeneratorsDoNotExistError of(List<GeneratorIdAndVersion> value) {
-    return new GeneratorsDoNotExistError(value);
-  }
-
   public List<GeneratorIdAndVersion> get() {
     return this.value;
   }
@@ -460,6 +453,13 @@ public final class GeneratorsDoNotExistError {
   @Override
   public String toString() {
     return value.toString();
+  }
+
+  @JsonCreator(
+      mode = JsonCreator.Mode.DELEGATING
+  )
+  public static GeneratorsDoNotExistError of(List<GeneratorIdAndVersion> value) {
+    return new GeneratorsDoNotExistError(value);
   }
 }
 
@@ -1370,13 +1370,6 @@ public final class Age {
     this.value = value;
   }
 
-  @JsonCreator(
-      mode = JsonCreator.Mode.DELEGATING
-  )
-  public static Age of(int value) {
-    return new Age(value);
-  }
-
   public int get() {
     return this.value;
   }
@@ -1394,6 +1387,17 @@ public final class Age {
   @Override
   public String toString() {
     return Integer.toString(value);
+  }
+
+  @JsonCreator(
+      mode = JsonCreator.Mode.DELEGATING
+  )
+  public static Age of(int value) {
+    return new Age(value);
+  }
+
+  public static Age valueOf(String value) {
+    return of(Integer.parseInt(value));
   }
 }
 
@@ -2093,13 +2097,6 @@ public final class GeneratorsDoNotExistErrorBody {
     this.value = value;
   }
 
-  @JsonCreator(
-      mode = JsonCreator.Mode.DELEGATING
-  )
-  public static GeneratorsDoNotExistErrorBody of(List<GeneratorIdAndVersion> value) {
-    return new GeneratorsDoNotExistErrorBody(value);
-  }
-
   public List<GeneratorIdAndVersion> get() {
     return this.value;
   }
@@ -2117,6 +2114,13 @@ public final class GeneratorsDoNotExistErrorBody {
   @Override
   public String toString() {
     return value.toString();
+  }
+
+  @JsonCreator(
+      mode = JsonCreator.Mode.DELEGATING
+  )
+  public static GeneratorsDoNotExistErrorBody of(List<GeneratorIdAndVersion> value) {
+    return new GeneratorsDoNotExistErrorBody(value);
   }
 }
 
@@ -2221,13 +2225,6 @@ public final class PostId {
     this.value = value;
   }
 
-  @JsonCreator(
-      mode = JsonCreator.Mode.DELEGATING
-  )
-  public static PostId of(String value) {
-    return new PostId(value);
-  }
-
   public String get() {
     return this.value;
   }
@@ -2245,6 +2242,17 @@ public final class PostId {
   @Override
   public String toString() {
     return value;
+  }
+
+  @JsonCreator(
+      mode = JsonCreator.Mode.DELEGATING
+  )
+  public static PostId of(String value) {
+    return new PostId(value);
+  }
+
+  public static PostId valueOf(String value) {
+    return of(value);
   }
 }
 
@@ -2617,13 +2625,6 @@ public final class DummyId {
     this.value = value;
   }
 
-  @JsonCreator(
-      mode = JsonCreator.Mode.DELEGATING
-  )
-  public static DummyId of(String value) {
-    return new DummyId(value);
-  }
-
   public String get() {
     return this.value;
   }
@@ -2641,6 +2642,17 @@ public final class DummyId {
   @Override
   public String toString() {
     return value;
+  }
+
+  @JsonCreator(
+      mode = JsonCreator.Mode.DELEGATING
+  )
+  public static DummyId of(String value) {
+    return new DummyId(value);
+  }
+
+  public static DummyId valueOf(String value) {
+    return of(value);
   }
 }
 

@@ -23,13 +23,16 @@ import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameConstants;
 import com.fern.types.AliasTypeDeclaration;
 import com.fern.types.PrimitiveType;
+import com.fern.types.TypeReference;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+import java.util.Optional;
 import javax.lang.model.element.Modifier;
 
 public final class AliasGenerator extends Generator {
@@ -60,15 +63,27 @@ public final class AliasGenerator extends Generator {
             TypeName aliasTypeName = generatorContext
                     .getClassNameUtils()
                     .getTypeNameFromTypeReference(true, aliasTypeDeclaration.aliasOf());
-            aliasTypeSpec = aliasTypeSpecBuilder
+            TypeSpec.Builder aliasBuilder = aliasTypeSpecBuilder
                     .addField(aliasTypeName, VALUE_FIELD_NAME, Modifier.PRIVATE, Modifier.FINAL)
                     .addMethod(getConstructor(aliasTypeName))
-                    .addMethod(getOfMethodName(aliasTypeName))
                     .addMethod(getGetMethod(aliasTypeName))
                     .addMethod(getEqualsMethod(aliasTypeName))
                     .addMethod(getHashCodeMethod())
                     .addMethod(getToStringMethod())
-                    .build();
+                    .addMethod(getOfMethodName(aliasTypeName));
+
+            Optional<CodeBlock> maybeValueOfFactoryMethod =
+                    valueOfFactoryMethod(aliasTypeDeclaration.aliasOf(), aliasTypeName);
+            if (maybeValueOfFactoryMethod.isPresent()) {
+                aliasBuilder.addMethod(MethodSpec.methodBuilder("valueOf")
+                        .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                        .addParameter(ParameterSpec.builder(String.class, VALUE_FIELD_NAME)
+                                .build())
+                        .returns(generatedAliasClassName)
+                        .addCode(maybeValueOfFactoryMethod.get())
+                        .build());
+            }
+            aliasTypeSpec = aliasBuilder.build();
         }
         JavaFile aliasFile = JavaFile.builder(generatedAliasClassName.packageName(), aliasTypeSpec)
                 .build();
@@ -168,6 +183,38 @@ public final class AliasGenerator extends Generator {
                 .addStatement(toStringMethodCodeBlock)
                 .returns(ClassNameConstants.STRING_CLASS_NAME)
                 .build();
+    }
+
+    private static Optional<CodeBlock> valueOfFactoryMethod(TypeReference typeReference, TypeName aliasTypeName) {
+        if (typeReference.isPrimitive()) {
+            return Optional.of(valueOfFactoryMethodForPrimitive(
+                    typeReference.getPrimitive().get(), aliasTypeName));
+        }
+        // TODO(dsinghvi): handle case of aliased alias
+        return Optional.empty();
+    }
+
+    @SuppressWarnings("checkstyle:cyclomaticcomplexity")
+    private static CodeBlock valueOfFactoryMethodForPrimitive(PrimitiveType primitiveType, TypeName aliasTypeName) {
+        switch (primitiveType.getEnumValue()) {
+            case STRING:
+            case UUID:
+            case DATE_TIME:
+                return CodeBlock.builder().addStatement("return of(value)").build();
+            case DOUBLE:
+                return CodeBlock.builder()
+                        .addStatement("return of($T.parseDouble(value))", Double.class)
+                        .build();
+            case INTEGER:
+                return CodeBlock.builder()
+                        .addStatement("return of($T.parseInt(value))", Integer.class)
+                        .build();
+            case BOOLEAN:
+                return CodeBlock.builder()
+                        .addStatement("return of($T.parseBoolean(value))", Boolean.class)
+                        .build();
+        }
+        throw new IllegalStateException("Unsupported primitive type: " + primitiveType + "for `valueOf` method.");
     }
 
     private static final class ToStringMethodSpecVisitor implements PrimitiveType.Visitor<CodeBlock> {
