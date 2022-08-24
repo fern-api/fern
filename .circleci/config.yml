@@ -51,9 +51,6 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
-          name: Compile
-          command: yarn compile
-      - run:
           name: Run tests
           command: yarn test --ci
       - run:
