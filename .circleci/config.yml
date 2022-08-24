@@ -2,7 +2,7 @@ version: 2.1
 orbs:
   node: circleci/node@5.0.1
 jobs:
-  lint:
+  check:
     docker:
       - image: cimg/node:current
     steps:
@@ -169,7 +169,7 @@ workflows:
   version: 2
   build:
     jobs:
-      - lint:
+      - check:
           filters:
             tags:
               only: /.*/
@@ -207,7 +207,7 @@ workflows:
             branches:
               only: main
           requires:
-            - lint
+            - check
             - test
             - ete-tests
           context:
@@ -221,7 +221,7 @@ workflows:
             tags:
               only: /.*/
           requires:
-            - lint
+            - check
             - test
             - ete-tests
             - live-test
