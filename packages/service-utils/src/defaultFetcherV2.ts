@@ -25,6 +25,7 @@ export const defaultFetcherV2: FetcherV2 = async (args) => {
             method: args.method,
             headers,
             data: args.body,
+            validateStatus: () => true,
         });
 
         return {
