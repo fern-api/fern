@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, assertNeverNoThrow } from "@fern-api/core-utils";
-import { GeneratorInvocation } from "@fern-api/generators-configuration";
+import { DraftGeneratorInvocation } from "@fern-api/generators-configuration";
 import { LogLevel } from "@fern-api/logger";
 import { Finishable, InteractiveTaskContext } from "@fern-api/task-context";
 import {
@@ -21,7 +21,7 @@ export declare namespace RemoteTaskHandler {
         job: CreateJobResponse;
         taskId: RemoteGenTaskId;
         interactiveTaskContext: Finishable & InteractiveTaskContext;
-        generatorInvocation: GeneratorInvocation;
+        generatorInvocation: DraftGeneratorInvocation;
     }
 }
 
@@ -29,7 +29,7 @@ export class RemoteTaskHandler {
     private job: CreateJobResponse;
     private taskId: RemoteGenTaskId;
     private context: Finishable & InteractiveTaskContext;
-    private generatorInvocation: GeneratorInvocation;
+    private generatorInvocation: DraftGeneratorInvocation;
     private lengthOfLastLogs = 0;
 
     constructor({ job, taskId, interactiveTaskContext, generatorInvocation }: RemoteTaskHandler.Init) {
@@ -106,17 +106,17 @@ export class RemoteTaskHandler {
         if (
             task.status._type === "finished" &&
             task.status.hasFilesToDownload &&
-            this.generatorInvocation.generate?.absolutePathToLocalOutput != null
+            this.generatorInvocation.absolutePathToLocalOutput != null
         ) {
             try {
                 await downloadFilesForTask({
                     jobId: this.job.jobId,
                     taskId: this.taskId,
-                    absolutePathToLocalOutput: this.generatorInvocation.generate.absolutePathToLocalOutput,
+                    absolutePathToLocalOutput: this.generatorInvocation.absolutePathToLocalOutput,
                     context: this.context,
                 });
             } catch {
-                this.context.fail(`Failed to download ${this.generatorInvocation.generate.absolutePathToLocalOutput}`);
+                this.context.fail(`Failed to download ${this.generatorInvocation.absolutePathToLocalOutput}`);
             }
         }
         this.context.finish();

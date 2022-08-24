@@ -5,9 +5,7 @@ import { JAVA_GENERATOR_INVOCATION } from "../generatorInvocations";
 
 describe("addGenerator", () => {
     it("adds generator if not present", () => {
-        const generatorsConfiguration: GeneratorsConfigurationSchema = {
-            generators: [],
-        };
+        const generatorsConfiguration: GeneratorsConfigurationSchema = {};
         const newConfiguration = addGenerator({
             generatorName: "java",
             generatorsConfiguration,
@@ -16,7 +14,7 @@ describe("addGenerator", () => {
         if (newConfiguration === TASK_FAILURE) {
             throw new Error("Failed to create new configuration");
         }
-        expect(newConfiguration.generators).toMatchObject([
+        expect(newConfiguration.draft).toMatchObject([
             {
                 name: JAVA_GENERATOR_INVOCATION.name,
             },
@@ -25,7 +23,7 @@ describe("addGenerator", () => {
 
     it("fail if present", () => {
         const generatorsConfiguration: GeneratorsConfigurationSchema = {
-            generators: [
+            draft: [
                 {
                     name: "fernapi/fern-typescript",
                     version: "0.0.23",

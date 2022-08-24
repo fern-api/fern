@@ -1,4 +1,4 @@
-import { GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
+import { BaseGeneratorInvocationSchema, GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import produce from "immer";
@@ -12,10 +12,21 @@ export function upgradeGenerators({
     generatorsConfiguration: GeneratorsConfigurationSchema;
     context: TaskContext;
 }): GeneratorsConfigurationSchema {
-    const updatedGenerators = generatorsConfiguration.generators.map((generatorConfig) => {
-        const updatedInvocation = GENERATOR_INVOCATIONS[generatorConfig.name];
+    return produce(generatorsConfiguration, (draft) => {
+        if (draft.draft != null) {
+            draft.draft = draft.draft.map((generatorConfig) => maybeUpgradeVersion(generatorConfig, context));
+        }
+        if (draft.release != null) {
+            draft.release = draft.release.map((generatorConfig) => maybeUpgradeVersion(generatorConfig, context));
+        }
+    });
+}
 
-        if (updatedInvocation != null && isVersionHigher(generatorConfig.version, updatedInvocation.version)) {
+function maybeUpgradeVersion<T extends BaseGeneratorInvocationSchema>(generatorConfig: T, context: TaskContext): T {
+    const updatedInvocation = GENERATOR_INVOCATIONS[generatorConfig.name];
+
+    if (updatedInvocation != null) {
+        if (isVersionHigher(generatorConfig.version, updatedInvocation.version)) {
             context.logger.info(
                 chalk.green(
                     `Upgraded ${generatorConfig.name} from ${generatorConfig.version} to ${updatedInvocation.version}`
@@ -25,11 +36,11 @@ export function upgradeGenerators({
                 draft.version = updatedInvocation.version;
             });
         }
+    } else {
+        context.fail("Unknown generator: " + generatorConfig.name);
+    }
 
-        return generatorConfig;
-    });
-
-    return { generators: updatedGenerators };
+    return generatorConfig;
 }
 
 /**

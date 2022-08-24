@@ -25,7 +25,8 @@ export async function createWorkspace({
 }
 
 const API_WORKSPACE_DEFINITION: GeneratorsConfigurationSchema = {
-    generators: [],
+    draft: [],
+    release: [],
 };
 
 async function writeGeneratorsConfiguration({ filepath }: { filepath: AbsoluteFilePath }): Promise<void> {

@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
-import { GeneratorInvocation } from "@fern-api/generators-configuration";
+import { DraftGeneratorInvocation } from "@fern-api/generators-configuration";
 import { Workspace } from "@fern-api/workspace-loader";
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
 import { mkdir, rm, writeFile } from "fs/promises";
@@ -19,7 +19,7 @@ export async function runLocalGenerationForWorkspace({
     intermediateRepresentation: IntermediateRepresentation;
     keepDocker: boolean;
 }): Promise<void> {
-    if (workspace.generatorsConfiguration.generators.length === 0) {
+    if (workspace.generatorsConfiguration.draft.length === 0) {
         return;
     }
 
@@ -34,7 +34,7 @@ export async function runLocalGenerationForWorkspace({
     await writeFile(absolutePathToIr, JSON.stringify(intermediateRepresentation));
 
     await Promise.all(
-        workspace.generatorsConfiguration.generators.map(async (generatorInvocation) =>
+        workspace.generatorsConfiguration.draft.map(async (generatorInvocation) =>
             loadHelpersAndRunGenerator({
                 organization,
                 workspace,
@@ -57,7 +57,7 @@ async function loadHelpersAndRunGenerator({
 }: {
     organization: string;
     workspace: Workspace;
-    generatorInvocation: GeneratorInvocation;
+    generatorInvocation: DraftGeneratorInvocation;
     workspaceTempDir: DirectoryResult;
     absolutePathToIr: AbsoluteFilePath;
     keepDocker: boolean;
@@ -67,14 +67,14 @@ async function loadHelpersAndRunGenerator({
     });
     const absolutePathToWriteConfigJson = AbsoluteFilePath.of(configJson.path);
 
-    if (generatorInvocation.generate?.absolutePathToLocalOutput != null) {
-        await rm(generatorInvocation.generate.absolutePathToLocalOutput, { force: true, recursive: true });
-        await mkdir(generatorInvocation.generate.absolutePathToLocalOutput, { recursive: true });
+    if (generatorInvocation.absolutePathToLocalOutput != null) {
+        await rm(generatorInvocation.absolutePathToLocalOutput, { force: true, recursive: true });
+        await mkdir(generatorInvocation.absolutePathToLocalOutput, { recursive: true });
     }
 
     await runGenerator({
         imageName: `${generatorInvocation.name}:${generatorInvocation.version}`,
-        absolutePathToOutput: generatorInvocation.generate?.absolutePathToLocalOutput,
+        absolutePathToOutput: generatorInvocation.absolutePathToLocalOutput,
         absolutePathToIr,
         absolutePathToWriteConfigJson,
         customConfig: generatorInvocation.config,

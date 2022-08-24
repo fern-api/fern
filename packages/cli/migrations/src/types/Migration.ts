@@ -1,4 +1,3 @@
-import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
 
 export interface Migration {
@@ -9,5 +8,4 @@ export interface Migration {
 
 export interface MigrationArgs {
     context: TaskContext;
-    project: Project;
 }

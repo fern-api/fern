@@ -18,7 +18,7 @@ export function pollJobAndReportStatus({
 }): Promise<void> {
     let numConsecutiveFailed = 0;
     const taskHandlers = job.taskIds.reduce<Record<RemoteGenTaskId, RemoteTaskHandler>>((acc, taskId, index) => {
-        const generatorInvocation = workspace.generatorsConfiguration.generators[index];
+        const generatorInvocation = workspace.generatorsConfiguration.draft[index];
         if (generatorInvocation == null) {
             context.fail("Task IDs list is longer than generators list.");
         } else {
