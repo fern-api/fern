@@ -443,6 +443,10 @@ public final class GeneratorsDoNotExistError {
     return new GeneratorsDoNotExistError(value);
   }
 
+  public List<GeneratorIdAndVersion> get() {
+    return this.value;
+  }
+
   @Override
   public boolean equals(Object other) {
     return this == other || (other instanceof GeneratorsDoNotExistError && this.value.equals(((GeneratorsDoNotExistError) other).value));
@@ -1373,6 +1377,10 @@ public final class Age {
     return new Age(value);
   }
 
+  public int get() {
+    return this.value;
+  }
+
   @Override
   public boolean equals(Object other) {
     return this == other || (other instanceof Age && this.value == ((Age) other).value);
@@ -2092,6 +2100,10 @@ public final class GeneratorsDoNotExistErrorBody {
     return new GeneratorsDoNotExistErrorBody(value);
   }
 
+  public List<GeneratorIdAndVersion> get() {
+    return this.value;
+  }
+
   @Override
   public boolean equals(Object other) {
     return this == other || (other instanceof GeneratorsDoNotExistErrorBody && this.value.equals(((GeneratorsDoNotExistErrorBody) other).value));
@@ -2214,6 +2226,10 @@ public final class PostId {
   )
   public static PostId of(String value) {
     return new PostId(value);
+  }
+
+  public String get() {
+    return this.value;
   }
 
   @Override
@@ -2606,6 +2622,10 @@ public final class DummyId {
   )
   public static DummyId of(String value) {
     return new DummyId(value);
+  }
+
+  public String get() {
+    return this.value;
   }
 
   @Override

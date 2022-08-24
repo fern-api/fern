@@ -64,6 +64,7 @@ public final class AliasGenerator extends Generator {
                     .addField(aliasTypeName, VALUE_FIELD_NAME, Modifier.PRIVATE, Modifier.FINAL)
                     .addMethod(getConstructor(aliasTypeName))
                     .addMethod(getOfMethodName(aliasTypeName))
+                    .addMethod(getGetMethod(aliasTypeName))
                     .addMethod(getEqualsMethod(aliasTypeName))
                     .addMethod(getHashCodeMethod())
                     .addMethod(getToStringMethod())
@@ -112,6 +113,14 @@ public final class AliasGenerator extends Generator {
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .addStatement("return new $T()", generatedAliasClassName)
                 .returns(generatedAliasClassName)
+                .build();
+    }
+
+    private MethodSpec getGetMethod(TypeName aliasTypeName) {
+        return MethodSpec.methodBuilder("get")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(aliasTypeName)
+                .addStatement("return this.$L", VALUE_FIELD_NAME)
                 .build();
     }
 
