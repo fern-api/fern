@@ -7,22 +7,16 @@ import { runFernCli } from "../../utils/runFernCli";
 import { init } from "../init/init";
 
 const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {
-    generators: [
+    draft: [
         {
             name: "fernapi/fern-postman",
             version: "0.0.20",
-            generate: {
-                enabled: true,
-                output: RelativeFilePath.of("./generated-postman.json"),
-            },
+            "local-output": RelativeFilePath.of("./generated-postman.json"),
         },
         {
             name: "fernapi/fern-openapi",
             version: "0.0.2",
-            generate: {
-                enabled: true,
-                output: RelativeFilePath.of("./generated-openapi.yml"),
-            },
+            "local-output": RelativeFilePath.of("./generated-openapi.yml"),
             config: {
                 format: "yaml",
             },
@@ -30,7 +24,6 @@ const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {
         {
             name: "fernapi/fern-java",
             version: "0.0.81",
-            generate: true,
             config: {
                 packagePrefix: "com",
                 mode: "client_and_server",
@@ -39,7 +32,6 @@ const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {
         {
             name: "fernapi/fern-typescript",
             version: "0.0.14",
-            generate: true,
             config: {
                 mode: "client_and_server",
             },

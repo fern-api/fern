@@ -27,7 +27,7 @@
   "dependencies": {
     "@fern-api/config-management-commons": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/generators-configuration-v2": "workspace:*",
+    "@fern-api/generators-configuration": "workspace:*",
     "@fern-api/project-loader": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",

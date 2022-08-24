@@ -1,5 +1,5 @@
 import { join, RelativeFilePath } from "@fern-api/core-utils";
-import { DraftGeneratorInvocationSchema, GeneratorsConfigurationSchema } from "@fern-api/generators-configuration-v2";
+import { DraftGeneratorInvocationSchema, GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
 import { Workspace } from "@fern-api/workspace-loader";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";

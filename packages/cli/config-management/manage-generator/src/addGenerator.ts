@@ -16,12 +16,16 @@ export function addGenerator({
         simpleName: generatorName,
     });
 
-    if (generatorsConfiguration.generators.some((generator) => generator.name === invocation.name)) {
+    if (
+        generatorsConfiguration.draft != null &&
+        generatorsConfiguration.draft.some((generator) => generator.name === invocation.name)
+    ) {
         context.fail(`${generatorName} is already installed.`);
         return TASK_FAILURE;
     }
 
     return produce(generatorsConfiguration, (draft) => {
-        draft.generators.push(invocation);
+        const draftGenerators = (draft.draft ??= []);
+        draftGenerators.push(invocation);
     });
 }

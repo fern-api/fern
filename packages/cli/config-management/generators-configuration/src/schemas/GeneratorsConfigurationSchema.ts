@@ -1,8 +1,10 @@
 import { z } from "zod";
-import { GeneratorInvocationSchema } from "./GeneratorInvocationSchema";
+import { DraftGeneratorInvocationSchema } from "./DraftGeneratorInvocationSchema";
+import { ReleaseGeneratorInvocationSchema } from "./ReleaseGeneratorInvocationSchema";
 
 export const GeneratorsConfigurationSchema = z.strictObject({
-    generators: z.array(GeneratorInvocationSchema),
+    draft: z.optional(z.array(DraftGeneratorInvocationSchema)),
+    release: z.optional(z.array(ReleaseGeneratorInvocationSchema)),
 });
 
 export type GeneratorsConfigurationSchema = z.infer<typeof GeneratorsConfigurationSchema>;

@@ -17,7 +17,7 @@ export async function runRemoteGenerationForWorkspace({
     intermediateRepresentation: IntermediateRepresentation;
     context: TaskContext;
 }): Promise<void> {
-    if (workspace.generatorsConfiguration.generators.length === 0) {
+    if (workspace.generatorsConfiguration.draft.length === 0) {
         context.logger.warn("No generators specified.");
         return;
     }

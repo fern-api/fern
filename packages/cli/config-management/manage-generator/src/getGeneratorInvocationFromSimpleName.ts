@@ -1,4 +1,4 @@
-import { GeneratorInvocationSchema } from "@fern-api/generators-configuration";
+import { DraftGeneratorInvocationSchema } from "@fern-api/generators-configuration";
 import {
     JAVA_GENERATOR_INVOCATION,
     OPENAPI_GENERATOR_INVOCATION,
@@ -12,7 +12,7 @@ export function getGeneratorInvocationFromSimpleName({
     simpleName,
 }: {
     simpleName: SimpleGeneratorName;
-}): GeneratorInvocationSchema {
+}): DraftGeneratorInvocationSchema {
     switch (simpleName) {
         case "java":
             return JAVA_GENERATOR_INVOCATION;

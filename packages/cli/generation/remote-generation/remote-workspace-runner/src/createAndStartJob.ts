@@ -24,10 +24,10 @@ async function createJob({ workspace, organization }: { workspace: Workspace; or
     const createResponse = await REMOTE_GENERATION_SERVICE.createJob({
         apiName: workspace.name,
         organizationName: organization,
-        generators: workspace.generatorsConfiguration.generators.map((generator) => ({
+        generators: workspace.generatorsConfiguration.draft.map((generator) => ({
             id: generator.name,
             version: generator.version,
-            willDownloadFiles: generator.generate?.absolutePathToLocalOutput != null,
+            willDownloadFiles: generator.absolutePathToLocalOutput != null,
             customConfig: generator.config,
         })),
     });
