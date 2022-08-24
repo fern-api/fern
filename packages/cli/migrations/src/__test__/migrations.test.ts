@@ -27,6 +27,7 @@ describe("migrations", () => {
 
             const exportedMigrations = (await import(pathToVersionDirectory)).default as VersionMigrations;
 
+            expect(exportedMigrations.version).toBe(version);
             expect(allMigrations.length).toEqual(exportedMigrations.migrations.length);
             for (const migration of allMigrations) {
                 expect(exportedMigrations.migrations).toContainEqual(
