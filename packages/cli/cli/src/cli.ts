@@ -275,9 +275,11 @@ async function loadProjectOrExit(
         context,
     });
     context.finish();
+
     if (project === TASK_FAILURE) {
         return cliContext.exit();
     }
+
     cliContext.registerWorkspaces(project.workspaces);
     return project;
 }

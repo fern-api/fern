@@ -18,6 +18,7 @@
     { "path": "../cli/logger" },
     { "path": "../cli/login" },
     { "path": "../cli/migrations" },
+    { "path": "../cli/project-loader" },
     { "path": "../cli/task-context" },
     { "path": "../cli/workspace-loader" },
     { "path": "../cli/yaml/json-schema" },

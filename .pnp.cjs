@@ -7623,8 +7623,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["semver-diff", "npm:4.0.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
             ["validate-npm-package-name", "npm:4.0.0"],\
-            ["yargs", "npm:17.5.1"],\
-            ["zod", "npm:3.16.0"]\
+            ["yargs", "npm:17.5.1"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -7656,6 +7655,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/migrations", "workspace:packages/cli/migrations"],\
             ["@fern-api/openapi-converter", "workspace:packages/openapi-converter"],\
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
+            ["@fern-api/project-loader", "workspace:packages/cli/project-loader"],\
             ["@fern-api/remote-workspace-runner", "workspace:packages/cli/generation/remote-generation/remote-workspace-runner"],\
             ["@fern-api/scripts", "workspace:packages/scripts"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\

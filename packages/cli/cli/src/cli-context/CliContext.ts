@@ -133,9 +133,6 @@ export class CliContext {
     ): Promise<void> {
         const context = this.addTaskWithInit(init).start();
         await run(context);
-        if (context.getResult() === TaskResult.Failure) {
-            this.didSucceed = false;
-        }
         context.finish();
     }
 
@@ -201,6 +198,11 @@ export class CliContext {
         return {
             log: (content) => this.log(content),
             takeOverTerminal: (run) => this.ttyAwareLogger.takeOverTerminal(run),
+            onFinish: (result) => {
+                if (result === TaskResult.Failure) {
+                    this.didSucceed = false;
+                }
+            },
         };
     }
 

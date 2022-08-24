@@ -2920,7 +2920,6 @@ __metadata:
     typescript: 4.6.4
     validate-npm-package-name: ^4.0.0
     yargs: ^17.4.1
-    zod: ^3.14.3
   bin:
     "fern:dev": ./dist/dev/bundle.cjs
     "fern:prod": ./dist/prod/bundle.cjs
@@ -2953,6 +2952,7 @@ __metadata:
     "@fern-api/migrations": "workspace:*"
     "@fern-api/openapi-converter": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
+    "@fern-api/project-loader": "workspace:*"
     "@fern-api/remote-workspace-runner": "workspace:*"
     "@fern-api/scripts": "workspace:*"
     "@fern-api/task-context": "workspace:*"
