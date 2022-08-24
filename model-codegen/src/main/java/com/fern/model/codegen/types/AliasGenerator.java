@@ -135,7 +135,7 @@ public final class AliasGenerator extends Generator {
             hashCodeMethodBlock =
                     aliasTypeDeclaration.aliasOf().getPrimitive().get().visit(HashcodeMethodSpecVisitor.INSTANCE);
         } else {
-            hashCodeMethodBlock = CodeBlock.of("return $L().$L()", VALUE_FIELD_NAME, "toString");
+            hashCodeMethodBlock = CodeBlock.of("return $L.$L()", VALUE_FIELD_NAME, "hashCode");
         }
         return MethodSpec.methodBuilder("hashCode")
                 .addAnnotation(Override.class)
@@ -182,7 +182,7 @@ public final class AliasGenerator extends Generator {
 
         @Override
         public CodeBlock visitBoolean() {
-            return CodeBlock.of("return $T.$L($L())", Boolean.class, "toString", VALUE_FIELD_NAME);
+            return CodeBlock.of("return $T.$L($L)", Boolean.class, "toString", VALUE_FIELD_NAME);
         }
 
         @Override

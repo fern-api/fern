@@ -419,6 +419,49 @@ public final class GetPost {
 ]
 
 
+basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/blog/errors/GeneratorsDoNotExistError.java]=[
+package com.fern.basic.client.blog.errors;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fern.basic.model.blog.GeneratorIdAndVersion;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.List;
+
+public final class GeneratorsDoNotExistError {
+  private final List<GeneratorIdAndVersion> value;
+
+  private GeneratorsDoNotExistError(List<GeneratorIdAndVersion> value) {
+    this.value = value;
+  }
+
+  @JsonCreator(
+      mode = JsonCreator.Mode.DELEGATING
+  )
+  public static GeneratorsDoNotExistError of(List<GeneratorIdAndVersion> value) {
+    return new GeneratorsDoNotExistError(value);
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    return this == other || (other instanceof GeneratorsDoNotExistError && this.value.equals(((GeneratorsDoNotExistError) other).value));
+  }
+
+  @Override
+  public int hashCode() {
+    return value.hashCode();
+  }
+
+  @Override
+  public String toString() {
+    return value.toString();
+  }
+}
+
+]
+
+
 basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/blog/errors/PostNotFoundError.java]=[
 package com.fern.basic.client.blog.errors;
 
@@ -1874,6 +1917,194 @@ public final class CreatePostRequest {
     public CreatePostRequest build() {
       return new CreatePostRequest(title, author, content, postType, _switch);
     }
+  }
+}
+
+]
+
+
+basic[basic/generated-java/basic-model/src/main/java/com/fern/basic/model/blog/GeneratorIdAndVersion.java]=[
+package com.fern.basic.model.blog;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Objects;
+
+@JsonDeserialize(
+    builder = GeneratorIdAndVersion.Builder.class
+)
+public final class GeneratorIdAndVersion {
+  private final String id;
+
+  private final String version;
+
+  private int _cachedHashCode;
+
+  GeneratorIdAndVersion(String id, String version) {
+    this.id = id;
+    this.version = version;
+  }
+
+  @JsonProperty("id")
+  public String getId() {
+    return id;
+  }
+
+  @JsonProperty("version")
+  public String getVersion() {
+    return version;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    return other instanceof GeneratorIdAndVersion && equalTo((GeneratorIdAndVersion) other);
+  }
+
+  private boolean equalTo(GeneratorIdAndVersion other) {
+    return id.equals(other.id) && version.equals(other.version);
+  }
+
+  @Override
+  public int hashCode() {
+    if (_cachedHashCode == 0) {
+      _cachedHashCode = Objects.hash(this.id, this.version);
+    }
+    return _cachedHashCode;
+  }
+
+  @Override
+  public String toString() {
+    return "GeneratorIdAndVersion{" + "id: " + id + ", version: " + version + "}";
+  }
+
+  public static IdStage builder() {
+    return new Builder();
+  }
+
+  public interface IdStage {
+    VersionStage id(String id);
+
+    Builder from(GeneratorIdAndVersion other);
+  }
+
+  public interface VersionStage {
+    _FinalStage version(String version);
+  }
+
+  public interface _FinalStage {
+    GeneratorIdAndVersion build();
+  }
+
+  @JsonIgnoreProperties(
+      ignoreUnknown = true
+  )
+  static final class Builder implements IdStage, VersionStage, _FinalStage {
+    private String id;
+
+    private String version;
+
+    private Builder() {
+    }
+
+    @Override
+    public Builder from(GeneratorIdAndVersion other) {
+      id(other.getId());
+      version(other.getVersion());
+      return this;
+    }
+
+    @Override
+    @JsonSetter("id")
+    public VersionStage id(String id) {
+      this.id = id;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("version")
+    public _FinalStage version(String version) {
+      this.version = version;
+      return this;
+    }
+
+    @Override
+    public GeneratorIdAndVersion build() {
+      return new GeneratorIdAndVersion(id, version);
+    }
+  }
+}
+
+]
+
+
+basic[basic/generated-java/basic-model/src/main/java/com/fern/basic/model/blog/GeneratorsDoNotExistError.java]=[
+package com.fern.basic.model.blog;
+
+import com.fern.java.exception.HttpException;
+import java.lang.Override;
+
+public final class GeneratorsDoNotExistError extends HttpException {
+  GeneratorsDoNotExistErrorBody body;
+
+  public GeneratorsDoNotExistError(GeneratorsDoNotExistErrorBody body) {
+    this.body = body;
+  }
+
+  public GeneratorsDoNotExistErrorBody getBody() {
+    return body;
+  }
+
+  @Override
+  public int getStatusCode() {
+    return 400;
+  }
+}
+
+]
+
+
+basic[basic/generated-java/basic-model/src/main/java/com/fern/basic/model/blog/GeneratorsDoNotExistErrorBody.java]=[
+package com.fern.basic.model.blog;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.List;
+
+public final class GeneratorsDoNotExistErrorBody {
+  private final List<GeneratorIdAndVersion> value;
+
+  private GeneratorsDoNotExistErrorBody(List<GeneratorIdAndVersion> value) {
+    this.value = value;
+  }
+
+  @JsonCreator(
+      mode = JsonCreator.Mode.DELEGATING
+  )
+  public static GeneratorsDoNotExistErrorBody of(List<GeneratorIdAndVersion> value) {
+    return new GeneratorsDoNotExistErrorBody(value);
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    return this == other || (other instanceof GeneratorsDoNotExistErrorBody && this.value.equals(((GeneratorsDoNotExistErrorBody) other).value));
+  }
+
+  @Override
+  public int hashCode() {
+    return value.hashCode();
+  }
+
+  @Override
+  public String toString() {
+    return value.toString();
   }
 }
 

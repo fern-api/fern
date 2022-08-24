@@ -27,6 +27,10 @@ types:
     union:
       anonymous: {}
       name: string
+  GeneratorIdAndVersion:
+    properties:
+      id: string
+      version: string
 errors:
   PostNotFoundError:
     http:
@@ -40,6 +44,10 @@ errors:
     type:
       properties:
         reason: string
+  GeneratorsDoNotExistError:
+    http:
+      statusCode: 400
+    type: list<GeneratorIdAndVersion>
 services:
   http:
     PostsService:
