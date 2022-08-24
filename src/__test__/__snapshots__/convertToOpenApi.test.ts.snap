@@ -295,6 +295,25 @@ Object {
             },
             "type": "object",
           },
+          Object {
+            "allOf": Array [
+              Object {
+                "$ref": "#/components/schemas/BlogPostType",
+              },
+              Object {
+                "properties": Object {
+                  "_type": Object {
+                    "enum": Array [
+                      "type",
+                    ],
+                    "type": "string",
+                  },
+                },
+                "type": "object",
+              },
+            ],
+            "type": "object",
+          },
         ],
       },
       "BlogBlogPost": Object {

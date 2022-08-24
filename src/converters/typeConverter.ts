@@ -128,7 +128,7 @@ export function convertUnion({
             const properties = {};
             properties[unionTypeDeclaration.discriminant] = {
                 type: "string",
-                enum: [singleUnionType.discriminantValue],
+                enum: [singleUnionType.discriminantValue.wireValue],
             };
             return {
                 type: "object",
@@ -146,7 +146,7 @@ export function convertUnion({
             const properties = {};
             properties[unionTypeDeclaration.discriminant] = {
                 type: "string",
-                enum: [singleUnionType.discriminantValue],
+                enum: [singleUnionType.discriminantValue.wireValue],
             };
             properties[unionTypeDeclaration.discriminant] = convertedValueType;
             return {

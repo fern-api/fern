@@ -17,6 +17,7 @@ types:
     union:
       anonymous: {}
       name: string
+      type: PostType
   CreatePostRequest:
     properties:
       title: string
