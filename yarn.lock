@@ -3282,10 +3282,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
-    "@fern-api/generators-configuration": "workspace:*"
-    "@fern-api/project-loader": "workspace:*"
     "@fern-api/task-context": "workspace:*"
-    "@fern-api/workspace-loader": "workspace:*"
     "@types/inquirer": ^9.0.1
     "@types/jest": ^28.1.7
     "@types/js-yaml": ^4.0.5
@@ -3293,6 +3290,7 @@ __metadata:
     chalk: ^5.0.1
     depcheck: ^1.4.3
     eslint: ^8.22.0
+    find-up: ^6.3.0
     inquirer: ^9.1.0
     jest: ^28.1.3
     js-yaml: ^4.1.0

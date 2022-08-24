@@ -27,11 +27,9 @@
   "dependencies": {
     "@fern-api/config-management-commons": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/generators-configuration": "workspace:*",
-    "@fern-api/project-loader": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-api/workspace-loader": "workspace:*",
     "chalk": "^5.0.1",
+    "find-up": "^6.3.0",
     "inquirer": "^9.1.0",
     "js-yaml": "^4.1.0",
     "semver-diff": "^4.0.0",

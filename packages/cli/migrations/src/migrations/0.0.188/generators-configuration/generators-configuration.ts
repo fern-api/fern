@@ -1,19 +1,24 @@
-import { join, RelativeFilePath } from "@fern-api/core-utils";
-import { DraftGeneratorInvocationSchema, GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
-import { Workspace } from "@fern-api/workspace-loader";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
+import { TASK_FAILURE } from "@fern-api/task-context";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { Migration } from "../../../types/Migration";
+import { loadWorkspaces } from "./loadWorkspaces";
+import * as newConfigurationUtils from "./new-configuration";
 import * as oldConfigurationUtils from "./old-configuration";
 
 export const GeneratorsConfigurationMigration: Migration = {
     name: "generators-configuration",
     summary:
         "migrates the generators configuration to a new format that handles publishing to public registries and GitHub repositories.",
-    run: async ({ context, project }) => {
-        for (const workspace of project.workspaces) {
+    run: async ({ context }) => {
+        const workspaces = await loadWorkspaces(context);
+        if (workspaces === TASK_FAILURE) {
+            return;
+        }
+        for (const pathToWorkspace of workspaces) {
             try {
-                await migrateWorkspace(workspace);
+                await migrateWorkspace(pathToWorkspace);
             } catch (error) {
                 context.fail("Failed to migrate generators configuration", error);
             }
@@ -21,11 +26,8 @@ export const GeneratorsConfigurationMigration: Migration = {
     },
 };
 
-async function migrateWorkspace(workspace: Workspace) {
-    const absolutePathToGeneratorsConfiguration = join(
-        workspace.absolutePathToWorkspace,
-        RelativeFilePath.of("generators.yml")
-    );
+async function migrateWorkspace(pathToWorkspace: AbsoluteFilePath) {
+    const absolutePathToGeneratorsConfiguration = join(pathToWorkspace, RelativeFilePath.of("generators.yml"));
     const oldRawConfiguration = await oldConfigurationUtils.loadRawGeneratorsConfiguration({
         absolutePathToGeneratorsConfiguration,
     });
@@ -39,7 +41,7 @@ async function migrateWorkspace(workspace: Workspace) {
 
 function migrateConfiguration(
     oldConfiguration: oldConfigurationUtils.GeneratorsConfiguration
-): GeneratorsConfigurationSchema {
+): newConfigurationUtils.GeneratorsConfigurationSchema {
     return {
         draft: oldConfiguration.generators.map(migrateGeneratorInvocation),
         release: [],
@@ -48,7 +50,7 @@ function migrateConfiguration(
 
 function migrateGeneratorInvocation(
     oldGenerator: oldConfigurationUtils.GeneratorInvocation
-): DraftGeneratorInvocationSchema {
+): newConfigurationUtils.DraftGeneratorInvocationSchema {
     return {
         name: oldGenerator.name,
         version: oldGenerator.version,

@@ -1,6 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
-import { loadProject } from "@fern-api/project-loader";
-import { createMockTaskContext, TASK_FAILURE } from "@fern-api/task-context";
+import { createMockTaskContext } from "@fern-api/task-context";
 import { cp, readFile } from "fs/promises";
 import tmp from "tmp-promise";
 import { GeneratorsConfigurationMigration } from "../generators-configuration";
@@ -15,20 +14,8 @@ describe("generators-configuration", () => {
         await cp(fixturePath, tmpDir.path, { recursive: true });
         process.chdir(tmpDir.path);
 
-        const project = await loadProject({
-            cliName: "fern",
-            commandLineWorkspace: undefined,
-            defaultToAllWorkspaces: true,
-            context: createMockTaskContext(),
-        });
-
-        if (project === TASK_FAILURE) {
-            throw new Error("Failed to parse project.");
-        }
-
         await GeneratorsConfigurationMigration.run({
             context: createMockTaskContext(),
-            project,
         });
 
         const newGeneratorsConfiguration = (

@@ -1,10 +1,11 @@
-draft:
+generators:
   - name: fernapi/fern-typescript
     version: 0.0.144
     config:
       mode: model
   - name: fernapi/fern-java
     version: 0.0.84
+    generate: true
     config:
       packagePrefix: "com.fern"
       mode: MODEL

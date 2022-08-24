@@ -255,10 +255,6 @@ function addUpgradeCommand({
         cliContext.processArgv(argv);
         await upgrade({
             cliContext,
-            project: await loadProjectOrExit(cliContext, {
-                commandLineWorkspace: undefined,
-                defaultToAllWorkspaces: true,
-            }),
         });
         onRun();
     });
