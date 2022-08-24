@@ -35,27 +35,29 @@ Generate a Postman API Key [here](Postman API Keys page).
 You'll want to create a local environment variable by running:
 
 ```bash
-~/.bash_profile
+open ~/.bash_profile
 ```
 
-and adding:
+and then adding YOUR credentials. Here's an example:
 
 ```bash
-POSTMAN_WORKSPACE_ID="Your Workspace ID"
-POSTMAN_API_TOKEN="Your API Key"
+POSTMAN_WORKSPACE_ID: "15b86683-3322-4788-8a89-EXAMPLE"
+POSTMAN_API_TOKEN: "PMAK-62def70116ae552419ba75c1-8cd17e8a751a5f64b9df8ab44c9a8b5199"
 ```
 
-Here's what the Postman Generator configuration could look like:
+Here's what the Postman Generator configuration in `generators.yml` could look like:
 
 ```yaml
-- name: fernapi/fern-postman
-  version: 0.0.xx
-  generate:
-    enabled: true
-    output: ./generated-postman.json
-  config:
-    api-key: ${POSTMAN_API_KEY}
-    workspace-id: ${POSTMAN_WORKSPACE_ID}
+generators:
+  - name: fernapi/fern-postman
+    version: 0.0.xx
+    generate:
+      enabled: true
+      output: ./generated-postman.json
+    config:
+      publishing:
+        apiKey: ${POSTMAN_API_KEY}
+        workspaceId: ${POSTMAN_WORKSPACE_ID}
 ```
 
 ### How does generating clients work?
