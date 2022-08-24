@@ -31,7 +31,7 @@ public interface GeneratedHttpServiceInterface extends IGeneratedFile {
 
     Map<HttpEndpointId, MethodSpec> endpointMethods();
 
-    Map<HttpEndpointId, GeneratedEndpointClient> endpointFiles();
+    Map<HttpEndpointId, Optional<GeneratedEndpointClient>> endpointFiles();
 
     Map<HttpEndpointId, IGeneratedFile> endpointExceptions();
 

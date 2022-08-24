@@ -112,7 +112,7 @@ public final class HttpServiceInterfaceGenerator extends Generator {
         Map<HttpEndpointId, MethodSpec> httpEndpointMethods = KeyedStream.stream(httpEndpointInfos)
                 .map(MethodSpecAndEndpointClient::methodSpec)
                 .collectToMap();
-        Map<HttpEndpointId, GeneratedEndpointClient> endpointFiles = KeyedStream.stream(httpEndpointInfos)
+        Map<HttpEndpointId, Optional<GeneratedEndpointClient>> endpointFiles = KeyedStream.stream(httpEndpointInfos)
                 .map(MethodSpecAndEndpointClient::endpointClient)
                 .collectToMap();
         Map<HttpEndpointId, IGeneratedFile> endpointExceptions = KeyedStream.stream(httpEndpointInfos)
@@ -161,15 +161,18 @@ public final class HttpServiceInterfaceGenerator extends Generator {
                 .getPayloadTypeName(generatedEndpointModel.generatedHttpResponse())
                 .ifPresent(endpointMethodBuilder::returns);
 
-        GeneratedEndpointClient generatedEndpointClient =
-                generateEndpointFile(httpEndpoint, endpointMethodBuilder.parameters);
+        ImmutableMethodSpecAndEndpointClient.Builder resultBuilder = MethodSpecAndEndpointClient.builder();
+        if (!endpointParameters.isEmpty()) {
+            GeneratedEndpointClient generatedEndpointClient =
+                    generateEndpointFile(httpEndpoint, endpointMethodBuilder.parameters);
+            resultBuilder.endpointClient(generatedEndpointClient);
+        }
         IGeneratedFile generateEndpointException = generateEndpointException(httpEndpoint);
         MethodSpec serviceInterfaceMethodSpec = endpointMethodBuilder
                 .addException(generateEndpointException.className())
                 .build();
-        return MethodSpecAndEndpointClient.builder()
+        return resultBuilder
                 .methodSpec(serviceInterfaceMethodSpec)
-                .endpointClient(generatedEndpointClient)
                 .endpointException(generateEndpointException)
                 .build();
     }
@@ -230,7 +233,7 @@ public final class HttpServiceInterfaceGenerator extends Generator {
     interface MethodSpecAndEndpointClient {
         MethodSpec methodSpec();
 
-        GeneratedEndpointClient endpointClient();
+        Optional<GeneratedEndpointClient> endpointClient();
 
         IGeneratedFile endpointException();
 

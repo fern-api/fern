@@ -255,10 +255,10 @@ public final class ClientGeneratorCli {
         for (GeneratedHttpServiceClient generatedHttpServiceClient : generatedHttpServiceClients) {
             resultBuilder.addClientFiles(generatedHttpServiceClient);
             resultBuilder.addClientFiles(generatedHttpServiceClient.serviceInterface());
-            resultBuilder.addAllClientFiles(generatedHttpServiceClient
-                    .serviceInterface()
-                    .endpointFiles()
-                    .values());
+            resultBuilder.addAllClientFiles(
+                    generatedHttpServiceClient.serviceInterface().endpointFiles().values().stream()
+                            .flatMap(Optional::stream)
+                            .collect(Collectors.toList()));
             resultBuilder.addAllClientFiles(generatedHttpServiceClient
                     .serviceInterface()
                     .endpointExceptions()

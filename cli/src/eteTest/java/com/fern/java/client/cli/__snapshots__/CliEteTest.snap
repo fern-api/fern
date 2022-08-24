@@ -978,8 +978,8 @@ public final class GetPostException extends Exception {
 basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/dummy/service/DummyService.java]=[
 package com.fern.basic.client.dummy.service;
 
-import com.fern.basic.client.BearerAuth;
 import com.fern.basic.client.dummy.service.exceptions.GetDummyException;
+import com.fern.basic.client.dummy.service.exceptions.HealthException;
 import com.fern.basic.model.dummy.service.DummyId;
 import com.fern.java.jackson.ClientObjectMappers;
 import com.fern.java.jersey.contracts.OptionalAwareContract;
@@ -990,7 +990,6 @@ import feign.jaxrs.JAXRSContract;
 import java.lang.String;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -1001,8 +1000,11 @@ import javax.ws.rs.core.MediaType;
 interface DummyService {
   @GET
   @Path("/")
-  void getDummy(@HeaderParam("Authorization") BearerAuth bearer, DummyId body) throws
-      GetDummyException;
+  void getDummy(DummyId body) throws GetDummyException;
+
+  @GET
+  @Path("/health")
+  void health() throws HealthException;
 
   static DummyService getClient(String url) {
     return Feign.builder()
@@ -1022,7 +1024,7 @@ package com.fern.basic.client.dummy.service;
 import com.fern.basic.client.BearerAuth;
 import com.fern.basic.client.dummy.service.endpoints.GetDummy;
 import com.fern.basic.client.dummy.service.exceptions.GetDummyException;
-import java.lang.RuntimeException;
+import com.fern.basic.client.dummy.service.exceptions.HealthException;
 import java.lang.String;
 import java.util.Optional;
 
@@ -1042,8 +1044,11 @@ public final class DummyServiceClient {
   }
 
   public void getDummy(GetDummy.Request request) throws GetDummyException {
-    BearerAuth authValue = request.getAuthOverride().orElse(this.auth.orElseThrow(() -> new RuntimeException("Auth is required for getDummy")));
-    this.service.getDummy(authValue, request.getBody());
+    this.service.getDummy(request.getBody());
+  }
+
+  public void health() throws HealthException {
+    this.service.health();
   }
 }
 
@@ -1054,6 +1059,7 @@ basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/dumm
 package com.fern.basic.client.dummy.service;
 
 import com.fern.basic.client.dummy.service.exceptions.GetDummyException;
+import com.fern.basic.client.dummy.service.exceptions.HealthException;
 import com.fern.java.jackson.ClientObjectMappers;
 import feign.Response;
 import feign.codec.ErrorDecoder;
@@ -1070,6 +1076,9 @@ final class DummyServiceErrorDecoder implements ErrorDecoder {
     try {
       if (methodKey.contains("getDummy")) {
         return decodeException(response, GetDummyException.class);
+      }
+      if (methodKey.contains("health")) {
+        return decodeException(response, HealthException.class);
       }
     }
     catch (IOException e) {
@@ -1089,32 +1098,23 @@ final class DummyServiceErrorDecoder implements ErrorDecoder {
 basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/dummy/service/endpoints/GetDummy.java]=[
 package com.fern.basic.client.dummy.service.endpoints;
 
-import com.fern.basic.client.BearerAuth;
 import com.fern.basic.model.dummy.service.DummyId;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
-import java.util.Optional;
 
 public final class GetDummy {
   private GetDummy() {
   }
 
   public static final class Request {
-    private final Optional<BearerAuth> authOverride;
-
     private final DummyId body;
 
     private int _cachedHashCode;
 
-    Request(Optional<BearerAuth> authOverride, DummyId body) {
-      this.authOverride = authOverride;
+    Request(DummyId body) {
       this.body = body;
-    }
-
-    public Optional<BearerAuth> getAuthOverride() {
-      return authOverride;
     }
 
     public DummyId getBody() {
@@ -1128,20 +1128,20 @@ public final class GetDummy {
     }
 
     private boolean equalTo(Request other) {
-      return authOverride.equals(other.authOverride) && body.equals(other.body);
+      return body.equals(other.body);
     }
 
     @Override
     public int hashCode() {
       if (_cachedHashCode == 0) {
-        _cachedHashCode = Objects.hash(this.authOverride, this.body);
+        _cachedHashCode = Objects.hash(this.body);
       }
       return _cachedHashCode;
     }
 
     @Override
     public String toString() {
-      return "GetDummy.Request{" + "authOverride: " + authOverride + ", body: " + body + "}";
+      return "GetDummy.Request{" + "body: " + body + "}";
     }
 
     public static BodyStage builder() {
@@ -1156,23 +1156,16 @@ public final class GetDummy {
 
     public interface _FinalStage {
       Request build();
-
-      _FinalStage authOverride(Optional<BearerAuth> authOverride);
-
-      _FinalStage authOverride(BearerAuth authOverride);
     }
 
     static final class Builder implements BodyStage, _FinalStage {
       private DummyId body;
-
-      private Optional<BearerAuth> authOverride = Optional.empty();
 
       private Builder() {
       }
 
       @Override
       public Builder from(Request other) {
-        authOverride(other.getAuthOverride());
         body(other.getBody());
         return this;
       }
@@ -1184,20 +1177,8 @@ public final class GetDummy {
       }
 
       @Override
-      public _FinalStage authOverride(BearerAuth authOverride) {
-        this.authOverride = Optional.of(authOverride);
-        return this;
-      }
-
-      @Override
-      public _FinalStage authOverride(Optional<BearerAuth> authOverride) {
-        this.authOverride = authOverride;
-        return this;
-      }
-
-      @Override
       public Request build() {
-        return new Request(authOverride, body);
+        return new Request(body);
       }
     }
   }
@@ -1321,6 +1302,128 @@ public final class GetDummyException extends Exception {
       Value value = ctx.readValue(p, Value.class);
       int statusCode = (int) ctx.getAttribute("statusCode");
       return new GetDummyException(value, statusCode);
+    }
+  }
+}
+
+]
+
+
+basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/dummy/service/exceptions/HealthException.java]=[
+package com.fern.basic.client.dummy.service.exceptions;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.io.IOException;
+import java.lang.Exception;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Objects;
+import java.util.Optional;
+
+@JsonDeserialize(
+    using = HealthException.Deserializer.class
+)
+public final class HealthException extends Exception {
+  private final Value value;
+
+  private int statusCode;
+
+  private HealthException(Value value, int statusCode) {
+    this.value = value;
+    this.statusCode = statusCode;
+  }
+
+  public <T> T visit(Visitor<T> visitor) {
+    return value.visit(visitor);
+  }
+
+  public int getStatusCode() {
+    return this.statusCode;
+  }
+
+  public static HealthException other(Object unknownValue, int statusCode) {
+    return new HealthException(new UnknownErrorValue(unknownValue), statusCode);
+  }
+
+  public boolean isOther() {
+    return value instanceof UnknownErrorValue;
+  }
+
+  public Optional<Object> getOther() {
+    if (isOther()) {
+      return Optional.of(((UnknownErrorValue) value).unknownValue);
+    }
+    return Optional.empty();
+  }
+
+  public interface Visitor<T> {
+    T visitOtherError(Object errorBody);
+  }
+
+  @JsonTypeInfo(
+      use = JsonTypeInfo.Id.NAME,
+      property = "_error",
+      visible = true,
+      defaultImpl = UnknownErrorValue.class
+  )
+  @JsonIgnoreProperties(
+      ignoreUnknown = true
+  )
+  private interface Value {
+    <T> T visit(Visitor<T> visitor);
+  }
+
+  private static final class UnknownErrorValue implements Value {
+    private Object unknownValue;
+
+    @JsonCreator(
+        mode = JsonCreator.Mode.DELEGATING
+    )
+    UnknownErrorValue(@JsonProperty("unknownValue") Object unknownValue) {
+      this.unknownValue = unknownValue;
+    }
+
+    @Override
+    public <T> T visit(Visitor<T> visitor) {
+      return visitor.visitOtherError(unknownValue);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+      if (this == other) return true;
+      return other instanceof UnknownErrorValue && equalTo((UnknownErrorValue) other);
+    }
+
+    private boolean equalTo(UnknownErrorValue other) {
+      return unknownValue.equals(other.unknownValue);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(this.unknownValue);
+    }
+
+    @Override
+    public String toString() {
+      return "HealthException{" + "unknownValue: " + unknownValue + "}";
+    }
+  }
+
+  static final class Deserializer extends JsonDeserializer<HealthException> {
+    @Override
+    public HealthException deserialize(JsonParser p, DeserializationContext ctx) throws
+        IOException {
+      Value value = ctx.readValue(p, Value.class);
+      int statusCode = (int) ctx.getAttribute("statusCode");
+      return new HealthException(value, statusCode);
     }
   }
 }
@@ -2872,10 +2975,8 @@ basic[basic/generated-java/basic-server-jersey/src/main/java/com/fern/basic/serv
 package com.fern.basic.server.dummy.service;
 
 import com.fern.basic.model.dummy.service.DummyId;
-import com.fern.basic.server.BearerAuth;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -2886,7 +2987,11 @@ import javax.ws.rs.core.MediaType;
 public interface DummyService {
   @GET
   @Path("/")
-  void getDummy(@HeaderParam("Authorization") BearerAuth bearer, DummyId request);
+  void getDummy(DummyId request);
+
+  @GET
+  @Path("/health")
+  void health();
 }
 
 ]
@@ -3079,10 +3184,8 @@ basic[basic/generated-java/basic-server-spring/src/main/java/com/fern/basic/serv
 package com.fern.basic.server.dummy.service;
 
 import com.fern.basic.model.dummy.service.DummyId;
-import com.fern.basic.server.BearerAuth;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping(
@@ -3092,7 +3195,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 )
 public interface DummyService {
   @GetMapping("/")
-  void getDummy(@RequestHeader("Authorization") BearerAuth bearer, @RequestBody DummyId request);
+  void getDummy(@RequestBody DummyId request);
+
+  @GetMapping("/health")
+  void health();
 }
 
 ]

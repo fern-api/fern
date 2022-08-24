@@ -103,15 +103,18 @@ public final class HttpServiceClientGenerator extends Generator {
                 getUrlAuthConstructor(generatedHttpServiceInterface, generatedAuthSchemes)));
 
         for (HttpEndpoint httpEndpoint : httpService.endpoints()) {
-            GeneratedEndpointClient endpointFile =
+            Optional<GeneratedEndpointClient> endpointFile =
                     generatedHttpServiceInterface.endpointFiles().get(httpEndpoint.id());
             MethodSpec interfaceMethod =
                     generatedHttpServiceInterface.endpointMethods().get(httpEndpoint.id());
             MethodSpec.Builder endpointMethodBuilder =
                     MethodSpec.methodBuilder(httpEndpoint.id().value()).addModifiers(Modifier.PUBLIC);
 
-            GeneratedRequestInfo generatedRequestInfo = endpointFile.generatedNestedRequest();
-            generateCallWithWrappedRequest(httpEndpoint, interfaceMethod, generatedRequestInfo, endpointMethodBuilder);
+            generateCallWithWrappedRequest(
+                    httpEndpoint,
+                    interfaceMethod,
+                    endpointFile.map(GeneratedEndpointClient::generatedNestedRequest),
+                    endpointMethodBuilder);
 
             endpointMethodBuilder.addExceptions(interfaceMethod.exceptions);
             endpointMethodBuilder.returns(interfaceMethod.returnType);
@@ -165,8 +168,13 @@ public final class HttpServiceClientGenerator extends Generator {
     private void generateCallWithWrappedRequest(
             HttpEndpoint httpEndpoint,
             MethodSpec interfaceMethod,
-            GeneratedRequestInfo generatedRequestInfo,
+            Optional<GeneratedRequestInfo> maybeGeneratedRequestInfo,
             MethodSpec.Builder endpointMethodBuilder) {
+        if (maybeGeneratedRequestInfo.isEmpty()) {
+            endpointMethodBuilder.addStatement("this.$L.$L()", SERVICE_FIELD_NAME, interfaceMethod.name);
+            return;
+        }
+        GeneratedRequestInfo generatedRequestInfo = maybeGeneratedRequestInfo.get();
         endpointMethodBuilder.addParameter(
                 ParameterSpec.builder(generatedRequestInfo.requestClassName(), REQUEST_PARAMETER_NAME)
                         .build());
