@@ -2,8 +2,7 @@ import { validateSchema } from "@fern-api/config-management-commons";
 import { ExitStatusUpdate, GeneratorUpdate } from "@fern-fern/generator-logging-api-client/model";
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
 import { GeneratorConfig } from "@fern-fern/ir-model/generators";
-import { CollectionId, WorkspaceId } from "@fern-fern/postman-collection-api-client/model/api";
-import { CollectionService } from "@fern-fern/postman-collection-api-client/services/api";
+import { CollectionService } from "@fern-fern/postman-collection-api-client/services/collection";
 import { readFile, writeFile } from "fs/promises";
 import path from "path";
 import { Collection, CollectionDefinition } from "postman-collection";
@@ -68,10 +67,10 @@ async function publishCollection({
     const collectionService = new CollectionService({
         origin: "https://api.getpostman.com",
         headers: {
-            "X-API-Key": publishConfig.apiKey,
+            xApiKey: publishConfig.apiKey,
         },
     });
-    const workspace = publishConfig.workspaceId != null ? WorkspaceId.of(publishConfig.workspaceId) : undefined;
+    const workspace = publishConfig.workspaceId != null ? publishConfig.workspaceId : undefined;
     console.log(`Workspace id is ${workspace}`);
     const getCollectionMetadataResponse = await collectionService.getAllCollectionMetadata({
         workspace,
@@ -92,7 +91,7 @@ async function publishCollection({
         await collectionsToUpdate.forEach(async (collectionMetadata) => {
             console.log("Updating postman collection!");
             await collectionService.updateCollection({
-                collectionId: CollectionId.of(collectionMetadata.uid),
+                collectionId: collectionMetadata.uid,
                 body: { collection: new Collection(collectionDefinition) },
             });
         });

@@ -18,7 +18,7 @@ import {
     PostmanRequest,
     PostmanRequestAuth,
     PostmanVariable,
-} from "@fern-fern/postman-collection-api-client/model/collection/collection";
+} from "@fern-fern/postman-collection-api-client/model/collection";
 import { getMockBodyFromTypeReference } from "./getMockBody";
 
 const ORIGIN_VARIABLE_NAME = "origin";

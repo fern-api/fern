@@ -1,0 +1,242 @@
+{
+  "info": {
+    "name": "postman-collection-api",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "origin",
+      "value": "http://localhost:8080",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "CollectionService",
+      "item": [
+        {
+          "name": "createCollection",
+          "request": {
+            "url": {
+              "host": ["{{origin}}"],
+              "path": ["collections"]
+            },
+            "header": [
+              {
+                "key": "X-API-Key",
+                "type": "text",
+                "value": "example"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"collection\": \"UNKNOWN\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Successful createCollection",
+              "code": 200,
+              "originalRequest": {
+                "url": {
+                  "host": ["{{origin}}"],
+                  "path": ["collections"]
+                },
+                "header": [
+                  {
+                    "key": "X-API-Key",
+                    "type": "text",
+                    "value": "example"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"collection\": \"UNKNOWN\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "name": "getCollection",
+          "request": {
+            "url": {
+              "host": ["{{origin}}"],
+              "path": ["collections", ":collectionId"]
+            },
+            "header": [
+              {
+                "key": "X-API-Key",
+                "type": "text",
+                "value": "example"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Successful getCollection",
+              "code": 200,
+              "originalRequest": {
+                "url": {
+                  "host": ["{{origin}}"],
+                  "path": ["collections", ":collectionId"]
+                },
+                "header": [
+                  {
+                    "key": "X-API-Key",
+                    "type": "text",
+                    "value": "example"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "body": "{\n    \"collection\": \"UNKNOWN\"\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "name": "getAllCollectionMetadata",
+          "request": {
+            "url": {
+              "host": ["{{origin}}"],
+              "path": ["collections"]
+            },
+            "header": [
+              {
+                "key": "X-API-Key",
+                "type": "text",
+                "value": "example"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Successful getAllCollectionMetadata",
+              "code": 200,
+              "originalRequest": {
+                "url": {
+                  "host": ["{{origin}}"],
+                  "path": ["collections"]
+                },
+                "header": [
+                  {
+                    "key": "X-API-Key",
+                    "type": "text",
+                    "value": "example"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "body": "{\n    \"collections\": [\n        {\n            \"id\": \"example\",\n            \"name\": \"example\",\n            \"owner\": \"example\",\n            \"createdAt\": \"2022-08-16T15:24:32.972Z\",\n            \"updatedAt\": \"2022-08-16T15:24:32.972Z\",\n            \"uid\": \"example\",\n            \"isPublic\": true,\n            \"forkInfo\": {\n                \"label\": \"example\",\n                \"createdAt\": \"2022-08-16T15:24:32.973Z\",\n                \"from\": \"example\"\n            }\n        }\n    ]\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "name": "updateCollection",
+          "request": {
+            "url": {
+              "host": ["{{origin}}"],
+              "path": ["collections", ":collectionId"]
+            },
+            "header": [
+              {
+                "key": "X-API-Key",
+                "type": "text",
+                "value": "example"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"collection\": \"UNKNOWN\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Successful updateCollection",
+              "code": 200,
+              "originalRequest": {
+                "url": {
+                  "host": ["{{origin}}"],
+                  "path": ["collections", ":collectionId"]
+                },
+                "header": [
+                  {
+                    "key": "X-API-Key",
+                    "type": "text",
+                    "value": "example"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"collection\": \"UNKNOWN\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

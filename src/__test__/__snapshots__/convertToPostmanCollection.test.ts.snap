@@ -416,14 +416,7 @@ Object {
               "raw": "{
     \\"title\\": \\"example\\",
     \\"author\\": {
-        \\"_type\\": {
-            \\"originalValue\\": \\"anonymous\\",
-            \\"camelCase\\": \\"anonymous\\",
-            \\"snakeCase\\": \\"anonymous\\",
-            \\"pascalCase\\": \\"Anonymous\\",
-            \\"screamingSnakeCase\\": \\"ANONYMOUS\\",
-            \\"wireValue\\": \\"anonymous\\"
-        }
+        \\"_type\\": \\"anonymous\\"
     },
     \\"content\\": \\"example\\",
     \\"postType\\": \\"LONG\\"
@@ -475,14 +468,7 @@ Object {
                   "raw": "{
     \\"title\\": \\"example\\",
     \\"author\\": {
-        \\"_type\\": {
-            \\"originalValue\\": \\"anonymous\\",
-            \\"camelCase\\": \\"anonymous\\",
-            \\"snakeCase\\": \\"anonymous\\",
-            \\"pascalCase\\": \\"Anonymous\\",
-            \\"screamingSnakeCase\\": \\"ANONYMOUS\\",
-            \\"wireValue\\": \\"anonymous\\"
-        }
+        \\"_type\\": \\"anonymous\\"
     },
     \\"content\\": \\"example\\",
     \\"postType\\": \\"LONG\\"
@@ -552,14 +538,7 @@ Object {
     \\"type\\": \\"LONG\\",
     \\"title\\": \\"example\\",
     \\"author\\": {
-        \\"_type\\": {
-            \\"originalValue\\": \\"anonymous\\",
-            \\"camelCase\\": \\"anonymous\\",
-            \\"snakeCase\\": \\"anonymous\\",
-            \\"pascalCase\\": \\"Anonymous\\",
-            \\"screamingSnakeCase\\": \\"ANONYMOUS\\",
-            \\"wireValue\\": \\"anonymous\\"
-        }
+        \\"_type\\": \\"anonymous\\"
     },
     \\"content\\": \\"example\\"
 }",

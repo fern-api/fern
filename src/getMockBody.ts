@@ -86,7 +86,7 @@ function getMockBodyFromType(type: Type, allTypes: TypeDeclaration[]): unknown {
             }
 
             let union: any = {
-                [unionDeclaration.discriminant]: firstUnionType.discriminantValue,
+                [unionDeclaration.discriminant]: firstUnionType.discriminantValue.wireValue,
             };
 
             TypeReference._visit(firstUnionType.valueType, {

@@ -48,7 +48,7 @@
     "@fern-api/config-management-commons": "0.0.184-10-g23653e43",
     "@fern-fern/generator-logging-api-client": "^0.0.5",
     "@fern-fern/ir-model": "^0.0.46",
-    "@fern-fern/postman-collection-api-client": "0.0.13",
+    "@fern-fern/postman-collection-api-client": "0.0.16",
     "@types/lodash": "^4.14.182",
     "lodash": "^4.17.21",
     "postman-collection": "^4.1.4",
