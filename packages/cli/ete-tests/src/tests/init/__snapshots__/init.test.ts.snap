@@ -68,7 +68,8 @@ errors:
         "type": "directory",
       },
       Object {
-        "contents": "generators: []
+        "contents": "draft: []
+release: []
 ",
         "name": "generators.yml",
         "type": "file",

@@ -1,4 +1,4 @@
-draft:
+generators:
   - name: fernapi/fern-typescript
     version: 0.0.144
     generate: true
