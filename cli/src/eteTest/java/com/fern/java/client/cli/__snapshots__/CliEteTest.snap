@@ -64,6 +64,7 @@ public abstract class BearerAuth {
 basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/FernBasicClient.java]=[
 package com.fern.basic.client;
 
+import com.fern.basic.client.auth.AuthServiceClient;
 import com.fern.basic.client.blog.PostsServiceClient;
 import com.fern.basic.client.dummy.service.DummyServiceClient;
 import java.lang.String;
@@ -72,6 +73,8 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 
 public final class FernBasicClient {
+  private final Supplier<AuthServiceClient> authServiceClient;
+
   private final Supplier<PostsServiceClient> postsServiceClient;
 
   private final Supplier<DummyServiceClient> dummyServiceClient;
@@ -79,11 +82,17 @@ public final class FernBasicClient {
   public FernBasicClient(String url) {
     this.postsServiceClient = memoize(() -> new PostsServiceClient(url));
     this.dummyServiceClient = memoize(() -> new DummyServiceClient(url));
+    this.authServiceClient = memoize(() -> new AuthServiceClient(url));
   }
 
   public FernBasicClient(String url, BearerAuth auth) {
     this.postsServiceClient = memoize(() -> new PostsServiceClient(url, auth));
     this.dummyServiceClient = memoize(() -> new DummyServiceClient(url, auth));
+    this.authServiceClient = memoize(() -> new AuthServiceClient(url, auth));
+  }
+
+  public final AuthServiceClient auth() {
+    return this.authServiceClient.get();
   }
 
   public final PostsServiceClient blog() {
@@ -103,6 +112,322 @@ public final class FernBasicClient {
       }
       return val;
     } ;
+  }
+}
+
+]
+
+
+basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/auth/AuthService.java]=[
+package com.fern.basic.client.auth;
+
+import com.fern.basic.client.BearerAuth;
+import com.fern.basic.client.auth.exceptions.GetAuthException;
+import com.fern.java.jackson.ClientObjectMappers;
+import com.fern.java.jersey.contracts.OptionalAwareContract;
+import feign.Feign;
+import feign.jackson.JacksonDecoder;
+import feign.jackson.JacksonEncoder;
+import feign.jaxrs.JAXRSContract;
+import java.lang.String;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+@Path("/auth")
+interface AuthService {
+  @GET
+  @Path("/")
+  void getAuth(@HeaderParam("Authorization") BearerAuth bearer) throws GetAuthException;
+
+  static AuthService getClient(String url) {
+    return Feign.builder()
+        .contract(new OptionalAwareContract(new JAXRSContract()))
+        .decoder(new JacksonDecoder(ClientObjectMappers.JSON_MAPPER))
+        .encoder(new JacksonEncoder(ClientObjectMappers.JSON_MAPPER))
+        .errorDecoder(new AuthServiceErrorDecoder()).target(AuthService.class, url);
+  }
+}
+
+]
+
+
+basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/auth/AuthServiceClient.java]=[
+package com.fern.basic.client.auth;
+
+import com.fern.basic.client.BearerAuth;
+import com.fern.basic.client.auth.endpoints.GetAuth;
+import com.fern.basic.client.auth.exceptions.GetAuthException;
+import java.lang.RuntimeException;
+import java.lang.String;
+import java.util.Optional;
+
+public final class AuthServiceClient {
+  private final AuthService service;
+
+  private final Optional<BearerAuth> auth;
+
+  public AuthServiceClient(String url) {
+    this.service = AuthService.getClient(url);
+    this.auth = Optional.empty();
+  }
+
+  public AuthServiceClient(String url, BearerAuth auth) {
+    this.service = AuthService.getClient(url);
+    this.auth = Optional.of(auth);
+  }
+
+  public void getAuth(GetAuth.Request request) throws GetAuthException {
+    BearerAuth authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required for getAuth")));
+    this.service.getAuth(authValue);
+  }
+}
+
+]
+
+
+basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/auth/AuthServiceErrorDecoder.java]=[
+package com.fern.basic.client.auth;
+
+import com.fern.basic.client.auth.exceptions.GetAuthException;
+import com.fern.java.jackson.ClientObjectMappers;
+import feign.Response;
+import feign.codec.ErrorDecoder;
+import java.io.IOException;
+import java.lang.Class;
+import java.lang.Exception;
+import java.lang.Override;
+import java.lang.RuntimeException;
+import java.lang.String;
+
+final class AuthServiceErrorDecoder implements ErrorDecoder {
+  @Override
+  public Exception decode(String methodKey, Response response) {
+    try {
+      if (methodKey.contains("getAuth")) {
+        return decodeException(response, GetAuthException.class);
+      }
+    }
+    catch (IOException e) {
+    }
+    return new RuntimeException("Failed to read response body. Received status " + response.status() + " for method " + methodKey);
+  }
+
+  private static <T extends Exception> Exception decodeException(Response response, Class<T> clazz)
+      throws IOException {
+    return ClientObjectMappers.JSON_MAPPER.reader().withAttribute("statusCode", response.status()).readValue(response.body().asInputStream(), clazz);
+  }
+}
+
+]
+
+
+basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/auth/endpoints/GetAuth.java]=[
+package com.fern.basic.client.auth.endpoints;
+
+import com.fern.basic.client.BearerAuth;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Objects;
+import java.util.Optional;
+
+public final class GetAuth {
+  private GetAuth() {
+  }
+
+  public static final class Request {
+    private final Optional<BearerAuth> authOverride;
+
+    private int _cachedHashCode;
+
+    Request(Optional<BearerAuth> authOverride) {
+      this.authOverride = authOverride;
+    }
+
+    public Optional<BearerAuth> getAuthOverride() {
+      return authOverride;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+      if (this == other) return true;
+      return other instanceof Request && equalTo((Request) other);
+    }
+
+    private boolean equalTo(Request other) {
+      return authOverride.equals(other.authOverride);
+    }
+
+    @Override
+    public int hashCode() {
+      if (_cachedHashCode == 0) {
+        _cachedHashCode = Objects.hash(this.authOverride);
+      }
+      return _cachedHashCode;
+    }
+
+    @Override
+    public String toString() {
+      return "GetAuth.Request{" + "authOverride: " + authOverride + "}";
+    }
+
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    public static final class Builder {
+      private Optional<BearerAuth> authOverride = Optional.empty();
+
+      private Builder() {
+      }
+
+      public Builder from(Request other) {
+        authOverride(other.getAuthOverride());
+        return this;
+      }
+
+      public Builder authOverride(Optional<BearerAuth> authOverride) {
+        this.authOverride = authOverride;
+        return this;
+      }
+
+      public Builder authOverride(BearerAuth authOverride) {
+        this.authOverride = Optional.of(authOverride);
+        return this;
+      }
+
+      public Request build() {
+        return new Request(authOverride);
+      }
+    }
+  }
+}
+
+]
+
+
+basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/auth/exceptions/GetAuthException.java]=[
+package com.fern.basic.client.auth.exceptions;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.io.IOException;
+import java.lang.Exception;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Objects;
+import java.util.Optional;
+
+@JsonDeserialize(
+    using = GetAuthException.Deserializer.class
+)
+public final class GetAuthException extends Exception {
+  private final Value value;
+
+  private int statusCode;
+
+  private GetAuthException(Value value, int statusCode) {
+    this.value = value;
+    this.statusCode = statusCode;
+  }
+
+  public <T> T visit(Visitor<T> visitor) {
+    return value.visit(visitor);
+  }
+
+  public int getStatusCode() {
+    return this.statusCode;
+  }
+
+  public static GetAuthException other(Object unknownValue, int statusCode) {
+    return new GetAuthException(new UnknownErrorValue(unknownValue), statusCode);
+  }
+
+  public boolean isOther() {
+    return value instanceof UnknownErrorValue;
+  }
+
+  public Optional<Object> getOther() {
+    if (isOther()) {
+      return Optional.of(((UnknownErrorValue) value).unknownValue);
+    }
+    return Optional.empty();
+  }
+
+  public interface Visitor<T> {
+    T visitOtherError(Object errorBody);
+  }
+
+  @JsonTypeInfo(
+      use = JsonTypeInfo.Id.NAME,
+      property = "_error",
+      visible = true,
+      defaultImpl = UnknownErrorValue.class
+  )
+  @JsonIgnoreProperties(
+      ignoreUnknown = true
+  )
+  private interface Value {
+    <T> T visit(Visitor<T> visitor);
+  }
+
+  private static final class UnknownErrorValue implements Value {
+    private Object unknownValue;
+
+    @JsonCreator(
+        mode = JsonCreator.Mode.DELEGATING
+    )
+    UnknownErrorValue(@JsonProperty("unknownValue") Object unknownValue) {
+      this.unknownValue = unknownValue;
+    }
+
+    @Override
+    public <T> T visit(Visitor<T> visitor) {
+      return visitor.visitOtherError(unknownValue);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+      if (this == other) return true;
+      return other instanceof UnknownErrorValue && equalTo((UnknownErrorValue) other);
+    }
+
+    private boolean equalTo(UnknownErrorValue other) {
+      return unknownValue.equals(other.unknownValue);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(this.unknownValue);
+    }
+
+    @Override
+    public String toString() {
+      return "GetAuthException{" + "unknownValue: " + unknownValue + "}";
+    }
+  }
+
+  static final class Deserializer extends JsonDeserializer<GetAuthException> {
+    @Override
+    public GetAuthException deserialize(JsonParser p, DeserializationContext ctx) throws
+        IOException {
+      Value value = ctx.readValue(p, Value.class);
+      int statusCode = (int) ctx.getAttribute("statusCode");
+      return new GetAuthException(value, statusCode);
+    }
   }
 }
 
@@ -2799,6 +3124,7 @@ dependencies {
 basic[basic/generated-java/basic-server-jersey/src/main/java/com/fern/basic/server/AbstractServiceRegistry.java]=[
 package com.fern.basic.server;
 
+import com.fern.basic.server.auth.AuthService;
 import com.fern.basic.server.blog.PostNotFoundErrorExceptionMapper;
 import com.fern.basic.server.blog.PostsService;
 import com.fern.basic.server.dummy.service.DummyService;
@@ -2810,8 +3136,10 @@ public abstract class AbstractServiceRegistry extends ResourceConfig {
     register(PostNotFoundErrorExceptionMapper.class);
   }
 
-  public AbstractServiceRegistry(PostsService postsService, DummyService dummyService) {
+  public AbstractServiceRegistry(AuthService authService, PostsService postsService,
+      DummyService dummyService) {
     this();
+    register(authService);
     register(postsService);
     register(dummyService);
   }
@@ -2901,6 +3229,29 @@ public final class DefaultExceptionMapper implements ExceptionMapper<Exception> 
       return ImmutableDefaultExceptionBody.of();
     }
   }
+}
+
+]
+
+
+basic[basic/generated-java/basic-server-jersey/src/main/java/com/fern/basic/server/auth/AuthService.java]=[
+package com.fern.basic.server.auth;
+
+import com.fern.basic.server.BearerAuth;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+@Path("/auth")
+public interface AuthService {
+  @GET
+  @Path("/")
+  void getAuth(@HeaderParam("Authorization") BearerAuth bearer);
 }
 
 ]
@@ -3146,6 +3497,27 @@ public final class DefaultExceptionMapper extends ResponseEntityExceptionHandler
       return ImmutableDefaultExceptionBody.of();
     }
   }
+}
+
+]
+
+
+basic[basic/generated-java/basic-server-spring/src/main/java/com/fern/basic/server/auth/AuthService.java]=[
+package com.fern.basic.server.auth;
+
+import com.fern.basic.server.BearerAuth;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@RequestMapping(
+    path = "/auth",
+    consumes = "application/json",
+    produces = "application/json"
+)
+public interface AuthService {
+  @GetMapping("/")
+  void getAuth(@RequestHeader("Authorization") BearerAuth bearer);
 }
 
 ]

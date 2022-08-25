@@ -182,7 +182,7 @@ public final class HttpServiceClientGenerator extends Generator {
         if (httpEndpoint.auth() && maybeGeneratedAuthSchemes.isPresent()) {
             GeneratedAuthSchemes generatedAuthSchemes = maybeGeneratedAuthSchemes.get();
             endpointMethodBuilder.addStatement(
-                    "$T authValue = $L.$L().orElse(this.$L.orElseThrow(() -> new $T($S)))",
+                    "$T authValue = $L.$L().orElseGet(() -> this.$L.orElseThrow(() -> new $T($S)))",
                     maybeGeneratedAuthSchemes.get().className(),
                     REQUEST_PARAMETER_NAME,
                     generatedRequestInfo.authMethodSpec().get().name,
