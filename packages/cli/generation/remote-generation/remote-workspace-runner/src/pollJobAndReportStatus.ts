@@ -1,7 +1,7 @@
 import { entries } from "@fern-api/core-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
-import { CreateJobResponse, RemoteGenTaskId } from "@fern-fern/fiddle-coordinator-api-client/model/remoteGen";
+import { Fiddle } from "@fern-fern/fiddle-client-v2";
 import { RemoteTaskHandler } from "./RemoteTaskHandler";
 import { REMOTE_GENERATION_SERVICE } from "./service";
 
@@ -12,29 +12,32 @@ export function pollJobAndReportStatus({
     workspace,
     context,
 }: {
-    job: CreateJobResponse;
+    job: Fiddle.remoteGen.CreateJobResponse;
     workspace: Workspace;
     context: TaskContext;
 }): Promise<void> {
     let numConsecutiveFailed = 0;
-    const taskHandlers = job.taskIds.reduce<Record<RemoteGenTaskId, RemoteTaskHandler>>((acc, taskId, index) => {
-        const generatorInvocation = workspace.generatorsConfiguration.draft[index];
-        if (generatorInvocation == null) {
-            context.fail("Task IDs list is longer than generators list.");
-        } else {
-            acc[taskId] = new RemoteTaskHandler({
-                job,
-                taskId,
-                generatorInvocation,
-                interactiveTaskContext: context
-                    .addInteractiveTask({
-                        name: generatorInvocation.name,
-                    })
-                    .start(),
-            });
-        }
-        return acc;
-    }, {});
+    const taskHandlers = job.taskIds.reduce<Record<Fiddle.remoteGen.RemoteGenTaskId, RemoteTaskHandler>>(
+        (acc, taskId, index) => {
+            const generatorInvocation = workspace.generatorsConfiguration.draft[index];
+            if (generatorInvocation == null) {
+                context.fail("Task IDs list is longer than generators list.");
+            } else {
+                acc[taskId] = new RemoteTaskHandler({
+                    job,
+                    taskId,
+                    generatorInvocation,
+                    interactiveTaskContext: context
+                        .addInteractiveTask({
+                            name: generatorInvocation.name,
+                        })
+                        .start(),
+                });
+            }
+            return acc;
+        },
+        {}
+    );
 
     return new Promise((resolve) => {
         void pollForStatus();
@@ -62,9 +65,9 @@ export function pollJobAndReportStatus({
     });
 }
 
-async function fetchJobStatus(job: CreateJobResponse) {
+async function fetchJobStatus(job: Fiddle.remoteGen.CreateJobResponse) {
     try {
-        return await REMOTE_GENERATION_SERVICE.getJobStatus({
+        return await REMOTE_GENERATION_SERVICE.remoteGen.getJobStatus({
             jobId: job.jobId,
         });
     } catch (error) {
