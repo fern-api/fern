@@ -24087,6 +24087,7 @@ yarn.lock
           Object {
             "contents": "import { BasicAuth, BearerToken } from \\"@fern-typescript/service-utils\\";
 import { MyApi } from \\"..\\";
+import urlJoin from \\"url-join\\";
 
 export namespace Client {
     export interface Options {
@@ -24105,7 +24106,7 @@ export class Client {
 
     public get admin(): MyApi.admin._Client {
         return (this.#admin ??= new MyApi.admin._Client({
-            _basePath: this.options._origin,
+            _basePath: urlJoin(this.options._origin, \\"/admin\\"),
             _token: this.options._token,
             _credentials: this.options._credentials,
             xApiKey: this.options.xApiKey
@@ -24116,7 +24117,7 @@ export class Client {
 
     public get homepage(): MyApi.homepage._Client {
         return (this.#homepage ??= new MyApi.homepage._Client({
-            _basePath: this.options._origin,
+            _basePath: urlJoin(this.options._origin, \\"/homepage-problems\\"),
             _token: this.options._token,
             _credentials: this.options._credentials,
             xApiKey: this.options.xApiKey
@@ -24127,7 +24128,7 @@ export class Client {
 
     public get migration(): MyApi.migration._Client {
         return (this.#migration ??= new MyApi.migration._Client({
-            _basePath: this.options._origin,
+            _basePath: urlJoin(this.options._origin, \\"/migration-info\\"),
             _token: this.options._token,
             _credentials: this.options._credentials,
             xApiKey: this.options.xApiKey
@@ -24138,7 +24139,7 @@ export class Client {
 
     public get playlist(): MyApi.playlist._Client {
         return (this.#playlist ??= new MyApi.playlist._Client({
-            _basePath: this.options._origin,
+            _basePath: urlJoin(this.options._origin, \\"/v2/playlist\\"),
             _token: this.options._token,
             _credentials: this.options._credentials,
             xApiKey: this.options.xApiKey
@@ -24149,7 +24150,7 @@ export class Client {
 
     public get problem(): MyApi.problem._Client {
         return (this.#problem ??= new MyApi.problem._Client({
-            _basePath: this.options._origin,
+            _basePath: urlJoin(this.options._origin, \\"/problem-crud\\"),
             _token: this.options._token,
             _credentials: this.options._credentials,
             xApiKey: this.options.xApiKey
@@ -24160,7 +24161,7 @@ export class Client {
 
     public get submission(): MyApi.submission._Client {
         return (this.#submission ??= new MyApi.submission._Client({
-            _basePath: this.options._origin,
+            _basePath: urlJoin(this.options._origin, \\"/sessions\\"),
             _token: this.options._token,
             _credentials: this.options._credentials,
             xApiKey: this.options.xApiKey
@@ -24171,7 +24172,7 @@ export class Client {
 
     public get sysprop(): MyApi.sysprop._Client {
         return (this.#sysprop ??= new MyApi.sysprop._Client({
-            _basePath: this.options._origin,
+            _basePath: urlJoin(this.options._origin, \\"/sysprop\\"),
             _token: this.options._token,
             _credentials: this.options._credentials,
             xApiKey: this.options.xApiKey
@@ -29232,6 +29233,7 @@ export namespace getNumWarmInstances {
               Object {
                 "contents": "import { BasicAuth, BearerToken } from \\"@fern-typescript/service-utils\\";
 import { MyApi } from \\"../..\\";
+import urlJoin from \\"url-join\\";
 
 export namespace _Client {
     export interface Options {
@@ -29250,7 +29252,7 @@ export class _Client {
 
     public get problem(): MyApi.v2.problem._Client {
         return (this.#problem ??= new MyApi.v2.problem._Client({
-            _basePath: this.options._origin,
+            _basePath: urlJoin(this.options._origin, \\"/problems-v2\\"),
             _token: this.options._token,
             _credentials: this.options._credentials,
             xApiKey: this.options.xApiKey
@@ -30261,6 +30263,7 @@ export * from \\"./_Client\\";
                   Object {
                     "contents": "import { BasicAuth, BearerToken } from \\"@fern-typescript/service-utils\\";
 import { MyApi } from \\"../../..\\";
+import urlJoin from \\"url-join\\";
 
 export namespace _Client {
     export interface Options {
@@ -30279,7 +30282,7 @@ export class _Client {
 
     public get problem(): MyApi.v2.v3.problem._Client {
         return (this.#problem ??= new MyApi.v2.v3.problem._Client({
-            _basePath: this.options._origin,
+            _basePath: urlJoin(this.options._origin, \\"/problems-v2\\"),
             _token: this.options._token,
             _credentials: this.options._credentials,
             xApiKey: this.options.xApiKey

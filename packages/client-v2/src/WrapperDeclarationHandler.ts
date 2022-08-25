@@ -52,6 +52,8 @@ export function generateWrapper({ wrapper, file }: { wrapper: WrapperDeclaration
     });
 
     for (const serviceName of wrapper.wrappedServices) {
+        const service = file.getServiceDeclaration(serviceName);
+
         const referenceToServiceClient = ts.factory.createTypeReferenceNode(
             ts.factory.createQualifiedName(
                 file.getReferenceToService(serviceName).entityName,
@@ -73,6 +75,21 @@ export function generateWrapper({ wrapper, file }: { wrapper: WrapperDeclaration
                 ])
             ),
         });
+
+        const referenceToOrigin = ts.factory.createPropertyAccessExpression(
+            ts.factory.createPropertyAccessExpression(
+                ts.factory.createThis(),
+                ts.factory.createIdentifier(optionsMember.getName())
+            ),
+            originProperty.getName()
+        );
+        const basePath =
+            service.basePath != null
+                ? file.externalDependencies.urlJoin.invoke([
+                      referenceToOrigin,
+                      ts.factory.createStringLiteral(service.basePath),
+                  ])
+                : referenceToOrigin;
 
         apiClass.addGetAccessor({
             name: publicPropertyName,
@@ -102,13 +119,7 @@ export function generateWrapper({ wrapper, file }: { wrapper: WrapperDeclaration
                                                         ClientConstants.HttpService.ServiceNamespace.Options.Properties
                                                             .BASE_PATH
                                                     ),
-                                                    ts.factory.createPropertyAccessExpression(
-                                                        ts.factory.createPropertyAccessExpression(
-                                                            ts.factory.createThis(),
-                                                            ts.factory.createIdentifier(optionsMember.getName())
-                                                        ),
-                                                        originProperty.getName()
-                                                    )
+                                                    basePath
                                                 ),
                                                 ...authSchemeProperties.map(({ name: propertyName }) =>
                                                     createPropertyAssignment(

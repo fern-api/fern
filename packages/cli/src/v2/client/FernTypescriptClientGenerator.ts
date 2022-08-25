@@ -2,7 +2,7 @@ import { DeclaredErrorName, DeclaredTypeName, IntermediateRepresentation, TypeRe
 import { ServiceDeclarationHandler, WrapperDeclarationHandler } from "@fern-typescript/client-v2";
 import { File, GeneratorContext } from "@fern-typescript/declaration-handler";
 import { ErrorDeclarationHandler } from "@fern-typescript/errors-v2";
-import { ErrorResolver, TypeResolver } from "@fern-typescript/resolvers";
+import { ErrorResolver, ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { TypeDeclarationHandler } from "@fern-typescript/types-v2";
 import { Volume } from "memfs/lib/volume";
 import { Directory, Project } from "ts-morph";
@@ -44,6 +44,7 @@ export class FernTypescriptClientGenerator {
     private dependencyManager = new DependencyManager();
     private typeResolver: TypeResolver;
     private errorResolver: ErrorResolver;
+    private serviceResolver: ServiceResolver;
 
     private generatePackage: () => Promise<void>;
 
@@ -65,6 +66,7 @@ export class FernTypescriptClientGenerator {
         this.rootDirectory = project.createDirectory("/");
         this.typeResolver = new TypeResolver(intermediateRepresentation);
         this.errorResolver = new ErrorResolver(intermediateRepresentation);
+        this.serviceResolver = new ServiceResolver(intermediateRepresentation);
 
         this.generatePackage = async () => {
             await generateTypeScriptProject({
@@ -183,6 +185,7 @@ export class FernTypescriptClientGenerator {
         const file: File = {
             sourceFile,
             getReferenceToType: getReferenceToTypeForFile,
+            getServiceDeclaration: (serviceName) => this.serviceResolver.getServiceDeclarationFromName(serviceName),
             getReferenceToService: (serviceName) =>
                 getReferenceToService({
                     referencedIn: sourceFile,

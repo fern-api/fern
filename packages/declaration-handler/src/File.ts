@@ -1,5 +1,5 @@
 import { DeclaredErrorName, ErrorDeclaration, FernConstants, TypeReference } from "@fern-fern/ir-model";
-import { DeclaredServiceName } from "@fern-fern/ir-model/services";
+import { DeclaredServiceName, HttpService } from "@fern-fern/ir-model/services";
 import { WrapperName } from "@fern-typescript/commons-v2";
 import { ResolvedType } from "@fern-typescript/resolvers";
 import { SourceFile, ts } from "ts-morph";
@@ -15,6 +15,7 @@ export interface File {
     getErrorDeclaration: (errorName: DeclaredErrorName) => ErrorDeclaration;
     getReferenceToError: (errorName: DeclaredErrorName) => ts.TypeNode;
     addDependency: (name: string, version: string, options?: { preferPeer?: boolean }) => void;
+    getServiceDeclaration: (serviceName: DeclaredServiceName) => HttpService;
     getReferenceToService: (serviceName: DeclaredServiceName) => ServiceReference;
     getReferenceToWrapper: (wrapperName: WrapperName) => WrapperReference;
     externalDependencies: ExternalDependencies;
