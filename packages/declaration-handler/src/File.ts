@@ -6,11 +6,12 @@ import { SourceFile, ts } from "ts-morph";
 import { ExternalDependencies } from "./external-dependencies/ExternalDependencies";
 import { ParsedAuthSchemes } from "./ParsedAuthSchemes";
 import { ServiceReference } from "./ServiceReference";
+import { TypeReferenceNode } from "./TypeReferenceNode";
 import { WrapperReference } from "./WrapperReference";
 
 export interface File {
     sourceFile: SourceFile;
-    getReferenceToType: (typeReference: TypeReference) => ts.TypeNode;
+    getReferenceToType: (typeReference: TypeReference) => TypeReferenceNode;
     resolveTypeReference: (typeReference: TypeReference) => ResolvedType;
     getErrorDeclaration: (errorName: DeclaredErrorName) => ErrorDeclaration;
     getReferenceToError: (errorName: DeclaredErrorName) => ts.TypeNode;

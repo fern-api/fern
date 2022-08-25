@@ -1932,7 +1932,7 @@ export type UpdatePlaylistResponse = UpdatePlaylistResponse.SuccessResponse | Up
 export declare namespace UpdatePlaylistResponse {
     export interface SuccessResponse {
         ok: true;
-        body: model.playlist.Playlist;
+        body: model.playlist.Playlist | null | undefined;
     }
 
     export interface ErrorResponse {
@@ -1949,7 +1949,7 @@ export declare namespace UpdatePlaylistResponse {
 
 export interface _UpdatePlaylistRequest {
     playlistId: model.playlist.PlaylistId;
-    body: model.playlist.UpdatePlaylistRequest;
+    body: model.playlist.UpdatePlaylistRequest | null | undefined;
 }
 ",
                         "name": "_UpdatePlaylistRequest.ts",
@@ -7473,7 +7473,7 @@ export class PlaylistCrudService implements PlaylistCrudService {
         if (isResponseOk(encodedResponse)) {
             return {
                 ok: true,
-                body: encodedResponse.body as model.playlist.Playlist
+                body: encodedResponse.body as model.playlist.Playlist | null | undefined
             };
         }
         else {
@@ -10102,7 +10102,7 @@ export type UpdatePlaylistResponse = UpdatePlaylistResponse.SuccessResponse | Up
 export declare namespace UpdatePlaylistResponse {
     export interface SuccessResponse {
         ok: true;
-        body: model.playlist.Playlist;
+        body: model.playlist.Playlist | null | undefined;
     }
 
     export interface ErrorResponse {
@@ -10119,7 +10119,7 @@ export declare namespace UpdatePlaylistResponse {
 
 export interface _UpdatePlaylistRequest {
     playlistId: model.playlist.PlaylistId;
-    body: model.playlist.UpdatePlaylistRequest;
+    body: model.playlist.UpdatePlaylistRequest | null | undefined;
 }
 ",
                         "name": "_UpdatePlaylistRequest.ts",
@@ -15643,7 +15643,7 @@ export class PlaylistCrudService implements PlaylistCrudService {
         if (isResponseOk(encodedResponse)) {
             return {
                 ok: true,
-                body: encodedResponse.body as model.playlist.Playlist
+                body: encodedResponse.body as model.playlist.Playlist | null | undefined
             };
         }
         else {
@@ -18267,7 +18267,7 @@ export type UpdatePlaylistResponse = UpdatePlaylistResponse.SuccessResponse | Up
 export declare namespace UpdatePlaylistResponse {
     export interface SuccessResponse {
         ok: true;
-        body: model.playlist.Playlist;
+        body: model.playlist.Playlist | null | undefined;
     }
 
     export interface ErrorResponse {
@@ -18284,7 +18284,7 @@ export declare namespace UpdatePlaylistResponse {
 
 export interface _UpdatePlaylistRequest {
     playlistId: model.playlist.PlaylistId;
-    body: model.playlist.UpdatePlaylistRequest;
+    body: model.playlist.UpdatePlaylistRequest | null | undefined;
 }
 ",
                         "name": "_UpdatePlaylistRequest.ts",
@@ -24727,8 +24727,8 @@ export interface BinaryTreeNodeAndTreeValue {
 export interface BinaryTreeNodeValue {
     nodeId: MyApi.commons.NodeId;
     val: number;
-    right: MyApi.commons.NodeId | undefined;
-    left: MyApi.commons.NodeId | undefined;
+    right?: MyApi.commons.NodeId;
+    left?: MyApi.commons.NodeId;
 }
 ",
                 "name": "BinaryTreeNodeValue.ts",
@@ -24738,7 +24738,7 @@ export interface BinaryTreeNodeValue {
                 "contents": "import { MyApi } from \\"../..\\";
 
 export interface BinaryTreeValue {
-    root: MyApi.commons.NodeId | undefined;
+    root?: MyApi.commons.NodeId;
     nodes: Record<MyApi.commons.NodeId, MyApi.commons.BinaryTreeNodeValue>;
 }
 ",
@@ -24967,8 +24967,8 @@ export interface DoublyLinkedListNodeAndListValue {
 export interface DoublyLinkedListNodeValue {
     nodeId: MyApi.commons.NodeId;
     val: number;
-    next: MyApi.commons.NodeId | undefined;
-    prev: MyApi.commons.NodeId | undefined;
+    next?: MyApi.commons.NodeId;
+    prev?: MyApi.commons.NodeId;
 }
 ",
                 "name": "DoublyLinkedListNodeValue.ts",
@@ -24978,7 +24978,7 @@ export interface DoublyLinkedListNodeValue {
                 "contents": "import { MyApi } from \\"../..\\";
 
 export interface DoublyLinkedListValue {
-    head: MyApi.commons.NodeId | undefined;
+    head?: MyApi.commons.NodeId;
     nodes: Record<MyApi.commons.NodeId, MyApi.commons.DoublyLinkedListNodeValue>;
 }
 ",
@@ -24996,7 +24996,7 @@ export interface DoublyLinkedListValue {
               },
               Object {
                 "contents": "export interface GenericValue {
-    stringifiedType: string | undefined;
+    stringifiedType?: string;
     stringifiedValue: string;
 }
 ",
@@ -25059,7 +25059,7 @@ export declare namespace Language {
 export interface ListType {
     valueType: MyApi.commons.VariableType;
     /** Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false. */
-    isFixedLength: boolean | undefined;
+    isFixedLength?: boolean;
 }
 ",
                 "name": "ListType.ts",
@@ -25115,7 +25115,7 @@ export interface SinglyLinkedListNodeAndListValue {
 export interface SinglyLinkedListNodeValue {
     nodeId: MyApi.commons.NodeId;
     val: number;
-    next: MyApi.commons.NodeId | undefined;
+    next?: MyApi.commons.NodeId;
 }
 ",
                 "name": "SinglyLinkedListNodeValue.ts",
@@ -25125,7 +25125,7 @@ export interface SinglyLinkedListNodeValue {
                 "contents": "import { MyApi } from \\"../..\\";
 
 export interface SinglyLinkedListValue {
-    head: MyApi.commons.NodeId | undefined;
+    head?: MyApi.commons.NodeId;
     nodes: Record<MyApi.commons.NodeId, MyApi.commons.SinglyLinkedListNodeValue>;
 }
 ",
@@ -25888,7 +25888,7 @@ export interface _Client {
     createPlaylist(request: MyApi.playlist.PlaylistCreateRequest): Promise<_Response<MyApi.playlist.Playlist, MyApi.playlist.createPlaylist.Error>>;
     getPlaylists(request: MyApi.playlist.getPlaylists.Request): Promise<_Response<MyApi.playlist.Playlist[], MyApi.playlist.getPlaylists.Error>>;
     getPlaylist(request: MyApi.playlist.getPlaylist.Request): Promise<_Response<MyApi.playlist.Playlist, MyApi.playlist.getPlaylist.Error>>;
-    updatePlaylist(request: MyApi.playlist.updatePlaylist.Request): Promise<_Response<MyApi.playlist.Playlist, MyApi.playlist.updatePlaylist.Error>>;
+    updatePlaylist(request: MyApi.playlist.updatePlaylist.Request): Promise<_Response<MyApi.playlist.Playlist | undefined, MyApi.playlist.updatePlaylist.Error>>;
     deletePlaylist(request: MyApi.playlist.deletePlaylist.Request): Promise<_Response<void, MyApi.playlist.deletePlaylist.Error>>;
 }
 
@@ -26027,7 +26027,7 @@ export class _Client implements _Client {
         }
     }
 
-    public async updatePlaylist(request: MyApi.playlist.updatePlaylist.Request): Promise<_Response<MyApi.playlist.Playlist, MyApi.playlist.updatePlaylist.Error>> {
+    public async updatePlaylist(request: MyApi.playlist.updatePlaylist.Request): Promise<_Response<MyApi.playlist.Playlist | undefined, MyApi.playlist.updatePlaylist.Error>> {
         const response = await defaultFetcherV2({
                 url: urlJoin(this.options._basePath, \`/\${request.playlistId}\`),
                 method: \\"PUT\\",
@@ -26041,7 +26041,7 @@ export class _Client implements _Client {
         if (response.ok) {
             return {
                 ok: true,
-                body: response.body as MyApi.playlist.Playlist
+                body: response.body as MyApi.playlist.Playlist | undefined
             };
         }
 
@@ -26123,7 +26123,7 @@ export namespace createPlaylist {
 
 export namespace getPlaylists {
     export interface Request {
-        limit: number | undefined;
+        limit?: number;
     }
 
     export interface Error {
@@ -26179,7 +26179,7 @@ export const getPlaylist = {
 export namespace updatePlaylist {
     export interface Request {
         playlistId: MyApi.playlist.PlaylistId;
-        body: MyApi.playlist.UpdatePlaylistRequest;
+        body?: MyApi.playlist.UpdatePlaylistRequest;
     }
 
     export interface Error {
@@ -27180,7 +27180,7 @@ export const ExceptionV2 = {
 
 export interface ExecutionSessionResponse {
     sessionId: string;
-    executionSessionUrl: string | undefined;
+    executionSessionUrl?: string;
     language: MyApi.commons.Language;
     status: MyApi.submission.ExecutionSessionStatus;
 }
@@ -27192,10 +27192,10 @@ export interface ExecutionSessionResponse {
                 "contents": "import { MyApi } from \\"../..\\";
 
 export interface ExecutionSessionState {
-    lastTimeContacted: string | undefined;
+    lastTimeContacted?: string;
     sessionId: string;
     isWarmInstance: boolean;
-    awsTaskId: string | undefined;
+    awsTaskId?: string;
     language: MyApi.commons.Language;
     status: MyApi.submission.ExecutionSessionStatus;
 }
@@ -27291,7 +27291,7 @@ export interface FinishedResponse {
 
 export interface GetExecutionSessionStateResponse {
     states: Record<string, MyApi.submission.ExecutionSessionState>;
-    numWarmingInstances: number | undefined;
+    numWarmingInstances?: number;
     warmingSessionIds: string[];
 }
 ",
@@ -27302,7 +27302,7 @@ export interface GetExecutionSessionStateResponse {
                 "contents": "import { MyApi } from \\"../..\\";
 
 export interface GetSubmissionStateResponse {
-    timeSubmitted: string | undefined;
+    timeSubmitted?: string;
     submission: string;
     language: MyApi.commons.Language;
     submissionTypeState: MyApi.submission.SubmissionTypeState;
@@ -27313,7 +27313,7 @@ export interface GetSubmissionStateResponse {
               },
               Object {
                 "contents": "export interface GetTraceResponsesPageRequest {
-    offset: number | undefined;
+    offset?: number;
 }
 ",
                 "name": "GetTraceResponsesPageRequest.ts",
@@ -27357,7 +27357,7 @@ export interface GradedTestCaseUpdate {
 
 export interface InitializeProblemRequest {
     problemId: MyApi.commons.ProblemId;
-    problemVersion: number | undefined;
+    problemVersion?: number;
 }
 ",
                 "name": "InitializeProblemRequest.ts",
@@ -27463,7 +27463,7 @@ export interface InvalidRequestResponse {
 export interface RecordedResponseNotification {
     submissionId: MyApi.submission.SubmissionId;
     traceResponsesSize: number;
-    testCaseId: string | undefined;
+    testCaseId?: string;
 }
 ",
                 "name": "RecordedResponseNotification.ts",
@@ -27485,10 +27485,10 @@ export interface RecordedTestCaseUpdate {
 
 export interface RecordingResponseNotification {
     submissionId: MyApi.submission.SubmissionId;
-    testCaseId: string | undefined;
+    testCaseId?: string;
     lineNumber: number;
     lightweightStackInfo: MyApi.submission.LightweightStackframeInformation;
-    tracedFile: MyApi.submission.TracedFile | undefined;
+    tracedFile?: MyApi.submission.TracedFile;
 }
 ",
                 "name": "RecordingResponseNotification.ts",
@@ -27595,7 +27595,7 @@ export interface StackFrame {
 
 export interface StackInformation {
     numStackFrames: number;
-    topStackFrame: MyApi.submission.StackFrame | undefined;
+    topStackFrame?: MyApi.submission.StackFrame;
 }
 ",
                 "name": "StackInformation.ts",
@@ -28045,8 +28045,8 @@ export interface SubmitRequestV2 {
     language: MyApi.commons.Language;
     submissionFiles: MyApi.submission.SubmissionFileInfo[];
     problemId: MyApi.commons.ProblemId;
-    problemVersion: number | undefined;
-    userId: string | undefined;
+    problemVersion?: number;
+    userId?: string;
 }
 ",
                 "name": "SubmitRequestV2.ts",
@@ -28120,8 +28120,8 @@ export const TestCaseGrade = {
 
 export interface TestCaseNonHiddenGrade {
     passed: boolean;
-    actualResult: MyApi.commons.VariableValue | undefined;
-    exception: MyApi.submission.ExceptionV2 | undefined;
+    actualResult?: MyApi.commons.VariableValue;
+    exception?: MyApi.submission.ExceptionV2;
     stdout: string;
 }
 ",
@@ -28364,10 +28364,10 @@ export const TestSubmissionUpdateInfo = {
 export interface TraceResponse {
     submissionId: MyApi.submission.SubmissionId;
     lineNumber: number;
-    returnValue: MyApi.commons.DebugVariableValue | undefined;
-    expressionLocation: MyApi.submission.ExpressionLocation | undefined;
+    returnValue?: MyApi.commons.DebugVariableValue;
+    expressionLocation?: MyApi.submission.ExpressionLocation;
     stack: MyApi.submission.StackInformation;
-    stdout: string | undefined;
+    stdout?: string;
 }
 ",
                 "name": "TraceResponse.ts",
@@ -28380,10 +28380,10 @@ export interface TraceResponseV2 {
     submissionId: MyApi.submission.SubmissionId;
     lineNumber: number;
     file: MyApi.submission.TracedFile;
-    returnValue: MyApi.commons.DebugVariableValue | undefined;
-    expressionLocation: MyApi.submission.ExpressionLocation | undefined;
+    returnValue?: MyApi.commons.DebugVariableValue;
+    expressionLocation?: MyApi.submission.ExpressionLocation;
     stack: MyApi.submission.StackInformation;
-    stdout: string | undefined;
+    stdout?: string;
 }
 ",
                 "name": "TraceResponseV2.ts",
@@ -28398,7 +28398,7 @@ export interface TraceResponsesPage {
      * The offset is the id of the next trace response to load.
      *
      */
-    offset: number | undefined;
+    offset?: number;
     traceResponses: MyApi.submission.TraceResponse[];
 }
 ",
@@ -28414,7 +28414,7 @@ export interface TraceResponsesPageV2 {
      * The offset is the id of the next trace response to load.
      *
      */
-    offset: number | undefined;
+    offset?: number;
     traceResponses: MyApi.submission.TraceResponseV2[];
 }
 ",
@@ -28478,8 +28478,8 @@ export interface WorkspaceRanResponse {
                 "contents": "import { MyApi } from \\"../..\\";
 
 export interface WorkspaceRunDetails {
-    exceptionV2: MyApi.submission.ExceptionV2 | undefined;
-    exception: MyApi.submission.ExceptionInfo | undefined;
+    exceptionV2?: MyApi.submission.ExceptionV2;
+    exception?: MyApi.submission.ExceptionInfo;
     stdout: string;
 }
 ",
@@ -28736,7 +28736,7 @@ export interface WorkspaceSubmitRequest {
     submissionId: MyApi.submission.SubmissionId;
     language: MyApi.commons.Language;
     submissionFiles: MyApi.submission.SubmissionFileInfo[];
-    userId: string | undefined;
+    userId?: string;
 }
 ",
                 "name": "WorkspaceSubmitRequest.ts",
@@ -29463,7 +29463,7 @@ export interface Files {
                   Object {
                     "contents": "export interface FunctionImplementation {
     impl: string;
-    imports: string | undefined;
+    imports?: string;
 }
 ",
                     "name": "FunctionImplementation.ts",
@@ -29598,7 +29598,7 @@ export interface GetFunctionSignatureResponse {
                     "contents": "import { MyApi } from \\"../../..\\";
 
 export interface GetGeneratedTestCaseFileRequest {
-    template: MyApi.v2.problem.TestCaseTemplate | undefined;
+    template?: MyApi.v2.problem.TestCaseTemplate;
     testCase: MyApi.v2.problem.TestCaseV2;
 }
 ",
@@ -29689,7 +29689,7 @@ export interface ProblemInfoV2 {
                   },
                   Object {
                     "contents": "export interface TestCaseExpects {
-    expectedStdout: string | undefined;
+    expectedStdout?: string;
 }
 ",
                     "name": "TestCaseExpects.ts",
@@ -29906,7 +29906,7 @@ export interface TestCaseV2 {
     metadata: MyApi.v2.problem.TestCaseMetadata;
     implementation: MyApi.v2.problem.TestCaseImplementationReference;
     arguments: Record<MyApi.v2.problem.ParameterId, MyApi.commons.VariableValue>;
-    expects: MyApi.v2.problem.TestCaseExpects | undefined;
+    expects?: MyApi.v2.problem.TestCaseExpects;
 }
 ",
                     "name": "TestCaseV2.ts",
@@ -30486,7 +30486,7 @@ export interface Files {
                       Object {
                         "contents": "export interface FunctionImplementation {
     impl: string;
-    imports: string | undefined;
+    imports?: string;
 }
 ",
                         "name": "FunctionImplementation.ts",
@@ -30621,7 +30621,7 @@ export interface GetFunctionSignatureResponse {
                         "contents": "import { MyApi } from \\"../../../..\\";
 
 export interface GetGeneratedTestCaseFileRequest {
-    template: MyApi.v2.v3.problem.TestCaseTemplate | undefined;
+    template?: MyApi.v2.v3.problem.TestCaseTemplate;
     testCase: MyApi.v2.v3.problem.TestCaseV2;
 }
 ",
@@ -30712,7 +30712,7 @@ export interface ProblemInfoV2 {
                       },
                       Object {
                         "contents": "export interface TestCaseExpects {
-    expectedStdout: string | undefined;
+    expectedStdout?: string;
 }
 ",
                         "name": "TestCaseExpects.ts",
@@ -30929,7 +30929,7 @@ export interface TestCaseV2 {
     metadata: MyApi.v2.v3.problem.TestCaseMetadata;
     implementation: MyApi.v2.v3.problem.TestCaseImplementationReference;
     arguments: Record<MyApi.v2.v3.problem.ParameterId, MyApi.commons.VariableValue>;
-    expects: MyApi.v2.v3.problem.TestCaseExpects | undefined;
+    expects?: MyApi.v2.v3.problem.TestCaseExpects;
 }
 ",
                         "name": "TestCaseV2.ts",
@@ -33279,7 +33279,7 @@ export type UpdatePlaylistResponse = UpdatePlaylistResponse.SuccessResponse | Up
 export declare namespace UpdatePlaylistResponse {
     export interface SuccessResponse {
         ok: true;
-        body: model.playlist.Playlist;
+        body: model.playlist.Playlist | null | undefined;
     }
 
     export interface ErrorResponse {
@@ -33296,7 +33296,7 @@ export declare namespace UpdatePlaylistResponse {
 
 export interface _UpdatePlaylistRequest {
     playlistId: model.playlist.PlaylistId;
-    body: model.playlist.UpdatePlaylistRequest;
+    body: model.playlist.UpdatePlaylistRequest | null | undefined;
 }
 ",
                         "name": "_UpdatePlaylistRequest.ts",

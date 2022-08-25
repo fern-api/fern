@@ -23,7 +23,7 @@ export function parseEndpoint({
 
     const endpointUtils: ts.ObjectLiteralElementLike[] = [];
 
-    const parsedEndpoint = {
+    const parsedEndpoint: ParsedClientEndpoint = {
         endpointMethodName: endpointModule.getName(),
         path: endpoint.path,
         method: endpoint.method,

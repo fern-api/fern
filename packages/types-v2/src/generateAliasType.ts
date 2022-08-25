@@ -15,7 +15,7 @@ export function generateAliasType({
 }): void {
     const typeAlias = file.sourceFile.addTypeAlias({
         name: typeName,
-        type: getTextOfTsNode(file.getReferenceToType(shape.aliasOf)),
+        type: getTextOfTsNode(file.getReferenceToType(shape.aliasOf).typeNode),
         isExported: true,
     });
     maybeAddDocs(typeAlias, docs);

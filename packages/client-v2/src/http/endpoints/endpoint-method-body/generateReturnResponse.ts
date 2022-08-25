@@ -64,7 +64,7 @@ function generateReturnSuccessResponse({
                                   ts.factory.createIdentifier(ClientConstants.HttpService.Endpoint.Variables.RESPONSE),
                                   file.externalDependencies.serviceUtils.Fetcher.Response.BODY
                               ),
-                              endpoint.referenceToResponse
+                              endpoint.referenceToResponse.typeNode
                           )
                         : ts.factory.createIdentifier("undefined")
                 ),

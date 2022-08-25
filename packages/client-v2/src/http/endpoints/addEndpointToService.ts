@@ -27,7 +27,7 @@ export function addEndpointToService({
         ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
             file.externalDependencies.serviceUtils._Response._getReferenceToType(
                 parsedEndpoint.referenceToResponse != null
-                    ? parsedEndpoint.referenceToResponse
+                    ? parsedEndpoint.referenceToResponse.typeNode
                     : ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword),
                 parsedEndpoint.error.reference
             ),

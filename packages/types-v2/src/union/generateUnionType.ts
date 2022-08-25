@@ -74,15 +74,17 @@ export function generateUnionType({
         );
 
         for (const additionalProperty of additionalPropertiesForEveryType) {
+            const { typeNode, isOptional } = file.getReferenceToType(additionalProperty.valueType);
             interfaceNode.addProperty({
                 name: additionalProperty.key,
-                type: getTextOfTsNode(file.getReferenceToType(additionalProperty.valueType)),
+                type: getTextOfTsNode(typeNode),
+                hasQuestionToken: isOptional,
             });
         }
 
         if (resolvedType.valueType != null) {
             if (resolvedType.valueType.isExtendable) {
-                interfaceNode.addExtends(getTextOfTsNode(resolvedType.valueType.type));
+                interfaceNode.addExtends(getTextOfTsNode(resolvedType.valueType.type.typeNode));
             } else {
                 addNonExtendableProperty({
                     interfaceNode,
@@ -102,11 +104,11 @@ export function generateUnionType({
                     resolvedType.valueType != null
                         ? resolvedType.valueType.isExtendable
                             ? {
-                                  type: resolvedType.valueType.type,
+                                  type: resolvedType.valueType.type.typeNode,
                                   argument: ts.factory.createIdentifier(visitorUtils.VALUE_PARAMETER_NAME),
                               }
                             : {
-                                  type: resolvedType.valueType.type,
+                                  type: resolvedType.valueType.type.typeNode,
                                   argument: ts.factory.createPropertyAccessExpression(
                                       ts.factory.createIdentifier(visitorUtils.VALUE_PARAMETER_NAME),
                                       ts.factory.createIdentifier(resolvedType.discriminantValue.wireValue)
@@ -168,7 +170,12 @@ function addNonExtendableProperty({
 }) {
     interfaceNode.addProperty({
         name: resolvedSingleUnionType.discriminantValue.wireValue,
-        type: getTextOfTsNode(resolvedValueType.type),
+        type: getTextOfTsNode(
+            resolvedValueType.type.isOptional
+                ? resolvedValueType.type.typeNodeWithoutUndefined
+                : resolvedValueType.type.typeNode
+        ),
+        hasQuestionToken: resolvedValueType.type.isOptional,
     });
 }
 
@@ -269,8 +276,10 @@ function generateCreator({
                   undefined,
                   undefined,
                   VALUE_PARAMETER_NAME,
-                  undefined,
-                  parameterType.type,
+                  parameterType.type.isOptional ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
+                  parameterType.type.isOptional
+                      ? parameterType.type.typeNodeWithoutUndefined
+                      : parameterType.type.typeNode,
                   undefined
               )
             : undefined;

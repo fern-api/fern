@@ -8,7 +8,7 @@ import {
     QueryParameter,
 } from "@fern-fern/ir-model/services";
 import { getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
-import { File } from "@fern-typescript/declaration-handler";
+import { File, TypeReferenceNode } from "@fern-typescript/declaration-handler";
 import { InterfaceDeclaration, ModuleDeclaration, ts } from "ts-morph";
 import { getReferenceToMaybeVoidType } from "./getReferenceToMaybeVoidType";
 
@@ -22,7 +22,7 @@ export interface RequestWrapper {
 
 export interface WrapperField<T> {
     key: string;
-    type: ts.TypeNode;
+    type: TypeReferenceNode;
     originalData: T;
 }
 
@@ -113,7 +113,8 @@ function constructWrapperFields<T>({
 
         const property = wrapperInterface.addProperty({
             name: key,
-            type: getTextOfTsNode(type),
+            type: getTextOfTsNode(type.isOptional ? type.typeNodeWithoutUndefined : type.typeNode),
+            hasQuestionToken: type.isOptional,
         });
         maybeAddDocs(property, docs);
 
@@ -141,7 +142,8 @@ function constructBody({
 
     const property = wrapperInterface.addProperty({
         name: "body",
-        type: getTextOfTsNode(bodyType),
+        type: getTextOfTsNode(bodyType.isOptional ? bodyType.typeNodeWithoutUndefined : bodyType.typeNode),
+        hasQuestionToken: bodyType.isOptional,
     });
 
     return {

@@ -1,8 +1,7 @@
 import { TypeReference } from "@fern-fern/ir-model";
-import { File } from "@fern-typescript/declaration-handler";
-import { ts } from "ts-morph";
+import { File, TypeReferenceNode } from "@fern-typescript/declaration-handler";
 
-export function getReferenceToMaybeVoidType(reference: TypeReference, file: File): ts.TypeNode | undefined {
+export function getReferenceToMaybeVoidType(reference: TypeReference, file: File): TypeReferenceNode | undefined {
     if (reference._type === "void") {
         return undefined;
     }

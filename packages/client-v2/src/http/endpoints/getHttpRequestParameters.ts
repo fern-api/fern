@@ -22,7 +22,12 @@ export function getHttpRequestParameters(
     return [
         {
             name: ClientConstants.HttpService.Endpoint.Signature.REQUEST_PARAMETER,
-            type: getTextOfTsNode(endpoint.request.referenceToBody),
+            type: getTextOfTsNode(
+                endpoint.request.referenceToBody.isOptional
+                    ? endpoint.request.referenceToBody.typeNodeWithoutUndefined
+                    : endpoint.request.referenceToBody.typeNode
+            ),
+            hasQuestionToken: endpoint.request.referenceToBody.isOptional,
         },
     ];
 }

@@ -1,7 +1,7 @@
 import { ObjectTypeDeclaration, TypeReference } from "@fern-fern/ir-model";
 import { getPropertyKey, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { File } from "@fern-typescript/declaration-handler";
-import { ts } from "ts-morph";
+import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
 export function generateObjectType({
     typeName,
@@ -19,17 +19,25 @@ export function generateObjectType({
     const node = file.sourceFile.addInterface({
         name: typeName,
         extends: shape.extends
-            .map((typeName) => file.getReferenceToType(TypeReference.named(typeName)))
+            .map((typeName) => file.getReferenceToType(TypeReference.named(typeName)).typeNode)
             .map(getTextOfTsNode),
         properties: [
-            ...Object.entries(additionalProperties).map(([name, value]) => ({
-                name,
-                type: getTextOfTsNode(value),
-            })),
+            ...Object.entries(additionalProperties).map(
+                ([name, value]): OptionalKind<PropertySignatureStructure> => ({
+                    name,
+                    type: getTextOfTsNode(value),
+                })
+            ),
             ...shape.properties.map((field) => {
-                const property = {
+                const referenceToProperty = file.getReferenceToType(field.valueType);
+                const property: OptionalKind<PropertySignatureStructure> = {
                     name: getPropertyKey(field.name.wireValue),
-                    type: getTextOfTsNode(file.getReferenceToType(field.valueType)),
+                    type: getTextOfTsNode(
+                        referenceToProperty.isOptional
+                            ? referenceToProperty.typeNodeWithoutUndefined
+                            : referenceToProperty.typeNode
+                    ),
+                    hasQuestionToken: referenceToProperty.isOptional,
                     docs: field.docs != null ? [{ description: field.docs }] : undefined,
                 };
 

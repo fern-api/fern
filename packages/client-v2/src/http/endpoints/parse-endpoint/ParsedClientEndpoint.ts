@@ -1,4 +1,5 @@
 import { HttpMethod, HttpPath } from "@fern-fern/ir-model/services";
+import { TypeReferenceNode } from "@fern-typescript/declaration-handler";
 import { ts } from "ts-morph";
 import { RequestWrapper } from "./constructRequestWrapper";
 
@@ -7,7 +8,7 @@ export interface ParsedClientEndpoint {
     path: HttpPath;
     method: HttpMethod;
     request: ClientEndpointRequest | undefined;
-    referenceToResponse: ts.TypeNode | undefined;
+    referenceToResponse: TypeReferenceNode | undefined;
     error: ClientEndpointError;
 }
 
@@ -20,7 +21,7 @@ export declare namespace ClientEndpointRequest {
 
     export interface NotWrapped extends Base {
         isWrapped: false;
-        referenceToBody: ts.TypeNode;
+        referenceToBody: TypeReferenceNode;
     }
 
     export interface Base {}

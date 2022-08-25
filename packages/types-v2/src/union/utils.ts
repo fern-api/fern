@@ -1,8 +1,7 @@
 import { TypeReference, WireStringWithAllCasings } from "@fern-fern/ir-model";
 import { ImportStrategy } from "@fern-typescript/commons";
-import { File } from "@fern-typescript/declaration-handler";
+import { File, TypeReferenceNode } from "@fern-typescript/declaration-handler";
 import { ResolvedType } from "@fern-typescript/resolvers";
-import { ts } from "ts-morph";
 
 // don't used named imports for type reference to prevent clashing with union subtypes
 export const UNION_TYPE_MODEL_IMPORT_STRATEGY = ImportStrategy.TOP_PACKAGE_IMPORT;
@@ -18,7 +17,7 @@ export interface ResolvedSingleUnionType {
 }
 
 export interface ResolvedSingleUnionValueType {
-    type: ts.TypeNode;
+    type: TypeReferenceNode;
     isExtendable: boolean;
 }
 

@@ -59,8 +59,8 @@ services:
           path: /{playlistId}
           path-parameters:
             playlistId: PlaylistId
-          request: UpdatePlaylistRequest
-          response: Playlist
+          request: optional<UpdatePlaylistRequest>
+          response: optional<Playlist>
           errors:
             - PlaylistIdNotFoundError
 

@@ -218,7 +218,7 @@ export class FernTypescriptClientGenerator {
             authSchemes: parseAuthSchemes({
                 apiAuth: this.intermediateRepresentation.auth,
                 externalDependencies,
-                getReferenceToType: getReferenceToTypeForFile,
+                getReferenceToType: (typeReference) => getReferenceToTypeForFile(typeReference).typeNode,
             }),
             fernConstants: this.intermediateRepresentation.constants,
         };
