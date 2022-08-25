@@ -22,15 +22,17 @@ export function pollJobAndReportStatus({
         if (generatorInvocation == null) {
             context.fail("Task IDs list is longer than generators list.");
         } else {
+            const interactiveTaskContext = context
+                .addInteractiveTask({
+                    name: generatorInvocation.name,
+                })
+                .start();
+            interactiveTaskContext.logger.debug(`Task ID: ${taskId}`);
             acc[taskId] = new RemoteTaskHandler({
                 job,
                 taskId,
                 generatorInvocation,
-                interactiveTaskContext: context
-                    .addInteractiveTask({
-                        name: generatorInvocation.name,
-                    })
-                    .start(),
+                interactiveTaskContext,
             });
         }
         return acc;
