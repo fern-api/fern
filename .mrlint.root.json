@@ -1,3 +1,4 @@
 {
-  "packages": "packages/**"
+  "packages": "packages/**",
+  "defaultScope": "@fern-typescript"
 }

@@ -3,13 +3,12 @@
   "version": "0.0.0",
   "repository": {
     "type": "git",
-    "url": "git@github.com:fern-api/fern-typescript.git",
+    "url": "https://github.com/fern-api/fern-typescript.git",
     "directory": "packages/service-utils"
   },
   "files": [
     "lib"
   ],
-  "type": "module",
   "source": "src/index.ts",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

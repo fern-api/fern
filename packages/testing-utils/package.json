@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "repository": {
     "type": "git",
-    "url": "git@github.com:fern-api/fern-typescript.git",
+    "url": "https://github.com/fern-api/fern-typescript.git",
     "directory": "packages/testing-utils"
   },
   "files": [
