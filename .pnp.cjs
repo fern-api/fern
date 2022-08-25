@@ -8122,7 +8122,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
-            ["@fern-fern/fiddle-client-v2", "npm:0.0.14"],\
+            ["@fern-fern/fiddle-client-v2", "npm:0.0.18"],\
             ["@fern-fern/ir-model", "npm:0.0.46"],\
             ["@types/jest", "npm:28.1.7"],\
             ["@types/node", "npm:18.7.11"],\
@@ -8267,11 +8267,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/fiddle-client-v2", [\
-        ["npm:0.0.14", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-fiddle-client-v2-npm-0.0.14-4cea15e3c2-aa657d5c8e.zip/node_modules/@fern-fern/fiddle-client-v2/",\
+        ["npm:0.0.18", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-fiddle-client-v2-npm-0.0.18-26234ca4d4-3a2b0cdb9c.zip/node_modules/@fern-fern/fiddle-client-v2/",\
           "packageDependencies": [\
-            ["@fern-fern/fiddle-client-v2", "npm:0.0.14"],\
-            ["@fern-typescript/service-utils", "npm:0.0.194"],\
+            ["@fern-fern/fiddle-client-v2", "npm:0.0.18"],\
+            ["@fern-typescript/service-utils", "npm:0.0.196"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["url-join", "npm:4.0.1"]\
           ],\
@@ -8288,10 +8288,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-typescript/service-utils", [\
-        ["npm:0.0.194", {\
-          "packageLocation": "./.yarn/cache/@fern-typescript-service-utils-npm-0.0.194-33ac0c0e69-e49c604af0.zip/node_modules/@fern-typescript/service-utils/",\
+        ["npm:0.0.196", {\
+          "packageLocation": "./.yarn/cache/@fern-typescript-service-utils-npm-0.0.196-0853c1aefe-8fa0919888.zip/node_modules/@fern-typescript/service-utils/",\
           "packageDependencies": [\
-            ["@fern-typescript/service-utils", "npm:0.0.194"],\
+            ["@fern-typescript/service-utils", "npm:0.0.196"],\
             ["axios", "npm:0.27.2"],\
             ["basic-auth", "npm:2.0.1"],\
             ["js-base64", "npm:3.7.2"]\

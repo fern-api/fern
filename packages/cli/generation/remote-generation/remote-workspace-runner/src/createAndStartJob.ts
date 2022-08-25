@@ -29,7 +29,12 @@ async function createJob({ workspace, organization }: { workspace: Workspace; or
             version: generator.version,
             willDownloadFiles: generator.absolutePathToLocalOutput != null,
             customConfig: generator.config,
+            outputs: {
+                npm: undefined,
+                maven: undefined,
+            },
         })),
+        version: undefined,
     });
 
     if (!createResponse.ok) {
