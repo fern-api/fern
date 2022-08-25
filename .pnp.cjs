@@ -8122,7 +8122,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
-            ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.7"],\
+            ["@fern-fern/fiddle-client-v2", "npm:0.0.14"],\
             ["@fern-fern/ir-model", "npm:0.0.46"],\
             ["@types/jest", "npm:28.1.7"],\
             ["@types/node", "npm:18.7.11"],\
@@ -8266,16 +8266,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
-      ["@fern-fern/fiddle-coordinator-api-client", [\
-        ["npm:0.0.7", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-fiddle-coordinator-api-client-npm-0.0.7-d592de3fa2-62959e887d.zip/node_modules/@fern-fern/fiddle-coordinator-api-client/",\
+      ["@fern-fern/fiddle-client-v2", [\
+        ["npm:0.0.14", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-fiddle-client-v2-npm-0.0.14-4cea15e3c2-aa657d5c8e.zip/node_modules/@fern-fern/fiddle-client-v2/",\
           "packageDependencies": [\
-            ["@fern-fern/fiddle-coordinator-api-client", "npm:0.0.7"],\
-            ["@fern-typescript/service-utils", "npm:0.0.124"],\
+            ["@fern-fern/fiddle-client-v2", "npm:0.0.14"],\
+            ["@fern-typescript/service-utils", "npm:0.0.194"],\
             ["@types/url-join", "npm:4.0.1"],\
-            ["@types/uuid", "npm:8.3.4"],\
-            ["url-join", "npm:4.0.1"],\
-            ["uuid", "npm:8.3.2"]\
+            ["url-join", "npm:4.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -8290,11 +8288,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-typescript/service-utils", [\
-        ["npm:0.0.124", {\
-          "packageLocation": "./.yarn/cache/@fern-typescript-service-utils-npm-0.0.124-eb81d631f3-e94d6fb8f1.zip/node_modules/@fern-typescript/service-utils/",\
+        ["npm:0.0.194", {\
+          "packageLocation": "./.yarn/cache/@fern-typescript-service-utils-npm-0.0.194-33ac0c0e69-e49c604af0.zip/node_modules/@fern-typescript/service-utils/",\
           "packageDependencies": [\
-            ["@fern-typescript/service-utils", "npm:0.0.124"],\
-            ["axios", "npm:0.27.2"]\
+            ["@fern-typescript/service-utils", "npm:0.0.194"],\
+            ["axios", "npm:0.27.2"],\
+            ["basic-auth", "npm:2.0.1"],\
+            ["js-base64", "npm:3.7.2"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -10671,15 +10671,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["@types/uuid", [\
-        ["npm:8.3.4", {\
-          "packageLocation": "./.yarn/cache/@types-uuid-npm-8.3.4-7547f4402c-6f11f3ff70.zip/node_modules/@types/uuid/",\
-          "packageDependencies": [\
-            ["@types/uuid", "npm:8.3.4"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["@types/validate-npm-package-name", [\
         ["npm:4.0.0", {\
           "packageLocation": "./.yarn/cache/@types-validate-npm-package-name-npm-4.0.0-0a37928601-09efd659f4.zip/node_modules/@types/validate-npm-package-name/",\
@@ -12476,6 +12467,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/base64-js-npm-1.5.1-b2f7275641-669632eb37.zip/node_modules/base64-js/",\
           "packageDependencies": [\
             ["base64-js", "npm:1.5.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["basic-auth", [\
+        ["npm:2.0.1", {\
+          "packageLocation": "./.yarn/cache/basic-auth-npm-2.0.1-f1627ef330-3419b805d5.zip/node_modules/basic-auth/",\
+          "packageDependencies": [\
+            ["basic-auth", "npm:2.0.1"],\
+            ["safe-buffer", "npm:5.1.2"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -19076,6 +19077,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@sideway/address", "npm:4.1.4"],\
             ["@sideway/formula", "npm:3.0.0"],\
             ["@sideway/pinpoint", "npm:2.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["js-base64", [\
+        ["npm:3.7.2", {\
+          "packageLocation": "./.yarn/cache/js-base64-npm-3.7.2-706fb77a0b-573f28e9a2.zip/node_modules/js-base64/",\
+          "packageDependencies": [\
+            ["js-base64", "npm:3.7.2"]\
           ],\
           "linkType": "HARD"\
         }]\

@@ -2,32 +2,25 @@ import { AbsoluteFilePath, assertNeverNoThrow } from "@fern-api/core-utils";
 import { DraftGeneratorInvocation } from "@fern-api/generators-configuration";
 import { LogLevel } from "@fern-api/logger";
 import { Finishable, InteractiveTaskContext } from "@fern-api/task-context";
-import {
-    CreateJobResponse,
-    LogLevel as FiddleLogLevel,
-    PackageCoordinate,
-    RemoteGenJobId,
-    RemoteGenTaskId,
-    Task,
-} from "@fern-fern/fiddle-coordinator-api-client/model/remoteGen";
+import { Fiddle } from "@fern-fern/fiddle-client-v2";
 import axios from "axios";
 import chalk from "chalk";
 import { createWriteStream } from "fs";
 import urlJoin from "url-join";
-import { FIDDLE_API_URL } from "./service";
+import { FIDDLE_ORIGIN } from "./service";
 
 export declare namespace RemoteTaskHandler {
     export interface Init {
-        job: CreateJobResponse;
-        taskId: RemoteGenTaskId;
+        job: Fiddle.remoteGen.CreateJobResponse;
+        taskId: Fiddle.remoteGen.RemoteGenTaskId;
         interactiveTaskContext: Finishable & InteractiveTaskContext;
         generatorInvocation: DraftGeneratorInvocation;
     }
 }
 
 export class RemoteTaskHandler {
-    private job: CreateJobResponse;
-    private taskId: RemoteGenTaskId;
+    private job: Fiddle.remoteGen.CreateJobResponse;
+    private taskId: Fiddle.remoteGen.RemoteGenTaskId;
     private context: Finishable & InteractiveTaskContext;
     private generatorInvocation: DraftGeneratorInvocation;
     private lengthOfLastLogs = 0;
@@ -39,7 +32,7 @@ export class RemoteTaskHandler {
         this.generatorInvocation = generatorInvocation;
     }
 
-    public processUpdate(remoteTask: Task | undefined): void {
+    public processUpdate(remoteTask: Fiddle.remoteGen.Task | undefined): void {
         if (remoteTask == null) {
             this.context.fail("Task is missing on job status");
             this.context.finish();
@@ -54,7 +47,7 @@ export class RemoteTaskHandler {
             remoteTask.packages.length > 0
                 ? remoteTask.packages
                       .map((p) => {
-                          const coordinateStr = PackageCoordinate._visit(p.coordinate, {
+                          const coordinateStr = Fiddle.remoteGen.PackageCoordinate._visit(p.coordinate, {
                               npm: (npmPackage) => `${npmPackage.name}@${npmPackage.version}`,
                               maven: (mavenPackage) =>
                                   `${mavenPackage.group}:${mavenPackage.artifact}:${mavenPackage.version}`,
@@ -67,7 +60,7 @@ export class RemoteTaskHandler {
         );
 
         for (const newLog of remoteTask.logs.slice(this.lengthOfLastLogs)) {
-            const level = FiddleLogLevel._visit(newLog.level, {
+            const level = Fiddle.remoteGen.LogLevel._visit(newLog.level, {
                 debug: () => LogLevel.Debug,
                 info: () => LogLevel.Info,
                 warn: () => LogLevel.Warn,
@@ -102,7 +95,7 @@ export class RemoteTaskHandler {
         return this.context.isFinished();
     }
 
-    private async processFinishedTask(task: Task): Promise<void> {
+    private async processFinishedTask(task: Fiddle.remoteGen.Task): Promise<void> {
         if (
             task.status._type === "finished" &&
             task.status.hasFilesToDownload &&
@@ -129,14 +122,14 @@ async function downloadFilesForTask({
     absolutePathToLocalOutput,
     context,
 }: {
-    jobId: RemoteGenJobId;
-    taskId: RemoteGenTaskId;
+    jobId: Fiddle.remoteGen.RemoteGenJobId;
+    taskId: Fiddle.remoteGen.RemoteGenTaskId;
     absolutePathToLocalOutput: AbsoluteFilePath;
     context: Finishable & InteractiveTaskContext;
 }) {
     const writer = createWriteStream(absolutePathToLocalOutput);
     await axios
-        .get(urlJoin(FIDDLE_API_URL, `/remote-gen/tasks/${taskId}/jobs/${jobId}/downloadFiles`), {
+        .get(urlJoin(FIDDLE_ORIGIN, `/api/remote-gen/tasks/${taskId}/jobs/${jobId}/downloadFiles`), {
             responseType: "stream",
         })
         .then((response) => {
