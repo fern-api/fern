@@ -1,6 +1,6 @@
 import { TaskContext } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
-import { CreateJobResponse } from "@fern-fern/fiddle-coordinator-api-client/model/remoteGen";
+import { Fiddle } from "@fern-fern/fiddle-client-v2";
 import { IntermediateRepresentation } from "@fern-fern/ir-model";
 import { AxiosError } from "axios";
 import { createAndStartJob } from "./createAndStartJob";
@@ -22,7 +22,7 @@ export async function runRemoteGenerationForWorkspace({
         return;
     }
 
-    let job: CreateJobResponse;
+    let job: Fiddle.remoteGen.CreateJobResponse;
     try {
         job = await createAndStartJob({ workspace, organization, intermediateRepresentation });
     } catch (e) {

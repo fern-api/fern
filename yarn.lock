@@ -3386,7 +3386,7 @@ __metadata:
     "@fern-api/logger": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/fiddle-coordinator-api-client": ^0.0.7
+    "@fern-fern/fiddle-client-v2": ^0.0.14
     "@fern-fern/ir-model": 0.0.46
     "@types/jest": ^28.1.7
     "@types/node": ^18.7.11
@@ -3521,16 +3521,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-fern/fiddle-coordinator-api-client@npm:^0.0.7":
-  version: 0.0.7
-  resolution: "@fern-fern/fiddle-coordinator-api-client@npm:0.0.7"
+"@fern-fern/fiddle-client-v2@npm:^0.0.14":
+  version: 0.0.14
+  resolution: "@fern-fern/fiddle-client-v2@npm:0.0.14"
   dependencies:
-    "@fern-typescript/service-utils": 0.0.124
+    "@fern-typescript/service-utils": 0.0.194
     "@types/url-join": 4.0.1
-    "@types/uuid": 8.3.4
     url-join: 4.0.1
-    uuid: 8.3.2
-  checksum: 62959e887d5dafd8f1f5cf49aaa985ff0611bf118b5d15c211cacc2350a5850279d606b35f1e41ead7978253930a9c8ad53b925b65b1657a300982acb574f677
+  checksum: aa657d5c8e6afed7e155a875f9909d1e81160b9b883d04063321d226216c9a4bf75d54967a493a7490fef5905bad6cbc5dc39da946e7fc4127731243215c7302
   languageName: node
   linkType: hard
 
@@ -3541,12 +3539,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-typescript/service-utils@npm:0.0.124":
-  version: 0.0.124
-  resolution: "@fern-typescript/service-utils@npm:0.0.124"
+"@fern-typescript/service-utils@npm:0.0.194":
+  version: 0.0.194
+  resolution: "@fern-typescript/service-utils@npm:0.0.194"
   dependencies:
-    axios: "npm:^0.27.2"
-  checksum: e94d6fb8f1f29b005cd7679ca0c6e231ff4fb65d109176ccd74fc8dfb8573bbbc5118c1bd4e6d822c0011fe1696bc976c216c702c807ba2fa6a9f6426b30846c
+    axios: ^0.27.2
+    basic-auth: ^2.0.1
+    js-base64: ^3.7.2
+  checksum: e49c604af09f8cf6bafb5144f047411eb0f4e6ba44f06c1b037607610ca604f600c3b24a8a5ec0df7e3773ab886ca4bae7625e23687d8e9efc45011ede5837da
   languageName: node
   linkType: hard
 
@@ -5436,13 +5436,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/uuid@npm:8.3.4":
-  version: 8.3.4
-  resolution: "@types/uuid@npm:8.3.4"
-  checksum: 6f11f3ff70f30210edaa8071422d405e9c1d4e53abbe50fdce365150d3c698fe7bbff65c1e71ae080cbfb8fded860dbb5e174da96fdbbdfcaa3fb3daa474d20f
-  languageName: node
-  linkType: hard
-
 "@types/validate-npm-package-name@npm:^4.0.0":
   version: 4.0.0
   resolution: "@types/validate-npm-package-name@npm:4.0.0"
@@ -6657,6 +6650,15 @@ __metadata:
   version: 1.5.1
   resolution: "base64-js@npm:1.5.1"
   checksum: 669632eb3745404c2f822a18fc3a0122d2f9a7a13f7fb8b5823ee19d1d2ff9ee5b52c53367176ea4ad093c332fd5ab4bd0ebae5a8e27917a4105a4cfc86b1005
+  languageName: node
+  linkType: hard
+
+"basic-auth@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "basic-auth@npm:2.0.1"
+  dependencies:
+    safe-buffer: 5.1.2
+  checksum: 3419b805d5dfc518f3a05dcf42aa53aa9ce820e50b6df5097f9e186322e1bc733c36722b624802cd37e791035aa73b828ed814d8362333d42d7f5cd04d7a5e48
   languageName: node
   linkType: hard
 
@@ -12218,6 +12220,13 @@ env-cmd@toddbluhm/env-cmd:
     "@sideway/formula": ^3.0.0
     "@sideway/pinpoint": ^2.0.0
   checksum: eaf62f6c02f2edb1042f1ab04fc23a5918a2cb8f54bec84c6e1033624d8a462c10ae9518af55a3ba84f1793960450d58094eda308e7ef93c17edd4e3c8ef31d5
+  languageName: node
+  linkType: hard
+
+"js-base64@npm:^3.7.2":
+  version: 3.7.2
+  resolution: "js-base64@npm:3.7.2"
+  checksum: 573f28e9a27c3df60096d4d3f551bcb4fcb6d49161cf83396e9bad9b76f94736a70bb70b8808fe834dff2a388f76604ba09d6e153bbf181646e407720139fa5b
   languageName: node
   linkType: hard
 
@@ -17868,7 +17877,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"uuid@npm:8.3.2, uuid@npm:^8.3.2":
+"uuid@npm:^8.3.2":
   version: 8.3.2
   resolution: "uuid@npm:8.3.2"
   bin:

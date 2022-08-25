@@ -1,7 +1,7 @@
 import { DraftGeneratorInvocation } from "@fern-api/generators-configuration";
-import { RemoteGenTaskId } from "@fern-fern/fiddle-coordinator-api-client/model/remoteGen";
+import { Fiddle } from "@fern-fern/fiddle-client-v2";
 
 export interface GeneratorInvocationWithTaskId {
-    taskId: RemoteGenTaskId | undefined;
+    taskId: Fiddle.remoteGen.RemoteGenTaskId | undefined;
     generatorInvocation: DraftGeneratorInvocation;
 }
