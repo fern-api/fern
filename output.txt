@@ -1,6 +1,0 @@
-Running Fern Commands!
-[api]: Added java generator
-[api]: Added typescript generator
-[api]: Added postman generator
-[api]: Added openapi generator
-[api]: Failed to create job {"_error":"_unknown","_errorInstanceId":"c2025091-d9e6-44da-aa64-fa15cd3c1c67"}

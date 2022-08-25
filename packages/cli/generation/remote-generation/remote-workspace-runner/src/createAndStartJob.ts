@@ -33,7 +33,7 @@ async function createJob({ workspace, organization }: { workspace: Workspace; or
     });
 
     if (!createResponse.ok) {
-        createResponse.error._visit({
+        return createResponse.error._visit({
             illegalApiNameError: () => {
                 throw new Error("API name is invalid: " + workspace.name);
             },
@@ -52,8 +52,8 @@ async function createJob({ workspace, organization }: { workspace: Workspace; or
                 throw new Error("Unknown Error: " + JSON.stringify(createResponse.error));
             },
         });
-        throw new Error("Job did not succeed");
     }
+
     const job = createResponse.body;
     return job;
 }
