@@ -748,6 +748,7 @@ basic[basic/generated-java/basic-client/src/main/java/com/fern/basic/client/blog
 package com.fern.basic.client.blog.errors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.fern.basic.model.blog.GeneratorIdAndVersion;
 import java.lang.Object;
 import java.lang.Override;
@@ -761,6 +762,7 @@ public final class GeneratorsDoNotExistError {
     this.value = value;
   }
 
+  @JsonValue
   public List<GeneratorIdAndVersion> get() {
     return this.value;
   }
@@ -1786,6 +1788,7 @@ basic[basic/generated-java/basic-model/src/main/java/com/fern/basic/model/blog/A
 package com.fern.basic.model.blog;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
@@ -1798,6 +1801,7 @@ public final class Age {
     this.value = value;
   }
 
+  @JsonValue
   public int get() {
     return this.value;
   }
@@ -2513,6 +2517,7 @@ basic[basic/generated-java/basic-model/src/main/java/com/fern/basic/model/blog/G
 package com.fern.basic.model.blog;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -2525,6 +2530,7 @@ public final class GeneratorsDoNotExistErrorBody {
     this.value = value;
   }
 
+  @JsonValue
   public List<GeneratorIdAndVersion> get() {
     return this.value;
   }
@@ -2642,6 +2648,7 @@ basic[basic/generated-java/basic-model/src/main/java/com/fern/basic/model/blog/P
 package com.fern.basic.model.blog;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -2653,6 +2660,7 @@ public final class PostId {
     this.value = value;
   }
 
+  @JsonValue
   public String get() {
     return this.value;
   }
@@ -3042,6 +3050,7 @@ basic[basic/generated-java/basic-model/src/main/java/com/fern/basic/model/dummy/
 package com.fern.basic.model.dummy.service;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -3053,6 +3062,7 @@ public final class DummyId {
     this.value = value;
   }
 
+  @JsonValue
   public String get() {
     return this.value;
   }

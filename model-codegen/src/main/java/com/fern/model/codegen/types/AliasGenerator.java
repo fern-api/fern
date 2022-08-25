@@ -17,6 +17,7 @@ package com.fern.model.codegen.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.fern.codegen.GeneratedAlias;
 import com.fern.codegen.Generator;
 import com.fern.codegen.GeneratorContext;
@@ -134,6 +135,7 @@ public final class AliasGenerator extends Generator {
     private MethodSpec getGetMethod(TypeName aliasTypeName) {
         return MethodSpec.methodBuilder("get")
                 .addModifiers(Modifier.PUBLIC)
+                .addAnnotation(JsonValue.class)
                 .returns(aliasTypeName)
                 .addStatement("return this.$L", VALUE_FIELD_NAME)
                 .build();
