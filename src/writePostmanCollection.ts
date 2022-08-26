@@ -1,7 +1,7 @@
 import { validateSchema } from "@fern-api/config-management-commons";
-import { ExitStatusUpdate, GeneratorUpdate } from "@fern-fern/generator-logging-api-client/model";
-import { IntermediateRepresentation } from "@fern-fern/ir-model";
-import { GeneratorConfig } from "@fern-fern/ir-model/generators";
+import { GeneratorConfig } from "@fern-fern/generator-exec-client/model/config";
+import { ExitStatusUpdate, GeneratorUpdate } from "@fern-fern/generator-exec-client/model/logging";
+import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { CollectionService } from "@fern-fern/postman-collection-api-client/services/collection";
 import { readFile, writeFile } from "fs/promises";
 import path from "path";

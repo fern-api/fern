@@ -1,4 +1,4 @@
-import { ContainerType, PrimitiveType, Type, TypeDeclaration, TypeReference } from "@fern-fern/ir-model";
+import { ContainerType, PrimitiveType, Type, TypeDeclaration, TypeReference } from "@fern-fern/ir-model/types";
 import { isEqual, noop } from "lodash";
 import uuid from "uuid";
 

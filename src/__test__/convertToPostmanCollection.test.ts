@@ -1,3 +1,4 @@
+import { AbsoluteFilePath } from "@fern-api/core-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { loadWorkspace } from "@fern-api/workspace-loader";
 import { mkdir, writeFile } from "fs/promises";
@@ -12,8 +13,7 @@ describe("convertToOpenApi", () => {
         it(fixture, async () => {
             const fixtureDir = path.join(__dirname, "fixtures", fixture);
             const maybeLoadedWorkspace = await loadWorkspace({
-                absolutePathToWorkspace: fixtureDir,
-                version: 2,
+                absolutePathToWorkspace: AbsoluteFilePath.of(fixtureDir),
             });
             if (!maybeLoadedWorkspace.didSucceed) {
                 throw new Error(JSON.stringify(maybeLoadedWorkspace.failures));

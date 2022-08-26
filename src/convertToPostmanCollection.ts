@@ -1,4 +1,5 @@
-import { ApiAuth, AuthScheme, IntermediateRepresentation, TypeDeclaration } from "@fern-fern/ir-model";
+import { ApiAuth, AuthScheme } from "@fern-fern/ir-model/auth";
+import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import {
     HttpEndpoint,
     HttpHeader,
@@ -6,7 +7,8 @@ import {
     HttpPath,
     HttpService,
     QueryParameter,
-} from "@fern-fern/ir-model/services";
+} from "@fern-fern/ir-model/services/http";
+import { TypeDeclaration } from "@fern-fern/ir-model/types";
 import {
     PostmanCollectionEndpointItem,
     PostmanCollectionSchema,
