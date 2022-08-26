@@ -1,4 +1,6 @@
-import { ErrorDeclaration, FernConstants, Type, TypeDeclaration, TypeReference } from "@fern-fern/ir-model";
+import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
+import { FernConstants } from "@fern-fern/ir-model/ir";
+import { ResponseError, ResponseErrors } from "@fern-fern/ir-model/services/commons";
 import {
     HttpEndpoint,
     HttpHeader,
@@ -9,9 +11,8 @@ import {
     HttpService,
     PathParameter,
     QueryParameter,
-    ResponseError,
-    ResponseErrors,
-} from "@fern-fern/ir-model/services";
+} from "@fern-fern/ir-model/services/http";
+import { Type, TypeDeclaration, TypeReference } from "@fern-fern/ir-model/types";
 import { OpenAPIV3 } from "openapi-types";
 import path from "path";
 import { getDeclaredTypeNameKey } from "../convertToOpenApi";

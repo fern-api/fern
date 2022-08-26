@@ -1,4 +1,4 @@
-import { ApiAuth, AuthScheme, AuthSchemesRequirement } from "@fern-fern/ir-model";
+import { ApiAuth, AuthScheme, AuthSchemesRequirement } from "@fern-fern/ir-model/auth";
 import { OpenAPIV3 } from "openapi-types";
 
 export function constructEndpointSecurity(apiAuth: ApiAuth): OpenAPIV3.SecurityRequirementObject[] {

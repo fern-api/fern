@@ -1,4 +1,5 @@
-import { ErrorDeclaration, Type } from "@fern-fern/ir-model";
+import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
+import { Type } from "@fern-fern/ir-model/types";
 import {
     convertAlias,
     ConvertedType,

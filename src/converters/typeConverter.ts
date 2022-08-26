@@ -9,7 +9,7 @@ import {
     TypeDeclaration,
     TypeReference,
     UnionTypeDeclaration,
-} from "@fern-fern/ir-model";
+} from "@fern-fern/ir-model/types";
 import { OpenAPIV3 } from "openapi-types";
 
 export interface ConvertedType {

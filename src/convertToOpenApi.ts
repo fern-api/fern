@@ -1,4 +1,6 @@
-import { DeclaredTypeName, ErrorDeclaration, IntermediateRepresentation, TypeDeclaration } from "@fern-fern/ir-model";
+import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
+import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { DeclaredTypeName, TypeDeclaration } from "@fern-fern/ir-model/types";
 import { OpenAPIV3 } from "openapi-types";
 import { convertError } from "./converters/errorConverter";
 import { convertServices } from "./converters/servicesConverter";
