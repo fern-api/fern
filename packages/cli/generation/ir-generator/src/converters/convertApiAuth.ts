@@ -1,6 +1,7 @@
 import { RelativeFilePath } from "@fern-api/core-utils";
 import { RawSchemas, visitRawApiAuth, visitRawAuthSchemeDeclaration } from "@fern-api/yaml-schema";
-import { ApiAuth, AuthScheme, AuthSchemesRequirement, FernFilepath } from "@fern-fern/ir-model";
+import { ApiAuth, AuthScheme, AuthSchemesRequirement } from "@fern-fern/ir-model/auth";
+import { FernFilepath } from "@fern-fern/ir-model/commons";
 import { convertHttpHeader } from "./services/convertHttpService";
 
 export function convertApiAuth({

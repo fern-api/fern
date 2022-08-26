@@ -1,5 +1,5 @@
 import { RelativeFilePath } from "@fern-api/core-utils";
-import { FernFilepath } from "@fern-fern/ir-model";
+import { FernFilepath } from "@fern-fern/ir-model/commons";
 import { convertToFernFilepath } from "../utils/convertToFernFilepath";
 
 describe("convertToFernFilepath", () => {

@@ -1,6 +1,7 @@
 import { RelativeFilePath } from "@fern-api/core-utils";
 import { RawSchemas, visitRawTypeReference } from "@fern-api/yaml-schema";
-import { ContainerType, FernFilepath, TypeReference } from "@fern-fern/ir-model";
+import { FernFilepath } from "@fern-fern/ir-model/commons";
+import { ContainerType, TypeReference } from "@fern-fern/ir-model/types";
 import { parseTypeName } from "./parseTypeName";
 
 export declare namespace parseInlineType {

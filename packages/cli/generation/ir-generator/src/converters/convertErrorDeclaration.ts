@@ -1,6 +1,8 @@
 import { RelativeFilePath } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { ErrorDeclaration, FernFilepath, Type } from "@fern-fern/ir-model";
+import { FernFilepath } from "@fern-fern/ir-model/commons";
+import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
+import { Type } from "@fern-fern/ir-model/types";
 import { generateWireStringWithAllCasings } from "../utils/generateCasings";
 import { createTypeReferenceParser } from "../utils/parseInlineType";
 import { convertType } from "./type-declarations/convertTypeDeclaration";

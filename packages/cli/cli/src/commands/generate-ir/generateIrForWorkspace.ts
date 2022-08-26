@@ -1,7 +1,7 @@
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { TaskContext, TaskResult, TASK_FAILURE } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
-import { IntermediateRepresentation } from "@fern-fern/ir-model";
+import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { validateWorkspaceAndLogIssues } from "../validate/validateWorkspaceAndLogIssues";
 
 export async function generateIrForWorkspace({

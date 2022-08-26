@@ -1,6 +1,7 @@
 import { RelativeFilePath } from "@fern-api/core-utils";
 import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
-import { FernFilepath, Type, TypeDeclaration, TypeReference } from "@fern-fern/ir-model";
+import { FernFilepath } from "@fern-fern/ir-model/commons";
+import { Type, TypeDeclaration, TypeReference } from "@fern-fern/ir-model/types";
 import { generateWireStringWithAllCasings } from "../../utils/generateCasings";
 import { getDocs } from "../../utils/getDocs";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";

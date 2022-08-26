@@ -1,5 +1,6 @@
 import { RelativeFilePath } from "@fern-api/core-utils";
-import { ErrorDeclaration, Type, TypeReference } from "@fern-fern/ir-model";
+import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
+import { Type, TypeReference } from "@fern-fern/ir-model/types";
 import { convertErrorDeclaration } from "../converters/convertErrorDeclaration";
 import { convertToFernFilepath } from "../utils/convertToFernFilepath";
 

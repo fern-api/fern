@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
 import { DraftGeneratorInvocation } from "@fern-api/generators-configuration";
 import { Workspace } from "@fern-api/workspace-loader";
-import { IntermediateRepresentation } from "@fern-fern/ir-model";
+import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { mkdir, rm, writeFile } from "fs/promises";
 import os from "os";
 import path from "path";
