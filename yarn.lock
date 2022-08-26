@@ -2888,7 +2888,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/validator": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/ir-model": 0.0.46
+    "@fern-fern/ir-model": 0.0.184
     "@types/boxen": ^3.0.1
     "@types/inquirer": ^9.0.1
     "@types/is-ci": ^3.0.0
@@ -3133,7 +3133,7 @@ __metadata:
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/ir-model": 0.0.46
+    "@fern-fern/ir-model": 0.0.184
     "@types/jest": ^28.1.7
     "@types/lodash-es": ^4.17.6
     "@types/node": ^18.7.11
@@ -3199,7 +3199,8 @@ __metadata:
     "@fern-api/docker-utils": "workspace:*"
     "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/ir-model": 0.0.46
+    "@fern-fern/generator-exec-client": 0.0.5
+    "@fern-fern/ir-model": 0.0.184
     "@types/jest": ^28.1.7
     "@types/node": ^18.7.11
     "@types/tmp": ^0.2.3
@@ -3387,7 +3388,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/fiddle-client-v2": ^0.0.18
-    "@fern-fern/ir-model": 0.0.46
+    "@fern-fern/ir-model": 0.0.184
     "@types/jest": ^28.1.7
     "@types/node": ^18.7.11
     axios: ^0.27.2
@@ -3509,7 +3510,7 @@ __metadata:
     "@babel/preset-env": ^7.18.10
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
-    "@fern-fern/ir-model": 0.0.46
+    "@fern-fern/ir-model": 0.0.184
     "@types/jest": ^28.1.7
     "@types/node": ^18.7.11
     depcheck: ^1.4.3
@@ -3532,10 +3533,32 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/ir-model@npm:0.0.46":
-  version: 0.0.46
-  resolution: "@fern-fern/ir-model@npm:0.0.46"
-  checksum: 3b066996498ce5c6df03b8dd2b8d4b43266ac8bd1f6c565cc0f2997bd5e4c1329f61964a441878550a93c5f39d290c62376fabcfb604b69f0304a528d36fa240
+"@fern-fern/generator-exec-client@npm:0.0.5":
+  version: 0.0.5
+  resolution: "@fern-fern/generator-exec-client@npm:0.0.5"
+  dependencies:
+    "@fern-typescript/service-utils": 0.0.184
+    "@types/url-join": 4.0.1
+    url-join: 4.0.1
+  checksum: 51bad9f8edf1a343a5b374b2d69113a783fc4bec0c2caab84dae6a2ee1a58b8abac11bd76de74810cae8de967749e8689cda4d0bea2232faabc95eb58c6a5540
+  languageName: node
+  linkType: hard
+
+"@fern-fern/ir-model@npm:0.0.184":
+  version: 0.0.184
+  resolution: "@fern-fern/ir-model@npm:0.0.184"
+  checksum: e117e345080c137d0dc06be40325dbf65011621ed0d4f3c9b27b9e293222f489bc49b40f25e2bfad2f39e4e97c5332139576c8962f8286d03bb68fe853db67fc
+  languageName: node
+  linkType: hard
+
+"@fern-typescript/service-utils@npm:0.0.184":
+  version: 0.0.184
+  resolution: "@fern-typescript/service-utils@npm:0.0.184"
+  dependencies:
+    axios: ^0.27.2
+    basic-auth: ^2.0.1
+    js-base64: ^3.7.2
+  checksum: 173877b5eb6412e65f577cf7f2ce90317e81e5348bbba0cb6c1b272d10b44c0ad74f1bafb16428f88b42a1af51343f45b82d2664728d5d7f1cf00e987bd3f6be
   languageName: node
   linkType: hard
 

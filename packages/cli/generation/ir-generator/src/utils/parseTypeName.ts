@@ -1,5 +1,6 @@
 import { RelativeFilePath } from "@fern-api/core-utils";
-import { DeclaredTypeName, FernFilepath } from "@fern-fern/ir-model";
+import { FernFilepath } from "@fern-fern/ir-model/commons";
+import { DeclaredTypeName } from "@fern-fern/ir-model/types";
 import path from "path";
 import { convertToFernFilepath } from "./convertToFernFilepath";
 import { parseReferenceToTypeName } from "./parseReferenceToTypeName";

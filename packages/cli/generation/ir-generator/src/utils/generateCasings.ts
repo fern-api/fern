@@ -1,4 +1,4 @@
-import { StringWithAllCasings, WireStringWithAllCasings } from "@fern-fern/ir-model";
+import { StringWithAllCasings, WireStringWithAllCasings } from "@fern-fern/ir-model/commons";
 import { camelCase, snakeCase, upperFirst } from "lodash-es";
 
 export function generateStringWithAllCasings(originalValue: string): StringWithAllCasings {

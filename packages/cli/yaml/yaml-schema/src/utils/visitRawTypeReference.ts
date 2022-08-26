@@ -1,4 +1,4 @@
-import { PrimitiveType } from "@fern-fern/ir-model";
+import { PrimitiveType } from "@fern-fern/ir-model/types";
 
 const MAP_REGEX = /^map<\s*(.*)\s*,\s*(.*)\s*>$/;
 const LIST_REGEX = /^list<\s*(.*)\s*>$/;

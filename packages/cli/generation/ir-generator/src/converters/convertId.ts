@@ -1,6 +1,7 @@
 import { RelativeFilePath } from "@fern-api/core-utils";
 import { RawSchemas, RAW_DEFAULT_ID_TYPE } from "@fern-api/yaml-schema";
-import { FernFilepath, Type, TypeDeclaration } from "@fern-fern/ir-model";
+import { FernFilepath } from "@fern-fern/ir-model/commons";
+import { Type, TypeDeclaration } from "@fern-fern/ir-model/types";
 import { getDocs } from "../utils/getDocs";
 import { createTypeReferenceParser } from "../utils/parseInlineType";
 

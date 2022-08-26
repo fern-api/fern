@@ -1,7 +1,8 @@
 import { entries, noop, visitObject } from "@fern-api/core-utils";
 import { Workspace } from "@fern-api/workspace-loader";
 import { ServiceFileSchema } from "@fern-api/yaml-schema";
-import { FernFilepath, IntermediateRepresentation } from "@fern-fern/ir-model";
+import { FernFilepath } from "@fern-fern/ir-model/commons";
+import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { convertApiAuth } from "./converters/convertApiAuth";
 import { convertErrorDeclaration } from "./converters/convertErrorDeclaration";
 import { convertId } from "./converters/convertId";
