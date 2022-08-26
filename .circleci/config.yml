@@ -37,7 +37,7 @@ jobs:
           command: yarn generate-json-schema
       - run:
           name: fern check
-          command: npx fern-api@0.0.187 check
+          command: npx fern-api@0.0.188 check
       - run:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff --exit-code
