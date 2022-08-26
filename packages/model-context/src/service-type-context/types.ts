@@ -1,4 +1,4 @@
-import { TypeReference } from "@fern-fern/ir-model";
+import { TypeReference } from "@fern-fern/ir-model/types";
 
 export type ServiceTypeReference<M> = InlinedServiceTypeReference<M> | ModelServiceTypeReference;
 

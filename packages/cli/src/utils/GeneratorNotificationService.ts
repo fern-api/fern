@@ -1,5 +1,5 @@
-import { GeneratorUpdate } from "@fern-fern/generator-logging-api-client/model";
-import { GeneratorLoggingService } from "@fern-fern/generator-logging-api-client/services";
+import { GeneratorUpdate } from "@fern-fern/generator-exec-client/model/logging";
+import { GeneratorLoggingService } from "@fern-fern/generator-exec-client/services/logging";
 import { FernTypescriptGeneratorConfig } from "@fern-typescript/commons";
 
 export class GeneratorNotificationService {

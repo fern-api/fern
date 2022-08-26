@@ -1,4 +1,4 @@
-import { EnumTypeDeclaration, EnumValue } from "@fern-fern/ir-model";
+import { EnumTypeDeclaration, EnumValue } from "@fern-fern/ir-model/types";
 import {
     FernWriters,
     getTextOfTsNode,

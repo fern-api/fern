@@ -1,6 +1,7 @@
+import { AbsoluteFilePath } from "@fern-api/core-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { loadWorkspace } from "@fern-api/workspace-loader";
-import { IntermediateRepresentation } from "@fern-fern/ir-model";
+import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { writeVolumeToDisk } from "@fern-typescript/commons";
 import { rm } from "fs/promises";
 import { Volume } from "memfs/lib/volume";
@@ -36,8 +37,7 @@ export async function runEteTest({ testFile, pathToFixture, generateFiles }: run
     await deleteDirectory(pathToGenerated);
 
     const parseWorkspaceResult = await loadWorkspace({
-        absolutePathToWorkspace: absolutePathToFixture,
-        version: 1,
+        absolutePathToWorkspace: AbsoluteFilePath.of(absolutePathToFixture),
     });
     if (!parseWorkspaceResult.didSucceed) {
         throw new Error(JSON.stringify(parseWorkspaceResult.failures));

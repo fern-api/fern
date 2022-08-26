@@ -1,5 +1,6 @@
-import { FernConstants } from "@fern-fern/ir-model";
-import { DeclaredServiceName, HttpEndpoint } from "@fern-fern/ir-model/services";
+import { FernConstants } from "@fern-fern/ir-model/ir";
+import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
+import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
 import { DependencyManager } from "@fern-typescript/commons";
 import { GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/model-context";
 import { generateResponse } from "../commons/generate-response/generateResponse";

@@ -1,5 +1,5 @@
-import { PackageCoordinate } from "@fern-fern/generator-logging-api-client/model";
-import { NpmRegistryConfig } from "@fern-fern/ir-model/generators";
+import { NpmRegistryConfig } from "@fern-fern/generator-exec-client/model/config";
+import { PackageCoordinate } from "@fern-fern/generator-exec-client/model/logging";
 import { FernTypescriptGeneratorConfig } from "@fern-typescript/commons";
 import { CommandKey } from "./Command";
 

@@ -1,4 +1,4 @@
-import { WebSocketChannel, WebSocketOperation } from "@fern-fern/ir-model/services";
+import { WebSocketChannel, WebSocketOperation } from "@fern-fern/ir-model/services/websocket";
 import { DependencyManager, getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedWebSocketOperationTypes, ModelContext } from "@fern-typescript/model-context";
 import {

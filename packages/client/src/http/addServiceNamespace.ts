@@ -1,4 +1,4 @@
-import { HttpService } from "@fern-fern/ir-model/services";
+import { HttpService } from "@fern-fern/ir-model/services/http";
 import {
     DependencyManager,
     getReferenceToFernServiceUtilsType,

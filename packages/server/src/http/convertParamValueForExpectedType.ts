@@ -1,4 +1,4 @@
-import { ContainerType, PrimitiveType, Type, TypeReference } from "@fern-fern/ir-model";
+import { ContainerType, PrimitiveType, Type, TypeReference } from "@fern-fern/ir-model/types";
 import { ModelContext } from "@fern-typescript/model-context";
 import { SourceFile, ts } from "ts-morph";
 

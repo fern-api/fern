@@ -1,4 +1,4 @@
-import { HttpService } from "@fern-fern/ir-model/services";
+import { HttpService } from "@fern-fern/ir-model/services/http";
 import { DeclarationHandler } from "@fern-typescript/declaration-handler";
 import { generateHttpService } from "./http/generateHttpService";
 

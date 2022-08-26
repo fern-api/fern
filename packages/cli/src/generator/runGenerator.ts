@@ -1,5 +1,5 @@
 import { validateSchema } from "@fern-api/config-management-commons";
-import { ExitStatusUpdate, GeneratorUpdate, PackageCoordinate } from "@fern-fern/generator-logging-api-client/model";
+import { ExitStatusUpdate, GeneratorUpdate, PackageCoordinate } from "@fern-fern/generator-exec-client/model/logging";
 import {
     FernTypescriptGeneratorConfig,
     FernTypescriptGeneratorCustomConfig,

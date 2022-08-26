@@ -1074,7 +1074,9 @@ yarn.lock
   "/index.ts": "export * as model from \\"./model\\";
 export * as services from \\"./services\\";
 ",
-  "/model/api/_service-types/NoErrorsService/GetErrorBody.ts": "export type GetErrorBody = never;
+  "/model/index.ts": "export * as noErrors from \\"./no-errors\\";
+",
+  "/model/no-errors/_service-types/NoErrorsService/GetErrorBody.ts": "export type GetErrorBody = never;
 
 export declare namespace GetErrorBody {
     export interface _Visitor<Result> {
@@ -1090,7 +1092,7 @@ export const GetErrorBody = {
     _types: (): GetErrorBody[\\"_error\\"][] => [],
 } as const;
 ",
-  "/model/api/_service-types/NoErrorsService/GetResponse.ts": "import * as model from \\"../../..\\";
+  "/model/no-errors/_service-types/NoErrorsService/GetResponse.ts": "import * as model from \\"../../..\\";
 
 export type GetResponse = GetResponse.SuccessResponse | GetResponse.ErrorResponse;
 
@@ -1101,18 +1103,16 @@ export declare namespace GetResponse {
 
     export interface ErrorResponse {
         ok: false;
-        error: model.api.GetErrorBody;
+        error: model.noErrors.GetErrorBody;
     }
 }
 ",
-  "/model/api/_service-types/NoErrorsService/index.ts": "export * from \\"./GetErrorBody\\";
+  "/model/no-errors/_service-types/NoErrorsService/index.ts": "export * from \\"./GetErrorBody\\";
 export * from \\"./GetResponse\\";
 ",
-  "/model/api/_service-types/index.ts": "export * from \\"./NoErrorsService\\";
+  "/model/no-errors/_service-types/index.ts": "export * from \\"./NoErrorsService\\";
 ",
-  "/model/api/index.ts": "export * from \\"./_service-types\\";
-",
-  "/model/index.ts": "export * as api from \\"./api\\";
+  "/model/no-errors/index.ts": "export * from \\"./_service-types\\";
 ",
   "/package.json": "{
     \\"name\\": \\"no-errors\\",
@@ -1133,12 +1133,14 @@ export * from \\"./GetResponse\\";
         \\"typescript\\": \\"4.6.4\\"
     }
 }",
-  "/services/api/NoErrorsService.ts": "import { isResponseOk, defaultFetcher, Fetcher } from \\"@fern-typescript/service-utils\\";
+  "/services/index.ts": "export * as noErrors from \\"./no-errors\\";
+",
+  "/services/no-errors/NoErrorsService.ts": "import { isResponseOk, defaultFetcher, Fetcher } from \\"@fern-typescript/service-utils\\";
 import urlJoin from \\"url-join\\";
 import * as model from \\"../../model\\";
 
 export interface NoErrorsService {
-    get(): Promise<model.api.GetResponse>;
+    get(): Promise<model.noErrors.GetResponse>;
 }
 
 export declare namespace NoErrorsService {
@@ -1157,7 +1159,7 @@ export class NoErrorsService implements NoErrorsService {
         this.baseUrl = urlJoin(args.origin, \\"/\\");
     }
 
-    public async get(): Promise<model.api.GetResponse> {
+    public async get(): Promise<model.noErrors.GetResponse> {
         const encodedResponse = await this.fetcher({
             url: urlJoin(this.baseUrl, \\"/\\"),
             method: \\"GET\\",
@@ -1172,15 +1174,13 @@ export class NoErrorsService implements NoErrorsService {
         else {
             return {
                 ok: false,
-                error: encodedResponse.body as model.api.GetErrorBody
+                error: encodedResponse.body as model.noErrors.GetErrorBody
             };
         }
     }
 }
 ",
-  "/services/api/index.ts": "export * from \\"./NoErrorsService\\";
-",
-  "/services/index.ts": "export * as api from \\"./api\\";
+  "/services/no-errors/index.ts": "export * from \\"./NoErrorsService\\";
 ",
   "/tsconfig.json": "{
     \\"compilerOptions\\": {

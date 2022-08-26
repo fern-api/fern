@@ -1,4 +1,4 @@
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services";
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { File } from "@fern-typescript/declaration-handler";
 import { ClassDeclaration, InterfaceDeclaration, Scope, ts } from "ts-morph";

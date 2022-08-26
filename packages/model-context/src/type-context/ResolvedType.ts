@@ -4,7 +4,7 @@ import {
     ObjectTypeDeclaration,
     PrimitiveType,
     UnionTypeDeclaration,
-} from "@fern-fern/ir-model";
+} from "@fern-fern/ir-model/types";
 
 export type ResolvedType =
     | ResolvedType.Object

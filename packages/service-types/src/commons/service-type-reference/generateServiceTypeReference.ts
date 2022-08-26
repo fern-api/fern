@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { TypeReference } from "@fern-fern/ir-model";
+import { TypeReference } from "@fern-fern/ir-model/types";
 import { ModelServiceTypeReference } from "@fern-typescript/model-context/src/service-type-context/types";
 import { SourceFile } from "ts-morph";
 import { ServiceTypeName } from "./types";

@@ -1,4 +1,4 @@
-import { WebSocketChannel } from "@fern-fern/ir-model/services";
+import { WebSocketChannel } from "@fern-fern/ir-model/services/websocket";
 import { DependencyManager, getTextOfTsNode } from "@fern-typescript/commons";
 import { ClassDeclaration, SourceFile, ts } from "ts-morph";
 import { ClientConstants } from "../constants";

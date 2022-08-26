@@ -1,4 +1,4 @@
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services";
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
 import { DependencyManager } from "@fern-typescript/commons";
 import { GeneratedHttpEndpointTypes, ModelContext } from "@fern-typescript/model-context";
 import { SourceFile, ts } from "ts-morph";

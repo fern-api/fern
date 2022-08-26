@@ -1,5 +1,5 @@
-import { FernConstants } from "@fern-fern/ir-model";
-import { WebSocketChannel, WebSocketOperation } from "@fern-fern/ir-model/services";
+import { FernConstants } from "@fern-fern/ir-model/ir";
+import { WebSocketChannel, WebSocketOperation } from "@fern-fern/ir-model/services/websocket";
 import { DependencyManager } from "@fern-typescript/commons";
 import { GeneratedWebSocketOperationTypes, ModelContext } from "@fern-typescript/model-context";
 import { generateRequestTypes } from "./generateRequestTypes";

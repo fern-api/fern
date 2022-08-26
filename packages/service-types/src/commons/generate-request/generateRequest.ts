@@ -1,4 +1,4 @@
-import { TypeReference } from "@fern-fern/ir-model";
+import { TypeReference } from "@fern-fern/ir-model/types";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { ServiceTypeReference } from "@fern-typescript/model-context";
 import { OptionalKind, PropertySignatureStructure, SourceFile, ts } from "ts-morph";

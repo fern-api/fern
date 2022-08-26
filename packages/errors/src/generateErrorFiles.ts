@@ -1,4 +1,4 @@
-import { IntermediateRepresentation } from "@fern-fern/ir-model";
+import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { ModelContext } from "@fern-typescript/model-context";
 import { generateType } from "@fern-typescript/types";
 

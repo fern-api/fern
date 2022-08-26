@@ -1,4 +1,4 @@
-import { HttpMethod, HttpPath } from "@fern-fern/ir-model/services";
+import { HttpMethod, HttpPath } from "@fern-fern/ir-model/services/http";
 import { TypeReferenceNode } from "@fern-typescript/declaration-handler";
 import { ts } from "ts-morph";
 import { RequestWrapper } from "./constructRequestWrapper";

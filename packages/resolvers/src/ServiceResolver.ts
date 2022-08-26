@@ -1,5 +1,6 @@
-import { IntermediateRepresentation } from "@fern-fern/ir-model";
-import { DeclaredServiceName, HttpService } from "@fern-fern/ir-model/services";
+import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
+import { HttpService } from "@fern-fern/ir-model/services/http";
 import path from "path";
 import { StringifiedFernFilepath, stringifyFernFilepath } from "./stringify-fern-filepath";
 

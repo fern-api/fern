@@ -1,4 +1,5 @@
-import { ApiAuth, AuthScheme, TypeReference } from "@fern-fern/ir-model";
+import { ApiAuth, AuthScheme } from "@fern-fern/ir-model/auth";
+import { TypeReference } from "@fern-fern/ir-model/types";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { createPropertyAssignment } from "@fern-typescript/commons-v2";
 import { ExternalDependencies, ParsedAuthSchemes } from "@fern-typescript/declaration-handler";

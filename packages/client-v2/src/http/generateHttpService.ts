@@ -1,4 +1,4 @@
-import { HttpService } from "@fern-fern/ir-model/services";
+import { HttpService } from "@fern-fern/ir-model/services/http";
 import { getTextOfTsKeyword, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { File } from "@fern-typescript/declaration-handler";
 import { Scope, ts } from "ts-morph";

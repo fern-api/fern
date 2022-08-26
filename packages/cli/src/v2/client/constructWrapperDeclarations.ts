@@ -1,4 +1,4 @@
-import { IntermediateRepresentation } from "@fern-fern/ir-model";
+import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { ClientConstants } from "@fern-typescript/client-v2";
 import { WrapperDeclaration, WrapperName } from "@fern-typescript/commons-v2";
 import { isEqual } from "lodash-es";

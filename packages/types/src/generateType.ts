@@ -1,4 +1,4 @@
-import { Type } from "@fern-fern/ir-model";
+import { Type } from "@fern-fern/ir-model/types";
 import { ModelContext } from "@fern-typescript/model-context";
 import { SourceFile } from "ts-morph";
 import { generateEnumType } from "./enum/generateEnumType";

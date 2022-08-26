@@ -1,4 +1,4 @@
-import { FernFilepath } from "@fern-fern/ir-model";
+import { FernFilepath } from "@fern-fern/ir-model/commons";
 import { ImportStrategy } from "@fern-typescript/commons";
 import { Directory, SourceFile, ts } from "ts-morph";
 import { BaseModelContext } from "../base-model-context/BaseModelContext";

@@ -1,5 +1,5 @@
 import { Values } from "@fern-api/core-utils";
-import { IntermediateRepresentation } from "@fern-fern/ir-model";
+import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { GeneratorContext } from "@fern-typescript/declaration-handler";
 import { Volume } from "memfs/lib/volume";
 import { NpmPackage } from "./constructNpmPackageForCommand";

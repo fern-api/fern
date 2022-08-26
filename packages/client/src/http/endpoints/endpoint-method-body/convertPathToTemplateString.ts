@@ -1,4 +1,4 @@
-import { HttpPath } from "@fern-fern/ir-model/services";
+import { HttpPath } from "@fern-fern/ir-model/services/http";
 import { ts } from "ts-morph";
 import { ClientConstants } from "../../../constants";
 

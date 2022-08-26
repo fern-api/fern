@@ -1,4 +1,6 @@
-import { DeclaredErrorName, DeclaredTypeName, IntermediateRepresentation, TypeReference } from "@fern-fern/ir-model";
+import { DeclaredErrorName } from "@fern-fern/ir-model/errors";
+import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { DeclaredTypeName, TypeReference } from "@fern-fern/ir-model/types";
 import { ServiceDeclarationHandler, WrapperDeclarationHandler } from "@fern-typescript/client-v2";
 import { File, GeneratorContext } from "@fern-typescript/declaration-handler";
 import { ErrorDeclarationHandler } from "@fern-typescript/errors-v2";

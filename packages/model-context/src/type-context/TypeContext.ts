@@ -1,11 +1,5 @@
-import {
-    ContainerType,
-    DeclaredTypeName,
-    IntermediateRepresentation,
-    PrimitiveType,
-    Type,
-    TypeReference,
-} from "@fern-fern/ir-model";
+import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { ContainerType, DeclaredTypeName, PrimitiveType, Type, TypeReference } from "@fern-fern/ir-model/types";
 import { ImportStrategy } from "@fern-typescript/commons";
 import { Directory, SourceFile, ts } from "ts-morph";
 import { BaseModelContext } from "../base-model-context/BaseModelContext";

@@ -1,4 +1,4 @@
-import { AliasTypeDeclaration } from "@fern-fern/ir-model";
+import { AliasTypeDeclaration } from "@fern-fern/ir-model/types";
 import { getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { ModelContext } from "@fern-typescript/model-context";
 import { SourceFile } from "ts-morph";

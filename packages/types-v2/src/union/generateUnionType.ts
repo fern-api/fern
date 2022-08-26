@@ -1,4 +1,4 @@
-import { TypeReference } from "@fern-fern/ir-model";
+import { TypeReference } from "@fern-fern/ir-model/types";
 import {
     FernWriters,
     getTextOfTsNode,

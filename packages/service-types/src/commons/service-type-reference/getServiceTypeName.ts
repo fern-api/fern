@@ -1,4 +1,4 @@
-import { FernFilepath } from "@fern-fern/ir-model";
+import { FernFilepath } from "@fern-fern/ir-model/commons";
 import { ModelContext } from "@fern-typescript/model-context";
 
 export function getServiceTypeName({

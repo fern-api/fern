@@ -1,4 +1,4 @@
-import { TypeReference } from "@fern-fern/ir-model";
+import { TypeReference } from "@fern-fern/ir-model/types";
 import { File, TypeReferenceNode } from "@fern-typescript/declaration-handler";
 
 export function getReferenceToMaybeVoidType(reference: TypeReference, file: File): TypeReferenceNode | undefined {

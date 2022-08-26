@@ -1,4 +1,4 @@
-import { ContainerType, PrimitiveType, TypeReference } from "@fern-fern/ir-model";
+import { ContainerType, PrimitiveType, TypeReference } from "@fern-fern/ir-model/types";
 import { TypeReferenceNode } from "@fern-typescript/declaration-handler";
 import { SourceFile, ts } from "ts-morph";
 import { ImportDeclaration } from "../../imports-manager/ImportsManager";

@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { IntermediateRepresentation } from "@fern-fern/ir-model";
+import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { DependencyManager, FernTypescriptGeneratorMode, generateTypeScriptProject } from "@fern-typescript/commons";
 import { generateErrorFiles } from "@fern-typescript/errors";
 import { ModelContext } from "@fern-typescript/model-context";

@@ -1,4 +1,4 @@
-import { DeclaredTypeName } from "@fern-fern/ir-model";
+import { DeclaredTypeName } from "@fern-fern/ir-model/types";
 import { ExportedFilePath } from "../../exports-manager/ExportedFilePath";
 import { getExportedDirectoriesForFernFilepath } from "./getExportedDirectoriesForFernFilepath";
 import { getFileNameForType } from "./getFileNameForType";

@@ -1,4 +1,4 @@
-import { WebSocketChannel } from "@fern-fern/ir-model/services";
+import { WebSocketChannel } from "@fern-fern/ir-model/services/websocket";
 import {
     createDirectoriesForFernFilepath,
     createSourceFileAndExportFromModule,

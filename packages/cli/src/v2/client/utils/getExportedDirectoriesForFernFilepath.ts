@@ -1,4 +1,4 @@
-import { FernFilepath } from "@fern-fern/ir-model";
+import { FernFilepath } from "@fern-fern/ir-model/commons";
 import { ExportedFilePathPart } from "../../exports-manager/ExportedFilePath";
 
 export const ROOT_API_DIRECTORY = "/api";

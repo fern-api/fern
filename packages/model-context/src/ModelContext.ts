@@ -1,11 +1,6 @@
-import {
-    DeclaredErrorName,
-    DeclaredTypeName,
-    ErrorDeclaration,
-    IntermediateRepresentation,
-    Type,
-    TypeReference,
-} from "@fern-fern/ir-model";
+import { DeclaredErrorName, ErrorDeclaration } from "@fern-fern/ir-model/errors";
+import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { DeclaredTypeName, Type, TypeReference } from "@fern-fern/ir-model/types";
 import { ImportStrategy } from "@fern-typescript/commons";
 import { Directory, SourceFile, ts } from "ts-morph";
 import { ErrorContext } from "./error-context/ErrorContext";

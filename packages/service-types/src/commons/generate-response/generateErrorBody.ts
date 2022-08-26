@@ -1,5 +1,6 @@
-import { FernConstants, PrimitiveType, TypeReference } from "@fern-fern/ir-model";
-import { ResponseError, ResponseErrors } from "@fern-fern/ir-model/services";
+import { FernConstants } from "@fern-fern/ir-model/ir";
+import { ResponseError, ResponseErrors } from "@fern-fern/ir-model/services/commons";
+import { PrimitiveType, TypeReference } from "@fern-fern/ir-model/types";
 import { DependencyManager, generateUuidCall } from "@fern-typescript/commons";
 import { ModelContext } from "@fern-typescript/model-context";
 import {

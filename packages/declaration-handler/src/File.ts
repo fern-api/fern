@@ -1,5 +1,8 @@
-import { DeclaredErrorName, ErrorDeclaration, FernConstants, TypeReference } from "@fern-fern/ir-model";
-import { DeclaredServiceName, HttpService } from "@fern-fern/ir-model/services";
+import { DeclaredErrorName, ErrorDeclaration } from "@fern-fern/ir-model/errors";
+import { FernConstants } from "@fern-fern/ir-model/ir";
+import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
+import { HttpService } from "@fern-fern/ir-model/services/http";
+import { TypeReference } from "@fern-fern/ir-model/types";
 import { WrapperName } from "@fern-typescript/commons-v2";
 import { ResolvedType } from "@fern-typescript/resolvers";
 import { SourceFile, ts } from "ts-morph";

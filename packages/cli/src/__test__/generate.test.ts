@@ -1,8 +1,9 @@
 import { validateWorkspaceAndLogIssues } from "@fern-api/cli";
-import { getDirectoryContents } from "@fern-api/core-utils";
+import { AbsoluteFilePath, getDirectoryContents } from "@fern-api/core-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { createMockTaskContext } from "@fern-api/task-context";
 import { loadWorkspace } from "@fern-api/workspace-loader";
-import { GeneratorConfig } from "@fern-fern/ir-model/generators";
+import { GeneratorConfig } from "@fern-fern/generator-exec-client/model/config";
 import { installAndCompileGeneratedProjects } from "@fern-typescript/testing-utils";
 import { mkdir, rm, symlink, writeFile } from "fs/promises";
 import path from "path";
@@ -32,14 +33,13 @@ describe("runGenerator", () => {
                 await mkdir(generatedDir, { recursive: true });
 
                 const parseWorkspaceResult = await loadWorkspace({
-                    absolutePathToWorkspace: path.join(fixturePath, ".fern", "api"),
-                    version: 2,
+                    absolutePathToWorkspace: AbsoluteFilePath.of(fixturePath),
                 });
                 if (!parseWorkspaceResult.didSucceed) {
                     throw new Error(JSON.stringify(parseWorkspaceResult.failures));
                 }
 
-                await validateWorkspaceAndLogIssues(parseWorkspaceResult.workspace);
+                await validateWorkspaceAndLogIssues(parseWorkspaceResult.workspace, createMockTaskContext());
 
                 const intermediateRepresentation = await generateIntermediateRepresentation(
                     parseWorkspaceResult.workspace
@@ -77,7 +77,7 @@ describe("runGenerator", () => {
 
                         await runGenerator(configJsonPath);
 
-                        const directoryContents = await getDirectoryContents(outputPath);
+                        const directoryContents = await getDirectoryContents(AbsoluteFilePath.of(outputPath));
                         expect(directoryContents).toMatchSnapshot();
 
                         // compile after snapshotting, so directoryContents doesn't

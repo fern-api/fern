@@ -1,4 +1,5 @@
-import { TypeReference, WireStringWithAllCasings } from "@fern-fern/ir-model";
+import { WireStringWithAllCasings } from "@fern-fern/ir-model/commons";
+import { TypeReference } from "@fern-fern/ir-model/types";
 import { ImportStrategy } from "@fern-typescript/commons";
 import { File, TypeReferenceNode } from "@fern-typescript/declaration-handler";
 import { ResolvedType } from "@fern-typescript/resolvers";

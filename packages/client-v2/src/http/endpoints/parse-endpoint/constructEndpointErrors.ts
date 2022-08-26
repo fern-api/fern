@@ -1,5 +1,6 @@
-import { ErrorDeclaration } from "@fern-fern/ir-model";
-import { HttpEndpoint, HttpService, ResponseError } from "@fern-fern/ir-model/services";
+import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
+import { ResponseError } from "@fern-fern/ir-model/services/commons";
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
 import { getTextOfTsNode, getWriterForMultiLineUnionType, visitorUtils } from "@fern-typescript/commons";
 import { createPropertyAssignment } from "@fern-typescript/commons-v2";
 import { TsNodeMaybeWithDocs } from "@fern-typescript/commons/src/writers/getWriterForMultiLineUnionType";

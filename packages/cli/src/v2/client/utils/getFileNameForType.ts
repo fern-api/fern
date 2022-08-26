@@ -1,4 +1,4 @@
-import { DeclaredTypeName } from "@fern-fern/ir-model";
+import { DeclaredTypeName } from "@fern-fern/ir-model/types";
 import { getGeneratedTypeName } from "./getGeneratedTypeName";
 
 export function getFileNameForType(typeName: DeclaredTypeName): string {

@@ -1,4 +1,4 @@
-import { DeclaredServiceName } from "@fern-fern/ir-model/services";
+import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
 import { ServiceReference } from "@fern-typescript/declaration-handler";
 import { SourceFile } from "ts-morph";
 import { getRelativePathAsModuleSpecifierTo } from "../../getRelativePathAsModuleSpecifierTo";

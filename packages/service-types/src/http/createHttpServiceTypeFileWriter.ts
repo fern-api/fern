@@ -1,4 +1,5 @@
-import { DeclaredServiceName, HttpEndpoint } from "@fern-fern/ir-model/services";
+import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
+import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
 import { HttpServiceTypeMetadata, ModelContext } from "@fern-typescript/model-context";
 import { ServiceTypeFileWriter } from "../commons/service-type-reference/generateServiceTypeReference";
 import { getServiceTypeName } from "../commons/service-type-reference/getServiceTypeName";

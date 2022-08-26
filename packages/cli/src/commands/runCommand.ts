@@ -1,5 +1,5 @@
-import { model as GeneratorLoggingApiModel } from "@fern-fern/generator-logging-api-client";
-import { GeneratorUpdate } from "@fern-fern/generator-logging-api-client/model";
+import { model as GeneratorLoggingApiModel } from "@fern-fern/generator-exec-client";
+import { GeneratorUpdate } from "@fern-fern/generator-exec-client/model/logging";
 import { BUILD_PROJECT_SCRIPT_NAME, FernTypescriptGeneratorConfig, writeVolumeToDisk } from "@fern-typescript/commons";
 import { createLogger, LogLevel } from "@fern-typescript/commons-v2";
 import execa from "execa";
@@ -11,11 +11,11 @@ import { loadIntermediateRepresentation } from "../utils/loadIntermediateReprese
 import { GeneratorContextImpl } from "../v2/generator-context/GeneratorContextImpl";
 import { Command } from "./Command";
 
-const LOG_LEVEL_CONVERSIONS: Record<LogLevel, GeneratorLoggingApiModel.LogLevel> = {
-    [LogLevel.Debug]: GeneratorLoggingApiModel.LogLevel.Debug,
-    [LogLevel.Info]: GeneratorLoggingApiModel.LogLevel.Info,
-    [LogLevel.Warn]: GeneratorLoggingApiModel.LogLevel.Warn,
-    [LogLevel.Error]: GeneratorLoggingApiModel.LogLevel.Error,
+const LOG_LEVEL_CONVERSIONS: Record<LogLevel, GeneratorLoggingApiModel.logging.LogLevel> = {
+    [LogLevel.Debug]: GeneratorLoggingApiModel.logging.LogLevel.Debug,
+    [LogLevel.Info]: GeneratorLoggingApiModel.logging.LogLevel.Info,
+    [LogLevel.Warn]: GeneratorLoggingApiModel.logging.LogLevel.Warn,
+    [LogLevel.Error]: GeneratorLoggingApiModel.logging.LogLevel.Error,
 };
 
 export async function runCommand({
