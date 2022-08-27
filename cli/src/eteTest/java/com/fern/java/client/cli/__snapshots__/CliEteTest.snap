@@ -1928,8 +1928,8 @@ public final class Author {
       defaultImpl = Unknown.class
   )
   @JsonSubTypes({
-      @JsonSubTypes.Type(value = InternalAnonymousValue.class, name = "WireStringWithAllCasings{originalValue=anonymous, camelCase=anonymous, pascalCase=Anonymous, snakeCase=anonymous, screamingSnakeCase=ANONYMOUS, wireValue=anonymous}"),
-      @JsonSubTypes.Type(value = InternalNameValue.class, name = "WireStringWithAllCasings{originalValue=name, camelCase=name, pascalCase=Name, snakeCase=name, screamingSnakeCase=NAME, wireValue=name}")
+      @JsonSubTypes.Type(value = InternalAnonymousValue.class, name = "anonymous"),
+      @JsonSubTypes.Type(value = InternalNameValue.class, name = "name")
   })
   @JsonIgnoreProperties(
       ignoreUnknown = true
@@ -1939,7 +1939,7 @@ public final class Author {
   }
 
   @Value.Immutable
-  @JsonTypeName("WireStringWithAllCasings{originalValue=anonymous, camelCase=anonymous, pascalCase=Anonymous, snakeCase=anonymous, screamingSnakeCase=ANONYMOUS, wireValue=anonymous}")
+  @JsonTypeName("anonymous")
   @JsonDeserialize(
       as = ImmutableAuthor.InternalAnonymousValue.class
   )
@@ -1955,7 +1955,7 @@ public final class Author {
   }
 
   @Value.Immutable
-  @JsonTypeName("WireStringWithAllCasings{originalValue=name, camelCase=name, pascalCase=Name, snakeCase=name, screamingSnakeCase=NAME, wireValue=name}")
+  @JsonTypeName("name")
   @JsonDeserialize(
       as = ImmutableAuthor.InternalNameValue.class
   )
