@@ -1,0 +1,12 @@
+types:
+  WireStringWithAllCasings:
+    extends: StringWithAllCasings
+    properties:
+      wireValue: string
+  StringWithAllCasings:
+    properties:
+      originalValue: string
+      camelCase: string
+      pascalCase: string
+      snakeCase: string
+      screamingSnakeCase: string

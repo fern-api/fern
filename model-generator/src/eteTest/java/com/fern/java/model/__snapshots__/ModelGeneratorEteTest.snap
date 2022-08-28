@@ -970,3 +970,429 @@ public final class DummyId {
 }
 
 ]
+
+
+basic[basic/generated-java/src/main/java/com/fern/basic/model/ir/types/IStringWithAllCasings.java]=[
+package com.fern.basic.model.ir.types;
+
+import java.lang.String;
+
+public interface IStringWithAllCasings {
+  String getOriginalValue();
+
+  String getCamelCase();
+
+  String getPascalCase();
+
+  String getSnakeCase();
+
+  String getScreamingSnakeCase();
+}
+
+]
+
+
+basic[basic/generated-java/src/main/java/com/fern/basic/model/ir/types/StringWithAllCasings.java]=[
+package com.fern.basic.model.ir.types;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Objects;
+
+@JsonDeserialize(
+    builder = StringWithAllCasings.Builder.class
+)
+public final class StringWithAllCasings implements IStringWithAllCasings {
+  private final String originalValue;
+
+  private final String camelCase;
+
+  private final String pascalCase;
+
+  private final String snakeCase;
+
+  private final String screamingSnakeCase;
+
+  private int _cachedHashCode;
+
+  StringWithAllCasings(String originalValue, String camelCase, String pascalCase, String snakeCase,
+      String screamingSnakeCase) {
+    this.originalValue = originalValue;
+    this.camelCase = camelCase;
+    this.pascalCase = pascalCase;
+    this.snakeCase = snakeCase;
+    this.screamingSnakeCase = screamingSnakeCase;
+  }
+
+  @JsonProperty("originalValue")
+  @Override
+  public String getOriginalValue() {
+    return originalValue;
+  }
+
+  @JsonProperty("camelCase")
+  @Override
+  public String getCamelCase() {
+    return camelCase;
+  }
+
+  @JsonProperty("pascalCase")
+  @Override
+  public String getPascalCase() {
+    return pascalCase;
+  }
+
+  @JsonProperty("snakeCase")
+  @Override
+  public String getSnakeCase() {
+    return snakeCase;
+  }
+
+  @JsonProperty("screamingSnakeCase")
+  @Override
+  public String getScreamingSnakeCase() {
+    return screamingSnakeCase;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    return other instanceof StringWithAllCasings && equalTo((StringWithAllCasings) other);
+  }
+
+  private boolean equalTo(StringWithAllCasings other) {
+    return originalValue.equals(other.originalValue) && camelCase.equals(other.camelCase) && pascalCase.equals(other.pascalCase) && snakeCase.equals(other.snakeCase) && screamingSnakeCase.equals(other.screamingSnakeCase);
+  }
+
+  @Override
+  public int hashCode() {
+    if (_cachedHashCode == 0) {
+      _cachedHashCode = Objects.hash(this.originalValue, this.camelCase, this.pascalCase, this.snakeCase, this.screamingSnakeCase);
+    }
+    return _cachedHashCode;
+  }
+
+  @Override
+  public String toString() {
+    return "StringWithAllCasings{" + "originalValue: " + originalValue + ", camelCase: " + camelCase + ", pascalCase: " + pascalCase + ", snakeCase: " + snakeCase + ", screamingSnakeCase: " + screamingSnakeCase + "}";
+  }
+
+  public static OriginalValueStage builder() {
+    return new Builder();
+  }
+
+  public interface OriginalValueStage {
+    CamelCaseStage originalValue(String originalValue);
+
+    Builder from(StringWithAllCasings other);
+  }
+
+  public interface CamelCaseStage {
+    PascalCaseStage camelCase(String camelCase);
+  }
+
+  public interface PascalCaseStage {
+    SnakeCaseStage pascalCase(String pascalCase);
+  }
+
+  public interface SnakeCaseStage {
+    ScreamingSnakeCaseStage snakeCase(String snakeCase);
+  }
+
+  public interface ScreamingSnakeCaseStage {
+    _FinalStage screamingSnakeCase(String screamingSnakeCase);
+  }
+
+  public interface _FinalStage {
+    StringWithAllCasings build();
+  }
+
+  @JsonIgnoreProperties(
+      ignoreUnknown = true
+  )
+  static final class Builder implements OriginalValueStage, CamelCaseStage, PascalCaseStage, SnakeCaseStage, ScreamingSnakeCaseStage, _FinalStage {
+    private String originalValue;
+
+    private String camelCase;
+
+    private String pascalCase;
+
+    private String snakeCase;
+
+    private String screamingSnakeCase;
+
+    private Builder() {
+    }
+
+    @Override
+    public Builder from(StringWithAllCasings other) {
+      originalValue(other.getOriginalValue());
+      camelCase(other.getCamelCase());
+      pascalCase(other.getPascalCase());
+      snakeCase(other.getSnakeCase());
+      screamingSnakeCase(other.getScreamingSnakeCase());
+      return this;
+    }
+
+    @Override
+    @JsonSetter("originalValue")
+    public CamelCaseStage originalValue(String originalValue) {
+      this.originalValue = originalValue;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("camelCase")
+    public PascalCaseStage camelCase(String camelCase) {
+      this.camelCase = camelCase;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("pascalCase")
+    public SnakeCaseStage pascalCase(String pascalCase) {
+      this.pascalCase = pascalCase;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("snakeCase")
+    public ScreamingSnakeCaseStage snakeCase(String snakeCase) {
+      this.snakeCase = snakeCase;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("screamingSnakeCase")
+    public _FinalStage screamingSnakeCase(String screamingSnakeCase) {
+      this.screamingSnakeCase = screamingSnakeCase;
+      return this;
+    }
+
+    @Override
+    public StringWithAllCasings build() {
+      return new StringWithAllCasings(originalValue, camelCase, pascalCase, snakeCase, screamingSnakeCase);
+    }
+  }
+}
+
+]
+
+
+basic[basic/generated-java/src/main/java/com/fern/basic/model/ir/types/WireStringWithAllCasings.java]=[
+package com.fern.basic.model.ir.types;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Objects;
+
+@JsonDeserialize(
+    builder = WireStringWithAllCasings.Builder.class
+)
+public final class WireStringWithAllCasings implements IStringWithAllCasings {
+  private final String originalValue;
+
+  private final String camelCase;
+
+  private final String pascalCase;
+
+  private final String snakeCase;
+
+  private final String screamingSnakeCase;
+
+  private final String wireValue;
+
+  private int _cachedHashCode;
+
+  WireStringWithAllCasings(String originalValue, String camelCase, String pascalCase,
+      String snakeCase, String screamingSnakeCase, String wireValue) {
+    this.originalValue = originalValue;
+    this.camelCase = camelCase;
+    this.pascalCase = pascalCase;
+    this.snakeCase = snakeCase;
+    this.screamingSnakeCase = screamingSnakeCase;
+    this.wireValue = wireValue;
+  }
+
+  @JsonProperty("originalValue")
+  @Override
+  public String getOriginalValue() {
+    return originalValue;
+  }
+
+  @JsonProperty("camelCase")
+  @Override
+  public String getCamelCase() {
+    return camelCase;
+  }
+
+  @JsonProperty("pascalCase")
+  @Override
+  public String getPascalCase() {
+    return pascalCase;
+  }
+
+  @JsonProperty("snakeCase")
+  @Override
+  public String getSnakeCase() {
+    return snakeCase;
+  }
+
+  @JsonProperty("screamingSnakeCase")
+  @Override
+  public String getScreamingSnakeCase() {
+    return screamingSnakeCase;
+  }
+
+  @JsonProperty("wireValue")
+  public String getWireValue() {
+    return wireValue;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    return other instanceof WireStringWithAllCasings && equalTo((WireStringWithAllCasings) other);
+  }
+
+  private boolean equalTo(WireStringWithAllCasings other) {
+    return originalValue.equals(other.originalValue) && camelCase.equals(other.camelCase) && pascalCase.equals(other.pascalCase) && snakeCase.equals(other.snakeCase) && screamingSnakeCase.equals(other.screamingSnakeCase) && wireValue.equals(other.wireValue);
+  }
+
+  @Override
+  public int hashCode() {
+    if (_cachedHashCode == 0) {
+      _cachedHashCode = Objects.hash(this.originalValue, this.camelCase, this.pascalCase, this.snakeCase, this.screamingSnakeCase, this.wireValue);
+    }
+    return _cachedHashCode;
+  }
+
+  @Override
+  public String toString() {
+    return "WireStringWithAllCasings{" + "originalValue: " + originalValue + ", camelCase: " + camelCase + ", pascalCase: " + pascalCase + ", snakeCase: " + snakeCase + ", screamingSnakeCase: " + screamingSnakeCase + ", wireValue: " + wireValue + "}";
+  }
+
+  public static OriginalValueStage builder() {
+    return new Builder();
+  }
+
+  public interface OriginalValueStage {
+    CamelCaseStage originalValue(String originalValue);
+
+    Builder from(WireStringWithAllCasings other);
+  }
+
+  public interface CamelCaseStage {
+    PascalCaseStage camelCase(String camelCase);
+  }
+
+  public interface PascalCaseStage {
+    SnakeCaseStage pascalCase(String pascalCase);
+  }
+
+  public interface SnakeCaseStage {
+    ScreamingSnakeCaseStage snakeCase(String snakeCase);
+  }
+
+  public interface ScreamingSnakeCaseStage {
+    WireValueStage screamingSnakeCase(String screamingSnakeCase);
+  }
+
+  public interface WireValueStage {
+    _FinalStage wireValue(String wireValue);
+  }
+
+  public interface _FinalStage {
+    WireStringWithAllCasings build();
+  }
+
+  @JsonIgnoreProperties(
+      ignoreUnknown = true
+  )
+  static final class Builder implements OriginalValueStage, CamelCaseStage, PascalCaseStage, SnakeCaseStage, ScreamingSnakeCaseStage, WireValueStage, _FinalStage {
+    private String originalValue;
+
+    private String camelCase;
+
+    private String pascalCase;
+
+    private String snakeCase;
+
+    private String screamingSnakeCase;
+
+    private String wireValue;
+
+    private Builder() {
+    }
+
+    @Override
+    public Builder from(WireStringWithAllCasings other) {
+      originalValue(other.getOriginalValue());
+      camelCase(other.getCamelCase());
+      pascalCase(other.getPascalCase());
+      snakeCase(other.getSnakeCase());
+      screamingSnakeCase(other.getScreamingSnakeCase());
+      wireValue(other.getWireValue());
+      return this;
+    }
+
+    @Override
+    @JsonSetter("originalValue")
+    public CamelCaseStage originalValue(String originalValue) {
+      this.originalValue = originalValue;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("camelCase")
+    public PascalCaseStage camelCase(String camelCase) {
+      this.camelCase = camelCase;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("pascalCase")
+    public SnakeCaseStage pascalCase(String pascalCase) {
+      this.pascalCase = pascalCase;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("snakeCase")
+    public ScreamingSnakeCaseStage snakeCase(String snakeCase) {
+      this.snakeCase = snakeCase;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("screamingSnakeCase")
+    public WireValueStage screamingSnakeCase(String screamingSnakeCase) {
+      this.screamingSnakeCase = screamingSnakeCase;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("wireValue")
+    public _FinalStage wireValue(String wireValue) {
+      this.wireValue = wireValue;
+      return this;
+    }
+
+    @Override
+    public WireStringWithAllCasings build() {
+      return new WireStringWithAllCasings(originalValue, camelCase, pascalCase, snakeCase, screamingSnakeCase, wireValue);
+    }
+  }
+}
+
+]

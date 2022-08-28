@@ -26,33 +26,43 @@ import com.fern.java.output.GeneratedInterfaceOutput;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public final class ObjectGenerator extends AbstractFileGenerator {
     private final ObjectTypeDeclaration objectTypeDeclaration;
-    private final List<GeneratedInterfaceOutput> extendedInterfaces;
+    private final Optional<GeneratedInterfaceOutput> selfInterface;
+    private final List<GeneratedInterfaceOutput> extendedInterfaces = new ArrayList<>();
 
     public ObjectGenerator(
             ObjectTypeDeclaration objectTypeDeclaration,
+            Optional<GeneratedInterfaceOutput> selfInterface,
             List<GeneratedInterfaceOutput> extendedInterfaces,
             AbstractGeneratorContext generatorContext,
             ClassName className) {
         super(className, generatorContext);
         this.objectTypeDeclaration = objectTypeDeclaration;
-        this.extendedInterfaces = extendedInterfaces;
+        this.selfInterface = selfInterface;
+        selfInterface.ifPresent(this.extendedInterfaces::add);
+        this.extendedInterfaces.addAll(extendedInterfaces);
     }
 
     @Override
     public GeneratedFileOutput generateFile() {
         PoetTypeNameMapper poetTypeNameMapper = generatorContext.getPoetTypeNameMapper();
-        List<EnrichedObjectProperty> enrichedObjectProperties = objectTypeDeclaration.getProperties().stream()
-                .map(objectProperty -> EnrichedObjectProperty.of(
-                        objectProperty.getName(),
-                        false,
-                        poetTypeNameMapper.convertToTypeName(true, objectProperty.getValueType())))
-                .collect(Collectors.toList());
-        List<ImplementsInterface> implementsInterfaces = extendedInterfaces.stream()
+        List<EnrichedObjectProperty> enrichedObjectProperties = new ArrayList<>();
+        if (selfInterface.isEmpty()) {
+            enrichedObjectProperties = objectTypeDeclaration.getProperties().stream()
+                    .map(objectProperty -> EnrichedObjectProperty.of(
+                            objectProperty.getName(),
+                            false,
+                            poetTypeNameMapper.convertToTypeName(true, objectProperty.getValueType())))
+                    .collect(Collectors.toList());
+        }
+        List<ImplementsInterface> implementsInterfaces = new ArrayList<>();
+        extendedInterfaces.stream()
                 .map(generatedInterface -> ImplementsInterface.builder()
                         .interfaceClassName(generatedInterface.getClassName())
                         .addAllInterfaceProperties(generatedInterface.propertyMethodSpecs().stream()
@@ -62,7 +72,7 @@ public final class ObjectGenerator extends AbstractFileGenerator {
                                         propertyMethodSpec.methodSpec().returnType))
                                 .collect(Collectors.toList()))
                         .build())
-                .collect(Collectors.toList());
+                .forEach(implementsInterfaces::add);
         ObjectTypeSpecGenerator genericObjectGenerator =
                 new ObjectTypeSpecGenerator(className, enrichedObjectProperties, implementsInterfaces, true);
         TypeSpec objectTypeSpec = genericObjectGenerator.generate();

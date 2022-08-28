@@ -26,11 +26,11 @@ import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.AbstractGeneratedFileOutput;
 import com.fern.java.output.GeneratedInterfaceOutput;
 import com.squareup.javapoet.ClassName;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public final class SingleTypeGenerator implements Type.Visitor<AbstractGeneratedFileOutput> {
 
@@ -64,14 +64,17 @@ public final class SingleTypeGenerator implements Type.Visitor<AbstractGenerated
 
     @Override
     public AbstractGeneratedFileOutput visitObject(ObjectTypeDeclaration value) {
-        List<GeneratedInterfaceOutput> extendedInterfaces = new ArrayList<>();
-        Optional.ofNullable(allGeneratedInterfaces.get(declaredTypeName)).ifPresent(extendedInterfaces::add);
-        value.getExtends().stream()
+        List<GeneratedInterfaceOutput> extendedInterfaces = value.getExtends().stream()
                 .map(allGeneratedInterfaces::get)
                 .sorted(Comparator.comparing(
                         generatedInterface -> generatedInterface.getClassName().simpleName()))
-                .forEach(extendedInterfaces::add);
-        ObjectGenerator objectGenerator = new ObjectGenerator(value, extendedInterfaces, generatorContext, className);
+                .collect(Collectors.toList());
+        ObjectGenerator objectGenerator = new ObjectGenerator(
+                value,
+                Optional.ofNullable(allGeneratedInterfaces.get(declaredTypeName)),
+                extendedInterfaces,
+                generatorContext,
+                className);
         return objectGenerator.generateFile();
     }
 

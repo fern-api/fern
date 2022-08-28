@@ -48,7 +48,7 @@ eteTest {
 }
 
 task deleteSnapshot(type: Exec) {
-    commandLine 'rm', '-rf', 'src/eteTest/java/com/fern/java/model/cli/__snapshots__/ModelGeneratorEteTest.snap'
+    commandLine 'rm', '-rf', 'src/eteTest/java/com/fern/java/model/__snapshots__/ModelGeneratorEteTest.snap'
 }
 
 rootProject.tasks.build.dependsOn eteTest
