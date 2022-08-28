@@ -18,8 +18,8 @@ package com.fern.java.generators.object;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fern.ir.model.commons.WireStringWithAllCasings;
-import com.fern.java.KeyWordUtils;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
+import com.fern.java.utils.KeyWordUtils;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;

@@ -19,6 +19,7 @@ package com.fern.java.generators.union;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fern.java.ObjectMethodFactory;
 import com.fern.java.ObjectMethodFactory.EqualsMethod;
+import com.fern.java.utils.KeyWordUtils;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -72,7 +73,8 @@ public abstract class UnionSubType {
 
     @SuppressWarnings("checkstyle:DesignForExtension")
     public Optional<MethodSpec> getStaticFactory() {
-        MethodSpec.Builder staticFactoryBuilder = MethodSpec.methodBuilder(getCamelCaseName())
+        MethodSpec.Builder staticFactoryBuilder = MethodSpec.methodBuilder(
+                        KeyWordUtils.getKeyWordCompatibleName(getCamelCaseName()))
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(unionClassName);
         if (getUnionSubTypeTypeName().isPresent()) {
@@ -94,9 +96,9 @@ public abstract class UnionSubType {
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                 .returns(TypeVariableName.get("T"));
         if (getUnionSubTypeTypeName().isPresent()) {
-            visitMethodBuilder.addParameter(
-                    ParameterSpec.builder(getUnionSubTypeTypeName().get(), getCamelCaseName())
-                            .build());
+            visitMethodBuilder.addParameter(ParameterSpec.builder(
+                            getUnionSubTypeTypeName().get(), KeyWordUtils.getKeyWordCompatibleName(getCamelCaseName()))
+                    .build());
         }
         return visitMethodBuilder.build();
     }
