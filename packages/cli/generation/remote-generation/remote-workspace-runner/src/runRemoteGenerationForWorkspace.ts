@@ -2,7 +2,6 @@ import { TaskContext } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import { Fiddle } from "@fern-fern/fiddle-client-v2";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { AxiosError } from "axios";
 import { createAndStartJob } from "./createAndStartJob";
 import { pollJobAndReportStatus } from "./pollJobAndReportStatus";
 
@@ -11,26 +10,32 @@ export async function runRemoteGenerationForWorkspace({
     workspace,
     intermediateRepresentation,
     context,
+    generatorConfigs,
+    version,
 }: {
     organization: string;
     workspace: Workspace;
     intermediateRepresentation: IntermediateRepresentation;
     context: TaskContext;
+    generatorConfigs: Fiddle.remoteGen.GeneratorConfig[];
+    version: string | undefined;
 }): Promise<void> {
-    if (workspace.generatorsConfiguration.draft.length === 0) {
+    if (generatorConfigs.length === 0) {
         context.logger.warn("No generators specified.");
         return;
     }
 
     let job: Fiddle.remoteGen.CreateJobResponse;
     try {
-        job = await createAndStartJob({ workspace, organization, intermediateRepresentation });
-    } catch (e) {
-        let str = "Failed to create job";
-        if (e instanceof AxiosError && e.response?.data != null) {
-            str += ` ${JSON.stringify(e.response.data)}`;
-        }
-        context.fail(str);
+        job = await createAndStartJob({
+            workspace,
+            organization,
+            intermediateRepresentation,
+            generatorConfigs,
+            version,
+        });
+    } catch (error) {
+        context.fail("Failed to create job", error);
         return;
     }
 

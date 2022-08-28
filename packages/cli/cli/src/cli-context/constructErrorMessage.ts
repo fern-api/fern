@@ -1,13 +1,13 @@
 export function constructErrorMessage({
-    messageOrError,
+    message,
     error,
 }: {
-    messageOrError: unknown;
+    message: string | undefined;
     error: unknown;
 }): string | undefined {
     const parts: string[] = [];
-    if (messageOrError != null) {
-        parts.push(convertErrorToString(messageOrError));
+    if (message != null) {
+        parts.push(message);
     }
     if (error != null) {
         parts.push(convertErrorToString(error));

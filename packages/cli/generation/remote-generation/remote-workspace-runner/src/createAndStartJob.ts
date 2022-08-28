@@ -1,7 +1,7 @@
 import { Workspace } from "@fern-api/workspace-loader";
 import { Fiddle } from "@fern-fern/fiddle-client-v2";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import FormData from "form-data";
 import urlJoin from "url-join";
 import { FIDDLE_ORIGIN, REMOTE_GENERATION_SERVICE } from "./service";
@@ -10,31 +10,36 @@ export async function createAndStartJob({
     workspace,
     organization,
     intermediateRepresentation,
+    generatorConfigs,
+    version,
 }: {
     workspace: Workspace;
     organization: string;
     intermediateRepresentation: IntermediateRepresentation;
+    generatorConfigs: Fiddle.remoteGen.GeneratorConfig[];
+    version: string | undefined;
 }): Promise<Fiddle.remoteGen.CreateJobResponse> {
-    const job = await createJob({ workspace, organization });
+    const job = await createJob({ workspace, organization, generatorConfigs, version });
     await startJob({ intermediateRepresentation, job });
     return job;
 }
 
-async function createJob({ workspace, organization }: { workspace: Workspace; organization: string }) {
+async function createJob({
+    workspace,
+    organization,
+    generatorConfigs,
+    version,
+}: {
+    workspace: Workspace;
+    organization: string;
+    generatorConfigs: Fiddle.remoteGen.GeneratorConfig[];
+    version: string | undefined;
+}) {
     const createResponse = await REMOTE_GENERATION_SERVICE.remoteGen.createJob({
         apiName: workspace.name,
+        version,
         organizationName: organization,
-        generators: workspace.generatorsConfiguration.draft.map((generator) => ({
-            id: generator.name,
-            version: generator.version,
-            willDownloadFiles: generator.absolutePathToLocalOutput != null,
-            customConfig: generator.config,
-            outputs: {
-                npm: undefined,
-                maven: undefined,
-            },
-        })),
-        version: undefined,
+        generators: generatorConfigs,
     });
 
     if (!createResponse.ok) {
@@ -73,9 +78,18 @@ async function startJob({
     const formData = new FormData();
     formData.append("file", JSON.stringify(intermediateRepresentation));
     const url = urlJoin(FIDDLE_ORIGIN, `/api/remote-gen/jobs/${job.jobId}/start`);
-    await axios.post(url, formData, {
-        headers: {
-            "Content-Type": `multipart/form-data; boundary=${formData.getBoundary()}`,
-        },
-    });
+    try {
+        await axios.post(url, formData, {
+            headers: {
+                "Content-Type": `multipart/form-data; boundary=${formData.getBoundary()}`,
+            },
+        });
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            const data = error.response?.data;
+            throw new Error(data != null ? JSON.stringify(data) : undefined);
+        } else {
+            throw error;
+        }
+    }
 }

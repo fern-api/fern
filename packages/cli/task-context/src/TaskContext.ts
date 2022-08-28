@@ -7,7 +7,6 @@ export interface TaskContext {
     logger: Logger;
     takeOverTerminal: (run: () => void | Promise<void>) => Promise<void>;
     fail(message?: string, error?: unknown): TASK_FAILURE;
-    fail(error: unknown): TASK_FAILURE;
     getResult: () => TaskResult;
     addInteractiveTask: (params: CreateInteractiveTaskParams) => Startable<InteractiveTaskContext>;
     runInteractiveTask: (
