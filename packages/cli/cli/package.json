@@ -50,7 +50,6 @@
     "@fern-api/task-context": "workspace:*",
     "@fern-api/validator": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-fern/fiddle-client-v2": "^0.0.18",
     "@fern-fern/ir-model": "0.0.186",
     "ansi-escapes": "^5.0.0",
     "boxen": "^7.0.0",
