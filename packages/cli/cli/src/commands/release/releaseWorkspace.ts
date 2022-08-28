@@ -1,20 +1,15 @@
-import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { GenerationLevel, runRemoteGenerationForWorkspace } from "@fern-api/remote-workspace-runner";
 import { TASK_FAILURE } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import { CliContext } from "../../cli-context/CliContext";
 import { generateIrForWorkspace } from "../generate-ir/generateIrForWorkspace";
 
-export async function generateWorkspace({
+export async function releaseWorkspace({
     workspace,
-    runLocal,
-    keepDocker,
     organization,
     cliContext,
 }: {
     workspace: Workspace;
-    runLocal: boolean;
-    keepDocker: boolean;
     organization: string;
     cliContext: CliContext;
 }): Promise<void> {
@@ -23,21 +18,12 @@ export async function generateWorkspace({
         if (intermediateRepresentation === TASK_FAILURE) {
             return;
         }
-        if (runLocal) {
-            await runLocalGenerationForWorkspace({
-                organization,
-                workspace,
-                intermediateRepresentation,
-                keepDocker,
-            });
-        } else {
-            await runRemoteGenerationForWorkspace({
-                workspace,
-                intermediateRepresentation,
-                organization,
-                context,
-                generationLevel: GenerationLevel.Draft,
-            });
-        }
+        await runRemoteGenerationForWorkspace({
+            workspace,
+            intermediateRepresentation,
+            organization,
+            context,
+            generationLevel: GenerationLevel.Release,
+        });
     });
 }
