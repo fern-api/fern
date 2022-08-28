@@ -10,7 +10,6 @@ import {
     TASK_FAILURE,
 } from "@fern-api/task-context";
 import chalk from "chalk";
-import { constructErrorMessage } from "./constructErrorMessage";
 import { LogWithLevel } from "./Log";
 
 export declare namespace TaskContextImpl {
@@ -59,10 +58,16 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
 
     public takeOverTerminal: (run: () => void | Promise<void>) => Promise<void>;
 
-    public fail(messageOrError?: unknown, error?: unknown): TASK_FAILURE {
-        const errorMessage = constructErrorMessage({ messageOrError, error });
-        if (errorMessage != null) {
-            this.logger.error(errorMessage);
+    public fail(message?: string, error?: unknown): TASK_FAILURE {
+        const parts = [];
+        if (message != null) {
+            parts.push(message);
+        }
+        if (error != null) {
+            parts.push(convertErrorToString(error));
+        }
+        if (parts.length > 0) {
+            this.logger.error(parts.join(" "));
         }
         this.result = TaskResult.Failure;
         return TASK_FAILURE;
@@ -237,4 +242,14 @@ export class InteractiveTaskContextImpl
         }
         return TaskResult.Success;
     }
+}
+
+function convertErrorToString(error: unknown): string {
+    if (typeof error === "string") {
+        return error;
+    }
+    if (error instanceof Error) {
+        return error.stack ?? error.message;
+    }
+    return JSON.stringify(error);
 }
