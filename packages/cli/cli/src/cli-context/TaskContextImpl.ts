@@ -238,13 +238,3 @@ export class InteractiveTaskContextImpl
         return TaskResult.Success;
     }
 }
-
-function convertErrorToString(error: unknown): string {
-    if (typeof error === "string") {
-        return error;
-    }
-    if (error instanceof Error) {
-        return error.stack ?? error.message;
-    }
-    return JSON.stringify(error);
-}

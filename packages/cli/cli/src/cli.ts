@@ -31,7 +31,7 @@ async function tryRunCli() {
     try {
         await runCli(cliContext);
     } catch (error) {
-        cliContext.fail(error);
+        cliContext.fail("Failed to run", error);
     } finally {
         await exit();
     }
