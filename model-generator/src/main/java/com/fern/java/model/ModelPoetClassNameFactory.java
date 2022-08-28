@@ -14,15 +14,19 @@
  * limitations under the License.
  */
 
-package com.fern.java.client;
+package com.fern.java.model;
 
-import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.ir.model.ir.IntermediateRepresentation;
-import com.fern.java.AbstractGeneratorContext;
+import com.fern.java.AbstractPoetClassNameFactory;
 
-public final class ClientGeneratorContext extends AbstractGeneratorContext<ClientPoetClassNameFactory> {
+public final class ModelPoetClassNameFactory extends AbstractPoetClassNameFactory {
 
-    public ClientGeneratorContext(IntermediateRepresentation ir, GeneratorConfig generatorConfig) {
-        super(ir, generatorConfig, new ClientPoetClassNameFactory(ir, generatorConfig.getOrganization()));
+    public ModelPoetClassNameFactory(IntermediateRepresentation ir, String organization) {
+        super(ir, organization);
+    }
+
+    @Override
+    public String rootPackageName() {
+        return "model";
     }
 }

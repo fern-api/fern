@@ -11,5 +11,7 @@ include 'runtime-utils:jersey-utils'
 include 'runtime-utils:exception-utils'
 include 'runtime-utils:jackson-utils'
 include 'runtime-utils:spring-utils'
+
+include 'model-generator'
 include 'client-generator'
 include 'generator-utils'

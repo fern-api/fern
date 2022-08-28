@@ -141,6 +141,14 @@ jobs:
             docker tag java-client:"$projectVersion" fernapi/java-client:"$projectVersion"
             docker push fernapi/java-client:"$projectVersion"
           name: Publish java-client docker
+      - run:
+          command: |
+            projectVersion=$(./gradlew printVersion --quiet)
+            ./gradlew :model-generator:dockerTag"$projectVersion"
+            echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
+            docker tag java-model:"$projectVersion" fernapi/java-model:"$projectVersion"
+            docker push fernapi/java-model:"$projectVersion"
+          name: Publish java-model docker
 
 workflows:
   version: 2

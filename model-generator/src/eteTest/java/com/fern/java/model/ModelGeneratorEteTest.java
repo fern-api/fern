@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fern.java.client.cli;
+package com.fern.java.model;
 
 import au.com.origin.snapshots.Expect;
 import au.com.origin.snapshots.annotations.SnapshotName;
@@ -33,9 +33,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @ExtendWith(SnapshotExtension.class)
-public class CliEteTest {
+public class ModelGeneratorEteTest {
 
-    private static final Logger log = LoggerFactory.getLogger(CliEteTest.class);
+    private static final Logger log = LoggerFactory.getLogger(ModelGeneratorEteTest.class);
 
     private Expect expect;
 
@@ -43,10 +43,11 @@ public class CliEteTest {
     @SnapshotName("basic")
     @Test
     public void test_basic() throws IOException {
+
         Path currentPath = Paths.get("").toAbsolutePath();
-        Path dotFernProjectPath = currentPath.endsWith("client-generator")
+        Path dotFernProjectPath = currentPath.endsWith("model-generator")
                 ? currentPath.resolve(Paths.get("src/eteTest/.fern"))
-                : currentPath.resolve(Paths.get("client-generator/src/eteTest/.fern"));
+                : currentPath.resolve(Paths.get("model-generator/src/eteTest/.fern"));
         runCommand(dotFernProjectPath, new String[] {"fern-dev", "generate", "--local", "--keepDocker"});
         List<Path> paths = Files.walk(dotFernProjectPath.resolve(Paths.get("basic/generated-java")))
                 .collect(Collectors.toList());

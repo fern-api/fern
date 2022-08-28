@@ -1,0 +1,972 @@
+basic[basic/generated-java/build.gradle]=[
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://s01.oss.sonatype.org/content/repositories/releases/"
+    }
+}
+
+dependencies {
+    api 'io.github.fern-api:jackson-utils:0.0.82'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.3'
+}
+
+]
+
+
+basic[basic/generated-java/settings.gradle]=[
+
+]
+
+
+basic[basic/generated-java/src/main/java/com/fern/basic/model/blog/types/Age.java]=[
+package com.fern.basic.model.blog.types;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+import java.lang.Integer;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+
+public final class Age {
+  private final int value;
+
+  private Age(int value) {
+    this.value = value;
+  }
+
+  @JsonValue
+  public int get() {
+    return this.value;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    return this == other || (other instanceof Age && this.value == ((Age) other).value);
+  }
+
+  @Override
+  public int hashCode() {
+    return Integer.hashCode(value);
+  }
+
+  @Override
+  public String toString() {
+    return Integer.toString(value);
+  }
+
+  @JsonCreator(
+      mode = JsonCreator.Mode.DELEGATING
+  )
+  public static Age of(int value) {
+    return new Age(value);
+  }
+
+  public static Age valueOf(String value) {
+    return of(Integer.parseInt(value));
+  }
+}
+
+]
+
+
+basic[basic/generated-java/src/main/java/com/fern/basic/model/blog/types/Author.java]=[
+package com.fern.basic.model.blog.types;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonValue;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Objects;
+import java.util.Optional;
+
+public final class Author {
+  private final Value value;
+
+  private Author(Value value) {
+    this.value = value;
+  }
+
+  public <T> T visit(Visitor<T> visitor) {
+    return value.visit(visitor);
+  }
+
+  public static Author anonymous() {
+    return new Author(new AnonymousValue());
+  }
+
+  public static Author name(String value) {
+    return new Author(new NameValue(value));
+  }
+
+  public boolean isAnonymous() {
+    return value instanceof AnonymousValue;
+  }
+
+  public boolean isName() {
+    return value instanceof NameValue;
+  }
+
+  public boolean isUnknown() {
+    return value instanceof UnknownValue;
+  }
+
+  public Optional<String> getName() {
+    if (isName()) {
+      return Optional.of(((NameValue) value).value);
+    }
+    return Optional.empty();
+  }
+
+  public Optional<Object> getUnknown() {
+    if (isUnknown()) {
+      return Optional.of(((UnknownValue) value).value);
+    }
+    return Optional.empty();
+  }
+
+  @JsonValue
+  private Value getValue() {
+    return this.value;
+  }
+
+  public interface Visitor<T> {
+    T visitAnonymous();
+
+    T visitName(String name);
+
+    T visitUnknown(Object unknown);
+  }
+
+  @JsonTypeInfo(
+      use = JsonTypeInfo.Id.NAME,
+      property = "_error",
+      visible = true,
+      defaultImpl = UnknownValue.class
+  )
+  @JsonSubTypes({
+      @JsonSubTypes.Type(AnonymousValue.class),
+      @JsonSubTypes.Type(NameValue.class)
+  })
+  @JsonIgnoreProperties(
+      ignoreUnknown = true
+  )
+  private interface Value {
+    <T> T visit(Visitor<T> visitor);
+  }
+
+  @JsonTypeName("anonymous")
+  private static final class AnonymousValue implements Value {
+    @JsonCreator(
+        mode = JsonCreator.Mode.PROPERTIES
+    )
+    private AnonymousValue() {
+    }
+
+    @Override
+    public <T> T visit(Visitor<T> visitor) {
+      return visitor.visitAnonymous();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+      if (this == other) return true;
+      return other instanceof AnonymousValue;
+    }
+
+    @Override
+    public String toString() {
+      return "Author{" + "}";
+    }
+  }
+
+  @JsonTypeName("name")
+  private static final class NameValue implements Value {
+    private String value;
+
+    @JsonCreator(
+        mode = JsonCreator.Mode.PROPERTIES
+    )
+    private NameValue(@JsonProperty("value") String value) {
+      this.value = value;
+    }
+
+    @Override
+    public <T> T visit(Visitor<T> visitor) {
+      return visitor.visitName(value);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+      if (this == other) return true;
+      return other instanceof NameValue && equalTo((NameValue) other);
+    }
+
+    private boolean equalTo(NameValue other) {
+      return value.equals(other.value);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(this.value);
+    }
+
+    @Override
+    public String toString() {
+      return "Author{" + "value: " + value + "}";
+    }
+  }
+
+  private static final class UnknownValue implements Value {
+    private String type;
+
+    @JsonValue
+    private Object value;
+
+    @JsonCreator(
+        mode = JsonCreator.Mode.PROPERTIES
+    )
+    private UnknownValue(@JsonProperty("value") Object value) {
+    }
+
+    @Override
+    public <T> T visit(Visitor<T> visitor) {
+      return visitor.visitUnknown(value);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+      if (this == other) return true;
+      return other instanceof UnknownValue && equalTo((UnknownValue) other);
+    }
+
+    private boolean equalTo(UnknownValue other) {
+      return type.equals(other.type) && value.equals(other.value);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(this.type, this.value);
+    }
+
+    @Override
+    public String toString() {
+      return "Author{" + "type: " + type + ", value: " + value + "}";
+    }
+  }
+}
+
+]
+
+
+basic[basic/generated-java/src/main/java/com/fern/basic/model/blog/types/BlogPost.java]=[
+package com.fern.basic.model.blog.types;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Objects;
+
+@JsonDeserialize(
+    builder = BlogPost.Builder.class
+)
+public final class BlogPost {
+  private final PostId id;
+
+  private final PostType type;
+
+  private final String title;
+
+  private final Author author;
+
+  private final String content;
+
+  private int _cachedHashCode;
+
+  BlogPost(PostId id, PostType type, String title, Author author, String content) {
+    this.id = id;
+    this.type = type;
+    this.title = title;
+    this.author = author;
+    this.content = content;
+  }
+
+  @JsonProperty("id")
+  public PostId getId() {
+    return id;
+  }
+
+  @JsonProperty("type")
+  public PostType getType() {
+    return type;
+  }
+
+  @JsonProperty("title")
+  public String getTitle() {
+    return title;
+  }
+
+  @JsonProperty("author")
+  public Author getAuthor() {
+    return author;
+  }
+
+  @JsonProperty("content")
+  public String getContent() {
+    return content;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    return other instanceof BlogPost && equalTo((BlogPost) other);
+  }
+
+  private boolean equalTo(BlogPost other) {
+    return id.equals(other.id) && type.equals(other.type) && title.equals(other.title) && author.equals(other.author) && content.equals(other.content);
+  }
+
+  @Override
+  public int hashCode() {
+    if (_cachedHashCode == 0) {
+      _cachedHashCode = Objects.hash(this.id, this.type, this.title, this.author, this.content);
+    }
+    return _cachedHashCode;
+  }
+
+  @Override
+  public String toString() {
+    return "BlogPost{" + "id: " + id + ", type: " + type + ", title: " + title + ", author: " + author + ", content: " + content + "}";
+  }
+
+  public static IdStage builder() {
+    return new Builder();
+  }
+
+  public interface IdStage {
+    TypeStage id(PostId id);
+
+    Builder from(BlogPost other);
+  }
+
+  public interface TypeStage {
+    TitleStage type(PostType type);
+  }
+
+  public interface TitleStage {
+    AuthorStage title(String title);
+  }
+
+  public interface AuthorStage {
+    ContentStage author(Author author);
+  }
+
+  public interface ContentStage {
+    _FinalStage content(String content);
+  }
+
+  public interface _FinalStage {
+    BlogPost build();
+  }
+
+  @JsonIgnoreProperties(
+      ignoreUnknown = true
+  )
+  static final class Builder implements IdStage, TypeStage, TitleStage, AuthorStage, ContentStage, _FinalStage {
+    private PostId id;
+
+    private PostType type;
+
+    private String title;
+
+    private Author author;
+
+    private String content;
+
+    private Builder() {
+    }
+
+    @Override
+    public Builder from(BlogPost other) {
+      id(other.getId());
+      type(other.getType());
+      title(other.getTitle());
+      author(other.getAuthor());
+      content(other.getContent());
+      return this;
+    }
+
+    @Override
+    @JsonSetter("id")
+    public TypeStage id(PostId id) {
+      this.id = id;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("type")
+    public TitleStage type(PostType type) {
+      this.type = type;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("title")
+    public AuthorStage title(String title) {
+      this.title = title;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("author")
+    public ContentStage author(Author author) {
+      this.author = author;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("content")
+    public _FinalStage content(String content) {
+      this.content = content;
+      return this;
+    }
+
+    @Override
+    public BlogPost build() {
+      return new BlogPost(id, type, title, author, content);
+    }
+  }
+}
+
+]
+
+
+basic[basic/generated-java/src/main/java/com/fern/basic/model/blog/types/CreatePostRequest.java]=[
+package com.fern.basic.model.blog.types;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Objects;
+
+@JsonDeserialize(
+    builder = CreatePostRequest.Builder.class
+)
+public final class CreatePostRequest {
+  private final String title;
+
+  private final Author author;
+
+  private final String content;
+
+  private final PostType postType;
+
+  private final int _switch;
+
+  private int _cachedHashCode;
+
+  CreatePostRequest(String title, Author author, String content, PostType postType, int _switch) {
+    this.title = title;
+    this.author = author;
+    this.content = content;
+    this.postType = postType;
+    this._switch = _switch;
+  }
+
+  @JsonProperty("title")
+  public String getTitle() {
+    return title;
+  }
+
+  @JsonProperty("author")
+  public Author getAuthor() {
+    return author;
+  }
+
+  @JsonProperty("content")
+  public String getContent() {
+    return content;
+  }
+
+  @JsonProperty("postType")
+  public PostType getPostType() {
+    return postType;
+  }
+
+  @JsonProperty("switch")
+  public int getSwitch() {
+    return _switch;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    return other instanceof CreatePostRequest && equalTo((CreatePostRequest) other);
+  }
+
+  private boolean equalTo(CreatePostRequest other) {
+    return title.equals(other.title) && author.equals(other.author) && content.equals(other.content) && postType.equals(other.postType) && _switch == other._switch;
+  }
+
+  @Override
+  public int hashCode() {
+    if (_cachedHashCode == 0) {
+      _cachedHashCode = Objects.hash(this.title, this.author, this.content, this.postType, this._switch);
+    }
+    return _cachedHashCode;
+  }
+
+  @Override
+  public String toString() {
+    return "CreatePostRequest{" + "title: " + title + ", author: " + author + ", content: " + content + ", postType: " + postType + ", _switch: " + _switch + "}";
+  }
+
+  public static TitleStage builder() {
+    return new Builder();
+  }
+
+  public interface TitleStage {
+    AuthorStage title(String title);
+
+    Builder from(CreatePostRequest other);
+  }
+
+  public interface AuthorStage {
+    ContentStage author(Author author);
+  }
+
+  public interface ContentStage {
+    PostTypeStage content(String content);
+  }
+
+  public interface PostTypeStage {
+    SwitchStage postType(PostType postType);
+  }
+
+  public interface SwitchStage {
+    _FinalStage _switch(int _switch);
+  }
+
+  public interface _FinalStage {
+    CreatePostRequest build();
+  }
+
+  @JsonIgnoreProperties(
+      ignoreUnknown = true
+  )
+  static final class Builder implements TitleStage, AuthorStage, ContentStage, PostTypeStage, SwitchStage, _FinalStage {
+    private String title;
+
+    private Author author;
+
+    private String content;
+
+    private PostType postType;
+
+    private int _switch;
+
+    private Builder() {
+    }
+
+    @Override
+    public Builder from(CreatePostRequest other) {
+      title(other.getTitle());
+      author(other.getAuthor());
+      content(other.getContent());
+      postType(other.getPostType());
+      _switch(other.getSwitch());
+      return this;
+    }
+
+    @Override
+    @JsonSetter("title")
+    public AuthorStage title(String title) {
+      this.title = title;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("author")
+    public ContentStage author(Author author) {
+      this.author = author;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("content")
+    public PostTypeStage content(String content) {
+      this.content = content;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("postType")
+    public SwitchStage postType(PostType postType) {
+      this.postType = postType;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("switch")
+    public _FinalStage _switch(int _switch) {
+      this._switch = _switch;
+      return this;
+    }
+
+    @Override
+    public CreatePostRequest build() {
+      return new CreatePostRequest(title, author, content, postType, _switch);
+    }
+  }
+}
+
+]
+
+
+basic[basic/generated-java/src/main/java/com/fern/basic/model/blog/types/GeneratorIdAndVersion.java]=[
+package com.fern.basic.model.blog.types;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Objects;
+
+@JsonDeserialize(
+    builder = GeneratorIdAndVersion.Builder.class
+)
+public final class GeneratorIdAndVersion {
+  private final String id;
+
+  private final String version;
+
+  private int _cachedHashCode;
+
+  GeneratorIdAndVersion(String id, String version) {
+    this.id = id;
+    this.version = version;
+  }
+
+  @JsonProperty("id")
+  public String getId() {
+    return id;
+  }
+
+  @JsonProperty("version")
+  public String getVersion() {
+    return version;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    return other instanceof GeneratorIdAndVersion && equalTo((GeneratorIdAndVersion) other);
+  }
+
+  private boolean equalTo(GeneratorIdAndVersion other) {
+    return id.equals(other.id) && version.equals(other.version);
+  }
+
+  @Override
+  public int hashCode() {
+    if (_cachedHashCode == 0) {
+      _cachedHashCode = Objects.hash(this.id, this.version);
+    }
+    return _cachedHashCode;
+  }
+
+  @Override
+  public String toString() {
+    return "GeneratorIdAndVersion{" + "id: " + id + ", version: " + version + "}";
+  }
+
+  public static IdStage builder() {
+    return new Builder();
+  }
+
+  public interface IdStage {
+    VersionStage id(String id);
+
+    Builder from(GeneratorIdAndVersion other);
+  }
+
+  public interface VersionStage {
+    _FinalStage version(String version);
+  }
+
+  public interface _FinalStage {
+    GeneratorIdAndVersion build();
+  }
+
+  @JsonIgnoreProperties(
+      ignoreUnknown = true
+  )
+  static final class Builder implements IdStage, VersionStage, _FinalStage {
+    private String id;
+
+    private String version;
+
+    private Builder() {
+    }
+
+    @Override
+    public Builder from(GeneratorIdAndVersion other) {
+      id(other.getId());
+      version(other.getVersion());
+      return this;
+    }
+
+    @Override
+    @JsonSetter("id")
+    public VersionStage id(String id) {
+      this.id = id;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("version")
+    public _FinalStage version(String version) {
+      this.version = version;
+      return this;
+    }
+
+    @Override
+    public GeneratorIdAndVersion build() {
+      return new GeneratorIdAndVersion(id, version);
+    }
+  }
+}
+
+]
+
+
+basic[basic/generated-java/src/main/java/com/fern/basic/model/blog/types/PostId.java]=[
+package com.fern.basic.model.blog.types;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+
+public final class PostId {
+  private final String value;
+
+  private PostId(String value) {
+    this.value = value;
+  }
+
+  @JsonValue
+  public String get() {
+    return this.value;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    return this == other || (other instanceof PostId && this.value.equals(((PostId) other).value));
+  }
+
+  @Override
+  public int hashCode() {
+    return value.hashCode();
+  }
+
+  @Override
+  public String toString() {
+    return value;
+  }
+
+  @JsonCreator(
+      mode = JsonCreator.Mode.DELEGATING
+  )
+  public static PostId of(String value) {
+    return new PostId(value);
+  }
+
+  public static PostId valueOf(String value) {
+    return of(value);
+  }
+}
+
+]
+
+
+basic[basic/generated-java/src/main/java/com/fern/basic/model/blog/types/PostType.java]=[
+package com.fern.basic.model.blog.types;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Locale;
+
+public final class PostType {
+  public static final PostType LONG = new PostType(Value.LONG, "LONG");
+
+  public static final PostType SHORT = new PostType(Value.SHORT, "SHORT");
+
+  public static final PostType MEDIUM = new PostType(Value.MEDIUM, "med.med");
+
+  private final Value value;
+
+  private final String string;
+
+  PostType(Value value, String string) {
+    this.value = value;
+    this.string = string;
+  }
+
+  public Value getEnumValue() {
+    return value;
+  }
+
+  @Override
+  @JsonValue
+  public String toString() {
+    return this.string;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    return (this == other) 
+      || (other instanceof PostType && this.string.equals(((PostType) other).string));
+  }
+
+  @Override
+  public int hashCode() {
+    return this.string.hashCode();
+  }
+
+  public <T> T visit(Visitor<T> visitor) {
+    switch (value) {
+      case LONG:
+        return visitor.visitLong();
+      case SHORT:
+        return visitor.visitShort();
+      case MEDIUM:
+        return visitor.visitMedium();
+      case UNKNOWN:
+      default:
+        return visitor.visitUnknown(string);
+    }
+  }
+
+  @JsonCreator(
+      mode = JsonCreator.Mode.DELEGATING
+  )
+  public static PostType valueOf(String value) {
+    String upperCasedValue = value.toUpperCase(Locale.ROOT);
+    switch (upperCasedValue) {
+      case "LONG":
+        return LONG;
+      case "SHORT":
+        return SHORT;
+      case "med.med":
+        return MEDIUM;
+      default:
+        return new PostType(Value.UNKNOWN, upperCasedValue);
+    }
+  }
+
+  public enum Value {
+    LONG,
+
+    SHORT,
+
+    MEDIUM,
+
+    UNKNOWN
+  }
+
+  public interface Visitor<T> {
+    T visitLong();
+
+    T visitShort();
+
+    T visitMedium();
+
+    T visitUnknown(String unknownType);
+  }
+}
+
+]
+
+
+basic[basic/generated-java/src/main/java/com/fern/basic/model/dummy/service/types/DummyId.java]=[
+package com.fern.basic.model.dummy.service.types;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+
+public final class DummyId {
+  private final String value;
+
+  private DummyId(String value) {
+    this.value = value;
+  }
+
+  @JsonValue
+  public String get() {
+    return this.value;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    return this == other || (other instanceof DummyId && this.value.equals(((DummyId) other).value));
+  }
+
+  @Override
+  public int hashCode() {
+    return value.hashCode();
+  }
+
+  @Override
+  public String toString() {
+    return value;
+  }
+
+  @JsonCreator(
+      mode = JsonCreator.Mode.DELEGATING
+  )
+  public static DummyId of(String value) {
+    return new DummyId(value);
+  }
+
+  public static DummyId valueOf(String value) {
+    return of(value);
+  }
+}
+
+]

@@ -7,16 +7,8 @@ plugins {
 
 dependencies {
     implementation project(':generator-utils')
-    implementation project(':runtime-utils:jersey-utils')
 
     implementation 'ch.qos.logback:logback-classic'
-    implementation 'org.glassfish.jersey.core:jersey-common'
-    implementation 'io.github.openfeign:feign-jackson'
-    implementation 'io.github.openfeign:feign-core'
-    implementation 'io.github.openfeign:feign-jaxrs'
-
-    compileOnly 'org.immutables:value::annotations'
-    annotationProcessor 'org.immutables:value'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-params'
     testImplementation 'org.junit.jupiter:junit-jupiter'
@@ -34,14 +26,14 @@ distributions {
 }
 
 docker {
-    name "java-client:${project.version}"
+    name "java-model:${project.version}"
     tags 'latest', "${project.version}"
     files tasks.distTar.outputs, './init.sh', './gradle-cache-project/build.gradle'
     buildArgs([BUILD_VERSION: "${project.version}"])
 }
 
 task dockerTagVersion {
-    dependsOn ":client-generator:dockerTag${project.version}"
+    dependsOn ":model-generator:dockerTag${project.version}"
 }
 
 testSets {
@@ -56,8 +48,8 @@ eteTest {
 }
 
 task deleteSnapshot(type: Exec) {
-    commandLine 'rm', '-rf', 'src/eteTest/java/com/fern/java/client/cli/__snapshots__/ClientGeneratorEteTest.snap'
+    commandLine 'rm', '-rf', 'src/eteTest/java/com/fern/java/model/cli/__snapshots__/ModelGeneratorEteTest.snap'
 }
 
 rootProject.tasks.build.dependsOn eteTest
-tasks.eteTest.dependsOn ':client-generator:dockerTagLatest'
+tasks.eteTest.dependsOn ':model-generator:dockerTagLatest'

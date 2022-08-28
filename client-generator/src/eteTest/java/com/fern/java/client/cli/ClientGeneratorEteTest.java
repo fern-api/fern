@@ -18,6 +18,7 @@ package com.fern.java.client.cli;
 import au.com.origin.snapshots.Expect;
 import au.com.origin.snapshots.annotations.SnapshotName;
 import au.com.origin.snapshots.junit5.SnapshotExtension;
+import com.fern.java.StreamGobbler;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -32,9 +33,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @ExtendWith(SnapshotExtension.class)
-public class CliEteTest {
+public class ClientGeneratorEteTest {
 
-    private static final Logger log = LoggerFactory.getLogger(CliEteTest.class);
+    private static final Logger log = LoggerFactory.getLogger(ClientGeneratorEteTest.class);
 
     private Expect expect;
 
@@ -42,11 +43,10 @@ public class CliEteTest {
     @SnapshotName("basic")
     @Test
     public void test_basic() throws IOException {
-
         Path currentPath = Paths.get("").toAbsolutePath();
-        Path dotFernProjectPath = currentPath.endsWith("cli")
+        Path dotFernProjectPath = currentPath.endsWith("client-generator")
                 ? currentPath.resolve(Paths.get("src/eteTest/.fern"))
-                : currentPath.resolve(Paths.get("cli/src/eteTest/.fern"));
+                : currentPath.resolve(Paths.get("client-generator/src/eteTest/.fern"));
         runCommand(dotFernProjectPath, new String[] {"fern-dev", "generate", "--local", "--keepDocker"});
         List<Path> paths = Files.walk(dotFernProjectPath.resolve(Paths.get("basic/generated-java")))
                 .collect(Collectors.toList());
@@ -62,7 +62,6 @@ public class CliEteTest {
                     expect.scenario(relativizedPath.toString()).toMatchSnapshot(relativizedPath.toString());
                 } else {
                     String fileContents = Files.readString(path);
-
                     expect.scenario(relativizedPath.toString()).toMatchSnapshot(fileContents);
                 }
             } catch (IOException e) {

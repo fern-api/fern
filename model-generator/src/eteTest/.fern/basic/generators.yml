@@ -1,0 +1,6 @@
+generators:
+  - name: java-model
+    version: latest
+    generate:
+      enabled: true
+      output: ./generated-java
