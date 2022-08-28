@@ -1,7 +1,7 @@
 import { RelativeFilePath } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { FernFilepath } from "@fern-fern/ir-model";
-import { ResponseErrors } from "@fern-fern/ir-model/services";
+import { FernFilepath } from "@fern-fern/ir-model/commons";
+import { ResponseErrors } from "@fern-fern/ir-model/services/commons";
 import { parseTypeName } from "../../utils/parseTypeName";
 
 export function convertResponseErrors({

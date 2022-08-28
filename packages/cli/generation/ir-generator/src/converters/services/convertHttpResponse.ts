@@ -1,7 +1,8 @@
 import { RelativeFilePath } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { FernFilepath, TypeReference } from "@fern-fern/ir-model";
-import { HttpResponse } from "@fern-fern/ir-model/services";
+import { FernFilepath } from "@fern-fern/ir-model/commons";
+import { HttpResponse } from "@fern-fern/ir-model/services/http";
+import { TypeReference } from "@fern-fern/ir-model/types";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
 
 export function convertHttpResponse({

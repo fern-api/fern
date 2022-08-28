@@ -1,4 +1,4 @@
-import { GeneratorConfig } from "@fern-fern/ir-model/generators";
+import { GeneratorConfig } from "@fern-fern/generator-exec-client/model/config";
 import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_PATH_TO_IR } from "./constants";
 
 export declare namespace getGeneratorConfig {

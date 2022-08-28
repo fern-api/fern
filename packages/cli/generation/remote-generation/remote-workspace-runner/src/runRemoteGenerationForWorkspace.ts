@@ -1,10 +1,8 @@
-import { assertNever } from "@fern-api/core-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import { Fiddle } from "@fern-fern/fiddle-client-v2";
-import { IntermediateRepresentation } from "@fern-fern/ir-model";
+import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { createAndStartJob } from "./createAndStartJob";
-import { GenerationLevel } from "./GenerationLevel";
 import { pollJobAndReportStatus } from "./pollJobAndReportStatus";
 
 export async function runRemoteGenerationForWorkspace({
@@ -12,15 +10,16 @@ export async function runRemoteGenerationForWorkspace({
     workspace,
     intermediateRepresentation,
     context,
-    generationLevel,
+    generatorConfigs,
+    version,
 }: {
     organization: string;
     workspace: Workspace;
     intermediateRepresentation: IntermediateRepresentation;
     context: TaskContext;
-    generationLevel: GenerationLevel;
+    generatorConfigs: Fiddle.remoteGen.GeneratorConfig[];
+    version: string | undefined;
 }): Promise<void> {
-    const generatorConfigs = getGeneratorConfigs({ generationLevel, workspace });
     if (generatorConfigs.length === 0) {
         context.logger.warn("No generators specified.");
         return;
@@ -28,7 +27,13 @@ export async function runRemoteGenerationForWorkspace({
 
     let job: Fiddle.remoteGen.CreateJobResponse;
     try {
-        job = await createAndStartJob({ workspace, organization, intermediateRepresentation, generatorConfigs });
+        job = await createAndStartJob({
+            workspace,
+            organization,
+            intermediateRepresentation,
+            generatorConfigs,
+            version,
+        });
     } catch (error) {
         context.fail("Failed to create job", error);
         return;
@@ -39,31 +44,4 @@ export async function runRemoteGenerationForWorkspace({
         workspace,
         context,
     });
-}
-
-function getGeneratorConfigs({
-    generationLevel,
-    workspace,
-}: {
-    generationLevel: GenerationLevel;
-    workspace: Workspace;
-}): Fiddle.remoteGen.GeneratorConfig[] {
-    switch (generationLevel) {
-        case GenerationLevel.Draft:
-            return workspace.generatorsConfiguration.draft.map((generator) => ({
-                id: generator.name,
-                version: generator.version,
-                willDownloadFiles: generator.absolutePathToLocalOutput != null,
-                customConfig: generator.config,
-            }));
-        case GenerationLevel.Release:
-            return workspace.generatorsConfiguration.release.map((generator) => ({
-                id: generator.name,
-                version: generator.version,
-                willDownloadFiles: false,
-                customConfig: generator.config,
-            }));
-        default:
-            assertNever(generationLevel);
-    }
 }

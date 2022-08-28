@@ -1,5 +1,5 @@
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
-import { GenerationLevel, runRemoteGenerationForWorkspace } from "@fern-api/remote-workspace-runner";
+import { runRemoteGenerationForWorkspace } from "@fern-api/remote-workspace-runner";
 import { TASK_FAILURE } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import { CliContext } from "../../cli-context/CliContext";
@@ -36,7 +36,17 @@ export async function generateWorkspace({
                 intermediateRepresentation,
                 organization,
                 context,
-                generationLevel: GenerationLevel.Draft,
+                generatorConfigs: workspace.generatorsConfiguration.draft.map((generator) => ({
+                    id: generator.name,
+                    version: generator.version,
+                    willDownloadFiles: generator.absolutePathToLocalOutput != null,
+                    customConfig: generator.config,
+                    outputs: {
+                        npm: undefined,
+                        maven: undefined,
+                    },
+                })),
+                version: undefined,
             });
         }
     });

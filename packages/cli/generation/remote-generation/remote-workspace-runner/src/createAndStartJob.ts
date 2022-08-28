@@ -1,6 +1,6 @@
 import { Workspace } from "@fern-api/workspace-loader";
 import { Fiddle } from "@fern-fern/fiddle-client-v2";
-import { IntermediateRepresentation } from "@fern-fern/ir-model";
+import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import axios, { AxiosError } from "axios";
 import FormData from "form-data";
 import urlJoin from "url-join";
@@ -11,13 +11,15 @@ export async function createAndStartJob({
     organization,
     intermediateRepresentation,
     generatorConfigs,
+    version,
 }: {
     workspace: Workspace;
     organization: string;
     intermediateRepresentation: IntermediateRepresentation;
     generatorConfigs: Fiddle.remoteGen.GeneratorConfig[];
+    version: string | undefined;
 }): Promise<Fiddle.remoteGen.CreateJobResponse> {
-    const job = await createJob({ workspace, organization, generatorConfigs });
+    const job = await createJob({ workspace, organization, generatorConfigs, version });
     await startJob({ intermediateRepresentation, job });
     return job;
 }
@@ -26,19 +28,22 @@ async function createJob({
     workspace,
     organization,
     generatorConfigs,
+    version,
 }: {
     workspace: Workspace;
     organization: string;
     generatorConfigs: Fiddle.remoteGen.GeneratorConfig[];
+    version: string | undefined;
 }) {
     const createResponse = await REMOTE_GENERATION_SERVICE.remoteGen.createJob({
         apiName: workspace.name,
+        version,
         organizationName: organization,
         generators: generatorConfigs,
     });
 
     if (!createResponse.ok) {
-        createResponse.error._visit({
+        return createResponse.error._visit({
             illegalApiNameError: () => {
                 throw new Error("API name is invalid: " + workspace.name);
             },
@@ -57,8 +62,8 @@ async function createJob({
                 throw new Error("Unknown Error: " + JSON.stringify(createResponse.error));
             },
         });
-        throw new Error("Job did not succeed");
     }
+
     const job = createResponse.body;
     return job;
 }

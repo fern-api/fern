@@ -1,5 +1,5 @@
 import { RelativeFilePath } from "@fern-api/core-utils";
-import { ResponseErrors } from "@fern-fern/ir-model/services";
+import { ResponseErrors } from "@fern-fern/ir-model/services/commons";
 import { convertResponseErrors } from "../converters/services/convertResponseErrors";
 import { convertToFernFilepath } from "../utils/convertToFernFilepath";
 

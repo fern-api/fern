@@ -5,9 +5,11 @@ import { releaseWorkspace } from "./releaseWorkspace";
 export async function releaseWorkspaces({
     project,
     cliContext,
+    version,
 }: {
     project: Project;
     cliContext: CliContext;
+    version: string;
 }): Promise<void> {
     await Promise.all(
         project.workspaces.map((workspace) =>
@@ -15,6 +17,7 @@ export async function releaseWorkspaces({
                 workspace,
                 organization: project.config.organization,
                 cliContext,
+                version,
             })
         )
     );

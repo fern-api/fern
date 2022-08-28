@@ -1,6 +1,7 @@
 import { RelativeFilePath } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { FernFilepath, Type, TypeReference } from "@fern-fern/ir-model";
+import { FernFilepath } from "@fern-fern/ir-model/commons";
+import { Type, TypeReference } from "@fern-fern/ir-model/types";
 import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { convertType } from "./convertTypeDeclaration";
 
