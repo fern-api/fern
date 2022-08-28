@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fern.java.client.cli;
+package com.fern.java;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,7 +23,7 @@ import java.io.InputStreamReader;
 public final class StreamGobbler extends Thread {
     private final InputStream is;
 
-    StreamGobbler(InputStream is) {
+    public StreamGobbler(InputStream is) {
         this.is = is;
     }
 

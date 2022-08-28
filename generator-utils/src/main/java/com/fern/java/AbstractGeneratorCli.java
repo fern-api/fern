@@ -17,10 +17,13 @@
 package com.fern.java;
 
 import com.fern.generator.exec.model.config.GeneratorConfig;
+import com.fern.generator.exec.model.config.GeneratorPublishConfig;
 import com.fern.generator.exec.model.config.MavenRegistryConfigV2;
 import com.fern.generator.exec.model.logging.ErrorExitStatusUpdate;
 import com.fern.generator.exec.model.logging.ExitStatusUpdate;
 import com.fern.generator.exec.model.logging.GeneratorUpdate;
+import com.fern.generator.exec.model.logging.MavenCoordinate;
+import com.fern.generator.exec.model.logging.PackageCoordinate;
 import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.java.jackson.ClientObjectMappers;
 import com.fern.java.output.AbstractGeneratedFileOutput;
@@ -31,7 +34,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,6 +63,11 @@ public abstract class AbstractGeneratorCli {
         GeneratorConfig generatorConfig = getGeneratorConfig(pluginPath);
         DefaultGeneratorExecClient generatorExecClient = new DefaultGeneratorExecClient(generatorConfig);
         try {
+            Optional<PackageCoordinate> maybePackageCoordinate = getMavenCoordinateFromRegistryConfig(generatorConfig);
+            maybePackageCoordinate.ifPresent(packageCoordinate -> {
+                generatorExecClient.sendUpdate(GeneratorUpdate.publishing(packageCoordinate));
+            });
+
             IntermediateRepresentation ir = getIr(generatorConfig);
             run(generatorExecClient, generatorConfig, ir);
 
@@ -69,6 +79,13 @@ public abstract class AbstractGeneratorCli {
 
             generatedFiles.forEach(generatedFileOutput ->
                     writeFile(Paths.get(outputDirectory, SRC_MAIN_JAVA), generatedFileOutput.javaFile()));
+
+            maybePackageCoordinate.ifPresent(packageCoordinate -> {
+                runCommandBlocking(new String[] {"gradle", "publish"}, Paths.get(outputDirectory));
+                generatorExecClient.sendUpdate(GeneratorUpdate.published(packageCoordinate));
+            });
+
+            generatorExecClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful()));
         } catch (Exception e) {
             log.error("Encountered fatal error", e);
             generatorExecClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.error(
@@ -108,6 +125,26 @@ public abstract class AbstractGeneratorCli {
                 .build();
     }
 
+    private static Optional<PackageCoordinate> getMavenCoordinateFromRegistryConfig(GeneratorConfig generatorConfig) {
+        if (generatorConfig.getPublish().isEmpty()) {
+            return Optional.empty();
+        }
+        GeneratorPublishConfig generatorPublishConfig =
+                generatorConfig.getPublish().get();
+        MavenRegistryConfigV2 mavenRegistryConfigV2 =
+                generatorPublishConfig.getRegistriesV2().getMaven();
+        String[] splitCoordinate = mavenRegistryConfigV2.getCoordinate().split(":");
+        if (splitCoordinate.length < 2) {
+            throw new IllegalStateException(
+                    "Received invalid maven coordinate: " + mavenRegistryConfigV2.getCoordinate());
+        }
+        return Optional.of(PackageCoordinate.maven(MavenCoordinate.builder()
+                .group(splitCoordinate[0])
+                .artifact(splitCoordinate[1])
+                .version(generatorPublishConfig.getVersion())
+                .build()));
+    }
+
     private static GeneratorConfig getGeneratorConfig(String pluginPath) {
         try {
             return ClientObjectMappers.JSON_MAPPER.readValue(new File(pluginPath), GeneratorConfig.class);
@@ -138,6 +175,33 @@ public abstract class AbstractGeneratorCli {
             Files.writeString(path, contents);
         } catch (IOException e) {
             throw new RuntimeException("Failed to write .gitignore ", e);
+        }
+    }
+
+    private static void runCommandBlocking(String[] command, Path workingDirectory) {
+        try {
+            Process process = runCommandAsync(command, workingDirectory);
+            int exitCode = process.waitFor();
+            if (exitCode != 0) {
+                throw new RuntimeException("Command failed with non-zero exit code: " + Arrays.toString(command));
+            }
+            process.waitFor();
+        } catch (InterruptedException e) {
+            throw new RuntimeException("Failed to run command", e);
+        }
+    }
+
+    private static Process runCommandAsync(String[] command, Path workingDirectory) {
+        try {
+            ProcessBuilder pb = new ProcessBuilder(command).directory(workingDirectory.toFile());
+            Process process = pb.start();
+            StreamGobbler errorGobbler = new StreamGobbler(process.getErrorStream());
+            StreamGobbler outputGobbler = new StreamGobbler(process.getInputStream());
+            errorGobbler.start();
+            outputGobbler.start();
+            return process;
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to run command: " + Arrays.toString(command), e);
         }
     }
 }

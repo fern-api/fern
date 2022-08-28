@@ -18,6 +18,7 @@ package com.fern.java.client.cli;
 import au.com.origin.snapshots.Expect;
 import au.com.origin.snapshots.annotations.SnapshotName;
 import au.com.origin.snapshots.junit5.SnapshotExtension;
+import com.fern.java.StreamGobbler;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
