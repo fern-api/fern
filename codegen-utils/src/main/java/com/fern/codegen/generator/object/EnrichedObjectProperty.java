@@ -19,8 +19,8 @@ package com.fern.codegen.generator.object;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fern.codegen.utils.ClassNameUtils;
 import com.fern.codegen.utils.KeyWordUtils;
+import com.fern.ir.model.types.ObjectProperty;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import com.fern.types.ObjectProperty;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
@@ -76,13 +76,13 @@ public interface EnrichedObjectProperty {
 
     static EnrichedObjectProperty of(
             ObjectProperty objectProperty, boolean fromInterface, ClassNameUtils classNameUtils) {
-        TypeName poetTypeName = classNameUtils.getTypeNameFromTypeReference(true, objectProperty.valueType());
+        TypeName poetTypeName = classNameUtils.getTypeNameFromTypeReference(true, objectProperty.getValueType());
         return EnrichedObjectProperty.builder()
-                .camelCaseKey(objectProperty.name().camelCase())
-                .pascalCaseKey(objectProperty.name().pascalCase())
+                .camelCaseKey(objectProperty.getName().getCamelCase())
+                .pascalCaseKey(objectProperty.getName().getPascalCase())
                 .poetTypeName(poetTypeName)
                 .fromInterface(fromInterface)
-                .wireKey(objectProperty.name().wireValue())
+                .wireKey(objectProperty.getName().getWireValue())
                 .build();
     }
 }

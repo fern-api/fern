@@ -1,5 +1,7 @@
 dependencies {
     api project(':runtime-utils:immutables-utils')
+    api 'com.fern.fern:generator-exec-client'
+
     implementation project(':runtime-utils:jackson-utils')
     implementation project(':runtime-utils:jersey-utils')
     implementation project(':runtime-utils:exception-utils')

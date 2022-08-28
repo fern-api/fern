@@ -15,9 +15,9 @@
  */
 package com.fern.codegen;
 
+import com.fern.ir.model.types.ObjectProperty;
+import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import com.fern.types.ObjectProperty;
-import com.fern.types.ObjectTypeDeclaration;
 import com.squareup.javapoet.MethodSpec;
 import java.util.Map;
 import org.immutables.value.Value;

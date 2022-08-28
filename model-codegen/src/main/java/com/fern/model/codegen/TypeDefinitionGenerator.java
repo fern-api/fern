@@ -18,17 +18,17 @@ package com.fern.model.codegen;
 import com.fern.codegen.GeneratedInterface;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.IGeneratedFile;
+import com.fern.ir.model.types.AliasTypeDeclaration;
+import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.ir.model.types.EnumTypeDeclaration;
+import com.fern.ir.model.types.ObjectTypeDeclaration;
+import com.fern.ir.model.types.Type;
+import com.fern.ir.model.types.TypeDeclaration;
+import com.fern.ir.model.types.UnionTypeDeclaration;
 import com.fern.model.codegen.types.AliasGenerator;
 import com.fern.model.codegen.types.EnumGenerator;
 import com.fern.model.codegen.types.ObjectGenerator;
 import com.fern.model.codegen.types.UnionGenerator;
-import com.fern.types.AliasTypeDeclaration;
-import com.fern.types.DeclaredTypeName;
-import com.fern.types.EnumTypeDeclaration;
-import com.fern.types.ObjectTypeDeclaration;
-import com.fern.types.Type;
-import com.fern.types.TypeDeclaration;
-import com.fern.types.UnionTypeDeclaration;
 import com.squareup.javapoet.ClassName;
 import java.util.Comparator;
 import java.util.List;
@@ -57,14 +57,14 @@ public final class TypeDefinitionGenerator implements Type.Visitor<IGeneratedFil
     @Override
     public IGeneratedFile visitObject(ObjectTypeDeclaration objectTypeDefinition) {
         Optional<GeneratedInterface> selfInterface =
-                Optional.ofNullable(generatedInterfaces.get(typeDeclaration.name()));
-        List<GeneratedInterface> extendedInterfaces = objectTypeDefinition._extends().stream()
+                Optional.ofNullable(generatedInterfaces.get(typeDeclaration.getName()));
+        List<GeneratedInterface> extendedInterfaces = objectTypeDefinition.getExtends().stream()
                 .map(generatedInterfaces::get)
                 .sorted(Comparator.comparing(
                         generatedInterface -> generatedInterface.className().simpleName()))
                 .collect(Collectors.toList());
         ObjectGenerator objectGenerator = new ObjectGenerator(
-                typeDeclaration.name(),
+                typeDeclaration.getName(),
                 objectTypeDefinition,
                 extendedInterfaces,
                 selfInterface,
@@ -75,8 +75,8 @@ public final class TypeDefinitionGenerator implements Type.Visitor<IGeneratedFil
 
     @Override
     public IGeneratedFile visitUnion(UnionTypeDeclaration unionTypeDeclaration) {
-        UnionGenerator unionGenerator =
-                new UnionGenerator(typeDeclaration.name(), unionTypeDeclaration, generatedClassName, generatorContext);
+        UnionGenerator unionGenerator = new UnionGenerator(
+                typeDeclaration.getName(), unionTypeDeclaration, generatedClassName, generatorContext);
         return unionGenerator.generate();
     }
 
@@ -89,7 +89,7 @@ public final class TypeDefinitionGenerator implements Type.Visitor<IGeneratedFil
     @Override
     public IGeneratedFile visitEnum(EnumTypeDeclaration enumTypeDeclaration) {
         EnumGenerator enumGenerator =
-                new EnumGenerator(typeDeclaration.name(), enumTypeDeclaration, generatorContext, generatedClassName);
+                new EnumGenerator(typeDeclaration.getName(), enumTypeDeclaration, generatorContext, generatedClassName);
         return enumGenerator.generate();
     }
 

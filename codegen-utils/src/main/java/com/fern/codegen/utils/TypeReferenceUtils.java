@@ -16,11 +16,11 @@
 package com.fern.codegen.utils;
 
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
-import com.fern.types.ContainerType;
-import com.fern.types.DeclaredTypeName;
-import com.fern.types.MapType;
-import com.fern.types.PrimitiveType;
-import com.fern.types.TypeReference;
+import com.fern.ir.model.types.ContainerType;
+import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.ir.model.types.MapType;
+import com.fern.ir.model.types.PrimitiveType;
+import com.fern.ir.model.types.TypeReference;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
@@ -159,8 +159,8 @@ class TypeReferenceUtils {
         public TypeName visitMap(MapType mapType) {
             return ParameterizedTypeName.get(
                     ClassName.get(Map.class),
-                    mapType.keyType().visit(primitiveDisAllowedTypeReferenceConverter),
-                    mapType.valueType().visit(primitiveDisAllowedTypeReferenceConverter));
+                    mapType.getKeyType().visit(primitiveDisAllowedTypeReferenceConverter),
+                    mapType.getValueType().visit(primitiveDisAllowedTypeReferenceConverter));
         }
 
         @Override

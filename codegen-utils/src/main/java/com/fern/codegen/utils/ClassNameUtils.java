@@ -15,13 +15,13 @@
  */
 package com.fern.codegen.utils;
 
-import com.fern.interfaces.IStringWithAllCasings;
-import com.fern.types.DeclaredErrorName;
-import com.fern.types.DeclaredTypeName;
-import com.fern.types.FernFilepath;
-import com.fern.types.TypeReference;
-import com.fern.types.services.DeclaredServiceName;
-import com.fern.types.services.HttpEndpointId;
+import com.fern.ir.model.commons.FernFilepath;
+import com.fern.ir.model.commons.StringWithAllCasings;
+import com.fern.ir.model.errors.DeclaredErrorName;
+import com.fern.ir.model.services.commons.DeclaredServiceName;
+import com.fern.ir.model.services.http.HttpEndpointId;
+import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.ir.model.types.TypeReference;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeName;
 import java.util.ArrayList;
@@ -43,30 +43,37 @@ public final class ClassNameUtils {
 
     public ClassName getClassNameFromEndpointId(
             DeclaredServiceName serviceName, HttpEndpointId endpointId, PackageType packageType) {
-        return getClassName(endpointId.value(), Optional.empty(), Optional.of(serviceName.fernFilepath()), packageType);
+        return getClassName(
+                endpointId.get(), Optional.empty(), Optional.of(serviceName.getFernFilepath()), packageType);
     }
 
     public ClassName getClassNameFromServiceName(
             DeclaredServiceName serviceName, String suffix, PackageType packageType) {
         return getClassName(
-                serviceName.name(), Optional.of(suffix), Optional.of(serviceName.fernFilepath()), packageType);
+                serviceName.getName(), Optional.of(suffix), Optional.of(serviceName.getFernFilepath()), packageType);
     }
 
     public ClassName getClassNameFromServiceName(DeclaredServiceName serviceName, PackageType packageType) {
-        return getClassName(serviceName.name(), Optional.empty(), Optional.of(serviceName.fernFilepath()), packageType);
+        return getClassName(
+                serviceName.getName(), Optional.empty(), Optional.of(serviceName.getFernFilepath()), packageType);
     }
 
     public ClassName getClassNameFromDeclaredTypeName(DeclaredTypeName declaredTypeName, PackageType packageType) {
         return getClassName(
-                declaredTypeName.name(), Optional.empty(), Optional.of(declaredTypeName.fernFilepath()), packageType);
+                declaredTypeName.getName(),
+                Optional.empty(),
+                Optional.of(declaredTypeName.getFernFilepath()),
+                packageType);
     }
 
     public ClassName getClassNameFromErrorName(DeclaredErrorName errorName, PackageType packageType) {
-        return getClassName(errorName.name(), Optional.empty(), Optional.of(errorName.fernFilepath()), packageType);
+        return getClassName(
+                errorName.getName(), Optional.empty(), Optional.of(errorName.getFernFilepath()), packageType);
     }
 
     public ClassName getClassNameFromErrorName(DeclaredErrorName errorName, String suffix, PackageType packageType) {
-        return getClassName(errorName.name(), Optional.of(suffix), Optional.of(errorName.fernFilepath()), packageType);
+        return getClassName(
+                errorName.getName(), Optional.of(suffix), Optional.of(errorName.getFernFilepath()), packageType);
     }
 
     public ClassName getNestedClassName(ClassName outerClassName, String nestedClassName) {
@@ -119,8 +126,8 @@ public final class ClassNameUtils {
     private String getPackage(Optional<FernFilepath> filepath, PackageType packageType) {
         List<String> packageParts = new ArrayList<>(packagePrefixes);
         packageParts.add(getPackageFromType(packageType));
-        filepath.ifPresent(fernFilepath -> packageParts.addAll(fernFilepath.value().stream()
-                .map(IStringWithAllCasings::snakeCase)
+        filepath.ifPresent(fernFilepath -> packageParts.addAll(fernFilepath.get().stream()
+                .map(StringWithAllCasings::getSnakeCase)
                 .map(snakeCase -> snakeCase.replaceAll("_", "."))
                 .collect(Collectors.toList())));
         return String.join(".", packageParts);

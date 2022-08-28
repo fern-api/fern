@@ -16,8 +16,8 @@
 package com.fern.spring;
 
 import com.fern.codegen.utils.HttpPathUtils;
-import com.fern.types.services.HttpEndpoint;
-import com.fern.types.services.HttpMethod;
+import com.fern.ir.model.services.http.HttpEndpoint;
+import com.fern.ir.model.services.http.HttpMethod;
 import com.squareup.javapoet.AnnotationSpec;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +30,7 @@ public final class SpringHttpMethodAnnotationVisitor implements HttpMethod.Visit
     private final String path;
 
     public SpringHttpMethodAnnotationVisitor(HttpEndpoint httpEndpoint) {
-        this.path = HttpPathUtils.getPathWithCurlyBracedPathParams(httpEndpoint.path());
+        this.path = HttpPathUtils.getPathWithCurlyBracedPathParams(httpEndpoint.getPath());
     }
 
     @Override

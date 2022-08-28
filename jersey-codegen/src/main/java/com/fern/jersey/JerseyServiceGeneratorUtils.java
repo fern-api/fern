@@ -19,10 +19,10 @@ import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.payload.Payload;
 import com.fern.codegen.payload.TypeNamePayload;
 import com.fern.codegen.payload.VoidPayload;
-import com.fern.types.TypeReference;
-import com.fern.types.services.HttpHeader;
-import com.fern.types.services.PathParameter;
-import com.fern.types.services.QueryParameter;
+import com.fern.ir.model.services.http.HttpHeader;
+import com.fern.ir.model.services.http.PathParameter;
+import com.fern.ir.model.services.http.QueryParameter;
+import com.fern.ir.model.types.TypeReference;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
@@ -41,23 +41,26 @@ public final class JerseyServiceGeneratorUtils {
 
     public ParameterSpec getHeaderParameterSpec(HttpHeader header) {
         return getParameterSpec(
-                HeaderParam.class, header.name().wireValue(), header.name().camelCase(), header.valueType());
+                HeaderParam.class,
+                header.getName().getWireValue(),
+                header.getName().getCamelCase(),
+                header.getValueType());
     }
 
     public ParameterSpec getPathParameterSpec(PathParameter pathParameter) {
         return getParameterSpec(
                 PathParam.class,
-                pathParameter.name().originalValue(),
-                pathParameter.name().camelCase(),
-                pathParameter.valueType());
+                pathParameter.getName().getOriginalValue(),
+                pathParameter.getName().getCamelCase(),
+                pathParameter.getValueType());
     }
 
     public ParameterSpec getQueryParameterSpec(QueryParameter queryParameter) {
         return getParameterSpec(
                 QueryParam.class,
-                queryParameter.name().originalValue(),
-                queryParameter.name().camelCase(),
-                queryParameter.valueType());
+                queryParameter.getName().getOriginalValue(),
+                queryParameter.getName().getCamelCase(),
+                queryParameter.getValueType());
     }
 
     private <T> ParameterSpec getParameterSpec(

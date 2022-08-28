@@ -1,0 +1,15 @@
+ids:
+  - DummyId
+services:
+  http:
+    DummyService:
+      auth: false
+      base-path: /dummy
+      endpoints:
+        getDummy:
+          method: GET
+          path: /
+          request: DummyId
+        health:
+          method: GET
+          path: /health

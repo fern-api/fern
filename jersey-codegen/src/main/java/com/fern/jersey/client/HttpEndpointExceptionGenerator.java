@@ -23,10 +23,10 @@ import com.fern.codegen.IGeneratedFile;
 import com.fern.codegen.generator.union.client.ClientErrorUnionGenerator;
 import com.fern.codegen.generator.union.client.ClientErrorUnionOtherSubType;
 import com.fern.codegen.generator.union.client.ClientErrorUnionSubType;
-import com.fern.types.DeclaredErrorName;
-import com.fern.types.ErrorDeclaration;
-import com.fern.types.services.HttpEndpoint;
-import com.fern.types.services.HttpService;
+import com.fern.ir.model.errors.DeclaredErrorName;
+import com.fern.ir.model.errors.ErrorDeclaration;
+import com.fern.ir.model.services.http.HttpEndpoint;
+import com.fern.ir.model.services.http.HttpService;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
@@ -51,16 +51,16 @@ public final class HttpEndpointExceptionGenerator extends Generator {
                 new ClientClassNameUtils(generatorContext.getIr(), generatorContext.getOrganization());
         this.httpEndpoint = httpEndpoint;
         this.generatedClientErrors = generatedClientErrors;
-        this.exceptionClassName = clientClassNameUtils.getExceptionClassName(httpService.name(), httpEndpoint);
+        this.exceptionClassName = clientClassNameUtils.getExceptionClassName(httpService.getName(), httpEndpoint);
     }
 
     @Override
     public IGeneratedFile generate() {
-        List<ClientErrorUnionSubType> clientErrorSubTypes = httpEndpoint.errors().value().stream()
+        List<ClientErrorUnionSubType> clientErrorSubTypes = httpEndpoint.getErrors().get().stream()
                 .map(responseError -> {
                     ErrorDeclaration errorDeclaration =
-                            generatorContext.getErrorDefinitionsByName().get(responseError.error());
-                    IGeneratedFile generatedClientError = generatedClientErrors.get(responseError.error());
+                            generatorContext.getErrorDefinitionsByName().get(responseError.getError());
+                    IGeneratedFile generatedClientError = generatedClientErrors.get(responseError.getError());
                     return new ClientErrorUnionSubType(
                             exceptionClassName,
                             errorDeclaration,

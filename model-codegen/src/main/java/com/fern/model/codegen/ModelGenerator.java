@@ -29,18 +29,18 @@ import com.fern.codegen.payload.Payload;
 import com.fern.codegen.payload.TypeNamePayload;
 import com.fern.codegen.payload.VoidPayload;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
+import com.fern.ir.model.errors.DeclaredErrorName;
+import com.fern.ir.model.errors.ErrorDeclaration;
+import com.fern.ir.model.services.http.HttpEndpointId;
+import com.fern.ir.model.services.http.HttpService;
+import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.ir.model.types.ObjectTypeDeclaration;
+import com.fern.ir.model.types.Type;
+import com.fern.ir.model.types.TypeDeclaration;
+import com.fern.ir.model.types.TypeReference;
 import com.fern.model.codegen.errors.ErrorGenerator;
 import com.fern.model.codegen.services.payloads.FailedResponseGenerator;
 import com.fern.model.codegen.types.InterfaceGenerator;
-import com.fern.types.DeclaredErrorName;
-import com.fern.types.DeclaredTypeName;
-import com.fern.types.ErrorDeclaration;
-import com.fern.types.ObjectTypeDeclaration;
-import com.fern.types.Type;
-import com.fern.types.TypeDeclaration;
-import com.fern.types.TypeReference;
-import com.fern.types.services.HttpEndpointId;
-import com.fern.types.services.HttpService;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeName;
 import java.util.List;
@@ -77,9 +77,9 @@ public final class ModelGenerator {
         typeDeclarations.forEach(typeDefinition -> {
             ClassName className = generatorContext
                     .getClassNameUtils()
-                    .getClassNameFromDeclaredTypeName(typeDefinition.name(), PackageType.MODEL);
+                    .getClassNameFromDeclaredTypeName(typeDefinition.getName(), PackageType.MODEL);
             IGeneratedFile generatedFile = typeDefinition
-                    .shape()
+                    .getShape()
                     .visit(new TypeDefinitionGenerator(
                             typeDefinition, generatorContext, generatedInterfaces, className));
             if (generatedFile instanceof GeneratedObject) {
@@ -96,7 +96,7 @@ public final class ModelGenerator {
             }
         });
         Map<DeclaredErrorName, GeneratedError> generatedErrors = errorDeclarations.stream()
-                .collect(Collectors.toMap(ErrorDeclaration::name, errorDefinition -> {
+                .collect(Collectors.toMap(ErrorDeclaration::getName, errorDefinition -> {
                     ErrorGenerator errorGenerator =
                             new ErrorGenerator(errorDefinition, generatorContext, generatedInterfaces);
                     return errorGenerator.generate();
@@ -114,20 +114,20 @@ public final class ModelGenerator {
 
     private Map<DeclaredTypeName, GeneratedInterface> getGeneratedInterfaces() {
         Set<DeclaredTypeName> interfaceCandidates = typeDeclarations.stream()
-                .map(TypeDeclaration::shape)
+                .map(TypeDeclaration::getShape)
                 .map(Type::getObject)
                 .flatMap(Optional::stream)
-                .map(ObjectTypeDeclaration::_extends)
+                .map(ObjectTypeDeclaration::getExtends)
                 .flatMap(List::stream)
                 .collect(Collectors.toSet());
         return interfaceCandidates.stream().collect(Collectors.toMap(Function.identity(), namedType -> {
             TypeDeclaration typeDeclaration = typeDeclarationsByName.get(namedType);
             ObjectTypeDeclaration objectTypeDeclaration = typeDeclaration
-                    .shape()
+                    .getShape()
                     .getObject()
                     .orElseThrow(() -> new IllegalStateException("Non-objects cannot be extended. Fix type "
-                            + typeDeclaration.name().name() + " located in file"
-                            + typeDeclaration.name().fernFilepath()));
+                            + typeDeclaration.getName().getName() + " located in file"
+                            + typeDeclaration.getName().getFernFilepath()));
             InterfaceGenerator interfaceGenerator =
                     new InterfaceGenerator(objectTypeDeclaration, namedType, generatorContext);
             return interfaceGenerator.generate();
@@ -138,20 +138,20 @@ public final class ModelGenerator {
             HttpService httpService,
             Map<DeclaredTypeName, GeneratedInterface> generatedInterfaces,
             Map<DeclaredErrorName, GeneratedError> generatedErrors) {
-        return httpService.endpoints().stream()
+        return httpService.getEndpoints().stream()
                 .map(httpEndpoint -> {
                     ImmutableGeneratedEndpointModel.Builder generatedEndpointModel =
                             GeneratedEndpointModel.builder().httpEndpoint(httpEndpoint);
 
                     Payload requestPayload =
-                            generatePayload(httpEndpoint.request().type());
+                            generatePayload(httpEndpoint.getRequest().getType());
                     generatedEndpointModel.generatedHttpRequest(requestPayload);
 
                     Payload responsePayload =
-                            generatePayload(httpEndpoint.response().type());
+                            generatePayload(httpEndpoint.getResponse().getType());
                     generatedEndpointModel.generatedHttpResponse(responsePayload);
 
-                    if (!httpEndpoint.errors().value().isEmpty()) {
+                    if (!httpEndpoint.getErrors().get().isEmpty()) {
                         FailedResponseGenerator failedResponseGenerator = new FailedResponseGenerator(
                                 httpService, httpEndpoint, generatorContext, generatedErrors);
                         generatedEndpointModel.errorFile(failedResponseGenerator.generate());
@@ -160,7 +160,7 @@ public final class ModelGenerator {
                 })
                 .collect(Collectors.toMap(
                         generatedEndpointModel ->
-                                generatedEndpointModel.httpEndpoint().id(),
+                                generatedEndpointModel.httpEndpoint().getId(),
                         Function.identity()));
     }
 

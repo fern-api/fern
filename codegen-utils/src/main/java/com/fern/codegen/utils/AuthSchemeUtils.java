@@ -16,9 +16,9 @@
 
 package com.fern.codegen.utils;
 
-import com.fern.types.AuthScheme;
-import com.fern.types.WithDocs;
-import com.fern.types.services.HttpHeader;
+import com.fern.ir.model.auth.AuthScheme;
+import com.fern.ir.model.commons.WithDocs;
+import com.fern.ir.model.services.http.HttpHeader;
 import org.apache.commons.lang3.StringUtils;
 
 public final class AuthSchemeUtils {
@@ -48,7 +48,7 @@ public final class AuthSchemeUtils {
 
         @Override
         public String visitHeader(HttpHeader value) {
-            return value.name().camelCase();
+            return value.getName().getCamelCase();
         }
 
         @Override

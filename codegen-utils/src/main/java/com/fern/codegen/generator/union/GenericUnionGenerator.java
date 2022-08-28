@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fern.codegen.utils.ClassNameConstants;
-import com.fern.types.FernConstants;
+import com.fern.ir.model.ir.FernConstants;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -187,7 +187,7 @@ public abstract class GenericUnionGenerator {
                 .addModifiers(Modifier.PRIVATE)
                 .addAnnotation(AnnotationSpec.builder(JsonTypeInfo.class)
                         .addMember("use", "$T.Id.$L", JsonTypeInfo.class, Id.NAME.name())
-                        .addMember("property", "$S", fernConstants.errorDiscriminant())
+                        .addMember("property", "$S", fernConstants.getErrorDiscriminant())
                         .addMember("visible", "$L", true)
                         .addMember("defaultImpl", "$T.class", unknownSubType.getUnionSubTypeWrapperClass())
                         .build());

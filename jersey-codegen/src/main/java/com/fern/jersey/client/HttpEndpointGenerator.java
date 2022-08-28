@@ -24,9 +24,9 @@ import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.IGeneratedFile;
 import com.fern.codegen.generator.object.EnrichedObjectProperty;
 import com.fern.codegen.generator.object.GenericObjectGenerator;
-import com.fern.types.DeclaredErrorName;
-import com.fern.types.services.HttpEndpoint;
-import com.fern.types.services.HttpService;
+import com.fern.ir.model.errors.DeclaredErrorName;
+import com.fern.ir.model.services.http.HttpEndpoint;
+import com.fern.ir.model.services.http.HttpService;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
@@ -63,7 +63,7 @@ public final class HttpEndpointGenerator extends Generator {
             Map<DeclaredErrorName, IGeneratedFile> generatedClientErrors) {
         super(generatorContext);
         this.httpEndpoint = httpEndpoint;
-        this.endpointClassName = clientClassNameUtils.getClassName(httpService.name(), httpEndpoint.id());
+        this.endpointClassName = clientClassNameUtils.getClassName(httpService.getName(), httpEndpoint.getId());
         this.serviceInterfaceMethodParameters = serviceInterfaceMethodParameters;
         this.maybeGeneratedAuthSchemes = maybeGeneratedAuthSchemes;
         this.generatedClientErrors = generatedClientErrors;
@@ -106,7 +106,7 @@ public final class HttpEndpointGenerator extends Generator {
                 Optional.of(endpointClassName));
         TypeSpec requestTypeSpec = genericObjectGenerator.generate();
         Optional<MethodSpec> authMethodSpec = Optional.empty();
-        if (httpEndpoint.auth() && maybeGeneratedAuthSchemes.isPresent()) {
+        if (httpEndpoint.getAuth() && maybeGeneratedAuthSchemes.isPresent()) {
             authMethodSpec = Optional.of(enrichedObjectProperties.get(0).getterProperty());
         }
         return GeneratedRequestInfo.builder()
@@ -119,7 +119,7 @@ public final class HttpEndpointGenerator extends Generator {
 
     private List<ParameterSpec> getRequestParameters() {
         List<ParameterSpec> requestParameters = new ArrayList<>();
-        if (httpEndpoint.auth() && maybeGeneratedAuthSchemes.isPresent()) {
+        if (httpEndpoint.getAuth() && maybeGeneratedAuthSchemes.isPresent()) {
             GeneratedAuthSchemes generatedAuthSchemes = maybeGeneratedAuthSchemes.get();
             requestParameters.add(ParameterSpec.builder(
                             ParameterizedTypeName.get(ClassName.get(Optional.class), generatedAuthSchemes.className()),

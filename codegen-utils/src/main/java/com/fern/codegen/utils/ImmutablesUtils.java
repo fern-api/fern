@@ -16,7 +16,7 @@
 package com.fern.codegen.utils;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fern.types.WireStringWithAllCasings;
+import com.fern.ir.model.commons.WireStringWithAllCasings;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
@@ -33,12 +33,12 @@ public final class ImmutablesUtils {
     public MethodSpec getKeyWordCompatibleImmutablesPropertyMethod(
             WireStringWithAllCasings property, TypeName returnType) {
         String prefix = "";
-        if (KeyWordUtils.isReserved(property.camelCase())) {
+        if (KeyWordUtils.isReserved(property.getCamelCase())) {
             prefix = "_";
         }
-        return MethodSpec.methodBuilder(prefix + property.camelCase())
+        return MethodSpec.methodBuilder(prefix + property.getCamelCase())
                 .addAnnotation(AnnotationSpec.builder(JsonProperty.class)
-                        .addMember("value", "$S", property.wireValue())
+                        .addMember("value", "$S", property.getWireValue())
                         .build())
                 .returns(returnType)
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)

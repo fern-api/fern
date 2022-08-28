@@ -22,8 +22,8 @@ import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.generator.object.EnrichedObjectProperty;
 import com.fern.codegen.generator.object.GenericObjectGenerator;
 import com.fern.codegen.generator.object.ImplementsInterface;
-import com.fern.types.DeclaredTypeName;
-import com.fern.types.ObjectTypeDeclaration;
+import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
@@ -62,14 +62,14 @@ public final class ObjectGenerator extends Generator {
 
     @Override
     public GeneratedObject generate() {
-        List<EnrichedObjectProperty> enrichedObjectProperties = objectTypeDeclaration.properties().stream()
+        List<EnrichedObjectProperty> enrichedObjectProperties = objectTypeDeclaration.getProperties().stream()
                 .map(objectProperty ->
                         EnrichedObjectProperty.of(objectProperty, false, generatorContext.getClassNameUtils()))
                 .collect(Collectors.toList());
         List<ImplementsInterface> implementsInterfaces = extendedInterfaces.stream()
                 .map(generatedInterface -> ImplementsInterface.builder()
                         .interfaceClassName(generatedInterface.className())
-                        .addAllInterfaceProperties(generatedInterface.objectTypeDeclaration().properties().stream()
+                        .addAllInterfaceProperties(generatedInterface.objectTypeDeclaration().getProperties().stream()
                                 .map(objectProperty -> EnrichedObjectProperty.of(
                                         objectProperty, true, generatorContext.getClassNameUtils()))
                                 .collect(Collectors.toList()))

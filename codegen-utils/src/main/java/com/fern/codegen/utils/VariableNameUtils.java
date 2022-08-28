@@ -16,7 +16,7 @@
 
 package com.fern.codegen.utils;
 
-import com.fern.types.services.HttpHeader;
+import com.fern.ir.model.services.http.HttpHeader;
 import java.util.List;
 import org.apache.commons.text.CaseUtils;
 
@@ -27,7 +27,7 @@ public final class VariableNameUtils {
     private VariableNameUtils() {}
 
     public static String getVariableNameFromHeader(HttpHeader httpHeader) {
-        String unprefixedHeader = httpHeader.name().originalValue();
+        String unprefixedHeader = httpHeader.getName().getOriginalValue();
         for (String prefix : COMMON_REMOVABLE_HTTP_HEADERS) {
             if (unprefixedHeader.startsWith(prefix)) {
                 unprefixedHeader = unprefixedHeader.substring(prefix.length());

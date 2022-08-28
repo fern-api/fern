@@ -15,8 +15,8 @@
  */
 package com.fern.codegen;
 
+import com.fern.ir.model.errors.ErrorDeclaration;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import com.fern.types.ErrorDeclaration;
 import org.immutables.value.Value;
 
 @Value.Immutable

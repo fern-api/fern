@@ -17,10 +17,10 @@ package com.fern.java.client.cli;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.java.client.cli.CustomPluginConfig.Mode;
 import com.fern.java.client.cli.CustomPluginConfig.ServerFramework;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import com.fern.types.generators.GeneratorConfig;
 import com.fiddle.generator.logging.types.MavenCoordinate;
 import com.fiddle.generator.logging.types.PackageCoordinate;
 import java.util.ArrayList;
@@ -89,22 +89,22 @@ public interface FernPluginConfig {
     }
 
     default String getSubProjectName(String projectSuffix) {
-        return generatorConfig().workspaceName() + "-" + projectSuffix;
+        return generatorConfig().getWorkspaceName() + "-" + projectSuffix;
     }
 
     default Optional<PackageCoordinate> getPackageCoordinate(String projectName) {
         return generatorConfig()
-                .publish()
+                .getPublish()
                 .map(generatorPublishConfig -> PackageCoordinate.maven(MavenCoordinate.builder()
-                        .group(generatorPublishConfig.registries().maven().group())
+                        .group(generatorPublishConfig.getRegistries().getMaven().getGroup())
                         .artifact(projectName)
-                        .version(generatorPublishConfig.version())
+                        .version(generatorPublishConfig.getVersion())
                         .build()));
     }
 
     static FernPluginConfig create(GeneratorConfig generatorConfig, String version) {
         Map<String, Object> customConfig =
-                (Map<String, Object>) generatorConfig.customConfig().get();
+                (Map<String, Object>) generatorConfig.getCustomConfig().get();
         return ImmutableFernPluginConfig.builder()
                 .generatorConfig(generatorConfig)
                 .customPluginConfig(CustomPluginConfig.builder()

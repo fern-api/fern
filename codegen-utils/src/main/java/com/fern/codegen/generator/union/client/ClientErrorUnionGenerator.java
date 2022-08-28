@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.codegen.generator.union.GenericUnionGenerator;
 import com.fern.codegen.generator.union.UnionSubType;
-import com.fern.types.FernConstants;
+import com.fern.ir.model.ir.FernConstants;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;

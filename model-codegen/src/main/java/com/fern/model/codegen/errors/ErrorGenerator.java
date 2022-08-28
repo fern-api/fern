@@ -21,11 +21,11 @@ import com.fern.codegen.Generator;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.IGeneratedFile;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
+import com.fern.ir.model.errors.ErrorDeclaration;
+import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.java.exception.HttpException;
 import com.fern.model.codegen.TypeDefinitionGenerator;
-import com.fern.types.DeclaredTypeName;
-import com.fern.types.ErrorDeclaration;
-import com.fern.types.TypeDeclaration;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
@@ -54,24 +54,24 @@ public final class ErrorGenerator extends Generator {
         this.generatedInterfaces = generatedInterfaces;
         this.errorClassName = generatorContext
                 .getClassNameUtils()
-                .getClassNameFromErrorName(errorDeclaration.name(), PackageType.MODEL);
+                .getClassNameFromErrorName(errorDeclaration.getName(), PackageType.MODEL);
     }
 
     @Override
     public GeneratedError generate() {
         DeclaredTypeName declaredTypeName = DeclaredTypeName.builder()
-                .fernFilepath(errorDeclaration.name().fernFilepath())
+                .fernFilepath(errorDeclaration.getName().getFernFilepath())
                 .name(errorClassName.simpleName() + BODY_SUFFIX)
                 .build();
         ClassName className = generatorContext
                 .getClassNameUtils()
                 .getClassNameFromDeclaredTypeName(declaredTypeName, PackageType.MODEL);
         IGeneratedFile generatedBodyFile = errorDeclaration
-                .type()
+                .getType()
                 .visit(new TypeDefinitionGenerator(
                         TypeDeclaration.builder()
                                 .name(declaredTypeName)
-                                .shape(errorDeclaration.type())
+                                .shape(errorDeclaration.getType())
                                 .build(),
                         generatorContext,
                         generatedInterfaces,
@@ -92,10 +92,10 @@ public final class ErrorGenerator extends Generator {
                         .returns(bodyClassName)
                         .addStatement("return $L", BODY_FIELD_NAME)
                         .build());
-        if (errorDeclaration.http().isPresent()) {
+        if (errorDeclaration.getHttp().isPresent()) {
             errorTypeSpecBuilder.addMethod(MethodSpec.methodBuilder(GET_STATUS_CODE_METHOD_NAME)
                     .addModifiers(Modifier.PUBLIC)
-                    .addStatement("return $L", errorDeclaration.http().get().statusCode())
+                    .addStatement("return $L", errorDeclaration.getHttp().get().getStatusCode())
                     .returns(ClassName.INT)
                     .addAnnotation(Override.class)
                     .build());

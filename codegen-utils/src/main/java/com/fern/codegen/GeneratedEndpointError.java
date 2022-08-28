@@ -15,8 +15,8 @@
  */
 package com.fern.codegen;
 
+import com.fern.ir.model.errors.DeclaredErrorName;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import com.fern.types.DeclaredErrorName;
 import com.squareup.javapoet.MethodSpec;
 import java.util.Map;
 import org.immutables.value.Value;

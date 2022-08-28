@@ -15,7 +15,7 @@
  */
 package com.fern.jersey;
 
-import com.fern.types.services.HttpMethod;
+import com.fern.ir.model.services.http.HttpMethod;
 import com.squareup.javapoet.AnnotationSpec;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;

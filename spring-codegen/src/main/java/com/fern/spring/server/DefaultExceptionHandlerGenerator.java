@@ -137,11 +137,11 @@ public final class DefaultExceptionHandlerGenerator extends Generator {
                                 .addMember(
                                         "value",
                                         "$S",
-                                        generatorContext.getFernConstants().errorDiscriminant())
+                                        generatorContext.getFernConstants().getErrorDiscriminant())
                                 .build())
                         .addModifiers(Modifier.PUBLIC, Modifier.DEFAULT)
                         .addStatement(
-                                "return $S", generatorContext.getFernConstants().unknownErrorDiscriminantValue())
+                                "return $S", generatorContext.getFernConstants().getUnknownErrorDiscriminantValue())
                         .returns(String.class)
                         .build())
                 .addMethod(MethodSpec.methodBuilder(ERROR_INSTANCE_ID_METHOD_NAME)
@@ -149,7 +149,7 @@ public final class DefaultExceptionHandlerGenerator extends Generator {
                                 .addMember(
                                         "value",
                                         "$S",
-                                        generatorContext.getFernConstants().errorInstanceIdKey())
+                                        generatorContext.getFernConstants().getErrorInstanceIdKey())
                                 .build())
                         .addModifiers(Modifier.PUBLIC, Modifier.DEFAULT)
                         .addStatement("return $T.$N().toString()", UUID.class, RANDOM_UUID_METHOD_NAME)

@@ -24,8 +24,8 @@ import com.fern.codegen.Generator;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.CasingUtils;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
+import com.fern.ir.model.commons.FernFilepath;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import com.fern.types.FernFilepath;
 import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -80,9 +80,9 @@ public final class ClientWrapperGenerator extends Generator {
                 .sorted(Comparator.comparingInt(generatedClient -> generatedClient
                         .serviceInterface()
                         .httpService()
-                        .name()
-                        .fernFilepath()
-                        .value()
+                        .getName()
+                        .getFernFilepath()
+                        .get()
                         .size()))
                 .collect(Collectors.toList());
         this.rootClientConfig = createClientConfig(clientsOrderedByDept, 1, generatedClientWrapperClassName);
@@ -124,19 +124,17 @@ public final class ClientWrapperGenerator extends Generator {
             supplierFields.put(fieldName, httpServiceClient);
 
             FernFilepath fernFilepath =
-                    httpServiceClient.serviceInterface().httpService().name().fernFilepath();
+                    httpServiceClient.serviceInterface().httpService().getName().getFernFilepath();
             String methodName;
-            if (fernFilepath.value().isEmpty()) {
+            if (fernFilepath.get().isEmpty()) {
                 methodName = StringUtils.uncapitalize(httpServiceClient
                         .serviceInterface()
                         .httpService()
-                        .name()
-                        .name());
+                        .getName()
+                        .getName());
             } else {
-                methodName = fernFilepath
-                        .value()
-                        .get(fernFilepath.value().size() - 1)
-                        .camelCase();
+                methodName =
+                        fernFilepath.get().get(fernFilepath.get().size() - 1).getCamelCase();
             }
             clientWrapperBuilder.addMethod(MethodSpec.methodBuilder(methodName)
                     .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
@@ -248,12 +246,12 @@ public final class ClientWrapperGenerator extends Generator {
             FernFilepath fernFilepath = generatedHttpServiceClient
                     .serviceInterface()
                     .httpService()
-                    .name()
-                    .fernFilepath();
-            if (fernFilepath.value().size() <= fernFilePathSize) {
+                    .getName()
+                    .getFernFilepath();
+            if (fernFilepath.get().size() <= fernFilePathSize) {
                 clientConfigBuilder.addHttpServiceClient(generatedHttpServiceClient);
             } else {
-                String prefix = fernFilepath.value().get(fernFilePathSize).originalValue();
+                String prefix = fernFilepath.get().get(fernFilePathSize).getOriginalValue();
                 if (nestedClients.containsKey(prefix)) {
                     nestedClients.get(prefix).add(generatedHttpServiceClient);
                 } else {

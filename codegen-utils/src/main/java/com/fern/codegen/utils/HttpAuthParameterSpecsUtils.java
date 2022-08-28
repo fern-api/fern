@@ -18,12 +18,12 @@ package com.fern.codegen.utils;
 
 import com.fern.codegen.GeneratedFile;
 import com.fern.codegen.GeneratorContext;
-import com.fern.types.ApiAuth;
-import com.fern.types.AuthScheme;
-import com.fern.types.AuthSchemesRequirement;
-import com.fern.types.WithDocs;
-import com.fern.types.services.HttpEndpoint;
-import com.fern.types.services.HttpHeader;
+import com.fern.ir.model.auth.ApiAuth;
+import com.fern.ir.model.auth.AuthScheme;
+import com.fern.ir.model.auth.AuthSchemesRequirement;
+import com.fern.ir.model.commons.WithDocs;
+import com.fern.ir.model.services.http.HttpEndpoint;
+import com.fern.ir.model.services.http.HttpHeader;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterSpec;
@@ -54,25 +54,25 @@ public final class HttpAuthParameterSpecsUtils {
 
     public List<ParameterSpec> getAuthParameters(HttpEndpoint httpEndpoint) {
         ApiAuth apiAuth = generatorContext.getApiAuth();
-        if (!httpEndpoint.auth() || apiAuth.schemes().isEmpty()) {
+        if (!httpEndpoint.getAuth() || apiAuth.getSchemes().isEmpty()) {
             return Collections.emptyList();
         }
-        if (apiAuth.schemes().size() == 1) {
-            AuthScheme authScheme = apiAuth.schemes().get(0);
+        if (apiAuth.getSchemes().size() == 1) {
+            AuthScheme authScheme = apiAuth.getSchemes().get(0);
             ParameterSpec parameterSpec = authScheme.visit(new AuthSchemeParameterSpec(
                     generatedAuthSchemes.get(authScheme),
                     AuthSchemeUtils.getAuthSchemeCamelCaseName(authScheme),
                     false));
             return Collections.singletonList(parameterSpec);
-        } else if (apiAuth.requirement().equals(AuthSchemesRequirement.ANY)) {
-            return apiAuth.schemes().stream()
+        } else if (apiAuth.getRequirement().equals(AuthSchemesRequirement.ANY)) {
+            return apiAuth.getSchemes().stream()
                     .map(authScheme -> authScheme.visit(new AuthSchemeParameterSpec(
                             generatedAuthSchemes.get(authScheme),
                             AuthSchemeUtils.getAuthSchemeCamelCaseName(authScheme),
                             true)))
                     .collect(Collectors.toList());
-        } else if (apiAuth.requirement().equals(AuthSchemesRequirement.ALL)) {
-            return apiAuth.schemes().stream()
+        } else if (apiAuth.getRequirement().equals(AuthSchemesRequirement.ALL)) {
+            return apiAuth.getSchemes().stream()
                     .map(authScheme -> authScheme.visit(new AuthSchemeParameterSpec(
                             generatedAuthSchemes.get(authScheme),
                             AuthSchemeUtils.getAuthSchemeCamelCaseName(authScheme),
@@ -116,7 +116,7 @@ public final class HttpAuthParameterSpecsUtils {
         public ParameterSpec visitHeader(HttpHeader value) {
             return ParameterSpec.builder(getTypeName(), parameterName)
                     .addAnnotation(AnnotationSpec.builder(headerAnnotationClazz)
-                            .addMember("value", "$S", value.name().wireValue())
+                            .addMember("value", "$S", value.getName().getWireValue())
                             .build())
                     .build();
         }

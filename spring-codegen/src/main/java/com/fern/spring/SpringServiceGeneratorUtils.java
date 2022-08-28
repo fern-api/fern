@@ -20,10 +20,10 @@ import com.fern.codegen.payload.Payload;
 import com.fern.codegen.payload.TypeNamePayload;
 import com.fern.codegen.payload.VoidPayload;
 import com.fern.codegen.utils.VariableNameUtils;
-import com.fern.types.TypeReference;
-import com.fern.types.services.HttpHeader;
-import com.fern.types.services.PathParameter;
-import com.fern.types.services.QueryParameter;
+import com.fern.ir.model.services.http.HttpHeader;
+import com.fern.ir.model.services.http.PathParameter;
+import com.fern.ir.model.services.http.QueryParameter;
+import com.fern.ir.model.types.TypeReference;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
@@ -43,25 +43,25 @@ public final class SpringServiceGeneratorUtils {
     public ParameterSpec getHeaderParameterSpec(HttpHeader header) {
         return getParameterSpec(
                 RequestHeader.class,
-                header.name().originalValue(),
+                header.getName().getOriginalValue(),
                 VariableNameUtils.getVariableNameFromHeader(header),
-                header.valueType());
+                header.getValueType());
     }
 
     public ParameterSpec getPathParameterSpec(PathParameter pathParameter) {
         return getParameterSpec(
                 PathVariable.class,
-                pathParameter.name().originalValue(),
-                pathParameter.name().originalValue(),
-                pathParameter.valueType());
+                pathParameter.getName().getOriginalValue(),
+                pathParameter.getName().getOriginalValue(),
+                pathParameter.getValueType());
     }
 
     public ParameterSpec getQueryParameterSpec(QueryParameter queryParameter) {
         return getParameterSpec(
                 RequestParam.class,
-                queryParameter.name().originalValue(),
-                queryParameter.name().originalValue(),
-                queryParameter.valueType());
+                queryParameter.getName().getOriginalValue(),
+                queryParameter.getName().getOriginalValue(),
+                queryParameter.getValueType());
     }
 
     private <T> ParameterSpec getParameterSpec(

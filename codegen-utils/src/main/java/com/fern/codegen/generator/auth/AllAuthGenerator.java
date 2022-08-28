@@ -22,10 +22,10 @@ import com.fern.codegen.Generator;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.CasingUtils;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
+import com.fern.ir.model.auth.AuthScheme;
+import com.fern.ir.model.commons.WithDocs;
+import com.fern.ir.model.services.http.HttpHeader;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import com.fern.types.AuthScheme;
-import com.fern.types.WithDocs;
-import com.fern.types.services.HttpHeader;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
@@ -117,7 +117,7 @@ public final class AllAuthGenerator extends Generator {
 
         @Override
         public MethodSpec visitHeader(HttpHeader value) {
-            return MethodSpec.methodBuilder(value.name().camelCase())
+            return MethodSpec.methodBuilder(value.getName().getCamelCase())
                     .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                     .returns(generatedFile.className())
                     .build();
@@ -146,7 +146,7 @@ public final class AllAuthGenerator extends Generator {
         for (Map.Entry<AuthScheme, MethodSpec> entry : propertyMethods.entrySet()) {
             AuthScheme authScheme = entry.getKey();
             if (authScheme.isHeader()
-                    && authScheme.getHeader().get().valueType().isContainer()) {
+                    && authScheme.getHeader().get().getValueType().isContainer()) {
                 continue;
             }
             return Optional.of(entry.getValue());

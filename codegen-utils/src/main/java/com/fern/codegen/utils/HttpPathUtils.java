@@ -15,17 +15,17 @@
  */
 package com.fern.codegen.utils;
 
-import com.fern.types.services.HttpPath;
-import com.fern.types.services.HttpPathPart;
+import com.fern.ir.model.services.http.HttpPath;
+import com.fern.ir.model.services.http.HttpPathPart;
 
 public class HttpPathUtils {
 
     private HttpPathUtils() {}
 
     public static String getPathWithCurlyBracedPathParams(HttpPath httpPath) {
-        String result = httpPath.head();
-        for (HttpPathPart httpPathPart : httpPath.parts()) {
-            result += "{" + httpPathPart.pathParameter() + "}" + httpPathPart.tail();
+        String result = httpPath.getHead();
+        for (HttpPathPart httpPathPart : httpPath.getParts()) {
+            result += "{" + httpPathPart.getPathParameter() + "}" + httpPathPart.getTail();
         }
         return result;
     }

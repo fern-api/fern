@@ -8,7 +8,7 @@
   - javax.annotation.Nonnull$Checker
   - javax.annotation.RegEx$Checker
   - javax.annotation.meta.When
-[jakarta.ws.rs:jakarta.ws.rs-api, javax.ws.rs:jsr311-api]
+[jakarta.ws.rs:jakarta.ws.rs-api, javax.ws.rs:javax.ws.rs-api, javax.ws.rs:jsr311-api]
   - javax.ws.rs.ApplicationPath
   - javax.ws.rs.Consumes
   - javax.ws.rs.CookieParam
@@ -63,6 +63,12 @@
   - javax.ws.rs.ext.Providers
   - javax.ws.rs.ext.RuntimeDelegate
   - javax.ws.rs.ext.RuntimeDelegate$HeaderDelegate
+[jakarta.ws.rs:jakarta.ws.rs-api, javax.ws.rs:javax.ws.rs-api]
+  - javax.ws.rs.client.ClientBuilder
+  - javax.ws.rs.client.FactoryFinder
+  - javax.ws.rs.sse.FactoryFinder
+  - javax.ws.rs.sse.SseEventSource
+  - javax.ws.rs.sse.SseEventSource$Builder
 [org.glassfish.hk2.external:aopalliance-repackaged, org.springframework:spring-aop]
   - org.aopalliance.aop.AspectException
   - org.aopalliance.intercept.ConstructorInterceptor

@@ -15,8 +15,8 @@
  */
 package com.fern.codegen;
 
+import com.fern.ir.model.types.UnionTypeDeclaration;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import com.fern.types.UnionTypeDeclaration;
 import org.immutables.value.Value;
 
 @Value.Immutable

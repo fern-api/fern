@@ -21,9 +21,9 @@ import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.IGeneratedFile;
 import com.fern.codegen.utils.ClassNameConstants;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
-import com.fern.types.services.HttpEndpoint;
-import com.fern.types.services.HttpEndpointId;
-import com.fern.types.services.HttpService;
+import com.fern.ir.model.services.http.HttpEndpoint;
+import com.fern.ir.model.services.http.HttpEndpointId;
+import com.fern.ir.model.services.http.HttpService;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.JavaFile;
@@ -63,7 +63,7 @@ public final class ServiceErrorDecoderGenerator extends Generator {
         this.httpService = httpService;
         this.errorDecoderClassName = generatorContext
                 .getClassNameUtils()
-                .getClassNameFromServiceName(httpService.name(), ERROR_DECODER_CLASSNAME_SUFFIX, PackageType.CLIENT);
+                .getClassNameFromServiceName(httpService.getName(), ERROR_DECODER_CLASSNAME_SUFFIX, PackageType.CLIENT);
         this.generatedEndpointExceptions = generatedEndpointExceptions;
     }
 
@@ -92,14 +92,14 @@ public final class ServiceErrorDecoderGenerator extends Generator {
                 .addParameter(FEIGN_RESPONSE_PARAMETER_TYPE, DECODE_METHOD_RESPONSE_PARAMETER_NAME);
         CodeBlock.Builder codeBlockBuilder = CodeBlock.builder().beginControlFlow("try");
         boolean ifStatementStarted = false;
-        for (HttpEndpoint httpEndpoint : httpService.endpoints()) {
-            IGeneratedFile endpointException = generatedEndpointExceptions.get(httpEndpoint.id());
+        for (HttpEndpoint httpEndpoint : httpService.getEndpoints()) {
+            IGeneratedFile endpointException = generatedEndpointExceptions.get(httpEndpoint.getId());
             codeBlockBuilder
                     .beginControlFlow(
                             "$L ($L.contains($S))",
                             ifStatementStarted ? "else if" : "if",
                             DECODE_METHOD_KEY_PARAMETER_NAME,
-                            httpEndpoint.id())
+                            httpEndpoint.getId())
                     .addStatement(
                             "return $L($L, $T.class)",
                             DECODE_EXCEPTION_METHOD_NAME,

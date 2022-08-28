@@ -16,8 +16,8 @@
 
 package com.fern.java.client.cli;
 
-import com.fern.types.generators.GeneratorConfig;
-import com.fern.types.generators.RemoteGeneratorEnvironment;
+import com.fern.generator.exec.model.config.GeneratorConfig;
+import com.fern.generator.exec.model.config.RemoteGeneratorEnvironment;
 import com.fiddle.generator.logging.client.GeneratorLoggingServiceClient;
 import com.fiddle.generator.logging.types.GeneratorUpdate;
 import com.fiddle.generator.logging.types.TaskId;
@@ -31,9 +31,9 @@ public final class GeneratorLoggingClientWrapper {
 
     public GeneratorLoggingClientWrapper(GeneratorConfig generatorConfig) {
         Optional<RemoteGeneratorEnvironment> maybeEnv =
-                generatorConfig.environment().getRemote();
-        this.taskId = maybeEnv.map(env -> TaskId.valueOf(env.id().value())).orElse(null);
-        this.generatorLoggingServiceClient = maybeEnv.map(RemoteGeneratorEnvironment::coordinatorUrl)
+                generatorConfig.getEnvironment().getRemote();
+        this.taskId = maybeEnv.map(env -> TaskId.valueOf(env.getId().get())).orElse(null);
+        this.generatorLoggingServiceClient = maybeEnv.map(RemoteGeneratorEnvironment::getCoordinatorUrl)
                 .map(GeneratorLoggingServiceClient::getClient)
                 .orElse(null);
     }

@@ -16,13 +16,13 @@
 
 package com.fern.jersey.client;
 
-import com.fern.interfaces.IStringWithAllCasings;
-import com.fern.types.ErrorDeclaration;
-import com.fern.types.FernFilepath;
-import com.fern.types.IntermediateRepresentation;
-import com.fern.types.services.DeclaredServiceName;
-import com.fern.types.services.HttpEndpoint;
-import com.fern.types.services.HttpEndpointId;
+import com.fern.ir.model.commons.FernFilepath;
+import com.fern.ir.model.commons.StringWithAllCasings;
+import com.fern.ir.model.errors.ErrorDeclaration;
+import com.fern.ir.model.ir.IntermediateRepresentation;
+import com.fern.ir.model.services.commons.DeclaredServiceName;
+import com.fern.ir.model.services.http.HttpEndpoint;
+import com.fern.ir.model.services.http.HttpEndpointId;
 import com.squareup.javapoet.ClassName;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,22 +40,22 @@ public final class ClientClassNameUtils {
     public ClientClassNameUtils(IntermediateRepresentation ir, String organization) {
         packagePrefixTokens.add("com");
         packagePrefixTokens.addAll(splitOnNonAlphaNumericChar(organization));
-        packagePrefixTokens.addAll(splitOnNonAlphaNumericChar(ir.apiName()));
+        packagePrefixTokens.addAll(splitOnNonAlphaNumericChar(ir.getApiName()));
     }
 
     public ClassName getClassName(ErrorDeclaration errorDeclaration) {
-        String packageName = getErrorsPackageName(errorDeclaration.name().fernFilepath());
-        return ClassName.get(packageName, errorDeclaration.name().name());
+        String packageName = getErrorsPackageName(errorDeclaration.getName().getFernFilepath());
+        return ClassName.get(packageName, errorDeclaration.getName().getName());
     }
 
     public ClassName getClassName(DeclaredServiceName declaredServiceName, HttpEndpointId endpointId) {
-        String packageName = getEndpointsPackageName(declaredServiceName.fernFilepath());
-        return ClassName.get(packageName, StringUtils.capitalize(endpointId.value()));
+        String packageName = getEndpointsPackageName(declaredServiceName.getFernFilepath());
+        return ClassName.get(packageName, StringUtils.capitalize(endpointId.get()));
     }
 
     public ClassName getExceptionClassName(DeclaredServiceName declaredServiceName, HttpEndpoint httpEndpoint) {
-        String packageName = getExceptionsPackageName(declaredServiceName.fernFilepath());
-        return ClassName.get(packageName, httpEndpoint.name().pascalCase() + EXCEPTION_SUFFIX_NAME);
+        String packageName = getExceptionsPackageName(declaredServiceName.getFernFilepath());
+        return ClassName.get(packageName, httpEndpoint.getName().getPascalCase() + EXCEPTION_SUFFIX_NAME);
     }
 
     private String getPackageName() {
@@ -85,8 +85,8 @@ public final class ClientClassNameUtils {
     private String getPackage(Optional<FernFilepath> fernFilepath, Optional<String> suffix) {
         List<String> tokens = new ArrayList<>(packagePrefixTokens);
         tokens.add("client");
-        fernFilepath.ifPresent(filepath -> tokens.addAll(filepath.value().stream()
-                .map(IStringWithAllCasings::snakeCase)
+        fernFilepath.ifPresent(filepath -> tokens.addAll(filepath.get().stream()
+                .map(StringWithAllCasings::getSnakeCase)
                 .flatMap(snakeCase -> splitOnNonAlphaNumericChar(snakeCase).stream())
                 .collect(Collectors.toList())));
         suffix.ifPresent(tokens::add);

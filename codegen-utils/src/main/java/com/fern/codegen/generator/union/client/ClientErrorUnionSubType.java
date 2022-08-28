@@ -22,9 +22,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fern.codegen.IGeneratedFile;
 import com.fern.codegen.generator.union.UnionSubType;
-import com.fern.types.ErrorDeclaration;
-import com.fern.types.FernConstants;
-import com.fern.types.HttpErrorConfiguration;
+import com.fern.ir.model.errors.ErrorDeclaration;
+import com.fern.ir.model.errors.HttpErrorConfiguration;
+import com.fern.ir.model.ir.FernConstants;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -66,12 +66,12 @@ public final class ClientErrorUnionSubType extends UnionSubType {
 
     @Override
     public String getStaticFactoryMethodName() {
-        return errorDeclaration.discriminantValue().camelCase();
+        return errorDeclaration.getDiscriminantValue().getCamelCase();
     }
 
     @Override
     public Optional<String> getDiscriminantValue() {
-        return Optional.of(errorDeclaration.discriminantValue().wireValue());
+        return Optional.of(errorDeclaration.getDiscriminantValue().getWireValue());
     }
 
     @Override
@@ -81,7 +81,7 @@ public final class ClientErrorUnionSubType extends UnionSubType {
 
     @Override
     public ClassName getUnionSubTypeWrapperClass() {
-        return getUnionClassName().nestedClass(errorDeclaration.name().name() + "Value");
+        return getUnionClassName().nestedClass(errorDeclaration.getName().getName() + "Value");
     }
 
     @Override
@@ -96,13 +96,13 @@ public final class ClientErrorUnionSubType extends UnionSubType {
 
     @Override
     public MethodSpec getVisitorMethodInterface() {
-        return MethodSpec.methodBuilder(
-                        "visit" + StringUtils.capitalize(errorDeclaration.name().name()))
+        return MethodSpec.methodBuilder("visit"
+                        + StringUtils.capitalize(errorDeclaration.getName().getName()))
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                 .returns(TypeVariableName.get("T"))
                 .addParameter(ParameterSpec.builder(
                                 getUnionSubTypeClassName(),
-                                errorDeclaration.discriminantValue().camelCase())
+                                errorDeclaration.getDiscriminantValue().getCamelCase())
                         .build())
                 .build();
     }
@@ -119,14 +119,14 @@ public final class ClientErrorUnionSubType extends UnionSubType {
                         getUnionSubTypeWrapperClass(),
                         getValueFieldName(),
                         errorDeclaration
-                                .http()
-                                .map(HttpErrorConfiguration::statusCode)
+                                .getHttp()
+                                .map(HttpErrorConfiguration::getStatusCode)
                                 .orElse(400))
                 .build();
     }
 
     private FieldSpec getValueField() {
-        boolean errorIsObject = errorDeclaration.type().isObject();
+        boolean errorIsObject = errorDeclaration.getType().isObject();
         FieldSpec.Builder valueFieldSpec =
                 FieldSpec.builder(getUnionSubTypeClassName(), getValueFieldName(), Modifier.PRIVATE);
         if (errorIsObject) {
@@ -152,7 +152,7 @@ public final class ClientErrorUnionSubType extends UnionSubType {
                                 Mode.PROPERTIES.name())
                         .build());
 
-        boolean errorIsObject = errorDeclaration.type().isObject();
+        boolean errorIsObject = errorDeclaration.getType().isObject();
         List<ParameterSpec> parameterSpecs = new ArrayList<>();
         if (!errorIsObject) {
             parameterSpecs.add(ParameterSpec.builder(getUnionSubTypeClassName(), getValueFieldName())
@@ -164,7 +164,7 @@ public final class ClientErrorUnionSubType extends UnionSubType {
         }
         parameterSpecs.add(ParameterSpec.builder(String.class, ERROR_INSTANCE_ID_FIELD_NAME)
                 .addAnnotation(AnnotationSpec.builder(JsonProperty.class)
-                        .addMember("value", "$S", fernConstants.errorInstanceIdKey())
+                        .addMember("value", "$S", fernConstants.getErrorInstanceIdKey())
                         .build())
                 .build());
         fromJsonConstructorBuilder.addStatement(

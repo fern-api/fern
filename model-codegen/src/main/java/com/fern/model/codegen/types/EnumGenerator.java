@@ -23,9 +23,9 @@ import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameConstants;
 import com.fern.codegen.utils.VisitorUtils;
 import com.fern.codegen.utils.VisitorUtils.GeneratedVisitor;
-import com.fern.types.DeclaredTypeName;
-import com.fern.types.EnumTypeDeclaration;
-import com.fern.types.EnumValue;
+import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.ir.model.types.EnumTypeDeclaration;
+import com.fern.ir.model.types.EnumValue;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
@@ -87,7 +87,7 @@ public final class EnumGenerator extends Generator {
     public GeneratedEnum generate() {
         Map<EnumValue, FieldSpec> enumConstants = getConstants();
         VisitorUtils.GeneratedVisitor<EnumValue> generatedVisitor = getVisitor();
-        TypeSpec enumTypeSpec = TypeSpec.classBuilder(declaredTypeName.name())
+        TypeSpec enumTypeSpec = TypeSpec.classBuilder(declaredTypeName.getName())
                 .addModifiers(ENUM_CLASS_MODIFIERS)
                 .addFields(enumConstants.values())
                 .addFields(getPrivateMembers())
@@ -112,10 +112,10 @@ public final class EnumGenerator extends Generator {
 
     private Map<EnumValue, FieldSpec> getConstants() {
         // Generate public static final constant for each enum value
-        return enumTypeDeclaration.values().stream()
+        return enumTypeDeclaration.getValues().stream()
                 .collect(Collectors.toMap(Function.identity(), enumValue -> FieldSpec.builder(
                                 generatedEnumClassName,
-                                enumValue.name().screamingSnakeCase(),
+                                enumValue.getName().getScreamingSnakeCase(),
                                 Modifier.PUBLIC,
                                 Modifier.STATIC,
                                 Modifier.FINAL)
@@ -123,8 +123,8 @@ public final class EnumGenerator extends Generator {
                                 "new $T($T.$L, $S)",
                                 generatedEnumClassName,
                                 valueFieldClassName,
-                                enumValue.name().screamingSnakeCase(),
-                                enumValue.value())
+                                enumValue.getName().getScreamingSnakeCase(),
+                                enumValue.getValue())
                         .build()));
     }
 
@@ -213,7 +213,7 @@ public final class EnumGenerator extends Generator {
         CodeBlock.Builder acceptMethodImplementation = CodeBlock.builder().beginControlFlow("switch (value)");
         generatedVisitor.visitMethodsByKeyName().forEach((enumValue, visitMethod) -> {
             acceptMethodImplementation
-                    .add("case $L:\n", enumValue.name().screamingSnakeCase())
+                    .add("case $L:\n", enumValue.getName().getScreamingSnakeCase())
                     .indent()
                     .addStatement("return visitor.$L()", visitMethod.name)
                     .unindent();
@@ -256,7 +256,7 @@ public final class EnumGenerator extends Generator {
                 .beginControlFlow("switch (upperCasedValue)");
         constants.forEach((enumValue, constantField) -> {
             valueOfCodeBlockBuilder
-                    .add("case $S:\n", enumValue.value())
+                    .add("case $S:\n", enumValue.getValue())
                     .indent()
                     .addStatement("return $L", constantField.name)
                     .unindent();
@@ -299,9 +299,9 @@ public final class EnumGenerator extends Generator {
         TypeSpec.Builder nestedValueEnumBuilder =
                 TypeSpec.enumBuilder(VALUE_TYPE_NAME).addModifiers(Modifier.PUBLIC);
         enumTypeDeclaration
-                .values()
-                .forEach(enumValue ->
-                        nestedValueEnumBuilder.addEnumConstant(enumValue.name().screamingSnakeCase()));
+                .getValues()
+                .forEach(enumValue -> nestedValueEnumBuilder.addEnumConstant(
+                        enumValue.getName().getScreamingSnakeCase()));
         nestedValueEnumBuilder.addEnumConstant(UNKNOWN_ENUM_CONSTANT);
         return nestedValueEnumBuilder.build();
     }
@@ -315,9 +315,9 @@ public final class EnumGenerator extends Generator {
      * }
      */
     private GeneratedVisitor<EnumValue> getVisitor() {
-        List<VisitorUtils.VisitMethodArgs<EnumValue>> visitMethodArgs = enumTypeDeclaration.values().stream()
+        List<VisitorUtils.VisitMethodArgs<EnumValue>> visitMethodArgs = enumTypeDeclaration.getValues().stream()
                 .map(enumValue -> {
-                    String keyName = enumValue.name().pascalCase();
+                    String keyName = enumValue.getName().getPascalCase();
                     return VisitorUtils.VisitMethodArgs.<EnumValue>builder()
                             .key(enumValue)
                             .keyName(keyName)

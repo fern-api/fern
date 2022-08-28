@@ -27,6 +27,16 @@ import com.fern.codegen.IGeneratedFile;
 import com.fern.codegen.generator.auth.AuthGenerator;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.codegen.utils.ObjectMappers;
+import com.fern.generator.exec.model.config.GeneratorConfig;
+import com.fern.generator.exec.model.config.GeneratorOutputConfig;
+import com.fern.ir.model.auth.AuthScheme;
+import com.fern.ir.model.errors.DeclaredErrorName;
+import com.fern.ir.model.errors.ErrorDeclaration;
+import com.fern.ir.model.ir.IntermediateRepresentation;
+import com.fern.ir.model.services.http.HttpEndpoint;
+import com.fern.ir.model.services.http.HttpService;
+import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.java.client.cli.CustomPluginConfig.ServerFramework;
 import com.fern.jersey.client.ClientErrorGenerator;
 import com.fern.jersey.client.ClientWrapperGenerator;
@@ -39,16 +49,6 @@ import com.fern.model.codegen.ModelGeneratorResult;
 import com.fern.spring.server.DefaultExceptionHandlerGenerator;
 import com.fern.spring.server.ErrorExceptionHandlerGenerator;
 import com.fern.spring.server.HttpServiceSpringServerGenerator;
-import com.fern.types.AuthScheme;
-import com.fern.types.DeclaredErrorName;
-import com.fern.types.DeclaredTypeName;
-import com.fern.types.ErrorDeclaration;
-import com.fern.types.IntermediateRepresentation;
-import com.fern.types.TypeDeclaration;
-import com.fern.types.generators.GeneratorConfig;
-import com.fern.types.generators.GeneratorOutputConfig;
-import com.fern.types.services.HttpEndpoint;
-import com.fern.types.services.HttpService;
 import com.fiddle.generator.logging.types.ErrorExitStatusUpdate;
 import com.fiddle.generator.logging.types.ExitStatusUpdate;
 import com.fiddle.generator.logging.types.GeneratorUpdate;
@@ -94,7 +94,7 @@ public final class ClientGeneratorCli {
                     .addAllPackagesToPublish(packageCoordinates)
                     .build()));
 
-            createOutputDirectory(fernPluginConfig.generatorConfig().output());
+            createOutputDirectory(fernPluginConfig.generatorConfig().getOutput());
             startGradleDaemon(fernPluginConfig);
 
             IntermediateRepresentation ir = getIr(fernPluginConfig.generatorConfig());
@@ -126,7 +126,7 @@ public final class ClientGeneratorCli {
     }
 
     private static void createOutputDirectory(GeneratorOutputConfig generatorOutputConfig) {
-        Path path = Paths.get(generatorOutputConfig.path());
+        Path path = Paths.get(generatorOutputConfig.getPath());
         if (!Files.exists(path)) {
             try {
                 Files.createDirectories(path);
@@ -139,7 +139,7 @@ public final class ClientGeneratorCli {
     private static IntermediateRepresentation getIr(GeneratorConfig generatorConfig) {
         try {
             return ObjectMappers.CLIENT_OBJECT_MAPPER.readValue(
-                    new File(generatorConfig.irFilepath()), IntermediateRepresentation.class);
+                    new File(generatorConfig.getIrFilepath()), IntermediateRepresentation.class);
         } catch (IOException e) {
             throw new RuntimeException("Failed to read ir", e);
         }
@@ -147,21 +147,21 @@ public final class ClientGeneratorCli {
 
     private static void generate(IntermediateRepresentation ir, FernPluginConfig fernPluginConfig) {
         ImmutableCodeGenerationResult.Builder resultBuilder = CodeGenerationResult.builder();
-        Map<DeclaredTypeName, TypeDeclaration> typeDefinitionsByName =
-                ir.types().stream().collect(Collectors.toUnmodifiableMap(TypeDeclaration::name, Function.identity()));
-        Map<DeclaredErrorName, ErrorDeclaration> errorDefinitionsByName =
-                ir.errors().stream().collect(Collectors.toUnmodifiableMap(ErrorDeclaration::name, Function.identity()));
+        Map<DeclaredTypeName, TypeDeclaration> typeDefinitionsByName = ir.getTypes().stream()
+                .collect(Collectors.toUnmodifiableMap(TypeDeclaration::getName, Function.identity()));
+        Map<DeclaredErrorName, ErrorDeclaration> errorDefinitionsByName = ir.getErrors().stream()
+                .collect(Collectors.toUnmodifiableMap(ErrorDeclaration::getName, Function.identity()));
         List<String> packagePrefixTokens =
-                List.of("com", fernPluginConfig.generatorConfig().organization(), ir.apiName());
+                List.of("com", fernPluginConfig.generatorConfig().getOrganization(), ir.getApiName());
         String unreplacedPackagePrefix = String.join(".", packagePrefixTokens);
         GeneratorContext generatorContext = new GeneratorContext(
                 ir,
-                fernPluginConfig.generatorConfig().organization(),
+                fernPluginConfig.generatorConfig().getOrganization(),
                 unreplacedPackagePrefix.replaceAll("[^a-zA-Z0-9]", "."),
                 typeDefinitionsByName,
                 errorDefinitionsByName,
-                ir.auth(),
-                ir.constants());
+                ir.getAuth(),
+                ir.getConstants());
 
         ModelGeneratorResult modelGeneratorResult = addModelFiles(ir, generatorContext, resultBuilder);
         switch (fernPluginConfig.customPluginConfig().mode()) {
@@ -183,8 +183,8 @@ public final class ClientGeneratorCli {
     }
 
     private static void publish(FernPluginConfig fernPluginConfig) {
-        String outputDirectory = fernPluginConfig.generatorConfig().output().path();
-        if (fernPluginConfig.generatorConfig().publish().isPresent()) {
+        String outputDirectory = fernPluginConfig.generatorConfig().getOutput().getPath();
+        if (fernPluginConfig.generatorConfig().getPublish().isPresent()) {
             runCommandBlocking(
                     new String[] {"gradle", "--parallel", "--no-daemon", "publish"}, Paths.get(outputDirectory));
         }
@@ -195,7 +195,7 @@ public final class ClientGeneratorCli {
             GeneratorContext generatorContext,
             ImmutableCodeGenerationResult.Builder resultBuilder) {
         ModelGenerator modelGenerator =
-                new ModelGenerator(ir.services().http(), ir.types(), ir.errors(), generatorContext);
+                new ModelGenerator(ir.getServices().getHttp(), ir.getTypes(), ir.getErrors(), generatorContext);
         ModelGeneratorResult modelGeneratorResult = modelGenerator.generate();
         resultBuilder.addAllModelFiles(modelGeneratorResult.aliases());
         resultBuilder.addAllModelFiles(modelGeneratorResult.enums());
@@ -216,18 +216,19 @@ public final class ClientGeneratorCli {
             GeneratorContext generatorContext,
             ModelGeneratorResult modelGeneratorResult,
             ImmutableCodeGenerationResult.Builder resultBuilder) {
-        AuthGenerator authGenerator = new AuthGenerator(ir.auth(), generatorContext, ir.apiName(), PackageType.CLIENT);
+        AuthGenerator authGenerator =
+                new AuthGenerator(ir.getAuth(), generatorContext, ir.getApiName(), PackageType.CLIENT);
         Optional<GeneratedAuthSchemes> maybeGeneratedAuthSchemes = authGenerator.generate();
 
-        Map<DeclaredErrorName, IGeneratedFile> generatedErrors = ir.errors().stream()
-                .collect(Collectors.toMap(ErrorDeclaration::name, errorDefinition -> {
+        Map<DeclaredErrorName, IGeneratedFile> generatedErrors = ir.getErrors().stream()
+                .collect(Collectors.toMap(ErrorDeclaration::getName, errorDefinition -> {
                     ClientErrorGenerator clientErrorGenerator = new ClientErrorGenerator(
                             errorDefinition, generatorContext, modelGeneratorResult.interfaces());
                     return clientErrorGenerator.generate();
                 }));
         resultBuilder.addAllClientFiles(generatedErrors.values());
 
-        List<GeneratedHttpServiceClient> generatedHttpServiceClients = ir.services().http().stream()
+        List<GeneratedHttpServiceClient> generatedHttpServiceClients = ir.getServices().getHttp().stream()
                 .map(httpService -> {
                     HttpServiceClientGenerator httpServiceClientGenerator = new HttpServiceClientGenerator(
                             generatorContext,
@@ -241,8 +242,8 @@ public final class ClientGeneratorCli {
         ClientWrapperGenerator clientWrapperGenerator = new ClientWrapperGenerator(
                 generatorContext,
                 generatedHttpServiceClients,
-                fernPluginConfig.generatorConfig().organization(),
-                ir.apiName(),
+                fernPluginConfig.generatorConfig().getOrganization(),
+                ir.getApiName(),
                 maybeGeneratedAuthSchemes);
         GeneratedClientWrapper generatedClientWrapper = clientWrapperGenerator.generate();
         maybeGeneratedAuthSchemes.ifPresent(generatedAuthSchemes -> {
@@ -276,7 +277,8 @@ public final class ClientGeneratorCli {
             GeneratorContext generatorContext,
             ModelGeneratorResult modelGeneratorResult,
             ImmutableCodeGenerationResult.Builder resultBuilder) {
-        AuthGenerator authGenerator = new AuthGenerator(ir.auth(), generatorContext, ir.apiName(), PackageType.SERVER);
+        AuthGenerator authGenerator =
+                new AuthGenerator(ir.getAuth(), generatorContext, ir.getApiName(), PackageType.SERVER);
         Optional<GeneratedAuthSchemes> maybeGeneratedAuthSchemes = authGenerator.generate();
         Map<AuthScheme, GeneratedFile> generatedAuthSchemes = maybeGeneratedAuthSchemes
                 .map(GeneratedAuthSchemes::generatedAuthSchemes)
@@ -303,8 +305,8 @@ public final class ClientGeneratorCli {
             ImmutableCodeGenerationResult.Builder resultBuilder) {
         Map<HttpService, GeneratedHttpServiceServer> generatedHttpServiceServers = new LinkedHashMap<>();
         Map<DeclaredErrorName, Map<HttpService, List<HttpEndpoint>>> errorMap = new LinkedHashMap<>();
-        ir.services().http().forEach(httpService -> {
-            httpService.endpoints().forEach(httpEndpoint -> {
+        ir.getServices().getHttp().forEach(httpService -> {
+            httpService.getEndpoints().forEach(httpEndpoint -> {
                 buildErrorMap(httpService, httpEndpoint, errorMap);
             });
             GeneratedHttpServiceServer generatedHttpServiceServer = generateJerseyHttpServiceServer(
@@ -343,8 +345,8 @@ public final class ClientGeneratorCli {
             ImmutableCodeGenerationResult.Builder resultBuilder) {
         Map<HttpService, GeneratedHttpServiceServer> generatedHttpServiceServers = new LinkedHashMap<>();
         Map<DeclaredErrorName, Map<HttpService, List<HttpEndpoint>>> errorMap = new LinkedHashMap<>();
-        ir.services().http().forEach(httpService -> {
-            httpService.endpoints().forEach(httpEndpoint -> {
+        ir.getServices().getHttp().forEach(httpService -> {
+            httpService.getEndpoints().forEach(httpEndpoint -> {
                 buildErrorMap(httpService, httpEndpoint, errorMap);
             });
             GeneratedHttpServiceServer generatedHttpServiceServer = generateSpringHttpServiceServer(
@@ -401,8 +403,8 @@ public final class ClientGeneratorCli {
             HttpService httpService,
             HttpEndpoint httpEndpoint,
             Map<DeclaredErrorName, Map<HttpService, List<HttpEndpoint>>> errorMap) {
-        httpEndpoint.errors().value().forEach(responseError -> {
-            DeclaredErrorName errorName = responseError.error();
+        httpEndpoint.getErrors().get().forEach(responseError -> {
+            DeclaredErrorName errorName = responseError.getError();
             Map<HttpService, List<HttpEndpoint>> containingEndpoints;
             if (errorMap.containsKey(errorName)) {
                 containingEndpoints = errorMap.get(errorName);
@@ -422,22 +424,22 @@ public final class ClientGeneratorCli {
     }
 
     private static synchronized void startGradleDaemon(FernPluginConfig fernPluginConfig) {
-        String outputDirectory = fernPluginConfig.generatorConfig().output().path();
+        String outputDirectory = fernPluginConfig.generatorConfig().getOutput().getPath();
 
         writeFileContents(
                 Paths.get(outputDirectory, "settings.gradle"),
                 CodeGenerationResult.getSettingsDotGradle(fernPluginConfig));
-        if (fernPluginConfig.generatorConfig().publish().isPresent()) {
+        if (fernPluginConfig.generatorConfig().getPublish().isPresent()) {
             writeFileContents(
                     Paths.get(outputDirectory, "build.gradle"),
                     CodeGenerationResult.getBuildDotGradle(
-                            fernPluginConfig.generatorConfig().publish().get()));
+                            fernPluginConfig.generatorConfig().getPublish().get()));
         }
     }
 
     private static synchronized void writeToFiles(
             CodeGenerationResult codeGenerationResult, FernPluginConfig fernPluginConfig) {
-        String outputDirectory = fernPluginConfig.generatorConfig().output().path();
+        String outputDirectory = fernPluginConfig.generatorConfig().getOutput().getPath();
 
         if (!codeGenerationResult.modelFiles().isEmpty()) {
             String modelDirectory = fernPluginConfig.getModelProjectName();

@@ -19,9 +19,9 @@ package com.fern.codegen.generator.auth;
 import com.fern.codegen.GeneratedFile;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
-import com.fern.types.AuthScheme;
-import com.fern.types.WithDocs;
-import com.fern.types.services.HttpHeader;
+import com.fern.ir.model.auth.AuthScheme;
+import com.fern.ir.model.commons.WithDocs;
+import com.fern.ir.model.services.http.HttpHeader;
 
 public final class AuthSchemeToGeneratedFile implements AuthScheme.Visitor<GeneratedFile> {
 

@@ -24,7 +24,7 @@ import com.fern.codegen.utils.AuthSchemeUtils;
 import com.fern.codegen.utils.CasingUtils;
 import com.fern.codegen.utils.ClassNameConstants;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
-import com.fern.types.AuthScheme;
+import com.fern.ir.model.auth.AuthScheme;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;

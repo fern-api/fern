@@ -21,7 +21,7 @@ import com.fern.codegen.GeneratedFile;
 import com.fern.codegen.Generator;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
-import com.fern.types.services.HttpHeader;
+import com.fern.ir.model.services.http.HttpHeader;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -42,7 +42,7 @@ public class HeaderAuthGenerator extends Generator {
         super(generatorContext);
         this.generatedClassName = generatorContext
                 .getClassNameUtils()
-                .getClassName(httpHeader.name().pascalCase(), Optional.of("Auth"), Optional.empty(), packageType);
+                .getClassName(httpHeader.getName().getPascalCase(), Optional.of("Auth"), Optional.empty(), packageType);
         this.generatedImmutablesClassName =
                 generatorContext.getImmutablesUtils().getImmutablesClassName(generatedClassName);
     }

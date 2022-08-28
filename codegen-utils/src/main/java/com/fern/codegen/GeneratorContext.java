@@ -18,13 +18,13 @@ package com.fern.codegen;
 import com.fern.codegen.utils.ClassNameUtils;
 import com.fern.codegen.utils.ImmutablesUtils;
 import com.fern.codegen.utils.VisitorUtils;
-import com.fern.types.ApiAuth;
-import com.fern.types.DeclaredErrorName;
-import com.fern.types.DeclaredTypeName;
-import com.fern.types.ErrorDeclaration;
-import com.fern.types.FernConstants;
-import com.fern.types.IntermediateRepresentation;
-import com.fern.types.TypeDeclaration;
+import com.fern.ir.model.auth.ApiAuth;
+import com.fern.ir.model.errors.DeclaredErrorName;
+import com.fern.ir.model.errors.ErrorDeclaration;
+import com.fern.ir.model.ir.FernConstants;
+import com.fern.ir.model.ir.IntermediateRepresentation;
+import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.ir.model.types.TypeDeclaration;
 import java.util.Map;
 
 public final class GeneratorContext {

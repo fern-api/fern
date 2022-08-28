@@ -132,7 +132,15 @@ jobs:
             echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
             docker tag fern-java:"$projectVersion" fernapi/fern-java:"$projectVersion"
             docker push fernapi/fern-java:"$projectVersion"
-          name: Publish docker
+          name: Publish fern-java docker
+      - run:
+          command: |
+            projectVersion=$(./gradlew printVersion --quiet)
+            ./gradlew :cli:dockerTag"$projectVersion"
+            echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
+            docker tag java-client:"$projectVersion" fernapi/java-client:"$projectVersion"
+            docker push fernapi/java-client:"$projectVersion"
+          name: Publish java-client docker
 
 workflows:
   version: 2

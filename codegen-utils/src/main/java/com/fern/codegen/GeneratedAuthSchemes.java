@@ -16,8 +16,8 @@
 
 package com.fern.codegen;
 
+import com.fern.ir.model.auth.AuthScheme;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import com.fern.types.AuthScheme;
 import java.util.Map;
 import org.immutables.value.Value;
 

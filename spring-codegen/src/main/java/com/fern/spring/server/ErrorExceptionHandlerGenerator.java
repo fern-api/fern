@@ -25,11 +25,11 @@ import com.fern.codegen.Generator;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameConstants;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
+import com.fern.ir.model.services.http.HttpEndpoint;
+import com.fern.ir.model.services.http.HttpEndpointId;
+import com.fern.ir.model.services.http.HttpService;
 import com.fern.java.spring.HandlerMethodUtils;
 import com.fern.model.codegen.errors.ErrorGenerator;
-import com.fern.types.services.HttpEndpoint;
-import com.fern.types.services.HttpEndpointId;
-import com.fern.types.services.HttpService;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -81,7 +81,7 @@ public final class ErrorExceptionHandlerGenerator extends Generator {
                 .getClassName(
                         generatedError.className().simpleName(),
                         Optional.of(EXCEPTION_MAPPER_CLASSNAME_SUFFIX),
-                        Optional.of(generatedError.errorDeclaration().name().fernFilepath()),
+                        Optional.of(generatedError.errorDeclaration().getName().getFernFilepath()),
                         PackageType.MODEL);
     }
 
@@ -148,7 +148,7 @@ public final class ErrorExceptionHandlerGenerator extends Generator {
 
             boolean firstEndpointCondition = true;
             for (HttpEndpoint httpEndpoint : entry.getValue()) {
-                HttpEndpointId endpointId = httpEndpoint.id();
+                HttpEndpointId endpointId = httpEndpoint.getId();
                 MethodSpec endpointMethodSpec =
                         generatedHttpServiceServer.methodsByEndpointId().get(endpointId);
                 toResponseMethodBuilder.beginControlFlow(
@@ -170,7 +170,7 @@ public final class ErrorExceptionHandlerGenerator extends Generator {
                         generatedEndpointError.className(),
                         generatedEndpointError
                                 .constructorsByResponseError()
-                                .get(generatedError.errorDeclaration().name())
+                                .get(generatedError.errorDeclaration().getName())
                                 .name,
                         EXCEPTION_PARAMETER_NAME,
                         HttpStatus.class,

@@ -22,9 +22,9 @@ import com.fern.codegen.GeneratedAlias;
 import com.fern.codegen.Generator;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameConstants;
-import com.fern.types.AliasTypeDeclaration;
-import com.fern.types.PrimitiveType;
-import com.fern.types.TypeReference;
+import com.fern.ir.model.types.AliasTypeDeclaration;
+import com.fern.ir.model.types.PrimitiveType;
+import com.fern.ir.model.types.TypeReference;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
@@ -55,7 +55,7 @@ public final class AliasGenerator extends Generator {
         TypeSpec.Builder aliasTypeSpecBuilder =
                 TypeSpec.classBuilder(generatedAliasClassName).addModifiers(Modifier.PUBLIC, Modifier.FINAL);
         TypeSpec aliasTypeSpec;
-        if (aliasTypeDeclaration.aliasOf().isVoid()) {
+        if (aliasTypeDeclaration.getAliasOf().isVoid()) {
             aliasTypeSpec = aliasTypeSpecBuilder
                     .addMethod(getConstructor())
                     .addMethod(getOfMethodName())
@@ -63,7 +63,7 @@ public final class AliasGenerator extends Generator {
         } else {
             TypeName aliasTypeName = generatorContext
                     .getClassNameUtils()
-                    .getTypeNameFromTypeReference(true, aliasTypeDeclaration.aliasOf());
+                    .getTypeNameFromTypeReference(true, aliasTypeDeclaration.getAliasOf());
             TypeSpec.Builder aliasBuilder = aliasTypeSpecBuilder
                     .addField(aliasTypeName, VALUE_FIELD_NAME, Modifier.PRIVATE, Modifier.FINAL)
                     .addMethod(getConstructor(aliasTypeName))
@@ -74,7 +74,7 @@ public final class AliasGenerator extends Generator {
                     .addMethod(getOfMethodName(aliasTypeName));
 
             Optional<CodeBlock> maybeValueOfFactoryMethod =
-                    valueOfFactoryMethod(aliasTypeDeclaration.aliasOf(), aliasTypeName);
+                    valueOfFactoryMethod(aliasTypeDeclaration.getAliasOf(), aliasTypeName);
             if (maybeValueOfFactoryMethod.isPresent()) {
                 aliasBuilder.addMethod(MethodSpec.methodBuilder("valueOf")
                         .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
@@ -157,9 +157,9 @@ public final class AliasGenerator extends Generator {
 
     private MethodSpec getHashCodeMethod() {
         CodeBlock hashCodeMethodBlock;
-        if (aliasTypeDeclaration.aliasOf().isPrimitive()) {
+        if (aliasTypeDeclaration.getAliasOf().isPrimitive()) {
             hashCodeMethodBlock =
-                    aliasTypeDeclaration.aliasOf().getPrimitive().get().visit(HashcodeMethodSpecVisitor.INSTANCE);
+                    aliasTypeDeclaration.getAliasOf().getPrimitive().get().visit(HashcodeMethodSpecVisitor.INSTANCE);
         } else {
             hashCodeMethodBlock = CodeBlock.of("return $L.$L()", VALUE_FIELD_NAME, "hashCode");
         }
@@ -173,9 +173,9 @@ public final class AliasGenerator extends Generator {
 
     private MethodSpec getToStringMethod() {
         CodeBlock toStringMethodCodeBlock;
-        if (aliasTypeDeclaration.aliasOf().isPrimitive()) {
+        if (aliasTypeDeclaration.getAliasOf().isPrimitive()) {
             toStringMethodCodeBlock =
-                    aliasTypeDeclaration.aliasOf().getPrimitive().get().visit(ToStringMethodSpecVisitor.INSTANCE);
+                    aliasTypeDeclaration.getAliasOf().getPrimitive().get().visit(ToStringMethodSpecVisitor.INSTANCE);
         } else {
             toStringMethodCodeBlock = CodeBlock.of("return $L.$L()", VALUE_FIELD_NAME, "toString");
         }

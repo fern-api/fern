@@ -1,0 +1,6 @@
+generators:
+  - name: java-client
+    version: latest
+    generate:
+      enabled: true
+      output: ./generated-java

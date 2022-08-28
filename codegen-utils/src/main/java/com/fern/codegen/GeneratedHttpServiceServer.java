@@ -15,9 +15,9 @@
  */
 package com.fern.codegen;
 
+import com.fern.ir.model.services.http.HttpEndpointId;
+import com.fern.ir.model.services.http.HttpService;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import com.fern.types.services.HttpEndpointId;
-import com.fern.types.services.HttpService;
 import com.squareup.javapoet.MethodSpec;
 import java.util.Map;
 import org.immutables.value.Value;

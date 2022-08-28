@@ -28,11 +28,11 @@ import com.fern.codegen.IGeneratedFile;
 import com.fern.codegen.generator.auth.AnyAuthGenerator;
 import com.fern.codegen.utils.AuthSchemeUtils;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
-import com.fern.types.AuthSchemesRequirement;
-import com.fern.types.DeclaredErrorName;
-import com.fern.types.services.HttpEndpoint;
-import com.fern.types.services.HttpEndpointId;
-import com.fern.types.services.HttpService;
+import com.fern.ir.model.auth.AuthSchemesRequirement;
+import com.fern.ir.model.errors.DeclaredErrorName;
+import com.fern.ir.model.services.http.HttpEndpoint;
+import com.fern.ir.model.services.http.HttpEndpointId;
+import com.fern.ir.model.services.http.HttpService;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
@@ -72,7 +72,7 @@ public final class HttpServiceClientGenerator extends Generator {
         this.generatedEndpointModels = generatedEndpointModels;
         this.generatedServiceClientClassName = generatorContext
                 .getClassNameUtils()
-                .getClassNameFromServiceName(httpService.name(), CLIENT_SUFFIX, PackageType.CLIENT);
+                .getClassNameFromServiceName(httpService.getName(), CLIENT_SUFFIX, PackageType.CLIENT);
         this.generatedErrors = generatedErrors;
         this.maybeGeneratedAuthSchemes = maybeGeneratedAuthSchemes;
         this.clientClassNameUtils =
@@ -102,13 +102,13 @@ public final class HttpServiceClientGenerator extends Generator {
         maybeGeneratedAuthSchemes.ifPresent(generatedAuthSchemes -> serviceClientBuilder.addMethod(
                 getUrlAuthConstructor(generatedHttpServiceInterface, generatedAuthSchemes)));
 
-        for (HttpEndpoint httpEndpoint : httpService.endpoints()) {
+        for (HttpEndpoint httpEndpoint : httpService.getEndpoints()) {
             Optional<GeneratedEndpointClient> endpointFile =
-                    generatedHttpServiceInterface.endpointFiles().get(httpEndpoint.id());
+                    generatedHttpServiceInterface.endpointFiles().get(httpEndpoint.getId());
             MethodSpec interfaceMethod =
-                    generatedHttpServiceInterface.endpointMethods().get(httpEndpoint.id());
+                    generatedHttpServiceInterface.endpointMethods().get(httpEndpoint.getId());
             MethodSpec.Builder endpointMethodBuilder =
-                    MethodSpec.methodBuilder(httpEndpoint.id().value()).addModifiers(Modifier.PUBLIC);
+                    MethodSpec.methodBuilder(httpEndpoint.getId().get()).addModifiers(Modifier.PUBLIC);
 
             generateCallWithWrappedRequest(
                     httpEndpoint,
@@ -179,7 +179,7 @@ public final class HttpServiceClientGenerator extends Generator {
                 ParameterSpec.builder(generatedRequestInfo.requestClassName(), REQUEST_PARAMETER_NAME)
                         .build());
         String args;
-        if (httpEndpoint.auth() && maybeGeneratedAuthSchemes.isPresent()) {
+        if (httpEndpoint.getAuth() && maybeGeneratedAuthSchemes.isPresent()) {
             GeneratedAuthSchemes generatedAuthSchemes = maybeGeneratedAuthSchemes.get();
             endpointMethodBuilder.addStatement(
                     "$T authValue = $L.$L().orElseGet(() -> this.$L.orElseThrow(() -> new $T($S)))",
@@ -188,15 +188,15 @@ public final class HttpServiceClientGenerator extends Generator {
                     generatedRequestInfo.authMethodSpec().get().name,
                     AUTH_FIELD_NAME,
                     RuntimeException.class,
-                    "Auth is required for " + httpEndpoint.id().value());
+                    "Auth is required for " + httpEndpoint.getId().get());
             List<String> argTokens = new ArrayList<>();
             if (generatedAuthSchemes.generatedAuthSchemes().size() == 1) {
                 argTokens.add("authValue");
-            } else if (generatorContext.getApiAuth().requirement().equals(AuthSchemesRequirement.ALL)) {
+            } else if (generatorContext.getApiAuth().getRequirement().equals(AuthSchemesRequirement.ALL)) {
                 generatedAuthSchemes.generatedAuthSchemes().forEach(((authScheme, generatedFile) -> {
                     argTokens.add("authValue." + AuthSchemeUtils.getAuthSchemeCamelCaseName(authScheme) + "()");
                 }));
-            } else if (generatorContext.getApiAuth().requirement().equals(AuthSchemesRequirement.ANY)) {
+            } else if (generatorContext.getApiAuth().getRequirement().equals(AuthSchemesRequirement.ANY)) {
                 generatedAuthSchemes
                         .generatedAuthSchemes()
                         .forEach((authScheme, generatedFile) ->

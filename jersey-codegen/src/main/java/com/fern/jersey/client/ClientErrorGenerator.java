@@ -19,10 +19,10 @@ package com.fern.jersey.client;
 import com.fern.codegen.GeneratedInterface;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.IGeneratedFile;
+import com.fern.ir.model.errors.ErrorDeclaration;
+import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.model.codegen.TypeDefinitionGenerator;
-import com.fern.types.DeclaredTypeName;
-import com.fern.types.ErrorDeclaration;
-import com.fern.types.TypeDeclaration;
 import com.squareup.javapoet.ClassName;
 import java.util.Map;
 
@@ -30,7 +30,6 @@ public final class ClientErrorGenerator {
     private final ErrorDeclaration errorDeclaration;
     private final ClassName errorClassName;
     private final GeneratorContext generatorContext;
-
     private final Map<DeclaredTypeName, GeneratedInterface> generatedInterfaces;
 
     public ClientErrorGenerator(
@@ -47,14 +46,14 @@ public final class ClientErrorGenerator {
 
     public IGeneratedFile generate() {
         IGeneratedFile generatedFile = errorDeclaration
-                .type()
+                .getType()
                 .visit(new TypeDefinitionGenerator(
                         TypeDeclaration.builder()
                                 .name(DeclaredTypeName.builder()
-                                        .fernFilepath(errorDeclaration.name().fernFilepath())
+                                        .fernFilepath(errorDeclaration.getName().getFernFilepath())
                                         .name(errorClassName.simpleName())
                                         .build())
-                                .shape(errorDeclaration.type())
+                                .shape(errorDeclaration.getType())
                                 .build(),
                         generatorContext,
                         generatedInterfaces,

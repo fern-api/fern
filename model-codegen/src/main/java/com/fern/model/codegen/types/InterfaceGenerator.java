@@ -19,9 +19,9 @@ import com.fern.codegen.GeneratedInterface;
 import com.fern.codegen.Generator;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
-import com.fern.types.DeclaredTypeName;
-import com.fern.types.ObjectProperty;
-import com.fern.types.ObjectTypeDeclaration;
+import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.ir.model.types.ObjectProperty;
+import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
@@ -47,8 +47,8 @@ public final class InterfaceGenerator extends Generator {
         super(generatorContext);
         this.objectTypeDeclaration = objectTypeDeclaration;
         this.declaredTypeName = DeclaredTypeName.builder()
-                .fernFilepath(declaredTypeName.fernFilepath())
-                .name(INTERFACE_PREFIX + declaredTypeName.name())
+                .fernFilepath(declaredTypeName.getFernFilepath())
+                .name(INTERFACE_PREFIX + declaredTypeName.getName())
                 .build();
     }
 
@@ -73,15 +73,15 @@ public final class InterfaceGenerator extends Generator {
     }
 
     private Map<ObjectProperty, MethodSpec> getPropertyGetters() {
-        return objectTypeDeclaration.properties().stream()
+        return objectTypeDeclaration.getProperties().stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
                         objectProperty -> {
                             TypeName poetTypeName = generatorContext
                                     .getClassNameUtils()
-                                    .getTypeNameFromTypeReference(true, objectProperty.valueType());
+                                    .getTypeNameFromTypeReference(true, objectProperty.getValueType());
                             return MethodSpec.methodBuilder(
-                                            "get" + objectProperty.name().pascalCase())
+                                            "get" + objectProperty.getName().getPascalCase())
                                     .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                                     .returns(poetTypeName)
                                     .build();

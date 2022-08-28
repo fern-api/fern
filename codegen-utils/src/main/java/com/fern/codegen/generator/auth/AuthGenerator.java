@@ -20,9 +20,9 @@ import com.fern.codegen.GeneratedAuthSchemes;
 import com.fern.codegen.GeneratedFile;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
-import com.fern.types.ApiAuth;
-import com.fern.types.AuthScheme;
-import com.fern.types.AuthSchemesRequirement;
+import com.fern.ir.model.auth.ApiAuth;
+import com.fern.ir.model.auth.AuthScheme;
+import com.fern.ir.model.auth.AuthSchemesRequirement;
 import java.util.Optional;
 
 public final class AuthGenerator {
@@ -40,10 +40,10 @@ public final class AuthGenerator {
     }
 
     public Optional<GeneratedAuthSchemes> generate() {
-        if (apiAuth.schemes().size() == 0) {
+        if (apiAuth.getSchemes().size() == 0) {
             return Optional.empty();
-        } else if (apiAuth.schemes().size() == 1) {
-            AuthScheme authScheme = apiAuth.schemes().get(0);
+        } else if (apiAuth.getSchemes().size() == 1) {
+            AuthScheme authScheme = apiAuth.getSchemes().get(0);
             GeneratedFile generatedFile =
                     authScheme.visit(new AuthSchemeToGeneratedFile(generatorContext, packageType));
             return Optional.of(GeneratedAuthSchemes.builder()
@@ -51,13 +51,13 @@ public final class AuthGenerator {
                     .className(generatedFile.className())
                     .putGeneratedAuthSchemes(authScheme, generatedFile)
                     .build());
-        } else if (apiAuth.requirement().equals(AuthSchemesRequirement.ANY)) {
+        } else if (apiAuth.getRequirement().equals(AuthSchemesRequirement.ANY)) {
             AnyAuthGenerator anyAuthGenerator =
-                    new AnyAuthGenerator(generatorContext, packageType, apiName, apiAuth.schemes());
+                    new AnyAuthGenerator(generatorContext, packageType, apiName, apiAuth.getSchemes());
             return Optional.of(anyAuthGenerator.generate());
-        } else if (apiAuth.requirement().equals(AuthSchemesRequirement.ALL)) {
+        } else if (apiAuth.getRequirement().equals(AuthSchemesRequirement.ALL)) {
             AllAuthGenerator allAuthGenerator =
-                    new AllAuthGenerator(generatorContext, packageType, apiName, apiAuth.schemes());
+                    new AllAuthGenerator(generatorContext, packageType, apiName, apiAuth.getSchemes());
             return Optional.of(allAuthGenerator.generate());
         }
         return Optional.empty();

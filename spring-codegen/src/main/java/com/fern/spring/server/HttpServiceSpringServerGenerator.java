@@ -23,13 +23,13 @@ import com.fern.codegen.Generator;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
 import com.fern.codegen.utils.HttpAuthParameterSpecsUtils;
+import com.fern.ir.model.auth.AuthScheme;
+import com.fern.ir.model.errors.DeclaredErrorName;
+import com.fern.ir.model.services.http.HttpEndpoint;
+import com.fern.ir.model.services.http.HttpEndpointId;
+import com.fern.ir.model.services.http.HttpService;
 import com.fern.spring.SpringHttpMethodAnnotationVisitor;
 import com.fern.spring.SpringServiceGeneratorUtils;
-import com.fern.types.AuthScheme;
-import com.fern.types.DeclaredErrorName;
-import com.fern.types.services.HttpEndpoint;
-import com.fern.types.services.HttpEndpointId;
-import com.fern.types.services.HttpService;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -67,7 +67,7 @@ public final class HttpServiceSpringServerGenerator extends Generator {
         this.generatedErrors = generatedErrors;
         this.generatedServiceClassName = generatorContext
                 .getClassNameUtils()
-                .getClassNameFromServiceName(httpService.name(), PackageType.SERVER);
+                .getClassNameFromServiceName(httpService.getName(), PackageType.SERVER);
         this.springServiceGeneratorUtils = new SpringServiceGeneratorUtils(generatorContext);
         this.generatedEndpointModels = generatedEndpointModels;
         this.generatedAuthSchemes = generatedAuthSchemes;
@@ -78,13 +78,13 @@ public final class HttpServiceSpringServerGenerator extends Generator {
         TypeSpec.Builder jerseyServiceBuilder = TypeSpec.interfaceBuilder(generatedServiceClassName)
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(AnnotationSpec.builder(RequestMapping.class)
-                        .addMember("path", "$S", httpService.basePath().orElse("/"))
+                        .addMember("path", "$S", httpService.getBasePath().orElse("/"))
                         .addMember("consumes", "$S", "application/json")
                         .addMember("produces", "$S", "application/json")
                         .build());
         Map<HttpEndpointId, MethodSpec> endpointToMethodSpec = new LinkedHashMap<>();
-        httpService.endpoints().forEach(httpEndpoint -> {
-            endpointToMethodSpec.put(httpEndpoint.id(), getHttpEndpointMethodSpec(httpEndpoint));
+        httpService.getEndpoints().forEach(httpEndpoint -> {
+            endpointToMethodSpec.put(httpEndpoint.getId(), getHttpEndpointMethodSpec(httpEndpoint));
         });
         TypeSpec jerseyServiceTypeSpec =
                 jerseyServiceBuilder.addMethods(endpointToMethodSpec.values()).build();
@@ -101,27 +101,27 @@ public final class HttpServiceSpringServerGenerator extends Generator {
 
     private MethodSpec getHttpEndpointMethodSpec(HttpEndpoint httpEndpoint) {
         MethodSpec.Builder endpointMethodBuilder = MethodSpec.methodBuilder(
-                        httpEndpoint.id().value())
-                .addAnnotation(httpEndpoint.method().visit(new SpringHttpMethodAnnotationVisitor(httpEndpoint)))
+                        httpEndpoint.getId().get())
+                .addAnnotation(httpEndpoint.getMethod().visit(new SpringHttpMethodAnnotationVisitor(httpEndpoint)))
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT);
 
         HttpAuthParameterSpecsUtils httpAuthParameterSpecsUtils =
                 new HttpAuthParameterSpecsUtils(RequestHeader.class, generatorContext, generatedAuthSchemes);
         endpointMethodBuilder.addParameters(httpAuthParameterSpecsUtils.getAuthParameters(httpEndpoint));
 
-        httpService.headers().stream()
+        httpService.getHeaders().stream()
                 .map(springServiceGeneratorUtils::getHeaderParameterSpec)
                 .forEach(endpointMethodBuilder::addParameter);
-        httpEndpoint.headers().stream()
+        httpEndpoint.getHeaders().stream()
                 .map(springServiceGeneratorUtils::getHeaderParameterSpec)
                 .forEach(endpointMethodBuilder::addParameter);
-        httpEndpoint.pathParameters().stream()
+        httpEndpoint.getPathParameters().stream()
                 .map(springServiceGeneratorUtils::getPathParameterSpec)
                 .forEach(endpointMethodBuilder::addParameter);
-        httpEndpoint.queryParameters().stream()
+        httpEndpoint.getQueryParameters().stream()
                 .map(springServiceGeneratorUtils::getQueryParameterSpec)
                 .forEach(endpointMethodBuilder::addParameter);
-        GeneratedEndpointModel generatedEndpointModel = generatedEndpointModels.get(httpEndpoint.id());
+        GeneratedEndpointModel generatedEndpointModel = generatedEndpointModels.get(httpEndpoint.getId());
         springServiceGeneratorUtils
                 .getPayloadTypeName(generatedEndpointModel.generatedHttpRequest())
                 .ifPresent(typeName -> {
@@ -133,8 +133,9 @@ public final class HttpServiceSpringServerGenerator extends Generator {
                 springServiceGeneratorUtils.getPayloadTypeName(generatedEndpointModel.generatedHttpResponse());
         returnPayload.ifPresent(endpointMethodBuilder::returns);
 
-        List<ClassName> errorClassNames = httpEndpoint.errors().value().stream()
-                .map(responseError -> generatedErrors.get(responseError.error()).className())
+        List<ClassName> errorClassNames = httpEndpoint.getErrors().get().stream()
+                .map(responseError ->
+                        generatedErrors.get(responseError.getError()).className())
                 .collect(Collectors.toList());
         endpointMethodBuilder.addExceptions(errorClassNames);
         return endpointMethodBuilder.build();
