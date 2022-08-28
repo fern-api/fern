@@ -40,7 +40,7 @@ public final class DefaultGeneratorExecClient {
         Optional<RemoteGeneratorEnvironment> maybeEnv =
                 generatorConfig.getEnvironment().getRemote();
         this.taskId = maybeEnv.map(env -> TaskId.valueOf(env.getId().get())).orElse(null);
-        this.generatorExecClient = maybeEnv.map(RemoteGeneratorEnvironment::getCoordinatorUrl)
+        this.generatorExecClient = maybeEnv.map(RemoteGeneratorEnvironment::getCoordinatorUrlV2)
                 .map(FernGeneratorExecClient::new)
                 .orElse(null);
     }
