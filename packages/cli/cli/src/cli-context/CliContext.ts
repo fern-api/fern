@@ -69,11 +69,9 @@ export class CliContext {
         this.logLevel = argv.logLevel;
     }
 
-    public fail(message?: string, error?: unknown): TASK_FAILURE;
-    public fail(error: unknown): TASK_FAILURE;
-    public fail(messageOrError?: unknown, error?: unknown): TASK_FAILURE {
+    public fail(message?: string, error?: unknown): TASK_FAILURE {
         this.didSucceed = false;
-        const errorMessage = constructErrorMessage({ messageOrError, error });
+        const errorMessage = constructErrorMessage({ message, error });
         if (errorMessage != null) {
             this.logger.error(errorMessage);
         }
