@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, noop } from "@fern-api/core-utils";
-import { GeneratorInvcation } from "@fern-api/generators-configuration";
+import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { LogLevel } from "@fern-api/logger";
 import { Finishable, InteractiveTaskContext } from "@fern-api/task-context";
 import { Fiddle } from "@fern-fern/fiddle-client-v2";
@@ -14,7 +14,7 @@ export declare namespace RemoteTaskHandler {
         job: Fiddle.remoteGen.CreateJobResponse;
         taskId: Fiddle.remoteGen.RemoteGenTaskId;
         interactiveTaskContext: Finishable & InteractiveTaskContext;
-        generatorInvocation: GeneratorInvcation;
+        generatorInvocation: GeneratorInvocation;
     }
 }
 
@@ -22,7 +22,7 @@ export class RemoteTaskHandler {
     private job: Fiddle.remoteGen.CreateJobResponse;
     private taskId: Fiddle.remoteGen.RemoteGenTaskId;
     private context: Finishable & InteractiveTaskContext;
-    private generatorInvocation: GeneratorInvcation;
+    private generatorInvocation: GeneratorInvocation;
     private lengthOfLastLogs = 0;
 
     constructor({ job, taskId, interactiveTaskContext, generatorInvocation }: RemoteTaskHandler.Init) {

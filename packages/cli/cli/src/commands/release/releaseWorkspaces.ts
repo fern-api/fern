@@ -13,12 +13,14 @@ export async function releaseWorkspaces({
 }): Promise<void> {
     await Promise.all(
         project.workspaces.map((workspace) =>
-            releaseWorkspace({
-                workspace,
-                organization: project.config.organization,
-                cliContext,
-                version,
-            })
+            cliContext.runTaskForWorkspace(workspace, (context) =>
+                releaseWorkspace({
+                    workspace,
+                    organization: project.config.organization,
+                    context,
+                    version,
+                })
+            )
         )
     );
 }

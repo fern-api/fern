@@ -25,7 +25,7 @@ const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {
             name: "fernapi/fern-java",
             version: "0.0.81",
             config: {
-                packagePrefix: "com",
+                packagePrefix: "${SOME_ENV_VAR}",
                 mode: "client_and_server",
             },
         },
@@ -48,11 +48,13 @@ describe("fern upgrade", () => {
             RelativeFilePath.of("api"),
             RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)
         );
+        // make sure the file exists
+        await readFile(generatorsConfigurationFilepath);
         await writeFile(generatorsConfigurationFilepath, yaml.dump(GENERATORS_CONFIGURATION));
         await runFernCli(["upgrade"], {
             cwd: directory,
             env: {
-                // needed so the CLI thinks we're mid-upgrade
+                // this env var needs to be defined so the CLI thinks we're mid-upgrade
                 FERN_PRE_UPGRADE_VERSION: "0.0.0",
             },
         });

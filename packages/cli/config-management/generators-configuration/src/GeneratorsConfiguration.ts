@@ -8,7 +8,7 @@ export interface GeneratorsConfiguration {
     release: ReleaseGeneratorInvocation[];
 }
 
-export type GeneratorInvcation = DraftGeneratorInvocation | ReleaseGeneratorInvocation;
+export type GeneratorInvocation = DraftGeneratorInvocation | ReleaseGeneratorInvocation;
 
 export interface DraftGeneratorInvocation extends BaseGeneratorInvocation {
     type: "draft";

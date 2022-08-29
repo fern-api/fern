@@ -1,6 +1,6 @@
 export {
     type DraftGeneratorInvocation,
-    type GeneratorInvcation,
+    type GeneratorInvocation,
     type GeneratorOutputs,
     type GeneratorsConfiguration,
     type GithubGeneratorOutput,

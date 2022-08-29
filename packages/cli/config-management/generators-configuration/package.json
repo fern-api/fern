@@ -29,7 +29,6 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/project-configuration": "workspace:*",
     "js-yaml": "^4.1.0",
-    "lodash-es": "^4.17.21",
     "zod": "^3.14.3"
   },
   "devDependencies": {
@@ -38,7 +37,6 @@
     "@babel/preset-typescript": "^7.18.6",
     "@types/jest": "^28.1.7",
     "@types/js-yaml": "^4.0.5",
-    "@types/lodash-es": "^4.17.6",
     "@types/node": "^18.7.11",
     "depcheck": "^1.4.3",
     "eslint": "^8.22.0",
