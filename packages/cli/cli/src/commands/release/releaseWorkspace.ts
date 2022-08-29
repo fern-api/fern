@@ -43,7 +43,9 @@ export async function releaseWorkspace({
                     maven:
                         generator.outputs.maven != null
                             ? {
-                                  registryUrl: generator.outputs.maven.url ?? "http://repo1.maven.org",
+                                  registryUrl:
+                                      generator.outputs.maven.url ??
+                                      "https://s01.oss.sonatype.org/content/repositories/releases/",
                                   username: generator.outputs.maven.username,
                                   password: generator.outputs.maven.password,
                                   coordinate: generator.outputs.maven.coordinate,
