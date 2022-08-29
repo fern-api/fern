@@ -195,10 +195,15 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
 
 function addReleaseCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        ["release"],
+        ["release <version>"],
         "Run the release tasks from generators.yml",
         (yargs) =>
             yargs
+                .positional("version", {
+                    type: "string",
+                    demandOption: true,
+                    description: "The version for the generated packages",
+                })
                 .option("api", {
                     string: true,
                     description: "Only run the command on the provided API",
@@ -207,11 +212,6 @@ function addReleaseCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                     boolean: true,
                     default: false,
                     description: "Include all APIs",
-                })
-                .option("version", {
-                    string: true,
-                    demandOption: true,
-                    description: "The version for the generated packages",
                 }),
         async (argv) => {
             cliContext.processArgv(argv);
