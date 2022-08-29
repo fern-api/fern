@@ -195,11 +195,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
 
 function addReleaseCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        ["release <releaseVersion>"],
+        ["release <package-version>"],
         "Run the release tasks from generators.yml",
         (yargs) =>
             yargs
-                .positional("releaseVersion", {
+                .positional("package-version", {
                     type: "string",
                     demandOption: true,
                     description: "The version for the generated packages",
@@ -221,7 +221,7 @@ function addReleaseCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                     defaultToAllWorkspaces: argv.all,
                 }),
                 cliContext,
-                version: argv.releaseVersion,
+                version: argv.packageVersion,
             });
         }
     );

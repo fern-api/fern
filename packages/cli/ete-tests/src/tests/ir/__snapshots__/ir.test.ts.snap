@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`fern-ir-tests simple 1`] = `
+exports[`ir simple 1`] = `
 "{
     \\"apiName\\": \\"my-api\\",
     \\"auth\\": {

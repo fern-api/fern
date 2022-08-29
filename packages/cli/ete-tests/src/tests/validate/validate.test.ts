@@ -5,7 +5,7 @@ import { runFernCli } from "../../utils/runFernCli";
 
 const FIXTURES_DIR = path.join(__dirname, "fixtures");
 
-describe("fern-ir-tests", () => {
+describe("validate", () => {
     itFixture("simple");
 });
 

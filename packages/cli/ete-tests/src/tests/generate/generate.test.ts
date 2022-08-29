@@ -1,10 +1,9 @@
-import { readFile, rm } from "fs/promises";
 import path from "path";
 import { runFernCli } from "../../utils/runFernCli";
 
 const FIXTURES_DIR = path.join(__dirname, "fixtures");
 
-describe("ir", () => {
+describe("generate", () => {
     itFixture("simple");
 });
 
@@ -14,15 +13,10 @@ function itFixture(fixtureName: string) {
         fixtureName,
         async () => {
             const fixturePath = path.join(FIXTURES_DIR, fixtureName);
-            const irOutputPath = path.join(fixturePath, "ir.json");
-            await rm(irOutputPath, { force: true, recursive: true });
-
-            await runFernCli(["ir", "--output", irOutputPath], {
+            const { exitCode } = await runFernCli(["generate"], {
                 cwd: fixturePath,
             });
-
-            const irContents = await readFile(irOutputPath);
-            expect(irContents.toString()).toMatchSnapshot();
+            expect(exitCode).toBe(0);
         },
         90_000
     );
