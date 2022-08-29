@@ -3,25 +3,26 @@ import { substituteEnvVariables } from "../substituteEnvVariables";
 
 describe("substituteEnvVariables", () => {
     it("basic", () => {
-        process.env.ENV_VAR = "test";
+        process.env.FOO_VAR = "foo";
+        process.env.BAR_VAR = "bar";
         const content = {
             foo: "bar",
             baz: {
                 qux: {
-                    thud: "${ENV_VAR}",
+                    thud: "${FOO_VAR}",
                 },
             },
-            plugh: "${ENV_VAR}",
+            plugh: "${FOO_VAR}-${BAR_VAR}",
         };
         const context = createMockTaskContext();
         const substituted = substituteEnvVariables(content, context);
 
-        expect(substituted).toEqual({ foo: "bar", baz: { qux: { thud: "test" } }, plugh: "test" });
+        expect(substituted).toEqual({ foo: "bar", baz: { qux: { thud: "foo" } }, plugh: "foo-bar" });
         expect(context.getResult()).toBe(TaskResult.Success);
     });
 
     it("fails with undefined env var", () => {
-        process.env.ENV_VAR = "test";
+        process.env.FOO_VAR = "foo";
         const content = {
             foo: "bar",
             baz: {
@@ -29,7 +30,7 @@ describe("substituteEnvVariables", () => {
                     thud: "${UNDEFINED_ENV_VAR}",
                 },
             },
-            plugh: "${ENV_VAR}",
+            plugh: "${FOO_VAR}",
         };
         const context = createMockTaskContext();
         substituteEnvVariables(content, context);
