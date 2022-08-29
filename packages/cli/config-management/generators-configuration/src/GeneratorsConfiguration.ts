@@ -8,11 +8,15 @@ export interface GeneratorsConfiguration {
     release: ReleaseGeneratorInvocation[];
 }
 
+export type GeneratorInvcation = DraftGeneratorInvocation | ReleaseGeneratorInvocation;
+
 export interface DraftGeneratorInvocation extends BaseGeneratorInvocation {
+    type: "draft";
     absolutePathToLocalOutput: AbsoluteFilePath | undefined;
 }
 
 export interface ReleaseGeneratorInvocation extends BaseGeneratorInvocation {
+    type: "release";
     outputs: GeneratorOutputs;
 }
 
