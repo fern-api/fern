@@ -4,6 +4,7 @@ import { Fiddle } from "@fern-fern/fiddle-client-v2";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { createAndStartJob } from "./createAndStartJob";
 import { pollJobAndReportStatus } from "./pollJobAndReportStatus";
+import { GenericGeneratorInvocationSchema } from "./types";
 
 export async function runRemoteGenerationForWorkspace({
     organization,
@@ -11,6 +12,7 @@ export async function runRemoteGenerationForWorkspace({
     intermediateRepresentation,
     context,
     generatorConfigs,
+    genericGeneratorInvocations,
     version,
 }: {
     organization: string;
@@ -18,6 +20,7 @@ export async function runRemoteGenerationForWorkspace({
     intermediateRepresentation: IntermediateRepresentation;
     context: TaskContext;
     generatorConfigs: Fiddle.remoteGen.GeneratorConfig[];
+    genericGeneratorInvocations: GenericGeneratorInvocationSchema[];
     version: string | undefined;
 }): Promise<void> {
     if (generatorConfigs.length === 0) {
@@ -41,7 +44,7 @@ export async function runRemoteGenerationForWorkspace({
 
     await pollJobAndReportStatus({
         job,
-        workspace,
+        genericGeneratorInvocations,
         context,
     });
 }

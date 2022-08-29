@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const NpmRegistryOutputSchema = z.strictObject({
+    url: z.optional(z.string()),
     "package-name": z.string(),
     token: z.string(),
 });

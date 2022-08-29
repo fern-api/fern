@@ -35,7 +35,7 @@ export async function releaseWorkspace({
                     npm:
                         generator.outputs.npm != null
                             ? {
-                                  registryUrl: "https://registry.npmjs.org",
+                                  registryUrl: generator.outputs.npm.url ?? "https://registry.npmjs.org",
                                   packageName: generator.outputs.npm.packageName,
                                   token: generator.outputs.npm.token,
                               }
@@ -43,7 +43,7 @@ export async function releaseWorkspace({
                     maven:
                         generator.outputs.maven != null
                             ? {
-                                  registryUrl: "http://repo1.maven.org",
+                                  registryUrl: generator.outputs.maven.url ?? "http://repo1.maven.org",
                                   username: generator.outputs.maven.username,
                                   password: generator.outputs.maven.password,
                                   coordinate: generator.outputs.maven.coordinate,
@@ -51,6 +51,12 @@ export async function releaseWorkspace({
                             : undefined,
                 },
             })),
+            genericGeneratorInvocations: workspace.generatorsConfiguration.release.map((releaseGeneratorInvocation) => {
+                return {
+                    name: releaseGeneratorInvocation.name,
+                    absolutePathToLocalOutput: undefined,
+                };
+            }),
         });
     });
 }
