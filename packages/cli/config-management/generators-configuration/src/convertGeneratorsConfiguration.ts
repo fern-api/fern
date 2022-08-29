@@ -39,6 +39,7 @@ export function convertGeneratorsConfiguration({
                               npm:
                                   draftInvocation.outputs.npm != null
                                       ? {
+                                            url: draftInvocation.outputs.npm.url,
                                             packageName: draftInvocation.outputs.npm["package-name"],
                                             token: draftInvocation.outputs.npm.token,
                                         }
@@ -46,6 +47,7 @@ export function convertGeneratorsConfiguration({
                               maven:
                                   draftInvocation.outputs.maven != null
                                       ? {
+                                            url: draftInvocation.outputs.maven.url,
                                             coordinate: draftInvocation.outputs.maven.coordinate,
                                             username: draftInvocation.outputs.maven.username,
                                             password: draftInvocation.outputs.maven.password,
