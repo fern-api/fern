@@ -5,7 +5,6 @@ import { TASK_FAILURE } from "@fern-api/task-context";
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
 import produce from "immer";
-import latestVersion from "latest-version";
 import { CliContext } from "../../cli-context/CliContext";
 import { isFernCliUpgradeAvailable } from "../../cli-context/upgrade-utils/isFernCliUpgradeAvailable";
 import { rerunFernCliAtVersion } from "../../rerunFernCliAtVersion";
@@ -57,7 +56,9 @@ export async function upgrade({ cliContext }: { cliContext: CliContext }): Promi
         await writeFile(projectConfig._absolutePath, JSON.stringify(newProjectConfig, undefined, 2));
 
         cliContext.logger.info(
-            `Upgrading from ${chalk.dim(cliContext.environment.packageVersion)} → ${chalk.green(latestVersion)}`
+            `Upgrading from ${chalk.dim(cliContext.environment.packageVersion)} → ${chalk.green(
+                fernCliUpgradeInfo.latestVersion
+            )}`
         );
 
         const { failed } = await rerunFernCliAtVersion({
