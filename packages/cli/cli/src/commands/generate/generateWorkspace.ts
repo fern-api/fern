@@ -46,6 +46,14 @@ export async function generateWorkspace({
                         maven: undefined,
                     },
                 })),
+                genericGeneratorInvocations: workspace.generatorsConfiguration.draft.map(
+                    (releaseGeneratorInvocation) => {
+                        return {
+                            name: releaseGeneratorInvocation.name,
+                            absolutePathToLocalOutput: undefined,
+                        };
+                    }
+                ),
                 version: undefined,
             });
         }

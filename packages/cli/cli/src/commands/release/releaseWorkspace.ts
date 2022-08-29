@@ -51,6 +51,12 @@ export async function releaseWorkspace({
                             : undefined,
                 },
             })),
+            genericGeneratorInvocations: workspace.generatorsConfiguration.release.map((releaseGeneratorInvocation) => {
+                return {
+                    name: releaseGeneratorInvocation.name,
+                    absolutePathToLocalOutput: undefined,
+                };
+            }),
         });
     });
 }
