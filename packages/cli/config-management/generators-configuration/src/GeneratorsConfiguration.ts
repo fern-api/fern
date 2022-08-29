@@ -29,11 +29,13 @@ export interface GeneratorOutputs {
 }
 
 export interface NpmGeneratorOutput {
+    url: string | undefined;
     packageName: string;
     token: string;
 }
 
 export interface MavenGeneratorOutput {
+    url: string | undefined;
     coordinate: string;
     username: string;
     password: string;
