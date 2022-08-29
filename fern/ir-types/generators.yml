@@ -1,11 +1,16 @@
-generators:
+draft:
   - name: fernapi/fern-typescript
     version: 0.0.197
-    generate: true
     config:
       mode: model
-  - name: fernapi/fern-java
-    version: 0.0.107
-    generate: true
-    config:
-      mode: MODEL
+  - name: fernapi/java-model
+    version: 0.0.108
+release:
+  - name: fernapi/java-model
+    version: 0.0.108
+    outputs:
+      maven:
+        url: https://s01.oss.sonatype.org/content/repositories/releases/
+        coordinate: io.github.fern-api:ir-model
+        username: ${FERN_MAVEN_PUBLISH_USERNAME}
+        password: ${FERN_MAVEN_PUBLISH_PASSWORD}
