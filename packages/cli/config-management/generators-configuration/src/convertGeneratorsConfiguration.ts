@@ -16,6 +16,7 @@ export function convertGeneratorsConfiguration({
             rawGeneratorsConfiguration.draft != null
                 ? rawGeneratorsConfiguration.draft.map((draftInvocation) => {
                       return {
+                          type: "draft",
                           name: draftInvocation.name,
                           version: draftInvocation.version,
                           absolutePathToLocalOutput:
@@ -33,6 +34,7 @@ export function convertGeneratorsConfiguration({
             rawGeneratorsConfiguration.release != null
                 ? rawGeneratorsConfiguration.release.map((draftInvocation) => {
                       return {
+                          type: "release",
                           name: draftInvocation.name,
                           version: draftInvocation.version,
                           outputs: {

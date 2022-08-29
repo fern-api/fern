@@ -1,25 +1,25 @@
 import { entries } from "@fern-api/core-utils";
+import { GeneratorInvcation } from "@fern-api/generators-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { Fiddle } from "@fern-fern/fiddle-client-v2";
 import { RemoteTaskHandler } from "./RemoteTaskHandler";
 import { REMOTE_GENERATION_SERVICE } from "./service";
-import { GenericGeneratorInvocationSchema } from "./types";
 
 const MAX_UNSUCCESSFUL_ATTEMPTS = 3;
 
 export function pollJobAndReportStatus({
     job,
-    genericGeneratorInvocations,
+    generatorInvocations,
     context,
 }: {
     job: Fiddle.remoteGen.CreateJobResponse;
-    genericGeneratorInvocations: GenericGeneratorInvocationSchema[];
+    generatorInvocations: GeneratorInvcation[];
     context: TaskContext;
 }): Promise<void> {
     let numConsecutiveFailed = 0;
     const taskHandlers = job.taskIds.reduce<Record<Fiddle.remoteGen.RemoteGenTaskId, RemoteTaskHandler>>(
         (acc, taskId, index) => {
-            const generatorInvocation = genericGeneratorInvocations[index];
+            const generatorInvocation = generatorInvocations[index];
             if (generatorInvocation == null) {
                 context.fail("Task IDs list is longer than generators list.");
             } else {

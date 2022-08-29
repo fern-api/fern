@@ -1,4 +1,5 @@
-import { AbsoluteFilePath, assertNeverNoThrow } from "@fern-api/core-utils";
+import { AbsoluteFilePath, noop } from "@fern-api/core-utils";
+import { GeneratorInvcation } from "@fern-api/generators-configuration";
 import { LogLevel } from "@fern-api/logger";
 import { Finishable, InteractiveTaskContext } from "@fern-api/task-context";
 import { Fiddle } from "@fern-fern/fiddle-client-v2";
@@ -7,14 +8,13 @@ import chalk from "chalk";
 import { createWriteStream } from "fs";
 import urlJoin from "url-join";
 import { FIDDLE_ORIGIN } from "./service";
-import { GenericGeneratorInvocationSchema } from "./types";
 
 export declare namespace RemoteTaskHandler {
     export interface Init {
         job: Fiddle.remoteGen.CreateJobResponse;
         taskId: Fiddle.remoteGen.RemoteGenTaskId;
         interactiveTaskContext: Finishable & InteractiveTaskContext;
-        generatorInvocation: GenericGeneratorInvocationSchema;
+        generatorInvocation: GeneratorInvcation;
     }
 }
 
@@ -22,7 +22,7 @@ export class RemoteTaskHandler {
     private job: Fiddle.remoteGen.CreateJobResponse;
     private taskId: Fiddle.remoteGen.RemoteGenTaskId;
     private context: Finishable & InteractiveTaskContext;
-    private generatorInvocation: GenericGeneratorInvocationSchema;
+    private generatorInvocation: GeneratorInvcation;
     private lengthOfLastLogs = 0;
 
     constructor({ job, taskId, interactiveTaskContext, generatorInvocation }: RemoteTaskHandler.Init) {
@@ -71,35 +71,33 @@ export class RemoteTaskHandler {
         }
         this.lengthOfLastLogs = remoteTask.logs.length;
 
-        switch (remoteTask.status._type) {
-            case "notStarted":
-            case "running":
-                break;
-            case "failed":
-                this.context.fail(remoteTask.status.message);
+        Fiddle.remoteGen.TaskStatus._visit(remoteTask.status, {
+            notStarted: noop,
+            running: noop,
+            failed: ({ message }) => {
+                this.context.fail(message);
                 this.context.finish();
-                break;
-            case "finished":
-                // kick off, but don't await
-                void this.processFinishedTask(remoteTask);
-                break;
-            default:
-                assertNeverNoThrow(remoteTask.status);
-                // kick off, but don't await
-                void this.processFinishedTask(remoteTask);
-                break;
-        }
+            },
+            finished: async (finishedStatus) => {
+                await this.maybeDownloadFiles(finishedStatus);
+                this.context.finish();
+            },
+            _unknown: () => {
+                this.context.logger.warn("Received unknown update type: " + remoteTask.status._type);
+                this.context.finish();
+            },
+        });
     }
 
     public isFinished(): boolean {
         return this.context.isFinished();
     }
 
-    private async processFinishedTask(task: Fiddle.remoteGen.Task): Promise<void> {
+    private async maybeDownloadFiles(status: Fiddle.remoteGen.FinishedTaskStatus): Promise<void> {
         if (
-            task.status._type === "finished" &&
-            task.status.hasFilesToDownload &&
-            this.generatorInvocation.absolutePathToLocalOutput != null
+            this.generatorInvocation.type === "draft" &&
+            this.generatorInvocation.absolutePathToLocalOutput != null &&
+            status.hasFilesToDownload
         ) {
             try {
                 await downloadFilesForTask({
@@ -112,7 +110,6 @@ export class RemoteTaskHandler {
                 this.context.fail(`Failed to download ${this.generatorInvocation.absolutePathToLocalOutput}`);
             }
         }
-        this.context.finish();
     }
 }
 
