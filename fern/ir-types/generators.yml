@@ -1,11 +1,13 @@
 draft:
   - name: fernapi/fern-typescript
     version: 0.0.197
+    config:
+      mode: model
   - name: fernapi/java-model
-    version: 0.0.107-9-g898532f
+    version: 0.0.108
 release:
   - name: fernapi/java-model
-    version: 0.0.107-9-g898532f
+    version: 0.0.108
     outputs:
       maven:
         url: https://s01.oss.sonatype.org/content/repositories/releases/
