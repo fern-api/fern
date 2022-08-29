@@ -1,18 +1,20 @@
 import execa, { ExecaChildProcess } from "execa";
-import { CliEnvironment } from "./cli-context/CliEnvironment";
+import { CliContext } from "./cli-context/CliContext";
 
 export async function rerunFernCliAtVersion({
     version,
-    cliEnvironment,
+    cliContext,
     env,
 }: {
     version: string;
-    cliEnvironment: CliEnvironment;
+    cliContext: CliContext;
     env?: Record<string, string>;
 }): Promise<ExecaChildProcess> {
+    cliContext.suppressUpgradeMessage = true;
+
     const npxProcess = execa(
         "npx",
-        ["--quiet", "--yes", `${cliEnvironment.packageName}@${version}`, ...process.argv.slice(2)],
+        ["--quiet", "--yes", `${cliContext.environment.packageName}@${version}`, ...process.argv.slice(2)],
         {
             stdio: "inherit",
             reject: false,
