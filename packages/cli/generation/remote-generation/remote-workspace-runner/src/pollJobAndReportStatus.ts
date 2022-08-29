@@ -46,6 +46,7 @@ export function pollJobAndReportStatus({
 
         async function pollForStatus() {
             const response = await fetchJobStatus(job);
+            context.logger.debug("Received status update: " + JSON.stringify(response));
             if (response == null || !response.ok) {
                 numConsecutiveFailed++;
                 if (numConsecutiveFailed === MAX_UNSUCCESSFUL_ATTEMPTS) {
