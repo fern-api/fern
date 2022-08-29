@@ -36,6 +36,17 @@ export async function generateWorkspace({
                 intermediateRepresentation,
                 organization,
                 context,
+                generatorConfigs: workspace.generatorsConfiguration.draft.map((generator) => ({
+                    id: generator.name,
+                    version: generator.version,
+                    willDownloadFiles: generator.absolutePathToLocalOutput != null,
+                    customConfig: generator.config,
+                    outputs: {
+                        npm: undefined,
+                        maven: undefined,
+                    },
+                })),
+                version: undefined,
             });
         }
     });

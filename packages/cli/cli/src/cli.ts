@@ -13,6 +13,7 @@ import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVers
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateWorkspaces } from "./commands/generate/generateWorkspaces";
+import { releaseWorkspaces } from "./commands/release/releaseWorkspaces";
 import { upgrade } from "./commands/upgrade/upgrade";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
@@ -30,7 +31,7 @@ async function tryRunCli() {
     try {
         await runCli(cliContext);
     } catch (error) {
-        cliContext.fail(error);
+        cliContext.fail("Failed to run", error);
     } finally {
         await exit();
     }
@@ -64,6 +65,7 @@ async function runCli(cliContext: CliContext) {
     addInitCommand(cli, cliContext);
     addAddCommand(cli, cliContext);
     addGenerateCommand(cli, cliContext);
+    addReleaseCommand(cli, cliContext);
     addIrCommand(cli, cliContext);
     addValidateCommand(cli, cliContext);
 
@@ -153,7 +155,7 @@ function addAddCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         ["generate"],
-        "Generate typesafe servers and clients",
+        "Run the draft tasks from generators.yml",
         (yargs) =>
             yargs
                 .option("keepDocker", {
@@ -174,7 +176,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 .option("all", {
                     boolean: true,
                     default: false,
-                    descriptoin: "Include all APIs",
+                    description: "Include all APIs",
                 }),
         async (argv) => {
             cliContext.processArgv(argv);
@@ -186,6 +188,40 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 runLocal: argv.local,
                 keepDocker: argv.keepDocker,
                 cliContext,
+            });
+        }
+    );
+}
+
+function addReleaseCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        ["release"],
+        "Run the release tasks from generators.yml",
+        (yargs) =>
+            yargs
+                .option("api", {
+                    string: true,
+                    description: "Only run the command on the provided API",
+                })
+                .option("all", {
+                    boolean: true,
+                    default: false,
+                    description: "Include all APIs",
+                })
+                .option("version", {
+                    string: true,
+                    demandOption: true,
+                    description: "The version for the generated packages",
+                }),
+        async (argv) => {
+            cliContext.processArgv(argv);
+            await releaseWorkspaces({
+                project: await loadProjectOrExit(cliContext, {
+                    commandLineWorkspace: argv.all ? undefined : argv.api,
+                    defaultToAllWorkspaces: argv.all,
+                }),
+                cliContext,
+                version: argv.version,
             });
         }
     );

@@ -59,8 +59,8 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
 
     public takeOverTerminal: (run: () => void | Promise<void>) => Promise<void>;
 
-    public fail(messageOrError?: unknown, error?: unknown): TASK_FAILURE {
-        const errorMessage = constructErrorMessage({ messageOrError, error });
+    public fail(message?: string, error?: unknown): TASK_FAILURE {
+        const errorMessage = constructErrorMessage({ message, error });
         if (errorMessage != null) {
             this.logger.error(errorMessage);
         }
