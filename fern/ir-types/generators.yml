@@ -1,12 +1,14 @@
 draft:
   - name: fernapi/fern-typescript
     version: 0.0.197
+  - name: fernapi/java-model
+    version: 0.0.107-9-g898532f
 release:
   - name: fernapi/java-model
-    version: 0.0.107-8-g7437aac
+    version: 0.0.107-9-g898532f
     outputs:
       maven:
         url: https://s01.oss.sonatype.org/content/repositories/releases/
         coordinate: io.github.fern-api:ir-model
-        username: dsinghvi
-        password: tme4VBP9hmg.hvg5fbu
+        username: ${FERN_MAVEN_PUBLISH_USERNAME}
+        password: ${FERN_MAVEN_PUBLISH_PASSWORD}
