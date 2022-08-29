@@ -14,14 +14,16 @@ export async function generateWorkspaces({
     cliContext: CliContext;
 }): Promise<void> {
     await Promise.all(
-        project.workspaces.map((workspace) =>
-            generateWorkspace({
-                workspace,
-                runLocal,
-                keepDocker,
-                organization: project.config.organization,
-                cliContext,
-            })
+        project.workspaces.map(async (workspace) =>
+            cliContext.runTaskForWorkspace(workspace, async (context) =>
+                generateWorkspace({
+                    workspace,
+                    runLocal,
+                    keepDocker,
+                    organization: project.config.organization,
+                    context,
+                })
+            )
         )
     );
 }

@@ -6,7 +6,6 @@ import yaml from "js-yaml";
 import { convertGeneratorsConfiguration } from "./convertGeneratorsConfiguration";
 import { GeneratorsConfiguration } from "./GeneratorsConfiguration";
 import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfigurationSchema";
-import { substituteEnvVariables } from "./substituteEnvVariables";
 
 export async function loadRawGeneratorsConfiguration({
     absolutePathToWorkspace,
@@ -14,7 +13,7 @@ export async function loadRawGeneratorsConfiguration({
     absolutePathToWorkspace: AbsoluteFilePath;
 }): Promise<GeneratorsConfigurationSchema> {
     const contentsStr = await readFile(getPathToGeneratorsConfiguration({ absolutePathToWorkspace }));
-    const contentsParsed = substituteEnvVariables(yaml.load(contentsStr.toString()));
+    const contentsParsed = yaml.load(contentsStr.toString());
     return await validateSchema(GeneratorsConfigurationSchema, contentsParsed);
 }
 

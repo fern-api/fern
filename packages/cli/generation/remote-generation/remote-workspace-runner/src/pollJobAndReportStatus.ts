@@ -1,5 +1,5 @@
 import { entries } from "@fern-api/core-utils";
-import { GeneratorInvcation } from "@fern-api/generators-configuration";
+import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { Fiddle } from "@fern-fern/fiddle-client-v2";
 import { RemoteTaskHandler } from "./RemoteTaskHandler";
@@ -13,7 +13,7 @@ export function pollJobAndReportStatus({
     context,
 }: {
     job: Fiddle.remoteGen.CreateJobResponse;
-    generatorInvocations: GeneratorInvcation[];
+    generatorInvocations: GeneratorInvocation[];
     context: TaskContext;
 }): Promise<void> {
     let numConsecutiveFailed = 0;
