@@ -42,7 +42,7 @@ async function runCli(cliContext: CliContext) {
     if (cliContext.environment.packageVersion !== versionOfCliToRun) {
         const { failed } = await rerunFernCliAtVersion({
             version: versionOfCliToRun,
-            cliEnvironment: cliContext.environment,
+            cliContext,
         });
         if (failed) {
             cliContext.fail();

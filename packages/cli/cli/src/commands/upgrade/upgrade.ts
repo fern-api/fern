@@ -62,7 +62,7 @@ export async function upgrade({ cliContext }: { cliContext: CliContext }): Promi
 
         const { failed } = await rerunFernCliAtVersion({
             version: fernCliUpgradeInfo.latestVersion,
-            cliEnvironment: cliContext.environment,
+            cliContext,
             env: {
                 [PREVIOUS_VERSION_ENV_VAR]: cliContext.environment.packageVersion,
             },
