@@ -1,11 +1,3 @@
-generators:
-  - name: fernapi/fern-typescript
-    version: 0.0.197
-    generate: true
-    config:
-      mode: model
-  - name: fernapi/fern-java
-    version: 0.0.107
-    generate: true
-    config:
-      mode: MODEL
+draft:
+  - name: fernapi/java-model
+    version: 0.0.107-7-g0ec1961
