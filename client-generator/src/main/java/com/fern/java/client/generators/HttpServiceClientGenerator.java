@@ -72,8 +72,8 @@ public final class HttpServiceClientGenerator extends AbstractFileGenerator {
 
     @Override
     public GeneratedServiceClientOutput generateFile() {
-        JerseyServiceInterfaceGenerator jerseyServiceInterfaceGenerator = new JerseyServiceInterfaceGenerator(
-                clientGeneratorContext, generatedErrors, Optional.empty(), httpService);
+        JerseyServiceInterfaceGenerator jerseyServiceInterfaceGenerator =
+                new JerseyServiceInterfaceGenerator(clientGeneratorContext, generatedErrors, maybeAuth, httpService);
         GeneratedJerseyServiceInterfaceOutput jerseyServiceInterfaceOutput =
                 jerseyServiceInterfaceGenerator.generateFile();
         TypeSpec.Builder serviceClientBuilder = TypeSpec.classBuilder(className)

@@ -126,6 +126,7 @@ public final class FernBasicClient {
 basic[basic/generated-java/src/main/java/com/fern/basic/client/auth/AuthService.java]=[
 package com.fern.basic.client.auth;
 
+import com.fern.basic.client.BearerAuth;
 import com.fern.basic.client.auth.exceptions.GetAuthException;
 import com.fern.java.jackson.ClientObjectMappers;
 import com.fern.java.jersey.contracts.OptionalAwareContract;
@@ -136,6 +137,7 @@ import feign.jaxrs.JAXRSContract;
 import java.lang.String;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -146,7 +148,7 @@ import javax.ws.rs.core.MediaType;
 interface AuthService {
   @GET
   @Path("/")
-  void getAuth() throws GetAuthException;
+  void getAuth(@HeaderParam("Authorization") BearerAuth auth) throws GetAuthException;
 
   static AuthService getClient(String url) {
     return Feign.builder()
@@ -164,7 +166,9 @@ basic[basic/generated-java/src/main/java/com/fern/basic/client/auth/AuthServiceC
 package com.fern.basic.client.auth;
 
 import com.fern.basic.client.BearerAuth;
+import com.fern.basic.client.auth.endpoints.GetAuth;
 import com.fern.basic.client.auth.exceptions.GetAuthException;
+import java.lang.RuntimeException;
 import java.lang.String;
 import java.util.Optional;
 
@@ -183,8 +187,9 @@ public final class AuthServiceClient {
     this.auth = Optional.of(auth);
   }
 
-  public void getAuth() throws GetAuthException {
-    this.service.getAuth();
+  public void getAuth(GetAuth.Request request) throws GetAuthException {
+    BearerAuth authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required for getAuth")));
+    this.service.getAuth(authValue);
   }
 }
 
@@ -221,6 +226,91 @@ final class AuthServiceErrorDecoder implements ErrorDecoder {
   private static <T extends Exception> Exception decodeException(Response response, Class<T> clazz)
       throws IOException {
     return ClientObjectMappers.JSON_MAPPER.reader().withAttribute("statusCode", response.status()).readValue(response.body().asInputStream(), clazz);
+  }
+}
+
+]
+
+
+basic[basic/generated-java/src/main/java/com/fern/basic/client/auth/endpoints/GetAuth.java]=[
+package com.fern.basic.client.auth.endpoints;
+
+import com.fern.basic.client.BearerAuth;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Objects;
+import java.util.Optional;
+
+public final class GetAuth {
+  private GetAuth() {
+  }
+
+  public static final class Request {
+    private final Optional<BearerAuth> authOverride;
+
+    private int _cachedHashCode;
+
+    Request(Optional<BearerAuth> authOverride) {
+      this.authOverride = authOverride;
+    }
+
+    public Optional<BearerAuth> getAuthOverride() {
+      return authOverride;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+      if (this == other) return true;
+      return other instanceof Request && equalTo((Request) other);
+    }
+
+    private boolean equalTo(Request other) {
+      return authOverride.equals(other.authOverride);
+    }
+
+    @Override
+    public int hashCode() {
+      if (_cachedHashCode == 0) {
+        _cachedHashCode = Objects.hash(this.authOverride);
+      }
+      return _cachedHashCode;
+    }
+
+    @Override
+    public String toString() {
+      return "GetAuth.Request{" + "authOverride: " + authOverride + "}";
+    }
+
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    public static final class Builder {
+      private Optional<BearerAuth> authOverride = Optional.empty();
+
+      private Builder() {
+      }
+
+      public Builder from(Request other) {
+        authOverride(other.getAuthOverride());
+        return this;
+      }
+
+      public Builder authOverride(Optional<BearerAuth> authOverride) {
+        this.authOverride = authOverride;
+        return this;
+      }
+
+      public Builder authOverride(BearerAuth authOverride) {
+        this.authOverride = Optional.of(authOverride);
+        return this;
+      }
+
+      public Request build() {
+        return new Request(authOverride);
+      }
+    }
   }
 }
 
