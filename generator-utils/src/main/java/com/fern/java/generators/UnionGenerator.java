@@ -154,25 +154,35 @@ public final class UnionGenerator extends AbstractFileGenerator {
 
         @Override
         public List<MethodSpec> getConstructors() {
+            List<MethodSpec> constructors = new ArrayList<>();
             MethodSpec.Builder fromJsonConstructorBuilder = MethodSpec.constructorBuilder()
                     .addModifiers(Modifier.PRIVATE)
                     .addAnnotation(FernJavaAnnotations.jacksonPropertiesCreator());
             if (getUnionSubTypeTypeName().isEmpty()) {
-                return Collections.singletonList(fromJsonConstructorBuilder.build());
+                constructors.add(fromJsonConstructorBuilder.build());
+            } else {
+                TypeName unionSubTypeName = getUnionSubTypeTypeName().get();
+                boolean isObject = isTypeReferenceAnObject(singleUnionType.getValueType());
+                List<ParameterSpec> parameterSpecs = new ArrayList<>();
+                if (isObject) {
+                    constructors.add(MethodSpec.constructorBuilder()
+                            .addModifiers(Modifier.PRIVATE)
+                            .addParameter(ParameterSpec.builder(unionSubTypeName, getValueFieldName())
+                                    .build())
+                            .addStatement("this.$L = $L", getValueFieldName(), getValueFieldName())
+                            .build());
+                } else {
+                    parameterSpecs.add(ParameterSpec.builder(unionSubTypeName, getValueFieldName())
+                            .addAnnotation(AnnotationSpec.builder(JsonProperty.class)
+                                    .addMember("value", "$S", getValueFieldName())
+                                    .build())
+                            .build());
+                    fromJsonConstructorBuilder.addStatement("this.$L = $L", getValueFieldName(), getValueFieldName());
+                }
+                constructors.add(
+                        fromJsonConstructorBuilder.addParameters(parameterSpecs).build());
             }
-            TypeName unionSubTypeName = getUnionSubTypeTypeName().get();
-            boolean isObject = isTypeReferenceAnObject(singleUnionType.getValueType());
-            List<ParameterSpec> parameterSpecs = new ArrayList<>();
-            if (!isObject) {
-                parameterSpecs.add(ParameterSpec.builder(unionSubTypeName, getValueFieldName())
-                        .addAnnotation(AnnotationSpec.builder(JsonProperty.class)
-                                .addMember("value", "$S", getValueFieldName())
-                                .build())
-                        .build());
-                fromJsonConstructorBuilder.addStatement("this.$L = $L", getValueFieldName(), getValueFieldName());
-            }
-            return Collections.singletonList(
-                    fromJsonConstructorBuilder.addParameters(parameterSpecs).build());
+            return constructors;
         }
 
         private Optional<FieldSpec> getValueField() {
@@ -221,6 +231,21 @@ public final class UnionGenerator extends AbstractFileGenerator {
         }
 
         @Override
+        public String getVisitMethodName() {
+            return "_visitUnknown";
+        }
+
+        @Override
+        public String getIsMethodName() {
+            return "_isUnknown";
+        }
+
+        @Override
+        public String getGetMethodName() {
+            return "_getUnknown";
+        }
+
+        @Override
         public Optional<String> getDiscriminantValue() {
             return Optional.empty();
         }
@@ -232,7 +257,7 @@ public final class UnionGenerator extends AbstractFileGenerator {
 
         @Override
         public ClassName getUnionSubTypeWrapperClass() {
-            return getUnionClassName().nestedClass(getPascalCaseName() + "Value");
+            return getUnionClassName().nestedClass("_" + getPascalCaseName() + "Value");
         }
 
         @Override

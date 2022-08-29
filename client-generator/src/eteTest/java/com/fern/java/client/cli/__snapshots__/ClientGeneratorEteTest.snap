@@ -1302,8 +1302,8 @@ public final class Author {
     return value instanceof NameValue;
   }
 
-  public boolean isUnknown() {
-    return value instanceof UnknownValue;
+  public boolean _isUnknown() {
+    return value instanceof _UnknownValue;
   }
 
   public Optional<String> getName() {
@@ -1313,9 +1313,9 @@ public final class Author {
     return Optional.empty();
   }
 
-  public Optional<Object> getUnknown() {
-    if (isUnknown()) {
-      return Optional.of(((UnknownValue) value).value);
+  public Optional<Object> _getUnknown() {
+    if (_isUnknown()) {
+      return Optional.of(((_UnknownValue) value).value);
     }
     return Optional.empty();
   }
@@ -1330,14 +1330,14 @@ public final class Author {
 
     T visitName(String name);
 
-    T visitUnknown(Object unknown);
+    T _visitUnknown(Object unknown);
   }
 
   @JsonTypeInfo(
       use = JsonTypeInfo.Id.NAME,
       property = "_error",
       visible = true,
-      defaultImpl = UnknownValue.class
+      defaultImpl = _UnknownValue.class
   )
   @JsonSubTypes({
       @JsonSubTypes.Type(AnonymousValue.class),
@@ -1412,7 +1412,7 @@ public final class Author {
     }
   }
 
-  private static final class UnknownValue implements Value {
+  private static final class _UnknownValue implements Value {
     private String type;
 
     @JsonValue
@@ -1421,21 +1421,21 @@ public final class Author {
     @JsonCreator(
         mode = JsonCreator.Mode.PROPERTIES
     )
-    private UnknownValue(@JsonProperty("value") Object value) {
+    private _UnknownValue(@JsonProperty("value") Object value) {
     }
 
     @Override
     public <T> T visit(Visitor<T> visitor) {
-      return visitor.visitUnknown(value);
+      return visitor._visitUnknown(value);
     }
 
     @Override
     public boolean equals(Object other) {
       if (this == other) return true;
-      return other instanceof UnknownValue && equalTo((UnknownValue) other);
+      return other instanceof _UnknownValue && equalTo((_UnknownValue) other);
     }
 
-    private boolean equalTo(UnknownValue other) {
+    private boolean equalTo(_UnknownValue other) {
       return type.equals(other.type) && value.equals(other.value);
     }
 

@@ -39,7 +39,6 @@ import org.apache.commons.lang3.StringUtils;
 public abstract class UnionTypeSpecGenerator {
 
     private static final String VISITOR_CLASS_NAME = "Visitor";
-    private static final String IS_METHOD_NAME_PREFIX = "is";
     private static final TypeVariableName VISITOR_RETURN_TYPE = TypeVariableName.get("T");
 
     private final ClassName unionClassName;
@@ -138,7 +137,7 @@ public abstract class UnionTypeSpecGenerator {
         allSubTypes.addAll(subTypes);
         allSubTypes.add(unknownSubType);
         return allSubTypes.stream()
-                .map(subType -> MethodSpec.methodBuilder(IS_METHOD_NAME_PREFIX + subType.getPascalCaseName())
+                .map(subType -> MethodSpec.methodBuilder(subType.getIsMethodName())
                         .addModifiers(Modifier.PUBLIC)
                         .returns(boolean.class)
                         .addStatement("return value instanceof $T", subType.getUnionSubTypeWrapperClass())
@@ -151,20 +150,19 @@ public abstract class UnionTypeSpecGenerator {
         allSubTypes.addAll(subTypes);
         allSubTypes.add(unknownSubType);
         return allSubTypes.stream()
-                .map(this::getIsTypeMethod)
+                .map(this::getSubTypeMethodSpec)
                 .flatMap(Optional::stream)
                 .collect(Collectors.toList());
     }
 
-    private Optional<MethodSpec> getIsTypeMethod(UnionSubType subType) {
+    private Optional<MethodSpec> getSubTypeMethodSpec(UnionSubType subType) {
         if (subType.getUnionSubTypeTypeName().isPresent()) {
-            String isTypeMethodName = IS_METHOD_NAME_PREFIX + subType.getPascalCaseName();
-            return Optional.of(MethodSpec.methodBuilder("get" + subType.getPascalCaseName())
+            return Optional.of(MethodSpec.methodBuilder(subType.getGetMethodName())
                     .addModifiers(Modifier.PUBLIC)
                     .returns(ParameterizedTypeName.get(
                             ClassName.get(Optional.class),
                             subType.getUnionSubTypeTypeName().get()))
-                    .beginControlFlow("if ($L())", isTypeMethodName)
+                    .beginControlFlow("if ($L())", subType.getIsMethodName())
                     .addStatement(
                             "return $T.of((($T) value).$L)",
                             Optional.class,
