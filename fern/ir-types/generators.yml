@@ -1,3 +1,11 @@
 draft:
+  - name: fernapi/fern-typescript
+    version: 0.0.197
+release:
   - name: fernapi/java-model
-    version: 0.0.107-7-g0ec1961
+    version: 0.0.107-8-g7437aac
+    outputs:
+      maven:
+        coordinate: "https://s01.oss.sonatype.org/content/repositories/releases/"
+        username: ${FERN_MAVEN_PUBLISH_USERNAME}
+        password: ${FERN_MAVEN_PUBLISH_PASSWORD}
