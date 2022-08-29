@@ -13,7 +13,7 @@ exports[`fern upgrade upgrades generators 1`] = `
   - name: fernapi/fern-java
     version: 0.0.92
     config:
-      packagePrefix: com
+      packagePrefix: \${SOME_ENV_VAR}
       mode: client_and_server
   - name: fernapi/fern-typescript
     version: 0.0.189
