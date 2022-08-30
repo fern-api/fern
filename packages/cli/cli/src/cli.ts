@@ -127,7 +127,7 @@ async function askForOrganization() {
 function addAddCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "add <generator>",
-        "Add a generator to .fernrc.yml",
+        "Add a generator to generators.yml",
         (yargs) =>
             yargs
                 .positional("generator", {
