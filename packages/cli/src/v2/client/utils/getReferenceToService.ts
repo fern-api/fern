@@ -1,12 +1,11 @@
 import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
-import { ServiceReference } from "@fern-typescript/declaration-handler";
+import { ClientConstants } from "@fern-typescript/client-v2";
+import { Reference } from "@fern-typescript/declaration-handler";
 import { SourceFile } from "ts-morph";
-import { getRelativePathAsModuleSpecifierTo } from "../../getRelativePathAsModuleSpecifierTo";
 import { ImportDeclaration } from "../../imports-manager/ImportsManager";
 import { ModuleSpecifier } from "../../types";
-import { getEntityNameOfContainingDirectory } from "./getEntityNameOfContainingDirectory";
+import { getDirectReferenceToExport } from "./getDirectReferenceToExport";
 import { getExportedFilepathForService } from "./getExportedFilepathForService";
-import { getExpressionToContainingDirectory } from "./getExpressionToContainingDirectory";
 
 export declare namespace getReferenceToService {
     export interface Args {
@@ -14,6 +13,7 @@ export declare namespace getReferenceToService {
         referencedIn: SourceFile;
         addImport: (moduleSpecifier: ModuleSpecifier, importDeclaration: ImportDeclaration) => void;
         serviceName: DeclaredServiceName;
+        importAlias: string;
     }
 }
 
@@ -22,20 +22,13 @@ export function getReferenceToService({
     apiName,
     addImport,
     serviceName,
-}: getReferenceToService.Args): ServiceReference {
-    const moduleSpecifierOfRoot = getRelativePathAsModuleSpecifierTo(referencedIn, "/");
-    addImport(moduleSpecifierOfRoot, {
-        namedImports: [apiName],
+    importAlias,
+}: getReferenceToService.Args): Reference {
+    return getDirectReferenceToExport({
+        referencedIn,
+        addImport,
+        filepath: getExportedFilepathForService(serviceName, apiName),
+        exportedName: ClientConstants.HttpService.SERVICE_NAME,
+        importAlias,
     });
-
-    const pathToServiceFile = getExportedFilepathForService(serviceName, apiName);
-
-    return {
-        entityName: getEntityNameOfContainingDirectory({
-            pathToFile: pathToServiceFile,
-        }),
-        expression: getExpressionToContainingDirectory({
-            pathToFile: pathToServiceFile,
-        }),
-    };
 }

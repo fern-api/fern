@@ -1,6 +1,5 @@
-import { DeclaredErrorName } from "@fern-fern/ir-model/errors";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { DeclaredTypeName, TypeReference } from "@fern-fern/ir-model/types";
+import { TypeReference } from "@fern-fern/ir-model/types";
 import { ServiceDeclarationHandler, WrapperDeclarationHandler } from "@fern-typescript/client-v2";
 import { File, GeneratorContext } from "@fern-typescript/declaration-handler";
 import { ErrorDeclarationHandler } from "@fern-typescript/errors-v2";
@@ -16,11 +15,12 @@ import { generateTypeScriptProject } from "../generate-ts-project/generateTypeSc
 import { ImportsManager } from "../imports-manager/ImportsManager";
 import { constructWrapperDeclarations } from "./constructWrapperDeclarations";
 import { parseAuthSchemes } from "./parseAuthSchemes";
+import { getExportedFilepathForError } from "./utils/getExportedFilepathForError";
 import { getExportedFilepathForService } from "./utils/getExportedFilepathForService";
 import { getExportedFilepathForType } from "./utils/getExportedFilepathForType";
 import { getExportedFilepathForWrapper } from "./utils/getExportedFilepathForWrapper";
-import { getGeneratedTypeName } from "./utils/getGeneratedTypeName";
-import { getReferenceToExportedType } from "./utils/getReferenceToExportedType";
+import { getReferenceToError } from "./utils/getReferenceToError";
+import { getReferenceToExport } from "./utils/getReferenceToExport";
 import { getReferenceToService } from "./utils/getReferenceToService";
 import { getReferenceToType } from "./utils/getReferenceToType";
 import { getReferenceToWrapper } from "./utils/getReferenceToWrapper";
@@ -96,26 +96,24 @@ export class FernTypescriptClientGenerator {
     private async generateTypeDeclarations() {
         for (const typeDeclaration of this.intermediateRepresentation.types) {
             await TypeDeclarationHandler.run(typeDeclaration, {
-                withFile: (run) => this.withTypeDeclartionFile(typeDeclaration.name, run),
+                withFile: (run) =>
+                    this.withFile({
+                        filepath: getExportedFilepathForType(typeDeclaration.name, this.apiName),
+                        run,
+                    }),
                 context: this.context,
             });
         }
     }
 
-    private async withTypeDeclartionFile(
-        typeDeclarationName: DeclaredTypeName | DeclaredErrorName,
-        run: (file: File) => void | Promise<void>
-    ) {
-        return this.withFile({
-            filepath: getExportedFilepathForType(typeDeclarationName, this.apiName),
-            run,
-        });
-    }
-
     private async generateErrorDeclarations() {
         for (const errorDeclaration of this.intermediateRepresentation.errors) {
             await ErrorDeclarationHandler.run(errorDeclaration, {
-                withFile: async (run) => this.withTypeDeclartionFile(errorDeclaration.name, run),
+                withFile: async (run) =>
+                    this.withFile({
+                        filepath: getExportedFilepathForError(errorDeclaration.name, this.apiName),
+                        run,
+                    }),
                 context: this.context,
             });
         }
@@ -188,32 +186,30 @@ export class FernTypescriptClientGenerator {
             sourceFile,
             getReferenceToType: getReferenceToTypeForFile,
             getServiceDeclaration: (serviceName) => this.serviceResolver.getServiceDeclarationFromName(serviceName),
-            getReferenceToService: (serviceName) =>
+            getReferenceToService: (serviceName, { importAlias }) =>
                 getReferenceToService({
                     referencedIn: sourceFile,
                     apiName: this.apiName,
                     serviceName,
-                    addImport: (moduleSpecifier, importDeclaration) =>
-                        importsManager.addImport(moduleSpecifier, importDeclaration),
+                    addImport: importsManager.addImport.bind(importsManager),
+                    importAlias,
                 }),
-            getReferenceToWrapper: (wrapperName) =>
+            getReferenceToWrapper: (wrapperName, { importAlias }) =>
                 getReferenceToWrapper({
                     referencedIn: sourceFile,
                     apiName: this.apiName,
                     wrapperName,
-                    addImport: (moduleSpecifier, importDeclaration) =>
-                        importsManager.addImport(moduleSpecifier, importDeclaration),
+                    addImport: importsManager.addImport.bind(importsManager),
+                    importAlias,
                 }),
             resolveTypeReference: (typeReference) => this.typeResolver.resolveTypeReference(typeReference),
             getErrorDeclaration: (errorName) => this.errorResolver.getErrorDeclarationFromName(errorName),
             getReferenceToError: (errorName) =>
-                getReferenceToExportedType({
+                getReferenceToError({
                     apiName: this.apiName,
                     referencedIn: sourceFile,
-                    typeName: getGeneratedTypeName(errorName),
-                    exportedFromPath: getExportedFilepathForType(errorName, this.apiName),
-                    addImport: (moduleSpecifier, importDeclaration) =>
-                        importsManager.addImport(moduleSpecifier, importDeclaration),
+                    errorName,
+                    addImport: importsManager.addImport.bind(importsManager),
                 }),
             externalDependencies,
             addDependency,
@@ -223,6 +219,19 @@ export class FernTypescriptClientGenerator {
                 getReferenceToType: (typeReference) => getReferenceToTypeForFile(typeReference).typeNode,
             }),
             fernConstants: this.intermediateRepresentation.constants,
+            addNamedExport: (namedExport) => {
+                this.exportsManager.addExport(sourceFile, {
+                    namedExports: [namedExport],
+                });
+            },
+            getReferenceToExportInSameFile: (exportedName) =>
+                getReferenceToExport({
+                    apiName: this.apiName,
+                    referencedIn: sourceFile,
+                    exportedName,
+                    exportedFromPath: filepath,
+                    addImport: importsManager.addImport.bind(importsManager),
+                }),
         };
 
         await run(file);

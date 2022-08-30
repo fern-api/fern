@@ -2,7 +2,6 @@ import {
     HttpEndpoint,
     HttpHeader,
     HttpRequest,
-    HttpService,
     PathParameter,
     QueryParameter,
 } from "@fern-fern/ir-model/services/http";
@@ -27,12 +26,10 @@ export interface WrapperField<T> {
 }
 
 export function constructRequestWrapper({
-    service,
     endpoint,
     file,
     endpointModule,
 }: {
-    service: HttpService;
     endpoint: HttpEndpoint;
     file: File;
     endpointModule: ModuleDeclaration;
@@ -44,10 +41,7 @@ export function constructRequestWrapper({
 
     const referenceToWrapper = ts.factory.createTypeReferenceNode(
         ts.factory.createQualifiedName(
-            ts.factory.createQualifiedName(
-                file.getReferenceToService(service.name).entityName,
-                ts.factory.createIdentifier(endpointModule.getName())
-            ),
+            file.getReferenceToExportInSameFile(endpointModule.getName()).entityName,
             wrapperInterface.getName()
         )
     );

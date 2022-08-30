@@ -56,7 +56,6 @@ export function generateHttpService({ service, file }: { service: HttpService; f
 
     for (const endpoint of service.endpoints) {
         addEndpointToService({
-            service,
             endpoint,
             file,
             serviceInterface,

@@ -54,12 +54,10 @@ export function generateWrapper({ wrapper, file }: { wrapper: WrapperDeclaration
     for (const serviceName of wrapper.wrappedServices) {
         const service = file.getServiceDeclaration(serviceName);
 
-        const referenceToServiceClient = ts.factory.createTypeReferenceNode(
-            ts.factory.createQualifiedName(
-                file.getReferenceToService(serviceName).entityName,
-                ClientConstants.HttpService.SERVICE_NAME
-            )
-        );
+        const referenceToServiceClient = file.getReferenceToService(serviceName, {
+            importAlias: `${serviceName.name}${ClientConstants.HttpService.SERVICE_NAME}`,
+        });
+        const referenceToServiceClientType = ts.factory.createTypeReferenceNode(referenceToServiceClient.entityName);
 
         const publicPropertyName = serviceName.fernFilepath[serviceName.fernFilepath.length - 1]?.camelCase;
         if (publicPropertyName == null) {
@@ -70,7 +68,7 @@ export function generateWrapper({ wrapper, file }: { wrapper: WrapperDeclaration
             name: `#${publicPropertyName}`,
             type: getTextOfTsNode(
                 ts.factory.createUnionTypeNode([
-                    referenceToServiceClient,
+                    referenceToServiceClientType,
                     ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
                 ])
             ),
@@ -93,7 +91,7 @@ export function generateWrapper({ wrapper, file }: { wrapper: WrapperDeclaration
 
         apiClass.addGetAccessor({
             name: publicPropertyName,
-            returnType: getTextOfTsNode(referenceToServiceClient),
+            returnType: getTextOfTsNode(referenceToServiceClientType),
             scope: Scope.Public,
             statements: [
                 getTextOfTsNode(
@@ -105,39 +103,32 @@ export function generateWrapper({ wrapper, file }: { wrapper: WrapperDeclaration
                                     serviceProperty.getName()
                                 ),
                                 ts.SyntaxKind.QuestionQuestionEqualsToken,
-                                ts.factory.createNewExpression(
-                                    ts.factory.createPropertyAccessExpression(
-                                        file.getReferenceToService(serviceName).expression,
-                                        ClientConstants.HttpService.SERVICE_NAME
-                                    ),
-                                    undefined,
-                                    [
-                                        ts.factory.createObjectLiteralExpression(
-                                            [
+                                ts.factory.createNewExpression(referenceToServiceClient.expression, undefined, [
+                                    ts.factory.createObjectLiteralExpression(
+                                        [
+                                            createPropertyAssignment(
+                                                ts.factory.createIdentifier(
+                                                    ClientConstants.HttpService.ServiceNamespace.Options.Properties
+                                                        .BASE_PATH
+                                                ),
+                                                basePath
+                                            ),
+                                            ...authSchemeProperties.map(({ name: propertyName }) =>
                                                 createPropertyAssignment(
-                                                    ts.factory.createIdentifier(
-                                                        ClientConstants.HttpService.ServiceNamespace.Options.Properties
-                                                            .BASE_PATH
-                                                    ),
-                                                    basePath
-                                                ),
-                                                ...authSchemeProperties.map(({ name: propertyName }) =>
-                                                    createPropertyAssignment(
-                                                        propertyName,
+                                                    propertyName,
+                                                    ts.factory.createPropertyAccessExpression(
                                                         ts.factory.createPropertyAccessExpression(
-                                                            ts.factory.createPropertyAccessExpression(
-                                                                ts.factory.createThis(),
-                                                                ts.factory.createIdentifier(optionsMember.getName())
-                                                            ),
-                                                            propertyName
-                                                        )
+                                                            ts.factory.createThis(),
+                                                            ts.factory.createIdentifier(optionsMember.getName())
+                                                        ),
+                                                        propertyName
                                                     )
-                                                ),
-                                            ],
-                                            true
-                                        ),
-                                    ]
-                                )
+                                                )
+                                            ),
+                                        ],
+                                        true
+                                    ),
+                                ])
                             )
                         )
                     )
@@ -147,13 +138,17 @@ export function generateWrapper({ wrapper, file }: { wrapper: WrapperDeclaration
     }
 
     for (const wrapped of wrapper.wrappedWrappers) {
-        const referenceToWrapped = file.getReferenceToWrapper(wrapped);
+        const lastFernFilepathPart = wrapped.fernFilepath[wrapped.fernFilepath.length - 1];
+        if (lastFernFilepathPart == null) {
+            throw new Error("FernFilepath is empty for wrapper.");
+        }
+
+        const referenceToWrapped = file.getReferenceToWrapper(wrapped, {
+            importAlias: `${lastFernFilepathPart.pascalCase}${wrapped.name}`,
+        });
         const referenceToWrappedType = ts.factory.createTypeReferenceNode(referenceToWrapped.entityName);
 
-        const publicPropertyName = wrapped.fernFilepath[wrapped.fernFilepath.length - 1]?.camelCase;
-        if (publicPropertyName == null) {
-            throw new Error("FernFilepath is empty for tree node.");
-        }
+        const publicPropertyName = lastFernFilepathPart.camelCase;
 
         const serviceProperty = apiClass.addProperty({
             name: `#${publicPropertyName}`,

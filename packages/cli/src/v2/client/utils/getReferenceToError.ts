@@ -1,32 +1,32 @@
-import { DeclaredTypeName } from "@fern-fern/ir-model/types";
+import { DeclaredErrorName } from "@fern-fern/ir-model/errors";
 import { SourceFile, ts } from "ts-morph";
 import { ImportDeclaration } from "../../imports-manager/ImportsManager";
 import { ModuleSpecifier } from "../../types";
-import { getExportedFilepathForType } from "./getExportedFilepathForType";
-import { getGeneratedTypeName } from "./getGeneratedTypeName";
+import { getExportedFilepathForError } from "./getExportedFilepathForError";
+import { getGeneratedErrorName } from "./getGeneratedErrorName";
 import { getReferenceToExport } from "./getReferenceToExport";
 
-export declare namespace getReferenceToExportedType {
+export declare namespace getReferenceToError {
     export interface Args {
         apiName: string;
         referencedIn: SourceFile;
-        typeName: DeclaredTypeName;
+        errorName: DeclaredErrorName;
         addImport: (moduleSpecifier: ModuleSpecifier, importDeclaration: ImportDeclaration) => void;
     }
 }
 
-export function getReferenceToExportedType({
+export function getReferenceToError({
     apiName,
     referencedIn,
-    typeName,
+    errorName,
     addImport,
-}: getReferenceToExportedType.Args): ts.TypeNode {
+}: getReferenceToError.Args): ts.TypeNode {
     return ts.factory.createTypeReferenceNode(
         getReferenceToExport({
             apiName,
             referencedIn,
-            exportedName: getGeneratedTypeName(typeName),
-            exportedFromPath: getExportedFilepathForType(typeName, apiName),
+            exportedName: getGeneratedErrorName(errorName),
+            exportedFromPath: getExportedFilepathForError(errorName, apiName),
             addImport,
         }).entityName
     );

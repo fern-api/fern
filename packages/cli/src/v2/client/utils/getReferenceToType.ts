@@ -3,8 +3,6 @@ import { TypeReferenceNode } from "@fern-typescript/declaration-handler";
 import { SourceFile, ts } from "ts-morph";
 import { ImportDeclaration } from "../../imports-manager/ImportsManager";
 import { ModuleSpecifier } from "../../types";
-import { getExportedFilepathForType } from "./getExportedFilepathForType";
-import { getGeneratedTypeName } from "./getGeneratedTypeName";
 import { getReferenceToExportedType } from "./getReferenceToExportedType";
 
 export declare namespace getReferenceToType {
@@ -28,8 +26,7 @@ export function getReferenceToType({
                 typeNode: getReferenceToExportedType({
                     apiName,
                     referencedIn,
-                    typeName: getGeneratedTypeName(typeName),
-                    exportedFromPath: getExportedFilepathForType(typeName, apiName),
+                    typeName,
                     addImport,
                 }),
                 isOptional: false,

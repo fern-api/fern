@@ -1,6 +1,6 @@
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { ResponseError } from "@fern-fern/ir-model/services/commons";
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
+import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
 import { getTextOfTsNode, getWriterForMultiLineUnionType, visitorUtils } from "@fern-typescript/commons";
 import { createPropertyAssignment } from "@fern-typescript/commons-v2";
 import { TsNodeMaybeWithDocs } from "@fern-typescript/commons/src/writers/getWriterForMultiLineUnionType";
@@ -22,23 +22,17 @@ interface ServerError {
 }
 
 export function constructEndpointErrors({
-    service,
     endpoint,
     file,
     endpointModule,
     addEndpointUtil,
 }: {
-    service: HttpService;
     endpoint: HttpEndpoint;
     file: File;
     endpointModule: ModuleDeclaration;
     addEndpointUtil: (util: ts.ObjectLiteralElementLike) => void;
 }): ClientEndpointError {
-    const referenceToService = file.getReferenceToService(service.name);
-    const referenceToEndpointModule = ts.factory.createQualifiedName(
-        referenceToService.entityName,
-        ts.factory.createIdentifier(endpointModule.getName())
-    );
+    const referenceToEndpointModule = file.getReferenceToExportInSameFile(endpointModule.getName());
 
     const errorType = endpointModule.addInterface({
         name: "Error",
@@ -46,14 +40,14 @@ export function constructEndpointErrors({
     });
 
     const referenceToErrorType = ts.factory.createTypeReferenceNode(
-        ts.factory.createQualifiedName(referenceToEndpointModule, errorType.getName())
+        ts.factory.createQualifiedName(referenceToEndpointModule.entityName, errorType.getName())
     );
 
     const serverErrors = parseServerErrors({
         endpoint,
         file,
         endpointModule,
-        referenceToEndpointModule,
+        referenceToEndpointModule: referenceToEndpointModule.entityName,
     });
 
     const errorBodyProperty = errorType.addProperty(
@@ -104,7 +98,7 @@ export function constructEndpointErrors({
         name: "_visit",
         type: getTextOfTsNode(
             visitorUtils.generateVisitMethodType(
-                ts.factory.createQualifiedName(referenceToEndpointModule, visitorInterface.getName())
+                ts.factory.createQualifiedName(referenceToEndpointModule.entityName, visitorInterface.getName())
             )
         ),
     });
@@ -124,10 +118,7 @@ export function constructEndpointErrors({
     }
 
     const referenceToErrorParser = ts.factory.createPropertyAccessExpression(
-        ts.factory.createPropertyAccessExpression(
-            referenceToService.expression,
-            ts.factory.createIdentifier(endpointModule.getName())
-        ),
+        referenceToEndpointModule.expression,
         ClientConstants.HttpService.Endpoint.Utils.ERROR_PARSER
     );
 
@@ -160,7 +151,7 @@ function parseServerErrors({
     endpoint: HttpEndpoint;
     file: File;
     endpointModule: ModuleDeclaration;
-    referenceToEndpointModule: ts.QualifiedName;
+    referenceToEndpointModule: ts.EntityName;
 }): ServerErrors | undefined {
     const serverErrors = endpoint.errors.map((error) => {
         const errorDeclaration = file.getErrorDeclaration(error.error);

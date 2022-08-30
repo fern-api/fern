@@ -1,11 +1,10 @@
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { ClientConstants } from "@fern-typescript/client-v2";
 import { WrapperDeclaration, WrapperName } from "@fern-typescript/commons-v2";
 import { isEqual } from "lodash-es";
 import { StringifiedFernFilepath, stringifyFernFilepath } from "./utils/stringifyFernFilepath";
 
 const ROOT_WRAPPER_NAME = "Client";
-const NON_ROOT_WRAPPER_NAME = ClientConstants.HttpService.SERVICE_NAME;
+const NON_ROOT_WRAPPER_NAME = "Wrapper";
 
 export function constructWrapperDeclarations(
     intermediateRepresentation: IntermediateRepresentation
@@ -14,8 +13,10 @@ export function constructWrapperDeclarations(
 
     for (const service of intermediateRepresentation.services.http) {
         for (const [index, fernFilepathPart] of service.name.fernFilepath.entries()) {
+            const isRootWrapper = index === 0;
             const wrapper: WrapperName = {
-                name: index === 0 ? ROOT_WRAPPER_NAME : NON_ROOT_WRAPPER_NAME,
+                name: isRootWrapper ? ROOT_WRAPPER_NAME : NON_ROOT_WRAPPER_NAME,
+                isRootWrapper,
                 fernFilepath: service.name.fernFilepath.slice(0, index),
             };
 
@@ -30,6 +31,7 @@ export function constructWrapperDeclarations(
             } else {
                 const wrapped: WrapperName = {
                     name: NON_ROOT_WRAPPER_NAME,
+                    isRootWrapper: false,
                     fernFilepath: [...wrapper.fernFilepath, fernFilepathPart],
                 };
                 if (!declarationOfWrapper.wrappedWrappers.some((wrapper) => isEqual(wrapper, wrapped))) {

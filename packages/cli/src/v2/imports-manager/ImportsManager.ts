@@ -3,13 +3,18 @@ import { ModuleSpecifier } from "../types";
 
 export interface ImportDeclaration {
     namespaceImport?: string;
-    namedImports?: string[];
+    namedImports?: (string | NamedImport)[];
     defaultImport?: string;
+}
+
+export interface NamedImport {
+    name: string;
+    alias?: string;
 }
 
 interface CombinedImportDeclarations {
     namespaceImports: Set<string>;
-    namedImports: Set<string>;
+    namedImports: NamedImport[];
     defaultImports: Set<string>;
 }
 
@@ -19,7 +24,7 @@ export class ImportsManager {
     public addImport(moduleSpecifier: ModuleSpecifier, importDeclaration: ImportDeclaration): void {
         const importsForModuleSpecifier = (this.imports[moduleSpecifier] ??= {
             namespaceImports: new Set(),
-            namedImports: new Set(),
+            namedImports: [],
             defaultImports: new Set(),
         });
 
@@ -29,7 +34,16 @@ export class ImportsManager {
 
         if (importDeclaration.namedImports != null) {
             for (const namedImport of importDeclaration.namedImports) {
-                importsForModuleSpecifier.namedImports.add(namedImport);
+                const convertedNamedImport = typeof namedImport === "string" ? { name: namedImport } : namedImport;
+                if (
+                    !importsForModuleSpecifier.namedImports.some(
+                        (otherNamedImport) =>
+                            otherNamedImport.name === convertedNamedImport.name &&
+                            otherNamedImport.alias === convertedNamedImport.alias
+                    )
+                ) {
+                    importsForModuleSpecifier.namedImports.push(convertedNamedImport);
+                }
             }
         }
 
@@ -61,11 +75,14 @@ export class ImportsManager {
             }
 
             const defaultImport = [...combinedImportDeclarations.defaultImports][0];
-            if (defaultImport != null || combinedImportDeclarations.namedImports.size > 0) {
+            if (defaultImport != null || combinedImportDeclarations.namedImports.length > 0) {
                 sourceFile.addImportDeclaration({
                     moduleSpecifier,
                     defaultImport,
-                    namedImports: [...combinedImportDeclarations.namedImports].sort(),
+                    namedImports: [...combinedImportDeclarations.namedImports].sort().map((namedImport) => ({
+                        name: namedImport.name,
+                        alias: namedImport.alias,
+                    })),
                 });
             }
         }

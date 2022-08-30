@@ -47,6 +47,18 @@ export class ExportsManager {
                     exportDeclaration: part.exportDeclaration,
                 });
             }
+            if (part.subExports != null) {
+                for (const [relativeFilePath, exportDeclaration] of Object.entries(part.subExports)) {
+                    this.addExportDeclarationForDirectory({
+                        directory: directoryFilepath,
+                        moduleSpecifierToExport: getRelativePathAsModuleSpecifierTo(
+                            directoryFilepath,
+                            path.join(nextDirectoryPath, relativeFilePath)
+                        ),
+                        exportDeclaration,
+                    });
+                }
+            }
             directoryFilepath = nextDirectoryPath;
         }
 

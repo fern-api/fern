@@ -5,10 +5,15 @@ import { getFileNameForService } from "./getFileNameForService";
 
 export function getExportedFilepathForService(serviceName: DeclaredServiceName, apiName: string): ExportedFilePath {
     return {
-        directories: getExportedDirectoriesForFernFilepath(serviceName.fernFilepath, apiName),
+        directories: [
+            ...getExportedDirectoriesForFernFilepath({ fernFilepath: serviceName.fernFilepath, apiName }),
+            {
+                nameOnDisk: "client",
+                exportDeclaration: { exportAll: true },
+            },
+        ],
         file: {
             nameOnDisk: getFileNameForService(serviceName),
-            exportDeclaration: { exportAll: true },
         },
     };
 }

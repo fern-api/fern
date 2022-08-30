@@ -1,4 +1,4 @@
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
+import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { File } from "@fern-typescript/declaration-handler";
 import { ModuleDeclaration, ts, VariableDeclarationKind } from "ts-morph";
@@ -7,19 +7,12 @@ import { constructRequestWrapper } from "./constructRequestWrapper";
 import { getReferenceToMaybeVoidType } from "./getReferenceToMaybeVoidType";
 import { ClientEndpointRequest, ParsedClientEndpoint } from "./ParsedClientEndpoint";
 
-export function parseEndpoint({
-    service,
-    endpoint,
-    file,
-}: {
-    service: HttpService;
-    endpoint: HttpEndpoint;
-    file: File;
-}): ParsedClientEndpoint {
+export function parseEndpoint({ endpoint, file }: { endpoint: HttpEndpoint; file: File }): ParsedClientEndpoint {
     const endpointModule = file.sourceFile.addModule({
         name: endpoint.name.camelCase,
         isExported: true,
     });
+    file.addNamedExport(endpointModule.getName());
 
     const endpointUtils: ts.ObjectLiteralElementLike[] = [];
 
@@ -27,10 +20,9 @@ export function parseEndpoint({
         endpointMethodName: endpointModule.getName(),
         path: endpoint.path,
         method: endpoint.method,
-        request: parseRequest({ service, endpoint, file, endpointModule }),
+        request: parseRequest({ endpoint, file, endpointModule }),
         referenceToResponse: getReferenceToMaybeVoidType(endpoint.response.type, file),
         error: constructEndpointErrors({
-            service,
             endpoint,
             file,
             endpointModule,
@@ -57,12 +49,10 @@ export function parseEndpoint({
 }
 
 function parseRequest({
-    service,
     endpoint,
     file,
     endpointModule,
 }: {
-    service: HttpService;
     endpoint: HttpEndpoint;
     file: File;
     endpointModule: ModuleDeclaration;
@@ -83,7 +73,7 @@ function parseRequest({
         };
     }
 
-    const wrapper = constructRequestWrapper({ service, endpoint, file, endpointModule });
+    const wrapper = constructRequestWrapper({ endpoint, file, endpointModule });
 
     return {
         isWrapped: true,

@@ -8,9 +8,8 @@ import { ResolvedType } from "@fern-typescript/resolvers";
 import { SourceFile, ts } from "ts-morph";
 import { ExternalDependencies } from "./external-dependencies/ExternalDependencies";
 import { ParsedAuthSchemes } from "./ParsedAuthSchemes";
-import { ServiceReference } from "./ServiceReference";
+import { Reference } from "./Reference";
 import { TypeReferenceNode } from "./TypeReferenceNode";
-import { WrapperReference } from "./WrapperReference";
 
 export interface File {
     sourceFile: SourceFile;
@@ -19,9 +18,12 @@ export interface File {
     getErrorDeclaration: (errorName: DeclaredErrorName) => ErrorDeclaration;
     getReferenceToError: (errorName: DeclaredErrorName) => ts.TypeNode;
     addDependency: (name: string, version: string, options?: { preferPeer?: boolean }) => void;
+    addNamedExport: (namedExport: string) => void;
+    getReferenceToExportInSameFile: (exportedName: string) => Reference;
     getServiceDeclaration: (serviceName: DeclaredServiceName) => HttpService;
-    getReferenceToService: (serviceName: DeclaredServiceName) => ServiceReference;
-    getReferenceToWrapper: (wrapperName: WrapperName) => WrapperReference;
+    // services are not exported from their module, so they must imported directly and aliased
+    getReferenceToService: (serviceName: DeclaredServiceName, options: { importAlias: string }) => Reference;
+    getReferenceToWrapper: (wrapperName: WrapperName, options: { importAlias: string }) => Reference;
     externalDependencies: ExternalDependencies;
     authSchemes: ParsedAuthSchemes;
     fernConstants: FernConstants;

@@ -1,30 +1,30 @@
 import { RelativeFilePath } from "@fern-api/core-utils";
-import { DeclaredTypeName } from "@fern-fern/ir-model/types";
+import { DeclaredErrorName } from "@fern-fern/ir-model/errors";
 import { ExportedFilePath } from "../../exports-manager/ExportedFilePath";
 import { getExportedDirectoriesForFernFilepath } from "./getExportedDirectoriesForFernFilepath";
 import { getFileNameForType } from "./getFileNameForType";
 
-export const TYPES_DIRECTORY_NAME = "types";
+const ERRORS_DIRECTORY_NAME = "errors";
 
-export function getExportedFilepathForType(typeName: DeclaredTypeName, apiName: string): ExportedFilePath {
+export function getExportedFilepathForError(errorName: DeclaredErrorName, apiName: string): ExportedFilePath {
     return {
         directories: [
             ...getExportedDirectoriesForFernFilepath({
-                fernFilepath: typeName.fernFilepath,
+                fernFilepath: errorName.fernFilepath,
                 apiName,
                 subExports: {
-                    [RelativeFilePath.of(TYPES_DIRECTORY_NAME)]: {
+                    [RelativeFilePath.of(ERRORS_DIRECTORY_NAME)]: {
                         exportAll: true,
                     },
                 },
             }),
             {
-                nameOnDisk: TYPES_DIRECTORY_NAME,
+                nameOnDisk: ERRORS_DIRECTORY_NAME,
                 exportDeclaration: { exportAll: true },
             },
         ],
         file: {
-            nameOnDisk: getFileNameForType(typeName),
+            nameOnDisk: getFileNameForType(errorName),
             exportDeclaration: { exportAll: true },
         },
     };

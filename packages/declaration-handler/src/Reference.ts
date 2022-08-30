@@ -1,6 +1,6 @@
 import { ts } from "ts-morph";
 
-export interface WrapperReference {
+export interface Reference {
     entityName: ts.EntityName;
     expression: ts.Expression;
 }
