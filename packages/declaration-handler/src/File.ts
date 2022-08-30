@@ -21,7 +21,6 @@ export interface File {
     addNamedExport: (namedExport: string) => void;
     getReferenceToExportInSameFile: (exportedName: string) => Reference;
     getServiceDeclaration: (serviceName: DeclaredServiceName) => HttpService;
-    // services are not exported from their module, so they must imported directly and aliased
     getReferenceToService: (serviceName: DeclaredServiceName, options: { importAlias: string }) => Reference;
     getReferenceToWrapper: (wrapperName: WrapperName, options: { importAlias: string }) => Reference;
     externalDependencies: ExternalDependencies;
