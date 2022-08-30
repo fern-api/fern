@@ -16,8 +16,12 @@ jobs:
           name: Check root package
           command: yarn root-package:check
       - run:
-          name: Format
-          command: yarn format:check
+          name: Organize imports
+          # not using --list-different because sometimes this removes a trailing
+          # comma that prettier adds back. Instead, we write the changes to disk.
+          # if the repo is dirty after the prettier step is run, this job will fail
+          # on the last step.
+          command: yarn organize-imports:all
       - run:
           name: Check dependencies
           command: yarn depcheck
@@ -38,6 +42,9 @@ jobs:
       - run:
           name: fern check
           command: npx fern-api@0.0.188 check
+      - run:
+          name: Format
+          command: yarn format:all
       - run:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff --exit-code
