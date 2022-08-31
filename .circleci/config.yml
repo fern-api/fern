@@ -1,0 +1,35 @@
+version: 2.1
+
+orbs:
+  python: circleci/python@2.0.3
+
+jobs:
+  check:
+    executor: python/default
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: poetry
+      - run:
+          name: Type check
+          command: poetry run mypy -p generator
+      - run:
+          name: Format
+          command: poetry run black --check generator
+      - run:
+          name: Lint
+          command: poetry run flake8 generator
+      - run:
+          name: Ensure no changes to git-tracked files
+          command: git --no-pager diff --exit-code
+
+workflows:
+  build:
+    jobs:
+      - check:
+          filters:
+            tags:
+              only: /.*/
+      - python/test:
+          pkg-manager: poetry
+          test-tool: pytest
