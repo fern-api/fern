@@ -1,10 +1,5 @@
-import { AbsoluteFilePath, cwd, join, RelativeFilePath } from "@fern-api/core-utils";
-import {
-    FERN_DIRECTORY,
-    getFernDirectory,
-    ProjectConfigSchema,
-    PROJECT_CONFIG_FILENAME,
-} from "@fern-api/project-configuration";
+import { AbsoluteFilePath, cwd, doesPathExist, join, RelativeFilePath } from "@fern-api/core-utils";
+import { FERN_DIRECTORY, ProjectConfigSchema, PROJECT_CONFIG_FILENAME } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { mkdir, writeFile } from "fs/promises";
 import { createWorkspace } from "./createWorkspace";
@@ -18,11 +13,9 @@ export async function initialize({
     versionOfCli: string;
     context: TaskContext;
 }): Promise<void> {
-    const existingFernDirectory = await getFernDirectory();
-    if (existingFernDirectory != null) {
-        context.fail(
-            `Could not initialize fern because a ${FERN_DIRECTORY} directory already exists: ` + existingFernDirectory
-        );
+    const pathToFernDirectory = join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(FERN_DIRECTORY));
+    if (await doesPathExist(pathToFernDirectory)) {
+        context.fail("Directory already exists: " + pathToFernDirectory);
         return;
     }
 
