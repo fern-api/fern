@@ -1,0 +1,47 @@
+services:
+  http:
+    PrimitiveService:
+      auth: false
+      base-path: /primitives
+      endpoints:
+        reflectString:
+          method: POST
+          path: /string
+          request: string
+          response: string
+
+        reflectInt:
+          method: POST
+          path: /int
+          request: integer
+          response: integer
+
+        reflectDouble:
+          method: POST
+          path: /double
+          request: double
+          response: double
+
+        reflectBoolean:
+          method: POST
+          path: /boolean
+          request: boolean
+          response: boolean
+
+        reflectLong:
+          method: POST
+          path: /long
+          request: long
+          response: long
+
+        reflectDateTime:
+          method: POST
+          path: /datetime
+          request: datetime
+          response: datetime
+
+        reflectUUID:
+          method: POST
+          path: /uuid
+          request: uuid
+          response: uuid
