@@ -8206,11 +8206,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
             ["@types/jest", "npm:28.1.7"],\
+            ["@types/lodash-es", "npm:4.17.6"],\
             ["@types/node", "npm:18.7.11"],\
             ["chalk", "npm:5.0.1"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.22.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
+            ["lodash-es", "npm:4.17.21"],\
             ["prettier", "npm:2.7.1"],\
             ["strip-ansi", "npm:7.0.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
