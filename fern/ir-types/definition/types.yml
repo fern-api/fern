@@ -53,11 +53,11 @@ types:
     extends: commons.WithDocs
     properties:
       discriminantValue: commons.WireStringWithAllCasings
-      additionalProperties: optional<SingleUnionTypeProperties>
+      shape: optional<SingleUnionTypeProperties>
   SingleUnionTypeProperties:
     union:
-      objectExtension: DeclaredTypeName
-      property: SingleUnionTypeProperty
+      samePropertiesAsObject: DeclaredTypeName
+      singleProperty: SingleUnionTypeProperty
   SingleUnionTypeProperty:
     properties:
       name: commons.WireStringWithAllCasings
