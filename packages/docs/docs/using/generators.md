@@ -1,10 +1,11 @@
 ---
+sidebar_label: "Code generators"
 sidebar_position: 9
 ---
 
-# Fern Generators
+# Code Generators
 
-Code generators run remotely in the cloud. The input is a of API Definition file (YAML) and the output is auto generated code. Specify the generators you'd like to use in `generators.yml`.
+Code generators run remotely in the cloud. The input is a Fern Definition (a set of YAML files) and the output is auto generated code. Specify the generators you'd like to use in `generators.yml`.
 
 |  **Name**  |                                       **Description**                                        |   **CLI Command**   |                                            **Library**                                             |
 | :--------: | :------------------------------------------------------------------------------------------: | :-----------------: | :------------------------------------------------------------------------------------------------: |
