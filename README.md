@@ -10,4 +10,4 @@ Getting started:
 1. `poetry shell`
 1. `code .`
 
-To check types: `poetry run mypy -p generator`
+To check types: `poetry run mypy`

@@ -12,13 +12,13 @@ jobs:
           pkg-manager: poetry
       - run:
           name: Type check
-          command: poetry run mypy -p generator
+          command: poetry run mypy
       - run:
           name: Format
-          command: poetry run black --check generator
+          command: poetry run black --check src tests
       - run:
           name: Lint
-          command: poetry run flake8 generator
+          command: poetry run flake8 src tests
       - run:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff --exit-code
