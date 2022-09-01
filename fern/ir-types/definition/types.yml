@@ -53,7 +53,8 @@ types:
     extends: commons.WithDocs
     properties:
       discriminantValue: commons.WireStringWithAllCasings
-      valueType: TypeReference
+      extends: list<DeclaredTypeName>
+      properties: list<ObjectProperty>
 
   TypeReference:
     union:
