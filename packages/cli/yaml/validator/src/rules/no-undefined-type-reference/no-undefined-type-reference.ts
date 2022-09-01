@@ -1,14 +1,16 @@
-import { RelativeFilePath } from "@fern-api/core-utils";
+import { entries, RelativeFilePath } from "@fern-api/core-utils";
 import { parseReferenceToTypeName } from "@fern-api/ir-generator";
 import { Workspace } from "@fern-api/workspace-loader";
 import { visitFernYamlAst, visitRawTypeReference } from "@fern-api/yaml-schema";
 import chalk from "chalk";
 import { Rule, RuleViolation } from "../../Rule";
 
+type TypeName = string;
+
 export const NoUndefinedTypeReferenceRule: Rule = {
     name: "no-undefined-type-reference",
     create: async ({ workspace }) => {
-        const typesByFilepath = await getTypesByFilepath(workspace);
+        const typesByFilepath: Record<RelativeFilePath, Set<TypeName>> = await getTypesByFilepath(workspace);
 
         function doesTypeExist(reference: ReferenceToTypeName) {
             if (reference.parsed == null) {
@@ -44,10 +46,10 @@ export const NoUndefinedTypeReferenceRule: Rule = {
 };
 
 async function getTypesByFilepath(workspace: Workspace) {
-    const typesByFilepath: Record<string, Set<string>> = {};
+    const typesByFilepath: Record<RelativeFilePath, Set<TypeName>> = {};
 
-    for (const [relativeFilepath, file] of Object.entries(workspace.serviceFiles)) {
-        const typesForFile = new Set<string>();
+    for (const [relativeFilepath, file] of entries(workspace.serviceFiles)) {
+        const typesForFile = new Set<TypeName>();
         typesByFilepath[relativeFilepath] = typesForFile;
 
         await visitFernYamlAst(file, {

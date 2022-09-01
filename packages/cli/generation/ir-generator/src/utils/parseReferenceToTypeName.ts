@@ -1,4 +1,5 @@
-import { dirname, join, RelativeFilePath } from "@fern-api/core-utils";
+import { RelativeFilePath } from "@fern-api/core-utils";
+import { getResolvedPathOfImportedFile } from "./getResolvedPathOfImportedFile";
 
 export interface ReferenceToTypeName {
     typeName: string;
@@ -35,7 +36,7 @@ export function parseReferenceToTypeName({
     }
 
     return {
-        relativeFilePath: join(dirname(referencedIn), importPath),
+        relativeFilePath: getResolvedPathOfImportedFile({ referencedIn, importPath }),
         typeName: secondPart,
     };
 }
