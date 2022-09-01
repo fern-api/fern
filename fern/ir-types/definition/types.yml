@@ -1,5 +1,39 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
+# Animal:
+#   union:
+#     dog: Dog
+#     cat: string
+
+# Dog:
+#   properties:
+#     likesToBark: boolean
+
+# type Animal = Animal.Dog | Animal.Cat
+
+# namespace Animal {
+#   interface Dog extends Dog {
+#     "type": "dog"
+#   }
+# }
+
+# class Animal {
+#   private internalValue;
+
+#   public isDog(): boolean {
+#     return internalValue instanceof InternalDogValue
+#   }
+
+#   private class InternalDogValue {
+#     private @JsonUnwrapped Dog dog;
+#   }
+
+#   private class InternalCat {
+#     private @JsonField("value") String cat;
+#   }
+
+# }
+
 imports:
   commons: commons.yml
 types:
@@ -53,8 +87,15 @@ types:
     extends: commons.WithDocs
     properties:
       discriminantValue: commons.WireStringWithAllCasings
-      extends: list<DeclaredTypeName>
-      properties: list<ObjectProperty>
+      additionalProperties: optional<SingleUnionTypeProperties>
+  SingleUnionTypeProperties:
+    union:
+      objectExtension: DeclaredTypeName
+      property: SingleUnionTypeProperty
+  SingleUnionTypeProperty:
+    properties:
+      name: commons.WireStringWithAllCasings
+      valueType: TypeReference
 
   TypeReference:
     union:
