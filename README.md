@@ -42,7 +42,7 @@ types:
 services:
   http:
     DayOfWeekService:
-      auth: none
+      auth: false
       endpoints:
         getCurrentDayOfWeek:
           response: DayOfWeek

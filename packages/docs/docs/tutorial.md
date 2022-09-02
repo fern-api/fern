@@ -1,12 +1,11 @@
 ---
 title: Tutorial - IMDb
 sidebar_label: "Tutorial"
-sidebar_position: 10
 ---
 
 <!-- markdownlint-disable MD033 MD025 MD010 -->
 
-This guide uses an example API for IMDb (the International Movie Database) that introduces you to using Fern. We'll generate a TypeScript server and a Postman Collection to implement and test our API.
+This guide uses an example API for IMDb (the International Movie Database) that introduces you to using Fern. We'll generate a TypeScript Express server and a Postman collection to implement and test our API.
 
 ## Step 0: Prerequisites
 
@@ -48,7 +47,7 @@ This adds the following content:
 fern/
 └── api
 		├── definition
-				├── api.yml # Your API's name and the authentication scheme
+				├── api.yml # Your API name and the authentication scheme
 				└── imdb.yml # An example Fern Definition for IMDb (International Movie Database)
 		└── generators.yml # A list of code generators you're using
 fern.config.json # Configure your organization name and the version of Fern CLI you're using
@@ -67,7 +66,7 @@ fern add typescript-server
 ```diff
 -draft: []
 +draft:
-+  - name: fernapi/typescript-server
++  - name: fernapi/javascript-express-server
 +    version: 0.0.xxx
 release:[]
 ```

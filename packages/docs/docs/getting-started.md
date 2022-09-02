@@ -1,7 +1,5 @@
 ---
 title: Getting started
-sidebar_label: "Getting started"
-sidebar_position: 2
 ---
 
 <!-- markdownlint-disable MD033 MD025 MD010 -->
@@ -22,19 +20,17 @@ In the root of your repo, run `fern init.` This will create the following folder
 fern/
 └── api
 		├── definition
-				├── api.yml # Your API's name and the authentication scheme
+				├── api.yml # Your API name and the authentication scheme
 				└── imdb.yml # An example Fern Definition for IMDb (International Movie Database)
 		└── generators.yml # A list of code generators you're using
 fern.config.json # Configure your organization name and the version of Fern CLI you're using
 ```
 
-## Define your API
+## Defining your API
 
-1. Write your Fern Definition
+Your **Fern Definition** is a set of YAML files that are the single source of truth for your API. You check your **Fern Definition** into your repo, inside of which describes your API requests, responses, model, paths, methods, errors, and authentication scheme.
 
-Your _Fern Definition_ is a set of YAML files that are the single source of truth for your API. You check your _Fern Definition_ into your repo, inside of which describes your API's requests, responses, model, paths, methods, errors, and authentication scheme.
-
-Check out [an example Fern Definition](https://github.com/fern-api/fern-examples/blob/main/fern/api/definition/movie.yml) on Github. Ready to define your API? [Read on](TODO).
+Check out [an example Fern Definition](https://github.com/fern-api/fern-examples/blob/main/fern/api/definition/movie.yml) on Github.
 
 :::tip Already have an OpenAPI spec?
 
@@ -42,9 +38,16 @@ Join our private beta for access to our OpenAPI spec -> Fern Definition converte
 
 :::
 
+## What's next?
+
+- How do I get server-side type safety?
+- How do I get SDKs?
+- How do I get API documentation?
+- How do I get a Postman integration?
+
 ## Generate code
 
-Fern's code generators run remotely in the cloud. The input is your _Fern Definition_ and the output is auto-generated code. You configure which generators you're using in `generators.yml`.
+Fern's code generators run remotely in the cloud. The input is your **Fern Definition** and the output is auto-generated code. You configure which generators you're using in `generators.yml`.
 
 Check out [an example generators.yml](https://github.com/fern-api/fern-examples/blob/main/fern/api/generators.yml) on Github.
 

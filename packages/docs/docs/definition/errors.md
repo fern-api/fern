@@ -1,7 +1,5 @@
 ---
 title: Errors
-sidebar_position: 7
-sidebar_label: Errors
 ---
 
 Endpoints can throw errors on failure. An endpoint can have multiple errors. Errors have the following properties:
@@ -18,7 +16,7 @@ The `getMovie` endpoint below has two errors that can throw: `NotFoundError` and
 services:
   http:
     MoviesService:
-      auth: none
+      auth: false
       base-path: /movies
       endpoints:
         getMovie:

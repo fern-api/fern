@@ -1,27 +1,27 @@
 ---
-title: API Definition
-sidebar_position: 10
-sidebar_label: API Definition
+title: Fern Definition
 ---
 
-In Fern, an **API Definition** is a set of YAML files that describe your API. Each file may define:
+A **Fern Definition** is a set of YAML files that describe your API. Each file may define:
 
+- **[Services](services.md)**: a set of REST endpoints
 - **[Types](types.md)**: data model and objects
-- **[Services](services.md)**: REST endpoints
 - **[Errors](errors.md)**: an error name, status code, and can include properties
+- **[Docs](docs.md)**: human-readable descriptions
 - **[Imports](imports.md)**: share types and errors across YAML files
 
-You can add human-readable descriptions throughout your API Definition with **[Docs](docs.md)**.
+## An example of a Fern Definition
 
-## An example of a Fern API Definition
+[View the example on Github](https://github.com/fern-api/fern-examples/blob/main/fern/api/definition/movie.yml) or here:
 
 ```yml
-types:
-  MovieId: string
+imports:
+  commons: commons.yml
 
+types:
   Movie:
     properties:
-      id: MovieId
+      id: commons.MovieId # We are referencing a type (MovieId) defined in another file (commons.yml).
       title: string
       rating:
         type: double
@@ -35,21 +35,22 @@ types:
 services:
   http:
     MoviesService:
-      auth: none
+      auth: false
       base-path: /movies
       endpoints:
+        # Here's an HTTP endpoint
         createMovie:
           docs: Add a movie to the database
           method: POST
           path: /create-movie
           request: CreateMovieRequest
-          response: MovieId
+          response: commons.MovieId
 
         getMovie:
           method: GET
           path: /{movieId}
           path-parameters:
-            movieId: MovieId
+            movieId: commons.MovieId
           response: Movie
           errors:
             - NotFoundError
@@ -59,9 +60,3 @@ errors:
     http:
       statusCode: 404
 ```
-
-## Explore Fern API Definitions on Github
-
-- [Connect Earth](https://github.com/fern-api/fern-connect-earth/blob/main/api/src/charts.yml) helps embed sustainability into financial products.
-
-- [Telematica](https://github.com/fern-api/fern-telematica/blob/main/api/src/vehicleData.yml) is a unified API for electric vehicles.

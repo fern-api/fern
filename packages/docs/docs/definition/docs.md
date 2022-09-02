@@ -1,7 +1,5 @@
 ---
 title: Docs
-sidebar_position: 10
-sidebar_label: Docs
 ---
 
 Add descriptions that help document your API. Docs are intended for readers of your API Definition as well as for populating your docs website.
@@ -23,7 +21,7 @@ services:
   http:
     MoviesService:
       docs: This service helps grow the IMDb database.
-      auth: none
+      auth: false
       base-path: /movies
       endpoints:
         createMovie:
