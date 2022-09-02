@@ -1,48 +1,75 @@
+from __future__ import annotations
 import pydantic
 import typing
 from abc import ABC, abstractmethod
 import typing_extensions
-from ..commons import WithDocs
+from .alias_type_declaration import AliasTypeDeclaration
+from .enum_type_declaration import EnumTypeDeclaration
+from .object_type_declaration import ObjectTypeDeclaration
+from .union_type_declaration import UnionTypeDeclaration
 
 _Result = typing.TypeVar("_Result")
 
 
+class _Type:
+    class Alias(AliasTypeDeclaration):
+        type: typing.Literal["alias"]
+
+    class Enum(EnumTypeDeclaration):
+        type: typing.Literal["enum"]
+
+    class Object(ObjectTypeDeclaration):
+        type: typing.Literal["object"]
+
+    class Union(UnionTypeDeclaration):
+        type: typing.Literal["union"]
+
+
 class Type(pydantic.BaseModel):
-    class Alias(WithDocs):
-        type: typing.Literal["alias"] = pydantic.Field(alias="_type")
+    @staticmethod
+    def alias(value: AliasTypeDeclaration) -> Type:
+        return Type(__root__=_Type.Alias(type="alias", alias_of=value.alias_of))
 
-    class Enum(WithDocs):
-        type: typing.Literal["enum"] = pydantic.Field(alias="_type")
+    @staticmethod
+    def enum(value: EnumTypeDeclaration) -> Type:
+        return Type(__root__=_Type.Enum(type="enum", values=value.values))
 
-    class Object(WithDocs):
-        type: typing.Literal["object"] = pydantic.Field(alias="_type")
+    @staticmethod
+    def object(value: ObjectTypeDeclaration) -> Type:
+        return Type(__root__=_Type.Object(type="object", extends=value.extends, properties=value.properties))
 
-    class Union(WithDocs):
-        type: typing.Literal["union"] = pydantic.Field(alias="_type")
+    @staticmethod
+    def union(value: UnionTypeDeclaration) -> Type:
+        return Type(__root__=_Type.Union(type="union", discriminant=value.discriminant, types=value.types))
 
     __root__: typing_extensions.Annotated[
-        typing.Union[Alias, Enum, Object, Union],
-        # underscore prefix broken with _type
-        # https://github.com/pydantic/pydantic/issues/3849#issuecomment-1231445845
+        typing.Union[_Type.Alias, _Type.Enum, _Type.Object, _Type.Union],
         pydantic.Field(discriminator="type"),
     ]
 
     class _Visitor(ABC, typing.Generic[_Result]):
         @abstractmethod
-        def alias(self) -> _Result:
+        def alias(self, value: AliasTypeDeclaration) -> _Result:
             ...
 
         @abstractmethod
-        def enum(self) -> _Result:
+        def enum(self, value: EnumTypeDeclaration) -> _Result:
             ...
 
         @abstractmethod
-        def object(self) -> _Result:
+        def object(self, value: ObjectTypeDeclaration) -> _Result:
             ...
 
         @abstractmethod
-        def union(self) -> _Result:
+        def union(self, value: UnionTypeDeclaration) -> _Result:
             ...
 
-    def _visit(self, visitor: _Visitor[_Result]) -> None:
-        print(self.__root__.type)
+    def _visit(self, visitor: _Visitor[_Result]) -> _Result:
+        if self.__root__.type == "alias":
+            return visitor.alias(self.__root__)
+        if self.__root__.type == "enum":
+            return visitor.enum(self.__root__)
+        if self.__root__.type == "object":
+            return visitor.object(self.__root__)
+        if self.__root__.type == "union":
+            return visitor.union(self.__root__)

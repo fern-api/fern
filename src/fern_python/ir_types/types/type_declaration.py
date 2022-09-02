@@ -1,4 +1,4 @@
-from ..commons import WithDocs
+from ..commons.with_docs import WithDocs
 from .declared_type_name import DeclaredTypeName
 from .type import Type
 

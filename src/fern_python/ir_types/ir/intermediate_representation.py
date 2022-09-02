@@ -1,11 +1,14 @@
-from pydantic import BaseModel, Field
+import pydantic
+import typing
 from ..auth import ApiAuth
-from .services import Services
+from . import services
 from .fern_constants import FernConstants
+from ..types.type_declaration import TypeDeclaration
 
 
-class IntermediateRepresentation(BaseModel):
-    api_name: str = Field(alias="apiName")
+class IntermediateRepresentation(pydantic.BaseModel):
+    api_name: str = pydantic.Field(alias="apiName")
     auth: ApiAuth
-    services: Services
+    types: typing.List[TypeDeclaration]
+    services: services.Services
     constants: FernConstants
