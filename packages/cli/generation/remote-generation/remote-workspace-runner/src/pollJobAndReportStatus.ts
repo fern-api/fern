@@ -45,16 +45,17 @@ export function pollJobAndReportStatus({
         void pollForStatus();
 
         async function pollForStatus() {
-            const response = await fetchJobStatus(job);
-            context.logger.debug("Received status update: " + JSON.stringify(response));
-            if (response == null || !response.ok) {
+            const taskStatuses = await fetchTaskStatuses(job, context);
+            context.logger.debug("Received status update: " + JSON.stringify(taskStatuses));
+            if (taskStatuses == null) {
                 numConsecutiveFailed++;
                 if (numConsecutiveFailed === MAX_UNSUCCESSFUL_ATTEMPTS) {
-                    context.fail("Failed to poll task status.");
+                    context.fail(`Failed to get job status after ${numConsecutiveFailed} attempts.`);
                     return resolve();
                 }
             } else {
-                for (const [taskId, taskUpdate] of entries(response.body)) {
+                numConsecutiveFailed = 0;
+                for (const [taskId, taskUpdate] of entries(taskStatuses)) {
                     taskHandlers[taskId]?.processUpdate(taskUpdate);
                 }
                 const allFinished = Object.values(taskHandlers).every((taskHandler) => taskHandler.isFinished());
@@ -68,12 +69,14 @@ export function pollJobAndReportStatus({
     });
 }
 
-async function fetchJobStatus(job: Fiddle.remoteGen.CreateJobResponse) {
-    try {
-        return await REMOTE_GENERATION_SERVICE.remoteGen.getJobStatus({
-            jobId: job.jobId,
-        });
-    } catch (error) {
+async function fetchTaskStatuses(job: Fiddle.remoteGen.CreateJobResponse, context: TaskContext) {
+    const response = await REMOTE_GENERATION_SERVICE.remoteGen.getJobStatus({
+        jobId: job.jobId,
+    });
+    if (response.ok) {
+        return response.body;
+    } else {
+        context.logger.warn("Failed to get job status.", response.error.body);
         return undefined;
     }
 }

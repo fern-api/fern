@@ -67,7 +67,7 @@ export class RemoteTaskHandler {
                 error: () => LogLevel.Error,
                 _unknown: () => LogLevel.Info,
             });
-            this.context.logger.log(newLog.message, level);
+            this.context.logger.log(level, newLog.message);
         }
         this.lengthOfLastLogs = remoteTask.logs.length;
 
@@ -94,11 +94,11 @@ export class RemoteTaskHandler {
     }
 
     private async maybeDownloadFiles(status: Fiddle.remoteGen.FinishedTaskStatus): Promise<void> {
-        if (
-            this.generatorInvocation.type === "draft" &&
-            this.generatorInvocation.absolutePathToLocalOutput != null &&
-            status.hasFilesToDownload
-        ) {
+        if (this.generatorInvocation.type === "draft" && this.generatorInvocation.absolutePathToLocalOutput != null) {
+            if (!status.hasFilesToDownload) {
+                this.context.fail("No files available to download");
+                return;
+            }
             try {
                 await downloadFilesForTask({
                     jobId: this.job.jobId,

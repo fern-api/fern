@@ -5,7 +5,7 @@ import chalk from "chalk";
 import { ArgumentsCamelCase } from "yargs";
 import { CliEnvironment } from "./CliEnvironment";
 import { constructErrorMessage } from "./constructErrorMessage";
-import { Log, LogWithLevel } from "./Log";
+import { Log } from "./Log";
 import { TaskContextImpl } from "./TaskContextImpl";
 import { TtyAwareLogger } from "./TtyAwareLogger";
 import { getFernCliUpgradeMessage } from "./upgrade-utils/getFernCliUpgradeMessage";
@@ -136,42 +136,42 @@ export class CliContext {
 
     get logger(): Logger {
         return {
-            debug: (content) => {
+            debug: (...args) => {
                 this.log([
                     {
-                        content,
+                        args,
                         level: LogLevel.Debug,
                     },
                 ]);
             },
-            info: (content) => {
+            info: (...args) => {
                 this.log([
                     {
-                        content,
+                        args,
                         level: LogLevel.Info,
                     },
                 ]);
             },
-            warn: (content) => {
+            warn: (...args) => {
                 this.log([
                     {
-                        content,
+                        args,
                         level: LogLevel.Warn,
                     },
                 ]);
             },
-            error: (content) => {
+            error: (...args) => {
                 this.log([
                     {
-                        content,
+                        args,
                         level: LogLevel.Error,
                     },
                 ]);
             },
-            log: (content, level) => {
+            log: (level, ...args) => {
                 this.log([
                     {
-                        content,
+                        args,
                         level,
                     },
                 ]);
@@ -204,32 +204,12 @@ export class CliContext {
         };
     }
 
-    private log(logs: LogWithLevel[]): void {
-        const formatted = logs
-            .filter((log) => LOG_LEVELS.indexOf(log.level) >= LOG_LEVELS.indexOf(this.logLevel))
-            .map(
-                (log): Log => ({
-                    omitOnTTY: log.omitOnTTY,
-                    content: formatLog(log),
-                })
-            );
-        this.ttyAwareLogger.log(formatted);
+    private log(logs: Log[]): void {
+        const filtered = logs.filter((log) => LOG_LEVELS.indexOf(log.level) >= LOG_LEVELS.indexOf(this.logLevel));
+        this.ttyAwareLogger.log(filtered);
     }
 }
 
 function wrapWorkspaceNameForPrefix(workspaceName: string): string {
     return `[${workspaceName}]:`;
-}
-
-function formatLog(log: LogWithLevel): string {
-    const trimmed = log.content.trim() + "\n";
-    switch (log.level) {
-        case LogLevel.Error:
-            return chalk.red(trimmed);
-        case LogLevel.Warn:
-            return chalk.hex("FFA500")(trimmed);
-        case LogLevel.Debug:
-        case LogLevel.Info:
-            return trimmed;
-    }
 }

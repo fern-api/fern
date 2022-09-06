@@ -1,9 +1,9 @@
 import { LogLevel } from "./LogLevel";
 
 export interface Logger {
-    debug: (value: string) => void;
-    info: (value: string) => void;
-    warn: (value: string) => void;
-    error: (value: string) => void;
-    log: (value: string, level: LogLevel) => void;
+    debug: (...args: unknown[]) => void;
+    info: (...args: unknown[]) => void;
+    warn: (...args: unknown[]) => void;
+    error: (...args: unknown[]) => void;
+    log: (level: LogLevel, ...args: unknown[]) => void;
 }
