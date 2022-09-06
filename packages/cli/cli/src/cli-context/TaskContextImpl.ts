@@ -11,11 +11,11 @@ import {
 } from "@fern-api/task-context";
 import chalk from "chalk";
 import { constructErrorMessage } from "./constructErrorMessage";
-import { LogWithLevel } from "./Log";
+import { Log } from "./Log";
 
 export declare namespace TaskContextImpl {
     export interface Init {
-        log: (logs: LogWithLevel[]) => void;
+        log: (logs: Log[]) => void;
         takeOverTerminal: (run: () => void | Promise<void>) => Promise<void>;
         logPrefix?: string;
         onFinish?: (result: TaskResult) => void;
@@ -24,10 +24,10 @@ export declare namespace TaskContextImpl {
 
 export class TaskContextImpl implements Startable<TaskContext>, Finishable, TaskContext {
     protected result = TaskResult.Success;
-    protected log: (logs: LogWithLevel[]) => void;
+    protected log: (logs: Log[]) => void;
     protected logPrefix: string;
     protected subtasks: InteractiveTaskContextImpl[] = [];
-    private logs: LogWithLevel[] = [];
+    private logs: Log[] = [];
     protected status: "notStarted" | "running" | "finished" = "notStarted";
     private onFinish: ((result: TaskResult) => void) | undefined;
 
@@ -72,13 +72,10 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
         return this.result;
     }
 
-    protected bufferLog(log: LogWithLevel): void {
+    protected bufferLog(log: Log): void {
         this.logs.push({
             ...log,
-            content: addPrefixToString({
-                prefix: `${this.logPrefix} `,
-                content: log.content,
-            }),
+            prefix: this.logPrefix,
         });
     }
 
@@ -88,20 +85,20 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
 
     public get logger(): Logger {
         return {
-            debug: (content) => {
-                this.bufferLog({ content, level: LogLevel.Debug });
+            debug: (...args) => {
+                this.bufferLog({ args, level: LogLevel.Debug });
             },
-            info: (content) => {
-                this.bufferLog({ content, level: LogLevel.Info });
+            info: (...args) => {
+                this.bufferLog({ args, level: LogLevel.Info });
             },
-            warn: (content) => {
-                this.bufferLog({ content, level: LogLevel.Warn });
+            warn: (...args) => {
+                this.bufferLog({ args, level: LogLevel.Warn });
             },
-            error: (content) => {
-                this.bufferLog({ content, level: LogLevel.Error });
+            error: (...args) => {
+                this.bufferLog({ args, level: LogLevel.Error });
             },
-            log: (content, level) => {
-                this.bufferLog({ content, level });
+            log: (level, ...args) => {
+                this.bufferLog({ args, level });
             },
         };
     }
@@ -160,7 +157,7 @@ export class InteractiveTaskContextImpl
     public start(): Finishable & InteractiveTaskContext {
         super.start();
         this.bufferLog({
-            content: "Started.",
+            args: ["Started."],
             level: LogLevel.Info,
             omitOnTTY: true,
         });
@@ -175,13 +172,13 @@ export class InteractiveTaskContextImpl
     public finish(): void {
         if (this.result === TaskResult.Success) {
             this.bufferLog({
-                content: "Finished.",
+                args: ["Finished."],
                 level: LogLevel.Info,
                 omitOnTTY: true,
             });
         } else {
             this.bufferLog({
-                content: "Failed.",
+                args: ["Failed."],
                 level: LogLevel.Error,
                 omitOnTTY: true,
             });

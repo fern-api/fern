@@ -16,11 +16,11 @@ export async function validateWorkspaceAndLogIssues(workspace: Workspace, contex
 
     for (const violation of violations) {
         context.logger.log(
+            getLogLevelForSeverity(violation.severity),
             formatLog({
                 breadcrumbs: [violation.relativeFilePath, ...violation.nodePath],
                 title: violation.message,
-            }),
-            getLogLevelForSeverity(violation.severity)
+            })
         );
     }
 }
