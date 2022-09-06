@@ -95,40 +95,42 @@ export class FernTypescriptClientGenerator {
 
     private async generateTypeDeclarations() {
         for (const typeDeclaration of this.intermediateRepresentation.types) {
-            await TypeDeclarationHandler.run(typeDeclaration, {
-                withFile: (run) =>
-                    this.withFile({
-                        filepath: getExportedFilepathForType(typeDeclaration.name, this.apiName),
-                        run,
-                    }),
-                context: this.context,
+            await this.withFile({
+                filepath: getExportedFilepathForType(typeDeclaration.name, this.apiName),
+                run: async (file) => {
+                    await TypeDeclarationHandler.run(typeDeclaration, {
+                        file,
+                        context: this.context,
+                    });
+                },
             });
         }
     }
 
     private async generateErrorDeclarations() {
         for (const errorDeclaration of this.intermediateRepresentation.errors) {
-            await ErrorDeclarationHandler.run(errorDeclaration, {
-                withFile: async (run) =>
-                    this.withFile({
-                        filepath: getExportedFilepathForError(errorDeclaration.name, this.apiName),
-                        run,
-                    }),
-                context: this.context,
+            await this.withFile({
+                filepath: getExportedFilepathForError(errorDeclaration.name, this.apiName),
+                run: async (file) => {
+                    await ErrorDeclarationHandler.run(errorDeclaration, {
+                        file,
+                        context: this.context,
+                    });
+                },
             });
         }
     }
 
     private async generateServiceDeclarations() {
         for (const serviceDeclaration of this.intermediateRepresentation.services.http) {
-            await ServiceDeclarationHandler.run(serviceDeclaration, {
-                withFile: async (run) => {
-                    await this.withFile({
-                        filepath: getExportedFilepathForService(serviceDeclaration.name, this.apiName),
-                        run,
+            await this.withFile({
+                filepath: getExportedFilepathForService(serviceDeclaration.name, this.apiName),
+                run: async (file) => {
+                    await ServiceDeclarationHandler.run(serviceDeclaration, {
+                        file,
+                        context: this.context,
                     });
                 },
-                context: this.context,
             });
         }
     }
@@ -136,14 +138,14 @@ export class FernTypescriptClientGenerator {
     private async generateWrappers() {
         const wrapperDeclarations = constructWrapperDeclarations(this.intermediateRepresentation);
         for (const wrapperDeclaration of wrapperDeclarations) {
-            await WrapperDeclarationHandler.run(wrapperDeclaration, {
-                withFile: async (run) => {
-                    await this.withFile({
-                        filepath: getExportedFilepathForWrapper(wrapperDeclaration.name, this.apiName),
-                        run,
+            await this.withFile({
+                filepath: getExportedFilepathForWrapper(wrapperDeclaration.name, this.apiName),
+                run: async (file) => {
+                    await WrapperDeclarationHandler.run(wrapperDeclaration, {
+                        file,
+                        context: this.context,
                     });
                 },
-                context: this.context,
             });
         }
     }

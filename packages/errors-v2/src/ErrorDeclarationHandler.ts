@@ -5,19 +5,17 @@ import { generateObjectType } from "@fern-typescript/types-v2";
 import { ts } from "ts-morph";
 
 export const ErrorDeclarationHandler: DeclarationHandler<ErrorDeclaration> = {
-    run: async (errorDeclaration, { withFile }) => {
-        await withFile((file) => {
-            generateObjectType({
-                typeName: file.sourceFile.getBaseNameWithoutExtension(),
-                docs: errorDeclaration.docs,
-                file,
-                shape: getErrorShapeWithoutAdditionalProperties(errorDeclaration, file),
-                additionalProperties: {
-                    [file.fernConstants.errorDiscriminant]: ts.factory.createLiteralTypeNode(
-                        ts.factory.createStringLiteral(errorDeclaration.discriminantValue.wireValue)
-                    ),
-                },
-            });
+    run: async (errorDeclaration, { file }) => {
+        generateObjectType({
+            typeName: file.sourceFile.getBaseNameWithoutExtension(),
+            docs: errorDeclaration.docs,
+            file,
+            shape: getErrorShapeWithoutAdditionalProperties(errorDeclaration, file),
+            additionalProperties: {
+                [file.fernConstants.errorDiscriminant]: ts.factory.createLiteralTypeNode(
+                    ts.factory.createStringLiteral(errorDeclaration.discriminantValue.wireValue)
+                ),
+            },
         });
     },
 };

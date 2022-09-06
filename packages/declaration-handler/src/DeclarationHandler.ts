@@ -6,6 +6,6 @@ export interface DeclarationHandler<T> {
 }
 
 export interface DeclarationHandlerArgs {
-    withFile: (run: (file: File) => void | Promise<void>) => Promise<void>;
+    file: File;
     context: GeneratorContext;
 }

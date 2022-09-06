@@ -5,10 +5,8 @@ import { Scope, ts } from "ts-morph";
 import { ClientConstants } from "./constants";
 
 export const WrapperDeclarationHandler: DeclarationHandler<WrapperDeclaration> = {
-    run: async (wrapper, { withFile }) => {
-        await withFile((file) => {
-            generateWrapper({ wrapper, file });
-        });
+    run: async (wrapper, { file }) => {
+        generateWrapper({ wrapper, file });
     },
 };
 
