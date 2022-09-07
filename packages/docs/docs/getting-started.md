@@ -34,9 +34,15 @@ Check out [an example Fern Definition](https://github.com/fern-api/fern-examples
 
 :::tip Already have an OpenAPI spec?
 
-Join our private beta for access to our OpenAPI spec -> Fern Definition converter. [Get in touch.](mailto:hey@buildwithfern.com?subject=%5BPrivate%20Beta%5D%20OpenAPI%20to%20Fern%20Definition%20converter)
+[Join our private beta](mailto:hey@buildwithfern.com?subject=%5BPrivate%20Beta%5D%20OpenAPI%20to%20Fern%20Definition%20converter) for access to our OpenAPI spec -> Fern Definition converter.
 
 :::
+
+## Generate code
+
+Fern's code generators run remotely in the cloud. The input is your **Fern Definition** and the output is auto-generated code. You configure which generators you're using in [`generators.yml`](./cli/generate.md).
+
+Check out [an example generators.yml](https://github.com/fern-api/fern-examples/blob/main/fern/api/generators.yml) on Github.
 
 ## What's next?
 
@@ -44,9 +50,3 @@ Join our private beta for access to our OpenAPI spec -> Fern Definition converte
 - [How do I get API documentation?](./features/api-docs.md)
 - [How do I get server-side type safety?](./features/server.md)
 - [How do I get a Postman integration?](./features/postman.md)
-
-## Generate code
-
-Fern's code generators run remotely in the cloud. The input is your **Fern Definition** and the output is auto-generated code. You configure which generators you're using in [`generators.yml`](./cli/generate.md).
-
-Check out [an example generators.yml](https://github.com/fern-api/fern-examples/blob/main/fern/api/generators.yml) on Github.

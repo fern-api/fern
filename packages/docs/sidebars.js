@@ -36,6 +36,11 @@ module.exports = {
         `getting-started`,
         {
             type: "category",
+            label: "Benefits",
+            items: [`features/sdks`, `features/api-docs`, `features/server`, `features/postman`],
+        },
+        {
+            type: "category",
             label: "Defining an API",
             items: [
                 `definition/definition`,
