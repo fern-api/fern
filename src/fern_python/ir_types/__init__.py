@@ -1,24 +1,29 @@
+from . import services
 from .auth import ApiAuth, AuthScheme, AuthSchemesRequirement
-from .commons import WithDocs, FernFilepath, StringWithAllCasings, WireStringWithAllCasings
-from .ir import IntermediateRepresentation, Services, FernConstants
+from .commons import (
+    FernFilepath,
+    StringWithAllCasings,
+    WireStringWithAllCasings,
+    WithDocs,
+)
+from .errors import DeclaredErrorName, ErrorDeclaration, HttpErrorConfiguration
+from .ir import FernConstants, IntermediateRepresentation, Services
 from .types import (
-    TypeDeclaration,
-    DeclaredTypeName,
-    Type,
     AliasTypeDeclaration,
+    ContainerType,
+    DeclaredTypeName,
     EnumTypeDeclaration,
     EnumValue,
-    ObjectTypeDeclaration,
-    ObjectProperty,
-    UnionTypeDeclaration,
-    SingleUnionType,
-    TypeReference,
     MapType,
-    ContainerType,
+    ObjectProperty,
+    ObjectTypeDeclaration,
     PrimitiveType,
+    SingleUnionType,
+    Type,
+    TypeDeclaration,
+    TypeReference,
+    UnionTypeDeclaration,
 )
-from .errors import DeclaredErrorName, HttpErrorConfiguration, ErrorDeclaration
-from . import services
 
 __all__ = [
     "ApiAuth",

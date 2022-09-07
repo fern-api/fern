@@ -17,6 +17,9 @@ jobs:
           name: Format
           command: poetry run black --check src tests
       - run:
+          name: Sort imports
+          command: poetry run isort src tests --check --diff
+      - run:
           name: Lint
           command: poetry run flake8 src tests
       - run:

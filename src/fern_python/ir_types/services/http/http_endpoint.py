@@ -1,16 +1,18 @@
-from ...commons.with_docs import WithDocs
-from .http_endpoint_id import HttpEndpointId
+import typing
+
+import pydantic
+
 from ...commons.string_with_all_casings import StringWithAllCasings
-from .http_method import HttpMethod
+from ...commons.with_docs import WithDocs
+from ..commons.response_errors import ResponseErrors
+from .http_endpoint_id import HttpEndpointId
 from .http_header import HttpHeader
+from .http_method import HttpMethod
 from .http_path import HttpPath
-from .path_parameter import PathParameter
-from .query_parameter import QueryParameter
 from .http_request import HttpRequest
 from .http_response import HttpResponse
-from ..commons.response_errors import ResponseErrors
-import typing
-import pydantic
+from .path_parameter import PathParameter
+from .query_parameter import QueryParameter
 
 
 class HttpEndpoint(WithDocs):

@@ -1,4 +1,5 @@
 from pydantic import Field
+
 from .string_with_all_casings import StringWithAllCasings
 
 

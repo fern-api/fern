@@ -1,9 +1,12 @@
 from __future__ import annotations
-import pydantic
-from .map_type import MapType
+
 import typing
 from abc import ABC, abstractmethod
+
+import pydantic
 import typing_extensions
+
+from .map_type import MapType
 
 _Result = typing.TypeVar("_Result")
 

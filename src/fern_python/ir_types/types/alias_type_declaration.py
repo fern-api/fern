@@ -1,4 +1,5 @@
 import pydantic
+
 from .type_reference import TypeReference
 
 

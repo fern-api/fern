@@ -8,17 +8,22 @@ authors = []
 python = "^3.8"
 pydantic = "^1.9.2"
 typer = {extras = ["all"], version = "^0.6.1"}
+Jinja2 = "^3.1.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
 mypy = "^0.971"
 black = "^22.6.0"
 flake8 = "^5.0.4"
+isort = "^5.10.1"
 
 [tool.black]
 line-length = 120
 target-version = ['py38']
 include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
 
 [tool.pytest.ini_options]
 testpaths = [ "tests" ]

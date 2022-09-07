@@ -1,5 +1,7 @@
-import pydantic
 import typing
+
+import pydantic
+
 from .single_union_type import SingleUnionType
 
 

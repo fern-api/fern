@@ -1,5 +1,7 @@
-import pydantic
 import typing
+
+import pydantic
+
 from .declared_type_name import DeclaredTypeName
 from .object_property import ObjectProperty
 

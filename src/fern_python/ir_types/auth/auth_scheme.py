@@ -1,11 +1,14 @@
 from __future__ import annotations
+
 import typing
-from pydantic import Field, BaseModel
-from typing import Literal, Union
-from typing_extensions import Annotated
-from ..commons import WithDocs
 from abc import ABC, abstractmethod
+from typing import Literal, Union
+
+from pydantic import BaseModel, Field
+from typing_extensions import Annotated
+
 from .. import services
+from ..commons import WithDocs
 
 _Result = typing.TypeVar("_Result")
 

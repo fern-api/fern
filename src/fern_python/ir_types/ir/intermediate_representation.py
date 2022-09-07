@@ -1,9 +1,11 @@
-import pydantic
 import typing
+
+import pydantic
+
 from ..auth import ApiAuth
+from ..types.type_declaration import TypeDeclaration
 from . import services
 from .fern_constants import FernConstants
-from ..types.type_declaration import TypeDeclaration
 
 
 class IntermediateRepresentation(pydantic.BaseModel):

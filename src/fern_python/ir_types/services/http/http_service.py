@@ -1,9 +1,11 @@
+import typing
+
+import pydantic
+
 from ...commons.with_docs import WithDocs
-from .http_header import HttpHeader
 from ..commons.declared_service_name import DeclaredServiceName
 from .http_endpoint import HttpEndpoint
-import typing
-import pydantic
+from .http_header import HttpHeader
 
 
 class HttpService(WithDocs):

@@ -1,11 +1,13 @@
 from __future__ import annotations
-import pydantic
+
 import typing
 from abc import ABC, abstractmethod
+
+import pydantic
 import typing_extensions
+
 from .declared_type_name import DeclaredTypeName
 from .primitive_type import PrimitiveType
-
 
 _Result = typing.TypeVar("_Result")
 

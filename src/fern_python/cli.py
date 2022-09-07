@@ -1,13 +1,15 @@
+import pydantic
 import typer
+
+from fern_python.codegen import SourceFile
 from fern_python.ir_types import (
-    TypeReference,
+    AliasTypeDeclaration,
     ContainerType,
+    IntermediateRepresentation,
     MapType,
     Type,
-    AliasTypeDeclaration,
-    IntermediateRepresentation,
+    TypeReference,
 )
-import pydantic
 
 
 def main(path_to_config_json: str) -> None:
@@ -48,6 +50,10 @@ def main(path_to_config_json: str) -> None:
     parsed = pydantic.parse_file_as(IntermediateRepresentation, "ir.json")
     with open("parsed_ir.json", "w") as f:
         f.write(parsed.json(by_alias=True))
+
+    source_file = SourceFile(module_path=())
+    source_file.add_class(class_name="ZachClass")
+    source_file.write()
 
 
 def processTypeReference(x: TypeReference) -> None:

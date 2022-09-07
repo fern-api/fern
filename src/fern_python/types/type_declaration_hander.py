@@ -1,0 +1,2 @@
+class TypeDeclarationHandler:
+    pass

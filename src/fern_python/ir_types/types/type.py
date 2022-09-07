@@ -1,8 +1,11 @@
 from __future__ import annotations
-import pydantic
+
 import typing
 from abc import ABC, abstractmethod
+
+import pydantic
 import typing_extensions
+
 from .alias_type_declaration import AliasTypeDeclaration
 from .enum_type_declaration import EnumTypeDeclaration
 from .object_type_declaration import ObjectTypeDeclaration

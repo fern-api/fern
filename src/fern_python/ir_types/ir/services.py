@@ -1,5 +1,7 @@
+from typing import Any, List
+
 from pydantic import BaseModel
-from typing import List, Any
+
 from .. import services
 
 

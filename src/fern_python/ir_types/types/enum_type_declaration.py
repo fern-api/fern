@@ -1,5 +1,7 @@
-import pydantic
 import typing
+
+import pydantic
+
 from .enum_value import EnumValue
 
 
