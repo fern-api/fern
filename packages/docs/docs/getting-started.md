@@ -40,52 +40,13 @@ Join our private beta for access to our OpenAPI spec -> Fern Definition converte
 
 ## What's next?
 
-- How do I get server-side type safety?
-- How do I get SDKs?
-- How do I get API documentation?
-- How do I get a Postman integration?
+- [How do I get SDKs?](./features/sdk.md)
+- [How do I get API documentation?](./features/api-docs.md)
+- [How do I get server-side type safety?](./features/server.md)
+- [How do I get a Postman integration?](./features/postman.md)
 
 ## Generate code
 
-Fern's code generators run remotely in the cloud. The input is your **Fern Definition** and the output is auto-generated code. You configure which generators you're using in `generators.yml`.
+Fern's code generators run remotely in the cloud. The input is your **Fern Definition** and the output is auto-generated code. You configure which generators you're using in [`generators.yml`](./cli/generate.md).
 
 Check out [an example generators.yml](https://github.com/fern-api/fern-examples/blob/main/fern/api/generators.yml) on Github.
-
-### Add a generator
-
-You can add a generator by running `fern add <generator>`. By default generators are added to `draft` which will not publish your code to public registries (e.g. npm, Maven, PyPi). Here are [a list of supported generators](TODO).
-
-To generate a TypeScript SDK, we'd run:
-
-```bash
-fern add typescript-client
-```
-
-This would update our `generators.yml` to read:
-
-```diff
--draft: []
-+draft:
-+  - name: fernapi/typescript-client
-+    version: 0.0.xxx
-release:[]
-```
-
-### Run generators
-
-Once you've added generator(s), you'll invoke them by running:
-
-```bash
-fern generate
-```
-
-The output will look similar to:
-
-```bash
-┌─
-│ ✓  fernapi/fern-typescript
-│    ◦ @fern-examples-fern/imdb-client@0.0.1
-└─
-```
-
-You've just generated a TypeScript SDK that can start being used immediately! Add it to your project's `package.json` and get going.
