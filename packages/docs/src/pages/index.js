@@ -1,5 +1,4 @@
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
-import HomepageFeatures from "@site/src/components/HomepageFeatures";
 import Layout from "@theme/Layout";
 import React from "react";
 import styles from "./index.module.css";
@@ -7,9 +6,9 @@ import styles from "./index.module.css";
 function HomepageHeader() {
     const { siteConfig } = useDocusaurusContext();
     return (
-        <header className={styles.heroBanner}>
+        <div className={styles.heroBanner}>
             <div className="container" style={{ textAlign: "left" }}>
-                <h1 className={styles.hero_title}>Define your API once.</h1>
+                <h1 className={styles.hero_title}>{siteConfig.tagline}</h1>
                 <p className="hero__subtitle" style={{ color: "black" }}>
                     Keeps your docs and SDKs in sync with your API.
                 </p>
@@ -32,7 +31,7 @@ function HomepageHeader() {
                     </button>
                 </div>
             </div>
-        </header>
+        </div>
     );
 }
 
@@ -41,9 +40,6 @@ export default function Home() {
     return (
         <Layout title={siteConfig.title}>
             <HomepageHeader />
-            {/* <main>
-                <HomepageFeatures />
-            </main> */}
             <div className={styles.legalFooter}>
                 <a target="_blank" rel="noopener noreferrer" href="/docs/legal/privacy">
                     Privacy Policy
