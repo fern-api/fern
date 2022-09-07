@@ -11,7 +11,7 @@ function HomepageHeader() {
             <div className="container" style={{ textAlign: "left" }}>
                 <h1 className={styles.hero_title}>Define your API once.</h1>
                 <p className="hero__subtitle" style={{ color: "black" }}>
-                    Keep your server, SDKs, and docs in sync.
+                    Keeps your docs and SDKs in sync with your API.
                 </p>
                 <div className={styles.buttons}>
                     <button
@@ -41,9 +41,9 @@ export default function Home() {
     return (
         <Layout title={siteConfig.title}>
             <HomepageHeader />
-            <main>
+            {/* <main>
                 <HomepageFeatures />
-            </main>
+            </main> */}
             <div className={styles.legalFooter}>
                 <a target="_blank" rel="noopener noreferrer" href="/docs/legal/privacy">
                     Privacy Policy

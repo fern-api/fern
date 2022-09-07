@@ -1,7 +1,5 @@
 ---
 title: Services
-sidebar_position: 6
-sidebar_label: Services
 ---
 
 This page describes how to define a REST service, which communicates over HTTP.
@@ -18,7 +16,7 @@ types:
 services:
   WeatherService:
     base-path: /weather
-    auth: none
+    auth: false
     endpoints:
       isItRaining:
         docs: Check if it's currently raining in the provided zip code!
@@ -34,7 +32,7 @@ You can also define requests and responses inline:
 services:
   WeatherService:
     base-path: /weather
-    auth: none
+    auth: false
     endpoints:
       isItRaining:
         docs: Check if it's currently raining in the provided city!
@@ -59,7 +57,7 @@ types:
 services:
   WeatherService:
     base-path: /weather
-    auth: none
+    auth: false
     endpoints:
       isItRaining:
         docs: Check if it's currently raining in the provided zip code!
@@ -80,7 +78,7 @@ types:
 services:
   WeatherService:
     base-path: /weather
-    auth: none
+    auth: false
     endpoints:
       isItRaining:
         docs: Check if it's currently raining in the provided zip code!
@@ -105,7 +103,7 @@ Every endpoint can specify [errors](errors.md) - i.e. responses that indicate th
  services:
    WeatherService:
      base-path: /weather
-     auth: none
+     auth: false
      endpoints:
        isItRaining:
          docs: Check if it's currently raining in the provided zip code!
@@ -134,7 +132,7 @@ types:
 services:
   WeatherService:
     base-path: /weather
-+   auth: bearer
++   auth: true
     endpoints:
       isItRaining:
         docs: Check if it's currently raining in the provided zip code!

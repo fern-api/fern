@@ -1,7 +1,5 @@
 ---
 title: Types
-sidebar_position: 5
-sidebar_label: Types
 ---
 
 <!-- markdownlint-disable MD036 -->
@@ -225,6 +223,18 @@ enum Suit {
   CLUBS,
   DIAMONDS,
 }
+```
+
+You can optionally assign a `name` of an enum. This is often used when the `value` has punctuation.
+
+```yaml
+Topic:
+  enum:
+    - name: IssueOpened
+      value: issue.opened
+    - name: IssueUpdated
+      value: issue.updated
+  docs: Either issue.opened or issue.updated
 ```
 
 ### Aliases
