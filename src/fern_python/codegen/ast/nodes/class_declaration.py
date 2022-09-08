@@ -1,10 +1,16 @@
+from __future__ import annotations
+
 from typing import List, Optional, Set, Union
+
+from jinja2 import Template
 
 from ..ast_node import AstNode, ReferenceResolver, Writer
 from ..reference import Reference
 from .class_constructor import ClassConstructor
 from .class_reference import ClassReference
 from .function_declaration import FunctionDeclaration
+from .function_parameter import FunctionParameter
+from .type_hint import TypeHint
 from .variable_declaration import VariableDeclaration
 
 
@@ -12,13 +18,29 @@ class ClassDeclaration(AstNode):
     name: str
     extends: List[ClassReference]
     constructor: Optional[ClassConstructor]
-    statements: List[Union[VariableDeclaration, FunctionDeclaration]]
+    statements: List[Union[VariableDeclaration, FunctionDeclaration, ClassDeclaration]]
 
     def __init__(self, name: str, extends: List[ClassReference] = []):
         self.name = name
         self.extends = extends
         self.constructor = None
         self.statements = []
+
+    def add_variable(self, variable_declaration: VariableDeclaration) -> None:
+        self.statements.append(variable_declaration)
+
+    def add_method(self, name: str, return_type: TypeHint, parameters: List[FunctionParameter], body: Template) -> None:
+        self.statements.append(
+            FunctionDeclaration(
+                name=name,
+                return_type=return_type,
+                parameters=[FunctionParameter(name="self")] + parameters,
+                body=body,
+            )
+        )
+
+    def add_class(self, class_declaration: ClassDeclaration) -> None:
+        self.statements.append(class_declaration)
 
     def get_references(self) -> Set[Reference]:
         references: Set[Reference] = set(self.extends)
@@ -36,4 +58,6 @@ class ClassDeclaration(AstNode):
         writer.write_line(top_line)
 
         with writer.indent():
-            writer.write_line("pass")
+            for statement in self.statements:
+                writer.write_node(statement)
+                writer.write("\n\n")

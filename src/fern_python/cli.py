@@ -1,7 +1,7 @@
 import pydantic
 import typer
 
-from fern_python.codegen import SourceFile
+from fern_python.codegen import AST, ExportStrategy, Filepath, Project
 from fern_python.ir_types import (
     AliasTypeDeclaration,
     ContainerType,
@@ -51,9 +51,17 @@ def main(path_to_config_json: str) -> None:
     with open("parsed_ir.json", "w") as f:
         f.write(parsed.json(by_alias=True))
 
-    source_file = SourceFile(module_path=())
-    source_file.add_class(class_name="ZachClass")
-    source_file.write()
+    with Project(filepath="./foo") as project:
+        with project.source_file(
+            filepath=Filepath(
+                directories=[
+                    Filepath.DirectoryFilepathPart(module_name="bar", export_strategy=ExportStrategy.EXPORT_ALL)
+                ],
+                file=Filepath.FilepathPart(module_name="baz"),
+            )
+        ) as source_file:
+            class_declaration = source_file.add_class(class_name="ZachClass")
+            class_declaration.add_variable(AST.VariableDeclaration(name="foo"))
 
 
 def processTypeReference(x: TypeReference) -> None:

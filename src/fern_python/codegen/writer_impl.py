@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import errno
+import os
 from types import TracebackType
 from typing import IO, Any, Optional, Type
 
@@ -13,6 +15,7 @@ class WriterImpl(AST.Writer):
 
     def __init__(self, filepath: str, reference_resolver: AST.ReferenceResolver):
         self._reference_resolver = reference_resolver
+        mkdir_p(os.path.dirname(filepath))
         self._file = open(filepath, "w")
 
     def write(self, content: str) -> None:
@@ -68,3 +71,14 @@ class IndentableWriterImpl(AST.IndentableWriter):
         exctb: Optional[TracebackType],
     ) -> None:
         self._writer.outdent()
+
+
+# Taken from https://stackoverflow.com/a/600612/119527
+def mkdir_p(path: str) -> None:
+    try:
+        os.makedirs(path)
+    except OSError as exc:
+        if exc.errno == errno.EEXIST and os.path.isdir(path):
+            pass
+        else:
+            raise

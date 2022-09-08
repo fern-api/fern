@@ -2,7 +2,7 @@ from collections import defaultdict
 from dataclasses import dataclass
 from typing import DefaultDict, Optional, Set
 
-from .. import AST
+from . import AST
 
 
 @dataclass(frozen=True)
