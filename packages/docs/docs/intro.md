@@ -12,7 +12,7 @@ And it’s reasonable to want examples of how to use those SDKs in your API docs
 
 Despite feeling like reasonable asks, completing them is hardly feasible. Unless you can invest in an engineering team to build great internal tooling for your APIs—like Stripe and Palantir have—there are no good options. The closest thing to a single source of truth is OpenAPI, which is **far** from ideal.
 
-<div style="margin-left: 15px">
+<div style={{ marginLeft: 15px }}>
 
 The OpenAPI spec is incredibly flexible, but as a result, the SDK generators are notorious for generating code that isn’t idiomatic and sometimes [doesn’t even](https://github.com/OpenAPITools/openapi-generator/issues?q=is%3Aissue+%22doesn%27t+compile%22) compile.
 
