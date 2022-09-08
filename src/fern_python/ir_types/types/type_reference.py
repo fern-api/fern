@@ -99,6 +99,6 @@ class TypeReference(pydantic.BaseModel):
             return visitor.void()
 
 
-from .container_type import ContainerType  # noqa E402
+from .container_type import ContainerType  # noqa: E402
 
 _TypeReference.Container.update_forward_refs()

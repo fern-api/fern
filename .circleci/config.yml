@@ -14,17 +14,8 @@ jobs:
           name: Type check
           command: poetry run mypy
       - run:
-          name: Format
-          command: poetry run black --check src tests
-      - run:
-          name: Sort imports
-          command: poetry run isort src tests --check --diff
-      - run:
-          name: Lint
-          command: poetry run flake8 src tests
-      - run:
-          name: Ensure no changes to git-tracked files
-          command: git --no-pager diff --exit-code
+          name: pre-commit
+          command: poetry run pre-commit run --all-files
 
 workflows:
   build:

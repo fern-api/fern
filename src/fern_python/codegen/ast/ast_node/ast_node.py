@@ -17,4 +17,4 @@ class AstNode(ABC):
         ...
 
 
-from .writer import Writer  # noqa E402
+from .writer import Writer  # noqa: E402

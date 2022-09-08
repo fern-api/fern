@@ -11,6 +11,6 @@ class MapType(pydantic.BaseModel):
         allow_population_by_field_name = True
 
 
-from .type_reference import TypeReference  # noqa E402
+from .type_reference import TypeReference  # noqa: E402
 
 MapType.update_forward_refs()

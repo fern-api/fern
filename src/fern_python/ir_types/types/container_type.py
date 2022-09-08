@@ -81,7 +81,7 @@ class ContainerType(pydantic.BaseModel):
             return visitor.set(self.__root__.set)
 
 
-from .type_reference import TypeReference  # noqa E402
+from .type_reference import TypeReference  # noqa: E402
 
 _ContainerType.List.update_forward_refs()
 _ContainerType.Map.update_forward_refs()
