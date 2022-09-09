@@ -252,7 +252,7 @@ types:
 
 With aliases:
 
-```diff-yaml diff-highlight
+```diff
 types:
 + EmployeeId: string
   Employee:

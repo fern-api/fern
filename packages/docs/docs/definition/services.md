@@ -10,7 +10,7 @@ A service consists of **endpoints**. Each endpoint has a path and an associated 
 
 Endpoints can optionally provide requests and responses, which are used as the HTTP message body.
 
-```diff-yaml diff-highlight
+```diff
 types:
   ZipCode: string
 services:
@@ -28,7 +28,7 @@ services:
 
 You can also define requests and responses inline:
 
-```diff-yaml diff-highlight
+```diff
 services:
   WeatherService:
     base-path: /weather
@@ -51,7 +51,7 @@ You can specify **path parameters** and **query parameters** for each endpoint.
 
 **Path parameters** are parsed from the endpoint URL, e.g. `/weather/is-it-raining/98112`.
 
-```diff-yaml diff-highlight
+```diff
 types:
   ZipCode: string
 services:
@@ -72,7 +72,7 @@ services:
 
 > **Note:** To encourage best practices, all query parameters are implicitly typed as `optional`. API consumers are never required to supply them.
 
-```diff-yaml diff-highlight
+```diff
 types:
   ZipCode: string
 services:
@@ -97,7 +97,7 @@ services:
 
 Every endpoint can specify [errors](errors.md) - i.e. responses that indicate that something went wrong. The endpoint's `errors` field must be a union.
 
-```diff-yaml diff-highlight
+```diff
  types:
    ZipCode: string
  services:
@@ -126,7 +126,7 @@ Every endpoint can specify [errors](errors.md) - i.e. responses that indicate th
 
 Services require authentication. Currently, Fern only supports bearer tokens using the `Authorization` header.
 
-```diff-yaml diff-highlight
+```diff
 types:
   ZipCode: string
 services:
