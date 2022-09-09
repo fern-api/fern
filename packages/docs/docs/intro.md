@@ -2,6 +2,8 @@
 title: Introduction
 ---
 
+<!-- markdownlint-disable MD033 -->
+
 When it comes to API development, there’s a gap between what’s _reasonable_ and what’s _feasible_.
 
 It’s reasonable to want a [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) approach to API development. Every software engineer knows that drift is inevitable with multiple sources of truth. This is why API docs are constantly out of date or why SDKs are missing the latest features.
