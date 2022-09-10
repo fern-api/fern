@@ -2,21 +2,22 @@ from __future__ import annotations
 
 import errno
 import os
+from pathlib import Path
 from types import TracebackType
 from typing import IO, Any, Optional, Type
+
+import black
 
 from . import AST
 
 
 class WriterImpl(AST.Writer):
-    _reference_resolver: AST.ReferenceResolver
+    _filepath: str
     _file: IO[Any]
     _indent: int = 0
 
-    def __init__(self, filepath: str, reference_resolver: AST.ReferenceResolver):
-        self._reference_resolver = reference_resolver
-        mkdir_p(os.path.dirname(filepath))
-        self._file = open(filepath, "w")
+    def __init__(self, filepath: str):
+        self._filepath = filepath
 
     def write(self, content: str) -> None:
         self._file.write("\t" * self._indent + content)
@@ -26,9 +27,6 @@ class WriterImpl(AST.Writer):
         if not content.endswith("\n"):
             self.write("\n")
 
-    def write_node(self, node: AST.AstNode) -> None:
-        node.write(writer=self, reference_resolver=self._reference_resolver)
-
     def indent(self) -> IndentableWriterImpl:
         """
         with writer.indent():
@@ -37,13 +35,24 @@ class WriterImpl(AST.Writer):
         self._indent += 1
         return IndentableWriterImpl(writer=self)
 
-    def close(self) -> None:
+    def start(self) -> None:
+        mkdir_p(os.path.dirname(self._filepath))
+        self._file = open(self._filepath, "w")
+
+    def finish(self) -> None:
         self._file.close()
+        black.format_file_in_place(
+            Path(os.path.join(os.getcwd(), self._filepath)),
+            fast=True,
+            mode=black.FileMode(),
+            write_back=black.WriteBack.YES,
+        )
 
     def outdent(self) -> None:
         self._indent = max(0, self._indent - 1)
 
     def __enter__(self) -> WriterImpl:
+        self.start()
         return self
 
     def __exit__(
@@ -52,7 +61,7 @@ class WriterImpl(AST.Writer):
         excinst: Optional[BaseException],
         exctb: Optional[TracebackType],
     ) -> None:
-        self.close()
+        self.finish()
 
 
 class IndentableWriterImpl(AST.IndentableWriter):

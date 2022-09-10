@@ -51,7 +51,7 @@ def main(path_to_config_json: str) -> None:
     with open("parsed_ir.json", "w") as f:
         f.write(parsed.json(by_alias=True))
 
-    with Project(filepath="./foo") as project:
+    with Project(filepath=".", project_name="foo") as project:
         with project.source_file(
             filepath=Filepath(
                 directories=[

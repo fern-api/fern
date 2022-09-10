@@ -1,4 +1,4 @@
-from ..reference import Reference
+from ...reference import Reference
 
 
 class ClassReference(Reference):

@@ -1,19 +1,17 @@
 from typing import Optional, Set
 
-from jinja2 import Template
-
-from ..ast_node import AstNode, ReferenceResolver, Writer
+from ..ast_node import AstNode, NodeWriter, ReferenceResolver
 from ..reference import Reference
-from .jinja_utils import get_references_from_jinja_template, write_jinja_template
+from .code_writer import CodeWriter, get_references_from_code_writer, run_code_writer
 from .type_hint import TypeHint
 
 
 class VariableDeclaration(AstNode):
     name: str
     type_hint: Optional[TypeHint]
-    initializer: Optional[Template]
+    initializer: Optional[CodeWriter]
 
-    def __init__(self, name: str, type_hint: Optional[TypeHint] = None, initializer: Template = None):
+    def __init__(self, name: str, type_hint: Optional[TypeHint] = None, initializer: CodeWriter = None):
         self.name = name
         self.type_hint = type_hint
         self.initializer = initializer
@@ -23,14 +21,14 @@ class VariableDeclaration(AstNode):
         if self.type_hint is not None:
             references = references.union(self.type_hint.get_references())
         if self.initializer is not None:
-            references = references.union(get_references_from_jinja_template(self.initializer))
+            references = references.union(get_references_from_code_writer(self.initializer))
         return references
 
-    def write(self, writer: Writer, reference_resolver: ReferenceResolver) -> None:
+    def write(self, writer: NodeWriter, reference_resolver: ReferenceResolver) -> None:
         writer.write(f"{self.name}")
         if self.type_hint is not None:
             writer.write(": ")
             writer.write_node(self.type_hint)
-        if self.initializer:
-            writer.write(" = ")
-            write_jinja_template(template=self.initializer, writer=writer, reference_resolver=reference_resolver)
+        if self.initializer is not None:
+            initializer_str = run_code_writer(code_writer=self.initializer, reference_resolver=reference_resolver)
+            writer.write(" = " + initializer_str)

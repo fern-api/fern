@@ -1,5 +1,8 @@
 from dataclasses import dataclass
-from typing import Optional, Tuple
+from typing import Optional, Tuple, Union
+
+from .built_in_module import BuiltInModule
+from .dependency import Dependency
 
 ModulePath = Tuple[str, ...]
 
@@ -7,8 +10,6 @@ ModulePath = Tuple[str, ...]
 @dataclass(frozen=True)
 class Reference:
     module: ModulePath
-    submodule: Optional[str]
-    alias: Optional[str]
 
     name_inside_import: Tuple[str, ...]
     """
@@ -24,3 +25,7 @@ class Reference:
 
         l: List # name_inside_import == ()
     """
+
+    submodule: Optional[str] = None
+    alias: Optional[str] = None
+    from_module: Optional[Union[BuiltInModule, Dependency]] = None

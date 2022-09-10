@@ -15,10 +15,6 @@ class Writer(ABC):
         ...
 
     @abstractmethod
-    def write_node(self, node: AstNode) -> None:
-        ...
-
-    @abstractmethod
     def indent(self) -> IndentableWriter:
         ...
 
@@ -40,6 +36,3 @@ class IndentableWriter(ABC):
         exctb: Optional[TracebackType],
     ) -> None:
         ...
-
-
-from .ast_node import AstNode  # noqa: E402

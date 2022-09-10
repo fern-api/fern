@@ -6,6 +6,7 @@ from typing import DefaultDict, Set, Tuple
 from . import AST
 from .filepath import ExportStrategy, Filepath
 from .source_file import SourceFileImpl
+from .writer_impl import WriterImpl
 
 RelativeModulePath = Tuple[str, ...]
 
@@ -56,11 +57,11 @@ class ModuleManager:
 
     def write_modules(self, filepath: str) -> None:
         for module, module_info in self._module_infos.items():
-            with open(os.path.join(filepath, *module, "__init__.py"), "w") as f:
+            with WriterImpl(filepath=os.path.join(filepath, *module, "__init__.py")) as writer:
                 all_exports: Set[str] = set()
                 for exported_from, exports in module_info.exports.items():
                     if len(exports) > 0:
-                        f.write(f"from .{'.'.join(exported_from)} import {', '.join(exports)}\n")
+                        writer.write_line(f"from .{'.'.join(exported_from)} import {', '.join(exports)}\n")
                         all_exports.update(exports)
                 if len(all_exports) > 0:
-                    f.write("__all__ = [" + ", ".join(f'"{export}"' for export in sorted(all_exports)) + "]")
+                    writer.write_line("__all__ = [" + ", ".join(f'"{export}"' for export in sorted(all_exports)) + "]")

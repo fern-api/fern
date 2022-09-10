@@ -1,18 +1,16 @@
 from typing import List, Set
 
-from jinja2 import Template
-
-from ..ast_node import AstNode, ReferenceResolver, Writer
-from ..reference import Reference
-from .function_parameter import FunctionParameter
-from .jinja_utils import get_references_from_jinja_template, write_jinja_template
+from ...ast_node import AstNode, NodeWriter, ReferenceResolver
+from ...reference import Reference
+from ..code_writer import CodeWriter, get_references_from_code_writer, run_code_writer
+from ..function import FunctionParameter
 
 
 class ClassConstructor(AstNode):
     parameters: List[FunctionParameter]
-    body: Template
+    body: CodeWriter
 
-    def __init__(self, parameters: List[FunctionParameter], body: Template):
+    def __init__(self, parameters: List[FunctionParameter], body: CodeWriter):
         self.parameters = parameters
         self.body = body
 
@@ -20,10 +18,10 @@ class ClassConstructor(AstNode):
         references: Set[Reference] = set()
         for parameter in self.parameters:
             references = references.union(parameter.get_references())
-        references = references.union(get_references_from_jinja_template(self.body))
+        references = references.union(get_references_from_code_writer(self.body))
         return references
 
-    def write(self, writer: Writer, reference_resolver: ReferenceResolver) -> None:
+    def write(self, writer: NodeWriter, reference_resolver: ReferenceResolver) -> None:
         writer.write("def __init__(self, ")
         for i, parameter in enumerate(self.parameters):
             writer.write_node(parameter)
@@ -32,4 +30,5 @@ class ClassConstructor(AstNode):
         writer.write("):")
 
         with writer.indent():
-            write_jinja_template(template=self.body, writer=writer, reference_resolver=reference_resolver)
+            body_str = run_code_writer(code_writer=self.body, reference_resolver=reference_resolver)
+            writer.write(body_str)

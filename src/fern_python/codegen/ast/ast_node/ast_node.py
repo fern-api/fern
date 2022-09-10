@@ -13,8 +13,8 @@ class AstNode(ABC):
         ...
 
     @abstractmethod
-    def write(self, writer: Writer, reference_resolver: ReferenceResolver) -> None:
+    def write(self, writer: NodeWriter, reference_resolver: ReferenceResolver) -> None:
         ...
 
 
-from .writer import Writer  # noqa: E402
+from .node_writer import NodeWriter  # noqa: E402

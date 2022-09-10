@@ -1,8 +1,8 @@
 from typing import Optional, Set
 
-from ..ast_node import AstNode, ReferenceResolver, Writer
-from ..reference import Reference
-from .type_hint import TypeHint
+from ...ast_node import AstNode, NodeWriter, ReferenceResolver
+from ...reference import Reference
+from ..type_hint import TypeHint
 
 
 class FunctionParameter(AstNode):
@@ -19,7 +19,7 @@ class FunctionParameter(AstNode):
             references = references.union(self.type_hint.get_references())
         return references
 
-    def write(self, writer: Writer, reference_resolver: ReferenceResolver) -> None:
+    def write(self, writer: NodeWriter, reference_resolver: ReferenceResolver) -> None:
         writer.write(f"{self.name}")
         if self.type_hint is not None:
             writer.write(": ")

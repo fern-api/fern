@@ -1,4 +1,5 @@
-from .ast_node import AstNode, IndentableWriter, ReferenceResolver, Writer
+from .ast_node import AstNode, IndentableWriter, NodeWriter, ReferenceResolver, Writer
+from .dependency import Dependency, DependencyName, DependencyVersion
 from .nodes import (
     ClassConstructor,
     ClassDeclaration,
@@ -14,6 +15,7 @@ __all__ = [
     "AstNode",
     "ReferenceResolver",
     "Writer",
+    "NodeWriter",
     "IndentableWriter",
     "ModulePath",
     "Reference",
@@ -24,4 +26,7 @@ __all__ = [
     "FunctionParameter",
     "TypeHint",
     "VariableDeclaration",
+    "Dependency",
+    "DependencyName",
+    "DependencyVersion",
 ]

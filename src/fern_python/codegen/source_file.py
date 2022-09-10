@@ -6,8 +6,8 @@ from typing import Callable, List, Optional, Set, Type
 
 from . import AST
 from .imports_manager import ImportsManager
+from .node_writer_impl import NodeWriterImpl
 from .reference_resolver_impl import ReferenceResolverImpl
-from .writer_impl import WriterImpl
 
 
 class SourceFile(ABC):
@@ -51,11 +51,12 @@ class SourceFileImpl(SourceFile):
         self,
         filepath: str,
         module_path: AST.ModulePath,
+        reference_resolver: ReferenceResolverImpl,
         completion_listener: Callable[[SourceFileImpl], None] = None,
     ):
         self._filepath = filepath
         self._module_path = module_path
-        self._reference_resolver = ReferenceResolverImpl(module_path=self._module_path)
+        self._reference_resolver = reference_resolver
         self._completion_listener = completion_listener
 
     def add_class(
@@ -80,7 +81,7 @@ class SourceFileImpl(SourceFile):
             if reference.module != self._module_path:
                 self._imports_manager.register_import(reference)
 
-        with WriterImpl(filepath=self._filepath, reference_resolver=self._reference_resolver) as writer:
+        with NodeWriterImpl(filepath=self._filepath, reference_resolver=self._reference_resolver) as writer:
             for statement in self._statements:
                 writer.write_node(statement)
 

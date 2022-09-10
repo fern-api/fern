@@ -2,16 +2,14 @@ from __future__ import annotations
 
 from typing import List, Optional, Set, Union
 
-from jinja2 import Template
-
-from ..ast_node import AstNode, ReferenceResolver, Writer
-from ..reference import Reference
+from ...ast_node import AstNode, NodeWriter, ReferenceResolver
+from ...reference import Reference
+from ..code_writer import CodeWriterFunction
+from ..function import FunctionDeclaration, FunctionParameter
+from ..type_hint import TypeHint
+from ..variable_declaration import VariableDeclaration
 from .class_constructor import ClassConstructor
 from .class_reference import ClassReference
-from .function_declaration import FunctionDeclaration
-from .function_parameter import FunctionParameter
-from .type_hint import TypeHint
-from .variable_declaration import VariableDeclaration
 
 
 class ClassDeclaration(AstNode):
@@ -29,7 +27,9 @@ class ClassDeclaration(AstNode):
     def add_variable(self, variable_declaration: VariableDeclaration) -> None:
         self.statements.append(variable_declaration)
 
-    def add_method(self, name: str, return_type: TypeHint, parameters: List[FunctionParameter], body: Template) -> None:
+    def add_method(
+        self, name: str, return_type: TypeHint, parameters: List[FunctionParameter], body: CodeWriterFunction
+    ) -> None:
         self.statements.append(
             FunctionDeclaration(
                 name=name,
@@ -50,7 +50,7 @@ class ClassDeclaration(AstNode):
             references = references.union(statement.get_references())
         return references
 
-    def write(self, writer: Writer, reference_resolver: ReferenceResolver) -> None:
+    def write(self, writer: NodeWriter, reference_resolver: ReferenceResolver) -> None:
         top_line = f"class {self.name}"
         if len(self.extends) > 0:
             top_line += f"({', '.join(reference_resolver.resolve_reference(r) for r in self.extends)})"
