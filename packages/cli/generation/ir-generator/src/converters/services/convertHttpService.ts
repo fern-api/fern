@@ -1,10 +1,10 @@
 import { assertNever, RelativeFilePath } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { FernFilepath } from "@fern-fern/ir-model/commons";
-import { HttpEndpoint, HttpHeader, HttpMethod, HttpService } from "@fern-fern/ir-model/services/http";
+import { HttpEndpoint, HttpHeader, HttpMethod, HttpService, PathParameter } from "@fern-fern/ir-model/services/http";
 import { generateStringWithAllCasings, generateWireStringWithAllCasings } from "../../utils/generateCasings";
 import { getDocs } from "../../utils/getDocs";
-import { createTypeReferenceParser } from "../../utils/parseInlineType";
+import { createTypeReferenceParser, TypeReferenceParser } from "../../utils/parseInlineType";
 import { constructHttpPath } from "./constructHttpPath";
 import { convertHttpRequest } from "./convertHttpRequest";
 import { convertHttpResponse } from "./convertHttpResponse";
@@ -30,6 +30,7 @@ export function convertHttpService({
             fernFilepath,
         },
         basePath: serviceDefinition["base-path"],
+        basePathV2: constructHttpPath(serviceDefinition["base-path"]),
         headers:
             serviceDefinition.headers != null
                 ? Object.entries(serviceDefinition.headers).map(([headerKey, header]) =>
@@ -44,14 +45,11 @@ export function convertHttpService({
                 docs: endpoint.docs,
                 method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
                 path: constructHttpPath(endpoint.path),
-                pathParameters:
-                    endpoint["path-parameters"] != null
-                        ? Object.entries(endpoint["path-parameters"]).map(([parameterName, parameter]) => ({
-                              docs: typeof parameter !== "string" ? parameter.docs : undefined,
-                              name: generateStringWithAllCasings(parameterName),
-                              valueType: parseTypeReference(parameter),
-                          }))
-                        : [],
+                pathParameters: getEndpointPathParameters({
+                    servicePathParameters: serviceDefinition["path-parameters"],
+                    endpointPathParameters: endpoint["path-parameters"],
+                    parseTypeReference,
+                }),
                 queryParameters:
                     endpoint["query-parameters"] != null
                         ? Object.entries(endpoint["query-parameters"]).map(([parameterName, parameter]) => {
@@ -92,6 +90,57 @@ export function convertHttpService({
                 }),
             })
         ),
+    };
+}
+
+function getEndpointPathParameters({
+    servicePathParameters,
+    endpointPathParameters,
+    parseTypeReference,
+}: {
+    servicePathParameters: Record<string, RawSchemas.HttpPathParameterSchema> | undefined;
+    endpointPathParameters: Record<string, RawSchemas.HttpPathParameterSchema> | undefined;
+    parseTypeReference: TypeReferenceParser;
+}): PathParameter[] {
+    const result: PathParameter[] = [];
+    if (servicePathParameters != null) {
+        Object.entries(servicePathParameters).forEach(([parameterName, parameter]) =>
+            result.push(
+                convertPathParameter({
+                    parameterName,
+                    parameter,
+                    parseTypeReference,
+                })
+            )
+        );
+    }
+    if (endpointPathParameters != null) {
+        Object.entries(endpointPathParameters).forEach(([parameterName, parameter]) =>
+            result.push(
+                convertPathParameter({
+                    parameterName,
+                    parameter,
+                    parseTypeReference,
+                })
+            )
+        );
+    }
+    return result;
+}
+
+function convertPathParameter({
+    parameterName,
+    parameter,
+    parseTypeReference,
+}: {
+    parameterName: string;
+    parameter: RawSchemas.HttpPathParameterSchema;
+    parseTypeReference: TypeReferenceParser;
+}): PathParameter {
+    return {
+        docs: typeof parameter !== "string" ? parameter.docs : undefined,
+        name: generateStringWithAllCasings(parameterName),
+        valueType: parseTypeReference(parameter),
     };
 }
 

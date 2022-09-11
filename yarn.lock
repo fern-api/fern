@@ -2888,7 +2888,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/validator": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/ir-model": 0.0.186
+    "@fern-fern/ir-model": 0.0.192
     "@types/boxen": ^3.0.1
     "@types/inquirer": ^9.0.1
     "@types/is-ci": ^3.0.0
@@ -3131,7 +3131,7 @@ __metadata:
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/ir-model": 0.0.186
+    "@fern-fern/ir-model": 0.0.192
     "@types/jest": ^28.1.7
     "@types/lodash-es": ^4.17.6
     "@types/node": ^18.7.11
@@ -3198,7 +3198,7 @@ __metadata:
     "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/generator-exec-client": 0.0.5
-    "@fern-fern/ir-model": 0.0.186
+    "@fern-fern/ir-model": 0.0.192
     "@types/jest": ^28.1.7
     "@types/node": ^18.7.11
     "@types/tmp": ^0.2.3
@@ -3386,7 +3386,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/fiddle-client-v2": ^0.0.18
-    "@fern-fern/ir-model": 0.0.186
+    "@fern-fern/ir-model": 0.0.192
     "@types/jest": ^28.1.7
     "@types/lodash-es": ^4.17.6
     "@types/node": ^18.7.11
@@ -3465,11 +3465,13 @@ __metadata:
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^28.1.7
+    "@types/lodash-es": ^4.17.6
     "@types/node": ^18.7.11
     chalk: ^5.0.1
     depcheck: ^1.4.3
     eslint: ^8.22.0
     jest: ^28.1.3
+    lodash-es: ^4.17.21
     prettier: ^2.7.1
     strip-ansi: ^7.0.1
     typescript: 4.6.4
@@ -3511,7 +3513,7 @@ __metadata:
     "@babel/preset-env": ^7.18.10
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
-    "@fern-fern/ir-model": 0.0.186
+    "@fern-fern/ir-model": 0.0.192
     "@types/jest": ^28.1.7
     "@types/node": ^18.7.11
     depcheck: ^1.4.3
@@ -3545,10 +3547,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/ir-model@npm:0.0.186":
-  version: 0.0.186
-  resolution: "@fern-fern/ir-model@npm:0.0.186"
-  checksum: bb7a3967a678234e694111f246cbc87661ce64a4c99b61600563900b35464b619944a0db70a5e86410e77039aec709b21792a4aaf5eb0d118efe0efdad3fe8c9
+"@fern-fern/ir-model@npm:0.0.192":
+  version: 0.0.192
+  resolution: "@fern-fern/ir-model@npm:0.0.192"
+  checksum: ccec857bb889d45324f6534fa86e3d2fdfd70b5e8442e22a8b734374e91ce90ea0b47917a979542693473402336944eee269182ec4c8cfa924a0eb716efb6292
   languageName: node
   linkType: hard
 

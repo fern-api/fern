@@ -2,7 +2,9 @@ services:
   http:
     SimpleService:
       auth: false
-      base-path: /
+      base-path: /base/{baseParameter}
+      path-parameters:
+        fakeBaseParameter: string
       endpoints:
         noErrors:
           path: /path/{parameter}/to/endpoint
