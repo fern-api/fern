@@ -16,13 +16,11 @@ export const NoUndefinedPathParametersRule: Rule = {
                 });
             },
             httpEndpoint: ({ endpoint }) => {
-                const endpointPathParameters = endpoint["path-parameters"];
-                const ruleViolations = getPathParameterRuleViolations({
+                return getPathParameterRuleViolations({
                     path: endpoint.path,
-                    pathParameters: endpointPathParameters,
+                    pathParameters: endpoint["path-parameters"] ?? {},
                     pathType: "endpoint",
                 });
-                if (service.)
             },
         };
     },
