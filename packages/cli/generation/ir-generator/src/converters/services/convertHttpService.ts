@@ -37,6 +37,16 @@ export function convertHttpService({
                       convertHttpHeader({ headerKey, header, fernFilepath, imports })
                   )
                 : [],
+        pathParameters:
+            serviceDefinition["path-parameters"] != null
+                ? Object.entries(serviceDefinition["path-parameters"]).map(([parameterName, parameter]) =>
+                      convertPathParameter({
+                          parameterName,
+                          parameter,
+                          parseTypeReference,
+                      })
+                  )
+                : [],
         endpoints: Object.entries(serviceDefinition.endpoints).map(
             ([endpointKey, endpoint]): HttpEndpoint => ({
                 id: endpointKey,
@@ -45,11 +55,16 @@ export function convertHttpService({
                 docs: endpoint.docs,
                 method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
                 path: constructHttpPath(endpoint.path),
-                pathParameters: getEndpointPathParameters({
-                    servicePathParameters: serviceDefinition["path-parameters"],
-                    endpointPathParameters: endpoint["path-parameters"],
-                    parseTypeReference,
-                }),
+                pathParameters:
+                    endpoint["path-parameters"] != null
+                        ? Object.entries(endpoint["path-parameters"]).map(([parameterName, parameter]) =>
+                              convertPathParameter({
+                                  parameterName,
+                                  parameter,
+                                  parseTypeReference,
+                              })
+                          )
+                        : [],
                 queryParameters:
                     endpoint["query-parameters"] != null
                         ? Object.entries(endpoint["query-parameters"]).map(([parameterName, parameter]) => {
@@ -91,41 +106,6 @@ export function convertHttpService({
             })
         ),
     };
-}
-
-function getEndpointPathParameters({
-    servicePathParameters,
-    endpointPathParameters,
-    parseTypeReference,
-}: {
-    servicePathParameters: Record<string, RawSchemas.HttpPathParameterSchema> | undefined;
-    endpointPathParameters: Record<string, RawSchemas.HttpPathParameterSchema> | undefined;
-    parseTypeReference: TypeReferenceParser;
-}): PathParameter[] {
-    const result: PathParameter[] = [];
-    if (servicePathParameters != null) {
-        Object.entries(servicePathParameters).forEach(([parameterName, parameter]) =>
-            result.push(
-                convertPathParameter({
-                    parameterName,
-                    parameter,
-                    parseTypeReference,
-                })
-            )
-        );
-    }
-    if (endpointPathParameters != null) {
-        Object.entries(endpointPathParameters).forEach(([parameterName, parameter]) =>
-            result.push(
-                convertPathParameter({
-                    parameterName,
-                    parameter,
-                    parseTypeReference,
-                })
-            )
-        );
-    }
-    return result;
 }
 
 function convertPathParameter({
