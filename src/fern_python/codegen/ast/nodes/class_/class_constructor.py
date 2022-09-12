@@ -1,22 +1,17 @@
 from typing import List, Set
 
-from ..ast_node import AstNode, NodeWriter, ReferenceResolver
+from ...ast_node import AstNode, NodeWriter, ReferenceResolver
+from ...references import Reference
 from ..code_writer import CodeWriter
-from ..reference import Reference
-from ..type_hint import TypeHint
-from .function_parameter import FunctionParameter
+from ..function import FunctionParameter
 
 
-class FunctionDeclaration(AstNode):
-    name: str
+class ClassConstructor(AstNode):
     parameters: List[FunctionParameter]
-    return_type: TypeHint
     body: CodeWriter
 
-    def __init__(self, name: str, return_type: TypeHint, parameters: List[FunctionParameter], body: CodeWriter):
-        self.name = name
+    def __init__(self, parameters: List[FunctionParameter], body: CodeWriter):
         self.parameters = parameters
-        self.return_type = return_type
         self.body = body
 
     def get_references(self) -> Set[Reference]:
@@ -27,14 +22,12 @@ class FunctionDeclaration(AstNode):
         return references
 
     def write(self, writer: NodeWriter, reference_resolver: ReferenceResolver) -> None:
-        writer.write(f"def {self.name}(")
+        writer.write("def __init__(self, ")
         for i, parameter in enumerate(self.parameters):
             writer.write_node(parameter)
             if i < len(self.parameters) - 1:
                 writer.write(", ")
-        writer.write(") -> ")
-        writer.write_node(self.return_type)
-        writer.write(":")
+        writer.write("):")
 
         with writer.indent():
             self.body.write(writer=writer, reference_resolver=reference_resolver)

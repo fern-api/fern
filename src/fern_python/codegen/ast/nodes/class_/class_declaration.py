@@ -2,14 +2,13 @@ from __future__ import annotations
 
 from typing import List, Optional, Set, Union
 
-from ..ast_node import AstNode, NodeWriter, ReferenceResolver
+from ...ast_node import AstNode, NodeWriter, ReferenceResolver
+from ...references import ClassReference, Reference
 from ..code_writer import CodeWriter
 from ..function import FunctionDeclaration, FunctionParameter
-from ..reference import Reference
 from ..type_hint import TypeHint
 from ..variable_declaration import VariableDeclaration
 from .class_constructor import ClassConstructor
-from .class_reference import ClassReference
 
 
 class ClassDeclaration(AstNode):

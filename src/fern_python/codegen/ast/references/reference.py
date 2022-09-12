@@ -1,8 +1,7 @@
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
-from .built_in_module import BuiltInModule
-from .dependency import Dependency
+from ..dependency import BuiltInModule, Dependency
 
 ModulePath = Tuple[str, ...]
 

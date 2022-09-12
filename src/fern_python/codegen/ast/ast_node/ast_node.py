@@ -3,7 +3,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import Set
 
-from ..reference import Reference
+from ..references import Reference
 from .reference_resolver import ReferenceResolver
 
 

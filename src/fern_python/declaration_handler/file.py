@@ -1,6 +1,6 @@
 from abc import ABC
 
-from ..codegen import SourceFile
+from fern_python.codegen import SourceFile
 
 
 class File(ABC):

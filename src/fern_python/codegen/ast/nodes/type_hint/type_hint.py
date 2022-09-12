@@ -2,11 +2,10 @@ from __future__ import annotations
 
 from typing import Set, Union
 
-from ..ast_node import AstNode, NodeWriter, ReferenceResolver
-from ..built_in_module import BuiltInModule
-from ..class_ import ClassReference
+from ...ast_node import AstNode, NodeWriter, ReferenceResolver
+from ...dependency import BuiltInModule
+from ...references import ClassReference, Reference
 from ..code_writer import CodeWriter
-from ..reference import Reference
 from .class_type_hint import ClassTypeHint
 from .primitive_type_hint import PrimitiveType, PrimitiveTypeHint
 

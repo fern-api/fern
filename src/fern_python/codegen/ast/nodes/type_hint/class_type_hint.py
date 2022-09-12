@@ -1,8 +1,7 @@
 from typing import List, Set
 
-from ..ast_node import AstNode, NodeWriter, ReferenceResolver
-from ..class_ import ClassReference
-from ..reference import Reference
+from ...ast_node import AstNode, NodeWriter, ReferenceResolver
+from ...references import ClassReference, Reference
 
 
 class ClassTypeHint(AstNode):

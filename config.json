@@ -1,0 +1,11 @@
+{
+  "irFilepath": "./ir.json",
+  "output": {
+    "path": "./outputA"
+  },
+  "workspaceName": "workspace",
+  "organization": "fern",
+  "environment": {
+    "type": "local"
+  }
+}

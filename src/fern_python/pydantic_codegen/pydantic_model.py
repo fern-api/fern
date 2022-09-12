@@ -1,4 +1,4 @@
-from ..codegen import AST
+from fern_python.codegen import AST
 
 
 def get_reference_to_pydantic_export(export: str) -> AST.ClassReference:
@@ -17,10 +17,10 @@ class PydanticModel:
     _class_declaration: AST.ClassDeclaration
     _has_aliases: bool = False
 
-    def __init__(self, name: str):
+    def __init__(self, name: str, base_model: AST.ClassReference = PYDANTIC_BASE_MODEL_REFERENCE):
         self._class_declaration = AST.ClassDeclaration(
             name=name,
-            extends=[PYDANTIC_BASE_MODEL_REFERENCE],
+            extends=[base_model],
         )
 
     def add_field(self, name: str, type_hint: AST.TypeHint, json_field_name: str) -> None:

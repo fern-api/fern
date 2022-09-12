@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from ..reference import Reference
+from ..references import Reference
 
 
 class ReferenceResolver(ABC):

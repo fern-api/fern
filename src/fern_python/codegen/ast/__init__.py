@@ -1,12 +1,17 @@
 from .ast_node import AstNode, IndentableWriter, NodeWriter, ReferenceResolver, Writer
-from .class_ import ClassConstructor, ClassDeclaration, ClassReference
-from .code_writer import CodeWriter, ReferencingCodeWriter
 from .dependency import Dependency, DependencyName, DependencyVersion
-from .function import FunctionDeclaration, FunctionParameter
-from .reference import ModulePath, Reference
-from .type_alias import TypeAlias
-from .type_hint import TypeHint
-from .variable_declaration import VariableDeclaration
+from .nodes import (
+    ClassConstructor,
+    ClassDeclaration,
+    CodeWriter,
+    FunctionDeclaration,
+    FunctionParameter,
+    ReferencingCodeWriter,
+    TypeAlias,
+    TypeHint,
+    VariableDeclaration,
+)
+from .references import ClassReference, ModulePath, Reference
 
 __all__ = [
     "AstNode",
