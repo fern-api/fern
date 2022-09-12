@@ -3,14 +3,13 @@ from typing import List, Set
 from ..ast_node import AstNode, NodeWriter, ReferenceResolver
 from ..class_ import ClassReference
 from ..reference import Reference
-from .type_hint import TypeHint
 
 
 class ClassTypeHint(AstNode):
     _reference: ClassReference
-    _type_parameters: List[TypeHint]
+    _type_parameters: List[AstNode]
 
-    def __init__(self, reference: ClassReference, type_parameters: List[TypeHint] = []):
+    def __init__(self, reference: ClassReference, type_parameters: List[AstNode] = []):
         self._reference = reference
         self._type_parameters = type_parameters
 

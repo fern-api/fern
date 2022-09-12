@@ -11,7 +11,7 @@ class VariableDeclaration(AstNode):
     type_hint: Optional[TypeHint]
     initializer: Optional[CodeWriter]
 
-    def __init__(self, name: str, type_hint: Optional[TypeHint] = None, initializer: CodeWriter = None):
+    def __init__(self, name: str, type_hint: TypeHint = None, initializer: CodeWriter = None):
         self.name = name
         self.type_hint = type_hint
         self.initializer = initializer

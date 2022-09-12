@@ -1,7 +1,7 @@
 import pydantic
 import typer
 
-from fern_python.codegen import AST, ExportStrategy, Filepath, Project
+from fern_python.codegen import ExportStrategy, Filepath, Project
 from fern_python.generated.ir_types import (
     AliasTypeDeclaration,
     ContainerType,
@@ -59,9 +59,10 @@ def main(path_to_config_json: str) -> None:
                 ],
                 file=Filepath.FilepathPart(module_name="baz"),
             )
-        ) as source_file:
-            class_declaration = source_file.add_class(class_name="ZachClass")
-            class_declaration.add_variable(AST.VariableDeclaration(name="foo"))
+        ):
+            ...
+            # class_declaration = source_file.add_class(name="ZachClass")
+            # class_declaration.add_variable(AST.VariableDeclaration(name="foo"))
 
 
 def processTypeReference(x: TypeReference) -> None:

@@ -16,10 +16,17 @@ class SourceFile(ABC):
     @abstractmethod
     def add_class(
         self,
-        class_name: str,
-        extends: List[AST.ClassReference] = [],
+        declaration: AST.ClassDeclaration,
         do_not_export: bool = False,
     ) -> AST.ClassDeclaration:
+        ...
+
+    @abstractmethod
+    def add_function(
+        self,
+        declaration: AST.FunctionDeclaration,
+        do_not_export: bool = False,
+    ) -> AST.FunctionDeclaration:
         ...
 
     @abstractmethod
@@ -64,23 +71,17 @@ class SourceFileImpl(SourceFile):
 
     def add_class(
         self,
-        name: str,
-        extends: List[AST.ClassReference] = [],
+        declaration: AST.ClassDeclaration,
         do_not_export: bool = False,
     ) -> AST.ClassDeclaration:
-        declaration = AST.ClassDeclaration(name=name, extends=extends)
-        return self._add_statement(statement=declaration, exported_name=name if not do_not_export else None)
+        return self._add_statement(statement=declaration, exported_name=declaration.name if not do_not_export else None)
 
     def add_function(
         self,
-        name: str,
-        parameters: List[AST.FunctionParameter],
-        return_type: AST.TypeHint,
-        body: AST.CodeWriter,
+        declaration: AST.FunctionDeclaration,
         do_not_export: bool = False,
     ) -> AST.FunctionDeclaration:
-        declaration = AST.FunctionDeclaration(name=name, return_type=return_type, parameters=parameters, body=body)
-        return self._add_statement(statement=declaration, exported_name=name if not do_not_export else None)
+        return self._add_statement(statement=declaration, exported_name=declaration.name if not do_not_export else None)
 
     def add_arbitrary_code(self, code: AST.CodeWriter, after_bottom_imports: bool = False) -> None:
         if after_bottom_imports:

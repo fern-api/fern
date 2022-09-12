@@ -5,6 +5,7 @@ from typing import Set, Union
 from ..ast_node import AstNode, NodeWriter, ReferenceResolver
 from ..built_in_module import BuiltInModule
 from ..class_ import ClassReference
+from ..code_writer import CodeWriter
 from ..reference import Reference
 from .class_type_hint import ClassTypeHint
 from .primitive_type_hint import PrimitiveType, PrimitiveTypeHint
@@ -55,6 +56,18 @@ class TypeHint(AstNode):
             ClassTypeHint(
                 reference=get_reference_to_typing_import("Dict"),
                 type_parameters=[key_type, value_type],
+            )
+        )
+
+    @staticmethod
+    def annotated(type: TypeHint, annotation: CodeWriter) -> TypeHint:
+        return TypeHint(
+            ClassTypeHint(
+                reference=ClassReference(
+                    module=("typing_extensions",),
+                    name_inside_import=("Annotated",),
+                ),
+                type_parameters=[annotation],
             )
         )
 

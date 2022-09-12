@@ -18,13 +18,13 @@ class ClassDeclaration(AstNode):
     constructor: Optional[ClassConstructor]
     statements: List[Union[VariableDeclaration, FunctionDeclaration, ClassDeclaration]]
 
-    def __init__(self, name: str, extends: List[ClassReference] = []):
+    def __init__(self, name: str, extends: List[ClassReference] = [], constructor: ClassConstructor = None):
         self.name = name
         self.extends = extends
-        self.constructor = None
+        self.constructor = constructor
         self.statements = []
 
-    def add_variable(self, variable_declaration: VariableDeclaration) -> None:
+    def add_attribute(self, variable_declaration: VariableDeclaration) -> None:
         self.statements.append(variable_declaration)
 
     def add_method(
@@ -39,8 +39,8 @@ class ClassDeclaration(AstNode):
             )
         )
 
-    def add_class(self, class_declaration: ClassDeclaration) -> None:
-        self.statements.append(class_declaration)
+    def add_class(self, declaration: ClassDeclaration) -> None:
+        self.statements.append(declaration)
 
     def get_references(self) -> Set[Reference]:
         references: Set[Reference] = set(self.extends)

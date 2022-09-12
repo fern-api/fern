@@ -1,9 +1,10 @@
 from .ast_node import AstNode, IndentableWriter, NodeWriter, ReferenceResolver, Writer
 from .class_ import ClassConstructor, ClassDeclaration, ClassReference
-from .code_writer import CodeWriter, CodeWriterFunction
+from .code_writer import CodeWriter, ReferencingCodeWriter
 from .dependency import Dependency, DependencyName, DependencyVersion
 from .function import FunctionDeclaration, FunctionParameter
 from .reference import ModulePath, Reference
+from .type_alias import TypeAlias
 from .type_hint import TypeHint
 from .variable_declaration import VariableDeclaration
 
@@ -26,5 +27,6 @@ __all__ = [
     "DependencyName",
     "DependencyVersion",
     "CodeWriter",
-    "CodeWriterFunction",
+    "ReferencingCodeWriter",
+    "TypeAlias",
 ]
