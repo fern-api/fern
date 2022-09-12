@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from typing import List, Optional, Set, Union
 
-from ...ast_node import AstNode, NodeWriter, ReferenceResolver
-from ...reference import Reference
-from ..code_writer import CodeWriterFunction
+from ..ast_node import AstNode, NodeWriter, ReferenceResolver
+from ..code_writer import CodeWriter
 from ..function import FunctionDeclaration, FunctionParameter
+from ..reference import Reference
 from ..type_hint import TypeHint
 from ..variable_declaration import VariableDeclaration
 from .class_constructor import ClassConstructor
@@ -28,7 +28,7 @@ class ClassDeclaration(AstNode):
         self.statements.append(variable_declaration)
 
     def add_method(
-        self, name: str, return_type: TypeHint, parameters: List[FunctionParameter], body: CodeWriterFunction
+        self, name: str, return_type: TypeHint, parameters: List[FunctionParameter], body: CodeWriter
     ) -> None:
         self.statements.append(
             FunctionDeclaration(

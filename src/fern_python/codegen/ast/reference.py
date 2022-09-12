@@ -28,4 +28,10 @@ class Reference:
 
     submodule: Optional[str] = None
     alias: Optional[str] = None
+
     from_module: Optional[Union[BuiltInModule, Dependency]] = None
+    """
+    if absent, module is assumed to be local
+    """
+
+    at_bottom_of_file: bool = False

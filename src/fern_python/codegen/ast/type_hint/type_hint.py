@@ -2,12 +2,20 @@ from __future__ import annotations
 
 from typing import Set, Union
 
-from ...ast_node import AstNode, NodeWriter, ReferenceResolver
-from ...built_in_module import BuiltInModule
-from ...reference import Reference
+from ..ast_node import AstNode, NodeWriter, ReferenceResolver
+from ..built_in_module import BuiltInModule
 from ..class_ import ClassReference
+from ..reference import Reference
 from .class_type_hint import ClassTypeHint
 from .primitive_type_hint import PrimitiveType, PrimitiveTypeHint
+
+
+def get_reference_to_typing_import(name: str) -> ClassReference:
+    return ClassReference(
+        module=("typing",),
+        name_inside_import=(name,),
+        from_module=BuiltInModule.typing,
+    )
 
 
 class TypeHint(AstNode):
@@ -27,11 +35,7 @@ class TypeHint(AstNode):
     def optional(wrapped_type: TypeHint) -> TypeHint:
         return TypeHint(
             ClassTypeHint(
-                reference=ClassReference(
-                    module=("typing",),
-                    name_inside_import=("Optional",),
-                    from_module=BuiltInModule.typing,
-                ),
+                reference=get_reference_to_typing_import("Optional"),
                 type_parameters=[wrapped_type],
             )
         )
@@ -40,11 +44,7 @@ class TypeHint(AstNode):
     def list(wrapped_type: TypeHint) -> TypeHint:
         return TypeHint(
             ClassTypeHint(
-                reference=ClassReference(
-                    module=("typing",),
-                    name_inside_import=("List",),
-                    from_module=BuiltInModule.typing,
-                ),
+                reference=get_reference_to_typing_import("List"),
                 type_parameters=[wrapped_type],
             )
         )
@@ -53,11 +53,7 @@ class TypeHint(AstNode):
     def dict(key_type: TypeHint, value_type: TypeHint) -> TypeHint:
         return TypeHint(
             ClassTypeHint(
-                reference=ClassReference(
-                    module=("typing",),
-                    name_inside_import=("Dict",),
-                    from_module=BuiltInModule.typing,
-                ),
+                reference=get_reference_to_typing_import("Dict"),
                 type_parameters=[key_type, value_type],
             )
         )

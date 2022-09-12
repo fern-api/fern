@@ -48,5 +48,5 @@ repos:
     rev: '1.2.0'
     hooks:
       - id: poetry-check
-      - id: poetry-lock
+      # - id: poetry-lock
       - id: poetry-export

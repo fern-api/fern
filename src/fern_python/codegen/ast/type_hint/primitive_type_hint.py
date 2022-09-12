@@ -1,8 +1,8 @@
 from enum import Enum
 from typing import Set
 
-from ...ast_node import AstNode, NodeWriter, ReferenceResolver
-from ...reference import Reference
+from ..ast_node import AstNode, NodeWriter, ReferenceResolver
+from ..reference import Reference
 
 
 class PrimitiveType(str, Enum):
