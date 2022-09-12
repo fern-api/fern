@@ -3043,6 +3043,7 @@ __metadata:
     "@docusaurus/theme-search-algolia": ^2.0.1
     "@mdx-js/react": ^1.6.22
     clsx: ^1.2.1
+    posthog-docusaurus: ^1.0.3
     prism-react-renderer: ^1.3.5
     react: ^18.2.0
     react-dom: ^18.2.0
@@ -14773,6 +14774,15 @@ env-cmd@toddbluhm/env-cmd:
     picocolors: ^1.0.0
     source-map-js: ^1.0.2
   checksum: 10eee25efd77868036403858577da0cefaf2e0905feeaba5770d5438ccdddba3d01cba8063e96b8aac4c6daa0ed413dd5ae0554a433a3c4db38df1d134cffc1f
+  languageName: node
+  linkType: hard
+
+"posthog-docusaurus@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "posthog-docusaurus@npm:1.0.3"
+  peerDependencies:
+    "@docusaurus/core": ^2.0.0
+  checksum: 250a7509eca1de685a4dbf069781eb49ff77ffa981b553a5fbc5ba61427be741f63d1ed7955658a09445ef7b2071880e0e1f445fdc7d9c67ff233faf39cf4183
   languageName: node
   linkType: hard
 

@@ -7750,6 +7750,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@docusaurus/theme-search-algolia", "virtual:0e22bec6c31cba292c2eafee712a4f44efcd205a5eb5fbdc172d86a58b90ce9b75aa9e0501b2352bc64f19c96f31b32a2f53ed4481651620596bea7157fbd2e0#npm:2.0.1"],\
             ["@mdx-js/react", "virtual:0e22bec6c31cba292c2eafee712a4f44efcd205a5eb5fbdc172d86a58b90ce9b75aa9e0501b2352bc64f19c96f31b32a2f53ed4481651620596bea7157fbd2e0#npm:1.6.22"],\
             ["clsx", "npm:1.2.1"],\
+            ["posthog-docusaurus", "virtual:0e22bec6c31cba292c2eafee712a4f44efcd205a5eb5fbdc172d86a58b90ce9b75aa9e0501b2352bc64f19c96f31b32a2f53ed4481651620596bea7157fbd2e0#npm:1.0.3"],\
             ["prism-react-renderer", "virtual:0e22bec6c31cba292c2eafee712a4f44efcd205a5eb5fbdc172d86a58b90ce9b75aa9e0501b2352bc64f19c96f31b32a2f53ed4481651620596bea7157fbd2e0#npm:1.3.5"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:0e22bec6c31cba292c2eafee712a4f44efcd205a5eb5fbdc172d86a58b90ce9b75aa9e0501b2352bc64f19c96f31b32a2f53ed4481651620596bea7157fbd2e0#npm:18.2.0"]\
@@ -22775,6 +22776,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packagePeers": [\
             "@types/postcss",\
             "postcss"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["posthog-docusaurus", [\
+        ["npm:1.0.3", {\
+          "packageLocation": "./.yarn/cache/posthog-docusaurus-npm-1.0.3-f4c5ba422f-250a7509ec.zip/node_modules/posthog-docusaurus/",\
+          "packageDependencies": [\
+            ["posthog-docusaurus", "npm:1.0.3"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:0e22bec6c31cba292c2eafee712a4f44efcd205a5eb5fbdc172d86a58b90ce9b75aa9e0501b2352bc64f19c96f31b32a2f53ed4481651620596bea7157fbd2e0#npm:1.0.3", {\
+          "packageLocation": "./.yarn/__virtual__/posthog-docusaurus-virtual-7520afeee3/0/cache/posthog-docusaurus-npm-1.0.3-f4c5ba422f-250a7509ec.zip/node_modules/posthog-docusaurus/",\
+          "packageDependencies": [\
+            ["posthog-docusaurus", "virtual:0e22bec6c31cba292c2eafee712a4f44efcd205a5eb5fbdc172d86a58b90ce9b75aa9e0501b2352bc64f19c96f31b32a2f53ed4481651620596bea7157fbd2e0#npm:1.0.3"],\
+            ["@docusaurus/core", "virtual:0e22bec6c31cba292c2eafee712a4f44efcd205a5eb5fbdc172d86a58b90ce9b75aa9e0501b2352bc64f19c96f31b32a2f53ed4481651620596bea7157fbd2e0#npm:2.0.1"],\
+            ["@types/docusaurus__core", null]\
+          ],\
+          "packagePeers": [\
+            "@docusaurus/core",\
+            "@types/docusaurus__core"\
           ],\
           "linkType": "HARD"\
         }]\

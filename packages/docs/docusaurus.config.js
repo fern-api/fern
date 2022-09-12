@@ -43,6 +43,7 @@ const config = {
             }),
         ],
     ],
+    plugins: ["posthog-docusaurus"],
     themeConfig:
         /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
@@ -97,6 +98,10 @@ const config = {
             prism: {
                 theme: lightCodeTheme,
                 darkTheme: darkCodeTheme,
+            },
+            posthog: {
+                apiKey: "phc_yQgAEdJJkVpI24NdSRID2mor1x1leRpDoC9yZ9mfXal",
+                enableInDevelopment: false,
             },
         }),
 };
