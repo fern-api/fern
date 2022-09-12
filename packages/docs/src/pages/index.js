@@ -24,7 +24,7 @@ function HomepageHeader() {
                     <button
                         className={styles.hero_button_git}
                         onClick={() => {
-                            window.open("https://github.com/fern-api/fern/");
+                            window.open("https://github.com/fern-api/fern/", "_blank");
                         }}
                     >
                         View GitHub
