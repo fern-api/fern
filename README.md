@@ -21,4 +21,4 @@ We’re in private beta with a handful of customers. If you’re interested in u
 - [How do I get SDKs?](https://www.buildwithfern.com/docs/features/sdk)
 - [How do I get API documentation?](https://www.buildwithfern.com/docs/features/api-docs)
 - [How do I get server-side type safety?](https://www.buildwithfern.com/docs/features/server)
-- [How do I get a Postman integration?](phttps://www.buildwithfern.com/docs/features/postman)
+- [How do I get a Postman integration?](https://www.buildwithfern.com/docs/features/postman)
