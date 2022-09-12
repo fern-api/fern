@@ -9,9 +9,13 @@ types:
     extends: commons.WithDocs
     properties:
       name: serviceCommons.DeclaredServiceName
-      basePath: optional<string>
+      basePath:
+        type: optional<string>
+        docs: This is deprecated.
+      basePathV2: optional<HttpPath>
       endpoints: list<HttpEndpoint>
       headers: list<HttpHeader>
+      pathParameters: list<PathParameter>
   HttpEndpointId: string
   HttpEndpoint:
     extends: commons.WithDocs

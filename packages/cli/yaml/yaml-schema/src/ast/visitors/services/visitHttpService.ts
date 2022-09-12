@@ -36,6 +36,24 @@ export async function visitHttpService({
             }
         },
         auth: noop,
+        "path-parameters": async (pathParameters) => {
+            if (pathParameters == null) {
+                return;
+            }
+            for (const [pathParameterKey, pathParameter] of Object.entries(pathParameters)) {
+                const nodePathForPathParameter = [...nodePathForService, "path-parameters", pathParameterKey];
+                if (typeof pathParameter === "string") {
+                    await visitor.typeReference?.(pathParameter, nodePathForPathParameter);
+                } else {
+                    await visitObject(pathParameter, {
+                        type: async (type) => {
+                            await visitor.typeReference?.(type, nodePathForPathParameter);
+                        },
+                        docs: createDocsVisitor(visitor, nodePathForPathParameter),
+                    });
+                }
+            }
+        },
         endpoints: async (endpoints) => {
             for (const [endpointId, endpoint] of Object.entries(endpoints)) {
                 const nodePathForEndpoint = [...nodePathForService, "endpoints", endpointId];

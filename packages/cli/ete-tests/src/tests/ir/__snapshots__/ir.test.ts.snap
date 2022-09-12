@@ -198,7 +198,12 @@ exports[`ir simple 1`] = `
                     ]
                 },
                 \\"basePath\\": \\"/movies\\",
+                \\"basePathV2\\": {
+                    \\"head\\": \\"/movies\\",
+                    \\"parts\\": []
+                },
                 \\"headers\\": [],
+                \\"pathParameters\\": [],
                 \\"endpoints\\": [
                     {
                         \\"id\\": \\"createMovie\\",
