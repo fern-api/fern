@@ -25,7 +25,9 @@ class PydanticModel:
 
     def add_field(self, name: str, type_hint: AST.TypeHint, json_field_name: str) -> None:
         initializer = (
-            AST.CodeWriter(FieldNameInitializer(json_field_name=json_field_name)) if json_field_name != name else None
+            AST.CodeWriter(get_field_name_initializer(json_field_name=json_field_name))
+            if json_field_name != name
+            else None
         )
 
         if initializer is not None:
@@ -52,12 +54,9 @@ class PydanticModel:
         return self._class_declaration
 
 
-class FieldNameInitializer(AST.ReferencingCodeWriter):
-    _json_field_name: str
+def get_field_name_initializer(json_field_name: str) -> AST.ReferencingCodeWriter:
+    def write(reference_resolver: AST.ReferenceResolver) -> str:
+        PydanticField = reference_resolver.resolve_reference(PYDANTIC_FIELD_REFERENCE)
+        return f'{PydanticField}(alias="{json_field_name}")'
 
-    def __init__(self, json_field_name: str):
-        super().__init__()
-        self._json_field_name = json_field_name
-
-    def write(self, reference_resolver: AST.ReferenceResolver) -> str:
-        return f'{reference_resolver.resolve_reference(PYDANTIC_FIELD_REFERENCE)}(alias="{self._json_field_name}")'
+    return write

@@ -60,3 +60,5 @@ class ClassDeclaration(AstNode):
             for statement in self.statements:
                 writer.write_node(statement)
                 writer.write("\n\n")
+            if len(self.statements) == 0:
+                writer.write_line("pass")

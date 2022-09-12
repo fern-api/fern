@@ -1,7 +1,7 @@
 {
   "irFilepath": "./ir.json",
   "output": {
-    "path": "./outputA"
+    "path": "./output"
   },
   "workspaceName": "workspace",
   "organization": "fern",

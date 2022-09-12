@@ -10,7 +10,7 @@ class ReferenceResolverImpl(AST.ReferenceResolver):
     _project_name: str
     _module_path_of_source_file: AST.ModulePath
     _default_name_to_original_references: DefaultDict[QualifiedName, Set[AST.Reference]] = defaultdict(lambda: set())
-    _original_reference_to_resolved_reference: Dict[AST.Reference, AST.Reference]
+    _original_reference_to_resolved_reference: Dict[AST.Reference, AST.Reference] = {}
 
     def __init__(self, project_name: str, module_path_of_source_file: AST.ModulePath):
         self._project_name = project_name

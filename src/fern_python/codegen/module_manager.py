@@ -50,7 +50,7 @@ class ModuleManager:
                 module_info.exports[relative_module_being_exported_from].update(exports)
             elif export_strategy == ExportStrategy.EXPORT_AS_NAMESPACE:
                 exports = set(relative_module_being_exported_from)
-                module_info.exports[(".",)].update(exports)
+                module_info.exports[()].update(exports)
 
             module_being_exported_from = exporting_module
             is_exporting_from_file = False

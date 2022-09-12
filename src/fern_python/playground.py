@@ -54,9 +54,9 @@ def main(path_to_config_json: str) -> None:
     with Project(filepath=".", project_name="foo") as project:
         with project.source_file(
             filepath=Filepath(
-                directories=[
-                    Filepath.DirectoryFilepathPart(module_name="bar", export_strategy=ExportStrategy.EXPORT_ALL)
-                ],
+                directories=(
+                    Filepath.DirectoryFilepathPart(module_name="bar", export_strategy=ExportStrategy.EXPORT_ALL),
+                ),
                 file=Filepath.FilepathPart(module_name="baz"),
             )
         ):
