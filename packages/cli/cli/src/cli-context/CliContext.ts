@@ -19,8 +19,6 @@ export interface GlobalCliOptions {
 export class CliContext {
     public readonly environment: CliEnvironment;
 
-    public suppressUpgradeMessage = false;
-
     private didSucceed = true;
 
     private numTasks = 0;
@@ -80,7 +78,7 @@ export class CliContext {
 
     public async exit(): Promise<never> {
         this.ttyAwareLogger.finish();
-        if (!this.suppressUpgradeMessage) {
+        if (!this._suppressUpgradeMessage) {
             const upgradeMessage = await getFernCliUpgradeMessage(this.environment);
             if (upgradeMessage != null) {
                 this.stream.write(upgradeMessage);
@@ -207,6 +205,11 @@ export class CliContext {
     private log(logs: Log[]): void {
         const filtered = logs.filter((log) => LOG_LEVELS.indexOf(log.level) >= LOG_LEVELS.indexOf(this.logLevel));
         this.ttyAwareLogger.log(filtered);
+    }
+
+    private _suppressUpgradeMessage = false;
+    public suppressUpgradeMessage(): void {
+        this._suppressUpgradeMessage = true;
     }
 }
 

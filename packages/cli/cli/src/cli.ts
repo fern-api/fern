@@ -40,6 +40,7 @@ async function tryRunCli() {
 async function runCli(cliContext: CliContext) {
     const versionOfCliToRun = await getIntendedVersionOfCli(cliContext);
     if (cliContext.environment.packageVersion !== versionOfCliToRun) {
+        cliContext.suppressUpgradeMessage();
         const { failed } = await rerunFernCliAtVersion({
             version: versionOfCliToRun,
             cliContext,
@@ -73,7 +74,7 @@ async function runCli(cliContext: CliContext) {
         cli,
         cliContext,
         onRun: () => {
-            cliContext.suppressUpgradeMessage = true;
+            cliContext.suppressUpgradeMessage();
         },
     });
 
