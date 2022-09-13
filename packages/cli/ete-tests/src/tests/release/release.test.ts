@@ -8,15 +8,16 @@ describe("release", () => {
 });
 
 function itFixture(fixtureName: string) {
+    // runFernCli throws if the command exits with a non-zero exit code
+    // eslint-disable-next-line jest/expect-expect
     it(
         // eslint-disable-next-line jest/valid-title
         fixtureName,
         async () => {
             const fixturePath = path.join(FIXTURES_DIR, fixtureName);
-            const { exitCode } = await runFernCli(["release", "0.0.0"], {
+            await runFernCli(["release", "0.0.0"], {
                 cwd: fixturePath,
             });
-            expect(exitCode).toBe(0);
         },
         90_000
     );

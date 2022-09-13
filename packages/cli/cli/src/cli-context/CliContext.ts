@@ -2,7 +2,6 @@ import { Logger, LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import { Finishable, Startable, TaskContext, TaskResult, TASK_FAILURE } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
-import { ArgumentsCamelCase } from "yargs";
 import { CliEnvironment } from "./CliEnvironment";
 import { constructErrorMessage } from "./constructErrorMessage";
 import { Log } from "./Log";
@@ -12,14 +11,8 @@ import { getFernCliUpgradeMessage } from "./upgrade-utils/getFernCliUpgradeMessa
 
 const WORKSPACE_NAME_COLORS = ["#2E86AB", "#A23B72", "#F18F01", "#C73E1D", "#CCE2A3"];
 
-export interface GlobalCliOptions {
-    "log-level": LogLevel;
-}
-
 export class CliContext {
     public readonly environment: CliEnvironment;
-
-    public suppressUpgradeMessage = false;
 
     private didSucceed = true;
 
@@ -65,8 +58,16 @@ export class CliContext {
         return process.env.CLI_NAME;
     }
 
-    public processArgv(argv: ArgumentsCamelCase<GlobalCliOptions>): void {
-        this.logLevel = argv.logLevel;
+    public setLogLevel(logLevel: LogLevel): void {
+        this.logLevel = logLevel;
+    }
+
+    public logDebugInfo(): void {
+        this.logger.debug(
+            `Running ${chalk.bold(`${this.environment.cliName}`)} (${this.environment.packageName}@${
+                this.environment.packageVersion
+            })`
+        );
     }
 
     public fail(message?: string, error?: unknown): TASK_FAILURE {
@@ -80,7 +81,7 @@ export class CliContext {
 
     public async exit(): Promise<never> {
         this.ttyAwareLogger.finish();
-        if (!this.suppressUpgradeMessage) {
+        if (!this._suppressUpgradeMessage) {
             const upgradeMessage = await getFernCliUpgradeMessage(this.environment);
             if (upgradeMessage != null) {
                 this.stream.write(upgradeMessage);
@@ -141,6 +142,7 @@ export class CliContext {
                     {
                         args,
                         level: LogLevel.Debug,
+                        prefix: chalk.dim("[debug] "),
                     },
                 ]);
             },
@@ -207,6 +209,11 @@ export class CliContext {
     private log(logs: Log[]): void {
         const filtered = logs.filter((log) => LOG_LEVELS.indexOf(log.level) >= LOG_LEVELS.indexOf(this.logLevel));
         this.ttyAwareLogger.log(filtered);
+    }
+
+    private _suppressUpgradeMessage = false;
+    public suppressUpgradeMessage(): void {
+        this._suppressUpgradeMessage = true;
     }
 }
 

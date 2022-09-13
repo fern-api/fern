@@ -8,7 +8,7 @@ import inquirer, { InputQuestion } from "inquirer";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
-import { CliContext, GlobalCliOptions } from "./cli-context/CliContext";
+import { CliContext } from "./cli-context/CliContext";
 import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
@@ -17,6 +17,10 @@ import { releaseWorkspaces } from "./commands/release/releaseWorkspaces";
 import { upgrade } from "./commands/upgrade/upgrade";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
+
+interface GlobalCliOptions {
+    "log-level": LogLevel;
+}
 
 void tryRunCli();
 
@@ -28,16 +32,6 @@ async function tryRunCli() {
     };
     process.on("SIGINT", exit);
 
-    try {
-        await runCli(cliContext);
-    } catch (error) {
-        cliContext.fail("Failed to run", error);
-    } finally {
-        await exit();
-    }
-}
-
-async function runCli(cliContext: CliContext) {
     const versionOfCliToRun = await getIntendedVersionOfCli(cliContext);
     if (cliContext.environment.packageVersion !== versionOfCliToRun) {
         const { failed } = await rerunFernCliAtVersion({
@@ -47,14 +41,41 @@ async function runCli(cliContext: CliContext) {
         if (failed) {
             cliContext.fail();
         }
-        return;
+    } else {
+        try {
+            await runCli(cliContext);
+        } catch (error) {
+            cliContext.fail("Failed to run", error);
+        }
     }
 
+    await exit();
+}
+
+async function runCli(cliContext: CliContext) {
     const cli: Argv<GlobalCliOptions> = yargs(hideBin(process.argv))
         .scriptName(cliContext.environment.cliName)
-        .version(cliContext.environment.packageVersion)
+        .version(false)
         .strict()
-        .alias("v", "version")
+        .command(
+            "$0",
+            false,
+            (yargs) =>
+                yargs
+                    .option("--version", {
+                        describe: "Print current version",
+                        alias: "v",
+                    })
+                    .version(false),
+            (argv) => {
+                if (argv["--version"] != null) {
+                    cliContext.logger.info(cliContext.environment.packageVersion);
+                } else {
+                    cliContext.fail();
+                    cli.showHelp();
+                }
+            }
+        )
         .option("log-level", {
             default: LogLevel.Info,
             choices: LOG_LEVELS,
@@ -73,8 +94,13 @@ async function runCli(cliContext: CliContext) {
         cli,
         cliContext,
         onRun: () => {
-            cliContext.suppressUpgradeMessage = true;
+            cliContext.suppressUpgradeMessage();
         },
+    });
+
+    cli.middleware((argv) => {
+        cliContext.setLogLevel(argv["log-level"]);
+        cliContext.logDebugInfo();
     });
 
     await cli.parse();
@@ -101,7 +127,6 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 description: "Organization name",
             }),
         async (argv) => {
-            cliContext.processArgv(argv);
             const organization = argv.organization ?? (await askForOrganization());
             await cliContext.runTask(async (context) =>
                 initialize({
@@ -139,7 +164,6 @@ function addAddCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     description: "Only run the command on the provided API",
                 }),
         async (argv) => {
-            cliContext.processArgv(argv);
             await addGeneratorToWorkspaces(
                 await loadProjectOrExit(cliContext, {
                     commandLineWorkspace: argv.api,
@@ -179,7 +203,6 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description: "Include all APIs",
                 }),
         async (argv) => {
-            cliContext.processArgv(argv);
             await generateWorkspaces({
                 project: await loadProjectOrExit(cliContext, {
                     commandLineWorkspace: argv.all ? undefined : argv.api,
@@ -214,7 +237,6 @@ function addReleaseCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                     description: "Include all APIs",
                 }),
         async (argv) => {
-            cliContext.processArgv(argv);
             await releaseWorkspaces({
                 project: await loadProjectOrExit(cliContext, {
                     commandLineWorkspace: argv.all ? undefined : argv.api,
@@ -243,7 +265,6 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     description: "Only run the command on the provided API",
                 }),
         async (argv) => {
-            cliContext.processArgv(argv);
             await generateIrForWorkspaces({
                 project: await loadProjectOrExit(cliContext, {
                     commandLineWorkspace: argv.api,
@@ -266,7 +287,6 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 description: "Only run the command on the provided API",
             }),
         async (argv) => {
-            cliContext.processArgv(argv);
             await validateWorkspaces({
                 project: await loadProjectOrExit(cliContext, {
                     commandLineWorkspace: argv.api,
@@ -287,8 +307,7 @@ function addUpgradeCommand({
     cliContext: CliContext;
     onRun: () => void;
 }) {
-    cli.command("upgrade", "Upgrades generator versions in your workspace", noop, async (argv) => {
-        cliContext.processArgv(argv);
+    cli.command("upgrade", "Upgrades generator versions in your workspace", noop, async () => {
         await upgrade({
             cliContext,
         });
