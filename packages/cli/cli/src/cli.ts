@@ -55,6 +55,7 @@ async function tryRunCli() {
 async function runCli(cliContext: CliContext) {
     const cli: Argv<GlobalCliOptions> = yargs(hideBin(process.argv))
         .scriptName(cliContext.environment.cliName)
+        .version(false)
         .strict()
         .command(
             "$0",
@@ -70,6 +71,7 @@ async function runCli(cliContext: CliContext) {
                 if (argv["--version"] != null) {
                     cliContext.logger.info(cliContext.environment.packageVersion);
                 } else {
+                    cliContext.fail();
                     cli.showHelp();
                 }
             }
