@@ -28,19 +28,8 @@ async function tryRunCli() {
     };
     process.on("SIGINT", exit);
 
-    try {
-        await runCli(cliContext);
-    } catch (error) {
-        cliContext.fail("Failed to run", error);
-    } finally {
-        await exit();
-    }
-}
-
-async function runCli(cliContext: CliContext) {
     const versionOfCliToRun = await getIntendedVersionOfCli(cliContext);
     if (cliContext.environment.packageVersion !== versionOfCliToRun) {
-        cliContext.suppressUpgradeMessage();
         const { failed } = await rerunFernCliAtVersion({
             version: versionOfCliToRun,
             cliContext,
@@ -48,9 +37,18 @@ async function runCli(cliContext: CliContext) {
         if (failed) {
             cliContext.fail();
         }
-        return;
+    } else {
+        try {
+            await runCli(cliContext);
+        } catch (error) {
+            cliContext.fail("Failed to run", error);
+        }
     }
 
+    await exit();
+}
+
+async function runCli(cliContext: CliContext) {
     const cli: Argv<GlobalCliOptions> = yargs(hideBin(process.argv))
         .scriptName(cliContext.environment.cliName)
         .version(cliContext.environment.packageVersion)

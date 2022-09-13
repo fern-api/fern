@@ -10,7 +10,7 @@ export async function rerunFernCliAtVersion({
     cliContext: CliContext;
     env?: Record<string, string>;
 }): Promise<ExecaChildProcess> {
-    cliContext.suppressUpgradeMessage = true;
+    cliContext.suppressUpgradeMessage();
 
     const npxProcess = execa(
         "npx",
