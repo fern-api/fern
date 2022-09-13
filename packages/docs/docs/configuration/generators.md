@@ -22,13 +22,15 @@ Here's an example [using multiple generators](https://github.com/fern-api/fern-e
 
 Generators in the `draft` list will publish to a private registry managed by Fern. Use this when your API is a work-in-progress. By default, code generators you add will show up as a draft.
 
-[Add a generator](../cli/add.md) in the CLI. For example, when we add the `javascript-sdk` generator:
+[Add a generator](../cli/add.md) in the CLI. For example, when we add the `typescript` generator:
 
 ```diff
 # generators.yml
 draft:
-+ - name: fernapi/javascript-sdk
++ - name: fernapi/typescript
 +   version: 0.0.xxx
++   config:
++     mode: client_and_server
 release: []
 ```
 
@@ -41,8 +43,9 @@ For example:
 ```diff
 draft: []
 release:
-  - name: fernapi/java-sdk
+  - name: fernapi/java
     version: 0.0.xxx
++   mode: client
 +   outputs:
 +     maven:
 +       url: https://s01.oss.sonatype.org/content/repositories/releases/
@@ -55,23 +58,23 @@ release:
 
 ### Generate SDKs
 
-- **javascript-sdk**: a JavaScript SDK, fully typed with TypeScript declarations. Build Node.js, web, and mobile web applications.
-- **java-sdk**: A Java SDK.
-- **python-sdk**: A Python SDK.
+- **fern-typescript**: a JavaScript SDK, fully typed with TypeScript declarations. Build Node.js, web, and mobile web applications.
+- **fern-java**: A Java SDK.
+- **fern-python**: A Python SDK. _(coming soon!)_
 
 ### Generate server interfaces
 
-- **javascript-express-server**: validation that your JavaScript or TypeScript Express server correctly implements your API.
+- **fern-typescript**: validation that your JavaScript or TypeScript Express server correctly implements your API.
 - **java-spring-server**: validation that your Java Spring server correctly implements your API.
-- **python-fastapi-server**: validation that your Python FastAPI server correctly implements your API.
+- **python-fastapi-server**: validation that your Python FastAPI server correctly implements your API. _(coming soon!)_
 
 ### Generate a Postman Collection
 
-**fern-postman**: generates a [Postman Collection](https://www.postman.com/collection). If you'd like to use the Postman integration to auto-update your collection, [read on](../features/postman.md).
+**postman**: generates a [Postman Collection](https://www.postman.com/collection). If you'd like to use the Postman integration to auto-update your collection, [read on](../features/postman.md).
 
 ### Generate an OpenAPI Specification
 
-**fern-openapi**: generates an [OpenAPI Spec](https://swagger.io/resources/open-api/).
+**openapi**: generates an [OpenAPI Spec](https://swagger.io/resources/open-api/).
 
 ## Contributing
 

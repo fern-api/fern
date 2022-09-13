@@ -56,7 +56,7 @@ fern.config.json # Configure your organization name and the version of Fern CLI 
 ## Step 3: Add TypeScript server interfaces generator
 
 ```bash
-fern add typescript-server
+fern add typescript
 ```
 
 <summary>What happens:</summary>
@@ -66,8 +66,10 @@ fern add typescript-server
 ```diff
 -draft: []
 +draft:
-+  - name: fernapi/javascript-express-server
-+    version: 0.0.xxx
++  - name: fernapi/fern-typescript
++    version: 0.0.189
++    config:
++      mode: client_and_server
 release:[]
 ```
 

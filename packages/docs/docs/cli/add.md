@@ -16,13 +16,13 @@ fern add <generator-name>
 Add the TypeScript SDK generator:
 
 ```bash
-fern add typescript-sdk
+fern add typescript
 ```
 
-Add the Python FastAPI server generator:
+Add the Java Spring server generator:
 
 ```bash
-fern add python-fastapi-server
+fern add java-spring-server
 ```
 
 Add the Postman collection generator:
@@ -33,4 +33,4 @@ fern add postman
 
 ## Options
 
-Here is [a list of code generators](/configuration/generators.md)) supported by Fern.
+Here is [a list of code generators](../configuration/generators.md)) supported by Fern.
