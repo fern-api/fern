@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import typing
-from abc import ABC, abstractmethod
 
 import pydantic
 import typing_extensions
@@ -65,38 +64,24 @@ class TypeReference(pydantic.BaseModel):
         pydantic.Field(discriminator="type"),
     ]
 
-    class _Visitor(ABC, typing.Generic[_Result]):
-        @abstractmethod
-        def container(self, value: ContainerType) -> _Result:
-            ...
-
-        @abstractmethod
-        def named(self, value: DeclaredTypeName) -> _Result:
-            ...
-
-        @abstractmethod
-        def primitive(self, value: PrimitiveType) -> _Result:
-            ...
-
-        @abstractmethod
-        def unknown(self) -> _Result:
-            ...
-
-        @abstractmethod
-        def void(self) -> _Result:
-            ...
-
-    def _visit(self, visitor: _Visitor[_Result]) -> _Result:
+    def _visit(
+        self,
+        container: typing.Callable[[ContainerType], _Result],
+        named: typing.Callable[[DeclaredTypeName], _Result],
+        primitive: typing.Callable[[PrimitiveType], _Result],
+        unknown: typing.Callable[[], _Result],
+        void: typing.Callable[[], _Result],
+    ) -> _Result:
         if self.__root__.type == "container":
-            return visitor.container(self.__root__.container)
+            return container(self.__root__.container)
         if self.__root__.type == "named":
-            return visitor.named(self.__root__)
+            return named(self.__root__)
         if self.__root__.type == "primitive":
-            return visitor.primitive(self.__root__.primitive)
+            return primitive(self.__root__.primitive)
         if self.__root__.type == "unknown":
-            return visitor.unknown()
+            return unknown()
         if self.__root__.type == "void":
-            return visitor.void()
+            return void()
 
 
 from .container_type import ContainerType  # noqa: E402

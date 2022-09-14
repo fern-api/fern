@@ -14,14 +14,12 @@ PYDANTIC_FIELD_REFERENCE = get_reference_to_pydantic_export("Field")
 
 
 class PydanticModel:
-    _class_declaration: AST.ClassDeclaration
-    _has_aliases: bool = False
-
     def __init__(self, name: str, base_model: AST.ClassReference = PYDANTIC_BASE_MODEL_REFERENCE):
         self._class_declaration = AST.ClassDeclaration(
             name=name,
             extends=[base_model],
         )
+        self._has_aliases = False
 
     def add_field(self, name: str, type_hint: AST.TypeHint, json_field_name: str) -> None:
         initializer = (

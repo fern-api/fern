@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Optional, Set, Union
+from typing import List, Set
 
 from ...ast_node import AstNode, NodeWriter, ReferenceResolver
 from ...references import ClassReference, Reference
@@ -12,16 +12,11 @@ from .class_constructor import ClassConstructor
 
 
 class ClassDeclaration(AstNode):
-    name: str
-    extends: List[ClassReference]
-    constructor: Optional[ClassConstructor]
-    statements: List[Union[VariableDeclaration, FunctionDeclaration, ClassDeclaration]]
-
     def __init__(self, name: str, extends: List[ClassReference] = [], constructor: ClassConstructor = None):
         self.name = name
         self.extends = extends
         self.constructor = constructor
-        self.statements = []
+        self.statements: List[AstNode] = []
 
     def add_attribute(self, variable_declaration: VariableDeclaration) -> None:
         self.statements.append(variable_declaration)

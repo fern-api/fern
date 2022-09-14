@@ -8,12 +8,12 @@ from ...references import Reference
 class PrimitiveType(str, Enum):
     str = "str"
     int = "int"
+    float = "float"
     bool = "bool"
+    none = "None"
 
 
 class PrimitiveTypeHint(AstNode):
-    _primitive: PrimitiveType
-
     def __init__(self, primitive: PrimitiveType):
         self._primitive = primitive
 

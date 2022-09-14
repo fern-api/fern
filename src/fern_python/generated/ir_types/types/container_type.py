@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import typing
-from abc import ABC, abstractmethod
 
 import pydantic
 import typing_extensions
@@ -53,32 +52,21 @@ class ContainerType(pydantic.BaseModel):
     def set(value: TypeReference) -> ContainerType:
         return ContainerType(__root__=_ContainerType.Set(type="set", set=value))
 
-    class _Visitor(ABC, typing.Generic[_Result]):
-        @abstractmethod
-        def list(self, value: TypeReference) -> _Result:
-            ...
-
-        @abstractmethod
-        def map(self, value: MapType) -> _Result:
-            ...
-
-        @abstractmethod
-        def optional(self, value: TypeReference) -> _Result:
-            ...
-
-        @abstractmethod
-        def set(self, value: TypeReference) -> _Result:
-            ...
-
-    def _visit(self, visitor: _Visitor[_Result]) -> _Result:
+    def _visit(
+        self,
+        list: typing.Callable[[TypeReference], _Result],
+        map: typing.Callable[[MapType], _Result],
+        optional: typing.Callable[[TypeReference], _Result],
+        set: typing.Callable[[TypeReference], _Result],
+    ) -> _Result:
         if self.__root__.type == "list":
-            return visitor.list(self.__root__.list)
+            return list(self.__root__.list)
         if self.__root__.type == "map":
-            return visitor.map(self.__root__)
+            return map(self.__root__)
         if self.__root__.type == "optional":
-            return visitor.optional(self.__root__.optional)
+            return optional(self.__root__.optional)
         if self.__root__.type == "set":
-            return visitor.set(self.__root__.set)
+            return set(self.__root__.set)
 
 
 from .type_reference import TypeReference  # noqa: E402

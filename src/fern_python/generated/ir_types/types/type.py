@@ -29,21 +29,38 @@ class _Type:
 
 
 class Type(pydantic.BaseModel):
+    _value: typing.Union[_Type.Alias, _Type.Enum, _Type.Object, _Type.Union] = pydantic.PrivateAttr()
+
+    def __init__(
+        self,
+        **data: typing.Any,
+    ):
+        super().__init__(**data)
+        self._value = data["__root__"]
+
     @staticmethod
     def alias(value: AliasTypeDeclaration) -> Type:
-        return Type(__root__=_Type.Alias(type="alias", alias_of=value.alias_of))
+        return Type(
+            __root__=_Type.Alias(type="alias", alias_of=value.alias_of),
+        )
 
     @staticmethod
     def enum(value: EnumTypeDeclaration) -> Type:
-        return Type(__root__=_Type.Enum(type="enum", values=value.values))
+        return Type(
+            __root__=_Type.Enum(type="enum", values=value.values),
+        )
 
     @staticmethod
     def object(value: ObjectTypeDeclaration) -> Type:
-        return Type(__root__=_Type.Object(type="object", extends=value.extends, properties=value.properties))
+        return Type(
+            __root__=_Type.Object(type="object", extends=value.extends, properties=value.properties),
+        )
 
     @staticmethod
     def union(value: UnionTypeDeclaration) -> Type:
-        return Type(__root__=_Type.Union(type="union", discriminant=value.discriminant, types=value.types))
+        return Type(
+            __root__=_Type.Union(type="union", discriminant=value.discriminant, types=value.types),
+        )
 
     __root__: typing_extensions.Annotated[
         typing.Union[_Type.Alias, _Type.Enum, _Type.Object, _Type.Union],

@@ -12,12 +12,10 @@ from . import AST
 
 
 class WriterImpl(AST.Writer):
-    _filepath: str
-    _file: IO[Any]
-    _indent: int = 0
-
     def __init__(self, filepath: str):
         self._filepath = filepath
+        self._indent = 0
+        self._file: IO[Any]
 
     def write(self, content: str) -> None:
         self._file.write("\t" * self._indent + content)
@@ -65,8 +63,6 @@ class WriterImpl(AST.Writer):
 
 
 class IndentableWriterImpl(AST.IndentableWriter):
-    _writer: AST.Writer
-
     def __init__(self, writer: AST.Writer):
         self._writer = writer
 

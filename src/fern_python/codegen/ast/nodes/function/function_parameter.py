@@ -1,4 +1,4 @@
-from typing import Optional, Set
+from typing import Set
 
 from ...ast_node import AstNode, NodeWriter, ReferenceResolver
 from ...references import Reference
@@ -6,9 +6,6 @@ from ..type_hint import TypeHint
 
 
 class FunctionParameter(AstNode):
-    name: str
-    type_hint: Optional[TypeHint]
-
     def __init__(self, name: str, type_hint: TypeHint = None):
         self.name = name
         self.type_hint = type_hint

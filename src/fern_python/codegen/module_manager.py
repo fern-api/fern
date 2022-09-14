@@ -25,7 +25,10 @@ class ModuleManager:
     A utility for managing the __init__.py files in a project
     """
 
-    _module_infos: DefaultDict[AST.ModulePath, ModuleInfo] = defaultdict(create_empty_module_info)
+    _module_infos: DefaultDict[AST.ModulePath, ModuleInfo]
+
+    def __init__(self) -> None:
+        self._module_infos = defaultdict(create_empty_module_info)
 
     def register_source_file(self, filepath: Filepath, source_file: SourceFileImpl) -> None:
         exports = source_file.get_exports()

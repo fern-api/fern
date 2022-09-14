@@ -3,11 +3,12 @@ from __future__ import annotations
 import os
 import shutil
 from types import TracebackType
-from typing import Generator, Optional, Type
+from typing import Optional, Type
 
 from . import AST
 from .dependency_manager import DependencyManager
 from .filepath import Filepath
+from .imports_manager import ImportsManager
 from .module_manager import ModuleManager
 from .reference_resolver_impl import ReferenceResolverImpl
 from .source_file import SourceFile, SourceFileImpl
@@ -19,14 +20,11 @@ class Project:
         ...
     """
 
-    _filepath: str
-    _project_name: str
-    _module_manager = ModuleManager()
-    _dependency_manager = DependencyManager()
-
     def __init__(self, filepath: str, project_name: str):
         self._filepath = os.path.join(filepath, project_name)
         self._project_name = project_name
+        self._module_manager = ModuleManager()
+        self._dependency_manager = DependencyManager()
 
     def source_file(self, filepath: Filepath) -> SourceFile:
         """
@@ -40,7 +38,7 @@ class Project:
                 source_file=source_file,
             )
 
-        module_path = convert_filepath_to_module_path(filepath)
+        module_path = filepath.to_module_path()
         source_file = SourceFileImpl(
             filepath=os.path.join(
                 self._get_root_module_filepath(),
@@ -49,6 +47,7 @@ class Project:
             ),
             module_path=module_path,
             completion_listener=on_finish,
+            imports_manager=ImportsManager(project_name=self._project_name),
             reference_resolver=ReferenceResolverImpl(
                 project_name=self._project_name,
                 module_path_of_source_file=module_path,
@@ -84,13 +83,3 @@ class Project:
         exctb: Optional[TracebackType],
     ) -> None:
         self.finish()
-
-
-def convert_filepath_to_module_path(filepath: Filepath) -> AST.ModulePath:
-    return tuple(get_module_names_from_filepath(filepath))
-
-
-def get_module_names_from_filepath(filepath: Filepath) -> Generator[str, None, None]:
-    for directory in filepath.directories:
-        yield directory.module_name
-    yield filepath.file.module_name

@@ -8,11 +8,6 @@ from .function_parameter import FunctionParameter
 
 
 class FunctionDeclaration(AstNode):
-    name: str
-    parameters: List[FunctionParameter]
-    return_type: TypeHint
-    body: CodeWriter
-
     def __init__(self, name: str, return_type: TypeHint, parameters: List[FunctionParameter], body: CodeWriter):
         self.name = name
         self.parameters = parameters

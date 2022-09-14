@@ -4,6 +4,8 @@ from dataclasses import dataclass
 from enum import Enum, auto
 from typing import Optional, Tuple
 
+from . import AST
+
 
 class ExportStrategy(Enum):
     EXPORT_ALL = auto()
@@ -14,6 +16,9 @@ class ExportStrategy(Enum):
 class Filepath:
     directories: Tuple[DirectoryFilepathPart, ...]
     file: FilepathPart
+
+    def to_module_path(self) -> AST.ModulePath:
+        return tuple(part.module_name for part in self.directories + (self.file,))
 
     @dataclass(frozen=True)
     class FilepathPart:

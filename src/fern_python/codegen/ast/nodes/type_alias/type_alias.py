@@ -6,9 +6,6 @@ from ..type_hint import TypeHint
 
 
 class TypeAlias(AstNode):
-    name: str
-    type_hint: TypeHint
-
     def __init__(self, name: str, type_hint: TypeHint):
         self.name = name
         self.type_hint = type_hint

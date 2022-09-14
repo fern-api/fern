@@ -7,9 +7,6 @@ from ..function import FunctionParameter
 
 
 class ClassConstructor(AstNode):
-    parameters: List[FunctionParameter]
-    body: CodeWriter
-
     def __init__(self, parameters: List[FunctionParameter], body: CodeWriter):
         self.parameters = parameters
         self.body = body

@@ -10,7 +10,8 @@ class ReferenceLoader(ReferenceResolver):
     encountered.
     """
 
-    _references: Set[Reference] = set()
+    def __init__(self) -> None:
+        self._references: Set[Reference] = set()
 
     def resolve_reference(self, reference: Reference) -> str:
         self._references.add(reference)
@@ -26,8 +27,6 @@ class ReferencingCodeWriter(Protocol):
 
 
 class CodeWriter(AstNode):
-    _code_writer: Union[ReferencingCodeWriter, str]
-
     def __init__(self, code_writer: Union[ReferencingCodeWriter, str]):
         self._code_writer = code_writer
 

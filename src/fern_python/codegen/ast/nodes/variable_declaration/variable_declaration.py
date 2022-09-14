@@ -1,4 +1,4 @@
-from typing import Optional, Set
+from typing import Set
 
 from ...ast_node import AstNode, NodeWriter, ReferenceResolver
 from ...references import Reference
@@ -7,10 +7,6 @@ from ..type_hint import TypeHint
 
 
 class VariableDeclaration(AstNode):
-    name: str
-    type_hint: Optional[TypeHint]
-    initializer: Optional[CodeWriter]
-
     def __init__(self, name: str, type_hint: TypeHint = None, initializer: CodeWriter = None):
         self.name = name
         self.type_hint = type_hint

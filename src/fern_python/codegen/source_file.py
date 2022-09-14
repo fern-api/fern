@@ -30,6 +30,14 @@ class SourceFile(ABC):
         ...
 
     @abstractmethod
+    def add_type_alias(
+        self,
+        declaration: AST.TypeAlias,
+        do_not_export: bool = False,
+    ) -> AST.TypeAlias:
+        ...
+
+    @abstractmethod
     def finish(self) -> None:
         ...
 
@@ -48,26 +56,22 @@ class SourceFile(ABC):
 
 
 class SourceFileImpl(SourceFile):
-    _filepath: str
-    _module_path: AST.ModulePath
-    _imports_manager = ImportsManager()
-    _reference_resolver: ReferenceResolverImpl
-    _statements: List[AST.AstNode] = []
-    _statements_after_bottom_imports: List[AST.AstNode] = []
-    _exports: Set[str] = set()
-    _completion_listener: Optional[Callable[[SourceFileImpl], None]]
-
     def __init__(
         self,
         filepath: str,
         module_path: AST.ModulePath,
+        imports_manager: ImportsManager,
         reference_resolver: ReferenceResolverImpl,
         completion_listener: Callable[[SourceFileImpl], None] = None,
     ):
         self._filepath = filepath
         self._module_path = module_path
+        self._imports_manager = imports_manager
         self._reference_resolver = reference_resolver
         self._completion_listener = completion_listener
+        self._statements: List[AST.AstNode] = []
+        self._statements_after_bottom_imports: List[AST.AstNode] = []
+        self._exports: Set[str] = set()
 
     def add_class(
         self,
@@ -81,6 +85,13 @@ class SourceFileImpl(SourceFile):
         declaration: AST.FunctionDeclaration,
         do_not_export: bool = False,
     ) -> AST.FunctionDeclaration:
+        return self._add_statement(statement=declaration, exported_name=declaration.name if not do_not_export else None)
+
+    def add_type_alias(
+        self,
+        declaration: AST.TypeAlias,
+        do_not_export: bool = False,
+    ) -> AST.TypeAlias:
         return self._add_statement(statement=declaration, exported_name=declaration.name if not do_not_export else None)
 
     def add_arbitrary_code(self, code: AST.CodeWriter, after_bottom_imports: bool = False) -> None:
@@ -103,6 +114,7 @@ class SourceFileImpl(SourceFile):
         for statement in self._statements:
             for reference in statement.get_references():
                 self._reference_resolver.register_reference(reference)
+        self._reference_resolver.resolve_references()
 
         for reference in self._reference_resolver.get_resolved_references():
             if reference.module != self._module_path:

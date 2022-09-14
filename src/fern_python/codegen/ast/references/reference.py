@@ -25,7 +25,7 @@ class Reference:
         l: List # name_inside_import == ()
     """
 
-    submodule: Optional[str] = None
+    named_import: Optional[str] = None
     alias: Optional[str] = None
 
     from_module: Optional[Union[BuiltInModule, Dependency]] = None

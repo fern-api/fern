@@ -5,8 +5,6 @@ from .writer_impl import WriterImpl
 
 
 class NodeWriterImpl(AST.NodeWriter, WriterImpl):
-    _reference_resolver: AST.ReferenceResolver
-
     def __init__(self, filepath: str, reference_resolver: AST.ReferenceResolver):
         super().__init__(filepath)
         self._reference_resolver = reference_resolver
