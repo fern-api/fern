@@ -2,6 +2,7 @@ from fern_python.codegen import AST, SourceFile
 from fern_python.declaration_handler import DeclarationHandlerContext
 from fern_python.generated import ir_types
 
+from .type_name_to_class_reference_converter import TypeNameToClassReferenceConverter
 from .type_reference_to_type_hint_converter import TypeReferenceToTypeHintConverter
 
 
@@ -11,6 +12,12 @@ class DeclarationHandlerContextImpl(DeclarationHandlerContext):
         self._type_reference_to_type_hint_converter = TypeReferenceToTypeHintConverter(
             api_name=intermediate_representation.api_name
         )
+        self._type_name_to_class_reference_converter = TypeNameToClassReferenceConverter(
+            api_name=intermediate_representation.api_name
+        )
 
     def get_type_hint_for_type_reference(self, type_reference: ir_types.TypeReference) -> AST.TypeHint:
         return self._type_reference_to_type_hint_converter.get_type_hint_for_type_reference(type_reference)
+
+    def get_class_reference_for_type_name(self, type_name: ir_types.DeclaredTypeName) -> AST.ClassReference:
+        return self._type_name_to_class_reference_converter.get_class_reference_for_type_name(type_name)

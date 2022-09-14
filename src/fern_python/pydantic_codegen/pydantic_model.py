@@ -1,3 +1,5 @@
+from typing import List
+
 from fern_python.codegen import AST
 
 
@@ -14,10 +16,10 @@ PYDANTIC_FIELD_REFERENCE = get_reference_to_pydantic_export("Field")
 
 
 class PydanticModel:
-    def __init__(self, name: str, base_model: AST.ClassReference = PYDANTIC_BASE_MODEL_REFERENCE):
+    def __init__(self, name: str, base_models: List[AST.ClassReference] = None):
         self._class_declaration = AST.ClassDeclaration(
             name=name,
-            extends=[base_model],
+            extends=base_models or [PYDANTIC_BASE_MODEL_REFERENCE],
         )
         self._has_aliases = False
 

@@ -12,9 +12,9 @@ from .class_constructor import ClassConstructor
 
 
 class ClassDeclaration(AstNode):
-    def __init__(self, name: str, extends: List[ClassReference] = [], constructor: ClassConstructor = None):
+    def __init__(self, name: str, extends: List[ClassReference] = None, constructor: ClassConstructor = None):
         self.name = name
-        self.extends = extends
+        self.extends = extends or []
         self.constructor = constructor
         self.statements: List[AstNode] = []
 
@@ -54,6 +54,6 @@ class ClassDeclaration(AstNode):
         with writer.indent():
             for statement in self.statements:
                 writer.write_node(statement)
-                writer.write("\n\n")
+                writer.write("\n")
             if len(self.statements) == 0:
                 writer.write_line("pass")

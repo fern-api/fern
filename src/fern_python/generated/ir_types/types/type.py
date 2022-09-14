@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import typing
-from abc import ABC, abstractmethod
 
 import pydantic
 import typing_extensions
@@ -67,29 +66,18 @@ class Type(pydantic.BaseModel):
         pydantic.Field(discriminator="type"),
     ]
 
-    class _Visitor(ABC, typing.Generic[_Result]):
-        @abstractmethod
-        def alias(self, value: AliasTypeDeclaration) -> _Result:
-            ...
-
-        @abstractmethod
-        def enum(self, value: EnumTypeDeclaration) -> _Result:
-            ...
-
-        @abstractmethod
-        def object(self, value: ObjectTypeDeclaration) -> _Result:
-            ...
-
-        @abstractmethod
-        def union(self, value: UnionTypeDeclaration) -> _Result:
-            ...
-
-    def _visit(self, visitor: _Visitor[_Result]) -> _Result:
+    def _visit(
+        self,
+        alias: typing.Callable[[AliasTypeDeclaration], _Result],
+        enum: typing.Callable[[EnumTypeDeclaration], _Result],
+        object: typing.Callable[[ObjectTypeDeclaration], _Result],
+        union: typing.Callable[[UnionTypeDeclaration], _Result],
+    ) -> _Result:
         if self.__root__.type == "alias":
-            return visitor.alias(self.__root__)
+            return alias(self.__root__)
         if self.__root__.type == "enum":
-            return visitor.enum(self.__root__)
+            return enum(self.__root__)
         if self.__root__.type == "object":
-            return visitor.object(self.__root__)
+            return object(self.__root__)
         if self.__root__.type == "union":
-            return visitor.union(self.__root__)
+            return union(self.__root__)
