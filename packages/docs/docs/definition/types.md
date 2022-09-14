@@ -225,16 +225,31 @@ enum Suit {
 }
 ```
 
-You can optionally assign a `name` of an enum. This is often used when the `value` has punctuation.
+You can optionally assign a `name` of an enum. This is often used when the `value` has punctuation. The `value` is what goes over the wire as JSON.
 
 ```yaml
-Topic:
+GithubIssueStatus:
   enum:
     - name: IssueOpened
       value: issue.opened
     - name: IssueUpdated
       value: issue.updated
-  docs: Either issue.opened or issue.updated
+    - name: IssueClosed
+      value: issue.closed
+```
+
+Let's look at another example.
+
+```yaml
+FamilyRelationship:
+  docs: Describes the relationship between two individuals.
+  enum:
+    - name: SPOUSE
+      value: "01"
+      docs: 01 - Spouse
+    - value: "02"
+      name: SIBLING
+      docs: 02 - Brother or Sister
 ```
 
 ### Aliases
