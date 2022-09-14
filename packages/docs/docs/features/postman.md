@@ -1,5 +1,5 @@
 ---
-title: Postman Integration
+title: Postman integration
 ---
 
 The Fern team uses Postman and, if you're here, you probably do too.

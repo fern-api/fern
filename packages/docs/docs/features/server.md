@@ -1,5 +1,5 @@
 ---
-title: Server-side Type Safety
+title: Server-side type safety
 ---
 
 _Coming soon_
