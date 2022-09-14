@@ -37,7 +37,7 @@ The includes primitives are:
 - `string`
 - `boolean`
 - `datetime`
-- `UUID`
+- `uuid`
 
 ### Containers
 
