@@ -7,7 +7,7 @@ import { IdSchema } from "../IdSchema";
 import { TypeDeclarationSchema } from "../TypeDeclarationSchema";
 
 export const RootApiFileSchema = z.strictObject({
-    name: z.string(),
+    name: z.optional(z.string()),
     auth: z.optional(ApiAuthSchema),
     "auth-schemes": z.optional(z.record(AuthSchemeDeclarationSchema)),
     imports: z.optional(z.record(z.string().transform(RelativeFilePath.of))),

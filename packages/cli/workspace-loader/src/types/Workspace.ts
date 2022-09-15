@@ -3,7 +3,7 @@ import { GeneratorsConfiguration } from "@fern-api/generators-configuration";
 import { RootApiFileSchema, ServiceFileSchema } from "@fern-api/yaml-schema";
 
 export interface Workspace {
-    name: string;
+    name: string | undefined;
     absolutePathToWorkspace: AbsoluteFilePath;
     absolutePathToDefinition: AbsoluteFilePath;
     generatorsConfiguration: GeneratorsConfiguration;

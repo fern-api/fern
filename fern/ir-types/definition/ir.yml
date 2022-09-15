@@ -12,6 +12,7 @@ types:
     docs: "Complete representation of the API schema"
     properties:
       apiName: string
+      apiNameV2: optional<string>
       auth: auth.ApiAuth
       types:
         docs: "The types described by this API"

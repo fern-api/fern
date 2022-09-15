@@ -16,6 +16,7 @@ const ROOT_API_FILE_FERN_FILEPATH: FernFilepath = [];
 export async function generateIntermediateRepresentation(workspace: Workspace): Promise<IntermediateRepresentation> {
     const intermediateRepresentation: IntermediateRepresentation = {
         apiName: workspace.name,
+        apiNameV2: workspace.name,
         auth: convertApiAuth({
             rawApiFileSchema: workspace.rootApiFile,
             fernFilepath: ROOT_API_FILE_FERN_FILEPATH,
