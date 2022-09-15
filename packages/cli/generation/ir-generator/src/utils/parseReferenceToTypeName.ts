@@ -3,8 +3,7 @@ import { getResolvedPathOfImportedFile } from "./getResolvedPathOfImportedFile";
 
 export interface ReferenceToTypeName {
     typeName: string;
-    // if not defined, the reference lives in the same file as the referencer
-    relativeFilePath: RelativeFilePath | undefined;
+    relativeFilePath: RelativeFilePath;
 }
 
 export function parseReferenceToTypeName({
@@ -25,7 +24,7 @@ export function parseReferenceToTypeName({
     if (secondPart == null) {
         return {
             typeName: firstPart,
-            relativeFilePath: undefined,
+            relativeFilePath: referencedIn,
         };
     }
 

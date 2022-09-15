@@ -1,18 +1,16 @@
-import { RelativeFilePath } from "@fern-api/core-utils";
 import { RawSchemas, visitRawTypeReference } from "@fern-api/yaml-schema";
-import { FernFilepath } from "@fern-fern/ir-model/commons";
 import { ContainerType, TypeReference } from "@fern-fern/ir-model/types";
+import { FernFileContext } from "../FernFileContext";
 import { parseTypeName } from "./parseTypeName";
 
 export declare namespace parseInlineType {
     export interface Args {
         type: string;
-        fernFilepath: FernFilepath;
-        imports: Record<string, RelativeFilePath>;
+        file: FernFileContext;
     }
 }
 
-export function parseInlineType({ type, fernFilepath, imports }: parseInlineType.Args): TypeReference {
+export function parseInlineType({ type, file }: parseInlineType.Args): TypeReference {
     return visitRawTypeReference<TypeReference>(type, {
         primitive: TypeReference.primitive,
         unknown: TypeReference.unknown,
@@ -25,8 +23,7 @@ export function parseInlineType({ type, fernFilepath, imports }: parseInlineType
             TypeReference.named(
                 parseTypeName({
                     typeName: namedType,
-                    fernFilepath,
-                    imports,
+                    file,
                 })
             ),
     });
@@ -34,9 +31,9 @@ export function parseInlineType({ type, fernFilepath, imports }: parseInlineType
 
 export type TypeReferenceParser = (type: RawSchemas.TypeReferenceSchema) => TypeReference;
 
-export function createTypeReferenceParser(args: Omit<parseInlineType.Args, "type">): TypeReferenceParser {
+export function createTypeReferenceParser(file: FernFileContext): TypeReferenceParser {
     return (type) => {
         const typeAsString = typeof type === "string" ? type : type.type;
-        return parseInlineType({ ...args, type: typeAsString });
+        return parseInlineType({ type: typeAsString, file });
     };
 }

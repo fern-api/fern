@@ -26,6 +26,10 @@ exports[`ir simple 1`] = `
                     \\"primitive\\": \\"STRING\\",
                     \\"_type\\": \\"primitive\\"
                 },
+                \\"resolvedType\\": {
+                    \\"primitive\\": \\"STRING\\",
+                    \\"_type\\": \\"primitive\\"
+                },
                 \\"_type\\": \\"alias\\"
             }
         },
@@ -176,6 +180,9 @@ exports[`ir simple 1`] = `
             },
             \\"type\\": {
                 \\"aliasOf\\": {
+                    \\"_type\\": \\"void\\"
+                },
+                \\"resolvedType\\": {
                     \\"_type\\": \\"void\\"
                 },
                 \\"_type\\": \\"alias\\"
