@@ -3,7 +3,6 @@ import { getResolvedPathOfImportedFile } from "./getResolvedPathOfImportedFile";
 
 export interface ReferenceToTypeName {
     typeName: string;
-    // if not defined, the reference lives in the same file as the referencer
     relativeFilePath: RelativeFilePath;
 }
 
