@@ -1,168 +1,52 @@
 ---
 title: Getting started
-sidebar_label: "Getting Started: IMDb Tutorial"
-sidebar_position: 2
 ---
 
-<!-- markdownlint-disable MD033 MD025 -->
+<!-- markdownlint-disable MD033 MD025 MD010 -->
 
-This guide uses an example API for IMDb (the International Movie Database) that introduces you to using Fern. We'll generate a TypeScript server and a Postman Collection to implement and test our API.
+Welcome to Fern! This guide walks through setting up Fern in your repo, defining your API, and generating code.
 
-<a href="https://www.loom.com/share/c892f4a9fc674c4bb42fb31d395d9ebf">
-    <p>Video walkthrough</p>
-    <img style={{maxWidth:300}} src="https://cdn.loom.com/sessions/thumbnails/c892f4a9fc674c4bb42fb31d395d9ebf-1657127975624-with-play.gif">
-    </img>
-</a>
+## Setting up Fern in your repo
 
-## Step 0: Prerequisites
+### Install
 
-- Install [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
-- Install [Postman](https://www.postman.com/downloads/)
+In terminal, run `npm install -g fern-api`.
 
-## Step 1: Set up
+### Initialize
 
-Create a new folder for this tutorial and `cd` into it. Let's create a new npm project.
-
-```bash
-npm init -y
-npm install typescript express @types/express ts-node
-```
-
-This will set us up for a new TypeScript backend repo. We'll also install fern:
-
-```bash
-npm install -g fern-api
-```
-
-## Step 2: Initialize
-
-In the root of your backend repo, run:
-
-```bash
-fern init
-```
-
-When it asks you for your `organization`, just write `imdb`.
-
-In the `.fernrc.yml`, let's change the name of our api from `api` to `imdb-api`.
-
-<summary>What happens:</summary>
-
-This adds the following content:
+In the root of your repo, run `fern init`. This will create the following folder structure in your project:
 
 ```yml
-api/
-├── src
-│   ├── api.yml
-└── .fernrc.yml
-fern.config.json
+fern/
+└─ api
+	├─ definition
+		├─ api.yml # Your API name and authentication
+		└─ imdb.yml # An example Fern Definition
+	└─ generators.yml # Code generators you're using
+fern.config.json # Your organization name and Fern CLI version
 ```
 
-## Step 3: Add TypeScript generator
+## Defining your API
 
-```bash
-fern add typescript
-```
+Your **Fern Definition** is a set of YAML files that are the single source of truth for your API. You check your **Fern Definition** into your repo, inside of which describes your API requests, responses, model, paths, methods, errors, and authentication scheme.
 
-<summary>What happens:</summary>
+Check out [an example Fern Definition](https://github.com/fern-api/fern-examples/blob/main/fern/api/definition/movie.yml) on Github.
 
-`.fernrc.yml` will now list a generator:
+:::tip Already have an OpenAPI spec?
 
-```diff
- name: api
- definition: src
--generators: []
-+generators:
-+  - name: fernapi/fern-typescript
-+    version: 0.0.xxx
-+    generate: true
-+    config:
-+      mode: client_and_server
-```
+[Join our private beta](mailto:hey@buildwithfern.com?subject=%5BPrivate%20Beta%5D%20OpenAPI%20to%20Fern%20Definition%20converter) for access to our OpenAPI spec -> Fern Definition converter.
 
-## Step 4: Run the generator
+:::
 
-```bash
-fern generate
-```
+## Generate code
 
-In the terminal, you'll see `Published @imdb-fern/imdb-api-server@0.0.x` which we'll add as a dependency. By default, Fern publishes dependencies to a private registry.
+Fern's code generators run remotely in the cloud. The input is your **Fern Definition** and the output is auto-generated code. You configure which generators you're using in [`generators.yml`](./cli/generate.md).
 
-```bash
-# Teach npm about the Fern private registry
-npm config set --location project @imdb-fern:registry https://npm.buildwithfern.com/
+Check out [an example generators.yml](https://github.com/fern-api/fern-examples/blob/main/fern/api/generators.yml) on Github.
 
-# Your version may be different, but this version will also work
-npm install @imdb-fern/imdb-api-server@0.0.1
-```
+## What's next?
 
-## Step 5: Implement the server
-
-We'll create a new file `server.ts` at the root of our project. This will be a simple express server that serves our IMDb API.
-
-```ts
-// server.ts
-import { GetMovieErrorBody, MovieId } from "@imdb-fern/imdb-api-server/model";
-import { MoviesService } from "@imdb-fern/imdb-api-server/services";
-import express from "express";
-
-const app = express();
-
-app.use(
-  MoviesService.expressMiddleware({
-    createMovie: () => {
-      return {
-        ok: true,
-        // We are hardcoding the movie "Iron Man 3" for this demo
-        // because we don't have our server wired up to a database.
-        body: MovieId.of("iron-man-3"),
-      };
-    },
-
-    getMovie: () => {
-      return {
-        ok: false,
-        error: GetMovieErrorBody.NotFoundError(),
-      };
-    },
-  })
-);
-
-console.log("Listening for requests...");
-app.listen(8080);
-```
-
-## Step 6: Run the server
-
-```bash
-npx ts-node server.ts
-```
-
-In the terminal, you should see `Listening for requests...`
-
-## Step 7: Add the Postman generator
-
-In another terminal, let's run:
-
-```bash
-fern add postman
-fern generate
-```
-
-In the `api/` folder you'll see `generated-postman.json` that we'll import to Postman.
-
-## Step 8: Hit the server from Postman
-
-Open Postman and File -> Import `api/generated-postman.json`.
-
-Select the `createMovie` endpoint and hit `Send`. You should get **`iron-man-3`** back from your server.
-
-![createMovie-postman](../static/img/tutorial/createMovie-postman.png)
-
-Select the `getMovie` endpoint and hit `Send`. As expected, we get a 404 response back.
-
-![getMovie-postman](../static/img/tutorial/getMovie-postman.png)
-
-## Step 9: Celebrate 🎉
-
-You've successfully implemented a simple IMDb server using Fern. You're invited to join our [Discord](https://discord.gg/JkkXumPzcG).
+- [How do I get SDKs?](./features/sdk.md)
+- [How do I get API documentation?](./features/api-docs.md)
+- [How do I get server-side type safety?](./features/server.md)
+- [How do I get a Postman integration?](./features/postman.md)

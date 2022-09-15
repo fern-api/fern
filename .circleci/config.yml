@@ -23,13 +23,13 @@ jobs:
           # on the last step.
           command: yarn organize-imports:all
       - run:
-          name: Check dependencies
-          command: yarn depcheck
-      - run:
           # compilation is needed for some typescript-eslint rules,
           # so we do it before the eslint check
           name: compile
           command: yarn compile
+      - run:
+          name: Check dependencies
+          command: yarn depcheck
       - run:
           name: lint:eslint
           command: yarn lint:eslint

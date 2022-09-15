@@ -1,5 +1,6 @@
 import { Rule } from "./Rule";
 import ImportFileExistsRule from "./rules/import-file-exists";
+import NoCircularImportsRule from "./rules/no-circular-imports";
 import NoDuplicateDeclarationsRule from "./rules/no-duplicate-declarations";
 import NoDuplicateEnumValuesRule from "./rules/no-duplicate-enum-values";
 import NoUndefinedErrorReferenceRule from "./rules/no-undefined-error-reference";
@@ -16,5 +17,6 @@ export function getAllRules(): Rule[] {
         ImportFileExistsRule,
         NoDuplicateDeclarationsRule,
         NoUndefinedErrorReferenceRule,
+        NoCircularImportsRule,
     ];
 }

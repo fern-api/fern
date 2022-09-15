@@ -80,7 +80,7 @@ export function convertType({
             }),
         union: (union) =>
             Type.union({
-                discriminant: union.discriminant ?? "_type",
+                discriminant: union.discriminant ?? "type",
                 types: Object.entries(union.union).map(([unionKey, unionedType]) => ({
                     discriminantValue: generateWireStringWithAllCasings({
                         wireValue: unionKey,

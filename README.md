@@ -1,59 +1,24 @@
 # Fern
 
-Define your API once. Keep your server, SDKs, and docs in sync.
+Fern keeps your docs and SDKs in sync with your API.
 
-[View our docs ➚](https://docs.buildwithfern.com/#/)
+[View our docs ➚](https://buildwithfern.com/docs/intro)
 
-[Join the discord ➚](https://discord.com/invite/JkkXumPzcG)
+[Join the Discord ➚](https://discord.com/invite/JkkXumPzcG)
 
-### Goals
+**Fern is the single source of truth for your API.** You define your API in one place, and we'll:
 
-**1. High quality code generation.**
+1. **Generate idiomatic SDKs that feel hand-written**. We generate SDKs in the cloud and can publish them to public registries like npm, PyPi, and Maven.
+1. **Verify that your backend serves the API correctly**. We integrate with popular frameworks like Express, FastAPI, and Spring Boot to add compile-time and run-time checks.
+1. **Build and host API documentation**. With Fern, you automatically get Stripe-like documentation with examples of using the SDKs, not just [fetch](https://developer.mozilla.org/en-US/docs/Web/API/fetch) and [requests](https://pypi.org/project/requests/).
+1. **Integrate with Postman**. A first-class integration with Postman; changes you make to your API automatically update in your Postman Workspace.
+1. **Leave you with an OpenAPI spec**. Fern also generates an OpenAPI spec, so you’re never locked in and able to use any other tools that integrate with OpenAPI.
 
-Generators can be written in any language, for any language. Generated servers and clients are idoimatic and easy to use.
+We’re in private beta with a handful of customers. If you’re interested in using Fern, please [reach out](mailto:hey@buildwithfern.com?subject=%5BPrivate%20beta%5D%20Interest%20in%20joining).
 
-**2. Plugin support.**
+## Getting started
 
-Generators can define plugin points to expand their functionality. For example, a plugin might add support for gRPC or add Auth0 authorization checks for each endpoint.
-
-**3. Protocol flexiblility.**
-
-Use HTTP when you want RESTful calls. Use WebSockets when you want subscriptions. Use TCP when you care about performance. Fern manages the transport layer and provides similar interfaces so you can use the best protocol for the job.
-
-**4. Errors as a first class concept.**
-
-Every request can result in success or failure. Errors are strongly typed so it's easy for consumers to handle them.
-
-### How does it work?
-
-An API begins as a **Fern Definition**, a set of YAML files that describe your API. For example, here's a **Fern Definition** for a simple API to get the current day of the week:
-
-```yaml
-types:
-  DayOfWeek:
-    enum:
-      - SUNDAY
-      - MONDAY
-      - TUESDAY
-      - WEDNESDAY
-      - THURSDAY
-      - FRIDAY
-      - SATURDAY
-services:
-  http:
-    DayOfWeekService:
-      auth: none
-      endpoints:
-        getCurrentDayOfWeek:
-          response: DayOfWeek
-```
-
-Fern reads in the Definition, validates it, and invokes generators. Some examples of generators are:
-
-| Generator         | Description                                                               |
-| ----------------- | ------------------------------------------------------------------------- |
-| `fern-typescript` | converts a Fern Definition to a TypeScript server and a TypeScript client |
-| `fern-java`       | converts a Fern Definition to a Java server and a Java client             |
-| `fern-postman`    | converts a Fern Definition to a Postman Collection                        |
-| `fern-openapi`    | converts a Fern Definition to a OpenAPI Spec                              |
-| `fern-docs`       | converts a Fern Definition to an interactive documentation site           |
+- [How do I get SDKs?](https://www.buildwithfern.com/docs/features/sdk)
+- [How do I get API documentation?](https://www.buildwithfern.com/docs/features/api-docs)
+- [How do I get server-side type safety?](https://www.buildwithfern.com/docs/features/server)
+- [How do I get a Postman integration?](https://www.buildwithfern.com/docs/features/postman)

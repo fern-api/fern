@@ -7588,7 +7588,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/validator", "workspace:packages/cli/yaml/validator"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
-            ["@fern-fern/ir-model", "npm:0.0.186"],\
+            ["@fern-fern/ir-model", "npm:0.0.193"],\
             ["@types/boxen", "npm:3.0.1"],\
             ["@types/inquirer", "npm:9.0.1"],\
             ["@types/is-ci", "npm:3.0.0"],\
@@ -7750,6 +7750,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@docusaurus/theme-search-algolia", "virtual:0e22bec6c31cba292c2eafee712a4f44efcd205a5eb5fbdc172d86a58b90ce9b75aa9e0501b2352bc64f19c96f31b32a2f53ed4481651620596bea7157fbd2e0#npm:2.0.1"],\
             ["@mdx-js/react", "virtual:0e22bec6c31cba292c2eafee712a4f44efcd205a5eb5fbdc172d86a58b90ce9b75aa9e0501b2352bc64f19c96f31b32a2f53ed4481651620596bea7157fbd2e0#npm:1.6.22"],\
             ["clsx", "npm:1.2.1"],\
+            ["posthog-docusaurus", "virtual:0e22bec6c31cba292c2eafee712a4f44efcd205a5eb5fbdc172d86a58b90ce9b75aa9e0501b2352bc64f19c96f31b32a2f53ed4481651620596bea7157fbd2e0#npm:1.0.3"],\
             ["prism-react-renderer", "virtual:0e22bec6c31cba292c2eafee712a4f44efcd205a5eb5fbdc172d86a58b90ce9b75aa9e0501b2352bc64f19c96f31b32a2f53ed4481651620596bea7157fbd2e0#npm:1.3.5"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:0e22bec6c31cba292c2eafee712a4f44efcd205a5eb5fbdc172d86a58b90ce9b75aa9e0501b2352bc64f19c96f31b32a2f53ed4481651620596bea7157fbd2e0#npm:18.2.0"]\
@@ -7846,7 +7847,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
-            ["@fern-fern/ir-model", "npm:0.0.186"],\
+            ["@fern-fern/ir-model", "npm:0.0.193"],\
             ["@types/jest", "npm:28.1.7"],\
             ["@types/lodash-es", "npm:4.17.6"],\
             ["@types/node", "npm:18.7.11"],\
@@ -7919,7 +7920,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/generators-configuration", "workspace:packages/cli/config-management/generators-configuration"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-fern/generator-exec-client", "npm:0.0.5"],\
-            ["@fern-fern/ir-model", "npm:0.0.186"],\
+            ["@fern-fern/ir-model", "npm:0.0.193"],\
             ["@types/jest", "npm:28.1.7"],\
             ["@types/node", "npm:18.7.11"],\
             ["@types/tmp", "npm:0.2.3"],\
@@ -8123,7 +8124,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-fern/fiddle-client-v2", "npm:0.0.18"],\
-            ["@fern-fern/ir-model", "npm:0.0.186"],\
+            ["@fern-fern/ir-model", "npm:0.0.193"],\
             ["@types/jest", "npm:28.1.7"],\
             ["@types/lodash-es", "npm:4.17.6"],\
             ["@types/node", "npm:18.7.11"],\
@@ -8206,11 +8207,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
             ["@types/jest", "npm:28.1.7"],\
+            ["@types/lodash-es", "npm:4.17.6"],\
             ["@types/node", "npm:18.7.11"],\
             ["chalk", "npm:5.0.1"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.22.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
+            ["lodash-es", "npm:4.17.21"],\
             ["prettier", "npm:2.7.1"],\
             ["strip-ansi", "npm:7.0.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
@@ -8256,7 +8259,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-env", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:7.18.10"],\
             ["@babel/preset-typescript", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:7.18.6"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-fern/ir-model", "npm:0.0.186"],\
+            ["@fern-fern/ir-model", "npm:0.0.193"],\
             ["@types/jest", "npm:28.1.7"],\
             ["@types/node", "npm:18.7.11"],\
             ["depcheck", "npm:1.4.3"],\
@@ -8294,10 +8297,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/ir-model", [\
-        ["npm:0.0.186", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-ir-model-npm-0.0.186-6c05f23a24-bb7a3967a6.zip/node_modules/@fern-fern/ir-model/",\
+        ["npm:0.0.193", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-ir-model-npm-0.0.193-83ce58e002-8fef3cc4be.zip/node_modules/@fern-fern/ir-model/",\
           "packageDependencies": [\
-            ["@fern-fern/ir-model", "npm:0.0.186"]\
+            ["@fern-fern/ir-model", "npm:0.0.193"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -22773,6 +22776,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packagePeers": [\
             "@types/postcss",\
             "postcss"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["posthog-docusaurus", [\
+        ["npm:1.0.3", {\
+          "packageLocation": "./.yarn/cache/posthog-docusaurus-npm-1.0.3-f4c5ba422f-250a7509ec.zip/node_modules/posthog-docusaurus/",\
+          "packageDependencies": [\
+            ["posthog-docusaurus", "npm:1.0.3"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:0e22bec6c31cba292c2eafee712a4f44efcd205a5eb5fbdc172d86a58b90ce9b75aa9e0501b2352bc64f19c96f31b32a2f53ed4481651620596bea7157fbd2e0#npm:1.0.3", {\
+          "packageLocation": "./.yarn/__virtual__/posthog-docusaurus-virtual-7520afeee3/0/cache/posthog-docusaurus-npm-1.0.3-f4c5ba422f-250a7509ec.zip/node_modules/posthog-docusaurus/",\
+          "packageDependencies": [\
+            ["posthog-docusaurus", "virtual:0e22bec6c31cba292c2eafee712a4f44efcd205a5eb5fbdc172d86a58b90ce9b75aa9e0501b2352bc64f19c96f31b32a2f53ed4481651620596bea7157fbd2e0#npm:1.0.3"],\
+            ["@docusaurus/core", "virtual:0e22bec6c31cba292c2eafee712a4f44efcd205a5eb5fbdc172d86a58b90ce9b75aa9e0501b2352bc64f19c96f31b32a2f53ed4481651620596bea7157fbd2e0#npm:2.0.1"],\
+            ["@types/docusaurus__core", null]\
+          ],\
+          "packagePeers": [\
+            "@docusaurus/core",\
+            "@types/docusaurus__core"\
           ],\
           "linkType": "HARD"\
         }]\

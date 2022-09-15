@@ -1,5 +1,7 @@
 import { addPrefixToString, noop } from "@fern-api/core-utils";
+import { LogLevel } from "@fern-api/logger";
 import ansiEscapes from "ansi-escapes";
+import chalk from "chalk";
 import IS_CI from "is-ci";
 import ora, { Ora } from "ora";
 import { Log } from "./Log";
@@ -71,7 +73,9 @@ export class TtyAwareLogger {
     }
 
     public log(logs: Log[]): void {
-        for (const { content, omitOnTTY } of logs) {
+        for (const log of logs) {
+            const content = formatLog(log);
+            const omitOnTTY = log.omitOnTTY ?? false;
             if (!this.isTTY) {
                 this.write(content);
             } else if (!omitOnTTY) {
@@ -130,4 +134,32 @@ function getSpinnerInterval(spinner: Ora) {
 
 function countLines(str: string): number {
     return [...str].filter((char) => char === "\n").length + 1;
+}
+
+function formatLog(log: Log): string {
+    let content = log.args.map(stringify).join(" ").trim();
+    if (log.prefix != null) {
+        content = addPrefixToString({ prefix: log.prefix, content });
+    }
+    content += "\n";
+
+    switch (log.level) {
+        case LogLevel.Error:
+            return chalk.red(content);
+        case LogLevel.Warn:
+            return chalk.hex("FFA500")(content);
+        case LogLevel.Debug:
+        case LogLevel.Info:
+            return content;
+    }
+}
+
+function stringify(value: unknown): string {
+    if (typeof value === "string") {
+        return value;
+    }
+    if (value instanceof Error) {
+        return value.stack ?? value.message;
+    }
+    return JSON.stringify(value);
 }

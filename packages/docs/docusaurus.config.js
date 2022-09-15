@@ -34,7 +34,6 @@ const config = {
                 blog: false,
                 docs: {
                     sidebarPath: require.resolve("./sidebars.js"),
-                    // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
                     editUrl: "https://github.com/fern-api/fern/tree/main/docs",
                 },
@@ -44,6 +43,7 @@ const config = {
             }),
         ],
     ],
+    plugins: ["posthog-docusaurus"],
     themeConfig:
         /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
@@ -98,6 +98,10 @@ const config = {
             prism: {
                 theme: lightCodeTheme,
                 darkTheme: darkCodeTheme,
+            },
+            posthog: {
+                apiKey: "phc_yQgAEdJJkVpI24NdSRID2mor1x1leRpDoC9yZ9mfXal",
+                enableInDevelopment: false,
             },
         }),
 };
