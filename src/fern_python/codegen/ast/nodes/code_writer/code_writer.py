@@ -1,6 +1,6 @@
 from typing import Protocol, Set, Union
 
-from ...ast_node import AstNode, NodeWriter, ReferenceResolver
+from ...ast_node import AstNode, GenericTypeVar, NodeWriter, ReferenceResolver
 from ...references import Reference
 
 
@@ -36,6 +36,9 @@ class CodeWriter(AstNode):
         reference_loader = ReferenceLoader()
         self._code_writer(reference_resolver=reference_loader)
         return reference_loader.get_references()
+
+    def get_generics(self) -> Set[GenericTypeVar]:
+        return set()
 
     def write(self, writer: NodeWriter, reference_resolver: ReferenceResolver) -> None:
         if isinstance(self._code_writer, str):

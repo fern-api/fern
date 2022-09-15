@@ -13,8 +13,8 @@ class TypeReferenceToTypeHintConverter:
             container=self._get_type_hint_for_container,
             named=self._get_type_hint_for_named,
             primitive=self._get_type_hint_for_primitive,
-            unknown=self._get_type_hint_for_unknown,
-            void=self._get_type_hint_for_void,
+            unknown=AST.TypeHint.any,
+            void=AST.TypeHint.none,
         )
 
     def _get_type_hint_for_container(self, container: ir_types.ContainerType) -> AST.TypeHint:
@@ -34,27 +34,21 @@ class TypeReferenceToTypeHintConverter:
             api_name=self._api_name,
         )
         reference = AST.ClassReference(
-            module=filepath.to_module_path(),
-            named_import=type_name.name,
-            name_inside_import=(),
+            import_=AST.ReferenceImport(
+                module=filepath.to_module_path(),
+                named_import=type_name.name,
+            ),
+            qualified_name_excluding_import=(),
         )
-        return AST.TypeHint.class_(reference)
+        return AST.TypeHint(type=reference)
 
     def _get_type_hint_for_primitive(self, primitive: ir_types.PrimitiveType) -> AST.TypeHint:
-        return AST.TypeHint.primitive(
-            primitive._visit(
-                integer=lambda: AST.PrimitiveType.int,
-                double=lambda: AST.PrimitiveType.float,
-                string=lambda: AST.PrimitiveType.str,
-                boolean=lambda: AST.PrimitiveType.bool,
-                long=lambda: AST.PrimitiveType.int,
-                date_time=lambda: AST.PrimitiveType.str,
-                uuid=lambda: AST.PrimitiveType.str,
-            )
+        return primitive._visit(
+            integer=AST.TypeHint.int,
+            double=AST.TypeHint.float,
+            string=AST.TypeHint.str,
+            boolean=AST.TypeHint.bool,
+            long=AST.TypeHint.int,
+            date_time=AST.TypeHint.str,
+            uuid=AST.TypeHint.str,
         )
-
-    def _get_type_hint_for_unknown(self) -> AST.TypeHint:
-        return AST.TypeHint.any()
-
-    def _get_type_hint_for_void(self) -> AST.TypeHint:
-        return AST.TypeHint.primitive(AST.PrimitiveType.none)

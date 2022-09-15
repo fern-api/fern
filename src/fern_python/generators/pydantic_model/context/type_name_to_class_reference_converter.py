@@ -14,7 +14,9 @@ class TypeNameToClassReferenceConverter:
             api_name=self._api_name,
         )
         return AST.ClassReference(
-            module=filepath.to_module_path(),
-            named_import=type_name.name,
-            name_inside_import=(),
+            import_=AST.ReferenceImport(
+                module=filepath.to_module_path(),
+                named_import=type_name.name,
+            ),
+            qualified_name_excluding_import=(),
         )

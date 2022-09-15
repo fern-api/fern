@@ -1,8 +1,8 @@
 from typing import Set
 
-from ...ast_node import AstNode, NodeWriter, ReferenceResolver
-from ...references import Reference
-from ..type_hint import TypeHint
+from ....ast_node import AstNode, GenericTypeVar, NodeWriter, ReferenceResolver
+from ....references import Reference
+from ...type_hint import TypeHint
 
 
 class FunctionParameter(AstNode):
@@ -13,8 +13,14 @@ class FunctionParameter(AstNode):
     def get_references(self) -> Set[Reference]:
         references: Set[Reference] = set()
         if self.type_hint is not None:
-            references = references.union(self.type_hint.get_references())
+            references.update(self.type_hint.get_references())
         return references
+
+    def get_generics(self) -> Set[GenericTypeVar]:
+        generics: Set[GenericTypeVar] = set()
+        if self.type_hint is not None:
+            generics.update(self.type_hint.get_generics())
+        return generics
 
     def write(self, writer: NodeWriter, reference_resolver: ReferenceResolver) -> None:
         writer.write(f"{self.name}")

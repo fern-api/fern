@@ -64,7 +64,7 @@ class ModuleManager:
                 all_exports: Set[str] = set()
                 for exported_from, exports in module_info.exports.items():
                     if len(exports) > 0:
-                        writer.write_line(f"from .{'.'.join(exported_from)} import {', '.join(exports)}\n")
+                        writer.write_line(f"from .{'.'.join(exported_from)} import {', '.join(exports)}")
                         all_exports.update(exports)
                 if len(all_exports) > 0:
                     writer.write_line("__all__ = [" + ", ".join(f'"{export}"' for export in sorted(all_exports)) + "]")

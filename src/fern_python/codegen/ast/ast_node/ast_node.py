@@ -4,12 +4,17 @@ from abc import ABC, abstractmethod
 from typing import Set
 
 from ..references import Reference
+from .generic_type_var import GenericTypeVar
 from .reference_resolver import ReferenceResolver
 
 
 class AstNode(ABC):
     @abstractmethod
     def get_references(self) -> Set[Reference]:
+        ...
+
+    @abstractmethod
+    def get_generics(self) -> Set[GenericTypeVar]:
         ...
 
     @abstractmethod

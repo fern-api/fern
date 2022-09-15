@@ -1,23 +1,31 @@
-from .ast_node import AstNode, IndentableWriter, NodeWriter, ReferenceResolver, Writer
+from .ast_node import (
+    AstNode,
+    GenericTypeVar,
+    IndentableWriter,
+    NodeWriter,
+    ReferenceResolver,
+    Writer,
+)
 from .dependency import Dependency, DependencyName, DependencyVersion
 from .nodes import (
     ClassConstructor,
     ClassDeclaration,
-    ClassTypeHint,
     CodeWriter,
+    Declaration,
+    Expression,
     FunctionDeclaration,
+    FunctionInvocation,
     FunctionParameter,
-    PrimitiveType,
-    PrimitiveTypeHint,
     ReferencingCodeWriter,
-    TypeAlias,
+    TypeAliasDeclaration,
     TypeHint,
     VariableDeclaration,
 )
-from .references import ClassReference, ModulePath, Reference
+from .references import ClassReference, ModulePath, Reference, ReferenceImport
 
 __all__ = [
     "AstNode",
+    "Declaration",
     "ReferenceResolver",
     "Writer",
     "NodeWriter",
@@ -30,14 +38,15 @@ __all__ = [
     "FunctionDeclaration",
     "FunctionParameter",
     "TypeHint",
-    "PrimitiveType",
-    "PrimitiveTypeHint",
-    "ClassTypeHint",
     "VariableDeclaration",
     "Dependency",
     "DependencyName",
     "DependencyVersion",
     "CodeWriter",
     "ReferencingCodeWriter",
-    "TypeAlias",
+    "TypeAliasDeclaration",
+    "ReferenceImport",
+    "Expression",
+    "FunctionInvocation",
+    "GenericTypeVar",
 ]

@@ -1,13 +1,15 @@
-from typing import List
+from typing import Sequence
 
 from fern_python.codegen import AST
 
 
 def get_reference_to_pydantic_export(export: str) -> AST.ClassReference:
     return AST.ClassReference(
-        module=("pydantic",),
-        name_inside_import=(export,),
-        from_module=AST.Dependency(name="pydantic", version="^1.9.2"),
+        import_=AST.ReferenceImport(
+            module=("pydantic",),
+            external_dependency=AST.Dependency(name="pydantic", version="^1.9.2"),
+        ),
+        qualified_name_excluding_import=(export,),
     )
 
 
@@ -16,7 +18,7 @@ PYDANTIC_FIELD_REFERENCE = get_reference_to_pydantic_export("Field")
 
 
 class PydanticModel:
-    def __init__(self, name: str, base_models: List[AST.ClassReference] = None):
+    def __init__(self, name: str, base_models: Sequence[AST.ClassReference] = None):
         self._class_declaration = AST.ClassDeclaration(
             name=name,
             extends=base_models or [PYDANTIC_BASE_MODEL_REFERENCE],

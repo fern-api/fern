@@ -15,6 +15,10 @@ class Writer(ABC):
         ...
 
     @abstractmethod
+    def write_newline_if_last_line_not(self) -> None:
+        ...
+
+    @abstractmethod
     def indent(self) -> IndentableWriter:
         ...
 

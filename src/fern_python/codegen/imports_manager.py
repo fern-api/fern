@@ -30,16 +30,15 @@ def create_empty_module_imports() -> ModuleImports:
 
 
 class ImportsManager:
-    def __init__(self, project_name: str):
-        self._project_name = project_name
+    def __init__(self) -> None:
         self._top_imports: Imports = defaultdict(create_empty_module_imports)
         self._bottom_imports: Imports = defaultdict(create_empty_module_imports)
 
-    def register_import(self, reference: AST.Reference) -> None:
-        if reference.at_bottom_of_file:
-            self._register_import(reference=reference, imports=self._bottom_imports)
+    def register_import(self, reference_import: AST.ReferenceImport) -> None:
+        if reference_import.at_bottom_of_file:
+            self._register_import(reference_import=reference_import, imports=self._bottom_imports)
         else:
-            self._register_import(reference=reference, imports=self._top_imports)
+            self._register_import(reference_import=reference_import, imports=self._top_imports)
 
     def write_top_imports(self, writer: AST.Writer) -> None:
         self._write_imports(writer=writer, imports=self._top_imports)
@@ -59,14 +58,13 @@ class ImportsManager:
                 named_imports = ", ".join(map(stringify_named_import, import_to_write.named_imports))
                 writer.write_line(f"from {stringified_module_name} import {named_imports}")
 
-    def _register_import(self, reference: AST.Reference, imports: Imports) -> None:
-        module_path = (
-            reference.module if reference.from_module is not None else (self._project_name,) + reference.module
-        )
-        if reference.named_import is None:
-            imports[module_path].direct_module_imports.add(DirectModuleImport(alias=reference.alias))
+    def _register_import(self, reference_import: AST.ReferenceImport, imports: Imports) -> None:
+        if reference_import.named_import is None:
+            imports[reference_import.module].direct_module_imports.add(DirectModuleImport(alias=reference_import.alias))
         else:
-            imports[module_path].named_imports.add(NamedImport(name=reference.named_import, alias=reference.alias))
+            imports[reference_import.module].named_imports.add(
+                NamedImport(name=reference_import.named_import, alias=reference_import.alias)
+            )
 
 
 def stringify_named_import(named_import: NamedImport) -> str:

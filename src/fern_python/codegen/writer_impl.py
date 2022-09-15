@@ -16,13 +16,20 @@ class WriterImpl(AST.Writer):
         self._filepath = filepath
         self._indent = 0
         self._file: IO[Any]
+        self._last_character_is_newline = False
 
     def write(self, content: str) -> None:
-        self._file.write("\t" * self._indent + content)
+        prefix = "\t" * self._indent
+        content_with_prefix = content.replace("\n", f"\n{prefix}")
+        self._file.write(content_with_prefix)
+        self._last_character_is_newline = len(content) > 0 and content[-1] == "\n"
 
     def write_line(self, content: str) -> None:
         self.write(content)
-        if not content.endswith("\n"):
+        self.write_newline_if_last_line_not()
+
+    def write_newline_if_last_line_not(self) -> None:
+        if not self._last_character_is_newline:
             self.write("\n")
 
     def indent(self) -> IndentableWriterImpl:
@@ -31,6 +38,7 @@ class WriterImpl(AST.Writer):
             writer.write_line("# here's an indented line")
         """
         self._indent += 1
+        self.write("\n")
         return IndentableWriterImpl(writer=self)
 
     def start(self) -> None:

@@ -1,3 +1,4 @@
+import dataclasses
 from collections import defaultdict
 from typing import DefaultDict, Dict, Iterator, Set, Tuple
 
@@ -29,13 +30,15 @@ class ReferenceResolverImpl(AST.ReferenceResolver):
             for original_reference in original_references:
                 resolved_reference = (
                     original_reference
-                    if len(original_references) == 1 or original_reference.module == self._module_path_of_source_file
-                    else AST.Reference(
-                        module=original_reference.module,
-                        named_import=original_reference.named_import,
-                        alias=construct_alias_for_collision(original_reference),
-                        name_inside_import=original_reference.name_inside_import,
-                        from_module=original_reference.from_module,
+                    if len(original_references) == 1
+                    or original_reference.import_ is None
+                    or original_reference.import_.module == self._module_path_of_source_file
+                    else dataclasses.replace(
+                        original_reference,
+                        import_=dataclasses.replace(
+                            original_reference.import_,
+                            alias=construct_import_alias_for_collision(original_reference.import_),
+                        ),
                     )
                 )
 
@@ -60,19 +63,21 @@ def construct_qualified_name_of_reference(reference: AST.Reference) -> Qualified
     returns the would-be qualfieid name of a reference, before resolving collisions
     """
     prefix = (
-        (reference.alias,)
-        if reference.alias is not None
-        else (reference.named_import,)
-        if reference.named_import is not None
-        else reference.module
+        ()
+        if reference.import_ is None
+        else (reference.import_.alias,)
+        if reference.import_.alias is not None
+        else (reference.import_.named_import,)
+        if reference.import_.named_import is not None
+        else reference.import_.module
     )
-    return prefix + reference.name_inside_import
+    return prefix + reference.qualified_name_excluding_import
 
 
-def construct_alias_for_collision(reference: AST.Reference) -> str:
-    parts = reference.module
-    if reference.named_import is not None:
-        parts += (reference.named_import,)
-    if reference.alias is not None:
-        parts += (reference.alias,)
+def construct_import_alias_for_collision(reference_import: AST.ReferenceImport) -> str:
+    parts = reference_import.module
+    if reference_import.named_import is not None:
+        parts += (reference_import.named_import,)
+    if reference_import.alias is not None:
+        parts += (reference_import.alias,)
     return "_".join(parts)

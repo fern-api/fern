@@ -1,18 +1,18 @@
 from __future__ import annotations
 
-from typing import List, Set
+from typing import List, Sequence, Set
 
-from ...ast_node import AstNode, NodeWriter, ReferenceResolver
-from ...references import ClassReference, Reference
-from ..code_writer import CodeWriter
+from ....ast_node import AstNode, GenericTypeVar, NodeWriter, ReferenceResolver
+from ....references import ClassReference, Reference
+from ...code_writer import CodeWriter
+from ...type_hint import TypeHint
 from ..function import FunctionDeclaration, FunctionParameter
-from ..type_hint import TypeHint
-from ..variable_declaration import VariableDeclaration
+from ..variable import VariableDeclaration
 from .class_constructor import ClassConstructor
 
 
 class ClassDeclaration(AstNode):
-    def __init__(self, name: str, extends: List[ClassReference] = None, constructor: ClassConstructor = None):
+    def __init__(self, name: str, extends: Sequence[ClassReference] = None, constructor: ClassConstructor = None):
         self.name = name
         self.extends = extends or []
         self.constructor = constructor
@@ -22,13 +22,13 @@ class ClassDeclaration(AstNode):
         self.statements.append(variable_declaration)
 
     def add_method(
-        self, name: str, return_type: TypeHint, parameters: List[FunctionParameter], body: CodeWriter
+        self, name: str, parameters: Sequence[FunctionParameter], return_type: TypeHint, body: CodeWriter
     ) -> None:
         self.statements.append(
             FunctionDeclaration(
                 name=name,
+                parameters=[FunctionParameter(name="self")] + list(parameters),
                 return_type=return_type,
-                parameters=[FunctionParameter(name="self")] + parameters,
                 body=body,
             )
         )
@@ -39,10 +39,18 @@ class ClassDeclaration(AstNode):
     def get_references(self) -> Set[Reference]:
         references: Set[Reference] = set(self.extends)
         if self.constructor is not None:
-            references = references.union(self.constructor.get_references())
+            references.update(self.constructor.get_references())
         for statement in self.statements:
-            references = references.union(statement.get_references())
+            references.update(statement.get_references())
         return references
+
+    def get_generics(self) -> Set[GenericTypeVar]:
+        generics: Set[GenericTypeVar] = set()
+        if self.constructor is not None:
+            generics.update(self.constructor.get_generics())
+        for statement in self.statements:
+            generics.update(statement.get_generics())
+        return generics
 
     def write(self, writer: NodeWriter, reference_resolver: ReferenceResolver) -> None:
         top_line = f"class {self.name}"
@@ -54,6 +62,6 @@ class ClassDeclaration(AstNode):
         with writer.indent():
             for statement in self.statements:
                 writer.write_node(statement)
-                writer.write("\n")
             if len(self.statements) == 0:
-                writer.write_line("pass")
+                writer.write("pass")
+            writer.write("\n")
