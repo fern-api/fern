@@ -23,6 +23,26 @@ types:
   AliasTypeDeclaration:
     properties:
       aliasOf: TypeReference
+      resolvedType: ResolvedTypeReference
+
+  ResolvedTypeReference:
+    union:
+      container: ContainerType
+      named: ResolvedNamedType
+      primitive: PrimitiveType
+      unknown: {}
+      void: {}
+
+  ResolvedNamedType:
+    properties:
+      name: DeclaredTypeName
+      shape: ShapeType
+
+  ShapeType:
+    enum:
+      - ENUM
+      - OBJECT
+      - UNION
 
   EnumTypeDeclaration:
     properties:
@@ -53,15 +73,19 @@ types:
     extends: commons.WithDocs
     properties:
       discriminantValue: commons.WireStringWithAllCasings
-      shape: optional<SingleUnionTypeProperties>
+      valueType:
+        type: TypeReference
+        docs: This is deprecated. Use shape instead.
+      shape: SingleUnionTypeProperties
   SingleUnionTypeProperties:
     union:
       samePropertiesAsObject: DeclaredTypeName
       singleProperty: SingleUnionTypeProperty
+      noProperties: {}
   SingleUnionTypeProperty:
     properties:
       name: commons.WireStringWithAllCasings
-      valueType: TypeReference
+      type: TypeReference
 
   TypeReference:
     union:

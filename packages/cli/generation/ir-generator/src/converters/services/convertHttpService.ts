@@ -1,10 +1,9 @@
-import { assertNever, RelativeFilePath } from "@fern-api/core-utils";
+import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { FernFilepath } from "@fern-fern/ir-model/commons";
 import { HttpEndpoint, HttpHeader, HttpMethod, HttpService, PathParameter } from "@fern-fern/ir-model/services/http";
+import { FernFileContext } from "../../FernFileContext";
 import { generateStringWithAllCasings, generateWireStringWithAllCasings } from "../../utils/generateCasings";
 import { getDocs } from "../../utils/getDocs";
-import { createTypeReferenceParser, TypeReferenceParser } from "../../utils/parseInlineType";
 import { constructHttpPath } from "./constructHttpPath";
 import { convertHttpRequest } from "./convertHttpRequest";
 import { convertHttpResponse } from "./convertHttpResponse";
@@ -13,28 +12,24 @@ import { convertResponseErrors } from "./convertResponseErrors";
 export function convertHttpService({
     serviceDefinition,
     serviceId,
-    fernFilepath,
-    imports,
+    file,
 }: {
     serviceDefinition: RawSchemas.HttpServiceSchema;
     serviceId: string;
-    fernFilepath: FernFilepath;
-    imports: Record<string, RelativeFilePath>;
+    file: FernFileContext;
 }): HttpService {
-    const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
-
     return {
         docs: serviceDefinition.docs,
         name: {
             name: serviceId,
-            fernFilepath,
+            fernFilepath: file.fernFilepath,
         },
         basePath: serviceDefinition["base-path"],
         basePathV2: constructHttpPath(serviceDefinition["base-path"]),
         headers:
             serviceDefinition.headers != null
                 ? Object.entries(serviceDefinition.headers).map(([headerKey, header]) =>
-                      convertHttpHeader({ headerKey, header, fernFilepath, imports })
+                      convertHttpHeader({ headerKey, header, file })
                   )
                 : [],
         pathParameters:
@@ -43,7 +38,7 @@ export function convertHttpService({
                       convertPathParameter({
                           parameterName,
                           parameter,
-                          parseTypeReference,
+                          file,
                       })
                   )
                 : [],
@@ -61,14 +56,14 @@ export function convertHttpService({
                               convertPathParameter({
                                   parameterName,
                                   parameter,
-                                  parseTypeReference,
+                                  file,
                               })
                           )
                         : [],
                 queryParameters:
                     endpoint["query-parameters"] != null
                         ? Object.entries(endpoint["query-parameters"]).map(([parameterName, parameter]) => {
-                              const valueType = parseTypeReference(parameter);
+                              const valueType = file.parseTypeReference(parameter);
                               return {
                                   docs: typeof parameter !== "string" ? parameter.docs : undefined,
                                   name: generateWireStringWithAllCasings({
@@ -85,24 +80,12 @@ export function convertHttpService({
                 headers:
                     endpoint.headers != null
                         ? Object.entries(endpoint.headers).map(([headerKey, header]) =>
-                              convertHttpHeader({ headerKey, header, fernFilepath, imports })
+                              convertHttpHeader({ headerKey, header, file })
                           )
                         : [],
-                request: convertHttpRequest({
-                    request: endpoint.request,
-                    fernFilepath,
-                    imports,
-                }),
-                response: convertHttpResponse({
-                    response: endpoint.response,
-                    fernFilepath,
-                    imports,
-                }),
-                errors: convertResponseErrors({
-                    errors: endpoint.errors,
-                    fernFilepath,
-                    imports,
-                }),
+                request: convertHttpRequest({ request: endpoint.request, file }),
+                response: convertHttpResponse({ response: endpoint.response, file }),
+                errors: convertResponseErrors({ errors: endpoint.errors, file }),
             })
         ),
     };
@@ -111,16 +94,16 @@ export function convertHttpService({
 function convertPathParameter({
     parameterName,
     parameter,
-    parseTypeReference,
+    file,
 }: {
     parameterName: string;
     parameter: RawSchemas.HttpPathParameterSchema;
-    parseTypeReference: TypeReferenceParser;
+    file: FernFileContext;
 }): PathParameter {
     return {
         docs: typeof parameter !== "string" ? parameter.docs : undefined,
         name: generateStringWithAllCasings(parameterName),
-        valueType: parseTypeReference(parameter),
+        valueType: file.parseTypeReference(parameter),
     };
 }
 
@@ -144,22 +127,18 @@ function convertHttpMethod(method: Exclude<RawSchemas.HttpEndpointSchema["method
 export function convertHttpHeader({
     headerKey,
     header,
-    fernFilepath,
-    imports,
+    file,
 }: {
     headerKey: string;
     header: RawSchemas.HttpHeaderSchema;
-    fernFilepath: FernFilepath;
-    imports: Record<string, RelativeFilePath>;
+    file: FernFileContext;
 }): HttpHeader {
-    const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
-
     return {
         name: generateWireStringWithAllCasings({
             wireValue: headerKey,
             name: typeof header !== "string" && header.name != null ? header.name : headerKey,
         }),
-        valueType: parseTypeReference(header),
+        valueType: file.parseTypeReference(header),
         docs: getDocs(header),
     };
 }

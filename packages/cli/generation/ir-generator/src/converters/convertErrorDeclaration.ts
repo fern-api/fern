@@ -1,29 +1,25 @@
-import { RelativeFilePath } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { FernFilepath } from "@fern-fern/ir-model/commons";
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
-import { Type } from "@fern-fern/ir-model/types";
+import { FernFileContext } from "../FernFileContext";
+import { TypeResolver } from "../type-resolver/TypeResolver";
 import { generateWireStringWithAllCasings } from "../utils/generateCasings";
-import { createTypeReferenceParser } from "../utils/parseInlineType";
-import { convertType } from "./type-declarations/convertTypeDeclaration";
+import { convertType } from "./convertTypeDeclaration";
 
 export function convertErrorDeclaration({
     errorName,
-    fernFilepath,
     errorDeclaration,
-    imports,
+    file,
+    typeResolver,
 }: {
     errorName: string;
-    fernFilepath: FernFilepath;
-    errorDeclaration: RawSchemas.ErrorDeclarationSchema | string;
-    imports: Record<string, RelativeFilePath>;
+    errorDeclaration: RawSchemas.ErrorDeclarationSchema;
+    file: FernFileContext;
+    typeResolver: TypeResolver;
 }): ErrorDeclaration {
-    const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
-
     return {
         name: {
             name: errorName,
-            fernFilepath,
+            fernFilepath: file.fernFilepath,
         },
         discriminantValue: generateWireStringWithAllCasings({
             wireValue: errorName,
@@ -36,11 +32,10 @@ export function convertErrorDeclaration({
                       statusCode: errorDeclaration.http.statusCode,
                   }
                 : undefined,
-        type:
-            typeof errorDeclaration === "string"
-                ? Type.alias({
-                      aliasOf: parseTypeReference(errorDeclaration),
-                  })
-                : convertType({ typeDeclaration: errorDeclaration.type, fernFilepath, imports }),
+        type: convertType({
+            typeDeclaration: typeof errorDeclaration === "string" ? errorDeclaration : errorDeclaration.type,
+            file,
+            typeResolver,
+        }),
     };
 }

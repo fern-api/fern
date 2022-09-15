@@ -1,17 +1,14 @@
-import { RelativeFilePath } from "@fern-api/core-utils";
 import { RawSchemas, visitRawApiAuth, visitRawAuthSchemeDeclaration } from "@fern-api/yaml-schema";
 import { ApiAuth, AuthScheme, AuthSchemesRequirement } from "@fern-fern/ir-model/auth";
-import { FernFilepath } from "@fern-fern/ir-model/commons";
+import { FernFileContext } from "../FernFileContext";
 import { convertHttpHeader } from "./services/convertHttpService";
 
 export function convertApiAuth({
     rawApiFileSchema,
-    fernFilepath,
-    imports,
+    file,
 }: {
     rawApiFileSchema: RawSchemas.RootApiFileSchema;
-    fernFilepath: FernFilepath;
-    imports: Record<string, RelativeFilePath>;
+    file: FernFileContext;
 }): ApiAuth {
     if (rawApiFileSchema.auth == null) {
         return {
@@ -30,8 +27,7 @@ export function convertApiAuth({
                 convertSchemeReference({
                     reference: authScheme,
                     authSchemeDeclarations: rawApiFileSchema["auth-schemes"],
-                    fernFilepath,
-                    imports,
+                    file,
                 }),
             ],
         }),
@@ -42,8 +38,7 @@ export function convertApiAuth({
                 convertSchemeReference({
                     reference: schemeReference,
                     authSchemeDeclarations: rawApiFileSchema["auth-schemes"],
-                    fernFilepath,
-                    imports,
+                    file,
                 })
             ),
         }),
@@ -54,8 +49,7 @@ export function convertApiAuth({
                 convertSchemeReference({
                     reference: schemeReference,
                     authSchemeDeclarations: rawApiFileSchema["auth-schemes"],
-                    fernFilepath,
-                    imports,
+                    file,
                 })
             ),
         }),
@@ -65,13 +59,11 @@ export function convertApiAuth({
 function convertSchemeReference({
     reference,
     authSchemeDeclarations,
-    fernFilepath,
-    imports,
+    file,
 }: {
     reference: RawSchemas.AuthSchemeReferenceSchema | string;
     authSchemeDeclarations: Record<string, RawSchemas.AuthSchemeDeclarationSchema> | undefined;
-    fernFilepath: FernFilepath;
-    imports: Record<string, RelativeFilePath>;
+    file: FernFileContext;
 }): AuthScheme {
     const convertNamedAuthSchemeReference = (reference: string, docs: string | undefined) => {
         const declaration = authSchemeDeclarations?.[reference];
@@ -88,8 +80,7 @@ function convertSchemeReference({
                             name: rawHeader.name,
                             type: rawHeader.type ?? "string",
                         },
-                        fernFilepath,
-                        imports,
+                        file,
                     })
                 ),
         });

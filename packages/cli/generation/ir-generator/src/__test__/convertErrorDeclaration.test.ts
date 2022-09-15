@@ -2,7 +2,9 @@ import { RelativeFilePath } from "@fern-api/core-utils";
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { Type, TypeReference } from "@fern-fern/ir-model/types";
 import { convertErrorDeclaration } from "../converters/convertErrorDeclaration";
+import { constructFernFileContext } from "../FernFileContext";
 import { convertToFernFilepath } from "../utils/convertToFernFilepath";
+import { MockTypeResolver } from "./mocks/MockTypeResolver";
 
 describe("convertErrorDeclaration", () => {
     it("reference to a type in another file", () => {
@@ -15,10 +17,15 @@ describe("convertErrorDeclaration", () => {
                     },
                 },
             },
-            fernFilepath: convertToFernFilepath(RelativeFilePath.of("path/to/other")),
-            imports: {
-                commons: RelativeFilePath.of("./commons"),
-            },
+            file: constructFernFileContext({
+                relativeFilepath: RelativeFilePath.of("path/to/other"),
+                serviceFile: {
+                    imports: {
+                        commons: RelativeFilePath.of("./commons"),
+                    },
+                },
+            }),
+            typeResolver: MockTypeResolver,
         });
 
         const expectedDefinition: ErrorDeclaration = {
