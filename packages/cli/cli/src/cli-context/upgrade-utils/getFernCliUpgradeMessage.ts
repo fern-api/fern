@@ -1,19 +1,19 @@
 import boxen from "boxen";
 import chalk from "chalk";
 import { CliEnvironment } from "../CliEnvironment";
-import { isFernCliUpgradeAvailable } from "./isFernCliUpgradeAvailable";
 
-export async function getFernCliUpgradeMessage(cliEnvironment: CliEnvironment): Promise<string | undefined> {
-    const upgradeInfo = await isFernCliUpgradeAvailable(cliEnvironment);
-    if (!upgradeInfo.upgradeAvailable) {
-        return undefined;
-    }
-
+export async function getFernCliUpgradeMessage({
+    cliEnvironment,
+    toVersion,
+}: {
+    cliEnvironment: CliEnvironment;
+    toVersion: string;
+}): Promise<string> {
     const message =
         "Update available " +
         chalk.dim(cliEnvironment.packageVersion) +
         chalk.reset(" → ") +
-        chalk.green(upgradeInfo.latestVersion) +
+        chalk.green(toVersion) +
         " \nRun " +
         chalk.cyan(`${cliEnvironment.cliName} upgrade`) +
         " to update";
