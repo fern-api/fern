@@ -23,6 +23,7 @@ export class TtyAwareLogger {
             this.paintAndStartInterval();
             this.finish = () => {
                 clearInterval(this.interval);
+                this.interval = undefined;
                 this.repaint();
                 this.write(ansiEscapes.cursorShow);
             };
