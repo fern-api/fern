@@ -1,8 +1,6 @@
-import { RelativeFilePath } from "@fern-api/core-utils";
 import { Workspace } from "@fern-api/workspace-loader";
-import { visitRawTypeDeclaration } from "@fern-api/yaml-schema";
+import { RawSchemas, RAW_DEFAULT_ID_TYPE, ServiceFileSchema, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
 import { ResolvedTypeReference, ShapeType, TypeReference } from "@fern-fern/ir-model/types";
-import path from "path";
 import { constructFernFileContext, FernFileContext } from "../FernFileContext";
 import { parseInlineType } from "../utils/parseInlineType";
 import { parseReferenceToTypeName } from "../utils/parseReferenceToTypeName";
@@ -23,23 +21,19 @@ export class TypeResolverImpl implements TypeResolver {
             void: ResolvedTypeReference.void,
             named: (typeName) => {
                 const reference = parseReferenceToTypeName({
-                    reference: typeName.name,
-                    referencedIn: RelativeFilePath.of(
-                        typeName.fernFilepath.map((part) => part.originalValue).join(path.sep)
-                    ),
+                    reference: type,
+                    referencedIn: file.relativeFilepath,
                     imports: file.imports,
                 });
                 if (reference == null) {
-                    throw new Error("Cannot find type: " + typeName.name);
+                    throw new Error("Cannot find type: " + type);
                 }
                 const serviceFile = this.workspace.serviceFiles[reference.relativeFilePath];
                 if (serviceFile == null) {
                     throw new Error("Cannot find file: " + reference.relativeFilePath);
                 }
-                const declaration = serviceFile.types?.[reference.typeName];
-                if (declaration == null) {
-                    throw new Error("Cannot find type declaration: " + reference.typeName);
-                }
+
+                const declaration = getDeclaration(serviceFile, reference.typeName);
                 return visitRawTypeDeclaration(declaration, {
                     alias: (aliasDeclaration) => {
                         return this.resolveType({
@@ -72,4 +66,23 @@ export class TypeResolverImpl implements TypeResolver {
             },
         });
     }
+}
+
+function getDeclaration(serviceFile: ServiceFileSchema, typeName: string): RawSchemas.TypeDeclarationSchema {
+    const declaration = serviceFile.types?.[typeName];
+    if (declaration != null) {
+        return declaration;
+    }
+
+    const idDeclaration = serviceFile.ids?.find((id) =>
+        typeof id === "string" ? id === typeName : id.name === typeName
+    );
+    if (idDeclaration != null) {
+        if (typeof idDeclaration !== "string" && idDeclaration.type != null) {
+            return idDeclaration.type;
+        }
+        return RAW_DEFAULT_ID_TYPE;
+    }
+
+    throw new Error("Cannot find type declaration: " + typeName);
 }
