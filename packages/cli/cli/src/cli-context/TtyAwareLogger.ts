@@ -13,12 +13,12 @@ export class TtyAwareLogger {
     private spinner = ora({ spinner: "dots11" });
     private interval: NodeJS.Timer | undefined;
 
-    public finish: () => void;
-
     constructor(private readonly stream: NodeJS.WriteStream) {
-        if (!this.isTTY) {
-            this.finish = noop;
-        } else {
+        this.start();
+    }
+
+    private start() {
+        if (this.isTTY) {
             this.write(ansiEscapes.cursorHide);
             this.paintAndStartInterval();
             this.finish = () => {
@@ -28,6 +28,8 @@ export class TtyAwareLogger {
             };
         }
     }
+
+    public finish: () => void = noop;
 
     private paintAndStartInterval() {
         if (this.interval != null) {
@@ -66,10 +68,10 @@ export class TtyAwareLogger {
 
     public async takeOverTerminal(run: () => void | Promise<void>): Promise<void> {
         this.startBuffering();
-        clearInterval(this.interval);
+        this.finish();
         await run();
+        this.start();
         this.flushAndStopBuffering();
-        this.paintAndStartInterval();
     }
 
     public log(logs: Log[]): void {

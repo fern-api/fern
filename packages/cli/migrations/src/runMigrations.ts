@@ -76,7 +76,7 @@ async function askForConfirmation(migrationsToRun: VersionMigrations[]): Promise
         for (const migration of migrations) {
             lines.push(
                 addPrefixToString({
-                    prefix: "◦ ",
+                    prefix: "  ◦ ",
                     content: `${migration.name}\n${chalk.dim(migration.summary)}`,
                 })
             );
