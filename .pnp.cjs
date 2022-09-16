@@ -231,7 +231,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-deprecation", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:1.3.2"],\
             ["eslint-plugin-import", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:2.26.0"],\
             ["eslint-plugin-jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:27.0.4"],\
-            ["execa", "npm:6.1.0"],\
+            ["execa", "npm:5.1.1"],\
             ["husky", "npm:8.0.1"],\
             ["immer", "npm:9.0.15"],\
             ["is-ci", "npm:3.0.1"],\
@@ -7788,7 +7788,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["env-cmd", "https://github.com/toddbluhm/env-cmd.git#commit=8f35b71651f6a78710308ff38ab30896ea72ee8b"],\
             ["esbuild", "npm:0.15.7"],\
             ["eslint", "npm:8.23.1"],\
-            ["execa", "npm:6.1.0"],\
+            ["execa", "npm:5.1.1"],\
             ["immer", "npm:9.0.15"],\
             ["inquirer", "npm:9.1.0"],\
             ["is-ci", "npm:3.0.1"],\
@@ -7955,7 +7955,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.23.1"],\
-            ["execa", "npm:6.1.0"],\
+            ["execa", "npm:5.1.1"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.0.3"],\
             ["js-yaml", "npm:4.1.0"],\
             ["prettier", "npm:2.7.1"],\
@@ -8345,7 +8345,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["depcheck", "npm:1.4.3"],\
             ["esbuild", "npm:0.15.7"],\
             ["eslint", "npm:8.23.1"],\
-            ["execa", "npm:6.1.0"],\
+            ["execa", "npm:5.1.1"],\
             ["immer", "npm:9.0.15"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.0.3"],\
             ["lodash-es", "npm:4.17.21"],\
@@ -16749,7 +16749,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-deprecation", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:1.3.2"],\
             ["eslint-plugin-import", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:2.26.0"],\
             ["eslint-plugin-jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:27.0.4"],\
-            ["execa", "npm:6.1.0"],\
+            ["execa", "npm:5.1.1"],\
             ["husky", "npm:8.0.1"],\
             ["immer", "npm:9.0.15"],\
             ["is-ci", "npm:3.0.1"],\

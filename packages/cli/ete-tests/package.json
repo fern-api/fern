@@ -29,7 +29,7 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/generators-configuration": "workspace:*",
     "@fern-api/project-configuration": "workspace:*",
-    "execa": "^6.1.0",
+    "execa": "^5.1.1",
     "js-yaml": "^4.1.0",
     "strip-ansi": "^7.0.1",
     "tmp-promise": "^3.0.3"
