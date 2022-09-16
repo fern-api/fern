@@ -63,3 +63,16 @@ export function visitRawTypeReference<R>(type: string, visitor: RawTypeReference
 
     return visitor.named(type);
 }
+
+export function isRawNamedTypeReference(type: string): boolean {
+    return visitRawTypeReference(type, {
+        primitive: () => false,
+        map: () => false,
+        list: () => false,
+        set: () => false,
+        optional: () => false,
+        named: () => true,
+        void: () => false,
+        unknown: () => false,
+    });
+}

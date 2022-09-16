@@ -18,7 +18,7 @@ export async function validateWorkspaceAndLogIssues(workspace: Workspace, contex
         context.logger.log(
             getLogLevelForSeverity(violation.severity),
             formatLog({
-                breadcrumbs: [violation.relativeFilePath, ...violation.nodePath],
+                breadcrumbs: [violation.relativeFilepath, ...violation.nodePath],
                 title: violation.message,
             })
         );

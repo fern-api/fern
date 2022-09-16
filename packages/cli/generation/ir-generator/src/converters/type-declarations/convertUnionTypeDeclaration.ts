@@ -1,12 +1,7 @@
-import { RawSchemas } from "@fern-api/yaml-schema";
-import {
-    ResolvedTypeReference,
-    ShapeType,
-    SingleUnionTypeProperties,
-    Type,
-    TypeReference,
-} from "@fern-fern/ir-model/types";
+import { isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
+import { SingleUnionTypeProperties, Type, TypeReference } from "@fern-fern/ir-model/types";
 import { FernFileContext } from "../../FernFileContext";
+import { ResolvedType } from "../../type-resolver/ResolvedType";
 import { TypeResolver } from "../../type-resolver/TypeResolver";
 import { generateWireStringWithAllCasings } from "../../utils/generateCasings";
 import { getDocs } from "../../utils/getDocs";
@@ -33,18 +28,19 @@ export function convertUnionTypeDeclaration({
             const rawType: string | undefined =
                 typeof unionedType === "string" ? unionedType : unionedType.type != null ? unionedType.type : undefined;
             const valueType = rawType != null ? file.parseTypeReference(rawType) : TypeReference.void();
-            const resolvedType =
-                rawType != null ? typeResolver.resolveType({ type: rawType, file }) : ResolvedTypeReference.void();
+            const resolvedType: ResolvedType =
+                rawType != null ? typeResolver.resolveType({ type: rawType, file }) : { _type: "void" };
+
             return {
                 discriminantValue: generateWireStringWithAllCasings({
                     wireValue: unionKey,
-                    name: typeof unionedType !== "string" && unionedType.name != null ? unionedType.name : unionKey,
+                    name: getUnionedTypeName({ unionKey, unionedType }).name,
                 }),
                 valueType,
                 shape:
                     resolvedType._type === "void"
                         ? SingleUnionTypeProperties.noProperties()
-                        : resolvedType._type === "named" && resolvedType.shape === ShapeType.Object
+                        : resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)
                         ? SingleUnionTypeProperties.samePropertiesAsObject(resolvedType.name)
                         : SingleUnionTypeProperties.singleProperty({
                               name: generateWireStringWithAllCasings({
@@ -78,6 +74,29 @@ export function getUnionDiscriminantName(union: RawSchemas.UnionSchema): { name:
     }
     return {
         name: getUnionDiscriminant(union),
+        wasExplicitlySet: false,
+    };
+}
+
+export function getUnionedTypeName({
+    unionKey,
+    unionedType,
+}: {
+    unionKey: string;
+    unionedType: string | RawSchemas.SingleUnionTypeSchema;
+}): {
+    name: string;
+    wasExplicitlySet: boolean;
+} {
+    if (typeof unionedType !== "string" && unionedType.name != null) {
+        return {
+            name: unionedType.name,
+            wasExplicitlySet: true,
+        };
+    }
+
+    return {
+        name: unionKey,
         wasExplicitlySet: false,
     };
 }

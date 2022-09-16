@@ -14,6 +14,6 @@ export function parseTypeName({ typeName, file }: { typeName: string; file: Fern
     }
     return {
         name: reference.typeName,
-        fernFilepath: convertToFernFilepath(reference.relativeFilePath),
+        fernFilepath: convertToFernFilepath(reference.relativeFilepath),
     };
 }

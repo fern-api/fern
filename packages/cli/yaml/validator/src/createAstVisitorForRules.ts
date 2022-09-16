@@ -10,12 +10,12 @@ import { RuleRunner } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";
 
 export function createAstVisitorForRules({
-    relativeFilePath,
+    relativeFilepath,
     contents,
     ruleRunners,
     addViolations,
 }: {
-    relativeFilePath: RelativeFilePath;
+    relativeFilepath: RelativeFilePath;
     contents: ServiceFileSchema;
     ruleRunners: RuleRunner[];
     addViolations: (newViolations: ValidationViolation[]) => void;
@@ -25,11 +25,11 @@ export function createAstVisitorForRules({
             for (const visitorInRule of ruleRunners) {
                 const visitFromRule = visitorInRule[nodeType];
                 if (visitFromRule != null) {
-                    const ruleViolations = await visitFromRule(node, { relativeFilePath, contents });
+                    const ruleViolations = await visitFromRule(node, { relativeFilepath, contents });
                     addViolations(
                         ruleViolations.map((violation) => ({
                             severity: violation.severity,
-                            relativeFilePath,
+                            relativeFilepath,
                             nodePath,
                             message: violation.message,
                         }))

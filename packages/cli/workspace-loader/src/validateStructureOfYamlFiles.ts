@@ -22,12 +22,12 @@ export function validateStructureOfYamlFiles(
     const validatedFiles: Record<RelativeFilePath, ServiceFileSchema> = {};
     const failures: Record<RelativeFilePath, WorkspaceLoader.StructureValidationFailure> = {};
 
-    for (const [relativeFilePath, parsedFileContents] of entries(files)) {
+    for (const [relativeFilepath, parsedFileContents] of entries(files)) {
         const parsed = ServiceFileSchema.safeParse(parsedFileContents);
         if (parsed.success) {
-            validatedFiles[relativeFilePath] = parsed.data;
+            validatedFiles[relativeFilepath] = parsed.data;
         } else {
-            failures[relativeFilePath] = {
+            failures[relativeFilepath] = {
                 type: WorkspaceLoaderFailureType.STRUCTURE_VALIDATION,
                 error: parsed.error,
             };

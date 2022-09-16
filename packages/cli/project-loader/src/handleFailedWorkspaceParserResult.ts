@@ -6,23 +6,23 @@ import { YAMLException } from "js-yaml";
 import { ZodIssue, ZodIssueCode } from "zod";
 
 export function handleFailedWorkspaceParserResult(result: WorkspaceLoader.FailedResult, logger: Logger): void {
-    for (const [relativeFilePath, failure] of entries(result.failures)) {
-        handleWorkspaceParserFailureForFile({ relativeFilePath, failure, logger });
+    for (const [relativeFilepath, failure] of entries(result.failures)) {
+        handleWorkspaceParserFailureForFile({ relativeFilepath, failure, logger });
     }
 }
 
 function handleWorkspaceParserFailureForFile({
-    relativeFilePath,
+    relativeFilepath,
     failure,
     logger,
 }: {
-    relativeFilePath: RelativeFilePath;
+    relativeFilepath: RelativeFilePath;
     failure: WorkspaceLoader.Failure;
     logger: Logger;
 }): void {
     switch (failure.type) {
         case WorkspaceLoaderFailureType.FILE_READ:
-            logger.error("Failed to open file: " + relativeFilePath);
+            logger.error("Failed to open file: " + relativeFilepath);
             break;
         case WorkspaceLoaderFailureType.FILE_PARSE:
             if (failure.error instanceof YAMLException) {
@@ -33,7 +33,7 @@ function handleWorkspaceParserFailureForFile({
                     })
                 );
             } else {
-                logger.error("Failed to parse file: " + relativeFilePath);
+                logger.error("Failed to parse file: " + relativeFilepath);
             }
             break;
         case WorkspaceLoaderFailureType.STRUCTURE_VALIDATION:

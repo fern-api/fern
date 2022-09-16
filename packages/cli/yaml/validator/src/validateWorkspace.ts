@@ -8,10 +8,10 @@ import { ValidationViolation } from "./ValidationViolation";
 
 export async function validateWorkspace(workspace: Workspace, logger: Logger): Promise<ValidationViolation[]> {
     const violations: ValidationViolation[] = [];
-    for (const [relativeFilePath, contents] of entries(workspace.serviceFiles)) {
+    for (const [relativeFilepath, contents] of entries(workspace.serviceFiles)) {
         const violationsForFile = await validateFernFile({
             workspace,
-            relativeFilePath,
+            relativeFilepath,
             contents,
             logger,
         });
@@ -22,12 +22,12 @@ export async function validateWorkspace(workspace: Workspace, logger: Logger): P
 
 async function validateFernFile({
     workspace,
-    relativeFilePath,
+    relativeFilepath,
     contents,
     logger,
 }: {
     workspace: Workspace;
-    relativeFilePath: RelativeFilePath;
+    relativeFilepath: RelativeFilePath;
     contents: ServiceFileSchema;
     logger: Logger;
 }): Promise<ValidationViolation[]> {
@@ -35,7 +35,7 @@ async function validateFernFile({
     const ruleRunners = await Promise.all(getAllRules().map((rule) => rule.create({ workspace, logger })));
 
     const astVisitor = createAstVisitorForRules({
-        relativeFilePath,
+        relativeFilepath,
         contents,
         ruleRunners,
         addViolations: (newViolations: ValidationViolation[]) => {

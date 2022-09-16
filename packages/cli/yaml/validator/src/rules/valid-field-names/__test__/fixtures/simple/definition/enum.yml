@@ -1,0 +1,16 @@
+types:
+  ValidAndInvalidEnum:
+    enum:
+      - 523_Invalid
+      - bla.bla
+      - valid
+      - VALID
+      - V2343_ALID
+      - value: VALID
+        docs: Some docs
+      - value: 23-Invalid
+        docs: Some docs
+      - name: _invalidName
+        value: _invalidName
+      - name: validName
+        value: bla.bla

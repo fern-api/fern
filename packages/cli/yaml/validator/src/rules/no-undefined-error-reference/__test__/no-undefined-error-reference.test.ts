@@ -12,10 +12,10 @@ describe("no-undefined-error-reference", () => {
                 RelativeFilePath.of("simple")
             ),
         });
-        expect(violations).toMatchObject([
+        expect(violations).toEqual([
             {
                 severity: "error",
-                relativeFilePath: "simple.yml",
+                relativeFilepath: "simple.yml",
                 nodePath: [
                     "services",
                     "http",
@@ -29,7 +29,7 @@ describe("no-undefined-error-reference", () => {
             },
             {
                 severity: "error",
-                relativeFilePath: "simple.yml",
+                relativeFilepath: "simple.yml",
                 nodePath: [
                     "services",
                     "http",

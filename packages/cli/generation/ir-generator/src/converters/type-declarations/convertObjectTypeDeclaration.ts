@@ -21,17 +21,34 @@ export function convertObjectTypeDeclaration({
                 : [],
         properties:
             object.properties != null
-                ? Object.entries(object.properties).map(([propertyName, propertyDefinition]) => ({
+                ? Object.entries(object.properties).map(([propertyKey, propertyDefinition]) => ({
                       name: generateWireStringWithAllCasings({
-                          wireValue: propertyName,
-                          name:
-                              typeof propertyDefinition !== "string" && propertyDefinition.name
-                                  ? propertyDefinition.name
-                                  : propertyName,
+                          wireValue: propertyKey,
+                          name: getPropertyName({ propertyKey, declaration: propertyDefinition }).name,
                       }),
                       valueType: file.parseTypeReference(propertyDefinition),
                       docs: getDocs(propertyDefinition),
                   }))
                 : [],
     });
+}
+
+export function getPropertyName({
+    propertyKey,
+    declaration,
+}: {
+    propertyKey: string;
+    declaration: RawSchemas.ObjectPropertySchema;
+}): { name: string; wasExplicitlySet: boolean } {
+    if (typeof declaration !== "string" && declaration.name != null) {
+        return {
+            name: declaration.name,
+            wasExplicitlySet: true,
+        };
+    }
+
+    return {
+        name: propertyKey,
+        wasExplicitlySet: false,
+    };
 }
