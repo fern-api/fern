@@ -2,14 +2,21 @@ import { Logger, LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import { Finishable, Startable, TaskContext, TaskResult, TASK_FAILURE } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
+import semverDiff from "semver-diff";
 import { CliEnvironment } from "./CliEnvironment";
 import { constructErrorMessage } from "./constructErrorMessage";
 import { Log } from "./Log";
 import { TaskContextImpl } from "./TaskContextImpl";
 import { TtyAwareLogger } from "./TtyAwareLogger";
 import { getFernCliUpgradeMessage } from "./upgrade-utils/getFernCliUpgradeMessage";
+import { getLatestVersionOfCli } from "./upgrade-utils/getLatestVersionOfCli";
 
 const WORKSPACE_NAME_COLORS = ["#2E86AB", "#A23B72", "#F18F01", "#C73E1D", "#CCE2A3"];
+
+export interface FernCliUpgradeInfo {
+    isUpgradeAvailable: boolean;
+    latestVersion: string;
+}
 
 export class CliContext {
     public readonly environment: CliEnvironment;
@@ -82,8 +89,12 @@ export class CliContext {
     public async exit(): Promise<never> {
         this.ttyAwareLogger.finish();
         if (!this._suppressUpgradeMessage) {
-            const upgradeMessage = await getFernCliUpgradeMessage(this.environment);
-            if (upgradeMessage != null) {
+            const { isUpgradeAvailable, latestVersion } = await this.isUpgradeAvailable();
+            if (isUpgradeAvailable) {
+                const upgradeMessage = await getFernCliUpgradeMessage({
+                    toVersion: latestVersion,
+                    cliEnvironment: this.environment,
+                });
                 this.stream.write(upgradeMessage);
             }
         }
@@ -214,6 +225,27 @@ export class CliContext {
     private _suppressUpgradeMessage = false;
     public suppressUpgradeMessage(): void {
         this._suppressUpgradeMessage = true;
+    }
+
+    private _isUpgradeAvailable: FernCliUpgradeInfo | undefined;
+    public async isUpgradeAvailable(): Promise<FernCliUpgradeInfo> {
+        if (this._isUpgradeAvailable == null) {
+            this.logger.debug(`Checking if ${this.environment.packageName} upgrade is available...`);
+
+            const latestPackageVersion = await getLatestVersionOfCli(this.environment);
+            const diff = semverDiff(this.environment.packageVersion, latestPackageVersion);
+
+            this.logger.debug(
+                `Latest version: ${latestPackageVersion}. ` +
+                    (diff != null ? "Upgrade available." : "No upgrade available.")
+            );
+
+            this._isUpgradeAvailable = {
+                isUpgradeAvailable: diff != null,
+                latestVersion: latestPackageVersion,
+            };
+        }
+        return this._isUpgradeAvailable;
     }
 }
 
