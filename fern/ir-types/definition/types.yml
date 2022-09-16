@@ -14,6 +14,7 @@ types:
       fernFilepath: commons.FernFilepath
       name: string
   Type:
+    discriminant: _type
     union:
       alias: AliasTypeDeclaration
       enum: EnumTypeDeclaration
@@ -25,6 +26,7 @@ types:
       aliasOf: TypeReference
       resolvedType: ResolvedTypeReference
   ResolvedTypeReference:
+    discriminant: _type
     union:
       container: ContainerType
       named: ResolvedNamedType
@@ -76,6 +78,7 @@ types:
         docs: This is deprecated. Use shape instead.
       shape: SingleUnionTypeProperties
   SingleUnionTypeProperties:
+    discriminant: _type
     union:
       samePropertiesAsObject: DeclaredTypeName
       singleProperty: SingleUnionTypeProperty
@@ -86,6 +89,7 @@ types:
       type: TypeReference
 
   TypeReference:
+    discriminant: _type
     union:
       container: ContainerType
       named: DeclaredTypeName
@@ -93,6 +97,7 @@ types:
       unknown: {}
       void: {}
   ContainerType:
+    discriminant: _type
     union:
       list: TypeReference
       map: MapType
