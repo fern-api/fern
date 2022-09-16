@@ -1,5 +1,8 @@
+imports:
+  director: director.yml
 ids:
   - MovieId
+  - ActorId
 types:
   Movie:
     properties:
@@ -10,6 +13,11 @@ types:
     properties:
       title: string
       rating: double
+  Person:
+    union:
+      actor: ActorId
+      director: director.Director
+      producer: {}
 errors:
   NotFoundError:
     http:

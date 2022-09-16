@@ -24,7 +24,6 @@ types:
     properties:
       aliasOf: TypeReference
       resolvedType: ResolvedTypeReference
-
   ResolvedTypeReference:
     union:
       container: ContainerType
@@ -32,7 +31,6 @@ types:
       primitive: PrimitiveType
       unknown: {}
       void: {}
-
   ResolvedNamedType:
     properties:
       name: DeclaredTypeName
