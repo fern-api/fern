@@ -6,17 +6,17 @@ import NoDuplicateEnumValuesRule from "./rules/no-duplicate-enum-values";
 import NoUndefinedErrorReferenceRule from "./rules/no-undefined-error-reference";
 import NoUndefinedPathParametersRule from "./rules/no-undefined-path-parameters";
 import NoUndefinedTypeReferenceRule from "./rules/no-undefined-type-reference";
-import ValidEnumNameRule from "./rules/valid-enum-name";
+import ValidFieldNamesRule from "./rules/valid-field-names";
 
 export function getAllRules(): Rule[] {
     return [
         NoUndefinedTypeReferenceRule,
         NoDuplicateEnumValuesRule,
         NoUndefinedPathParametersRule,
-        ValidEnumNameRule,
         ImportFileExistsRule,
         NoDuplicateDeclarationsRule,
         NoUndefinedErrorReferenceRule,
         NoCircularImportsRule,
+        ValidFieldNamesRule,
     ];
 }

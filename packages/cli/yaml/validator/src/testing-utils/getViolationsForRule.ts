@@ -4,7 +4,8 @@ import { loadWorkspace } from "@fern-api/workspace-loader";
 import { visitFernYamlAst } from "@fern-api/yaml-schema";
 import stripAnsi from "strip-ansi";
 import { createAstVisitorForRules } from "../createAstVisitorForRules";
-import { Rule, RuleViolation } from "../Rule";
+import { Rule } from "../Rule";
+import { ValidationViolation } from "../ValidationViolation";
 
 export declare namespace getViolationsForRule {
     export interface Args {
@@ -16,7 +17,7 @@ export declare namespace getViolationsForRule {
 export async function getViolationsForRule({
     rule,
     absolutePathToWorkspace,
-}: getViolationsForRule.Args): Promise<RuleViolation[]> {
+}: getViolationsForRule.Args): Promise<ValidationViolation[]> {
     const parseResult = await loadWorkspace({
         absolutePathToWorkspace,
     });
@@ -25,7 +26,7 @@ export async function getViolationsForRule({
     }
 
     const ruleRunner = await rule.create({ workspace: parseResult.workspace, logger: NOOP_LOGGER });
-    const violations: RuleViolation[] = [];
+    const violations: ValidationViolation[] = [];
 
     for (const [relativeFilePath, contents] of entries(parseResult.workspace.serviceFiles)) {
         const visitor = createAstVisitorForRules({

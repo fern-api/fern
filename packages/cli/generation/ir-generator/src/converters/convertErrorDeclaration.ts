@@ -3,7 +3,7 @@ import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { FernFileContext } from "../FernFileContext";
 import { TypeResolver } from "../type-resolver/TypeResolver";
 import { generateWireStringWithAllCasings } from "../utils/generateCasings";
-import { convertType } from "./convertTypeDeclaration";
+import { convertType } from "./type-declarations/convertTypeDeclaration";
 
 export function convertErrorDeclaration({
     errorName,

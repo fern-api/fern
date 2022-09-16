@@ -3,7 +3,7 @@ import { TypeDeclaration } from "@fern-fern/ir-model/types";
 import { FernFileContext } from "../FernFileContext";
 import { TypeResolver } from "../type-resolver/TypeResolver";
 import { getDocs } from "../utils/getDocs";
-import { convertTypeDeclaration } from "./convertTypeDeclaration";
+import { convertTypeDeclaration } from "./type-declarations/convertTypeDeclaration";
 
 export function convertId({
     id,
