@@ -47,9 +47,6 @@ function addDiscriminantToFile(contents: string): string {
             return result;
         }
 
-        // discriminant should be indented 3 tabs, union is indented two tabs
-        const prefixForNewLine = " ".repeat(prefix.length * 1.5);
-
-        return `${result}\n${prefixForNewLine}discriminant: _type`;
+        return `${prefix}discriminant: _type\n${result}`;
     });
 }
