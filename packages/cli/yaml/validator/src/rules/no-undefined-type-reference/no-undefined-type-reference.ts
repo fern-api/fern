@@ -107,7 +107,7 @@ function getAllNamedTypes({
                         reference != null
                             ? {
                                   typeName: reference.typeName,
-                                  relativeFilePath: reference.relativeFilePath ?? relativeFilePath,
+                                  relativeFilePath: reference.relativeFilePath,
                               }
                             : undefined,
                 },

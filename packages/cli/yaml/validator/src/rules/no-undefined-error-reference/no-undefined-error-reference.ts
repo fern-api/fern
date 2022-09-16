@@ -29,7 +29,7 @@ export const NoUndefinedErrorReferenceRule: Rule = {
 
                 if (
                     parsedReference != null &&
-                    doesErrorExist(parsedReference.typeName, parsedReference.relativeFilePath ?? relativeFilePath)
+                    doesErrorExist(parsedReference.typeName, parsedReference.relativeFilePath)
                 ) {
                     return [];
                 }

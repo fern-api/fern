@@ -28,7 +28,7 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
-    "@fern-fern/ir-model": "0.0.193",
+    "@fern-fern/ir-model": "0.0.199",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {
