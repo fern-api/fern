@@ -1,5 +1,4 @@
 import IS_CI from "is-ci";
-// eslint-disable-next-line jest/no-jest-import
 import { Config } from "jest";
 import { getAllPackages } from "./packages/scripts/src/getAllPackages";
 import defaultConfig from "./shared/jest.config.shared";

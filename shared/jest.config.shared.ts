@@ -1,4 +1,3 @@
-// eslint-disable-next-line jest/no-jest-import
 import { Config } from "jest";
 
 const config: Config = {
