@@ -1,8 +1,8 @@
 import { Logger, LogLevel, LOG_LEVELS } from "@fern-api/logger";
+import { isVersionAhead } from "@fern-api/semver-utils";
 import { Finishable, Startable, TaskContext, TaskResult, TASK_FAILURE } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
-import semverDiff from "semver-diff";
 import { CliEnvironment } from "./CliEnvironment";
 import { constructErrorMessage } from "./constructErrorMessage";
 import { Log } from "./Log";
@@ -233,15 +233,15 @@ export class CliContext {
             this.logger.debug(`Checking if ${this.environment.packageName} upgrade is available...`);
 
             const latestPackageVersion = await getLatestVersionOfCli(this.environment);
-            const diff = semverDiff(this.environment.packageVersion, latestPackageVersion);
+            const isUpgradeAvailable = isVersionAhead(latestPackageVersion, this.environment.packageVersion);
 
             this.logger.debug(
                 `Latest version: ${latestPackageVersion}. ` +
-                    (diff != null ? "Upgrade available." : "No upgrade available.")
+                    (isUpgradeAvailable ? "Upgrade available." : "No upgrade available.")
             );
 
             this._isUpgradeAvailable = {
-                isUpgradeAvailable: diff != null,
+                isUpgradeAvailable,
                 latestVersion: latestPackageVersion,
             };
         }

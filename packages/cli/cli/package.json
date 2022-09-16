@@ -47,6 +47,7 @@
     "@fern-api/project-configuration": "workspace:*",
     "@fern-api/project-loader": "workspace:*",
     "@fern-api/remote-workspace-runner": "workspace:*",
+    "@fern-api/semver-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/validator": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
@@ -61,7 +62,6 @@
     "js-yaml": "^4.1.0",
     "latest-version": "^7.0.0",
     "ora": "^6.1.2",
-    "semver-diff": "^4.0.0",
     "validate-npm-package-name": "^4.0.0",
     "yargs": "^17.4.1"
   },
@@ -76,7 +76,6 @@
     "@types/js-yaml": "^4.0.5",
     "@types/latest-version": "^4.0.1",
     "@types/node": "^18.7.11",
-    "@types/semver-diff": "^3.0.0",
     "@types/validate-npm-package-name": "^4.0.0",
     "@types/yargs": "^17.0.10",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",

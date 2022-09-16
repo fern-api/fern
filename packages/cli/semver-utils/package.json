@@ -1,10 +1,10 @@
 {
-  "name": "@fern-api/migrations",
+  "name": "@fern-api/semver-utils",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",
-    "directory": "packages/cli/migrations"
+    "directory": "packages/cli/semver-utils"
   },
   "files": [
     "lib"
@@ -25,31 +25,18 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/config-management-commons": "workspace:*",
-    "@fern-api/core-utils": "workspace:*",
-    "@fern-api/semver-utils": "workspace:*",
-    "@fern-api/task-context": "workspace:*",
-    "chalk": "^5.0.1",
-    "find-up": "^6.3.0",
-    "glob": "^7.2.0",
-    "glob-promise": "^4.2.2",
-    "inquirer": "^9.1.0",
-    "js-yaml": "^4.1.0",
-    "zod": "^3.14.3"
+    "semver-diff": "^4.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",
     "@babel/preset-env": "^7.18.10",
     "@babel/preset-typescript": "^7.18.6",
-    "@types/inquirer": "^9.0.1",
     "@types/jest": "^28.1.7",
-    "@types/js-yaml": "^4.0.5",
     "@types/node": "^18.7.11",
     "depcheck": "^1.4.3",
     "eslint": "^8.22.0",
     "jest": "^28.1.3",
     "prettier": "^2.7.1",
-    "tmp-promise": "^3.0.3",
     "typescript": "4.6.4"
   }
 }

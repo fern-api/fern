@@ -1,8 +1,8 @@
 import { BaseGeneratorInvocationSchema, GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
+import { isVersionAhead } from "@fern-api/semver-utils";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import produce from "immer";
-import semverDiff from "semver-diff";
 import { GENERATOR_INVOCATIONS } from "./generatorInvocations";
 
 export function upgradeGenerators({
@@ -26,7 +26,7 @@ function maybeUpgradeVersion<T extends BaseGeneratorInvocationSchema>(generatorC
     const updatedInvocation = GENERATOR_INVOCATIONS[generatorConfig.name];
 
     if (updatedInvocation != null) {
-        if (isVersionHigher(generatorConfig.version, updatedInvocation.version)) {
+        if (isVersionAhead(updatedInvocation.version, generatorConfig.version)) {
             context.logger.info(
                 chalk.green(
                     `Upgraded ${generatorConfig.name} from ${generatorConfig.version} to ${updatedInvocation.version}`
@@ -41,12 +41,4 @@ function maybeUpgradeVersion<T extends BaseGeneratorInvocationSchema>(generatorC
     }
 
     return generatorConfig;
-}
-
-/**
- *
- * @returns true if versionB is higher than versionA
- */
-function isVersionHigher(versionA: string, versionB: string): boolean {
-    return semverDiff(versionA, versionB) != null;
 }

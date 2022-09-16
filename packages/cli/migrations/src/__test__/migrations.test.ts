@@ -1,6 +1,6 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
+import { isVersionAhead } from "@fern-api/semver-utils";
 import { readdir } from "fs/promises";
-import { isVersionBehind } from "../isVersionBehind";
 import { ALL_MIGRATIONS } from "../migrations";
 import { Migration } from "../types/Migration";
 import { VersionMigrations } from "../types/VersionMigrations";
@@ -66,7 +66,7 @@ describe("migrations", () => {
             const nextMigration = ALL_MIGRATIONS[index + 1];
             if (nextMigration != null) {
                 // eslint-disable-next-line jest/no-conditional-expect
-                expect(isVersionBehind(migration.version, nextMigration.version)).toBe(true);
+                expect(isVersionAhead(nextMigration.version, migration.version)).toBe(true);
             }
         }
     });
