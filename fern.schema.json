@@ -100,7 +100,17 @@
                       ]
                     }
                   },
-                  "discriminant": { "type": "string" }
+                  "discriminant": {
+                    "anyOf": [
+                      { "type": "string" },
+                      {
+                        "type": "object",
+                        "properties": { "name": { "type": "string" }, "value": { "type": "string" } },
+                        "required": ["value"],
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
                 },
                 "required": ["union"],
                 "additionalProperties": false
