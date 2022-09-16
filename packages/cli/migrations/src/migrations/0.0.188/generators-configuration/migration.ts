@@ -7,7 +7,7 @@ import { loadWorkspaces } from "./loadWorkspaces";
 import * as newConfigurationUtils from "./new-configuration";
 import * as oldConfigurationUtils from "./old-configuration";
 
-export const GeneratorsConfigurationMigration: Migration = {
+export const migration: Migration = {
     name: "generators-configuration",
     summary:
         "migrates the generators configuration to a new format that handles publishing to public registries and GitHub repositories.",

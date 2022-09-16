@@ -1,0 +1,10 @@
+types:
+  a: string
+  b: boolean
+  c:
+    properties:
+      a: integer
+  d:
+    union:
+      a: string
+      b: boolean

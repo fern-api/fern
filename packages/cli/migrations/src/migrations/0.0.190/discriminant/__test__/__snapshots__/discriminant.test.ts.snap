@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`discriminant simple 1`] = `
+"types:
+  a: string
+  b: boolean
+  c:
+    properties:
+      a: integer
+  d:
+    union:
+      discriminant: _type
+      a: string
+      b: boolean
+"
+`;

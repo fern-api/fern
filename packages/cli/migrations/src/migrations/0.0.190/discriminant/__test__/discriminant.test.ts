@@ -6,7 +6,7 @@ import { migration } from "../migration";
 
 const FIXTURES_PATH = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
-describe("generators-configuration", () => {
+describe("discriminant", () => {
     it("simple", async () => {
         const fixturePath = join(FIXTURES_PATH, RelativeFilePath.of("simple"));
         const tmpDir = await tmp.dir();
@@ -18,10 +18,12 @@ describe("generators-configuration", () => {
             context: createMockTaskContext(),
         });
 
-        const newGeneratorsConfiguration = (
-            await readFile(join(AbsoluteFilePath.of(tmpDir.path), RelativeFilePath.of("fern/api/generators.yml")))
+        const newBlogYaml = (
+            await readFile(
+                join(AbsoluteFilePath.of(tmpDir.path), RelativeFilePath.of("fern/api/definition/blog/blog.yml"))
+            )
         ).toString();
 
-        expect(newGeneratorsConfiguration).toMatchSnapshot();
+        expect(newBlogYaml).toMatchSnapshot();
     });
 });
