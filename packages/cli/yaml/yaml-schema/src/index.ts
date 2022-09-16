@@ -25,4 +25,4 @@ export {
     visitRawTypeDeclaration,
     type RawTypeDeclarationVisitor,
 } from "./utils/visitRawTypeDeclaration";
-export { isRawNamedTypeReference, visitRawTypeReference } from "./utils/visitRawTypeReference";
+export { visitRawTypeReference } from "./utils/visitRawTypeReference";
