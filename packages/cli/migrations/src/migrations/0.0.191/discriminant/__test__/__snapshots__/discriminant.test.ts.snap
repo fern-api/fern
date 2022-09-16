@@ -8,8 +8,8 @@ exports[`discriminant simple 1`] = `
     properties:
       a: integer
   d:
+    discriminant: _type
     union:
-      discriminant: _type
       a: string
       b: boolean
 "
