@@ -37,7 +37,6 @@ types:
     properties:
       name: DeclaredTypeName
       shape: ShapeType
-
   ShapeType:
     enum:
       - ENUM
@@ -68,6 +67,7 @@ types:
   UnionTypeDeclaration:
     properties:
       discriminant: string
+      discriminantV2: commons.WireStringWithAllCasings
       types: list<SingleUnionType>
   SingleUnionType:
     extends: commons.WithDocs

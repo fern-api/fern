@@ -226,6 +226,14 @@ exports[`ir simple 1`] = `
             },
             "shape": {
                 "discriminant": "type",
+                "discriminantV2": {
+                    "originalValue": "type",
+                    "camelCase": "type",
+                    "snakeCase": "type",
+                    "pascalCase": "Type",
+                    "screamingSnakeCase": "TYPE",
+                    "wireValue": "type"
+                },
                 "types": [
                     {
                         "discriminantValue": {
