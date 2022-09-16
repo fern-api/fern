@@ -47,6 +47,12 @@ function addDiscriminantToFile(contents: string): string {
             return result;
         }
 
-        return `${prefix}discriminant: _type\n${result}`;
+        const prefixForDiscriminantFields = " ".repeat(prefix.length * 1.5);
+        return [
+            `${prefix}discriminant:`,
+            `${prefixForDiscriminantFields}value: _type`,
+            `${prefixForDiscriminantFields}name: type`,
+            result,
+        ].join("\n");
     });
 }
