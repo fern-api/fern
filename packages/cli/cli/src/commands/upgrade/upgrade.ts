@@ -13,7 +13,7 @@ import { upgradeGeneratorsInWorkspaces } from "./upgradeGeneratorsInWorkspaces";
 const PREVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION";
 
 export async function upgrade({ cliContext }: { cliContext: CliContext }): Promise<void> {
-    const fernCliUpgradeInfo = await isFernCliUpgradeAvailable(cliContext.environment);
+    const fernCliUpgradeInfo = await isFernCliUpgradeAvailable(cliContext);
     if (!fernCliUpgradeInfo.upgradeAvailable) {
         const previousVersion = process.env[PREVIOUS_VERSION_ENV_VAR];
         if (previousVersion == null) {
