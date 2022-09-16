@@ -1,18 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`fern init 1`] = `
-Array [
-  Object {
-    "contents": Array [
-      Object {
-        "contents": Array [
-          Object {
+[
+  {
+    "contents": [
+      {
+        "contents": [
+          {
             "contents": "name: api
 ",
             "name": "api.yml",
             "type": "file",
           },
-          Object {
+          {
             "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 types:
@@ -67,7 +67,7 @@ errors:
         "name": "definition",
         "type": "directory",
       },
-      Object {
+      {
         "contents": "draft: []
 release: []
 ",
@@ -78,10 +78,10 @@ release: []
     "name": "api",
     "type": "directory",
   },
-  Object {
+  {
     "contents": "{
-    \\"organization\\": \\"fern\\",
-    \\"version\\": \\"0.0.0\\"
+    "organization": "fern",
+    "version": "0.0.0"
 }",
     "name": "fern.config.json",
     "type": "file",
