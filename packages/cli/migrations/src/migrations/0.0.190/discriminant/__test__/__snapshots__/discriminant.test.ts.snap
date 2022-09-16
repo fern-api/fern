@@ -11,5 +11,6 @@ exports[`discriminant simple 1`] = `
     union:
       discriminant: _type
       a: string
-      b: boolean"
+      b: boolean
+"
 `;
