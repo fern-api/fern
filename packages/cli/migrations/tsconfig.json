@@ -5,6 +5,7 @@
   "references": [
     { "path": "../../commons/core-utils" },
     { "path": "../config-management/commons" },
+    { "path": "../semver-utils" },
     { "path": "../task-context" }
   ]
 }
