@@ -56,7 +56,7 @@ module.exports = {
             label: "Configuring Fern",
             items: [`configuration/fern.config`, `configuration/api`, `configuration/generators`],
         },
-        `Tutorial`,
+        `tutorial`,
         {
             type: "link",
             label: "Join Discord",
