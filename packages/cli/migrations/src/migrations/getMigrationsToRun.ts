@@ -25,7 +25,7 @@ function getIndexOfFirstMigrationGreaterThanOrEqualTo(version: string): number {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const versionOfMigration = ALL_MIGRATIONS[index]!.version;
         if (versionOfMigration === version || isVersionAhead(versionOfMigration, version)) {
-            return index;
+            break;
         }
     }
     return index;
