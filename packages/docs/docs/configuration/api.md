@@ -24,9 +24,9 @@ const imdb = new ImdbApi.Client();
 
 In `api.yml` you can optionally set authentication for your API. Fern supports [bearer authentication](https://swagger.io/docs/specification/authentication/bearer-authentication/), [basic authentication](https://swagger.io/docs/specification/authentication/basic-authentication/), and authentication via HTTP headers.
 
-:: tip
+::: tip
 If you integrate Fern with your backend, it will check that the required authentication is present on every request. If a request is missing authentication, Fern will return a `401` for you.
-::
+:::
 
 ### No auth
 
