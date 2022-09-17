@@ -4,7 +4,9 @@ title: Tutorial
 
 <!-- markdownlint-disable MD033 MD025 MD010 -->
 
-This guide uses an example API for IMDb (the International Movie Database) that introduces you to using Fern. We'll generate a TypeScript Express server and a Postman collection to implement and test our API.
+This guide uses an example API for IMDb (the International Movie Database) that introduces you to using Fern. We'll generate a TypeScript Express server and a Postman collection to implement and test our API. [Here's what your repo will look like](https://github.com/fern-api/fern-tutorials/tree/main/express-server-tutorial) once completing the tutorial.
+
+**Let's get started!**
 
 ## Step 0: Prerequisites
 
