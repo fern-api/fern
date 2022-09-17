@@ -21,7 +21,15 @@ from .nodes import (
     TypeHint,
     VariableDeclaration,
 )
-from .references import ClassReference, ModulePath, Reference, ReferenceImport
+from .references import (
+    ClassReference,
+    ImportConstraint,
+    Module,
+    ModulePath,
+    QualifiedName,
+    Reference,
+    ReferenceImport,
+)
 
 __all__ = [
     "AstNode",
@@ -49,4 +57,7 @@ __all__ = [
     "Expression",
     "FunctionInvocation",
     "GenericTypeVar",
+    "ImportConstraint",
+    "Module",
+    "QualifiedName",
 ]

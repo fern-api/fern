@@ -15,7 +15,7 @@ class TypeNameToClassReferenceConverter:
         )
         return AST.ClassReference(
             import_=AST.ReferenceImport(
-                module=filepath.to_module_path(),
+                module=filepath.to_module(),
                 named_import=type_name.name,
             ),
             qualified_name_excluding_import=(),

@@ -1,24 +1,25 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
-from typing import Optional, Tuple
+from typing import Optional
 
-from ..dependency import Dependency
-
-ModulePath = Tuple[str, ...]
+from .import_contraint import ImportConstraint
+from .module import Module
+from .qualfied_name import QualifiedName
 
 
 @dataclass(frozen=True)
 class ReferenceImport:
-    module: ModulePath
+    module: Module
     named_import: Optional[str] = None
     alias: Optional[str] = None
-    external_dependency: Optional[Dependency] = None
-    at_bottom_of_file: bool = False
+    constaint: Optional[ImportConstraint] = None
 
 
 @dataclass(frozen=True)
 class Reference:
 
-    qualified_name_excluding_import: Tuple[str, ...]
+    qualified_name_excluding_import: QualifiedName
     """
     the qualfied name of the reference "inside" the import.
 

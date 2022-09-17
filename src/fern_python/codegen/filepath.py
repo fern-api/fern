@@ -17,8 +17,8 @@ class Filepath:
     directories: Tuple[DirectoryFilepathPart, ...]
     file: FilepathPart
 
-    def to_module_path(self) -> AST.ModulePath:
-        return tuple(part.module_name for part in self.directories + (self.file,))
+    def to_module(self) -> AST.Module:
+        return AST.Module.local(*(part.module_name for part in self.directories + (self.file,)))
 
     @dataclass(frozen=True)
     class FilepathPart:

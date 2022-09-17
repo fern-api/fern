@@ -8,6 +8,7 @@ from typing import Optional, Type
 from . import AST
 from .dependency_manager import DependencyManager
 from .filepath import Filepath
+from .imports_manager import ImportsManager
 from .module_manager import ModuleManager
 from .reference_resolver_impl import ReferenceResolverImpl
 from .source_file import SourceFile, SourceFileImpl
@@ -37,19 +38,20 @@ class Project:
                 source_file=source_file,
             )
 
-        module_path = filepath.to_module_path()
+        module = filepath.to_module()
         source_file = SourceFileImpl(
             filepath=os.path.join(
                 self._get_root_module_filepath(),
                 *(directory.module_name for directory in filepath.directories),
                 f"{filepath.file.module_name}.py",
             ),
-            module_path=module_path,
+            module_path=module.path,
             completion_listener=on_finish,
             reference_resolver=ReferenceResolverImpl(
                 project_name=self._project_name,
-                module_path_of_source_file=module_path,
+                module_path_of_source_file=module.path,
             ),
+            imports_manager=ImportsManager(project_name=self._project_name),
         )
         return source_file
 

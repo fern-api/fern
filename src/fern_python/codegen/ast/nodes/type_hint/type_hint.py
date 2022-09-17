@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Sequence, Set, Union
 
 from ...ast_node import AstNode, GenericTypeVar, NodeWriter, ReferenceResolver
-from ...references import ClassReference, Reference, ReferenceImport
+from ...references import ClassReference, Module, Reference, ReferenceImport
 from ..code_writer import CodeWriter
 from .type_parameter import TypeParameter
 
@@ -88,7 +88,9 @@ class TypeHint(AstNode):
         return TypeHint(
             type=ClassReference(
                 import_=ReferenceImport(
-                    module=("typing_extensions",),
+                    module=Module.built_in(
+                        "typing_extensions",
+                    ),
                 ),
                 qualified_name_excluding_import=("Annotated",),
             ),
@@ -129,7 +131,7 @@ class TypeHint(AstNode):
 def get_reference_to_typing_import(name: str) -> ClassReference:
     return ClassReference(
         import_=ReferenceImport(
-            module=("typing",),
+            module=Module.built_in("typing"),
         ),
         qualified_name_excluding_import=(name,),
     )

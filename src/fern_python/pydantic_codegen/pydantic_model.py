@@ -6,8 +6,10 @@ from fern_python.codegen import AST
 def get_reference_to_pydantic_export(export: str) -> AST.ClassReference:
     return AST.ClassReference(
         import_=AST.ReferenceImport(
-            module=("pydantic",),
-            external_dependency=AST.Dependency(name="pydantic", version="^1.9.2"),
+            module=AST.Module.external(
+                dependency=AST.Dependency(name="pydantic", version="^1.9.2"),
+                module_path=("pydantic",),
+            )
         ),
         qualified_name_excluding_import=(export,),
     )

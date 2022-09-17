@@ -8,6 +8,7 @@ from . import AST
 from .imports_manager import ImportsManager
 from .node_writer_impl import NodeWriterImpl
 from .reference_resolver_impl import ReferenceResolverImpl
+from .top_level_statement import TopLevelStatement
 
 T_AstNode = TypeVar("T_AstNode", bound=AST.AstNode)
 
@@ -45,15 +46,15 @@ class SourceFileImpl(SourceFile):
         filepath: str,
         module_path: AST.ModulePath,
         reference_resolver: ReferenceResolverImpl,
+        imports_manager: ImportsManager,
         completion_listener: Callable[[SourceFileImpl], None] = None,
     ):
         self._filepath = filepath
         self._module_path = module_path
-        self._imports_manager = ImportsManager()
         self._reference_resolver = reference_resolver
+        self._imports_manager = imports_manager
         self._completion_listener = completion_listener
-        self._statements: List[AST.AstNode] = []
-        self._statements_after_bottom_imports: List[AST.AstNode] = []
+        self._statements: List[TopLevelStatement] = []
         self._exports: Set[str] = set()
 
     def add_declaration(
@@ -61,55 +62,47 @@ class SourceFileImpl(SourceFile):
         declaration: AST.Declaration,
         do_not_export: bool = False,
     ) -> None:
-        self._statements.append(declaration)
+        self._statements.append(TopLevelStatement(node=declaration, id=declaration.name))
         if declaration.name is not None:
             self._exports.add(declaration.name)
 
-    def add_arbitrary_code(self, code: AST.CodeWriter, after_bottom_imports: bool = False) -> None:
-        if after_bottom_imports:
-            self._statements_after_bottom_imports.append(code)
-        else:
-            self._statements.append(code)
+    def add_arbitrary_code(self, code: AST.CodeWriter) -> None:
+        self._statements.append(TopLevelStatement(node=code))
 
     def finish(self) -> None:
-        self._add_generics_declarations()
-        self._register_imports()
+        self._prepend_generics_declarations_to_statements()
+        self._resolve_references()
+        self._imports_manager.resolve_constraints(statements=self._statements)
 
         with NodeWriterImpl(filepath=self._filepath, reference_resolver=self._reference_resolver) as writer:
-            self._imports_manager.write_top_imports(writer=writer)
-
             for statement in self._statements:
-                writer.write_node(statement)
-
-            self._imports_manager.write_bottom_imports(writer=writer)
-
-            for statement in self._statements_after_bottom_imports:
-                writer.write_node(statement)
+                self._imports_manager.write_top_imports_for_statement(
+                    statement=statement,
+                    writer=writer,
+                    reference_resolver=self._reference_resolver,
+                )
+                writer.write_node(statement.node)
+            self._imports_manager.write_remaining_imports(
+                writer=writer,
+                reference_resolver=self._reference_resolver,
+            )
 
         if self._completion_listener is not None:
             self._completion_listener(self)
 
-    def _register_imports(self) -> None:
-        for statement in self._statements:
-            for reference in statement.get_references():
-                self._reference_resolver.register_reference(reference)
-        self._reference_resolver.resolve_references()
-
-        for reference in self._reference_resolver.get_resolved_references():
-            if reference.import_ is not None and reference.import_.module != self._module_path:
-                self._imports_manager.register_import(reference.import_)
-
-    def _add_generics_declarations(self) -> None:
-        generics_declarations: List[AST.AstNode] = [
-            AST.VariableDeclaration(
-                name=generic.name,
-                initializer=AST.FunctionInvocation(
-                    function_definition=AST.Reference(
-                        import_=AST.ReferenceImport(module=("typing",)),
-                        qualified_name_excluding_import=("TypeVar",),
+    def _prepend_generics_declarations_to_statements(self) -> None:
+        generics_declarations: List[TopLevelStatement] = [
+            TopLevelStatement(
+                node=AST.VariableDeclaration(
+                    name=generic.name,
+                    initializer=AST.FunctionInvocation(
+                        function_definition=AST.Reference(
+                            import_=AST.ReferenceImport(module=AST.Module.built_in("typing")),
+                            qualified_name_excluding_import=("TypeVar",),
+                        ),
+                        args=[AST.CodeWriter(f'"{generic.name}"')],
                     ),
-                    args=[AST.CodeWriter(f'"{generic.name}"')],
-                ),
+                )
             )
             for generic in self._get_generics()
         ]
@@ -118,8 +111,14 @@ class SourceFileImpl(SourceFile):
     def _get_generics(self) -> Set[AST.GenericTypeVar]:
         generics: Set[AST.GenericTypeVar] = set()
         for statement in self._statements:
-            generics.update(statement.get_generics())
+            generics.update(statement.node.get_generics())
         return generics
+
+    def _resolve_references(self) -> None:
+        for statement in self._statements:
+            for reference in statement.references:
+                self._reference_resolver.register_reference(reference)
+        self._reference_resolver.resolve_references()
 
     def get_exports(self) -> Set[str]:
         return self._exports

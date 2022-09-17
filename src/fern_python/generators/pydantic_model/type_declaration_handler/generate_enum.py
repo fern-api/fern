@@ -12,7 +12,7 @@ def generate_enum(name: ir_types.DeclaredTypeName, enum: ir_types.EnumTypeDeclar
                 qualified_name_excluding_import=("str",),
             ),
             AST.ClassReference(
-                import_=AST.ReferenceImport(module=("enum",)),
+                import_=AST.ReferenceImport(module=AST.Module.built_in("enum")),
                 qualified_name_excluding_import=("Enum",),
             ),
         ],

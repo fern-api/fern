@@ -1,74 +1,102 @@
 from collections import defaultdict
 from dataclasses import dataclass
-from typing import DefaultDict, Optional, Set
+from typing import DefaultDict, Sequence, Set
 
 from . import AST
+from .reference_resolver_impl import ReferenceResolverImpl
+from .top_level_statement import StatementId, TopLevelStatement
 
 
 @dataclass(frozen=True)
-class NamedImport:
-    name: str
-    alias: Optional[str]
-
-
-@dataclass(frozen=True)
-class DirectModuleImport:
-    alias: Optional[str]
-
-
-@dataclass
-class ModuleImports:
-    direct_module_imports: Set[DirectModuleImport]
-    named_imports: Set[NamedImport]
-
-
-Imports = DefaultDict[AST.ModulePath, ModuleImports]
-
-
-def create_empty_module_imports() -> ModuleImports:
-    return ModuleImports(direct_module_imports=set(), named_imports=set())
+class StatementIdAndConstraint:
+    statement_id: StatementId
+    constraint: AST.ImportConstraint
 
 
 class ImportsManager:
-    def __init__(self) -> None:
-        self._top_imports: Imports = defaultdict(create_empty_module_imports)
-        self._bottom_imports: Imports = defaultdict(create_empty_module_imports)
+    def __init__(self, project_name: str):
+        self._project_name = project_name
+        self._statement_to_imports_that_must_come_before_it: DefaultDict[
+            StatementId, Set[AST.ReferenceImport]
+        ] = defaultdict(set)
+        self._import_to_constraints: DefaultDict[AST.ReferenceImport, Set[StatementIdAndConstraint]] = defaultdict(set)
 
-    def register_import(self, reference_import: AST.ReferenceImport) -> None:
-        if reference_import.at_bottom_of_file:
-            self._register_import(reference_import=reference_import, imports=self._bottom_imports)
-        else:
-            self._register_import(reference_import=reference_import, imports=self._top_imports)
+    def resolve_constraints(self, statements: Sequence[TopLevelStatement]) -> None:
+        for statement in statements:
+            for reference in statement.references:
+                if reference.import_ is not None:
 
-    def write_top_imports(self, writer: AST.Writer) -> None:
-        self._write_imports(writer=writer, imports=self._top_imports)
+                    if reference.import_.constaint is not None:
+                        self._import_to_constraints[reference.import_].add(
+                            StatementIdAndConstraint(
+                                statement_id=statement.id,
+                                constraint=reference.import_.constaint,
+                            )
+                        )
+                        if reference.import_.constaint == AST.ImportConstraint.BEFORE_CURRENT_DECLARATION:
+                            self._statement_to_imports_that_must_come_before_it[statement.id].add(reference.import_)
+                    else:
+                        # even if there's no constraints, we still add the
+                        # import to the defaultdict so we write it to the file
+                        self._import_to_constraints[reference.import_]
 
-    def write_bottom_imports(self, writer: AST.Writer) -> None:
-        self._write_imports(writer=writer, imports=self._bottom_imports)
+    def write_top_imports_for_statement(
+        self, statement: TopLevelStatement, writer: AST.Writer, reference_resolver: ReferenceResolverImpl
+    ) -> None:
+        # find all imports where the constraint is "must be before {statement}"
+        imports_constrained_to_before_statement = self._statement_to_imports_that_must_come_before_it[statement.id]
 
-    def _write_imports(self, writer: AST.Writer, imports: Imports) -> None:
-        for module_name, import_to_write in imports.items():
-            stringified_module_name = ".".join(module_name)
-            for direct_module_import in import_to_write.direct_module_imports:
-                line = f"import {stringified_module_name}"
-                if direct_module_import.alias is not None:
-                    line += f" as {direct_module_import.alias}"
-                writer.write_line(line)
-            if len(import_to_write.named_imports) > 0:
-                named_imports = ", ".join(map(stringify_named_import, import_to_write.named_imports))
-                writer.write_line(f"from {stringified_module_name} import {named_imports}")
+        # clear all constraints from these imports.
+        # if any of them have "must be after {different statement}", raise an error
+        for import_ in imports_constrained_to_before_statement:
+            for constraint_for_import in self._import_to_constraints[import_]:
+                if constraint_for_import.constraint == AST.ImportConstraint.BEFORE_CURRENT_DECLARATION:
+                    self._statement_to_imports_that_must_come_before_it[constraint_for_import.statement_id].remove(
+                        import_
+                    )
+                else:
+                    raise RuntimeError(
+                        f"Import is constrained to be before statement {statement.id}"
+                        + f" but after later statement {constraint_for_import.statement_id}"
+                    )
 
-    def _register_import(self, reference_import: AST.ReferenceImport, imports: Imports) -> None:
-        if reference_import.named_import is None:
-            imports[reference_import.module].direct_module_imports.add(DirectModuleImport(alias=reference_import.alias))
-        else:
-            imports[reference_import.module].named_imports.add(
-                NamedImport(name=reference_import.named_import, alias=reference_import.alias)
+            self._import_to_constraints[import_] = set()
+
+        # write (and forget) all imports without constraints
+        written_imports: Set[AST.ReferenceImport] = set()
+        for import_, constraints in self._import_to_constraints.items():
+            if len(constraints) == 0:
+                self._write_import(import_=import_, writer=writer, reference_resolver=reference_resolver)
+                written_imports.add(import_)
+        for import_ in written_imports:
+            del self._import_to_constraints[import_]
+
+        # delete "must be after {statement} constraints"
+        constraint_to_delete = StatementIdAndConstraint(
+            statement_id=statement.id,
+            constraint=AST.ImportConstraint.AFTER_CURRENT_DECLARATION,
+        )
+        for import_, constraints in self._import_to_constraints.items():
+            if constraint_to_delete in constraints:
+                constraints.remove(constraint_to_delete)
+
+    def write_remaining_imports(self, writer: AST.Writer, reference_resolver: ReferenceResolverImpl) -> None:
+        for import_ in self._import_to_constraints:
+            self._write_import(import_=import_, writer=writer, reference_resolver=reference_resolver)
+
+    def _write_import(
+        self, import_: AST.ReferenceImport, writer: AST.Writer, reference_resolver: ReferenceResolverImpl
+    ) -> None:
+        resolved_import = reference_resolver.resolve_import(import_)
+        module_str = ".".join(
+            resolved_import.module.get_fully_qualfied_module_path(
+                project_name=self._project_name,
             )
-
-
-def stringify_named_import(named_import: NamedImport) -> str:
-    if named_import.alias is None:
-        return named_import.name
-    else:
-        return f"{named_import.name} as {named_import.alias}"
+        )
+        if resolved_import.named_import is None:
+            writer.write(f"import {module_str}")
+        else:
+            writer.write(f"from {module_str} import {resolved_import.named_import}")
+        if resolved_import.alias is not None:
+            writer.write(f" as {resolved_import.alias}")
+        writer.write("\n")

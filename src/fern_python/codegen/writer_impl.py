@@ -7,6 +7,7 @@ from types import TracebackType
 from typing import IO, Any, Optional, Type
 
 import black
+import isort
 
 from . import AST
 
@@ -19,10 +20,16 @@ class WriterImpl(AST.Writer):
         self._last_character_is_newline = False
 
     def write(self, content: str) -> None:
-        prefix = "\t" * self._indent
+        prefix = self._get_indent_str()
         content_with_prefix = content.replace("\n", f"\n{prefix}")
-        self._file.write(content_with_prefix)
+        self._write(content_with_prefix)
         self._last_character_is_newline = len(content) > 0 and content[-1] == "\n"
+
+    def _get_indent_str(self) -> str:
+        return "\t" * self._indent
+
+    def _write(self, content: str) -> None:
+        self._file.write(content)
 
     def write_line(self, content: str) -> None:
         self.write(content)
@@ -38,7 +45,13 @@ class WriterImpl(AST.Writer):
             writer.write_line("# here's an indented line")
         """
         self._indent += 1
-        self.write("\n")
+
+        # ensure the cursor is indented properly
+        if self._last_character_is_newline:
+            self._write(self._get_indent_str())
+        else:
+            self.write("\n")
+
         return IndentableWriterImpl(writer=self)
 
     def start(self) -> None:
@@ -47,8 +60,10 @@ class WriterImpl(AST.Writer):
 
     def finish(self) -> None:
         self._file.close()
+        path = Path(os.path.join(os.getcwd(), self._filepath))
+        isort.file(path, quiet=True)
         black.format_file_in_place(
-            Path(os.path.join(os.getcwd(), self._filepath)),
+            path,
             fast=True,
             mode=black.FileMode(),
             write_back=black.WriteBack.YES,
