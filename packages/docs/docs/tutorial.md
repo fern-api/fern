@@ -34,9 +34,7 @@ In the root of your backend repo, run:
 fern init
 ```
 
-In your terminal, you'll see `? What's the name of your organization?`. Here we'll write `imdb`.
-
-Navigate to `api.yml` and change name `imdb-api`.
+When it asks you for the name of your organization, enter `imdb`.
 
 This will add the following:
 
