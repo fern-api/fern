@@ -20,7 +20,7 @@ npm init -y
 npm install typescript express @types/express ts-node
 ```
 
-This will set us up for a new TypeScript backend repo. We'll also install fern:
+This will set us up for a new TypeScript Express backend repo. We'll also install fern:
 
 ```bash
 npm install -g fern-api
@@ -48,11 +48,15 @@ fern/
 fern.config.json # Your organization name and Fern CLI version
 ```
 
-## Step 3: Add TypeScript generator
+## Step 3: Add TypeScript code generator
+
+When adding a generator, Fern defaults to the SDK (aka client). We'll see this by running:
 
 ```bash
 fern add typescript
 ```
+
+This will add:
 
 ```diff
 # generators.yml
@@ -62,10 +66,10 @@ fern add typescript
 +    version: 0.0.189
 +    config:
 +      mode: client-v2
-release:[]
+ release:[]
 ```
 
-By default, Fern adds the client generator. We want the server generator, so we'll change this to:
+For this tutorial, we want to generate a TypeScript Express server, so we'll change this to:
 
 ```diff
 # generators.yml
@@ -75,30 +79,42 @@ By default, Fern adds the client generator. We want the server generator, so we'
      config:
 -       mode: client-v2
 +       mode: server
-release:[]
+ release:[]
 ```
 
+:::tip Have a question?
+We're here to help! Reach out in [Discord](https://discord.gg/JkkXumPzcG).
+:::tip
+
 ## Step 4: Run the generator
+
+Next we'll invoke the TypeScript server code generator by running:
 
 ```bash
 fern generate
 ```
 
-In the terminal, you'll see `Published @imdb-fern/imdb-api-server@0.0.x` which we'll add as a dependency. By default, Fern publishes dependencies to a private registry.
+After a few seconds of processing, you'll see a message in your terminal that you `Published @imdb-fern/api-server@0.0.x`.
+
+![Successful code generation](../static/img/tutorial/generator-success.png)
+
+Let's install the generated Express server code.
 
 ```bash
 # Your version may be different, but this version will also work
-npm install @imdb-fern/imdb-api-server@0.0.1
+npm install @imdb-fern/api-server@0.0.3
 ```
 
 ## Step 5: Implement the server
 
-We'll create a new file `server.ts` at the root of our project. This will be a simple express server that serves our IMDb API.
+We'll create a new file `server.ts` at the root of our project. This will be an Express server which serves our API.
 
 ```ts
-// server.ts
-import { GetMovieErrorBody, MovieId } from "@imdb-fern/imdb-api-server/model";
-import { MoviesService } from "@imdb-fern/imdb-api-server/services";
+// 1. create a file called server.ts
+// 2. copy and paste these contents
+
+import { GetMovieErrorBody, MovieId } from "@imdb-fern/api-server/model";
+import { MoviesService } from "@imdb-fern/api-server/services";
 import express from "express";
 
 const app = express();
