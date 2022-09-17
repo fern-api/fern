@@ -6,7 +6,7 @@ export const JAVA_GENERATOR_INVOCATION: DraftGeneratorInvocationSchema = {
     version: "0.0.92",
     config: {
         packagePrefix: "com",
-        mode: "client_and_server",
+        mode: "client",
     },
 };
 
@@ -14,7 +14,7 @@ export const TYPESCRIPT_GENERATOR_INVOCATION: DraftGeneratorInvocationSchema = {
     name: "fernapi/fern-typescript",
     version: "0.0.189",
     config: {
-        mode: "client_and_server",
+        mode: "client-v2",
     },
 };
 
