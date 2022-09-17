@@ -28,9 +28,9 @@ export async function getViolationsForRule({
     const ruleRunner = await rule.create({ workspace: parseResult.workspace, logger: NOOP_LOGGER });
     const violations: ValidationViolation[] = [];
 
-    for (const [relativeFilePath, contents] of entries(parseResult.workspace.serviceFiles)) {
+    for (const [relativeFilepath, contents] of entries(parseResult.workspace.serviceFiles)) {
         const visitor = createAstVisitorForRules({
-            relativeFilePath,
+            relativeFilepath,
             contents,
             ruleRunners: [ruleRunner],
             addViolations: (newViolations) => {

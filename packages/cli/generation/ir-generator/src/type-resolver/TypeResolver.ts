@@ -1,74 +1,113 @@
+import { RelativeFilePath } from "@fern-api/core-utils";
 import { Workspace } from "@fern-api/workspace-loader";
-import { RawSchemas, RAW_DEFAULT_ID_TYPE, ServiceFileSchema, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
-import { ResolvedTypeReference, ShapeType, TypeReference } from "@fern-fern/ir-model/types";
+import { isRawAliasDefinition, RawSchemas, RAW_DEFAULT_ID_TYPE, ServiceFileSchema } from "@fern-api/yaml-schema";
+import { DeclaredTypeName, TypeReference } from "@fern-fern/ir-model/types";
 import { constructFernFileContext, FernFileContext } from "../FernFileContext";
 import { parseInlineType } from "../utils/parseInlineType";
 import { parseReferenceToTypeName } from "../utils/parseReferenceToTypeName";
+import { ResolvedType } from "./ResolvedType";
 
 export interface TypeResolver {
-    resolveType: (args: { type: string; file: FernFileContext }) => ResolvedTypeReference;
+    resolveType: (args: { type: string; file: FernFileContext }) => ResolvedType;
 }
 
 export class TypeResolverImpl implements TypeResolver {
     constructor(private readonly workspace: Workspace) {}
 
-    public resolveType({ type, file }: { type: string; file: FernFileContext }): ResolvedTypeReference {
+    public resolveType({ type, file }: { type: string; file: FernFileContext }): ResolvedType {
+        return this.resolveTypeRecursive({ type, file });
+    }
+
+    private resolveTypeRecursive({
+        type,
+        file,
+        objectPath = [],
+    }: {
+        type: string;
+        file: FernFileContext;
+        objectPath?: string[];
+    }): ResolvedType {
         const parsedType = parseInlineType({ type, file });
-        return TypeReference._visit<ResolvedTypeReference>(parsedType, {
-            container: ResolvedTypeReference.container,
-            primitive: ResolvedTypeReference.primitive,
-            unknown: ResolvedTypeReference.unknown,
-            void: ResolvedTypeReference.void,
-            named: (typeName) => {
-                const reference = parseReferenceToTypeName({
-                    reference: type,
+        return TypeReference._visit<ResolvedType>(parsedType, {
+            container: (container) => ({ _type: "container", container }),
+            primitive: (primitive) => ({ _type: "primitive", primitive }),
+            unknown: () => ({ _type: "unknown" }),
+            void: () => ({ _type: "void" }),
+            named: (parsedTypeName) => {
+                const declaration = this.getDeclarationOfReferenceToNamedType({
+                    referenceToNamedType: type,
+                    parsedTypeName,
                     referencedIn: file.relativeFilepath,
                     imports: file.imports,
+                    objectPath: [...objectPath, type],
                 });
-                if (reference == null) {
+                if (declaration == null) {
                     throw new Error("Cannot find type: " + type);
                 }
-                const serviceFile = this.workspace.serviceFiles[reference.relativeFilePath];
-                if (serviceFile == null) {
-                    throw new Error("Cannot find file: " + reference.relativeFilePath);
-                }
-
-                const declaration = getDeclaration(serviceFile, reference.typeName);
-                return visitRawTypeDeclaration(declaration, {
-                    alias: (aliasDeclaration) => {
-                        return this.resolveType({
-                            type: typeof aliasDeclaration === "string" ? aliasDeclaration : aliasDeclaration.alias,
-                            file: constructFernFileContext({
-                                relativeFilepath: reference.relativeFilePath,
-                                serviceFile,
-                            }),
-                        });
-                    },
-                    object: () =>
-                        ResolvedTypeReference.named({
-                            name: typeName,
-                            shape: ShapeType.Object,
-                        }),
-                    union: () =>
-                        ResolvedTypeReference.named({
-                            name: typeName,
-                            shape: ShapeType.Union,
-                        }),
-                    enum: () =>
-                        ResolvedTypeReference.named({
-                            name: typeName,
-                            shape: ShapeType.Enum,
-                        }),
-                });
+                return declaration;
             },
             _unknown: () => {
                 throw new Error("Unknown type reference type: " + parsedType._type);
             },
         });
     }
+
+    private getDeclarationOfReferenceToNamedType({
+        referenceToNamedType,
+        parsedTypeName,
+        referencedIn,
+        imports,
+        objectPath,
+    }: {
+        referenceToNamedType: string;
+        parsedTypeName: DeclaredTypeName;
+        referencedIn: RelativeFilePath;
+        imports: Record<string, RelativeFilePath>;
+        objectPath: string[];
+    }): ResolvedType | undefined {
+        const parsedReference = parseReferenceToTypeName({
+            reference: referenceToNamedType,
+            referencedIn,
+            imports,
+        });
+        if (parsedReference == null) {
+            return undefined;
+        }
+        const serviceFile = this.workspace.serviceFiles[parsedReference.relativeFilepath];
+        if (serviceFile == null) {
+            return undefined;
+        }
+
+        const declaration = getDeclarationInFile(serviceFile, parsedReference.typeName);
+        if (declaration == null) {
+            return undefined;
+        }
+
+        if (isRawAliasDefinition(declaration)) {
+            return this.resolveTypeRecursive({
+                type: typeof declaration === "string" ? declaration : declaration.alias,
+                file: constructFernFileContext({
+                    relativeFilepath: parsedReference.relativeFilepath,
+                    serviceFile,
+                }),
+                objectPath,
+            });
+        }
+
+        return {
+            _type: "named",
+            name: parsedTypeName,
+            declaration,
+            filepath: parsedReference.relativeFilepath,
+            objectPath,
+        };
+    }
 }
 
-function getDeclaration(serviceFile: ServiceFileSchema, typeName: string): RawSchemas.TypeDeclarationSchema {
+function getDeclarationInFile(
+    serviceFile: ServiceFileSchema,
+    typeName: string
+): RawSchemas.TypeDeclarationSchema | undefined {
     const declaration = serviceFile.types?.[typeName];
     if (declaration != null) {
         return declaration;
@@ -84,5 +123,5 @@ function getDeclaration(serviceFile: ServiceFileSchema, typeName: string): RawSc
         return RAW_DEFAULT_ID_TYPE;
     }
 
-    throw new Error("Cannot find type declaration: " + typeName);
+    return undefined;
 }

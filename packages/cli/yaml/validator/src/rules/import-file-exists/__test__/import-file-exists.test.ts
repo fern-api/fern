@@ -13,23 +13,23 @@ describe("import-file-exists", () => {
             ),
         });
 
-        expect(violations).toMatchObject([
+        expect(violations).toEqual([
             {
                 message: "Import missing points to non-existent path missing/missing.yml.",
                 nodePath: ["imports", "missing"],
-                relativeFilePath: "root.yml",
+                relativeFilepath: "root.yml",
                 severity: "error",
             },
             {
                 message: "Import missing points to non-existent path ./missing.yml.",
                 nodePath: ["imports", "missing"],
-                relativeFilePath: "subfolder-a/a.yml",
+                relativeFilepath: "subfolder-a/a.yml",
                 severity: "error",
             },
             {
                 message: "Import doesNotExist points to non-existent path ../subfolder-a/a.",
                 nodePath: ["imports", "doesNotExist"],
-                relativeFilePath: "subfolder-b/b.yml",
+                relativeFilepath: "subfolder-b/b.yml",
                 severity: "error",
             },
         ]);

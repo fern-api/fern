@@ -17,7 +17,7 @@ export type RuleRunner = {
 };
 
 export interface RuleRunnerArgs {
-    relativeFilePath: RelativeFilePath;
+    relativeFilepath: RelativeFilePath;
     contents: ServiceFileSchema;
 }
 export interface RuleViolation {

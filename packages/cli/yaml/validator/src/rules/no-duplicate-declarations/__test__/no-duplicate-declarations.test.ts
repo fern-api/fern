@@ -13,40 +13,42 @@ describe("no-duplicate-declarations", () => {
             ),
         });
 
-        expect(violations).toMatchObject([
+        expect(violations).toEqual([
             {
                 message: "C is already declared in this file",
                 nodePath: ["ids", "C"],
-                relativeFilePath: "1.yml",
+                relativeFilepath: "1.yml",
                 severity: "error",
             },
             {
                 message: "TwoService is already declared in 2.yml",
                 nodePath: ["types", "TwoService"],
-                relativeFilePath: "1.yml",
+                relativeFilepath: "1.yml",
                 severity: "error",
             },
             {
                 message: "OneService is already declared in 2.yml",
                 nodePath: ["services", "http", "OneService"],
-                relativeFilePath: "1.yml",
+                relativeFilepath: "1.yml",
                 severity: "error",
             },
             {
                 message: "C is already declared in this file",
                 nodePath: ["errors", "C"],
-                relativeFilePath: "1.yml",
+                relativeFilepath: "1.yml",
                 severity: "error",
             },
             {
                 message: "OneService is already declared in 1.yml",
                 nodePath: ["services", "http", "OneService"],
-                relativeFilePath: "2.yml",
+                relativeFilepath: "2.yml",
                 severity: "error",
             },
             {
                 message: "TwoService is already declared in 1.yml",
                 nodePath: ["services", "http", "TwoService"],
+                relativeFilepath: "2.yml",
+                severity: "error",
             },
         ]);
     });

@@ -11,8 +11,8 @@ export const NoUndefinedErrorReferenceRule: Rule = {
     create: async ({ workspace }) => {
         const errorsByFilepath: Record<RelativeFilePath, Set<ErrorName>> = await getErrorsByFilepath(workspace);
 
-        function doesErrorExist(errorName: string, relativeFilePath: RelativeFilePath) {
-            const errorsForFilepath = errorsByFilepath[relativeFilePath];
+        function doesErrorExist(errorName: string, relativeFilepath: RelativeFilePath) {
+            const errorsForFilepath = errorsByFilepath[relativeFilepath];
             if (errorsForFilepath == null) {
                 return false;
             }
@@ -20,16 +20,16 @@ export const NoUndefinedErrorReferenceRule: Rule = {
         }
 
         return {
-            errorReference: (errorReference, { relativeFilePath, contents }) => {
+            errorReference: (errorReference, { relativeFilepath, contents }) => {
                 const parsedReference = parseReferenceToTypeName({
                     reference: errorReference,
-                    referencedIn: relativeFilePath,
+                    referencedIn: relativeFilepath,
                     imports: contents.imports ?? {},
                 });
 
                 if (
                     parsedReference != null &&
-                    doesErrorExist(parsedReference.typeName, parsedReference.relativeFilePath)
+                    doesErrorExist(parsedReference.typeName, parsedReference.relativeFilepath)
                 ) {
                     return [];
                 }

@@ -119,8 +119,9 @@
                 "type": "object",
                 "properties": {
                   "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
-                  "alias": { "type": "string", "default": "void" }
+                  "alias": { "type": "string" }
                 },
+                "required": ["alias"],
                 "additionalProperties": false
               },
               {
