@@ -20,12 +20,13 @@ export function getMigrationsToRun({
  * returns ALL_MIGRATIONS.length if no migrations are >= the provided version.
  */
 function getIndexOfFirstMigrationGreaterThanOrEqualTo(version: string): number {
-    const index = ALL_MIGRATIONS.findIndex(
-        ({ version: versionOfMigration }) =>
-            versionOfMigration === version || isVersionAhead(versionOfMigration, version)
-    );
-    if (index === -1) {
-        return ALL_MIGRATIONS.length;
+    let index;
+    for (index = 0; index < ALL_MIGRATIONS.length; index++) {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const versionOfMigration = ALL_MIGRATIONS[index]!.version;
+        if (versionOfMigration === version || isVersionAhead(versionOfMigration, version)) {
+            return index;
+        }
     }
     return index;
 }
