@@ -3174,7 +3174,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/validator": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/ir-model": 0.0.202
+    "@fern-fern/ir-model": 0.0.203
     "@types/boxen": ^3.0.1
     "@types/inquirer": ^9.0.1
     "@types/is-ci": ^3.0.0
@@ -3417,7 +3417,7 @@ __metadata:
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/ir-model": 0.0.202
+    "@fern-fern/ir-model": 0.0.203
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.6
     "@types/node": ^18.7.18
@@ -3484,7 +3484,7 @@ __metadata:
     "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/generator-exec-client": 0.0.5
-    "@fern-fern/ir-model": 0.0.202
+    "@fern-fern/ir-model": 0.0.203
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/tmp": ^0.2.3
@@ -3674,7 +3674,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/fiddle-client-v2": ^0.0.18
-    "@fern-fern/ir-model": 0.0.202
+    "@fern-fern/ir-model": 0.0.203
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.6
     "@types/node": ^18.7.18
@@ -3819,7 +3819,7 @@ __metadata:
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
-    "@fern-fern/ir-model": 0.0.202
+    "@fern-fern/ir-model": 0.0.203
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -3853,10 +3853,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/ir-model@npm:0.0.202":
-  version: 0.0.202
-  resolution: "@fern-fern/ir-model@npm:0.0.202"
-  checksum: f15adb5be219dc4938d302dc95ffa54912e20bd142887c864d136e243402dbb221761c396a4c3a9342236b07c969d32b017fe2347042ffb076497f905c6b5443
+"@fern-fern/ir-model@npm:0.0.203":
+  version: 0.0.203
+  resolution: "@fern-fern/ir-model@npm:0.0.203"
+  checksum: 16ce8800a66b980a26a1f77fe1dd6bf4a9c5f0c7a042529cedad47f856a90805b55db7541f18c90de234d07f5a1b18358906aaf73722a90da66d9cf967a6882e
   languageName: node
   linkType: hard
 
