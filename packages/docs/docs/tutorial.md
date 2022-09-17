@@ -176,4 +176,4 @@ Select the `getMovie` endpoint and hit `Send`. As expected, we get a 404 respons
 
 ## Step 9: Celebrate 🎉
 
-You've successfully implemented a simple IMDb TypeScript Express server using Fern. You're invited to join our [Discord](https://discord.gg/JkkXumPzcG).
+You've successfully implemented a IMDb TypeScript Express server using Fern. You're invited to join our [Discord](https://discord.gg/JkkXumPzcG).
