@@ -17,15 +17,15 @@ export function getMigrationsToRun({
 
 /**
  * returns the index of the first migration that is >= the provided version.
- * returns undefined if no migrations are >= the provided version.
+ * returns ALL_MIGRATIONS.length if no migrations are >= the provided version.
  */
-function getIndexOfFirstMigrationGreaterThanOrEqualTo(version: string): number | undefined {
+function getIndexOfFirstMigrationGreaterThanOrEqualTo(version: string): number {
     const index = ALL_MIGRATIONS.findIndex(
         ({ version: versionOfMigration }) =>
             versionOfMigration === version || isVersionAhead(versionOfMigration, version)
     );
     if (index === -1) {
-        return undefined;
+        return ALL_MIGRATIONS.length;
     }
     return index;
 }

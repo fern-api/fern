@@ -20,4 +20,13 @@ describe("getMigrationsToRun", () => {
         const allMigrations = migrationsToRun.flatMap(({ migrations }) => migrations);
         expect(allMigrations).toHaveLength(1);
     });
+
+    it("works with prod + dev versions", () => {
+        const migrationsToRun = getMigrationsToRun({
+            fromVersion: "0.0.194",
+            toVersion: "0.0.194-4-gc1524d1b",
+        });
+        const allMigrations = migrationsToRun.flatMap(({ migrations }) => migrations);
+        expect(allMigrations).toHaveLength(0);
+    });
 });
