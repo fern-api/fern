@@ -1,39 +1,33 @@
-import { RelativeFilePath } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { FernFilepath } from "@fern-fern/ir-model/commons";
 import { WebSocketChannel, WebSocketMessenger } from "@fern-fern/ir-model/services/websocket";
 import { TypeReference } from "@fern-fern/ir-model/types";
+import { FernFileContext } from "../../FernFileContext";
 import { generateWireStringWithAllCasings } from "../../utils/generateCasings";
-import { createTypeReferenceParser } from "../../utils/parseInlineType";
 import { convertResponseErrors } from "./convertResponseErrors";
 
 export function convertWebsocketChannel({
     channelDefinition,
-    fernFilepath,
     channelId,
-    imports,
+    file,
 }: {
     channelId: string;
     channelDefinition: RawSchemas.WebSocketChannelSchema;
-    fernFilepath: FernFilepath;
-    imports: Record<string, RelativeFilePath>;
+    file: FernFileContext;
 }): WebSocketChannel {
     return {
         docs: channelDefinition.docs,
         name: {
-            fernFilepath,
+            fernFilepath: file.fernFilepath,
             name: channelId,
         },
         path: channelDefinition.path,
         client: convertWebSocketMessenger({
             messenger: channelDefinition.client,
-            fernFilepath,
-            imports,
+            file,
         }),
         server: convertWebSocketMessenger({
             messenger: channelDefinition.server,
-            fernFilepath,
-            imports,
+            file,
         }),
         operationProperties: {
             id: "id",
@@ -45,14 +39,11 @@ export function convertWebsocketChannel({
 
 function convertWebSocketMessenger({
     messenger,
-    fernFilepath,
-    imports,
+    file,
 }: {
     messenger: RawSchemas.WebSocketMessengerSchema | null | undefined;
-    fernFilepath: FernFilepath;
-    imports: Record<string, RelativeFilePath>;
+    file: FernFileContext;
 }): WebSocketMessenger {
-    const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
     return {
         operations:
             messenger?.operations != null
@@ -67,20 +58,19 @@ function convertWebSocketMessenger({
                               docs: typeof operation.request !== "string" ? operation.request?.docs : undefined,
                               type:
                                   operation.request != null
-                                      ? parseTypeReference(operation.request)
+                                      ? file.parseTypeReference(operation.request)
                                       : TypeReference.void(),
                           },
                           response: {
                               docs: typeof operation.response !== "string" ? operation.response?.docs : undefined,
                               type:
                                   operation.response != null
-                                      ? parseTypeReference(operation.response)
+                                      ? file.parseTypeReference(operation.response)
                                       : TypeReference.void(),
                           },
                           errors: convertResponseErrors({
                               errors: operation.errors,
-                              fernFilepath,
-                              imports,
+                              file,
                           }),
                       };
                   })

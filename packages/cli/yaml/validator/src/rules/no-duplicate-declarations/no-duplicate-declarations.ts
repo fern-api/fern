@@ -16,12 +16,12 @@ export const NoDuplicateDeclarationsRule: Rule = {
 
         const getRuleViolations = ({
             declaredName,
-            relativeFilePath,
+            relativeFilepath,
         }: {
             declaredName: DeclaredName;
-            relativeFilePath: RelativeFilePath;
+            relativeFilepath: RelativeFilePath;
         }): RuleViolation[] => {
-            const relativeDirectoryPath: RelativeDirectoryPath = path.dirname(relativeFilePath);
+            const relativeDirectoryPath: RelativeDirectoryPath = path.dirname(relativeFilepath);
             const declarationsForName = declarations[relativeDirectoryPath]?.[declaredName];
             if (declarationsForName == null) {
                 logger.error(
@@ -30,23 +30,23 @@ export const NoDuplicateDeclarationsRule: Rule = {
                 return [];
             }
 
-            const indexOfThisDeclarations = declarationsForName.indexOf(relativeFilePath);
+            const indexOfThisDeclarations = declarationsForName.indexOf(relativeFilepath);
             const duplicates = declarationsForName.filter((_declaration, index) => index !== indexOfThisDeclarations);
             return duplicates.map((duplicate) => ({
                 severity: "error",
                 message: `${declaredName} is already declared in ${
-                    duplicate === relativeFilePath ? "this file" : duplicate
+                    duplicate === relativeFilepath ? "this file" : duplicate
                 }`,
             }));
         };
 
         return {
-            typeName: (typeName, { relativeFilePath }) =>
-                getRuleViolations({ declaredName: typeName, relativeFilePath }),
-            errorDeclaration: ({ errorName }, { relativeFilePath }) =>
-                getRuleViolations({ declaredName: errorName, relativeFilePath }),
-            httpService: ({ serviceName }, { relativeFilePath }) =>
-                getRuleViolations({ declaredName: serviceName, relativeFilePath }),
+            typeName: (typeName, { relativeFilepath }) =>
+                getRuleViolations({ declaredName: typeName, relativeFilepath }),
+            errorDeclaration: ({ errorName }, { relativeFilepath }) =>
+                getRuleViolations({ declaredName: errorName, relativeFilepath }),
+            httpService: ({ serviceName }, { relativeFilepath }) =>
+                getRuleViolations({ declaredName: serviceName, relativeFilepath }),
         };
     },
 };

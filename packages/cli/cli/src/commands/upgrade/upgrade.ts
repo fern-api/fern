@@ -3,18 +3,42 @@ import { FERN_DIRECTORY, getFernDirectory, loadProjectConfig } from "@fern-api/p
 import { loadProject } from "@fern-api/project-loader";
 import { TASK_FAILURE } from "@fern-api/task-context";
 import chalk from "chalk";
+import execa from "execa";
 import { writeFile } from "fs/promises";
 import produce from "immer";
 import { CliContext } from "../../cli-context/CliContext";
-import { isFernCliUpgradeAvailable } from "../../cli-context/upgrade-utils/isFernCliUpgradeAvailable";
 import { rerunFernCliAtVersion } from "../../rerunFernCliAtVersion";
 import { upgradeGeneratorsInWorkspaces } from "./upgradeGeneratorsInWorkspaces";
 
 const PREVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION";
 
+/**
+ * there are 3 relevant versions:
+ *   1. the version of the CLI specified in fern.config.json
+ *   2. the version of the CLI being run right now.
+ *   3. the latest version of the CLI that's been released.
+ *
+ * When the CLI is first invoked, if the version of the CLI is not equal to
+ * the version in fern.config.json, we immediately re-run the CLI at the
+ * version specified in fern.config.json. So by the time we're here, we can
+ * assume that version #1 == version #2.
+ *
+ * if #3 is the same version as #1 and #2 (i.e. no later version of the CLI exists),
+ * then this function simply prints "No upgrade available." and returns.
+ *
+ * otherwise, if an upgrade is available, this function:
+ *   1. upgrades the globally-installed version of the CLI to the latest version
+ *   2. change the version in fern.config.json to the latest version
+ *   3. re-runs `fern upgrade` using the latest version the CLI
+ *        implementation detail: when doing so, we set the PREVIOUS_VERSION_ENV_VAR
+ *        so we know what version we just upgraded from
+ *   4. During this re-run, this function is invoked again. During this re-run, we:
+ *        - run any migrations between PREVIOUS_VERSION_ENV_VAR and the latest version of the CLI.
+ *        - change the generator versions in generators.yml to the latest stable versions
+ */
 export async function upgrade({ cliContext }: { cliContext: CliContext }): Promise<void> {
-    const fernCliUpgradeInfo = await isFernCliUpgradeAvailable(cliContext.environment);
-    if (!fernCliUpgradeInfo.upgradeAvailable) {
+    const fernCliUpgradeInfo = await cliContext.isUpgradeAvailable();
+    if (!fernCliUpgradeInfo.isUpgradeAvailable) {
         const previousVersion = process.env[PREVIOUS_VERSION_ENV_VAR];
         if (previousVersion == null) {
             cliContext.logger.info("No upgrade available.");
@@ -60,6 +84,8 @@ export async function upgrade({ cliContext }: { cliContext: CliContext }): Promi
                 fernCliUpgradeInfo.latestVersion
             )}`
         );
+
+        await execa("npm", ["install", "-g", cliContext.environment.packageName]);
 
         const { failed } = await rerunFernCliAtVersion({
             version: fernCliUpgradeInfo.latestVersion,

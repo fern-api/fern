@@ -16,7 +16,7 @@ export const NoUndefinedTypeReferenceRule: Rule = {
             if (reference.parsed == null) {
                 return false;
             }
-            const typesForFilepath = typesByFilepath[reference.parsed.relativeFilePath];
+            const typesForFilepath = typesByFilepath[reference.parsed.relativeFilepath];
             if (typesForFilepath == null) {
                 return false;
             }
@@ -24,9 +24,9 @@ export const NoUndefinedTypeReferenceRule: Rule = {
         }
 
         return {
-            typeReference: (typeReference, { relativeFilePath, contents }) => {
+            typeReference: (typeReference, { relativeFilepath, contents }) => {
                 const type = typeof typeReference === "string" ? typeReference : typeReference.type;
-                const namedTypes = getAllNamedTypes({ type, relativeFilePath, imports: contents.imports ?? {} });
+                const namedTypes = getAllNamedTypes({ type, relativeFilepath, imports: contents.imports ?? {} });
 
                 return namedTypes.reduce<RuleViolation[]>((violations, namedType) => {
                     if (!doesTypeExist(namedType)) {
@@ -70,18 +70,18 @@ interface ReferenceToTypeName {
     parsed:
         | {
               typeName: string;
-              relativeFilePath: RelativeFilePath;
+              relativeFilepath: RelativeFilePath;
           }
         | undefined;
 }
 
 function getAllNamedTypes({
     type,
-    relativeFilePath,
+    relativeFilepath,
     imports,
 }: {
     type: string;
-    relativeFilePath: RelativeFilePath;
+    relativeFilepath: RelativeFilePath;
     imports: Record<string, RelativeFilePath>;
 }): ReferenceToTypeName[] {
     return visitRawTypeReference<ReferenceToTypeName[]>(type, {
@@ -97,7 +97,7 @@ function getAllNamedTypes({
         named: (named) => {
             const reference = parseReferenceToTypeName({
                 reference: named,
-                referencedIn: relativeFilePath,
+                referencedIn: relativeFilepath,
                 imports,
             });
             return [
@@ -107,7 +107,7 @@ function getAllNamedTypes({
                         reference != null
                             ? {
                                   typeName: reference.typeName,
-                                  relativeFilePath: reference.relativeFilePath ?? relativeFilePath,
+                                  relativeFilepath: reference.relativeFilepath,
                               }
                             : undefined,
                 },

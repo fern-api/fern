@@ -15,6 +15,7 @@ types:
       - ALL
       - ANY
   AuthScheme:
+    discriminant: _type
     union:
       bearer: commons.WithDocs
       basic: commons.WithDocs

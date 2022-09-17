@@ -1,0 +1,4 @@
+types:
+  Director:
+    properties:
+      name: string

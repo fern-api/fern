@@ -13,23 +13,23 @@ describe("no-circular-imports", () => {
             ),
         });
 
-        expect(violations).toMatchObject([
+        expect(violations).toEqual([
             {
                 message: "A file cannot import itself",
                 nodePath: ["imports", "b"],
-                relativeFilePath: "b.yml",
+                relativeFilepath: "b.yml",
                 severity: "error",
             },
             {
                 message: "Circular import detected: c/c.yml -> d/d.yml -> e.yml -> c/c.yml",
                 nodePath: ["imports", "d"],
-                relativeFilePath: "c/c.yml",
+                relativeFilepath: "c/c.yml",
                 severity: "error",
             },
             {
                 message: "Circular import detected: d/d.yml -> e.yml -> d/d.yml",
                 nodePath: ["imports", "e"],
-                relativeFilePath: "d/d.yml",
+                relativeFilepath: "d/d.yml",
                 severity: "error",
             },
         ]);

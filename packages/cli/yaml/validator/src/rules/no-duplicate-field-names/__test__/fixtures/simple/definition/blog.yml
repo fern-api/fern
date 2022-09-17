@@ -1,0 +1,5 @@
+types:
+  BlogPostAlias: BlogPost
+  BlogPost:
+    properties:
+      blogPostName: string

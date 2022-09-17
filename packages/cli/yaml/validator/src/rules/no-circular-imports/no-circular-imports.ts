@@ -16,14 +16,14 @@ export const NoCircularImportsRule: Rule = {
         const circularImports = findCircularImports(workspace.serviceFiles);
 
         return {
-            import: async ({ importPath }, { relativeFilePath }) => {
-                const circularImportsForFile = circularImports[relativeFilePath];
+            import: async ({ importPath }, { relativeFilepath }) => {
+                const circularImportsForFile = circularImports[relativeFilepath];
                 if (circularImportsForFile == null) {
                     return [];
                 }
 
                 const resolvedImportPath = getResolvedPathOfImportedFile({
-                    referencedIn: relativeFilePath,
+                    referencedIn: relativeFilepath,
                     importPath,
                 });
                 const circularImportsToReport = circularImportsForFile.filter(

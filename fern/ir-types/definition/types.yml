@@ -14,6 +14,7 @@ types:
       fernFilepath: commons.FernFilepath
       name: string
   Type:
+    discriminant: _type
     union:
       alias: AliasTypeDeclaration
       enum: EnumTypeDeclaration
@@ -23,6 +24,24 @@ types:
   AliasTypeDeclaration:
     properties:
       aliasOf: TypeReference
+      resolvedType: ResolvedTypeReference
+  ResolvedTypeReference:
+    discriminant: _type
+    union:
+      container: ContainerType
+      named: ResolvedNamedType
+      primitive: PrimitiveType
+      unknown: {}
+      void: {}
+  ResolvedNamedType:
+    properties:
+      name: DeclaredTypeName
+      shape: ShapeType
+  ShapeType:
+    enum:
+      - ENUM
+      - OBJECT
+      - UNION
 
   EnumTypeDeclaration:
     properties:
@@ -48,14 +67,29 @@ types:
   UnionTypeDeclaration:
     properties:
       discriminant: string
+      discriminantV2: commons.WireStringWithAllCasings
       types: list<SingleUnionType>
   SingleUnionType:
     extends: commons.WithDocs
     properties:
       discriminantValue: commons.WireStringWithAllCasings
-      valueType: TypeReference
+      valueType:
+        type: TypeReference
+        docs: This is deprecated. Use shape instead.
+      shape: SingleUnionTypeProperties
+  SingleUnionTypeProperties:
+    discriminant: _type
+    union:
+      samePropertiesAsObject: DeclaredTypeName
+      singleProperty: SingleUnionTypeProperty
+      noProperties: {}
+  SingleUnionTypeProperty:
+    properties:
+      name: commons.WireStringWithAllCasings
+      type: TypeReference
 
   TypeReference:
+    discriminant: _type
     union:
       container: ContainerType
       named: DeclaredTypeName
@@ -63,6 +97,7 @@ types:
       unknown: {}
       void: {}
   ContainerType:
+    discriminant: _type
     union:
       list: TypeReference
       map: MapType

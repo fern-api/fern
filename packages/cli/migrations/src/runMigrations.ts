@@ -2,8 +2,7 @@ import { addPrefixToString } from "@fern-api/core-utils";
 import { InteractiveTaskContext, Startable, TaskContext, TaskResult } from "@fern-api/task-context";
 import chalk from "chalk";
 import inquirer from "inquirer";
-import { isVersionBehind } from "./isVersionBehind";
-import { ALL_MIGRATIONS } from "./migrations";
+import { getMigrationsToRun } from "./migrations/getMigrationsToRun";
 import { Migration } from "./types/Migration";
 import { VersionMigrations } from "./types/VersionMigrations";
 
@@ -21,12 +20,20 @@ export declare namespace runMigrations {
 }
 
 export async function runMigrations({ fromVersion, toVersion, context }: runMigrations.Args): Promise<void> {
-    const migrationsToRun = ALL_MIGRATIONS.slice(
-        getIndexOfFirstMigrationForVersion(fromVersion),
-        getIndexOfFirstMigrationForVersion(toVersion)
-    );
+    context.logger.debug(`Checking if any migrations need to be run (from=${fromVersion}, to=${toVersion})`);
+
+    const migrationsToRun = getMigrationsToRun({ fromVersion, toVersion });
+
     if (migrationsToRun.length === 0) {
+        context.logger.debug("No migrations needed.");
         return;
+    } else {
+        context.logger.debug(
+            "Migrations need to be run:\n" +
+                migrationsToRun
+                    .flatMap(({ migrations }) => migrations.map((migration) => `  - ${migration.name}`))
+                    .join("\n")
+        );
     }
 
     await context.takeOverTerminal(async () => {
@@ -61,12 +68,6 @@ export async function runMigrations({ fromVersion, toVersion, context }: runMigr
     }
 }
 
-function getIndexOfFirstMigrationForVersion(version: string): number {
-    return ALL_MIGRATIONS.findIndex(({ version: versionForMigration }) =>
-        isVersionBehind(version, versionForMigration)
-    );
-}
-
 async function askForConfirmation(migrationsToRun: VersionMigrations[]): Promise<boolean> {
     const QUESTION_KEY = "wantsToContinue";
 
@@ -75,7 +76,7 @@ async function askForConfirmation(migrationsToRun: VersionMigrations[]): Promise
         for (const migration of migrations) {
             lines.push(
                 addPrefixToString({
-                    prefix: "◦ ",
+                    prefix: "  ◦ ",
                     content: `${migration.name}\n${chalk.dim(migration.summary)}`,
                 })
             );

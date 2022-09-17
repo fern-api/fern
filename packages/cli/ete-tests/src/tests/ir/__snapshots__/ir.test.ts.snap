@@ -2,336 +2,529 @@
 
 exports[`ir simple 1`] = `
 "{
-    \\"apiName\\": \\"my-api\\",
-    \\"auth\\": {
-        \\"requirement\\": \\"ALL\\",
-        \\"schemes\\": []
+    "apiName": "my-api",
+    "auth": {
+        "requirement": "ALL",
+        "schemes": []
     },
-    \\"types\\": [
+    "types": [
         {
-            \\"name\\": {
-                \\"fernFilepath\\": [
+            "name": {
+                "fernFilepath": [
                     {
-                        \\"originalValue\\": \\"imdb\\",
-                        \\"camelCase\\": \\"imdb\\",
-                        \\"snakeCase\\": \\"imdb\\",
-                        \\"pascalCase\\": \\"Imdb\\",
-                        \\"screamingSnakeCase\\": \\"IMDB\\"
+                        "originalValue": "director",
+                        "camelCase": "director",
+                        "snakeCase": "director",
+                        "pascalCase": "Director",
+                        "screamingSnakeCase": "DIRECTOR"
                     }
                 ],
-                \\"name\\": \\"MovieId\\"
+                "name": "Director"
             },
-            \\"shape\\": {
-                \\"aliasOf\\": {
-                    \\"primitive\\": \\"STRING\\",
-                    \\"_type\\": \\"primitive\\"
-                },
-                \\"_type\\": \\"alias\\"
+            "shape": {
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "originalValue": "name",
+                            "camelCase": "name",
+                            "snakeCase": "name",
+                            "pascalCase": "Name",
+                            "screamingSnakeCase": "NAME",
+                            "wireValue": "name"
+                        },
+                        "valueType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        }
+                    }
+                ],
+                "_type": "object"
             }
         },
         {
-            \\"name\\": {
-                \\"fernFilepath\\": [
+            "name": {
+                "fernFilepath": [
                     {
-                        \\"originalValue\\": \\"imdb\\",
-                        \\"camelCase\\": \\"imdb\\",
-                        \\"snakeCase\\": \\"imdb\\",
-                        \\"pascalCase\\": \\"Imdb\\",
-                        \\"screamingSnakeCase\\": \\"IMDB\\"
+                        "originalValue": "imdb",
+                        "camelCase": "imdb",
+                        "snakeCase": "imdb",
+                        "pascalCase": "Imdb",
+                        "screamingSnakeCase": "IMDB"
                     }
                 ],
-                \\"name\\": \\"Movie\\"
+                "name": "MovieId"
             },
-            \\"shape\\": {
-                \\"extends\\": [],
-                \\"properties\\": [
+            "shape": {
+                "aliasOf": {
+                    "primitive": "STRING",
+                    "_type": "primitive"
+                },
+                "resolvedType": {
+                    "primitive": "STRING",
+                    "_type": "primitive"
+                },
+                "_type": "alias"
+            }
+        },
+        {
+            "name": {
+                "fernFilepath": [
                     {
-                        \\"name\\": {
-                            \\"originalValue\\": \\"id\\",
-                            \\"camelCase\\": \\"id\\",
-                            \\"snakeCase\\": \\"id\\",
-                            \\"pascalCase\\": \\"Id\\",
-                            \\"screamingSnakeCase\\": \\"ID\\",
-                            \\"wireValue\\": \\"id\\"
+                        "originalValue": "imdb",
+                        "camelCase": "imdb",
+                        "snakeCase": "imdb",
+                        "pascalCase": "Imdb",
+                        "screamingSnakeCase": "IMDB"
+                    }
+                ],
+                "name": "ActorId"
+            },
+            "shape": {
+                "aliasOf": {
+                    "primitive": "STRING",
+                    "_type": "primitive"
+                },
+                "resolvedType": {
+                    "primitive": "STRING",
+                    "_type": "primitive"
+                },
+                "_type": "alias"
+            }
+        },
+        {
+            "name": {
+                "fernFilepath": [
+                    {
+                        "originalValue": "imdb",
+                        "camelCase": "imdb",
+                        "snakeCase": "imdb",
+                        "pascalCase": "Imdb",
+                        "screamingSnakeCase": "IMDB"
+                    }
+                ],
+                "name": "Movie"
+            },
+            "shape": {
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "originalValue": "id",
+                            "camelCase": "id",
+                            "snakeCase": "id",
+                            "pascalCase": "Id",
+                            "screamingSnakeCase": "ID",
+                            "wireValue": "id"
                         },
-                        \\"valueType\\": {
-                            \\"name\\": \\"MovieId\\",
-                            \\"fernFilepath\\": [
+                        "valueType": {
+                            "name": "MovieId",
+                            "fernFilepath": [
                                 {
-                                    \\"originalValue\\": \\"imdb\\",
-                                    \\"camelCase\\": \\"imdb\\",
-                                    \\"snakeCase\\": \\"imdb\\",
-                                    \\"pascalCase\\": \\"Imdb\\",
-                                    \\"screamingSnakeCase\\": \\"IMDB\\"
+                                    "originalValue": "imdb",
+                                    "camelCase": "imdb",
+                                    "snakeCase": "imdb",
+                                    "pascalCase": "Imdb",
+                                    "screamingSnakeCase": "IMDB"
                                 }
                             ],
-                            \\"_type\\": \\"named\\"
+                            "_type": "named"
                         }
                     },
                     {
-                        \\"name\\": {
-                            \\"originalValue\\": \\"title\\",
-                            \\"camelCase\\": \\"title\\",
-                            \\"snakeCase\\": \\"title\\",
-                            \\"pascalCase\\": \\"Title\\",
-                            \\"screamingSnakeCase\\": \\"TITLE\\",
-                            \\"wireValue\\": \\"title\\"
+                        "name": {
+                            "originalValue": "title",
+                            "camelCase": "title",
+                            "snakeCase": "title",
+                            "pascalCase": "Title",
+                            "screamingSnakeCase": "TITLE",
+                            "wireValue": "title"
                         },
-                        \\"valueType\\": {
-                            \\"primitive\\": \\"STRING\\",
-                            \\"_type\\": \\"primitive\\"
+                        "valueType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
                         }
                     },
                     {
-                        \\"name\\": {
-                            \\"originalValue\\": \\"rating\\",
-                            \\"camelCase\\": \\"rating\\",
-                            \\"snakeCase\\": \\"rating\\",
-                            \\"pascalCase\\": \\"Rating\\",
-                            \\"screamingSnakeCase\\": \\"RATING\\",
-                            \\"wireValue\\": \\"rating\\"
+                        "name": {
+                            "originalValue": "rating",
+                            "camelCase": "rating",
+                            "snakeCase": "rating",
+                            "pascalCase": "Rating",
+                            "screamingSnakeCase": "RATING",
+                            "wireValue": "rating"
                         },
-                        \\"valueType\\": {
-                            \\"primitive\\": \\"DOUBLE\\",
-                            \\"_type\\": \\"primitive\\"
+                        "valueType": {
+                            "primitive": "DOUBLE",
+                            "_type": "primitive"
                         }
                     }
                 ],
-                \\"_type\\": \\"object\\"
+                "_type": "object"
             }
         },
         {
-            \\"name\\": {
-                \\"fernFilepath\\": [
+            "name": {
+                "fernFilepath": [
                     {
-                        \\"originalValue\\": \\"imdb\\",
-                        \\"camelCase\\": \\"imdb\\",
-                        \\"snakeCase\\": \\"imdb\\",
-                        \\"pascalCase\\": \\"Imdb\\",
-                        \\"screamingSnakeCase\\": \\"IMDB\\"
+                        "originalValue": "imdb",
+                        "camelCase": "imdb",
+                        "snakeCase": "imdb",
+                        "pascalCase": "Imdb",
+                        "screamingSnakeCase": "IMDB"
                     }
                 ],
-                \\"name\\": \\"CreateMovieRequest\\"
+                "name": "CreateMovieRequest"
             },
-            \\"shape\\": {
-                \\"extends\\": [],
-                \\"properties\\": [
+            "shape": {
+                "extends": [],
+                "properties": [
                     {
-                        \\"name\\": {
-                            \\"originalValue\\": \\"title\\",
-                            \\"camelCase\\": \\"title\\",
-                            \\"snakeCase\\": \\"title\\",
-                            \\"pascalCase\\": \\"Title\\",
-                            \\"screamingSnakeCase\\": \\"TITLE\\",
-                            \\"wireValue\\": \\"title\\"
+                        "name": {
+                            "originalValue": "title",
+                            "camelCase": "title",
+                            "snakeCase": "title",
+                            "pascalCase": "Title",
+                            "screamingSnakeCase": "TITLE",
+                            "wireValue": "title"
                         },
-                        \\"valueType\\": {
-                            \\"primitive\\": \\"STRING\\",
-                            \\"_type\\": \\"primitive\\"
+                        "valueType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
                         }
                     },
                     {
-                        \\"name\\": {
-                            \\"originalValue\\": \\"rating\\",
-                            \\"camelCase\\": \\"rating\\",
-                            \\"snakeCase\\": \\"rating\\",
-                            \\"pascalCase\\": \\"Rating\\",
-                            \\"screamingSnakeCase\\": \\"RATING\\",
-                            \\"wireValue\\": \\"rating\\"
+                        "name": {
+                            "originalValue": "rating",
+                            "camelCase": "rating",
+                            "snakeCase": "rating",
+                            "pascalCase": "Rating",
+                            "screamingSnakeCase": "RATING",
+                            "wireValue": "rating"
                         },
-                        \\"valueType\\": {
-                            \\"primitive\\": \\"DOUBLE\\",
-                            \\"_type\\": \\"primitive\\"
+                        "valueType": {
+                            "primitive": "DOUBLE",
+                            "_type": "primitive"
                         }
                     }
                 ],
-                \\"_type\\": \\"object\\"
+                "_type": "object"
+            }
+        },
+        {
+            "name": {
+                "fernFilepath": [
+                    {
+                        "originalValue": "imdb",
+                        "camelCase": "imdb",
+                        "snakeCase": "imdb",
+                        "pascalCase": "Imdb",
+                        "screamingSnakeCase": "IMDB"
+                    }
+                ],
+                "name": "Person"
+            },
+            "shape": {
+                "discriminant": "type",
+                "discriminantV2": {
+                    "originalValue": "type",
+                    "camelCase": "type",
+                    "snakeCase": "type",
+                    "pascalCase": "Type",
+                    "screamingSnakeCase": "TYPE",
+                    "wireValue": "type"
+                },
+                "types": [
+                    {
+                        "discriminantValue": {
+                            "originalValue": "actor",
+                            "camelCase": "actor",
+                            "snakeCase": "actor",
+                            "pascalCase": "Actor",
+                            "screamingSnakeCase": "ACTOR",
+                            "wireValue": "actor"
+                        },
+                        "valueType": {
+                            "name": "ActorId",
+                            "fernFilepath": [
+                                {
+                                    "originalValue": "imdb",
+                                    "camelCase": "imdb",
+                                    "snakeCase": "imdb",
+                                    "pascalCase": "Imdb",
+                                    "screamingSnakeCase": "IMDB"
+                                }
+                            ],
+                            "_type": "named"
+                        },
+                        "shape": {
+                            "name": {
+                                "originalValue": "value",
+                                "camelCase": "value",
+                                "snakeCase": "value",
+                                "pascalCase": "Value",
+                                "screamingSnakeCase": "VALUE",
+                                "wireValue": "value"
+                            },
+                            "type": {
+                                "name": "ActorId",
+                                "fernFilepath": [
+                                    {
+                                        "originalValue": "imdb",
+                                        "camelCase": "imdb",
+                                        "snakeCase": "imdb",
+                                        "pascalCase": "Imdb",
+                                        "screamingSnakeCase": "IMDB"
+                                    }
+                                ],
+                                "_type": "named"
+                            },
+                            "_type": "singleProperty"
+                        }
+                    },
+                    {
+                        "discriminantValue": {
+                            "originalValue": "director",
+                            "camelCase": "director",
+                            "snakeCase": "director",
+                            "pascalCase": "Director",
+                            "screamingSnakeCase": "DIRECTOR",
+                            "wireValue": "director"
+                        },
+                        "valueType": {
+                            "name": "Director",
+                            "fernFilepath": [
+                                {
+                                    "originalValue": "director",
+                                    "camelCase": "director",
+                                    "snakeCase": "director",
+                                    "pascalCase": "Director",
+                                    "screamingSnakeCase": "DIRECTOR"
+                                }
+                            ],
+                            "_type": "named"
+                        },
+                        "shape": {
+                            "name": "Director",
+                            "fernFilepath": [
+                                {
+                                    "originalValue": "director",
+                                    "camelCase": "director",
+                                    "snakeCase": "director",
+                                    "pascalCase": "Director",
+                                    "screamingSnakeCase": "DIRECTOR"
+                                }
+                            ],
+                            "_type": "samePropertiesAsObject"
+                        }
+                    },
+                    {
+                        "discriminantValue": {
+                            "originalValue": "producer",
+                            "camelCase": "producer",
+                            "snakeCase": "producer",
+                            "pascalCase": "Producer",
+                            "screamingSnakeCase": "PRODUCER",
+                            "wireValue": "producer"
+                        },
+                        "valueType": {
+                            "_type": "void"
+                        },
+                        "shape": {
+                            "_type": "noProperties"
+                        }
+                    }
+                ],
+                "_type": "union"
             }
         }
     ],
-    \\"errors\\": [
+    "errors": [
         {
-            \\"name\\": {
-                \\"name\\": \\"NotFoundError\\",
-                \\"fernFilepath\\": [
+            "name": {
+                "name": "NotFoundError",
+                "fernFilepath": [
                     {
-                        \\"originalValue\\": \\"imdb\\",
-                        \\"camelCase\\": \\"imdb\\",
-                        \\"snakeCase\\": \\"imdb\\",
-                        \\"pascalCase\\": \\"Imdb\\",
-                        \\"screamingSnakeCase\\": \\"IMDB\\"
+                        "originalValue": "imdb",
+                        "camelCase": "imdb",
+                        "snakeCase": "imdb",
+                        "pascalCase": "Imdb",
+                        "screamingSnakeCase": "IMDB"
                     }
                 ]
             },
-            \\"discriminantValue\\": {
-                \\"originalValue\\": \\"NotFoundError\\",
-                \\"camelCase\\": \\"notFoundError\\",
-                \\"snakeCase\\": \\"not_found_error\\",
-                \\"pascalCase\\": \\"NotFoundError\\",
-                \\"screamingSnakeCase\\": \\"NOT_FOUND_ERROR\\",
-                \\"wireValue\\": \\"NotFoundError\\"
+            "discriminantValue": {
+                "originalValue": "NotFoundError",
+                "camelCase": "notFoundError",
+                "snakeCase": "not_found_error",
+                "pascalCase": "NotFoundError",
+                "screamingSnakeCase": "NOT_FOUND_ERROR",
+                "wireValue": "NotFoundError"
             },
-            \\"http\\": {
-                \\"statusCode\\": 404
+            "http": {
+                "statusCode": 404
             },
-            \\"type\\": {
-                \\"aliasOf\\": {
-                    \\"_type\\": \\"void\\"
+            "type": {
+                "aliasOf": {
+                    "_type": "void"
                 },
-                \\"_type\\": \\"alias\\"
+                "resolvedType": {
+                    "_type": "void"
+                },
+                "_type": "alias"
             }
         }
     ],
-    \\"services\\": {
-        \\"http\\": [
+    "services": {
+        "http": [
             {
-                \\"name\\": {
-                    \\"name\\": \\"MoviesService\\",
-                    \\"fernFilepath\\": [
+                "name": {
+                    "name": "MoviesService",
+                    "fernFilepath": [
                         {
-                            \\"originalValue\\": \\"imdb\\",
-                            \\"camelCase\\": \\"imdb\\",
-                            \\"snakeCase\\": \\"imdb\\",
-                            \\"pascalCase\\": \\"Imdb\\",
-                            \\"screamingSnakeCase\\": \\"IMDB\\"
+                            "originalValue": "imdb",
+                            "camelCase": "imdb",
+                            "snakeCase": "imdb",
+                            "pascalCase": "Imdb",
+                            "screamingSnakeCase": "IMDB"
                         }
                     ]
                 },
-                \\"basePath\\": \\"/movies\\",
-                \\"basePathV2\\": {
-                    \\"head\\": \\"/movies\\",
-                    \\"parts\\": []
+                "basePath": "/movies",
+                "basePathV2": {
+                    "head": "/movies",
+                    "parts": []
                 },
-                \\"headers\\": [],
-                \\"pathParameters\\": [],
-                \\"endpoints\\": [
+                "headers": [],
+                "pathParameters": [],
+                "endpoints": [
                     {
-                        \\"id\\": \\"createMovie\\",
-                        \\"name\\": {
-                            \\"originalValue\\": \\"createMovie\\",
-                            \\"camelCase\\": \\"createMovie\\",
-                            \\"snakeCase\\": \\"create_movie\\",
-                            \\"pascalCase\\": \\"CreateMovie\\",
-                            \\"screamingSnakeCase\\": \\"CREATE_MOVIE\\"
+                        "id": "createMovie",
+                        "name": {
+                            "originalValue": "createMovie",
+                            "camelCase": "createMovie",
+                            "snakeCase": "create_movie",
+                            "pascalCase": "CreateMovie",
+                            "screamingSnakeCase": "CREATE_MOVIE"
                         },
-                        \\"auth\\": false,
-                        \\"method\\": \\"POST\\",
-                        \\"path\\": {
-                            \\"head\\": \\"/\\",
-                            \\"parts\\": []
+                        "auth": false,
+                        "method": "POST",
+                        "path": {
+                            "head": "/",
+                            "parts": []
                         },
-                        \\"pathParameters\\": [],
-                        \\"queryParameters\\": [],
-                        \\"headers\\": [],
-                        \\"request\\": {
-                            \\"type\\": {
-                                \\"name\\": \\"CreateMovieRequest\\",
-                                \\"fernFilepath\\": [
+                        "pathParameters": [],
+                        "queryParameters": [],
+                        "headers": [],
+                        "request": {
+                            "type": {
+                                "name": "CreateMovieRequest",
+                                "fernFilepath": [
                                     {
-                                        \\"originalValue\\": \\"imdb\\",
-                                        \\"camelCase\\": \\"imdb\\",
-                                        \\"snakeCase\\": \\"imdb\\",
-                                        \\"pascalCase\\": \\"Imdb\\",
-                                        \\"screamingSnakeCase\\": \\"IMDB\\"
+                                        "originalValue": "imdb",
+                                        "camelCase": "imdb",
+                                        "snakeCase": "imdb",
+                                        "pascalCase": "Imdb",
+                                        "screamingSnakeCase": "IMDB"
                                     }
                                 ],
-                                \\"_type\\": \\"named\\"
+                                "_type": "named"
                             }
                         },
-                        \\"response\\": {
-                            \\"type\\": {
-                                \\"name\\": \\"MovieId\\",
-                                \\"fernFilepath\\": [
+                        "response": {
+                            "type": {
+                                "name": "MovieId",
+                                "fernFilepath": [
                                     {
-                                        \\"originalValue\\": \\"imdb\\",
-                                        \\"camelCase\\": \\"imdb\\",
-                                        \\"snakeCase\\": \\"imdb\\",
-                                        \\"pascalCase\\": \\"Imdb\\",
-                                        \\"screamingSnakeCase\\": \\"IMDB\\"
+                                        "originalValue": "imdb",
+                                        "camelCase": "imdb",
+                                        "snakeCase": "imdb",
+                                        "pascalCase": "Imdb",
+                                        "screamingSnakeCase": "IMDB"
                                     }
                                 ],
-                                \\"_type\\": \\"named\\"
+                                "_type": "named"
                             }
                         },
-                        \\"errors\\": []
+                        "errors": []
                     },
                     {
-                        \\"id\\": \\"getMovie\\",
-                        \\"name\\": {
-                            \\"originalValue\\": \\"getMovie\\",
-                            \\"camelCase\\": \\"getMovie\\",
-                            \\"snakeCase\\": \\"get_movie\\",
-                            \\"pascalCase\\": \\"GetMovie\\",
-                            \\"screamingSnakeCase\\": \\"GET_MOVIE\\"
+                        "id": "getMovie",
+                        "name": {
+                            "originalValue": "getMovie",
+                            "camelCase": "getMovie",
+                            "snakeCase": "get_movie",
+                            "pascalCase": "GetMovie",
+                            "screamingSnakeCase": "GET_MOVIE"
                         },
-                        \\"auth\\": false,
-                        \\"method\\": \\"GET\\",
-                        \\"path\\": {
-                            \\"head\\": \\"/\\",
-                            \\"parts\\": [
+                        "auth": false,
+                        "method": "GET",
+                        "path": {
+                            "head": "/",
+                            "parts": [
                                 {
-                                    \\"pathParameter\\": \\"movieId\\",
-                                    \\"tail\\": \\"\\"
+                                    "pathParameter": "movieId",
+                                    "tail": ""
                                 }
                             ]
                         },
-                        \\"pathParameters\\": [
+                        "pathParameters": [
                             {
-                                \\"name\\": {
-                                    \\"originalValue\\": \\"movieId\\",
-                                    \\"camelCase\\": \\"movieId\\",
-                                    \\"snakeCase\\": \\"movie_id\\",
-                                    \\"pascalCase\\": \\"MovieId\\",
-                                    \\"screamingSnakeCase\\": \\"MOVIE_ID\\"
+                                "name": {
+                                    "originalValue": "movieId",
+                                    "camelCase": "movieId",
+                                    "snakeCase": "movie_id",
+                                    "pascalCase": "MovieId",
+                                    "screamingSnakeCase": "MOVIE_ID"
                                 },
-                                \\"valueType\\": {
-                                    \\"name\\": \\"MovieId\\",
-                                    \\"fernFilepath\\": [
+                                "valueType": {
+                                    "name": "MovieId",
+                                    "fernFilepath": [
                                         {
-                                            \\"originalValue\\": \\"imdb\\",
-                                            \\"camelCase\\": \\"imdb\\",
-                                            \\"snakeCase\\": \\"imdb\\",
-                                            \\"pascalCase\\": \\"Imdb\\",
-                                            \\"screamingSnakeCase\\": \\"IMDB\\"
+                                            "originalValue": "imdb",
+                                            "camelCase": "imdb",
+                                            "snakeCase": "imdb",
+                                            "pascalCase": "Imdb",
+                                            "screamingSnakeCase": "IMDB"
                                         }
                                     ],
-                                    \\"_type\\": \\"named\\"
+                                    "_type": "named"
                                 }
                             }
                         ],
-                        \\"queryParameters\\": [],
-                        \\"headers\\": [],
-                        \\"request\\": {
-                            \\"type\\": {
-                                \\"_type\\": \\"void\\"
+                        "queryParameters": [],
+                        "headers": [],
+                        "request": {
+                            "type": {
+                                "_type": "void"
                             }
                         },
-                        \\"response\\": {
-                            \\"type\\": {
-                                \\"name\\": \\"Movie\\",
-                                \\"fernFilepath\\": [
+                        "response": {
+                            "type": {
+                                "name": "Movie",
+                                "fernFilepath": [
                                     {
-                                        \\"originalValue\\": \\"imdb\\",
-                                        \\"camelCase\\": \\"imdb\\",
-                                        \\"snakeCase\\": \\"imdb\\",
-                                        \\"pascalCase\\": \\"Imdb\\",
-                                        \\"screamingSnakeCase\\": \\"IMDB\\"
+                                        "originalValue": "imdb",
+                                        "camelCase": "imdb",
+                                        "snakeCase": "imdb",
+                                        "pascalCase": "Imdb",
+                                        "screamingSnakeCase": "IMDB"
                                     }
                                 ],
-                                \\"_type\\": \\"named\\"
+                                "_type": "named"
                             }
                         },
-                        \\"errors\\": [
+                        "errors": [
                             {
-                                \\"error\\": {
-                                    \\"name\\": \\"NotFoundError\\",
-                                    \\"fernFilepath\\": [
+                                "error": {
+                                    "name": "NotFoundError",
+                                    "fernFilepath": [
                                         {
-                                            \\"originalValue\\": \\"imdb\\",
-                                            \\"camelCase\\": \\"imdb\\",
-                                            \\"snakeCase\\": \\"imdb\\",
-                                            \\"pascalCase\\": \\"Imdb\\",
-                                            \\"screamingSnakeCase\\": \\"IMDB\\"
+                                            "originalValue": "imdb",
+                                            "camelCase": "imdb",
+                                            "snakeCase": "imdb",
+                                            "pascalCase": "Imdb",
+                                            "screamingSnakeCase": "IMDB"
                                         }
                                     ]
                                 }
@@ -341,12 +534,12 @@ exports[`ir simple 1`] = `
                 ]
             }
         ],
-        \\"websocket\\": []
+        "websocket": []
     },
-    \\"constants\\": {
-        \\"errorDiscriminant\\": \\"_error\\",
-        \\"errorInstanceIdKey\\": \\"_errorInstanceId\\",
-        \\"unknownErrorDiscriminantValue\\": \\"_unknown\\"
+    "constants": {
+        "errorDiscriminant": "_error",
+        "errorInstanceIdKey": "_errorInstanceId",
+        "unknownErrorDiscriminantValue": "_unknown"
     }
 }"
 `;

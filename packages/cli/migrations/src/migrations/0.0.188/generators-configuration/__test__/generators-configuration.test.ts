@@ -2,7 +2,7 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { cp, readFile } from "fs/promises";
 import tmp from "tmp-promise";
-import { GeneratorsConfigurationMigration } from "../generators-configuration";
+import { migration } from "../migration";
 
 const FIXTURES_PATH = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
@@ -14,7 +14,7 @@ describe("generators-configuration", () => {
         await cp(fixturePath, tmpDir.path, { recursive: true });
         process.chdir(tmpDir.path);
 
-        await GeneratorsConfigurationMigration.run({
+        await migration.run({
             context: createMockTaskContext(),
         });
 

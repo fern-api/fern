@@ -38,6 +38,7 @@ function doesRuleRequireTypeInformation(ruleId) {
     }
     switch (ruleId) {
         case "deprecation/deprecation":
+        case "jest/unbound-method":
             return true;
         default:
             return false;

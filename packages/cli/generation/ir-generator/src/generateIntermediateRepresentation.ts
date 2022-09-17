@@ -1,7 +1,6 @@
-import { entries, noop, visitObject } from "@fern-api/core-utils";
+import { entries, noop, RelativeFilePath, visitObject } from "@fern-api/core-utils";
 import { Workspace } from "@fern-api/workspace-loader";
 import { ServiceFileSchema } from "@fern-api/yaml-schema";
-import { FernFilepath } from "@fern-fern/ir-model/commons";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { convertApiAuth } from "./converters/convertApiAuth";
 import { convertErrorDeclaration } from "./converters/convertErrorDeclaration";
@@ -9,17 +8,20 @@ import { convertId } from "./converters/convertId";
 import { convertHttpService } from "./converters/services/convertHttpService";
 import { convertWebsocketChannel } from "./converters/services/convertWebsocketChannel";
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
-import { convertToFernFilepath } from "./utils/convertToFernFilepath";
-
-const ROOT_API_FILE_FERN_FILEPATH: FernFilepath = [];
+import { constructFernFileContext, FernFileContext } from "./FernFileContext";
+import { TypeResolverImpl } from "./type-resolver/TypeResolver";
 
 export async function generateIntermediateRepresentation(workspace: Workspace): Promise<IntermediateRepresentation> {
+    const rootApiFile = constructFernFileContext({
+        relativeFilepath: RelativeFilePath.of(""),
+        serviceFile: workspace.rootApiFile,
+    });
+
     const intermediateRepresentation: IntermediateRepresentation = {
         apiName: workspace.name,
         auth: convertApiAuth({
             rawApiFileSchema: workspace.rootApiFile,
-            fernFilepath: ROOT_API_FILE_FERN_FILEPATH,
-            imports: workspace.rootApiFile.imports ?? {},
+            file: rootApiFile,
         }),
         types: [],
         errors: [],
@@ -34,9 +36,9 @@ export async function generateIntermediateRepresentation(workspace: Workspace): 
         },
     };
 
-    const visitServiceFile = async (fernFilepath: FernFilepath, schema: ServiceFileSchema) => {
-        const { imports = {} } = schema;
+    const typeResolver = new TypeResolverImpl(workspace);
 
+    const visitServiceFile = async ({ file, schema }: { file: FernFileContext; schema: ServiceFileSchema }) => {
         await visitObject(schema, {
             imports: noop,
 
@@ -46,7 +48,7 @@ export async function generateIntermediateRepresentation(workspace: Workspace): 
                 }
 
                 for (const id of ids) {
-                    intermediateRepresentation.types.push(convertId({ id, fernFilepath, imports }));
+                    intermediateRepresentation.types.push(convertId({ id, file, typeResolver }));
                 }
             },
 
@@ -60,8 +62,8 @@ export async function generateIntermediateRepresentation(workspace: Workspace): 
                         convertTypeDeclaration({
                             typeName,
                             typeDeclaration,
-                            fernFilepath,
-                            imports,
+                            file,
+                            typeResolver,
                         })
                     );
                 }
@@ -74,7 +76,12 @@ export async function generateIntermediateRepresentation(workspace: Workspace): 
 
                 for (const [errorName, errorDeclaration] of Object.entries(errors)) {
                     intermediateRepresentation.errors.push(
-                        convertErrorDeclaration({ errorName, fernFilepath, errorDeclaration, imports })
+                        convertErrorDeclaration({
+                            errorName,
+                            errorDeclaration,
+                            file,
+                            typeResolver,
+                        })
                     );
                 }
             },
@@ -87,12 +94,7 @@ export async function generateIntermediateRepresentation(workspace: Workspace): 
                 if (services.http != null) {
                     for (const [serviceId, serviceDefinition] of Object.entries(services.http)) {
                         intermediateRepresentation.services.http.push(
-                            convertHttpService({
-                                serviceDefinition,
-                                serviceId,
-                                fernFilepath,
-                                imports,
-                            })
+                            convertHttpService({ serviceDefinition, serviceId, file })
                         );
                     }
                 }
@@ -103,8 +105,7 @@ export async function generateIntermediateRepresentation(workspace: Workspace): 
                             convertWebsocketChannel({
                                 channelId,
                                 channelDefinition,
-                                fernFilepath,
-                                imports,
+                                file,
                             })
                         );
                     }
@@ -114,10 +115,13 @@ export async function generateIntermediateRepresentation(workspace: Workspace): 
     };
 
     for (const [filepath, schema] of entries(workspace.serviceFiles)) {
-        await visitServiceFile(convertToFernFilepath(filepath), schema);
+        await visitServiceFile({
+            file: constructFernFileContext({ relativeFilepath: filepath, serviceFile: schema }),
+            schema,
+        });
     }
 
-    await visitServiceFile(ROOT_API_FILE_FERN_FILEPATH, workspace.rootApiFile);
+    await visitServiceFile({ file: rootApiFile, schema: workspace.rootApiFile });
 
     return intermediateRepresentation;
 }

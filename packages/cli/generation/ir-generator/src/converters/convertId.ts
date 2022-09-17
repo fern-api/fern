@@ -1,32 +1,26 @@
-import { RelativeFilePath } from "@fern-api/core-utils";
 import { RawSchemas, RAW_DEFAULT_ID_TYPE } from "@fern-api/yaml-schema";
-import { FernFilepath } from "@fern-fern/ir-model/commons";
-import { Type, TypeDeclaration } from "@fern-fern/ir-model/types";
+import { TypeDeclaration } from "@fern-fern/ir-model/types";
+import { FernFileContext } from "../FernFileContext";
+import { TypeResolver } from "../type-resolver/TypeResolver";
 import { getDocs } from "../utils/getDocs";
-import { createTypeReferenceParser } from "../utils/parseInlineType";
+import { convertTypeDeclaration } from "./type-declarations/convertTypeDeclaration";
 
 export function convertId({
     id,
-    fernFilepath,
-    imports,
+    file,
+    typeResolver,
 }: {
     id: RawSchemas.IdSchema;
-    fernFilepath: FernFilepath;
-    imports: Record<string, RelativeFilePath>;
+    file: FernFileContext;
+    typeResolver: TypeResolver;
 }): TypeDeclaration {
-    const parseTypeReference = createTypeReferenceParser({ fernFilepath, imports });
-
-    return {
-        docs: getDocs(id),
-        name: {
-            fernFilepath,
-            name: typeof id === "string" ? id : id.name,
+    return convertTypeDeclaration({
+        typeName: typeof id === "string" ? id : id.name,
+        typeDeclaration: {
+            docs: getDocs(id),
+            alias: typeof id === "string" || id.type == null ? RAW_DEFAULT_ID_TYPE : id.type,
         },
-        shape: Type.alias({
-            aliasOf:
-                typeof id === "string" || id.type == null
-                    ? parseTypeReference(RAW_DEFAULT_ID_TYPE)
-                    : parseTypeReference(id.type),
-        }),
-    };
+        file,
+        typeResolver,
+    });
 }
