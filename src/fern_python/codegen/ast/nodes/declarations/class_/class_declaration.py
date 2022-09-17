@@ -22,16 +22,32 @@ class ClassDeclaration(AstNode):
         self.statements.append(variable_declaration)
 
     def add_method(
-        self, name: str, parameters: Sequence[FunctionParameter], return_type: TypeHint, body: CodeWriter
-    ) -> None:
-        self.statements.append(
-            FunctionDeclaration(
-                name=name,
-                parameters=[FunctionParameter(name="self")] + list(parameters),
-                return_type=return_type,
-                body=body,
-            )
+        self,
+        name: str,
+        parameters: Sequence[FunctionParameter],
+        return_type: TypeHint,
+        body: CodeWriter,
+        is_static: bool = False,
+    ) -> FunctionDeclaration:
+        parameters = parameters if is_static else [FunctionParameter(name="self")] + list(parameters)
+        decorators = (
+            [
+                Reference(
+                    qualified_name_excluding_import=("staticmethod",),
+                )
+            ]
+            if is_static
+            else None
         )
+        declaration = FunctionDeclaration(
+            name=name,
+            parameters=parameters,
+            return_type=return_type,
+            body=body,
+            decorators=decorators,
+        )
+        self.statements.append(declaration)
+        return declaration
 
     def add_class(self, declaration: ClassDeclaration) -> None:
         self.statements.append(declaration)

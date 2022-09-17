@@ -12,19 +12,31 @@ _Result = typing.TypeVar("_Result")
 
 class _ContainerType:
     class List(pydantic.BaseModel):
-        type: typing.Literal["list"]
+        type: typing.Literal["list"] = pydantic.Field(alias="_type")
         list: TypeReference
 
+        class Config:
+            allow_population_by_field_name = True
+
     class Map(MapType):
-        type: typing.Literal["map"]
+        type: typing.Literal["map"] = pydantic.Field(alias="_type")
+
+        class Config:
+            allow_population_by_field_name = True
 
     class Optional(pydantic.BaseModel):
-        type: typing.Literal["optional"]
+        type: typing.Literal["optional"] = pydantic.Field(alias="_type")
         optional: TypeReference
 
+        class Config:
+            allow_population_by_field_name = True
+
     class Set(pydantic.BaseModel):
-        type: typing.Literal["set"]
+        type: typing.Literal["set"] = pydantic.Field(alias="_type")
         set: TypeReference
+
+        class Config:
+            allow_population_by_field_name = True
 
 
 class ContainerType(pydantic.BaseModel):

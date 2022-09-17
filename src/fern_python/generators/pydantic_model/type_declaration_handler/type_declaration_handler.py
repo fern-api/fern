@@ -4,6 +4,7 @@ from fern_python.generated import ir_types
 from fern_python.pydantic_codegen import PydanticModel
 
 from .generate_enum import generate_enum
+from .generate_union import generate_union
 
 
 class TypeDeclarationHandler(DeclarationHandler[ir_types.TypeDeclaration]):
@@ -41,5 +42,5 @@ class TypeDeclarationHandler(DeclarationHandler[ir_types.TypeDeclaration]):
 
         self._context.source_file.add_declaration(pydantic_model.finish())
 
-    def _generate_union(self, value: ir_types.UnionTypeDeclaration) -> None:
-        pass
+    def _generate_union(self, union: ir_types.UnionTypeDeclaration) -> None:
+        generate_union(name=self._declaration.name, union=union, source_file=self._context.source_file)

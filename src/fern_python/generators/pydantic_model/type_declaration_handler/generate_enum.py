@@ -22,7 +22,10 @@ def generate_enum(name: ir_types.DeclaredTypeName, enum: ir_types.EnumTypeDeclar
 
     for value in enum.values:
         enum_class.add_attribute(
-            AST.VariableDeclaration(name=value.name.snake_case, initializer=AST.CodeWriter(f'"{value.value}"'))
+            AST.VariableDeclaration(
+                name=value.name.screaming_snake_case,
+                initializer=AST.CodeWriter(f'"{value.value}"'),
+            )
         )
 
     enum_class.add_method(

@@ -7,6 +7,7 @@ from fern_python.generated.ir_types import (
     ContainerType,
     IntermediateRepresentation,
     MapType,
+    ResolvedTypeReference,
     Type,
     TypeReference,
 )
@@ -24,7 +25,7 @@ def main(path_to_config_json: str) -> None:
     processTypeReference(optional)
     print(optional.json(by_alias=True))
 
-    type = Type.alias(AliasTypeDeclaration(alias_of=map))
+    type = Type.alias(AliasTypeDeclaration(alias_of=map, resolved_type=ResolvedTypeReference.void()))
     print(type.json(by_alias=True))
 
     print(map.json(by_alias=True))

@@ -5,13 +5,13 @@ _Result = typing.TypeVar("_Result")
 
 
 class PrimitiveType(str, Enum):
-    integer = "INTEGER"
-    double = "DOUBLE"
-    string = "STRING"
-    boolean = "BOOLEAN"
-    long = "LONG"
-    date_time = "DATE_TIME"
-    uuid = "UUID"
+    INTEGER = "INTEGER"
+    DOUBLE = "DOUBLE"
+    STRING = "STRING"
+    BOOLEAN = "BOOLEAN"
+    LONG = "LONG"
+    DATE_TIME = "DATE_TIME"
+    UUID = "UUID"
 
     def _visit(
         self,

@@ -54,7 +54,7 @@
                   "screamingSnakeCase": "AUTH"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           },
           {
@@ -79,15 +79,15 @@
                       "screamingSnakeCase": "AUTH"
                     }
                   ],
-                  "type": "named"
+                  "_type": "named"
                 },
-                "type": "list"
+                "_type": "list"
               },
-              "type": "container"
+              "_type": "container"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -128,7 +128,7 @@
             "value": "ANY"
           }
         ],
-        "type": "enum"
+        "_type": "enum"
       }
     },
     {
@@ -145,7 +145,15 @@
         "name": "AuthScheme"
       },
       "shape": {
-        "discriminant": "type",
+        "discriminant": "_type",
+        "discriminantV2": {
+          "originalValue": "type",
+          "camelCase": "type",
+          "snakeCase": "type",
+          "pascalCase": "Type",
+          "screamingSnakeCase": "TYPE",
+          "wireValue": "_type"
+        },
         "types": [
           {
             "discriminantValue": {
@@ -167,7 +175,20 @@
                   "screamingSnakeCase": "COMMONS"
                 }
               ],
-              "type": "named"
+              "_type": "named"
+            },
+            "shape": {
+              "name": "WithDocs",
+              "fernFilepath": [
+                {
+                  "originalValue": "commons",
+                  "camelCase": "commons",
+                  "snakeCase": "commons",
+                  "pascalCase": "Commons",
+                  "screamingSnakeCase": "COMMONS"
+                }
+              ],
+              "_type": "samePropertiesAsObject"
             }
           },
           {
@@ -190,7 +211,20 @@
                   "screamingSnakeCase": "COMMONS"
                 }
               ],
-              "type": "named"
+              "_type": "named"
+            },
+            "shape": {
+              "name": "WithDocs",
+              "fernFilepath": [
+                {
+                  "originalValue": "commons",
+                  "camelCase": "commons",
+                  "snakeCase": "commons",
+                  "pascalCase": "Commons",
+                  "screamingSnakeCase": "COMMONS"
+                }
+              ],
+              "_type": "samePropertiesAsObject"
             }
           },
           {
@@ -220,11 +254,31 @@
                   "screamingSnakeCase": "HTTP"
                 }
               ],
-              "type": "named"
+              "_type": "named"
+            },
+            "shape": {
+              "name": "HttpHeader",
+              "fernFilepath": [
+                {
+                  "originalValue": "services",
+                  "camelCase": "services",
+                  "snakeCase": "services",
+                  "pascalCase": "Services",
+                  "screamingSnakeCase": "SERVICES"
+                },
+                {
+                  "originalValue": "http",
+                  "camelCase": "http",
+                  "snakeCase": "http",
+                  "pascalCase": "Http",
+                  "screamingSnakeCase": "HTTP"
+                }
+              ],
+              "_type": "samePropertiesAsObject"
             }
           }
         ],
-        "type": "union"
+        "_type": "union"
       }
     },
     {
@@ -256,15 +310,15 @@
               "container": {
                 "optional": {
                   "primitive": "STRING",
-                  "type": "primitive"
+                  "_type": "primitive"
                 },
-                "type": "optional"
+                "_type": "optional"
               },
-              "type": "container"
+              "_type": "container"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -294,13 +348,32 @@
                   "screamingSnakeCase": "COMMONS"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             },
-            "type": "list"
+            "_type": "list"
           },
-          "type": "container"
+          "_type": "container"
         },
-        "type": "alias"
+        "resolvedType": {
+          "container": {
+            "list": {
+              "name": "StringWithAllCasings",
+              "fernFilepath": [
+                {
+                  "originalValue": "commons",
+                  "camelCase": "commons",
+                  "snakeCase": "commons",
+                  "pascalCase": "Commons",
+                  "screamingSnakeCase": "COMMONS"
+                }
+              ],
+              "_type": "named"
+            },
+            "_type": "list"
+          },
+          "_type": "container"
+        },
+        "_type": "alias"
       }
     },
     {
@@ -343,11 +416,11 @@
             },
             "valueType": {
               "primitive": "STRING",
-              "type": "primitive"
+              "_type": "primitive"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -377,7 +450,7 @@
             },
             "valueType": {
               "primitive": "STRING",
-              "type": "primitive"
+              "_type": "primitive"
             }
           },
           {
@@ -391,7 +464,7 @@
             },
             "valueType": {
               "primitive": "STRING",
-              "type": "primitive"
+              "_type": "primitive"
             }
           },
           {
@@ -405,7 +478,7 @@
             },
             "valueType": {
               "primitive": "STRING",
-              "type": "primitive"
+              "_type": "primitive"
             }
           },
           {
@@ -419,7 +492,7 @@
             },
             "valueType": {
               "primitive": "STRING",
-              "type": "primitive"
+              "_type": "primitive"
             }
           },
           {
@@ -433,11 +506,11 @@
             },
             "valueType": {
               "primitive": "STRING",
-              "type": "primitive"
+              "_type": "primitive"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -489,7 +562,7 @@
                   "screamingSnakeCase": "ERRORS"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           },
           {
@@ -512,7 +585,7 @@
                   "screamingSnakeCase": "COMMONS"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           },
           {
@@ -535,7 +608,7 @@
                   "screamingSnakeCase": "TYPES"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           },
           {
@@ -560,15 +633,15 @@
                       "screamingSnakeCase": "ERRORS"
                     }
                   ],
-                  "type": "named"
+                  "_type": "named"
                 },
-                "type": "optional"
+                "_type": "optional"
               },
-              "type": "container"
+              "_type": "container"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -607,7 +680,7 @@
                   "screamingSnakeCase": "COMMONS"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           },
           {
@@ -621,11 +694,11 @@
             },
             "valueType": {
               "primitive": "STRING",
-              "type": "primitive"
+              "_type": "primitive"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -655,11 +728,11 @@
             },
             "valueType": {
               "primitive": "INTEGER",
-              "type": "primitive"
+              "_type": "primitive"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -690,7 +763,7 @@
             },
             "valueType": {
               "primitive": "STRING",
-              "type": "primitive"
+              "_type": "primitive"
             }
           },
           {
@@ -713,7 +786,7 @@
                   "screamingSnakeCase": "AUTH"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           },
           {
@@ -738,11 +811,11 @@
                       "screamingSnakeCase": "TYPES"
                     }
                   ],
-                  "type": "named"
+                  "_type": "named"
                 },
-                "type": "list"
+                "_type": "list"
               },
-              "type": "container"
+              "_type": "container"
             },
             "docs": "The types described by this API"
           },
@@ -766,7 +839,7 @@
                   "screamingSnakeCase": "IR"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             },
             "docs": "The services exposed by this API"
           },
@@ -792,11 +865,11 @@
                       "screamingSnakeCase": "ERRORS"
                     }
                   ],
-                  "type": "named"
+                  "_type": "named"
                 },
-                "type": "list"
+                "_type": "list"
               },
-              "type": "container"
+              "_type": "container"
             }
           },
           {
@@ -819,11 +892,11 @@
                   "screamingSnakeCase": "IR"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -871,11 +944,11 @@
                       "screamingSnakeCase": "HTTP"
                     }
                   ],
-                  "type": "named"
+                  "_type": "named"
                 },
-                "type": "list"
+                "_type": "list"
               },
-              "type": "container"
+              "_type": "container"
             }
           },
           {
@@ -907,15 +980,15 @@
                       "screamingSnakeCase": "WEBSOCKET"
                     }
                   ],
-                  "type": "named"
+                  "_type": "named"
                 },
-                "type": "list"
+                "_type": "list"
               },
-              "type": "container"
+              "_type": "container"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -945,7 +1018,7 @@
             },
             "valueType": {
               "primitive": "STRING",
-              "type": "primitive"
+              "_type": "primitive"
             }
           },
           {
@@ -959,7 +1032,7 @@
             },
             "valueType": {
               "primitive": "STRING",
-              "type": "primitive"
+              "_type": "primitive"
             }
           },
           {
@@ -973,11 +1046,11 @@
             },
             "valueType": {
               "primitive": "STRING",
-              "type": "primitive"
+              "_type": "primitive"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -1023,7 +1096,7 @@
                   "screamingSnakeCase": "COMMONS"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           },
           {
@@ -1037,11 +1110,11 @@
             },
             "valueType": {
               "primitive": "STRING",
-              "type": "primitive"
+              "_type": "primitive"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -1085,13 +1158,39 @@
                   "screamingSnakeCase": "COMMONS"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             },
-            "type": "list"
+            "_type": "list"
           },
-          "type": "container"
+          "_type": "container"
         },
-        "type": "alias"
+        "resolvedType": {
+          "container": {
+            "list": {
+              "name": "ResponseError",
+              "fernFilepath": [
+                {
+                  "originalValue": "services",
+                  "camelCase": "services",
+                  "snakeCase": "services",
+                  "pascalCase": "Services",
+                  "screamingSnakeCase": "SERVICES"
+                },
+                {
+                  "originalValue": "commons",
+                  "camelCase": "commons",
+                  "snakeCase": "commons",
+                  "pascalCase": "Commons",
+                  "screamingSnakeCase": "COMMONS"
+                }
+              ],
+              "_type": "named"
+            },
+            "_type": "list"
+          },
+          "_type": "container"
+        },
+        "_type": "alias"
       }
     },
     {
@@ -1150,11 +1249,11 @@
                   "screamingSnakeCase": "ERRORS"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -1220,7 +1319,7 @@
                   "screamingSnakeCase": "COMMONS"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           },
           {
@@ -1236,11 +1335,48 @@
               "container": {
                 "optional": {
                   "primitive": "STRING",
-                  "type": "primitive"
+                  "_type": "primitive"
                 },
-                "type": "optional"
+                "_type": "optional"
               },
-              "type": "container"
+              "_type": "container"
+            },
+            "docs": "This is deprecated."
+          },
+          {
+            "name": {
+              "originalValue": "basePathV2",
+              "camelCase": "basePathV2",
+              "snakeCase": "base_path_v_2",
+              "pascalCase": "BasePathV2",
+              "screamingSnakeCase": "BASE_PATH_V_2",
+              "wireValue": "basePathV2"
+            },
+            "valueType": {
+              "container": {
+                "optional": {
+                  "name": "HttpPath",
+                  "fernFilepath": [
+                    {
+                      "originalValue": "services",
+                      "camelCase": "services",
+                      "snakeCase": "services",
+                      "pascalCase": "Services",
+                      "screamingSnakeCase": "SERVICES"
+                    },
+                    {
+                      "originalValue": "http",
+                      "camelCase": "http",
+                      "snakeCase": "http",
+                      "pascalCase": "Http",
+                      "screamingSnakeCase": "HTTP"
+                    }
+                  ],
+                  "_type": "named"
+                },
+                "_type": "optional"
+              },
+              "_type": "container"
             }
           },
           {
@@ -1272,11 +1408,11 @@
                       "screamingSnakeCase": "HTTP"
                     }
                   ],
-                  "type": "named"
+                  "_type": "named"
                 },
-                "type": "list"
+                "_type": "list"
               },
-              "type": "container"
+              "_type": "container"
             }
           },
           {
@@ -1308,15 +1444,51 @@
                       "screamingSnakeCase": "HTTP"
                     }
                   ],
-                  "type": "named"
+                  "_type": "named"
                 },
-                "type": "list"
+                "_type": "list"
               },
-              "type": "container"
+              "_type": "container"
+            }
+          },
+          {
+            "name": {
+              "originalValue": "pathParameters",
+              "camelCase": "pathParameters",
+              "snakeCase": "path_parameters",
+              "pascalCase": "PathParameters",
+              "screamingSnakeCase": "PATH_PARAMETERS",
+              "wireValue": "pathParameters"
+            },
+            "valueType": {
+              "container": {
+                "list": {
+                  "name": "PathParameter",
+                  "fernFilepath": [
+                    {
+                      "originalValue": "services",
+                      "camelCase": "services",
+                      "snakeCase": "services",
+                      "pascalCase": "Services",
+                      "screamingSnakeCase": "SERVICES"
+                    },
+                    {
+                      "originalValue": "http",
+                      "camelCase": "http",
+                      "snakeCase": "http",
+                      "pascalCase": "Http",
+                      "screamingSnakeCase": "HTTP"
+                    }
+                  ],
+                  "_type": "named"
+                },
+                "_type": "list"
+              },
+              "_type": "container"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -1342,9 +1514,13 @@
       "shape": {
         "aliasOf": {
           "primitive": "STRING",
-          "type": "primitive"
+          "_type": "primitive"
         },
-        "type": "alias"
+        "resolvedType": {
+          "primitive": "STRING",
+          "_type": "primitive"
+        },
+        "_type": "alias"
       }
     },
     {
@@ -1410,7 +1586,7 @@
                   "screamingSnakeCase": "HTTP"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           },
           {
@@ -1433,7 +1609,7 @@
                   "screamingSnakeCase": "COMMONS"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           },
           {
@@ -1463,7 +1639,7 @@
                   "screamingSnakeCase": "HTTP"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           },
           {
@@ -1495,11 +1671,11 @@
                       "screamingSnakeCase": "HTTP"
                     }
                   ],
-                  "type": "named"
+                  "_type": "named"
                 },
-                "type": "list"
+                "_type": "list"
               },
-              "type": "container"
+              "_type": "container"
             }
           },
           {
@@ -1529,7 +1705,7 @@
                   "screamingSnakeCase": "HTTP"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           },
           {
@@ -1561,11 +1737,11 @@
                       "screamingSnakeCase": "HTTP"
                     }
                   ],
-                  "type": "named"
+                  "_type": "named"
                 },
-                "type": "list"
+                "_type": "list"
               },
-              "type": "container"
+              "_type": "container"
             }
           },
           {
@@ -1597,11 +1773,11 @@
                       "screamingSnakeCase": "HTTP"
                     }
                   ],
-                  "type": "named"
+                  "_type": "named"
                 },
-                "type": "list"
+                "_type": "list"
               },
-              "type": "container"
+              "_type": "container"
             }
           },
           {
@@ -1631,7 +1807,7 @@
                   "screamingSnakeCase": "HTTP"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           },
           {
@@ -1661,7 +1837,7 @@
                   "screamingSnakeCase": "HTTP"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           },
           {
@@ -1691,7 +1867,7 @@
                   "screamingSnakeCase": "COMMONS"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           },
           {
@@ -1705,11 +1881,11 @@
             },
             "valueType": {
               "primitive": "BOOLEAN",
-              "type": "primitive"
+              "_type": "primitive"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -1746,7 +1922,7 @@
             },
             "valueType": {
               "primitive": "STRING",
-              "type": "primitive"
+              "_type": "primitive"
             }
           },
           {
@@ -1778,15 +1954,15 @@
                       "screamingSnakeCase": "HTTP"
                     }
                   ],
-                  "type": "named"
+                  "_type": "named"
                 },
-                "type": "list"
+                "_type": "list"
               },
-              "type": "container"
+              "_type": "container"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -1823,7 +1999,7 @@
             },
             "valueType": {
               "primitive": "STRING",
-              "type": "primitive"
+              "_type": "primitive"
             }
           },
           {
@@ -1837,11 +2013,11 @@
             },
             "valueType": {
               "primitive": "STRING",
-              "type": "primitive"
+              "_type": "primitive"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -1922,7 +2098,7 @@
             "value": "DELETE"
           }
         ],
-        "type": "enum"
+        "_type": "enum"
       }
     },
     {
@@ -1981,14 +2157,14 @@
                   "screamingSnakeCase": "COMMONS"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           },
           {
             "name": {
               "originalValue": "valueType",
               "camelCase": "valueType",
-              "snakeCase": "valuetype",
+              "snakeCase": "value_type",
               "pascalCase": "ValueType",
               "screamingSnakeCase": "VALUE_TYPE",
               "wireValue": "valueType"
@@ -2004,11 +2180,11 @@
                   "screamingSnakeCase": "TYPES"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -2067,14 +2243,14 @@
                   "screamingSnakeCase": "COMMONS"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           },
           {
             "name": {
               "originalValue": "valueType",
               "camelCase": "valueType",
-              "snakeCase": "valuetype",
+              "snakeCase": "value_type",
               "pascalCase": "ValueType",
               "screamingSnakeCase": "VALUE_TYPE",
               "wireValue": "valueType"
@@ -2090,11 +2266,11 @@
                   "screamingSnakeCase": "TYPES"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -2153,14 +2329,14 @@
                   "screamingSnakeCase": "COMMONS"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           },
           {
             "name": {
               "originalValue": "valueType",
               "camelCase": "valueType",
-              "snakeCase": "valuetype",
+              "snakeCase": "value_type",
               "pascalCase": "ValueType",
               "screamingSnakeCase": "VALUE_TYPE",
               "wireValue": "valueType"
@@ -2176,11 +2352,11 @@
                   "screamingSnakeCase": "TYPES"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -2239,11 +2415,11 @@
                   "screamingSnakeCase": "TYPES"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -2302,11 +2478,11 @@
                   "screamingSnakeCase": "TYPES"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -2372,7 +2548,7 @@
                   "screamingSnakeCase": "COMMONS"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           },
           {
@@ -2386,7 +2562,7 @@
             },
             "valueType": {
               "primitive": "STRING",
-              "type": "primitive"
+              "_type": "primitive"
             }
           },
           {
@@ -2416,7 +2592,7 @@
                   "screamingSnakeCase": "WEBSOCKET"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           },
           {
@@ -2446,7 +2622,7 @@
                   "screamingSnakeCase": "WEBSOCKET"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           },
           {
@@ -2476,11 +2652,11 @@
                   "screamingSnakeCase": "WEBSOCKET"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -2535,15 +2711,15 @@
                       "screamingSnakeCase": "WEBSOCKET"
                     }
                   ],
-                  "type": "named"
+                  "_type": "named"
                 },
-                "type": "list"
+                "_type": "list"
               },
-              "type": "container"
+              "_type": "container"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -2602,7 +2778,7 @@
                   "screamingSnakeCase": "COMMONS"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           },
           {
@@ -2632,7 +2808,7 @@
                   "screamingSnakeCase": "WEBSOCKET"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           },
           {
@@ -2662,7 +2838,7 @@
                   "screamingSnakeCase": "WEBSOCKET"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           },
           {
@@ -2692,11 +2868,11 @@
                   "screamingSnakeCase": "COMMONS"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -2755,11 +2931,11 @@
                   "screamingSnakeCase": "TYPES"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -2818,11 +2994,11 @@
                   "screamingSnakeCase": "TYPES"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -2859,7 +3035,7 @@
             },
             "valueType": {
               "primitive": "STRING",
-              "type": "primitive"
+              "_type": "primitive"
             }
           },
           {
@@ -2873,7 +3049,7 @@
             },
             "valueType": {
               "primitive": "STRING",
-              "type": "primitive"
+              "_type": "primitive"
             }
           },
           {
@@ -2887,11 +3063,11 @@
             },
             "valueType": {
               "primitive": "STRING",
-              "type": "primitive"
+              "_type": "primitive"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -2944,7 +3120,7 @@
                   "screamingSnakeCase": "TYPES"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           },
           {
@@ -2967,11 +3143,11 @@
                   "screamingSnakeCase": "TYPES"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -3010,7 +3186,7 @@
                   "screamingSnakeCase": "COMMONS"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           },
           {
@@ -3024,11 +3200,11 @@
             },
             "valueType": {
               "primitive": "STRING",
-              "type": "primitive"
+              "_type": "primitive"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -3045,7 +3221,15 @@
         "name": "Type"
       },
       "shape": {
-        "discriminant": "type",
+        "discriminant": "_type",
+        "discriminantV2": {
+          "originalValue": "type",
+          "camelCase": "type",
+          "snakeCase": "type",
+          "pascalCase": "Type",
+          "screamingSnakeCase": "TYPE",
+          "wireValue": "_type"
+        },
         "types": [
           {
             "discriminantValue": {
@@ -3067,7 +3251,20 @@
                   "screamingSnakeCase": "TYPES"
                 }
               ],
-              "type": "named"
+              "_type": "named"
+            },
+            "shape": {
+              "name": "AliasTypeDeclaration",
+              "fernFilepath": [
+                {
+                  "originalValue": "types",
+                  "camelCase": "types",
+                  "snakeCase": "types",
+                  "pascalCase": "Types",
+                  "screamingSnakeCase": "TYPES"
+                }
+              ],
+              "_type": "samePropertiesAsObject"
             }
           },
           {
@@ -3090,7 +3287,20 @@
                   "screamingSnakeCase": "TYPES"
                 }
               ],
-              "type": "named"
+              "_type": "named"
+            },
+            "shape": {
+              "name": "EnumTypeDeclaration",
+              "fernFilepath": [
+                {
+                  "originalValue": "types",
+                  "camelCase": "types",
+                  "snakeCase": "types",
+                  "pascalCase": "Types",
+                  "screamingSnakeCase": "TYPES"
+                }
+              ],
+              "_type": "samePropertiesAsObject"
             }
           },
           {
@@ -3113,7 +3323,20 @@
                   "screamingSnakeCase": "TYPES"
                 }
               ],
-              "type": "named"
+              "_type": "named"
+            },
+            "shape": {
+              "name": "ObjectTypeDeclaration",
+              "fernFilepath": [
+                {
+                  "originalValue": "types",
+                  "camelCase": "types",
+                  "snakeCase": "types",
+                  "pascalCase": "Types",
+                  "screamingSnakeCase": "TYPES"
+                }
+              ],
+              "_type": "samePropertiesAsObject"
             }
           },
           {
@@ -3136,11 +3359,24 @@
                   "screamingSnakeCase": "TYPES"
                 }
               ],
-              "type": "named"
+              "_type": "named"
+            },
+            "shape": {
+              "name": "UnionTypeDeclaration",
+              "fernFilepath": [
+                {
+                  "originalValue": "types",
+                  "camelCase": "types",
+                  "snakeCase": "types",
+                  "pascalCase": "Types",
+                  "screamingSnakeCase": "TYPES"
+                }
+              ],
+              "_type": "samePropertiesAsObject"
             }
           }
         ],
-        "type": "union"
+        "_type": "union"
       }
     },
     {
@@ -3179,11 +3415,342 @@
                   "screamingSnakeCase": "TYPES"
                 }
               ],
-              "type": "named"
+              "_type": "named"
+            }
+          },
+          {
+            "name": {
+              "originalValue": "resolvedType",
+              "camelCase": "resolvedType",
+              "snakeCase": "resolved_type",
+              "pascalCase": "ResolvedType",
+              "screamingSnakeCase": "RESOLVED_TYPE",
+              "wireValue": "resolvedType"
+            },
+            "valueType": {
+              "name": "ResolvedTypeReference",
+              "fernFilepath": [
+                {
+                  "originalValue": "types",
+                  "camelCase": "types",
+                  "snakeCase": "types",
+                  "pascalCase": "Types",
+                  "screamingSnakeCase": "TYPES"
+                }
+              ],
+              "_type": "named"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": [
+          {
+            "originalValue": "types",
+            "camelCase": "types",
+            "snakeCase": "types",
+            "pascalCase": "Types",
+            "screamingSnakeCase": "TYPES"
+          }
+        ],
+        "name": "ResolvedTypeReference"
+      },
+      "shape": {
+        "discriminant": "_type",
+        "discriminantV2": {
+          "originalValue": "type",
+          "camelCase": "type",
+          "snakeCase": "type",
+          "pascalCase": "Type",
+          "screamingSnakeCase": "TYPE",
+          "wireValue": "_type"
+        },
+        "types": [
+          {
+            "discriminantValue": {
+              "originalValue": "container",
+              "camelCase": "container",
+              "snakeCase": "container",
+              "pascalCase": "Container",
+              "screamingSnakeCase": "CONTAINER",
+              "wireValue": "container"
+            },
+            "valueType": {
+              "name": "ContainerType",
+              "fernFilepath": [
+                {
+                  "originalValue": "types",
+                  "camelCase": "types",
+                  "snakeCase": "types",
+                  "pascalCase": "Types",
+                  "screamingSnakeCase": "TYPES"
+                }
+              ],
+              "_type": "named"
+            },
+            "shape": {
+              "name": {
+                "originalValue": "value",
+                "camelCase": "value",
+                "snakeCase": "value",
+                "pascalCase": "Value",
+                "screamingSnakeCase": "VALUE",
+                "wireValue": "value"
+              },
+              "type": {
+                "name": "ContainerType",
+                "fernFilepath": [
+                  {
+                    "originalValue": "types",
+                    "camelCase": "types",
+                    "snakeCase": "types",
+                    "pascalCase": "Types",
+                    "screamingSnakeCase": "TYPES"
+                  }
+                ],
+                "_type": "named"
+              },
+              "_type": "singleProperty"
+            }
+          },
+          {
+            "discriminantValue": {
+              "originalValue": "named",
+              "camelCase": "named",
+              "snakeCase": "named",
+              "pascalCase": "Named",
+              "screamingSnakeCase": "NAMED",
+              "wireValue": "named"
+            },
+            "valueType": {
+              "name": "ResolvedNamedType",
+              "fernFilepath": [
+                {
+                  "originalValue": "types",
+                  "camelCase": "types",
+                  "snakeCase": "types",
+                  "pascalCase": "Types",
+                  "screamingSnakeCase": "TYPES"
+                }
+              ],
+              "_type": "named"
+            },
+            "shape": {
+              "name": "ResolvedNamedType",
+              "fernFilepath": [
+                {
+                  "originalValue": "types",
+                  "camelCase": "types",
+                  "snakeCase": "types",
+                  "pascalCase": "Types",
+                  "screamingSnakeCase": "TYPES"
+                }
+              ],
+              "_type": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "originalValue": "primitive",
+              "camelCase": "primitive",
+              "snakeCase": "primitive",
+              "pascalCase": "Primitive",
+              "screamingSnakeCase": "PRIMITIVE",
+              "wireValue": "primitive"
+            },
+            "valueType": {
+              "name": "PrimitiveType",
+              "fernFilepath": [
+                {
+                  "originalValue": "types",
+                  "camelCase": "types",
+                  "snakeCase": "types",
+                  "pascalCase": "Types",
+                  "screamingSnakeCase": "TYPES"
+                }
+              ],
+              "_type": "named"
+            },
+            "shape": {
+              "name": {
+                "originalValue": "value",
+                "camelCase": "value",
+                "snakeCase": "value",
+                "pascalCase": "Value",
+                "screamingSnakeCase": "VALUE",
+                "wireValue": "value"
+              },
+              "type": {
+                "name": "PrimitiveType",
+                "fernFilepath": [
+                  {
+                    "originalValue": "types",
+                    "camelCase": "types",
+                    "snakeCase": "types",
+                    "pascalCase": "Types",
+                    "screamingSnakeCase": "TYPES"
+                  }
+                ],
+                "_type": "named"
+              },
+              "_type": "singleProperty"
+            }
+          },
+          {
+            "discriminantValue": {
+              "originalValue": "unknown",
+              "camelCase": "unknown",
+              "snakeCase": "unknown",
+              "pascalCase": "Unknown",
+              "screamingSnakeCase": "UNKNOWN",
+              "wireValue": "unknown"
+            },
+            "valueType": {
+              "_type": "void"
+            },
+            "shape": {
+              "_type": "noProperties"
+            }
+          },
+          {
+            "discriminantValue": {
+              "originalValue": "void",
+              "camelCase": "void",
+              "snakeCase": "void",
+              "pascalCase": "Void",
+              "screamingSnakeCase": "VOID",
+              "wireValue": "void"
+            },
+            "valueType": {
+              "_type": "void"
+            },
+            "shape": {
+              "_type": "noProperties"
+            }
+          }
+        ],
+        "_type": "union"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": [
+          {
+            "originalValue": "types",
+            "camelCase": "types",
+            "snakeCase": "types",
+            "pascalCase": "Types",
+            "screamingSnakeCase": "TYPES"
+          }
+        ],
+        "name": "ResolvedNamedType"
+      },
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "name": {
+              "originalValue": "name",
+              "camelCase": "name",
+              "snakeCase": "name",
+              "pascalCase": "Name",
+              "screamingSnakeCase": "NAME",
+              "wireValue": "name"
+            },
+            "valueType": {
+              "name": "DeclaredTypeName",
+              "fernFilepath": [
+                {
+                  "originalValue": "types",
+                  "camelCase": "types",
+                  "snakeCase": "types",
+                  "pascalCase": "Types",
+                  "screamingSnakeCase": "TYPES"
+                }
+              ],
+              "_type": "named"
+            }
+          },
+          {
+            "name": {
+              "originalValue": "shape",
+              "camelCase": "shape",
+              "snakeCase": "shape",
+              "pascalCase": "Shape",
+              "screamingSnakeCase": "SHAPE",
+              "wireValue": "shape"
+            },
+            "valueType": {
+              "name": "ShapeType",
+              "fernFilepath": [
+                {
+                  "originalValue": "types",
+                  "camelCase": "types",
+                  "snakeCase": "types",
+                  "pascalCase": "Types",
+                  "screamingSnakeCase": "TYPES"
+                }
+              ],
+              "_type": "named"
+            }
+          }
+        ],
+        "_type": "object"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": [
+          {
+            "originalValue": "types",
+            "camelCase": "types",
+            "snakeCase": "types",
+            "pascalCase": "Types",
+            "screamingSnakeCase": "TYPES"
+          }
+        ],
+        "name": "ShapeType"
+      },
+      "shape": {
+        "values": [
+          {
+            "name": {
+              "originalValue": "ENUM",
+              "camelCase": "enum",
+              "snakeCase": "enum",
+              "pascalCase": "Enum",
+              "screamingSnakeCase": "ENUM",
+              "wireValue": "ENUM"
+            },
+            "value": "ENUM"
+          },
+          {
+            "name": {
+              "originalValue": "OBJECT",
+              "camelCase": "object",
+              "snakeCase": "object",
+              "pascalCase": "Object",
+              "screamingSnakeCase": "OBJECT",
+              "wireValue": "OBJECT"
+            },
+            "value": "OBJECT"
+          },
+          {
+            "name": {
+              "originalValue": "UNION",
+              "camelCase": "union",
+              "snakeCase": "union",
+              "pascalCase": "Union",
+              "screamingSnakeCase": "UNION",
+              "wireValue": "UNION"
+            },
+            "value": "UNION"
+          }
+        ],
+        "_type": "enum"
       }
     },
     {
@@ -3224,15 +3791,15 @@
                       "screamingSnakeCase": "TYPES"
                     }
                   ],
-                  "type": "named"
+                  "_type": "named"
                 },
-                "type": "list"
+                "_type": "list"
               },
-              "type": "container"
+              "_type": "container"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -3284,7 +3851,7 @@
                   "screamingSnakeCase": "COMMONS"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           },
           {
@@ -3298,11 +3865,11 @@
             },
             "valueType": {
               "primitive": "STRING",
-              "type": "primitive"
+              "_type": "primitive"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -3343,11 +3910,11 @@
                       "screamingSnakeCase": "TYPES"
                     }
                   ],
-                  "type": "named"
+                  "_type": "named"
                 },
-                "type": "list"
+                "_type": "list"
               },
-              "type": "container"
+              "_type": "container"
             },
             "docs": "A list of other types to inherit from"
           },
@@ -3373,15 +3940,15 @@
                       "screamingSnakeCase": "TYPES"
                     }
                   ],
-                  "type": "named"
+                  "_type": "named"
                 },
-                "type": "list"
+                "_type": "list"
               },
-              "type": "container"
+              "_type": "container"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -3433,14 +4000,14 @@
                   "screamingSnakeCase": "COMMONS"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           },
           {
             "name": {
               "originalValue": "valueType",
               "camelCase": "valueType",
-              "snakeCase": "valuetype",
+              "snakeCase": "value_type",
               "pascalCase": "ValueType",
               "screamingSnakeCase": "VALUE_TYPE",
               "wireValue": "valueType"
@@ -3456,11 +4023,11 @@
                   "screamingSnakeCase": "TYPES"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -3490,7 +4057,30 @@
             },
             "valueType": {
               "primitive": "STRING",
-              "type": "primitive"
+              "_type": "primitive"
+            }
+          },
+          {
+            "name": {
+              "originalValue": "discriminantV2",
+              "camelCase": "discriminantV2",
+              "snakeCase": "discriminant_v_2",
+              "pascalCase": "DiscriminantV2",
+              "screamingSnakeCase": "DISCRIMINANT_V_2",
+              "wireValue": "discriminantV2"
+            },
+            "valueType": {
+              "name": "WireStringWithAllCasings",
+              "fernFilepath": [
+                {
+                  "originalValue": "commons",
+                  "camelCase": "commons",
+                  "snakeCase": "commons",
+                  "pascalCase": "Commons",
+                  "screamingSnakeCase": "COMMONS"
+                }
+              ],
+              "_type": "named"
             }
           },
           {
@@ -3515,15 +4105,15 @@
                       "screamingSnakeCase": "TYPES"
                     }
                   ],
-                  "type": "named"
+                  "_type": "named"
                 },
-                "type": "list"
+                "_type": "list"
               },
-              "type": "container"
+              "_type": "container"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -3575,14 +4165,14 @@
                   "screamingSnakeCase": "COMMONS"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           },
           {
             "name": {
               "originalValue": "valueType",
               "camelCase": "valueType",
-              "snakeCase": "valuetype",
+              "snakeCase": "value_type",
               "pascalCase": "ValueType",
               "screamingSnakeCase": "VALUE_TYPE",
               "wireValue": "valueType"
@@ -3598,11 +4188,217 @@
                   "screamingSnakeCase": "TYPES"
                 }
               ],
-              "type": "named"
+              "_type": "named"
+            },
+            "docs": "This is deprecated. Use shape instead."
+          },
+          {
+            "name": {
+              "originalValue": "shape",
+              "camelCase": "shape",
+              "snakeCase": "shape",
+              "pascalCase": "Shape",
+              "screamingSnakeCase": "SHAPE",
+              "wireValue": "shape"
+            },
+            "valueType": {
+              "name": "SingleUnionTypeProperties",
+              "fernFilepath": [
+                {
+                  "originalValue": "types",
+                  "camelCase": "types",
+                  "snakeCase": "types",
+                  "pascalCase": "Types",
+                  "screamingSnakeCase": "TYPES"
+                }
+              ],
+              "_type": "named"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": [
+          {
+            "originalValue": "types",
+            "camelCase": "types",
+            "snakeCase": "types",
+            "pascalCase": "Types",
+            "screamingSnakeCase": "TYPES"
+          }
+        ],
+        "name": "SingleUnionTypeProperties"
+      },
+      "shape": {
+        "discriminant": "_type",
+        "discriminantV2": {
+          "originalValue": "propertiesType",
+          "camelCase": "propertiesType",
+          "snakeCase": "properties_type",
+          "pascalCase": "PropertiesType",
+          "screamingSnakeCase": "PROPERTIES_TYPE",
+          "wireValue": "_type"
+        },
+        "types": [
+          {
+            "discriminantValue": {
+              "originalValue": "samePropertiesAsObject",
+              "camelCase": "samePropertiesAsObject",
+              "snakeCase": "same_properties_as_object",
+              "pascalCase": "SamePropertiesAsObject",
+              "screamingSnakeCase": "SAME_PROPERTIES_AS_OBJECT",
+              "wireValue": "samePropertiesAsObject"
+            },
+            "valueType": {
+              "name": "DeclaredTypeName",
+              "fernFilepath": [
+                {
+                  "originalValue": "types",
+                  "camelCase": "types",
+                  "snakeCase": "types",
+                  "pascalCase": "Types",
+                  "screamingSnakeCase": "TYPES"
+                }
+              ],
+              "_type": "named"
+            },
+            "shape": {
+              "name": "DeclaredTypeName",
+              "fernFilepath": [
+                {
+                  "originalValue": "types",
+                  "camelCase": "types",
+                  "snakeCase": "types",
+                  "pascalCase": "Types",
+                  "screamingSnakeCase": "TYPES"
+                }
+              ],
+              "_type": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "originalValue": "singleProperty",
+              "camelCase": "singleProperty",
+              "snakeCase": "single_property",
+              "pascalCase": "SingleProperty",
+              "screamingSnakeCase": "SINGLE_PROPERTY",
+              "wireValue": "singleProperty"
+            },
+            "valueType": {
+              "name": "SingleUnionTypeProperty",
+              "fernFilepath": [
+                {
+                  "originalValue": "types",
+                  "camelCase": "types",
+                  "snakeCase": "types",
+                  "pascalCase": "Types",
+                  "screamingSnakeCase": "TYPES"
+                }
+              ],
+              "_type": "named"
+            },
+            "shape": {
+              "name": "SingleUnionTypeProperty",
+              "fernFilepath": [
+                {
+                  "originalValue": "types",
+                  "camelCase": "types",
+                  "snakeCase": "types",
+                  "pascalCase": "Types",
+                  "screamingSnakeCase": "TYPES"
+                }
+              ],
+              "_type": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "originalValue": "noProperties",
+              "camelCase": "noProperties",
+              "snakeCase": "no_properties",
+              "pascalCase": "NoProperties",
+              "screamingSnakeCase": "NO_PROPERTIES",
+              "wireValue": "noProperties"
+            },
+            "valueType": {
+              "_type": "void"
+            },
+            "shape": {
+              "_type": "noProperties"
+            }
+          }
+        ],
+        "_type": "union"
+      }
+    },
+    {
+      "name": {
+        "fernFilepath": [
+          {
+            "originalValue": "types",
+            "camelCase": "types",
+            "snakeCase": "types",
+            "pascalCase": "Types",
+            "screamingSnakeCase": "TYPES"
+          }
+        ],
+        "name": "SingleUnionTypeProperty"
+      },
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "name": {
+              "originalValue": "name",
+              "camelCase": "name",
+              "snakeCase": "name",
+              "pascalCase": "Name",
+              "screamingSnakeCase": "NAME",
+              "wireValue": "name"
+            },
+            "valueType": {
+              "name": "WireStringWithAllCasings",
+              "fernFilepath": [
+                {
+                  "originalValue": "commons",
+                  "camelCase": "commons",
+                  "snakeCase": "commons",
+                  "pascalCase": "Commons",
+                  "screamingSnakeCase": "COMMONS"
+                }
+              ],
+              "_type": "named"
+            }
+          },
+          {
+            "name": {
+              "originalValue": "type",
+              "camelCase": "type",
+              "snakeCase": "type",
+              "pascalCase": "Type",
+              "screamingSnakeCase": "TYPE",
+              "wireValue": "type"
+            },
+            "valueType": {
+              "name": "TypeReference",
+              "fernFilepath": [
+                {
+                  "originalValue": "types",
+                  "camelCase": "types",
+                  "snakeCase": "types",
+                  "pascalCase": "Types",
+                  "screamingSnakeCase": "TYPES"
+                }
+              ],
+              "_type": "named"
+            }
+          }
+        ],
+        "_type": "object"
       }
     },
     {
@@ -3619,7 +4415,15 @@
         "name": "TypeReference"
       },
       "shape": {
-        "discriminant": "type",
+        "discriminant": "_type",
+        "discriminantV2": {
+          "originalValue": "type",
+          "camelCase": "type",
+          "snakeCase": "type",
+          "pascalCase": "Type",
+          "screamingSnakeCase": "TYPE",
+          "wireValue": "_type"
+        },
         "types": [
           {
             "discriminantValue": {
@@ -3641,7 +4445,31 @@
                   "screamingSnakeCase": "TYPES"
                 }
               ],
-              "type": "named"
+              "_type": "named"
+            },
+            "shape": {
+              "name": {
+                "originalValue": "value",
+                "camelCase": "value",
+                "snakeCase": "value",
+                "pascalCase": "Value",
+                "screamingSnakeCase": "VALUE",
+                "wireValue": "value"
+              },
+              "type": {
+                "name": "ContainerType",
+                "fernFilepath": [
+                  {
+                    "originalValue": "types",
+                    "camelCase": "types",
+                    "snakeCase": "types",
+                    "pascalCase": "Types",
+                    "screamingSnakeCase": "TYPES"
+                  }
+                ],
+                "_type": "named"
+              },
+              "_type": "singleProperty"
             }
           },
           {
@@ -3664,7 +4492,20 @@
                   "screamingSnakeCase": "TYPES"
                 }
               ],
-              "type": "named"
+              "_type": "named"
+            },
+            "shape": {
+              "name": "DeclaredTypeName",
+              "fernFilepath": [
+                {
+                  "originalValue": "types",
+                  "camelCase": "types",
+                  "snakeCase": "types",
+                  "pascalCase": "Types",
+                  "screamingSnakeCase": "TYPES"
+                }
+              ],
+              "_type": "samePropertiesAsObject"
             }
           },
           {
@@ -3687,7 +4528,31 @@
                   "screamingSnakeCase": "TYPES"
                 }
               ],
-              "type": "named"
+              "_type": "named"
+            },
+            "shape": {
+              "name": {
+                "originalValue": "value",
+                "camelCase": "value",
+                "snakeCase": "value",
+                "pascalCase": "Value",
+                "screamingSnakeCase": "VALUE",
+                "wireValue": "value"
+              },
+              "type": {
+                "name": "PrimitiveType",
+                "fernFilepath": [
+                  {
+                    "originalValue": "types",
+                    "camelCase": "types",
+                    "snakeCase": "types",
+                    "pascalCase": "Types",
+                    "screamingSnakeCase": "TYPES"
+                  }
+                ],
+                "_type": "named"
+              },
+              "_type": "singleProperty"
             }
           },
           {
@@ -3700,7 +4565,10 @@
               "wireValue": "unknown"
             },
             "valueType": {
-              "type": "void"
+              "_type": "void"
+            },
+            "shape": {
+              "_type": "noProperties"
             }
           },
           {
@@ -3713,11 +4581,14 @@
               "wireValue": "void"
             },
             "valueType": {
-              "type": "void"
+              "_type": "void"
+            },
+            "shape": {
+              "_type": "noProperties"
             }
           }
         ],
-        "type": "union"
+        "_type": "union"
       }
     },
     {
@@ -3734,7 +4605,15 @@
         "name": "ContainerType"
       },
       "shape": {
-        "discriminant": "type",
+        "discriminant": "_type",
+        "discriminantV2": {
+          "originalValue": "type",
+          "camelCase": "type",
+          "snakeCase": "type",
+          "pascalCase": "Type",
+          "screamingSnakeCase": "TYPE",
+          "wireValue": "_type"
+        },
         "types": [
           {
             "discriminantValue": {
@@ -3756,7 +4635,31 @@
                   "screamingSnakeCase": "TYPES"
                 }
               ],
-              "type": "named"
+              "_type": "named"
+            },
+            "shape": {
+              "name": {
+                "originalValue": "value",
+                "camelCase": "value",
+                "snakeCase": "value",
+                "pascalCase": "Value",
+                "screamingSnakeCase": "VALUE",
+                "wireValue": "value"
+              },
+              "type": {
+                "name": "TypeReference",
+                "fernFilepath": [
+                  {
+                    "originalValue": "types",
+                    "camelCase": "types",
+                    "snakeCase": "types",
+                    "pascalCase": "Types",
+                    "screamingSnakeCase": "TYPES"
+                  }
+                ],
+                "_type": "named"
+              },
+              "_type": "singleProperty"
             }
           },
           {
@@ -3779,7 +4682,20 @@
                   "screamingSnakeCase": "TYPES"
                 }
               ],
-              "type": "named"
+              "_type": "named"
+            },
+            "shape": {
+              "name": "MapType",
+              "fernFilepath": [
+                {
+                  "originalValue": "types",
+                  "camelCase": "types",
+                  "snakeCase": "types",
+                  "pascalCase": "Types",
+                  "screamingSnakeCase": "TYPES"
+                }
+              ],
+              "_type": "samePropertiesAsObject"
             }
           },
           {
@@ -3802,7 +4718,31 @@
                   "screamingSnakeCase": "TYPES"
                 }
               ],
-              "type": "named"
+              "_type": "named"
+            },
+            "shape": {
+              "name": {
+                "originalValue": "value",
+                "camelCase": "value",
+                "snakeCase": "value",
+                "pascalCase": "Value",
+                "screamingSnakeCase": "VALUE",
+                "wireValue": "value"
+              },
+              "type": {
+                "name": "TypeReference",
+                "fernFilepath": [
+                  {
+                    "originalValue": "types",
+                    "camelCase": "types",
+                    "snakeCase": "types",
+                    "pascalCase": "Types",
+                    "screamingSnakeCase": "TYPES"
+                  }
+                ],
+                "_type": "named"
+              },
+              "_type": "singleProperty"
             }
           },
           {
@@ -3825,11 +4765,35 @@
                   "screamingSnakeCase": "TYPES"
                 }
               ],
-              "type": "named"
+              "_type": "named"
+            },
+            "shape": {
+              "name": {
+                "originalValue": "value",
+                "camelCase": "value",
+                "snakeCase": "value",
+                "pascalCase": "Value",
+                "screamingSnakeCase": "VALUE",
+                "wireValue": "value"
+              },
+              "type": {
+                "name": "TypeReference",
+                "fernFilepath": [
+                  {
+                    "originalValue": "types",
+                    "camelCase": "types",
+                    "snakeCase": "types",
+                    "pascalCase": "Types",
+                    "screamingSnakeCase": "TYPES"
+                  }
+                ],
+                "_type": "named"
+              },
+              "_type": "singleProperty"
             }
           }
         ],
-        "type": "union"
+        "_type": "union"
       }
     },
     {
@@ -3852,7 +4816,7 @@
             "name": {
               "originalValue": "keyType",
               "camelCase": "keyType",
-              "snakeCase": "keytype",
+              "snakeCase": "key_type",
               "pascalCase": "KeyType",
               "screamingSnakeCase": "KEY_TYPE",
               "wireValue": "keyType"
@@ -3868,14 +4832,14 @@
                   "screamingSnakeCase": "TYPES"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           },
           {
             "name": {
               "originalValue": "valueType",
               "camelCase": "valueType",
-              "snakeCase": "valuetype",
+              "snakeCase": "value_type",
               "pascalCase": "ValueType",
               "screamingSnakeCase": "VALUE_TYPE",
               "wireValue": "valueType"
@@ -3891,11 +4855,11 @@
                   "screamingSnakeCase": "TYPES"
                 }
               ],
-              "type": "named"
+              "_type": "named"
             }
           }
         ],
-        "type": "object"
+        "_type": "object"
       }
     },
     {
@@ -3992,7 +4956,7 @@
             "value": "UUID"
           }
         ],
-        "type": "enum"
+        "_type": "enum"
       }
     }
   ],

@@ -27,7 +27,7 @@ class ClassConstructor(AstNode):
 
     def write(self, writer: NodeWriter, reference_resolver: ReferenceResolver) -> None:
         writer.write("def __init__(self, ")
-        for i, parameter in enumerate(self.parameters):
+        for parameter in self.parameters:
             writer.write_node(parameter)
             writer.write(", ")
         writer.write("):")

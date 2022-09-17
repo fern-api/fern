@@ -42,6 +42,22 @@ class PydanticModel:
     def add_root_type(self, root_type: AST.TypeHint) -> None:
         self._class_declaration.add_attribute(AST.VariableDeclaration(name="__root__", type_hint=root_type))
 
+    def add_method(
+        self,
+        name: str,
+        parameters: Sequence[AST.FunctionParameter],
+        return_type: AST.TypeHint,
+        body: AST.CodeWriter,
+        is_static: bool = False,
+    ) -> AST.FunctionDeclaration:
+        return self._class_declaration.add_method(
+            name=name,
+            parameters=parameters,
+            return_type=return_type,
+            body=body,
+            is_static=is_static,
+        )
+
     def finish(self) -> AST.ClassDeclaration:
         if self._has_aliases:
             config = AST.ClassDeclaration(name="Config")

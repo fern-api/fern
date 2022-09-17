@@ -8,11 +8,19 @@ from .function_parameter import FunctionParameter
 
 
 class FunctionDeclaration(AstNode):
-    def __init__(self, name: str, parameters: Sequence[FunctionParameter], return_type: TypeHint, body: CodeWriter):
+    def __init__(
+        self,
+        name: str,
+        parameters: Sequence[FunctionParameter],
+        return_type: TypeHint,
+        body: CodeWriter,
+        decorators: Sequence[Reference] = None,
+    ):
         self.name = name
         self.parameters = parameters
         self.return_type = return_type
         self.body = body
+        self.decorators = decorators or []
 
     def get_references(self) -> Set[Reference]:
         references: Set[Reference] = set()
@@ -20,6 +28,7 @@ class FunctionDeclaration(AstNode):
             references.update(parameter.get_references())
         references.update(self.return_type.get_references())
         references.update(self.body.get_references())
+        references.update(self.decorators)
         return references
 
     def get_generics(self) -> Set[GenericTypeVar]:
@@ -31,10 +40,16 @@ class FunctionDeclaration(AstNode):
         return generics
 
     def write(self, writer: NodeWriter, reference_resolver: ReferenceResolver) -> None:
+        # apply decorators in reverse order, since they are executed by Python
+        # from bottom to top
+        for decorator in reversed(self.decorators):
+            writer.write_line(f"@{reference_resolver.resolve_reference(decorator)}")
+
         writer.write(f"def {self.name}(")
         for i, parameter in enumerate(self.parameters):
             writer.write_node(parameter)
-            writer.write(", ")
+            if i < len(self.parameters) - 1:
+                writer.write(", ")
         writer.write(") -> ")
         writer.write_node(self.return_type)
         writer.write(":")

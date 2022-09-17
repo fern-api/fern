@@ -13,10 +13,16 @@ _Result = typing.TypeVar("_Result")
 
 class _GeneratorEnvironment:
     class Local(pydantic.BaseModel):
-        type: typing.Literal["local"]
+        type: typing.Literal["local"] = pydantic.Field(alias="_type")
+
+        class Config:
+            allow_population_by_field_name = True
 
     class Remote(RemoteGeneratorEnvironment):
-        type: typing.Literal["remote"]
+        type: typing.Literal["remote"] = pydantic.Field(alias="_type")
+
+        class Config:
+            allow_population_by_field_name = True
 
 
 class GeneratorEnvironment(pydantic.BaseModel):

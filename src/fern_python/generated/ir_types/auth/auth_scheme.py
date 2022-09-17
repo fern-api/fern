@@ -2,9 +2,8 @@ from __future__ import annotations
 
 import typing
 from abc import ABC, abstractmethod
-from typing import Literal, Union
 
-from pydantic import BaseModel, Field
+import pydantic
 from typing_extensions import Annotated
 
 from .. import services
@@ -15,20 +14,29 @@ _Result = typing.TypeVar("_Result")
 
 class _AuthScheme:
     class Bearer(WithDocs):
-        type: Literal["bearer"]
+        type: typing.Literal["bearer"] = pydantic.Field(alias="_type")
+
+        class Config:
+            allow_population_by_field_name = True
 
     class Basic(WithDocs):
-        type: Literal["basic"]
+        type: typing.Literal["basic"] = pydantic.Field(alias="_type")
+
+        class Config:
+            allow_population_by_field_name = True
 
     class Header(services.HttpHeader):
-        type: Literal["header"]
+        type: typing.Literal["header"] = pydantic.Field(alias="_type")
+
+        class Config:
+            allow_population_by_field_name = True
 
 
-class AuthScheme(BaseModel):
+class AuthScheme(pydantic.BaseModel):
 
     __root__: Annotated[
-        Union[_AuthScheme.Bearer, _AuthScheme.Basic, _AuthScheme.Header],
-        Field(discriminator="type"),
+        typing.Union[_AuthScheme.Bearer, _AuthScheme.Basic, _AuthScheme.Header],
+        pydantic.Field(discriminator="type"),
     ]
 
     @staticmethod

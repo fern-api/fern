@@ -7,6 +7,8 @@ from .map_type import MapType
 from .object_property import ObjectProperty
 from .object_type_declaration import ObjectTypeDeclaration
 from .primitive_type import PrimitiveType
+from .resolved_named_type import ResolvedNamedType
+from .resolved_type_reference import ResolvedTypeReference
 from .single_union_type import SingleUnionType
 from .type import Type
 from .type_declaration import TypeDeclaration
@@ -28,4 +30,6 @@ __all__ = [
     "MapType",
     "ContainerType",
     "PrimitiveType",
+    "ResolvedTypeReference",
+    "ResolvedNamedType",
 ]

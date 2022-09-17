@@ -18,6 +18,8 @@ from .types import (
     ObjectProperty,
     ObjectTypeDeclaration,
     PrimitiveType,
+    ResolvedNamedType,
+    ResolvedTypeReference,
     SingleUnionType,
     Type,
     TypeDeclaration,
@@ -54,4 +56,6 @@ __all__ = [
     "DeclaredErrorName",
     "HttpErrorConfiguration",
     "ErrorDeclaration",
+    "ResolvedTypeReference",
+    "ResolvedNamedType",
 ]

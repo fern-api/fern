@@ -6,6 +6,6 @@
   "workspaceName": "workspace",
   "organization": "fern",
   "environment": {
-    "type": "local"
+    "_type": "local"
   }
 }
