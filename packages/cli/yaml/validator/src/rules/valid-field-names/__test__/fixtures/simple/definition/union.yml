@@ -22,9 +22,7 @@ types:
       a: string
       b: string
   UnionWithInvalidDiscriminant:
-    discriminant:
-      value: _type
-      name: type
+    discriminant: _type
     union:
       a: string
       b: string
