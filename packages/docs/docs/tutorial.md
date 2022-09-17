@@ -44,31 +44,41 @@ This adds the following content:
 
 ```yml
 fern/
-└── api
-		├── definition
-				├── api.yml # Your API name and the authentication scheme
-				└── imdb.yml # An example Fern Definition for IMDb (International Movie Database)
-		└── generators.yml # A list of code generators you're using
-fern.config.json # Configure your organization name and the version of Fern CLI you're using
+└─ api
+	├─ definition
+		├─ api.yml # Your API name and authentication
+		└─ imdb.yml # An example Fern Definition
+	└─ generators.yml # Code generators you're using
+fern.config.json # Your organization name and Fern CLI version
 ```
 
-## Step 3: Add TypeScript server interfaces generator
+## Step 3: Add TypeScript generator
 
 ```bash
 fern add typescript
 ```
 
-<summary>What happens:</summary>
-
-`generators.yml` will now list a generator:
-
 ```diff
+# generators.yml
 -draft: []
 +draft:
 +  - name: fernapi/fern-typescript
 +    version: 0.0.189
 +    config:
-+      mode: client_and_server
++      mode: client-v2
+release:[]
+```
+
+By default, Fern adds the client generator. We want the server generator, so we'll change this to:
+
+```diff
+# generators.yml
+ draft:
+   - name: fernapi/fern-typescript
+     version: 0.0.189
+     config:
+-       mode: client-v2
++       mode: server
 release:[]
 ```
 
@@ -154,4 +164,4 @@ Select the `getMovie` endpoint and hit `Send`. As expected, we get a 404 respons
 
 ## Step 9: Celebrate 🎉
 
-You've successfully implemented a simple IMDb server using Fern. You're invited to join our [Discord](https://discord.gg/JkkXumPzcG).
+You've successfully implemented a simple IMDb TypeScript Express server using Fern. You're invited to join our [Discord](https://discord.gg/JkkXumPzcG).

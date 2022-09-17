@@ -75,11 +75,11 @@ errors:
     version: 0.0.92
     config:
       packagePrefix: com
-      mode: client_and_server
+      mode: client
   - name: fernapi/fern-typescript
     version: 0.0.189
     config:
-      mode: client_and_server
+      mode: client-v2
   - name: fernapi/fern-postman
     version: 0.0.22
     local-output: ./generated-postman.json
