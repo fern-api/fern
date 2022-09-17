@@ -1,6 +1,5 @@
 ---
-title: Tutorial - IMDb
-sidebar_label: "Tutorial"
+title: Tutorial
 ---
 
 <!-- markdownlint-disable MD033 MD025 MD010 -->
