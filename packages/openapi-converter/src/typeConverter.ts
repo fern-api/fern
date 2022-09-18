@@ -5,7 +5,7 @@ import { OpenAPIV3 } from "openapi-types";
 import { isReferenceObject, isSchemaObject } from "./utils";
 
 export interface FernTypeConversionResult {
-    typeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema | string>;
+    typeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema>;
 }
 
 const EMPTY_OBJECT_TYPE_DEFINITION: RawSchemas.ObjectSchema & Pick<Required<RawSchemas.ObjectSchema>, "properties"> = {

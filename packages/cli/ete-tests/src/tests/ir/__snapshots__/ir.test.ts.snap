@@ -37,10 +37,73 @@ exports[`ir simple 1`] = `
                             "primitive": "STRING",
                             "_type": "primitive"
                         }
+                    },
+                    {
+                        "name": {
+                            "originalValue": "age",
+                            "camelCase": "age",
+                            "snakeCase": "age",
+                            "pascalCase": "Age",
+                            "screamingSnakeCase": "AGE",
+                            "wireValue": "age"
+                        },
+                        "valueType": {
+                            "name": "Age",
+                            "fernFilepath": [
+                                {
+                                    "originalValue": "director",
+                                    "camelCase": "director",
+                                    "snakeCase": "director",
+                                    "pascalCase": "Director",
+                                    "screamingSnakeCase": "DIRECTOR"
+                                }
+                            ],
+                            "_type": "named"
+                        }
                     }
                 ],
                 "_type": "object"
-            }
+            },
+            "referencedTypes": [
+                {
+                    "name": "Age",
+                    "fernFilepath": [
+                        {
+                            "originalValue": "director",
+                            "camelCase": "director",
+                            "snakeCase": "director",
+                            "pascalCase": "Director",
+                            "screamingSnakeCase": "DIRECTOR"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": {
+                "fernFilepath": [
+                    {
+                        "originalValue": "director",
+                        "camelCase": "director",
+                        "snakeCase": "director",
+                        "pascalCase": "Director",
+                        "screamingSnakeCase": "DIRECTOR"
+                    }
+                ],
+                "name": "Age"
+            },
+            "shape": {
+                "aliasOf": {
+                    "primitive": "INTEGER",
+                    "_type": "primitive"
+                },
+                "resolvedType": {
+                    "primitive": "INTEGER",
+                    "_type": "primitive"
+                },
+                "_type": "alias"
+            },
+            "referencedTypes": []
         },
         {
             "name": {
@@ -65,7 +128,8 @@ exports[`ir simple 1`] = `
                     "_type": "primitive"
                 },
                 "_type": "alias"
-            }
+            },
+            "referencedTypes": []
         },
         {
             "name": {
@@ -90,7 +154,8 @@ exports[`ir simple 1`] = `
                     "_type": "primitive"
                 },
                 "_type": "alias"
-            }
+            },
+            "referencedTypes": []
         },
         {
             "name": {
@@ -161,7 +226,21 @@ exports[`ir simple 1`] = `
                     }
                 ],
                 "_type": "object"
-            }
+            },
+            "referencedTypes": [
+                {
+                    "name": "MovieId",
+                    "fernFilepath": [
+                        {
+                            "originalValue": "imdb",
+                            "camelCase": "imdb",
+                            "snakeCase": "imdb",
+                            "pascalCase": "Imdb",
+                            "screamingSnakeCase": "IMDB"
+                        }
+                    ]
+                }
+            ]
         },
         {
             "name": {
@@ -195,21 +274,28 @@ exports[`ir simple 1`] = `
                     },
                     {
                         "name": {
-                            "originalValue": "rating",
-                            "camelCase": "rating",
-                            "snakeCase": "rating",
-                            "pascalCase": "Rating",
-                            "screamingSnakeCase": "RATING",
-                            "wireValue": "rating"
+                            "originalValue": "ratings",
+                            "camelCase": "ratings",
+                            "snakeCase": "ratings",
+                            "pascalCase": "Ratings",
+                            "screamingSnakeCase": "RATINGS",
+                            "wireValue": "ratings"
                         },
                         "valueType": {
-                            "primitive": "DOUBLE",
-                            "_type": "primitive"
+                            "container": {
+                                "list": {
+                                    "primitive": "DOUBLE",
+                                    "_type": "primitive"
+                                },
+                                "_type": "list"
+                            },
+                            "_type": "container"
                         }
                     }
                 ],
                 "_type": "object"
-            }
+            },
+            "referencedTypes": []
         },
         {
             "name": {
@@ -336,7 +422,108 @@ exports[`ir simple 1`] = `
                     }
                 ],
                 "_type": "union"
-            }
+            },
+            "referencedTypes": [
+                {
+                    "name": "ActorId",
+                    "fernFilepath": [
+                        {
+                            "originalValue": "imdb",
+                            "camelCase": "imdb",
+                            "snakeCase": "imdb",
+                            "pascalCase": "Imdb",
+                            "screamingSnakeCase": "IMDB"
+                        }
+                    ]
+                },
+                {
+                    "name": "Director",
+                    "fernFilepath": [
+                        {
+                            "originalValue": "director",
+                            "camelCase": "director",
+                            "snakeCase": "director",
+                            "pascalCase": "Director",
+                            "screamingSnakeCase": "DIRECTOR"
+                        }
+                    ]
+                },
+                {
+                    "name": "Age",
+                    "fernFilepath": [
+                        {
+                            "originalValue": "director",
+                            "camelCase": "director",
+                            "snakeCase": "director",
+                            "pascalCase": "Director",
+                            "screamingSnakeCase": "DIRECTOR"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": {
+                "fernFilepath": [
+                    {
+                        "originalValue": "imdb",
+                        "camelCase": "imdb",
+                        "snakeCase": "imdb",
+                        "pascalCase": "Imdb",
+                        "screamingSnakeCase": "IMDB"
+                    }
+                ],
+                "name": "RecursiveType"
+            },
+            "shape": {
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "originalValue": "selfRefrencing",
+                            "camelCase": "selfRefrencing",
+                            "snakeCase": "self_refrencing",
+                            "pascalCase": "SelfRefrencing",
+                            "screamingSnakeCase": "SELF_REFRENCING",
+                            "wireValue": "selfRefrencing"
+                        },
+                        "valueType": {
+                            "container": {
+                                "list": {
+                                    "name": "RecursiveType",
+                                    "fernFilepath": [
+                                        {
+                                            "originalValue": "imdb",
+                                            "camelCase": "imdb",
+                                            "snakeCase": "imdb",
+                                            "pascalCase": "Imdb",
+                                            "screamingSnakeCase": "IMDB"
+                                        }
+                                    ],
+                                    "_type": "named"
+                                },
+                                "_type": "list"
+                            },
+                            "_type": "container"
+                        }
+                    }
+                ],
+                "_type": "object"
+            },
+            "referencedTypes": [
+                {
+                    "name": "RecursiveType",
+                    "fernFilepath": [
+                        {
+                            "originalValue": "imdb",
+                            "camelCase": "imdb",
+                            "snakeCase": "imdb",
+                            "pascalCase": "Imdb",
+                            "screamingSnakeCase": "IMDB"
+                        }
+                    ]
+                }
+            ]
         }
     ],
     "errors": [
