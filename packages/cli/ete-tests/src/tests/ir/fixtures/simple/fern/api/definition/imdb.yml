@@ -12,12 +12,15 @@ types:
   CreateMovieRequest:
     properties:
       title: string
-      rating: double
+      ratings: list<double>
   Person:
     union:
       actor: ActorId
       director: director.Director
       producer: {}
+  RecursiveType:
+    properties:
+      selfRefrencing: list<RecursiveType>
 errors:
   NotFoundError:
     http:
