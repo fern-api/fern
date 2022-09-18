@@ -16,14 +16,11 @@ export async function addGeneratorToWorkspaces(
         workspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 const generatorsConfiguration = await loadRawGeneratorsConfiguration({
-                    absolutePathToWorkspace: workspace.absolutePathToWorkspace,
+                    pathToWorkspace: workspace.pathToWorkspace,
                 });
                 const newConfiguration = addGenerator({ generatorName, generatorsConfiguration, context });
                 if (newConfiguration !== TASK_FAILURE) {
-                    await writeFile(
-                        workspace.generatorsConfiguration.absolutePathToConfiguration,
-                        yaml.dump(newConfiguration)
-                    );
+                    await writeFile(workspace.generatorsConfiguration.pathToConfiguration, yaml.dump(newConfiguration));
                     context.logger.info(chalk.green(`Added ${generatorName} generator`));
                 }
             });

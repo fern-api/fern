@@ -8,11 +8,7 @@ export const ImportFileExistsRule: Rule = {
         return {
             import: async ({ importedAs, importPath }, { relativeFilepath }) => {
                 const violations: RuleViolation[] = [];
-                const importedFilePath = join(
-                    workspace.absolutePathToDefinition,
-                    dirname(relativeFilepath),
-                    importPath
-                );
+                const importedFilePath = join(workspace.pathToDefinition, dirname(relativeFilepath), importPath);
                 const fileExists = await doesPathExist(importedFilePath);
                 if (!fileExists) {
                     violations.push({

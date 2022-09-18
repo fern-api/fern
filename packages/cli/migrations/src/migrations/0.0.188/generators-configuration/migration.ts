@@ -27,16 +27,16 @@ export const migration: Migration = {
 };
 
 async function migrateWorkspace(pathToWorkspace: AbsoluteFilePath) {
-    const absolutePathToGeneratorsConfiguration = join(pathToWorkspace, RelativeFilePath.of("generators.yml"));
+    const pathToGeneratorsConfiguration = join(pathToWorkspace, RelativeFilePath.of("generators.yml"));
     const oldRawConfiguration = await oldConfigurationUtils.loadRawGeneratorsConfiguration({
-        absolutePathToGeneratorsConfiguration,
+        pathToGeneratorsConfiguration,
     });
     const oldConfiguration = oldConfigurationUtils.convertGeneratorsConfiguration({
-        absolutePathToGeneratorsConfiguration,
+        pathToGeneratorsConfiguration,
         rawGeneratorsConfiguration: oldRawConfiguration,
     });
     const migratedConfiguration = migrateConfiguration(oldConfiguration);
-    await writeFile(absolutePathToGeneratorsConfiguration, yaml.dump(migratedConfiguration));
+    await writeFile(pathToGeneratorsConfiguration, yaml.dump(migratedConfiguration));
 }
 
 function migrateConfiguration(
@@ -54,7 +54,7 @@ function migrateGeneratorInvocation(
     return {
         name: oldGenerator.name,
         version: oldGenerator.version,
-        "local-output": oldGenerator.generate?.absolutePathToLocalOutput,
+        "local-output": oldGenerator.generate?.pathToLocalOutput,
         config: oldGenerator.config,
     };
 }

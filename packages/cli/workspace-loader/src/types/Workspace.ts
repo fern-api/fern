@@ -4,8 +4,8 @@ import { RootApiFileSchema, ServiceFileSchema } from "@fern-api/yaml-schema";
 
 export interface Workspace {
     name: string;
-    absolutePathToWorkspace: AbsoluteFilePath;
-    absolutePathToDefinition: AbsoluteFilePath;
+    pathToWorkspace: AbsoluteFilePath;
+    pathToDefinition: AbsoluteFilePath;
     generatorsConfiguration: GeneratorsConfiguration;
     rootApiFile: RootApiFileSchema;
     serviceFiles: Record<RelativeFilePath, ServiceFileSchema>;

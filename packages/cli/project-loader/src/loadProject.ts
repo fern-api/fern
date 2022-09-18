@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
-import { FERN_DIRECTORY, getFernDirectory, loadProjectConfig } from "@fern-api/project-configuration";
+import { FERN_DIRECTORY, getPathToFernDirectory, loadProjectConfig } from "@fern-api/project-configuration";
 import { TaskContext, TASK_FAILURE } from "@fern-api/task-context";
 import { loadWorkspace, Workspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
@@ -26,11 +26,11 @@ export async function loadProject({
     defaultToAllWorkspaces,
     context,
 }: loadProject.Args): Promise<Project | TASK_FAILURE> {
-    const fernDirectory = await getFernDirectory();
-    if (fernDirectory == null) {
+    const pathToFernDirectory = await getPathToFernDirectory();
+    if (pathToFernDirectory == null) {
         return context.fail(`Directory "${FERN_DIRECTORY}" not found.`);
     }
-    const fernDirectoryContents = await readdir(fernDirectory, { withFileTypes: true });
+    const fernDirectoryContents = await readdir(pathToFernDirectory, { withFileTypes: true });
     const allWorkspaceDirectoryNames = fernDirectoryContents.reduce<string[]>((all, item) => {
         if (item.isDirectory()) {
             all.push(item.name);
@@ -59,7 +59,7 @@ export async function loadProject({
     }
 
     const workspaces = await loadWorkspaces({
-        fernDirectory,
+        pathToFernDirectory,
         workspaceDirectoryNames:
             commandLineWorkspace != null ? [commandLineWorkspace] : [...allWorkspaceDirectoryNames],
         context,
@@ -70,17 +70,17 @@ export async function loadProject({
     }
 
     return {
-        config: await loadProjectConfig({ directory: fernDirectory }),
+        config: await loadProjectConfig({ directory: pathToFernDirectory }),
         workspaces,
     };
 }
 
 async function loadWorkspaces({
-    fernDirectory,
+    pathToFernDirectory,
     workspaceDirectoryNames,
     context,
 }: {
-    fernDirectory: AbsoluteFilePath;
+    pathToFernDirectory: AbsoluteFilePath;
     workspaceDirectoryNames: string[];
     context: TaskContext;
 }): Promise<Workspace[] | TASK_FAILURE> {
@@ -91,7 +91,8 @@ async function loadWorkspaces({
     await Promise.all(
         workspaceDirectoryNames.map(async (workspaceDirectoryName) => {
             const workspace = await loadWorkspace({
-                absolutePathToWorkspace: join(fernDirectory, RelativeFilePath.of(workspaceDirectoryName)),
+                pathToFernDirectory,
+                pathToWorkspace: join(pathToFernDirectory, RelativeFilePath.of(workspaceDirectoryName)),
             });
             if (workspace.didSucceed) {
                 allWorkspaces.push(workspace.workspace);

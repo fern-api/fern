@@ -13,11 +13,12 @@ describe("substituteEnvVariables", () => {
                 },
             },
             plugh: "${FOO_VAR}-${BAR_VAR}",
+            hello: ["${FOO_VAR}"],
         };
         const context = createMockTaskContext();
         const substituted = substituteEnvVariables(content, context);
 
-        expect(substituted).toEqual({ foo: "bar", baz: { qux: { thud: "foo" } }, plugh: "foo-bar" });
+        expect(substituted).toEqual({ foo: "bar", baz: { qux: { thud: "foo" } }, plugh: "foo-bar", hello: ["foo"] });
         expect(context.getResult()).toBe(TaskResult.Success);
     });
 

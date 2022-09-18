@@ -1,7 +1,7 @@
 import { cwd, FilePath, noop, resolve } from "@fern-api/core-utils";
 import { initialize } from "@fern-api/init";
 import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
-import { getFernDirectory, loadProjectConfig } from "@fern-api/project-configuration";
+import { getPathToFernDirectory, loadProjectConfig } from "@fern-api/project-configuration";
 import { loadProject, Project } from "@fern-api/project-loader";
 import { TASK_FAILURE } from "@fern-api/task-context";
 import inquirer, { InputQuestion } from "inquirer";
@@ -107,10 +107,10 @@ async function runCli(cliContext: CliContext) {
 }
 
 async function getIntendedVersionOfCli(cliContext: CliContext): Promise<string> {
-    const fernDirectory = await getFernDirectory();
-    if (fernDirectory != null) {
+    const pathToFernDirectory = await getPathToFernDirectory();
+    if (pathToFernDirectory != null) {
         try {
-            return (await loadProjectConfig({ directory: fernDirectory })).version;
+            return (await loadProjectConfig({ directory: pathToFernDirectory })).version;
         } catch {}
     }
     return getLatestVersionOfCli(cliContext.environment);

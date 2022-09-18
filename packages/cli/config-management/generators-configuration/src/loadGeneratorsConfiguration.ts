@@ -8,31 +8,34 @@ import { GeneratorsConfiguration } from "./GeneratorsConfiguration";
 import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfigurationSchema";
 
 export async function loadRawGeneratorsConfiguration({
-    absolutePathToWorkspace,
+    pathToWorkspace,
 }: {
-    absolutePathToWorkspace: AbsoluteFilePath;
+    pathToWorkspace: AbsoluteFilePath;
 }): Promise<GeneratorsConfigurationSchema> {
-    const contentsStr = await readFile(getPathToGeneratorsConfiguration({ absolutePathToWorkspace }));
+    const contentsStr = await readFile(getPathToGeneratorsConfiguration({ pathToWorkspace }));
     const contentsParsed = yaml.load(contentsStr.toString());
     return await validateSchema(GeneratorsConfigurationSchema, contentsParsed);
 }
 
 export async function loadGeneratorsConfiguration({
-    absolutePathToWorkspace,
+    pathToFernDirectory,
+    pathToWorkspace,
 }: {
-    absolutePathToWorkspace: AbsoluteFilePath;
+    pathToFernDirectory: AbsoluteFilePath;
+    pathToWorkspace: AbsoluteFilePath;
 }): Promise<GeneratorsConfiguration> {
-    const rawGeneratorsConfiguration = await loadRawGeneratorsConfiguration({ absolutePathToWorkspace });
+    const rawGeneratorsConfiguration = await loadRawGeneratorsConfiguration({ pathToWorkspace });
     return convertGeneratorsConfiguration({
-        absolutePathToGeneratorsConfiguration: getPathToGeneratorsConfiguration({ absolutePathToWorkspace }),
+        pathToFernDirectory,
+        pathToGeneratorsConfiguration: getPathToGeneratorsConfiguration({ pathToWorkspace }),
         rawGeneratorsConfiguration,
     });
 }
 
 function getPathToGeneratorsConfiguration({
-    absolutePathToWorkspace,
+    pathToWorkspace,
 }: {
-    absolutePathToWorkspace: AbsoluteFilePath;
+    pathToWorkspace: AbsoluteFilePath;
 }): AbsoluteFilePath {
-    return join(absolutePathToWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME));
+    return join(pathToWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME));
 }

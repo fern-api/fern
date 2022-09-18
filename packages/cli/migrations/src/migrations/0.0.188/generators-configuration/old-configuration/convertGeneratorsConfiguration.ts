@@ -3,14 +3,14 @@ import { GeneratorsConfiguration } from "./GeneratorsConfiguration";
 import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfigurationSchema";
 
 export function convertGeneratorsConfiguration({
-    absolutePathToGeneratorsConfiguration,
+    pathToGeneratorsConfiguration,
     rawGeneratorsConfiguration,
 }: {
-    absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
+    pathToGeneratorsConfiguration: AbsoluteFilePath;
     rawGeneratorsConfiguration: GeneratorsConfigurationSchema;
 }): GeneratorsConfiguration {
     return {
-        absolutePathToConfiguration: absolutePathToGeneratorsConfiguration,
+        pathToConfiguration: pathToGeneratorsConfiguration,
         rawConfiguration: rawGeneratorsConfiguration,
         generators: rawGeneratorsConfiguration.generators.map((generatorInvocation) => {
             return {
@@ -19,10 +19,10 @@ export function convertGeneratorsConfiguration({
                 generate:
                     generatorInvocation.generate != null
                         ? {
-                              absolutePathToLocalOutput:
+                              pathToLocalOutput:
                                   generatorInvocation.generate !== true && generatorInvocation.generate.output != null
                                       ? resolve(
-                                            dirname(absolutePathToGeneratorsConfiguration),
+                                            dirname(pathToGeneratorsConfiguration),
                                             generatorInvocation.generate.output
                                         )
                                       : undefined,

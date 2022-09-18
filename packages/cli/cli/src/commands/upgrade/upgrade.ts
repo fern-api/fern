@@ -1,5 +1,5 @@
 import { runMigrations } from "@fern-api/migrations";
-import { FERN_DIRECTORY, getFernDirectory, loadProjectConfig } from "@fern-api/project-configuration";
+import { FERN_DIRECTORY, getPathToFernDirectory, loadProjectConfig } from "@fern-api/project-configuration";
 import { loadProject } from "@fern-api/project-loader";
 import { TASK_FAILURE } from "@fern-api/task-context";
 import chalk from "chalk";
@@ -68,12 +68,12 @@ export async function upgrade({ cliContext }: { cliContext: CliContext }): Promi
 
         await upgradeGeneratorsInWorkspaces(project, cliContext);
     } else {
-        const fernDirectory = await getFernDirectory();
-        if (fernDirectory == null) {
+        const pathToFernDirectory = await getPathToFernDirectory();
+        if (pathToFernDirectory == null) {
             cliContext.fail(`Directory "${FERN_DIRECTORY}" not found.`);
             return;
         }
-        const projectConfig = await loadProjectConfig({ directory: fernDirectory });
+        const projectConfig = await loadProjectConfig({ directory: pathToFernDirectory });
         const newProjectConfig = produce(projectConfig.rawConfig, (draft) => {
             draft.version = fernCliUpgradeInfo.latestVersion;
         });

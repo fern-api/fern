@@ -11,12 +11,12 @@ const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {
         {
             name: "fernapi/fern-postman",
             version: "0.0.20",
-            "local-output": RelativeFilePath.of("./generated-postman.json"),
+            "output-directory": RelativeFilePath.of("./generated"),
         },
         {
             name: "fernapi/fern-openapi",
             version: "0.0.2",
-            "local-output": RelativeFilePath.of("./generated-openapi.yml"),
+            "output-directory": RelativeFilePath.of("./generated"),
             config: {
                 format: "yaml",
             },

@@ -5,6 +5,6 @@ export {
     PROJECT_CONFIG_FILENAME,
     ROOT_API_FILENAME,
 } from "./constants";
-export { getFernDirectory } from "./getFernDirectory";
+export { getPathToFernDirectory } from "./getPathToFernDirectory";
 export { loadProjectConfig, type ProjectConfig as ProjectConfig } from "./loadProjectConfig";
 export { ProjectConfigSchema } from "./schemas/ProjectConfigSchema";

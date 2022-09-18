@@ -38,7 +38,7 @@ export async function generateWorkspace({
             generatorConfigs: workspace.generatorsConfiguration.draft.map((generator) => ({
                 id: generator.name,
                 version: generator.version,
-                willDownloadFiles: generator.absolutePathToLocalOutput != null,
+                willDownloadFiles: generator.pathToLocalOutput != null,
                 customConfig: generator.config,
                 outputs: {
                     npm: undefined,

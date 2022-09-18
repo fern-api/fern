@@ -13,7 +13,7 @@ export async function upgradeGeneratorsInWorkspaces(project: Project, cliContext
                     context,
                 });
                 await writeFile(
-                    workspace.generatorsConfiguration.absolutePathToConfiguration,
+                    workspace.generatorsConfiguration.pathToConfiguration,
                     yaml.dump(updatedGeneratorsConfiguration)
                 );
             })

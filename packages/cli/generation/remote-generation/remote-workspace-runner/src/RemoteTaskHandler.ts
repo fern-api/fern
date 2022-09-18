@@ -94,7 +94,7 @@ export class RemoteTaskHandler {
     }
 
     private async maybeDownloadFiles(status: Fiddle.remoteGen.FinishedTaskStatus): Promise<void> {
-        if (this.generatorInvocation.type === "draft" && this.generatorInvocation.absolutePathToLocalOutput != null) {
+        if (this.generatorInvocation.type === "draft" && this.generatorInvocation.pathToLocalOutput != null) {
             if (!status.hasFilesToDownload) {
                 this.context.fail("No files available to download");
                 return;
@@ -103,11 +103,11 @@ export class RemoteTaskHandler {
                 await downloadFilesForTask({
                     jobId: this.job.jobId,
                     taskId: this.taskId,
-                    absolutePathToLocalOutput: this.generatorInvocation.absolutePathToLocalOutput,
+                    pathToLocalOutput: this.generatorInvocation.pathToLocalOutput,
                     context: this.context,
                 });
             } catch {
-                this.context.fail(`Failed to download ${this.generatorInvocation.absolutePathToLocalOutput}`);
+                this.context.fail(`Failed to download ${this.generatorInvocation.pathToLocalOutput}`);
             }
         }
     }
@@ -116,24 +116,24 @@ export class RemoteTaskHandler {
 async function downloadFilesForTask({
     jobId,
     taskId,
-    absolutePathToLocalOutput,
+    pathToLocalOutput,
     context,
 }: {
     jobId: Fiddle.remoteGen.RemoteGenJobId;
     taskId: Fiddle.remoteGen.RemoteGenTaskId;
-    absolutePathToLocalOutput: AbsoluteFilePath;
+    pathToLocalOutput: AbsoluteFilePath;
     context: Finishable & InteractiveTaskContext;
 }) {
-    const writer = createWriteStream(absolutePathToLocalOutput);
+    const writer = createWriteStream(pathToLocalOutput);
     await axios
         .get(urlJoin(FIDDLE_ORIGIN, `/api/remote-gen/tasks/${taskId}/jobs/${jobId}/downloadFiles`), {
             responseType: "stream",
         })
         .then((response) => {
             response.data.pipe(writer);
-            context.logger.info(chalk.green("Downloaded: " + absolutePathToLocalOutput));
+            context.logger.info(chalk.green("Downloaded: " + pathToLocalOutput));
         })
         .catch(() => {
-            context.fail("Failed to download: " + absolutePathToLocalOutput);
+            context.fail("Failed to download: " + pathToLocalOutput);
         });
 }

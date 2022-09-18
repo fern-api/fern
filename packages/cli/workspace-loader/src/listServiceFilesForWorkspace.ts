@@ -7,12 +7,12 @@ import { FernFile } from "./types/FernFile";
 
 const ROOT_API_FILE_BASENAME = path.basename(ROOT_API_FILENAME, path.extname(ROOT_API_FILENAME));
 
-export async function listServiceFilesForWorkspace(absolutePathToDefinition: AbsoluteFilePath): Promise<FernFile[]> {
+export async function listServiceFilesForWorkspace(pathToDefinition: AbsoluteFilePath): Promise<FernFile[]> {
     const files: FernFile[] = [];
 
     const filepaths = (
         await glob(`**/!(${ROOT_API_FILE_BASENAME}).yml`, {
-            cwd: absolutePathToDefinition,
+            cwd: pathToDefinition,
         })
     ).map(RelativeFilePath.of);
 
@@ -20,7 +20,7 @@ export async function listServiceFilesForWorkspace(absolutePathToDefinition: Abs
         files.push(
             await createFernFile({
                 relativeFilepath: filepath,
-                absoluteFilepath: join(absolutePathToDefinition, filepath),
+                absoluteFilepath: join(pathToDefinition, filepath),
             })
         );
     }

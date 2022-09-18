@@ -21,13 +21,13 @@ export const TYPESCRIPT_GENERATOR_INVOCATION: DraftGeneratorInvocationSchema = {
 export const POSTMAN_GENERATOR_INVOCATION: DraftGeneratorInvocationSchema = {
     name: "fernapi/fern-postman",
     version: "0.0.22",
-    "local-output": RelativeFilePath.of("./generated-postman.json"),
+    "output-directory": RelativeFilePath.of("./generated"),
 };
 
 export const OPENAPI_GENERATOR_INVOCATION: DraftGeneratorInvocationSchema = {
     name: "fernapi/fern-openapi",
     version: "0.0.5",
-    "local-output": RelativeFilePath.of("./generated-openapi.json"),
+    "output-directory": RelativeFilePath.of("./generated"),
     config: {
         format: "yaml",
     },

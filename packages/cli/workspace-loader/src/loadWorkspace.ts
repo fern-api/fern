@@ -12,13 +12,15 @@ import { WorkspaceLoader } from "./types/Result";
 import { validateStructureOfYamlFiles } from "./validateStructureOfYamlFiles";
 
 export async function loadWorkspace({
-    absolutePathToWorkspace,
+    pathToFernDirectory,
+    pathToWorkspace,
 }: {
-    absolutePathToWorkspace: AbsoluteFilePath;
+    pathToFernDirectory: AbsoluteFilePath;
+    pathToWorkspace: AbsoluteFilePath;
 }): Promise<WorkspaceLoader.Result> {
-    const generatorsConfiguration = await loadGeneratorsConfiguration({ absolutePathToWorkspace });
-    const absolutePathToDefinition = join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY));
-    const serviceFiles = await listServiceFilesForWorkspace(absolutePathToDefinition);
+    const generatorsConfiguration = await loadGeneratorsConfiguration({ pathToWorkspace, pathToFernDirectory });
+    const pathToDefinition = join(pathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY));
+    const serviceFiles = await listServiceFilesForWorkspace(pathToDefinition);
 
     const parseResult = await parseYamlFiles(serviceFiles);
     if (!parseResult.didSucceed) {
@@ -30,7 +32,7 @@ export async function loadWorkspace({
         return structuralValidationResult;
     }
 
-    const rootApiFile = await readFile(path.join(absolutePathToDefinition, ROOT_API_FILENAME));
+    const rootApiFile = await readFile(path.join(pathToDefinition, ROOT_API_FILENAME));
     const parsedRootApiFile = yaml.load(rootApiFile.toString());
     const validatedRootApiFile = await validateSchema(RootApiFileSchema, parsedRootApiFile);
 
@@ -38,8 +40,8 @@ export async function loadWorkspace({
         didSucceed: true,
         workspace: {
             name: validatedRootApiFile.name,
-            absolutePathToWorkspace,
-            absolutePathToDefinition,
+            pathToWorkspace,
+            pathToDefinition,
             generatorsConfiguration,
             rootApiFile: validatedRootApiFile,
             serviceFiles: structuralValidationResult.validatedFiles,

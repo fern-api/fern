@@ -3,14 +3,16 @@ import { GeneratorsConfiguration } from "./GeneratorsConfiguration";
 import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfigurationSchema";
 
 export function convertGeneratorsConfiguration({
-    absolutePathToGeneratorsConfiguration,
+    pathToFernDirectory,
+    pathToGeneratorsConfiguration,
     rawGeneratorsConfiguration,
 }: {
-    absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
+    pathToFernDirectory: AbsoluteFilePath;
+    pathToGeneratorsConfiguration: AbsoluteFilePath;
     rawGeneratorsConfiguration: GeneratorsConfigurationSchema;
 }): GeneratorsConfiguration {
     return {
-        absolutePathToConfiguration: absolutePathToGeneratorsConfiguration,
+        pathToConfiguration: pathToGeneratorsConfiguration,
         rawConfiguration: rawGeneratorsConfiguration,
         draft:
             rawGeneratorsConfiguration.draft != null
@@ -19,12 +21,10 @@ export function convertGeneratorsConfiguration({
                           type: "draft",
                           name: draftInvocation.name,
                           version: draftInvocation.version,
-                          absolutePathToLocalOutput:
-                              draftInvocation["local-output"] != null
-                                  ? resolve(
-                                        dirname(absolutePathToGeneratorsConfiguration),
-                                        draftInvocation["local-output"]
-                                    )
+                          shouldPublishToFernRegistry: draftInvocation["publish-to-fern-registry"] ?? true,
+                          pathToLocalOutput:
+                              draftInvocation["output-directory"] != null
+                                  ? resolve(dirname(pathToFernDirectory), draftInvocation["output-directory"])
                                   : undefined,
                           config: draftInvocation.config,
                       };

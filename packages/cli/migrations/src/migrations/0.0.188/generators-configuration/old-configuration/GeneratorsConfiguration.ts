@@ -2,7 +2,7 @@ import { AbsoluteFilePath } from "@fern-api/core-utils";
 import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfigurationSchema";
 
 export interface GeneratorsConfiguration {
-    absolutePathToConfiguration: AbsoluteFilePath;
+    pathToConfiguration: AbsoluteFilePath;
     rawConfiguration: GeneratorsConfigurationSchema;
     generators: GeneratorInvocation[];
 }
@@ -15,5 +15,5 @@ export interface GeneratorInvocation {
 }
 
 export interface GenerateConfig {
-    absolutePathToLocalOutput: AbsoluteFilePath | undefined;
+    pathToLocalOutput: AbsoluteFilePath | undefined;
 }

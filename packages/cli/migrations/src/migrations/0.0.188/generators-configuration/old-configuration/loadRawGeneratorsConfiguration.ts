@@ -5,11 +5,11 @@ import yaml from "js-yaml";
 import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfigurationSchema";
 
 export async function loadRawGeneratorsConfiguration({
-    absolutePathToGeneratorsConfiguration,
+    pathToGeneratorsConfiguration,
 }: {
-    absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
+    pathToGeneratorsConfiguration: AbsoluteFilePath;
 }): Promise<GeneratorsConfigurationSchema> {
-    const contentsStr = await readFile(absolutePathToGeneratorsConfiguration);
+    const contentsStr = await readFile(pathToGeneratorsConfiguration);
     const contentsParsed = yaml.load(contentsStr.toString());
     return await validateSchema(GeneratorsConfigurationSchema, contentsParsed);
 }

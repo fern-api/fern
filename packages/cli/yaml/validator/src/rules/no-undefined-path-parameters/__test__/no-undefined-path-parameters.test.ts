@@ -6,7 +6,7 @@ describe("no-undefined-path-parameters", () => {
     it("simple", async () => {
         const violations = await getViolationsForRule({
             rule: NoUndefinedPathParametersRule,
-            absolutePathToWorkspace: join(
+            pathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")

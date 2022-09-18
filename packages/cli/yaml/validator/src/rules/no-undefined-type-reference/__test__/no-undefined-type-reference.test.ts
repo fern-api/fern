@@ -6,7 +6,7 @@ describe("no-undefined-type-reference", () => {
     it("simple", async () => {
         const violations = await getViolationsForRule({
             rule: NoUndefinedTypeReferenceRule,
-            absolutePathToWorkspace: join(
+            pathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")

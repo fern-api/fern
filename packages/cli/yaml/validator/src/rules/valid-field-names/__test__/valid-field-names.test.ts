@@ -7,7 +7,7 @@ describe("valid-field-names", () => {
     it("simple", async () => {
         const violations = await getViolationsForRule({
             rule: ValidFieldNamesRule,
-            absolutePathToWorkspace: join(
+            pathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")

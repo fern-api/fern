@@ -6,7 +6,7 @@ describe("no-duplicate-field-names", () => {
     it("simple", async () => {
         const violations = await getViolationsForRule({
             rule: NoDuplicateFieldNamesRule,
-            absolutePathToWorkspace: join(
+            pathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")

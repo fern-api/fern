@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, entries } from "@fern-api/core-utils";
+import { AbsoluteFilePath, entries, join, RelativeFilePath } from "@fern-api/core-utils";
 import { NOOP_LOGGER } from "@fern-api/logger";
 import { loadWorkspace } from "@fern-api/workspace-loader";
 import { visitFernYamlAst } from "@fern-api/yaml-schema";
@@ -10,16 +10,17 @@ import { ValidationViolation } from "../ValidationViolation";
 export declare namespace getViolationsForRule {
     export interface Args {
         rule: Rule;
-        absolutePathToWorkspace: AbsoluteFilePath;
+        pathToWorkspace: AbsoluteFilePath;
     }
 }
 
 export async function getViolationsForRule({
     rule,
-    absolutePathToWorkspace,
+    pathToWorkspace,
 }: getViolationsForRule.Args): Promise<ValidationViolation[]> {
     const parseResult = await loadWorkspace({
-        absolutePathToWorkspace,
+        pathToWorkspace,
+        pathToFernDirectory: join(pathToWorkspace, RelativeFilePath.of("..")),
     });
     if (!parseResult.didSucceed) {
         throw new Error("Failed to parse workspace: " + JSON.stringify(parseResult));

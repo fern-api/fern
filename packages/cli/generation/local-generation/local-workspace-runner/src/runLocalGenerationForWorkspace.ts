@@ -30,8 +30,8 @@ export async function runLocalGenerationForWorkspace({
         prefix: "fern",
     });
 
-    const absolutePathToIr = join(AbsoluteFilePath.of(workspaceTempDir.path), RelativeFilePath.of("ir.json"));
-    await writeFile(absolutePathToIr, JSON.stringify(intermediateRepresentation));
+    const pathToIr = join(AbsoluteFilePath.of(workspaceTempDir.path), RelativeFilePath.of("ir.json"));
+    await writeFile(pathToIr, JSON.stringify(intermediateRepresentation));
 
     await Promise.all(
         workspace.generatorsConfiguration.draft.map(async (generatorInvocation) =>
@@ -40,7 +40,7 @@ export async function runLocalGenerationForWorkspace({
                 workspace,
                 generatorInvocation,
                 workspaceTempDir,
-                absolutePathToIr,
+                pathToIr,
                 keepDocker,
             })
         )
@@ -52,31 +52,31 @@ async function loadHelpersAndRunGenerator({
     workspace,
     generatorInvocation,
     workspaceTempDir,
-    absolutePathToIr,
+    pathToIr,
     keepDocker,
 }: {
     organization: string;
     workspace: Workspace;
     generatorInvocation: DraftGeneratorInvocation;
     workspaceTempDir: DirectoryResult;
-    absolutePathToIr: AbsoluteFilePath;
+    pathToIr: AbsoluteFilePath;
     keepDocker: boolean;
 }): Promise<void> {
     const configJson = await tmp.file({
         tmpdir: workspaceTempDir.path,
     });
-    const absolutePathToWriteConfigJson = AbsoluteFilePath.of(configJson.path);
+    const pathToWriteConfigJson = AbsoluteFilePath.of(configJson.path);
 
-    if (generatorInvocation.absolutePathToLocalOutput != null) {
-        await rm(generatorInvocation.absolutePathToLocalOutput, { force: true, recursive: true });
-        await mkdir(generatorInvocation.absolutePathToLocalOutput, { recursive: true });
+    if (generatorInvocation.pathToLocalOutput != null) {
+        await rm(generatorInvocation.pathToLocalOutput, { force: true, recursive: true });
+        await mkdir(generatorInvocation.pathToLocalOutput, { recursive: true });
     }
 
     await runGenerator({
         imageName: `${generatorInvocation.name}:${generatorInvocation.version}`,
-        absolutePathToOutput: generatorInvocation.absolutePathToLocalOutput,
-        absolutePathToIr,
-        absolutePathToWriteConfigJson,
+        pathToOutput: generatorInvocation.pathToLocalOutput,
+        pathToIr,
+        pathToWriteConfigJson,
         customConfig: generatorInvocation.config,
         workspaceName: workspace.name,
         organization,

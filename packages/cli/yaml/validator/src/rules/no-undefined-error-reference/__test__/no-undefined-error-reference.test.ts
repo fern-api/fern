@@ -6,7 +6,7 @@ describe("no-undefined-error-reference", () => {
     it("simple", async () => {
         const violations = await getViolationsForRule({
             rule: NoUndefinedErrorReferenceRule,
-            absolutePathToWorkspace: join(
+            pathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")

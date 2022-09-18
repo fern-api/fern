@@ -6,7 +6,7 @@ describe("no-duplicate-enum-values", () => {
     it("simple", async () => {
         const violations = await getViolationsForRule({
             rule: NoDuplicateEnumValuesRule,
-            absolutePathToWorkspace: join(
+            pathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")

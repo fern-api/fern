@@ -16,9 +16,9 @@ export declare namespace runGenerator {
         workspaceName: string;
         organization: string;
 
-        absolutePathToIr: AbsoluteFilePath;
-        absolutePathToOutput: AbsoluteFilePath | undefined;
-        absolutePathToWriteConfigJson: AbsoluteFilePath;
+        pathToIr: AbsoluteFilePath;
+        pathToOutput: AbsoluteFilePath | undefined;
+        pathToWriteConfigJson: AbsoluteFilePath;
 
         keepDocker: boolean;
     }
@@ -28,19 +28,19 @@ export async function runGenerator({
     imageName,
     workspaceName,
     organization,
-    absolutePathToOutput,
-    absolutePathToIr,
-    absolutePathToWriteConfigJson,
+    pathToOutput,
+    pathToIr,
+    pathToWriteConfigJson,
     customConfig,
     keepDocker,
 }: runGenerator.Args): Promise<void> {
     const binds = [
-        `${absolutePathToWriteConfigJson}:${DOCKER_GENERATOR_CONFIG_PATH}:ro`,
-        `${absolutePathToIr}:${DOCKER_PATH_TO_IR}:ro`,
+        `${pathToWriteConfigJson}:${DOCKER_GENERATOR_CONFIG_PATH}:ro`,
+        `${pathToIr}:${DOCKER_PATH_TO_IR}:ro`,
     ];
 
-    if (absolutePathToOutput != null) {
-        binds.push(`${absolutePathToOutput}:${DOCKER_CODEGEN_OUTPUT_DIRECTORY}`);
+    if (pathToOutput != null) {
+        binds.push(`${pathToOutput}:${DOCKER_CODEGEN_OUTPUT_DIRECTORY}`);
     }
 
     const { config, binds: bindsForGenerators } = getGeneratorConfig({
@@ -50,7 +50,7 @@ export async function runGenerator({
     });
     binds.push(...bindsForGenerators);
 
-    await writeFile(absolutePathToWriteConfigJson, JSON.stringify(config, undefined, 4));
+    await writeFile(pathToWriteConfigJson, JSON.stringify(config, undefined, 4));
 
     await runDocker({
         imageName,
