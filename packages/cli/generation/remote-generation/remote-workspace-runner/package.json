@@ -31,7 +31,7 @@
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/fiddle-client-v2": "^0.0.18",
-    "@fern-fern/ir-model": "0.0.204",
+    "@fern-fern/ir-model": "0.0.205",
     "axios": "^0.27.2",
     "chalk": "^5.0.1",
     "form-data": "^4.0.0",
