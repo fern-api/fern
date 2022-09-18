@@ -27,7 +27,11 @@ export function getReferencedTypesFromRawDeclaration({
         object: (objectDeclaration) => {
             const types: string[] = [];
             if (objectDeclaration.extends != null) {
-                types.push(...objectDeclaration.extends);
+                const extendsArr =
+                    typeof objectDeclaration.extends === "string"
+                        ? [objectDeclaration.extends]
+                        : objectDeclaration.extends;
+                types.push(...extendsArr);
             }
             if (objectDeclaration.properties != null) {
                 types.push(

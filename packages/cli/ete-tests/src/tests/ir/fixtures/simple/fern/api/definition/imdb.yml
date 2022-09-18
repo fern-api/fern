@@ -19,6 +19,7 @@ types:
       director: director.Director
       producer: {}
   RecursiveType:
+    extends: CreateMovieRequest
     properties:
       selfRefrencing: list<RecursiveType>
 errors:
