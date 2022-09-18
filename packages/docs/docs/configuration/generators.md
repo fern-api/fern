@@ -20,9 +20,9 @@ Here's an example [using multiple generators](https://github.com/fern-api/fern-e
 
 ## Draft
 
-Generators in the `draft` list will publish to a private registry managed by Fern. Use this when your API is a work-in-progress. By default, code generators you add will show up as a draft.
+Generators in the `draft` list are used when you're editing your API. By default, the generated code is published to a private registry managed my Fern.
 
-[Add a generator](../cli/add.md) in the CLI. For example, when we add the `typescript` generator:
+[Add a generator](../cli/add.md) in the CLI. For example, when we add the `typescript` generator with `fern add typescript`:
 
 ```diff
 # generators.yml
@@ -31,6 +31,35 @@ draft:
 +   version: 0.0.xxx
 +   config:
 +     mode: client_and_server
+release: []
+```
+
+You can also configure your generators to download the code locally. To do this, use `output-directory`:
+
+```diff
+# generators.yml
+draft:
+  - name: fernapi/typescript
+    version: 0.0.xxx
++   # output directory is relative to your project's root
++   output-directory: path/to/generated
+    config:
+      mode: client_and_server
+release: []
+```
+
+You can also disable publishing the generated code to Fern's private registries:
+
+```diff
+# generators.yml
+draft:
+  - name: fernapi/typescript
+    version: 0.0.xxx
+    # output directory is relative to your project's root
+    output-directory: path/to/generated
++   publish-to-fern-registry: false
+    config:
+      mode: client_and_server
 release: []
 ```
 
