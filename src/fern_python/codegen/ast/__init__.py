@@ -23,7 +23,6 @@ from .nodes import (
 )
 from .references import (
     ClassReference,
-    ImportConstraint,
     Module,
     ModulePath,
     QualifiedName,
@@ -57,7 +56,6 @@ __all__ = [
     "Expression",
     "FunctionInvocation",
     "GenericTypeVar",
-    "ImportConstraint",
     "Module",
     "QualifiedName",
 ]

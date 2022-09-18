@@ -88,7 +88,160 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "WithDocs",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "AuthSchemesRequirement",
+          "fernFilepath": [
+            {
+              "originalValue": "auth",
+              "camelCase": "auth",
+              "snakeCase": "auth",
+              "pascalCase": "Auth",
+              "screamingSnakeCase": "AUTH"
+            }
+          ]
+        },
+        {
+          "name": "AuthScheme",
+          "fernFilepath": [
+            {
+              "originalValue": "auth",
+              "camelCase": "auth",
+              "snakeCase": "auth",
+              "pascalCase": "Auth",
+              "screamingSnakeCase": "AUTH"
+            }
+          ]
+        },
+        {
+          "name": "HttpHeader",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "WireStringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "TypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ContainerType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "MapType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredTypeName",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "PrimitiveType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -129,7 +282,8 @@
           }
         ],
         "_type": "enum"
-      }
+      },
+      "referencedTypes": []
     },
     {
       "name": {
@@ -279,7 +433,136 @@
           }
         ],
         "_type": "union"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "WithDocs",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "HttpHeader",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "WireStringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "TypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ContainerType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "MapType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredTypeName",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "PrimitiveType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -319,7 +602,8 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": []
     },
     {
       "name": {
@@ -374,7 +658,21 @@
           "_type": "container"
         },
         "_type": "alias"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -421,7 +719,21 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -511,7 +823,8 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": []
     },
     {
       "name": {
@@ -642,7 +955,297 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "WithDocs",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredErrorName",
+          "fernFilepath": [
+            {
+              "originalValue": "errors",
+              "camelCase": "errors",
+              "snakeCase": "errors",
+              "pascalCase": "Errors",
+              "screamingSnakeCase": "ERRORS"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "WireStringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "Type",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "AliasTypeDeclaration",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "TypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ContainerType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "MapType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredTypeName",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "PrimitiveType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ResolvedTypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ResolvedNamedType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ShapeType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "EnumTypeDeclaration",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "EnumValue",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ObjectTypeDeclaration",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ObjectProperty",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "UnionTypeDeclaration",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "SingleUnionType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "SingleUnionTypeProperties",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "SingleUnionTypeProperty",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "HttpErrorConfiguration",
+          "fernFilepath": [
+            {
+              "originalValue": "errors",
+              "camelCase": "errors",
+              "snakeCase": "errors",
+              "pascalCase": "Errors",
+              "screamingSnakeCase": "ERRORS"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -699,7 +1302,33 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -733,7 +1362,8 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": []
     },
     {
       "docs": "Complete representation of the API schema",
@@ -897,7 +1527,761 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "ApiAuth",
+          "fernFilepath": [
+            {
+              "originalValue": "auth",
+              "camelCase": "auth",
+              "snakeCase": "auth",
+              "pascalCase": "Auth",
+              "screamingSnakeCase": "AUTH"
+            }
+          ]
+        },
+        {
+          "name": "WithDocs",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "AuthSchemesRequirement",
+          "fernFilepath": [
+            {
+              "originalValue": "auth",
+              "camelCase": "auth",
+              "snakeCase": "auth",
+              "pascalCase": "Auth",
+              "screamingSnakeCase": "AUTH"
+            }
+          ]
+        },
+        {
+          "name": "AuthScheme",
+          "fernFilepath": [
+            {
+              "originalValue": "auth",
+              "camelCase": "auth",
+              "snakeCase": "auth",
+              "pascalCase": "Auth",
+              "screamingSnakeCase": "AUTH"
+            }
+          ]
+        },
+        {
+          "name": "HttpHeader",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "WireStringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "TypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ContainerType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "MapType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredTypeName",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "PrimitiveType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "TypeDeclaration",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "Type",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "AliasTypeDeclaration",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ResolvedTypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ResolvedNamedType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ShapeType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "EnumTypeDeclaration",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "EnumValue",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ObjectTypeDeclaration",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ObjectProperty",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "UnionTypeDeclaration",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "SingleUnionType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "SingleUnionTypeProperties",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "SingleUnionTypeProperty",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "Services",
+          "fernFilepath": [
+            {
+              "originalValue": "ir",
+              "camelCase": "ir",
+              "snakeCase": "ir",
+              "pascalCase": "Ir",
+              "screamingSnakeCase": "IR"
+            }
+          ]
+        },
+        {
+          "name": "HttpService",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredServiceName",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "HttpPath",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "HttpPathPart",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "HttpEndpoint",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "HttpEndpointId",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "HttpMethod",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "PathParameter",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "QueryParameter",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "HttpRequest",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "HttpResponse",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "ResponseErrors",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "ResponseError",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredErrorName",
+          "fernFilepath": [
+            {
+              "originalValue": "errors",
+              "camelCase": "errors",
+              "snakeCase": "errors",
+              "pascalCase": "Errors",
+              "screamingSnakeCase": "ERRORS"
+            }
+          ]
+        },
+        {
+          "name": "WebSocketChannel",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "websocket",
+              "camelCase": "websocket",
+              "snakeCase": "websocket",
+              "pascalCase": "Websocket",
+              "screamingSnakeCase": "WEBSOCKET"
+            }
+          ]
+        },
+        {
+          "name": "WebSocketMessenger",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "websocket",
+              "camelCase": "websocket",
+              "snakeCase": "websocket",
+              "pascalCase": "Websocket",
+              "screamingSnakeCase": "WEBSOCKET"
+            }
+          ]
+        },
+        {
+          "name": "WebSocketOperation",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "websocket",
+              "camelCase": "websocket",
+              "snakeCase": "websocket",
+              "pascalCase": "Websocket",
+              "screamingSnakeCase": "WEBSOCKET"
+            }
+          ]
+        },
+        {
+          "name": "WebSocketRequest",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "websocket",
+              "camelCase": "websocket",
+              "snakeCase": "websocket",
+              "pascalCase": "Websocket",
+              "screamingSnakeCase": "WEBSOCKET"
+            }
+          ]
+        },
+        {
+          "name": "WebSocketResponse",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "websocket",
+              "camelCase": "websocket",
+              "snakeCase": "websocket",
+              "pascalCase": "Websocket",
+              "screamingSnakeCase": "WEBSOCKET"
+            }
+          ]
+        },
+        {
+          "name": "WebSocketOperationProperties",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "websocket",
+              "camelCase": "websocket",
+              "snakeCase": "websocket",
+              "pascalCase": "Websocket",
+              "screamingSnakeCase": "WEBSOCKET"
+            }
+          ]
+        },
+        {
+          "name": "ErrorDeclaration",
+          "fernFilepath": [
+            {
+              "originalValue": "errors",
+              "camelCase": "errors",
+              "snakeCase": "errors",
+              "pascalCase": "Errors",
+              "screamingSnakeCase": "ERRORS"
+            }
+          ]
+        },
+        {
+          "name": "HttpErrorConfiguration",
+          "fernFilepath": [
+            {
+              "originalValue": "errors",
+              "camelCase": "errors",
+              "snakeCase": "errors",
+              "pascalCase": "Errors",
+              "screamingSnakeCase": "ERRORS"
+            }
+          ]
+        },
+        {
+          "name": "FernConstants",
+          "fernFilepath": [
+            {
+              "originalValue": "ir",
+              "camelCase": "ir",
+              "snakeCase": "ir",
+              "pascalCase": "Ir",
+              "screamingSnakeCase": "IR"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -989,7 +2373,509 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "HttpService",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "WithDocs",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredServiceName",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "HttpPath",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "HttpPathPart",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "HttpEndpoint",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "HttpEndpointId",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "HttpMethod",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "HttpHeader",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "WireStringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "TypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ContainerType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "MapType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredTypeName",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "PrimitiveType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "PathParameter",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "QueryParameter",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "HttpRequest",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "HttpResponse",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "ResponseErrors",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "ResponseError",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredErrorName",
+          "fernFilepath": [
+            {
+              "originalValue": "errors",
+              "camelCase": "errors",
+              "snakeCase": "errors",
+              "pascalCase": "Errors",
+              "screamingSnakeCase": "ERRORS"
+            }
+          ]
+        },
+        {
+          "name": "WebSocketChannel",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "websocket",
+              "camelCase": "websocket",
+              "snakeCase": "websocket",
+              "pascalCase": "Websocket",
+              "screamingSnakeCase": "WEBSOCKET"
+            }
+          ]
+        },
+        {
+          "name": "WebSocketMessenger",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "websocket",
+              "camelCase": "websocket",
+              "snakeCase": "websocket",
+              "pascalCase": "Websocket",
+              "screamingSnakeCase": "WEBSOCKET"
+            }
+          ]
+        },
+        {
+          "name": "WebSocketOperation",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "websocket",
+              "camelCase": "websocket",
+              "snakeCase": "websocket",
+              "pascalCase": "Websocket",
+              "screamingSnakeCase": "WEBSOCKET"
+            }
+          ]
+        },
+        {
+          "name": "WebSocketRequest",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "websocket",
+              "camelCase": "websocket",
+              "snakeCase": "websocket",
+              "pascalCase": "Websocket",
+              "screamingSnakeCase": "WEBSOCKET"
+            }
+          ]
+        },
+        {
+          "name": "WebSocketResponse",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "websocket",
+              "camelCase": "websocket",
+              "snakeCase": "websocket",
+              "pascalCase": "Websocket",
+              "screamingSnakeCase": "WEBSOCKET"
+            }
+          ]
+        },
+        {
+          "name": "WebSocketOperationProperties",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "websocket",
+              "camelCase": "websocket",
+              "snakeCase": "websocket",
+              "pascalCase": "Websocket",
+              "screamingSnakeCase": "WEBSOCKET"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -1051,7 +2937,8 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": []
     },
     {
       "name": {
@@ -1115,7 +3002,33 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -1191,7 +3104,76 @@
           "_type": "container"
         },
         "_type": "alias"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "ResponseError",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "WithDocs",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredErrorName",
+          "fernFilepath": [
+            {
+              "originalValue": "errors",
+              "camelCase": "errors",
+              "snakeCase": "errors",
+              "pascalCase": "Errors",
+              "screamingSnakeCase": "ERRORS"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -1254,7 +3236,57 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "WithDocs",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredErrorName",
+          "fernFilepath": [
+            {
+              "originalValue": "errors",
+              "camelCase": "errors",
+              "snakeCase": "errors",
+              "pascalCase": "Errors",
+              "screamingSnakeCase": "ERRORS"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -1489,7 +3521,376 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "WithDocs",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredServiceName",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "HttpPath",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "HttpPathPart",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "HttpEndpoint",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "HttpEndpointId",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "HttpMethod",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "HttpHeader",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "WireStringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "TypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ContainerType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "MapType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredTypeName",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "PrimitiveType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "PathParameter",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "QueryParameter",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "HttpRequest",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "HttpResponse",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "ResponseErrors",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "ResponseError",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredErrorName",
+          "fernFilepath": [
+            {
+              "originalValue": "errors",
+              "camelCase": "errors",
+              "snakeCase": "errors",
+              "pascalCase": "Errors",
+              "screamingSnakeCase": "ERRORS"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -1521,7 +3922,8 @@
           "_type": "primitive"
         },
         "_type": "alias"
-      }
+      },
+      "referencedTypes": []
     },
     {
       "name": {
@@ -1886,7 +4288,338 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "WithDocs",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "HttpEndpointId",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "HttpMethod",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "HttpHeader",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "WireStringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "TypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ContainerType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "MapType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredTypeName",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "PrimitiveType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "HttpPath",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "HttpPathPart",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "PathParameter",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "QueryParameter",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "HttpRequest",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "HttpResponse",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        },
+        {
+          "name": "ResponseErrors",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "ResponseError",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredErrorName",
+          "fernFilepath": [
+            {
+              "originalValue": "errors",
+              "camelCase": "errors",
+              "snakeCase": "errors",
+              "pascalCase": "Errors",
+              "screamingSnakeCase": "ERRORS"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -1963,7 +4696,28 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "HttpPathPart",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "http",
+              "camelCase": "http",
+              "snakeCase": "http",
+              "pascalCase": "Http",
+              "screamingSnakeCase": "HTTP"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -2018,7 +4772,8 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": []
     },
     {
       "name": {
@@ -2099,7 +4854,8 @@
           }
         ],
         "_type": "enum"
-      }
+      },
+      "referencedTypes": []
     },
     {
       "name": {
@@ -2185,7 +4941,117 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "WithDocs",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "WireStringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "TypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ContainerType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "MapType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredTypeName",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "PrimitiveType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -2271,7 +5137,105 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "WithDocs",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "TypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ContainerType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "MapType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredTypeName",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "PrimitiveType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -2357,7 +5321,117 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "WithDocs",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "WireStringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "TypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ContainerType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "MapType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredTypeName",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "PrimitiveType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -2420,7 +5494,105 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "WithDocs",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "TypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ContainerType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "MapType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredTypeName",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "PrimitiveType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -2483,7 +5655,105 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "WithDocs",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "TypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ContainerType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "MapType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredTypeName",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "PrimitiveType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -2657,7 +5927,281 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "WithDocs",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredServiceName",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "WebSocketMessenger",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "websocket",
+              "camelCase": "websocket",
+              "snakeCase": "websocket",
+              "pascalCase": "Websocket",
+              "screamingSnakeCase": "WEBSOCKET"
+            }
+          ]
+        },
+        {
+          "name": "WebSocketOperation",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "websocket",
+              "camelCase": "websocket",
+              "snakeCase": "websocket",
+              "pascalCase": "Websocket",
+              "screamingSnakeCase": "WEBSOCKET"
+            }
+          ]
+        },
+        {
+          "name": "WireStringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "WebSocketRequest",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "websocket",
+              "camelCase": "websocket",
+              "snakeCase": "websocket",
+              "pascalCase": "Websocket",
+              "screamingSnakeCase": "WEBSOCKET"
+            }
+          ]
+        },
+        {
+          "name": "TypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ContainerType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "MapType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredTypeName",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "PrimitiveType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "WebSocketResponse",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "websocket",
+              "camelCase": "websocket",
+              "snakeCase": "websocket",
+              "pascalCase": "Websocket",
+              "screamingSnakeCase": "WEBSOCKET"
+            }
+          ]
+        },
+        {
+          "name": "ResponseErrors",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "ResponseError",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredErrorName",
+          "fernFilepath": [
+            {
+              "originalValue": "errors",
+              "camelCase": "errors",
+              "snakeCase": "errors",
+              "pascalCase": "Errors",
+              "screamingSnakeCase": "ERRORS"
+            }
+          ]
+        },
+        {
+          "name": "WebSocketOperationProperties",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "websocket",
+              "camelCase": "websocket",
+              "snakeCase": "websocket",
+              "pascalCase": "Websocket",
+              "screamingSnakeCase": "WEBSOCKET"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -2720,7 +6264,224 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "WebSocketOperation",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "websocket",
+              "camelCase": "websocket",
+              "snakeCase": "websocket",
+              "pascalCase": "Websocket",
+              "screamingSnakeCase": "WEBSOCKET"
+            }
+          ]
+        },
+        {
+          "name": "WithDocs",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "WireStringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "WebSocketRequest",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "websocket",
+              "camelCase": "websocket",
+              "snakeCase": "websocket",
+              "pascalCase": "Websocket",
+              "screamingSnakeCase": "WEBSOCKET"
+            }
+          ]
+        },
+        {
+          "name": "TypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ContainerType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "MapType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredTypeName",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "PrimitiveType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "WebSocketResponse",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "websocket",
+              "camelCase": "websocket",
+              "snakeCase": "websocket",
+              "pascalCase": "Websocket",
+              "screamingSnakeCase": "WEBSOCKET"
+            }
+          ]
+        },
+        {
+          "name": "ResponseErrors",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "ResponseError",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredErrorName",
+          "fernFilepath": [
+            {
+              "originalValue": "errors",
+              "camelCase": "errors",
+              "snakeCase": "errors",
+              "pascalCase": "Errors",
+              "screamingSnakeCase": "ERRORS"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -2873,7 +6634,205 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "WithDocs",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "WireStringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "WebSocketRequest",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "websocket",
+              "camelCase": "websocket",
+              "snakeCase": "websocket",
+              "pascalCase": "Websocket",
+              "screamingSnakeCase": "WEBSOCKET"
+            }
+          ]
+        },
+        {
+          "name": "TypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ContainerType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "MapType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredTypeName",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "PrimitiveType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "WebSocketResponse",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "websocket",
+              "camelCase": "websocket",
+              "snakeCase": "websocket",
+              "pascalCase": "Websocket",
+              "screamingSnakeCase": "WEBSOCKET"
+            }
+          ]
+        },
+        {
+          "name": "ResponseErrors",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "ResponseError",
+          "fernFilepath": [
+            {
+              "originalValue": "services",
+              "camelCase": "services",
+              "snakeCase": "services",
+              "pascalCase": "Services",
+              "screamingSnakeCase": "SERVICES"
+            },
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredErrorName",
+          "fernFilepath": [
+            {
+              "originalValue": "errors",
+              "camelCase": "errors",
+              "snakeCase": "errors",
+              "pascalCase": "Errors",
+              "screamingSnakeCase": "ERRORS"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -2936,7 +6895,105 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "WithDocs",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "TypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ContainerType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "MapType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredTypeName",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "PrimitiveType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -2999,7 +7056,105 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "WithDocs",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "TypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ContainerType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "MapType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredTypeName",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "PrimitiveType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -3068,7 +7223,8 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": []
     },
     {
       "docs": "A type, which is a name and a shape",
@@ -3145,10 +7301,306 @@
               ],
               "_type": "named"
             }
+          },
+          {
+            "name": {
+              "originalValue": "referencedTypes",
+              "camelCase": "referencedTypes",
+              "snakeCase": "referenced_types",
+              "pascalCase": "ReferencedTypes",
+              "screamingSnakeCase": "REFERENCED_TYPES",
+              "wireValue": "referencedTypes"
+            },
+            "valueType": {
+              "container": {
+                "set": {
+                  "name": "DeclaredTypeName",
+                  "fernFilepath": [
+                    {
+                      "originalValue": "types",
+                      "camelCase": "types",
+                      "snakeCase": "types",
+                      "pascalCase": "Types",
+                      "screamingSnakeCase": "TYPES"
+                    }
+                  ],
+                  "_type": "named"
+                },
+                "_type": "set"
+              },
+              "_type": "container"
+            },
+            "docs": "All other named types that this type references (directly or indirectly)"
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "WithDocs",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredTypeName",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "Type",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "AliasTypeDeclaration",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "TypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ContainerType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "MapType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "PrimitiveType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ResolvedTypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ResolvedNamedType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ShapeType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "EnumTypeDeclaration",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "EnumValue",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "WireStringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "ObjectTypeDeclaration",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ObjectProperty",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "UnionTypeDeclaration",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "SingleUnionType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "SingleUnionTypeProperties",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "SingleUnionTypeProperty",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -3205,7 +7657,33 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -3377,7 +7855,261 @@
           }
         ],
         "_type": "union"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "AliasTypeDeclaration",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "TypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ContainerType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "MapType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredTypeName",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "PrimitiveType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ResolvedTypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ResolvedNamedType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ShapeType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "EnumTypeDeclaration",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "EnumValue",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "WithDocs",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "WireStringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "ObjectTypeDeclaration",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ObjectProperty",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "UnionTypeDeclaration",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "SingleUnionType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "SingleUnionTypeProperties",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "SingleUnionTypeProperty",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -3443,7 +8175,129 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "TypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ContainerType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "MapType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredTypeName",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "PrimitiveType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ResolvedTypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ResolvedNamedType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ShapeType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -3633,7 +8487,117 @@
           }
         ],
         "_type": "union"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "ContainerType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "TypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredTypeName",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "PrimitiveType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "MapType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ResolvedNamedType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ShapeType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -3699,7 +8663,57 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "DeclaredTypeName",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "ShapeType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -3751,7 +8765,8 @@
           }
         ],
         "_type": "enum"
-      }
+      },
+      "referencedTypes": []
     },
     {
       "name": {
@@ -3800,7 +8815,57 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "EnumValue",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "WithDocs",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "WireStringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -3870,7 +8935,45 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "WithDocs",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "WireStringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -3949,7 +9052,129 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "DeclaredTypeName",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "ObjectProperty",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "WithDocs",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "WireStringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "TypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ContainerType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "MapType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "PrimitiveType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -4028,7 +9253,117 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "WithDocs",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "WireStringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "TypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ContainerType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "MapType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredTypeName",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "PrimitiveType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -4114,7 +9449,153 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "WireStringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "SingleUnionType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "WithDocs",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "TypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ContainerType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "MapType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredTypeName",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "PrimitiveType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "SingleUnionTypeProperties",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "SingleUnionTypeProperty",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -4217,7 +9698,141 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "WithDocs",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "WireStringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "TypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ContainerType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "MapType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredTypeName",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "PrimitiveType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "SingleUnionTypeProperties",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "SingleUnionTypeProperty",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -4333,7 +9948,117 @@
           }
         ],
         "_type": "union"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "DeclaredTypeName",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "SingleUnionTypeProperty",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "WireStringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "TypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ContainerType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "MapType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "PrimitiveType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -4399,7 +10124,105 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "WireStringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "TypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ContainerType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "MapType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredTypeName",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "PrimitiveType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -4589,7 +10412,93 @@
           }
         ],
         "_type": "union"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "ContainerType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "TypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredTypeName",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "PrimitiveType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "MapType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -4794,7 +10703,93 @@
           }
         ],
         "_type": "union"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "TypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ContainerType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "MapType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredTypeName",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "PrimitiveType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -4860,7 +10855,93 @@
           }
         ],
         "_type": "object"
-      }
+      },
+      "referencedTypes": [
+        {
+          "name": "TypeReference",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "ContainerType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "MapType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "DeclaredTypeName",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        },
+        {
+          "name": "FernFilepath",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "StringWithAllCasings",
+          "fernFilepath": [
+            {
+              "originalValue": "commons",
+              "camelCase": "commons",
+              "snakeCase": "commons",
+              "pascalCase": "Commons",
+              "screamingSnakeCase": "COMMONS"
+            }
+          ]
+        },
+        {
+          "name": "PrimitiveType",
+          "fernFilepath": [
+            {
+              "originalValue": "types",
+              "camelCase": "types",
+              "snakeCase": "types",
+              "pascalCase": "Types",
+              "screamingSnakeCase": "TYPES"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -4957,7 +11038,8 @@
           }
         ],
         "_type": "enum"
-      }
+      },
+      "referencedTypes": []
     }
   ],
   "errors": [],

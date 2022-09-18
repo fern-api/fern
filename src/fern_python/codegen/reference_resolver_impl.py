@@ -9,9 +9,7 @@ class ReferenceResolverImpl(AST.ReferenceResolver):
     def __init__(self, project_name: str, module_path_of_source_file: AST.ModulePath):
         self._project_name = project_name
         self._module_path_of_source_file = module_path_of_source_file
-        self._default_name_to_original_references: DefaultDict[AST.QualifiedName, Set[AST.Reference]] = defaultdict(
-            lambda: set()
-        )
+        self._default_name_to_original_references: DefaultDict[AST.QualifiedName, Set[AST.Reference]] = defaultdict(set)
         self._original_import_to_resolved_import: Optional[Dict[AST.ReferenceImport, AST.ReferenceImport]] = None
 
     def register_reference(self, reference: AST.Reference) -> None:
@@ -25,15 +23,20 @@ class ReferenceResolverImpl(AST.ReferenceResolver):
         self._original_import_to_resolved_import = {}
 
         for default_name, original_references in self._default_name_to_original_references.items():
-            if len(original_references) == 0:
-                continue
+            # get the set of all import-prefixes that result in this default name.
+            # if len(set) > 1, then there's a collision, so we need to alias the imports.
+            original_import_prefixes = set(
+                self._construct_qualified_import_prefix_for_reference(reference.import_)
+                for reference in original_references
+            )
 
             for original_reference in original_references:
                 if original_reference.import_ is None:
                     continue
+
                 resolved_import = (
                     original_reference.import_
-                    if len(original_references) == 1
+                    if len(original_import_prefixes) == 1
                     or original_reference.import_.module == self._module_path_of_source_file
                     else dataclasses.replace(
                         original_reference.import_,

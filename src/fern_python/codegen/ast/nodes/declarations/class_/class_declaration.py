@@ -4,8 +4,6 @@ from typing import List, Sequence, Set
 
 from ....ast_node import AstNode, GenericTypeVar, NodeWriter, ReferenceResolver
 from ....references import ClassReference, Reference
-from ...code_writer import CodeWriter
-from ...type_hint import TypeHint
 from ..function import FunctionDeclaration, FunctionParameter
 from ..variable import VariableDeclaration
 from .class_constructor import ClassConstructor
@@ -23,30 +21,34 @@ class ClassDeclaration(AstNode):
 
     def add_method(
         self,
-        name: str,
-        parameters: Sequence[FunctionParameter],
-        return_type: TypeHint,
-        body: CodeWriter,
+        declaration: FunctionDeclaration,
         is_static: bool = False,
     ) -> FunctionDeclaration:
-        parameters = parameters if is_static else [FunctionParameter(name="self")] + list(parameters)
-        decorators = (
-            [
-                Reference(
-                    qualified_name_excluding_import=("staticmethod",),
-                )
-            ]
-            if is_static
-            else None
+        """
+            - adds 'self' parameter to signature if not static
+            - adds @staticmethod decorator if static
+        returns new declaration
+        """
+        parameters = (
+            declaration.parameters if is_static else [FunctionParameter(name="self")] + list(declaration.parameters)
         )
+
+        decorators = (
+            list(declaration.decorators) + [Reference(qualified_name_excluding_import=("staticmethod",))]
+            if is_static
+            else declaration.decorators
+        )
+
         declaration = FunctionDeclaration(
-            name=name,
+            name=declaration.name,
             parameters=parameters,
-            return_type=return_type,
-            body=body,
+            return_type=declaration.return_type,
+            body=declaration.body,
             decorators=decorators,
         )
+
         self.statements.append(declaration)
+
         return declaration
 
     def add_class(self, declaration: ClassDeclaration) -> None:

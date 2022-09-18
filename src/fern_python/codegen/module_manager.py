@@ -17,7 +17,7 @@ class ModuleInfo:
 
 
 def create_empty_module_info() -> ModuleInfo:
-    return ModuleInfo(exports=defaultdict(lambda: set()))
+    return ModuleInfo(exports=defaultdict(set))
 
 
 class ModuleManager:

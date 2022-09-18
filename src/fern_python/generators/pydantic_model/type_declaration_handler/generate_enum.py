@@ -29,19 +29,21 @@ def generate_enum(name: ir_types.DeclaredTypeName, enum: ir_types.EnumTypeDeclar
         )
 
     enum_class.add_method(
-        name="_visit",
-        parameters=[
-            AST.FunctionParameter(
-                name=get_parameter_name_for_enum_value(value),
-                type_hint=AST.TypeHint.callable(
-                    parameters=[],
-                    return_type=AST.TypeHint(type=VISITOR_RETURN_TYPE),
-                ),
-            )
-            for value in enum.values
-        ],
-        return_type=AST.TypeHint.generic(VISITOR_RETURN_TYPE),
-        body=AST.CodeWriter(get_enum_body(enum)),
+        AST.FunctionDeclaration(
+            name="_visit",
+            parameters=[
+                AST.FunctionParameter(
+                    name=get_parameter_name_for_enum_value(value),
+                    type_hint=AST.TypeHint.callable(
+                        parameters=[],
+                        return_type=AST.TypeHint(type=VISITOR_RETURN_TYPE),
+                    ),
+                )
+                for value in enum.values
+            ],
+            return_type=AST.TypeHint.generic(VISITOR_RETURN_TYPE),
+            body=AST.CodeWriter(get_enum_body(enum)),
+        )
     )
 
 

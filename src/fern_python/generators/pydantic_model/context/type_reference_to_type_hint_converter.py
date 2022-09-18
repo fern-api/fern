@@ -8,27 +8,65 @@ class TypeReferenceToTypeHintConverter:
     def __init__(self, api_name: str):
         self._api_name = api_name
 
-    def get_type_hint_for_type_reference(self, type_reference: ir_types.TypeReference) -> AST.TypeHint:
+    def get_type_hint_for_type_reference(
+        self,
+        type_reference: ir_types.TypeReference,
+        must_import_after_current_declaration: bool = False,
+    ) -> AST.TypeHint:
         return type_reference._visit(
-            container=self._get_type_hint_for_container,
-            named=self._get_type_hint_for_named,
+            container=lambda container: self._get_type_hint_for_container(
+                container=container,
+                must_import_after_current_declaration=must_import_after_current_declaration,
+            ),
+            named=lambda type_name: self._get_type_hint_for_named(
+                type_name=type_name,
+                must_import_after_current_declaration=must_import_after_current_declaration,
+            ),
             primitive=self._get_type_hint_for_primitive,
             unknown=AST.TypeHint.any,
             void=AST.TypeHint.none,
         )
 
-    def _get_type_hint_for_container(self, container: ir_types.ContainerType) -> AST.TypeHint:
+    def _get_type_hint_for_container(
+        self, container: ir_types.ContainerType, must_import_after_current_declaration: bool
+    ) -> AST.TypeHint:
         return container._visit(
-            list=lambda wrapped_type: AST.TypeHint.list(self.get_type_hint_for_type_reference(wrapped_type)),
-            map=lambda map_type: AST.TypeHint.dict(
-                key_type=self.get_type_hint_for_type_reference(map_type.key_type),
-                value_type=self.get_type_hint_for_type_reference(map_type.value_type),
+            list=lambda wrapped_type: AST.TypeHint.list(
+                self.get_type_hint_for_type_reference(
+                    type_reference=wrapped_type,
+                    must_import_after_current_declaration=must_import_after_current_declaration,
+                )
             ),
-            set=lambda wrapped_type: AST.TypeHint.set(self.get_type_hint_for_type_reference(wrapped_type)),
-            optional=lambda wrapped_type: AST.TypeHint.optional(self.get_type_hint_for_type_reference(wrapped_type)),
+            map=lambda map_type: AST.TypeHint.dict(
+                key_type=self.get_type_hint_for_type_reference(
+                    type_reference=map_type.key_type,
+                    must_import_after_current_declaration=must_import_after_current_declaration,
+                ),
+                value_type=self.get_type_hint_for_type_reference(
+                    type_reference=map_type.value_type,
+                    must_import_after_current_declaration=must_import_after_current_declaration,
+                ),
+            ),
+            # Fern sets become Pydanic lists, since Pydantic models aren't hashable
+            set=lambda wrapped_type: AST.TypeHint.list(
+                self.get_type_hint_for_type_reference(
+                    type_reference=wrapped_type,
+                    must_import_after_current_declaration=must_import_after_current_declaration,
+                )
+            ),
+            optional=lambda wrapped_type: AST.TypeHint.optional(
+                self.get_type_hint_for_type_reference(
+                    type_reference=wrapped_type,
+                    must_import_after_current_declaration=must_import_after_current_declaration,
+                )
+            ),
         )
 
-    def _get_type_hint_for_named(self, type_name: ir_types.DeclaredTypeName) -> AST.TypeHint:
+    def _get_type_hint_for_named(
+        self,
+        type_name: ir_types.DeclaredTypeName,
+        must_import_after_current_declaration: bool,
+    ) -> AST.TypeHint:
         filepath = get_filepath_for_type(
             type_name=type_name,
             api_name=self._api_name,
@@ -37,6 +75,7 @@ class TypeReferenceToTypeHintConverter:
             import_=AST.ReferenceImport(
                 module=filepath.to_module(),
                 named_import=type_name.name,
+                must_import_after_current_declaration=must_import_after_current_declaration,
             ),
             qualified_name_excluding_import=(),
         )
