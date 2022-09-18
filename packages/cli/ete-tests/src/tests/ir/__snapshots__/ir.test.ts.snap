@@ -476,7 +476,20 @@ exports[`ir simple 1`] = `
                 "name": "RecursiveType"
             },
             "shape": {
-                "extends": [],
+                "extends": [
+                    {
+                        "name": "CreateMovieRequest",
+                        "fernFilepath": [
+                            {
+                                "originalValue": "imdb",
+                                "camelCase": "imdb",
+                                "snakeCase": "imdb",
+                                "pascalCase": "Imdb",
+                                "screamingSnakeCase": "IMDB"
+                            }
+                        ]
+                    }
+                ],
                 "properties": [
                     {
                         "name": {
@@ -511,6 +524,18 @@ exports[`ir simple 1`] = `
                 "_type": "object"
             },
             "referencedTypes": [
+                {
+                    "name": "CreateMovieRequest",
+                    "fernFilepath": [
+                        {
+                            "originalValue": "imdb",
+                            "camelCase": "imdb",
+                            "snakeCase": "imdb",
+                            "pascalCase": "Imdb",
+                            "screamingSnakeCase": "IMDB"
+                        }
+                    ]
+                },
                 {
                     "name": "RecursiveType",
                     "fernFilepath": [
