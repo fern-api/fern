@@ -18,19 +18,19 @@ class TypeHint(AstNode):
         self._type_parameters = type_parameters or []
 
     @staticmethod
-    def str() -> TypeHint:
+    def str_() -> TypeHint:
         return TypeHint(type=get_reference_to_built_in_primitive("str"))
 
     @staticmethod
-    def bool() -> TypeHint:
+    def bool_() -> TypeHint:
         return TypeHint(type=get_reference_to_built_in_primitive("bool"))
 
     @staticmethod
-    def int() -> TypeHint:
+    def int_() -> TypeHint:
         return TypeHint(type=get_reference_to_built_in_primitive("int"))
 
     @staticmethod
-    def float() -> TypeHint:
+    def float_() -> TypeHint:
         return TypeHint(type=get_reference_to_built_in_primitive("float"))
 
     @staticmethod
@@ -95,6 +95,13 @@ class TypeHint(AstNode):
                 qualified_name_excluding_import=("Annotated",),
             ),
             type_parameters=[TypeParameter(annotation)],
+        )
+
+    @staticmethod
+    def literal(value: str) -> TypeHint:
+        return TypeHint(
+            type=get_reference_to_typing_import("Literal"),
+            type_parameters=[TypeParameter(CodeWriter(value))],
         )
 
     def get_references(self) -> Set[Reference]:

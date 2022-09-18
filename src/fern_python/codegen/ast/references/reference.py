@@ -17,7 +17,7 @@ class ReferenceImport:
     """
     in Python 3.7+, annotations can be imported after they're used, with:
       from __future__ import annotations.
-    from non-annotation references, this field is ignored.
+    in non-annotation references, this field is ignored.
     """
 
 

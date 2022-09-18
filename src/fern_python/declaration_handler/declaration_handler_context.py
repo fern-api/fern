@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Set, Tuple
+from typing import Callable, Optional, Set, Tuple
 
 from fern_python.codegen import AST, SourceFile
 from fern_python.generated import ir_types
@@ -16,7 +16,7 @@ class DeclarationHandlerContext(ABC):
     def get_type_hint_for_type_reference(
         self,
         type_reference: ir_types.TypeReference,
-        must_import_after_current_declaration: bool = False,
+        must_import_after_current_declaration: Optional[Callable[[ir_types.DeclaredTypeName], bool]] = None,
     ) -> AST.TypeHint:
         ...
 

@@ -17,18 +17,35 @@ class WriterImpl(AST.Writer):
         self._filepath = filepath
         self._indent = 0
         self._file: IO[Any]
+        self._has_written_anything = False
         self._last_character_is_newline = False
 
     def write(self, content: str) -> None:
-        prefix = self._get_indent_str()
-        content_with_prefix = content.replace("\n", f"\n{prefix}")
-        self._write(content_with_prefix)
-        self._last_character_is_newline = len(content) > 0 and content[-1] == "\n"
+        content_ends_in_newline = len(content) > 0 and content[-1] == "\n"
+
+        # temporarily remove the trailing newline, since we don't want to add the prefix after it
+        content_without_trailing_newline = content[:-1] if content_ends_in_newline else content
+
+        # indent all lines
+        indent = self._get_indent_str()
+        indented_content = content_without_trailing_newline.replace("\n", f"\n{indent}")
+        if self._is_at_start_of_line():
+            indented_content = indent + indented_content
+        if content_ends_in_newline:
+            indented_content += "\n"
+
+        self._write(indented_content)
+
+    def _is_at_start_of_line(self) -> bool:
+        return self._last_character_is_newline or not self._has_written_anything
 
     def _get_indent_str(self) -> str:
         return "\t" * self._indent
 
     def _write(self, content: str) -> None:
+        if len(content) > 0:
+            self._has_written_anything = True
+            self._last_character_is_newline = content[-1] == "\n"
         self._file.write(content)
 
     def write_line(self, content: str) -> None:

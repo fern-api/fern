@@ -45,7 +45,7 @@ class TypeDeclarationHandler(DeclarationHandler[ir_types.TypeDeclaration]):
                 json_field_name=property.name.wire_value,
             )
 
-        self._context.source_file.add_declaration(pydantic_model.finish())
+        pydantic_model.add_to_source_file()
 
     def _generate_union(self, union: ir_types.UnionTypeDeclaration) -> None:
         generate_union(

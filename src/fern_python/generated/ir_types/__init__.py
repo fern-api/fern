@@ -21,6 +21,8 @@ from .types import (
     ResolvedNamedType,
     ResolvedTypeReference,
     SingleUnionType,
+    SingleUnionTypeProperties,
+    SingleUnionTypeProperty,
     Type,
     TypeDeclaration,
     TypeReference,
@@ -58,4 +60,6 @@ __all__ = [
     "ErrorDeclaration",
     "ResolvedTypeReference",
     "ResolvedNamedType",
+    "SingleUnionTypeProperty",
+    "SingleUnionTypeProperties",
 ]

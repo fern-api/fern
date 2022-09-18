@@ -10,6 +10,8 @@ from .primitive_type import PrimitiveType
 from .resolved_named_type import ResolvedNamedType
 from .resolved_type_reference import ResolvedTypeReference
 from .single_union_type import SingleUnionType
+from .single_union_type_properties import SingleUnionTypeProperties
+from .single_union_type_property import SingleUnionTypeProperty
 from .type import Type
 from .type_declaration import TypeDeclaration
 from .type_reference import TypeReference
@@ -32,4 +34,6 @@ __all__ = [
     "PrimitiveType",
     "ResolvedTypeReference",
     "ResolvedNamedType",
+    "SingleUnionTypeProperty",
+    "SingleUnionTypeProperties",
 ]

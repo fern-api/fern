@@ -1,4 +1,4 @@
-from typing import Set
+from typing import Callable, Optional, Set
 
 from fern_python.codegen import AST, SourceFile
 from fern_python.declaration_handler import (
@@ -31,7 +31,7 @@ class DeclarationHandlerContextImpl(DeclarationHandlerContext):
     def get_type_hint_for_type_reference(
         self,
         type_reference: ir_types.TypeReference,
-        must_import_after_current_declaration: bool = False,
+        must_import_after_current_declaration: Optional[Callable[[ir_types.DeclaredTypeName], bool]] = None,
     ) -> AST.TypeHint:
         return self._type_reference_to_type_hint_converter.get_type_hint_for_type_reference(
             type_reference,

@@ -65,6 +65,9 @@ class TypeReference(pydantic.BaseModel):
             return void()
 
 
+from .container_type import ContainerType  # noqa: E402
+
+
 class _TypeReference:
     class Container(pydantic.BaseModel):
         type: typing.Literal["container"] = pydantic.Field(alias="_type")
@@ -99,7 +102,4 @@ class _TypeReference:
             allow_population_by_field_name = True
 
 
-from .container_type import ContainerType  # noqa: E402
-
 TypeReference.update_forward_refs()
-_TypeReference.Container.update_forward_refs()

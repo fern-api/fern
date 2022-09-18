@@ -23,6 +23,14 @@ class SourceFile(ABC):
         ...
 
     @abstractmethod
+    def add_arbitrary_code(self, code: AST.CodeWriter) -> None:
+        ...
+
+    @abstractmethod
+    def add_footer_expression(self, expression: AST.Expression) -> None:
+        ...
+
+    @abstractmethod
     def finish(self) -> None:
         ...
 
@@ -56,6 +64,7 @@ class SourceFileImpl(SourceFile):
         self._completion_listener = completion_listener
         self._statements: List[TopLevelStatement] = []
         self._exports: Set[str] = set()
+        self._footer_statements: List[TopLevelStatement] = []
 
     def add_declaration(
         self,
@@ -69,10 +78,13 @@ class SourceFileImpl(SourceFile):
     def add_arbitrary_code(self, code: AST.CodeWriter) -> None:
         self._statements.append(TopLevelStatement(node=code))
 
+    def add_footer_expression(self, expression: AST.Expression) -> None:
+        self._footer_statements.append(TopLevelStatement(node=expression))
+
     def finish(self) -> None:
         self._prepend_generics_declarations_to_statements()
         self._resolve_references()
-        self._imports_manager.resolve_constraints(statements=self._statements)
+        self._imports_manager.resolve_constraints(statements=self._get_all_statements())
 
         with NodeWriterImpl(filepath=self._filepath, reference_resolver=self._reference_resolver) as writer:
             self._imports_manager.write_top_imports_for_file(writer=writer)
@@ -87,9 +99,17 @@ class SourceFileImpl(SourceFile):
                 writer=writer,
                 reference_resolver=self._reference_resolver,
             )
+            for statement in self._footer_statements:
+                writer.write_node(node=statement.node)
 
         if self._completion_listener is not None:
             self._completion_listener(self)
+
+    def get_exports(self) -> Set[str]:
+        return self._exports
+
+    def _get_all_statements(self) -> List[TopLevelStatement]:
+        return self._statements + self._footer_statements
 
     def _prepend_generics_declarations_to_statements(self) -> None:
         generics_declarations: List[TopLevelStatement] = [
@@ -112,18 +132,15 @@ class SourceFileImpl(SourceFile):
 
     def _get_generics(self) -> Set[AST.GenericTypeVar]:
         generics: Set[AST.GenericTypeVar] = set()
-        for statement in self._statements:
+        for statement in self._get_all_statements():
             generics.update(statement.node.get_generics())
         return generics
 
     def _resolve_references(self) -> None:
-        for statement in self._statements:
+        for statement in self._get_all_statements():
             for reference in statement.references:
                 self._reference_resolver.register_reference(reference)
         self._reference_resolver.resolve_references()
-
-    def get_exports(self) -> Set[str]:
-        return self._exports
 
     def __enter__(self) -> SourceFile:
         return self
