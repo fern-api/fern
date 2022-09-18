@@ -9,6 +9,10 @@ types:
     properties:
       name: DeclaredTypeName
       shape: Type
+      referencedTypes:
+        docs: All other named types that this type references (directly or indirectly)
+        type: set<DeclaredTypeName>
+
   DeclaredTypeName:
     properties:
       fernFilepath: commons.FernFilepath

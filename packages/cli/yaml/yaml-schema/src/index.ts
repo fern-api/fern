@@ -5,6 +5,7 @@ export { RAW_DEFAULT_ID_TYPE } from "./ast/visitors/visitIds";
 export * as RawSchemas from "./schemas";
 export { RootApiFileSchema } from "./schemas/file-schemas/RootApiFileSchema";
 export { ServiceFileSchema } from "./schemas/file-schemas/ServiceFileSchema";
+export { RawPrimitiveType } from "./utils/RawPrimitiveType";
 export {
     isAllAuthSchemes,
     isAnyAuthSchemes,

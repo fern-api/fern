@@ -2,3 +2,5 @@ types:
   Director:
     properties:
       name: string
+      age: Age
+  Age: integer
