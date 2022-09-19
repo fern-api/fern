@@ -37,13 +37,17 @@ module.exports = {
         {
             type: "category",
             label: "What you get",
+            collapsed: false,
             items: [`features/sdk`, `features/api-docs`, `features/server`, `features/postman`],
         },
         {
             type: "category",
             label: "Defining an API",
+            link: {
+                type: "doc",
+                id: "definition",
+            },
             items: [
-                `definition/definition`,
                 `definition/services`,
                 `definition/types`,
                 `definition/errors`,

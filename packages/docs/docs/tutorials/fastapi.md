@@ -1,5 +1,5 @@
 ---
-title: Python FastAPI server tutorial
+title: Python FastAPI
 ---
 
 <!-- markdownlint-disable MD033 MD025 MD010 -->

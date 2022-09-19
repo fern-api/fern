@@ -1,5 +1,5 @@
 ---
-title: Java Spring server tutorial
+title: Java Spring
 ---
 
 <!-- markdownlint-disable MD033 MD025 MD010 -->

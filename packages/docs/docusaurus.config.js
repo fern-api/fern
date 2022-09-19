@@ -79,8 +79,8 @@ const config = {
                 ],
             },
             colorMode: {
-                defaultMode: "dark",
-                disableSwitch: true,
+                defaultMode: "light",
+                disableSwitch: false,
             },
             announcementBar: {
                 id: "support_us",
@@ -102,6 +102,11 @@ const config = {
             posthog: {
                 apiKey: "phc_yQgAEdJJkVpI24NdSRID2mor1x1leRpDoC9yZ9mfXal",
                 enableInDevelopment: false,
+            },
+            docs: {
+                sidebar: {
+                    hideable: true,
+                },
             },
         }),
 };

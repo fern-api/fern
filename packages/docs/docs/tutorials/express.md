@@ -1,14 +1,14 @@
 ---
-title: TypeScript Express server tutorial
+title: TypeScript Express
 ---
 
 <!-- markdownlint-disable MD033 MD025 MD010 -->
 
-This guide uses an example API for IMDb (the International Movie Database) that introduces you to using Fern. We'll generate a TypeScript Express server and a Postman collection to implement and test our API. [Here's what your repo will look like](https://github.com/fern-api/fern-tutorials/tree/main/express-server-tutorial) once completing the tutorial.
+This guide uses an example API for [IMDb](https://www.imdb.com/title/tt0111161/) that introduces you to using Fern. We'll generate a TypeScript Express server and a Postman collection to implement and test our API.
 
-**Let's get started!**
+[**👀 Sneak peak: here's what your repo**](https://github.com/fern-api/fern-tutorials/tree/main/express-server-tutorial) will look like after completing the tutorial.
 
-## Step 0: Prerequisites
+### Step 0: Prerequisites
 
 - Install [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 - Install [Postman](https://www.postman.com/downloads/)
@@ -17,7 +17,7 @@ This guide uses an example API for IMDb (the International Movie Database) that 
 We're here to help! Reach out in [Discord](https://discord.gg/JkkXumPzcG).
 :::tip
 
-## Step 1: Set up
+### Step 1: Set up
 
 Create a new folder for this tutorial and `cd` into it. Let's create a new npm project.
 
@@ -32,7 +32,7 @@ This will set us up for a new TypeScript Express backend repo. We'll also instal
 npm install -g fern-api
 ```
 
-## Step 2: Initialize
+### Step 2: Initialize
 
 In the root of your backend repo, run:
 
@@ -54,7 +54,7 @@ fern/
 fern.config.json # Your organization name and Fern CLI version
 ```
 
-## Step 3: Add TypeScript code generator
+### Step 3: Add TypeScript code generator
 
 When adding a generator, Fern defaults to the SDK (aka client). We'll see this by running:
 
@@ -92,7 +92,7 @@ For this tutorial, we want to generate a TypeScript Express server, so we'll cha
 We're here to help! Reach out in [Discord](https://discord.gg/JkkXumPzcG).
 :::tip
 
-## Step 4: Run the generator
+### Step 4: Run the generator
 
 Next we'll invoke the TypeScript server code generator by running:
 
@@ -104,7 +104,7 @@ After a few seconds of processing, you'll see a message in your terminal. Here's
 
 ![Successful code generation](../../static/img/tutorial/generator-success.png)
 
-## Step 5: Install the generated package
+### Step 5: Install the generated package
 
 Create a new file `.npmrc` at the root of our project and add the following:
 
@@ -128,7 +128,7 @@ Next we'll install the package by running `npm install @imdb-fern/api-server@0.0
 }
 ```
 
-## Step 6: Implement the server
+### Step 6: Implement the server
 
 Create a new file `server.ts` at the root of our project. This will be the server which serves the API.
 
@@ -165,7 +165,7 @@ console.log("Listening for requests...");
 app.listen(8080);
 ```
 
-## Step 7: Run the server
+### Step 7: Run the server
 
 ```bash
 npx ts-node server.ts
@@ -173,7 +173,7 @@ npx ts-node server.ts
 
 In the terminal, you should see `Listening for requests...` Great, our server is running!
 
-## Step 8: Add the Postman generator
+### Step 8: Add the Postman generator
 
 Open a new terminal window and run:
 
@@ -184,7 +184,7 @@ fern generate
 
 In the `api/` folder you'll see `generated-postman.json` was recently created.
 
-## Step 9: Hit the server from Postman
+### Step 9: Hit the server from Postman
 
 Open Postman. Click File -> Import and navigate to `api/generated-postman.json`. You should now see a collection called `api`.
 
@@ -196,6 +196,6 @@ Select the `getMovie` endpoint and hit `Send`. As expected, we get a 404 respons
 
 ![getMovie-postman](../../static/img/tutorial/getMovie-postman.png)
 
-## Step 10: Celebrate 🎉
+### Step 10: Celebrate 🎉
 
 You've successfully implemented a IMDb TypeScript Express server using Fern. You're invited to join our [Discord](https://discord.gg/JkkXumPzcG).

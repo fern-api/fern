@@ -6,13 +6,13 @@ title: Getting started
 
 Welcome to Fern! This guide walks through setting up Fern in your repo, defining your API, and generating code.
 
-## Setting up Fern in your repo
+### Setting up Fern in your repo
 
-### Install
+#### Install
 
 In terminal, run `npm install -g fern-api`.
 
-### Initialize
+#### Initialize
 
 In the root of your repo, run `fern init`. This will create the following folder structure in your project:
 
@@ -26,7 +26,7 @@ fern/
 fern.config.json # Your organization name and Fern CLI version
 ```
 
-## Defining your API
+### Defining your API
 
 Your **Fern Definition** is a set of YAML files that are the single source of truth for your API. You check your **Fern Definition** into your repo, inside of which describes your API requests, responses, model, paths, methods, errors, and authentication scheme.
 
@@ -38,13 +38,13 @@ Check out [an example Fern Definition](https://github.com/fern-api/fern-examples
 
 :::
 
-## Generate code
+### Generate code
 
 Fern's code generators run remotely in the cloud. The input is your **Fern Definition** and the output is auto-generated code. You configure which generators you're using in [`generators.yml`](./cli/generate.md).
 
 Check out [an example generators.yml](https://github.com/fern-api/fern-examples/blob/main/fern/api/generators.yml) on Github.
 
-## What's next?
+### What's next?
 
 - [How do I get SDKs?](./features/sdk.md)
 - [How do I get API documentation?](./features/api-docs.md)
