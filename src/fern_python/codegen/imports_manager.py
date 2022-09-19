@@ -7,14 +7,14 @@ from .top_level_statement import StatementId, TopLevelStatement
 
 
 class ImportsManager:
-    def __init__(self, project_name: str):
-        self._project_name = project_name
+    def __init__(self, module_path: AST.ModulePath) -> None:
+        self._module_path = module_path
+
         self._import_to_statements_that_must_precede_it: DefaultDict[
             AST.ReferenceImport, Set[StatementId]
         ] = defaultdict(set)
 
         self._postponed_annotations = False
-
         self._has_resolved_constraints = False
         self._has_written_top_imports = False
 
@@ -32,10 +32,10 @@ class ImportsManager:
 
         self._has_resolved_constraints = True
 
-    def write_top_imports_for_file(self, writer: AST.Writer) -> None:
+    def write_top_imports_for_file(self, writer: AST.Writer, reference_resolver: ReferenceResolverImpl) -> None:
         if not self._has_resolved_constraints:
             raise RuntimeError("Constraints haven't been resolved yet")
-        if self._postponed_annotations:
+        if self._postponed_annotations or reference_resolver.does_file_self_import():
             writer.write_line("from __future__ import annotations")
         self._has_written_top_imports = True
 
@@ -63,21 +63,50 @@ class ImportsManager:
     def _write_import(
         self, import_: AST.ReferenceImport, writer: AST.Writer, reference_resolver: ReferenceResolverImpl
     ) -> None:
-        writer.write_line(self._get_import_as_string(import_=import_, reference_resolver=reference_resolver))
-
-    def _get_import_as_string(self, import_: AST.ReferenceImport, reference_resolver: ReferenceResolverImpl) -> str:
         resolved_import = reference_resolver.resolve_import(import_)
-        module_str = ".".join(
-            resolved_import.module.get_fully_qualfied_module_path(
-                project_name=self._project_name,
+        if resolved_import.import_ is not None:
+            writer.write_line(
+                self._get_import_as_string(
+                    import_=resolved_import.import_,
+                )
             )
+
+    def _get_import_as_string(self, import_: AST.ReferenceImport) -> str:
+        module_str = (
+            get_relative_module_path_str(
+                from_module=self._module_path,
+                to_module=import_.module.path,
+            )
+            if import_.module.is_local()
+            else ".".join(import_.module.path)
         )
 
-        if resolved_import.named_import is None:
+        if import_.named_import is None:
             s = f"import {module_str}"
         else:
-            s = f"from {module_str} import {resolved_import.named_import}"
-        if resolved_import.alias is not None:
-            s += f" as {resolved_import.alias}"
+            s = f"from {module_str} import {import_.named_import}"
+        if import_.alias is not None:
+            s += f" as {import_.alias}"
 
         return s
+
+
+def get_relative_module_path_str(from_module: AST.ModulePath, to_module: AST.ModulePath) -> str:
+    s = "."
+
+    # walk back from the from_module until we get to a common ancestor
+    index = len(from_module) - 2
+    while index >= 0:
+        if index >= len(to_module) or to_module[index] != from_module[index]:
+            s += "."
+        else:
+            break
+        index -= 1
+
+    # `index` is now the index of the common ancestor between from and to
+    # new parts to include in the relative part start at `index + 1`
+
+    # ignore flake warning https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html#slices
+    s += ".".join(to_module[index + 1 :])  # noqa: E203
+
+    return s

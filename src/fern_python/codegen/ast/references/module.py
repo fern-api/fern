@@ -27,11 +27,6 @@ class Module:
     def is_local(self) -> bool:
         return isinstance(self._source, LocalModule)
 
-    def get_fully_qualfied_module_path(self, project_name: str) -> ModulePath:
-        if self.is_local():
-            return (project_name,) + self.path
-        return self.path
-
     @staticmethod
     def external(module_path: ModulePath, dependency: Dependency) -> Module:
         return Module(path=module_path, source=dependency)

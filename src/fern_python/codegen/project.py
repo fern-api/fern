@@ -8,7 +8,6 @@ from typing import Optional, Type
 from . import AST
 from .dependency_manager import DependencyManager
 from .filepath import Filepath
-from .imports_manager import ImportsManager
 from .module_manager import ModuleManager
 from .reference_resolver_impl import ReferenceResolverImpl
 from .source_file import SourceFile, SourceFileImpl
@@ -51,7 +50,6 @@ class Project:
                 project_name=self._project_name,
                 module_path_of_source_file=module.path,
             ),
-            imports_manager=ImportsManager(project_name=self._project_name),
         )
         return source_file
 

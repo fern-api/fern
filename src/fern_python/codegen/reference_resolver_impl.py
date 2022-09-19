@@ -1,8 +1,14 @@
 import dataclasses
 from collections import defaultdict
-from typing import DefaultDict, Dict, Optional, Set, Tuple
+from typing import DefaultDict, Dict, Optional, Set
 
 from . import AST
+
+
+@dataclasses.dataclass
+class ResolvedImport:
+    import_: Optional[AST.ReferenceImport]
+    prefix_for_qualfied_names: AST.QualifiedName
 
 
 class ReferenceResolverImpl(AST.ReferenceResolver):
@@ -10,13 +16,11 @@ class ReferenceResolverImpl(AST.ReferenceResolver):
         self._project_name = project_name
         self._module_path_of_source_file = module_path_of_source_file
         self._default_name_to_original_references: DefaultDict[AST.QualifiedName, Set[AST.Reference]] = defaultdict(set)
-        self._original_import_to_resolved_import: Optional[Dict[AST.ReferenceImport, AST.ReferenceImport]] = None
+        self._original_import_to_resolved_import: Optional[Dict[AST.ReferenceImport, ResolvedImport]] = None
+        self._does_file_self_import = False
 
     def register_reference(self, reference: AST.Reference) -> None:
-        default_name = self._construct_qualified_name_for_reference(
-            import_=reference.import_,
-            qualified_name_excluding_import=reference.qualified_name_excluding_import,
-        )
+        default_name = self._construct_qualified_name_for_reference(reference)
         self._default_name_to_original_references[default_name].add(reference)
 
     def resolve_references(self) -> None:
@@ -34,16 +38,34 @@ class ReferenceResolverImpl(AST.ReferenceResolver):
                 if original_reference.import_ is None:
                     continue
 
-                resolved_import = (
-                    original_reference.import_
-                    if len(original_import_prefixes) == 1
-                    or original_reference.import_.module == self._module_path_of_source_file
-                    else dataclasses.replace(
-                        original_reference.import_,
+                import_: Optional[AST.ReferenceImport] = original_reference.import_
+                prefix_for_qualfied_names: AST.QualifiedName = ()
+
+                if original_reference.import_.module.path == self._module_path_of_source_file:
+                    self._does_file_self_import = True
+                    if original_reference.import_.named_import is not None:
+                        import_ = None
+                        prefix_for_qualfied_names = (original_reference.import_.named_import,)
+                    else:
+                        raise RuntimeError(
+                            f"Intra-file reference in {self._module_path_of_source_file} is not using a named import: "
+                            + ".".join(self._construct_qualified_name_for_reference(original_reference))
+                        )
+                    if original_reference.import_.alias is not None:
+                        raise RuntimeError(
+                            f"Intra-file reference in {self._module_path_of_source_file} is using an alias import"
+                            + ".".join(self._construct_qualified_name_for_reference(original_reference))
+                        )
+                elif len(original_import_prefixes) > 1:
+                    import_ = dataclasses.replace(
+                        import_,
                         alias=construct_import_alias_for_collision(original_reference.import_),
                     )
+
+                self._original_import_to_resolved_import[original_reference.import_] = ResolvedImport(
+                    import_=import_,
+                    prefix_for_qualfied_names=prefix_for_qualfied_names,
                 )
-                self._original_import_to_resolved_import[original_reference.import_] = resolved_import
 
     def resolve_reference(self, reference: AST.Reference) -> str:
         if self._original_import_to_resolved_import is None:
@@ -51,21 +73,33 @@ class ReferenceResolverImpl(AST.ReferenceResolver):
         resolved_import = (
             self._original_import_to_resolved_import[reference.import_] if reference.import_ is not None else None
         )
+        resolved_qualified_name_excluding_import = (
+            resolved_import.prefix_for_qualfied_names + reference.qualified_name_excluding_import
+            if resolved_import is not None
+            else reference.qualified_name_excluding_import
+        )
         return ".".join(
             self._construct_qualified_name_for_reference(
-                import_=resolved_import, qualified_name_excluding_import=reference.qualified_name_excluding_import
+                AST.Reference(
+                    qualified_name_excluding_import=resolved_qualified_name_excluding_import,
+                    import_=resolved_import.import_ if resolved_import is not None else None,
+                )
             )
         )
 
-    def resolve_import(self, import_: AST.ReferenceImport) -> AST.ReferenceImport:
+    def resolve_import(self, import_: AST.ReferenceImport) -> ResolvedImport:
         if self._original_import_to_resolved_import is None:
             raise RuntimeError("References have not yet been resolved.")
         return self._original_import_to_resolved_import[import_]
 
-    def _construct_qualified_name_for_reference(
-        self, import_: Optional[AST.ReferenceImport], qualified_name_excluding_import: Tuple[str, ...]
-    ) -> AST.QualifiedName:
-        return self._construct_qualified_import_prefix_for_reference(import_) + qualified_name_excluding_import
+    def does_file_self_import(self) -> bool:
+        return self._does_file_self_import
+
+    def _construct_qualified_name_for_reference(self, reference: AST.Reference) -> AST.QualifiedName:
+        return (
+            self._construct_qualified_import_prefix_for_reference(reference.import_)
+            + reference.qualified_name_excluding_import
+        )
 
     def _construct_qualified_import_prefix_for_reference(
         self, import_: Optional[AST.ReferenceImport]
@@ -76,7 +110,9 @@ class ReferenceResolverImpl(AST.ReferenceResolver):
             return (import_.alias,)
         if import_.named_import is not None:
             return (import_.named_import,)
-        return import_.module.get_fully_qualfied_module_path(project_name=self._project_name)
+        if import_.module.is_local():
+            raise RuntimeError("Import from local module is not a named import: " + ".".join(import_.module.path))
+        return import_.module.path
 
 
 def construct_import_alias_for_collision(reference_import: AST.ReferenceImport) -> str:

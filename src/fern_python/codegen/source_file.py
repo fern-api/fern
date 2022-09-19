@@ -54,13 +54,12 @@ class SourceFileImpl(SourceFile):
         filepath: str,
         module_path: AST.ModulePath,
         reference_resolver: ReferenceResolverImpl,
-        imports_manager: ImportsManager,
         completion_listener: Callable[[SourceFileImpl], None] = None,
     ):
         self._filepath = filepath
         self._module_path = module_path
         self._reference_resolver = reference_resolver
-        self._imports_manager = imports_manager
+        self._imports_manager = ImportsManager(module_path=module_path)
         self._completion_listener = completion_listener
         self._statements: List[TopLevelStatement] = []
         self._exports: Set[str] = set()
@@ -87,7 +86,7 @@ class SourceFileImpl(SourceFile):
         self._imports_manager.resolve_constraints(statements=self._get_all_statements())
 
         with NodeWriterImpl(filepath=self._filepath, reference_resolver=self._reference_resolver) as writer:
-            self._imports_manager.write_top_imports_for_file(writer=writer)
+            self._imports_manager.write_top_imports_for_file(writer=writer, reference_resolver=self._reference_resolver)
             for statement in self._statements:
                 self._imports_manager.write_top_imports_for_statement(
                     statement=statement,
