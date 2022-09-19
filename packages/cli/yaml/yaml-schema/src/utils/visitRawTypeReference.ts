@@ -1,4 +1,5 @@
 import { PrimitiveType } from "@fern-fern/ir-model/types";
+import { RawPrimitiveType } from "./RawPrimitiveType";
 
 const MAP_REGEX = /^map<\s*(.*)\s*,\s*(.*)\s*>$/;
 const LIST_REGEX = /^list<\s*(.*)\s*>$/;
@@ -18,23 +19,23 @@ export interface RawTypeReferenceVisitor<R> {
 
 export function visitRawTypeReference<R>(type: string, visitor: RawTypeReferenceVisitor<R>): R {
     switch (type) {
-        case "integer":
+        case RawPrimitiveType.integer:
             return visitor.primitive(PrimitiveType.Integer);
-        case "double":
+        case RawPrimitiveType.double:
             return visitor.primitive(PrimitiveType.Double);
-        case "long":
+        case RawPrimitiveType.long:
             return visitor.primitive(PrimitiveType.Long);
-        case "string":
+        case RawPrimitiveType.string:
             return visitor.primitive(PrimitiveType.String);
-        case "boolean":
+        case RawPrimitiveType.boolean:
             return visitor.primitive(PrimitiveType.Boolean);
-        case "datetime":
+        case RawPrimitiveType.datetime:
             return visitor.primitive(PrimitiveType.DateTime);
-        case "uuid":
+        case RawPrimitiveType.uuid:
             return visitor.primitive(PrimitiveType.Uuid);
-        case "void":
+        case RawPrimitiveType.void:
             return visitor.void();
-        case "unknown":
+        case RawPrimitiveType.unknown:
             return visitor.unknown();
     }
 

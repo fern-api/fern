@@ -1,5 +1,5 @@
 import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
-import { Type, TypeDeclaration, TypeReference } from "@fern-fern/ir-model/types";
+import { Type, TypeDeclaration } from "@fern-fern/ir-model/types";
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../type-resolver/TypeResolver";
 import { getDocs } from "../../utils/getDocs";
@@ -7,6 +7,7 @@ import { convertAliasTypeDeclaration } from "./convertAliasTypeDeclaration";
 import { convertEnumTypeDeclaration } from "./convertEnumTypeDeclaration";
 import { convertObjectTypeDeclaration } from "./convertObjectTypeDeclaration";
 import { convertUnionTypeDeclaration } from "./convertUnionTypeDeclaration";
+import { getReferencedTypesFromRawDeclaration } from "./getReferencedTypesFromRawDeclaration";
 
 export function convertTypeDeclaration({
     typeName,
@@ -15,7 +16,7 @@ export function convertTypeDeclaration({
     typeResolver,
 }: {
     typeName: string;
-    typeDeclaration: RawSchemas.TypeDeclarationSchema | string;
+    typeDeclaration: RawSchemas.TypeDeclarationSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
 }): TypeDeclaration {
@@ -26,6 +27,7 @@ export function convertTypeDeclaration({
             name: typeName,
         },
         shape: convertType({ typeDeclaration, file, typeResolver }),
+        referencedTypes: getReferencedTypesFromRawDeclaration({ typeDeclaration, file, typeResolver }),
     };
 }
 
@@ -34,17 +36,10 @@ export function convertType({
     file,
     typeResolver,
 }: {
-    typeDeclaration: RawSchemas.TypeDeclarationSchema | string | null | undefined;
+    typeDeclaration: RawSchemas.TypeDeclarationSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
 }): Type {
-    if (typeDeclaration == null) {
-        return Type.alias({
-            aliasOf: TypeReference.void(),
-            resolvedType: TypeReference.void(),
-        });
-    }
-
     return visitRawTypeDeclaration<Type>(typeDeclaration, {
         alias: (alias) => convertAliasTypeDeclaration({ alias, file, typeResolver }),
         object: (object) => convertObjectTypeDeclaration({ object, file }),
