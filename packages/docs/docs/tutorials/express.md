@@ -102,7 +102,7 @@ fern generate
 
 After a few seconds of processing, you'll see a message in your terminal. Here's a screenshot after the code generator ran successfully:
 
-![Successful code generation](../static/img/tutorial/generator-success.png)
+![Successful code generation](../../static/img/tutorial/generator-success.png)
 
 ## Step 5: Install the generated package
 
