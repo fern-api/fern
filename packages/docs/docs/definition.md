@@ -4,11 +4,11 @@ title: Fern Definition
 
 A **Fern Definition** is a set of YAML files that describe your API. Each file may define:
 
-- **[Services](services.md)**: a set of REST endpoints
-- **[Types](types.md)**: data model and objects
-- **[Errors](errors.md)**: an error name, status code, and can include properties
-- **[Docs](docs.md)**: human-readable descriptions
-- **[Imports](imports.md)**: share types and errors across YAML files
+- **[Services](definition/services.md)**: a set of REST endpoints
+- **[Types](definition/types.md)**: data model and objects
+- **[Errors](definition/errors.md)**: an error name, status code, and can include properties
+- **[Docs](definition/docs.md)**: human-readable descriptions
+- **[Imports](definition/imports.md)**: share types and errors across YAML files
 
 ## An example of a Fern Definition
 
@@ -38,7 +38,6 @@ services:
       auth: false
       base-path: /movies
       endpoints:
-        # Here's an HTTP endpoint
         createMovie:
           docs: Add a movie to the database
           method: POST
