@@ -79,11 +79,11 @@ class TypeReferenceToTypeHintConverter:
             import_=AST.ReferenceImport(
                 module=filepath.to_module(),
                 named_import=type_name.name,
-                must_import_after_current_declaration=must_import_after_current_declaration(type_name)
-                if must_import_after_current_declaration is not None
-                else False,
             ),
             qualified_name_excluding_import=(),
+            must_import_after_current_declaration=must_import_after_current_declaration(type_name)
+            if must_import_after_current_declaration is not None
+            else False,
         )
         return AST.TypeHint(type=reference)
 

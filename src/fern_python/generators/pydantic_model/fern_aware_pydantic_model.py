@@ -96,7 +96,7 @@ class FernAwarePydanticModel:
                     function_definition=AST.Reference(
                         qualified_name_excluding_import=(
                             self.get_name_of_pydantic_model(),
-                            "updateForwardRefs",
+                            "update_forward_refs",
                         )
                     )
                 )

@@ -17,19 +17,19 @@ class ImportsManager:
         self._postponed_annotations = False
         self._has_resolved_constraints = False
         self._has_written_top_imports = False
+        self._has_written_any_statements = False
 
     def resolve_constraints(self, statements: Sequence[TopLevelStatement]) -> None:
         for statement in statements:
             for reference in statement.references:
                 if reference.import_ is not None:
-                    if reference.import_.must_import_after_current_declaration:
+                    if reference.must_import_after_current_declaration:
                         self._import_to_statements_that_must_precede_it[reference.import_].add(statement.id)
                         self._postponed_annotations = True
                     elif reference.import_ not in self._import_to_statements_that_must_precede_it:
                         # even if there's no constraints, we still store the import
                         # so that we write it to the file.
                         self._import_to_statements_that_must_precede_it[reference.import_] = set()
-
         self._has_resolved_constraints = True
 
     def write_top_imports_for_file(self, writer: AST.Writer, reference_resolver: ReferenceResolverImpl) -> None:
@@ -52,9 +52,12 @@ class ImportsManager:
                 self._write_import(import_=import_, writer=writer, reference_resolver=reference_resolver)
                 written_imports.add(import_)
             else:
+                print("not yet importing: ", import_.module.path, import_.named_import, statements_that_must_precede_it)
                 statements_that_must_precede_it.remove(statement.id)
         for import_ in written_imports:
             del self._import_to_statements_that_must_precede_it[import_]
+
+        self._has_written_any_statements = True
 
     def write_remaining_imports(self, writer: AST.Writer, reference_resolver: ReferenceResolverImpl) -> None:
         for import_ in self._import_to_statements_that_must_precede_it:
@@ -87,6 +90,9 @@ class ImportsManager:
             s = f"from {module_str} import {import_.named_import}"
         if import_.alias is not None:
             s += f" as {import_.alias}"
+
+        if self._has_written_any_statements:
+            s += " # noqa: E402"
 
         return s
 

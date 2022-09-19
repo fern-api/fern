@@ -13,13 +13,6 @@ class ReferenceImport:
     named_import: Optional[str] = None
     alias: Optional[str] = None
 
-    must_import_after_current_declaration: bool = False
-    """
-    in Python 3.7+, annotations can be imported after they're used, with:
-      from __future__ import annotations.
-    in non-annotation references, this field is ignored.
-    """
-
 
 @dataclass(frozen=True)
 class Reference:
@@ -41,4 +34,11 @@ class Reference:
     import_: Optional[ReferenceImport] = None
     """
     not required for built-ins, like str
+    """
+
+    must_import_after_current_declaration: bool = False
+    """
+    in Python 3.7+, annotations can be imported after they're used, with:
+      from __future__ import annotations.
+    for built-ins and non-annotation references, this field is ignored.
     """

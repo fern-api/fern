@@ -1,31 +1,34 @@
 from __future__ import annotations
 
+from dataclasses import dataclass
 from typing import Optional, Union
 
 from ..dependency import Dependency
 from .module_path import ModulePath
 
 
+@dataclass(frozen=True)
 class BuiltInModule:
     pass
 
 
+@dataclass(frozen=True)
 class LocalModule:
     pass
 
 
+@dataclass(frozen=True)
 class Module:
-    def __init__(self, path: ModulePath, source: Union[Dependency, BuiltInModule, LocalModule]):
-        self.path = path
-        self._source = source
+    path: ModulePath
+    source: Union[Dependency, BuiltInModule, LocalModule]
 
     def get_dependency(self) -> Optional[Dependency]:
-        if isinstance(self._source, Dependency):
-            return self._source
+        if isinstance(self.source, Dependency):
+            return self.source
         return None
 
     def is_local(self) -> bool:
-        return isinstance(self._source, LocalModule)
+        return isinstance(self.source, LocalModule)
 
     @staticmethod
     def external(module_path: ModulePath, dependency: Dependency) -> Module:
