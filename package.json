@@ -79,5 +79,8 @@
     "vite": {
       "unplugged": true
     }
+  },
+  "dependencies": {
+    "node-gyp": "^9.1.0"
   }
 }

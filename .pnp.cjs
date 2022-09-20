@@ -239,6 +239,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["lint-staged", "npm:13.0.3"],\
             ["lodash-es", "npm:4.17.21"],\
             ["mrlint", "npm:0.0.103"],\
+            ["node-gyp", "npm:9.1.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["stylelint", "npm:14.11.0"],\
@@ -16757,6 +16758,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["lint-staged", "npm:13.0.3"],\
             ["lodash-es", "npm:4.17.21"],\
             ["mrlint", "npm:0.0.103"],\
+            ["node-gyp", "npm:9.1.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["stylelint", "npm:14.11.0"],\
@@ -20997,6 +20999,23 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/unplugged/node-gyp-npm-9.0.0-0eccfca4d1/node_modules/node-gyp/",\
           "packageDependencies": [\
             ["node-gyp", "npm:9.0.0"],\
+            ["env-paths", "npm:2.2.1"],\
+            ["glob", "npm:7.2.3"],\
+            ["graceful-fs", "npm:4.2.10"],\
+            ["make-fetch-happen", "npm:10.1.3"],\
+            ["nopt", "npm:5.0.0"],\
+            ["npmlog", "npm:6.0.2"],\
+            ["rimraf", "npm:3.0.2"],\
+            ["semver", "npm:7.3.7"],\
+            ["tar", "npm:6.1.11"],\
+            ["which", "npm:2.0.2"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:9.1.0", {\
+          "packageLocation": "./.yarn/unplugged/node-gyp-npm-9.1.0-2091059b31/node_modules/node-gyp/",\
+          "packageDependencies": [\
+            ["node-gyp", "npm:9.1.0"],\
             ["env-paths", "npm:2.2.1"],\
             ["glob", "npm:7.2.3"],\
             ["graceful-fs", "npm:4.2.10"],\
