@@ -6,8 +6,6 @@ title: Introduction
 
 When it comes to API development, there’s a gap between what’s **_reasonable_** and what’s **_feasible_**.
 
-## The problem
-
 It’s **reasonable** to want a [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) approach to API development. Every software engineer knows that drift is inevitable with multiple sources of truth. This is why API docs are constantly out of date or why SDKs are missing the latest features.
 
 It’s **reasonable** to want great SDKs for your API, even in languages you don’t happen to be familiar with.
@@ -15,8 +13,6 @@ It’s **reasonable** to want great SDKs for your API, even in languages you don
 And it’s **reasonable** to want examples of how to use those SDKs in your API docs.
 
 Despite feeling like reasonable asks, completing them is hardly feasible. Unless you can invest in an engineering team to build great internal tooling for your APIs—like Stripe and Palantir have—there are no good options. The closest thing to a single source of truth is OpenAPI, which is [**far from ideal**](comparison.md#openapi).
-
-## The solution
 
 Fern is the single source of truth for your API. Define your API in Fern to:
 
