@@ -6,15 +6,31 @@ Fern makes it easy to code generate SDKs, server interfaces, a Postman collectio
 
 ### Generate SDKs
 
-- **fern-typescript**: a JavaScript SDK, fully typed with TypeScript declarations. Build Node.js, web, and mobile web applications.
-- **fern-java**: A Java SDK.
-- **fern-python**: A Python SDK. _(coming soon!)_
+#### JavaScript/TypeScript
+
+**fern-typescript**: A JavaScript SDK, fully typed with TypeScript declarations. Build Node.js, web, and mobile web applications.
+
+#### Java
+
+**fern-java**: A Java SDK.
+
+#### Python
+
+**fern-python**: A Python SDK. _(coming soon!)_
 
 ### Generate server interfaces
 
-- **fern-typescript**: validation that your JavaScript or TypeScript Express server correctly implements your API.
-- **fern-java**: validation that your Java Spring server correctly implements your API.
-- **python-fastapi-server**: validation that your Python FastAPI server correctly implements your API. _(coming soon!)_
+#### TypeScript Express
+
+**fern-typescript**: Validation that your JavaScript or TypeScript Express server correctly implements your API.
+
+#### Java Spring
+
+**fern-java**: Validation that your Java Spring server correctly implements your API.
+
+#### Python FastAPI
+
+**fern-python**: Validation that your Python FastAPI server correctly implements your API. _(coming soon!)_
 
 ### Generate a Postman Collection
 
