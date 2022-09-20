@@ -1,6 +1,6 @@
 # Cookie Policy
 
-We use cookies to help improve your experience of our website at [https://www.buildwithfern.com](https://www.buildwithfern.com). This cookie policy is part of the Birch Solutions Inc. ("Birch")privacy policy. It covers the use of cookies between your device and our site.
+We use cookies to help improve your experience of our website at [https://www.buildwithfern.com](https://www.buildwithfern.com). This cookie policy is part of the Birch Solutions, Inc. ("Birch") privacy policy. It covers the use of cookies between your device and our site.
 
 We also provide basic information on third-party services we may use, who may also use cookies as part of their service. This policy does not cover their cookies.
 
