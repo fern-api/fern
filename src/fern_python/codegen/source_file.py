@@ -6,6 +6,7 @@ from typing import Callable, List, Optional, Set, Type, TypeVar
 
 from . import AST
 from .imports_manager import ImportsManager
+from .local_class_reference import LocalClassReference
 from .node_writer_impl import NodeWriterImpl
 from .reference_resolver_impl import ReferenceResolverImpl
 from .top_level_statement import TopLevelStatement
@@ -20,6 +21,14 @@ class SourceFile(ABC):
         declaration: AST.Declaration,
         do_not_export: bool = False,
     ) -> None:
+        ...
+
+    @abstractmethod
+    def add_class_declaration(
+        self,
+        declaration: AST.ClassDeclaration,
+        do_not_export: bool = False,
+    ) -> LocalClassReference:
         ...
 
     @abstractmethod
@@ -73,6 +82,36 @@ class SourceFileImpl(SourceFile):
         self._statements.append(TopLevelStatement(node=declaration, id=declaration.name))
         if declaration.name is not None:
             self._exports.add(declaration.name)
+
+    def add_class_declaration(
+        self,
+        declaration: AST.ClassDeclaration,
+        do_not_export: bool = False,
+    ) -> LocalClassReference:
+        class LocalClassReferenceImpl(LocalClassReference):
+            def add_class_declaration(
+                class_reference_self,
+                sub_declaration: AST.ClassDeclaration,
+            ) -> LocalClassReference:
+                declaration.add_class(sub_declaration)
+                return LocalClassReferenceImpl(
+                    qualified_name_excluding_import=(
+                        class_reference_self.qualified_name_excluding_import + (sub_declaration.name,)
+                    ),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.local(*self._module_path),
+                        named_import=declaration.name,
+                    ),
+                )
+
+        self.add_declaration(declaration=declaration, do_not_export=do_not_export)
+        return LocalClassReferenceImpl(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path),
+                named_import=declaration.name,
+            ),
+        )
 
     def add_arbitrary_code(self, code: AST.CodeWriter) -> None:
         self._statements.append(TopLevelStatement(node=code))

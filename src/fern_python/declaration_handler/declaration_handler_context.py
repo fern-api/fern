@@ -28,6 +28,10 @@ class DeclarationHandlerContext(ABC):
     def get_referenced_types(self, type_name: ir_types.DeclaredTypeName) -> Set[HashableDeclaredTypeName]:
         ...
 
+    @abstractmethod
+    def get_class_name_for_type_name(self, type_name: ir_types.DeclaredTypeName) -> str:
+        ...
+
 
 @dataclass(frozen=True)
 class HashableDeclaredTypeName:

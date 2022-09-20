@@ -11,7 +11,7 @@ class Writer(ABC):
         ...
 
     @abstractmethod
-    def write_line(self, content: str) -> None:
+    def write_line(self, content: str = "") -> None:
         ...
 
     @abstractmethod

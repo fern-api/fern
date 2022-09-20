@@ -32,20 +32,18 @@ class TypeDeclarationHandler(DeclarationHandler[ir_types.TypeDeclaration]):
         )
 
     def _generate_object(self, object: ir_types.ObjectTypeDeclaration) -> None:
-        pydantic_model = FernAwarePydanticModel(
+        with FernAwarePydanticModel(
             type_name=self._declaration.name,
             extends=object.extends,
             context=self._context,
-        )
+        ) as pydantic_model:
 
-        for property in object.properties:
-            pydantic_model.add_field(
-                name=property.name.snake_case,
-                type_reference=property.valueType,
-                json_field_name=property.name.wire_value,
-            )
-
-        pydantic_model.add_to_source_file()
+            for property in object.properties:
+                pydantic_model.add_field(
+                    name=property.name.snake_case,
+                    type_reference=property.valueType,
+                    json_field_name=property.name.wire_value,
+                )
 
     def _generate_union(self, union: ir_types.UnionTypeDeclaration) -> None:
         generate_union(

@@ -48,7 +48,7 @@ class WriterImpl(AST.Writer):
             self._last_character_is_newline = content[-1] == "\n"
         self._file.write(content)
 
-    def write_line(self, content: str) -> None:
+    def write_line(self, content: str = "") -> None:
         self.write(content)
         self.write_newline_if_last_line_not()
 
@@ -99,7 +99,8 @@ class WriterImpl(AST.Writer):
         excinst: Optional[BaseException],
         exctb: Optional[TracebackType],
     ) -> None:
-        self.finish()
+        if exctype is None:
+            self.finish()
 
 
 class IndentableWriterImpl(AST.IndentableWriter):

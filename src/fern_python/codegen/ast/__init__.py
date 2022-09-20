@@ -10,6 +10,7 @@ from .dependency import Dependency, DependencyName, DependencyVersion
 from .nodes import (
     ClassConstructor,
     ClassDeclaration,
+    ClassInstantiation,
     CodeWriter,
     Declaration,
     Expression,
@@ -58,4 +59,5 @@ __all__ = [
     "GenericTypeVar",
     "Module",
     "QualifiedName",
+    "ClassInstantiation",
 ]

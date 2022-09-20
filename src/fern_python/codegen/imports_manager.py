@@ -52,7 +52,6 @@ class ImportsManager:
                 self._write_import(import_=import_, writer=writer, reference_resolver=reference_resolver)
                 written_imports.add(import_)
             else:
-                print("not yet importing: ", import_.module.path, import_.named_import, statements_that_must_precede_it)
                 statements_that_must_precede_it.remove(statement.id)
         for import_ in written_imports:
             del self._import_to_statements_that_must_precede_it[import_]
@@ -109,8 +108,8 @@ def get_relative_module_path_str(from_module: AST.ModulePath, to_module: AST.Mod
             break
         index -= 1
 
-    # `index` is now the index of the common ancestor between from and to
-    # new parts to include in the relative part start at `index + 1`
+    # `index` is now the index of the common ancestor between 'from' and 'to'.
+    # new parts to include in the relative path start at `index + 1`
 
     # ignore flake warning https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html#slices
     s += ".".join(to_module[index + 1 :])  # noqa: E203

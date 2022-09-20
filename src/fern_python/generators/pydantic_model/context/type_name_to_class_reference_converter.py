@@ -19,7 +19,10 @@ class TypeNameToClassReferenceConverter:
         return AST.ClassReference(
             import_=AST.ReferenceImport(
                 module=filepath.to_module(),
-                named_import=type_name.name,
+                named_import=self.get_class_name_for_type_name(type_name),
             ),
             qualified_name_excluding_import=(),
         )
+
+    def get_class_name_for_type_name(self, type_name: ir_types.DeclaredTypeName) -> str:
+        return type_name.name

@@ -46,3 +46,6 @@ class DeclarationHandlerContextImpl(DeclarationHandlerContext):
 
     def get_referenced_types(self, type_name: ir_types.DeclaredTypeName) -> Set[HashableDeclaredTypeName]:
         return self._type_name_to_declaration[HashableDeclaredTypeName.of(type_name)]
+
+    def get_class_name_for_type_name(self, type_name: ir_types.DeclaredTypeName) -> str:
+        return self._type_name_to_class_reference_converter.get_class_name_for_type_name(type_name)

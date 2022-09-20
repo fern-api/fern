@@ -98,10 +98,10 @@ class TypeHint(AstNode):
         )
 
     @staticmethod
-    def literal(value: str) -> TypeHint:
+    def literal(value: CodeWriter) -> TypeHint:
         return TypeHint(
             type=get_reference_to_typing_import("Literal"),
-            type_parameters=[TypeParameter(CodeWriter(value))],
+            type_parameters=[TypeParameter(value)],
         )
 
     def get_references(self) -> Set[Reference]:

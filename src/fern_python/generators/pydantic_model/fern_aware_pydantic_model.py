@@ -1,12 +1,15 @@
-from typing import Sequence, Tuple
+from __future__ import annotations
 
-from fern_python.codegen import AST
+from types import TracebackType
+from typing import Optional, Sequence, Tuple, Type
+
+from fern_python.codegen import AST, LocalClassReference
 from fern_python.declaration_handler import (
     DeclarationHandlerContext,
     HashableDeclaredTypeName,
 )
 from fern_python.generated import ir_types
-from fern_python.pydantic_codegen import PydanticModel
+from fern_python.pydantic_codegen import PydanticField, PydanticModel
 
 
 class FernAwarePydanticModel:
@@ -28,24 +31,30 @@ class FernAwarePydanticModel:
         self._type_name = type_name
         self._context = context
         self._pydantic_model = PydanticModel(
-            name=self.get_name_of_pydantic_model(),
+            name=self.get_class_name(),
+            source_file=context.source_file,
             base_models=[context.get_class_reference_for_type_name(extended) for extended in extends]
             if extends is not None
             else None,
         )
         self._model_contains_forward_refs = False
 
-    def get_name_of_pydantic_model(self) -> str:
-        return self._type_name.name
+    def to_reference(self) -> LocalClassReference:
+        return self._pydantic_model.to_reference()
 
-    def add_field(self, name: str, json_field_name: str, type_reference: ir_types.TypeReference) -> None:
-        self._pydantic_model.add_field(
+    def get_class_name(self) -> str:
+        return self._context.get_class_name_for_type_name(self._type_name)
+
+    def add_field(self, name: str, json_field_name: str, type_reference: ir_types.TypeReference) -> PydanticField:
+        field = PydanticField(
             name=name,
             type_hint=self._get_type_hint_for_type_reference(
                 type_reference,
             ),
             json_field_name=json_field_name,
         )
+        self._pydantic_model.add_field(field)
+        return field
 
     def _get_type_hint_for_type_reference(self, type_reference: ir_types.TypeReference) -> AST.TypeHint:
         return self._context.get_type_hint_for_type_reference(
@@ -87,17 +96,27 @@ class FernAwarePydanticModel:
             is_static=is_static,
         )
 
-    def add_to_source_file(self) -> None:
-        class_declaration = self._pydantic_model.finish()
-        self._context.source_file.add_declaration(declaration=class_declaration)
+    def finish(self) -> None:
+        self._pydantic_model.finish()
         if self._model_contains_forward_refs:
             self._context.source_file.add_footer_expression(
                 AST.FunctionInvocation(
                     function_definition=AST.Reference(
                         qualified_name_excluding_import=(
-                            self.get_name_of_pydantic_model(),
+                            self.get_class_name(),
                             "update_forward_refs",
                         )
                     )
                 )
             )
+
+    def __enter__(self) -> FernAwarePydanticModel:
+        return self
+
+    def __exit__(
+        self,
+        exctype: Optional[Type[BaseException]],
+        excinst: Optional[BaseException],
+        exctb: Optional[TracebackType],
+    ) -> None:
+        self.finish()
