@@ -12,26 +12,9 @@ A **Fern Definition** is a set of YAML files that describe your API. Each file m
 
 ## An example of a Fern Definition
 
-[View the example on Github](https://github.com/fern-api/fern-examples/blob/main/fern/api/definition/movie.yml) or here:
+[View the example on Github](https://github.com/fern-api/fern-examples/blob/main/fern/api/definition/) or here:
 
 ```yml
-imports:
-  commons: commons.yml
-
-types:
-  Movie:
-    properties:
-      id: commons.MovieId # We are referencing a type (MovieId) defined in another file (commons.yml).
-      title: string
-      rating:
-        type: double
-        docs: The rating scale is one to five stars
-
-  CreateMovieRequest:
-    properties:
-      title: string
-      rating: double
-
 services:
   http:
     MoviesService:
@@ -43,19 +26,43 @@ services:
           method: POST
           path: /create-movie
           request: CreateMovieRequest
-          response: commons.MovieId
+          response: MovieId
 
         getMovie:
           method: GET
           path: /{movieId}
           path-parameters:
-            movieId: commons.MovieId
+            movieId: MovieId
           response: Movie
           errors:
             - NotFoundError
+            - UnauthorizedError
+
+types:
+  Movie:
+    properties:
+      title: string
+      rating:
+        type: double
+        docs: The rating scale from one to five stars
+      id:
+        type: MovieId
+        docs: The unique identifier for a movie
+
+  CreateMovieRequest:
+    properties:
+      title: string
+      rating: double
 
 errors:
   NotFoundError:
     http:
       statusCode: 404
+    type:
+      properties:
+        id: MovieId
+
+  UnauthorizedError:
+    http:
+      statusCode: 401
 ```

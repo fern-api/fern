@@ -32,7 +32,7 @@ Your **Fern Definition** is a set of YAML files that are the single source of tr
 
 Check out [an example Fern Definition](https://github.com/fern-api/fern-examples/blob/main/fern/api/definition/movie.yml) on Github.
 
-:::tip Already have an OpenAPI spec?
+:::tip Already have OpenAPI document?
 
 [Join our private beta](mailto:hey@buildwithfern.com?subject=%5BPrivate%20Beta%5D%20OpenAPI%20to%20Fern%20Definition%20converter) for access to our OpenAPI spec -> Fern Definition converter.
 

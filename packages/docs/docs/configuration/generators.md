@@ -11,12 +11,42 @@ A code generator reads in your **Fern Definition** and outputs code. The outputt
 By default, `generators.yml` starts with two empty lists: `draft` and `release`.
 
 ```yml
-# generators.yml
+# in generators.yml
 draft: []
 release: []
 ```
 
-Here's an example [using multiple generators](https://github.com/fern-api/fern-examples/blob/main/fern/api/generators.yml).
+## An example of generators.md
+
+View an example using multiple generators [on Github](https://github.com/fern-api/fern-examples/blob/main/fern/api/generators.yml) or here:
+
+````yml
+# in generators.yml
+draft: # Publishes the generated code to a private registry managed by Fern.
+  - name: fernapi/fern-typescript
+    version: 0.0.197
+    generate: true
+    config:
+      mode: client-v2
+  - name: fernapi/fern-java
+    version: 0.0.109
+    generate: true
+    config:
+      mode: server
+
+release: # Publishes the generated code to a public registry (e.g. maven, npm, pypi).
+  - name: fernapi/fern-java
+    version: 0.0.109
+    generate: true
+    config:
+      mode: client
+    outputs:
+      maven:
+        url: https://s01.oss.sonatype.org/content/repositories/releases/
+        coordinate: <maven-group:maven-artifact>
+        username: ${MAVEN_USERNAME} # .env variable
+        password: ${MAVEN_PASSWORD}
+
 
 ## Draft
 
@@ -25,14 +55,14 @@ Generators in the `draft` list will publish to a private registry managed by Fer
 [Add a generator](../cli/add.md) in the CLI. For example, when we add the `typescript` generator:
 
 ```diff
-# generators.yml
+# in generators.yml
 draft:
-+ - name: fernapi/typescript
++ - name: fernapi/fern-typescript
 +   version: 0.0.xxx
 +   config:
 +     mode: client_and_server
 release: []
-```
+````
 
 ## Release
 
@@ -41,9 +71,10 @@ Generators in the `release` list will publish to a public registry (e.g. npm, Ma
 For example:
 
 ```diff
+# in generators.yml
 draft: []
 release:
-  - name: fernapi/java
+  - name: fernapi/fern-java
     version: 0.0.xxx
 +   mode: client
 +   outputs:
@@ -65,16 +96,16 @@ release:
 ### Generate server interfaces
 
 - **fern-typescript**: validation that your JavaScript or TypeScript Express server correctly implements your API.
-- **java-spring-server**: validation that your Java Spring server correctly implements your API.
+- **fern-java**: validation that your Java Spring server correctly implements your API.
 - **python-fastapi-server**: validation that your Python FastAPI server correctly implements your API. _(coming soon!)_
 
 ### Generate a Postman Collection
 
 **postman**: generates a [Postman Collection](https://www.postman.com/collection). If you'd like to use the Postman integration to auto-update your collection, [read on](../features/postman.md).
 
-### Generate an OpenAPI Specification
+### Generate an OpenAPI document
 
-**openapi**: generates an [OpenAPI Spec](https://swagger.io/resources/open-api/).
+**openapi**: generates an [OpenAPI document](https://swagger.io/resources/open-api/).
 
 ## Contributing
 

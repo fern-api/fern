@@ -37,8 +37,7 @@ module.exports = {
         {
             type: "category",
             label: "What you get",
-            collapsed: false,
-            items: [`features/sdk`, `features/api-docs`, `features/server`, `features/postman`],
+            items: [`features/sdk`, `features/api-docs`, `features/server`, `features/postman`, `features/openapi`],
         },
         {
             type: "category",
@@ -59,6 +58,11 @@ module.exports = {
             type: "category",
             label: "Configuring Fern",
             items: [`configuration/fern.config`, `configuration/api`, `configuration/generators`],
+        },
+        {
+            type: "category",
+            label: "CLI",
+            items: [`cli/add`, `cli/check`, `cli/generate`, `cli/init`, `cli/upgrade`],
         },
         {
             type: "category",
