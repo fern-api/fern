@@ -1,6 +1,6 @@
 # Terms of Service
 
-These Terms of Service govern your use of the website located at [https://www.buildwithfern.com](https://www.buildwithfern.com) and any related services provided by Birch Solutions, Inc "Birch".
+These Terms of Service govern your use of the website located at [https://www.buildwithfern.com](https://www.buildwithfern.com) and any related services provided by Birch Solutions, Inc. ("Birch").
 
 By accessing [https://www.buildwithfern.com](https://www.buildwithfern.com), you agree to abide by these Terms of Service and to comply with all applicable laws and regulations. If you do not agree with these Terms of Service, you are prohibited from using or accessing this website or using any other services provided by Birch.
 

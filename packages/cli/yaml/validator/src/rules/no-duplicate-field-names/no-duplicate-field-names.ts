@@ -5,7 +5,7 @@ import {
     getUnionedTypeName,
     TypeResolverImpl,
 } from "@fern-api/ir-generator";
-import { isRawObjectDefinition, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
+import { isRawObjectDefinition, RawPrimitiveType, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
 import { groupBy, noop } from "lodash-es";
 import { Rule, RuleViolation } from "../../Rule";
 import { getAllPropertiesForObject } from "./getAllPropertiesForObject";
@@ -76,7 +76,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                     ? unionedType
                                     : unionedType.type != null
                                     ? unionedType.type
-                                    : "void";
+                                    : RawPrimitiveType.void;
                             const resolvedType = typeResolver.resolveType({
                                 type: specifiedType,
                                 file: constructFernFileContext({

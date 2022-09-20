@@ -1,10 +1,11 @@
 import { visitObject } from "@fern-api/core-utils";
 import { IdSchema } from "../../schemas";
+import { RawPrimitiveType } from "../../utils/RawPrimitiveType";
 import { FernAstVisitor } from "../FernAstVisitor";
 import { NodePath } from "../NodePath";
 import { createDocsVisitor } from "./utils/createDocsVisitor";
 
-export const RAW_DEFAULT_ID_TYPE = "string";
+export const RAW_DEFAULT_ID_TYPE = RawPrimitiveType.string;
 
 export async function visitIds({
     ids,

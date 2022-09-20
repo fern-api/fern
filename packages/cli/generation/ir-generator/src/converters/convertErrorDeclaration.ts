@@ -1,4 +1,4 @@
-import { RawSchemas } from "@fern-api/yaml-schema";
+import { RawPrimitiveType, RawSchemas } from "@fern-api/yaml-schema";
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { FernFileContext } from "../FernFileContext";
 import { TypeResolver } from "../type-resolver/TypeResolver";
@@ -33,7 +33,10 @@ export function convertErrorDeclaration({
                   }
                 : undefined,
         type: convertType({
-            typeDeclaration: typeof errorDeclaration === "string" ? errorDeclaration : errorDeclaration.type,
+            typeDeclaration:
+                typeof errorDeclaration === "string"
+                    ? errorDeclaration
+                    : errorDeclaration.type ?? RawPrimitiveType.void,
             file,
             typeResolver,
         }),
