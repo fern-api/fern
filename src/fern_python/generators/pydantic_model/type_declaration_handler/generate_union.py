@@ -111,7 +111,8 @@ def generate_union(
             )
         )
         external_pydantic_model.set_root_type(
-            AST.TypeHint.annotated(
+            is_forward_ref=True,
+            root_type=AST.TypeHint.annotated(
                 type=AST.TypeHint.union(
                     *(
                         AST.TypeHint(type=internal_single_union_type)
@@ -131,7 +132,7 @@ def generate_union(
                         ],
                     )
                 ),
-            )
+            ),
         )
 
 

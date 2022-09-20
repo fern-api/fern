@@ -105,8 +105,10 @@ class FernAwarePydanticModel:
         """
         self._pydantic_model.add_method(declaration=declaration)
 
-    def set_root_type(self, root_type: AST.TypeHint) -> None:
+    def set_root_type(self, root_type: AST.TypeHint, is_forward_ref: bool = False) -> None:
         self._pydantic_model.set_root_type(root_type=root_type)
+        if is_forward_ref:
+            self._model_contains_forward_refs = True
 
     def finish(self) -> None:
         self._pydantic_model.finish()
