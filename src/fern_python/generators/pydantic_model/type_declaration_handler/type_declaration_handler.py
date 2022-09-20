@@ -37,7 +37,6 @@ class TypeDeclarationHandler(DeclarationHandler[ir_types.TypeDeclaration]):
             extends=object.extends,
             context=self._context,
         ) as pydantic_model:
-
             for property in object.properties:
                 pydantic_model.add_field(
                     name=property.name.snake_case,

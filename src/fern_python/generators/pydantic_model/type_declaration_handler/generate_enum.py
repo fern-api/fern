@@ -1,7 +1,7 @@
 from fern_python.codegen import AST, SourceFile
 from fern_python.generated import ir_types
 
-VISITOR_RETURN_TYPE = AST.GenericTypeVar(name="T_Result")
+from .get_visit_method import VisitableItem, get_visit_method
 
 
 def generate_enum(name: ir_types.DeclaredTypeName, enum: ir_types.EnumTypeDeclaration, source_file: SourceFile) -> None:
@@ -24,37 +24,22 @@ def generate_enum(name: ir_types.DeclaredTypeName, enum: ir_types.EnumTypeDeclar
         enum_class.add_attribute(
             AST.VariableDeclaration(
                 name=value.name.screaming_snake_case,
-                initializer=AST.CodeWriter(f'"{value.value}"'),
+                initializer=AST.Expression(AST.CodeWriter(f'"{value.value}"')),
             )
         )
 
-    def write_enum_body(
-        writer: AST.NodeWriter,
-        reference_resolver: AST.ReferenceResolver,
-    ) -> None:
-        for value in enum.values:
-            writer.write_line(f'if self.value == "{value.value}":')
-            with writer.indent():
-                writer.write_line(f"return {get_parameter_name_for_enum_value(value)}()")
-        writer.write_line()
-        writer.write_line("# the above checks are exhaustive, but this is necessary to satisfy the type checker")
-        writer.write_line("raise RuntimeError()")
-
     enum_class.add_method(
-        AST.FunctionDeclaration(
-            name="_visit",
-            parameters=[
-                AST.FunctionParameter(
-                    name=get_parameter_name_for_enum_value(value),
-                    type_hint=AST.TypeHint.callable(
-                        parameters=[],
-                        return_type=AST.TypeHint(type=VISITOR_RETURN_TYPE),
-                    ),
+        get_visit_method(
+            items=[
+                VisitableItem(
+                    parameter_name=get_parameter_name_for_enum_value(value),
+                    expected_value=value.value,
+                    visitor_argument=None,
                 )
                 for value in enum.values
             ],
-            return_type=AST.TypeHint.generic(VISITOR_RETURN_TYPE),
-            body=AST.CodeWriter(write_enum_body),
+            reference_to_current_value="self.value",
+            are_checks_exhaustive=False,
         )
     )
 

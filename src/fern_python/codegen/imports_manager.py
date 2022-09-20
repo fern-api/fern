@@ -51,7 +51,7 @@ class ImportsManager:
             if len(statements_that_must_precede_it) == 0:
                 self._write_import(import_=import_, writer=writer, reference_resolver=reference_resolver)
                 written_imports.add(import_)
-            else:
+            elif statement.id in statements_that_must_precede_it:
                 statements_that_must_precede_it.remove(statement.id)
         for import_ in written_imports:
             del self._import_to_statements_that_must_precede_it[import_]

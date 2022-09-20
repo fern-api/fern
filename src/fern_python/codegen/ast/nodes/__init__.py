@@ -8,7 +8,12 @@ from .declarations import (
     TypeAliasDeclaration,
     VariableDeclaration,
 )
-from .expressions import ClassInstantiation, Expression, FunctionInvocation
+from .expressions import (
+    ClassInstantiation,
+    Expression,
+    ExpressionSpread,
+    FunctionInvocation,
+)
 from .type_hint import TypeHint
 
 __all__ = [
@@ -23,6 +28,7 @@ __all__ = [
     "TypeHint",
     "TypeAliasDeclaration",
     "Expression",
+    "ExpressionSpread",
     "FunctionInvocation",
     "Declaration",
     "ClassInstantiation",

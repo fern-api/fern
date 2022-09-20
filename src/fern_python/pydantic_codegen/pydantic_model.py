@@ -5,23 +5,8 @@ from typing import Optional, Sequence, Type
 
 from fern_python.codegen import AST, ClassParent, LocalClassReference, SourceFile
 
+from .pydantic_exports import PYDANTIC_BASE_MODEL_REFERENCE, PYDANTIC_FIELD_REFERENCE
 from .pydantic_field import PydanticField
-
-
-def get_reference_to_pydantic_export(export: str) -> AST.ClassReference:
-    return AST.ClassReference(
-        import_=AST.ReferenceImport(
-            module=AST.Module.external(
-                dependency=AST.Dependency(name="pydantic", version="^1.9.2"),
-                module_path=("pydantic",),
-            )
-        ),
-        qualified_name_excluding_import=(export,),
-    )
-
-
-PYDANTIC_BASE_MODEL_REFERENCE = get_reference_to_pydantic_export("BaseModel")
-PYDANTIC_FIELD_REFERENCE = get_reference_to_pydantic_export("Field")
 
 
 class PydanticModel:
@@ -45,7 +30,7 @@ class PydanticModel:
 
     def add_field(self, field: PydanticField) -> None:
         initializer = (
-            AST.CodeWriter(get_field_name_initializer(json_field_name=field.json_field_name))
+            AST.Expression(AST.CodeWriter(get_field_name_initializer(json_field_name=field.json_field_name)))
             if field.json_field_name != field.name
             else None
         )
@@ -57,7 +42,7 @@ class PydanticModel:
             AST.VariableDeclaration(name=field.name, type_hint=field.type_hint, initializer=initializer)
         )
 
-    def add_root_type(self, root_type: AST.TypeHint) -> None:
+    def set_root_type(self, root_type: AST.TypeHint) -> None:
         self._class_declaration.add_attribute(AST.VariableDeclaration(name="__root__", type_hint=root_type))
 
     def add_method(
@@ -76,7 +61,7 @@ class PydanticModel:
             config.add_attribute(
                 AST.VariableDeclaration(
                     name="allow_population_by_field_name",
-                    initializer=AST.CodeWriter("True"),
+                    initializer=AST.Expression(AST.CodeWriter("True")),
                 )
             )
             self._class_declaration.add_class(declaration=config)

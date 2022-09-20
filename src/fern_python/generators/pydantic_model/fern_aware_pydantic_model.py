@@ -13,15 +13,6 @@ from fern_python.pydantic_codegen import PydanticField, PydanticModel
 
 
 class FernAwarePydanticModel:
-    """
-    A Fern-aware class for generating a Pydantic model class.
-
-    Methods should _not_ take AST.TypeHint's, but rather the original Fern
-    types.  This is because certain type hints need to be imported below the
-    class to avoid issues with circular references. For each type hint. we need
-    the original TypeReference to determine if that's necessary.
-    """
-
     def __init__(
         self,
         context: DeclarationHandlerContext,
@@ -48,7 +39,7 @@ class FernAwarePydanticModel:
     def add_field(self, name: str, json_field_name: str, type_reference: ir_types.TypeReference) -> PydanticField:
         field = PydanticField(
             name=name,
-            type_hint=self._get_type_hint_for_type_reference(
+            type_hint=self.get_type_hint_for_type_reference(
                 type_reference,
             ),
             json_field_name=json_field_name,
@@ -56,7 +47,7 @@ class FernAwarePydanticModel:
         self._pydantic_model.add_field(field)
         return field
 
-    def _get_type_hint_for_type_reference(self, type_reference: ir_types.TypeReference) -> AST.TypeHint:
+    def get_type_hint_for_type_reference(self, type_reference: ir_types.TypeReference) -> AST.TypeHint:
         return self._context.get_type_hint_for_type_reference(
             type_reference,
             # if the given type references this pydantic model's type, then
@@ -86,25 +77,48 @@ class FernAwarePydanticModel:
                 name=name,
                 parameters=[
                     AST.FunctionParameter(
-                        name=parameter_name, type_hint=self._get_type_hint_for_type_reference(parameter_type)
+                        name=parameter_name, type_hint=self.get_type_hint_for_type_reference(parameter_type)
                     )
                     for parameter_name, parameter_type in parameters
                 ],
-                return_type=self._get_type_hint_for_type_reference(return_type),
+                return_type=self.get_type_hint_for_type_reference(return_type),
                 body=body,
             ),
             is_static=is_static,
         )
 
+    def add_method_unsafe(self, declaration: AST.FunctionDeclaration) -> None:
+        """
+        When generating a Pydantic model, certain type hints need to be
+        imported below the class to avoid issues with circular references. For each
+        type hint. we need the original TypeReference to determine if that's
+        necessary. To ensure the imports are done correctly, the non-unsafe
+        methods in the class take TypeReference and handle converting the
+        TypeReference to a TypeHint.
+
+        If you need to add a method to this class that's already been converted
+        to an AST node, you can use add_method_unsafe.
+
+        IMPORTANT: when constructing the FunctionDeclaration, make sure not to
+        convert TypeReference's to TypeHint's yourself!  Use the
+        get_type_hint_for_type_reference method on this class.
+        """
+        self._pydantic_model.add_method(declaration=declaration)
+
+    def set_root_type(self, root_type: AST.TypeHint) -> None:
+        self._pydantic_model.set_root_type(root_type=root_type)
+
     def finish(self) -> None:
         self._pydantic_model.finish()
         if self._model_contains_forward_refs:
             self._context.source_file.add_footer_expression(
-                AST.FunctionInvocation(
-                    function_definition=AST.Reference(
-                        qualified_name_excluding_import=(
-                            self.get_class_name(),
-                            "update_forward_refs",
+                AST.Expression(
+                    AST.FunctionInvocation(
+                        function_definition=AST.Reference(
+                            qualified_name_excluding_import=(
+                                self.get_class_name(),
+                                "update_forward_refs",
+                            )
                         )
                     )
                 )

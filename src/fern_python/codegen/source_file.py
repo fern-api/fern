@@ -151,12 +151,14 @@ class SourceFileImpl(SourceFile):
                 id=generic.name,
                 node=AST.VariableDeclaration(
                     name=generic.name,
-                    initializer=AST.FunctionInvocation(
-                        function_definition=AST.Reference(
-                            import_=AST.ReferenceImport(module=AST.Module.built_in("typing")),
-                            qualified_name_excluding_import=("TypeVar",),
+                    initializer=AST.Expression(
+                        AST.FunctionInvocation(
+                            function_definition=AST.Reference(
+                                import_=AST.ReferenceImport(module=AST.Module.built_in("typing")),
+                                qualified_name_excluding_import=("TypeVar",),
+                            ),
+                            args=[AST.Expression(AST.CodeWriter(f'"{generic.name}"'))],
                         ),
-                        args=[AST.CodeWriter(f'"{generic.name}"')],
                     ),
                 ),
             )

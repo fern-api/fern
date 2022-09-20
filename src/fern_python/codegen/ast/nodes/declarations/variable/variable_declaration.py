@@ -36,4 +36,4 @@ class VariableDeclaration(AstNode):
         if self.initializer is not None:
             writer.write(" = ")
             self.initializer.write(writer=writer, reference_resolver=reference_resolver)
-        writer.write("\n")
+        writer.write_line()

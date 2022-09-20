@@ -82,4 +82,4 @@ class ClassDeclaration(AstNode):
                 writer.write_node(statement)
             if len(self.statements) == 0:
                 writer.write("pass")
-            writer.write("\n")
+            writer.write_line()

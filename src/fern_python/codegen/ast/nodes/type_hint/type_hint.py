@@ -4,7 +4,7 @@ from typing import Sequence, Set, Union
 
 from ...ast_node import AstNode, GenericTypeVar, NodeWriter, ReferenceResolver
 from ...references import ClassReference, Module, Reference, ReferenceImport
-from ..code_writer import CodeWriter
+from ..expressions import Expression
 from .type_parameter import TypeParameter
 
 
@@ -66,6 +66,13 @@ class TypeHint(AstNode):
         )
 
     @staticmethod
+    def union(*subtypes: TypeHint) -> TypeHint:
+        return TypeHint(
+            type=get_reference_to_typing_import("Union"),
+            type_parameters=[TypeParameter(subtype) for subtype in subtypes],
+        )
+
+    @staticmethod
     def any() -> TypeHint:
         return TypeHint(type=get_reference_to_typing_import("Optional"))
 
@@ -84,7 +91,7 @@ class TypeHint(AstNode):
         )
 
     @staticmethod
-    def annotated(type: TypeHint, annotation: CodeWriter) -> TypeHint:
+    def annotated(type: TypeHint, annotation: Expression) -> TypeHint:
         return TypeHint(
             type=ClassReference(
                 import_=ReferenceImport(
@@ -94,11 +101,11 @@ class TypeHint(AstNode):
                 ),
                 qualified_name_excluding_import=("Annotated",),
             ),
-            type_parameters=[TypeParameter(annotation)],
+            type_parameters=[TypeParameter(type), TypeParameter(annotation)],
         )
 
     @staticmethod
-    def literal(value: CodeWriter) -> TypeHint:
+    def literal(value: Expression) -> TypeHint:
         return TypeHint(
             type=get_reference_to_typing_import("Literal"),
             type_parameters=[TypeParameter(value)],

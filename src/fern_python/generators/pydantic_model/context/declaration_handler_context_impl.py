@@ -22,9 +22,7 @@ class DeclarationHandlerContextImpl(DeclarationHandlerContext):
         )
 
         self._type_name_to_declaration = {
-            HashableDeclaredTypeName.of(declaration.name): set(
-                map(HashableDeclaredTypeName.of, declaration.referenced_types)
-            )
+            HashableDeclaredTypeName.of(declaration.name): declaration
             for declaration in intermediate_representation.types
         }
 
@@ -45,6 +43,13 @@ class DeclarationHandlerContextImpl(DeclarationHandlerContext):
         return self._type_name_to_class_reference_converter.get_class_reference_for_type_name(type_name)
 
     def get_referenced_types(self, type_name: ir_types.DeclaredTypeName) -> Set[HashableDeclaredTypeName]:
+        declaration = self.get_declaration_for_type_name(type_name)
+        return set(map(HashableDeclaredTypeName.of, declaration.referenced_types))
+
+    def get_declaration_for_type_name(
+        self,
+        type_name: ir_types.DeclaredTypeName,
+    ) -> ir_types.TypeDeclaration:
         return self._type_name_to_declaration[HashableDeclaredTypeName.of(type_name)]
 
     def get_class_name_for_type_name(self, type_name: ir_types.DeclaredTypeName) -> str:
