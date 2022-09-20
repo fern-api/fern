@@ -4,9 +4,9 @@ title: SDKs
 
 ## Languages supported
 
-- [JavaScript/TypeScript](../configuration/generators.md#supported-generators)
-- [Java](../configuration/generators.md#supported-generators)
-- [Python](../configuration/generators.md#supported-generators)
+- [JavaScript/TypeScript](../generators/supported.md#javascripttypescript)
+- [Java](../generators/supported.md#java)
+- [Python](../generators/supported.md#python)
 
 ## Request another language or framework
 
