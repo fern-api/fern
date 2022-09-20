@@ -1,10 +1,11 @@
 from __future__ import annotations
 
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 from types import TracebackType
 from typing import Callable, List, Optional, Set, Type, TypeVar
 
 from . import AST
+from .class_parent import ClassParent
 from .imports_manager import ImportsManager
 from .local_class_reference import LocalClassReference
 from .node_writer_impl import NodeWriterImpl
@@ -14,21 +15,13 @@ from .top_level_statement import TopLevelStatement
 T_AstNode = TypeVar("T_AstNode", bound=AST.AstNode)
 
 
-class SourceFile(ABC):
+class SourceFile(ClassParent):
     @abstractmethod
     def add_declaration(
         self,
         declaration: AST.Declaration,
         do_not_export: bool = False,
     ) -> None:
-        ...
-
-    @abstractmethod
-    def add_class_declaration(
-        self,
-        declaration: AST.ClassDeclaration,
-        do_not_export: bool = False,
-    ) -> LocalClassReference:
         ...
 
     @abstractmethod
@@ -88,19 +81,22 @@ class SourceFileImpl(SourceFile):
         declaration: AST.ClassDeclaration,
         do_not_export: bool = False,
     ) -> LocalClassReference:
+        new_declaration = declaration
+
         class LocalClassReferenceImpl(LocalClassReference):
             def add_class_declaration(
                 class_reference_self,
-                sub_declaration: AST.ClassDeclaration,
+                declaration: AST.ClassDeclaration,
+                do_not_export: bool = False,
             ) -> LocalClassReference:
-                declaration.add_class(sub_declaration)
+                new_declaration.add_class(declaration)
                 return LocalClassReferenceImpl(
                     qualified_name_excluding_import=(
-                        class_reference_self.qualified_name_excluding_import + (sub_declaration.name,)
+                        class_reference_self.qualified_name_excluding_import + (declaration.name,)
                     ),
                     import_=AST.ReferenceImport(
                         module=AST.Module.local(*self._module_path),
-                        named_import=declaration.name,
+                        named_import=new_declaration.name,
                     ),
                 )
 

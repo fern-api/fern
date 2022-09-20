@@ -3,7 +3,7 @@ from __future__ import annotations
 from types import TracebackType
 from typing import Optional, Sequence, Type
 
-from fern_python.codegen import AST, LocalClassReference, SourceFile
+from fern_python.codegen import AST, ClassParent, LocalClassReference, SourceFile
 
 from .pydantic_field import PydanticField
 
@@ -25,15 +25,19 @@ PYDANTIC_FIELD_REFERENCE = get_reference_to_pydantic_export("Field")
 
 
 class PydanticModel:
-    def __init__(self, source_file: SourceFile, name: str, base_models: Sequence[AST.ClassReference] = None):
+    def __init__(
+        self,
+        source_file: SourceFile,
+        name: str,
+        base_models: Sequence[AST.ClassReference] = None,
+        parent: ClassParent = None,
+    ):
         self._source_file = source_file
         self._class_declaration = AST.ClassDeclaration(
             name=name,
             extends=base_models or [PYDANTIC_BASE_MODEL_REFERENCE],
         )
-        self._local_class_reference = source_file.add_class_declaration(
-            declaration=self._class_declaration,
-        )
+        self._local_class_reference = (parent or source_file).add_class_declaration(declaration=self._class_declaration)
         self._has_aliases = False
 
     def to_reference(self) -> LocalClassReference:

@@ -1,11 +1,8 @@
 from __future__ import annotations
 
-from abc import ABC, abstractmethod
-
 from . import AST
+from .class_parent import ClassParent
 
 
-class LocalClassReference(AST.ClassReference, ABC):
-    @abstractmethod
-    def add_class_declaration(self, declaration: AST.ClassDeclaration) -> LocalClassReference:
-        ...
+class LocalClassReference(AST.ClassReference, ClassParent):
+    ...

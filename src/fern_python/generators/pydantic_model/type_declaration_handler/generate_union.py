@@ -16,20 +16,11 @@ def generate_union(
 
     with FernAwarePydanticModel(type_name=name, context=context) as external_pydantic_model:
         internal_union = context.source_file.add_class_declaration(
-            declaration=AST.ClassDeclaration(name="_" + external_pydantic_model.get_class_name())
+            declaration=AST.ClassDeclaration(name="_" + external_pydantic_model.get_class_name()),
+            do_not_export=True,
         )
 
         for single_union_type in union.types:
-            shape = single_union_type.shape.get()
-
-            wire_discriminant_value = AST.CodeWriter(f'"{single_union_type.discriminant_value.wire_value}"')
-
-            discriminant_field = PydanticField(
-                name=union.discriminant_v2.snake_case,
-                type_hint=AST.TypeHint.literal(wire_discriminant_value),
-                json_field_name=union.discriminant_v2.wire_value,
-            )
-
             with PydanticModel(
                 name=single_union_type.discriminant_value.pascal_case,
                 source_file=context.source_file,
@@ -38,7 +29,16 @@ def generate_union(
                     single_property=lambda property: None,
                     no_properties=lambda: None,
                 ),
+                parent=internal_union,
             ) as internal_pydantic_model_for_single_union_type:
+
+                shape = single_union_type.shape.get()
+                wire_discriminant_value = AST.CodeWriter(f'"{single_union_type.discriminant_value.wire_value}"')
+                discriminant_field = PydanticField(
+                    name=union.discriminant_v2.snake_case,
+                    type_hint=AST.TypeHint.literal(wire_discriminant_value),
+                    json_field_name=union.discriminant_v2.wire_value,
+                )
 
                 internal_pydantic_model_for_single_union_type.add_field(discriminant_field)
 
