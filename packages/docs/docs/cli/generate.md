@@ -13,7 +13,7 @@ fern generate
 
 ## Example
 
-If we have previously run `fern add javascript-client` and now run `fern generate`, the output will look similar to:
+If we have previously run `fern add typescript` and now run `fern generate`, the output will look similar to:
 
 ```bash
 ┌─

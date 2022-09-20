@@ -37,13 +37,16 @@ module.exports = {
         {
             type: "category",
             label: "What you get",
-            items: [`features/sdk`, `features/api-docs`, `features/server`, `features/postman`],
+            items: [`features/sdk`, `features/api-docs`, `features/server`, `features/postman`, `features/openapi`],
         },
         {
             type: "category",
             label: "Defining an API",
+            link: {
+                type: "doc",
+                id: "definition",
+            },
             items: [
-                `definition/definition`,
                 `definition/services`,
                 `definition/types`,
                 `definition/errors`,
@@ -53,10 +56,19 @@ module.exports = {
         },
         {
             type: "category",
-            label: "Configuring Fern",
-            items: [`configuration/fern.config`, `configuration/api`, `configuration/generators`],
+            label: "Generators",
+            items: [`generators/supported`, `generators/generators`],
         },
-        `tutorial`,
+        {
+            type: "category",
+            label: "CLI",
+            items: [`cli/add`, `cli/check`, `cli/generate`, `cli/init`, `cli/upgrade`, `cli/fern.config.json`],
+        },
+        {
+            type: "category",
+            label: "Tutorials",
+            items: [`tutorials/express`, `tutorials/fastapi`, `tutorials/spring`],
+        },
         {
             type: "link",
             label: "Join Discord",

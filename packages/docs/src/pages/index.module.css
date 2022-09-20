@@ -137,9 +137,15 @@
 }
 
 .legalFooter {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
     justify-content: flex-end;
     display: flex;
     gap: 10px;
-    padding-right: 10px;
-    padding-bottom: 10px;
+    font-size: 16px;
+}
+
+.legalFooter a {
+    color: navy;
 }
