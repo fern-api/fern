@@ -56,13 +56,13 @@ module.exports = {
         },
         {
             type: "category",
-            label: "Configuring Fern",
-            items: [`configuration/fern.config`, `configuration/api`, `configuration/generators`],
+            label: "Generators",
+            items: [`generators/supported`, `generators/generators`],
         },
         {
             type: "category",
             label: "CLI",
-            items: [`cli/add`, `cli/check`, `cli/generate`, `cli/init`, `cli/upgrade`],
+            items: [`cli/add`, `cli/check`, `cli/generate`, `cli/init`, `cli/upgrade`, `cli/fern.config.json`],
         },
         {
             type: "category",

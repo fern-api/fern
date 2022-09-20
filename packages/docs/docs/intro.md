@@ -14,7 +14,7 @@ It’s **reasonable** to want great SDKs for your API, even in languages you don
 
 And it’s **reasonable** to want examples of how to use those SDKs in your API docs.
 
-Despite feeling like reasonable asks, completing them is hardly feasible. Unless you can invest in an engineering team to build great internal tooling for your APIs—like Stripe and Palantir have—there are no good options. The closest thing to a single source of truth is OpenAPI, which is [**far from ideal**](openapi.md).
+Despite feeling like reasonable asks, completing them is hardly feasible. Unless you can invest in an engineering team to build great internal tooling for your APIs—like Stripe and Palantir have—there are no good options. The closest thing to a single source of truth is OpenAPI, which is [**far from ideal**](comparison.md#openapi).
 
 ## The solution
 
