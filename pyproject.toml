@@ -16,6 +16,7 @@ black = "^22.6.0"
 flake8 = "^5.0.4"
 isort = "^5.10.1"
 pre-commit = "^2.20.0"
+snapshottest = "^0.6.0"
 
 [tool.black]
 line-length = 120

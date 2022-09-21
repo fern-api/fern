@@ -15,3 +15,6 @@ class GeneratorConfig(pydantic.BaseModel):
     organization: str
     custom_config: typing.Any = pydantic.Field(alias="customConfig")
     environment: GeneratorEnvironment
+
+    class Config:
+        allow_population_by_field_name = True
