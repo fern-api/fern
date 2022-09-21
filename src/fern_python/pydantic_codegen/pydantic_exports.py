@@ -15,3 +15,4 @@ def get_reference_to_pydantic_export(export: str) -> AST.ClassReference:
 
 PYDANTIC_BASE_MODEL_REFERENCE = get_reference_to_pydantic_export("BaseModel")
 PYDANTIC_FIELD_REFERENCE = get_reference_to_pydantic_export("Field")
+PYDANTIC_PRIVATE_ATTR_REFERENCE = get_reference_to_pydantic_export("PrivateAttr")

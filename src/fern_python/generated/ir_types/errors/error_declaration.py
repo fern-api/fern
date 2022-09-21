@@ -14,3 +14,6 @@ class ErrorDeclaration(WithDocs):
     discriminant_value: WireStringWithAllCasings = pydantic.Field(alias="discriminantValue")
     type: Type
     http: typing.Optional[HttpErrorConfiguration]
+
+    class Config:
+        allow_population_by_field_name = True

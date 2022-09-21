@@ -26,7 +26,7 @@ def get_visit_method(
     reference_to_current_value: str,
     are_checks_exhaustive: bool,
 ) -> AST.FunctionDeclaration:
-    def write_visitor_body(
+    def writevisitor_body(
         writer: AST.NodeWriter,
         reference_resolver: AST.ReferenceResolver,
     ) -> None:
@@ -43,7 +43,7 @@ def get_visit_method(
             writer.write_line("raise RuntimeError()")
 
     return AST.FunctionDeclaration(
-        name="_visit",
+        name="visit",
         parameters=[
             AST.FunctionParameter(
                 name=item.parameter_name,
@@ -55,5 +55,5 @@ def get_visit_method(
             for item in items
         ],
         return_type=AST.TypeHint.generic(VISITOR_RETURN_TYPE),
-        body=AST.CodeWriter(write_visitor_body),
+        body=AST.CodeWriter(writevisitor_body),
     )

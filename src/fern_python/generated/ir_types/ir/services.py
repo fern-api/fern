@@ -1,10 +1,11 @@
-from typing import Any, List
+import typing
 
-from pydantic import BaseModel
+import pydantic
 
-from .. import services
+from ..services.http.http_service import HttpService
+from ..services.websocket.web_socket_channel import WebSocketChannel
 
 
-class Services(BaseModel):
-    http: List[services.HttpService]
-    websocket: List[Any]
+class Services(pydantic.BaseModel):
+    http: typing.List[HttpService]
+    websocket: typing.List[WebSocketChannel]

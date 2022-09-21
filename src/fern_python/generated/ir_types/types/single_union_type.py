@@ -10,3 +10,6 @@ class SingleUnionType(WithDocs):
     discriminant_value: WireStringWithAllCasings = pydantic.Field(alias="discriminantValue")
     value_type: TypeReference = pydantic.Field(alias="valueType")
     shape: SingleUnionTypeProperties
+
+    class Config:
+        allow_population_by_field_name = True

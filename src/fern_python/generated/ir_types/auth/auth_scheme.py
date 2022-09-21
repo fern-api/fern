@@ -1,15 +1,49 @@
 from __future__ import annotations
 
 import typing
-from abc import ABC, abstractmethod
 
 import pydantic
-from typing_extensions import Annotated
+import typing_extensions
 
-from .. import services
-from ..commons import WithDocs
+from ..commons.with_docs import WithDocs
+from ..services.http.http_header import HttpHeader
 
-_Result = typing.TypeVar("_Result")
+T_Result = typing.TypeVar("T_Result")
+
+
+class _Factory:
+    def bearer(self, value: WithDocs) -> AuthScheme:
+        return AuthScheme(__root__=_AuthScheme.Bearer(**dict(value), type="bearer"))
+
+    def basic(self, value: WithDocs) -> AuthScheme:
+        return AuthScheme(__root__=_AuthScheme.Basic(**dict(value), type="basic"))
+
+    def header(self, value: HttpHeader) -> AuthScheme:
+        return AuthScheme(__root__=_AuthScheme.Header(**dict(value), type="header"))
+
+
+class AuthScheme(pydantic.BaseModel):
+    factory: typing.ClassVar[_Factory] = _Factory()
+
+    def get(self) -> typing.Union[_AuthScheme.Bearer, _AuthScheme.Basic, _AuthScheme.Header]:
+        return self.__root__
+
+    def visit(
+        self,
+        bearer: typing.Callable[[WithDocs], T_Result],
+        basic: typing.Callable[[WithDocs], T_Result],
+        header: typing.Callable[[HttpHeader], T_Result],
+    ) -> T_Result:
+        if self.__root__.type == "bearer":
+            return bearer(self.__root__)
+        if self.__root__.type == "basic":
+            return basic(self.__root__)
+        if self.__root__.type == "header":
+            return header(self.__root__)
+
+    __root__: typing_extensions.Annotated[
+        typing.Union[_AuthScheme.Bearer, _AuthScheme.Basic, _AuthScheme.Header], pydantic.Field(discriminator="type")
+    ]
 
 
 class _AuthScheme:
@@ -25,51 +59,11 @@ class _AuthScheme:
         class Config:
             allow_population_by_field_name = True
 
-    class Header(services.HttpHeader):
+    class Header(HttpHeader):
         type: typing.Literal["header"] = pydantic.Field(alias="_type")
 
         class Config:
             allow_population_by_field_name = True
 
 
-class AuthScheme(pydantic.BaseModel):
-
-    __root__: Annotated[
-        typing.Union[_AuthScheme.Bearer, _AuthScheme.Basic, _AuthScheme.Header],
-        pydantic.Field(discriminator="type"),
-    ]
-
-    @staticmethod
-    def bearer(value: WithDocs) -> AuthScheme:
-        return AuthScheme(__root__=_AuthScheme.Bearer(type="bearer", docs=value.docs))
-
-    @staticmethod
-    def basic(value: WithDocs) -> AuthScheme:
-        return AuthScheme(__root__=_AuthScheme.Basic(type="basic", docs=value.docs))
-
-    @staticmethod
-    def header(value: services.HttpHeader) -> AuthScheme:
-        return AuthScheme(
-            __root__=_AuthScheme.Header(type="header", docs=value.docs, name=value.name, value_type=value.value_type)
-        )
-
-    class _Visitor(ABC, typing.Generic[_Result]):
-        @abstractmethod
-        def bearer(self, value: WithDocs) -> _Result:
-            ...
-
-        @abstractmethod
-        def basic(self, value: WithDocs) -> _Result:
-            ...
-
-        @abstractmethod
-        def header(self, value: services.HttpHeader) -> _Result:
-            ...
-
-    def _visit(self, visitor: _Visitor[_Result]) -> _Result:
-        if self.__root__.type == "bearer":
-            return visitor.bearer(self.__root__)
-        if self.__root__.type == "basic":
-            return visitor.basic(self.__root__)
-        if self.__root__.type == "header":
-            return visitor.header(self.__root__)
+AuthScheme.update_forward_refs()

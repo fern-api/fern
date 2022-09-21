@@ -11,15 +11,15 @@ from .path_parameter import PathParameter
 from .query_parameter import QueryParameter
 
 __all__ = [
-    "HttpHeader",
-    "HttpResponse",
-    "HttpRequest",
-    "QueryParameter",
-    "PathParameter",
-    "HttpMethod",
-    "HttpPathPart",
-    "HttpPath",
-    "HttpEndpointId",
     "HttpEndpoint",
+    "HttpEndpointId",
+    "HttpHeader",
+    "HttpMethod",
+    "HttpPath",
+    "HttpPathPart",
+    "HttpRequest",
+    "HttpResponse",
     "HttpService",
+    "PathParameter",
+    "QueryParameter",
 ]

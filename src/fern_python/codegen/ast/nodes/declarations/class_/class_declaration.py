@@ -7,6 +7,7 @@ from ....references import ClassReference, Reference
 from ..function import FunctionDeclaration, FunctionParameter
 from ..variable import VariableDeclaration
 from .class_constructor import ClassConstructor
+from .class_method_decorator import ClassMethodDecorator
 
 
 class ClassDeclaration(AstNode):
@@ -22,7 +23,7 @@ class ClassDeclaration(AstNode):
     def add_method(
         self,
         declaration: FunctionDeclaration,
-        is_static: bool = False,
+        decorator: ClassMethodDecorator = None,
     ) -> FunctionDeclaration:
         """
             - adds 'self' parameter to signature if not static
@@ -30,12 +31,16 @@ class ClassDeclaration(AstNode):
         returns new declaration
         """
         parameters = (
-            declaration.parameters if is_static else [FunctionParameter(name="self")] + list(declaration.parameters)
+            declaration.parameters
+            if decorator == ClassMethodDecorator.STATIC
+            else [FunctionParameter(name="cls")] + list(declaration.parameters)
+            if decorator == ClassMethodDecorator.CLASS_METHOD
+            else [FunctionParameter(name="self")] + list(declaration.parameters)
         )
 
         decorators = (
-            list(declaration.decorators) + [Reference(qualified_name_excluding_import=("staticmethod",))]
-            if is_static
+            list(declaration.decorators) + [Reference(qualified_name_excluding_import=(decorator.value,))]
+            if decorator is not None
             else declaration.decorators
         )
 

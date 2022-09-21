@@ -1,4 +1,4 @@
-from .class_ import ClassConstructor, ClassDeclaration
+from .class_ import ClassConstructor, ClassDeclaration, ClassMethodDecorator
 from .declaration import Declaration
 from .function import FunctionDeclaration, FunctionParameter
 from .type_alias import TypeAliasDeclaration
@@ -12,4 +12,5 @@ __all__ = [
     "FunctionParameter",
     "VariableDeclaration",
     "TypeAliasDeclaration",
+    "ClassMethodDecorator",
 ]

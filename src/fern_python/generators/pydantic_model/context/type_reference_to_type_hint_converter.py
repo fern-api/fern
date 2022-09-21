@@ -15,7 +15,7 @@ class TypeReferenceToTypeHintConverter:
         type_reference: ir_types.TypeReference,
         must_import_after_current_declaration: Optional[Callable[[ir_types.DeclaredTypeName], bool]],
     ) -> AST.TypeHint:
-        return type_reference._visit(
+        return type_reference.visit(
             container=lambda container: self._get_type_hint_for_container(
                 container=container,
                 must_import_after_current_declaration=must_import_after_current_declaration,
@@ -34,7 +34,7 @@ class TypeReferenceToTypeHintConverter:
         container: ir_types.ContainerType,
         must_import_after_current_declaration: Optional[Callable[[ir_types.DeclaredTypeName], bool]],
     ) -> AST.TypeHint:
-        return container._visit(
+        return container.visit(
             list=lambda wrapped_type: AST.TypeHint.list(
                 self.get_type_hint_for_type_reference(
                     type_reference=wrapped_type,
@@ -88,7 +88,7 @@ class TypeReferenceToTypeHintConverter:
         return AST.TypeHint(type=reference)
 
     def _get_type_hint_for_primitive(self, primitive: ir_types.PrimitiveType) -> AST.TypeHint:
-        return primitive._visit(
+        to_return = primitive.visit(
             integer=AST.TypeHint.int_,
             double=AST.TypeHint.float_,
             string=AST.TypeHint.str_,
@@ -97,3 +97,4 @@ class TypeReferenceToTypeHintConverter:
             date_time=AST.TypeHint.str_,
             uuid=AST.TypeHint.str_,
         )
+        return to_return

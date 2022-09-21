@@ -14,6 +14,7 @@ class ClassParent(ABC):
     def add_class_declaration(
         self,
         declaration: AST.ClassDeclaration,
-        do_not_export: bool = False,
+        # defaults to false if declaration.name starts with an underscore, true otherwise
+        should_export: bool = None,
     ) -> LocalClassReference:
         ...

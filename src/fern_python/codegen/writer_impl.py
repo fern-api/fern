@@ -82,7 +82,8 @@ class WriterImpl(AST.Writer):
         black.format_file_in_place(
             path,
             fast=True,
-            mode=black.FileMode(),
+            # todo read their config?
+            mode=black.FileMode(magic_trailing_comma=False, line_length=120),
             write_back=black.WriteBack.YES,
         )
 

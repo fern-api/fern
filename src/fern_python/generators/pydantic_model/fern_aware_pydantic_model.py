@@ -13,6 +13,21 @@ from fern_python.pydantic_codegen import PydanticField, PydanticModel
 
 
 class FernAwarePydanticModel:
+    """
+    A pydantic model generator that is aware of the Fern type representations.
+
+    IMPORTANT: when constructing the FunctionDeclaration, make sure not to
+    convert TypeReference's to TypeHint's yourself!  Use the
+    get_type_hint_for_type_reference method on this class. Read on more for information.
+
+    When generating a Pydantic model, certain type hints need to be
+    imported below the class to avoid issues with circular references. For each
+    type hint. we need the original TypeReference to determine if that's
+    necessary. To ensure the imports are done correctly, the non-unsafe
+    methods in the class take TypeReference and handle converting the
+    TypeReference to a TypeHint.
+    """
+
     def __init__(
         self,
         context: DeclarationHandlerContext,
@@ -47,6 +62,14 @@ class FernAwarePydanticModel:
         self._pydantic_model.add_field(field)
         return field
 
+    def add_private_instance_field_unsafe(
+        self, name: str, type_hint: AST.TypeHint, default_factory: AST.Expression = None
+    ) -> None:
+        self._pydantic_model.add_private_instance_field(name=name, type_hint=type_hint, default_factory=default_factory)
+
+    def add_class_var_unsafe(self, name: str, type_hint: AST.TypeHint, initializer: AST.Expression = None) -> None:
+        self._pydantic_model.add_class_var(name, type_hint, initializer=initializer)
+
     def get_type_hint_for_type_reference(self, type_reference: ir_types.TypeReference) -> AST.TypeHint:
         return self._context.get_type_hint_for_type_reference(
             type_reference,
@@ -70,7 +93,7 @@ class FernAwarePydanticModel:
         parameters: Sequence[Tuple[str, ir_types.TypeReference]],
         return_type: ir_types.TypeReference,
         body: AST.CodeWriter,
-        is_static: bool = False,
+        decorator: AST.ClassMethodDecorator = None,
     ) -> AST.FunctionDeclaration:
         return self._pydantic_model.add_method(
             declaration=AST.FunctionDeclaration(
@@ -84,26 +107,15 @@ class FernAwarePydanticModel:
                 return_type=self.get_type_hint_for_type_reference(return_type),
                 body=body,
             ),
-            is_static=is_static,
+            decorator=decorator,
         )
 
-    def add_method_unsafe(self, declaration: AST.FunctionDeclaration) -> None:
-        """
-        When generating a Pydantic model, certain type hints need to be
-        imported below the class to avoid issues with circular references. For each
-        type hint. we need the original TypeReference to determine if that's
-        necessary. To ensure the imports are done correctly, the non-unsafe
-        methods in the class take TypeReference and handle converting the
-        TypeReference to a TypeHint.
-
-        If you need to add a method to this class that's already been converted
-        to an AST node, you can use add_method_unsafe.
-
-        IMPORTANT: when constructing the FunctionDeclaration, make sure not to
-        convert TypeReference's to TypeHint's yourself!  Use the
-        get_type_hint_for_type_reference method on this class.
-        """
-        self._pydantic_model.add_method(declaration=declaration)
+    def add_method_unsafe(
+        self,
+        declaration: AST.FunctionDeclaration,
+        decorator: AST.ClassMethodDecorator = None,
+    ) -> None:
+        self._pydantic_model.add_method(declaration=declaration, decorator=decorator)
 
     def set_root_type(self, root_type: AST.TypeHint, is_forward_ref: bool = False) -> None:
         self._pydantic_model.set_root_type(root_type=root_type)

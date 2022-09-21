@@ -111,6 +111,13 @@ class TypeHint(AstNode):
             type_parameters=[TypeParameter(value)],
         )
 
+    @staticmethod
+    def class_var(class_var_type: TypeHint) -> TypeHint:
+        return TypeHint(
+            type=get_reference_to_typing_import("ClassVar"),
+            type_parameters=[TypeParameter(class_var_type)],
+        )
+
     def get_references(self) -> Set[Reference]:
         references: Set[Reference] = set()
         if isinstance(self._type, Reference):

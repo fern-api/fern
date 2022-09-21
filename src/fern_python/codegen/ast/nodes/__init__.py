@@ -2,6 +2,7 @@ from .code_writer import CodeWriter, ReferencingCodeWriter
 from .declarations import (
     ClassConstructor,
     ClassDeclaration,
+    ClassMethodDecorator,
     Declaration,
     FunctionDeclaration,
     FunctionParameter,
@@ -32,4 +33,5 @@ __all__ = [
     "FunctionInvocation",
     "Declaration",
     "ClassInstantiation",
+    "ClassMethodDecorator",
 ]

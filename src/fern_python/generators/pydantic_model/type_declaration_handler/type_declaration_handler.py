@@ -9,7 +9,7 @@ from .generate_union import generate_union
 
 class TypeDeclarationHandler(DeclarationHandler[ir_types.TypeDeclaration]):
     def run(self) -> None:
-        self._declaration.shape._visit(
+        self._declaration.shape.visit(
             alias=self._generate_alias,
             enum=self._generate_enum,
             object=self._generate_object,
@@ -18,10 +18,11 @@ class TypeDeclarationHandler(DeclarationHandler[ir_types.TypeDeclaration]):
 
     def _generate_alias(self, alias: ir_types.AliasTypeDeclaration) -> None:
         self._context.source_file.add_declaration(
-            AST.TypeAliasDeclaration(
+            declaration=AST.TypeAliasDeclaration(
                 name=self._declaration.name.name,
                 type_hint=self._context.get_type_hint_for_type_reference(alias.alias_of),
-            )
+            ),
+            should_export=True,
         )
 
     def _generate_enum(self, enum: ir_types.EnumTypeDeclaration) -> None:
@@ -40,7 +41,7 @@ class TypeDeclarationHandler(DeclarationHandler[ir_types.TypeDeclaration]):
             for property in object.properties:
                 pydantic_model.add_field(
                     name=property.name.snake_case,
-                    type_reference=property.valueType,
+                    type_reference=property.value_type,
                     json_field_name=property.name.wire_value,
                 )
 

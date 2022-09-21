@@ -17,11 +17,7 @@ T_AstNode = TypeVar("T_AstNode", bound=AST.AstNode)
 
 class SourceFile(ClassParent):
     @abstractmethod
-    def add_declaration(
-        self,
-        declaration: AST.Declaration,
-        do_not_export: bool = False,
-    ) -> None:
+    def add_declaration(self, declaration: AST.Declaration, should_export: bool) -> None:
         ...
 
     @abstractmethod
@@ -70,16 +66,16 @@ class SourceFileImpl(SourceFile):
     def add_declaration(
         self,
         declaration: AST.Declaration,
-        do_not_export: bool = False,
+        should_export: bool,
     ) -> None:
         self._statements.append(TopLevelStatement(node=declaration, id=declaration.name))
-        if declaration.name is not None:
+        if should_export:
             self._exports.add(declaration.name)
 
     def add_class_declaration(
         self,
         declaration: AST.ClassDeclaration,
-        do_not_export: bool = False,
+        should_export: bool = None,
     ) -> LocalClassReference:
         new_declaration = declaration
 
@@ -87,7 +83,7 @@ class SourceFileImpl(SourceFile):
             def add_class_declaration(
                 class_reference_self,
                 declaration: AST.ClassDeclaration,
-                do_not_export: bool = False,
+                should_export: bool = None,
             ) -> LocalClassReference:
                 new_declaration.add_class(declaration)
                 return LocalClassReferenceImpl(
@@ -100,7 +96,10 @@ class SourceFileImpl(SourceFile):
                     ),
                 )
 
-        self.add_declaration(declaration=declaration, do_not_export=do_not_export)
+        self.add_declaration(
+            declaration=declaration,
+            should_export=should_export if should_export is not None else not declaration.name.startswith("_"),
+        )
         return LocalClassReferenceImpl(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
@@ -157,7 +156,7 @@ class SourceFileImpl(SourceFile):
                                 import_=AST.ReferenceImport(module=AST.Module.built_in("typing")),
                                 qualified_name_excluding_import=("TypeVar",),
                             ),
-                            args=[AST.Expression(AST.CodeWriter(f'"{generic.name}"'))],
+                            args=[AST.Expression(f'"{generic.name}"')],
                         ),
                     ),
                 ),

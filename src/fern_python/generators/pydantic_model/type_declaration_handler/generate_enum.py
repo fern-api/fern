@@ -24,7 +24,7 @@ def generate_enum(name: ir_types.DeclaredTypeName, enum: ir_types.EnumTypeDeclar
         enum_class.add_attribute(
             AST.VariableDeclaration(
                 name=value.name.screaming_snake_case,
-                initializer=AST.Expression(AST.CodeWriter(f'"{value.value}"')),
+                initializer=AST.Expression(f'"{value.value}"'),
             )
         )
 
@@ -45,4 +45,4 @@ def generate_enum(name: ir_types.DeclaredTypeName, enum: ir_types.EnumTypeDeclar
 
 
 def get_parameter_name_for_enum_value(enum_value: ir_types.EnumValue) -> str:
-    return enum_value.name.camel_case
+    return enum_value.name.snake_case

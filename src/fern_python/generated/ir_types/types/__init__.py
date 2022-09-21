@@ -9,6 +9,7 @@ from .object_type_declaration import ObjectTypeDeclaration
 from .primitive_type import PrimitiveType
 from .resolved_named_type import ResolvedNamedType
 from .resolved_type_reference import ResolvedTypeReference
+from .shape_type import ShapeType
 from .single_union_type import SingleUnionType
 from .single_union_type_properties import SingleUnionTypeProperties
 from .single_union_type_property import SingleUnionTypeProperty
@@ -18,22 +19,23 @@ from .type_reference import TypeReference
 from .union_type_declaration import UnionTypeDeclaration
 
 __all__ = [
-    "TypeDeclaration",
-    "DeclaredTypeName",
-    "Type",
     "AliasTypeDeclaration",
+    "ContainerType",
+    "DeclaredTypeName",
     "EnumTypeDeclaration",
     "EnumValue",
-    "ObjectTypeDeclaration",
-    "ObjectProperty",
-    "UnionTypeDeclaration",
-    "SingleUnionType",
-    "TypeReference",
     "MapType",
-    "ContainerType",
+    "ObjectProperty",
+    "ObjectTypeDeclaration",
     "PrimitiveType",
-    "ResolvedTypeReference",
     "ResolvedNamedType",
-    "SingleUnionTypeProperty",
+    "ResolvedTypeReference",
+    "ShapeType",
+    "SingleUnionType",
     "SingleUnionTypeProperties",
+    "SingleUnionTypeProperty",
+    "Type",
+    "TypeDeclaration",
+    "TypeReference",
+    "UnionTypeDeclaration",
 ]

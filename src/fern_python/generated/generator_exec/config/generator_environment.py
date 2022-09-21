@@ -49,7 +49,7 @@ class GeneratorEnvironment(pydantic.BaseModel):
         pydantic.Field(discriminator="type"),
     ]
 
-    class _Visitor(ABC, typing.Generic[_Result]):
+    class visitor(ABC, typing.Generic[_Result]):
         @abstractmethod
         def local(self) -> _Result:
             ...
@@ -58,7 +58,7 @@ class GeneratorEnvironment(pydantic.BaseModel):
         def remote(self, value: RemoteGeneratorEnvironment) -> _Result:
             ...
 
-    def _visit(self, visitor: _Visitor[_Result]) -> _Result:
+    def visit(self, visitor: visitor[_Result]) -> _Result:
         if self.__root__.type == "local":
             return visitor.local()
         if self.__root__.type == "remote":

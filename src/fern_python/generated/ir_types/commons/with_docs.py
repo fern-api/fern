@@ -1,7 +1,7 @@
-from typing import Optional
+import typing
 
-from pydantic import BaseModel
+import pydantic
 
 
-class WithDocs(BaseModel):
-    docs: Optional[str]
+class WithDocs(pydantic.BaseModel):
+    docs: typing.Optional[str]

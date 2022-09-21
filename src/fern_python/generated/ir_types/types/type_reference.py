@@ -8,31 +8,58 @@ import typing_extensions
 from .declared_type_name import DeclaredTypeName
 from .primitive_type import PrimitiveType
 
-_Result = typing.TypeVar("_Result")
+T_Result = typing.TypeVar("T_Result")
+
+
+class _Factory:
+    def container(self, value: ContainerType) -> TypeReference:
+        return TypeReference(__root__=_TypeReference.Container(type="container", container=value))
+
+    def named(self, value: DeclaredTypeName) -> TypeReference:
+        return TypeReference(__root__=_TypeReference.Named(**dict(value), type="named"))
+
+    def primitive(self, value: PrimitiveType) -> TypeReference:
+        return TypeReference(__root__=_TypeReference.Primitive(type="primitive", primitive=value))
+
+    def unknown(self) -> TypeReference:
+        return TypeReference(__root__=_TypeReference.Unknown(type="unknown"))
+
+    def void(self) -> TypeReference:
+        return TypeReference(__root__=_TypeReference.Void(type="void"))
 
 
 class TypeReference(pydantic.BaseModel):
-    @staticmethod
-    def container(value: ContainerType) -> TypeReference:
-        return TypeReference(__root__=_TypeReference.Container(type="container", container=value))
+    factory: typing.ClassVar[_Factory] = _Factory()
 
-    @staticmethod
-    def named(value: DeclaredTypeName) -> TypeReference:
-        return TypeReference(
-            __root__=_TypeReference.Named(type="named", fern_filepath=value.fern_filepath, name=value.name)
-        )
+    def get(
+        self,
+    ) -> typing.Union[
+        _TypeReference.Container,
+        _TypeReference.Named,
+        _TypeReference.Primitive,
+        _TypeReference.Unknown,
+        _TypeReference.Void,
+    ]:
+        return self.__root__
 
-    @staticmethod
-    def primitive(value: PrimitiveType) -> TypeReference:
-        return TypeReference(__root__=_TypeReference.Primitive(type="primitive", primitive=value))
-
-    @staticmethod
-    def unknown() -> TypeReference:
-        return TypeReference(__root__=_TypeReference.Unknown(type="unknown"))
-
-    @staticmethod
-    def void() -> TypeReference:
-        return TypeReference(__root__=_TypeReference.Void(type="void"))
+    def visit(
+        self,
+        container: typing.Callable[[ContainerType], T_Result],
+        named: typing.Callable[[DeclaredTypeName], T_Result],
+        primitive: typing.Callable[[PrimitiveType], T_Result],
+        unknown: typing.Callable[[], T_Result],
+        void: typing.Callable[[], T_Result],
+    ) -> T_Result:
+        if self.__root__.type == "container":
+            return container(self.__root__.container)
+        if self.__root__.type == "named":
+            return named(self.__root__)
+        if self.__root__.type == "primitive":
+            return primitive(self.__root__.primitive)
+        if self.__root__.type == "unknown":
+            return unknown()
+        if self.__root__.type == "void":
+            return void()
 
     __root__: typing_extensions.Annotated[
         typing.Union[
@@ -44,25 +71,6 @@ class TypeReference(pydantic.BaseModel):
         ],
         pydantic.Field(discriminator="type"),
     ]
-
-    def _visit(
-        self,
-        container: typing.Callable[[ContainerType], _Result],
-        named: typing.Callable[[DeclaredTypeName], _Result],
-        primitive: typing.Callable[[PrimitiveType], _Result],
-        unknown: typing.Callable[[], _Result],
-        void: typing.Callable[[], _Result],
-    ) -> _Result:
-        if self.__root__.type == "container":
-            return container(self.__root__.container)
-        if self.__root__.type == "named":
-            return named(self.__root__)
-        if self.__root__.type == "primitive":
-            return primitive(self.__root__.primitive)
-        if self.__root__.type == "unknown":
-            return unknown()
-        if self.__root__.type == "void":
-            return void()
 
 
 from .container_type import ContainerType  # noqa: E402

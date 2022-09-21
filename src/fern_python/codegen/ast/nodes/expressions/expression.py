@@ -13,22 +13,29 @@ from .function_invocation import FunctionInvocation
 class Expression(AstNode):
     def __init__(
         self,
-        expression: Union[FunctionInvocation, CodeWriter, ClassInstantiation],
+        expression: Union[FunctionInvocation, CodeWriter, ClassInstantiation, Reference, str],
         spread: Optional[ExpressionSpread] = None,
     ):
-        self.expression = expression
+        self.expression = CodeWriter(expression) if isinstance(expression, str) else expression
         self.spread = spread
 
     def get_references(self) -> Set[Reference]:
+        if isinstance(self.expression, Reference):
+            return set([self.expression])
         return self.expression.get_references()
 
     def get_generics(self) -> Set[GenericTypeVar]:
+        if isinstance(self.expression, Reference):
+            return set()
         return self.expression.get_generics()
 
     def write(self, writer: NodeWriter, reference_resolver: ReferenceResolver) -> None:
         if self.spread is not None:
             writer.write(self.spread.value)
-        self.expression.write(writer=writer, reference_resolver=reference_resolver)
+        if isinstance(self.expression, Reference):
+            writer.write(reference_resolver.resolve_reference(self.expression))
+        else:
+            self.expression.write(writer=writer, reference_resolver=reference_resolver)
 
 
 class ExpressionSpread(Enum):

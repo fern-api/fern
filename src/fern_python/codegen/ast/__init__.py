@@ -11,6 +11,7 @@ from .nodes import (
     ClassConstructor,
     ClassDeclaration,
     ClassInstantiation,
+    ClassMethodDecorator,
     CodeWriter,
     Declaration,
     Expression,
@@ -62,4 +63,5 @@ __all__ = [
     "Module",
     "QualifiedName",
     "ClassInstantiation",
+    "ClassMethodDecorator",
 ]

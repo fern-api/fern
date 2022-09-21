@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import pydantic
 
 from ...commons.wire_string_with_all_casings import WireStringWithAllCasings
