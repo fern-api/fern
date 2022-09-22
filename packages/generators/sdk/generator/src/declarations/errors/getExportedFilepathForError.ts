@@ -1,8 +1,8 @@
 import { RelativeFilePath } from "@fern-api/core-utils";
 import { DeclaredErrorName } from "@fern-fern/ir-model/errors";
 import { ExportedFilePath } from "../../exports-manager/ExportedFilePath";
-import { getExportedDirectoriesForFernFilepath } from "./getExportedDirectoriesForFernFilepath";
-import { getFileNameForType } from "./getFileNameForType";
+import { getFileNameForType } from "../types/getFileNameForType";
+import { getExportedDirectoriesForFernFilepath } from "../utils/getExportedDirectoriesForFernFilepath";
 
 const ERRORS_DIRECTORY_NAME = "errors";
 

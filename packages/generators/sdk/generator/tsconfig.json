@@ -8,7 +8,7 @@
     { "path": "../../../declaration-handler" },
     { "path": "../../../resolvers" },
     { "path": "../../../types-v2" },
-    { "path": "../errors-v2" },
+    { "path": "../errors" },
     { "path": "../service-declaration-handler" }
   ]
 }

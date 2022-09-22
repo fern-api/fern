@@ -1,11 +1,11 @@
 import { Reference } from "@fern-typescript/declaration-handler";
 import { SourceFile, ts } from "ts-morph";
 import { ExportedFilePath } from "../../exports-manager/ExportedFilePath";
-import { getRelativePathAsModuleSpecifierTo } from "../../getRelativePathAsModuleSpecifierTo";
 import { ImportDeclaration } from "../../imports-manager/ImportsManager";
-import { ModuleSpecifier } from "../../types";
 import { getEntityNameOfContainingDirectory } from "./getEntityNameOfContainingDirectory";
 import { getExpressionToContainingDirectory } from "./getExpressionToContainingDirectory";
+import { getRelativePathAsModuleSpecifierTo } from "./getRelativePathAsModuleSpecifierTo";
+import { ModuleSpecifier } from "./ModuleSpecifier";
 
 export declare namespace getReferenceToExport {
     export interface Args {

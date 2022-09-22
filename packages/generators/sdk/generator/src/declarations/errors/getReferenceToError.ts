@@ -1,10 +1,10 @@
 import { DeclaredErrorName } from "@fern-fern/ir-model/errors";
 import { SourceFile, ts } from "ts-morph";
 import { ImportDeclaration } from "../../imports-manager/ImportsManager";
-import { ModuleSpecifier } from "../../types";
+import { getReferenceToExport } from "../utils/getReferenceToExport";
+import { ModuleSpecifier } from "../utils/ModuleSpecifier";
 import { getExportedFilepathForError } from "./getExportedFilepathForError";
 import { getGeneratedErrorName } from "./getGeneratedErrorName";
-import { getReferenceToExport } from "./getReferenceToExport";
 
 export declare namespace getReferenceToError {
     export interface Args {

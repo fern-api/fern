@@ -3,7 +3,7 @@ import { ExportedFilePath } from "../../exports-manager/ExportedFilePath";
 import {
     createExportForFernFilepathDirectory,
     createRootApiFilePathPart,
-} from "./getExportedDirectoriesForFernFilepath";
+} from "../utils/getExportedDirectoriesForFernFilepath";
 import { getFileNameForWrapper } from "./getFileNameForWrapper";
 
 export function getExportedFilepathForWrapper(wrapperName: WrapperName, apiName: string): ExportedFilePath {

@@ -1,7 +1,7 @@
 import { RelativeFilePath } from "@fern-api/core-utils";
 import { DeclaredTypeName } from "@fern-fern/ir-model/types";
 import { ExportedFilePath } from "../../exports-manager/ExportedFilePath";
-import { getExportedDirectoriesForFernFilepath } from "./getExportedDirectoriesForFernFilepath";
+import { getExportedDirectoriesForFernFilepath } from "../utils/getExportedDirectoriesForFernFilepath";
 import { getFileNameForType } from "./getFileNameForType";
 
 export const TYPES_DIRECTORY_NAME = "types";

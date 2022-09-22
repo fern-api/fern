@@ -1,1 +1,1 @@
-export { FernTypescriptClientGenerator } from "./client/FernTypescriptClientGenerator";
+export { FernTypescriptClientGenerator } from "./declarations/FernTypescriptClientGenerator";

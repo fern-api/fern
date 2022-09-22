@@ -49,8 +49,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/generators/sdk/cli"\
       },\
       {\
-        "name": "@fern-typescript/errors-v2",\
-        "reference": "workspace:packages/generators/sdk/errors-v2"\
+        "name": "@fern-typescript/sdk-errors",\
+        "reference": "workspace:packages/generators/sdk/errors"\
       },\
       {\
         "name": "@fern-typescript/sdk-generator",\
@@ -105,10 +105,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-typescript/commons-v2", ["workspace:packages/commons-v2"]],\
       ["@fern-typescript/declaration-handler", ["workspace:packages/declaration-handler"]],\
       ["@fern-typescript/errors", ["workspace:packages/errors"]],\
-      ["@fern-typescript/errors-v2", ["workspace:packages/generators/sdk/errors-v2"]],\
       ["@fern-typescript/model", ["workspace:packages/model"]],\
       ["@fern-typescript/model-context", ["workspace:packages/model-context"]],\
       ["@fern-typescript/resolvers", ["workspace:packages/resolvers"]],\
+      ["@fern-typescript/sdk-errors", ["workspace:packages/generators/sdk/errors"]],\
       ["@fern-typescript/sdk-generator", ["workspace:packages/generators/sdk/generator"]],\
       ["@fern-typescript/sdk-generator-cli", ["workspace:packages/generators/sdk/cli"]],\
       ["@fern-typescript/sdk-service-declaration-handler", ["workspace:packages/generators/sdk/service-declaration-handler"]],\
@@ -4665,29 +4665,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
-      ["@fern-typescript/errors-v2", [\
-        ["workspace:packages/generators/sdk/errors-v2", {\
-          "packageLocation": "./packages/generators/sdk/errors-v2/",\
-          "packageDependencies": [\
-            ["@fern-typescript/errors-v2", "workspace:packages/generators/sdk/errors-v2"],\
-            ["@babel/core", "npm:7.19.1"],\
-            ["@babel/preset-env", "virtual:ed8d3b741aca6d7f72e87e186271880a21d6274efa50e516039b37f16c5f2bee49ab26b2472ba74ced210e3eaa3fe652d463400f1a2b2c8b59898c168b6831bb#npm:7.19.1"],\
-            ["@babel/preset-typescript", "virtual:ed8d3b741aca6d7f72e87e186271880a21d6274efa50e516039b37f16c5f2bee49ab26b2472ba74ced210e3eaa3fe652d463400f1a2b2c8b59898c168b6831bb#npm:7.18.6"],\
-            ["@fern-fern/ir-model", "npm:0.0.205"],\
-            ["@fern-typescript/declaration-handler", "workspace:packages/declaration-handler"],\
-            ["@fern-typescript/types-v2", "workspace:packages/types-v2"],\
-            ["@types/jest", "npm:29.0.3"],\
-            ["@types/node", "npm:18.7.18"],\
-            ["depcheck", "npm:1.4.3"],\
-            ["eslint", "npm:8.23.1"],\
-            ["jest", "virtual:ed8d3b741aca6d7f72e87e186271880a21d6274efa50e516039b37f16c5f2bee49ab26b2472ba74ced210e3eaa3fe652d463400f1a2b2c8b59898c168b6831bb#npm:29.0.3"],\
-            ["prettier", "npm:2.7.1"],\
-            ["ts-morph", "npm:15.1.0"],\
-            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
-          ],\
-          "linkType": "SOFT"\
-        }]\
-      ]],\
       ["@fern-typescript/model", [\
         ["workspace:packages/model", {\
           "packageLocation": "./packages/model/",\
@@ -4761,6 +4738,29 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
+      ["@fern-typescript/sdk-errors", [\
+        ["workspace:packages/generators/sdk/errors", {\
+          "packageLocation": "./packages/generators/sdk/errors/",\
+          "packageDependencies": [\
+            ["@fern-typescript/sdk-errors", "workspace:packages/generators/sdk/errors"],\
+            ["@babel/core", "npm:7.19.1"],\
+            ["@babel/preset-env", "virtual:ed8d3b741aca6d7f72e87e186271880a21d6274efa50e516039b37f16c5f2bee49ab26b2472ba74ced210e3eaa3fe652d463400f1a2b2c8b59898c168b6831bb#npm:7.19.1"],\
+            ["@babel/preset-typescript", "virtual:ed8d3b741aca6d7f72e87e186271880a21d6274efa50e516039b37f16c5f2bee49ab26b2472ba74ced210e3eaa3fe652d463400f1a2b2c8b59898c168b6831bb#npm:7.18.6"],\
+            ["@fern-fern/ir-model", "npm:0.0.205"],\
+            ["@fern-typescript/declaration-handler", "workspace:packages/declaration-handler"],\
+            ["@fern-typescript/types-v2", "workspace:packages/types-v2"],\
+            ["@types/jest", "npm:29.0.3"],\
+            ["@types/node", "npm:18.7.18"],\
+            ["depcheck", "npm:1.4.3"],\
+            ["eslint", "npm:8.23.1"],\
+            ["jest", "virtual:ed8d3b741aca6d7f72e87e186271880a21d6274efa50e516039b37f16c5f2bee49ab26b2472ba74ced210e3eaa3fe652d463400f1a2b2c8b59898c168b6831bb#npm:29.0.3"],\
+            ["prettier", "npm:2.7.1"],\
+            ["ts-morph", "npm:15.1.0"],\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
       ["@fern-typescript/sdk-generator", [\
         ["workspace:packages/generators/sdk/generator", {\
           "packageLocation": "./packages/generators/sdk/generator/",\
@@ -4774,8 +4774,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/commons", "workspace:packages/commons"],\
             ["@fern-typescript/commons-v2", "workspace:packages/commons-v2"],\
             ["@fern-typescript/declaration-handler", "workspace:packages/declaration-handler"],\
-            ["@fern-typescript/errors-v2", "workspace:packages/generators/sdk/errors-v2"],\
             ["@fern-typescript/resolvers", "workspace:packages/resolvers"],\
+            ["@fern-typescript/sdk-errors", "workspace:packages/generators/sdk/errors"],\
             ["@fern-typescript/sdk-service-declaration-handler", "workspace:packages/generators/sdk/service-declaration-handler"],\
             ["@fern-typescript/types-v2", "workspace:packages/types-v2"],\
             ["@types/jest", "npm:29.0.3"],\

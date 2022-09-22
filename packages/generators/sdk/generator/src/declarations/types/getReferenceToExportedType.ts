@@ -1,10 +1,10 @@
 import { DeclaredTypeName } from "@fern-fern/ir-model/types";
 import { SourceFile, ts } from "ts-morph";
 import { ImportDeclaration } from "../../imports-manager/ImportsManager";
-import { ModuleSpecifier } from "../../types";
+import { getReferenceToExport } from "../utils/getReferenceToExport";
+import { ModuleSpecifier } from "../utils/ModuleSpecifier";
 import { getExportedFilepathForType } from "./getExportedFilepathForType";
 import { getGeneratedTypeName } from "./getGeneratedTypeName";
-import { getReferenceToExport } from "./getReferenceToExport";
 
 export declare namespace getReferenceToExportedType {
     export interface Args {

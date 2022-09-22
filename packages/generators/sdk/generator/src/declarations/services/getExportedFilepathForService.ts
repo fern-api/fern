@@ -1,6 +1,6 @@
 import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
 import { ExportedFilePath } from "../../exports-manager/ExportedFilePath";
-import { getExportedDirectoriesForFernFilepath } from "./getExportedDirectoriesForFernFilepath";
+import { getExportedDirectoriesForFernFilepath } from "../utils/getExportedDirectoriesForFernFilepath";
 import { getFileNameForService } from "./getFileNameForService";
 
 export function getExportedFilepathForService(serviceName: DeclaredServiceName, apiName: string): ExportedFilePath {

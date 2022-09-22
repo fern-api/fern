@@ -2,7 +2,7 @@ import { ContainerType, PrimitiveType, TypeReference } from "@fern-fern/ir-model
 import { TypeReferenceNode } from "@fern-typescript/declaration-handler";
 import { SourceFile, ts } from "ts-morph";
 import { ImportDeclaration } from "../../imports-manager/ImportsManager";
-import { ModuleSpecifier } from "../../types";
+import { ModuleSpecifier } from "../utils/ModuleSpecifier";
 import { getReferenceToExportedType } from "./getReferenceToExportedType";
 
 export declare namespace getReferenceToType {

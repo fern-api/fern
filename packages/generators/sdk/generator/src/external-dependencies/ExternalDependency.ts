@@ -1,5 +1,5 @@
+import { ModuleSpecifier } from "../declarations/utils/ModuleSpecifier";
 import { ImportDeclaration } from "../imports-manager/ImportsManager";
-import { ModuleSpecifier } from "../types";
 
 export declare namespace ExternalDependency {
     export interface Init {

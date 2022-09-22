@@ -3,8 +3,8 @@ import { Reference } from "@fern-typescript/declaration-handler";
 import { ClientConstants } from "@fern-typescript/sdk-service-declaration-handler";
 import { SourceFile } from "ts-morph";
 import { ImportDeclaration } from "../../imports-manager/ImportsManager";
-import { ModuleSpecifier } from "../../types";
-import { getDirectReferenceToExport } from "./getDirectReferenceToExport";
+import { getDirectReferenceToExport } from "../utils/getDirectReferenceToExport";
+import { ModuleSpecifier } from "../utils/ModuleSpecifier";
 import { getExportedFilepathForService } from "./getExportedFilepathForService";
 
 export declare namespace getReferenceToService {
