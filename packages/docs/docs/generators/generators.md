@@ -10,8 +10,7 @@ A code generator reads in your **Fern Definition** and outputs code. The outputt
 
 By default, `generators.yml` starts with two empty lists: `draft` and `release`.
 
-```yml
-# in generators.yml
+```yml title="/fern/api/generators.yml"
 draft: []
 release: []
 ```
@@ -20,8 +19,7 @@ release: []
 
 View an example using multiple generators [on Github](https://github.com/fern-api/fern-examples/blob/main/fern/api/generators.yml) or here:
 
-````yml
-# in generators.yml
+````yml title="/fern/api/generators.yml"
 draft: # Publishes the generated code to a private registry managed by Fern.
   - name: fernapi/fern-typescript
     version: 0.0.197
@@ -54,8 +52,7 @@ Generators in the `draft` list will publish to a private registry managed by Fer
 
 [Add a generator](../cli/add.md) in the CLI. For example, when we add the `typescript` generator:
 
-```diff
-# in generators.yml
+```diff title="/fern/api/generators.yml"
 draft:
 + - name: fernapi/fern-typescript
 +   version: 0.0.xxx
@@ -70,8 +67,7 @@ Generators in the `release` list will publish to a public registry (e.g. npm, Ma
 
 For example:
 
-```diff
-# in generators.yml
+```diff title="/fern/api/generators.yml"
 draft: []
 release:
   - name: fernapi/fern-java
