@@ -1,44 +1,5 @@
-import { WireStringWithAllCasings } from "@fern-fern/ir-model/commons";
-import { ResolvedTypeReference, ShapeType, TypeReference } from "@fern-fern/ir-model/types";
-import { ImportStrategy } from "@fern-typescript/commons";
-import { File, TypeReferenceNode } from "@fern-typescript/declaration-handler";
+import { SingleUnionType } from "@fern-fern/ir-model/types";
 
-// don't used named imports for type reference to prevent clashing with union subtypes
-export const UNION_TYPE_MODEL_IMPORT_STRATEGY = ImportStrategy.TOP_PACKAGE_IMPORT;
-
-export function getKeyForUnion({ discriminantValue }: ResolvedSingleUnionType): string {
+export function getKeyForUnion({ discriminantValue }: SingleUnionType): string {
     return discriminantValue.pascalCase;
-}
-
-export interface ResolvedSingleUnionType {
-    docs: string | null | undefined;
-    discriminantValue: WireStringWithAllCasings;
-    valueType: ResolvedSingleUnionValueType | undefined;
-}
-
-export interface ResolvedSingleUnionValueType {
-    type: TypeReferenceNode;
-    isExtendable: boolean;
-}
-
-export function getResolvedValueTypeForSingleUnionType({
-    valueType,
-    file,
-}: {
-    valueType: TypeReference;
-    file: File;
-}): ResolvedSingleUnionValueType | undefined {
-    const resolvedType = file.resolveTypeReference(valueType);
-    if (resolvedType._type === "void") {
-        return undefined;
-    }
-
-    return {
-        isExtendable: isTypeExtendable(resolvedType),
-        type: file.getReferenceToType(valueType),
-    };
-}
-
-export function isTypeExtendable(resolvedType: ResolvedTypeReference): boolean {
-    return resolvedType._type === "named" && resolvedType.shape === ShapeType.Object;
 }

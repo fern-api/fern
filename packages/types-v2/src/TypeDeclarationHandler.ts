@@ -4,7 +4,6 @@ import { generateEnumType } from "./enum/generateEnumType";
 import { generateAliasType } from "./generateAliasType";
 import { generateObjectType } from "./generateObjectType";
 import { generateUnionType } from "./union/generateUnionType";
-import { getResolvedValueTypeForSingleUnionType } from "./union/utils";
 
 export const TypeDeclarationHandler: DeclarationHandler<TypeDeclaration> = {
     run: async (typeDeclaration, { file }) => {
@@ -24,15 +23,7 @@ export const TypeDeclarationHandler: DeclarationHandler<TypeDeclaration> = {
                     file,
                     typeName,
                     docs: typeDeclaration.docs,
-                    discriminant: unionTypeDeclaration.discriminant,
-                    resolvedTypes: unionTypeDeclaration.types.map((singleUnionType) => ({
-                        docs: singleUnionType.docs,
-                        discriminantValue: singleUnionType.discriminantValue,
-                        valueType: getResolvedValueTypeForSingleUnionType({
-                            valueType: singleUnionType.valueType,
-                            file,
-                        }),
-                    })),
+                    union: unionTypeDeclaration,
                 });
             },
             alias: (aliasTypeDeclaration) => {
