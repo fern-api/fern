@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`validate simple 1`] = `
+"[simple-api]: other.yml -> types -> MyType
+              Type MissingType is not defined.
+"
+`;

@@ -8,7 +8,12 @@ import {
 import { isRawObjectDefinition, RawPrimitiveType, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
 import { groupBy, noop } from "lodash-es";
 import { Rule, RuleViolation } from "../../Rule";
-import { getAllPropertiesForObject } from "./getAllPropertiesForObject";
+import {
+    getAllPropertiesForObject,
+    ObjectPropertyPath,
+    ObjectPropertyPathPart,
+    ObjectPropertyWithPath,
+} from "./getAllPropertiesForObject";
 
 export const NoDuplicateFieldNamesRule: Rule = {
     name: "no-duplicate-field-names",
@@ -16,7 +21,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
         const typeResolver = new TypeResolverImpl(workspace);
 
         return {
-            typeDeclaration: ({ declaration }, { relativeFilepath, contents }) => {
+            typeDeclaration: ({ typeName, declaration }, { relativeFilepath, contents }) => {
                 const violations: RuleViolation[] = [];
 
                 visitRawTypeDeclaration(declaration, {
@@ -47,8 +52,14 @@ export const NoDuplicateFieldNamesRule: Rule = {
                         for (const [propertyName, propertiesWithName] of Object.entries(propertiesGroupedByName)) {
                             if (propertiesWithName.length > 1) {
                                 const message = [
-                                    `Name "${propertyName}" is used by multiple properties:`,
-                                    ...propertiesWithName.map((property) => `  - ${property.path.join(" -> ")}`),
+                                    `Object has multiple properties named "${propertyName}":`,
+                                    ...propertiesWithName.map(
+                                        (property) =>
+                                            `  - ${convertObjectPropertyWithPathToString({
+                                                property,
+                                                prefixBreadcrumbs: [typeName],
+                                            })}`
+                                    ),
                                 ].join("\n");
                                 violations.push({
                                     severity: "error",
@@ -110,7 +121,10 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                         }:`,
                                         ...propertiesWithSameNameAsDiscriminant.map(
                                             (property) =>
-                                                `  - ${[unionKey, specifiedType, ...property.path].join(" -> ")}`
+                                                `  - ${convertObjectPropertyWithPathToString({
+                                                    property,
+                                                    prefixBreadcrumbs: [unionKey, specifiedType],
+                                                })}`
                                         ),
                                     ].join("\n");
                                     violations.push({
@@ -142,4 +156,36 @@ function getDuplicateNames<T>(items: T[], getName: (item: T) => string): string[
         }
         return duplicates;
     }, []);
+}
+
+function convertObjectPropertyWithPathToString({
+    property,
+    prefixBreadcrumbs = [],
+}: {
+    property: ObjectPropertyWithPath;
+    prefixBreadcrumbs?: string[];
+}): string {
+    const parts = [
+        ...prefixBreadcrumbs,
+        ...convertObjectPropertyPathToStrings(property.path),
+        property.finalPropertyKey,
+    ];
+    return parts.join(" -> ");
+}
+
+function convertObjectPropertyPathToStrings(path: ObjectPropertyPath): string[] {
+    return path.map(convertObjectPropertyPathPartToString);
+}
+
+function convertObjectPropertyPathPartToString(part: ObjectPropertyPathPart): string {
+    return [getPrefixForObjectPropertyPathPart(part), part.name].join(" ");
+}
+
+function getPrefixForObjectPropertyPathPart(part: ObjectPropertyPathPart): string {
+    switch (part.followedVia) {
+        case "alias":
+            return "(alias of)";
+        case "extension":
+            return "(extends)";
+    }
 }

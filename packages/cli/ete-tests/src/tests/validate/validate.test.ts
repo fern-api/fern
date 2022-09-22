@@ -22,7 +22,7 @@ function itFixture(fixtureName: string) {
                 cwd: fixturePath,
                 reject: false,
             });
-            expect(stripAnsi(stdout)).toContain("Type MissingType is not defined");
+            expect(stripAnsi(stdout)).toMatchSnapshot();
         },
         90_000
     );
