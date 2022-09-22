@@ -18,25 +18,25 @@ describe("no-duplicate-field-names", () => {
                 severity: "error",
                 relativeFilepath: "1.yml",
                 nodePath: ["types", "ObjectWithDuplicateNames"],
-                message: `Name "b" is used by multiple properties:
-  - b
-  - c`,
+                message: `Object has multiple properties named "b":
+  - ObjectWithDuplicateNames -> b
+  - ObjectWithDuplicateNames -> c`,
             },
             {
                 severity: "error",
                 relativeFilepath: "1.yml",
                 nodePath: ["types", "ObjectWithDuplicatedNameDirectAndByExtension"],
-                message: `Name "blogPostName" is used by multiple properties:
-  - blogPostName
-  - blog.BlogPostAlias -> BlogPost -> blogPostName`,
+                message: `Object has multiple properties named "blogPostName":
+  - ObjectWithDuplicatedNameDirectAndByExtension -> blogPostName
+  - ObjectWithDuplicatedNameDirectAndByExtension -> (extends) blog.BlogPostAlias -> (alias of) BlogPost -> blogPostName`,
             },
             {
                 severity: "error",
                 relativeFilepath: "1.yml",
                 nodePath: ["types", "ObjectWithDuplicatedNameFooByDifferentExtensions"],
-                message: `Name "foo" is used by multiple properties:
-  - ObjectWithFooProperty -> foo
-  - ObjectWithFooAndBarProperties -> propertyWithFooName`,
+                message: `Object has multiple properties named "foo":
+  - ObjectWithDuplicatedNameFooByDifferentExtensions -> (extends) ObjectWithFooProperty -> foo
+  - ObjectWithDuplicatedNameFooByDifferentExtensions -> (extends) ObjectWithFooAndBarProperties -> propertyWithFooName`,
             },
             {
                 severity: "error",
@@ -56,8 +56,8 @@ describe("no-duplicate-field-names", () => {
                 relativeFilepath: "1.yml",
                 nodePath: ["types", "UnionWithOverlapWithCustomName"],
                 message: `Discriminant "foo" conflicts with extended properties:
-  - a -> ObjectWithDuplicatedNameFooByDifferentExtensions -> ObjectWithFooProperty -> foo
-  - a -> ObjectWithDuplicatedNameFooByDifferentExtensions -> ObjectWithFooAndBarProperties -> propertyWithFooName`,
+  - a -> ObjectWithDuplicatedNameFooByDifferentExtensions -> (extends) ObjectWithFooProperty -> foo
+  - a -> ObjectWithDuplicatedNameFooByDifferentExtensions -> (extends) ObjectWithFooAndBarProperties -> propertyWithFooName`,
             },
         ]);
     });

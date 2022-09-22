@@ -7,4 +7,7 @@ export const MockTypeResolver: TypeResolver = {
     resolveType: () => {
         throw new Error("Not implemented");
     },
+    resolveNamedType: () => {
+        throw new Error("Not implemented");
+    },
 };

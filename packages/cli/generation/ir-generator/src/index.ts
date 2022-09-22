@@ -7,6 +7,7 @@ export {
 } from "./converters/type-declarations/convertUnionTypeDeclaration";
 export { constructFernFileContext, type FernFileContext } from "./FernFileContext";
 export { generateIntermediateRepresentation } from "./generateIntermediateRepresentation";
+export { type ResolvedType } from "./type-resolver/ResolvedType";
 export { TypeResolverImpl, type TypeResolver } from "./type-resolver/TypeResolver";
 export { getResolvedPathOfImportedFile } from "./utils/getResolvedPathOfImportedFile";
 export { parseReferenceToTypeName, type ReferenceToTypeName } from "./utils/parseReferenceToTypeName";
